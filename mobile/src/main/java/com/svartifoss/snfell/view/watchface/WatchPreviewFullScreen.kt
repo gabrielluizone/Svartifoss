@@ -4,10 +4,13 @@ import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.Bitmap
+import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.TextView
+import com.google.android.material.imageview.ShapeableImageView
 import com.svartifoss.snfell.R
 
 /**
@@ -48,21 +51,52 @@ object WatchPreviewFullScreen {
             onDismiss: () -> Unit = {},
             configure: (WatchPreviewView) -> Unit
     ): WatchPreviewView? {
-        if (activity.isFinishing || activity.isDestroyed) return null
-
-        val content = activity.layoutInflater
-                .inflate(R.layout.dialog_watch_preview_fullscreen, null) as FrameLayout
+        val content = inflate(activity) ?: return null
         val preview = content.findViewById<WatchPreviewView>(R.id.watch_preview_fullscreen)
+        sizeToScreen(activity, preview)
+        configure(preview)
+        return if (present(activity, content, onDismiss)) preview else null
+    }
 
+    /**
+     * The same dialog around an author's photograph instead of a render.
+     *
+     * It reuses this chrome rather than growing a second one because the question is identical --
+     * a circle at card size is not enough to judge a theme by -- and because the two must enlarge
+     * to the same geometry, or switching between them at full screen would resize the face.
+     */
+    fun showImage(
+            activity: Activity,
+            bitmap: Bitmap,
+            contentDescription: String,
+            onDismiss: () -> Unit = {}
+    ): Boolean {
+        val content = inflate(activity) ?: return false
+        content.findViewById<WatchPreviewView>(R.id.watch_preview_fullscreen).visibility = View.GONE
+        val image = content.findViewById<ShapeableImageView>(R.id.watch_preview_fullscreen_image)
+        sizeToScreen(activity, image)
+        image.setImageBitmap(bitmap)
+        image.contentDescription = contentDescription
+        image.visibility = View.VISIBLE
+        return present(activity, content, onDismiss)
+    }
+
+    private fun inflate(activity: Activity): FrameLayout? {
+        if (activity.isFinishing || activity.isDestroyed) return null
+        return activity.layoutInflater
+                .inflate(R.layout.dialog_watch_preview_fullscreen, null) as FrameLayout
+    }
+
+    private fun sizeToScreen(activity: Activity, view: View) {
         val metrics = activity.resources.displayMetrics
         val size = (minOf(metrics.widthPixels, metrics.heightPixels) * FACE_FRACTION).toInt()
-        preview.layoutParams = (preview.layoutParams as FrameLayout.LayoutParams).apply {
+        view.layoutParams = (view.layoutParams as FrameLayout.LayoutParams).apply {
             width = size
             height = size
         }
+    }
 
-        configure(preview)
-
+    private fun present(activity: Activity, content: FrameLayout, onDismiss: () -> Unit): Boolean {
         val dialog = Dialog(activity, R.style.LyraFullScreenPreviewDialog).apply {
             setContentView(content, ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
@@ -79,6 +113,6 @@ object WatchPreviewFullScreen {
                     WindowManager.LayoutParams.MATCH_PARENT)
         }
         dialog.show()
-        return preview
+        return true
     }
 }

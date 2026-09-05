@@ -24,6 +24,19 @@ class ExpandedAppearanceStylesTest {
     }
 
     @Test
+    fun `new album compositions stay separate from filter layer styles`() {
+        val compositions = listOf(
+                "prismatic", "crescent", "tidal", "paper", "lantern", "mirage",
+                "grid", "nocturne", "cloud", "liquid", "monolith", "split_tone")
+        compositions.forEach { value ->
+            assertEquals(value, PlayerBackgroundStyle.fromPreference(value).preferenceValue)
+        }
+        assertTrue(PlayerBackgroundStyle.PRISMATIC in BackgroundLayerStack.washStyles)
+        assertTrue(PlayerBackgroundStyle.SPLIT_TONE in BackgroundLayerStack.washStyles)
+        assertTrue(PlayerBackgroundStyle.FILTER_WARM !in BackgroundLayerStack.washStyles)
+    }
+
+    @Test
     fun `new shading and accent floor values decode without changing unknown fallbacks`() {
         assertEquals(PlayerShadingStyle.TOP_FADE,
                 PlayerShadingStyle.fromPreference("top_fade"))

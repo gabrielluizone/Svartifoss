@@ -15,6 +15,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.LinearInterpolator
 import com.svartifoss.snfell.common.ColorHarmony
+import com.svartifoss.snfell.common.SeekMarkerVisibility
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.watch.view.panel.PanelReadout
 import kotlin.math.atan2
@@ -214,6 +215,34 @@ class CircularProgressSeekBar : View {
     private val excludedViewRect = Rect()
 
     var seekable: Boolean = false
+
+    /**
+     * When the position tick is drawn - see [SeekMarkerVisibility].
+     *
+     * Held here rather than resolved at draw time so the enum is decoded once per preference
+     * change instead of once per frame, the same shape [ringStyle] and [ringLayout] use.
+     */
+    var markerVisibility: SeekMarkerVisibility = SeekMarkerVisibility.DURING_SEEK
+        set(value) {
+            if (field != value) {
+                field = value
+                invalidate()
+            }
+        }
+
+    /**
+     * Whether music is actually playing, which three of the four [markerVisibility] modes consult.
+     *
+     * A paused session and true idle both count as not playing, matching how `MainActivity`
+     * resolves `wear_track_time_mode` from the same flag.
+     */
+    var playing: Boolean = false
+        set(value) {
+            if (field != value) {
+                field = value
+                if (markerVisibility != SeekMarkerVisibility.DURING_SEEK) invalidate()
+            }
+        }
 
     /** Whether the progress track/arc is painted. The View deliberately stays present when false
      *  so [touchSeekingEnabled] can expose an invisible bezel scrub target. */
@@ -598,27 +627,39 @@ class CircularProgressSeekBar : View {
             foregroundPaint.color = originalColor
         }
 
-        if (gestureVisible) {
+        // The tick is a mark *on* the band, so it is inside the early return above rather than
+        // beside it: with the ring hidden it would be a lone dash at the screen edge, which is a
+        // different object rather than a smaller version of the same one.
+        if (gestureVisible ||
+                SeekMarkerVisibility.shouldDraw(markerVisibility, isDragging, playing)) {
             drawSeekOriginMarker(canvas, baseWidth)
         }
     }
 
     /**
-     * The tick showing where the track actually is, drawn only for the lifetime of a drag.
+     * The tick showing where the track actually is.
      *
      * A radial tick rather than a second dot on the arc: a dot at ring radius reads as another
      * thumb, i.e. as a second thing being dragged, while a mark crossing the band reads as a scale
      * marking - which is what it is. White with a dark outer stroke rather than the accent, because
      * it has to stay legible on all twenty-odd ring styles, several of which are already painted in
      * the accent at that exact radius.
+     *
+     * **Where it sits depends on whether a finger has the arc.** During a drag it marks
+     * [dragOriginProgress] - the position playback is actually at, which keeps advancing while the
+     * user decides - because [displayProgress] has been taken over by the finger and no longer says
+     * anything about the track. At rest the two are the same thing, so it follows [displayProgress]
+     * and reads as a playhead. Anchoring it to [dragOriginProgress] in both cases would leave a
+     * stale mark frozen wherever the last drag started.
      */
     private fun drawSeekOriginMarker(canvas: Canvas, baseWidth: Float) {
         markerPaint.style = Paint.Style.STROKE
         markerPaint.pathEffect = null
         val density = resources.displayMetrics.density
         val radius = circleBounds.width() / 2f
+        val markerProgress = if (isDragging) dragOriginProgress else displayProgress
         val angle = Math.toRadians(
-                (ringLayout.startAngle + dragOriginProgress * ringLayout.sweepAngle).toDouble())
+                (ringLayout.startAngle + markerProgress * ringLayout.sweepAngle).toDouble())
         val cosA = cos(angle).toFloat()
         val sinA = sin(angle).toFloat()
         val half = (baseWidth * MARKER_LENGTH_SCALE) / 2f

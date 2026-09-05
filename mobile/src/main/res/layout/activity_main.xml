@@ -253,22 +253,22 @@
                 <!-- Previous -->
                 <ImageButton
                     android:id="@+id/mini_prev"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@drawable/ic_mini_prev"
                     android:background="?selectableItemBackgroundBorderless"
-                    android:padding="8dp"
+                    android:padding="12dp"
                     android:contentDescription="@string/action_skip_prev"
                     app:tint="@color/lyra_text_secondary" />
 
                 <!-- Play / Pause -->
                 <ImageButton
                     android:id="@+id/mini_play_pause"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@drawable/ic_nav_playing"
                     android:background="?selectableItemBackgroundBorderless"
-                    android:padding="8dp"
+                    android:padding="12dp"
                     android:layout_marginStart="2dp"
                     android:layout_marginEnd="2dp"
                     android:contentDescription="@string/action_play"
@@ -277,11 +277,11 @@
                 <!-- Next -->
                 <ImageButton
                     android:id="@+id/mini_next"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@drawable/ic_mini_next"
                     android:background="?selectableItemBackgroundBorderless"
-                    android:padding="8dp"
+                    android:padding="12dp"
                     android:contentDescription="@string/action_skip_next"
                     app:tint="@color/lyra_text_secondary" />
 

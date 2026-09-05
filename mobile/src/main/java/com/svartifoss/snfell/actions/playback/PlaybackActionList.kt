@@ -6,17 +6,13 @@ import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.actions.PhoneAction
-import com.svartifoss.snfell.view.buttonconfig.ActionPickerViewModel
+import com.svartifoss.snfell.actions.PickerActionGroup
 
-class PlaybackActionList : PhoneAction {
+class PlaybackActionList : PickerActionGroup {
     constructor(context : Context) : super(context)
     constructor(context : Context, bundle: PersistableBundle) : super(context, bundle)
 
-    override val opensMoreOptions: Boolean
-        get() = true
-
-    override fun onActionPicked(actionPicker: ActionPickerViewModel) {
-        actionPicker.updateDisplayedActionsWithBackStack(title, listOf(
+    override fun pickerChildren(): List<PhoneAction> = listOf(
                 PlayAction(context),
                 PauseAction(context),
                 PlayPauseToggleAction(context),
@@ -24,14 +20,19 @@ class PlaybackActionList : PhoneAction {
                 SkipToPrevAction(context),
                 SkipToNextAction(context),
                 RestartTrackAction(context),
+                FastForwardAction(context),
+                RewindAction(context),
                 SkipThirtySecondsAction(context),
                 ReverseThirtySecondsAction(context),
+                PlaybackPositionActionList(context),
+                PlaybackSpeedActionList(context),
                 LikeAction(context),
                 ShuffleAction(context),
+                ShuffleModeActionList(context),
                 RepeatAction(context),
-                RepeatOneAction(context)
-        ))
-    }
+                RepeatOneAction(context),
+                RepeatModeActionList(context)
+        )
 
     override fun retrieveTitle(): String {
         return context.getString(R.string.group_playback_controls)

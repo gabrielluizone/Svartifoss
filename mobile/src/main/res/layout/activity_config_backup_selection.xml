@@ -67,8 +67,7 @@
             android:layout_height="48dp"
             android:minWidth="0dp"
             android:text="@string/backup_selection_select_all"
-            android:textAllCaps="false"
-            android:textColor="@color/lyra_accent" />
+            android:textAllCaps="false" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_clear_all"
@@ -77,8 +76,7 @@
             android:layout_height="48dp"
             android:minWidth="0dp"
             android:text="@string/backup_selection_clear_all"
-            android:textAllCaps="false"
-            android:textColor="@color/lyra_accent" />
+            android:textAllCaps="false" />
 
     </LinearLayout>
 

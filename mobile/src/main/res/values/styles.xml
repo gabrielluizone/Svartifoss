@@ -270,4 +270,13 @@
         <item name="android:includeFontPadding">false</item>
     </style>
 
+    <!--
+        The author screenshot is drawn round in the gallery and in the moderator's paired view, so
+        the attach slot shows it round too: what an author approves here is what a visitor sees.
+    -->
+    <style name="ShapeAppearance.Svartifoss.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>

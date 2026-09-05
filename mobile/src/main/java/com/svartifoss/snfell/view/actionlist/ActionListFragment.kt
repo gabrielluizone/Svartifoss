@@ -288,7 +288,10 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
             row.setOnClickListener {
                 dialog.dismiss()
                 startActivityForResult(
-                        Intent(context, ActionPickerActivity::class.java),
+                        Intent(context, ActionPickerActivity::class.java).putExtra(
+                                ActionPickerActivity.EXTRA_SURFACE,
+                                com.svartifoss.snfell.view.buttonconfig.ActionPickerSurface
+                                        .QUICK_PANEL.name),
                         REQUEST_CODE_QUICK_SLOT_BASE + index
                 )
             }

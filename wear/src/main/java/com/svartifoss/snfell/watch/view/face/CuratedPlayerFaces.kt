@@ -32,6 +32,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -58,6 +59,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -75,6 +77,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.svartifoss.snfell.common.PaletteTransforms
@@ -349,6 +352,7 @@ private fun BoxScope.ImmersiveComposition(
                     AdaptiveTitleText(
                             text = state.title,
                             mode = state.titleTextMode,
+                            state = state,
                             typography = state.titleTypography,
                             color = titleTextColor(state, Color.White),
                             fontSize = FaceGeometry.Immersive.TITLE_SP.sp,
@@ -494,6 +498,7 @@ private fun BoxScope.DepthComposition(
                     AdaptiveTitleText(
                             text = state.title,
                             mode = state.titleTextMode,
+                            state = state,
                             typography = state.titleTypography,
                             color = titleTextColor(state, Color.White),
                             fontSize = 16.sp,
@@ -747,6 +752,7 @@ private fun BoxScope.AuroraComposition(
                 AdaptiveTitleText(
                         state.title,
                         mode = state.titleTextMode,
+                        state = state,
                         typography = state.titleTypography,
                         color = titleTextColor(state, Color.White),
                         fontSize = 19.sp,
@@ -949,6 +955,7 @@ private fun BoxScope.SpectrumHeader(
     ) {
         if (state.showTitle) {
             AdaptiveTitleText(state.title.uppercase(), mode = state.titleTextMode,
+                    state = state,
                     typography = state.titleTypography,
                     color = titleTextColor(state, Color.White.copy(alpha = .92f)),
                     fontSize = 12.sp, lineHeight = 14.sp,
@@ -995,6 +1002,7 @@ private fun BoxScope.VinylMetadata(state: NowPlayingFaceState, screen: Dp) {
             AdaptiveTitleText(
                     state.title.uppercase(),
                     mode = state.titleTextMode,
+                    state = state,
                     typography = state.titleTypography,
                     color = titleTextColor(state, Color.White),
                     fontSize = 11.sp,
@@ -1009,14 +1017,52 @@ private fun BoxScope.VinylMetadata(state: NowPlayingFaceState, screen: Dp) {
     }
 }
 
+/**
+ * The metadata column Poster and Studio share, placed so the point that lands on the middle of the
+ * screen is the one the user asked for.
+ *
+ * Off, the whole block is centred, which is the older behaviour and still the default: the middle
+ * of the display falls somewhere between the title and the artist, and moves as soon as the title
+ * wraps to a second line. On, the block slides down by half of everything below the title, which
+ * puts the title's own centre on the middle and leaves the rest hanging beneath it.
+ *
+ * Two details. The shift is applied in `Modifier.offset { }`, the lambda form, so reading the
+ * measured heights happens at *placement*: a settling measurement re-places the block instead of
+ * recomposing it. And it is skipped entirely when the title is hidden - there is then nothing to
+ * centre, and shifting by half the block would push a lone artist line off the middle for no
+ * reason at all.
+ */
 @Composable
-private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
+private fun BoxScope.TitleAnchoredMetadata(
+        state: NowPlayingFaceState,
+        modifier: Modifier,
+        title: @Composable () -> Unit,
+        rest: @Composable () -> Unit
+) {
+    var blockHeight by remember { mutableIntStateOf(0) }
+    var titleHeight by remember { mutableIntStateOf(0) }
+    val anchorTitle = state.titleCentered && state.showTitle
     Column(
-            Modifier.align(Alignment.Center)
-                    .padding(horizontal = screen * .08f)
-                    .width(screen * .72f),
+            modifier
+                    .align(Alignment.Center)
+                    .offset {
+                        IntOffset(0, if (anchorTitle) (blockHeight - titleHeight) / 2 else 0)
+                    }
+                    .onSizeChanged { blockHeight = it.height },
             horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Full width so the title measures and wraps exactly as it did before this box existed.
+        Box(Modifier.fillMaxWidth().onSizeChanged { titleHeight = it.height }) { title() }
+        rest()
+    }
+}
+
+@Composable
+private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
+    TitleAnchoredMetadata(
+            state,
+            Modifier.padding(horizontal = screen * .08f).width(screen * .72f),
+            title = {
         if (state.showTitle) {
             // AdaptiveTitleText, not a bare Text, so the user's Title text behaviour actually
             // applies here like it does on every other face - this centered block growing with
@@ -1025,6 +1071,7 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
             AdaptiveTitleText(
                     text = state.title,
                     mode = state.titleTextMode,
+                    state = state,
                     typography = state.titleTypography,
                     color = titleTextColor(state, Color.White),
                     fontSize = 22.sp,
@@ -1034,6 +1081,7 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
                     textAlign = TextAlign.Center
             )
         }
+    }, rest = {
         if (state.showArtist) {
             Row(verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
@@ -1050,22 +1098,21 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
                 )
             }
         }
-    }
+    })
 }
 
 @Composable
 private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: CuratedPalette) {
-    Column(
-            Modifier.align(Alignment.Center)
-                    .padding(horizontal = screen * .08f)
-                    .width(screen * .72f),
-            horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+    TitleAnchoredMetadata(
+            state,
+            Modifier.padding(horizontal = screen * .08f).width(screen * .72f),
+            title = {
         if (state.showTitle) {
             // AdaptiveTitleText for the same reason as PosterMetadata above.
             AdaptiveTitleText(
                     text = state.title,
                     mode = state.titleTextMode,
+                    state = state,
                     typography = state.titleTypography,
                     color = titleTextColor(state, Color.White),
                     fontSize = 15.sp,
@@ -1075,6 +1122,7 @@ private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: C
                     textAlign = TextAlign.Center
             )
         }
+    }, rest = {
         if (state.showArtist) {
             Row(verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
@@ -1091,7 +1139,7 @@ private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: C
                 )
             }
         }
-    }
+    })
 }
 
 @Composable
@@ -1106,6 +1154,7 @@ private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
             AdaptiveTitleText(
                     state.title,
                     mode = state.titleTextMode,
+                    state = state,
                     typography = state.titleTypography,
                     color = titleTextColor(state, Color.White.copy(alpha = .94f)),
                     fontSize = 14.sp,
@@ -1152,6 +1201,7 @@ private fun BoxScope.EclipseMetadata(state: NowPlayingFaceState, screen: Dp) {
             AdaptiveTitleText(
                     state.title.uppercase(),
                     mode = state.titleTextMode,
+                    state = state,
                     typography = state.titleTypography,
                     color = titleTextColor(state, Color.White.copy(alpha = .88f)),
                     fontSize = 14.sp,
@@ -1671,6 +1721,7 @@ private fun BoxScope.MaterialComposition(
             AdaptiveTitleText(
                     text = state.title,
                     mode = state.titleTextMode,
+                    state = state,
                     typography = state.titleTypography,
                     color = titleTextColor(state, Color.White),
                     fontSize = 18.sp,

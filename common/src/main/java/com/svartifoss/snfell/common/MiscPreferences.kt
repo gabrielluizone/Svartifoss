@@ -625,6 +625,22 @@ object MiscPreferences {
     val WEAR_NOTE_SHOW_COVER: PreferenceDefinition<Boolean> =
             SimplePreferenceDefinition("wear_note_show_cover", true)
 
+    /**
+     * Anchor the *title* to the centre of the screen instead of the metadata block as a whole.
+     *
+     * Off, a face centres the block it composes - title, artist and whatever else it stacks with
+     * them - so the point that actually lands on the middle of the display moves as soon as a
+     * title wraps to a second line or an artist name appears. On, the block is shifted so the
+     * title's own centre is the fixed point and everything else hangs off it.
+     *
+     * Only the three faces that centre such a block honour it (Classic, Poster, Studio); it is not
+     * a general typography control, which is why it is a Player element rather than a Text one.
+     * The shift is a translation of the composition, never a reordering: Classic keeps the artist
+     * above the title where it has always drawn it.
+     */
+    val WEAR_TITLE_CENTERED: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_title_centered", false)
+
     /** Silhouette of Chat's avatar - the same [CoverShape] vocabulary as [WEAR_NOTE_COVER_SHAPE]
      *  and [WEAR_CAROUSEL_CARD_SHAPE], its own key for the same reason theirs is: a rail of cards,
      *  a disc beside a sentence and a message avatar are three different compositions, and one
@@ -724,6 +740,134 @@ object MiscPreferences {
     /** Extra artist letter spacing. See [WEAR_TITLE_FONT_TRACKING]. */
     val WEAR_ARTIST_FONT_TRACKING: PreferenceDefinition<Int> =
             SimplePreferenceDefinition("wear_artist_font_tracking", 0)
+
+    /**
+     * The title's shadow: shape, colour and how far it is pushed. See [TextShadowStyle].
+     *
+     * Four keys rather than one encoded value, unlike [WEAR_BACKGROUND_LAYERS]: that one describes
+     * a *list the user builds*, where the count is part of the answer, while this is a fixed set of
+     * four questions about one effect. Four ordinary keys stay searchable, stay individually
+     * resettable, and cost the community-theme vocabulary four entries it can validate by type.
+     */
+    val WEAR_TITLE_SHADOW_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_title_shadow_style",
+                    TextShadowStyle.NONE.preferenceValue)
+
+    /** Where the title shadow's colour comes from. See [TextShadowColorMode]. */
+    val WEAR_TITLE_SHADOW_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_title_shadow_color_mode",
+                    TextShadowColorMode.BLACK.preferenceValue)
+
+    /** Hex colour (#RRGGBB) used when [WEAR_TITLE_SHADOW_COLOR_MODE] is "custom". */
+    val WEAR_TITLE_SHADOW_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_title_shadow_custom_color", "")
+
+    /** Title shadow intensity, as a percentage of the style's own geometry and opacity. */
+    val WEAR_TITLE_SHADOW_STRENGTH: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition(
+                    "wear_title_shadow_strength",
+                    TextShadowSpec.DEFAULT_STRENGTH_PERCENT)
+
+    /** [WEAR_TITLE_SHADOW_STYLE] for the artist line. */
+    val WEAR_ARTIST_SHADOW_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_artist_shadow_style",
+                    TextShadowStyle.NONE.preferenceValue)
+
+    /** [WEAR_TITLE_SHADOW_COLOR_MODE] for the artist line. */
+    val WEAR_ARTIST_SHADOW_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_artist_shadow_color_mode",
+                    TextShadowColorMode.BLACK.preferenceValue)
+
+    /** [WEAR_TITLE_SHADOW_CUSTOM_COLOR] for the artist line. */
+    val WEAR_ARTIST_SHADOW_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_artist_shadow_custom_color", "")
+
+    /** [WEAR_TITLE_SHADOW_STRENGTH] for the artist line. */
+    val WEAR_ARTIST_SHADOW_STRENGTH: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition(
+                    "wear_artist_shadow_strength",
+                    TextShadowSpec.DEFAULT_STRENGTH_PERCENT)
+
+    /** The title's outline: a stroke drawn around the glyphs. See [TextOutlineStyle]. */
+    val WEAR_TITLE_OUTLINE_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_title_outline_style",
+                    TextOutlineStyle.NONE.preferenceValue)
+
+    /** Where the title outline's colour comes from. Shares [TextShadowColorMode] with the
+     *  shadow - the four sources somebody picks from are the same four. */
+    val WEAR_TITLE_OUTLINE_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_title_outline_color_mode",
+                    TextShadowColorMode.BLACK.preferenceValue)
+
+    /** Hex colour (#RRGGBB) used when [WEAR_TITLE_OUTLINE_COLOR_MODE] is "custom". */
+    val WEAR_TITLE_OUTLINE_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_title_outline_custom_color", "")
+
+    /** [WEAR_TITLE_OUTLINE_STYLE] for the artist line. */
+    val WEAR_ARTIST_OUTLINE_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_artist_outline_style",
+                    TextOutlineStyle.NONE.preferenceValue)
+
+    /** [WEAR_TITLE_OUTLINE_COLOR_MODE] for the artist line. */
+    val WEAR_ARTIST_OUTLINE_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_artist_outline_color_mode",
+                    TextShadowColorMode.BLACK.preferenceValue)
+
+    /** [WEAR_TITLE_OUTLINE_CUSTOM_COLOR] for the artist line. */
+    val WEAR_ARTIST_OUTLINE_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_artist_outline_custom_color", "")
+
+    /** A filled box drawn behind the title. See [TextBackdropStyle]. */
+    val WEAR_TITLE_TEXT_BG_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_title_text_bg_style",
+                    TextBackdropStyle.NONE.preferenceValue)
+
+    /** Where the title backdrop's colour comes from. Shares [TextShadowColorMode]. */
+    val WEAR_TITLE_TEXT_BG_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_title_text_bg_color_mode",
+                    TextShadowColorMode.BLACK.preferenceValue)
+
+    /** Hex colour (#RRGGBB) used when [WEAR_TITLE_TEXT_BG_COLOR_MODE] is "custom". */
+    val WEAR_TITLE_TEXT_BG_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_title_text_bg_custom_color", "")
+
+    /** Title backdrop opacity, scaling the chosen style's own alpha. */
+    val WEAR_TITLE_TEXT_BG_OPACITY: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition(
+                    "wear_title_text_bg_opacity",
+                    TextBackdropSpec.DEFAULT_OPACITY_PERCENT)
+
+    /** [WEAR_TITLE_TEXT_BG_STYLE] for the artist line. */
+    val WEAR_ARTIST_TEXT_BG_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_artist_text_bg_style",
+                    TextBackdropStyle.NONE.preferenceValue)
+
+    /** [WEAR_TITLE_TEXT_BG_COLOR_MODE] for the artist line. */
+    val WEAR_ARTIST_TEXT_BG_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_artist_text_bg_color_mode",
+                    TextShadowColorMode.BLACK.preferenceValue)
+
+    /** [WEAR_TITLE_TEXT_BG_CUSTOM_COLOR] for the artist line. */
+    val WEAR_ARTIST_TEXT_BG_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_artist_text_bg_custom_color", "")
+
+    /** [WEAR_TITLE_TEXT_BG_OPACITY] for the artist line. */
+    val WEAR_ARTIST_TEXT_BG_OPACITY: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition(
+                    "wear_artist_text_bg_opacity",
+                    TextBackdropSpec.DEFAULT_OPACITY_PERCENT)
 
     /** Artist line text-case transform. See [WEAR_TITLE_TEXT_CASE]. */
     val WEAR_ARTIST_TEXT_CASE: PreferenceDefinition<String> =
@@ -886,6 +1030,13 @@ object MiscPreferences {
      *  "playing" (only while music plays), "paused" (only while paused) or "never". */
     val WEAR_TRACK_TIME_MODE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_track_time_mode", "always")
+
+    /** When the edge ring's position tick is drawn - see [SeekMarkerVisibility] for what each
+     *  value means and why the default is the one that only appears during a seek. */
+    val WEAR_SEEK_MARKER: PreferenceDefinition<String> =
+            SimplePreferenceDefinition(
+                    "wear_seek_marker",
+                    SeekMarkerVisibility.DURING_SEEK.preferenceValue)
 
     /** Extract accent color from album art on the watch (when off, uses the static theme accent). */
     val WEAR_DYNAMIC_ACCENT: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("wear_dynamic_accent", true)
@@ -1240,8 +1391,22 @@ object MiscPreferences {
             WEAR_BACKGROUND_LAYERS,
             WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME, WEAR_QUADRANT_TAP_FLASH, WEAR_FONT,
             WEAR_FONT_ALL_SCREENS, WEAR_CAROUSEL_CARD_SHAPE, WEAR_NOTE_COVER_SHAPE, WEAR_NOTE_SHOW_COVER,
+            WEAR_TITLE_CENTERED,
             WEAR_CHAT_COVER_SHAPE, WEAR_CHAT_SHOW_COVER, WEAR_METADATA_COVER_SHAPE, WEAR_METADATA_SHOW_COVER,
-            WEAR_TRACK_TIME_MODE, WEAR_TRACK_TIME_FONT, WEAR_TRACK_TIME_FONT_WEIGHT,
+            WEAR_TITLE_SHADOW_STYLE, WEAR_TITLE_SHADOW_COLOR_MODE,
+            WEAR_TITLE_SHADOW_CUSTOM_COLOR, WEAR_TITLE_SHADOW_STRENGTH,
+            WEAR_ARTIST_SHADOW_STYLE, WEAR_ARTIST_SHADOW_COLOR_MODE,
+            WEAR_ARTIST_SHADOW_CUSTOM_COLOR, WEAR_ARTIST_SHADOW_STRENGTH,
+            WEAR_TITLE_OUTLINE_STYLE, WEAR_TITLE_OUTLINE_COLOR_MODE,
+            WEAR_TITLE_OUTLINE_CUSTOM_COLOR,
+            WEAR_ARTIST_OUTLINE_STYLE, WEAR_ARTIST_OUTLINE_COLOR_MODE,
+            WEAR_ARTIST_OUTLINE_CUSTOM_COLOR,
+            WEAR_TITLE_TEXT_BG_STYLE, WEAR_TITLE_TEXT_BG_COLOR_MODE,
+            WEAR_TITLE_TEXT_BG_CUSTOM_COLOR, WEAR_TITLE_TEXT_BG_OPACITY,
+            WEAR_ARTIST_TEXT_BG_STYLE, WEAR_ARTIST_TEXT_BG_COLOR_MODE,
+            WEAR_ARTIST_TEXT_BG_CUSTOM_COLOR, WEAR_ARTIST_TEXT_BG_OPACITY,
+            WEAR_TRACK_TIME_MODE, WEAR_SEEK_MARKER,
+            WEAR_TRACK_TIME_FONT, WEAR_TRACK_TIME_FONT_WEIGHT,
             WEAR_TRACK_TIME_FONT_ITALIC, WEAR_TRACK_TIME_FONT_SCALE,
             WEAR_TRACK_TIME_FONT_OPACITY, WEAR_TRACK_TIME_FONT_TRACKING,
             WEAR_DYNAMIC_ACCENT, WEAR_COLOR_TREATMENT, WEAR_NORMAL_COLOR, WEAR_NORMAL_COLOR_MULTI, WEAR_COLOR_MODIFIER,

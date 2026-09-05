@@ -15,9 +15,9 @@ class TypographyEditorModelTest {
     fun `every legacy Typography row has exactly one editor spec`() {
         val xmlRows = typographyRowsFromXml()
 
-        assertEquals(58, xmlRows.size)
+        assertEquals(80, xmlRows.size)
         assertEquals(xmlRows.keys, TypographyEditorModel.keys)
-        assertEquals(58, TypographyEditorModel.specs.size)
+        assertEquals(80, TypographyEditorModel.specs.size)
     }
 
     @Test
@@ -27,11 +27,27 @@ class TypographyEditorModelTest {
                 "wear_title_font" to "follow",
                 "wear_title_text_mode" to "smart",
                 "wear_title_text_case" to "normal",
+                "wear_title_shadow_style" to "none",
+                "wear_title_shadow_color_mode" to "black",
+                "wear_artist_shadow_style" to "none",
+                "wear_artist_shadow_color_mode" to "black",
+                "wear_title_outline_style" to "none",
+                "wear_title_outline_color_mode" to "black",
+                "wear_artist_outline_style" to "none",
+                "wear_artist_outline_color_mode" to "black",
+                "wear_title_text_bg_style" to "none",
+                "wear_title_text_bg_color_mode" to "black",
+                "wear_artist_text_bg_style" to "none",
+                "wear_artist_text_bg_color_mode" to "black",
                 "wear_artist_font" to "follow",
                 "wear_artist_text_case" to "normal",
                 "wear_track_time_font" to "follow",
                 "wear_clock_font" to "follow",
                 "wear_lyrics_font" to "follow")
+        // The picked colours behind the three text effects. A distinct kind from the mode rows
+        // beside them: both persist a string, and treating one as the other is what left the
+        // editor resolving every colour control to its mode row and no way to reach the hex.
+        val expectedHex = hexColorDefaults()
         val expectedToggles = mapOf(
                 "wear_font_all_screens" to false,
                 "wear_show_track_title" to true,
@@ -45,6 +61,8 @@ class TypographyEditorModelTest {
                 "wear_title_font_scale" to NumberContract(100, 70..140),
                 "wear_title_font_opacity" to NumberContract(100, 20..100),
                 "wear_title_font_tracking" to NumberContract(0, -5..20),
+                "wear_title_shadow_strength" to NumberContract(100, 0..200),
+                "wear_title_text_bg_opacity" to NumberContract(100, 0..100),
                 "wear_font_flex_width" to NumberContract(100, 25..151),
                 "wear_font_flex_optical_size" to NumberContract(18, 6..144),
                 "wear_font_flex_grade" to NumberContract(0, 0..100),
@@ -53,6 +71,8 @@ class TypographyEditorModelTest {
                 "wear_artist_font_scale" to NumberContract(100, 70..140),
                 "wear_artist_font_opacity" to NumberContract(100, 20..100),
                 "wear_artist_font_tracking" to NumberContract(0, -5..20),
+                "wear_artist_shadow_strength" to NumberContract(100, 0..200),
+                "wear_artist_text_bg_opacity" to NumberContract(100, 0..100),
                 "wear_track_time_font_weight" to NumberContract(400, 1..1000),
                 "wear_track_time_font_scale" to NumberContract(100, 70..140),
                 "wear_track_time_font_opacity" to NumberContract(100, 20..100),
@@ -74,6 +94,12 @@ class TypographyEditorModelTest {
                     TypographyValueSpec.Choice(expected),
                     TypographyEditorModel.specFor(key)?.value)
         }
+        expectedHex.forEach { (key, expected) ->
+            assertEquals(
+                    "$key hex default",
+                    TypographyValueSpec.Hex(expected),
+                    TypographyEditorModel.specFor(key)?.value)
+        }
         expectedToggles.forEach { (key, expected) ->
             assertEquals(
                     "$key toggle default",
@@ -87,7 +113,8 @@ class TypographyEditorModelTest {
                     TypographyEditorModel.specFor(key)?.value)
         }
 
-        val typedKeys = expectedChoices.keys + expectedToggles.keys + expectedNumbers.keys
+        val typedKeys = expectedChoices.keys + expectedHex.keys + expectedToggles.keys +
+                expectedNumbers.keys
         assertEquals(
                 setOf("wear_flex_axes_hint"),
                 TypographyEditorModel.keys - typedKeys)
@@ -101,6 +128,8 @@ class TypographyEditorModelTest {
             val xmlDefault = xmlRows.getValue(spec.key)
             when (val value = spec.value) {
                 is TypographyValueSpec.Choice ->
+                    assertEquals("${spec.key} XML default", value.defaultValue, xmlDefault)
+                is TypographyValueSpec.Hex ->
                     assertEquals("${spec.key} XML default", value.defaultValue, xmlDefault)
                 is TypographyValueSpec.Toggle ->
                     assertEquals("${spec.key} XML default", value.defaultValue.toString(), xmlDefault)
@@ -126,6 +155,30 @@ class TypographyEditorModelTest {
                         TypographyTarget.TITLE, TypographyControl.TEXT_BEHAVIOR),
                 "wear_title_text_case" to destination(
                         TypographyTarget.TITLE, TypographyControl.CASE),
+                "wear_title_shadow_style" to destination(
+                        TypographyTarget.TITLE, TypographyControl.SHADOW),
+                // The colour mode and the hex behind it resolve to the same control, the way the
+                // four Flex axes do: one decision, two rows of storage.
+                "wear_title_shadow_color_mode" to destination(
+                        TypographyTarget.TITLE, TypographyControl.SHADOW_COLOR),
+                "wear_title_shadow_custom_color" to destination(
+                        TypographyTarget.TITLE, TypographyControl.SHADOW_COLOR, hex = true),
+                "wear_title_shadow_strength" to destination(
+                        TypographyTarget.TITLE, TypographyControl.SHADOW_STRENGTH),
+                "wear_title_outline_style" to destination(
+                        TypographyTarget.TITLE, TypographyControl.OUTLINE),
+                "wear_title_outline_color_mode" to destination(
+                        TypographyTarget.TITLE, TypographyControl.OUTLINE_COLOR),
+                "wear_title_outline_custom_color" to destination(
+                        TypographyTarget.TITLE, TypographyControl.OUTLINE_COLOR, hex = true),
+                "wear_title_text_bg_style" to destination(
+                        TypographyTarget.TITLE, TypographyControl.BACKDROP),
+                "wear_title_text_bg_color_mode" to destination(
+                        TypographyTarget.TITLE, TypographyControl.BACKDROP_COLOR),
+                "wear_title_text_bg_custom_color" to destination(
+                        TypographyTarget.TITLE, TypographyControl.BACKDROP_COLOR, hex = true),
+                "wear_title_text_bg_opacity" to destination(
+                        TypographyTarget.TITLE, TypographyControl.BACKDROP_OPACITY),
                 "wear_title_font_weight" to destination(
                         TypographyTarget.TITLE, TypographyControl.WEIGHT),
                 "wear_title_font_italic" to destination(
@@ -162,6 +215,28 @@ class TypographyEditorModelTest {
                         TypographyTarget.ARTIST, TypographyControl.TRACKING),
                 "wear_artist_text_case" to destination(
                         TypographyTarget.ARTIST, TypographyControl.CASE),
+                "wear_artist_shadow_style" to destination(
+                        TypographyTarget.ARTIST, TypographyControl.SHADOW),
+                "wear_artist_shadow_color_mode" to destination(
+                        TypographyTarget.ARTIST, TypographyControl.SHADOW_COLOR),
+                "wear_artist_shadow_custom_color" to destination(
+                        TypographyTarget.ARTIST, TypographyControl.SHADOW_COLOR, hex = true),
+                "wear_artist_shadow_strength" to destination(
+                        TypographyTarget.ARTIST, TypographyControl.SHADOW_STRENGTH),
+                "wear_artist_outline_style" to destination(
+                        TypographyTarget.ARTIST, TypographyControl.OUTLINE),
+                "wear_artist_outline_color_mode" to destination(
+                        TypographyTarget.ARTIST, TypographyControl.OUTLINE_COLOR),
+                "wear_artist_outline_custom_color" to destination(
+                        TypographyTarget.ARTIST, TypographyControl.OUTLINE_COLOR, hex = true),
+                "wear_artist_text_bg_style" to destination(
+                        TypographyTarget.ARTIST, TypographyControl.BACKDROP),
+                "wear_artist_text_bg_color_mode" to destination(
+                        TypographyTarget.ARTIST, TypographyControl.BACKDROP_COLOR),
+                "wear_artist_text_bg_custom_color" to destination(
+                        TypographyTarget.ARTIST, TypographyControl.BACKDROP_COLOR, hex = true),
+                "wear_artist_text_bg_opacity" to destination(
+                        TypographyTarget.ARTIST, TypographyControl.BACKDROP_OPACITY),
                 "wear_track_time_font" to destination(
                         TypographyTarget.TRACK_TIME, TypographyControl.ELEMENT_FONT),
                 "wear_track_time_font_weight" to destination(
@@ -212,14 +287,14 @@ class TypographyEditorModelTest {
         assertEquals(
                 setOf("wear_flex_axes_hint"),
                 TypographyEditorModel.specs.filterNot { it.persisted }.map { it.key }.toSet())
-        assertEquals(57, TypographyEditorModel.specs.count { it.persisted })
+        assertEquals(79, TypographyEditorModel.specs.count { it.persisted })
     }
 
     @Test
     fun `target groups keep the compact editor shape`() {
         val expectedCounts = mapOf(
-                TypographyTarget.TITLE to 20,
-                TypographyTarget.ARTIST to 12,
+                TypographyTarget.TITLE to 31,
+                TypographyTarget.ARTIST to 23,
                 TypographyTarget.TRACK_TIME to 10,
                 TypographyTarget.CLOCK to 9,
                 TypographyTarget.ICON to 2,
@@ -258,8 +333,18 @@ class TypographyEditorModelTest {
 
     private fun destination(
             target: TypographyTarget,
-            control: TypographyControl
-    ) = TypographySearchTarget(target, control)
+            control: TypographyControl,
+            hex: Boolean = false
+    ) = TypographySearchTarget(target, control, hex)
+
+    /** The six picked-colour rows, all of which default to "no colour chosen". */
+    private fun hexColorDefaults(): Map<String, String> = listOf(
+            "wear_title_shadow_custom_color",
+            "wear_title_outline_custom_color",
+            "wear_title_text_bg_custom_color",
+            "wear_artist_shadow_custom_color",
+            "wear_artist_outline_custom_color",
+            "wear_artist_text_bg_custom_color").associateWith { "" }
 
     private fun flexAxisContracts(prefix: String): Map<String, NumberContract> = mapOf(
             "${prefix}_width" to NumberContract(100, 25..151),

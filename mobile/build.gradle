@@ -147,4 +147,16 @@ tasks.withType(Test).configureEach {
     inputs.file("${rootProject.projectDir}/common/src/main/assets/community-theme-constraints.json")
             .withPropertyName("communityThemeConstraintsAsset")
             .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // The author-screenshot contract, which is neither Kotlin nor in any module.
+    // CommunityThemeScreenshotContractTest reads the security rules and the Node publisher to keep
+    // their bounds in step with what the phone encodes. Both sit at the repository root, so without
+    // these an edit to either leaves the task UP-TO-DATE and the drift surfaces as a bare
+    // PERMISSION_DENIED on somebody's submission instead of as a failing test.
+    inputs.file("${rootProject.projectDir}/firestore.rules")
+            .withPropertyName("firestoreRulesForScreenshotContract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file("${rootProject.projectDir}/.github/community-theme-publisher/publisher.mjs")
+            .withPropertyName("communityThemePublisherForScreenshotContract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
 }

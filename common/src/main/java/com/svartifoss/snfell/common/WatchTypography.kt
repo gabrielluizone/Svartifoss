@@ -341,6 +341,83 @@ object WatchTypography {
                     FaceScopedPreferences.getString(prefs, MiscPreferences.WEAR_ARTIST_TEXT_CASE, context))
     )
 
+    /**
+     * The title's shadow, read from the same face-scoped storage as [titleSpec].
+     *
+     * Kept apart from `TextSpec` deliberately - see [TextShadowSpec]'s own note. The colour is
+     * *not* resolved here: it can depend on the album accent, which arrives asynchronously and
+     * which only the renderers hold, so this returns the user's choice and each renderer resolves
+     * it through `TextShadowSpec.resolveColor` against whatever accent it currently has.
+     */
+    fun titleShadow(prefs: SharedPreferences, context: AppearanceContext): TextShadowSpec =
+            TextShadowSpec(
+                    style = TextShadowStyle.fromPreference(FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_TITLE_SHADOW_STYLE, context)),
+                    colorMode = TextShadowColorMode.fromPreference(FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_TITLE_SHADOW_COLOR_MODE, context)),
+                    customColor = FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_TITLE_SHADOW_CUSTOM_COLOR, context),
+                    strengthPercent = FaceScopedPreferences.getInt(
+                            prefs, MiscPreferences.WEAR_TITLE_SHADOW_STRENGTH, context))
+
+    /** [titleShadow] for the artist line. */
+    fun artistShadow(prefs: SharedPreferences, context: AppearanceContext): TextShadowSpec =
+            TextShadowSpec(
+                    style = TextShadowStyle.fromPreference(FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_ARTIST_SHADOW_STYLE, context)),
+                    colorMode = TextShadowColorMode.fromPreference(FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_ARTIST_SHADOW_COLOR_MODE, context)),
+                    customColor = FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_ARTIST_SHADOW_CUSTOM_COLOR, context),
+                    strengthPercent = FaceScopedPreferences.getInt(
+                            prefs, MiscPreferences.WEAR_ARTIST_SHADOW_STRENGTH, context))
+
+    /** The title's outline, read from the same face-scoped storage as [titleSpec]. The colour is
+     *  resolved by each renderer, for [titleShadow]'s reason. */
+    fun titleOutline(prefs: SharedPreferences, context: AppearanceContext): TextOutlineSpec =
+            TextOutlineSpec(
+                    style = TextOutlineStyle.fromPreference(FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_TITLE_OUTLINE_STYLE, context)),
+                    colorMode = TextShadowColorMode.fromPreference(FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_TITLE_OUTLINE_COLOR_MODE, context)),
+                    customColor = FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_TITLE_OUTLINE_CUSTOM_COLOR, context))
+
+    /** [titleOutline] for the artist line. */
+    fun artistOutline(prefs: SharedPreferences, context: AppearanceContext): TextOutlineSpec =
+            TextOutlineSpec(
+                    style = TextOutlineStyle.fromPreference(FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_ARTIST_OUTLINE_STYLE, context)),
+                    colorMode = TextShadowColorMode.fromPreference(FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_ARTIST_OUTLINE_COLOR_MODE, context)),
+                    customColor = FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_ARTIST_OUTLINE_CUSTOM_COLOR, context))
+
+    /** The title's backdrop. Its colour is resolved by each renderer, for [titleShadow]'s
+     *  reason. */
+    fun titleBackdrop(prefs: SharedPreferences, context: AppearanceContext): TextBackdropSpec =
+            TextBackdropSpec(
+                    style = TextBackdropStyle.fromPreference(FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_TITLE_TEXT_BG_STYLE, context)),
+                    colorMode = TextShadowColorMode.fromPreference(FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_TITLE_TEXT_BG_COLOR_MODE, context)),
+                    customColor = FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_TITLE_TEXT_BG_CUSTOM_COLOR, context),
+                    opacityPercent = FaceScopedPreferences.getInt(
+                            prefs, MiscPreferences.WEAR_TITLE_TEXT_BG_OPACITY, context))
+
+    /** [titleBackdrop] for the artist line. */
+    fun artistBackdrop(prefs: SharedPreferences, context: AppearanceContext): TextBackdropSpec =
+            TextBackdropSpec(
+                    style = TextBackdropStyle.fromPreference(FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_ARTIST_TEXT_BG_STYLE, context)),
+                    colorMode = TextShadowColorMode.fromPreference(FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_ARTIST_TEXT_BG_COLOR_MODE, context)),
+                    customColor = FaceScopedPreferences.getString(
+                            prefs, MiscPreferences.WEAR_ARTIST_TEXT_BG_CUSTOM_COLOR, context),
+                    opacityPercent = FaceScopedPreferences.getInt(
+                            prefs, MiscPreferences.WEAR_ARTIST_TEXT_BG_OPACITY, context))
+
     /** Typography deltas for the elapsed/total playback readout. */
     fun trackTimeSpec(prefs: SharedPreferences, context: AppearanceContext): TextSpec = TextSpec(
             weight = normalizeWeight(

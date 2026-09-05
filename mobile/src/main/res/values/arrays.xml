@@ -140,6 +140,56 @@
         <item>varela_round</item>
         <item>yanone_kaffeesatz</item>
         <item>zilla_slab</item>
+        <item>lato</item>
+        <item>merriweather_sans</item>
+        <item>source_sans_3</item>
+        <item>source_serif_4</item>
+        <item>libre_baskerville</item>
+        <item>libre_franklin</item>
+        <item>ibm_plex_sans</item>
+        <item>ibm_plex_mono</item>
+        <item>ibm_plex_serif</item>
+        <item>work_sans</item>
+        <item>karla</item>
+        <item>sora</item>
+        <item>urbanist</item>
+        <item>be_vietnam_pro</item>
+        <item>red_hat_display</item>
+        <item>red_hat_text</item>
+        <item>red_hat_mono</item>
+        <item>syne</item>
+        <item>instrument_sans</item>
+        <item>figtree</item>
+        <item>gabarito</item>
+        <item>bricolage_grotesque</item>
+        <item>dm_serif_display</item>
+        <item>cormorant_garamond</item>
+        <item>cormorant</item>
+        <item>bitter</item>
+        <item>spectral</item>
+        <item>vollkorn</item>
+        <item>raleway</item>
+        <item>league_spartan</item>
+        <item>saira</item>
+        <item>signika</item>
+        <item>sofia_sans</item>
+        <item>overpass</item>
+        <item>public_sans</item>
+        <item>questrial</item>
+        <item>dosis</item>
+        <item>prompt</item>
+        <item>unbounded</item>
+        <item>recursive</item>
+        <item>trispace</item>
+        <item>noto_sans</item>
+        <item>noto_serif</item>
+        <item>noto_sans_mono</item>
+        <item>heebo</item>
+        <item>hind</item>
+        <item>hind_madurai</item>
+        <item>kumbh_sans</item>
+        <item>alegreya</item>
+        <item>assistant</item>
     </string-array>
     <string-array name="streaming_open_mode_values" translatable="false">
         <item>app</item>

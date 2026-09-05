@@ -238,22 +238,22 @@ private fun CurrentMessageBubble(state: NowPlayingFaceState, color: Color) {
         ChatBubble(color = color, incoming = false) {
             Column {
                 if (showTitle) {
-                    val titleSpec = state.titleTypography
-                    Text(
-                            text = titleSpec.case.apply(state.title),
+                    // TitleLineText, not a bare Text: this bubble is start-aligned inside a width
+                    // it does not own, so AdaptiveTitleText's overflow cascade cannot serve it -
+                    // but the merge is the same one. Bold is passed as the *designed* weight, so
+                    // the Text tab's weight control now moves it (it was hardcoded here, which is
+                    // why that one control did nothing on Chat), and the shadow, outline and
+                    // backdrop the host resolves arrive with it.
+                    TitleLineText(
+                            text = state.title,
+                            state = state,
                             // Was a hardcoded white, which made the title colour treatment, the
                             // custom colour and the adaptive-contrast option all inert on this
                             // face. titleTextColor keeps the face's designed colour when the user
                             // has not chosen one.
                             color = titleTextColor(state, Color.White),
-                            fontFamily = state.titleFont,
-                            fontWeight = FontWeight.Bold,
-                            fontStyle = state.titleFontStyle,
-                            letterSpacing = state.titleLetterSpacing,
-                            fontSize = titleSpec
-                                    .scaled(FaceGeometry.Chat.CURRENT_BUBBLE_TITLE_SP).sp,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            fontSize = FaceGeometry.Chat.CURRENT_BUBBLE_TITLE_SP.sp,
+                            fontWeight = FontWeight.Bold
                     )
                 }
                 if (showArtist) {
@@ -725,29 +725,32 @@ private fun ActionGlyph(@DrawableRes icon: Int, tint: Color, size: Dp) {
  */
 @Composable
 private fun ChatAmbient(state: NowPlayingFaceState) {
+    val geo = FaceGeometry.Chat.Ambient
     val tint = Color(state.ambientTint).copy(alpha = state.ambientIntensity.coerceIn(.2f, 1f))
     BoxWithConstraints(Modifier.fillMaxSize().background(Color.Black)) {
         val screen = maxWidth
         Column(
                 modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = screen * .14f),
+                        .padding(horizontal = screen * geo.SIDE_PADDING_FRACTION),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
         ) {
             if (state.ambientShowTrackInfo && state.title.isNotEmpty()) {
                 Box(
                         modifier = Modifier
-                                .widthIn(max = 190.dp)
+                                .widthIn(max = geo.BUBBLE_MAX_WIDTH_DP.dp)
                                 .border(
-                                        width = 1.dp,
+                                        width = geo.BUBBLE_BORDER_DP.dp,
                                         color = tint,
                                         shape = RoundedCornerShape(
-                                                topStart = 12.dp,
-                                                topEnd = 3.dp,
-                                                bottomEnd = 12.dp,
-                                                bottomStart = 12.dp))
-                                .padding(horizontal = 10.dp, vertical = 6.dp)
+                                                topStart = geo.BUBBLE_CORNER_DP.dp,
+                                                topEnd = geo.BUBBLE_TAIL_CORNER_DP.dp,
+                                                bottomEnd = geo.BUBBLE_CORNER_DP.dp,
+                                                bottomStart = geo.BUBBLE_CORNER_DP.dp))
+                                .padding(
+                                        horizontal = geo.BUBBLE_HORIZONTAL_PADDING_DP.dp,
+                                        vertical = geo.BUBBLE_VERTICAL_PADDING_DP.dp)
                 ) {
                     Column(horizontalAlignment = Alignment.Start) {
                         Text(
@@ -755,7 +758,7 @@ private fun ChatAmbient(state: NowPlayingFaceState) {
                                 color = tint,
                                 fontFamily = state.titleFont,
                                 fontWeight = FontWeight.SemiBold,
-                                fontSize = 13.sp,
+                                fontSize = geo.TITLE_SP.sp,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                                 textAlign = TextAlign.Start
@@ -763,9 +766,9 @@ private fun ChatAmbient(state: NowPlayingFaceState) {
                         if (state.artist.isNotEmpty()) {
                             Text(
                                     text = state.artist,
-                                    color = tint.copy(alpha = tint.alpha * .7f),
+                                    color = tint.copy(alpha = tint.alpha * geo.ARTIST_ALPHA),
                                     fontFamily = state.artistFont,
-                                    fontSize = 11.sp,
+                                    fontSize = geo.ARTIST_SP.sp,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis
                             )

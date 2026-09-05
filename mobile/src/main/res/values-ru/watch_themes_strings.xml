@@ -44,6 +44,8 @@
     <string name="online_theme_refresh">Обновить темы сообщества</string>
     <string name="online_theme_list_description">Темы для часов, созданные сообществом</string>
     <string name="online_theme_byline">От %1$s</string>
+    <string name="online_theme_filter_author">Темы от %1$s</string>
+    <string name="online_theme_filter_author_selected">Показаны темы от %1$s</string>
     <string name="online_theme_row_description">%1$s от %2$s. Макет %3$s.</string>
     <string name="online_theme_apply">Добавить и применить</string>
     <string name="online_theme_loading">Загрузка тем сообщества…</string>
@@ -83,4 +85,27 @@
     <string name="online_theme_filter_not_installed_off">Темы, которые вы уже добавили, показаны</string>
     <string name="online_theme_search_empty_all_installed">Вы уже добавили все темы сообщества.</string>
     <string name="online_theme_search_empty_all_installed_hint">Отключите «Новые для меня», чтобы снова их увидеть.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Больше всего загрузок</string>
+    <string name="online_theme_sort_most_downloaded_short">Загрузки</string>
+    <string name="community_theme_detail_downloads">Загрузки</string>
+    <string name="community_theme_report_action">Пожаловаться</string>
+    <string name="community_theme_report_already">Жалоба отправлена</string>
+    <string name="community_theme_report_description">Пожаловаться модераторам на «%1$s»</string>
+    <string name="community_theme_report_title">Пожаловаться на эту тему</string>
+    <string name="community_theme_report_intro">Расскажите модераторам, что не так с этой темой.</string>
+    <string name="community_theme_report_reason_inappropriate">Оскорбительное или неуместное содержимое</string>
+    <string name="community_theme_report_reason_impersonation">Выдаётся за чужую работу</string>
+    <string name="community_theme_report_reason_misleading">Не соответствует тому, что показано</string>
+    <string name="community_theme_report_reason_illegible">Непригодна на часах</string>
+    <string name="community_theme_report_reason_spam">Спам или дубликат</string>
+    <string name="community_theme_report_reason_other">Другое</string>
+    <string name="community_theme_report_details_hint">Что ещё стоит знать модераторам (необязательно)</string>
+    <string name="community_theme_report_privacy">Вашу жалобу читают только модераторы. Автор никогда не узнаёт, кто её отправил.</string>
+    <string name="community_theme_report_submit">Отправить жалобу</string>
+    <string name="community_theme_report_sent">Жалоба отправлена. Модераторы проверят эту тему.</string>
+    <string name="community_theme_report_already_sent">Вы уже пожаловались на эту тему.</string>
+    <string name="community_theme_report_not_ready">На эту тему пока нельзя пожаловаться. Попробуйте позже.</string>
+    <string name="community_theme_report_error">Не удалось отправить жалобу. Проверьте подключение и попробуйте снова.</string>
 </resources>

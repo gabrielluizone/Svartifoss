@@ -38,7 +38,8 @@ fun resolveAodArtwork(
         showArtwork: Boolean,
         effectiveAodStyle: String,
         treatment: AodArtTreatment,
-        playerArtworkStyle: String
+        playerArtworkStyle: String,
+        playerArtworkFilter: String? = null
 ): AodArtworkSpec {
     if (!showArtwork || effectiveAodStyle == "chrono" || effectiveAodStyle == "eclipse") {
         return AodArtworkSpec(visible = false)
@@ -50,11 +51,13 @@ fun resolveAodArtwork(
         AodArtTreatment.MONOCHROME_BLUR ->
             AodArtworkSpec(visible = true, blurred = true, monochrome = true)
         AodArtTreatment.FOLLOW -> PlayerBackgroundStyle.fromPreference(playerArtworkStyle).let {
+            val filter = resolveAlbumArtFilter(playerArtworkFilter, it)
             AodArtworkSpec(
                     visible = !it.hidesArtwork,
                     blurred = it.blurredArtwork,
-                    monochrome = it.grayscaleArtwork,
-                    photoFilter = it.photoFilter)
+                    monochrome = filter == AlbumArtFilter.MONOCHROME,
+                    photoFilter = filter.takeUnless { resolved ->
+                        resolved == AlbumArtFilter.MONOCHROME } ?: AlbumArtFilter.NONE)
         }
     }
 }

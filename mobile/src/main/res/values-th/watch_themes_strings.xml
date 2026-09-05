@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">รีเฟรชธีมจากชุมชน</string>
     <string name="online_theme_list_description">ธีมนาฬิกาที่สร้างโดยชุมชน</string>
     <string name="online_theme_byline">โดย %1$s</string>
+    <string name="online_theme_filter_author">ธีมโดย %1$s</string>
+    <string name="online_theme_filter_author_selected">กำลังแสดงธีมโดย %1$s</string>
     <string name="online_theme_row_description">%1$s โดย %2$s เลย์เอาต์ %3$s</string>
     <string name="online_theme_apply">เพิ่มและใช้</string>
     <string name="online_theme_loading">กำลังโหลดธีมจากชุมชน…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">กำลังแสดงธีมที่คุณเพิ่มแล้ว</string>
     <string name="online_theme_search_empty_all_installed">คุณเพิ่มธีมของชุมชนครบทุกธีมแล้ว</string>
     <string name="online_theme_search_empty_all_installed_hint">ปิด “ใหม่สำหรับฉัน” เพื่อดูอีกครั้ง</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">ดาวน์โหลดมากที่สุด</string>
+    <string name="online_theme_sort_most_downloaded_short">ดาวน์โหลด</string>
+    <string name="community_theme_detail_downloads">ดาวน์โหลด</string>
+    <string name="community_theme_report_action">รายงานธีม</string>
+    <string name="community_theme_report_already">รายงานแล้ว</string>
+    <string name="community_theme_report_description">รายงาน “%1$s” ต่อผู้ดูแล</string>
+    <string name="community_theme_report_title">รายงานธีมนี้</string>
+    <string name="community_theme_report_intro">บอกผู้ดูแลว่าธีมนี้มีปัญหาอะไร</string>
+    <string name="community_theme_report_reason_inappropriate">เนื้อหาที่ไม่เหมาะสมหรือก้าวร้าว</string>
+    <string name="community_theme_report_reason_impersonation">แอบอ้างเป็นผลงานของคนอื่น</string>
+    <string name="community_theme_report_reason_misleading">ไม่ตรงกับที่แสดงไว้</string>
+    <string name="community_theme_report_reason_illegible">ใช้งานบนนาฬิกาไม่ได้</string>
+    <string name="community_theme_report_reason_spam">สแปมหรือซ้ำ</string>
+    <string name="community_theme_report_reason_other">เหตุผลอื่น</string>
+    <string name="community_theme_report_details_hint">สิ่งอื่นที่ผู้ดูแลควรทราบ (ไม่บังคับ)</string>
+    <string name="community_theme_report_privacy">มีเพียงผู้ดูแลที่อ่านรายงานของคุณ ผู้สร้างจะไม่มีทางรู้ว่าใครส่งมา</string>
+    <string name="community_theme_report_submit">ส่งรายงาน</string>
+    <string name="community_theme_report_sent">ส่งรายงานแล้ว ผู้ดูแลจะตรวจสอบธีมนี้</string>
+    <string name="community_theme_report_already_sent">คุณรายงานธีมนี้ไปแล้ว</string>
+    <string name="community_theme_report_not_ready">ยังรายงานธีมนี้ไม่ได้ ลองอีกครั้งภายหลัง</string>
+    <string name="community_theme_report_error">ส่งรายงานไม่สำเร็จ ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง</string>
 </resources>

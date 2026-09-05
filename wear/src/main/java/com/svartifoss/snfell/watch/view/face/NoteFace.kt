@@ -245,6 +245,7 @@ private fun NoteLine(state: NowPlayingFaceState, screen: Dp, modifier: Modifier 
     AdaptiveTitleText(
             text = text,
             mode = state.titleTextMode,
+            state = state,
             fontSize = titleSpec.scaled(16f).sp,
             color = titleColor,
             textAlign = TextAlign.Center,
@@ -304,6 +305,7 @@ private fun noteTitleColor(state: NowPlayingFaceState): Color {
  */
 @Composable
 private fun NoteAmbient(state: NowPlayingFaceState) {
+    val geo = FaceGeometry.Note.Ambient
     val tint = Color(state.ambientTint).copy(alpha = state.ambientIntensity.coerceIn(.2f, 1f))
     BoxWithConstraints(Modifier.fillMaxSize().background(Color.Black)) {
         val screen = maxWidth
@@ -311,7 +313,7 @@ private fun NoteAmbient(state: NowPlayingFaceState) {
         Column(
                 modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = screen * .18f),
+                        .padding(horizontal = screen * geo.SIDE_PADDING_FRACTION),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
         ) {
@@ -326,10 +328,10 @@ private fun NoteAmbient(state: NowPlayingFaceState) {
                     text = text,
                     color = tint,
                     fontFamily = state.titleFont,
-                    fontSize = 15.sp,
-                    lineHeight = 18.sp,
+                    fontSize = geo.TEXT_SP.sp,
+                    lineHeight = geo.LINE_HEIGHT_SP.sp,
                     textAlign = TextAlign.Center,
-                    maxLines = 3,
+                    maxLines = FaceGeometry.Note.MAX_LINES,
                     overflow = TextOverflow.Ellipsis
             )
         }

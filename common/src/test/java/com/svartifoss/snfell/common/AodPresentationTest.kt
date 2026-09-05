@@ -63,6 +63,18 @@ class AodPresentationTest {
     }
 
     @Test
+    fun followUsesTheIndependentAlbumArtFilterLayer() {
+        assertEquals(
+                AodArtworkSpec(visible = true, photoFilter = AlbumArtFilter.MOSS),
+                resolveAodArtwork(
+                        true, "classic", AodArtTreatment.FOLLOW, "cover", "moss"))
+        assertEquals(
+                AodArtworkSpec(visible = true, monochrome = true),
+                resolveAodArtwork(
+                        true, "classic", AodArtTreatment.FOLLOW, "cover", "monochrome"))
+    }
+
+    @Test
     fun chronoEclipseAndDisabledArtNeverRequestArtworkWork() {
         assertEquals(
                 AodArtworkSpec(visible = false),

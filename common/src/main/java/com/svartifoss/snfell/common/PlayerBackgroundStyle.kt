@@ -7,13 +7,26 @@ package com.svartifoss.snfell.common
  * choices remain valid, while the named treatments expose the authored backdrops that used to be
  * locked to one specific layout.
  */
+/**
+ * Which slot of the album triad a flat-fill background paints.
+ *
+ * Only the three solid fills carried over from the panel catalogue have one. It exists so a
+ * renderer never has to be asked "which colour is this style?" through a `when` of its own, and
+ * so [AdaptiveTextContrast] can be told the real luminance of a field that hides the artwork
+ * without being black.
+ */
+enum class AlbumFillSlot { PRIMARY, SECONDARY, TERTIARY }
+
 enum class PlayerBackgroundStyle(
         val preferenceValue: String,
         val blurredArtwork: Boolean = false,
         val grayscaleArtwork: Boolean = false,
         val hidesArtwork: Boolean = false,
         val frostedEdges: Boolean = false,
-        val photoFilter: AlbumArtFilter = AlbumArtFilter.NONE
+        /** Filter carried by a pre-layer value; new settings use the independent Filter key. */
+        val legacyFilter: AlbumArtFilter = AlbumArtFilter.NONE,
+        /** Set only by the flat album fills - see [AlbumFillSlot]. */
+        val flatAlbumFill: AlbumFillSlot? = null
 ) {
     COVER("cover"),
     BLUR("blur", blurredArtwork = true),
@@ -85,22 +98,111 @@ enum class PlayerBackgroundStyle(
     ICE("ice"),
     /** Muted rose light gathered around the lower-right controls. */
     ROSE("rose"),
-    FILTER_WARM("filter_warm", photoFilter = AlbumArtFilter.WARM),
-    FILTER_COOL("filter_cool", photoFilter = AlbumArtFilter.COOL),
-    FILTER_GOLDEN("filter_golden", photoFilter = AlbumArtFilter.GOLDEN),
-    FILTER_ROSE("filter_rose", photoFilter = AlbumArtFilter.ROSE),
-    FILTER_VINTAGE("filter_vintage", photoFilter = AlbumArtFilter.VINTAGE),
-    FILTER_FADED("filter_faded", photoFilter = AlbumArtFilter.FADED),
-    FILTER_MATTE("filter_matte", photoFilter = AlbumArtFilter.MATTE),
-    FILTER_VIVID("filter_vivid", photoFilter = AlbumArtFilter.VIVID),
-    FILTER_PUNCH("filter_punch", photoFilter = AlbumArtFilter.PUNCH),
-    FILTER_PASTEL("filter_pastel", photoFilter = AlbumArtFilter.PASTEL),
-    FILTER_SEPIA("filter_sepia", photoFilter = AlbumArtFilter.SEPIA),
-    FILTER_CYANOTYPE("filter_cyanotype", photoFilter = AlbumArtFilter.CYANOTYPE),
-    FILTER_TEAL_ORANGE("filter_teal_orange", photoFilter = AlbumArtFilter.TEAL_ORANGE),
-    FILTER_HIGH_CONTRAST("filter_high_contrast", photoFilter = AlbumArtFilter.HIGH_CONTRAST),
-    FILTER_SOFT_LIGHT("filter_soft_light", photoFilter = AlbumArtFilter.SOFT_LIGHT),
-    FILTER_NIGHT("filter_night", photoFilter = AlbumArtFilter.NIGHT),
+    /** Authored backdrops that remain distinct from the bitmap's independent Filter layer. */
+    PRISMATIC("prismatic"),
+    CRESCENT("crescent"),
+    TIDAL("tidal"),
+    PAPER("paper"),
+    LANTERN("lantern"),
+    MIRAGE("mirage"),
+    GRID("grid"),
+    NOCTURNE("nocturne"),
+    CLOUD("cloud"),
+    LIQUID("liquid"),
+    MONOLITH("monolith"),
+    SPLIT_TONE("split_tone"),
+    /*
+     * Carried over from [OverlayBackdrop] so the two catalogues offer the same repertoire.
+     *
+     * The adaptation runs the opposite way to a player-to-panel port: a panel backdrop *is* an
+     * opaque surface, and here the same composition has to let the cover through, so what arrives
+     * is the geometry and the hues at the alpha an artwork treatment works by.
+     */
+    /** Diagonal wash from the album's primary into its secondary. */
+    GRADIENT("gradient"),
+    /** Two tones meeting across the middle. */
+    DUOTONE("duotone"),
+    /** Stacked horizontal bands of the whole triad. */
+    BANDS("bands"),
+    /** An album tone open at the centre and closing hard at the rim. */
+    VIGNETTE("vignette"),
+    /** A charcoal surface with a diagonal material grain. */
+    GRAPHITE("graphite"),
+    /** A luminous band held between deep letterbox edges. */
+    CINEMA("cinema"),
+    /** A frosted diagonal pane, album-tinted at the top corner. */
+    ACRYLIC("acrylic"),
+    /** Two wide colour fields meeting across an album-toned ground. */
+    MESH("mesh"),
+    /** Soft album clouds scattered over a dark field. */
+    NEBULA("nebula"),
+    /** A green-black field lit by two cyan blooms. */
+    BIOLUMINESCENCE("bioluminescence"),
+    /** A pearlescent run through the triad with violet at its middle. */
+    IRIDESCENT("iridescent"),
+    /** Two offset colour orbits with a small core. */
+    ORBIT("orbit"),
+    /** A translucent ink bloom running off one corner. */
+    INK_WASH("ink_wash"),
+    /** Berry and rose with a jewel-like centre. */
+    BLOSSOM("blossom"),
+    /** Cold slate and teal with the mineral character of a fjord. */
+    FJORD("fjord"),
+    /*
+     * The five drawn patterns. Unlike every other treatment here these are not gradients, so all
+     * three renderers call the *same* `OverlayBackdropPatterns` function - Compose reaches it
+     * through `drawIntoCanvas { it.nativeCanvas }`, which is what keeps a hand-drawn pattern from
+     * being written twice and drifting.
+     */
+    /** A fine hex-offset grid of dots. */
+    DOT_MATRIX("dot_matrix"),
+    /** Interlaced hairlines, like an old CRT. */
+    SCANLINES("scanlines"),
+    /** Concentric rings and one fixed sweep wedge. */
+    RADAR("radar"),
+    /** Elevation-style contours nudged off a perfect circle. */
+    CONTOUR("contour"),
+    /** A low-poly field of triangular facets. */
+    FACETED("faceted"),
+    /*
+     * The flat album fills. They set [hidesArtwork] because they genuinely do cover the cover -
+     * but unlike HIDDEN and ECLIPSE the field they paint is *not* black, which is why they also
+     * carry a [flatAlbumFill] for `AdaptiveTextContrast.backdropLuminance` to measure. Without
+     * that, adaptive contrast would assume a black ground under a possibly light album tone and
+     * darken text that needed lifting.
+     */
+    /** A flat field in the album's own accent. */
+    SOLID_ALBUM("album", hidesArtwork = true, flatAlbumFill = AlbumFillSlot.PRIMARY),
+    /** A flat field in the palette's secondary. */
+    SOLID_SECONDARY("secondary", hidesArtwork = true, flatAlbumFill = AlbumFillSlot.SECONDARY),
+    /** A flat field in the palette's tertiary. */
+    SOLID_TERTIARY("tertiary", hidesArtwork = true, flatAlbumFill = AlbumFillSlot.TERTIARY),
+    /** A pale wash falling into black - the panel's Glass, over the player's artwork. */
+    GLASS("glass"),
+    /** Deep navy falling to black. */
+    MIDNIGHT("midnight"),
+    /** A grey diagonal haze. */
+    SMOKE("smoke"),
+    /** A layered waterline from deep blue into the album's quieter tone. */
+    TIDELINE("tideline"),
+    // Deprecated persisted aliases. They remain readable while the picker no longer mixes them
+    // into Album art style; resolveAlbumArtFilter() turns them into the independent filter.
+    FILTER_WARM("filter_warm", legacyFilter = AlbumArtFilter.WARM),
+    FILTER_COOL("filter_cool", legacyFilter = AlbumArtFilter.COOL),
+    FILTER_GOLDEN("filter_golden", legacyFilter = AlbumArtFilter.GOLDEN),
+    FILTER_ROSE("filter_rose", legacyFilter = AlbumArtFilter.ROSE),
+    FILTER_VINTAGE("filter_vintage", legacyFilter = AlbumArtFilter.VINTAGE),
+    FILTER_FADED("filter_faded", legacyFilter = AlbumArtFilter.FADED),
+    FILTER_MATTE("filter_matte", legacyFilter = AlbumArtFilter.MATTE),
+    FILTER_VIVID("filter_vivid", legacyFilter = AlbumArtFilter.VIVID),
+    FILTER_PUNCH("filter_punch", legacyFilter = AlbumArtFilter.PUNCH),
+    FILTER_PASTEL("filter_pastel", legacyFilter = AlbumArtFilter.PASTEL),
+    FILTER_SEPIA("filter_sepia", legacyFilter = AlbumArtFilter.SEPIA),
+    FILTER_CYANOTYPE("filter_cyanotype", legacyFilter = AlbumArtFilter.CYANOTYPE),
+    FILTER_TEAL_ORANGE("filter_teal_orange", legacyFilter = AlbumArtFilter.TEAL_ORANGE),
+    FILTER_HIGH_CONTRAST("filter_high_contrast", legacyFilter = AlbumArtFilter.HIGH_CONTRAST),
+    FILTER_SOFT_LIGHT("filter_soft_light", legacyFilter = AlbumArtFilter.SOFT_LIGHT),
+    FILTER_NIGHT("filter_night", legacyFilter = AlbumArtFilter.NIGHT),
     ECLIPSE("eclipse", hidesArtwork = true),
     HIDDEN("hidden", hidesArtwork = true);
 
@@ -108,14 +210,14 @@ enum class PlayerBackgroundStyle(
         get() = blurredArtwork || frostedEdges
 
     val artworkFilter: AlbumArtFilter
-        get() = if (grayscaleArtwork) AlbumArtFilter.MONOCHROME else photoFilter
+        get() = if (grayscaleArtwork) AlbumArtFilter.MONOCHROME else legacyFilter
 
     /** Styles that only transform the host image and therefore need the shared default fade. */
     val isPlainArtworkTreatment: Boolean
         get() = this == COVER || this == BLUR || this == BLACK_AND_WHITE ||
                 this == BLURRED_BLACK_AND_WHITE || this == FROSTED ||
                 this == SQUARE_SHARP || this == SQUARE_SOFT || this == SQUARE ||
-                photoFilter != AlbumArtFilter.NONE
+                legacyFilter != AlbumArtFilter.NONE
 
     /** Fraction of the inset square's own side used as its corner radius, or null for a style
      *  that isn't a Square variant at all. */
@@ -128,7 +230,12 @@ enum class PlayerBackgroundStyle(
         }
 
     companion object {
-        private val LEGACY_OVERRIDE_VALUES = setOf("blur", "bw", "blur_bw", "hidden")
+        private val LEGACY_OVERRIDE_VALUES = setOf(
+                "blur", "bw", "blur_bw", "hidden",
+                "filter_warm", "filter_cool", "filter_golden", "filter_rose",
+                "filter_vintage", "filter_faded", "filter_matte", "filter_vivid",
+                "filter_punch", "filter_pastel", "filter_sepia", "filter_cyanotype",
+                "filter_teal_orange", "filter_high_contrast", "filter_soft_light", "filter_night")
 
         fun fromPreference(value: String?): PlayerBackgroundStyle =
                 entries.firstOrNull { it.preferenceValue == value } ?: COVER

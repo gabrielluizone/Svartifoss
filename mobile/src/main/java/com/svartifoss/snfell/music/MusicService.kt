@@ -770,7 +770,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      *  not implement ACTION_SET_PLAYBACK_SPEED reports the same speed back on its next state,
      *  which is a harmless no-op rather than a reason to withhold the command. */
     private fun setPlaybackSpeed(multiplier: Float) {
-        currentMediaController?.transportControls?.setPlaybackSpeed(multiplier)
+        val controller = currentMediaController ?: return
+        // The framework method exists only from API 29 while this app supports API 23.
+        // MediaControllerCompat carries the same command through its support protocol on older
+        // phones, which also keeps this direct-message path aligned with SetPlaybackSpeedAction.
+        MediaControllerCompat(
+                this,
+                MediaSessionCompat.Token.fromToken(controller.sessionToken)
+        ).transportControls.setPlaybackSpeed(multiplier)
     }
 
     /** Seeks by [deltaMs] relative to the session's LIVE position. Senders like the Tile only
@@ -895,7 +902,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         executeAction(action)
     }
 
-    private fun executeLikeCommand(): Boolean {
+    fun executeLikeCommand(): Boolean {
         val controller = currentMediaController ?: return false
         controller.playbackState?.let { state ->
             LikeAction.findLikeCustomAction(state)?.let { custom ->

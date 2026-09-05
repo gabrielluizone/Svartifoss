@@ -35,7 +35,37 @@ class CommunityThemeTranslationTest {
             "online_theme_filter_not_installed_selected",
             "online_theme_filter_not_installed_off",
             "online_theme_search_empty_all_installed",
-            "online_theme_search_empty_all_installed_hint"
+            "online_theme_search_empty_all_installed_hint",
+            // Reporting is the one gallery flow somebody reaches while already upset about what
+            // is on screen, and a Play requirement for user-generated content besides. An English
+            // fallback here would be the worst place in the feature to have one.
+            "community_theme_report_action",
+            "community_theme_report_already",
+            "community_theme_report_description",
+            "community_theme_report_title",
+            "community_theme_report_intro",
+            "community_theme_report_reason_inappropriate",
+            "community_theme_report_reason_impersonation",
+            "community_theme_report_reason_misleading",
+            "community_theme_report_reason_illegible",
+            "community_theme_report_reason_spam",
+            "community_theme_report_reason_other",
+            "community_theme_report_details_hint",
+            "community_theme_report_privacy",
+            "community_theme_report_submit",
+            "community_theme_report_sent",
+            "community_theme_report_already_sent",
+            "community_theme_report_not_ready",
+            "community_theme_report_error",
+            "community_theme_detail_downloads",
+            "online_theme_sort_most_downloaded",
+            "online_theme_sort_most_downloaded_short",
+            // Tapping an author's name is how one browses a person rather than a catalogue, and
+            // the chip it produces is labelled with their pseudonym alone -- these two strings are
+            // the only place that says what the filter is, so an English fallback would leave the
+            // reader with a bare name and no way to tell it apart from a search they had typed.
+            "online_theme_filter_author",
+            "online_theme_filter_author_selected"
     )
 
     @Test

@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,8 +35,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.graphics.drawscope.DrawStyle
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
@@ -57,10 +67,13 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import com.svartifoss.snfell.common.BitmapBlur
+import com.svartifoss.snfell.common.OverlayBackdropPatterns
 import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.TitleTextMode
 import androidx.core.graphics.ColorUtils
 import androidx.wear.compose.material3.Icon
+import androidx.wear.compose.material3.LocalTextStyle
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.R as commonR
@@ -490,6 +503,368 @@ private fun DrawScope.drawBackgroundWash(
                     center = Offset(size.width * .72f, size.height * .74f),
                     radius = size.minDimension * .72f))
 
+            PlayerBackgroundStyle.PRISMATIC -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.28f)))
+                drawRect(brush = Brush.linearGradient(
+                        listOf(primary.copy(alpha = opacity(.48f)),
+                                secondary.copy(alpha = opacity(.22f)),
+                                tertiary.copy(alpha = opacity(.36f)),
+                                Color.Black.copy(alpha = authoredOpacity(.72f))),
+                        start = Offset.Zero, end = Offset(size.width, size.height)))
+                drawCircle(brush = Brush.sweepGradient(listOf(primary, secondary, tertiary, primary)),
+                        radius = size.minDimension * .41f,
+                        style = Stroke(width = size.minDimension * .10f),
+                        alpha = opacity(.42f))
+            }
+
+            PlayerBackgroundStyle.CRESCENT -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.34f)))
+                drawArc(brush = Brush.sweepGradient(listOf(Color.Transparent, primary,
+                        secondary.copy(alpha = .28f), Color.Transparent)),
+                        startAngle = 138f, sweepAngle = 196f, useCenter = false,
+                        topLeft = Offset(size.width * -.04f, size.height * -.04f),
+                        size = androidx.compose.ui.geometry.Size(size.width * 1.08f,
+                                size.height * 1.08f), style = Stroke(size.minDimension * .12f),
+                        alpha = opacity(.72f))
+            }
+
+            PlayerBackgroundStyle.TIDAL -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.20f)))
+                listOf(.34f to primary, .55f to secondary, .76f to tertiary).forEachIndexed { index, (y, color) ->
+                    val wave = Path().apply {
+                        moveTo(0f, size.height * y)
+                        cubicTo(size.width * .24f, size.height * (y - .11f + index * .02f),
+                                size.width * .70f, size.height * (y + .10f),
+                                size.width, size.height * (y - .03f))
+                    }
+                    drawPath(wave, color = color, style = Stroke(size.minDimension *
+                            (.11f - index * .03f)), alpha = authoredOpacity(.78f))
+                }
+            }
+
+            PlayerBackgroundStyle.PAPER -> {
+                drawRect(Color(0xFFFFF3DF).copy(alpha = authoredOpacity(.18f)))
+                drawRect(brush = Brush.verticalGradient(
+                        0f to Color.Transparent, .64f to Color.Transparent,
+                        1f to Color.Black.copy(alpha = authoredOpacity(.62f))))
+                drawRect(Color.White.copy(alpha = opacity(.44f)),
+                        topLeft = Offset(size.minDimension * .065f, size.minDimension * .065f),
+                        size = androidx.compose.ui.geometry.Size(
+                                size.width - size.minDimension * .13f,
+                                size.height - size.minDimension * .13f), style = Stroke(size.minDimension * .009f))
+            }
+
+            PlayerBackgroundStyle.LANTERN -> {
+                drawRect(brush = Brush.verticalGradient(
+                        0f to Color.Black.copy(alpha = authoredOpacity(.55f)),
+                        .46f to Color.Transparent,
+                        1f to deep.copy(alpha = authoredOpacity(.72f))))
+                drawRect(brush = Brush.radialGradient(
+                        0f to Color(0xFFFFC857).copy(alpha = opacity(.52f)),
+                        .45f to primary.copy(alpha = opacity(.18f)),
+                        1f to Color.Transparent,
+                        center = Offset(size.width * .5f, size.height * .82f),
+                        radius = size.minDimension * .41f))
+            }
+
+            PlayerBackgroundStyle.MIRAGE -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.18f)))
+                drawRect(brush = Brush.radialGradient(0f to primary.copy(alpha = opacity(.46f)),
+                        1f to Color.Transparent, center = Offset(size.width * .08f,
+                                size.height * .38f), radius = size.minDimension * .58f))
+                drawRect(brush = Brush.radialGradient(0f to secondary.copy(alpha = opacity(.42f)),
+                        1f to Color.Transparent, center = Offset(size.width * .92f,
+                                size.height * .62f), radius = size.minDimension * .58f))
+            }
+
+            PlayerBackgroundStyle.GRID -> {
+                drawRect(deep.copy(alpha = authoredOpacity(.64f)))
+                for (step in 1..5) {
+                    val x = size.width * step / 6f
+                    val y = size.height * step / 6f
+                    drawLine(primary.copy(alpha = opacity(.22f)), Offset(x, 0f),
+                            Offset(x, size.height), strokeWidth = size.minDimension * .006f,
+                            alpha = authoredOpacity(.72f))
+                    drawLine(primary.copy(alpha = opacity(.22f)), Offset(0f, y),
+                            Offset(size.width, y), strokeWidth = size.minDimension * .006f,
+                            alpha = authoredOpacity(.72f))
+                }
+            }
+
+            PlayerBackgroundStyle.NOCTURNE -> {
+                drawRect(Color(0xFF070B25).copy(alpha = authoredOpacity(.72f)))
+                drawRect(brush = Brush.radialGradient(0f to tertiary.copy(alpha = opacity(.36f)),
+                        1f to Color.Transparent, center = Offset(size.width * .68f,
+                                size.height * .28f), radius = size.minDimension * .58f))
+                listOf(.16f to .22f, .72f to .18f, .37f to .58f, .82f to .72f).forEach { (x, y) ->
+                    drawCircle(Color.White.copy(alpha = opacity(.62f)),
+                            radius = size.minDimension * .009f,
+                            center = Offset(size.width * x, size.height * y))
+                }
+            }
+
+            PlayerBackgroundStyle.CLOUD -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.16f)))
+                listOf(Triple(.22f, .34f, primary), Triple(.74f, .30f, secondary),
+                        Triple(.50f, .78f, tertiary)).forEach { (x, y, color) ->
+                    drawRect(brush = Brush.radialGradient(0f to color.copy(alpha = opacity(.32f)),
+                            1f to Color.Transparent, center = Offset(size.width * x,
+                                    size.height * y), radius = size.minDimension * .49f))
+                }
+            }
+
+            PlayerBackgroundStyle.LIQUID -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.30f)))
+                listOf(Triple(.18f, .72f, primary), Triple(.62f, .42f, secondary),
+                        Triple(.86f, .76f, tertiary)).forEach { (x, y, color) ->
+                    drawRect(brush = Brush.radialGradient(0f to color.copy(alpha = opacity(.52f)),
+                            .48f to color.copy(alpha = opacity(.12f)), 1f to Color.Transparent,
+                            center = Offset(size.width * x, size.height * y),
+                            radius = size.minDimension * .38f))
+                }
+            }
+
+            PlayerBackgroundStyle.MONOLITH -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.58f)))
+                drawRect(brush = Brush.horizontalGradient(
+                        0f to primary.copy(alpha = opacity(.58f)),
+                        .70f to secondary.copy(alpha = opacity(.12f)),
+                        1f to Color.Transparent), size = size.copy(width = size.width * .48f))
+                drawRect(brush = Brush.verticalGradient(0f to Color.Transparent,
+                        .64f to Color.Transparent,
+                        1f to Color.Black.copy(alpha = authoredOpacity(.76f))))
+            }
+
+            PlayerBackgroundStyle.SPLIT_TONE -> {
+                drawRect(brush = Brush.verticalGradient(listOf(
+                        primary.copy(alpha = opacity(.36f)),
+                        secondary.copy(alpha = opacity(.20f)),
+                        deep.copy(alpha = authoredOpacity(.78f)))))
+                drawLine(Color.White.copy(alpha = opacity(.48f)),
+                        Offset(0f, size.height * .50f), Offset(size.width, size.height * .50f),
+                        strokeWidth = size.minDimension * .006f,
+                        alpha = authoredOpacity(.76f))
+            }
+
+            PlayerBackgroundStyle.GRADIENT -> drawRect(brush = Brush.linearGradient(
+                    0f to primary.copy(alpha = opacity(.46f)),
+                    1f to secondary.copy(alpha = opacity(.30f)),
+                    start = Offset.Zero,
+                    end = Offset(size.width, size.height)))
+            PlayerBackgroundStyle.DUOTONE -> drawRect(brush = Brush.horizontalGradient(
+                    0f to primary.copy(alpha = opacity(.40f)),
+                    1f to secondary.copy(alpha = opacity(.40f))))
+            PlayerBackgroundStyle.BANDS -> drawRect(brush = Brush.verticalGradient(listOf(
+                    tertiary.copy(alpha = opacity(.30f)),
+                    primary.copy(alpha = opacity(.44f)),
+                    primary.copy(alpha = opacity(.18f)),
+                    secondary.copy(alpha = opacity(.38f)),
+                    Color.Black.copy(alpha = authoredOpacity(.82f)))))
+            PlayerBackgroundStyle.VIGNETTE -> {
+                drawRect(primary.copy(alpha = opacity(.20f)))
+                drawRect(brush = Brush.radialGradient(
+                        0f to Color.Transparent,
+                        .52f to Color.Black.copy(alpha = authoredOpacity(.14f)),
+                        1f to Color.Black.copy(alpha = authoredOpacity(.90f)),
+                        center = center,
+                        radius = size.minDimension * .68f))
+            }
+            PlayerBackgroundStyle.GRAPHITE -> {
+                drawRect(Color(0xFF111318).copy(alpha = authoredOpacity(.86f)))
+                drawRect(brush = Brush.linearGradient(
+                        0f to Color(0xFF292D34).copy(alpha = authoredOpacity(.62f)),
+                        .5f to Color.Transparent,
+                        1f to Color(0xFF1D2026).copy(alpha = authoredOpacity(.62f)),
+                        start = Offset.Zero,
+                        end = Offset(size.width, size.height)))
+            }
+            PlayerBackgroundStyle.CINEMA -> drawRect(brush = Brush.verticalGradient(listOf(
+                    Color.Black.copy(alpha = authoredOpacity(.94f)),
+                    Color.Black.copy(alpha = authoredOpacity(.88f)),
+                    primary.copy(alpha = opacity(.34f)),
+                    secondary.copy(alpha = opacity(.24f)),
+                    Color.Black.copy(alpha = authoredOpacity(.88f)),
+                    Color.Black.copy(alpha = authoredOpacity(.94f)))))
+
+            PlayerBackgroundStyle.ACRYLIC -> drawRect(brush = Brush.linearGradient(
+                    0f to primary.copy(alpha = opacity(.40f)),
+                    1f to Color.Black.copy(alpha = authoredOpacity(.72f)),
+                    start = Offset.Zero,
+                    end = Offset(size.width, size.height)))
+
+            PlayerBackgroundStyle.MESH -> {
+                drawRect(primary.copy(alpha = opacity(.14f)))
+                drawRect(brush = Brush.radialGradient(
+                        0f to secondary.copy(alpha = opacity(.44f)),
+                        1f to Color.Transparent,
+                        center = Offset(size.width * .18f, size.height * .22f),
+                        radius = size.minDimension * .72f))
+                drawRect(brush = Brush.radialGradient(
+                        0f to tertiary.copy(alpha = opacity(.38f)),
+                        1f to Color.Transparent,
+                        center = Offset(size.width * .86f, size.height * .78f),
+                        radius = size.minDimension * .68f))
+            }
+
+            PlayerBackgroundStyle.NEBULA -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.42f)))
+                drawRect(brush = Brush.radialGradient(
+                        0f to primary.copy(alpha = opacity(.42f)),
+                        1f to Color.Transparent,
+                        center = Offset(size.width * .16f, size.height * .24f),
+                        radius = size.minDimension * .70f))
+                drawRect(brush = Brush.radialGradient(
+                        0f to secondary.copy(alpha = opacity(.38f)),
+                        1f to Color.Transparent,
+                        center = Offset(size.width * .84f, size.height * .32f),
+                        radius = size.minDimension * .64f))
+                drawRect(brush = Brush.radialGradient(
+                        0f to tertiary.copy(alpha = opacity(.34f)),
+                        1f to Color.Transparent,
+                        center = Offset(size.width * .50f, size.height * .94f),
+                        radius = size.minDimension * .58f))
+            }
+
+            PlayerBackgroundStyle.BIOLUMINESCENCE -> {
+                drawRect(Color(0xFF041A19).copy(alpha = authoredOpacity(.66f)))
+                drawRect(brush = Brush.radialGradient(
+                        0f to primary.copy(alpha = opacity(.52f)),
+                        0.5f to Color(0xFF0A6A62).copy(alpha = opacity(.26f)),
+                        1f to Color.Transparent,
+                        center = Offset(size.width * .20f, size.height * .74f),
+                        radius = size.minDimension * .62f))
+                drawRect(brush = Brush.radialGradient(
+                        0f to tertiary.copy(alpha = opacity(.44f)),
+                        0.5f to Color(0xFF1AB5A2).copy(alpha = opacity(.18f)),
+                        1f to Color.Transparent,
+                        center = Offset(size.width * .82f, size.height * .24f),
+                        radius = size.minDimension * .54f))
+            }
+
+            PlayerBackgroundStyle.IRIDESCENT -> drawRect(brush = Brush.linearGradient(listOf(
+                    tertiary.copy(alpha = opacity(.36f)),
+                    Color(0xFF4A2F72).copy(alpha = opacity(.44f)),
+                    primary.copy(alpha = opacity(.42f)),
+                    secondary.copy(alpha = opacity(.30f)),
+                    Color(0xFF0B101A).copy(alpha = authoredOpacity(.82f))),
+                    start = Offset.Zero,
+                    end = Offset(size.width, size.height)))
+
+            PlayerBackgroundStyle.ORBIT -> {
+                drawRect(primary.copy(alpha = opacity(.13f)))
+                drawRect(brush = Brush.radialGradient(
+                        0f to secondary.copy(alpha = opacity(.46f)),
+                        1f to Color.Transparent,
+                        center = Offset(size.width * .16f, size.height * .30f),
+                        radius = size.minDimension * .64f))
+                drawRect(brush = Brush.radialGradient(
+                        0f to tertiary.copy(alpha = opacity(.38f)),
+                        1f to Color.Transparent,
+                        center = Offset(size.width * .84f, size.height * .72f),
+                        radius = size.minDimension * .62f))
+                drawRect(brush = Brush.radialGradient(
+                        0f to primary.copy(alpha = opacity(.34f)),
+                        1f to Color.Transparent,
+                        center = Offset(size.width * .50f, size.height * .50f),
+                        radius = size.minDimension * .26f))
+            }
+
+            PlayerBackgroundStyle.INK_WASH -> {
+                drawRect(Color.Black.copy(alpha = authoredOpacity(.34f)))
+                drawRect(brush = Brush.linearGradient(
+                        0f to primary.copy(alpha = opacity(.44f)),
+                        .5f to secondary.copy(alpha = opacity(.16f)),
+                        1f to Color.Transparent,
+                        start = Offset.Zero,
+                        end = Offset(size.width, size.height)))
+            }
+
+            PlayerBackgroundStyle.BLOSSOM -> drawRect(brush = Brush.linearGradient(listOf(
+                    Color(0xFF160B1D).copy(alpha = authoredOpacity(.80f)),
+                    Color(0xFF542047).copy(alpha = opacity(.52f)),
+                    Color(0xFFB84B74).copy(alpha = opacity(.44f)),
+                    tertiary.copy(alpha = opacity(.34f)),
+                    Color(0xFF08050B).copy(alpha = authoredOpacity(.84f))),
+                    start = Offset(0f, size.height),
+                    end = Offset(size.width, 0f)))
+
+            PlayerBackgroundStyle.FJORD -> drawRect(brush = Brush.linearGradient(listOf(
+                    Color(0xFF0A2030).copy(alpha = authoredOpacity(.76f)),
+                    tertiary.copy(alpha = opacity(.34f)),
+                    Color(0xFF0A5960).copy(alpha = opacity(.44f)),
+                    Color.Black.copy(alpha = authoredOpacity(.86f))),
+                    start = Offset.Zero,
+                    end = Offset(size.width, size.height)))
+
+            // The drawn patterns go through the shared android.graphics implementation rather
+            // than being re-authored in DrawScope: hand-drawn geometry written twice is the exact
+            // shape of drift the preview-parity rules exist to prevent, and `nativeCanvas` makes
+            // the second write unnecessary.
+            PlayerBackgroundStyle.DOT_MATRIX -> drawIntoCanvas { target ->
+                OverlayBackdropPatterns.drawDotMatrix(
+                        target.nativeCanvas, patternBounds(), density,
+                        baseColor = android.graphics.Color.TRANSPARENT,
+                        dotColor = primary.copy(alpha = opacity(.44f)).toArgb())
+            }
+            PlayerBackgroundStyle.SCANLINES -> drawIntoCanvas { target ->
+                OverlayBackdropPatterns.drawScanlines(
+                        target.nativeCanvas, patternBounds(), density,
+                        baseColor = Color.Black.copy(alpha = authoredOpacity(.34f)).toArgb(),
+                        lineColor = Color.Black.copy(alpha = authoredOpacity(.52f)).toArgb())
+            }
+            PlayerBackgroundStyle.RADAR -> drawIntoCanvas { target ->
+                val bounds = patternBounds()
+                OverlayBackdropPatterns.drawRadarRings(
+                        target.nativeCanvas, bounds, density,
+                        cx = bounds.centerX(), cy = bounds.centerY(),
+                        radius = minOf(bounds.width(), bounds.height()) / 2f,
+                        baseColor = primary.copy(alpha = opacity(.12f)).toArgb(),
+                        ringColor = tertiary.copy(alpha = opacity(.50f)).toArgb(),
+                        sweepColor = primary.copy(alpha = opacity(.42f)).toArgb())
+            }
+            PlayerBackgroundStyle.CONTOUR -> drawIntoCanvas { target ->
+                val bounds = patternBounds()
+                OverlayBackdropPatterns.drawContourLines(
+                        target.nativeCanvas, bounds, density,
+                        cx = bounds.centerX(), cy = bounds.centerY(),
+                        radius = minOf(bounds.width(), bounds.height()) / 2f,
+                        baseColor = primary.copy(alpha = opacity(.12f)).toArgb(),
+                        lineColor = secondary.copy(alpha = opacity(.46f)).toArgb(),
+                        accent = primary.toArgb())
+            }
+            PlayerBackgroundStyle.FACETED -> drawIntoCanvas { target ->
+                OverlayBackdropPatterns.drawFacetedCrystal(
+                        target.nativeCanvas, patternBounds(), density,
+                        primary = primary.copy(alpha = opacity(.42f)).toArgb(),
+                        secondary = secondary.copy(alpha = opacity(.38f)).toArgb(),
+                        tertiary = tertiary.copy(alpha = opacity(.34f)).toArgb(),
+                        accent = primary.toArgb())
+            }
+
+            // The flat fills are opaque by definition: they hide the artwork, so no alpha.
+            PlayerBackgroundStyle.SOLID_ALBUM -> drawRect(Color(flatFillArgb(palette, 0)))
+            PlayerBackgroundStyle.SOLID_SECONDARY -> drawRect(Color(flatFillArgb(palette, 1)))
+            PlayerBackgroundStyle.SOLID_TERTIARY -> drawRect(Color(flatFillArgb(palette, 2)))
+
+            PlayerBackgroundStyle.GLASS -> drawRect(brush = Brush.verticalGradient(
+                    0f to Color.White.copy(alpha = opacity(.18f)),
+                    1f to Color.Black.copy(alpha = authoredOpacity(.72f))))
+            PlayerBackgroundStyle.MIDNIGHT -> drawRect(brush = Brush.verticalGradient(listOf(
+                    tertiary.copy(alpha = opacity(.30f)),
+                    Color(0xFF070914).copy(alpha = authoredOpacity(.66f)),
+                    Color.Black.copy(alpha = authoredOpacity(.86f)))))
+            PlayerBackgroundStyle.SMOKE -> drawRect(brush = Brush.linearGradient(listOf(
+                    tertiary.copy(alpha = opacity(.24f)),
+                    Color(0xFF323238).copy(alpha = authoredOpacity(.56f)),
+                    Color.Black.copy(alpha = authoredOpacity(.82f))),
+                    start = Offset.Zero,
+                    end = Offset(size.width, size.height)))
+            PlayerBackgroundStyle.TIDELINE -> drawRect(brush = Brush.verticalGradient(listOf(
+                    Color(0xFF031423).copy(alpha = authoredOpacity(.72f)),
+                    Color(0xFF07516A).copy(alpha = opacity(.52f)),
+                    secondary.copy(alpha = opacity(.30f)),
+                    Color.Black.copy(alpha = authoredOpacity(.84f)))))
+
             PlayerBackgroundStyle.ECLIPSE,
             PlayerBackgroundStyle.HIDDEN -> drawRect(Color.Black)
         }
@@ -504,6 +879,22 @@ private fun DrawScope.drawBackgroundWash(
  * treatment is deliberately not drawn here even in the legacy arrangement - it never reached the
  * screen on this face, and putting it back because the stack now names it would redesign Split.
  */
+/** The DrawScope's own bounds as the `android.graphics.RectF` the shared pattern helpers take. */
+/** The opaque tone a flat album fill paints, from the same triad every other surface reads. */
+private fun flatFillArgb(palette: BackgroundWashPalette, slot: Int): Int =
+        PaletteTransforms.tonalSurface(
+                when (slot) {
+                    0 -> palette.primary
+                    1 -> palette.secondary
+                    else -> palette.tertiary
+                }.toArgb(),
+                .24f,
+                PaletteTransforms.FACE_MIN_SAT,
+                PaletteTransforms.FACE_MAX_SAT)
+
+private fun DrawScope.patternBounds(): android.graphics.RectF =
+        android.graphics.RectF(0f, 0f, size.width, size.height)
+
 @Composable
 internal fun PlayerBackgroundLayers(state: NowPlayingFaceState) {
     val layers = state.backgroundLayers
@@ -996,6 +1387,7 @@ internal fun FaceOverflowDots(color: Color = Color.White, scale: Float = 1f) {
 internal fun AdaptiveTitleText(
         text: String,
         mode: String,
+        state: NowPlayingFaceState,
         fontSize: TextUnit,
         color: Color,
         modifier: Modifier = Modifier,
@@ -1008,6 +1400,9 @@ internal fun AdaptiveTitleText(
         minFontSize: TextUnit = (fontSize.value * 0.62f).sp,
         typography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT,
         maxLines: Int? = null,
+        shadow: Shadow? = state.titleShadow,
+        outline: TextOutlinePaint? = state.titleOutline,
+        backdrop: Color? = state.titleBackdrop,
         onLineCount: ((Int) -> Unit)? = null
 ) = AdaptiveTitleText(
         // Applied here rather than in the AnnotatedString overload below: that one is Note's own
@@ -1017,6 +1412,7 @@ internal fun AdaptiveTitleText(
         // boundary built for the un-cased text. A plain String has no such boundary to protect.
         text = AnnotatedString(typography.case.apply(text)),
         mode = mode,
+        state = state,
         fontSize = fontSize,
         color = color,
         modifier = modifier,
@@ -1029,6 +1425,9 @@ internal fun AdaptiveTitleText(
         minFontSize = minFontSize,
         typography = typography,
         maxLines = maxLines,
+        shadow = shadow,
+        outline = outline,
+        backdrop = backdrop,
         onLineCount = onLineCount)
 
 /**
@@ -1045,6 +1444,7 @@ internal fun AdaptiveTitleText(
 internal fun AdaptiveTitleText(
         text: AnnotatedString,
         mode: String,
+        state: NowPlayingFaceState,
         fontSize: TextUnit,
         color: Color,
         modifier: Modifier = Modifier,
@@ -1068,6 +1468,53 @@ internal fun AdaptiveTitleText(
          * asks for", which is what every caller did before this existed.
          */
         maxLines: Int? = null,
+        /**
+         * The resolved title shadow, or null for none.
+         *
+         * Delivered through [LocalTextStyle] rather than as a parameter on every `Text` below,
+         * because this function has four rendering branches and two of them are separate
+         * composables with signatures of their own. A composition local reaches all four -
+         * including the shrink cascade's intermediate measurements - without threading a parameter
+         * through each, and a shadow that reached only some of the title modes would be exactly
+         * the quiet per-mode drift this function exists to end.
+         *
+         * Defaulted off [NowPlayingFaceState] rather than left at null: every one of the fifteen
+         * call sites had to opt *in* to a title effect that the host had already resolved for
+         * them, and not one of them did - so `wear_title_shadow_style`, the outline and the
+         * backdrop reached the classic View face and the artist line and were inert on every
+         * Compose face. Reading the host's answer here is what makes opting out impossible.
+         */
+        shadow: Shadow? = state.titleShadow,
+        /**
+         * The resolved outline, or null for none.
+         *
+         * An outline is genuinely **two drawing passes** - no text API on either platform strokes
+         * and fills in one - so this branch renders the whole cascade twice, stroke under fill,
+         * and every input but the colour and draw style is identical. Three details keep the two
+         * copies honest. The caller's `modifier` goes on the [Box] rather than on either copy, so
+         * a `weight` or `align` from an enclosing Row/Column still lands on a child of that scope.
+         * `propagateMinConstraints` hands the children the Box's own minimum width, which is what
+         * makes a `fillMaxWidth` caller behave exactly as it did before this existed - without it,
+         * a filled title would become wrap-content and its internal `textAlign` would stop
+         * meaning anything. And `onLineCount` is reported by the fill pass alone: the stroke copy
+         * measures identically, so a second report would be a duplicate rather than news.
+         *
+         * The one visible cost is a scrolling title, where both copies run their own
+         * `basicMarquee`. They enter composition in the same frame with identical parameters, so
+         * they travel in step; nothing enforces that beyond their inputs being the same.
+         *
+         * Defaults off [NowPlayingFaceState] for [shadow]'s reason.
+         */
+        outline: TextOutlinePaint? = state.titleOutline,
+        /**
+         * A filled box behind each line, or null for none.
+         *
+         * Delivered through [LocalTextStyle] like the shadow, and applied *before* the outline
+         * branch below so the box lands under both drawing passes rather than only under the fill.
+         *
+         * Defaults off [NowPlayingFaceState] for [shadow]'s reason.
+         */
+        backdrop: Color? = state.titleBackdrop,
         // How many lines the text actually settled on. A face on a round screen cannot inset its
         // title correctly without this: the usable chord depends on how deep the block reaches, so
         // the caller has to know whether it wrapped before it can pick a width (see
@@ -1075,6 +1522,53 @@ internal fun AdaptiveTitleText(
         // intermediate measurement, or the caller would chase sizes that are about to change.
         onLineCount: ((Int) -> Unit)? = null
 ) {
+    if (backdrop != null) {
+        CompositionLocalProvider(
+                LocalTextStyle provides LocalTextStyle.current.copy(background = backdrop)) {
+            AdaptiveTitleText(
+                    text, mode, state, fontSize, color, modifier, fontWeight, fontStyle,
+                    fontFamily, letterSpacing, lineHeight, textAlign, minFontSize, typography,
+                    maxLines, shadow = shadow, outline = outline, backdrop = null,
+                    onLineCount = onLineCount)
+        }
+        return
+    }
+    if (outline != null) {
+        val strokeWidth = with(LocalDensity.current) {
+            (typography.scaled(fontSize.value).sp.toPx() * outline.widthFraction)
+                    .coerceAtLeast(outline.minWidthPx)
+        }
+        Box(modifier = modifier, propagateMinConstraints = true) {
+            CompositionLocalProvider(
+                    LocalTextStyle provides LocalTextStyle.current.copy(
+                            drawStyle = Stroke(width = strokeWidth))) {
+                AdaptiveTitleText(
+                        text, mode, state, fontSize, outline.color, Modifier, fontWeight,
+                        fontStyle, fontFamily, letterSpacing, lineHeight, textAlign, minFontSize,
+                        typography, maxLines, shadow = shadow, outline = null, backdrop = null,
+                        onLineCount = null)
+            }
+            AdaptiveTitleText(
+                    text, mode, state, fontSize, color, Modifier, fontWeight, fontStyle,
+                    fontFamily, letterSpacing, lineHeight, textAlign, minFontSize, typography,
+                    maxLines,
+                    // The shadow rides the stroke pass, which is the outermost thing drawn - a
+                    // shadow cast by the fill would sit inside its own outline and be invisible.
+                    shadow = null, outline = null, backdrop = null, onLineCount = onLineCount)
+        }
+        return
+    }
+    if (shadow != null) {
+        CompositionLocalProvider(
+                LocalTextStyle provides LocalTextStyle.current.copy(shadow = shadow)) {
+            AdaptiveTitleText(
+                    text, mode, state, fontSize, color, modifier, fontWeight, fontStyle,
+                    fontFamily, letterSpacing, lineHeight, textAlign, minFontSize, typography,
+                    maxLines,
+                    shadow = null, outline = null, backdrop = null, onLineCount = onLineCount)
+        }
+        return
+    }
     // Each field's default value means "keep what this face designed for this line", not "use a
     // plain 400/upright/unspaced default" - otherwise simply shipping these controls would flatten
     // every face that deliberately sets its title Bold or its artist line wide-tracked. Only a
@@ -1306,7 +1800,62 @@ internal fun ArtistLineText(
         textAlign: TextAlign = TextAlign.Center
 ) {
     val spec = state.artistTypography
+    state.artistOutline?.let { outline ->
+        val strokeWidth = with(LocalDensity.current) {
+            (spec.scaled(fontSize.value).sp.toPx() * outline.widthFraction)
+                    .coerceAtLeast(outline.minWidthPx)
+        }
+        Box(modifier = modifier, propagateMinConstraints = true) {
+            ArtistLineTextPass(
+                    text, state, outline.color, fontSize, Modifier, fontWeight, lineHeight,
+                    letterSpacing, textAlign, Stroke(width = strokeWidth), state.artistShadow)
+            ArtistLineTextPass(
+                    text, state, color, fontSize, Modifier, fontWeight, lineHeight, letterSpacing,
+                    textAlign, drawStyle = null, shadow = null)
+        }
+        return
+    }
+    ArtistLineTextPass(
+            text, state, color, fontSize, modifier, fontWeight, lineHeight, letterSpacing,
+            textAlign, drawStyle = null, shadow = state.artistShadow)
+}
+
+/**
+ * One drawing pass of the artist line.
+ *
+ * Split out so an outline can render the identical line twice - stroke under fill - without a
+ * second copy of the typography merge. A null [drawStyle] is the ordinary filled pass.
+ */
+@Composable
+private fun ArtistLineTextPass(
+        text: String,
+        state: NowPlayingFaceState,
+        color: Color,
+        fontSize: TextUnit,
+        modifier: Modifier,
+        fontWeight: FontWeight?,
+        lineHeight: TextUnit,
+        letterSpacing: TextUnit,
+        textAlign: TextAlign,
+        drawStyle: DrawStyle?,
+        shadow: Shadow?
+) {
+    val spec = state.artistTypography
     Text(
+            // Unlike AdaptiveTitleText there is no size cascade and no sibling composables here,
+            // so the style can be handed straight to the one Text.
+            style = LocalTextStyle.current.let { base ->
+                var style = base
+                if (shadow != null) style = style.copy(shadow = shadow)
+                if (drawStyle != null) style = style.copy(drawStyle = drawStyle)
+                // Only the stroke pass paints the box. Painting it on both would lay the fill
+                // pass's opaque-ish plate over the stroke that was just drawn under it.
+                val backdrop = state.artistBackdrop
+                if (backdrop != null && (drawStyle != null || state.artistOutline == null)) {
+                    style = style.copy(background = backdrop)
+                }
+                style
+            },
             text = spec.case.apply(text),
             color = if (spec.alpha == 1f) color else color.copy(alpha = color.alpha * spec.alpha),
             fontSize = if (spec.scale == 1f) fontSize else spec.scaled(fontSize.value).sp,
@@ -1317,6 +1866,100 @@ internal fun ArtistLineText(
             letterSpacing = if (spec.trackingEm == 0f) letterSpacing else spec.trackingEm.em,
             textAlign = textAlign,
             maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = modifier
+    )
+}
+
+/**
+ * A track title drawn as one plain line (or a fixed number of them).
+ *
+ * [AdaptiveTitleText] is the entry point for a title that owns its band and may shrink, wrap or
+ * scroll to fit it. Two faces cannot use that cascade: Chat's title sits start-aligned inside a
+ * bubble it does not size, and Metadata's is a fixed two-line header above a table whose row
+ * budget is measured. Both drew a bare [Text] instead, which meant they read whichever properties
+ * they happened to name - Chat hardcoded Bold, so the weight control did nothing there - and none
+ * of the shadow, outline or backdrop the host had already resolved.
+ *
+ * So this is [ArtistLineText] for the title: the same merge, the same two-pass outline, and the
+ * same rule that a default value means "keep what this face designed".
+ */
+@Composable
+internal fun TitleLineText(
+        text: String,
+        state: NowPlayingFaceState,
+        color: Color,
+        fontSize: TextUnit,
+        modifier: Modifier = Modifier,
+        fontWeight: FontWeight? = null,
+        fontFamily: FontFamily? = state.titleFont,
+        lineHeight: TextUnit = TextUnit.Unspecified,
+        letterSpacing: TextUnit = TextUnit.Unspecified,
+        textAlign: TextAlign? = null,
+        maxLines: Int = 1
+) {
+    val spec = state.titleTypography
+    state.titleOutline?.let { outline ->
+        val strokeWidth = with(LocalDensity.current) {
+            (spec.scaled(fontSize.value).sp.toPx() * outline.widthFraction)
+                    .coerceAtLeast(outline.minWidthPx)
+        }
+        Box(modifier = modifier, propagateMinConstraints = true) {
+            TitleLineTextPass(
+                    text, state, outline.color, fontSize, Modifier, fontWeight, fontFamily,
+                    lineHeight, letterSpacing, textAlign, maxLines,
+                    Stroke(width = strokeWidth), state.titleShadow)
+            TitleLineTextPass(
+                    text, state, color, fontSize, Modifier, fontWeight, fontFamily, lineHeight,
+                    letterSpacing, textAlign, maxLines, drawStyle = null, shadow = null)
+        }
+        return
+    }
+    TitleLineTextPass(
+            text, state, color, fontSize, modifier, fontWeight, fontFamily, lineHeight,
+            letterSpacing, textAlign, maxLines, drawStyle = null, shadow = state.titleShadow)
+}
+
+/** One drawing pass of [TitleLineText] - see [ArtistLineTextPass] for why this is split out. */
+@Composable
+private fun TitleLineTextPass(
+        text: String,
+        state: NowPlayingFaceState,
+        color: Color,
+        fontSize: TextUnit,
+        modifier: Modifier,
+        fontWeight: FontWeight?,
+        fontFamily: FontFamily?,
+        lineHeight: TextUnit,
+        letterSpacing: TextUnit,
+        textAlign: TextAlign?,
+        maxLines: Int,
+        drawStyle: DrawStyle?,
+        shadow: Shadow?
+) {
+    val spec = state.titleTypography
+    Text(
+            style = LocalTextStyle.current.let { base ->
+                var style = base
+                if (shadow != null) style = style.copy(shadow = shadow)
+                if (drawStyle != null) style = style.copy(drawStyle = drawStyle)
+                // Only the stroke pass paints the box, exactly as ArtistLineTextPass does.
+                val backdrop = state.titleBackdrop
+                if (backdrop != null && (drawStyle != null || state.titleOutline == null)) {
+                    style = style.copy(background = backdrop)
+                }
+                style
+            },
+            text = spec.case.apply(text),
+            color = if (spec.alpha == 1f) color else color.copy(alpha = color.alpha * spec.alpha),
+            fontSize = if (spec.scale == 1f) fontSize else spec.scaled(fontSize.value).sp,
+            fontWeight = if (spec.weight == 400) fontWeight else FontWeight(spec.weight),
+            fontStyle = state.titleFontStyle,
+            fontFamily = fontFamily,
+            lineHeight = lineHeight,
+            letterSpacing = if (spec.trackingEm == 0f) letterSpacing else spec.trackingEm.em,
+            textAlign = textAlign,
+            maxLines = maxLines,
             overflow = TextOverflow.Ellipsis,
             modifier = modifier
     )
@@ -1528,3 +2171,24 @@ private const val GLYPH_FLASH_HOLD_MS = 220
 private const val GLYPH_FLASH_FADE_MS = 320
 /** Sized against the ring's own radius so the two confirmations read as one gesture. */
 private const val GLYPH_FLASH_DIAMETER_FRACTION = .46f
+
+/**
+ * A blurred copy of a cover, made once per cover and radius.
+ *
+ * [BitmapBlur] rather than Compose's `Modifier.blur`: that modifier is a no-op below Android 12
+ * and this module supports API 26, so a face relying on it would simply show a sharp photograph on
+ * older watches - not a degraded version of the design but a different one. The shared blur runs
+ * everywhere and is the same one the phone's preview uses, so the two agree.
+ *
+ * Keyed on the bitmap, so a track change pays for it and nothing else does. Falls back to the
+ * sharp cover if the blur throws (a recycled bitmap on a fast skip), which is wrong-looking for one
+ * frame rather than a crash. A caller whose composition needs a *minimum* amount of blur applies
+ * that floor to [radiusPx] itself - that is a property of the design, not of blurring.
+ */
+@Composable
+internal fun rememberBlurredCover(art: ImageBitmap, radiusPx: Float): ImageBitmap =
+        remember(art, radiusPx) {
+            runCatching {
+                BitmapBlur.blur(art.asAndroidBitmap(), radiusPx).asImageBitmap()
+            }.getOrDefault(art)
+        }

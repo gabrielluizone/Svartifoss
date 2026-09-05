@@ -17,7 +17,7 @@ class AlbumArtFilterTest {
     }
 
     @Test
-    fun `filter styles are plain artwork treatments with distinct matrices`() {
+    fun `legacy filter aliases remain plain while the new filter vocabulary is independent`() {
         val styles = PlayerBackgroundStyle.entries.filter {
             it.preferenceValue.startsWith("filter_")
         }
@@ -25,5 +25,11 @@ class AlbumArtFilterTest {
         assertTrue(styles.all(PlayerBackgroundStyle::isPlainArtworkTreatment))
         assertEquals(styles.size, styles.map { it.artworkFilter.matrixValues?.contentHashCode() }.toSet().size)
         assertNotEquals(AlbumArtFilter.NONE, PlayerBackgroundStyle.FILTER_WARM.artworkFilter)
+        assertEquals(AlbumArtFilter.MOSS, AlbumArtFilter.fromPreference("moss"))
+        assertEquals(AlbumArtFilter.CANDY, AlbumArtFilter.fromPreference("candy"))
+        assertEquals(AlbumArtFilter.WARM,
+                resolveAlbumArtFilter("warm", PlayerBackgroundStyle.BLACK_AND_WHITE))
+        assertEquals(AlbumArtFilter.MONOCHROME,
+                resolveAlbumArtFilter("none", PlayerBackgroundStyle.BLACK_AND_WHITE))
     }
 }

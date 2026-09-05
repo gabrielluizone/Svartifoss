@@ -1,0 +1,52 @@
+Modifications to special_elite_regular.ttf
+==========================================
+
+Required notice under Apache License 2.0, section 4(b).
+
+The bundled copies of this font (mobile/src/main/res/font/special_elite_regular.ttf
+and wear/src/main/res/font/special_elite_regular.ttf) have been modified from the
+upstream release at https://github.com/google/fonts/tree/main/apache/specialelite.
+
+Only the vertical metrics were changed. No glyph outline, character mapping, name or
+any other table was touched.
+
+  hhea.ascent          1440  ->  1734
+  hhea.descent         -608  ->  -314
+  hhea.lineGap            0  ->     0   (unchanged)
+  OS/2.sTypoAscender   1440  ->  1734
+  OS/2.sTypoDescender  -608  ->  -314
+  OS/2.sTypoLineGap       0  ->     0   (unchanged)
+  OS/2.usWinAscent     1440  ->  1962
+  OS/2.usWinDescent     608  ->   659
+
+Why
+---
+
+Every renderer centres a line of text by its line box (ascent..descent) - Compose
+measures it, a wrapped TextView is it, the phone's preview computes a baseline from
+it - so the glyphs land wherever the font places them inside that box, and this font
+placed its digits 0.144 em above the box centre. That read as a clock or a
+percentage sitting visibly high inside every pill, chip and centred container in
+the app, and it was roughly the largest such offset in the whole bundled catalogue.
+
+The correction centres the box on this font's own flat capital letters - E, F, H, I,
+L, whose ink has a genuinely flat top and bottom, unlike a round letter (O, C, G, S),
+which naturally overshoots the baseline/cap-line by design, or a swash-tailed one,
+which would pull a naive average off in one direction. That target is not arbitrary:
+it is where the well-behaved fonts in this catalogue (Inter, Poppins, Montserrat)
+already put their own box centre, to within a few thousandths of an em - so this
+brings Special Elite in line with how every other correctly-metriced font here
+already relates its box to its ink, rather than inventing a bespoke rule for one
+font.
+
+ascent + |descent| is still exactly one em (2048 units), so line height, spacing,
+wrapping and every reserved height are unchanged - only the baseline's position
+within the box moves. Digits now land 0.003 em from centre; the flat-cap band lands
+within 0.001 em.
+
+usWinAscent/usWinDescent were widened to the font's real ink extents (head.yMax/yMin),
+which they never covered upstream.
+
+The correction is pinned by BundledFontMetricsTest, so re-downloading the upstream
+file over these copies fails the build rather than silently restoring the
+misalignment.

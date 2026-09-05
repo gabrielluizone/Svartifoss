@@ -19,8 +19,48 @@
         <item>Midnight</item>
         <item>Halo</item>
         <item>Smoke blur</item>
-        <item>Sunrise</item>
-        <item>Deep ocean</item>
+        <item>Sunset</item>
+        <item>Ocean</item>
+        <item>Nebula</item>
+        <item>Ember</item>
+        <item>Tideline</item>
+        <item>Bioluminescence</item>
+        <item>Iridescent</item>
+        <item>Graphite</item>
+        <item>Cinema</item>
+        <item>Orbit</item>
+        <item>Horizon</item>
+        <item>Ink wash</item>
+        <item>Blossom</item>
+        <item>Fjord</item>
+        <item>Dot grid</item>
+        <item>Scanline</item>
+        <item>Radar</item>
+        <item>Contour lines</item>
+        <item>Faceted</item>
+        <item>Dusk</item>
+        <item>Ice</item>
+        <item>Rose</item>
+        <item>Paper</item>
+        <item>Monolith</item>
+        <item>Lantern</item>
+        <item>Noir</item>
+        <item>Velvet</item>
+        <item>Mirage</item>
+        <item>Bloom</item>
+        <item>Cloud</item>
+        <item>Nocturne</item>
+        <item>Liquid</item>
+        <item>Tidal</item>
+        <item>Vinyl</item>
+        <item>Corona</item>
+        <item>Crescent</item>
+        <item>Grid</item>
+        <item>Glass veil</item>
+        <item>Material</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Spectrum</item>
     </string-array>
     <string-array name="wear_overlay_backdrop_extra_values" translatable="false">
         <item>secondary</item>
@@ -36,6 +76,46 @@
         <item>smoke</item>
         <item>sunrise</item>
         <item>deep_ocean</item>
+        <item>nebula</item>
+        <item>ember</item>
+        <item>tideline</item>
+        <item>bioluminescence</item>
+        <item>iridescent</item>
+        <item>graphite</item>
+        <item>cinema</item>
+        <item>orbit</item>
+        <item>horizon</item>
+        <item>ink_wash</item>
+        <item>blossom</item>
+        <item>fjord</item>
+        <item>dot_matrix</item>
+        <item>scanlines</item>
+        <item>radar</item>
+        <item>contour</item>
+        <item>faceted</item>
+        <item>dusk</item>
+        <item>ice</item>
+        <item>rose</item>
+        <item>paper</item>
+        <item>monolith</item>
+        <item>lantern</item>
+        <item>noir</item>
+        <item>velvet</item>
+        <item>mirage</item>
+        <item>bloom</item>
+        <item>cloud</item>
+        <item>nocturne</item>
+        <item>liquid</item>
+        <item>tidal</item>
+        <item>vinyl</item>
+        <item>corona</item>
+        <item>crescent</item>
+        <item>grid</item>
+        <item>glass_veil</item>
+        <item>material</item>
+        <item>poster</item>
+        <item>studio</item>
+        <item>spectrum</item>
     </string-array>
 
     <string-array name="wear_volume_style_extra_entries">

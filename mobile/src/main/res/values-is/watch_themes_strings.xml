@@ -42,6 +42,8 @@
     <string name="online_theme_refresh">Endurnýja samfélagsþemu</string>
     <string name="online_theme_list_description">Úrþemu búin til af samfélaginu</string>
     <string name="online_theme_byline">Eftir %1$s</string>
+    <string name="online_theme_filter_author">Þemu eftir %1$s</string>
+    <string name="online_theme_filter_author_selected">Sýnir þemu eftir %1$s</string>
     <string name="online_theme_row_description">%1$s eftir %2$s. %3$s uppsetning.</string>
     <string name="online_theme_apply">Bæta við og nota</string>
     <string name="online_theme_loading">Hleð inn samfélagsþemum…</string>
@@ -81,4 +83,27 @@
     <string name="online_theme_filter_not_installed_off">Þemu sem þú hefur þegar bætt við eru sýnd</string>
     <string name="online_theme_search_empty_all_installed">Þú hefur þegar bætt við öllum samfélagsþemum.</string>
     <string name="online_theme_search_empty_all_installed_hint">Slökktu á „Nýtt fyrir mig“ til að sjá þau aftur.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Mest sótt</string>
+    <string name="online_theme_sort_most_downloaded_short">Niðurhal</string>
+    <string name="community_theme_detail_downloads">Niðurhal</string>
+    <string name="community_theme_report_action">Tilkynna þema</string>
+    <string name="community_theme_report_already">Þema tilkynnt</string>
+    <string name="community_theme_report_description">Tilkynna „%1$s“ til umsjónarmanna</string>
+    <string name="community_theme_report_title">Tilkynna þetta þema</string>
+    <string name="community_theme_report_intro">Segðu umsjónarmönnum hvað er að þessu þema.</string>
+    <string name="community_theme_report_reason_inappropriate">Móðgandi eða óviðeigandi efni</string>
+    <string name="community_theme_report_reason_impersonation">Gefið út sem verk annars</string>
+    <string name="community_theme_report_reason_misleading">Passar ekki við það sem sýnt er</string>
+    <string name="community_theme_report_reason_illegible">Ónothæft á úrinu</string>
+    <string name="community_theme_report_reason_spam">Ruslpóstur eða tvítak</string>
+    <string name="community_theme_report_reason_other">Eitthvað annað</string>
+    <string name="community_theme_report_details_hint">Annað sem umsjónarmenn ættu að vita (valfrjálst)</string>
+    <string name="community_theme_report_privacy">Aðeins umsjónarmenn lesa tilkynninguna þína. Höfundinum er aldrei sagt hver sendi hana.</string>
+    <string name="community_theme_report_submit">Senda tilkynningu</string>
+    <string name="community_theme_report_sent">Tilkynning send. Umsjónarmenn munu skoða þetta þema.</string>
+    <string name="community_theme_report_already_sent">Þú hefur þegar tilkynnt þetta þema.</string>
+    <string name="community_theme_report_not_ready">Ekki er hægt að tilkynna þetta þema enn. Reyndu aftur síðar.</string>
+    <string name="community_theme_report_error">Ekki tókst að senda tilkynninguna. Athugaðu tenginguna og reyndu aftur.</string>
 </resources>

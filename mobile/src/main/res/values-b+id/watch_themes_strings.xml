@@ -42,6 +42,8 @@
     <string name="online_theme_refresh">Muat ulang tema komunitas</string>
     <string name="online_theme_list_description">Tema jam tangan buatan komunitas</string>
     <string name="online_theme_byline">Oleh %1$s</string>
+    <string name="online_theme_filter_author">Tema oleh %1$s</string>
+    <string name="online_theme_filter_author_selected">Menampilkan tema oleh %1$s</string>
     <string name="online_theme_row_description">%1$s oleh %2$s. Tata letak %3$s.</string>
     <string name="online_theme_apply">Tambahkan dan terapkan</string>
     <string name="online_theme_loading">Memuat tema komunitas…</string>
@@ -81,4 +83,27 @@
     <string name="online_theme_filter_not_installed_off">Menampilkan tema yang sudah Anda tambahkan</string>
     <string name="online_theme_search_empty_all_installed">Anda sudah menambahkan semua tema komunitas.</string>
     <string name="online_theme_search_empty_all_installed_hint">Matikan “Baru bagi saya” untuk melihatnya lagi.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Paling banyak diunduh</string>
+    <string name="online_theme_sort_most_downloaded_short">Unduhan</string>
+    <string name="community_theme_detail_downloads">Unduhan</string>
+    <string name="community_theme_report_action">Laporkan tema</string>
+    <string name="community_theme_report_already">Tema dilaporkan</string>
+    <string name="community_theme_report_description">Laporkan “%1$s” ke moderator</string>
+    <string name="community_theme_report_title">Laporkan tema ini</string>
+    <string name="community_theme_report_intro">Beri tahu moderator apa yang salah dengan tema ini.</string>
+    <string name="community_theme_report_reason_inappropriate">Konten kasar atau tidak pantas</string>
+    <string name="community_theme_report_reason_impersonation">Diakui sebagai milik orang lain</string>
+    <string name="community_theme_report_reason_misleading">Tidak sesuai dengan yang ditampilkan</string>
+    <string name="community_theme_report_reason_illegible">Tidak bisa dipakai di jam tangan</string>
+    <string name="community_theme_report_reason_spam">Spam atau duplikat</string>
+    <string name="community_theme_report_reason_other">Alasan lain</string>
+    <string name="community_theme_report_details_hint">Hal lain yang perlu diketahui moderator (opsional)</string>
+    <string name="community_theme_report_privacy">Hanya moderator yang membaca laporan Anda. Pembuatnya tidak pernah diberi tahu siapa pengirimnya.</string>
+    <string name="community_theme_report_submit">Kirim laporan</string>
+    <string name="community_theme_report_sent">Laporan terkirim. Moderator akan memeriksa tema ini.</string>
+    <string name="community_theme_report_already_sent">Anda sudah melaporkan tema ini.</string>
+    <string name="community_theme_report_not_ready">Tema ini belum bisa dilaporkan. Coba lagi nanti.</string>
+    <string name="community_theme_report_error">Laporan tidak terkirim. Periksa koneksi Anda dan coba lagi.</string>
 </resources>

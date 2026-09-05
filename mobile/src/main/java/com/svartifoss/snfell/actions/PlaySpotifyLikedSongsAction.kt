@@ -25,6 +25,8 @@ class PlaySpotifyLikedSongsAction : SelectableAction {
     override val defaultIcon: Drawable
         get() = AppCompatResources.getDrawable(
                 context, com.svartifoss.snfell.common.R.drawable.action_liked_songs)!!
+    override val remoteUri: String
+        get() = PlayPlaylistShortcutAction(context, title, LIKED_SONGS_URI).remoteUri
 
     class Handler @Inject constructor(private val service: MusicService) :
             ActionHandler<PlaySpotifyLikedSongsAction> {

@@ -389,22 +389,23 @@ object QueueArtworkResolver {
     private const val THUMBNAIL_REQUEST_PX = 512
 
     /**
-     * Downloads a remote cover once and reuses it from disk afterwards. Shares
-     * [ShortcutArtworkStore] with the shortcut thumbnails: it is a plain URL-keyed PNG cache with
-     * no notion of what a "shortcut" is, so a second parallel cache would buy nothing.
+     * Downloads a remote cover once and reuses it from disk afterwards, through
+     * [RemoteArtworkCache]. That cache used to be [ShortcutArtworkStore] - both are plain
+     * URL-keyed PNG caches - until the difference in what they *hold* proved to matter more than
+     * the shape they share; [RemoteArtworkCache] records why.
      */
     private suspend fun remoteArtwork(context: Context, uri: Uri, targetPx: Int): Bitmap? {
         // The rewritten URL is also the cache key, so a queue that later asks for a larger size
         // fetches it rather than reusing the smaller cached copy under the original address.
         val key = sizedArtworkUrl(uri.toString(), targetPx)
-        ShortcutArtworkStore.get(context, key)?.let { cached ->
+        RemoteArtworkCache.get(context, key)?.let { cached ->
             BitmapFactory.decodeByteArray(cached, 0, cached.size)?.let { return it }
         }
         return withContext(Dispatchers.IO) {
             val bytes = download(key) ?: return@withContext null
             val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                     ?: return@withContext null
-            ShortcutArtworkStore.put(context, key, bytes)
+            RemoteArtworkCache.put(context, key, bytes)
             bitmap
         }
     }

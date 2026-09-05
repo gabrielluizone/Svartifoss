@@ -35,7 +35,9 @@ import com.svartifoss.snfell.view.actionlist.ActionListFragment
 import com.svartifoss.snfell.view.buttonconfig.ControlsFragment
 import com.svartifoss.snfell.view.settings.SettingsHomeFragment
 import com.svartifoss.snfell.view.settings.SettingsSearchActivity
+import androidx.activity.result.contract.ActivityResultContracts
 import com.svartifoss.snfell.view.watchface.WatchFaceFragment
+import com.svartifoss.snfell.view.watchface.theme.OnlineThemesActivity
 import android.graphics.Bitmap
 import android.widget.SeekBar
 import android.widget.ImageButton
@@ -86,6 +88,21 @@ class MainActivity : WearCompanionPhoneActivity(),
     private lateinit var binding: ActivityMainBinding
 
     private var currentFragment: Fragment? = null
+
+    /**
+     * The community gallery, opened from the toolbar rather than through the Watch tab.
+     *
+     * Started for a result for the one thing that route skips: the gallery installs and applies a
+     * theme itself, and the Watch tab - which may be the very screen underneath - has its own
+     * preference listener unregistered while another Activity is in front. So it is told directly
+     * on the way back, exactly as the themes screen already tells it.
+     */
+    private val communityGalleryLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            (currentFragment as? WatchFaceFragment)?.onThemeLibraryChanged()
+        }
+    }
 
     /** (tab, section, preference key) a settings-search result is waiting to land on. */
     private var pendingSearchTarget: Triple<String, String, String>? = null
@@ -430,6 +447,11 @@ class MainActivity : WearCompanionPhoneActivity(),
                         SettingsSearchActivity.createIntent(this), REQUEST_CODE_SETTINGS_SEARCH)
                 return true
             }
+            R.id.menu_community_themes -> {
+                communityGalleryLauncher.launch(
+                        Intent(this, OnlineThemesActivity::class.java))
+                return true
+            }
             R.id.menu_help -> {
                 startActivity(Intent(this, HelpActivity::class.java))
                 return true
@@ -721,19 +743,19 @@ class MainActivity : WearCompanionPhoneActivity(),
 
     private fun updateMiniPlayerPlayState(state: PlaybackState?) {
         val playing = state?.isPlaying() == true
-        binding.miniPlayPause.setImageResource(
-            if (playing) R.drawable.ic_nav_stopped else R.drawable.ic_nav_playing
-        )
-        binding.miniPlayPause.contentDescription = getString(
-            if (playing) R.string.action_pause else R.string.action_play
-        )
+        val icon = if (playing) R.drawable.ic_nav_stopped else R.drawable.ic_nav_playing
+        // The label has to move with the icon, not just accompany it: a button that reads
+        // "Play" while showing a pause glyph is worse for a screen reader than an unlabelled
+        // one. The details dialog carried the icon swap alone until it was given a label at all.
+        val label = getString(if (playing) R.string.action_pause else R.string.action_play)
+        binding.miniPlayPause.setImageResource(icon)
+        binding.miniPlayPause.contentDescription = label
         updatePlayFabVisibility(state)
 
         // Update dialog play/pause button if showing
         if (mediaDetailsDialog?.isShowing == true) {
-            detailPlayPause?.setImageResource(
-                if (playing) R.drawable.ic_nav_stopped else R.drawable.ic_nav_playing
-            )
+            detailPlayPause?.setImageResource(icon)
+            detailPlayPause?.contentDescription = label
         }
     }
 

@@ -177,6 +177,139 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!--
+                The attach slot. Its explanation sits above the button on purpose: what becomes
+                public, and that Git history keeps it, has to be readable before the picker opens
+                rather than behind a policy link.
+            -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                app:cardBackgroundColor="@color/lyra_surface"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/lyra_divider"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <FrameLayout
+                            android:layout_width="96dp"
+                            android:layout_height="96dp">
+
+                            <!-- Round, because the gallery draws it round: what is approved here
+                                 is what a visitor sees. -->
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:id="@+id/submission_screenshot"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/lyra_background"
+                                android:contentDescription="@string/community_theme_submit_screenshot_description"
+                                android:scaleType="centerCrop"
+                                android:visibility="gone"
+                                app:shapeAppearanceOverlay="@style/ShapeAppearance.Svartifoss.Circle" />
+
+                            <TextView
+                                android:id="@+id/submission_screenshot_empty"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/community_theme_screenshot_slot"
+                                android:fontFamily="@font/google_sans"
+                                android:gravity="center"
+                                android:includeFontPadding="false"
+                                android:padding="8dp"
+                                android:text="@string/community_theme_submit_screenshot_optional"
+                                android:textColor="@color/lyra_text_secondary"
+                                android:textSize="12sp" />
+
+                        </FrameLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/google_sans"
+                                android:includeFontPadding="false"
+                                android:text="@string/community_theme_submit_screenshot_title"
+                                android:textColor="@color/lyra_on_surface"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/submission_screenshot_status"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:fontFamily="@font/google_sans"
+                                android:includeFontPadding="false"
+                                android:lineSpacingExtra="2dp"
+                                android:text="@string/community_theme_submit_screenshot_placeholder"
+                                android:textColor="@color/lyra_text_secondary"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:fontFamily="@font/google_sans"
+                        android:includeFontPadding="false"
+                        android:lineSpacingExtra="2dp"
+                        android:text="@string/community_theme_submit_screenshot_intro"
+                        android:textColor="@color/lyra_text_secondary"
+                        android:textSize="12sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_choose_screenshot"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:text="@string/community_theme_submit_screenshot_add"
+                            android:textSize="13sp" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/button_remove_screenshot"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:text="@string/community_theme_submit_screenshot_remove"
+                            android:textSize="13sp"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/anonymous_author_switch"
                 android:layout_width="match_parent"

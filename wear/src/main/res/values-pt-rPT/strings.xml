@@ -76,10 +76,19 @@
     <string name="action_name_play_pause">Reproduzir/Pausar</string>
     <string name="action_name_stop">Parar</string>
     <string name="action_name_restart">Reiniciar faixa</string>
+    <string name="action_name_fast_forward">Avanço rápido</string>
+    <string name="action_name_rewind">Recuar</string>
+    <string name="action_name_set_speed">Definir velocidade</string>
+    <string name="action_name_seek_position">Ir para posição da faixa</string>
     <string name="action_name_seek">Percorrer a faixa</string>
     <string name="action_name_mute">Sem som</string>
+    <string name="action_name_set_volume">Definir volume</string>
+    <string name="action_name_set_shuffle">Definir modo aleatório</string>
+    <string name="action_name_set_repeat">Definir repetição</string>
     <string name="action_name_search">Procurar</string>
     <string name="action_name_custom">Ação personalizada</string>
+    <string name="action_name_open_face_picker">Abrir seletor de mostrador</string>
+    <string name="action_name_close_watch_app">Fechar aplicação no relógio</string>
     <string name="state_on">Ligado</string>
     <string name="state_off">Desligado</string>
 

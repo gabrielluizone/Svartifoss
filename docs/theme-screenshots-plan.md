@@ -256,9 +256,18 @@ that door open.
 **A slot for AOD.** See §4.1: it cannot be captured, so the slot could only ever hold something
 else. Permanently excluded.
 
-**Screenshots on the gallery cards.** Would turn scrolling the grid into N image downloads and
-destroy "the whole gallery stays one cached request". Cards stay synthetic; §10 keeps the question
-open.
+**~~Screenshots on the gallery cards.~~ Reversed (2026-09-01): the premise was wrong.** The stated
+objection was that per-card images would turn scrolling into N downloads and destroy "the whole
+gallery stays one cached request". The gallery has never been one request:
+`OnlineThemesActivity.loadPreview` already fetches `docs/themes/<id>.json` for **every visible
+card**, lazily on bind, so the miniature has a profile to render. Adding one image fetch per card
+that declares a photograph is the same shape of work against the same disk cache — and the profile
+the card already downloads is exactly what declares whether a photograph exists, so the index still
+does not need to carry it.
+
+What the objection got right is that the cost is per visible row, which is why the load stays lazy
+and cached rather than eager. The photograph is drawn over the miniature, so the render remains
+underneath and the setting can reveal it again with no reload.
 
 **Dropping the surface dimension now that there is one surface.** Saves a path segment and a JSON
 array today, and converts §10 from an additive change into a migration of every published theme.
@@ -475,10 +484,10 @@ screen has ever been in its scope, and widening it is a separate decision from t
   opened — unlike `queue_remote_artwork`, though, off here degrades nothing, so the opt-in argument
   is available and this is a defensible place to change one's mind. It is a privacy-doc-relevant
   default either way.
-- **Whether a card may ever use the author's screenshot.** Kept out of v1 (§5). Worth revisiting
-  only with a measurement of what it does to grid scrolling and to catalogue traffic. Note it is now
-  a *more* tempting idea than it was, since the one image a theme has is exactly the one a card
-  would want.
+- ~~**Whether a card may ever use the author's screenshot.**~~ **Answered (2026-09-01): yes, and it
+  shipped.** Reading the gallery to cost it out showed the reason for deferring it was false — see
+  §5. Worth remembering as a method note: the objection had been written from the design rather
+  than from the code, and it survived two review passes because it sounded right.
 - **Whether 450×450 at quality 85 survives contact with real submissions.** It is sized against §8's
   table and a detail card that may render larger on a high-density phone. Calibrate on real images
   before the number is baked into a hundred published themes.

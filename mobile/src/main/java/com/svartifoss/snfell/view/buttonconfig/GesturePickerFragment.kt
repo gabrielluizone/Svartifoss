@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.view.buttonconfig
 
+import android.content.res.ColorStateList
 import android.Manifest
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -18,6 +19,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentContainerView
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.view.settings.lyraRuntimeAccent
 import com.svartifoss.snfell.actions.NullAction
 import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.common.CenterButton
@@ -48,18 +50,25 @@ class GesturePickerFragment : DialogFragment() {
         private const val PARAM_BUTTON_NAME = "ButtonName"
         private const val PARAM_SUPPORTS_LONG_PRESS = "SupportsLongPress"
         private const val PARAM_SINGLE_ACTION_ONLY = "SingleActionOnly"
+        private const val PARAM_NOTE = "InputNote"
 
         private const val REQUEST_CODE_PICK_ACTION = 5891
         private const val REQUEST_CODE_PICK_ACTION_TO = REQUEST_CODE_PICK_ACTION + NUM_BUTTON_GESTURES
 
         private const val REQUEST_CODE_PICK_ICON = 5991
 
+        /**
+         * [note] explains an input whose behaviour its name cannot carry, shown above the
+         * assignment. Supplied by the caller because the caller is the side holding what the
+         * watch actually reported about this input.
+         */
         fun newInstance(
             setsPlaybackButtons: Boolean,
             baseButtonInfo: ButtonInfo,
             buttonName: String,
             supportsLongPress: Boolean,
-            singleActionOnly: Boolean = false
+            singleActionOnly: Boolean = false,
+            note: CharSequence? = null
         ): GesturePickerFragment {
             val fragment = GesturePickerFragment()
 
@@ -69,6 +78,7 @@ class GesturePickerFragment : DialogFragment() {
             args.putString(PARAM_BUTTON_NAME, buttonName)
             args.putBoolean(PARAM_SUPPORTS_LONG_PRESS, supportsLongPress)
             args.putBoolean(PARAM_SINGLE_ACTION_ONLY, singleActionOnly)
+            args.putCharSequence(PARAM_NOTE, note)
 
             fragment.arguments = args
             return fragment
@@ -149,6 +159,17 @@ class GesturePickerFragment : DialogFragment() {
         updateButton(buttons.elementAt(2), GESTURE_LONG_TAP)
 
         binding.customizeIcon.isVisible = !baseButtonInfo.physicalButton
+        // Both of the chip's colours are @color/lyra_accent in the layout, which is the *static*
+        // sage rather than whatever accent is on screen - so under a custom or album-derived one
+        // it was the only green thing in the picker, and it is the control that opens the icon
+        // grid. Lifted against the popup's own surface, since a very light album colour needs
+        // more of a push there than it does on the page behind it.
+        val chipAccent = com.svartifoss.snfell.view.LyraAccent.contrastSafe(
+                lyraRuntimeAccent(),
+                ContextCompat.getColor(requireContext(), R.color.lyra_surface),
+                minimumContrast = 4.5)
+        binding.customizeIcon.setTextColor(chipAccent)
+        binding.customizeIcon.iconTint = ColorStateList.valueOf(chipAccent)
 
         binding.longPressDescription.isVisible = supportsLongPress
         binding.longPressButton.isVisible = supportsLongPress
@@ -163,6 +184,10 @@ class GesturePickerFragment : DialogFragment() {
         // (double tap opens the quick panel) - call that out since nothing else on screen does.
         binding.centerButtonNote.isVisible =
                 !baseButtonInfo.physicalButton && baseButtonInfo.buttonCode == CenterButton.TAP
+
+        val note = requireArguments().getCharSequence(PARAM_NOTE)
+        binding.inputNote.text = note
+        binding.inputNote.isVisible = !note.isNullOrBlank()
 
         binding.customizeIcon.setOnClickListener { startIconSelection() }
         binding.singlePressButton.setOnClickListener { changeAction(GESTURE_SINGLE_TAP) }

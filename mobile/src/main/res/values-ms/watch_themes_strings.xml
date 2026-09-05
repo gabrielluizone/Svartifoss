@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Segarkan tema komuniti</string>
     <string name="online_theme_list_description">Tema jam tangan ciptaan komuniti</string>
     <string name="online_theme_byline">Oleh %1$s</string>
+    <string name="online_theme_filter_author">Tema oleh %1$s</string>
+    <string name="online_theme_filter_author_selected">Menunjukkan tema oleh %1$s</string>
     <string name="online_theme_row_description">%1$s oleh %2$s. Reka letak %3$s.</string>
     <string name="online_theme_apply">Tambah dan gunakan</string>
     <string name="online_theme_loading">Memuatkan tema komuniti…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Menunjukkan tema yang telah anda tambah</string>
     <string name="online_theme_search_empty_all_installed">Anda telah menambah semua tema komuniti.</string>
     <string name="online_theme_search_empty_all_installed_hint">Matikan “Baharu bagi saya” untuk melihatnya semula.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Paling banyak dimuat turun</string>
+    <string name="online_theme_sort_most_downloaded_short">Muat turun</string>
+    <string name="community_theme_detail_downloads">Muat turun</string>
+    <string name="community_theme_report_action">Laporkan tema</string>
+    <string name="community_theme_report_already">Tema dilaporkan</string>
+    <string name="community_theme_report_description">Laporkan “%1$s” kepada moderator</string>
+    <string name="community_theme_report_title">Laporkan tema ini</string>
+    <string name="community_theme_report_intro">Beritahu moderator apa yang tidak kena dengan tema ini.</string>
+    <string name="community_theme_report_reason_inappropriate">Kandungan kesat atau tidak sesuai</string>
+    <string name="community_theme_report_reason_impersonation">Diakui sebagai milik orang lain</string>
+    <string name="community_theme_report_reason_misleading">Tidak sepadan dengan yang dipaparkan</string>
+    <string name="community_theme_report_reason_illegible">Tidak boleh digunakan pada jam tangan</string>
+    <string name="community_theme_report_reason_spam">Spam atau pendua</string>
+    <string name="community_theme_report_reason_other">Sebab lain</string>
+    <string name="community_theme_report_details_hint">Perkara lain yang perlu diketahui moderator (pilihan)</string>
+    <string name="community_theme_report_privacy">Hanya moderator membaca laporan anda. Penciptanya tidak pernah diberitahu siapa yang menghantarnya.</string>
+    <string name="community_theme_report_submit">Hantar laporan</string>
+    <string name="community_theme_report_sent">Laporan dihantar. Moderator akan menyemak tema ini.</string>
+    <string name="community_theme_report_already_sent">Anda sudah melaporkan tema ini.</string>
+    <string name="community_theme_report_not_ready">Tema ini belum boleh dilaporkan. Cuba lagi nanti.</string>
+    <string name="community_theme_report_error">Laporan anda tidak dapat dihantar. Semak sambungan dan cuba lagi.</string>
 </resources>

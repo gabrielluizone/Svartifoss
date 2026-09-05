@@ -1,0 +1,50 @@
+Modifications to bebas_neue_regular.ttf
+=======================================
+
+The SIL Open Font License permits modification and does not require this notice,
+but it is recorded for the same reason `special-elite/MODIFICATIONS.txt` in this
+repository is: a binary font file carries no diff, so without a written record a
+future re-download of the upstream release would silently undo the fix.
+
+The bundled copies of this font (mobile/src/main/res/font/bebas_neue_regular.ttf
+and wear/src/main/res/font/bebas_neue_regular.ttf) have been modified from the
+upstream release at https://github.com/google/fonts/tree/main/ofl/bebasneue. Only
+the vertical metrics were changed; no glyph outline, character mapping, name table
+or Reserved Font Name was touched.
+
+  hhea.ascent           900  ->   950
+  hhea.descent         -300  ->  -250
+  hhea.lineGap            0  ->     0   (unchanged)
+  OS/2.sTypoAscender    900  ->   950
+  OS/2.sTypoDescender  -300  ->  -250
+  OS/2.sTypoLineGap       0  ->     0   (unchanged)
+  OS/2.usWinAscent      950  ->   912
+  OS/2.usWinDescent     350  ->   200
+
+Why
+---
+
+Every renderer centres a line of text by its line box. This is an all-capitals
+display face - its lowercase letters render as the same glyphs as their capitals,
+so there is no separate "which case" question here the way there is for most
+fonts - and its box centre sat 0.050 em below its own capital letters, which reads
+as text sitting low in a centred pill or chip.
+
+The correction centres the box on the font's flat capital letters - E, F, H, I, L,
+which for this font are also its lowercase and its digits (all three measure the
+same, since every character sits on the identical capital-height grid).
+
+ascent + |descent| is unchanged (1200 units in this font's 1000-unit em - the
+extra headroom above one em is original to this font, not something this fix
+introduced), so line height, spacing, wrapping and every reserved height are the
+same as upstream; only where the ink sits inside that box moves. The flat-cap band
+now lands within 0.0001 em of the box centre, and every realistic descender still
+clears the new descent line by 0.10 em (this face has none of its own - g, j, p, q
+and y all sit on the capital baseline with no true descender - so the margin comes
+entirely from other Latin diacritics).
+
+usWinAscent/usWinDescent were narrowed to the font's real ink extents
+(head.yMax/yMin).
+
+Pinned by BundledFontMetricsTest, so a re-download from upstream fails the build
+rather than silently reverting the fix.

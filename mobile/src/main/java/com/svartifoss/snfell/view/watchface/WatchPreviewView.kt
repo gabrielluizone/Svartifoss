@@ -32,6 +32,7 @@ import timber.log.Timber
 import com.svartifoss.snfell.view.settings.WatchFontCatalog
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeProfile
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeValue
+import com.svartifoss.snfell.common.AlbumFillSlot
 import com.svartifoss.snfell.common.ActivityVisibility
 import com.svartifoss.snfell.common.AodArtTreatment
 import com.svartifoss.snfell.common.AppearanceContext
@@ -43,6 +44,7 @@ import com.svartifoss.snfell.common.MiniButtonPlacement
 import com.svartifoss.snfell.common.MiniButtonSurfaces
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.OverlayBackdrop
+import com.svartifoss.snfell.common.OverlayBackdropPatterns
 import com.svartifoss.snfell.common.OverlayBackdropResolver
 import com.svartifoss.snfell.common.PaletteTransforms
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
@@ -52,6 +54,14 @@ import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.common.SHADING_MAX_PERCENT
 import com.svartifoss.snfell.common.QuickPanelButtons
 import com.svartifoss.snfell.common.ScreenQuadrant
+import com.svartifoss.snfell.common.SeekMarkerVisibility
+import com.svartifoss.snfell.common.TextBackdropSpec
+import com.svartifoss.snfell.common.TextBackdropStyle
+import com.svartifoss.snfell.common.TextOutlineSpec
+import com.svartifoss.snfell.common.TextOutlineStyle
+import com.svartifoss.snfell.common.TextShadowColorMode
+import com.svartifoss.snfell.common.TextShadowSpec
+import com.svartifoss.snfell.common.TextShadowStyle
 import com.svartifoss.snfell.common.ScreenTheme as SharedScreenTheme
 import com.svartifoss.snfell.common.ScreenThemeTokens
 import com.svartifoss.snfell.common.SpecialEliteKeywordPolicy
@@ -80,6 +90,7 @@ import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.TitleTextMode
 import com.svartifoss.snfell.common.TrackMetadataFields
 import com.svartifoss.snfell.common.resolveAodArtwork
+import com.svartifoss.snfell.common.resolveAlbumArtFilter
 import com.svartifoss.snfell.common.R as commonR
 import kotlin.math.asin
 import kotlin.math.atan2
@@ -90,6 +101,7 @@ import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.math.sqrt
 import kotlin.math.tanh
+import com.svartifoss.snfell.view.NEUTRAL_WATCH_ACCENT
 
 /**
  * Live miniature of the watch's now-playing screen, driving the "Watch face" customization tab.
@@ -124,7 +136,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
     private companion object {
         /** WatchTheme.ACCENT_DEFAULT on the wear side - the static "neutral" accent. */
-        const val ACCENT_NEUTRAL = 0xFF87A89F.toInt()
+        const val ACCENT_NEUTRAL = NEUTRAL_WATCH_ACCENT
 
         /** Fixed "palette-extracted" accent of the generated sample art below. */
         const val SAMPLE_ALBUM_ACCENT = 0xFFD98E76.toInt()
@@ -262,6 +274,16 @@ class WatchPreviewView @JvmOverloads constructor(
         private val VERSE_BAND_CENTER = FaceGeometry.Verse.BAND_CENTER
         const val VERSE_PREVIEW_LINE_PROGRESS = 0.55f
 
+        /**
+         * The always-on styles whose watch composable paints its own black canvas.
+         *
+         * Carousel keeps the cover as a single card; Ribbon, Frame, Chat, Split and Note draw no
+         * artwork at all in ambient. Either way the host's full-screen AOD backdrop never reaches
+         * the screen on the wrist, so the miniature must not draw one.
+         */
+        private val AOD_STYLES_OVER_BLACK =
+                setOf("ribbon", "frame", "carousel", "chat", "split", "note")
+
         private val METADATA_TABLE_HEIGHT_FRACTION = FaceGeometry.Metadata.TABLE_HEIGHT_FRACTION
         private val METADATA_ROW_HEIGHT_DP = FaceGeometry.Metadata.ROW_HEIGHT_DP
         private val METADATA_MIN_ROWS = FaceGeometry.Metadata.MIN_ROWS
@@ -386,6 +408,7 @@ class WatchPreviewView @JvmOverloads constructor(
     private var wearLyricsFontKey = WatchTypography.LYRICS_FONT_FOLLOW
     private var wearTrackTimeFontKey = WatchTypography.TRACK_TIME_FONT_FOLLOW
     private var artStyle = "cover"
+    private var artFilter = "none"
     private var accentFloor = AccentFloorStyle.DEFAULT
     /**
      * The resolved background stack - see [BackgroundLayerStack].
@@ -418,6 +441,12 @@ class WatchPreviewView @JvmOverloads constructor(
     private var titleTypographySpec = WatchTypography.IDENTITY_TEXT
     private var clockTypographySpec = WatchTypography.IDENTITY_TEXT
     private var artistTypographySpec = WatchTypography.IDENTITY_TEXT
+    private var titleShadowSpec = TextShadowSpec.NONE
+    private var artistShadowSpec = TextShadowSpec.NONE
+    private var titleOutlineSpec = TextOutlineSpec.NONE
+    private var artistOutlineSpec = TextOutlineSpec.NONE
+    private var titleBackdropSpec = TextBackdropSpec.NONE
+    private var artistBackdropSpec = TextBackdropSpec.NONE
     private var trackTimeTypographySpec = WatchTypography.IDENTITY_TEXT
     private var sourceIconTypographySpec = WatchTypography.IDENTITY_ICON
     private var flexAxesSpec = WatchTypography.IDENTITY_FLEX_AXES
@@ -437,6 +466,7 @@ class WatchPreviewView @JvmOverloads constructor(
     private var carouselCardShape = "rounded"
     private var noteCoverShape = "circle"
     private var noteShowCover = true
+    private var titleCentered = false
     private var chatCoverShape = "circle"
     private var chatShowCover = true
     private var metadataCoverShape = "rounded"
@@ -452,6 +482,14 @@ class WatchPreviewView @JvmOverloads constructor(
     private var progressStyle = "solid"
     private var progressLayout = "edge"
     private var trackTimeMode = "always"
+    private var seekMarker = "drag"
+
+    /** Mirrors MainActivity.MIN_SHADOW_LAYER_RADIUS_PX; see [applyTrackTextShadow]. */
+    private val MIN_SHADOW_LAYER_RADIUS_PX = 0.01f
+
+    /** Mirrors CircularProgressSeekBar.MARKER_WIDTH_DP / MARKER_LENGTH_SCALE. */
+    private val EDGE_MARKER_WIDTH_DP = 2.5f
+    private val EDGE_MARKER_LENGTH_SCALE = 2.4f
     private var titleTextMode = "smart"
     private var alwaysShowTime = false
     private var clockColorMode = "white"
@@ -535,6 +573,11 @@ class WatchPreviewView @JvmOverloads constructor(
     private fun trackTextTypeface(title: Boolean, bold: Boolean): Typeface? {
         val spec = if (title) titleTypographySpec else artistTypographySpec
         textPaint.letterSpacing = spec.trackingEm
+        // The one place both elements pass through, which is why the shadow is applied here rather
+        // than at each of the two dozen call sites that draw a title. It is paired with
+        // [resetTrackTextPaint], and onDraw clears it once per frame so a caller that forgets the
+        // reset can never carry a shadow into the next frame's unrelated text.
+        applyTrackTextShadow(if (title) titleShadowSpec else artistShadowSpec)
         if (SpecialEliteKeywordPolicy.matches(
                 displayTitle(),
                 if (isPlayingShown()) displayArtist() else "")) {
@@ -552,6 +595,115 @@ class WatchPreviewView @JvmOverloads constructor(
         val base = trackTextFontBase(title) ?: return styledPreviewTypeface(
                 if (bold) fontBold else fontRegular, bold, spec)
         return styledPreviewTypeface(base, bold, spec)
+    }
+
+    /**
+     * Puts one element's shadow on the shared text paint, mirroring the watch's
+     * `applyClassicTextShadows`.
+     *
+     * A zero radius means *no shadow layer at all* to `Paint`, not a hard-edged one, so a style
+     * with no blur of its own still has to ask for a hair of it - otherwise the Hard preset would
+     * silently draw nothing.
+     */
+    private fun applyTrackTextShadow(spec: TextShadowSpec) {
+        if (spec.isNone) {
+            textPaint.clearShadowLayer()
+            return
+        }
+        val density = resources.displayMetrics.density
+        val base = TextShadowSpec.resolveColor(
+                spec.colorMode,
+                spec.customColor,
+                // The face-wide primary, so an "album" shadow wears the same treatment, hue shift
+                // and modifier as everything else on screen - the watch resolves it against exactly
+                // this value.
+                albumAccent().takeIf { it != 0 })
+        textPaint.setShadowLayer(
+                (spec.radiusDp * density).coerceAtLeast(MIN_SHADOW_LAYER_RADIUS_PX),
+                0f,
+                spec.offsetDp * density,
+                ColorUtils.setAlphaComponent(base, (spec.alpha * 255f).toInt().coerceIn(0, 255)))
+    }
+
+    /**
+     * Runs [draw] twice when an outline is configured - stroke first, then the fill - mirroring
+     * the watch's two passes.
+     *
+     * The stroke width resolves against `textPaint.textSize`, so this has to run *after* the
+     * caller has set the size it settled on; both entry points do. Style, width and colour are put
+     * back before the fill pass, so [draw] never has to know which pass it is in.
+     */
+    /**
+     * Fills the box one line of text occupies, mirroring `OutlineTextView.drawTextBackdrop` and
+     * Compose's `TextStyle.background`.
+     *
+     * Uses the paint's own font metrics rather than the glyph bounds, so the box runs from the
+     * line's top to its bottom exactly as the other two renderers' line boxes do - measuring the
+     * glyphs would hug the letters and read as a different effect on the phone than on the wrist.
+     */
+    private fun drawTrackTextBackdrop(
+            canvas: Canvas,
+            spec: TextBackdropSpec,
+            text: String,
+            x: Float,
+            baselineY: Float
+    ) {
+        if (spec.isNone) return
+        val width = textPaint.measureText(text)
+        val left = when (textPaint.textAlign) {
+            Paint.Align.LEFT -> x
+            Paint.Align.RIGHT -> x - width
+            else -> x - width / 2f
+        }
+        val metrics = textPaint.fontMetrics
+        fillPaint.shader = null
+        fillPaint.color = ColorUtils.setAlphaComponent(
+                TextBackdropSpec.resolveColor(
+                        spec.colorMode,
+                        spec.customColor,
+                        albumAccent().takeIf { it != 0 }),
+                (spec.alpha * 255f).toInt().coerceIn(0, 255))
+        canvas.drawRect(
+                left,
+                baselineY + metrics.top,
+                left + width,
+                baselineY + metrics.bottom,
+                fillPaint)
+    }
+
+    private inline fun withTrackTextOutline(spec: TextOutlineSpec, draw: () -> Unit) {
+        if (spec.isNone) {
+            draw()
+            return
+        }
+        val fillColor = textPaint.color
+        textPaint.style = Paint.Style.STROKE
+        textPaint.strokeWidth = spec.strokeWidthPx(
+                textPaint.textSize,
+                resources.displayMetrics.density)
+        textPaint.strokeJoin = Paint.Join.ROUND
+        textPaint.color = TextOutlineSpec.resolveColor(
+                spec.colorMode,
+                spec.customColor,
+                albumAccent().takeIf { it != 0 })
+        draw()
+
+        textPaint.style = Paint.Style.FILL
+        textPaint.color = fillColor
+        // The shadow rides the stroke pass alone, as it does on the watch: one cast by the fill
+        // would sit inside its own outline and never be seen.
+        textPaint.clearShadowLayer()
+        draw()
+    }
+
+    /** Returns the shared paint to its neutral track-text state. Both halves have to be undone:
+     *  a stale shadow is far louder than stale letter spacing. */
+    private fun resetTrackTextPaint() {
+        textPaint.letterSpacing = 0f
+        textPaint.clearShadowLayer()
+        // The outline pass below leaves the paint stroking; a later fill draw would come out
+        // hollow without this.
+        textPaint.style = Paint.Style.FILL
     }
 
     private fun titleTypeface(bold: Boolean): Typeface? = trackTextTypeface(title = true, bold = bold)
@@ -602,8 +754,11 @@ class WatchPreviewView @JvmOverloads constructor(
         val glyph = if (sourceGlyph && showSourceIcon) this.sourceGlyph else null
         if (glyph == null) {
             val label = ellipsize(text, availWidth)
-            canvas.drawText(label, x, baselineY, textPaint)
-            textPaint.letterSpacing = 0f
+            drawTrackTextBackdrop(canvas, artistBackdropSpec, label, x, baselineY)
+            withTrackTextOutline(artistOutlineSpec) {
+                canvas.drawText(label, x, baselineY, textPaint)
+            }
+            resetTrackTextPaint()
             return
         }
         // Glyph and line are one centred unit, the way the watch's Row lays them out - the glyph
@@ -626,9 +781,13 @@ class WatchPreviewView @JvmOverloads constructor(
                 diameter, color)
         val previousAlign = textPaint.textAlign
         textPaint.textAlign = Paint.Align.LEFT
-        canvas.drawText(label, left + diameter + gap, baselineY, textPaint)
+        drawTrackTextBackdrop(
+                canvas, artistBackdropSpec, label, left + diameter + gap, baselineY)
+        withTrackTextOutline(artistOutlineSpec) {
+            canvas.drawText(label, left + diameter + gap, baselineY, textPaint)
+        }
         textPaint.textAlign = previousAlign
-        textPaint.letterSpacing = 0f
+        resetTrackTextPaint()
     }
 
     /**
@@ -960,6 +1119,7 @@ class WatchPreviewView @JvmOverloads constructor(
         wearTrackTimeFontKey = readString(
                 "wear_track_time_font", WatchTypography.TRACK_TIME_FONT_FOLLOW)
         artStyle = readString("album_art_style", "cover")
+        artFilter = readString("album_art_filter", "none")
         accentFloor = AccentFloorStyle.fromPreference(
                 readString("wear_accent_floor", AccentFloorStyle.DEFAULT.preferenceValue))
         accentFloorColorMode = readString("wear_accent_floor_color_mode", "album")
@@ -1083,6 +1243,7 @@ class WatchPreviewView @JvmOverloads constructor(
         carouselCardShape = readString("wear_carousel_card_shape", "rounded")
         noteCoverShape = readString("wear_note_cover_shape", "circle")
         noteShowCover = readBoolean("wear_note_show_cover", true)
+        titleCentered = readBoolean("wear_title_centered", false)
         chatCoverShape = readString("wear_chat_cover_shape", "circle")
         chatShowCover = readBoolean("wear_chat_show_cover", true)
         metadataCoverShape = readString("wear_metadata_cover_shape", "rounded")
@@ -1098,6 +1259,47 @@ class WatchPreviewView @JvmOverloads constructor(
         progressStyle = readString("wear_progress_style", "solid")
         progressLayout = readString("wear_progress_layout", "edge")
         trackTimeMode = readString("wear_track_time_mode", "always")
+        seekMarker = readString("wear_seek_marker", "drag")
+        titleShadowSpec = TextShadowSpec(
+                style = TextShadowStyle.fromPreference(
+                        readString("wear_title_shadow_style", "none")),
+                colorMode = TextShadowColorMode.fromPreference(
+                        readString("wear_title_shadow_color_mode", "black")),
+                customColor = readString("wear_title_shadow_custom_color", ""),
+                strengthPercent = readInt("wear_title_shadow_strength", 100))
+        artistShadowSpec = TextShadowSpec(
+                style = TextShadowStyle.fromPreference(
+                        readString("wear_artist_shadow_style", "none")),
+                colorMode = TextShadowColorMode.fromPreference(
+                        readString("wear_artist_shadow_color_mode", "black")),
+                customColor = readString("wear_artist_shadow_custom_color", ""),
+                strengthPercent = readInt("wear_artist_shadow_strength", 100))
+        titleOutlineSpec = TextOutlineSpec(
+                style = TextOutlineStyle.fromPreference(
+                        readString("wear_title_outline_style", "none")),
+                colorMode = TextShadowColorMode.fromPreference(
+                        readString("wear_title_outline_color_mode", "black")),
+                customColor = readString("wear_title_outline_custom_color", ""))
+        artistOutlineSpec = TextOutlineSpec(
+                style = TextOutlineStyle.fromPreference(
+                        readString("wear_artist_outline_style", "none")),
+                colorMode = TextShadowColorMode.fromPreference(
+                        readString("wear_artist_outline_color_mode", "black")),
+                customColor = readString("wear_artist_outline_custom_color", ""))
+        titleBackdropSpec = TextBackdropSpec(
+                style = TextBackdropStyle.fromPreference(
+                        readString("wear_title_text_bg_style", "none")),
+                colorMode = TextShadowColorMode.fromPreference(
+                        readString("wear_title_text_bg_color_mode", "black")),
+                customColor = readString("wear_title_text_bg_custom_color", ""),
+                opacityPercent = readInt("wear_title_text_bg_opacity", 100))
+        artistBackdropSpec = TextBackdropSpec(
+                style = TextBackdropStyle.fromPreference(
+                        readString("wear_artist_text_bg_style", "none")),
+                colorMode = TextShadowColorMode.fromPreference(
+                        readString("wear_artist_text_bg_color_mode", "black")),
+                customColor = readString("wear_artist_text_bg_custom_color", ""),
+                opacityPercent = readInt("wear_artist_text_bg_opacity", 100))
         titleTextMode = readString("wear_title_text_mode", "smart")
         alwaysShowTime = readBoolean("always_show_time", false)
         clockColorMode = readString("wear_clock_color_mode", "white")
@@ -1743,7 +1945,7 @@ class WatchPreviewView @JvmOverloads constructor(
             x += widths[index]
         }
         textPaint.textAlign = Paint.Align.CENTER
-        textPaint.letterSpacing = 0f
+        resetTrackTextPaint()
     }
 
     /** [drawMarqueeText]'s scroll, for a line of several runs. The single-run case delegates here
@@ -2085,23 +2287,31 @@ class WatchPreviewView @JvmOverloads constructor(
         } else {
             baselineY
         }
-        if (plan.marquee) {
-            // drawMarqueeText centres its scroll window on the x it is handed and leaves the paint
-            // centre-aligned, so a left-aligned face (Split's panel) has to hand it the middle of
-            // the run and put its own alignment back afterwards.
-            drawMarqueeText(
-                    canvas,
-                    plan.lines.first(),
-                    if (align == Paint.Align.LEFT) x + availWidth / 2f else x,
-                    baselineY,
-                    availWidth)
-            textPaint.textAlign = align
-        } else {
+        if (!titleBackdropSpec.isNone) {
             plan.lines.forEachIndexed { index, line ->
-                canvas.drawText(line, x, baselineY + index * lineH, textPaint)
+                drawTrackTextBackdrop(
+                        canvas, titleBackdropSpec, line, x, baselineY + index * lineH)
             }
         }
-        textPaint.letterSpacing = 0f
+        withTrackTextOutline(titleOutlineSpec) {
+            if (plan.marquee) {
+                // drawMarqueeText centres its scroll window on the x it is handed and leaves the
+                // paint centre-aligned, so a left-aligned face (Split's panel) has to hand it the
+                // middle of the run and put its own alignment back afterwards.
+                drawMarqueeText(
+                        canvas,
+                        plan.lines.first(),
+                        if (align == Paint.Align.LEFT) x + availWidth / 2f else x,
+                        baselineY,
+                        availWidth)
+                textPaint.textAlign = align
+            } else {
+                plan.lines.forEachIndexed { index, line ->
+                    canvas.drawText(line, x, baselineY + index * lineH, textPaint)
+                }
+            }
+        }
+        resetTrackTextPaint()
         return lineH * plan.lines.size
     }
 
@@ -2245,9 +2455,24 @@ class WatchPreviewView @JvmOverloads constructor(
             topFraction: Float,
             bottomFraction: Float
     ): Float? = AdaptiveTextContrast.backdropLuminance(
-            PlayerBackgroundStyle.fromPreference(artStyle)) {
-        sampleArtLuminance(leftFraction, rightFraction, topFraction, bottomFraction)
-    }
+            PlayerBackgroundStyle.fromPreference(artStyle),
+            artworkBandLuminance = {
+                sampleArtLuminance(leftFraction, rightFraction, topFraction, bottomFraction)
+            },
+            flatFillLuminance = { slot ->
+                AdaptiveTextContrast.relativeLuminance(flatAlbumFillColor(slot))
+            })
+
+    /** Mirrors `MainActivity.flatAlbumFillColor`. */
+    private fun flatAlbumFillColor(slot: AlbumFillSlot): Int = PaletteTransforms.tonalSurface(
+            when (slot) {
+                AlbumFillSlot.PRIMARY -> albumAccent()
+                AlbumFillSlot.SECONDARY -> albumSecondaryAccent()
+                AlbumFillSlot.TERTIARY -> albumTertiaryAccent()
+            },
+            .24f,
+            PaletteTransforms.FACE_MIN_SAT,
+            PaletteTransforms.FACE_MAX_SAT)
 
     /**
      * Average luminance of the shown artwork inside a rectangle given as fractions of the bitmap.
@@ -2313,6 +2538,9 @@ class WatchPreviewView @JvmOverloads constructor(
         if (width <= 0 || height <= 0) return
         marqueeActive = false
         transientAnimationActive = false
+        // A shadow set for track text and not reset cannot survive into the next frame's unrelated
+        // text. Within a frame the pairing above is what keeps it honest.
+        textPaint.clearShadowLayer()
 
         val geometry = previewGeometry()
         val dp: (Float) -> Float = { value -> value * geometry.dpScale }
@@ -2467,15 +2695,18 @@ class WatchPreviewView @JvmOverloads constructor(
                 val first = if (blurred) sampleArtBlurred else sampleArt
                 val second = if (blurred) sampleAlternateArtBlurred else sampleAlternateArt
                 drawFadeDemonstration(
-                        canvas, first, second, geometry.bounds, backgroundStyle.artworkFilter)
+                        canvas, first, second, geometry.bounds,
+                        resolveAlbumArtFilter(artFilter, backgroundStyle))
             } else if (backgroundStyle.squareCornerRadiusFraction != null) {
-                drawArtwork(canvas, displayedBlurredArt(), geometry.bounds, 255, grayscale = false)
+                drawArtwork(canvas, displayedBlurredArt(), geometry.bounds, 255,
+                        filter = resolveAlbumArtFilter(artFilter, backgroundStyle))
                 // The true original source, not liveArt - that copy is already center-cropped to
                 // a square for every other style's use, which would silently defeat the "never
                 // crop" point of this one for any source that isn't already square.
                 drawSquareInsetArtwork(
                         canvas, displayedSourceArt(), geometry.bounds,
-                        backgroundStyle.squareCornerRadiusFraction ?: 0.10f
+                        backgroundStyle.squareCornerRadiusFraction ?: 0.10f,
+                        resolveAlbumArtFilter(artFilter, backgroundStyle)
                 )
             } else {
                 val art = when {
@@ -2485,7 +2716,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 }
                 drawArtwork(
                         canvas, art, geometry.bounds, 255,
-                        filter = backgroundStyle.artworkFilter)
+                        filter = resolveAlbumArtFilter(artFilter, backgroundStyle))
             }
         }
 
@@ -2926,6 +3157,522 @@ class WatchPreviewView @JvmOverloads constructor(
                 canvas.drawRect(bounds, fillPaint)
             }
 
+            PlayerBackgroundStyle.PRISMATIC -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.28f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = LinearGradient(bounds.left, bounds.top, bounds.right, bounds.bottom,
+                        intArrayOf(ColorUtils.setAlphaComponent(primary, alpha(.48f)),
+                                ColorUtils.setAlphaComponent(secondary, alpha(.22f)),
+                                ColorUtils.setAlphaComponent(tertiary, alpha(.36f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.72f))),
+                        floatArrayOf(0f, .34f, .67f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+                strokePaint.shader = SweepGradient(cx, cy,
+                        intArrayOf(primary, secondary, tertiary, primary), null)
+                strokePaint.strokeWidth = radius * .10f
+                strokePaint.alpha = alpha(.42f)
+                canvas.drawCircle(cx, cy, radius * .82f, strokePaint)
+                strokePaint.shader = null
+                strokePaint.alpha = 255
+            }
+
+            PlayerBackgroundStyle.CRESCENT -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.34f))
+                canvas.drawRect(bounds, fillPaint)
+                strokePaint.shader = SweepGradient(cx, cy, intArrayOf(Color.TRANSPARENT,
+                        ColorUtils.setAlphaComponent(primary, alpha(.72f)),
+                        ColorUtils.setAlphaComponent(secondary, alpha(.28f)),
+                        Color.TRANSPARENT), null)
+                strokePaint.style = Paint.Style.STROKE
+                strokePaint.strokeWidth = radius * .24f
+                strokePaint.alpha = alpha(.72f)
+                canvas.drawArc(RectF(cx - radius * 1.08f, cy - radius * 1.08f,
+                        cx + radius * 1.08f, cy + radius * 1.08f), 138f, 196f, false, strokePaint)
+                strokePaint.style = Paint.Style.FILL
+                strokePaint.shader = null
+                strokePaint.alpha = 255
+            }
+
+            PlayerBackgroundStyle.TIDAL -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.20f))
+                canvas.drawRect(bounds, fillPaint)
+                listOf(
+                        Triple(.34f, primary, .11f),
+                        Triple(.55f, secondary, .08f),
+                        Triple(.76f, tertiary, .06f)
+                ).forEachIndexed { index, (y, color, width) ->
+                    val wave = Path().apply {
+                        moveTo(bounds.left, bounds.top + bounds.height() * y)
+                        cubicTo(bounds.left + bounds.width() * .24f,
+                                bounds.top + bounds.height() * (y - .11f + index * .02f),
+                                bounds.left + bounds.width() * .70f,
+                                bounds.top + bounds.height() * (y + .10f),
+                                bounds.right, bounds.top + bounds.height() * (y - .03f))
+                    }
+                    strokePaint.color = color
+                    strokePaint.strokeWidth = radius * width
+                    strokePaint.alpha = authoredAlpha(.78f)
+                    canvas.drawPath(wave, strokePaint)
+                }
+                strokePaint.alpha = 255
+            }
+
+            PlayerBackgroundStyle.PAPER -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(0xFFFFF3DF.toInt(), authoredAlpha(.18f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = LinearGradient(0f, bounds.top, 0f, bounds.bottom,
+                        intArrayOf(Color.TRANSPARENT,
+                                Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.62f))),
+                        floatArrayOf(0f, .64f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+                strokePaint.color = Color.WHITE
+                strokePaint.style = Paint.Style.STROKE
+                strokePaint.strokeWidth = radius * .018f
+                strokePaint.alpha = alpha(.44f)
+                canvas.drawRect(bounds.left + radius * .13f, bounds.top + radius * .13f,
+                        bounds.right - radius * .13f, bounds.bottom - radius * .13f, strokePaint)
+                strokePaint.style = Paint.Style.FILL
+                strokePaint.alpha = 255
+            }
+
+            PlayerBackgroundStyle.LANTERN -> {
+                fillPaint.shader = LinearGradient(0f, bounds.top, 0f, bounds.bottom,
+                        intArrayOf(ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.55f)),
+                                Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(deep, authoredAlpha(.72f))),
+                        floatArrayOf(0f, .46f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(cx, bounds.top + bounds.height() * .82f,
+                        radius * .82f, intArrayOf(ColorUtils.setAlphaComponent(0xFFFFC857.toInt(),
+                        alpha(.52f)), ColorUtils.setAlphaComponent(primary, alpha(.18f)),
+                        Color.TRANSPARENT), floatArrayOf(0f, .45f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.MIRAGE -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.18f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .08f,
+                        bounds.top + bounds.height() * .38f, radius * 1.15f,
+                        intArrayOf(ColorUtils.setAlphaComponent(primary, alpha(.46f)),
+                                Color.TRANSPARENT), floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.right - bounds.width() * .08f,
+                        bounds.top + bounds.height() * .62f, radius * 1.15f,
+                        intArrayOf(ColorUtils.setAlphaComponent(secondary, alpha(.42f)),
+                                Color.TRANSPARENT), floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.GRID -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(deep, authoredAlpha(.64f))
+                canvas.drawRect(bounds, fillPaint)
+                strokePaint.color = ColorUtils.setAlphaComponent(primary, alpha(.22f))
+                strokePaint.strokeWidth = radius * .012f
+                strokePaint.alpha = authoredAlpha(.72f)
+                for (step in 1..5) {
+                    val x = bounds.left + bounds.width() * step / 6f
+                    val y = bounds.top + bounds.height() * step / 6f
+                    canvas.drawLine(x, bounds.top, x, bounds.bottom, strokePaint)
+                    canvas.drawLine(bounds.left, y, bounds.right, y, strokePaint)
+                }
+                strokePaint.alpha = 255
+            }
+
+            PlayerBackgroundStyle.NOCTURNE -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(0xFF070B25.toInt(), authoredAlpha(.72f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .68f,
+                        bounds.top + bounds.height() * .28f, radius * 1.10f,
+                        intArrayOf(ColorUtils.setAlphaComponent(tertiary, alpha(.36f)),
+                                Color.TRANSPARENT), floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = null
+                listOf(.16f to .22f, .72f to .18f, .37f to .58f, .82f to .72f).forEach { (x, y) ->
+                    fillPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, alpha(.62f))
+                    canvas.drawCircle(bounds.left + bounds.width() * x,
+                            bounds.top + bounds.height() * y, radius * .018f, fillPaint)
+                }
+            }
+
+            PlayerBackgroundStyle.CLOUD -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.16f))
+                canvas.drawRect(bounds, fillPaint)
+                listOf(Triple(.22f, .34f, primary), Triple(.74f, .30f, secondary),
+                        Triple(.50f, .78f, tertiary)).forEach { (x, y, color) ->
+                    fillPaint.shader = RadialGradient(bounds.left + bounds.width() * x,
+                            bounds.top + bounds.height() * y, radius * .98f,
+                            intArrayOf(ColorUtils.setAlphaComponent(color, alpha(.32f)),
+                                    Color.TRANSPARENT), floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                    canvas.drawRect(bounds, fillPaint)
+                }
+            }
+
+            PlayerBackgroundStyle.LIQUID -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.30f))
+                canvas.drawRect(bounds, fillPaint)
+                listOf(Triple(.18f, .72f, primary), Triple(.62f, .42f, secondary),
+                        Triple(.86f, .76f, tertiary)).forEach { (x, y, color) ->
+                    fillPaint.shader = RadialGradient(bounds.left + bounds.width() * x,
+                            bounds.top + bounds.height() * y, radius * .76f,
+                            intArrayOf(ColorUtils.setAlphaComponent(color, alpha(.52f)),
+                                    ColorUtils.setAlphaComponent(color, alpha(.12f)),
+                                    Color.TRANSPARENT), floatArrayOf(0f, .48f, 1f), Shader.TileMode.CLAMP)
+                    canvas.drawRect(bounds, fillPaint)
+                }
+            }
+
+            PlayerBackgroundStyle.MONOLITH -> {
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.58f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = LinearGradient(bounds.left, 0f, bounds.left + bounds.width() * .34f, 0f,
+                        intArrayOf(ColorUtils.setAlphaComponent(primary, alpha(.58f)),
+                                ColorUtils.setAlphaComponent(secondary, alpha(.12f)),
+                                Color.TRANSPARENT), null, Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds.left, bounds.top, bounds.left + bounds.width() * .48f,
+                        bounds.bottom, fillPaint)
+                fillPaint.shader = LinearGradient(0f, bounds.top, 0f, bounds.bottom,
+                        intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.76f))),
+                        floatArrayOf(0f, .64f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.SPLIT_TONE -> {
+                fillPaint.shader = LinearGradient(0f, bounds.top, 0f, bounds.bottom,
+                        intArrayOf(ColorUtils.setAlphaComponent(primary, alpha(.36f)),
+                                ColorUtils.setAlphaComponent(secondary, alpha(.20f)),
+                                ColorUtils.setAlphaComponent(deep, authoredAlpha(.78f))),
+                        floatArrayOf(0f, .49f, .51f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+                strokePaint.color = ColorUtils.setAlphaComponent(Color.WHITE, alpha(.48f))
+                strokePaint.strokeWidth = radius * .012f
+                strokePaint.alpha = authoredAlpha(.76f)
+                canvas.drawLine(bounds.left, bounds.top + bounds.height() * .50f,
+                        bounds.right, bounds.top + bounds.height() * .50f, strokePaint)
+                strokePaint.alpha = 255
+            }
+
+            PlayerBackgroundStyle.GRADIENT -> {
+                fillPaint.shader = LinearGradient(bounds.left, bounds.top, bounds.right, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(primary, alpha(.46f)),
+                                ColorUtils.setAlphaComponent(secondary, alpha(.30f))),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.DUOTONE -> {
+                fillPaint.shader = LinearGradient(bounds.left, bounds.centerY(),
+                        bounds.right, bounds.centerY(),
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(primary, alpha(.40f)),
+                                ColorUtils.setAlphaComponent(secondary, alpha(.40f))),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.BANDS -> {
+                fillPaint.shader = LinearGradient(0f, bounds.top, 0f, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tertiary, alpha(.30f)),
+                                ColorUtils.setAlphaComponent(primary, alpha(.44f)),
+                                ColorUtils.setAlphaComponent(primary, alpha(.18f)),
+                                ColorUtils.setAlphaComponent(secondary, alpha(.38f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.82f))),
+                        floatArrayOf(0f, .25f, .5f, .75f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.VIGNETTE -> {
+                fillPaint.shader = null
+                fillPaint.color = ColorUtils.setAlphaComponent(primary, alpha(.20f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.centerX(), bounds.centerY(),
+                        radius * 1.36f,
+                        intArrayOf(
+                                Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.14f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.90f))),
+                        floatArrayOf(0f, .52f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.GRAPHITE -> {
+                fillPaint.shader = null
+                fillPaint.color = ColorUtils.setAlphaComponent(0xFF111318.toInt(), authoredAlpha(.86f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = LinearGradient(bounds.left, bounds.top, bounds.right, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(0xFF292D34.toInt(), authoredAlpha(.62f)),
+                                Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(0xFF1D2026.toInt(), authoredAlpha(.62f))),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.CINEMA -> {
+                fillPaint.shader = LinearGradient(0f, bounds.top, 0f, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.94f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.88f)),
+                                ColorUtils.setAlphaComponent(primary, alpha(.34f)),
+                                ColorUtils.setAlphaComponent(secondary, alpha(.24f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.88f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.94f))),
+                        floatArrayOf(0f, .2f, .4f, .6f, .8f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.ACRYLIC -> {
+                fillPaint.shader = LinearGradient(bounds.left, bounds.top, bounds.right, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(primary, alpha(.40f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.72f))),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.MESH -> {
+                fillPaint.shader = null
+                fillPaint.color = ColorUtils.setAlphaComponent(primary, alpha(.14f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .18f,
+                        bounds.top + bounds.height() * .22f, radius * 1.44f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(secondary, alpha(.44f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .86f,
+                        bounds.top + bounds.height() * .78f, radius * 1.36f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tertiary, alpha(.38f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.NEBULA -> {
+                fillPaint.shader = null
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.42f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .16f,
+                        bounds.top + bounds.height() * .24f, radius * 1.40f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(primary, alpha(.42f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .84f,
+                        bounds.top + bounds.height() * .32f, radius * 1.28f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(secondary, alpha(.38f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .50f,
+                        bounds.top + bounds.height() * .94f, radius * 1.16f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tertiary, alpha(.34f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.BIOLUMINESCENCE -> {
+                fillPaint.shader = null
+                fillPaint.color = ColorUtils.setAlphaComponent(0xFF041A19.toInt(), authoredAlpha(.66f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .20f,
+                        bounds.top + bounds.height() * .74f, radius * 1.24f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(primary, alpha(.52f)),
+                                ColorUtils.setAlphaComponent(0xFF0A6A62.toInt(), alpha(.26f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .82f,
+                        bounds.top + bounds.height() * .24f, radius * 1.08f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tertiary, alpha(.44f)),
+                                ColorUtils.setAlphaComponent(0xFF1AB5A2.toInt(), alpha(.18f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.IRIDESCENT -> {
+                fillPaint.shader = LinearGradient(bounds.left, bounds.top, bounds.right, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tertiary, alpha(.36f)),
+                                ColorUtils.setAlphaComponent(0xFF4A2F72.toInt(), alpha(.44f)),
+                                ColorUtils.setAlphaComponent(primary, alpha(.42f)),
+                                ColorUtils.setAlphaComponent(secondary, alpha(.30f)),
+                                ColorUtils.setAlphaComponent(0xFF0B101A.toInt(), authoredAlpha(.82f))),
+                        floatArrayOf(0f, .25f, .5f, .75f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.ORBIT -> {
+                fillPaint.shader = null
+                fillPaint.color = ColorUtils.setAlphaComponent(primary, alpha(.13f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .16f,
+                        bounds.top + bounds.height() * .30f, radius * 1.28f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(secondary, alpha(.46f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .84f,
+                        bounds.top + bounds.height() * .72f, radius * 1.24f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tertiary, alpha(.38f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = RadialGradient(bounds.left + bounds.width() * .50f,
+                        bounds.top + bounds.height() * .50f, radius * .52f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(primary, alpha(.34f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.INK_WASH -> {
+                fillPaint.shader = null
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.34f))
+                canvas.drawRect(bounds, fillPaint)
+                fillPaint.shader = LinearGradient(bounds.left, bounds.top, bounds.right, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(primary, alpha(.44f)),
+                                ColorUtils.setAlphaComponent(secondary, alpha(.16f)),
+                                Color.TRANSPARENT),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.BLOSSOM -> {
+                fillPaint.shader = LinearGradient(bounds.left, bounds.bottom, bounds.right, bounds.top,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(0xFF160B1D.toInt(), authoredAlpha(.80f)),
+                                ColorUtils.setAlphaComponent(0xFF542047.toInt(), alpha(.52f)),
+                                ColorUtils.setAlphaComponent(0xFFB84B74.toInt(), alpha(.44f)),
+                                ColorUtils.setAlphaComponent(tertiary, alpha(.34f)),
+                                ColorUtils.setAlphaComponent(0xFF08050B.toInt(), authoredAlpha(.84f))),
+                        floatArrayOf(0f, .25f, .5f, .75f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.FJORD -> {
+                fillPaint.shader = LinearGradient(bounds.left, bounds.top, bounds.right, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(0xFF0A2030.toInt(), authoredAlpha(.76f)),
+                                ColorUtils.setAlphaComponent(tertiary, alpha(.34f)),
+                                ColorUtils.setAlphaComponent(0xFF0A5960.toInt(), alpha(.44f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.86f))),
+                        floatArrayOf(0f, .33f, .66f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            // Same shared implementation the watch calls, so a hand-drawn pattern exists once.
+            PlayerBackgroundStyle.DOT_MATRIX -> {
+                fillPaint.shader = null
+                OverlayBackdropPatterns.drawDotMatrix(
+                        canvas, bounds, geometry.dpScale,
+                        baseColor = Color.TRANSPARENT,
+                        dotColor = ColorUtils.setAlphaComponent(primary, alpha(.44f)))
+            }
+
+            PlayerBackgroundStyle.SCANLINES -> {
+                fillPaint.shader = null
+                OverlayBackdropPatterns.drawScanlines(
+                        canvas, bounds, geometry.dpScale,
+                        baseColor = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.34f)),
+                        lineColor = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.52f)))
+            }
+
+            PlayerBackgroundStyle.RADAR -> {
+                fillPaint.shader = null
+                OverlayBackdropPatterns.drawRadarRings(
+                        canvas, bounds, geometry.dpScale,
+                        cx = bounds.centerX(), cy = bounds.centerY(), radius = radius,
+                        baseColor = ColorUtils.setAlphaComponent(primary, alpha(.12f)),
+                        ringColor = ColorUtils.setAlphaComponent(tertiary, alpha(.50f)),
+                        sweepColor = ColorUtils.setAlphaComponent(primary, alpha(.42f)))
+            }
+
+            PlayerBackgroundStyle.CONTOUR -> {
+                fillPaint.shader = null
+                OverlayBackdropPatterns.drawContourLines(
+                        canvas, bounds, geometry.dpScale,
+                        cx = bounds.centerX(), cy = bounds.centerY(), radius = radius,
+                        baseColor = ColorUtils.setAlphaComponent(primary, alpha(.12f)),
+                        lineColor = ColorUtils.setAlphaComponent(secondary, alpha(.46f)),
+                        accent = primary)
+            }
+
+            PlayerBackgroundStyle.FACETED -> {
+                fillPaint.shader = null
+                OverlayBackdropPatterns.drawFacetedCrystal(
+                        canvas, bounds, geometry.dpScale,
+                        primary = ColorUtils.setAlphaComponent(primary, alpha(.42f)),
+                        secondary = ColorUtils.setAlphaComponent(secondary, alpha(.38f)),
+                        tertiary = ColorUtils.setAlphaComponent(tertiary, alpha(.34f)),
+                        accent = primary)
+            }
+
+            PlayerBackgroundStyle.SOLID_ALBUM,
+            PlayerBackgroundStyle.SOLID_SECONDARY,
+            PlayerBackgroundStyle.SOLID_TERTIARY -> {
+                fillPaint.shader = null
+                fillPaint.color = style.flatAlbumFill?.let(::flatAlbumFillColor) ?: Color.BLACK
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.GLASS -> {
+                fillPaint.shader = LinearGradient(0f, bounds.top, 0f, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(Color.WHITE, alpha(.18f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.72f))),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.MIDNIGHT -> {
+                fillPaint.shader = LinearGradient(0f, bounds.top, 0f, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tertiary, alpha(.30f)),
+                                ColorUtils.setAlphaComponent(0xFF070914.toInt(), authoredAlpha(.66f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.86f))),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.SMOKE -> {
+                fillPaint.shader = LinearGradient(bounds.left, bounds.top, bounds.right, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tertiary, alpha(.24f)),
+                                ColorUtils.setAlphaComponent(0xFF323238.toInt(), authoredAlpha(.56f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.82f))),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
+            PlayerBackgroundStyle.TIDELINE -> {
+                fillPaint.shader = LinearGradient(0f, bounds.top, 0f, bounds.bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(0xFF031423.toInt(), authoredAlpha(.72f)),
+                                ColorUtils.setAlphaComponent(0xFF07516A.toInt(), alpha(.52f)),
+                                ColorUtils.setAlphaComponent(secondary, alpha(.30f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.84f))),
+                        floatArrayOf(0f, .33f, .66f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(bounds, fillPaint)
+            }
+
             PlayerBackgroundStyle.ECLIPSE,
             PlayerBackgroundStyle.HIDDEN -> {
                 fillPaint.shader = null
@@ -3069,7 +3816,8 @@ class WatchPreviewView @JvmOverloads constructor(
             bounds: RectF,
             alpha: Int,
             grayscale: Boolean = false,
-            filter: AlbumArtFilter = AlbumArtFilter.NONE
+            filter: AlbumArtFilter = resolveAlbumArtFilter(
+                    artFilter, PlayerBackgroundStyle.fromPreference(artStyle))
     ) {
         if (bitmap == null || bitmap.isRecycled || alpha <= 0) return
         val scale = max(bounds.width() / bitmap.width, bounds.height() / bitmap.height)
@@ -3082,8 +3830,9 @@ class WatchPreviewView @JvmOverloads constructor(
         }
         bitmapPaint.alpha = alpha.coerceIn(0, 255)
         bitmapPaint.colorFilter = when {
+            filter != AlbumArtFilter.NONE -> filter.androidColorFilter
             grayscale -> AlbumArtFilter.MONOCHROME.androidColorFilter
-            else -> filter.androidColorFilter
+            else -> null
         }
         canvas.drawBitmap(bitmap, matrix, bitmapPaint)
         bitmapPaint.alpha = 255
@@ -3126,7 +3875,8 @@ class WatchPreviewView @JvmOverloads constructor(
      *  backdrop callers are expected to have already painted via [drawArtwork] shows through any
      *  gap. */
     private fun drawSquareInsetArtwork(
-            canvas: Canvas, bitmap: Bitmap?, bounds: RectF, cornerRadiusFraction: Float
+            canvas: Canvas, bitmap: Bitmap?, bounds: RectF, cornerRadiusFraction: Float,
+            filter: AlbumArtFilter = AlbumArtFilter.NONE
     ) {
         if (bitmap == null || bitmap.isRecycled) return
         val side = minOf(bounds.width(), bounds.height()) / sqrt(2f)
@@ -3149,7 +3899,9 @@ class WatchPreviewView @JvmOverloads constructor(
             addRoundRect(insetRect, cornerRadius, cornerRadius, Path.Direction.CW)
         }
         canvas.clipPath(clipPath)
+        bitmapPaint.colorFilter = filter.androidColorFilter
         canvas.drawBitmap(bitmap, matrix, bitmapPaint)
+        bitmapPaint.colorFilter = null
         canvas.restore()
     }
 
@@ -3190,11 +3942,14 @@ class WatchPreviewView @JvmOverloads constructor(
                 showArtwork = aodShowArt,
                 effectiveAodStyle = style,
                 treatment = aodArtTreatment,
-                playerArtworkStyle = artStyle
+                playerArtworkStyle = artStyle,
+                playerArtworkFilter = artFilter
         )
-        // These faces use the AOD artwork only inside their own cover slots. A full-screen
-        // backdrop would erase the black negative space that defines both compositions.
-        if (artwork.visible && style !in setOf("ribbon", "frame")) {
+        // Ribbon and Frame use the AOD artwork only inside their own cover slots - a full-screen
+        // backdrop would erase the black negative space that defines both compositions - and the
+        // four after them paint their own black canvas on the wrist (Carousel keeps its cover as a
+        // card, the rest drop the artwork entirely), so drawing one here would only be covered up.
+        if (artwork.visible && style !in AOD_STYLES_OVER_BLACK) {
             drawArtwork(
                     canvas,
                     if (artwork.blurred) {
@@ -3209,11 +3964,21 @@ class WatchPreviewView @JvmOverloads constructor(
             )
         }
 
+        // One branch per style that has its own ambient composable on the watch. The six after
+        // Frame used to share the curated branch, which drew all of them - and Eclipse and
+        // Immersive besides - as the same screen: picking Chat, Split, Note or Verse in the
+        // always-on picker changed nothing the miniature could show.
         when (style) {
             "expressive" -> drawExpressiveAod(canvas, geometry, dp)
             "ribbon" -> drawRibbonAod(canvas, geometry, dp)
             "frame" -> drawFrameAod(canvas, geometry, dp)
-            "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth", "carousel", "chat", "split", "note", "verse", "metadata" ->
+            "carousel" -> drawCarouselAod(canvas, geometry, dp)
+            "chat" -> drawChatAod(canvas, geometry, dp)
+            "split" -> drawSplitAod(canvas, geometry, dp)
+            "note" -> drawNoteAod(canvas, geometry, dp)
+            "verse" -> drawVerseAod(canvas, geometry, dp)
+            "metadata" -> drawMetadataAod(canvas, geometry, dp)
+            "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth" ->
                 drawCuratedAod(canvas, geometry, dp)
             "chrono" -> drawChronoAod(canvas, geometry, dp)
             else -> drawClassicAod(canvas, geometry, dp, minimal = false)
@@ -3226,8 +3991,9 @@ class WatchPreviewView @JvmOverloads constructor(
     }
 
     /** Ambient Ribbon retains the awake face's rails and cover window, but moves them to the
-     * selected low-power tint. The optional art remains confined to the cards rather than becoming
-     * a full-screen backdrop. */
+     * selected low-power tint and empties them: `RibbonAmbient` draws the five silhouettes as
+     * hairlines and no cover, so the miniature must not fill them either - a rail of covers here
+     * against five outlines on the wrist is the same lie in the opposite direction. */
     private fun drawRibbonAod(
             canvas: Canvas,
             geometry: PreviewGeometry,
@@ -3237,13 +4003,6 @@ class WatchPreviewView @JvmOverloads constructor(
         val screenLeft = geometry.cx - geometry.radius
         val screenTop = geometry.cy - geometry.radius
         val tint = resolvedAodTint()
-        val artwork = resolveAodArtwork(
-                showArtwork = aodShowArt,
-                effectiveAodStyle = "ribbon",
-                treatment = aodArtTreatment,
-                playerArtworkStyle = artStyle
-        )
-        val art = if (artwork.blurred) displayedBlurredArt() else displayedArt()
         val columnWidth = screen * FaceGeometry.Ribbon.COLUMN_WIDTH_FRACTION
         val columnHeight = screen * FaceGeometry.Ribbon.COLUMN_HEIGHT_FRACTION
         val columnTop = screenTop + screen * FaceGeometry.Ribbon.COLUMN_TOP_FRACTION
@@ -3272,23 +4031,6 @@ class WatchPreviewView @JvmOverloads constructor(
         )
         val coverCorner = min(coverWidth, coverHeight) *
                 FaceGeometry.Ribbon.CENTER_COVER_CORNER_FRACTION
-
-        if (artwork.visible) {
-            columns.forEach { column ->
-                drawClippedFaceArtwork(
-                        canvas, art, column, columnCorner,
-                        alpha = (ambientArtOpacity * 255 / 100f * .62f).roundToInt(),
-                        grayscale = artwork.monochrome,
-                        filter = artwork.photoFilter
-                )
-            }
-            drawClippedFaceArtwork(
-                    canvas, art, cover, coverCorner,
-                    alpha = ambientArtOpacity * 255 / 100,
-                    grayscale = artwork.monochrome,
-                    filter = artwork.photoFilter
-            )
-        }
 
         configureAmbientStroke(dp, 1.15f)
         strokePaint.color = ambientColor(tint, .46f)
@@ -3342,11 +4084,12 @@ class WatchPreviewView @JvmOverloads constructor(
                     dp
             )
         }
-        textPaint.letterSpacing = 0f
+        resetTrackTextPaint()
     }
 
-    /** Ambient Frame keeps the card's hierarchy in outline form. Its art toggle affects only the
-     * wide image well, exactly as the awake face treats artwork as card content. */
+    /** Ambient Frame keeps the card's hierarchy in outline form: the card, the image well and the
+     * text, all as hairlines. `FrameAmbient` fills none of them - "no filled cover or tonal
+     * surface" is the whole point of the variant - so neither does this. */
     private fun drawFrameAod(
             canvas: Canvas,
             geometry: PreviewGeometry,
@@ -3371,23 +4114,6 @@ class WatchPreviewView @JvmOverloads constructor(
                 screenTop + screen * FaceGeometry.Frame.ARTWORK_BOTTOM_FRACTION
         )
         val artCorner = screen * FaceGeometry.Frame.artworkCornerFraction()
-        val artwork = resolveAodArtwork(
-                showArtwork = aodShowArt,
-                effectiveAodStyle = "frame",
-                treatment = aodArtTreatment,
-                playerArtworkStyle = artStyle
-        )
-        if (artwork.visible) {
-            drawClippedFaceArtwork(
-                    canvas,
-                    if (artwork.blurred) displayedBlurredArt() else displayedArt(),
-                    art,
-                    artCorner,
-                    alpha = ambientArtOpacity * 255 / 100,
-                    grayscale = artwork.monochrome,
-                    filter = artwork.photoFilter
-            )
-        }
 
         configureAmbientStroke(dp, 1.15f)
         strokePaint.color = ambientColor(tint, .58f)
@@ -3473,7 +4199,7 @@ class WatchPreviewView @JvmOverloads constructor(
             )
         }
         textPaint.textAlign = Paint.Align.CENTER
-        textPaint.letterSpacing = 0f
+        resetTrackTextPaint()
     }
 
     private fun drawAmbientClock(
@@ -3991,6 +4717,417 @@ class WatchPreviewView @JvmOverloads constructor(
         drawAmbientUpNextPill(canvas, geometry, dp)
     }
 
+    /**
+     * Ambient Carousel: the rail collapsed to one card, with the text moved to the foot.
+     *
+     * Mirrors `CarouselAmbient`, the one ambient face that draws a cover at all - which is why it
+     * is also the only one where the always-on artwork controls have anything to reach. It takes
+     * the same `resolveAodArtwork` answer the wrist does, so switching artwork off empties the
+     * card here too and the ambient treatment is the one on screen, not the interactive one.
+     */
+    private fun drawCarouselAod(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        val geo = FaceGeometry.Carousel.Ambient
+        val screen = geometry.radius * 2f
+        val tint = resolvedAodTint()
+        val intensity = aodIntensity / 100f
+
+        val artwork = resolveAodArtwork(
+                showArtwork = aodShowArt,
+                effectiveAodStyle = "carousel",
+                treatment = aodArtTreatment,
+                playerArtworkStyle = artStyle,
+                playerArtworkFilter = artFilter
+        )
+        if (artwork.visible) {
+            val side = screen * geo.CARD_FRACTION
+            val cardCy = geometry.cy - screen * geo.CARD_RISE_FRACTION
+            drawClippedFaceArtwork(
+                    canvas,
+                    if (artwork.blurred) displayedBlurredArt() else displayedArt(),
+                    RectF(geometry.cx - side / 2f, cardCy - side / 2f,
+                            geometry.cx + side / 2f, cardCy + side / 2f),
+                    dp(geo.CARD_CORNER_DP),
+                    // The always-on artwork opacity, as on the wrist - the face was authored at
+                    // that preference's own default, so this is the same picture until it moves.
+                    alpha = (255f * (ambientArtOpacity / 100f) * intensity)
+                            .roundToInt().coerceIn(0, 255),
+                    grayscale = artwork.monochrome,
+                    filter = artwork.photoFilter
+            )
+        }
+
+        if (!aodShowTrackInfo) return
+        textPaint.style = Paint.Style.FILL
+        textPaint.textAlign = Paint.Align.CENTER
+        val available = screen * .78f
+        // The watch anchors this block to the bottom of the screen, so the artist is placed first
+        // and the title stacked on top of it rather than the other way round.
+        var bottom = geometry.bounds.bottom - screen * geo.TEXT_BOTTOM_FRACTION
+
+        if (showTrackArtist || !isPlayingShown()) {
+            textPaint.typeface = artistTypeface(bold = false)
+            textPaint.textSize = dp(geo.ARTIST_SP)
+            // CarouselAmbient tracks both lines in sp; Paint states letter spacing in ems of the
+            // current size, which is the same distance expressed against the text it applies to.
+            textPaint.letterSpacing = FaceGeometry.Carousel.TITLE_TRACKING_SP / geo.ARTIST_SP
+            textPaint.color = ambientColor(tint, geo.ARTIST_ALPHA)
+            val fm = textPaint.fontMetrics
+            val baseline = bottom - fm.descent
+            canvas.drawText(
+                    ellipsize(
+                            if (isPlayingShown()) displayArtist().uppercase()
+                            else context.getString(R.string.preview_playback_stopped),
+                            available),
+                    geometry.cx, baseline, textPaint)
+            bottom = baseline + fm.ascent
+        }
+        if (showTrackTitle) {
+            textPaint.typeface = titleTypeface(bold = false)
+            textPaint.textSize = dp(geo.TITLE_SP)
+            textPaint.letterSpacing = FaceGeometry.Carousel.TITLE_TRACKING_SP / geo.TITLE_SP
+            textPaint.color = ambientColor(tint, geo.TITLE_ALPHA)
+            canvas.drawText(
+                    ellipsize(displayTitle().uppercase(), available),
+                    geometry.cx, bottom - textPaint.fontMetrics.descent, textPaint)
+        }
+        resetTrackTextPaint()
+    }
+
+    /**
+     * Ambient Chat: the thread reduced to the one outlined bubble.
+     *
+     * Mirrors `ChatAmbient`. The history bubbles are dropped rather than outlined, so the bubble
+     * that survives is centred instead of sitting where the bottom-anchored thread left it.
+     */
+    private fun drawChatAod(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        if (!aodShowTrackInfo || !showTrackTitle) return
+        val geo = FaceGeometry.Chat.Ambient
+        val screen = geometry.radius * 2f
+        val tint = resolvedAodTint()
+
+        val padX = dp(geo.BUBBLE_HORIZONTAL_PADDING_DP)
+        val padY = dp(geo.BUBBLE_VERTICAL_PADDING_DP)
+        val maxBubble = minOf(
+                dp(geo.BUBBLE_MAX_WIDTH_DP),
+                screen * (1f - geo.SIDE_PADDING_FRACTION * 2f))
+        val maxText = (maxBubble - padX * 2f).coerceAtLeast(1f)
+
+        textPaint.style = Paint.Style.FILL
+        textPaint.textAlign = Paint.Align.LEFT
+        textPaint.typeface = titleTypeface(bold = true)
+        textPaint.textSize = dp(geo.TITLE_SP)
+        val title = ellipsize(displayTitle(), maxText)
+        val titleFm = textPaint.fontMetrics
+        val titleWidth = textPaint.measureText(title)
+
+        val artistShown = showTrackArtist || !isPlayingShown()
+        textPaint.typeface = artistTypeface(bold = false)
+        textPaint.textSize = dp(geo.ARTIST_SP)
+        val artist = if (artistShown) {
+            ellipsize(
+                    if (isPlayingShown()) displayArtist()
+                    else context.getString(R.string.preview_playback_stopped),
+                    maxText)
+        } else {
+            ""
+        }
+        val artistFm = textPaint.fontMetrics
+        val artistWidth = if (artistShown) textPaint.measureText(artist) else 0f
+        val artistHeight = if (artistShown) artistFm.descent - artistFm.ascent else 0f
+
+        // The bubble wraps its content, as the Compose Box does, and stops at the max width.
+        val bubbleWidth = (maxOf(titleWidth, artistWidth) + padX * 2f).coerceAtMost(maxBubble)
+        val bubbleHeight = (titleFm.descent - titleFm.ascent) + artistHeight + padY * 2f
+        val bubble = RectF(
+                geometry.cx - bubbleWidth / 2f, geometry.cy - bubbleHeight / 2f,
+                geometry.cx + bubbleWidth / 2f, geometry.cy + bubbleHeight / 2f)
+
+        configureAmbientStroke(dp, geo.BUBBLE_BORDER_DP)
+        strokePaint.color = ambientColor(tint)
+        val corner = dp(geo.BUBBLE_CORNER_DP)
+        val tail = dp(geo.BUBBLE_TAIL_CORNER_DP)
+        // One genuinely smaller sender corner, as RoundedCornerShape has it: top-start round,
+        // top-end clipped. The radii run top-left, top-right, bottom-right, bottom-left.
+        canvas.drawPath(Path().apply {
+            addRoundRect(
+                    bubble,
+                    floatArrayOf(corner, corner, tail, tail, corner, corner, corner, corner),
+                    Path.Direction.CW)
+        }, strokePaint)
+
+        val textLeft = bubble.left + padX
+        textPaint.typeface = titleTypeface(bold = true)
+        textPaint.textSize = dp(geo.TITLE_SP)
+        textPaint.color = ambientColor(tint)
+        canvas.drawText(title, textLeft, bubble.top + padY - titleFm.ascent, textPaint)
+        if (artistShown) {
+            textPaint.typeface = artistTypeface(bold = false)
+            textPaint.textSize = dp(geo.ARTIST_SP)
+            textPaint.color = ambientColor(tint, geo.ARTIST_ALPHA)
+            canvas.drawText(
+                    artist, textLeft,
+                    bubble.top + padY + (titleFm.descent - titleFm.ascent) - artistFm.ascent,
+                    textPaint)
+        }
+        textPaint.textAlign = Paint.Align.CENTER
+        resetTrackTextPaint()
+    }
+
+    /**
+     * Ambient Split: the two-tone composition reduced to its seam and the text.
+     *
+     * Mirrors `SplitAmbient`. The panel is dropped rather than outlined - a filled half-screen
+     * band is the most expensive thing an always-on display can draw - so the hairline it created
+     * is what is left of the composition, and the text below it is start-aligned as on the face.
+     */
+    private fun drawSplitAod(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        val geo = FaceGeometry.Split.Ambient
+        val screen = geometry.radius * 2f
+        val screenTop = geometry.cy - geometry.radius
+        val tint = resolvedAodTint()
+
+        val seamY = screenTop + screen * SPLIT_SEAM_FRACTION
+        val seamInset = screen * geo.SEAM_INSET_FRACTION
+        fillPaint.shader = null
+        fillPaint.color = ambientColor(tint, geo.SEAM_ALPHA)
+        canvas.drawRect(
+                geometry.cx - geometry.radius + seamInset, seamY,
+                geometry.cx + geometry.radius - seamInset, seamY + dp(1f), fillPaint)
+
+        if (!aodShowTrackInfo) return
+        val left = geometry.cx - geometry.radius + screen * geo.SIDE_PADDING_FRACTION
+        val available = screen * (1f - geo.SIDE_PADDING_FRACTION * 2f)
+        var top = screenTop + screen * (SPLIT_SEAM_FRACTION + geo.TEXT_TOP_GAP_FRACTION)
+
+        textPaint.style = Paint.Style.FILL
+        textPaint.textAlign = Paint.Align.LEFT
+        if (showTrackArtist || !isPlayingShown()) {
+            textPaint.typeface = artistTypeface(bold = false)
+            textPaint.textSize = dp(geo.ARTIST_SP)
+            textPaint.color = ambientColor(tint, geo.ARTIST_ALPHA)
+            val fm = textPaint.fontMetrics
+            canvas.drawText(
+                    ellipsize(
+                            if (isPlayingShown()) displayArtist()
+                            else context.getString(R.string.preview_playback_stopped),
+                            available),
+                    left, top - fm.ascent, textPaint)
+            top += fm.descent - fm.ascent
+        }
+        if (showTrackTitle) {
+            textPaint.typeface = titleTypeface(bold = true)
+            textPaint.textSize = dp(geo.TITLE_SP)
+            textPaint.color = ambientColor(tint)
+            val fm = textPaint.fontMetrics
+            val lineHeight = fm.descent - fm.ascent
+            splitLines(displayTitle(), available, geo.TITLE_MAX_LINES)
+                    .forEachIndexed { index, line ->
+                        canvas.drawText(
+                                ellipsize(line, available), left,
+                                top - fm.ascent + index * lineHeight, textPaint)
+                    }
+        }
+        textPaint.textAlign = Paint.Align.CENTER
+        resetTrackTextPaint()
+    }
+
+    /**
+     * Ambient Note: the same `Artist: Title` sentence, wider, with the cover dropped.
+     *
+     * Mirrors `NoteAmbient` down to the family: the whole sentence is set in the *title* font
+     * there, the artist half differing only in weight, so this must not reach for the artist
+     * typeface the awake face uses.
+     */
+    private fun drawNoteAod(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        if (!aodShowTrackInfo) return
+        val geo = FaceGeometry.Note.Ambient
+        val screen = geometry.radius * 2f
+        val tint = ambientColor(resolvedAodTint())
+        val available = screen * (1f - geo.SIDE_PADDING_FRACTION * 2f)
+
+        val artistPart = when {
+            !isPlayingShown() -> context.getString(R.string.preview_playback_stopped)
+            showTrackArtist -> displayArtist()
+            else -> ""
+        }
+        val titlePart = if (showTrackTitle) displayTitle() else ""
+        val separator = if (artistPart.isNotEmpty() && titlePart.isNotEmpty()) ": " else ""
+        val sentence = artistPart + separator + titlePart
+        if (sentence.isEmpty()) return
+
+        textPaint.style = Paint.Style.FILL
+        textPaint.textAlign = Paint.Align.CENTER
+        textPaint.typeface = titleTypeface(bold = false)
+        textPaint.textSize = dp(geo.TEXT_SP)
+        val lineHeight = dp(geo.LINE_HEIGHT_SP)
+        val lines = splitLines(sentence, available, FaceGeometry.Note.MAX_LINES).toMutableList()
+        lines[lines.lastIndex] = ellipsize(lines.last(), available)
+        val artistChars = artistPart.length + separator.length
+        val fm = textPaint.fontMetrics
+        var baseline = geometry.cy - (lines.size - 1) * lineHeight / 2f -
+                (fm.ascent + fm.descent) / 2f
+        var consumed = 0
+        lines.forEach { line ->
+            val split = (artistChars - consumed).coerceIn(0, line.length)
+            drawTextRuns(
+                    canvas,
+                    listOf(
+                            TextRun(line.take(split), tint, titleTypeface(bold = true), 0f),
+                            TextRun(line.drop(split), tint, titleTypeface(bold = false), 0f))
+                            .filter { it.text.isNotEmpty() },
+                    geometry.cx, baseline)
+            // splitLines rejoins each line's words with a single space, so every line boundary
+            // swallowed exactly one character of the sentence.
+            consumed += line.length + 1
+            baseline += lineHeight
+        }
+        resetTrackTextPaint()
+    }
+
+    /**
+     * Ambient Verse: the running head and the current line alone.
+     *
+     * Mirrors `VerseAmbient`, including what it does *not* do: it paints no backdrop of its own,
+     * so the AOD artwork controls still reach this face in ambient exactly as they do awake. The
+     * neighbouring lines and the hairline are gone - at a once-a-minute refresh they would be
+     * wrong most of the time - which is why the block is measured over its own shallower band.
+     */
+    private fun drawVerseAod(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        val geo = FaceGeometry.Verse.Ambient
+        val screen = geometry.radius * 2f
+        val tint = resolvedAodTint()
+        val inset = RoundScreenText.sideInsetFor(geo.BAND_TOP, geo.BAND_BOTTOM)
+        val available = screen * (1f - 2f * inset)
+
+        textPaint.style = Paint.Style.FILL
+        textPaint.textAlign = Paint.Align.CENTER
+
+        val headShown = aodShowTrackInfo && showTrackTitle
+        textPaint.typeface = titleTypeface(bold = false)
+        textPaint.textSize = dp(geo.TITLE_SP)
+        textPaint.letterSpacing = geo.TITLE_TRACKING_EM
+        val headFm = textPaint.fontMetrics
+        val headHeight = if (headShown) {
+            headFm.descent - headFm.ascent + dp(geo.TITLE_TO_LINE_GAP_DP)
+        } else {
+            0f
+        }
+
+        // The words themselves, in the lyrics typeface rather than the track one, as on the face.
+        textPaint.typeface = lyricTypeface()
+        textPaint.letterSpacing = 0f
+        textPaint.textSize = dp(geo.LINE_SP)
+        val lineHeight = dp(geo.LINE_HEIGHT_SP)
+        val lines = splitLines(
+                context.getString(R.string.preview_verse_current), available, geo.LINE_MAX_LINES)
+        val lyricFm = textPaint.fontMetrics
+        var y = geometry.cy - (headHeight + lines.size * lineHeight) / 2f
+
+        if (headShown) {
+            textPaint.typeface = titleTypeface(bold = false)
+            textPaint.textSize = dp(geo.TITLE_SP)
+            textPaint.letterSpacing = geo.TITLE_TRACKING_EM
+            textPaint.color = ambientColor(tint, geo.TITLE_ALPHA)
+            canvas.drawText(
+                    ellipsize(displayTitle().uppercase(), available),
+                    geometry.cx, y - headFm.ascent, textPaint)
+            y += headHeight
+            textPaint.letterSpacing = 0f
+        }
+        textPaint.typeface = lyricTypeface()
+        textPaint.textSize = dp(geo.LINE_SP)
+        textPaint.color = ambientColor(tint, geo.LINE_ALPHA)
+        lines.forEachIndexed { index, line ->
+            canvas.drawText(
+                    ellipsize(line, available), geometry.cx,
+                    y + index * lineHeight - lyricFm.ascent, textPaint)
+        }
+        resetTrackTextPaint()
+    }
+
+    /**
+     * Ambient Metadata: the identity and the first couple of rows.
+     *
+     * Mirrors `MetadataAmbient`: the table is not merely shortened, it is re-centred and its rows
+     * lose the label column, becoming one centred "label  value" line each. Like the face, it
+     * paints no backdrop, so the AOD artwork still shows behind it.
+     */
+    private fun drawMetadataAod(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        if (!aodShowTrackInfo) return
+        val geo = FaceGeometry.Metadata.Ambient
+        val screen = geometry.radius * 2f
+        val tint = resolvedAodTint()
+        val available = screen * (1f - geo.SIDE_PADDING_FRACTION * 2f)
+
+        textPaint.style = Paint.Style.FILL
+        textPaint.textAlign = Paint.Align.CENTER
+        textPaint.typeface = titleTypeface(bold = false)
+        textPaint.textSize = dp(geo.TITLE_SP)
+        // The rows below are the album, the track position and so on - hiding the title leaves
+        // the table rather than emptying the screen, which is what the face does.
+        val titleLines = if (showTrackTitle) {
+            splitLines(displayTitle(), available, geo.TITLE_MAX_LINES)
+        } else {
+            emptyList()
+        }
+        val titleFm = textPaint.fontMetrics
+        val titleLineHeight = dp(geo.TITLE_LINE_HEIGHT_SP)
+
+        textPaint.typeface = artistTypeface(bold = false)
+        textPaint.textSize = dp(geo.ROW_SP)
+        val rowFm = textPaint.fontMetrics
+        val rowHeight = rowFm.descent - rowFm.ascent
+        val rows = previewMetadataRows().take(geo.ROWS)
+
+        var y = geometry.cy - (titleLines.size * titleLineHeight + rows.size * rowHeight) / 2f
+        textPaint.typeface = titleTypeface(bold = false)
+        textPaint.textSize = dp(geo.TITLE_SP)
+        textPaint.color = ambientColor(tint, geo.TITLE_ALPHA)
+        titleLines.forEachIndexed { index, line ->
+            canvas.drawText(
+                    ellipsize(line, available), geometry.cx,
+                    y + index * titleLineHeight +
+                            (titleLineHeight - (titleFm.descent - titleFm.ascent)) / 2f -
+                            titleFm.ascent,
+                    textPaint)
+        }
+        y += titleLines.size * titleLineHeight
+
+        textPaint.typeface = artistTypeface(bold = false)
+        textPaint.textSize = dp(geo.ROW_SP)
+        textPaint.color = ambientColor(tint, geo.ROW_ALPHA)
+        rows.forEachIndexed { index, row ->
+            canvas.drawText(
+                    ellipsize("${row.label}  ${row.value}", available),
+                    geometry.cx, y + index * rowHeight - rowFm.ascent, textPaint)
+        }
+        resetTrackTextPaint()
+    }
+
     /** Static, non-clickable queue preview matching AmbientUpNextPill on the watch. */
     private fun drawAmbientUpNextPill(
             canvas: Canvas,
@@ -4156,20 +5293,87 @@ class WatchPreviewView @JvmOverloads constructor(
                     floatArrayOf(0f, .48f, 1f),
                     Shader.TileMode.CLAMP
             )
-            OverlayBackdrop.AURORA -> fillPaint.shader = LinearGradient(
-                    geometry.bounds.left,
-                    geometry.bounds.bottom,
-                    geometry.bounds.right,
-                    geometry.bounds.top,
+            // Black under Aurora's two ribbon glows, which are drawn as blooms below.
+            OverlayBackdrop.AURORA -> fillPaint.color = Color.BLACK
+            // --- Carried over from the player catalogue; same colours and stops as the watch.
+            OverlayBackdrop.DUSK -> fillPaint.shader = LinearGradient(
+                    0f, geometry.bounds.top, 0f, geometry.bounds.bottom,
                     intArrayOf(
-                            tonal(secondary, .12f, .42f, .92f),
-                            tonal(accent, .38f, .42f, .92f),
-                            tonal(tertiary, .18f, .42f, .92f),
-                            Color.BLACK
-                    ),
-                    floatArrayOf(0f, .34f, .68f, 1f),
-                    Shader.TileMode.CLAMP
-            )
+                            tonal(tertiary, .17f, .25f, .60f),
+                            tonal(tertiary, .17f, .25f, .60f),
+                            tonal(tertiary, .17f, .25f, .60f),
+                            tonal(tertiary, .17f, .25f, .60f),
+                            tonal(tertiary, .09f, .25f, .60f),
+                            0xFF050507.toInt()),
+                    floatArrayOf(0f, .2f, .4f, .6f, .8f, 1f),
+                    Shader.TileMode.CLAMP)
+            OverlayBackdrop.ICE -> fillPaint.shader = LinearGradient(
+                    0f, geometry.bounds.top, 0f, geometry.bounds.bottom,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(0xFF2E7C93.toInt(), 0xEE),
+                            ColorUtils.setAlphaComponent(0xFF1B4A78.toInt(), 0xF2),
+                            0xFF061426.toInt()),
+                    floatArrayOf(0f, .5f, 1f),
+                    Shader.TileMode.CLAMP)
+            // Rose and Monolith are a base here; their bloom and slab are drawn after the fill.
+            OverlayBackdrop.ROSE -> fillPaint.color = 0xFF1B0810.toInt()
+            OverlayBackdrop.NOIR -> fillPaint.color = Color.BLACK
+            OverlayBackdrop.VELVET -> fillPaint.color = 0xFF120B16.toInt()
+            OverlayBackdrop.MIRAGE -> fillPaint.color = 0xFF0A0A0E.toInt()
+            OverlayBackdrop.BLOOM -> fillPaint.color = 0xFF0B0B0F.toInt()
+            OverlayBackdrop.CLOUD -> fillPaint.color = 0xFF0A0A0D.toInt()
+            OverlayBackdrop.NOCTURNE -> fillPaint.color = 0xFF070B25.toInt()
+            OverlayBackdrop.LIQUID -> fillPaint.color = 0xFF08080B.toInt()
+            // Tidal paints its own base inside the shared pattern helper, so nothing here.
+            OverlayBackdrop.TIDAL -> fillPaint.color = Color.TRANSPARENT
+            OverlayBackdrop.VINYL -> fillPaint.color = 0xFF050506.toInt()
+            OverlayBackdrop.MATERIAL -> fillPaint.color = Color.BLACK
+            OverlayBackdrop.POSTER -> fillPaint.color =
+                    ColorUtils.setAlphaComponent(tonal(accent, .22f, .25f, .60f), 0xF0)
+            OverlayBackdrop.STUDIO -> fillPaint.shader = LinearGradient(
+                    geometry.bounds.right, geometry.bounds.top,
+                    geometry.bounds.left, geometry.bounds.bottom,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(tonal(accent, .40f, .25f, .60f), 0xE2),
+                            ColorUtils.setAlphaComponent(tonal(secondary, .16f, .25f, .60f), 0xC8),
+                            0xFF060608.toInt()),
+                    floatArrayOf(0f, .5f, 1f),
+                    Shader.TileMode.CLAMP)
+            OverlayBackdrop.SPECTRUM -> fillPaint.shader = LinearGradient(
+                    0f, geometry.bounds.top, 0f, geometry.bounds.bottom,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(tonal(accent, .34f, .25f, .60f), 0xE8),
+                            ColorUtils.setAlphaComponent(tonal(tertiary, .14f, .25f, .60f), 0xF0),
+                            0xFF040405.toInt()),
+                    floatArrayOf(0f, .5f, 1f),
+                    Shader.TileMode.CLAMP)
+            // Corona, Crescent and Grid paint their own base inside the shared pattern helpers.
+            OverlayBackdrop.CORONA,
+            OverlayBackdrop.CRESCENT,
+            OverlayBackdrop.GRID -> fillPaint.color = Color.TRANSPARENT
+            OverlayBackdrop.GLASS_VEIL -> fillPaint.shader = LinearGradient(
+                    0f, geometry.bounds.top, 0f, geometry.bounds.bottom,
+                    intArrayOf(0x40FFFFFF, 0xC4000000.toInt()),
+                    floatArrayOf(0f, 1f),
+                    Shader.TileMode.CLAMP)
+            OverlayBackdrop.LANTERN -> fillPaint.shader = LinearGradient(
+                    0f, geometry.bounds.top, 0f, geometry.bounds.bottom,
+                    intArrayOf(
+                            0xFF07070A.toInt(),
+                            tonal(tertiary, .12f, .25f, .60f),
+                            0xFF07070A.toInt()),
+                    floatArrayOf(0f, .5f, 1f),
+                    Shader.TileMode.CLAMP)
+            OverlayBackdrop.MONOLITH -> fillPaint.color = 0xFF060608.toInt()
+            OverlayBackdrop.PAPER -> fillPaint.shader = LinearGradient(
+                    0f, geometry.bounds.top, 0f, geometry.bounds.bottom,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(0xFF4A4336.toInt(), 0xF4),
+                            ColorUtils.setAlphaComponent(0xFF4A4336.toInt(), 0xF4),
+                            ColorUtils.setAlphaComponent(0xFF241F17.toInt(), 0xF8),
+                            0xFF08070A.toInt()),
+                    floatArrayOf(0f, .333f, .667f, 1f),
+                    Shader.TileMode.CLAMP)
             OverlayBackdrop.SPOTLIGHT -> fillPaint.shader = RadialGradient(
                     geometry.cx,
                     geometry.bounds.top + geometry.bounds.height() * .28f,
@@ -4194,18 +5398,19 @@ class WatchPreviewView @JvmOverloads constructor(
                     floatArrayOf(0f, .54f, 1f),
                     Shader.TileMode.CLAMP
             )
+            // Two tones divided by a line, matching the player's `split_tone`; the divider
+            // itself is drawn after the fill, below.
             OverlayBackdrop.SPLIT -> fillPaint.shader = LinearGradient(
-                    geometry.bounds.left,
-                    geometry.cy,
-                    geometry.bounds.right,
-                    geometry.cy,
+                    0f,
+                    geometry.bounds.top,
+                    0f,
+                    geometry.bounds.bottom,
                     intArrayOf(
-                            tonal(accent, .36f, .28f, .72f),
-                            tonal(accent, .36f, .28f, .72f),
+                            tonal(accent, .30f, .28f, .72f),
                             tonal(secondary, .20f, .28f, .72f),
-                            tonal(secondary, .20f, .28f, .72f)
+                            0xFF060608.toInt()
                     ),
-                    floatArrayOf(0f, .495f, .505f, 1f),
+                    floatArrayOf(0f, .50f, 1f),
                     Shader.TileMode.CLAMP
             )
             OverlayBackdrop.BANDS -> fillPaint.shader = LinearGradient(
@@ -4278,6 +5483,88 @@ class WatchPreviewView @JvmOverloads constructor(
                             0xFF031B2D.toInt(), 0xFF075D73.toInt(),
                             tonal(tertiary, .20f, .34f, .82f), Color.BLACK),
                     floatArrayOf(0f, .38f, .72f, 1f), Shader.TileMode.CLAMP)
+            // These bloom-based treatments draw their additional radial passes below, after the
+            // common base rectangle has been painted.
+            OverlayBackdrop.NEBULA ->
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, 0x78)
+            // The dark field under Ember's single corner glow; the glow itself is a bloom below.
+            OverlayBackdrop.EMBER -> fillPaint.color = 0xFF120A10.toInt()
+            OverlayBackdrop.TIDELINE -> fillPaint.shader = LinearGradient(
+                    0f, geometry.bounds.top, 0f, geometry.bounds.bottom,
+                    intArrayOf(
+                            0xFF031423.toInt(),
+                            ColorUtils.setAlphaComponent(0xFF07516A.toInt(), 0xEA),
+                            tonal(secondary, .20f, .25f, .60f),
+                            Color.BLACK),
+                    floatArrayOf(0f, .35f, .70f, 1f),
+                    Shader.TileMode.CLAMP)
+            OverlayBackdrop.BIOLUMINESCENCE ->
+                fillPaint.color = ColorUtils.setAlphaComponent(0xFF041A19.toInt(), 0xC0)
+            OverlayBackdrop.IRIDESCENT -> fillPaint.shader = LinearGradient(
+                    geometry.bounds.left, geometry.bounds.top,
+                    geometry.bounds.right, geometry.bounds.bottom,
+                    intArrayOf(
+                            tonal(tertiary, .28f, .25f, .60f),
+                            0xFF4A2F72.toInt(),
+                            tonal(accent, .40f, .25f, .60f),
+                            tonal(secondary, .24f, .25f, .60f),
+                            0xFF0B101A.toInt()),
+                    floatArrayOf(0f, .25f, .50f, .75f, 1f),
+                    Shader.TileMode.CLAMP)
+            OverlayBackdrop.GRAPHITE -> fillPaint.shader = LinearGradient(
+                    geometry.bounds.left, geometry.bounds.top,
+                    geometry.bounds.right, geometry.bounds.bottom,
+                    intArrayOf(0xFF292D34.toInt(), 0xFF111318.toInt(), 0xFF1D2026.toInt()),
+                    floatArrayOf(0f, .50f, 1f),
+                    Shader.TileMode.CLAMP)
+            OverlayBackdrop.CINEMA -> fillPaint.shader = LinearGradient(
+                    0f, geometry.bounds.top, 0f, geometry.bounds.bottom,
+                    intArrayOf(
+                            Color.BLACK,
+                            Color.BLACK,
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .42f, .25f, .60f), 0xE0),
+                            ColorUtils.setAlphaComponent(
+                                    tonal(secondary, .26f, .25f, .60f), 0xD8),
+                            Color.BLACK,
+                            Color.BLACK),
+                    floatArrayOf(0f, .22f, .40f, .60f, .78f, 1f),
+                    Shader.TileMode.CLAMP)
+            OverlayBackdrop.ORBIT -> fillPaint.color = tonal(accent, .12f, .25f, .60f)
+            // Quiet the whole way up, with the lift held in the lower band the way the player's
+            // Horizon does - the stop at .72 is the line the name is about.
+            OverlayBackdrop.HORIZON -> fillPaint.shader = LinearGradient(
+                    0f, geometry.bounds.top, 0f, geometry.bounds.bottom,
+                    intArrayOf(
+                            0xFF070B12.toInt(),
+                            0xFF070B12.toInt(),
+                            tonal(accent, .34f, .25f, .60f),
+                            0xFF020204.toInt()),
+                    floatArrayOf(0f, .72f, .90f, 1f),
+                    Shader.TileMode.CLAMP)
+            OverlayBackdrop.INK_WASH ->
+                fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, 0x82)
+            OverlayBackdrop.BLOSSOM -> fillPaint.shader = LinearGradient(
+                    geometry.bounds.left, geometry.bounds.bottom,
+                    geometry.bounds.right, geometry.bounds.top,
+                    intArrayOf(
+                            0xFF160B1D.toInt(),
+                            0xFF542047.toInt(),
+                            ColorUtils.setAlphaComponent(0xFFB84B74.toInt(), 0xD8),
+                            tonal(tertiary, .30f, .25f, .60f),
+                            0xFF08050B.toInt()),
+                    floatArrayOf(0f, .25f, .50f, .75f, 1f),
+                    Shader.TileMode.CLAMP)
+            OverlayBackdrop.FJORD -> fillPaint.shader = LinearGradient(
+                    geometry.bounds.left, geometry.bounds.top,
+                    geometry.bounds.right, geometry.bounds.bottom,
+                    intArrayOf(
+                            0xFF0A2030.toInt(),
+                            tonal(tertiary, .25f, .25f, .60f),
+                            0xFF0A5960.toInt(),
+                            Color.BLACK),
+                    floatArrayOf(0f, .32f, .68f, 1f),
+                    Shader.TileMode.CLAMP)
             // Mirrors the watch's LIQUID_GLASS drawable: a low-alpha lifted album tint, a white
             // sheen through the middle and a deeper tail, over the blurred cover this backdrop
             // shares with Acrylic/Glass/Prism.
@@ -4306,6 +5593,56 @@ class WatchPreviewView @JvmOverloads constructor(
                                 tonal(accent, .30f, PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT),
                                 0x73))
             OverlayBackdrop.FOLLOW_STYLE -> fillPaint.color = Color.BLACK
+            // These five draw themselves directly (base fill and pattern together, via the same
+            // OverlayBackdropPatterns functions the watch's Drawable calls) rather than only
+            // setting fillPaint for the shared drawRect below - a repeating dot/line/facet
+            // pattern is not expressible as a single Shader the way every other backdrop here is.
+            // Left fully transparent afterwards so that shared drawRect, which still runs
+            // unconditionally right after this `when`, paints nothing over what was just drawn.
+            OverlayBackdrop.DOT_MATRIX -> {
+                OverlayBackdropPatterns.drawDotMatrix(
+                        canvas, geometry.bounds, geometry.dpScale,
+                        baseColor = tonal(accent, .10f, .25f, .60f),
+                        dotColor = ColorUtils.setAlphaComponent(
+                                tonal(tertiary, .62f, .25f, .60f), 0x38))
+                fillPaint.shader = null
+                fillPaint.color = Color.TRANSPARENT
+            }
+            OverlayBackdrop.SCANLINES -> {
+                OverlayBackdropPatterns.drawScanlines(
+                        canvas, geometry.bounds, geometry.dpScale,
+                        baseColor = tonal(accent, .09f, .25f, .60f),
+                        lineColor = tonal(secondary, .55f, .25f, .60f))
+                fillPaint.shader = null
+                fillPaint.color = Color.TRANSPARENT
+            }
+            OverlayBackdrop.RADAR -> {
+                OverlayBackdropPatterns.drawRadarRings(
+                        canvas, geometry.bounds, geometry.dpScale,
+                        cx = geometry.cx, cy = geometry.cy, radius = geometry.radius,
+                        baseColor = tonal(accent, .08f, .25f, .60f),
+                        ringColor = tonal(tertiary, .58f, .25f, .60f),
+                        sweepColor = tonal(accent, .50f, .25f, .60f))
+                fillPaint.shader = null
+                fillPaint.color = Color.TRANSPARENT
+            }
+            OverlayBackdrop.CONTOUR -> {
+                OverlayBackdropPatterns.drawContourLines(
+                        canvas, geometry.bounds, geometry.dpScale,
+                        cx = geometry.cx, cy = geometry.cy, radius = geometry.radius,
+                        baseColor = tonal(accent, .09f, .25f, .60f),
+                        lineColor = tonal(secondary, .60f, .25f, .60f),
+                        accent = accent)
+                fillPaint.shader = null
+                fillPaint.color = Color.TRANSPARENT
+            }
+            OverlayBackdrop.FACETED -> {
+                OverlayBackdropPatterns.drawFacetedCrystal(
+                        canvas, geometry.bounds, geometry.dpScale, accent, secondary, tertiary,
+                        accent)
+                fillPaint.shader = null
+                fillPaint.color = Color.TRANSPARENT
+            }
         }
         canvas.drawRect(geometry.bounds, fillPaint)
 
@@ -4325,6 +5662,400 @@ class WatchPreviewView @JvmOverloads constructor(
                     floatArrayOf(0f, .48f, 1f),
                     Shader.TileMode.CLAMP
             )
+            canvas.drawRect(geometry.bounds, fillPaint)
+            fillPaint.shader = null
+        }
+
+        if (backdrop == OverlayBackdrop.MATERIAL) {
+            drawBackdropBloom(canvas, geometry, .50f, .50f, .85f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(tonal(accent, .26f, .25f, .60f), 0xB8),
+                            ColorUtils.setAlphaComponent(tonal(accent, .26f, .25f, .60f), 0x62),
+                            ColorUtils.setAlphaComponent(tonal(accent, .26f, .25f, .60f), 0x1E),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .50f, .80f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.POSTER) {
+            fillPaint.shader = LinearGradient(
+                    0f, geometry.bounds.top, 0f, geometry.bounds.bottom,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(Color.BLACK, 0xC4),
+                            ColorUtils.setAlphaComponent(Color.BLACK, 0x1E),
+                            ColorUtils.setAlphaComponent(Color.BLACK, 0x66),
+                            ColorUtils.setAlphaComponent(Color.BLACK, 0xF0)),
+                    floatArrayOf(0f, .333f, .667f, 1f),
+                    Shader.TileMode.CLAMP)
+            canvas.drawRect(geometry.bounds, fillPaint)
+            fillPaint.shader = LinearGradient(
+                    geometry.bounds.left, 0f, geometry.bounds.right, 0f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(Color.BLACK, 0x92),
+                            Color.TRANSPARENT,
+                            ColorUtils.setAlphaComponent(Color.BLACK, 0x92)),
+                    floatArrayOf(0f, .5f, 1f),
+                    Shader.TileMode.CLAMP)
+            canvas.drawRect(geometry.bounds, fillPaint)
+            fillPaint.shader = null
+        }
+
+        if (backdrop == OverlayBackdrop.VINYL) {
+            drawBackdropBloom(canvas, geometry, .64f, .38f, .69f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .36f, .25f, .60f), 0xA6),
+                            ColorUtils.setAlphaComponent(
+                                    tonal(tertiary, .16f, .25f, .60f), 0x52),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .55f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.CORONA) {
+            OverlayBackdropPatterns.drawSweepRing(
+                    canvas,
+                    geometry.bounds,
+                    0xFF08080B.toInt(),
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(tonal(tertiary, .34f, .25f, .60f), 0x96),
+                            ColorUtils.setAlphaComponent(tonal(accent, .40f, .25f, .60f), 0x96),
+                            ColorUtils.setAlphaComponent(tonal(secondary, .36f, .25f, .60f), 0x96),
+                            ColorUtils.setAlphaComponent(tonal(tertiary, .34f, .25f, .60f), 0x96)),
+                    radiusFraction = .44f,
+                    strokeFraction = .24f,
+                    useMaxDimension = true,
+                    roundCap = true)
+        }
+
+        if (backdrop == OverlayBackdrop.CRESCENT) {
+            OverlayBackdropPatterns.drawSweepArc(
+                    canvas,
+                    geometry.bounds,
+                    0xFF07070A.toInt(),
+                    intArrayOf(
+                            Color.TRANSPARENT,
+                            ColorUtils.setAlphaComponent(tonal(accent, .44f, .25f, .60f), 0xB8),
+                            ColorUtils.setAlphaComponent(tonal(secondary, .30f, .25f, .60f), 0x50),
+                            Color.TRANSPARENT),
+                    startAngle = 138f,
+                    sweepAngle = 196f,
+                    inflateFraction = .04f,
+                    strokeFraction = .12f)
+        }
+
+        if (backdrop == OverlayBackdrop.GRID) {
+            OverlayBackdropPatterns.drawGridLines(
+                    canvas,
+                    geometry.bounds,
+                    tonal(tertiary, .10f, .25f, .60f),
+                    ColorUtils.setAlphaComponent(tonal(accent, .34f, .25f, .60f), 0x6E),
+                    divisions = 6)
+        }
+
+        if (backdrop == OverlayBackdrop.GLASS_VEIL) {
+            OverlayBackdropPatterns.drawSweepRing(
+                    canvas,
+                    geometry.bounds,
+                    0,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(Color.WHITE, 0xD2),
+                            ColorUtils.setAlphaComponent(tonal(accent, .48f, .25f, .60f), 0xC8),
+                            ColorUtils.setAlphaComponent(Color.WHITE, 0xD2),
+                            ColorUtils.setAlphaComponent(tonal(secondary, .44f, .25f, .60f), 0xC8),
+                            ColorUtils.setAlphaComponent(Color.WHITE, 0xD2)),
+                    radiusFraction = .485f,
+                    strokeFraction = .018f)
+        }
+
+        if (backdrop == OverlayBackdrop.CLOUD) {
+            listOf(
+                    Triple(.22f, .34f, tonal(accent, .34f, .25f, .60f) to 0x92),
+                    Triple(.74f, .30f, tonal(secondary, .32f, .25f, .60f) to 0x8C),
+                    Triple(.50f, .78f, tonal(tertiary, .30f, .25f, .60f) to 0x86)
+            ).forEach { (x, y, tint) ->
+                drawBackdropBloom(canvas, geometry, x, y, .49f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tint.first, tint.second),
+                                Color.TRANSPARENT),
+                        floatArrayOf(0f, 1f))
+            }
+        }
+
+        if (backdrop == OverlayBackdrop.NOCTURNE) {
+            drawBackdropBloom(canvas, geometry, .68f, .28f, .58f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(tertiary, .34f, .25f, .60f), 0x9E),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, 1f))
+            OverlayBackdropPatterns.drawNocturneStars(
+                    canvas,
+                    geometry.bounds,
+                    ColorUtils.setAlphaComponent(Color.WHITE, 0xB4))
+        }
+
+        if (backdrop == OverlayBackdrop.LIQUID) {
+            listOf(
+                    Triple(.18f, .72f, Triple(tonal(accent, .44f, .25f, .60f), tonal(accent, .16f, .25f, .60f), 0xC8)),
+                    Triple(.62f, .42f, Triple(tonal(secondary, .42f, .25f, .60f), tonal(secondary, .14f, .25f, .60f), 0xC0)),
+                    Triple(.86f, .76f, Triple(tonal(tertiary, .40f, .25f, .60f), tonal(tertiary, .14f, .25f, .60f), 0xBA))
+            ).forEach { (x, y, tint) ->
+                drawBackdropBloom(canvas, geometry, x, y, .38f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tint.first, tint.third),
+                                ColorUtils.setAlphaComponent(tint.second, 0x3A),
+                                Color.TRANSPARENT),
+                        floatArrayOf(0f, .48f, 1f))
+            }
+        }
+
+        if (backdrop == OverlayBackdrop.TIDAL) {
+            OverlayBackdropPatterns.drawTidalWaves(
+                    canvas,
+                    geometry.bounds,
+                    0xFF08080B.toInt(),
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(tonal(accent, .40f, .25f, .60f), 0xC6),
+                            ColorUtils.setAlphaComponent(tonal(secondary, .36f, .25f, .60f), 0xC6),
+                            ColorUtils.setAlphaComponent(tonal(tertiary, .34f, .25f, .60f), 0xC6)))
+        }
+
+        if (backdrop == OverlayBackdrop.LANTERN) {
+            drawBackdropBloom(canvas, geometry, .50f, .82f, .41f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(0xFFFFC857.toInt(), 0xC8),
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .34f, .25f, .60f), 0x52),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .45f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.NOIR) {
+            drawBackdropBloom(canvas, geometry, .50f, .42f, .58f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(Color.WHITE, 0x2E),
+                            Color.TRANSPARENT,
+                            ColorUtils.setAlphaComponent(Color.BLACK, 0xD2)),
+                    floatArrayOf(0f, .52f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.VELVET) {
+            drawBackdropBloom(canvas, geometry, .34f, .76f, .62f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .38f, .25f, .60f), 0xA8),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.MIRAGE) {
+            drawBackdropBloom(canvas, geometry, .08f, .38f, .58f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .40f, .25f, .60f), 0xBE),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, 1f))
+            drawBackdropBloom(canvas, geometry, .92f, .62f, .58f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(secondary, .36f, .25f, .60f), 0xB4),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.BLOOM) {
+            drawBackdropBloom(canvas, geometry, .22f, .26f, .52f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .38f, .25f, .60f), 0xAA),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, 1f))
+            drawBackdropBloom(canvas, geometry, .80f, .22f, .46f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(secondary, .34f, .25f, .60f), 0x9A),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, 1f))
+            drawBackdropBloom(canvas, geometry, .50f, .88f, .48f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(tertiary, .30f, .25f, .60f), 0x8E),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.ROSE) {
+            drawBackdropBloom(canvas, geometry, .72f, .74f, .72f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(0xFFFF8CAB.toInt(), 0xB4),
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .30f, .25f, .60f), 0x5E),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .55f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.PAPER) {
+            val inset = geometry.bounds.width() * .065f
+            val stroke = (geometry.bounds.width() * .009f).coerceAtLeast(1f)
+            strokePaint.shader = null
+            strokePaint.style = Paint.Style.STROKE
+            strokePaint.strokeWidth = stroke
+            strokePaint.color = ColorUtils.setAlphaComponent(Color.WHITE, 0x70)
+            canvas.drawRect(
+                    geometry.bounds.left + inset,
+                    geometry.bounds.top + inset,
+                    geometry.bounds.right - inset,
+                    geometry.bounds.bottom - inset,
+                    strokePaint)
+        }
+
+        if (backdrop == OverlayBackdrop.MONOLITH) {
+            val slab = geometry.bounds.left + geometry.bounds.width() * .48f
+            fillPaint.shader = LinearGradient(
+                    geometry.bounds.left, 0f, slab, 0f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .42f, .25f, .60f), 0xEE),
+                            ColorUtils.setAlphaComponent(
+                                    tonal(secondary, .18f, .25f, .60f), 0x66),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .70f, 1f),
+                    Shader.TileMode.CLAMP)
+            canvas.drawRect(
+                    geometry.bounds.left, geometry.bounds.top, slab, geometry.bounds.bottom,
+                    fillPaint)
+            fillPaint.shader = LinearGradient(
+                    0f, geometry.bounds.top, 0f, geometry.bounds.bottom,
+                    intArrayOf(
+                            Color.TRANSPARENT, Color.TRANSPARENT, Color.TRANSPARENT,
+                            ColorUtils.setAlphaComponent(Color.BLACK, 0xC2)),
+                    floatArrayOf(0f, .333f, .667f, 1f),
+                    Shader.TileMode.CLAMP)
+            canvas.drawRect(geometry.bounds, fillPaint)
+            fillPaint.shader = null
+        }
+
+        if (backdrop == OverlayBackdrop.SPLIT) {
+            val thickness = (geometry.bounds.width() * .006f).coerceAtLeast(1f)
+            fillPaint.shader = null
+            fillPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, 0x7A)
+            canvas.drawRect(
+                    geometry.bounds.left,
+                    geometry.cy - thickness / 2f,
+                    geometry.bounds.right,
+                    geometry.cy + thickness / 2f,
+                    fillPaint)
+        }
+
+        // Ember and Aurora share their geometry with the player faces of the same name: one warm
+        // corner glow, and two ribbon glows on black. Before this they were linear washes here and
+        // on the watch, so picking "Ember" for the player and for the panel gave two unrelated
+        // pictures - the collision this alignment removes.
+        if (backdrop == OverlayBackdrop.EMBER) {
+            drawBackdropBloom(canvas, geometry, .82f, .84f, .46f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .46f, .25f, .60f), 0xCC),
+                            ColorUtils.setAlphaComponent(0xFFC44536.toInt(), 0x5C),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .50f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.AURORA) {
+            drawBackdropBloom(canvas, geometry, .18f, .14f, .78f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .44f, .25f, .60f), 0xC4),
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .12f, .25f, .60f), 0x4C),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .42f, 1f))
+            drawBackdropBloom(canvas, geometry, .88f, .72f, .72f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(secondary, .38f, .25f, .60f), 0x9C),
+                            ColorUtils.setAlphaComponent(
+                                    tonal(tertiary, .18f, .25f, .60f), 0x3C),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .48f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.NEBULA) {
+            drawBackdropBloom(canvas, geometry, .16f, .24f, .70f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .38f, .25f, .60f), 0xB0),
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .08f, .25f, .60f), 0x10),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .52f, 1f))
+            drawBackdropBloom(canvas, geometry, .84f, .32f, .64f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(secondary, .34f, .25f, .60f), 0xA0),
+                            ColorUtils.setAlphaComponent(
+                                    tonal(secondary, .08f, .25f, .60f), 0x10),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .52f, 1f))
+            drawBackdropBloom(canvas, geometry, .50f, .94f, .58f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(tertiary, .30f, .25f, .60f), 0x96),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.BIOLUMINESCENCE) {
+            drawBackdropBloom(canvas, geometry, .20f, .74f, .62f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .54f, .25f, .60f), 0xC0),
+                            ColorUtils.setAlphaComponent(0xFF0A6A62.toInt(), 0x70),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .52f, 1f))
+            drawBackdropBloom(canvas, geometry, .82f, .24f, .54f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(tertiary, .42f, .25f, .60f), 0xA8),
+                            ColorUtils.setAlphaComponent(0xFF1AB5A2.toInt(), 0x40),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .52f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.ORBIT) {
+            drawBackdropBloom(canvas, geometry, .16f, .30f, .64f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(secondary, .42f, .25f, .60f), 0xB8),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, 1f))
+            drawBackdropBloom(canvas, geometry, .84f, .72f, .62f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(tertiary, .34f, .25f, .60f), 0xA8),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, 1f))
+            drawBackdropBloom(canvas, geometry, .50f, .50f, .26f,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .48f, .25f, .60f), 0x88),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, 1f))
+        }
+
+        if (backdrop == OverlayBackdrop.INK_WASH) {
+            fillPaint.shader = LinearGradient(
+                    geometry.bounds.left,
+                    geometry.bounds.top,
+                    geometry.bounds.right,
+                    geometry.bounds.bottom,
+                    intArrayOf(
+                            ColorUtils.setAlphaComponent(
+                                    tonal(accent, .35f, .25f, .60f), 0xB0),
+                            ColorUtils.setAlphaComponent(
+                                    tonal(secondary, .18f, .25f, .60f), 0x42),
+                            Color.TRANSPARENT),
+                    floatArrayOf(0f, .52f, 1f),
+                    Shader.TileMode.CLAMP)
             canvas.drawRect(geometry.bounds, fillPaint)
             fillPaint.shader = null
         }
@@ -4365,6 +6096,55 @@ class WatchPreviewView @JvmOverloads constructor(
                         geometry.dpScale * 10f, strokePaint)
             }
         }
+        if (backdrop == OverlayBackdrop.GRAPHITE) {
+            strokePaint.shader = null
+            strokePaint.pathEffect = null
+            strokePaint.style = Paint.Style.STROKE
+            strokePaint.strokeWidth = geometry.dpScale.coerceAtLeast(1f)
+            strokePaint.color = 0x44FFFFFF
+            val inset = strokePaint.strokeWidth / 2f
+            if (geometry.round) {
+                canvas.drawCircle(geometry.cx, geometry.cy, geometry.radius - inset, strokePaint)
+            } else {
+                val outline = RectF(geometry.bounds).apply { inset(inset, inset) }
+                canvas.drawRoundRect(outline, geometry.dpScale * 10f,
+                        geometry.dpScale * 10f, strokePaint)
+            }
+        }
+        fillPaint.shader = null
+    }
+
+    /** Draws one percentage-positioned radial bloom for the procedural backdrop treatments. */
+    /**
+     * One radial bloom of an overlay backdrop, mirroring a `GradientDrawable` with
+     * `RADIAL_GRADIENT` in `OverlayBackdropDrawables`.
+     *
+     * [radiusFraction] is a fraction of the **screen width**, which is what the watch's
+     * `gradientRadius = screenWidthPx * f` means - not of [PreviewGeometry.radius], which is half
+     * that. Every caller here was passing the watch's own fraction against the half-width base, so
+     * every bloom in this preview was drawn at half the size the wrist renders it: Nebula's clouds,
+     * Orbit's orbits and Bioluminescence's blooms all sat in the middle of the screen here while
+     * they filled it there. Converting inside this one function is what stops a call site from
+     * having to remember which base it is quoting, so the numbers can stay literally the same on
+     * both sides and be compared by eye.
+     */
+    private fun drawBackdropBloom(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            centerX: Float,
+            centerY: Float,
+            radiusFraction: Float,
+            colors: IntArray,
+            positions: FloatArray
+    ) {
+        fillPaint.shader = RadialGradient(
+                geometry.bounds.left + geometry.bounds.width() * centerX,
+                geometry.bounds.top + geometry.bounds.height() * centerY,
+                geometry.bounds.width() * radiusFraction,
+                colors,
+                positions,
+                Shader.TileMode.CLAMP)
+        canvas.drawRect(geometry.bounds, fillPaint)
         fillPaint.shader = null
     }
 
@@ -4536,7 +6316,7 @@ class WatchPreviewView @JvmOverloads constructor(
         textPaint.textAlign = Paint.Align.CENTER
         // Scratch paint shared across surfaces: styles that widen the tracking have to hand it
         // back neutral, or the next readout inherits the spacing.
-        textPaint.letterSpacing = 0f
+        resetTrackTextPaint()
         when (style) {
             "split" -> {
                 textPaint.color = plainColor
@@ -4562,7 +6342,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 textPaint.textSize = dp(15f)
                 textPaint.letterSpacing = 0.08f
                 canvas.drawText(content, geometry.cx, geometry.cy + dp(5f), textPaint)
-                textPaint.letterSpacing = 0f
+                resetTrackTextPaint()
             }
             "shadow" -> {
                 textPaint.textSize = dp(30f)
@@ -4705,7 +6485,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 canvas.drawText(content, geometry.cx,
                         geometry.cy - (metrics.ascent + metrics.descent) / 2f, textPaint)
                 textPaint.clearShadowLayer()
-                textPaint.letterSpacing = 0f
+                resetTrackTextPaint()
             }
             "outline_square" -> {
                 val rect = RectF(
@@ -4927,7 +6707,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 }
                 val baseline = geometry.cy - (fontMetrics.ascent + fontMetrics.descent) / 2f
                 canvas.drawText(content, geometry.cx, baseline, textPaint)
-                textPaint.letterSpacing = 0f
+                resetTrackTextPaint()
             }
             else -> {
                 textPaint.color = plainColor
@@ -6902,6 +8682,56 @@ class WatchPreviewView @JvmOverloads constructor(
         canvas.restoreToCount(saved)
     }
 
+    /** Ring geometry, shared by the band and the position mark drawn across it. */
+    private class EdgeRingMetrics(
+            val radius: Float,
+            val stroke: Float,
+            val startDegrees: Float,
+            val sweepDegrees: Float
+    )
+
+    private fun edgeSeekRingMetrics(
+            radius: Float,
+            dp: (Float) -> Float,
+            strokeScale: Float
+    ): EdgeRingMetrics {
+        val layoutStrokeScale = when (progressLayout) {
+            "bold" -> 1.8f
+            "double" -> .72f
+            else -> 1f
+        }
+        return EdgeRingMetrics(
+                radius = (radius - when (progressLayout) {
+                    "inset" -> dp(7f)
+                    "inner" -> dp(17f)
+                    "bold", "open_bottom", "open_top", "open_left", "open_right", "double" -> dp(1f)
+                    else -> 0f
+                }).coerceAtLeast(dp(28f)),
+                stroke = dp(6f) * strokeScale * layoutStrokeScale,
+                startDegrees = when (progressLayout) {
+                    "open_bottom" -> 135f
+                    "open_top" -> -45f
+                    "left_arc" -> 100f
+                    "right_arc" -> 80f
+                    "open_left" -> 45f
+                    "open_right" -> -135f
+                    else -> -90f
+                },
+                sweepDegrees = when (progressLayout) {
+                    "open_bottom", "open_top", "open_left", "open_right" -> 270f
+                    "left_arc" -> 160f
+                    "right_arc" -> -160f
+                    else -> 360f
+                })
+    }
+
+    /**
+     * The ring plus, where the setting says so, the tick marking the playback position.
+     *
+     * The mark is drawn out here rather than inside the style body below, because that body has a
+     * `return` in most of its style branches - a mark appended at its end would have appeared on
+     * a handful of ring styles and silently not on the rest.
+     */
     private fun drawEdgeSeekRing(
             canvas: Canvas,
             cx: Float,
@@ -6910,34 +8740,79 @@ class WatchPreviewView @JvmOverloads constructor(
             dp: (Float) -> Float,
             strokeScale: Float = 1f
     ) {
+        drawEdgeSeekRingStyle(canvas, cx, cy, radius, dp, strokeScale)
+        if (seekMarkerVisible()) {
+            drawEdgeSeekMarker(canvas, cx, cy, edgeSeekRingMetrics(radius, dp, strokeScale), dp)
+        }
+    }
+
+    /**
+     * Mirrors `CircularProgressSeekBar.drawSeekOriginMarker`: a radial tick crossing the band, in
+     * the palette's tertiary so it stays legible on the ring styles already painted in the primary
+     * at that exact radius.
+     *
+     * The preview never drags, so this always sits on the current position - the resting case,
+     * which is precisely the one this setting exists to change.
+     */
+    private fun drawEdgeSeekMarker(
+            canvas: Canvas,
+            cx: Float,
+            cy: Float,
+            metrics: EdgeRingMetrics,
+            dp: (Float) -> Float
+    ) {
+        val angle = Math.toRadians(
+                (metrics.startDegrees + progressFraction() * metrics.sweepDegrees).toDouble())
+        val cosA = cos(angle).toFloat()
+        val sinA = sin(angle).toFloat()
+        val half = (metrics.stroke * EDGE_MARKER_LENGTH_SCALE) / 2f
+        val ringRadius = metrics.radius - metrics.stroke / 2f
+        strokePaint.shader = null
+        strokePaint.pathEffect = null
+        strokePaint.style = Paint.Style.STROKE
+        strokePaint.strokeCap = Paint.Cap.ROUND
+        strokePaint.strokeWidth = dp(EDGE_MARKER_WIDTH_DP)
+        strokePaint.color = liftedAccent(
+                resolveTertiaryTint(progressMode, progressCustom, progressDesaturated))
+        canvas.drawLine(
+                cx + cosA * (ringRadius - half), cy + sinA * (ringRadius - half),
+                cx + cosA * (ringRadius + half), cy + sinA * (ringRadius + half),
+                strokePaint)
+    }
+
+    /**
+     * Whether the resting mark is on screen, mirroring `SeekMarkerVisibility.shouldDraw`.
+     *
+     * While the row itself is being edited the preview presents whichever state makes the mark
+     * visible - the same trick [isPlayingShown] plays for the track-time modes. A control whose
+     * preview is blank at the moment you touch it reads as broken, and for the default mode the
+     * honest resting answer *is* blank.
+     */
+    private fun seekMarkerVisible(): Boolean {
+        val mode = SeekMarkerVisibility.fromPreference(seekMarker)
+        val demonstrating = focusedPreference == "wear_seek_marker"
+        val playing = if (demonstrating) {
+            mode == SeekMarkerVisibility.ALWAYS || mode == SeekMarkerVisibility.DURING_SEEK
+        } else {
+            isPlayingShown()
+        }
+        return SeekMarkerVisibility.shouldDraw(mode, dragging = demonstrating, playing = playing)
+    }
+
+    private fun drawEdgeSeekRingStyle(
+            canvas: Canvas,
+            cx: Float,
+            cy: Float,
+            radius: Float,
+            dp: (Float) -> Float,
+            strokeScale: Float = 1f
+    ) {
         val progressColor = resolveTint(progressMode, progressCustom, progressDesaturated)
-        val layoutRadius = (radius - when (progressLayout) {
-            "inset" -> dp(7f)
-            "inner" -> dp(17f)
-            "bold", "open_bottom", "open_top", "open_left", "open_right", "double" -> dp(1f)
-            else -> 0f
-        }).coerceAtLeast(dp(28f))
-        val layoutStrokeScale = when (progressLayout) {
-            "bold" -> 1.8f
-            "double" -> .72f
-            else -> 1f
-        }
-        val baseStroke = dp(6f) * strokeScale * layoutStrokeScale
-        val layoutStart = when (progressLayout) {
-            "open_bottom" -> 135f
-            "open_top" -> -45f
-            "left_arc" -> 100f
-            "right_arc" -> 80f
-            "open_left" -> 45f
-            "open_right" -> -135f
-            else -> -90f
-        }
-        val layoutSweep = when (progressLayout) {
-            "open_bottom", "open_top", "open_left", "open_right" -> 270f
-            "left_arc" -> 160f
-            "right_arc" -> -160f
-            else -> 360f
-        }
+        val metrics = edgeSeekRingMetrics(radius, dp, strokeScale)
+        val layoutRadius = metrics.radius
+        val baseStroke = metrics.stroke
+        val layoutStart = metrics.startDegrees
+        val layoutSweep = metrics.sweepDegrees
         val ringInset = baseStroke / 2f
         val ringRect = RectF(cx - layoutRadius + ringInset, cy - layoutRadius + ringInset,
                 cx + layoutRadius - ringInset, cy + layoutRadius - ringInset)
@@ -7356,6 +9231,30 @@ class WatchPreviewView @JvmOverloads constructor(
      * vertically centered on the screen, font padding excluded, at the watch's sp sizes
      * (16 / 40-46 / 13). The title itself follows the synced text mode (see [planTitle]).
      */
+    /**
+     * How far a centred metadata block has to slide for the *title's* own centre to land on the
+     * middle of the screen instead of the block's.
+     *
+     * The watch's twin of this is `TitleAnchoredMetadata` for the Compose faces and
+     * `applyClassicTitleAnchor` for the View one; all three compute the same distance, which is
+     * why it is one expression here rather than three sprinkled through the branches. Zero
+     * whenever the title is hidden: there is then nothing to anchor, and shifting by half the
+     * block would push a lone artist line off the centre for no reason.
+     *
+     * @param titleTop the title's own offset inside the block - zero where the title leads
+     *   (Poster, Studio), the height of everything above it where it does not (Classic).
+     */
+    private fun titleAnchorShift(
+            totalH: Float,
+            titleTop: Float,
+            titleH: Float,
+            titleVisible: Boolean
+    ): Float = if (titleCentered && titleVisible) {
+        totalH / 2f - (titleTop + titleH / 2f)
+    } else {
+        0f
+    }
+
     private fun drawClassicTextBlock(
             canvas: Canvas,
             cx: Float,
@@ -7416,13 +9315,14 @@ class WatchPreviewView @JvmOverloads constructor(
         val timeFm = textPaint.fontMetrics
         val timeLineH = timeFm.descent - timeFm.ascent
         val timeGap = dp(4f)
-        textPaint.letterSpacing = 0f
+        resetTrackTextPaint()
 
         val titleVisible = showTrackTitle
         val totalH = artistH +
                 (if (titleVisible) titleH else 0f) +
                 (if (timeVisible) timeGap + timeLineH else 0f)
-        var y = cy - totalH / 2f
+        var y = cy - totalH / 2f +
+                titleAnchorShift(totalH, artistH, titleH, titleVisible)
 
         // Artist (or the "Playback Stopped" status in white while paused).
         if (artistPlan != null) {
@@ -7469,7 +9369,7 @@ class WatchPreviewView @JvmOverloads constructor(
                     canvas.drawText(line, labelCx, y - artistFm.ascent + index * artistLineH, textPaint)
                 }
             }
-            textPaint.letterSpacing = 0f
+            resetTrackTextPaint()
             y += artistH
         }
 
@@ -7601,7 +9501,7 @@ class WatchPreviewView @JvmOverloads constructor(
         textPaint.letterSpacing = trackTimeTypographySpec.trackingEm
         canvas.drawText(text, x, y, textPaint)
         // This Paint is shared by all preview drawings. Tracking cannot leak into the next line.
-        textPaint.letterSpacing = 0f
+        resetTrackTextPaint()
     }
 
     /** Mirrors MainActivity.resolveClockColor: opacity-baked ARGB from the color-mode pref, with
@@ -7654,7 +9554,7 @@ class WatchPreviewView @JvmOverloads constructor(
         canvas.drawText(time, x, y, textPaint)
         // textPaint is shared across the whole preview; leaving the clock's tracking on it would
         // silently space out whatever draws next.
-        textPaint.letterSpacing = 0f
+        resetTrackTextPaint()
     }
 
     /**
@@ -8923,7 +10823,7 @@ class WatchPreviewView @JvmOverloads constructor(
             drawFaceClock(canvas, cx, screenTop, dp)
         }
         textPaint.textAlign = Paint.Align.CENTER
-        textPaint.letterSpacing = 0f
+        resetTrackTextPaint()
         // The card uses every available lower pixel for its wide cover. Generic bottom chrome is
         // deliberately absent, matching the watch face rather than floating buttons over the art.
     }
@@ -9424,7 +11324,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val bandShift = screen * (VERSE_BAND_CENTER - 0.5f)
 
         textPaint.typeface = lyricTypeface()
-        textPaint.letterSpacing = 0f
+        resetTrackTextPaint()
         textPaint.textSize = dp(8.5f)
         textPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, 0x61)
         canvas.drawText(
@@ -10170,8 +12070,11 @@ class WatchPreviewView @JvmOverloads constructor(
             val hidden = selectedBackground.hidesArtwork
             val blurred = selectedBackground.blurredArtwork
             val grayscale = selectedBackground.grayscaleArtwork
+            val filter = resolveAlbumArtFilter(artFilter, selectedBackground)
             val art = if (hidden) null else if (blurred) displayedBlurredArt() else displayedArt()
-            if (art != null) drawArtwork(canvas, art, rect, 255, grayscale) else {
+            if (art != null) drawArtwork(canvas, art, rect, 255,
+                    grayscale = grayscale && filter == AlbumArtFilter.NONE,
+                    filter = filter) else {
                 fillPaint.shader = LinearGradient(rect.left, rect.top, rect.right, rect.bottom,
                         intArrayOf(primary, secondary, tertiary), null, Shader.TileMode.CLAMP)
                 canvas.drawRect(rect, fillPaint)
@@ -10431,7 +12334,8 @@ class WatchPreviewView @JvmOverloads constructor(
                     val posterTotalH = (if (titleVisible) posterTitleBlockH else 0f) +
                             (if (titleVisible && posterArtistVisible) posterGap else 0f) +
                             (if (posterArtistVisible) posterArtistLineH else 0f)
-                    var posterY = cy - posterTotalH / 2f
+                    var posterY = cy - posterTotalH / 2f + titleAnchorShift(
+                            posterTotalH, 0f, posterTitleBlockH, titleVisible)
 
                     if (titleVisible) {
                         textPaint.typeface = titleTypeface(bold = true)
@@ -10508,7 +12412,8 @@ class WatchPreviewView @JvmOverloads constructor(
                     val studioTotalH = (if (titleVisible) studioTitleBlockH else 0f) +
                             (if (titleVisible && studioArtistVisible) studioGap else 0f) +
                             (if (studioArtistVisible) studioArtistLineH else 0f)
-                    var studioY = cy - studioTotalH / 2f
+                    var studioY = cy - studioTotalH / 2f + titleAnchorShift(
+                            studioTotalH, 0f, studioTitleBlockH, titleVisible)
 
                     if (titleVisible) {
                         textPaint.typeface = titleTypeface(bold = true)

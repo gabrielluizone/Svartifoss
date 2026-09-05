@@ -21,9 +21,9 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/change_icon"
             android:padding="8dp"
             android:scaleType="fitCenter"
-            tools:ignore="ContentDescription"
             tools:src="@drawable/action_play"
             tools:tint="@android:color/black" />
 

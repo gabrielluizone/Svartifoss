@@ -11,8 +11,11 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.preference.PreferenceDialogFragmentCompat;
 
 import com.svartifoss.snfell.R;
+import com.svartifoss.snfell.common.AppearanceNumericRanges;
 import com.svartifoss.snfell.view.mainactivity.MainActivity;
 import com.matejdro.wearutils.preferences.compat.NumericEditTextPreference;
+
+import kotlin.ranges.IntRange;
 
 /**
  * Numeric preference whose edit dialog includes a reset-to-default action.
@@ -31,6 +34,12 @@ import com.matejdro.wearutils.preferences.compat.NumericEditTextPreference;
  * <p>The second reason is that one tap is what a "Reset to default" button should cost. Cancel no
  * longer undoes a reset, which is the accepted trade: it is an explicit action on a single number
  * the user can simply retype.
+ *
+ * <p>It also clamps. Every one of these fields used to accept any integer at all, while the watch
+ * clamped whatever it read - so an out-of-range number looked accepted, rendered exactly as
+ * intended, and then made the whole theme unsubmittable much later with a message naming a setting
+ * that had never objected. {@link AppearanceNumericRanges} is the one place those bounds live now,
+ * and the dialog states the range rather than making the user discover it.
  */
 public class ResettableNumericEditTextPreference extends NumericEditTextPreference {
 
@@ -58,6 +67,39 @@ public class ResettableNumericEditTextPreference extends NumericEditTextPreferen
         return defaultValueText != null ? defaultValueText : "";
     }
 
+    /**
+     * Clamps whatever is about to be stored.
+     *
+     * Overridden on the preference rather than in the dialog because every path that persists a
+     * value - OK, the reset button, a programmatic write - goes through this one method, and a
+     * bound only one of them honours is not a bound.
+     */
+    @Override
+    public void setText(String text) {
+        super.setText(clampToRange(text));
+    }
+
+    /** The range this key accepts, or {@code null} when it declares none. */
+    public IntRange getAllowedRange() {
+        return AppearanceNumericRanges.INSTANCE.rangeFor(getKey());
+    }
+
+    private String clampToRange(String text) {
+        IntRange range = getAllowedRange();
+        if (range == null || text == null) {
+            return text;
+        }
+        try {
+            int parsed = Integer.parseInt(text.trim());
+            int clamped = AppearanceNumericRanges.INSTANCE.clamp(getKey(), parsed);
+            return clamped == parsed ? text : String.valueOf(clamped);
+        } catch (NumberFormatException notANumber) {
+            // Left exactly as typed: the base class already decides what a non-numeric entry
+            // means, and inventing a number for it here would be a second, quieter opinion.
+            return text;
+        }
+    }
+
     @Override
     public PreferenceDialogFragmentCompat createDialog(String key) {
         return ResettableNumericEditTextPreferenceDialog.create(key);
@@ -79,6 +121,15 @@ public class ResettableNumericEditTextPreference extends NumericEditTextPreferen
         protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
             super.onPrepareDialogBuilder(builder);
             builder.setNeutralButton(R.string.pref_reset_default, null);
+            // Stated before the number is typed rather than discovered afterwards - the failure
+            // this replaces was a bound that nothing on screen ever mentioned.
+            ResettableNumericEditTextPreference pref =
+                    (ResettableNumericEditTextPreference) getPreference();
+            IntRange range = pref != null ? pref.getAllowedRange() : null;
+            if (range != null) {
+                builder.setMessage(getString(
+                        R.string.pref_numeric_range, range.getFirst(), range.getLast()));
+            }
         }
 
         @Override

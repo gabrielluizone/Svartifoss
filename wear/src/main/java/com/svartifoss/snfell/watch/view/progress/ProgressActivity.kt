@@ -24,7 +24,7 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
 import com.svartifoss.snfell.watch.view.panel.PanelSurface
-import com.svartifoss.snfell.watch.view.panel.PanelTriad
+import com.svartifoss.snfell.watch.view.panel.rememberPanelPalette
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchMusicService
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
@@ -155,31 +155,18 @@ class ProgressActivity : ComponentActivity() {
             // pendingSeekFraction, and unlike a drag it does want the ring to follow it.
             var ringDragging by remember { mutableStateOf(false) }
 
-            val fallbackTriad = PanelTriad(
-                    themeAccent,
-                    PanelAppearanceResolver.albumToneFallback(themeAccent, .42f),
-                    PanelAppearanceResolver.albumToneFallback(themeAccent, .68f))
-            var triad by remember { mutableStateOf(fallbackTriad) }
-            /** The album's own colours before any treatment - what the backdrop derives from. */
-            var rawTriad by remember { mutableStateOf(fallbackTriad) }
-            LaunchedEffect(albumArt) {
-                PanelAppearanceResolver.albumTriad(albumArt, accentSource, themeAccent) { raw ->
-                    rawTriad = raw
-                    triad = PanelAppearanceResolver.surfaceTriad(
-                            prefs, appearanceContext, PanelSurface.SEEK, raw, themeAccent)
-                }
-            }
-            val appearance = remember(triad) {
-                PanelAppearanceResolver.resolve(
-                        prefs, appearanceContext, PanelSurface.SEEK, triad)
-            }
-            // The player composition this panel background is painted over - see PanelScaffold.
-            // Resolved from the *raw* album triad, because the artwork treatment and shading use
-            // the watch-wide colour treatment rather than this panel's own.
-            val backdrop = remember(rawTriad) {
-                PanelAppearanceResolver.resolveBackdrop(
-                        prefs, appearanceContext, rawTriad, themeAccent)
-            }
+            // Seeded from AlbumPaletteCache, so a cover the player has already extracted
+            // is painted in the album's colours on the first frame - this screen used to
+            // open on the fallback accent and snap over. See rememberPanelPalette.
+            val palette = rememberPanelPalette(
+                    prefs = prefs,
+                    appearanceContext = appearanceContext,
+                    surface = PanelSurface.SEEK,
+                    albumArt = albumArt,
+                    accentSource = accentSource,
+                    themeAccent = themeAccent)
+            val appearance = palette.appearance
+            val backdrop = palette.backdrop
 
             // Re-anchors on every real sample (including a seek's optimistic echo once the phone
             // confirms it) and only runs while playing - a paused position is not moving, so

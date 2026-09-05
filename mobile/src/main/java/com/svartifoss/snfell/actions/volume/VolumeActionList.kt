@@ -6,22 +6,18 @@ import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.actions.PhoneAction
-import com.svartifoss.snfell.view.buttonconfig.ActionPickerViewModel
+import com.svartifoss.snfell.actions.PickerActionGroup
 
-class VolumeActionList : PhoneAction {
+class VolumeActionList : PickerActionGroup {
     constructor(context : Context) : super(context)
     constructor(context : Context, bundle: PersistableBundle) : super(context, bundle)
 
-    override val opensMoreOptions: Boolean
-        get() = true
-
-    override fun onActionPicked(actionPicker: ActionPickerViewModel) {
-        actionPicker.updateDisplayedActionsWithBackStack(title, listOf(
+    override fun pickerChildren(): List<PhoneAction> = listOf(
                 IncreaseVolumeAction(context),
                 DecreaseVolumeAction(context),
-                MuteToggleAction(context)
-        ))
-    }
+                MuteToggleAction(context),
+                VolumeLevelActionList(context)
+        )
 
     override fun retrieveTitle(): String {
         return context.getString(R.string.group_volume_controls)

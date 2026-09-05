@@ -42,6 +42,22 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
+
+        <!--
+            Switching between the author's photograph and the rendered preview is a view mode, not
+            an action on the theme, so it sits in the toolbar beside the title rather than as a
+            sentence under the card. Hidden entirely for a theme that has no photograph.
+        -->
+        <ImageButton
+            android:id="@+id/community_theme_detail_screenshot_toggle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="end|center_vertical"
+            android:background="?selectableItemBackgroundBorderless"
+            android:padding="12dp"
+            android:visibility="gone"
+            app:tint="@color/lyra_on_surface" />
+
     </FrameLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -76,12 +92,32 @@
                     android:paddingTop="18dp"
                     android:paddingBottom="16dp">
 
-                    <com.svartifoss.snfell.view.watchface.WatchPreviewView
-                        android:id="@+id/community_theme_detail_preview"
+                    <FrameLayout
                         android:layout_width="232dp"
                         android:layout_height="232dp"
-                        android:layout_gravity="center_horizontal"
-                        android:contentDescription="@string/community_theme_detail_title" />
+                        android:layout_gravity="center_horizontal">
+
+                        <com.svartifoss.snfell.view.watchface.WatchPreviewView
+                            android:id="@+id/community_theme_detail_preview"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/community_theme_detail_title" />
+
+                        <!--
+                            The author's photograph, laid over the rendered preview rather than
+                            replacing it: the render stays live underneath, so switching back is
+                            immediate and costs no second parse of the profile.
+                        -->
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:id="@+id/community_theme_detail_screenshot"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/community_theme_detail_screenshot_description"
+                            android:scaleType="centerCrop"
+                            android:visibility="gone"
+                            app:shapeAppearanceOverlay="@style/ShapeAppearance.Svartifoss.Circle" />
+
+                    </FrameLayout>
 
                     <TextView
                         android:id="@+id/community_theme_detail_preview_label"
@@ -96,7 +132,7 @@
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
-                    <HorizontalScrollView
+<HorizontalScrollView
                         android:id="@+id/community_theme_detail_surface_scroll"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -216,13 +252,25 @@
                                 android:textSize="20sp"
                                 android:textStyle="bold" />
 
+                            <!--
+                                A control, not a caption: tapping it closes this screen and leaves
+                                the gallery narrowed to everything this author published.
+                            -->
                             <TextView
                                 android:id="@+id/community_theme_detail_author"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginStart="-6dp"
+                                android:layout_marginTop="3dp"
+                                android:background="?selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
                                 android:fontFamily="@font/google_sans"
                                 android:includeFontPadding="false"
+                                android:minHeight="32dp"
+                                android:gravity="center_vertical"
+                                android:paddingStart="6dp"
+                                android:paddingEnd="6dp"
                                 android:textColor="@color/lyra_text_secondary"
                                 android:textSize="14sp" />
 
@@ -256,141 +304,254 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:baselineAligned="false"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="12dp">
 
-                        <LinearLayout
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/community_theme_detail_origin_guide"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.5" />
+
+                        <TextView
+                            android:id="@+id/community_theme_detail_layout_label"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:fontFamily="@font/google_sans"
+                            android:includeFontPadding="false"
+                            android:text="@string/community_theme_detail_layout"
+                            android:textColor="@color/lyra_text_secondary"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="12dp"
+                            app:layout_constraintEnd_toStartOf="@id/community_theme_detail_origin_guide"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/google_sans"
-                                android:includeFontPadding="false"
-                                android:text="@string/community_theme_detail_layout"
-                                android:textColor="@color/lyra_text_secondary"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/community_theme_detail_layout_value"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:fontFamily="@font/google_sans"
-                                android:includeFontPadding="false"
-                                android:textColor="@color/lyra_on_surface"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-
-                        <Space
-                            android:layout_width="24dp"
-                            android:layout_height="1dp" />
-
-                        <LinearLayout
+                        <TextView
+                            android:id="@+id/community_theme_detail_layout_value"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
+                            android:layout_marginTop="3dp"
+                            android:fontFamily="@font/google_sans"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/lyra_on_surface"
+                            android:textSize="14sp"
+                            android:layout_marginEnd="12dp"
+                            app:layout_constraintEnd_toStartOf="@id/community_theme_detail_origin_guide"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/community_theme_detail_origin_labels" />
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/google_sans"
-                                android:includeFontPadding="false"
-                                android:text="@string/community_theme_detail_published"
-                                android:textColor="@color/lyra_text_secondary"
-                                android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/community_theme_detail_published_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:includeFontPadding="false"
+                            android:text="@string/community_theme_detail_published"
+                            android:textColor="@color/lyra_text_secondary"
+                            android:textSize="12sp"
+                            android:layout_marginStart="12dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/community_theme_detail_origin_guide"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                            <TextView
-                                android:id="@+id/community_theme_detail_published_value"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:fontFamily="@font/google_sans"
-                                android:includeFontPadding="false"
-                                android:textColor="@color/lyra_on_surface"
-                                android:textSize="14sp" />
+                        <TextView
+                            android:id="@+id/community_theme_detail_published_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:fontFamily="@font/google_sans"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/lyra_on_surface"
+                            android:textSize="14sp"
+                            android:layout_marginStart="12dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/community_theme_detail_origin_guide"
+                            app:layout_constraintTop_toBottomOf="@id/community_theme_detail_origin_labels" />
 
-                        </LinearLayout>
+                        <!--
+                            Both values start under the taller of the two labels, so the gap between
+                            a label and the figure it names is the same 3dp on every row whatever a
+                            translation does to the label's line count. The two labels used to carry
+                            a 32dp minHeight to reserve a second line, which held every one-line row
+                            open and left the value floating far below its own title.
+                        -->
+                        <androidx.constraintlayout.widget.Barrier
+                            android:id="@+id/community_theme_detail_origin_labels"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="community_theme_detail_layout_label,community_theme_detail_published_label" />
 
-                    </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/community_theme_detail_requirements_guide"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.5" />
+
+                        <TextView
+                            android:id="@+id/community_theme_detail_minimum_version_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:includeFontPadding="false"
+                            android:text="@string/community_theme_detail_minimum_version"
+                            android:textColor="@color/lyra_text_secondary"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="12dp"
+                            app:layout_constraintEnd_toStartOf="@id/community_theme_detail_requirements_guide"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/community_theme_detail_minimum_version_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:fontFamily="@font/google_sans"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/lyra_on_surface"
+                            android:textSize="14sp"
+                            android:layout_marginEnd="12dp"
+                            app:layout_constraintEnd_toStartOf="@id/community_theme_detail_requirements_guide"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/community_theme_detail_requirements_labels" />
+
+                        <TextView
+                            android:id="@+id/community_theme_detail_settings_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:includeFontPadding="false"
+                            android:text="@string/community_theme_detail_visual_settings"
+                            android:textColor="@color/lyra_text_secondary"
+                            android:textSize="12sp"
+                            android:layout_marginStart="12dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/community_theme_detail_requirements_guide"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/community_theme_detail_settings_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:fontFamily="@font/google_sans"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/lyra_on_surface"
+                            android:textSize="14sp"
+                            android:layout_marginStart="12dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/community_theme_detail_requirements_guide"
+                            app:layout_constraintTop_toBottomOf="@id/community_theme_detail_requirements_labels" />
+
+                        <!--
+                            Both values start under the taller of the two labels, so the gap between
+                            a label and the figure it names is the same 3dp on every row whatever a
+                            translation does to the label's line count. The two labels used to carry
+                            a 32dp minHeight to reserve a second line, which held every one-line row
+                            open and left the value floating far below its own title.
+                        -->
+                        <androidx.constraintlayout.widget.Barrier
+                            android:id="@+id/community_theme_detail_requirements_labels"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="community_theme_detail_minimum_version_label,community_theme_detail_settings_label" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- The grid's other half stays empty rather than repeating the like count
+                         the heart above already carries as a live control. -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/community_theme_detail_reach_guide"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintGuide_percent="0.5" />
+
+                        <TextView
+                            android:id="@+id/community_theme_detail_downloads_label"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/google_sans"
+                            android:includeFontPadding="false"
+                            android:text="@string/community_theme_detail_downloads"
+                            android:textColor="@color/lyra_text_secondary"
+                            android:textSize="12sp"
+                            android:layout_marginEnd="12dp"
+                            app:layout_constraintEnd_toStartOf="@id/community_theme_detail_reach_guide"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/community_theme_detail_downloads_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="3dp"
+                            android:fontFamily="@font/google_sans"
+                            android:includeFontPadding="false"
+                            android:textColor="@color/lyra_on_surface"
+                            android:textSize="14sp"
+                            android:layout_marginEnd="12dp"
+                            app:layout_constraintEnd_toStartOf="@id/community_theme_detail_reach_guide"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/community_theme_detail_reach_labels" />
+
+                        <!--
+                            Both values start under the taller of the two labels, so the gap between
+                            a label and the figure it names is the same 3dp on every row whatever a
+                            translation does to the label's line count. The two labels used to carry
+                            a 32dp minHeight to reserve a second line, which held every one-line row
+                            open and left the value floating far below its own title.
+                        -->
+                        <androidx.constraintlayout.widget.Barrier
+                            android:id="@+id/community_theme_detail_reach_labels"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:barrierDirection="bottom"
+                            app:constraint_referenced_ids="community_theme_detail_downloads_label" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
                         android:layout_marginTop="16dp"
-                        android:baselineAligned="false"
-                        android:orientation="horizontal">
+                        android:background="@color/lyra_divider" />
 
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/google_sans"
-                                android:includeFontPadding="false"
-                                android:minHeight="32dp"
-                                android:text="@string/community_theme_detail_minimum_version"
-                                android:textColor="@color/lyra_text_secondary"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/community_theme_detail_minimum_version_value"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:fontFamily="@font/google_sans"
-                                android:includeFontPadding="false"
-                                android:textColor="@color/lyra_on_surface"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-
-                        <Space
-                            android:layout_width="24dp"
-                            android:layout_height="1dp" />
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/google_sans"
-                                android:includeFontPadding="false"
-                                android:minHeight="32dp"
-                                android:text="@string/community_theme_detail_visual_settings"
-                                android:textColor="@color/lyra_text_secondary"
-                                android:textSize="12sp" />
-
-                            <TextView
-                                android:id="@+id/community_theme_detail_settings_value"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="3dp"
-                                android:fontFamily="@font/google_sans"
-                                android:includeFontPadding="false"
-                                android:textColor="@color/lyra_on_surface"
-                                android:textSize="14sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
+                    <!-- Text only, deliberately. There is no flag glyph in this project's icon set
+                         and inventing one is how a drawing ends up subtly wrong; a labelled row is
+                         also the more legible affordance for something nobody is looking for until
+                         they need it. -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/button_report_community_theme"
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginStart="-8dp"
+                        android:fontFamily="@font/google_sans"
+                        android:letterSpacing="0"
+                        android:text="@string/community_theme_report_action"
+                        android:textAllCaps="false"
+                        android:textSize="14sp" />
 
                 </LinearLayout>
 

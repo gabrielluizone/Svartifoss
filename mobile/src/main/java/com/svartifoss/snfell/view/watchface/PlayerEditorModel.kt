@@ -45,6 +45,7 @@ internal enum class PlayerControl {
     EDGE_SEEK,
     ALWAYS_SHOW_TIME,
     CAROUSEL_SHAPE,
+    TITLE_CENTERED,
     NOTE_COVER_SHAPE,
     NOTE_SHOW_COVER,
     CHAT_COVER_SHAPE,
@@ -53,6 +54,7 @@ internal enum class PlayerControl {
     METADATA_SHOW_COVER,
     SPLIT_PANEL,
     EXPRESSIVE_SEEK,
+    SEEK_MARKER,
     TRACK_TIME_MODE,
     METADATA_GROUPS,
     KEEP_SCREEN_ON,
@@ -123,6 +125,17 @@ internal object PlayerEditorModel {
     val FIXED_TRANSPORT_FACES: Set<String> = setOf("expressive", "material")
 
     /**
+     * Faces that centre a stacked metadata block, and so have something for
+     * [MiscPreferences.WEAR_TITLE_CENTERED] to move.
+     *
+     * Every other face either places its title against a fixed edge of its own composition
+     * (Split's panel, Chat's bubble, Verse's band, Metadata's header) or has no separate artist
+     * line to weigh against it - so the switch would move nothing there, which reads as broken
+     * rather than as inapplicable. The same rule Carousel's card shape and Split's panel follow.
+     */
+    val TITLE_CENTERED_FACES: Set<String> = setOf("classic", "poster", "studio")
+
+    /**
      * Faces whose own composition draws icon glyphs [MiscPreferences.WEAR_SCREEN_THEME] actually
      * restyles - it only ever changes `ScreenThemeTokens.iconAlpha`/`iconScale` (see
      * `common/.../ScreenTheme.kt`), so it does nothing wherever a face has no icon of its own.
@@ -184,6 +197,22 @@ internal object PlayerEditorModel {
                     MiscPreferences.WEAR_TRACK_TIME_MODE,
                     PlayerSlot.CHOICE,
                     PlayerControl.TRACK_TIME_MODE),
+            /*
+             * Applies to every face, and is deliberately *not* in [appliesToFace].
+             *
+             * The tick is drawn on the shared edge ring rather than by a face's own composition,
+             * so no face is inapplicable — but the ring itself can be switched off, and on Split,
+             * Verse, Note and Chat it is off by default. That is a preference gate, not a face
+             * gate, so `WatchFacePrefsFragment.renderPlayerEditor` filters this row on
+             * `wear_edge_progress_visible` where it can actually read a value, and
+             * `WatchSearchTargetResolver` redirects a search for it to that switch. Keeping the
+             * distinction is what stops this function from needing to read preferences and stop
+             * being pure.
+             */
+            choice(
+                    MiscPreferences.WEAR_SEEK_MARKER,
+                    PlayerSlot.CHOICE,
+                    PlayerControl.SEEK_MARKER),
             choice(
                     MiscPreferences.WEAR_CAROUSEL_CARD_SHAPE,
                     PlayerSlot.CHOICE,
@@ -192,6 +221,10 @@ internal object PlayerEditorModel {
                     MiscPreferences.WEAR_NOTE_COVER_SHAPE,
                     PlayerSlot.CHOICE,
                     PlayerControl.NOTE_COVER_SHAPE),
+            element(
+                    MiscPreferences.WEAR_TITLE_CENTERED,
+                    PlayerControl.TITLE_CENTERED,
+                    R.string.player_element_title_centered),
             element(
                     MiscPreferences.WEAR_NOTE_SHOW_COVER,
                     PlayerControl.NOTE_SHOW_COVER,
@@ -270,6 +303,7 @@ internal object PlayerEditorModel {
     fun appliesToFace(control: PlayerControl, face: String): Boolean = when (control) {
         PlayerControl.SCREEN_THEME -> face in CONTROL_STYLE_FACES
         PlayerControl.QUADRANT_FLASH -> face == "classic"
+        PlayerControl.TITLE_CENTERED -> face in TITLE_CENTERED_FACES
         PlayerControl.CAROUSEL_SHAPE -> face == "carousel"
         PlayerControl.NOTE_COVER_SHAPE, PlayerControl.NOTE_SHOW_COVER -> face == "note"
         PlayerControl.CHAT_COVER_SHAPE, PlayerControl.CHAT_SHOW_COVER -> face == "chat"

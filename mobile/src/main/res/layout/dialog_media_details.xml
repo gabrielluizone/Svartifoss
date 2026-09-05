@@ -86,31 +86,34 @@
             <!-- Prev button -->
             <ImageButton
                 android:id="@+id/detail_prev"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:src="@drawable/ic_mini_prev"
                 android:background="?selectableItemBackgroundBorderless"
-                android:padding="8dp"
+                android:contentDescription="@string/action_skip_prev"
+                android:padding="12dp"
                 android:layout_marginStart="8dp"
                 app:tint="@color/lyra_on_surface" />
 
             <!-- Play/Pause — no tint so icon is its natural color -->
             <ImageButton
                 android:id="@+id/detail_play_pause"
-                android:layout_width="44dp"
-                android:layout_height="44dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:src="@drawable/ic_nav_playing"
                 android:background="?selectableItemBackgroundBorderless"
-                android:padding="8dp" />
+                android:contentDescription="@string/action_play"
+                android:padding="10dp" />
 
             <!-- Next button -->
             <ImageButton
                 android:id="@+id/detail_next"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:src="@drawable/ic_mini_next"
                 android:background="?selectableItemBackgroundBorderless"
-                android:padding="8dp"
+                android:contentDescription="@string/action_skip_next"
+                android:padding="12dp"
                 app:tint="@color/lyra_on_surface" />
         </LinearLayout>
 

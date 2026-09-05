@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Oppdater fellesskapstemaer</string>
     <string name="online_theme_list_description">Klokketemaer laget av fellesskapet</string>
     <string name="online_theme_byline">Av %1$s</string>
+    <string name="online_theme_filter_author">Temaer av %1$s</string>
+    <string name="online_theme_filter_author_selected">Viser temaer av %1$s</string>
     <string name="online_theme_row_description">%1$s av %2$s. %3$s-oppsett.</string>
     <string name="online_theme_apply">Legg til og bruk</string>
     <string name="online_theme_loading">Laster inn fellesskapstemaer…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Viser temaer du allerede har lagt til</string>
     <string name="online_theme_search_empty_all_installed">Du har allerede lagt til alle fellesskapstemaene.</string>
     <string name="online_theme_search_empty_all_installed_hint">Slå av «Nytt for meg» for å se dem igjen.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Flest nedlastinger</string>
+    <string name="online_theme_sort_most_downloaded_short">Nedlastinger</string>
+    <string name="community_theme_detail_downloads">Nedlastinger</string>
+    <string name="community_theme_report_action">Rapporter tema</string>
+    <string name="community_theme_report_already">Temaet er rapportert</string>
+    <string name="community_theme_report_description">Rapporter «%1$s» til moderatorene</string>
+    <string name="community_theme_report_title">Rapporter dette temaet</string>
+    <string name="community_theme_report_intro">Fortell moderatorene hva som er galt med dette temaet.</string>
+    <string name="community_theme_report_reason_inappropriate">Støtende eller upassende innhold</string>
+    <string name="community_theme_report_reason_impersonation">Utgitt for å være en annens</string>
+    <string name="community_theme_report_reason_misleading">Stemmer ikke med det som vises</string>
+    <string name="community_theme_report_reason_illegible">Ubrukelig på klokken</string>
+    <string name="community_theme_report_reason_spam">Spam eller et duplikat</string>
+    <string name="community_theme_report_reason_other">Noe annet</string>
+    <string name="community_theme_report_details_hint">Noe annet moderatorene bør vite (valgfritt)</string>
+    <string name="community_theme_report_privacy">Bare moderatorene leser rapporten din. Skaperen får aldri vite hvem som sendte den.</string>
+    <string name="community_theme_report_submit">Send rapport</string>
+    <string name="community_theme_report_sent">Rapporten er sendt. Moderatorene ser på dette temaet.</string>
+    <string name="community_theme_report_already_sent">Du har allerede rapportert dette temaet.</string>
+    <string name="community_theme_report_not_ready">Dette temaet kan ikke rapporteres ennå. Prøv igjen senere.</string>
+    <string name="community_theme_report_error">Rapporten kunne ikke sendes. Sjekk tilkoblingen og prøv igjen.</string>
 </resources>

@@ -3,6 +3,8 @@ package com.svartifoss.snfell.watch.view
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.TypedValue
@@ -46,6 +48,53 @@ class OutlineTextView : AppCompatTextView {
             field = value
             invalidate()
         }
+
+    /**
+     * Stroke width for a *filled* line that also carries an outline, as a fraction of the text
+     * size. Zero draws no outline.
+     *
+     * Distinct from [displayTextOutline], which replaces the fill; this draws a stroke underneath
+     * one. The width is a fraction rather than a pixel value because this View shrinks its own
+     * text (see [enableSmartWordSizing]) - a width resolved once against the designed size would
+     * be wrong at every size the cascade actually lands on.
+     */
+    var strokeOutlineWidthFraction: Float = 0f
+        set(value) {
+            if (field != value) {
+                field = value
+                invalidate()
+            }
+        }
+
+    /** The stroke's colour. Ignored while [strokeOutlineWidthFraction] is zero. */
+    var strokeOutlineColor: Int = 0
+        set(value) {
+            if (field != value) {
+                field = value
+                invalidate()
+            }
+        }
+
+    /** Pixel floor for the stroke, so the thinnest setting cannot alias into nothing. */
+    var strokeOutlineMinWidthPx: Float = 0f
+
+    /**
+     * A filled box drawn behind each line of text, already carrying its own alpha. Zero draws none.
+     *
+     * Drawn here rather than as the View's `background`: this View is `match_parent` on every face
+     * that uses it, so a View background would be a full-width band across the screen instead of a
+     * plate behind the words. Compose paints the same thing through `TextStyle.background`, which
+     * is also per line - see `TextBackdropStyle` for why the two are kept to what both can do.
+     */
+    var textBackdropColor: Int = 0
+        set(value) {
+            if (field != value) {
+                field = value
+                invalidate()
+            }
+        }
+
+    private val backdropPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     private var smartSizingEnabled = false
     private var smartMaxSizePx = 0f
@@ -292,14 +341,62 @@ class OutlineTextView : AppCompatTextView {
         return lines
     }
 
+    /**
+     * Fills the box each laid-out line occupies.
+     *
+     * `getLineLeft`/`getLineRight` are the *text* extents rather than the View's, which is what
+     * makes this hug the words on a centred line. Total padding is deliberately zero: the line box
+     * already runs from the line's top to its bottom, which is taller than the glyphs and reads as
+     * a highlight rather than as a tight outline of the letters.
+     */
+    private fun drawTextBackdrop(canvas: Canvas) {
+        if (textBackdropColor == 0) return
+        val textLayout = layout ?: return
+        backdropPaint.color = textBackdropColor
+        for (line in 0 until textLayout.lineCount) {
+            canvas.drawRect(
+                    totalPaddingLeft + textLayout.getLineLeft(line),
+                    (totalPaddingTop + textLayout.getLineTop(line)).toFloat(),
+                    totalPaddingLeft + textLayout.getLineRight(line),
+                    (totalPaddingTop + textLayout.getLineBottom(line)).toFloat(),
+                    backdropPaint)
+        }
+    }
+
     override fun onDraw(canvas: Canvas) {
+        drawTextBackdrop(canvas)
         if (displayTextOutline) {
             paint.style = Paint.Style.STROKE
             paint.strokeWidth = outlineWidth
-        } else {
-            paint.style = Paint.Style.FILL
+            super.onDraw(canvas)
+            return
         }
 
+        paint.style = Paint.Style.FILL
+        val strokeWidth = if (strokeOutlineWidthFraction > 0f) {
+            (textSize * strokeOutlineWidthFraction).coerceAtLeast(strokeOutlineMinWidthPx)
+        } else {
+            0f
+        }
+        if (strokeWidth <= 0f) {
+            super.onDraw(canvas)
+            return
+        }
+
+        // Two passes, because no text API strokes and fills in one. The stroke's colour cannot be
+        // set through `paint.color`: TextView re-applies the current text colour to its own paint
+        // at the top of every onDraw, so the assignment would be overwritten before anything is
+        // drawn. A SRC_IN colour filter is applied *after* that and wins, without touching the
+        // text colour itself - which would invalidate() and re-enter this method.
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = strokeWidth
+        paint.strokeJoin = Paint.Join.ROUND
+        val previousFilter = paint.colorFilter
+        paint.colorFilter = PorterDuffColorFilter(strokeOutlineColor, PorterDuff.Mode.SRC_IN)
+        super.onDraw(canvas)
+
+        paint.colorFilter = previousFilter
+        paint.style = Paint.Style.FILL
         super.onDraw(canvas)
     }
 }

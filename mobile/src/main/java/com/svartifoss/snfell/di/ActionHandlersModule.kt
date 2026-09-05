@@ -15,11 +15,17 @@ import com.svartifoss.snfell.actions.PlayPlaylistShortcutAction
 import com.svartifoss.snfell.actions.SearchAction
 import com.svartifoss.snfell.actions.appplay.AppPlayAction
 import com.svartifoss.snfell.actions.playback.LikeAction
+import com.svartifoss.snfell.actions.playback.FastForwardAction
 import com.svartifoss.snfell.actions.playback.PauseAction
 import com.svartifoss.snfell.actions.playback.PlayAction
 import com.svartifoss.snfell.actions.playback.PlayPauseToggleAction
 import com.svartifoss.snfell.actions.playback.RepeatAction
 import com.svartifoss.snfell.actions.playback.RepeatOneAction
+import com.svartifoss.snfell.actions.playback.RewindAction
+import com.svartifoss.snfell.actions.playback.SeekToPercentAction
+import com.svartifoss.snfell.actions.playback.SetPlaybackSpeedAction
+import com.svartifoss.snfell.actions.playback.SetRepeatModeAction
+import com.svartifoss.snfell.actions.playback.SetShuffleModeAction
 import com.svartifoss.snfell.actions.playback.RestartTrackAction
 import com.svartifoss.snfell.actions.playback.ReverseThirtySecondsAction
 import com.svartifoss.snfell.actions.playback.ShuffleAction
@@ -29,6 +35,7 @@ import com.svartifoss.snfell.actions.playback.SkipToPrevAction
 import com.svartifoss.snfell.actions.playback.StopAction
 import com.svartifoss.snfell.actions.tasker.TaskerTaskAction
 import com.svartifoss.snfell.actions.volume.MuteToggleAction
+import com.svartifoss.snfell.actions.volume.SetVolumePercentAction
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.ClassKey
@@ -68,8 +75,43 @@ abstract class ActionHandlersModule {
 
     @Binds
     @IntoMap
+    @ClassKey(FastForwardAction::class)
+    abstract fun bindFastForwardActionsHandler(handler: FastForwardAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
+    @ClassKey(RewindAction::class)
+    abstract fun bindRewindActionsHandler(handler: RewindAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
+    @ClassKey(SetPlaybackSpeedAction::class)
+    abstract fun bindSetPlaybackSpeedActionsHandler(handler: SetPlaybackSpeedAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
+    @ClassKey(SeekToPercentAction::class)
+    abstract fun bindSeekToPercentActionsHandler(handler: SeekToPercentAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
+    @ClassKey(SetShuffleModeAction::class)
+    abstract fun bindSetShuffleModeActionsHandler(handler: SetShuffleModeAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
+    @ClassKey(SetRepeatModeAction::class)
+    abstract fun bindSetRepeatModeActionsHandler(handler: SetRepeatModeAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
     @ClassKey(MuteToggleAction::class)
     abstract fun bindMuteToggleActionsHandler(handler: MuteToggleAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
+    @ClassKey(SetVolumePercentAction::class)
+    abstract fun bindSetVolumePercentActionsHandler(handler: SetVolumePercentAction.Handler): ActionHandler<*>
 
     @Binds
     @IntoMap

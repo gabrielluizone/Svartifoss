@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Obnoviť komunitné motívy</string>
     <string name="online_theme_list_description">Komunitou vytvorené motívy hodiniek</string>
     <string name="online_theme_byline">Od %1$s</string>
+    <string name="online_theme_filter_author">Motívy od %1$s</string>
+    <string name="online_theme_filter_author_selected">Zobrazujú sa motívy od %1$s</string>
     <string name="online_theme_row_description">%1$s od %2$s. Rozloženie %3$s.</string>
     <string name="online_theme_apply">Pridať a použiť</string>
     <string name="online_theme_loading">Načítavajú sa komunitné motívy…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Motívy, ktoré ste už pridali, sa zobrazujú</string>
     <string name="online_theme_search_empty_all_installed">Už ste pridali všetky komunitné motívy.</string>
     <string name="online_theme_search_empty_all_installed_hint">Vypnite „Nové pre mňa“ a zobrazte ich znova.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Najsťahovanejšie</string>
+    <string name="online_theme_sort_most_downloaded_short">Stiahnutia</string>
+    <string name="community_theme_detail_downloads">Stiahnutia</string>
+    <string name="community_theme_report_action">Nahlásiť motív</string>
+    <string name="community_theme_report_already">Motív nahlásený</string>
+    <string name="community_theme_report_description">Nahlásiť „%1$s“ moderátorom</string>
+    <string name="community_theme_report_title">Nahlásiť tento motív</string>
+    <string name="community_theme_report_intro">Povedzte moderátorom, čo je s týmto motívom zle.</string>
+    <string name="community_theme_report_reason_inappropriate">Urážlivý alebo nevhodný obsah</string>
+    <string name="community_theme_report_reason_impersonation">Vydáva sa za cudzie dielo</string>
+    <string name="community_theme_report_reason_misleading">Nezodpovedá tomu, čo ukazuje</string>
+    <string name="community_theme_report_reason_illegible">Na hodinkách nepoužiteľný</string>
+    <string name="community_theme_report_reason_spam">Spam alebo duplikát</string>
+    <string name="community_theme_report_reason_other">Niečo iné</string>
+    <string name="community_theme_report_details_hint">Čokoľvek ďalšie, čo by moderátori mali vedieť (nepovinné)</string>
+    <string name="community_theme_report_privacy">Vaše hlásenie čítajú len moderátori. Autorovi sa nikdy nepovie, kto ho poslal.</string>
+    <string name="community_theme_report_submit">Odoslať hlásenie</string>
+    <string name="community_theme_report_sent">Hlásenie odoslané. Moderátori sa na tento motív pozrú.</string>
+    <string name="community_theme_report_already_sent">Tento motív ste už nahlásili.</string>
+    <string name="community_theme_report_not_ready">Tento motív zatiaľ nemožno nahlásiť. Skúste to neskôr.</string>
+    <string name="community_theme_report_error">Hlásenie sa nepodarilo odoslať. Skontrolujte pripojenie a skúste to znova.</string>
 </resources>

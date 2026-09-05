@@ -21,6 +21,7 @@ import com.svartifoss.snfell.common.ColorModifier
 import com.svartifoss.snfell.common.SurfaceColorTreatment
 import com.svartifoss.snfell.common.SurfacePaletteResolver
 import com.svartifoss.snfell.view.LyraAccent
+import com.svartifoss.snfell.view.NEUTRAL_WATCH_ACCENT
 
 /**
  * A [ListPreference] for a Normal/Desaturated/Expressive-family color treatment (the
@@ -177,6 +178,6 @@ class ColorTreatmentPreference @JvmOverloads constructor(
     }
 
     companion object {
-        private const val DEFAULT_COLOR = 0xFF86A69D.toInt()
+        private const val DEFAULT_COLOR = NEUTRAL_WATCH_ACCENT
     }
 }

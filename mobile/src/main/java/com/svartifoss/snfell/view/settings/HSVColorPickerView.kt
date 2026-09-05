@@ -143,6 +143,13 @@ class HSVColorPickerView @JvmOverloads constructor(
                 hueRect.contains(x, y) -> 2
                 else -> 0
             }
+            // Both areas are dragged, and the saturation/value square is dragged *vertically*.
+            // The dialog holding this scrolls, so without claiming the gesture here an ancestor
+            // ScrollView takes it the moment the finger moves down and the square cannot be
+            // dragged at all - while the hue bar, being horizontal, keeps working. Asked for only
+            // when the touch actually landed on a control, so a stray touch in the padding still
+            // scrolls the dialog.
+            if (activeArea != 0) parent?.requestDisallowInterceptTouchEvent(true)
         }
         when (activeArea) {
             1 -> {

@@ -20,12 +20,25 @@ object StandardIcons {
             StandardActions.ACTION_PLAY_PAUSE to com.svartifoss.snfell.common.R.drawable.action_play_pause,
             StandardActions.ACTION_STOP to com.svartifoss.snfell.common.R.drawable.action_stop,
             StandardActions.ACTION_RESTART to com.svartifoss.snfell.common.R.drawable.action_restart,
+            StandardActions.ACTION_FAST_FORWARD to
+                    com.svartifoss.snfell.common.R.drawable.action_fast_forward,
+            StandardActions.ACTION_REWIND to com.svartifoss.snfell.common.R.drawable.action_rewind,
+            StandardActions.ACTION_SET_PLAYBACK_SPEED to
+                    com.svartifoss.snfell.common.R.drawable.action_speed,
+            StandardActions.ACTION_SEEK_TO_PERCENT to
+                    com.svartifoss.snfell.common.R.drawable.action_seek_position,
             StandardActions.ACTION_MUTE to com.svartifoss.snfell.common.R.drawable.action_volume_off,
+            StandardActions.ACTION_SET_VOLUME_PERCENT to
+                    com.svartifoss.snfell.common.R.drawable.action_volume_up,
             StandardActions.ACTION_SEARCH to com.svartifoss.snfell.common.R.drawable.action_search,
             StandardActions.ACTION_LIKE to com.svartifoss.snfell.common.R.drawable.action_like,
             StandardActions.ACTION_SHUFFLE to com.svartifoss.snfell.common.R.drawable.action_shuffle,
             StandardActions.ACTION_REPEAT to com.svartifoss.snfell.common.R.drawable.action_repeat,
             StandardActions.ACTION_REPEAT_ONE to com.svartifoss.snfell.common.R.drawable.action_repeat_one,
+            StandardActions.ACTION_SET_SHUFFLE_MODE to
+                    com.svartifoss.snfell.common.R.drawable.action_shuffle,
+            StandardActions.ACTION_SET_REPEAT_MODE to
+                    com.svartifoss.snfell.common.R.drawable.action_repeat,
             StandardActions.ACTION_OPEN_PLAYLIST_MENU to
                     com.svartifoss.snfell.common.R.drawable.action_open_playlist,
             // The watch ships this drawable too (it lives in common), so listing it here is what
@@ -37,6 +50,10 @@ object StandardIcons {
                     com.svartifoss.snfell.common.R.drawable.action_volume_up,
             StandardActions.ACTION_OPEN_PROGRESS_SCREEN to
                     com.svartifoss.snfell.common.R.drawable.action_progress,
+            StandardActions.ACTION_OPEN_FACE_PICKER to
+                    com.svartifoss.snfell.common.R.drawable.action_face_picker,
+            StandardActions.ACTION_CLOSE_WATCH_APP to
+                    com.svartifoss.snfell.common.R.drawable.action_close,
 
             getButtonKey(KeyEvent.KEYCODE_BACK) to R.drawable.button_back,
             getButtonKey(SpecialButtonCodes.TURN_ROTARY_CW) to R.drawable.button_turn_cw,

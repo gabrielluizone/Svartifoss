@@ -81,7 +81,7 @@ class PanelBackdropView(context: Context) : FrameLayout(context) {
                 artwork,
                 source = source,
                 blurred = backdrop.albumArtStyle.blurredArtwork,
-                artworkFilter = backdrop.albumArtStyle.artworkFilter,
+                artworkFilter = backdrop.albumArtFilter,
                 hidden = backdrop.albumArtStyle.hidesArtwork,
                 blurRadiusPx = backdrop.blurRadiusPx)
 
@@ -91,10 +91,12 @@ class PanelBackdropView(context: Context) : FrameLayout(context) {
         }
         if (insetSource == null) {
             squareInset.visibility = View.GONE
+            squareInset.colorFilter = null
             squareInset.setImageBitmap(null)
         } else {
             squareCornerFraction = cornerFraction ?: 0.10f
             squareInset.visibility = View.VISIBLE
+            squareInset.colorFilter = backdrop.albumArtFilter.androidColorFilter
             squareInset.setImageBitmap(insetSource)
             applySquareInsetMatrix(insetSource)
         }
@@ -108,7 +110,8 @@ class PanelBackdropView(context: Context) : FrameLayout(context) {
                 secondary = backdrop.globalTriad.secondary,
                 tertiary = backdrop.globalTriad.tertiary,
                 materialSurface = backdrop.globalTriad.primary,
-                materialSurfaceSoftened = backdrop.materialSurfaceSoftened)
+                materialSurfaceSoftened = backdrop.materialSurfaceSoftened,
+                density = resources.displayMetrics.density)
 
         shading.background = null
 
@@ -118,7 +121,7 @@ class PanelBackdropView(context: Context) : FrameLayout(context) {
                     overlayBlur,
                     source = albumArt,
                     blurred = true,
-                    artworkFilter = com.svartifoss.snfell.common.AlbumArtFilter.NONE,
+                    artworkFilter = backdrop.albumArtFilter,
                     hidden = false,
                     // Matches the artwork blur when the background is already blurred, so
                     // revealing the overlay never makes the blur jump to a different strength.
@@ -138,7 +141,8 @@ class PanelBackdropView(context: Context) : FrameLayout(context) {
                 appearance.triad.secondary,
                 appearance.triad.tertiary,
                 resources.displayMetrics.density,
-                resources.displayMetrics.widthPixels)
+                resources.displayMetrics.widthPixels,
+                resources.configuration.isScreenRound)
     }
 
     /** Deferred to the next layout pass when the view has not been measured yet, which is the

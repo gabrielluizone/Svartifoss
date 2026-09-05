@@ -153,18 +153,36 @@ class CommunityThemeSubmissionStatusTest {
     }
 
     @Test
-    fun `a like count is attached only where the catalogue actually has one`() {
+    fun `public counts are attached only where the catalogue actually has one`() {
         // A submission still in review has no public entry. Showing it a zero would claim nobody
-        // liked it, rather than that there was nothing to like yet.
+        // liked or installed it, rather than that there was nothing to like or install yet.
         val published = record("published", 2_000L)
         val pending = record("pending", 1_000L)
 
-        val withLikes = CommunityThemeSubmissionOrder.withLikes(
+        val counted = CommunityThemeSubmissionOrder.withPublicCounts(
                 listOf(published, pending),
-                mapOf("published" to 7))
+                mapOf("published" to 7),
+                mapOf("published" to 31))
 
-        assertEquals(7, withLikes.first { it.id == "published" }.likes)
-        assertNull(withLikes.first { it.id == "pending" }.likes)
+        assertEquals(7, counted.first { it.id == "published" }.likes)
+        assertEquals(31, counted.first { it.id == "published" }.installs)
+        assertNull(counted.first { it.id == "pending" }.likes)
+        assertNull(counted.first { it.id == "pending" }.installs)
+    }
+
+    @Test
+    fun `a catalogue with no install figures yet leaves downloads absent rather than zero`() {
+        // The state every already-published catalogue is in until the publisher's next run. Zero
+        // would be indistinguishable from a theme nobody has taken.
+        val published = record("published", 2_000L)
+
+        val counted = CommunityThemeSubmissionOrder.withPublicCounts(
+                listOf(published),
+                mapOf("published" to 7),
+                emptyMap())
+
+        assertEquals(7, counted.first().likes)
+        assertNull(counted.first().installs)
     }
 
     private fun record(id: String, createdAtMillis: Long?) = CommunityThemeSubmissionRecord(

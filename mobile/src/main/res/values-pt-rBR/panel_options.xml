@@ -14,8 +14,48 @@
         <item>Meia-noite</item>
         <item>Halo</item>
         <item>Desfoque de fumaça</item>
-        <item>Nascer do sol</item>
-        <item>Oceano profundo</item>
+        <item>Pôr do sol</item>
+        <item>Oceano</item>
+        <item>Nebulosa</item>
+        <item>Brasa</item>
+        <item>Linha de maré</item>
+        <item>Bioluminescência</item>
+        <item>Iridescente</item>
+        <item>Grafite</item>
+        <item>Cinema</item>
+        <item>Órbita</item>
+        <item>Horizonte</item>
+        <item>Aguada de tinta</item>
+        <item>Florescimento</item>
+        <item>Fiorde</item>
+        <item>Grade de pontos</item>
+        <item>Linhas de varredura</item>
+        <item>Radar</item>
+        <item>Linhas de contorno</item>
+        <item>Facetado</item>
+        <item>Crepúsculo</item>
+        <item>Gelo</item>
+        <item>Rosa</item>
+        <item>Papel</item>
+        <item>Monólito</item>
+        <item>Lanterna</item>
+        <item>Noir</item>
+        <item>Veludo</item>
+        <item>Miragem</item>
+        <item>Floração</item>
+        <item>Nuvem</item>
+        <item>Noturno</item>
+        <item>Líquido</item>
+        <item>Maré</item>
+        <item>Vinil</item>
+        <item>Coroa</item>
+        <item>Crescente</item>
+        <item>Grade</item>
+        <item>Véu de vidro</item>
+        <item>Material</item>
+        <item>Pôster</item>
+        <item>Estúdio</item>
+        <item>Espectro</item>
     </string-array>
 
     <string-array name="wear_volume_style_extra_entries">

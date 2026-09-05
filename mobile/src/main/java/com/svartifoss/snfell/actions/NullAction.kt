@@ -13,7 +13,7 @@ class NullAction : PhoneAction {
     constructor(context : Context, bundle: PersistableBundle) : super(context, bundle)
 
     override fun onActionPicked(actionPicker: ActionPickerViewModel) {
-        actionPicker.selectedAction.value = null
+        actionPicker.selectNoAction(this)
     }
 
     override fun retrieveTitle(): String = context.getString(R.string.no_action)

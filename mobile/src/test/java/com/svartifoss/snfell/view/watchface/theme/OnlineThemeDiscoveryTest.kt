@@ -43,6 +43,42 @@ class OnlineThemeDiscoveryTest {
     }
 
     @Test
+    fun `the author filter is exact where a search term is not`() {
+        val theirs = theme(id = "theirs", name = "Midnight", author = "Verse")
+        val aboutThem = theme(id = "about", name = "Verse at dusk", author = "Mina")
+        val themes = listOf(theirs, aboutThem)
+
+        val filtered = OnlineThemeDiscovery.discover(
+                themes,
+                OnlineThemeDiscoveryRequest(author = "verse"))
+        val searched = OnlineThemeDiscovery.discover(
+                themes,
+                OnlineThemeDiscoveryRequest(query = "verse"))
+
+        // The whole reason the author is its own field: a search for the name also matches every
+        // theme merely *called* that.
+        assertEquals(listOf(theirs), filtered)
+        assertEquals(listOf(aboutThem, theirs), searched)
+    }
+
+    @Test
+    fun `the author filter normalizes accents and case, and a blank one filters nothing`() {
+        val lucia = theme(id = "lucia", author = "L\u00facia")
+        val mina = theme(id = "mina", author = "Mina")
+        val themes = listOf(lucia, mina)
+
+        assertEquals(
+                listOf(lucia),
+                OnlineThemeDiscovery.discover(
+                        themes,
+                        OnlineThemeDiscoveryRequest(author = "LUCIA")))
+        // A blank name arriving from saved state is no filter rather than one nothing satisfies.
+        assertEquals(
+                listOf(lucia, mina),
+                OnlineThemeDiscovery.discover(themes, OnlineThemeDiscoveryRequest(author = "  ")))
+    }
+
+    @Test
     fun `newest sorts by publication time then id rather than input order`() {
         val old = theme(id = "old", publishedAt = "2026-08-20T00:00:00Z")
         val sameMomentZ = theme(id = "z", publishedAt = "2026-08-24T12:00:00Z")
@@ -67,6 +103,40 @@ class OnlineThemeDiscoveryTest {
                 OnlineThemeDiscoveryRequest(sort = OnlineThemeSort.MOST_LIKED))
 
         assertEquals(listOf(sameMomentA, sameMomentZ, olderPopular, fewerLikes), results)
+    }
+
+    @Test
+    fun `most downloaded orders by installs and falls back to likes then newest then id`() {
+        // Downloads and likes are deliberately separate orders rather than one "popular": a theme
+        // can be widely installed and rarely hearted, so the tie-break chain has to prove the
+        // install count wins outright before likes are consulted at all.
+        val quietlyPopular = theme(id = "quiet", installs = 90, likes = 1,
+                publishedAt = "2026-08-20T00:00:00Z")
+        val loved = theme(id = "loved", installs = 12, likes = 400,
+                publishedAt = "2026-08-30T00:00:00Z")
+        val tiedLessLoved = theme(id = "a", installs = 12, likes = 3,
+                publishedAt = "2026-08-31T00:00:00Z")
+
+        val results = OnlineThemeDiscovery.discover(
+                listOf(loved, tiedLessLoved, quietlyPopular),
+                OnlineThemeDiscoveryRequest(sort = OnlineThemeSort.MOST_DOWNLOADED))
+
+        assertEquals(listOf(quietlyPopular, loved, tiedLessLoved), results)
+    }
+
+    @Test
+    fun `a catalogue published before install counts existed orders by its remaining signals`() {
+        // Every entry reads back as zero installs until the publisher's next run backfills them,
+        // and an order that collapsed to catalogue order there would look broken on the one day
+        // it matters most.
+        val newer = theme(id = "newer", likes = 2, publishedAt = "2026-08-30T00:00:00Z")
+        val older = theme(id = "older", likes = 2, publishedAt = "2026-08-20T00:00:00Z")
+
+        val results = OnlineThemeDiscovery.discover(
+                listOf(older, newer),
+                OnlineThemeDiscoveryRequest(sort = OnlineThemeSort.MOST_DOWNLOADED))
+
+        assertEquals(listOf(newer, older), results)
     }
 
     @Test
@@ -172,6 +242,7 @@ class OnlineThemeDiscoveryTest {
             author: String = "Author $id",
             baseFace: String = "classic",
             likes: Int = 0,
+            installs: Int = 0,
             publishedAt: String = "2026-08-24T00:00:00Z"
     ) = OnlineThemeSummary(
             id = id,
@@ -182,5 +253,6 @@ class OnlineThemeDiscoveryTest {
             schemaVersion = 1,
             minimumAppVersion = "3.3",
             publishedAt = publishedAt,
-            likes = likes)
+            likes = likes,
+            installs = installs)
 }

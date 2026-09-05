@@ -1301,6 +1301,11 @@
     <string name="color_picker_title">Akzentfarbe wählen</string>
     <string name="color_picker_reset">Zurücksetzen</string>
     <string name="color_picker_apply">Anwenden</string>
+    <string name="setting_wear_title_centered">Titel zentrieren</string>
+    <string name="setting_wear_title_centered_description">Verankert den Titel in der Bildschirmmitte statt des gesamten Textblocks</string>
+    <string name="player_element_title_centered">Titel zentriert</string>
+    <string name="color_picker_recent">Zuletzt verwendet</string>
+    <string name="color_picker_copied">Farbcode kopiert</string>
     <string name="color_picker_default">Standard</string>
     <string name="color_picker_invalid">Ungültiger Farbcode</string>
     <string name="color_picker_current">Aktuell: %s</string>
@@ -1859,6 +1864,56 @@
         <item>@string/wear_font_varela_round</item>
         <item>@string/wear_font_yanone_kaffeesatz</item>
         <item>@string/wear_font_zilla_slab</item>
+        <item>@string/wear_font_lato</item>
+        <item>@string/wear_font_merriweather_sans</item>
+        <item>@string/wear_font_source_sans_3</item>
+        <item>@string/wear_font_source_serif_4</item>
+        <item>@string/wear_font_libre_baskerville</item>
+        <item>@string/wear_font_libre_franklin</item>
+        <item>@string/wear_font_ibm_plex_sans</item>
+        <item>@string/wear_font_ibm_plex_mono</item>
+        <item>@string/wear_font_ibm_plex_serif</item>
+        <item>@string/wear_font_work_sans</item>
+        <item>@string/wear_font_karla</item>
+        <item>@string/wear_font_sora</item>
+        <item>@string/wear_font_urbanist</item>
+        <item>@string/wear_font_be_vietnam_pro</item>
+        <item>@string/wear_font_red_hat_display</item>
+        <item>@string/wear_font_red_hat_text</item>
+        <item>@string/wear_font_red_hat_mono</item>
+        <item>@string/wear_font_syne</item>
+        <item>@string/wear_font_instrument_sans</item>
+        <item>@string/wear_font_figtree</item>
+        <item>@string/wear_font_gabarito</item>
+        <item>@string/wear_font_bricolage_grotesque</item>
+        <item>@string/wear_font_dm_serif_display</item>
+        <item>@string/wear_font_cormorant_garamond</item>
+        <item>@string/wear_font_cormorant</item>
+        <item>@string/wear_font_bitter</item>
+        <item>@string/wear_font_spectral</item>
+        <item>@string/wear_font_vollkorn</item>
+        <item>@string/wear_font_raleway</item>
+        <item>@string/wear_font_league_spartan</item>
+        <item>@string/wear_font_saira</item>
+        <item>@string/wear_font_signika</item>
+        <item>@string/wear_font_sofia_sans</item>
+        <item>@string/wear_font_overpass</item>
+        <item>@string/wear_font_public_sans</item>
+        <item>@string/wear_font_questrial</item>
+        <item>@string/wear_font_dosis</item>
+        <item>@string/wear_font_prompt</item>
+        <item>@string/wear_font_unbounded</item>
+        <item>@string/wear_font_recursive</item>
+        <item>@string/wear_font_trispace</item>
+        <item>@string/wear_font_noto_sans</item>
+        <item>@string/wear_font_noto_serif</item>
+        <item>@string/wear_font_noto_sans_mono</item>
+        <item>@string/wear_font_heebo</item>
+        <item>@string/wear_font_hind</item>
+        <item>@string/wear_font_hind_madurai</item>
+        <item>@string/wear_font_kumbh_sans</item>
+        <item>@string/wear_font_alegreya</item>
+        <item>@string/wear_font_assistant</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1949,6 +2004,56 @@
         <item>@string/wear_font_varela_round_description</item>
         <item>@string/wear_font_yanone_kaffeesatz_description</item>
         <item>@string/wear_font_zilla_slab_description</item>
+        <item>@string/wear_font_lato_description</item>
+        <item>@string/wear_font_merriweather_sans_description</item>
+        <item>@string/wear_font_source_sans_3_description</item>
+        <item>@string/wear_font_source_serif_4_description</item>
+        <item>@string/wear_font_libre_baskerville_description</item>
+        <item>@string/wear_font_libre_franklin_description</item>
+        <item>@string/wear_font_ibm_plex_sans_description</item>
+        <item>@string/wear_font_ibm_plex_mono_description</item>
+        <item>@string/wear_font_ibm_plex_serif_description</item>
+        <item>@string/wear_font_work_sans_description</item>
+        <item>@string/wear_font_karla_description</item>
+        <item>@string/wear_font_sora_description</item>
+        <item>@string/wear_font_urbanist_description</item>
+        <item>@string/wear_font_be_vietnam_pro_description</item>
+        <item>@string/wear_font_red_hat_display_description</item>
+        <item>@string/wear_font_red_hat_text_description</item>
+        <item>@string/wear_font_red_hat_mono_description</item>
+        <item>@string/wear_font_syne_description</item>
+        <item>@string/wear_font_instrument_sans_description</item>
+        <item>@string/wear_font_figtree_description</item>
+        <item>@string/wear_font_gabarito_description</item>
+        <item>@string/wear_font_bricolage_grotesque_description</item>
+        <item>@string/wear_font_dm_serif_display_description</item>
+        <item>@string/wear_font_cormorant_garamond_description</item>
+        <item>@string/wear_font_cormorant_description</item>
+        <item>@string/wear_font_bitter_description</item>
+        <item>@string/wear_font_spectral_description</item>
+        <item>@string/wear_font_vollkorn_description</item>
+        <item>@string/wear_font_raleway_description</item>
+        <item>@string/wear_font_league_spartan_description</item>
+        <item>@string/wear_font_saira_description</item>
+        <item>@string/wear_font_signika_description</item>
+        <item>@string/wear_font_sofia_sans_description</item>
+        <item>@string/wear_font_overpass_description</item>
+        <item>@string/wear_font_public_sans_description</item>
+        <item>@string/wear_font_questrial_description</item>
+        <item>@string/wear_font_dosis_description</item>
+        <item>@string/wear_font_prompt_description</item>
+        <item>@string/wear_font_unbounded_description</item>
+        <item>@string/wear_font_recursive_description</item>
+        <item>@string/wear_font_trispace_description</item>
+        <item>@string/wear_font_noto_sans_description</item>
+        <item>@string/wear_font_noto_serif_description</item>
+        <item>@string/wear_font_noto_sans_mono_description</item>
+        <item>@string/wear_font_heebo_description</item>
+        <item>@string/wear_font_hind_description</item>
+        <item>@string/wear_font_hind_madurai_description</item>
+        <item>@string/wear_font_kumbh_sans_description</item>
+        <item>@string/wear_font_alegreya_description</item>
+        <item>@string/wear_font_assistant_description</item>
     </string-array>
     <string-array name="wear_idle_auto_open_entries">
         <item>@string/wear_idle_auto_open_none</item>
@@ -2081,4 +2186,74 @@
     <string name="setting_privacy_policy_description">Sieh nach, welche Daten Svartifoss verwendet und welche Onlinedienste optional sind.</string>
     <string name="watch_preview_expand">Größere Vorschau öffnen</string>
     <string name="watch_preview_fullscreen_dismiss">Zum Schließen irgendwo tippen</string>
+
+    <!-- The edge ring's position mark. Entries pair with wear_seek_marker_values by index. -->
+    <string name="setting_wear_seek_marker">Positionsmarke</string>
+    <string name="setting_wear_seek_marker_description">Wann der kurze Strich über dem Fortschrittsring, der die Stelle im Titel markiert, sichtbar bleibt.</string>
+    <string-array name="wear_seek_marker_entries">
+        <item>Immer</item>
+        <item>Nur beim Spulen</item>
+        <item>Beim Spulen und im Pausenmodus</item>
+        <item>Nur im Pausenmodus</item>
+    </string-array>
+
+    <!-- Title/artist text shadow. Entries pair with the untranslated
+         wear_text_shadow_*_values arrays BY INDEX. -->
+    <string name="setting_wear_title_shadow_style">Titel-Schatten</string>
+    <string name="setting_wear_title_shadow_color">Titel-Schattenfarbe</string>
+    <string name="setting_wear_title_shadow_custom_color">Eigene Titel-Schattenfarbe</string>
+    <string name="setting_wear_title_shadow_strength">Titel-Schattenstärke</string>
+    <string name="setting_wear_artist_shadow_style">Interpret-Schatten</string>
+    <string name="setting_wear_artist_shadow_color">Interpret-Schattenfarbe</string>
+    <string name="setting_wear_artist_shadow_custom_color">Eigene Interpret-Schattenfarbe</string>
+    <string name="setting_wear_artist_shadow_strength">Interpret-Schattenstärke</string>
+    <string name="setting_wear_text_shadow_strength_description">Prozentsatz der Größe und Tiefe des gewählten Schattens.</string>
+    <string-array name="wear_text_shadow_style_entries">
+        <item>Kein</item>
+        <item>Weich</item>
+        <item>Hart</item>
+        <item>Schein</item>
+        <item>Erhoben</item>
+        <item>Dezent</item>
+    </string-array>
+    <string-array name="wear_text_shadow_color_entries">
+        <item>Schwarz</item>
+        <item>Albumfarbe</item>
+        <item>Weiß</item>
+        <item>Eigene</item>
+    </string-array>
+
+    <!-- Title/artist outline. Entries pair with the untranslated
+         wear_text_outline_style_values array BY INDEX. -->
+    <string name="setting_wear_title_outline_style">Titel-Kontur</string>
+    <string name="setting_wear_title_outline_color">Titel-Konturfarbe</string>
+    <string name="setting_wear_title_outline_custom_color">Eigene Titel-Konturfarbe</string>
+    <string name="setting_wear_artist_outline_style">Interpret-Kontur</string>
+    <string name="setting_wear_artist_outline_color">Interpret-Konturfarbe</string>
+    <string name="setting_wear_artist_outline_custom_color">Eigene Interpret-Konturfarbe</string>
+    <string-array name="wear_text_outline_style_entries">
+        <item>Keine</item>
+        <item>Haarlinie</item>
+        <item>Dünn</item>
+        <item>Mittel</item>
+        <item>Dick</item>
+    </string-array>
+
+    <!-- Title/artist text backdrop. Entries pair with the untranslated
+         wear_text_backdrop_style_values array BY INDEX. -->
+    <string name="setting_wear_title_text_bg_style">Titel-Hinterlegung</string>
+    <string name="setting_wear_title_text_bg_color">Farbe der Titel-Hinterlegung</string>
+    <string name="setting_wear_title_text_bg_custom_color">Eigene Farbe der Titel-Hinterlegung</string>
+    <string name="setting_wear_title_text_bg_opacity">Deckkraft der Titel-Hinterlegung</string>
+    <string name="setting_wear_artist_text_bg_style">Interpret-Hinterlegung</string>
+    <string name="setting_wear_artist_text_bg_color">Farbe der Interpret-Hinterlegung</string>
+    <string name="setting_wear_artist_text_bg_custom_color">Eigene Farbe der Interpret-Hinterlegung</string>
+    <string name="setting_wear_artist_text_bg_opacity">Deckkraft der Interpret-Hinterlegung</string>
+    <string name="setting_wear_text_bg_opacity_description">Prozentsatz der Deckkraft der gewählten Hinterlegung.</string>
+    <string-array name="wear_text_backdrop_style_entries">
+        <item>Keine</item>
+        <item>Markierung</item>
+        <item>Zart</item>
+        <item>Block</item>
+    </string-array>
 </resources>

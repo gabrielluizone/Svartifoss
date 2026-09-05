@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.Canvas
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,8 +23,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.asAndroidBitmap
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
@@ -39,7 +36,6 @@ import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.common.AdaptiveTextContrast
 import com.svartifoss.snfell.common.FaceGeometry
-import com.svartifoss.snfell.common.BitmapBlur
 import com.svartifoss.snfell.common.RoundScreenText
 import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.watch.view.compose.FaceClock
@@ -185,7 +181,10 @@ private fun ContinuousBackdrop(
         state: NowPlayingFaceState
 ) {
     val seamPx = with(LocalDensity.current) { seam.toPx() }
-    val blurred = rememberPanelBlur(art, state.albumArtBlurRadiusPx)
+    // The floor is applied here rather than inside the shared helper: it is this composition's
+    // requirement, not a property of blurring - see [MIN_PANEL_BLUR_PX].
+    val blurred = rememberBlurredCover(
+            art, state.albumArtBlurRadiusPx.coerceAtLeast(MIN_PANEL_BLUR_PX))
 
     Box(Modifier.fillMaxSize()) {
         Image(
@@ -211,29 +210,6 @@ private fun ContinuousBackdrop(
         }
     }
 }
-
-/**
- * The blurred copy, made once per cover.
- *
- * [BitmapBlur] rather than Compose's `Modifier.blur`: that modifier is a no-op below Android 12,
- * and this module supports API 26 - the panel would simply be a sharp photograph on older watches,
- * which is not a degraded version of this design but a different and much worse one. The shared
- * bitmap blur runs everywhere and is the same one the phone's preview uses, so the two agree.
- *
- * Keyed on the bitmap, so a track change pays for it and nothing else does. Falls back to the sharp
- * cover if the blur throws (a recycled bitmap on a fast skip), which is wrong-looking for one frame
- * rather than a crash.
- */
-@Composable
-private fun rememberPanelBlur(art: ImageBitmap, radiusPx: Float): ImageBitmap =
-        remember(art, radiusPx) {
-            runCatching {
-                BitmapBlur.blur(
-                        art.asAndroidBitmap(),
-                        radiusPx.coerceAtLeast(MIN_PANEL_BLUR_PX)
-                ).asImageBitmap()
-            }.getOrDefault(art)
-        }
 
 /** The artwork band. Falls back to a tonal wash when the artwork is hidden or has not arrived. */
 @Composable
@@ -307,6 +283,7 @@ private fun TrackText(
             AdaptiveTitleText(
                     text = state.title,
                     mode = state.titleTextMode,
+                    state = state,
                     fontSize = 21.sp,
                     color = titleTextColor(state, primary),
                     fontWeight = FontWeight.Bold,
@@ -394,31 +371,32 @@ private const val BADGE_FRACTION = FaceGeometry.Split.BADGE_FRACTION
  */
 @Composable
 private fun SplitAmbient(state: NowPlayingFaceState) {
+    val geo = FaceGeometry.Split.Ambient
     val tint = Color(state.ambientTint).copy(alpha = state.ambientIntensity.coerceIn(.2f, 1f))
     BoxWithConstraints(Modifier.fillMaxSize().background(Color.Black)) {
         val screen = maxWidth
         Box(
                 modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = screen * .18f)
+                        .padding(horizontal = screen * geo.SEAM_INSET_FRACTION)
                         .offset(y = screen * SEAM_FRACTION)
                         .height(1.dp)
-                        .background(tint.copy(alpha = tint.alpha * .5f))
+                        .background(tint.copy(alpha = tint.alpha * geo.SEAM_ALPHA))
         )
         if (state.ambientShowTrackInfo) {
             Column(
                     modifier = Modifier
                             .fillMaxSize()
-                            .padding(top = screen * (SEAM_FRACTION + .07f))
-                            .padding(horizontal = screen * .16f),
+                            .padding(top = screen * (SEAM_FRACTION + geo.TEXT_TOP_GAP_FRACTION))
+                            .padding(horizontal = screen * geo.SIDE_PADDING_FRACTION),
                     horizontalAlignment = Alignment.Start
             ) {
                 if (state.artist.isNotEmpty()) {
                     Text(
                             text = state.artist,
-                            color = tint.copy(alpha = tint.alpha * .7f),
+                            color = tint.copy(alpha = tint.alpha * geo.ARTIST_ALPHA),
                             fontFamily = state.artistFont,
-                            fontSize = 13.sp,
+                            fontSize = geo.ARTIST_SP.sp,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                     )
@@ -429,8 +407,8 @@ private fun SplitAmbient(state: NowPlayingFaceState) {
                             color = tint,
                             fontFamily = state.titleFont,
                             fontWeight = FontWeight.SemiBold,
-                            fontSize = 18.sp,
-                            maxLines = 2,
+                            fontSize = geo.TITLE_SP.sp,
+                            maxLines = geo.TITLE_MAX_LINES,
                             overflow = TextOverflow.Ellipsis
                     )
                 }

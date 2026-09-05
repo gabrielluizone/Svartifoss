@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Közösségi témák frissítése</string>
     <string name="online_theme_list_description">A közösség által készített óraí témák</string>
     <string name="online_theme_byline">Készítette: %1$s</string>
+    <string name="online_theme_filter_author">%1$s témái</string>
+    <string name="online_theme_filter_author_selected">%1$s témáinak megjelenítése</string>
     <string name="online_theme_row_description">%1$s készítette: %2$s. %3$s elrendezés.</string>
     <string name="online_theme_apply">Hozzáadás és alkalmazás</string>
     <string name="online_theme_loading">Közösségi témák betöltése…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">A már hozzáadott témák láthatók</string>
     <string name="online_theme_search_empty_all_installed">Már minden közösségi témát hozzáadtál.</string>
     <string name="online_theme_search_empty_all_installed_hint">Kapcsold ki a „Nekem új” szűrőt, hogy újra lásd őket.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Legtöbbet letöltött</string>
+    <string name="online_theme_sort_most_downloaded_short">Letöltések</string>
+    <string name="community_theme_detail_downloads">Letöltések</string>
+    <string name="community_theme_report_action">Téma jelentése</string>
+    <string name="community_theme_report_already">Téma jelentve</string>
+    <string name="community_theme_report_description">A(z) „%1$s” jelentése a moderátoroknak</string>
+    <string name="community_theme_report_title">Ennek a témának a jelentése</string>
+    <string name="community_theme_report_intro">Mondja el a moderátoroknak, mi a baj ezzel a témával.</string>
+    <string name="community_theme_report_reason_inappropriate">Sértő vagy nem megfelelő tartalom</string>
+    <string name="community_theme_report_reason_impersonation">Máséként adják ki</string>
+    <string name="community_theme_report_reason_misleading">Nem egyezik azzal, amit mutat</string>
+    <string name="community_theme_report_reason_illegible">Az órán használhatatlan</string>
+    <string name="community_theme_report_reason_spam">Levélszemét vagy duplikátum</string>
+    <string name="community_theme_report_reason_other">Egyéb ok</string>
+    <string name="community_theme_report_details_hint">Bármi más, amit a moderátoroknak tudniuk kell (nem kötelező)</string>
+    <string name="community_theme_report_privacy">A bejelentését csak a moderátorok olvassák. A szerző soha nem tudja meg, ki küldte.</string>
+    <string name="community_theme_report_submit">Bejelentés küldése</string>
+    <string name="community_theme_report_sent">Bejelentés elküldve. A moderátorok megnézik ezt a témát.</string>
+    <string name="community_theme_report_already_sent">Ezt a témát már bejelentette.</string>
+    <string name="community_theme_report_not_ready">Ez a téma még nem jelenthető be. Próbálja meg később.</string>
+    <string name="community_theme_report_error">A bejelentést nem sikerült elküldeni. Ellenőrizze a kapcsolatot, és próbálja újra.</string>
 </resources>

@@ -2,6 +2,7 @@ package com.svartifoss.snfell.res
 
 import com.svartifoss.snfell.common.ThemeAppearance
 import java.io.File
+import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
@@ -30,6 +31,37 @@ import org.junit.Test
 class WatchPreviewParityTest {
 
     private companion object {
+
+
+        /**
+         * Each ambient face on the watch and the preview function that mirrors it.
+         *
+         * Keyed by the composable so [everyAmbientFaceIsPairedWithItsMiniature] can prove the list
+         * is complete: a new ambient face that nobody paired would otherwise be silently exempt
+         * from every check below.
+         */
+        val AMBIENT_RENDERER_PAIRS = mapOf(
+                "CarouselAmbient" to "drawCarouselAod",
+                "ChatAmbient" to "drawChatAod",
+                "ChronoAmbientFace" to "drawChronoAod",
+                "CuratedAmbientFace" to "drawCuratedAod",
+                "ExpressiveAmbientFace" to "drawExpressiveAod",
+                "FrameAmbient" to "drawFrameAod",
+                "MetadataAmbient" to "drawMetadataAod",
+                "NoteAmbient" to "drawNoteAod",
+                "RibbonAmbient" to "drawRibbonAod",
+                "SplitAmbient" to "drawSplitAod",
+                "VerseAmbient" to "drawVerseAod")
+
+        /** The face contract's ambient cover. `albumArt` is the awake one and is a bug in ambient
+         *  (see the wear module's `AmbientFaceContractTest`), so it counts as drawing one too -
+         *  the preview would still have to match. */
+        val AMBIENT_COVER_ON_WATCH = Regex("""state\.(ambientA|a)lbumArt(?![A-Za-z0-9_])""")
+
+        /** The two ways the miniature puts a bitmap on screen. */
+        /** The two ways the miniature puts a bitmap on screen. */
+        val COVER_IN_MINIATURE = Regex("""draw(?:ClippedFace)?Artwork\(""")
+
 
         /**
          * Watch-face settings with genuinely nothing to draw in a still miniature.
@@ -126,6 +158,73 @@ class WatchPreviewParityTest {
             fail("Always-on styles with no miniature - previewed as the Classic AOD:\n  " +
                     missing.sorted().joinToString("\n  ") +
                     "\nAdd them to the when in WatchPreviewView.drawAodSurface.")
+        }
+    }
+
+    /**
+     * A miniature draws an always-on cover exactly where the watch's ambient face draws one.
+     *
+     * Having a branch is not the same as drawing the same screen, and artwork is where the two
+     * sides drifted furthest apart: the preview filled Ribbon's five card windows and Frame's
+     * image well with covers, while `RibbonAmbient` and `FrameAmbient` draw those as empty
+     * hairlines - a rail of album art on the phone against five outlines on the wrist. Carousel
+     * drifted the other way, drawing a cover the always-on artwork switch could not turn off.
+     *
+     * Which faces *should* carry a cover in ambient is a design decision and not this test's
+     * business; that the two renderers agree about it is.
+     */
+    @Test
+    fun theAmbientMiniaturesDrawCoversWhereTheWatchDoes() {
+        val previewText = withoutComments(previewSource)
+        val faceText = wearFaceSources().associate { it.name to withoutComments(it.readText()) }
+
+        val unmatched = mutableListOf<String>()
+        AMBIENT_RENDERER_PAIRS.forEach { (composable, previewFunction) ->
+            val face = faceText.values.firstOrNull {
+                Regex("""fun $composable\(""").containsMatchIn(it)
+            }
+            assertNotNull("$composable no longer exists - update AMBIENT_RENDERER_PAIRS", face)
+            val onWatch = AMBIENT_COVER_ON_WATCH.containsMatchIn(
+                    functionBody(face!!, composable))
+            val onPhone = COVER_IN_MINIATURE.containsMatchIn(
+                    functionBody(previewText, previewFunction))
+            if (onWatch != onPhone) {
+                unmatched += if (onWatch) {
+                    "$composable draws a cover; $previewFunction does not"
+                } else {
+                    "$previewFunction draws a cover; $composable does not"
+                }
+            }
+        }
+
+        if (unmatched.isNotEmpty()) {
+            fail("Always-on artwork the two renderers disagree about:\n  " +
+                    unmatched.joinToString("\n  ") +
+                    "\nThe miniature is the only place a user can see what an always-on style " +
+                    "looks like before wearing it.")
+        }
+    }
+
+    /** A face added to the watch with no entry here would simply not be compared. */
+    @Test
+    fun everyAmbientFaceIsPairedWithItsMiniature() {
+        val declared = wearFaceSources()
+                .flatMap { file ->
+                    Regex("""^(?:private |internal |public )?fun (\w+Ambient(?:Face)?)\(""",
+                            RegexOption.MULTILINE)
+                            .findAll(withoutComments(file.readText()))
+                            .map { it.groupValues[1] }
+                            .toList()
+                }
+                .toSet()
+        assertTrue("Expected to find the watch's ambient faces", declared.size >= 10)
+
+        val unpaired = declared - AMBIENT_RENDERER_PAIRS.keys
+        if (unpaired.isNotEmpty()) {
+            fail("Ambient faces with no miniature paired to them:\n  " +
+                    unpaired.sorted().joinToString("\n  ") +
+                    "\nAdd each to AMBIENT_RENDERER_PAIRS with the preview function that " +
+                    "mirrors it.")
         }
     }
 
@@ -626,6 +725,26 @@ class WatchPreviewParityTest {
         }
         return body + called.joinToString("\n") { functionBody(previewSource, it) }
     }
+
+    /**
+     * Comments removed, so prose about a rule is not read as a breach of it - the note beside a
+     * fix routinely names the very call it replaced. Block comments go first; a `//` starts a
+     * comment only outside a string literal, so a "content://" URL survives.
+     */
+    private fun withoutComments(source: String): String =
+            source.replace(Regex("""/\*.*?\*/""", RegexOption.DOT_MATCHES_ALL), "")
+                    .lineSequence()
+                    .joinToString("\n") { line ->
+                        var quotes = 0
+                        line.forEachIndexed { index, ch ->
+                            if (ch == '"' && (index == 0 || line[index - 1] != '\\')) quotes++
+                            if (ch == '/' && index > 0 && line[index - 1] == '/' &&
+                                    quotes % 2 == 0) {
+                                return@joinToString line.substring(0, index - 1)
+                            }
+                        }
+                        line
+                    }
 
     private fun functionBody(source: String, function: String): String {
         val signature = Regex("""fun $function\(""").find(source)

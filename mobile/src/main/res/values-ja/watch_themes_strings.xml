@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">コミュニティテーマを更新</string>
     <string name="online_theme_list_description">コミュニティ作成のウォッチテーマ</string>
     <string name="online_theme_byline">%1$s 作</string>
+    <string name="online_theme_filter_author">%1$s のテーマ</string>
+    <string name="online_theme_filter_author_selected">%1$s のテーマを表示中</string>
     <string name="online_theme_row_description">%1$s（%2$s 作）。%3$s レイアウト。</string>
     <string name="online_theme_apply">追加して適用</string>
     <string name="online_theme_loading">コミュニティテーマを読み込んでいます…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">追加済みのテーマを表示しています</string>
     <string name="online_theme_search_empty_all_installed">コミュニティテーマをすべて追加済みです。</string>
     <string name="online_theme_search_empty_all_installed_hint">もう一度表示するには「未追加」をオフにします。</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">ダウンロードが多い順</string>
+    <string name="online_theme_sort_most_downloaded_short">ダウンロード</string>
+    <string name="community_theme_detail_downloads">ダウンロード数</string>
+    <string name="community_theme_report_action">テーマを報告</string>
+    <string name="community_theme_report_already">報告済み</string>
+    <string name="community_theme_report_description">「%1$s」をモデレーターに報告</string>
+    <string name="community_theme_report_title">このテーマを報告</string>
+    <string name="community_theme_report_intro">このテーマの何が問題かをモデレーターに伝えてください。</string>
+    <string name="community_theme_report_reason_inappropriate">不快または不適切な内容</string>
+    <string name="community_theme_report_reason_impersonation">他人の作品として偽っている</string>
+    <string name="community_theme_report_reason_misleading">表示内容と一致しない</string>
+    <string name="community_theme_report_reason_illegible">時計で使い物にならない</string>
+    <string name="community_theme_report_reason_spam">スパムまたは重複</string>
+    <string name="community_theme_report_reason_other">その他</string>
+    <string name="community_theme_report_details_hint">モデレーターに伝えたいことがあれば（任意）</string>
+    <string name="community_theme_report_privacy">報告を読むのはモデレーターだけです。誰が送ったかが作者に伝わることはありません。</string>
+    <string name="community_theme_report_submit">報告を送信</string>
+    <string name="community_theme_report_sent">報告を送信しました。モデレーターがこのテーマを確認します。</string>
+    <string name="community_theme_report_already_sent">このテーマはすでに報告済みです。</string>
+    <string name="community_theme_report_not_ready">このテーマはまだ報告できません。しばらくしてからお試しください。</string>
+    <string name="community_theme_report_error">報告を送信できませんでした。接続を確認してもう一度お試しください。</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.view.watchface
 
 import com.svartifoss.snfell.common.MiniButtonPlacement
+import com.svartifoss.snfell.common.OverlayBackdropResolver
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.WatchTypography
@@ -113,6 +114,12 @@ internal object WatchSearchTargetResolver {
                 !readBoolean("wear_show_source_icon", true)) {
             return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_show_source_icon")
         }
+        // The position mark rides the edge ring, so with the ring off the Player page hides its
+        // row - see renderPlayerEditor. Point at the switch rather than at a control that is not
+        // on screen; the redirect never writes it.
+        if (key == "wear_seek_marker" && !readBoolean("wear_edge_progress_visible", true)) {
+            return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_edge_progress_visible")
+        }
         if (key.startsWith("wear_metadata_") && face != "metadata") {
             return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_screen_face")
         }
@@ -121,6 +128,8 @@ internal object WatchSearchTargetResolver {
                 key == "wear_carousel_card_shape" && face != "carousel" ||
                 key == "wear_note_cover_shape" && face != "note" ||
                 key == "wear_note_show_cover" && face != "note" ||
+                key == "wear_title_centered" &&
+                        face !in PlayerEditorModel.TITLE_CENTERED_FACES ||
                 key == "wear_chat_cover_shape" && face != "chat" ||
                 key == "wear_chat_show_cover" && face != "chat" ||
                 // wear_metadata_cover_shape / wear_metadata_show_cover need no entry here: the
@@ -167,6 +176,18 @@ internal object WatchSearchTargetResolver {
         if (key == "wear_progress_gradient" &&
                 readString("wear_progress_style", "solid") != "solid") {
             return redirect(WatchFacePrefsFragment.SECTION_PANELS, "wear_progress_style")
+        }
+
+        // Most OverlayBackdrop treatments are solid fields or authored gradients this radius has
+        // no effect on - see OverlayBackdrop.usesAlbumBlur and panelControlApplies(BLUR) in
+        // WatchFacePrefsFragment, which this mirrors. Resolved through Volume's own content style
+        // since the row is anchored there (see PanelEditorModel's class doc).
+        if (key == "wear_overlay_blur_radius" &&
+                !OverlayBackdropResolver.resolve(
+                        readString("wear_overlay_backdrop_style", "follow"),
+                        readString("wear_volume_style", "glass")
+                ).usesAlbumBlur) {
+            return redirect(WatchFacePrefsFragment.SECTION_PANELS, "wear_overlay_backdrop_style")
         }
 
         if (key == "wear_normal_color" &&

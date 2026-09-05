@@ -10,13 +10,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.common.CenterButton
+import com.svartifoss.snfell.common.DoublePinchGesture
+import com.svartifoss.snfell.common.HandGestureAvailability
 import com.svartifoss.snfell.common.ScreenButtons
 import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.SwipeGesture
@@ -79,6 +83,13 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         super.onCreate(savedInstanceState)
     }
 
+    override fun onResume() {
+        super.onResume()
+        // The developer switch lives on another screen, so re-check it every time this one comes
+        // back rather than only at inflation.
+        applyHandGestureVisibility()
+    }
+
     override fun onStart() {
         super.onStart()
         if (parentFragmentManager.findFragmentById(R.id.fragment_container) !== this) return
@@ -111,6 +122,11 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         setupCenterButton()
         setupSwipeGestureRows()
         setupScreenButtonRows()
+        // Last, matching the screen: the hand gesture is the one input here that not every watch
+        // has, so it sits after the rows every watch does have rather than between them.
+        setupDoublePinchRow()
+        updateHandGestureHint()
+        applyHandGestureVisibility()
         binding.quickPanelLink.setOnClickListener {
             (activity as? MainActivity)?.openActionsMenu()
         }
@@ -151,6 +167,7 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
     // the four quadrant icons (binding.iconTop etc.), just for the three configurable swipe
     // directions and the three on-screen mini-button slots.
     private val swipeGestureRows = mutableMapOf<Int, IconTile>()
+    private var doublePinchTile: IconTile? = null
     private val screenButtonRows = mutableMapOf<Int, IconTile>()
     private val physicalButtonRows = mutableMapOf<Int, PhysicalButtonRow>()
     private var currentButtonConfig: ButtonConfig? = null
@@ -184,6 +201,83 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
             swipeGestureRows[code] = IconTile(tileBinding, defaultIconRes, shortLabel, label)
         }
     }
+
+    /** One system-recognized hand gesture, and the last section on this screen. The app calls it
+     * double pinch because that is the physical gesture on the currently supported Pixel watches;
+     * Wear OS still routes it as the semantic primary action so compatible OEMs can supply their
+     * own equivalent - and on a watch that supplies none, the assignment is simply inert, which is
+     * why it is kept after the inputs that always work rather than in among them. */
+    private fun setupDoublePinchRow() {
+        val container = binding.handGestureContainer ?: return
+        val label = getString(R.string.double_pinch)
+        val tileBinding = ItemSwipeGestureBinding.inflate(LayoutInflater.from(requireContext()), container, true)
+        tileBinding.label.text = label
+        tileBinding.root.setOnClickListener {
+            configureButton(
+                physicalButton = false,
+                buttonCode = DoublePinchGesture.DOUBLE_PINCH,
+                buttonName = label,
+                supportsLongPress = false,
+                singleActionOnly = true,
+                // The one row on this screen whose name does not describe what it does, when it
+                // does it, or whether this watch can do it at all - and whose every failure is
+                // the same silence. The picker is the last moment before an action is assigned,
+                // so the explanation belongs there rather than only in a caption above it.
+                note = handGestureNote()
+            )
+        }
+        doublePinchTile = IconTile(tileBinding, R.drawable.ic_plus, label, label)
+    }
+
+    /**
+     * The hand gesture is archived: Wear OS routes it as the semantic primary action, but only a
+     * couple of Pixel watches supply one, the user has to switch it on in the watch's own
+     * settings, and every failure looks identical from the wrist - so the whole section is hidden
+     * behind the same "Show archived options" developer switch the retired faces and fonts use,
+     * rather than offering every other user a row that can only ever be inert. Nothing about the
+     * watch-side subscription changes: an assignment made while it was visible keeps working.
+     */
+    private fun applyHandGestureVisibility() {
+        val visible = PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .getBoolean("dev_show_archived", false)
+        val visibility = if (visible) View.VISIBLE else View.GONE
+        binding.handGesturesCaption.visibility = visibility
+        binding.handGesturesHint.visibility = visibility
+        binding.handGestureContainer?.visibility = visibility
+    }
+
+    /**
+     * What the watch last reported about the primary hand gesture, or `null` while the phone has
+     * heard nothing from it. Kept apart from the two renderers below so "not connected" stays a
+     * distinct answer from "connected, and the answer is that it cannot" - the whole reason the
+     * watch reports this at all.
+     */
+    private fun handGestureAvailability(): HandGestureAvailability? {
+        val info = watchInfo?.watchInfo ?: return null
+        // A watch build from before the field says nothing rather than saying UNSUPPORTED: this
+        // phone cannot tell a watch that lacks the hardware from one that lacks the report.
+        if (!info.hasHandGesture()) return HandGestureAvailability.UNKNOWN
+        return HandGestureAvailability.fromCode(info.handGesture)
+    }
+
+    @StringRes
+    private fun handGestureStateString(): Int = when (handGestureAvailability()) {
+        null -> R.string.hand_gestures_hint_disconnected
+        HandGestureAvailability.UNKNOWN -> R.string.hand_gestures_hint_outdated
+        HandGestureAvailability.UNSUPPORTED -> R.string.hand_gestures_hint_unsupported
+        HandGestureAvailability.DISABLED -> R.string.hand_gestures_hint_disabled
+        HandGestureAvailability.READY -> R.string.hand_gestures_hint_ready
+    }
+
+    /** The section caption's summary: one line, naming the state this watch is actually in. */
+    private fun updateHandGestureHint() {
+        binding.handGesturesHint.setText(handGestureStateString())
+    }
+
+    /** The verdict first, then the mechanics - a watch that cannot do this at all should not
+     *  have to be read past three paragraphs of instructions to find that out. */
+    private fun handGestureNote(): CharSequence = getString(handGestureStateString()) +
+            "\n\n" + getString(R.string.hand_gesture_how_it_works)
 
     /** Populates the "Mini buttons" section: 3 fixed tiles, one per [ScreenButtons] slot, in
      *  the same left-to-right order the watch renders them under the track time. Unlike swipes
@@ -227,6 +321,7 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
 
     private val watchInfoObserver = Observer<WatchInfoWithIcons?> {
         this.watchInfo = it
+        updateHandGestureHint()
 
         while (binding.watchButtonContainer.childCount > 0) {
             binding.watchButtonContainer.removeViewAt(0)
@@ -306,6 +401,11 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
 
         for ((code, tile) in swipeGestureRows) {
             val action = it.getScreenAction(ButtonInfo(false, code, GESTURE_SINGLE_TAP))
+            setTileIcon(tile, action)
+        }
+
+        doublePinchTile?.let { tile ->
+            val action = it.getScreenAction(DoublePinchGesture.buttonInfo())
             setTileIcon(tile, action)
         }
 
@@ -450,7 +550,8 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         buttonCode: Int,
         buttonName: String,
         supportsLongPress: Boolean,
-        singleActionOnly: Boolean = false
+        singleActionOnly: Boolean = false,
+        note: CharSequence? = null
     ) {
         val buttonInfo = ButtonInfo(physicalButton, buttonCode, GESTURE_SINGLE_TAP)
 
@@ -458,7 +559,8 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
                 buttonInfo,
                 buttonName,
                 supportsLongPress,
-                singleActionOnly)
+                singleActionOnly,
+                note)
         gesturePicker.show(requireFragmentManager(), "GesturePickerFragment")
     }
 

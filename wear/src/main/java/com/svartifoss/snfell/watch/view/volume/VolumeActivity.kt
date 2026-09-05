@@ -9,18 +9,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
 import com.svartifoss.snfell.watch.view.panel.PanelSurface
-import com.svartifoss.snfell.watch.view.panel.PanelTriad
+import com.svartifoss.snfell.watch.view.panel.rememberPanelPalette
 import com.google.android.wearable.input.RotaryEncoderHelper
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
@@ -108,34 +104,18 @@ class VolumeActivity : ComponentActivity() {
             val volume by viewModel.volume.observeAsState(0f)
             val albumArt by viewModel.albumArt.observeAsState()
 
-            // Palette extraction is a callback, so the screen necessarily draws once on the
-            // fallback accent and again when the cover's colour lands - the same asynchrony
-            // `MainActivity.updateAccentFromArt` has.
-            val fallbackTriad = PanelTriad(
-                    themeAccent,
-                    PanelAppearanceResolver.albumToneFallback(themeAccent, .42f),
-                    PanelAppearanceResolver.albumToneFallback(themeAccent, .68f))
-            var triad by remember { mutableStateOf(fallbackTriad) }
-            /** The album's own colours before any treatment - what the backdrop derives from. */
-            var rawTriad by remember { mutableStateOf(fallbackTriad) }
-            LaunchedEffect(albumArt) {
-                PanelAppearanceResolver.albumTriad(albumArt, accentSource, themeAccent) { raw ->
-                    rawTriad = raw
-                    triad = PanelAppearanceResolver.surfaceTriad(
-                            prefs, appearanceContext, PanelSurface.VOLUME, raw, themeAccent)
-                }
-            }
-            val appearance = remember(triad) {
-                PanelAppearanceResolver.resolve(
-                        prefs, appearanceContext, PanelSurface.VOLUME, triad)
-            }
-            // The player composition this panel background is painted over - see PanelScaffold.
-            // Resolved from the *raw* album triad, because the artwork treatment and shading use
-            // the watch-wide colour treatment rather than this panel's own.
-            val backdrop = remember(rawTriad) {
-                PanelAppearanceResolver.resolveBackdrop(
-                        prefs, appearanceContext, rawTriad, themeAccent)
-            }
+            // Seeded from AlbumPaletteCache, so a cover the player has already extracted
+            // is painted in the album's colours on the first frame - this screen used to
+            // open on the fallback accent and snap over. See rememberPanelPalette.
+            val palette = rememberPanelPalette(
+                    prefs = prefs,
+                    appearanceContext = appearanceContext,
+                    surface = PanelSurface.VOLUME,
+                    albumArt = albumArt,
+                    accentSource = accentSource,
+                    themeAccent = themeAccent)
+            val appearance = palette.appearance
+            val backdrop = palette.backdrop
 
             CompositionLocalProvider(
                     LocalWatchUiFontFamily provides watchUiFontFamily(prefs)) {

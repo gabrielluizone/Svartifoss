@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Қауымдастық тақырыптарын жаңарту</string>
     <string name="online_theme_list_description">Қауымдастық жасаған сағат тақырыптары</string>
     <string name="online_theme_byline">%1$s авторы</string>
+    <string name="online_theme_filter_author">%1$s тақырыптары</string>
+    <string name="online_theme_filter_author_selected">%1$s тақырыптары көрсетілуде</string>
     <string name="online_theme_row_description">%1$s, авторы %2$s. %3$s орналасуы.</string>
     <string name="online_theme_apply">Қосу және қолдану</string>
     <string name="online_theme_loading">Қауымдастық тақырыптары жүктелуде…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Қосылған тақырыптар көрсетілген</string>
     <string name="online_theme_search_empty_all_installed">Сіз барлық қоғамдастық тақырыбын қостыңыз.</string>
     <string name="online_theme_search_empty_all_installed_hint">Оларды қайта көру үшін «Маған жаңа» опциясын өшіріңіз.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Ең көп жүктелген</string>
+    <string name="online_theme_sort_most_downloaded_short">Жүктеулер</string>
+    <string name="community_theme_detail_downloads">Жүктеулер</string>
+    <string name="community_theme_report_action">Тақырыпқа шағымдану</string>
+    <string name="community_theme_report_already">Шағым жіберілді</string>
+    <string name="community_theme_report_description">«%1$s» туралы модераторларға шағымдану</string>
+    <string name="community_theme_report_title">Осы тақырыпқа шағымдану</string>
+    <string name="community_theme_report_intro">Модераторларға осы тақырыптың неден дұрыс емес екенін айтыңыз.</string>
+    <string name="community_theme_report_reason_inappropriate">Дөрекі немесе орынсыз мазмұн</string>
+    <string name="community_theme_report_reason_impersonation">Басқа біреудің жұмысы ретінде ұсынылған</string>
+    <string name="community_theme_report_reason_misleading">Көрсетілгенге сәйкес келмейді</string>
+    <string name="community_theme_report_reason_illegible">Сағатта қолдануға жарамсыз</string>
+    <string name="community_theme_report_reason_spam">Спам немесе көшірме</string>
+    <string name="community_theme_report_reason_other">Басқа себеп</string>
+    <string name="community_theme_report_details_hint">Модераторлар білуі керек басқа нәрсе (міндетті емес)</string>
+    <string name="community_theme_report_privacy">Шағымыңызды тек модераторлар оқиды. Оны кім жібергені авторға ешқашан айтылмайды.</string>
+    <string name="community_theme_report_submit">Шағымды жіберу</string>
+    <string name="community_theme_report_sent">Шағым жіберілді. Модераторлар осы тақырыпты қарайды.</string>
+    <string name="community_theme_report_already_sent">Сіз бұл тақырыпқа шағымданып қойғансыз.</string>
+    <string name="community_theme_report_not_ready">Бұл тақырыпқа әзірге шағымдануға болмайды. Кейінірек қайталап көріңіз.</string>
+    <string name="community_theme_report_error">Шағымыңыз жіберілмеді. Байланысты тексеріп, қайталап көріңіз.</string>
 </resources>

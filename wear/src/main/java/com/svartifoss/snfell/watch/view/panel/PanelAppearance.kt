@@ -9,6 +9,7 @@ import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
 import com.svartifoss.snfell.common.AccentFloorStyle
 import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.AppearanceContext
+import com.svartifoss.snfell.common.AppearanceNumericRanges
 import com.svartifoss.snfell.common.ColorModifier
 import com.svartifoss.snfell.common.FrostedEdges
 import com.svartifoss.snfell.common.FaceScopedPreferences
@@ -25,6 +26,8 @@ import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.common.SHADING_MAX_PERCENT
 import com.svartifoss.snfell.common.PlayerShadingIntensity
 import com.svartifoss.snfell.common.PlayerShadingStyle
+import com.svartifoss.snfell.common.AlbumArtFilter
+import com.svartifoss.snfell.common.resolveAlbumArtFilter
 import com.svartifoss.snfell.common.SurfaceColorTreatment
 import com.svartifoss.snfell.common.SurfacePaletteResolver
 import com.svartifoss.snfell.common.SwatchInfo
@@ -78,6 +81,7 @@ data class PanelAppearance(
  */
 data class PanelBackdrop(
         val albumArtStyle: PlayerBackgroundStyle,
+        val albumArtFilter: AlbumArtFilter,
         val blurRadiusPx: Float,
         val overlayBlurRadiusPx: Float,
         /**
@@ -181,10 +185,13 @@ object PanelAppearanceResolver {
             }
 
     /**
-     * The raw album triad, before any colour treatment. Answers on the caller's thread via
-     * [onResolved], because `Palette.generate` is a callback - the same asynchrony
-     * `MainActivity.updateAccentFromArt` has, and the same consequence: a screen must render once
-     * with the fallback and again when this lands, never assume the colour is ready at first draw.
+     * The raw album triad, before any colour treatment.
+     *
+     * Answers via [onResolved] rather than returning, because `Palette.generate` is a callback -
+     * but [AlbumPaletteCache] means the common case answers *synchronously*, before this function
+     * returns, since the player has almost always already extracted this exact cover. Callers that
+     * can seed their state from the cache should do so ([rememberPanelPalette]); this remains the
+     * path for the case where nothing has extracted it yet.
      */
     fun albumTriad(
             art: Bitmap?,
@@ -197,6 +204,10 @@ object PanelAppearanceResolver {
                     fallback,
                     albumToneFallback(fallback, .42f),
                     albumToneFallback(fallback, .68f)))
+            return
+        }
+        AlbumPaletteCache.get(art, source)?.let {
+            onResolved(it)
             return
         }
         Palette.from(art).generate { palette ->
@@ -223,10 +234,13 @@ object PanelAppearanceResolver {
             ) ?: preferredColors.firstOrNull() ?: fallback
             val ranked = swatchInfos.sortedByDescending { it.population }.map { it.rgb }
             val companions = selectAlbumCompanionColors(primary, preferredColors + ranked)
-            onResolved(PanelTriad(
+            val triad = PanelTriad(
                     primary,
                     companions.secondary ?: albumToneFallback(primary, .42f),
-                    companions.tertiary ?: albumToneFallback(primary, .68f)))
+                    companions.tertiary ?: albumToneFallback(primary, .68f))
+            // Shared, so the *next* screen to open on this cover paints it on its first frame.
+            AlbumPaletteCache.put(art, source, triad)
+            onResolved(triad)
         }
     }
 
@@ -297,6 +311,8 @@ object PanelAppearanceResolver {
     ): PanelBackdrop {
         val albumArtStyle = PlayerBackgroundStyle.fromPreference(
                 faceString(prefs, context, MiscPreferences.ALBUM_ART_STYLE))
+        val albumArtFilter = resolveAlbumArtFilter(
+                faceString(prefs, context, MiscPreferences.ALBUM_ART_FILTER), albumArtStyle)
         val shadingStyle = PlayerShadingStyle.fromPreference(
                 faceString(prefs, context, MiscPreferences.WEAR_PLAYER_SHADING_STYLE))
         val dimAlbumArt = FaceScopedPreferences.getBoolean(
@@ -314,11 +330,17 @@ object PanelAppearanceResolver {
 
         return PanelBackdrop(
                 albumArtStyle = albumArtStyle,
+                albumArtFilter = albumArtFilter,
                 blurRadiusPx = FaceScopedPreferences.getInt(
                         prefs, MiscPreferences.ALBUM_ART_BLUR_RADIUS, context)
                         .coerceIn(5, 120).toFloat(),
-                overlayBlurRadiusPx = FaceScopedPreferences.getInt(
-                        prefs, MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS, context).toFloat(),
+                // Clamped like MainActivity's own read: these screens draw the same backdrop,
+                // and a bound applied on one of them only is how the two drift apart.
+                overlayBlurRadiusPx = AppearanceNumericRanges.clamp(
+                        MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS.key,
+                        FaceScopedPreferences.getInt(
+                                prefs, MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS, context))
+                        .toFloat(),
                 layers = BackgroundLayerStack.resolve(
                         raw = faceString(prefs, context, MiscPreferences.WEAR_BACKGROUND_LAYERS),
                         background = albumArtStyle,

@@ -299,6 +299,7 @@ private fun CarouselFrameContent(
                 AdaptiveTitleText(
                         text = frame.title.uppercase(),
                         mode = state.titleTextMode,
+                        state = state,
                         typography = state.titleTypography,
                         color = titleTextColor(state, Color.White),
                         fontSize = CAROUSEL_TITLE_SIZE.sp,
@@ -318,7 +319,7 @@ private fun CarouselFrameContent(
 
 private const val CAROUSEL_ANIM_MS = 340
 
-private const val CAROUSEL_TITLE_TRACKING = 0.12f
+private const val CAROUSEL_TITLE_TRACKING = FaceGeometry.Carousel.TITLE_TRACKING_SP
 
 /**
  * The rail's geometry, as fractions of the screen. Every text anchor is derived from these three
@@ -387,45 +388,62 @@ private fun CarouselCardImage(
 private const val NEAR_SHADE = FaceGeometry.Carousel.NEAR_SHADE
 private const val FAR_SHADE = FaceGeometry.Carousel.FAR_SHADE
 
-/** Outline-only ambient variant: one card and the text, no neighbours, no fills. */
+/**
+ * Ambient variant: one card and the text, no neighbours.
+ *
+ * The one ambient face in the collection that keeps a cover on screen - everything else it draws
+ * is text - which makes it the only place the always-on artwork controls have anything to reach.
+ */
 @Composable
 private fun CarouselAmbient(state: NowPlayingFaceState) {
+    val geo = FaceGeometry.Carousel.Ambient
     val intensity = state.ambientIntensity.coerceIn(.2f, 1f)
     val tint = Color(state.ambientTint)
     BoxWithConstraints(Modifier.fillMaxSize().background(Color.Black)) {
         val screen = maxWidth
-        // No dedicated "show art" flag exists on the face contract - the host decides ambient
-        // artwork visibility by what it publishes - so the card simply draws whatever art arrived.
-        run {
-            state.albumArt?.let { art ->
-                Image(
-                        painter = BitmapPainter(art),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.align(Alignment.Center)
-                                .offset(y = -screen * .07f)
-                                .size(screen * .5f)
-                                .clip(RoundedCornerShape(12.dp))
-                                .alpha(.55f * intensity))
+        // state.ambientAlbumArt, never state.albumArt: this is the one ambient face that draws a
+        // cover, so it is the one that has to follow the always-on artwork controls. Reading the
+        // awake cover meant "Show artwork" and the ambient photo treatment reached the host's
+        // backdrop - which this face's black canvas covers anyway - and left the card showing a
+        // picture the user had switched off, under the interactive filter.
+        state.ambientAlbumArt?.let { cover ->
+            val art = if (state.ambientAlbumArtBlurred) {
+                rememberBlurredCover(cover, state.albumArtBlurRadiusPx)
+            } else {
+                cover
             }
+            Image(
+                    painter = BitmapPainter(art),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.align(Alignment.Center)
+                            .offset(y = -screen * geo.CARD_RISE_FRACTION)
+                            .size(screen * geo.CARD_FRACTION)
+                            .clip(RoundedCornerShape(geo.CARD_CORNER_DP.dp))
+                            // The always-on artwork opacity, not a constant of its own: the
+                            // face was authored at .55, which is that preference's default, so
+                            // the slider now moves this card and nothing else changed.
+                            .alpha(state.ambientAlbumArtAlpha * intensity))
         }
         if (state.ambientShowTrackInfo && (state.showTitle || state.showArtist)) {
             Column(
                     Modifier.align(Alignment.BottomCenter)
-                            .padding(bottom = screen * .16f)
+                            .padding(bottom = screen * geo.TEXT_BOTTOM_FRACTION)
                             .fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 if (state.showTitle) {
-                    Text(state.title.uppercase(), color = tint.copy(alpha = .82f * intensity),
-                            fontSize = 13.sp, fontFamily = state.titleFont,
+                    Text(state.title.uppercase(),
+                            color = tint.copy(alpha = geo.TITLE_ALPHA * intensity),
+                            fontSize = geo.TITLE_SP.sp, fontFamily = state.titleFont,
                             letterSpacing = CAROUSEL_TITLE_TRACKING.sp,
                             textAlign = TextAlign.Center, maxLines = 1,
                             overflow = TextOverflow.Ellipsis)
                 }
                 if (state.showArtist) {
-                    Text(state.artist.uppercase(), color = tint.copy(alpha = .48f * intensity),
-                            fontSize = 10.sp, fontFamily = state.artistFont,
+                    Text(state.artist.uppercase(),
+                            color = tint.copy(alpha = geo.ARTIST_ALPHA * intensity),
+                            fontSize = geo.ARTIST_SP.sp, fontFamily = state.artistFont,
                             letterSpacing = CAROUSEL_TITLE_TRACKING.sp,
                             textAlign = TextAlign.Center, maxLines = 1,
                             overflow = TextOverflow.Ellipsis)

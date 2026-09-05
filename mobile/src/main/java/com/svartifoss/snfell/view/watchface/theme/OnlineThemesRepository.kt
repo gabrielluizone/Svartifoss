@@ -3,6 +3,7 @@ package com.svartifoss.snfell.view.watchface.theme
 import android.content.Context
 import android.util.AtomicFile
 import com.svartifoss.snfell.common.ArchivedFaces
+import com.svartifoss.snfell.common.CommunityThemeScreenshots
 import com.svartifoss.snfell.common.ThemeAppearance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -34,6 +35,19 @@ data class OnlineThemeSummary(
         /** Static count supplied by the trusted publisher; older catalogues default to zero. */
         val likes: Int = 0,
         /**
+         * How many accounts have installed this theme, aggregated by the same publisher run that
+         * counts [likes].
+         *
+         * This is the closest thing the feature has to a download number and it is deliberately
+         * not one: the catalogue is a static file on GitHub Pages, so nothing on the serving side
+         * ever observes a download. It counts the per-account ledger the app writes when an
+         * install succeeds, which makes it a popularity signal with the same disposable-account
+         * caveat a like carries. Older catalogues default to zero for the same reason [likes]
+         * does -- an absent field is a missing figure, and the publisher backfills it at once
+         * rather than waiting out its refresh interval.
+         */
+        val installs: Int = 0,
+        /**
          * Canonical fingerprint of this theme's settings, recomputed by the publisher from the
          * published profile. It is what lets a submission be refused as an exact duplicate before
          * anyone is asked to sign in. Absent on catalogues written before the field existed, which
@@ -45,7 +59,16 @@ data class OnlineThemeSummary(
 /** A verified catalogue entry and its flat `profileToJson`-shaped JSON object. */
 data class OnlineTheme(
         val summary: OnlineThemeSummary,
-        val profileJson: JSONObject
+        val profileJson: JSONObject,
+        /**
+         * Surfaces for which the author published a screenshot of their own watch.
+         *
+         * Named in the profile rather than the index on purpose: the index is one fetch for the
+         * whole gallery and its cards render locally, so nothing in the list view needs to know.
+         * Absent on every theme published before author screenshots existed, and on every theme
+         * whose author attached none -- which is the same thing to every reader.
+         */
+        val screenshots: List<String> = emptyList()
 )
 
 /**
@@ -92,6 +115,14 @@ class OnlineThemesRepository(context: Context) {
         loadCatalog(forceRefresh = false).associate { it.id to it.likes }
     } catch (e: IOException) {
         Timber.d(e, "No cached catalogue for the author's own like counts")
+        emptyMap()
+    }
+
+    /** [publishedLikeCounts] for the download figure, with the same fail-open behaviour. */
+    suspend fun publishedInstallCounts(): Map<String, Int> = try {
+        loadCatalog(forceRefresh = false).associate { it.id to it.installs }
+    } catch (e: IOException) {
+        Timber.d(e, "No cached catalogue for the author's own install counts")
         emptyMap()
     }
 
@@ -273,6 +304,11 @@ class OnlineThemesRepository(context: Context) {
         } else {
             null
         }
+        val installs = if (json.has("installs")) {
+            json.nonNegativeInt("installs") ?: return null
+        } else {
+            0
+        }
         return OnlineThemeSummary(
                 id = id,
                 name = name,
@@ -283,7 +319,8 @@ class OnlineThemesRepository(context: Context) {
                 minimumAppVersion = minimumAppVersion,
                 publishedAt = publishedAt,
                 likes = likes,
-                settingsDigest = settingsDigest)
+                settingsDigest = settingsDigest,
+                installs = installs)
     }
 
     private fun validateSummary(summary: OnlineThemeSummary): OnlineThemeSummary {
@@ -299,7 +336,8 @@ class OnlineThemesRepository(context: Context) {
                 ?: throw IOException("Invalid online theme minimum app version")
         val publishedAt = cleanText(summary.publishedAt)
                 ?: throw IOException("Invalid online theme publication date")
-        if (summary.revision < 1 || summary.schemaVersion < 1 || summary.likes < 0) {
+        if (summary.revision < 1 || summary.schemaVersion < 1 || summary.likes < 0 ||
+                summary.installs < 0) {
             throw IOException("Invalid online theme metadata")
         }
         // The activity labels unknown schemas and retired faces unavailable rather than requesting
@@ -318,6 +356,24 @@ class OnlineThemesRepository(context: Context) {
                 baseFace = baseFace,
                 minimumAppVersion = minimumAppVersion,
                 publishedAt = publishedAt)
+    }
+
+    /**
+     * Which surfaces the publisher committed a screenshot for.
+     *
+     * An unknown surface name is dropped rather than refused: this reader may be older than the
+     * catalogue, and a profile naming a surface a future build added must still install here. The
+     * gallery already treats a missing picture as ordinary, so the degraded result is the one every
+     * theme without a screenshot already shows.
+     */
+    private fun parseScreenshotSurfaces(profile: JSONObject): List<String> {
+        val declared = profile.optJSONArray("screenshots") ?: return emptyList()
+        val surfaces = LinkedHashSet<String>()
+        for (index in 0 until declared.length()) {
+            val surface = declared.optString(index)
+            if (surface in CommunityThemeScreenshots.SURFACES) surfaces.add(surface)
+        }
+        return surfaces.toList()
     }
 
     private fun parseTheme(summary: OnlineThemeSummary, body: String): OnlineTheme = try {
@@ -368,7 +424,7 @@ class OnlineThemesRepository(context: Context) {
                 throw IOException("Online theme profile publication date does not match its catalogue entry")
             }
         }
-        OnlineTheme(summary, profile)
+        OnlineTheme(summary, profile, parseScreenshotSurfaces(profile))
     } catch (e: IOException) {
         throw e
     } catch (e: Exception) {
@@ -491,6 +547,159 @@ class OnlineThemesRepository(context: Context) {
     private fun cachedEtag(cacheKey: String): String? =
             cachePreferences.getString(etagKey(cacheKey), null)
 
+    /**
+     * One author screenshot, or null.
+     *
+     * Null for every ordinary reason -- no such surface, no network, a malformed answer -- because
+     * a missing picture is not an error state here: it is what the great majority of themes look
+     * like, and the caller falls back to the locally-rendered preview it was already showing.
+     *
+     * Deliberately not gated on a preference in here. The caller owns that choice, and owning it
+     * there is what makes turning the setting off stop the *download* rather than merely hide a
+     * picture that was fetched anyway.
+     */
+    suspend fun loadScreenshot(
+            themeId: String,
+            surface: String
+    ): ByteArray? = withContext(Dispatchers.IO) {
+        if (surface !in CommunityThemeScreenshots.SURFACES) return@withContext null
+        val id = canonicalThemeId(themeId) ?: return@withContext null
+        val cacheKey = screenshotCacheKey(id, surface)
+        val cacheFile = screenshotCacheFile(id, surface)
+        val cached = readBytesCache(cacheFile)
+        if (cached != null && isFresh(cacheKey)) return@withContext cached
+
+        try {
+            var response = requestBytes(
+                    url = screenshotUrl(id, surface),
+                    etag = cachedEtag(cacheKey))
+            if (response === BytesResponse.NotModified && cached == null) {
+                response = requestBytes(url = screenshotUrl(id, surface), etag = null)
+            }
+            when (response) {
+                is BytesResponse.Fresh -> {
+                    writeBytesCache(cacheFile, cacheKey, response.body, response.etag)
+                    response.body
+                }
+                BytesResponse.NotModified -> {
+                    touch(cacheKey)
+                    cached
+                }
+            }
+        } catch (e: IOException) {
+            Timber.d(e, "Could not load the %s screenshot of %s", surface, id)
+            cached
+        }
+    }
+
+    private fun requestBytes(url: String, etag: String?): BytesResponse {
+        var connection: HttpURLConnection? = null
+        try {
+            connection = URL(url).openConnection() as? HttpURLConnection
+                    ?: throw IOException("Screenshot URL is not HTTP")
+            connection.requestMethod = "GET"
+            connection.connectTimeout = CONNECT_TIMEOUT_MS
+            connection.readTimeout = READ_TIMEOUT_MS
+            connection.instanceFollowRedirects = true
+            connection.useCaches = false
+            connection.setRequestProperty("Accept", "image/webp")
+            connection.setRequestProperty("User-Agent", USER_AGENT)
+            // See ApkDownloader: Android can truncate a pooled redirected HttpURLConnection body.
+            connection.setRequestProperty("Connection", "close")
+            etag?.takeIf { it.isNotBlank() }?.let {
+                connection.setRequestProperty("If-None-Match", it)
+            }
+
+            return when (val status = connection.responseCode) {
+                HttpURLConnection.HTTP_NOT_MODIFIED -> BytesResponse.NotModified
+                HttpURLConnection.HTTP_OK -> {
+                    if (connection.contentLength > MAX_SCREENSHOT_BYTES) {
+                        throw IOException("Screenshot response is too large")
+                    }
+                    val body = readBytesLimited(connection.inputStream, MAX_SCREENSHOT_BYTES)
+                    // A 404 served as an HTML page, or anything else that is not an image, must
+                    // never reach the disk cache: the next read would hand it to BitmapFactory and
+                    // get a permanent blank where the fallback preview belongs.
+                    if (!isWebp(body)) throw IOException("Screenshot response is not a WebP")
+                    BytesResponse.Fresh(
+                            body = body,
+                            etag = connection.getHeaderField("ETag")?.takeIf { it.isNotBlank() })
+                }
+                else -> throw IOException("Screenshot returned HTTP $status")
+            }
+        } catch (e: IOException) {
+            throw e
+        } catch (e: Exception) {
+            throw IOException("Screenshot request failed", e)
+        } finally {
+            connection?.disconnect()
+        }
+    }
+
+    private fun isWebp(body: ByteArray): Boolean =
+            body.size > 12 &&
+                    String(body, 0, 4, Charsets.US_ASCII) == "RIFF" &&
+                    String(body, 8, 4, Charsets.US_ASCII) == "WEBP"
+
+    private fun readBytesLimited(input: InputStream, maxBytes: Int): ByteArray = input.use { stream ->
+        val buffer = ByteArray(8 * 1024)
+        val bytes = ByteArrayOutputStream()
+        var total = 0
+        while (true) {
+            val read = stream.read(buffer)
+            if (read < 0) break
+            total += read
+            if (total > maxBytes) throw IOException("Screenshot response is too large")
+            bytes.write(buffer, 0, read)
+        }
+        bytes.toByteArray()
+    }
+
+    private fun readBytesCache(file: File): ByteArray? {
+        if (!file.isFile || file.length() > MAX_SCREENSHOT_BYTES) return null
+        return try {
+            file.inputStream().use { input ->
+                val bytes = input.readBytes()
+                if (isWebp(bytes)) bytes else null
+            }
+        } catch (e: Exception) {
+            Timber.d(e, "Could not read a cached screenshot")
+            null
+        }
+    }
+
+    private fun writeBytesCache(file: File, cacheKey: String, body: ByteArray, etag: String?) {
+        if (!cacheDirectory.exists() && !cacheDirectory.mkdirs()) {
+            Timber.d("Could not create online theme cache directory")
+            return
+        }
+        val atomicFile = AtomicFile(file)
+        var output: FileOutputStream? = null
+        try {
+            output = atomicFile.startWrite()
+            output.write(body)
+            output.flush()
+            atomicFile.finishWrite(output)
+            output = null
+            cachePreferences.edit().apply {
+                putLong(lastFetchKey(cacheKey), System.currentTimeMillis())
+                if (etag == null) remove(etagKey(cacheKey)) else putString(etagKey(cacheKey), etag)
+            }.commit()
+        } catch (e: Exception) {
+            output?.let(atomicFile::failWrite)
+            Timber.d(e, "Could not cache a screenshot")
+        }
+    }
+
+    private fun screenshotUrl(id: String, surface: String): String =
+            THEMES_URL + CommunityThemeScreenshots.SHOTS_DIRECTORY + "/" +
+                    CommunityThemeScreenshots.fileName(id, surface)
+
+    private fun screenshotCacheFile(id: String, surface: String): File =
+            File(cacheDirectory, "shot-$id-$surface.webp")
+
+    private fun screenshotCacheKey(id: String, surface: String): String = "shot-$id-$surface"
+
     private fun themeUrl(id: String): String = "$THEMES_URL$id.json"
 
     private fun themeCacheFile(id: String): File = File(cacheDirectory, "theme-$id.json")
@@ -560,7 +769,14 @@ class OnlineThemesRepository(context: Context) {
         object NotModified : JsonResponse()
     }
 
+    private sealed class BytesResponse {
+        class Fresh(val body: ByteArray, val etag: String?) : BytesResponse()
+        object NotModified : BytesResponse()
+    }
+
     private companion object {
+        private val MAX_SCREENSHOT_BYTES = CommunityThemeScreenshots.MAX_BYTES
+
         private const val CATALOG_URL =
                 "https://gabrielluizone.github.io/Svartifoss/themes/index.json"
         private const val THEMES_URL = "https://gabrielluizone.github.io/Svartifoss/themes/"

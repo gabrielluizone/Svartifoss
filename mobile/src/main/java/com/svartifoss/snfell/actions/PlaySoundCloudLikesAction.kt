@@ -33,6 +33,8 @@ class PlaySoundCloudLikesAction : SelectableAction {
     override val defaultIcon: Drawable
         get() = AppCompatResources.getDrawable(
                 context, com.svartifoss.snfell.common.R.drawable.action_liked_songs)!!
+    override val remoteUri: String
+        get() = PlayPlaylistShortcutAction(context, title, LIKES_LINK).remoteUri
 
     class Handler @Inject constructor(private val service: MusicService) :
             ActionHandler<PlaySoundCloudLikesAction> {

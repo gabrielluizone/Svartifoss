@@ -1371,6 +1371,56 @@
         <item>@string/wear_font_varela_round</item>
         <item>@string/wear_font_yanone_kaffeesatz</item>
         <item>@string/wear_font_zilla_slab</item>
+        <item>@string/wear_font_lato</item>
+        <item>@string/wear_font_merriweather_sans</item>
+        <item>@string/wear_font_source_sans_3</item>
+        <item>@string/wear_font_source_serif_4</item>
+        <item>@string/wear_font_libre_baskerville</item>
+        <item>@string/wear_font_libre_franklin</item>
+        <item>@string/wear_font_ibm_plex_sans</item>
+        <item>@string/wear_font_ibm_plex_mono</item>
+        <item>@string/wear_font_ibm_plex_serif</item>
+        <item>@string/wear_font_work_sans</item>
+        <item>@string/wear_font_karla</item>
+        <item>@string/wear_font_sora</item>
+        <item>@string/wear_font_urbanist</item>
+        <item>@string/wear_font_be_vietnam_pro</item>
+        <item>@string/wear_font_red_hat_display</item>
+        <item>@string/wear_font_red_hat_text</item>
+        <item>@string/wear_font_red_hat_mono</item>
+        <item>@string/wear_font_syne</item>
+        <item>@string/wear_font_instrument_sans</item>
+        <item>@string/wear_font_figtree</item>
+        <item>@string/wear_font_gabarito</item>
+        <item>@string/wear_font_bricolage_grotesque</item>
+        <item>@string/wear_font_dm_serif_display</item>
+        <item>@string/wear_font_cormorant_garamond</item>
+        <item>@string/wear_font_cormorant</item>
+        <item>@string/wear_font_bitter</item>
+        <item>@string/wear_font_spectral</item>
+        <item>@string/wear_font_vollkorn</item>
+        <item>@string/wear_font_raleway</item>
+        <item>@string/wear_font_league_spartan</item>
+        <item>@string/wear_font_saira</item>
+        <item>@string/wear_font_signika</item>
+        <item>@string/wear_font_sofia_sans</item>
+        <item>@string/wear_font_overpass</item>
+        <item>@string/wear_font_public_sans</item>
+        <item>@string/wear_font_questrial</item>
+        <item>@string/wear_font_dosis</item>
+        <item>@string/wear_font_prompt</item>
+        <item>@string/wear_font_unbounded</item>
+        <item>@string/wear_font_recursive</item>
+        <item>@string/wear_font_trispace</item>
+        <item>@string/wear_font_noto_sans</item>
+        <item>@string/wear_font_noto_serif</item>
+        <item>@string/wear_font_noto_sans_mono</item>
+        <item>@string/wear_font_heebo</item>
+        <item>@string/wear_font_hind</item>
+        <item>@string/wear_font_hind_madurai</item>
+        <item>@string/wear_font_kumbh_sans</item>
+        <item>@string/wear_font_alegreya</item>
+        <item>@string/wear_font_assistant</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1461,6 +1511,56 @@
         <item>@string/wear_font_varela_round_description</item>
         <item>@string/wear_font_yanone_kaffeesatz_description</item>
         <item>@string/wear_font_zilla_slab_description</item>
+        <item>@string/wear_font_lato_description</item>
+        <item>@string/wear_font_merriweather_sans_description</item>
+        <item>@string/wear_font_source_sans_3_description</item>
+        <item>@string/wear_font_source_serif_4_description</item>
+        <item>@string/wear_font_libre_baskerville_description</item>
+        <item>@string/wear_font_libre_franklin_description</item>
+        <item>@string/wear_font_ibm_plex_sans_description</item>
+        <item>@string/wear_font_ibm_plex_mono_description</item>
+        <item>@string/wear_font_ibm_plex_serif_description</item>
+        <item>@string/wear_font_work_sans_description</item>
+        <item>@string/wear_font_karla_description</item>
+        <item>@string/wear_font_sora_description</item>
+        <item>@string/wear_font_urbanist_description</item>
+        <item>@string/wear_font_be_vietnam_pro_description</item>
+        <item>@string/wear_font_red_hat_display_description</item>
+        <item>@string/wear_font_red_hat_text_description</item>
+        <item>@string/wear_font_red_hat_mono_description</item>
+        <item>@string/wear_font_syne_description</item>
+        <item>@string/wear_font_instrument_sans_description</item>
+        <item>@string/wear_font_figtree_description</item>
+        <item>@string/wear_font_gabarito_description</item>
+        <item>@string/wear_font_bricolage_grotesque_description</item>
+        <item>@string/wear_font_dm_serif_display_description</item>
+        <item>@string/wear_font_cormorant_garamond_description</item>
+        <item>@string/wear_font_cormorant_description</item>
+        <item>@string/wear_font_bitter_description</item>
+        <item>@string/wear_font_spectral_description</item>
+        <item>@string/wear_font_vollkorn_description</item>
+        <item>@string/wear_font_raleway_description</item>
+        <item>@string/wear_font_league_spartan_description</item>
+        <item>@string/wear_font_saira_description</item>
+        <item>@string/wear_font_signika_description</item>
+        <item>@string/wear_font_sofia_sans_description</item>
+        <item>@string/wear_font_overpass_description</item>
+        <item>@string/wear_font_public_sans_description</item>
+        <item>@string/wear_font_questrial_description</item>
+        <item>@string/wear_font_dosis_description</item>
+        <item>@string/wear_font_prompt_description</item>
+        <item>@string/wear_font_unbounded_description</item>
+        <item>@string/wear_font_recursive_description</item>
+        <item>@string/wear_font_trispace_description</item>
+        <item>@string/wear_font_noto_sans_description</item>
+        <item>@string/wear_font_noto_serif_description</item>
+        <item>@string/wear_font_noto_sans_mono_description</item>
+        <item>@string/wear_font_heebo_description</item>
+        <item>@string/wear_font_hind_description</item>
+        <item>@string/wear_font_hind_madurai_description</item>
+        <item>@string/wear_font_kumbh_sans_description</item>
+        <item>@string/wear_font_alegreya_description</item>
+        <item>@string/wear_font_assistant_description</item>
     </string-array>
 
     <string name="action_open_library">লাইব্রেরি ব্রাউজ করুন</string>
@@ -1831,6 +1931,11 @@
     <string name="color_picker_title">অ্যাকসেন্ট রং বেছে নিন</string>
     <string name="color_picker_reset">রিসেট</string>
     <string name="color_picker_apply">প্রয়োগ করুন</string>
+    <string name="setting_wear_title_centered">শিরোনাম মাঝে রাখুন</string>
+    <string name="setting_wear_title_centered_description">পুরো টেক্সট ব্লকের বদলে শিরোনামকে স্ক্রিনের মাঝে স্থির রাখে</string>
+    <string name="player_element_title_centered">মাঝে শিরোনাম</string>
+    <string name="color_picker_recent">সম্প্রতি ব্যবহৃত</string>
+    <string name="color_picker_copied">রঙের কোড কপি করা হয়েছে</string>
     <string name="color_picker_default">ডিফল্ট</string>
     <string name="color_picker_invalid">অবৈধ রঙের কোড</string>
     <string name="color_picker_current">বর্তমান: %s</string>
@@ -2097,4 +2202,74 @@
     <string name="setting_metadata_lookup_description">প্লেয়ার অ্যাপ যে তথ্য প্রকাশ করেনি — ISRC, লেবেল, রিলিজের তারিখ — সেগুলো বিনামূল্যের পাবলিক ডেটাবেস MusicBrainz থেকে পূরণ করে। ডিফল্টে বন্ধ। Metadata ওয়াচ ফেস এটি ছাড়াও চলে; এটি শুধু অতিরিক্ত সারি যোগ করে। আপনি এটি চালু করে ওই ফেস নির্বাচন না করা পর্যন্ত কিছুই পাঠানো হয় না, আর পাঠানো হলেও শুধু ট্র্যাকের নাম ও শিল্পীর নাম পাঠানো হয়।</string>
     <string name="watch_preview_expand">বড় প্রিভিউ খুলুন</string>
     <string name="watch_preview_fullscreen_dismiss">বন্ধ করতে যেকোনো জায়গায় ট্যাপ করুন</string>
+
+    <!-- The edge ring's position mark. Entries pair with wear_seek_marker_values by index. -->
+    <string name="setting_wear_seek_marker">অবস্থান চিহ্ন</string>
+    <string name="setting_wear_seek_marker_description">প্রগ্রেস রিং কেটে যাওয়া যে ছোট রেখাটি গানের অবস্থান দেখায়, সেটি কখন দেখা যাবে।</string>
+    <string-array name="wear_seek_marker_entries">
+        <item>সবসময়</item>
+        <item>শুধু সরানোর সময়</item>
+        <item>সরানোর সময় ও বিরতিতে</item>
+        <item>শুধু বিরতিতে</item>
+    </string-array>
+
+    <!-- Title/artist text shadow. Entries pair with the untranslated
+         wear_text_shadow_*_values arrays BY INDEX. -->
+    <string name="setting_wear_title_shadow_style">শিরোনামের ছায়া</string>
+    <string name="setting_wear_title_shadow_color">শিরোনামের ছায়ার রং</string>
+    <string name="setting_wear_title_shadow_custom_color">শিরোনামের ছায়ার কাস্টম রং</string>
+    <string name="setting_wear_title_shadow_strength">শিরোনামের ছায়ার তীব্রতা</string>
+    <string name="setting_wear_artist_shadow_style">শিল্পীর ছায়া</string>
+    <string name="setting_wear_artist_shadow_color">শিল্পীর ছায়ার রং</string>
+    <string name="setting_wear_artist_shadow_custom_color">শিল্পীর ছায়ার কাস্টম রং</string>
+    <string name="setting_wear_artist_shadow_strength">শিল্পীর ছায়ার তীব্রতা</string>
+    <string name="setting_wear_text_shadow_strength_description">নির্বাচিত ছায়ার নিজস্ব আকার ও গভীরতার শতকরা হার।</string>
+    <string-array name="wear_text_shadow_style_entries">
+        <item>কিছু নয়</item>
+        <item>নরম</item>
+        <item>কড়া</item>
+        <item>দীপ্তি</item>
+        <item>উঁচু</item>
+        <item>মৃদু</item>
+    </string-array>
+    <string-array name="wear_text_shadow_color_entries">
+        <item>কালো</item>
+        <item>অ্যালবামের রং</item>
+        <item>সাদা</item>
+        <item>কাস্টম</item>
+    </string-array>
+
+    <!-- Title/artist outline. Entries pair with the untranslated
+         wear_text_outline_style_values array BY INDEX. -->
+    <string name="setting_wear_title_outline_style">শিরোনামের রূপরেখা</string>
+    <string name="setting_wear_title_outline_color">শিরোনামের রূপরেখার রং</string>
+    <string name="setting_wear_title_outline_custom_color">শিরোনামের রূপরেখার কাস্টম রং</string>
+    <string name="setting_wear_artist_outline_style">শিল্পীর রূপরেখা</string>
+    <string name="setting_wear_artist_outline_color">শিল্পীর রূপরেখার রং</string>
+    <string name="setting_wear_artist_outline_custom_color">শিল্পীর রূপরেখার কাস্টম রং</string>
+    <string-array name="wear_text_outline_style_entries">
+        <item>কিছু নয়</item>
+        <item>চুলের মতো সরু</item>
+        <item>সরু</item>
+        <item>মাঝারি</item>
+        <item>মোটা</item>
+    </string-array>
+
+    <!-- Title/artist text backdrop. Entries pair with the untranslated
+         wear_text_backdrop_style_values array BY INDEX. -->
+    <string name="setting_wear_title_text_bg_style">শিরোনামের পটভূমি</string>
+    <string name="setting_wear_title_text_bg_color">শিরোনামের পটভূমির রং</string>
+    <string name="setting_wear_title_text_bg_custom_color">শিরোনামের পটভূমির কাস্টম রং</string>
+    <string name="setting_wear_title_text_bg_opacity">শিরোনামের পটভূমির অস্বচ্ছতা</string>
+    <string name="setting_wear_artist_text_bg_style">শিল্পীর পটভূমি</string>
+    <string name="setting_wear_artist_text_bg_color">শিল্পীর পটভূমির রং</string>
+    <string name="setting_wear_artist_text_bg_custom_color">শিল্পীর পটভূমির কাস্টম রং</string>
+    <string name="setting_wear_artist_text_bg_opacity">শিল্পীর পটভূমির অস্বচ্ছতা</string>
+    <string name="setting_wear_text_bg_opacity_description">নির্বাচিত পটভূমির নিজস্ব অস্বচ্ছতার শতকরা হার।</string>
+    <string-array name="wear_text_backdrop_style_entries">
+        <item>কিছু নয়</item>
+        <item>হাইলাইট</item>
+        <item>মৃদু</item>
+        <item>নিরেট</item>
+    </string-array>
 </resources>

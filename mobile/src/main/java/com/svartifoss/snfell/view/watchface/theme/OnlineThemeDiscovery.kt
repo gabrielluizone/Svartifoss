@@ -14,7 +14,17 @@ sealed class OnlineThemeBaseFaceFilter {
 /** Orders that can be applied entirely from the public static catalogue. */
 enum class OnlineThemeSort {
     NEWEST,
-    MOST_LIKED
+    MOST_LIKED,
+
+    /**
+     * By the published install count.
+     *
+     * Kept beside [MOST_LIKED] rather than replacing it because the two answer different
+     * questions: a like is an opinion somebody chose to record, an install is what people actually
+     * put on their watch. A theme can be widely installed and rarely hearted, and the gallery is
+     * more useful when it can be asked either way round.
+     */
+    MOST_DOWNLOADED
 }
 
 /** Pure, saved-state-friendly input for Community-theme discovery. */
@@ -24,6 +34,15 @@ data class OnlineThemeDiscoveryRequest(
         val sort: OnlineThemeSort = OnlineThemeSort.NEWEST,
         /** Set only after an explicit authenticated “Liked” filter request. */
         val likedOnly: Boolean = false,
+        /**
+         * One author's published themes, matched exactly on the normalized pseudonym.
+         *
+         * Deliberately its own field rather than a search term. "Everything this person made" is
+         * an exact question, and pushing the name through [query] would answer a different one:
+         * the searchable text also carries every theme *name*, so an author called Verse would
+         * come back with the whole Verse catalogue beside their own work.
+         */
+        val author: String? = null,
         /**
          * Hides themes this phone has already installed. **On by default**: the gallery exists to
          * find something new, and a theme already in My themes is the one result that cannot be
@@ -61,6 +80,10 @@ object OnlineThemeDiscovery {
             OnlineThemeBaseFaceFilter.All -> null
             is OnlineThemeBaseFaceFilter.BaseFace -> normalize(filter.value)
         }
+        // A blank author is no filter at all rather than a filter nothing can satisfy: the name
+        // can arrive from saved state written by an older build, or from a catalogue entry whose
+        // author string is empty.
+        val selectedAuthor = request.author?.let(::normalize)?.takeIf(String::isNotEmpty)
 
         return themes.asSequence()
                 .filter { summary -> !request.likedOnly || summary.id in likedThemeIds }
@@ -75,6 +98,9 @@ object OnlineThemeDiscovery {
                     selectedFace == null || normalize(summary.baseFace) == selectedFace
                 }
                 .filter { summary ->
+                    selectedAuthor == null || normalize(summary.author) == selectedAuthor
+                }
+                .filter { summary ->
                     val searchable = normalize(
                             "${summary.name} ${summary.author} ${summary.baseFace}")
                     terms.all(searchable::contains)
@@ -87,6 +113,10 @@ object OnlineThemeDiscovery {
         OnlineThemeSort.NEWEST -> compareByDescending<OnlineThemeSummary> { publicationTime(it) }
                 .thenBy { it.id }
         OnlineThemeSort.MOST_LIKED -> compareByDescending<OnlineThemeSummary> { it.likes }
+                .thenByDescending { publicationTime(it) }
+                .thenBy { it.id }
+        OnlineThemeSort.MOST_DOWNLOADED -> compareByDescending<OnlineThemeSummary> { it.installs }
+                .thenByDescending { it.likes }
                 .thenByDescending { publicationTime(it) }
                 .thenBy { it.id }
     }

@@ -60,7 +60,12 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/music_screen_text_margin">
 
+            <!-- Given an id so MainActivity can translate it: with "Center the title" on, the
+                 block slides until the title's own centre sits on the middle of the display
+                 instead of the block's. A translation, never a reordering - the artist keeps the
+                 place above the title it has always had here. -->
             <LinearLayout
+                android:id="@+id/classic_metadata_block"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"

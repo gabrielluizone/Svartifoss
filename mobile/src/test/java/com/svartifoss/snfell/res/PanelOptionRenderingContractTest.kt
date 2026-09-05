@@ -83,7 +83,13 @@ class PanelOptionRenderingContractTest {
         val previewBackdrop = functionBody(preview, "drawConfiguredOverlayBackdrop")
         val wearBackdrop = functionBody(backdropDrawables, "build")
         val previewVolume = functionBody(preview, "drawVolumeArc")
-        val previewRing = functionBody(preview, "drawEdgeSeekRing")
+        // The ring used to be one function and is now three: a wrapper that also draws the
+        // position mark, the style table, and the layout geometry both of those read. Both
+        // halves are joined back together here so this contract keeps covering exactly what
+        // it covered when they shared a body - scoping to the wrapper alone would pass on an
+        // empty haystack, and scoping to either half would lose the other's value table.
+        val previewRing = functionBody(preview, "drawEdgeSeekRingStyle") +
+                functionBody(preview, "edgeSeekRingMetrics")
         val previewReadout = functionBody(preview, "drawOverlayReadout")
         val previewSeekLayout = functionBody(preview, "drawSeekSurface")
         val previewQuickStyle = functionBody(preview, "quickSkin")

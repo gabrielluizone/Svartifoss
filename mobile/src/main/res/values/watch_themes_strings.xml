@@ -49,6 +49,8 @@
     <string name="online_theme_refresh">Refresh community themes</string>
     <string name="online_theme_list_description">Community-created watch themes</string>
     <string name="online_theme_byline">By %1$s</string>
+    <string name="online_theme_filter_author">Themes by %1$s</string>
+    <string name="online_theme_filter_author_selected">Showing themes by %1$s</string>
     <string name="online_theme_row_description">%1$s by %2$s. %3$s layout.</string>
     <string name="online_theme_apply">Add and apply</string>
     <string name="online_theme_opening_details">Opening…</string>
@@ -98,7 +100,7 @@
 
     <string name="community_theme_submit_title">Submit theme</string>
     <string name="community_theme_submit_preview_description">Preview of the theme being submitted</string>
-    <string name="community_theme_submit_intro">It will be reviewed before it appears in Community themes. You can submit up to 3 themes every 24 hours.</string>
+    <string name="community_theme_submit_intro">It will be reviewed before it appears in Community themes. You can submit up to 10 themes every 24 hours.</string>
     <string name="community_theme_submit_public_name">Public theme name</string>
     <string name="community_theme_submit_author">Public author name</string>
     <string name="community_theme_submit_author_helper">Choose once: A–Z, 0–9, spaces, period, underscore, apostrophe or hyphen. It is unique and stays fixed until you delete the account.</string>
@@ -120,7 +122,7 @@
     <string name="community_theme_submit_unsupported_setting">The gallery can’t accept this theme’s %1$s setting. Change it and submit the theme again.</string>
     <string name="community_theme_submit_duplicate">A theme with exactly these settings is already published on this layout. Change something visible before submitting it.</string>
     <string name="community_theme_submit_sign_in_cancelled">Google sign-in was cancelled. Your theme was not submitted.</string>
-    <string name="community_theme_submit_limit_reached">You have already sent 3 themes in the last 24 hours. Try again after the oldest submission is 24 hours old.</string>
+    <string name="community_theme_submit_limit_reached">You have already sent 10 themes in this 24-hour period. Try again once it ends.</string>
     <string name="community_theme_submit_error">Couldn’t submit this theme. Check your connection and try again.</string>
     <string name="community_theme_submit_preview_error">Couldn’t prepare the review preview. Try again.</string>
     <string name="community_theme_submit_success_title">Submitted for review</string>
@@ -231,4 +233,56 @@
         <item quantity="other">%1$d likes</item>
     </plurals>
 
+    <!-- Author screenshot: one optional photo of the author's own watch, Player surface only. -->
+    <string name="community_theme_submit_screenshot_title">Photo of your watch</string>
+    <string name="community_theme_submit_screenshot_optional">Optional</string>
+    <string name="community_theme_submit_screenshot_intro">Add a screenshot of the Player on your own watch and the gallery will show it beside the generated preview. It becomes public permanently, including the album cover, track and clock it contains, and it stays in the repository history even if the theme is later removed.</string>
+    <string name="community_theme_submit_screenshot_add">Choose photo</string>
+    <string name="community_theme_submit_screenshot_replace">Replace photo</string>
+    <string name="community_theme_submit_screenshot_remove">Remove</string>
+    <string name="community_theme_submit_screenshot_description">Screenshot attached to this submission</string>
+    <string name="community_theme_submit_screenshot_placeholder">No photo attached. The gallery will show only the generated preview.</string>
+    <string name="community_theme_submit_screenshot_attached">Photo ready to send.</string>
+    <string name="community_theme_submit_screenshot_unreadable">That image could not be read. Pick another one.</string>
+    <string name="community_theme_submit_screenshot_too_small">That image is too small. A watch screenshot is at least %1$d pixels on its shorter side.</string>
+    <string name="community_theme_submit_screenshot_too_large">That image is too detailed to send. Try a screenshot rather than a photograph of the screen.</string>
+    <string name="community_theme_submit_screenshot_failed">Your theme was submitted, but the photo could not be attached to it.</string>
+
+    <!-- Downloads: the install ledger's public figure. See CommunityThemeInstallRepository for
+         why this counts installs rather than fetches. -->
+    <string name="online_theme_sort_most_downloaded">Most downloaded</string>
+    <string name="online_theme_sort_most_downloaded_short">Downloads</string>
+    <string name="community_theme_detail_downloads">Downloads</string>
+    <plurals name="online_theme_downloads_count">
+        <item quantity="one">%1$s download</item>
+        <item quantity="other">%1$s downloads</item>
+    </plurals>
+    <plurals name="community_theme_detail_downloads_count">
+        <item quantity="one">%1$s download</item>
+        <item quantity="other">%1$s downloads</item>
+    </plurals>
+
+    <!-- Reporting a published theme to the moderators. -->
+    <string name="community_theme_report_action">Report theme</string>
+    <string name="community_theme_report_already">Theme reported</string>
+    <string name="community_theme_report_description">Report “%1$s” to the moderators</string>
+    <string name="community_theme_report_title">Report this theme</string>
+    <string name="community_theme_report_intro">Tell the moderators what is wrong with this theme.</string>
+    <string name="community_theme_report_reason_inappropriate">Offensive or inappropriate content</string>
+    <string name="community_theme_report_reason_impersonation">Passed off as someone else\'s</string>
+    <string name="community_theme_report_reason_misleading">Not what the listing shows</string>
+    <string name="community_theme_report_reason_illegible">Unusable on the watch</string>
+    <string name="community_theme_report_reason_spam">Spam or a duplicate</string>
+    <string name="community_theme_report_reason_other">Something else</string>
+    <string name="community_theme_report_details_hint">Anything else the moderators should know (optional)</string>
+    <string name="community_theme_report_privacy">Only the moderators can read your report. The author is never told who sent it.</string>
+    <string name="community_theme_report_submit">Send report</string>
+    <string name="community_theme_report_sent">Report sent. The moderators will look at this theme.</string>
+    <string name="community_theme_report_already_sent">You have already reported this theme.</string>
+    <string name="community_theme_report_not_ready">This theme cannot be reported yet. Try again later.</string>
+    <string name="community_theme_report_error">Your report could not be sent. Check your connection and try again.</string>
+    <plurals name="community_theme_submissions_downloads">
+        <item quantity="one">%1$d download</item>
+        <item quantity="other">%1$d downloads</item>
+    </plurals>
 </resources>

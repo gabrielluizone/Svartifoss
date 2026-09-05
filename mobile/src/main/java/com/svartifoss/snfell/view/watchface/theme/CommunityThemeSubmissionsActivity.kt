@@ -70,10 +70,12 @@ class CommunityThemeSubmissionsActivity : AppCompatActivity() {
             // Counts come from the public catalogue, so a submission still in review simply has
             // none rather than a zero that would read as "nobody liked it".
             val likes = onlineThemes.publishedLikeCounts()
+            val installs = onlineThemes.publishedInstallCounts()
             progress.visibility = View.GONE
             when (state) {
                 is CommunityThemeSubmissionsState.Loaded ->
-                    render(CommunityThemeSubmissionOrder.withLikes(state.records, likes))
+                    render(CommunityThemeSubmissionOrder.withPublicCounts(
+                            state.records, likes, installs))
                 CommunityThemeSubmissionsState.SignedOut ->
                     showMessage(R.string.community_theme_submissions_signed_out)
                 is CommunityThemeSubmissionsState.Failed -> {
@@ -101,10 +103,21 @@ class CommunityThemeSubmissionsActivity : AppCompatActivity() {
                     .setText(statusExplanation(record.status))
             val likes = row.findViewById<TextView>(R.id.submission_likes)
             if (record.likes != null) {
-                likes.text = resources.getQuantityString(
-                        R.plurals.community_theme_submissions_likes,
-                        record.likes,
-                        record.likes)
+                // One line rather than two controls: an author reading their own list wants both
+                // figures at a glance, and a published theme always has both or neither.
+                likes.text = buildString {
+                    append(resources.getQuantityString(
+                            R.plurals.community_theme_submissions_likes,
+                            record.likes,
+                            record.likes))
+                    record.installs?.let { installs ->
+                        append(" \u00b7 ")
+                        append(resources.getQuantityString(
+                                R.plurals.community_theme_submissions_downloads,
+                                installs,
+                                installs))
+                    }
+                }
                 likes.visibility = View.VISIBLE
             } else {
                 likes.visibility = View.GONE

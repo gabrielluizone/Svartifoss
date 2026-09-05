@@ -1300,6 +1300,11 @@
     <string name="color_picker_title">Επιλογή χρώματος τόνου</string>
     <string name="color_picker_reset">Επαναφορά</string>
     <string name="color_picker_apply">Εφαρμογή</string>
+    <string name="setting_wear_title_centered">Κεντράρισμα τίτλου</string>
+    <string name="setting_wear_title_centered_description">Αγκυρώνει τον τίτλο στο κέντρο της οθόνης αντί για ολόκληρο το μπλοκ κειμένου</string>
+    <string name="player_element_title_centered">Κεντραρισμένος τίτλος</string>
+    <string name="color_picker_recent">Πρόσφατα χρησιμοποιημένα</string>
+    <string name="color_picker_copied">Ο κωδικός χρώματος αντιγράφηκε</string>
     <string name="color_picker_default">Προεπιλογή</string>
     <string name="color_picker_invalid">Μη έγκυρος κωδικός χρώματος</string>
     <string name="color_picker_current">Τρέχον: %s</string>
@@ -1783,6 +1788,56 @@
         <item>@string/wear_font_varela_round</item>
         <item>@string/wear_font_yanone_kaffeesatz</item>
         <item>@string/wear_font_zilla_slab</item>
+        <item>@string/wear_font_lato</item>
+        <item>@string/wear_font_merriweather_sans</item>
+        <item>@string/wear_font_source_sans_3</item>
+        <item>@string/wear_font_source_serif_4</item>
+        <item>@string/wear_font_libre_baskerville</item>
+        <item>@string/wear_font_libre_franklin</item>
+        <item>@string/wear_font_ibm_plex_sans</item>
+        <item>@string/wear_font_ibm_plex_mono</item>
+        <item>@string/wear_font_ibm_plex_serif</item>
+        <item>@string/wear_font_work_sans</item>
+        <item>@string/wear_font_karla</item>
+        <item>@string/wear_font_sora</item>
+        <item>@string/wear_font_urbanist</item>
+        <item>@string/wear_font_be_vietnam_pro</item>
+        <item>@string/wear_font_red_hat_display</item>
+        <item>@string/wear_font_red_hat_text</item>
+        <item>@string/wear_font_red_hat_mono</item>
+        <item>@string/wear_font_syne</item>
+        <item>@string/wear_font_instrument_sans</item>
+        <item>@string/wear_font_figtree</item>
+        <item>@string/wear_font_gabarito</item>
+        <item>@string/wear_font_bricolage_grotesque</item>
+        <item>@string/wear_font_dm_serif_display</item>
+        <item>@string/wear_font_cormorant_garamond</item>
+        <item>@string/wear_font_cormorant</item>
+        <item>@string/wear_font_bitter</item>
+        <item>@string/wear_font_spectral</item>
+        <item>@string/wear_font_vollkorn</item>
+        <item>@string/wear_font_raleway</item>
+        <item>@string/wear_font_league_spartan</item>
+        <item>@string/wear_font_saira</item>
+        <item>@string/wear_font_signika</item>
+        <item>@string/wear_font_sofia_sans</item>
+        <item>@string/wear_font_overpass</item>
+        <item>@string/wear_font_public_sans</item>
+        <item>@string/wear_font_questrial</item>
+        <item>@string/wear_font_dosis</item>
+        <item>@string/wear_font_prompt</item>
+        <item>@string/wear_font_unbounded</item>
+        <item>@string/wear_font_recursive</item>
+        <item>@string/wear_font_trispace</item>
+        <item>@string/wear_font_noto_sans</item>
+        <item>@string/wear_font_noto_serif</item>
+        <item>@string/wear_font_noto_sans_mono</item>
+        <item>@string/wear_font_heebo</item>
+        <item>@string/wear_font_hind</item>
+        <item>@string/wear_font_hind_madurai</item>
+        <item>@string/wear_font_kumbh_sans</item>
+        <item>@string/wear_font_alegreya</item>
+        <item>@string/wear_font_assistant</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1873,6 +1928,56 @@
         <item>@string/wear_font_varela_round_description</item>
         <item>@string/wear_font_yanone_kaffeesatz_description</item>
         <item>@string/wear_font_zilla_slab_description</item>
+        <item>@string/wear_font_lato_description</item>
+        <item>@string/wear_font_merriweather_sans_description</item>
+        <item>@string/wear_font_source_sans_3_description</item>
+        <item>@string/wear_font_source_serif_4_description</item>
+        <item>@string/wear_font_libre_baskerville_description</item>
+        <item>@string/wear_font_libre_franklin_description</item>
+        <item>@string/wear_font_ibm_plex_sans_description</item>
+        <item>@string/wear_font_ibm_plex_mono_description</item>
+        <item>@string/wear_font_ibm_plex_serif_description</item>
+        <item>@string/wear_font_work_sans_description</item>
+        <item>@string/wear_font_karla_description</item>
+        <item>@string/wear_font_sora_description</item>
+        <item>@string/wear_font_urbanist_description</item>
+        <item>@string/wear_font_be_vietnam_pro_description</item>
+        <item>@string/wear_font_red_hat_display_description</item>
+        <item>@string/wear_font_red_hat_text_description</item>
+        <item>@string/wear_font_red_hat_mono_description</item>
+        <item>@string/wear_font_syne_description</item>
+        <item>@string/wear_font_instrument_sans_description</item>
+        <item>@string/wear_font_figtree_description</item>
+        <item>@string/wear_font_gabarito_description</item>
+        <item>@string/wear_font_bricolage_grotesque_description</item>
+        <item>@string/wear_font_dm_serif_display_description</item>
+        <item>@string/wear_font_cormorant_garamond_description</item>
+        <item>@string/wear_font_cormorant_description</item>
+        <item>@string/wear_font_bitter_description</item>
+        <item>@string/wear_font_spectral_description</item>
+        <item>@string/wear_font_vollkorn_description</item>
+        <item>@string/wear_font_raleway_description</item>
+        <item>@string/wear_font_league_spartan_description</item>
+        <item>@string/wear_font_saira_description</item>
+        <item>@string/wear_font_signika_description</item>
+        <item>@string/wear_font_sofia_sans_description</item>
+        <item>@string/wear_font_overpass_description</item>
+        <item>@string/wear_font_public_sans_description</item>
+        <item>@string/wear_font_questrial_description</item>
+        <item>@string/wear_font_dosis_description</item>
+        <item>@string/wear_font_prompt_description</item>
+        <item>@string/wear_font_unbounded_description</item>
+        <item>@string/wear_font_recursive_description</item>
+        <item>@string/wear_font_trispace_description</item>
+        <item>@string/wear_font_noto_sans_description</item>
+        <item>@string/wear_font_noto_serif_description</item>
+        <item>@string/wear_font_noto_sans_mono_description</item>
+        <item>@string/wear_font_heebo_description</item>
+        <item>@string/wear_font_hind_description</item>
+        <item>@string/wear_font_hind_madurai_description</item>
+        <item>@string/wear_font_kumbh_sans_description</item>
+        <item>@string/wear_font_alegreya_description</item>
+        <item>@string/wear_font_assistant_description</item>
     </string-array>
     <string-array name="wear_cover_shape_entries">
         <item>Στρογγυλεμένο</item>
@@ -2080,4 +2185,74 @@
     <string name="setting_privacy_policy_description">Δείτε ποια δεδομένα χρησιμοποιεί το Svartifoss και ποιες διαδικτυακές υπηρεσίες είναι προαιρετικές.</string>
     <string name="watch_preview_expand">Άνοιγμα μεγαλύτερης προεπισκόπησης</string>
     <string name="watch_preview_fullscreen_dismiss">Πατήστε οπουδήποτε για κλείσιμο</string>
+
+    <!-- The edge ring's position mark. Entries pair with wear_seek_marker_values by index. -->
+    <string name="setting_wear_seek_marker">Σημάδι θέσης</string>
+    <string name="setting_wear_seek_marker_description">Πότε παραμένει ορατή η μικρή γραμμή που διασχίζει τον δακτύλιο προόδου και δείχνει το σημείο του κομματιού.</string>
+    <string-array name="wear_seek_marker_entries">
+        <item>Πάντα</item>
+        <item>Μόνο κατά την αναζήτηση</item>
+        <item>Κατά την αναζήτηση και σε παύση</item>
+        <item>Μόνο σε παύση</item>
+    </string-array>
+
+    <!-- Title/artist text shadow. Entries pair with the untranslated
+         wear_text_shadow_*_values arrays BY INDEX. -->
+    <string name="setting_wear_title_shadow_style">Σκιά τίτλου</string>
+    <string name="setting_wear_title_shadow_color">Χρώμα σκιάς τίτλου</string>
+    <string name="setting_wear_title_shadow_custom_color">Προσαρμοσμένο χρώμα σκιάς τίτλου</string>
+    <string name="setting_wear_title_shadow_strength">Ένταση σκιάς τίτλου</string>
+    <string name="setting_wear_artist_shadow_style">Σκιά καλλιτέχνη</string>
+    <string name="setting_wear_artist_shadow_color">Χρώμα σκιάς καλλιτέχνη</string>
+    <string name="setting_wear_artist_shadow_custom_color">Προσαρμοσμένο χρώμα σκιάς καλλιτέχνη</string>
+    <string name="setting_wear_artist_shadow_strength">Ένταση σκιάς καλλιτέχνη</string>
+    <string name="setting_wear_text_shadow_strength_description">Ποσοστό του μεγέθους και του βάθους της επιλεγμένης σκιάς.</string>
+    <string-array name="wear_text_shadow_style_entries">
+        <item>Καμία</item>
+        <item>Απαλή</item>
+        <item>Έντονη</item>
+        <item>Λάμψη</item>
+        <item>Ανασηκωμένη</item>
+        <item>Διακριτική</item>
+    </string-array>
+    <string-array name="wear_text_shadow_color_entries">
+        <item>Μαύρο</item>
+        <item>Χρώμα άλμπουμ</item>
+        <item>Λευκό</item>
+        <item>Προσαρμοσμένο</item>
+    </string-array>
+
+    <!-- Title/artist outline. Entries pair with the untranslated
+         wear_text_outline_style_values array BY INDEX. -->
+    <string name="setting_wear_title_outline_style">Περίγραμμα τίτλου</string>
+    <string name="setting_wear_title_outline_color">Χρώμα περιγράμματος τίτλου</string>
+    <string name="setting_wear_title_outline_custom_color">Προσαρμοσμένο χρώμα περιγράμματος τίτλου</string>
+    <string name="setting_wear_artist_outline_style">Περίγραμμα καλλιτέχνη</string>
+    <string name="setting_wear_artist_outline_color">Χρώμα περιγράμματος καλλιτέχνη</string>
+    <string name="setting_wear_artist_outline_custom_color">Προσαρμοσμένο χρώμα περιγράμματος καλλιτέχνη</string>
+    <string-array name="wear_text_outline_style_entries">
+        <item>Κανένα</item>
+        <item>Τριχοειδές</item>
+        <item>Λεπτό</item>
+        <item>Μεσαίο</item>
+        <item>Χοντρό</item>
+    </string-array>
+
+    <!-- Title/artist text backdrop. Entries pair with the untranslated
+         wear_text_backdrop_style_values array BY INDEX. -->
+    <string name="setting_wear_title_text_bg_style">Φόντο τίτλου</string>
+    <string name="setting_wear_title_text_bg_color">Χρώμα φόντου τίτλου</string>
+    <string name="setting_wear_title_text_bg_custom_color">Προσαρμοσμένο χρώμα φόντου τίτλου</string>
+    <string name="setting_wear_title_text_bg_opacity">Αδιαφάνεια φόντου τίτλου</string>
+    <string name="setting_wear_artist_text_bg_style">Φόντο καλλιτέχνη</string>
+    <string name="setting_wear_artist_text_bg_color">Χρώμα φόντου καλλιτέχνη</string>
+    <string name="setting_wear_artist_text_bg_custom_color">Προσαρμοσμένο χρώμα φόντου καλλιτέχνη</string>
+    <string name="setting_wear_artist_text_bg_opacity">Αδιαφάνεια φόντου καλλιτέχνη</string>
+    <string name="setting_wear_text_bg_opacity_description">Ποσοστό της αδιαφάνειας του επιλεγμένου φόντου.</string>
+    <string-array name="wear_text_backdrop_style_entries">
+        <item>Κανένα</item>
+        <item>Επισήμανση</item>
+        <item>Απαλό</item>
+        <item>Πλήρες</item>
+    </string-array>
 </resources>

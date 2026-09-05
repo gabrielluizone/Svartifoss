@@ -1,0 +1,48 @@
+Modifications to exo_2_regular.ttf
+==================================
+
+The SIL Open Font License permits modification and does not require this notice,
+but it is recorded for the same reason `special-elite/MODIFICATIONS.txt` in this
+repository is: a binary font file carries no diff, so without a written record a
+future re-download of the upstream release would silently undo the fix.
+
+The bundled copies of this font (mobile/src/main/res/font/exo_2_regular.ttf and
+wear/src/main/res/font/exo_2_regular.ttf) have been modified from the upstream
+release at https://github.com/google/fonts/tree/main/ofl/exo2. Only the vertical
+metrics were changed; no glyph outline, character mapping, name table or Reserved
+Font Name was touched.
+
+  hhea.ascent           999  ->   945
+  hhea.descent         -201  ->  -255
+  hhea.lineGap            0  ->     0   (unchanged)
+  OS/2.sTypoAscender    999  ->   945
+  OS/2.sTypoDescender  -201  ->  -255
+  OS/2.sTypoLineGap       0  ->     0   (unchanged)
+  OS/2.usWinAscent     1158  ->  1051
+  OS/2.usWinDescent     311  ->   275
+
+Why
+---
+
+Every renderer centres a line of text by its line box. This font's box centre sat
+0.054 em above its own capital letters, which reads as text sitting high in a
+centred pill or chip. Its own ordinary descenders (g, j, p, q, y, accented Latin
+letters) already overhung the old descent line by 0.042 em upstream - which the
+fix had to resolve rather than merely avoid worsening.
+
+The correction centres the box on the font's flat capital letters - E, F, H, I, L,
+which are essentially uniform in this font (a thousandth of an em of hinting
+rounding, no real disagreement). Its digits agree with that target exactly.
+
+ascent + |descent| is unchanged (1200 units in this font's 1000-unit em - the
+extra headroom above one em is original to this font, not something this fix
+introduced), so line height, spacing, wrapping and every reserved height are the
+same as upstream; only where the ink sits inside that box moves. The flat-cap band
+now lands within 0.0001 em of the box centre, and the same descenders that
+overhung upstream now clear the new descent line by 0.012 em instead.
+
+usWinAscent/usWinDescent were narrowed to the font's real ink extents
+(head.yMax/yMin), which upstream's values exceeded.
+
+Pinned by BundledFontMetricsTest, so a re-download from upstream fails the build
+rather than silently reverting the fix.

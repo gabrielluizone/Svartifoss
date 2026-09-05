@@ -173,16 +173,18 @@ private fun Identity(
     }
 
     if (state.showTitle && state.title.isNotBlank()) {
-        Text(
+        // The shared helper rather than a bare Text, for the reason the artist line below already
+        // records: this header looked wired up because it named the family, weight and slant by
+        // hand, while the size, tracking, case and every one of the shadow/outline/backdrop
+        // effects sitting beside them in the Text tab did nothing here at all. The fixed two-line
+        // cap stays - it is this face's row budget, not a text-behaviour choice.
+        TitleLineText(
                 text = state.title,
+                state = state,
                 color = titleTextColor(state, Color.White),
-                fontFamily = state.titleFont,
-                fontWeight = state.titleFontWeight,
-                fontStyle = state.titleFontStyle,
                 fontSize = 14.sp,
                 lineHeight = 17.sp,
                 maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.fillMaxWidth())
     }
@@ -350,28 +352,40 @@ private fun MetadataRow(entry: MetadataEntry, state: NowPlayingFaceState) {
  */
 @Composable
 private fun MetadataAmbient(state: NowPlayingFaceState) {
+    val geo = FaceGeometry.Metadata.Ambient
+    // Everything this face draws in ambient is track information, so the always-on switch governs
+    // all of it. It used to govern none of it: the identity and its rows were drawn unconditionally
+    // while every other ambient face honoured the switch, so turning track info off emptied the
+    // screen on eleven styles and did nothing on this one.
+    if (!state.ambientShowTrackInfo) return
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val tint = Color(state.ambientTint)
         Column(
-                modifier = Modifier.fillMaxSize().padding(horizontal = maxWidth * 0.16f),
+                modifier = Modifier.fillMaxSize()
+                        .padding(horizontal = maxWidth * geo.SIDE_PADDING_FRACTION),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center
         ) {
-            Text(
-                    text = state.title,
-                    color = tint.copy(alpha = 0.9f * state.ambientIntensity),
-                    fontFamily = state.titleFont,
-                    fontSize = 15.sp,
-                    lineHeight = 19.sp,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center)
-            metadataRows(state).take(2).forEach { entry ->
+            // The title also follows its own element switch, as it does on every other face. The
+            // rows below are the album, the track position and so on - they are not the title, so
+            // hiding it leaves the table rather than emptying the screen.
+            if (state.showTitle && state.title.isNotEmpty()) {
+                Text(
+                        text = state.title,
+                        color = tint.copy(alpha = geo.TITLE_ALPHA * state.ambientIntensity),
+                        fontFamily = state.titleFont,
+                        fontSize = geo.TITLE_SP.sp,
+                        lineHeight = geo.TITLE_LINE_HEIGHT_SP.sp,
+                        maxLines = geo.TITLE_MAX_LINES,
+                        overflow = TextOverflow.Ellipsis,
+                        textAlign = TextAlign.Center)
+            }
+            metadataRows(state).take(geo.ROWS).forEach { entry ->
                 Text(
                         text = "${entry.label}  ${entry.value}",
-                        color = tint.copy(alpha = 0.6f * state.ambientIntensity),
+                        color = tint.copy(alpha = geo.ROW_ALPHA * state.ambientIntensity),
                         fontFamily = state.artistFont,
-                        fontSize = 10.sp,
+                        fontSize = geo.ROW_SP.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         textAlign = TextAlign.Center)

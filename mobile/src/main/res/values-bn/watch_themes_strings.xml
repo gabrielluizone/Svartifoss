@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">কমিউনিটি থিম রিফ্রেশ করুন</string>
     <string name="online_theme_list_description">কমিউনিটির তৈরি ঘড়ির থিম</string>
     <string name="online_theme_byline">%1$s-এর তৈরি</string>
+    <string name="online_theme_filter_author">%1$s-এর থিম</string>
+    <string name="online_theme_filter_author_selected">%1$s-এর থিম দেখানো হচ্ছে</string>
     <string name="online_theme_row_description">%1$s, %2$s-এর তৈরি। %3$s লেআউট।</string>
     <string name="online_theme_apply">যোগ করুন এবং প্রয়োগ করুন</string>
     <string name="online_theme_loading">কমিউনিটি থিম লোড হচ্ছে…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">আপনি যেগুলি যোগ করেছেন সেই থিমগুলি দেখানো হচ্ছে</string>
     <string name="online_theme_search_empty_all_installed">আপনি ইতিমধ্যেই সব কমিউনিটি থিম যোগ করেছেন।</string>
     <string name="online_theme_search_empty_all_installed_hint">আবার দেখতে “আমার জন্য নতুন” বন্ধ করুন।</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">সবচেয়ে বেশি ডাউনলোড</string>
+    <string name="online_theme_sort_most_downloaded_short">ডাউনলোড</string>
+    <string name="community_theme_detail_downloads">ডাউনলোড</string>
+    <string name="community_theme_report_action">থিম রিপোর্ট করুন</string>
+    <string name="community_theme_report_already">রিপোর্ট করা হয়েছে</string>
+    <string name="community_theme_report_description">“%1$s” মডারেটরদের কাছে রিপোর্ট করুন</string>
+    <string name="community_theme_report_title">এই থিমটি রিপোর্ট করুন</string>
+    <string name="community_theme_report_intro">এই থিমে কী সমস্যা, মডারেটরদের জানান।</string>
+    <string name="community_theme_report_reason_inappropriate">আপত্তিকর বা অনুপযুক্ত বিষয়বস্তু</string>
+    <string name="community_theme_report_reason_impersonation">অন্যের কাজ বলে চালানো হয়েছে</string>
+    <string name="community_theme_report_reason_misleading">যা দেখানো হয়েছে তার সঙ্গে মেলে না</string>
+    <string name="community_theme_report_reason_illegible">ঘড়িতে ব্যবহারের অযোগ্য</string>
+    <string name="community_theme_report_reason_spam">স্প্যাম বা নকল</string>
+    <string name="community_theme_report_reason_other">অন্য কারণ</string>
+    <string name="community_theme_report_details_hint">মডারেটরদের আর কিছু জানানোর থাকলে (ঐচ্ছিক)</string>
+    <string name="community_theme_report_privacy">আপনার রিপোর্ট কেবল মডারেটররাই পড়েন। কে পাঠিয়েছে তা লেখককে কখনও জানানো হয় না।</string>
+    <string name="community_theme_report_submit">রিপোর্ট পাঠান</string>
+    <string name="community_theme_report_sent">রিপোর্ট পাঠানো হয়েছে। মডারেটররা এই থিমটি দেখবেন।</string>
+    <string name="community_theme_report_already_sent">আপনি ইতিমধ্যেই এই থিমটি রিপোর্ট করেছেন।</string>
+    <string name="community_theme_report_not_ready">এই থিমটি এখনও রিপোর্ট করা যাচ্ছে না। পরে আবার চেষ্টা করুন।</string>
+    <string name="community_theme_report_error">আপনার রিপোর্ট পাঠানো যায়নি। সংযোগ দেখে আবার চেষ্টা করুন।</string>
 </resources>

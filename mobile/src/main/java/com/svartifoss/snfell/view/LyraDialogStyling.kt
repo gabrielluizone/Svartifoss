@@ -4,6 +4,8 @@ import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckedTextView
+import android.widget.CompoundButton
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.widget.TextViewCompat
@@ -26,6 +28,15 @@ internal fun AlertDialog.applyLyraDialogStyling(
     getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(secondary)
     getButton(AlertDialog.BUTTON_NEUTRAL)?.setTextColor(secondary)
 
+    // A dialog built with setView() carries controls the shell knows nothing about, and every
+    // one of them draws its selected state from the theme's colorControlActivated - the static
+    // Lyra sage, resolved once at inflation and unable to follow a runtime accent. Styling the
+    // buttons alone therefore left dialogs whose *content* was the point (the report reasons,
+    // the account-deletion choice) with green radio marks under a pink accent. Walking the decor
+    // view is safe: the shell itself contains no CompoundButton and no EditText - its own
+    // choice rows are CheckedTextViews, handled separately below.
+    window?.decorView?.let { tintCustomContent(it, accent) }
+
     // Stock ListPreference rows are CheckedTextViews. Tint both possible mark renderings so the
     // result is identical across the AppCompat versions used by the preference and activity UIs.
     val choices = listView ?: return
@@ -45,4 +56,17 @@ internal fun AlertDialog.applyLyraDialogStyling(
 
         override fun onChildViewRemoved(parent: View, child: View) = Unit
     })
+}
+
+/** Recursively applies [accent] to the controls an AlertDialog's own shell never styles. */
+private fun tintCustomContent(view: View, accent: Int) {
+    when (view) {
+        is CompoundButton -> view.buttonTintList = ColorStateList.valueOf(accent)
+        // Cursor, selection handles and the focused underline, the same set MainActivity's own
+        // accent traversal hands to LyraAccent for every EditText it reaches.
+        is EditText -> LyraAccent.applyToEditText(view, accent)
+        is ViewGroup -> for (index in 0 until view.childCount) {
+            tintCustomContent(view.getChildAt(index), accent)
+        }
+    }
 }

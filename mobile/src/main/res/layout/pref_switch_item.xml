@@ -40,9 +40,7 @@
             android:layout_marginBottom="-3dp"
             android:textSize="15sp"
             android:textColor="?android:attr/textColorPrimary"
-            android:fontFamily="@font/google_sans"
-            android:maxLines="2"
-            android:ellipsize="end" />
+            android:fontFamily="@font/google_sans" />
 
         <TextView
             android:id="@android:id/summary"
@@ -53,6 +51,7 @@
             android:textSize="13sp"
             android:textColor="@color/lyra_pref_summary_selector"
             android:fontFamily="@font/google_sans"
+            android:ellipsize="end"
             android:maxLines="4" />
 
     </LinearLayout>

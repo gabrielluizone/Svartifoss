@@ -1,0 +1,61 @@
+Modifications to yanone_kaffeesatz_regular.ttf
+===============================================
+
+The SIL Open Font License permits modification and does not require this notice,
+but it is recorded for the same reason `special-elite/MODIFICATIONS.txt` in this
+repository is: a binary font file carries no diff, so without a written record a
+future re-download of the upstream release would silently undo the fix.
+
+The bundled copies of this font (mobile/src/main/res/font/yanone_kaffeesatz_regular.ttf
+and wear/src/main/res/font/yanone_kaffeesatz_regular.ttf) have been modified from
+the upstream release at
+https://github.com/google/fonts/tree/main/ofl/yanonekaffeesatz. Only the vertical
+metrics were changed; no glyph outline, character mapping, name table or Reserved
+Font Name was touched.
+
+  hhea.ascent           735  ->   918
+  hhea.descent         -200  ->  -218
+  hhea.lineGap           57  ->    57   (unchanged - see below)
+  OS/2.sTypoAscender    735  ->   918
+  OS/2.sTypoDescender  -200  ->  -218
+  OS/2.sTypoLineGap      57  ->    57   (unchanged)
+  OS/2.usWinAscent     1063  ->  1063   (unchanged - already the font's real ink height)
+  OS/2.usWinDescent     279  ->   235
+
+Why, and the one way this correction differs from most of its neighbours
+--------------------------------------------------------------------------
+
+Every renderer centres a line of text by its line box. This font's box centre sat
+0.083 em above its own capital letters, which reads as text sitting high in a
+centred pill or chip. Its own numerals are old-style figures - 3, 5, 7 and 9 dip
+below the baseline by design, the same way lowercase descenders do, while 0, 1, 2,
+4, 6 and 8 do not - so the correction target is the flat capital letters (E, F, H,
+I, L; perfectly uniform in this font), not the raw digit average, for the same
+reason this applies to Crete Round and Zilla Slab elsewhere in this tree.
+
+Most corrections recorded in this directory tree preserve the font's original
+ascent + |descent| exactly, moving only where the baseline sits within that
+unchanged total. That was not possible here without clipping ordinary text: the
+old-style figures above, and this font's ordinary lowercase descenders (g, j, p,
+q, y), already reached to within 0.002 em of the old descent line, and sliding the
+baseline up enough to fix the cap-height alignment would have pushed them roughly
+0.08 em past the new descent line.
+
+So the total box height grows here: from 935 to 1136 units (in this font's
+1000-unit em), a genuine increase in line height for this specific font. The new
+ascent and descent are chosen to satisfy two things exactly: the box still centres
+on the flat capital letters, and the descent still clears every realistic
+descender (the old-style figures, g/j/p/q/y, and the accented Latin letters used
+across the app's supported languages) by at least 0.02 em. It is the smallest
+growth that achieves both.
+
+hhea.lineGap (57 units, already present upstream) is left untouched rather than
+folded into ascent/descent or zeroed, so the *additional* space a renderer that
+adds lineGap on top of ascent+descent reserves is unaffected by this fix; only the
+ascent/descent split moved.
+
+usWinDescent was narrowed to the font's real ink extent (head.yMin); usWinAscent
+already matched head.yMax and is unchanged.
+
+Pinned by BundledFontMetricsTest, so a re-download from upstream fails the build
+rather than silently reverting the fix.

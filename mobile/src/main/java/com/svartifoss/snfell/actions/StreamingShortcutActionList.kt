@@ -6,7 +6,6 @@ import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
-import com.svartifoss.snfell.view.buttonconfig.ActionPickerViewModel
 
 /**
  * Action-picker category backed by the same library as Streaming shortcuts. Saved tracks,
@@ -14,14 +13,11 @@ import com.svartifoss.snfell.view.buttonconfig.ActionPickerViewModel
  * preference is created for the Actions tab. The built-in account-library shortcuts live here
  * too, so the root picker has one streaming entry instead of a growing row per service.
  */
-class StreamingShortcutActionList : PhoneAction {
+class StreamingShortcutActionList : PickerActionGroup {
     constructor(context: Context) : super(context)
     constructor(context: Context, bundle: PersistableBundle) : super(context, bundle)
 
-    override val opensMoreOptions: Boolean
-        get() = true
-
-    override fun onActionPicked(actionPicker: ActionPickerViewModel) {
+    override fun pickerChildren(): List<PhoneAction> {
         val shortcuts = PlaylistShortcutStorage.load(context)
         val actions = ArrayList<PhoneAction>(shortcuts.size + BUILT_IN_SHORTCUT_COUNT + 2)
 
@@ -65,7 +61,7 @@ class StreamingShortcutActionList : PhoneAction {
             })
         }
 
-        actionPicker.updateDisplayedActionsWithBackStack(title, actions)
+        return actions
     }
 
     override fun retrieveTitle(): String =

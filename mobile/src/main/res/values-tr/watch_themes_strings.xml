@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Topluluk temalarını yenile</string>
     <string name="online_theme_list_description">Topluluk tarafından oluşturulan saat temaları</string>
     <string name="online_theme_byline">%1$s tarafından</string>
+    <string name="online_theme_filter_author">%1$s tarafından yapılan temalar</string>
+    <string name="online_theme_filter_author_selected">%1$s tarafından yapılan temalar gösteriliyor</string>
     <string name="online_theme_row_description">%1$s, %2$s tarafından. %3$s düzeni.</string>
     <string name="online_theme_apply">Ekle ve uygula</string>
     <string name="online_theme_loading">Topluluk temaları yükleniyor…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Daha önce eklediğiniz temalar gösteriliyor</string>
     <string name="online_theme_search_empty_all_installed">Tüm topluluk temalarını zaten eklediniz.</string>
     <string name="online_theme_search_empty_all_installed_hint">Yeniden görmek için “Bana yeni” seçeneğini kapatın.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">En çok indirilen</string>
+    <string name="online_theme_sort_most_downloaded_short">İndirmeler</string>
+    <string name="community_theme_detail_downloads">İndirmeler</string>
+    <string name="community_theme_report_action">Temayı bildir</string>
+    <string name="community_theme_report_already">Tema bildirildi</string>
+    <string name="community_theme_report_description">“%1$s” temasını moderatörlere bildir</string>
+    <string name="community_theme_report_title">Bu temayı bildir</string>
+    <string name="community_theme_report_intro">Moderatörlere bu temada neyin yanlış olduğunu anlatın.</string>
+    <string name="community_theme_report_reason_inappropriate">Rahatsız edici veya uygunsuz içerik</string>
+    <string name="community_theme_report_reason_impersonation">Başkasının işi gibi gösteriliyor</string>
+    <string name="community_theme_report_reason_misleading">Gösterdiğiyle uyuşmuyor</string>
+    <string name="community_theme_report_reason_illegible">Saatte kullanılamaz</string>
+    <string name="community_theme_report_reason_spam">Spam veya kopya</string>
+    <string name="community_theme_report_reason_other">Başka bir şey</string>
+    <string name="community_theme_report_details_hint">Moderatörlerin bilmesi gereken başka bir şey (isteğe bağlı)</string>
+    <string name="community_theme_report_privacy">Bildiriminizi yalnızca moderatörler okur. Yazara kimin gönderdiği asla söylenmez.</string>
+    <string name="community_theme_report_submit">Bildirimi gönder</string>
+    <string name="community_theme_report_sent">Bildirim gönderildi. Moderatörler bu temayı inceleyecek.</string>
+    <string name="community_theme_report_already_sent">Bu temayı zaten bildirdiniz.</string>
+    <string name="community_theme_report_not_ready">Bu tema henüz bildirilemiyor. Daha sonra tekrar deneyin.</string>
+    <string name="community_theme_report_error">Bildiriminiz gönderilemedi. Bağlantınızı kontrol edip tekrar deneyin.</string>
 </resources>

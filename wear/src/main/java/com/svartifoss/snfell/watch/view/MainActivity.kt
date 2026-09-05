@@ -63,6 +63,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color as ComposeColor
+import androidx.compose.ui.graphics.Shadow as ComposeShadow
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.content.ContextCompat
@@ -84,7 +87,9 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.wearable.input.RotaryEncoderHelper
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.AlbumFillSlot
 import com.svartifoss.snfell.common.CenterButton
+import com.svartifoss.snfell.common.DoublePinchGesture
 import com.svartifoss.snfell.common.AdaptiveTextContrast
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
@@ -107,6 +112,11 @@ import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.common.SHADING_MAX_PERCENT
 import com.svartifoss.snfell.common.ScreenQuadrant
+import com.svartifoss.snfell.common.TextBackdropSpec
+import com.svartifoss.snfell.common.TextOutlineSpec
+import com.svartifoss.snfell.common.TextOutlineStyle
+import com.svartifoss.snfell.common.TextShadowSpec
+import com.svartifoss.snfell.common.SeekMarkerVisibility
 import com.svartifoss.snfell.common.ScreenSwipeDirection
 import com.svartifoss.snfell.common.ScreenSwipeResolver
 import com.svartifoss.snfell.common.QuickPanelButtons
@@ -116,6 +126,7 @@ import com.svartifoss.snfell.common.R as commonR
 import com.svartifoss.snfell.common.RotaryAction
 import com.svartifoss.snfell.common.ScreenButtons
 import com.svartifoss.snfell.common.AccentFloorStyle
+import com.svartifoss.snfell.common.AppearanceNumericRanges
 import com.svartifoss.snfell.common.BackgroundLayer
 import com.svartifoss.snfell.common.BackgroundLayerColor
 import com.svartifoss.snfell.common.BackgroundLayerStack
@@ -136,6 +147,7 @@ import com.svartifoss.snfell.common.SpecialEliteKeywordPolicy
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.TitleTextMode
 import com.svartifoss.snfell.common.resolveAodArtwork
+import com.svartifoss.snfell.common.resolveAlbumArtFilter
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_DOUBLE_TAP
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_LONG_TAP
@@ -151,11 +163,14 @@ import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchInfoSender
 import com.svartifoss.snfell.watch.communication.WatchMusicService
+import com.svartifoss.snfell.watch.input.DoublePinchGestureController
 import com.svartifoss.snfell.watch.view.menu.MenuActivity
 import com.svartifoss.snfell.watch.view.queue.QueueActivity
+import com.svartifoss.snfell.watch.view.panel.AlbumPaletteCache
 import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
 import com.svartifoss.snfell.watch.theme.watchUiTypeface
 import com.svartifoss.snfell.watch.view.panel.PanelReadout
+import com.svartifoss.snfell.watch.view.panel.PanelTriad
 import com.svartifoss.snfell.watch.view.progress.ProgressActivity
 import com.svartifoss.snfell.watch.view.volume.VolumeActivity
 import com.svartifoss.snfell.watch.view.lyrics.LyricsActivity
@@ -197,6 +212,7 @@ import com.svartifoss.snfell.watch.view.face.FaceMiniButton
 import com.svartifoss.snfell.watch.view.face.NowPlayingFaceListener
 import com.svartifoss.snfell.watch.view.face.MetadataFace
 import com.svartifoss.snfell.watch.view.face.NowPlayingFaceState
+import com.svartifoss.snfell.watch.view.face.TextOutlinePaint
 import com.svartifoss.snfell.watch.view.face.ScreenTheme
 import com.svartifoss.snfell.watch.view.face.resolveMetadataVisibility
 import com.svartifoss.snfell.watch.view.face.shouldShowClassicSourceIcon
@@ -207,6 +223,7 @@ import com.matejdro.wearutils.lifecycle.Resource
 import com.matejdro.wearutils.miscutils.VibratorCompat
 import com.matejdro.wearutils.preferences.definition.Preferences
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import timber.log.Timber
@@ -303,6 +320,15 @@ class MainActivity : WearCompanionWatchActivity(),
         private const val ROTARY_SEEK_COMMIT_DELAY_MS = 400L
         private const val SEEK_CANCEL_FADE_MS = 140L
         private const val SEEK_CANCEL_ENTER_SCALE = 0.7f
+        /**
+         * The smallest blur `Paint.setShadowLayer` will treat as a blur at all.
+         *
+         * Zero there means *no shadow layer*, not a hard-edged one, so a style with no blur
+         * of its own still has to ask for a hair of it or the whole shadow disappears - the
+         * opposite of what the Hard preset is asking for.
+         */
+        private const val MIN_SHADOW_LAYER_RADIUS_PX = 0.01f
+
         private const val OVERLAY_FADE_OUT_MS = 150L
         private const val OVERLAY_FADE_IN_MS = 90L
         private const val ALBUM_ART_CROSSFADE_MS = 300
@@ -341,6 +367,7 @@ class MainActivity : WearCompanionWatchActivity(),
     private var firstRunHintsPage = 0
     private var dimAlbumArt: Boolean = false
     private var albumArtStyle: String = "cover"
+    private var albumArtFilter: String = "none"
     /** Carousel's card outline, re-read with the other face-scoped appearance values. */
     private val carouselCardShape = mutableStateOf(CoverShape.ROUNDED)
     /** Note's cover silhouette. Its own state beside [carouselCardShape] for the reason
@@ -364,6 +391,7 @@ class MainActivity : WearCompanionWatchActivity(),
      */
     private var backgroundLayerSpecs: List<BackgroundLayer> = emptyList()
     private var backgroundLayersExplicit = false
+    private var titleCentered = false
     private var accentFloorColorMode: String = "album"
     private var accentFloorCustomColor: String = ""
     private var blurAlbumArtBackground: Boolean = false
@@ -377,6 +405,12 @@ class MainActivity : WearCompanionWatchActivity(),
     private var cachedFilteredArt: Bitmap? = null
     private var cachedFilteredSource: Bitmap? = null
     private var cachedFilteredStyle: AlbumArtFilter = AlbumArtFilter.NONE
+    /** The same pairing for the *ambient* cover, which resolves its own filter - see
+     *  [ambientArtworkForFace]. Kept apart from the awake cache so entering and leaving ambient
+     *  does not evict the one the awake face is about to ask for again. */
+    private var cachedAmbientArt: Bitmap? = null
+    private var cachedAmbientSource: Bitmap? = null
+    private var cachedAmbientStyle: AlbumArtFilter = AlbumArtFilter.NONE
     private var overlayBackdropStyle: String = "follow"
     private var playerShadingStyle: PlayerShadingStyle = PlayerShadingStyle.FOLLOW
     private var playerShadingIntensity: Float = PlayerShadingIntensity.BALANCED.multiplier
@@ -468,6 +502,16 @@ class MainActivity : WearCompanionWatchActivity(),
     private var artistTypography = WatchTypography.IDENTITY_TEXT
     private var trackTimeTypography = WatchTypography.IDENTITY_TEXT
     private var clockTypography = WatchTypography.IDENTITY_TEXT
+    /** The user's shadow choice for each line. The *colour* is resolved separately against the
+     *  current accent, in [applyAccentColor] - see [resolvedShadowColor]. */
+    private var titleShadowSpec = TextShadowSpec.NONE
+    private var artistShadowSpec = TextShadowSpec.NONE
+    /** The stroke drawn around each line, resolved to a colour in [applyAccentColor] like the
+     *  shadow. Its *width* stays a fraction until the draw - see [TextOutlinePaint]. */
+    private var titleOutlineSpec = TextOutlineSpec.NONE
+    private var artistOutlineSpec = TextOutlineSpec.NONE
+    private var titleBackdropSpec = TextBackdropSpec.NONE
+    private var artistBackdropSpec = TextBackdropSpec.NONE
     /** Google Sans Flex axes for the global title/artist fallback family. */
     private var flexAxes = WatchTypography.IDENTITY_FLEX_AXES
     /** Axes owned by explicit Flex overrides rather than by the global track family. */
@@ -640,6 +684,7 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     private val viewModel: MusicViewModel by viewModels()
+    private lateinit var doublePinchGestureController: DoublePinchGestureController
 
     private var rotatingInputDisabledUntil = 0L
 
@@ -819,6 +864,27 @@ class MainActivity : WearCompanionWatchActivity(),
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         classicTrackTimeTypeface = binding.textPlaybackTime.typeface
+        // The anchor depends on the title's measured height and on where the artist above it
+        // leaves it, both of which change with the track, the text mode and the font size. A
+        // layout listener is the one hook that sees all of those; setting translationY from it is
+        // safe because that is a draw-time property and starts no second layout pass.
+        binding.classicMetadataBlock.addOnLayoutChangeListener {
+            _, _, _, _, _, _, _, _, _ ->
+            applyClassicTitleAnchor()
+        }
+        doublePinchGestureController = DoublePinchGestureController(
+                this,
+                binding.root,
+                // Turning the gesture on in the watch's own Settings is the fix the phone's
+                // Controls screen tells people to make, so the phone has to hear that they made
+                // it. WatchInfo is otherwise published once per app open, which would have left
+                // the advice on screen until the player was closed and reopened.
+                onAvailabilityChanged = { republishWatchCapabilities() }) {
+            if (!inAmbient && viewModel.executeAction(DoublePinchGesture.buttonInfo())) {
+                buzz()
+                doublePinchGestureController.notifyGestureConsumed()
+            }
+        }
 
         // "Stop"/"Force stop" on the phone's notification now ends the watch app too; the player
         // is the bottom of the task, so closing here takes the queue/menu/picker with it.
@@ -1096,6 +1162,7 @@ class MainActivity : WearCompanionWatchActivity(),
         viewModel.openLyricsScreen.observe(this, openLyricsScreenListener)
         viewModel.openVolumeScreen.observe(this, openVolumeScreenListener)
         viewModel.openProgressScreen.observe(this, openProgressScreenListener)
+        viewModel.openFacePicker.observe(this, openFacePickerListener)
         viewModel.lyricsState.observe(this, lyricsStateObserver)
         viewModel.trackMetadata.observe(this, trackMetadataObserver)
         viewModel.openStreamingShortcutsMenu.observe(this, openStreamingShortcutsMenuListener)
@@ -1296,6 +1363,7 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     override fun onDestroy() {
+        doublePinchGestureController.dispose()
         viewModel.preferences.removeObserver(preferencesChangeObserver)
         super.onDestroy()
 
@@ -1359,6 +1427,10 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.loadingIndicator.visibility = View.GONE
 
         isMusicPlaying = it.status == Resource.Status.SUCCESS && it.data?.playing == true
+        // Three of the four position-mark modes read this. The seek bar keeps its own copy rather
+        // than reaching back here, so it has to be told - the same way updatePlaybackTimeVisibility
+        // below is called for the readout that consults the identical flag.
+        binding.seekBar.playing = isMusicPlaying
         sessionQuickActions = if (it.status == Resource.Status.SUCCESS) {
             it.data?.mediaActionsList.orEmpty()
         } else {
@@ -1946,6 +2018,13 @@ class MainActivity : WearCompanionWatchActivity(),
             val secondary = companions.secondary ?: albumToneFallback(primary, .42f)
             val tertiary = companions.tertiary ?: albumToneFallback(primary, .68f)
 
+            // Published for the dedicated Volume and Progress screens, which are separate
+            // Activities and used to re-extract this same cover from scratch - so opening one
+            // showed the fallback accent for a moment before snapping to the album's colour. The
+            // two extractions agree exactly (down to the fallback), so handing this one over is
+            // not an approximation of theirs, it is the same answer computed once.
+            AlbumPaletteCache.put(
+                    art, albumAccentSource, PanelTriad(primary, secondary, tertiary))
             applyAccentColor(primary, secondary, tertiary, art = art, publishArt = true)
         }
     }
@@ -2103,6 +2182,9 @@ class MainActivity : WearCompanionWatchActivity(),
         composeTapPulse.accentColor = currentAccentColor
         // Artist name uses the same dark-theme-adapted (lightened) accent as the queue's now-playing row.
         binding.textArtist.setTextColor(resolvedArtistTextColor())
+        // The "album" shadow colour is accent-derived, so it is recomputed here rather than beside
+        // the preference read - the same rule the clock's appearance follows further down.
+        applyClassicTextShadows()
 
         if (screenButtonsBgStyle in setOf(
                         "solid_album", "solid_exp_album",
@@ -2135,8 +2217,8 @@ class MainActivity : WearCompanionWatchActivity(),
                     // ...and so does every layer of the stack, which is where those tones and
                     // the accent floor's colour actually reach a Compose face. Only the legacy
                     // single-slot tint above was refreshed here, so `applyPlayerBackground` below
-                    // repainted Classic with the new album's colours while every face that reads
-                    // `backgroundLayers` off this state kept the previous track's - the floor
+                    // repainted Classic with the new album's colours while the nineteen faces that
+                    // read `backgroundLayers` off this state kept the previous track's - the floor
                     // being the one layer big and bright enough for anybody to notice. The stack's
                     // *structure* does not change with a track, so this re-resolves the colours
                     // rather than re-reading the preference.
@@ -2144,6 +2226,12 @@ class MainActivity : WearCompanionWatchActivity(),
                     progressColor = binding.seekBar.progressColor,
                     artistColor = binding.textArtist.currentTextColor,
                     titleColor = resolvedTitleTextColor(),
+                    titleShadow = composeShadow(titleShadowSpec),
+                    artistShadow = composeShadow(artistShadowSpec),
+                    titleOutline = composeOutline(titleOutlineSpec),
+                    artistOutline = composeOutline(artistOutlineSpec),
+                    titleBackdrop = composeBackdrop(titleBackdropSpec),
+                    artistBackdrop = composeBackdrop(artistBackdropSpec),
                     // The awake Up Next pill's colours follow the accent, so refresh them here too.
                     upNextPillFill = upNextPillFillColor(),
                     upNextPillTextColor = awakeUpNextPillTint(),
@@ -2373,7 +2461,7 @@ class MainActivity : WearCompanionWatchActivity(),
         applyAlbumArtDisplay(
                 source = frostArtworkIfSelected(source),
                 blurred = forceBlur,
-                artworkFilter = playerBackgroundStyle.artworkFilter,
+                artworkFilter = resolveAlbumArtFilter(albumArtFilter, playerBackgroundStyle),
                 hidden = albumArtHidden,
                 square = playerBackgroundStyle.squareCornerRadiusFraction != null
         )
@@ -2410,7 +2498,7 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Bakes the chosen filter once for cover windows drawn inside Compose faces. */
     private fun filteredArtworkForFace(source: Bitmap?): Bitmap? {
         val postFrost = frostArtworkIfSelected(source) ?: return null
-        val filter = playerBackgroundStyle.artworkFilter
+        val filter = resolveAlbumArtFilter(albumArtFilter, playerBackgroundStyle)
         if (filter == AlbumArtFilter.NONE) return postFrost
         if (cachedFilteredSource === postFrost && cachedFilteredStyle == filter) {
             cachedFilteredArt?.takeIf { !it.isRecycled }?.let { return it }
@@ -2483,6 +2571,7 @@ class MainActivity : WearCompanionWatchActivity(),
      */
     private fun applyBlurredAlbumArt(source: Bitmap?) {
         if (source == null) {
+            binding.overlayBlurImage.colorFilter = null
             binding.overlayBlurImage.setImageBitmap(null)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 binding.overlayBlurImage.setRenderEffect(null)
@@ -2494,6 +2583,8 @@ class MainActivity : WearCompanionWatchActivity(),
         // overlay blur is pixel-identical to what is already on screen and revealing it never makes
         // the blur "jump" to a different strength. Otherwise use the overlay's own radius.
         val radius = if (blurAlbumArtBackground) blurRadiusPx else overlayBlurRadiusPx
+        binding.overlayBlurImage.colorFilter = resolveAlbumArtFilter(
+                albumArtFilter, playerBackgroundStyle).androidColorFilter
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             binding.overlayBlurImage.setImageBitmap(source)
             binding.overlayBlurImage.setRenderEffect(
@@ -2514,19 +2605,54 @@ class MainActivity : WearCompanionWatchActivity(),
                 showArtwork = aodShowArt,
                 effectiveAodStyle = effectiveAodStyle(),
                 treatment = aodArtTreatment,
-                playerArtworkStyle = albumArtStyle
+                playerArtworkStyle = albumArtStyle,
+                playerArtworkFilter = albumArtFilter
         )
+        val filter = if (spec.monochrome) AlbumArtFilter.MONOCHROME else spec.photoFilter
         binding.albumArt.alpha = if (spec.visible) ambientAlbumArtAlpha else 0f
         applyAlbumArtDisplay(
                 source = latestAlbumArt,
                 blurred = spec.blurred,
-                artworkFilter = if (spec.monochrome) {
-                    AlbumArtFilter.MONOCHROME
-                } else {
-                    spec.photoFilter
-                },
+                artworkFilter = filter,
                 hidden = !spec.visible
         )
+        // The same decision, for a face that draws the cover inside its own composition rather
+        // than over this backdrop. Carousel's ambient card used to read the *awake* face-state
+        // cover, so "Show artwork" and the ambient photo treatment reached the backdrop and left
+        // that card alone - a picture the user had switched off, under the wrong filter.
+        updateFaceState {
+            it.copy(
+                    ambientAlbumArt = if (spec.visible) {
+                        ambientArtworkForFace(latestAlbumArt, filter)?.asImageBitmap()
+                    } else {
+                        null
+                    },
+                    ambientAlbumArtBlurred = spec.blurred,
+                    ambientAlbumArtAlpha = ambientAlbumArtAlpha
+            )
+        }
+    }
+
+    /**
+     * [latestAlbumArt] with the *ambient* photo treatment applied, cached on the pair it was
+     * built from.
+     *
+     * Deliberately the raw cover rather than [filteredArtworkForFace]'s: the always-on treatment
+     * is an independent control, so the interactive filter (and the frosted rim, which is an
+     * artwork *style*) must not ride along underneath it. Ambient BLUR/CLEAR/MONOCHROME each
+     * state the whole answer, and FOLLOW resolves to the interactive filter here, once.
+     */
+    private fun ambientArtworkForFace(source: Bitmap?, filter: AlbumArtFilter): Bitmap? {
+        if (source == null) return null
+        if (filter == AlbumArtFilter.NONE) return source
+        if (cachedAmbientSource === source && cachedAmbientStyle == filter) {
+            cachedAmbientArt?.takeIf { !it.isRecycled }?.let { return it }
+        }
+        return filter.applyTo(source).also {
+            cachedAmbientSource = source
+            cachedAmbientStyle = filter
+            cachedAmbientArt = it
+        }
     }
 
     /**
@@ -2698,10 +2824,30 @@ class MainActivity : WearCompanionWatchActivity(),
         }
     }
 
+    /**
+     * Re-sends [WatchInfo] so the phone's Controls screen can stop describing a state that has
+     * moved on. Failure is deliberately swallowed: nothing on the watch depends on this, and the
+     * next app open publishes the same answer anyway.
+     */
+    private fun republishWatchCapabilities() {
+        lifecycleScope.launch {
+            try {
+                WatchInfoSender(this@MainActivity, true).sendWatchInfoToPhone()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.w(e, "Could not re-publish watch capabilities to the phone")
+            }
+        }
+    }
+
     private val buttonConfigObserver = Observer<WatchActionConfigProvider?> { config ->
         if (config == null) {
             return@Observer
         }
+
+        doublePinchGestureController.setEnabled(
+                config.isActionActive(DoublePinchGesture.buttonInfo()))
 
         val topSingle = config.getAction(ButtonInfo(false, ScreenQuadrant.TOP, GESTURE_SINGLE_TAP))
         val bottomSingle =
@@ -4387,11 +4533,16 @@ class MainActivity : WearCompanionWatchActivity(),
 
         dimAlbumArt = faceBool(MiscPreferences.DIM_ALBUM_ART)
         albumArtStyle = faceString(MiscPreferences.ALBUM_ART_STYLE)
+        albumArtFilter = faceString(MiscPreferences.ALBUM_ART_FILTER)
         carouselCardShape.value = CoverShape.fromPreference(
                 faceString(MiscPreferences.WEAR_CAROUSEL_CARD_SHAPE))
         noteCoverShape.value = CoverShape.fromPreference(
                 faceString(MiscPreferences.WEAR_NOTE_COVER_SHAPE), CoverShape.CIRCLE)
         noteShowCover.value = faceBool(MiscPreferences.WEAR_NOTE_SHOW_COVER)
+        titleCentered = faceBool(MiscPreferences.WEAR_TITLE_CENTERED)
+        updateFaceState { it.copy(titleCentered = titleCentered) }
+        // Classic composes in Views, so it cannot read that state: it is anchored here instead.
+        applyClassicTitleAnchor()
         chatCoverShape.value = CoverShape.fromPreference(
                 faceString(MiscPreferences.WEAR_CHAT_COVER_SHAPE), CoverShape.CIRCLE)
         chatShowCover.value = faceBool(MiscPreferences.WEAR_CHAT_SHOW_COVER)
@@ -4400,7 +4551,8 @@ class MainActivity : WearCompanionWatchActivity(),
         metadataShowCover.value = faceBool(MiscPreferences.WEAR_METADATA_SHOW_COVER)
         playerBackgroundStyle = PlayerBackgroundStyle.fromPreference(albumArtStyle)
         blurAlbumArtBackground = playerBackgroundStyle.blurredArtwork
-        albumArtGrayscale = playerBackgroundStyle.grayscaleArtwork
+        albumArtGrayscale = resolveAlbumArtFilter(
+                albumArtFilter, playerBackgroundStyle) == AlbumArtFilter.MONOCHROME
         albumArtHidden = playerBackgroundStyle.hidesArtwork
         blurRadiusPx = faceInt(MiscPreferences.ALBUM_ART_BLUR_RADIUS)
                 .coerceIn(5, 120).toFloat()
@@ -4444,10 +4596,12 @@ class MainActivity : WearCompanionWatchActivity(),
                     backgroundLayersExplicit = backgroundLayersExplicit
             )
         }
-        volumeBarTimeoutMs = Preferences.getInt(preferences, MiscPreferences.VOLUME_OVERLAY_TIMEOUT)
-                .coerceIn(300, 5000).toLong()
-        rotaryDeadzone = Preferences.getInt(preferences, MiscPreferences.ROTARY_DEADZONE)
-                .coerceIn(0, 30).toFloat()
+        volumeBarTimeoutMs = AppearanceNumericRanges.clamp(
+                MiscPreferences.VOLUME_OVERLAY_TIMEOUT.key,
+                Preferences.getInt(preferences, MiscPreferences.VOLUME_OVERLAY_TIMEOUT)).toLong()
+        rotaryDeadzone = AppearanceNumericRanges.clamp(
+                MiscPreferences.ROTARY_DEADZONE.key,
+                Preferences.getInt(preferences, MiscPreferences.ROTARY_DEADZONE)).toFloat()
         ambientAlbumArtAlpha = faceInt(MiscPreferences.AMBIENT_ALBUM_ART_OPACITY)
                 .coerceIn(20, 100) / 100f
 
@@ -4515,6 +4669,9 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.seekBar.ringLayout = ProgressRingLayout.fromPref(
                 faceString(MiscPreferences.WEAR_PROGRESS_LAYOUT))
         binding.seekBar.gradientEnabled = faceBool(MiscPreferences.WEAR_PROGRESS_GRADIENT)
+        binding.seekBar.markerVisibility = SeekMarkerVisibility.fromPreference(
+                faceString(MiscPreferences.WEAR_SEEK_MARKER))
+        binding.seekBar.playing = isMusicPlaying
         updateFaceState { it.copy(progressRingStyle = progressRingStyle) }
         seekOverlayStyle = faceString(MiscPreferences.WEAR_SEEK_STYLE)
         seekPanelLayout = faceString(MiscPreferences.WEAR_SEEK_LAYOUT)
@@ -4667,6 +4824,12 @@ class MainActivity : WearCompanionWatchActivity(),
         trackTimeTypography = WatchTypography.trackTimeSpec(preferences, appearanceContext)
         sourceIconTypography = WatchTypography.sourceIconSpec(preferences, appearanceContext)
         clockTypography = WatchTypography.clockSpec(preferences, appearanceContext)
+        titleShadowSpec = WatchTypography.titleShadow(preferences, appearanceContext)
+        artistShadowSpec = WatchTypography.artistShadow(preferences, appearanceContext)
+        titleOutlineSpec = WatchTypography.titleOutline(preferences, appearanceContext)
+        artistOutlineSpec = WatchTypography.artistOutline(preferences, appearanceContext)
+        titleBackdropSpec = WatchTypography.titleBackdrop(preferences, appearanceContext)
+        artistBackdropSpec = WatchTypography.artistBackdrop(preferences, appearanceContext)
         flexAxes = WatchTypography.flexAxes(preferences, appearanceContext)
         titleFlexAxes = WatchTypography.flexAxes(
                 preferences, appearanceContext, WatchTypography.FlexAxesTarget.TITLE)
@@ -4690,8 +4853,17 @@ class MainActivity : WearCompanionWatchActivity(),
                     artistFlexAxes = artistFlexAxes,
                     clockFlexAxes = clockFlexAxes,
                     lyricsFlexAxes = lyricsFlexAxes,
-                    trackTimeFlexAxes = trackTimeFlexAxes)
+                    trackTimeFlexAxes = trackTimeFlexAxes,
+                    titleShadow = composeShadow(titleShadowSpec),
+                    artistShadow = composeShadow(artistShadowSpec),
+                    titleOutline = composeOutline(titleOutlineSpec),
+                    artistOutline = composeOutline(artistOutlineSpec),
+                    titleBackdrop = composeBackdrop(titleBackdropSpec),
+                    artistBackdrop = composeBackdrop(artistBackdropSpec))
         }
+        // The View face's own copy. applyAccentColor calls this again once extraction lands, which
+        // is what an "album" shadow needs; this call covers the preference change itself.
+        applyClassicTextShadows()
         // Resolve after the per-element specs and shared Flex axes above. Calling this while only
         // the raw font key had been refreshed made a Clock-only Flex choice reuse stale axes,
         // which is why its width/optical-size/grade/roundness appeared to work only for the
@@ -4852,7 +5024,8 @@ class MainActivity : WearCompanionWatchActivity(),
                 secondary = resolvedSecondaryAccent(),
                 tertiary = resolvedTertiaryAccent(),
                 materialSurface = currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor,
-                materialSurfaceSoftened = colorTreatment == "desaturated")
+                materialSurfaceSoftened = colorTreatment == "desaturated",
+                density = resources.displayMetrics.density)
     }
 
     /** Keep the bezel scrubber inert whenever another full-screen surface owns input. Merely
@@ -5077,6 +5250,10 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private val openProgressScreenListener = Observer<Unit?> {
         startActivity(Intent(this, ProgressActivity::class.java))
+    }
+
+    private val openFacePickerListener = Observer<Unit?> {
+        startActivity(Intent(this, FacePickerActivity::class.java))
     }
 
     /**
@@ -5404,9 +5581,25 @@ class MainActivity : WearCompanionWatchActivity(),
             rightFraction: Float,
             topFraction: Float,
             bottomFraction: Float
-    ): Float? = AdaptiveTextContrast.backdropLuminance(playerBackgroundStyle) {
-        sampleArtLuminance(leftFraction, rightFraction, topFraction, bottomFraction)
-    }
+    ): Float? = AdaptiveTextContrast.backdropLuminance(
+            playerBackgroundStyle,
+            artworkBandLuminance = {
+                sampleArtLuminance(leftFraction, rightFraction, topFraction, bottomFraction)
+            },
+            flatFillLuminance = { slot ->
+                AdaptiveTextContrast.relativeLuminance(flatAlbumFillColor(slot))
+            })
+
+    /** The colour a flat album fill paints, from the same triad every other surface reads. */
+    private fun flatAlbumFillColor(slot: AlbumFillSlot): Int = PaletteTransforms.tonalSurface(
+            when (slot) {
+                AlbumFillSlot.PRIMARY -> currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor
+                AlbumFillSlot.SECONDARY -> resolvedSecondaryAccent()
+                AlbumFillSlot.TERTIARY -> resolvedTertiaryAccent()
+            },
+            .24f,
+            PaletteTransforms.FACE_MIN_SAT,
+            PaletteTransforms.FACE_MAX_SAT)
 
     /** The album-derived clock colour, lifted or darkened away from the artwork under the clock
      *  when the user asked for it. Hue and saturation are untouched, so it still reads as the
@@ -5470,6 +5663,144 @@ class MainActivity : WearCompanionWatchActivity(),
     /** The band the title sits on - directly above the artist's, since the title is the taller
      *  line of the pair on every face. */
     private fun titleBandLuminance(): Float? = sampleBackdropLuminance(0.10f, 0.90f, 0.54f, 0.70f)
+
+    /**
+     * The resolved shadow for one element, or null when it draws nothing.
+     *
+     * Resolved against [currentAccentColor] rather than the raw album colour, so an "album" shadow
+     * matches the treatment, hue shift and modifier the rest of the screen is wearing. A zero
+     * accent means extraction has not produced one yet, which `TextShadowSpec.resolveColor` reads
+     * as absent and answers with black.
+     */
+    private fun resolvedShadowColor(spec: TextShadowSpec): Int? {
+        if (spec.isNone) return null
+        val base = TextShadowSpec.resolveColor(
+                spec.colorMode,
+                spec.customColor,
+                currentAccentColor.takeIf { it != 0 })
+        return ColorUtils.setAlphaComponent(base, (spec.alpha * 255f).toInt().coerceIn(0, 255))
+    }
+
+    /** The Compose faces' form of the same shadow. Null keeps a face exactly as it draws today. */
+    private fun composeShadow(spec: TextShadowSpec): ComposeShadow? {
+        val color = resolvedShadowColor(spec) ?: return null
+        val density = resources.displayMetrics.density
+        return ComposeShadow(
+                color = ComposeColor(color),
+                offset = Offset(0f, spec.offsetDp * density),
+                blurRadius = spec.radiusDp * density)
+    }
+
+    /** The Compose faces' form of one outline. Null keeps a face exactly as it draws today. */
+    private fun composeOutline(spec: TextOutlineSpec): TextOutlinePaint? {
+        if (spec.isNone) return null
+        val color = TextOutlineSpec.resolveColor(
+                spec.colorMode,
+                spec.customColor,
+                currentAccentColor.takeIf { it != 0 })
+        return TextOutlinePaint(
+                color = ComposeColor(color),
+                widthFraction = spec.style.widthFraction,
+                minWidthPx = TextOutlineStyle.MIN_WIDTH_DP * resources.displayMetrics.density)
+    }
+
+    /** The resolved backdrop fill, or null when nothing is drawn behind the line. */
+    private fun resolvedBackdropColor(spec: TextBackdropSpec): Int? {
+        if (spec.isNone) return null
+        val base = TextBackdropSpec.resolveColor(
+                spec.colorMode,
+                spec.customColor,
+                currentAccentColor.takeIf { it != 0 })
+        return ColorUtils.setAlphaComponent(base, (spec.alpha * 255f).toInt().coerceIn(0, 255))
+    }
+
+    private fun composeBackdrop(spec: TextBackdropSpec): ComposeColor? =
+            resolvedBackdropColor(spec)?.let(::ComposeColor)
+
+    /**
+     * The Classic face's title and artist shadows.
+     *
+     * `setShadowLayer` with a zero radius is not a faint shadow, it is *no shadow layer at all* -
+     * which is exactly what clearing one requires, so the none case passes zeros rather than
+     * skipping the call. Skipping it would leave a shadow behind after the user turned it off.
+     */
+    /** Takes the shadow, stroke and backdrop down on both lines, for ambient - see the call site. */
+    private fun clearClassicTextShadows() {
+        listOf(binding.textTitle, binding.textArtist).forEach { view ->
+            view.setShadowLayer(0f, 0f, 0f, 0)
+            view.strokeOutlineWidthFraction = 0f
+            view.textBackdropColor = 0
+        }
+    }
+
+    /**
+     * Slides Classic's metadata block so the *title* is what lands on the middle of the screen.
+     *
+     * The block is a full-height column with its children centred as a group, so the point that
+     * actually falls on the centre of the display is somewhere between the artist and the title,
+     * and it moves the moment a title wraps to a second line. With the switch on, the block is
+     * translated by the distance between its own centre and the title's, which pins the title
+     * there and lets the artist above and the elapsed time below hang off it.
+     *
+     * `translationY` rather than a layout change, deliberately: it is a draw-time property, so
+     * setting it from a layout listener cannot start a layout loop. It is also a different view
+     * from the one ambient burn-in jiggles (`content_frame`), so the two never fight.
+     *
+     * With no title on screen there is nothing to anchor, and shifting by half the block would
+     * push a lone artist line off the centre for no reason - so that case resets to zero.
+     */
+    private fun applyClassicTitleAnchor() {
+        val block = binding.classicMetadataBlock
+        val title = binding.textTitle
+        block.translationY = if (!titleCentered ||
+                title.visibility != View.VISIBLE ||
+                block.height == 0) {
+            0f
+        } else {
+            block.height / 2f - (title.top + title.height / 2f)
+        }
+    }
+
+    private fun applyClassicTextShadows() {
+        // applyAccentColor runs on track changes, which can land mid-ambient; without this the
+        // shadow onEnterAmbient just cleared would come straight back on the next cover.
+        if (ambientObserver.isAmbient) {
+            clearClassicTextShadows()
+            return
+        }
+        val density = resources.displayMetrics.density
+        val backdrops = mapOf(
+                binding.textTitle to titleBackdropSpec,
+                binding.textArtist to artistBackdropSpec)
+        listOf(
+                Triple(binding.textTitle, titleShadowSpec, titleOutlineSpec),
+                Triple(binding.textArtist, artistShadowSpec, artistOutlineSpec)
+        ).forEach { (view, shadow, outline) ->
+            view.textBackdropColor = backdrops[view]?.let(::resolvedBackdropColor) ?: 0
+            val color = resolvedShadowColor(shadow)
+            if (color == null) {
+                view.setShadowLayer(0f, 0f, 0f, 0)
+            } else {
+                view.setShadowLayer(
+                        (shadow.radiusDp * density).coerceAtLeast(MIN_SHADOW_LAYER_RADIUS_PX),
+                        0f,
+                        shadow.offsetDp * density,
+                        color)
+            }
+            // The width stays a fraction: this View shrinks its own text, so the stroke has to be
+            // resolved against whatever size the cascade settles on rather than the designed one.
+            view.strokeOutlineWidthFraction =
+                    if (outline.isNone) 0f else outline.style.widthFraction
+            view.strokeOutlineMinWidthPx = TextOutlineStyle.MIN_WIDTH_DP * density
+            view.textBackdropColor = 0
+            if (!outline.isNone) {
+                view.strokeOutlineColor = TextOutlineSpec.resolveColor(
+                        outline.colorMode,
+                        outline.customColor,
+                        currentAccentColor.takeIf { it != 0 })
+            }
+        }
+    }
 
     /** Applies the resolved awake-clock colour + font to the Classic View clock and pushes the
      *  colour into the face state for the Compose clock. Called on preference and artwork changes. */
@@ -5551,6 +5882,15 @@ class MainActivity : WearCompanionWatchActivity(),
         updateFaceState {
             it.copy(
                     ambient = true,
+                    // AOD is styled by the WEAR_AOD_* controls and never by the awake typography,
+                    // and a blur is the wrong thing on an always-on panel besides - it lights more
+                    // pixels for longer, which is what the burn-in jiggle exists to avoid.
+                    titleShadow = null,
+                    artistShadow = null,
+                    titleOutline = null,
+                    artistOutline = null,
+                    titleBackdrop = null,
+                    artistBackdrop = null,
                     ambientShowTrackInfo = aodShowTrackInfo,
                     ambientTint = resolvedAodTint(),
                     ambientIntensity = aodIntensity,
@@ -5576,6 +5916,11 @@ class MainActivity : WearCompanionWatchActivity(),
         applyAmbientViewColors()
         binding.textTitle.displayTextOutline = true
         binding.textPlaybackTime.displayTextOutline = true
+        // Ambient reuses these same Views, and the awake typography deliberately never reaches
+        // AOD - it has its own WEAR_AOD_* controls. A blur left behind here would also be exactly
+        // the wrong thing on an always-on panel: it lights more pixels for longer, which is what
+        // the burn-in jiggle exists to avoid.
+        clearClassicTextShadows()
     }
 
     private val ambientCallback = object : AmbientLifecycleObserver.AmbientLifecycleCallback {
@@ -5679,7 +6024,20 @@ class MainActivity : WearCompanionWatchActivity(),
                     viewModel.setContinuousPositionTicking(true)
                     stemButtonsManager.onExitAmbient()
 
-                    updateFaceState { it.copy(ambient = false) }
+                    updateFaceState {
+                        it.copy(
+                                ambient = false,
+                                // Released here rather than left standing: it is a second full
+                                // cover, and nothing awake has any use for it.
+                                ambientAlbumArt = null,
+                                // The counterpart to the nulls applyAmbientPresentation writes.
+                                titleShadow = composeShadow(titleShadowSpec),
+                                artistShadow = composeShadow(artistShadowSpec),
+                                titleOutline = composeOutline(titleOutlineSpec),
+                                artistOutline = composeOutline(artistOutlineSpec),
+                                titleBackdrop = composeBackdrop(titleBackdropSpec),
+                                artistBackdrop = composeBackdrop(artistBackdropSpec))
+                    }
                     // Restores the source-icon glyph the ambient pass cleared.
                     applyClassicSourceIcon()
                     binding.classicTextBlock.alpha = 1f
@@ -5752,6 +6110,8 @@ class MainActivity : WearCompanionWatchActivity(),
                     )
                     binding.textTitle.displayTextOutline = false
                     binding.textPlaybackTime.displayTextOutline = false
+                    // The counterpart to onEnterAmbient's clearClassicTextShadows().
+                    applyClassicTextShadows()
                     // Ambient presentation restores alpha to 1 while it freezes the readout.
                     // Put the per-face time typography back before making it visible again.
                     applyClassicTrackTimeTypography()
@@ -5983,7 +6343,7 @@ class MainActivity : WearCompanionWatchActivity(),
         // identical backdrop rather than their own approximation of it.
         binding.overlayDim.background = OverlayBackdropDrawables.build(
                 backdrop, accent, secondary, tertiary, density,
-                resources.displayMetrics.widthPixels)
+                resources.displayMetrics.widthPixels, resources.configuration.isScreenRound)
         return backdrop.usesAlbumBlur
     }
 
@@ -6913,6 +7273,55 @@ class MainActivity : WearCompanionWatchActivity(),
             OverlayBackdrop.MIDNIGHT, OverlayBackdrop.SMOKE -> Color.BLACK
             OverlayBackdrop.SUNRISE -> 0xFFFF8B70.toInt()
             OverlayBackdrop.DEEP_OCEAN -> 0xFF075D73.toInt()
+            OverlayBackdrop.NEBULA -> tonalSurface(accent, .30f)
+            OverlayBackdrop.EMBER -> 0xFFC44536.toInt()
+            OverlayBackdrop.TIDELINE -> 0xFF07516A.toInt()
+            OverlayBackdrop.BIOLUMINESCENCE -> 0xFF0A6A62.toInt()
+            OverlayBackdrop.IRIDESCENT -> 0xFF4A2F72.toInt()
+            OverlayBackdrop.GRAPHITE, OverlayBackdrop.CINEMA -> Color.BLACK
+            OverlayBackdrop.ORBIT -> tonalSurface(accent, .24f)
+            OverlayBackdrop.HORIZON -> tonalSurface(accent, .52f)
+            OverlayBackdrop.INK_WASH -> tonalSurface(accent, .22f)
+            OverlayBackdrop.BLOSSOM -> 0xFF542047.toInt()
+            OverlayBackdrop.FJORD -> 0xFF0A5960.toInt()
+            // Carried over from the player catalogue. Each is the tone the *centre* of the panel
+            // actually lands on, which is what this contrast decision needs: Rose's bloom sits low
+            // and right, so the centre is on its plum base, and Monolith's slab is on the left.
+            OverlayBackdrop.DUSK -> tonalSurface(resolvedQuickPanelTertiaryAccent(), .17f)
+            OverlayBackdrop.ICE -> 0xFF1B4A78.toInt()
+            OverlayBackdrop.ROSE -> 0xFF1B0810.toInt()
+            OverlayBackdrop.PAPER -> 0xFF241F17.toInt()
+            OverlayBackdrop.MONOLITH -> 0xFF060608.toInt()
+            // Lantern's lamp and Noir's well both sit under the centred text, so those are the
+            // tones the text is actually read against; Mirage and Bloom keep their glows at the
+            // edges by design, which leaves their dark base in the middle.
+            OverlayBackdrop.LANTERN -> tonalSurface(resolvedQuickPanelTertiaryAccent(), .12f)
+            OverlayBackdrop.NOIR -> 0xFF141414.toInt()
+            OverlayBackdrop.VELVET -> 0xFF120B16.toInt()
+            OverlayBackdrop.MIRAGE -> 0xFF0A0A0E.toInt()
+            OverlayBackdrop.BLOOM -> 0xFF0B0B0F.toInt()
+            // Cloud's third cloud and Liquid's middle pool both sit near the centre, so those are
+            // album tones; Nocturne's glow is high and right and Tidal's middle wave crosses the
+            // centre but is a stroke rather than a field, so both leave their dark base there.
+            OverlayBackdrop.CLOUD -> tonalSurface(resolvedQuickPanelTertiaryAccent(), .30f)
+            OverlayBackdrop.LIQUID -> tonalSurface(resolvedQuickPanelSecondaryAccent(), .42f)
+            OverlayBackdrop.NOCTURNE -> 0xFF070B25.toInt()
+            OverlayBackdrop.TIDAL -> 0xFF08080B.toInt()
+            // Corona and Crescent keep their colour at the rim by design, so the centre - where
+            // this text sits - is their dark field. Vinyl's glow does reach it.
+            OverlayBackdrop.VINYL -> tonalSurface(accent, .28f)
+            OverlayBackdrop.CORONA -> 0xFF08080B.toInt()
+            OverlayBackdrop.CRESCENT -> 0xFF07070A.toInt()
+            OverlayBackdrop.GRID -> tonalSurface(resolvedQuickPanelTertiaryAccent(), .10f)
+            // The pale veil is the surface here, not the hairline rim.
+            OverlayBackdrop.GLASS_VEIL -> 0xFF3A3A3A.toInt()
+            // Material's container and Poster's cleared middle both put an album tone under the
+            // centred text; Studio's light has fallen off by the middle and Spectrum's band there
+            // is its darker second stop.
+            OverlayBackdrop.MATERIAL -> tonalSurface(accent, .26f)
+            OverlayBackdrop.POSTER -> tonalSurface(accent, .22f)
+            OverlayBackdrop.STUDIO -> tonalSurface(resolvedQuickPanelSecondaryAccent(), .16f)
+            OverlayBackdrop.SPECTRUM -> tonalSurface(resolvedQuickPanelTertiaryAccent(), .14f)
             // The centre of the Expressive wash, where this text sits, is well inside the vignette
             // and reads as a dark album tone rather than as black.
             OverlayBackdrop.EXPRESSIVE, OverlayBackdrop.EXPRESSIVE_NO_BLUR ->
@@ -6922,6 +7331,13 @@ class MainActivity : WearCompanionWatchActivity(),
             OverlayBackdrop.LIQUID_GLASS,
             OverlayBackdrop.GLASS, OverlayBackdrop.SOLID_BLACK, OverlayBackdrop.FOLLOW_STYLE ->
                 Color.BLACK
+            // Dark bases with only thin lines/dots over them, like Graphite/Cinema above.
+            OverlayBackdrop.DOT_MATRIX, OverlayBackdrop.SCANLINES,
+            OverlayBackdrop.RADAR, OverlayBackdrop.CONTOUR -> Color.BLACK
+            // No single colour is "the" facet under the text - it depends on the grid cell the
+            // centre happens to land in. The middle of the tone band the facets are drawn from is
+            // the honest answer for a contrast decision, which does not need to be exact.
+            OverlayBackdrop.FACETED -> tonalSurface(accent, .22f)
         }
     }
 

@@ -28,9 +28,49 @@ class OverlayBackdropTest {
             "smoke" to OverlayBackdrop.SMOKE,
             "sunrise" to OverlayBackdrop.SUNRISE,
             "deep_ocean" to OverlayBackdrop.DEEP_OCEAN,
+            "nebula" to OverlayBackdrop.NEBULA,
+            "ember" to OverlayBackdrop.EMBER,
+            "tideline" to OverlayBackdrop.TIDELINE,
+            "bioluminescence" to OverlayBackdrop.BIOLUMINESCENCE,
+            "iridescent" to OverlayBackdrop.IRIDESCENT,
+            "graphite" to OverlayBackdrop.GRAPHITE,
+            "cinema" to OverlayBackdrop.CINEMA,
+            "orbit" to OverlayBackdrop.ORBIT,
+            "horizon" to OverlayBackdrop.HORIZON,
+            "ink_wash" to OverlayBackdrop.INK_WASH,
+            "blossom" to OverlayBackdrop.BLOSSOM,
+            "fjord" to OverlayBackdrop.FJORD,
             "liquid_glass" to OverlayBackdrop.LIQUID_GLASS,
             "expressive" to OverlayBackdrop.EXPRESSIVE,
-            "expressive_no_blur" to OverlayBackdrop.EXPRESSIVE_NO_BLUR
+            "expressive_no_blur" to OverlayBackdrop.EXPRESSIVE_NO_BLUR,
+            "dot_matrix" to OverlayBackdrop.DOT_MATRIX,
+            "scanlines" to OverlayBackdrop.SCANLINES,
+            "radar" to OverlayBackdrop.RADAR,
+            "contour" to OverlayBackdrop.CONTOUR,
+            "faceted" to OverlayBackdrop.FACETED,
+            "dusk" to OverlayBackdrop.DUSK,
+            "ice" to OverlayBackdrop.ICE,
+            "rose" to OverlayBackdrop.ROSE,
+            "paper" to OverlayBackdrop.PAPER,
+            "monolith" to OverlayBackdrop.MONOLITH,
+            "lantern" to OverlayBackdrop.LANTERN,
+            "noir" to OverlayBackdrop.NOIR,
+            "velvet" to OverlayBackdrop.VELVET,
+            "mirage" to OverlayBackdrop.MIRAGE,
+            "bloom" to OverlayBackdrop.BLOOM,
+            "cloud" to OverlayBackdrop.CLOUD,
+            "nocturne" to OverlayBackdrop.NOCTURNE,
+            "liquid" to OverlayBackdrop.LIQUID,
+            "tidal" to OverlayBackdrop.TIDAL,
+            "vinyl" to OverlayBackdrop.VINYL,
+            "corona" to OverlayBackdrop.CORONA,
+            "crescent" to OverlayBackdrop.CRESCENT,
+            "grid" to OverlayBackdrop.GRID,
+            "glass_veil" to OverlayBackdrop.GLASS_VEIL,
+            "material" to OverlayBackdrop.MATERIAL,
+            "poster" to OverlayBackdrop.POSTER,
+            "studio" to OverlayBackdrop.STUDIO,
+            "spectrum" to OverlayBackdrop.SPECTRUM
     )
 
     @Test
@@ -108,7 +148,10 @@ class OverlayBackdropTest {
                 OverlayBackdrop.PRISM,
                 OverlayBackdrop.LIQUID_GLASS,
                 OverlayBackdrop.EXPRESSIVE,
-                OverlayBackdrop.SMOKE
+                OverlayBackdrop.SMOKE,
+                OverlayBackdrop.NEBULA,
+                OverlayBackdrop.BIOLUMINESCENCE,
+                OverlayBackdrop.INK_WASH
         )
 
         OverlayBackdrop.values().forEach { backdrop ->

@@ -326,6 +326,138 @@
                 app:icon="@drawable/ic_tune"
                 tools:text="Automatic (shrink, then wrap, then scroll)" />
 
+            <!-- The shadow's entry point. Its colour and intensity below only appear once a style
+                 has been chosen: with no shadow there is nothing for either to change, and a
+                 control that changes nothing reads as broken rather than as inapplicable. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/typography_shadow_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                app:icon="@drawable/ic_dark_mode"
+                tools:text="Shadow: Soft" />
+
+            <LinearLayout
+                android:id="@+id/typography_shadow_detail_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/typography_shadow_color_button"
+                    style="@style/LyraGestureButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    app:icon="@drawable/ic_palette"
+                    tools:text="Black" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/typography_shadow_strength_button"
+                    style="@style/LyraGestureButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    app:icon="@drawable/ic_text_fields"
+                    tools:text="100%" />
+
+            </LinearLayout>
+
+            <!-- The picked colour, shown only while the mode above is Custom. Without it the mode
+                 could be set to Custom and the colour behind it never chosen, because that row is
+                 hidden on this page and the mode dialog only reports an actual change - so
+                 re-picking Custom to reach the swatch did nothing. Same pair as the Colors page. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/typography_shadow_custom_color_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                app:icon="@drawable/ic_palette"
+                tools:text="Custom color" />
+
+            <!-- Same shape as the shadow above: the entry point is always offered, its colour
+                 appears once there is a stroke to colour. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/typography_outline_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                app:icon="@drawable/ic_border_color"
+                tools:text="Outline: Thin" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/typography_outline_color_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                app:icon="@drawable/ic_palette"
+                tools:text="Black" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/typography_outline_custom_color_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                app:icon="@drawable/ic_palette"
+                tools:text="Custom color" />
+
+            <!-- The plate behind the words, with its colour and opacity appearing together once
+                 there is a plate to describe - the same shape as the shadow row above. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/typography_backdrop_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                app:icon="@drawable/ic_format_paint"
+                tools:text="Backdrop: Highlight" />
+
+            <LinearLayout
+                android:id="@+id/typography_backdrop_detail_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/typography_backdrop_color_button"
+                    style="@style/LyraGestureButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    app:icon="@drawable/ic_palette"
+                    tools:text="Black" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/typography_backdrop_opacity_button"
+                    style="@style/LyraGestureButton"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_weight="1"
+                    app:icon="@drawable/ic_text_fields"
+                    tools:text="100%" />
+
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/typography_backdrop_custom_color_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                app:icon="@drawable/ic_palette"
+                tools:text="Custom color" />
+
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

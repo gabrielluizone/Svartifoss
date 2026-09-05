@@ -1,0 +1,46 @@
+Modifications to source_code_pro_regular.ttf
+============================================
+
+The SIL Open Font License permits modification and does not require this
+notice, but it is recorded for the same reason `special-
+elite/MODIFICATIONS.txt` in this repository is: a binary font file carries no
+diff, so without a written record a future re-download of the upstream release
+would silently undo the fix.
+
+The bundled copies of this font
+(mobile/src/main/res/font/source_code_pro_regular.ttf and
+wear/src/main/res/font/source_code_pro_regular.ttf) have been modified from
+the upstream release at
+https://github.com/google/fonts/tree/main/ofl/sourcecodepro. Only the vertical
+metrics were changed; no glyph outline, character mapping, name table or
+Reserved Font Name was touched.
+
+  hhea.ascent            984  ->   958
+  hhea.descent          -273  ->  -299
+  hhea.lineGap             0  ->     0   (unchanged)
+  OS/2.sTypoAscender     984  ->   958
+  OS/2.sTypoDescender   -273  ->  -299
+  OS/2.sTypoLineGap        0  ->     0   (unchanged)
+
+Why
+---
+
+Every renderer centres a line of text by its line box - Compose measures it, a
+wrapped `TextView` *is* it, the phone preview computes a baseline from it - so
+where a font's ink sits inside that box is the font's decision, not the app's.
+This font's box centre sat 0.0260 em above its own capital letters, which
+reads as text sitting high in a centred pill or chip.
+
+The correction centres the box on the font's flat capital letters - E, F, H,
+I, L, which are uniform in this font (no round-letter overshoot or swash tail
+complicates the measurement).
+
+ascent + |descent| is unchanged (1257 units in this font's 1000-unit em), so
+line height, spacing, wrapping and every reserved height are the same as
+upstream; only where the ink sits inside that box moves. The flat-cap band now
+lands within a rounding error of the box centre, and every ordinary descender
+(g, j, p, q, y, accented Latin letters) clears the new descent line with room
+to spare.
+
+Pinned by BundledFontMetricsTest, so a re-download from upstream fails the
+build rather than silently reverting the fix.

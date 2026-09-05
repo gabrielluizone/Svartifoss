@@ -4,18 +4,25 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.Animatable
 import android.media.MediaMetadata
 import android.media.session.MediaController
 import android.os.Build
 import android.os.Bundle
+import android.text.InputFilter
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.TooltipCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -25,7 +32,9 @@ import androidx.preference.PreferenceManager
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.card.MaterialCardView
+import com.google.android.material.imageview.ShapeableImageView
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.CommunityThemeScreenshots
 import com.svartifoss.snfell.common.R as commonR
 import com.svartifoss.snfell.music.ActiveMediaSessionProvider
 import com.svartifoss.snfell.view.LyraAccent
@@ -35,6 +44,7 @@ import com.svartifoss.snfell.view.watchface.WatchPreviewView
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import timber.log.Timber
 import java.text.NumberFormat
 import java.time.Instant
 import java.time.ZoneId
@@ -110,18 +120,55 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
     private lateinit var minimumVersionValue: TextView
     private lateinit var publishedValue: TextView
     private lateinit var settingsValue: TextView
+    private lateinit var downloadsValue: TextView
     private lateinit var error: TextView
     private lateinit var themeActionButton: MaterialButton
     private lateinit var likeButton: MaterialButton
+    private lateinit var reportButton: MaterialButton
     private lateinit var surfaceToggleGroup: MaterialButtonToggleGroup
+    private lateinit var screenshotImage: ShapeableImageView
+    private lateinit var screenshotToggle: ImageButton
+
+    /** Decoded once per visit; kept so switching back to it costs no second fetch. */
+    private var authorScreenshot: Bitmap? = null
+    private var authorScreenshotSurfaces: List<String> = emptyList()
+    private var screenshotLoading = false
+    private val onlineThemes by lazy(LazyThreadSafetyMode.NONE) {
+        OnlineThemesRepository(applicationContext)
+    }
+
+    /**
+     * Whether the author's photograph is preferred over the local render, remembered across visits.
+     *
+     * It gates the **download**, not only the display: turning it off is therefore also the answer
+     * for someone who does not want the gallery fetching images at all. Phone-local and deliberately
+     * outside `MiscPreferences.EXPORTABLE`, so it never reaches the watch or a saved theme.
+     */
+    private var showAuthorScreenshot: Boolean
+        get() = defaultPrefs.getBoolean(PREF_SHOW_SCREENSHOTS, true)
+        set(value) {
+            defaultPrefs.edit().putBoolean(PREF_SHOW_SCREENSHOTS, value).apply()
+        }
     /** Optional: absence of a default Firebase app must not prevent static detail browsing. */
     private var likeRepository: CommunityThemeLikeRepository? = null
+    private var installRepository: CommunityThemeInstallRepository? = null
+    private var reportRepository: CommunityThemeReportRepository? = null
 
     private var selectedSurface = PreviewSurface.PLAYER
     private var parsedProfile: WatchThemeProfile? = null
     private var installedProfile: WatchThemeProfile? = null
     private var publicName = ""
     private var publishedLikes = 0
+
+    /**
+     * The catalogue's aggregated install count.
+     *
+     * Unlike the like count this is never moved by anything the current visit does. An install
+     * finishes the screen — the activity closes on success — so there is no moment where a stale
+     * figure would sit in front of the person who just changed it, and inventing a +1 on a number
+     * whose ledger may already contain this account from an earlier install would be a guess.
+     */
+    private var publishedInstalls = 0
     /**
      * What this visit changed, relative to the catalogue's aggregated count.
      *
@@ -137,6 +184,15 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
     private var canInstall = true
     private var likeResultChanged = false
     private var likeStateKnown = false
+    private var alreadyReported = false
+    /**
+     * The author the byline currently names, or null while it names nobody the gallery can filter
+     * by. Held rather than re-read from the launching Intent: the name can also come out of the
+     * fetched profile, and a byline that looks tappable and then does nothing is worse than one
+     * that never offered.
+     */
+    private var linkedAuthor: String? = null
+    private var reportBusy = false
     private val accentPreferenceListener =
             SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
                 if (LyraAccent.affectsResolvedColor(key) && ::themeActionButton.isInitialized) {
@@ -172,9 +228,11 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
         minimumVersionValue = findViewById(R.id.community_theme_detail_minimum_version_value)
         publishedValue = findViewById(R.id.community_theme_detail_published_value)
         settingsValue = findViewById(R.id.community_theme_detail_settings_value)
+        downloadsValue = findViewById(R.id.community_theme_detail_downloads_value)
         error = findViewById(R.id.community_theme_detail_error)
         themeActionButton = findViewById(R.id.button_add_apply_community_theme)
         likeButton = findViewById(R.id.button_like_community_theme)
+        reportButton = findViewById(R.id.button_report_community_theme)
         surfaceToggleGroup = findViewById(R.id.community_theme_detail_surfaces)
         ViewCompat.setAccessibilityHeading(
                 findViewById(R.id.community_theme_detail_toolbar_title),
@@ -186,13 +244,23 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
         preview.isClickable = true
         preview.isFocusable = true
         preview.setOnClickListener { openFullScreenPreview() }
+        screenshotImage = findViewById(R.id.community_theme_detail_screenshot)
+        screenshotToggle = findViewById(R.id.community_theme_detail_screenshot_toggle)
+        screenshotImage.setOnClickListener { openFullScreenScreenshot() }
+        screenshotToggle.setOnClickListener {
+            showAuthorScreenshot = !showAuthorScreenshot
+            if (showAuthorScreenshot) loadAuthorScreenshot()
+            applyPreviewSource()
+        }
         ViewCompat.replaceAccessibilityAction(
                 preview,
                 AccessibilityActionCompat.ACTION_CLICK,
                 getString(R.string.watch_preview_expand),
                 null)
         themeActionButton.setOnClickListener { handleThemeAction() }
+        detailAuthor.setOnClickListener { openAuthorInGallery() }
         likeButton.setOnClickListener { toggleLike() }
+        reportButton.setOnClickListener { openReportDialog() }
         surfaceToggleGroup.addOnButtonCheckedListener { _, checkedId, isChecked ->
             if (isChecked) {
                 PreviewSurface.values().firstOrNull { it.buttonId == checkedId }
@@ -211,6 +279,7 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
         sessionLikeDelta = savedInstanceState?.getInt(STATE_LIKE_DELTA) ?: 0
         likeResultChanged = savedInstanceState?.getBoolean(STATE_LIKE_CHANGED) ?: false
         likeStateKnown = savedInstanceState?.getBoolean(STATE_LIKE_KNOWN) ?: false
+        alreadyReported = savedInstanceState?.getBoolean(STATE_REPORTED) ?: false
         loadProfile()
         if (likeStateKnown || likeResultChanged) setResult(RESULT_OK, galleryResultIntent())
         observeLocalArtwork()
@@ -241,6 +310,7 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
         outState.putInt(STATE_LIKE_DELTA, sessionLikeDelta)
         outState.putBoolean(STATE_LIKE_CHANGED, likeResultChanged)
         outState.putBoolean(STATE_LIKE_KNOWN, likeStateKnown)
+        outState.putBoolean(STATE_REPORTED, alreadyReported)
         super.onSaveInstanceState(outState)
     }
 
@@ -277,9 +347,12 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
         }
 
         parsedProfile = profile
+        authorScreenshotSurfaces = screenshotSurfaces(rawProfile)
+        loadAuthorScreenshot()
         previewCard.visibility = View.VISIBLE
         publicName = intent.textExtra(EXTRA_NAME) ?: profile.name
         publishedLikes = intent.getIntExtra(EXTRA_LIKES, 0).coerceAtLeast(0)
+        publishedInstalls = intent.getIntExtra(EXTRA_INSTALLS, 0).coerceAtLeast(0)
         canInstall = intent.getBooleanExtra(EXTRA_CAN_INSTALL, true)
         refreshInstalledProfile()
         val author = intent.textExtra(EXTRA_AUTHOR) ?: rawProfile.textOrNull("author")
@@ -293,7 +366,7 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
                 ?: getString(R.string.community_theme_detail_not_available)
 
         detailName.text = publicName
-        detailAuthor.text = getString(R.string.community_theme_detail_byline, author)
+        renderAuthorLink(author)
         layoutValue.text = WatchThemeRepository.displayNameForFace(this, profile.baseFace)
         minimumVersionValue.text = minimumVersion
         publishedValue.text = formatPublishedAt(publishedAt)
@@ -303,6 +376,7 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
                 R.plurals.community_theme_detail_settings_count,
                 profile.settings.size,
                 settingsCount)
+        renderDownloads()
         // Only the in-memory cover may be used locally. Text, timing, queue, upload and
         // moderation rendering remain on the fixed sample media inside WatchPreviewView.
         preview.setThemeProfile(profile, useLocalArtwork = true)
@@ -315,6 +389,7 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
             error.visibility = View.VISIBLE
         }
         renderLikeAction()
+        renderReportAction()
         applyCommunityAccent()
 
         // WatchPreviewView's existing public preference routing selects each real watch surface.
@@ -323,6 +398,25 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
         surfaceToggleGroup.check(selectedSurface.buttonId)
         showSurface(selectedSurface)
         loadCurrentLike()
+        loadCurrentReport()
+    }
+
+    /**
+     * The published download count.
+     *
+     * A theme published before install aggregation existed carries no figure, and the catalogue
+     * reader reports that as zero — so a fresh listing and an unaggregated one look identical
+     * here. Both are shown as the number they are rather than hedged: the publisher backfills a
+     * missing count on its next run instead of waiting out the refresh interval, so the ambiguous
+     * state lasts hours rather than being a permanent property of the entry.
+     */
+    private fun renderDownloads() {
+        val count = formatCount(publishedInstalls)
+        downloadsValue.text = count
+        downloadsValue.contentDescription = resources.getQuantityString(
+                R.plurals.community_theme_detail_downloads_count,
+                publishedInstalls,
+                count)
     }
 
     /**
@@ -348,11 +442,101 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
         selectedSurface = surface
         previews { it.showPreviewSurface(surface.previewSurface) }
         val surfaceName = getString(surface.labelRes)
-        previewLabel.text = getString(R.string.community_theme_detail_preview_label, surfaceName)
         preview.contentDescription = getString(
                 R.string.community_theme_detail_preview_description,
                 publicName.ifBlank { getString(R.string.community_theme_detail_title) },
                 surfaceName)
+        applyPreviewSource()
+    }
+
+    /**
+     * Which surfaces the publisher committed a photograph for.
+     *
+     * An unknown name is dropped rather than refused: this build may be older than the catalogue,
+     * and a profile naming a surface a later version added must still install here. The degraded
+     * result is the locally-rendered preview every theme without a photograph already shows.
+     */
+    private fun screenshotSurfaces(profile: JSONObject): List<String> {
+        val declared = profile.optJSONArray("screenshots") ?: return emptyList()
+        val surfaces = LinkedHashSet<String>()
+        for (index in 0 until declared.length()) {
+            val surface = declared.optString(index)
+            if (surface in CommunityThemeScreenshots.SURFACES) surfaces.add(surface)
+        }
+        return surfaces.toList()
+    }
+
+    private fun hasAuthorScreenshot(): Boolean =
+            CommunityThemeScreenshots.SURFACE_PLAYER in authorScreenshotSurfaces
+
+    private fun loadAuthorScreenshot() {
+        val themeId = intent.textExtra(EXTRA_ID) ?: return
+        if (!hasAuthorScreenshot() || !showAuthorScreenshot) return
+        if (authorScreenshot != null || screenshotLoading) return
+        screenshotLoading = true
+        lifecycleScope.launch {
+            val bytes = onlineThemes.loadScreenshot(
+                    themeId,
+                    CommunityThemeScreenshots.SURFACE_PLAYER)
+            screenshotLoading = false
+            authorScreenshot = bytes?.let(::decodeScreenshot)
+            authorScreenshot?.let(screenshotImage::setImageBitmap)
+            applyPreviewSource()
+        }
+    }
+
+    private fun decodeScreenshot(bytes: ByteArray): Bitmap? = try {
+        BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+    } catch (error: Exception) {
+        Timber.d(error, "Could not decode a community theme screenshot")
+        null
+    }
+
+    /**
+     * Chooses between the author's photograph and the local render, and says which is on screen.
+     *
+     * The photograph only ever covers the Player: it is the one surface an author can capture, and
+     * every other one keeps rendering from the profile exactly as before. Saying so matters more
+     * here than it looks -- a screenshot is unverifiable, so a visitor has to be able to tell which
+     * of the two they are judging, and to reach the honest one in a single tap.
+     */
+    private fun applyPreviewSource() {
+        val surfaceName = getString(selectedSurface.labelRes)
+        val onPlayer = selectedSurface == PreviewSurface.PLAYER
+        val offered = onPlayer && hasAuthorScreenshot()
+        val showing = offered && showAuthorScreenshot && authorScreenshot != null
+        screenshotImage.visibility = if (showing) View.VISIBLE else View.GONE
+        screenshotToggle.visibility = if (offered) View.VISIBLE else View.GONE
+        // The icon names where a tap goes, not where you are: the label below already says which of
+        // the two is on screen, and repeating that here would leave the control saying nothing
+        // about what it does.
+        screenshotToggle.setImageResource(if (showing) R.drawable.ic_watch else R.drawable.ic_menu_gallery)
+        screenshotToggle.contentDescription = getString(if (showing) {
+            R.string.community_theme_detail_show_rendered
+        } else {
+            R.string.community_theme_detail_show_author
+        })
+        TooltipCompat.setTooltipText(screenshotToggle, screenshotToggle.contentDescription)
+        previewLabel.text = if (offered) {
+            getString(
+                    R.string.community_theme_detail_preview_source,
+                    getString(R.string.community_theme_detail_preview_label, surfaceName),
+                    getString(if (showing) {
+                        R.string.community_theme_detail_source_author
+                    } else {
+                        R.string.community_theme_detail_source_rendered
+                    }))
+        } else {
+            getString(R.string.community_theme_detail_preview_label, surfaceName)
+        }
+    }
+
+    private fun openFullScreenScreenshot() {
+        val bitmap = authorScreenshot ?: return
+        WatchPreviewFullScreen.showImage(
+                this,
+                bitmap,
+                getString(R.string.community_theme_detail_screenshot_description))
     }
 
     /**
@@ -593,6 +777,19 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
             })
             button.setTextColor(if (selected) onAccent else accentText)
         }
+        // A tappable name is the accent colour, the same as the gallery card's byline, so the two
+        // screens agree about which text in front of you is a link.
+        detailAuthor.setTextColor(
+                if (linkedAuthor != null) accentText else getColor(R.color.lyra_text_secondary))
+        // The report row is a stock TextButton, so its label came from the theme's colorPrimary -
+        // the static Lyra sage, resolved once at inflation and unable to follow the runtime
+        // accent. It was the one control on this card still reading green under a custom or
+        // album-derived accent. Ripple is set alongside it for the same reason the like button
+        // sets one: the default ripple is also drawn from that static primary.
+        if (::reportButton.isInitialized) {
+            reportButton.setTextColor(accentText)
+            reportButton.rippleColor = ColorStateList.valueOf(getColor(R.color.lyra_ripple))
+        }
         renderLikeAction()
     }
 
@@ -644,6 +841,49 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
         resources.configuration.locale ?: Locale.getDefault()
     }
 
+    /**
+     * Draws the byline and decides whether it is a control at all.
+     *
+     * A theme whose author could not be resolved shows the fallback text and stops being tappable:
+     * filtering the gallery by "Not available" would return an empty list and read as a bug rather
+     * than as a missing name.
+     */
+    private fun renderAuthorLink(author: String) {
+        val linkable = author.isNotBlank() &&
+                author != getString(R.string.community_theme_detail_not_available)
+        detailAuthor.text = if (linkable) {
+            getString(R.string.community_theme_detail_byline, author)
+        } else {
+            author
+        }
+        // The layout's ?selectableItemBackground is inert on a view that takes no touches, so an
+        // unlinkable byline needs nothing removed -- only the click disabled.
+        detailAuthor.isClickable = linkable
+        detailAuthor.isFocusable = linkable
+        detailAuthor.contentDescription = if (linkable) {
+            getString(R.string.online_theme_filter_author, author)
+        } else {
+            detailAuthor.text
+        }
+        linkedAuthor = author.takeIf { linkable }
+        applyCommunityAccent()
+    }
+
+    /**
+     * Hands the author back to the gallery and closes, rather than opening a second gallery.
+     *
+     * This screen is always reached from the gallery, and the gallery *is* the list of an author's
+     * work. Starting another one would put two catalogues on the back stack, so that pressing Back
+     * from an author's themes would land on an unfiltered copy of the same screen.
+     */
+    private fun openAuthorInGallery() {
+        val author = linkedAuthor ?: return
+        setResult(RESULT_OK, galleryResultIntent().apply {
+            putExtra(EXTRA_AUTHOR_FILTER, author)
+        })
+        finish()
+    }
+
     private fun galleryResultIntent(): Intent = Intent().apply {
         this@CommunityThemeDetailActivity.intent.textExtra(EXTRA_ID)?.let {
             putExtra(EXTRA_ID, it)
@@ -682,6 +922,153 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
             CommunityThemeLikeRepository().also { likeRepository = it }
         } catch (_: Exception) {
             null
+        }
+    }
+
+    /** [likeRepositoryOrNull] for the download ledger; an unconfigured build simply never counts. */
+    private fun installRepositoryOrNull(): CommunityThemeInstallRepository? {
+        installRepository?.let { return it }
+        return try {
+            CommunityThemeInstallRepository().also { installRepository = it }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    private fun reportRepositoryOrNull(): CommunityThemeReportRepository? {
+        reportRepository?.let { return it }
+        return try {
+            CommunityThemeReportRepository().also { reportRepository = it }
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    /**
+     * Reads back whether this device has already reported the theme.
+     *
+     * Failure is silent for the same reason the like lookup's is: the answer only changes a label,
+     * and a toast about a background read nobody asked for would be noise. A device that cannot
+     * tell falls back to offering the report, which the write itself then reports as already made.
+     */
+    private fun loadCurrentReport() {
+        if (alreadyReported) {
+            renderReportAction()
+            return
+        }
+        val themeId = intent.textExtra(EXTRA_ID) ?: return
+        val repository = reportRepositoryOrNull() ?: return
+        lifecycleScope.launch {
+            when (val state = repository.load(themeId)) {
+                is CommunityThemeReportState.Loaded -> {
+                    alreadyReported = state.reported
+                    renderReportAction()
+                }
+                is CommunityThemeReportState.Failed -> Unit
+            }
+        }
+    }
+
+    private fun renderReportAction() {
+        if (!::reportButton.isInitialized) return
+        reportButton.isEnabled = parsedProfile != null && !alreadyReported && !reportBusy
+        reportButton.setText(if (alreadyReported) {
+            R.string.community_theme_report_already
+        } else {
+            R.string.community_theme_report_action
+        })
+        reportButton.alpha = if (reportButton.isEnabled) 1f else 0.5f
+        reportButton.contentDescription = if (alreadyReported) {
+            getString(R.string.community_theme_report_already)
+        } else {
+            getString(R.string.community_theme_report_description, publicName)
+        }
+    }
+
+    /**
+     * Collects a reason and, optionally, the reporter's own words.
+     *
+     * Reporting needs no account: [CommunityThemeReportRepository] provisions an anonymous one
+     * silently, exactly as a heart tap does. Asking somebody to sign in with Google before they
+     * can flag offensive content puts the cost on the wrong person.
+     */
+    private fun openReportDialog() {
+        val themeId = intent.textExtra(EXTRA_ID) ?: return
+        if (parsedProfile == null || alreadyReported || reportBusy) return
+        val view = LayoutInflater.from(this)
+                .inflate(R.layout.dialog_community_theme_report, null, false)
+        val reasons = view.findViewById<RadioGroup>(R.id.community_theme_report_reason)
+        val details = view.findViewById<EditText>(R.id.community_theme_report_details)
+        details.filters = arrayOf(InputFilter.LengthFilter(COMMUNITY_THEME_REPORT_DETAILS_MAX_LENGTH))
+        val dialog = AlertDialog.Builder(this)
+                .setTitle(R.string.community_theme_report_title)
+                .setView(view)
+                .setNegativeButton(android.R.string.cancel, null)
+                .setPositiveButton(R.string.community_theme_report_submit) { _, _ ->
+                    sendReport(
+                            themeId,
+                            reasonFor(reasons.checkedRadioButtonId),
+                            details.text?.toString())
+                }
+                .create()
+        dialog.setOnShowListener {
+            dialog.applyLyraDialogStyling(accent = LyraAccent.contrastSafe(
+                    LyraAccent.resolve(this),
+                    getColor(R.color.lyra_surface),
+                    minimumContrast = 4.5))
+        }
+        dialog.show()
+    }
+
+    /**
+     * The radio ids are presentation; the wire values are the contract firestore.rules mirrors.
+     *
+     * An unrecognised id resolves to [CommunityThemeReportReason.OTHER] rather than refusing to
+     * send: the one way to reach that branch is a layout edit, and losing the report because a
+     * button was renamed is worse than filing it under the least specific reason.
+     */
+    private fun reasonFor(checkedId: Int): CommunityThemeReportReason = when (checkedId) {
+        R.id.community_theme_report_inappropriate -> CommunityThemeReportReason.INAPPROPRIATE
+        R.id.community_theme_report_impersonation -> CommunityThemeReportReason.IMPERSONATION
+        R.id.community_theme_report_misleading -> CommunityThemeReportReason.MISLEADING
+        R.id.community_theme_report_illegible -> CommunityThemeReportReason.ILLEGIBLE
+        R.id.community_theme_report_spam -> CommunityThemeReportReason.SPAM
+        else -> CommunityThemeReportReason.OTHER
+    }
+
+    private fun sendReport(
+            themeId: String,
+            reason: CommunityThemeReportReason,
+            details: String?
+    ) {
+        val repository = reportRepositoryOrNull() ?: run {
+            Toast.makeText(this, R.string.community_theme_report_error, Toast.LENGTH_LONG).show()
+            return
+        }
+        lifecycleScope.launch {
+            reportBusy = true
+            renderReportAction()
+            try {
+                val message = when (repository.report(themeId, reason, details)) {
+                    CommunityThemeReportResult.Sent -> {
+                        alreadyReported = true
+                        R.string.community_theme_report_sent
+                    }
+                    CommunityThemeReportResult.AlreadyReported -> {
+                        alreadyReported = true
+                        R.string.community_theme_report_already_sent
+                    }
+                    CommunityThemeReportResult.NotReady -> R.string.community_theme_report_not_ready
+                    CommunityThemeReportResult.InvalidTheme,
+                    is CommunityThemeReportResult.Failed -> R.string.community_theme_report_error
+                }
+                Toast.makeText(this@CommunityThemeDetailActivity, message, Toast.LENGTH_LONG).show()
+            } catch (error: CancellationException) {
+                throw error
+            } finally {
+                reportBusy = false
+                renderReportAction()
+            }
         }
     }
 
@@ -785,6 +1172,14 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
                     setResult(RESULT_OK, galleryResultIntent().apply {
                         result.profile.publishedTheme?.id?.let { putExtra(EXTRA_ID, it) }
                     })
+                    // The one moment the download figure can honestly be moved: a static catalogue
+                    // never sees a download, so a successful install on a phone is the only event
+                    // there is to count. Recorded for an already-installed theme too -- the ledger
+                    // is one document per account, so re-applying is idempotent, and this is what
+                    // backfills somebody who installed before the ledger existed.
+                    result.profile.publishedTheme?.id?.let { id ->
+                        installRepositoryOrNull()?.recordInstallDetached(id)
+                    }
                     val message = if (result.alreadyInstalled) {
                         getString(R.string.community_theme_detail_apply_existing)
                     } else {
@@ -822,20 +1217,25 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
     private fun showProfileError(message: Int) {
         parsedProfile = null
         installedProfile = null
+        // The card is hidden below, so nothing would draw the photograph -- but leaving the state
+        // behind would let a later successful load show the previous theme's picture.
+        authorScreenshotSurfaces = emptyList()
+        authorScreenshot = null
         renderThemeAction()
         likeButton.isEnabled = false
+        reportButton.isEnabled = false
         error.setText(message)
         error.visibility = View.VISIBLE
         val unavailable = getString(R.string.community_theme_detail_not_available)
         detailName.text = intent.textExtra(EXTRA_NAME) ?: unavailable
-        detailAuthor.text = intent.textExtra(EXTRA_AUTHOR)?.let {
-            getString(R.string.community_theme_detail_byline, it)
-        } ?: unavailable
+        renderAuthorLink(intent.textExtra(EXTRA_AUTHOR) ?: unavailable)
         layoutValue.text = intent.textExtra(EXTRA_BASE_FACE) ?: unavailable
         minimumVersionValue.text = intent.textExtra(EXTRA_MINIMUM_APP_VERSION) ?: unavailable
         publishedValue.text = formatPublishedAt(intent.textExtra(EXTRA_PUBLISHED_AT) ?: unavailable)
         publishedLikes = intent.getIntExtra(EXTRA_LIKES, 0).coerceAtLeast(0)
+        publishedInstalls = intent.getIntExtra(EXTRA_INSTALLS, 0).coerceAtLeast(0)
         settingsValue.text = unavailable
+        downloadsValue.text = unavailable
         previewCard.visibility = View.GONE
         preview.clearThemeProfile()
         renderLikeAction()
@@ -864,6 +1264,13 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
             .takeIf { it.isNotEmpty() }
 
     companion object {
+        /**
+         * Phone-local browsing preference, deliberately outside `MiscPreferences.EXPORTABLE`: which
+         * of two pictures this person prefers to look at is not a property of any theme and has no
+         * business reaching the watch or a backup.
+         */
+        const val PREF_SHOW_SCREENSHOTS = "community_theme_show_screenshots"
+
         const val EXTRA_ID = "com.svartifoss.snfell.extra.COMMUNITY_THEME_ID"
         const val EXTRA_NAME = "com.svartifoss.snfell.extra.COMMUNITY_THEME_NAME"
         const val EXTRA_AUTHOR = "com.svartifoss.snfell.extra.COMMUNITY_THEME_AUTHOR"
@@ -873,9 +1280,12 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
                 "com.svartifoss.snfell.extra.COMMUNITY_THEME_MINIMUM_APP_VERSION"
         const val EXTRA_PUBLISHED_AT = "com.svartifoss.snfell.extra.COMMUNITY_THEME_PUBLISHED_AT"
         const val EXTRA_LIKES = "com.svartifoss.snfell.extra.COMMUNITY_THEME_LIKES"
+        const val EXTRA_INSTALLS = "com.svartifoss.snfell.extra.COMMUNITY_THEME_INSTALLS"
         /** Returned to the gallery after the viewer explicitly changed their private reaction. */
         const val EXTRA_LIKED = "com.svartifoss.snfell.extra.COMMUNITY_THEME_LIKED"
         const val EXTRA_LIKE_DELTA = "com.svartifoss.snfell.extra.COMMUNITY_THEME_LIKE_DELTA"
+        const val EXTRA_AUTHOR_FILTER =
+                "com.svartifoss.snfell.extra.COMMUNITY_THEME_AUTHOR_FILTER"
         const val EXTRA_CAN_INSTALL = "com.svartifoss.snfell.extra.COMMUNITY_THEME_CAN_INSTALL"
         const val EXTRA_PROFILE_JSON = "com.svartifoss.snfell.extra.COMMUNITY_THEME_PROFILE_JSON"
 
@@ -884,6 +1294,7 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
         private const val STATE_LIKE_DELTA = "community_theme_detail.like_delta"
         private const val STATE_LIKE_CHANGED = "community_theme_detail.like_changed"
         private const val STATE_LIKE_KNOWN = "community_theme_detail.like_known"
+        private const val STATE_REPORTED = "community_theme_detail.reported"
 
         /** Creates an intent whose payload is fully self-contained for gallery and deep-link callers. */
         fun newIntent(
@@ -896,6 +1307,7 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
                 minimumAppVersion: String,
                 publishedAt: String,
                 likes: Int,
+                installs: Int,
                 canInstall: Boolean,
                 profileJson: String
         ): Intent = Intent(context, CommunityThemeDetailActivity::class.java).apply {
@@ -907,6 +1319,7 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
             putExtra(EXTRA_MINIMUM_APP_VERSION, minimumAppVersion)
             putExtra(EXTRA_PUBLISHED_AT, publishedAt)
             putExtra(EXTRA_LIKES, likes.coerceAtLeast(0))
+            putExtra(EXTRA_INSTALLS, installs.coerceAtLeast(0))
             putExtra(EXTRA_CAN_INSTALL, canInstall)
             putExtra(EXTRA_PROFILE_JSON, profileJson)
         }

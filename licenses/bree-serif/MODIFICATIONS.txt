@@ -1,0 +1,46 @@
+Modifications to bree_serif_regular.ttf
+=======================================
+
+The SIL Open Font License permits modification and does not require this notice,
+but it is recorded for the same reason `special-elite/MODIFICATIONS.txt` in this
+repository is: a binary font file carries no diff, so without a written record a
+future re-download of the upstream release would silently undo the fix.
+
+The bundled copies of this font (mobile/src/main/res/font/bree_serif_regular.ttf
+and wear/src/main/res/font/bree_serif_regular.ttf) have been modified from the
+upstream release at https://github.com/google/fonts/tree/main/ofl/breeserif. Only
+the vertical metrics were changed; no glyph outline, character mapping, name table
+or Reserved Font Name was touched.
+
+  hhea.ascent          1077  ->  1012
+  hhea.descent         -281  ->  -346
+  hhea.lineGap            0  ->     0   (unchanged)
+  OS/2.sTypoAscender   1077  ->  1012
+  OS/2.sTypoDescender  -281  ->  -346
+  OS/2.sTypoLineGap       0  ->     0   (unchanged)
+  OS/2.usWinAscent     1077  ->  1077   (unchanged - already the font's real ink height)
+  OS/2.usWinDescent     281  ->   281   (unchanged, for the same reason)
+
+Why
+---
+
+Every renderer centres a line of text by its line box. This font's box centre sat
+0.066 em above its own capital letters, which reads as text sitting high in a
+centred pill or chip.
+
+The correction centres the box on the font's flat capital letters - E, F, H, I, L,
+which are perfectly uniform in this font (no round-letter overshoot or swash
+tail complicates the measurement). Its digits sit a little lower than its caps by
+design (a mild, deliberate weight difference rather than true old-style figures -
+none of them dips below the baseline by more than an ordinary optical overshoot),
+so the flat-cap target and the digit target agree closely.
+
+ascent + |descent| is unchanged (1358 units in this font's 1000-unit em - the
+extra headroom above one em is original to this font, not something this fix
+introduced), so line height, spacing, wrapping and every reserved height are the
+same as upstream; only where the ink sits inside that box moves. The flat-cap band
+now lands within 0.0005 em of the box centre, and every ordinary descender still
+clears the new descent line by 0.10 em.
+
+Pinned by BundledFontMetricsTest, so a re-download from upstream fails the build
+rather than silently reverting the fix.

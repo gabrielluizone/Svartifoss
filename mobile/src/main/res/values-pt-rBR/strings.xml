@@ -129,16 +129,35 @@
     <string name="action_play_pause">Reproduzir / Pausar</string>
     <string name="action_stop">Parar</string>
     <string name="action_restart">Reiniciar faixa</string>
+    <string name="action_fast_forward">Avanço rápido</string>
+    <string name="action_rewind">Retroceder</string>
+    <string name="action_set_playback_speed">Definir velocidade para %1$s×</string>
+    <string name="action_seek_to_percent">Ir para %1$d%%</string>
     <string name="action_mute">Silenciar / Ativar som</string>
+    <string name="action_set_volume_percent">Definir volume para %1$d%%</string>
     <string name="action_skip_seconds">Avançar %1$d segundos</string>
     <string name="action_reverse_seconds">Voltar %1$d segundos</string>
     <string name="action_like">Curtir</string>
     <string name="action_shuffle">Aleatório</string>
     <string name="action_repeat">Repetir</string>
     <string name="action_repeat_one">Repetir uma</string>
+    <string name="action_set_shuffle_on">Ativar modo aleatório</string>
+    <string name="action_set_shuffle_off">Desativar modo aleatório</string>
+    <string name="action_set_repeat_off">Desativar repetição</string>
+    <string name="action_set_repeat_all">Repetir tudo</string>
+    <string name="action_set_repeat_one">Repetir uma faixa</string>
     <string name="action_search">Buscar música</string>
     <string name="action_open_lyrics">Letras</string>
     <string name="group_playback_controls">Controles de reprodução</string>
+    <string name="group_playback_speed">Velocidade de reprodução</string>
+    <string name="group_track_position">Posição da faixa</string>
+    <string name="group_shuffle_mode">Modo aleatório</string>
+    <string name="group_repeat_mode">Modo de repetição</string>
+    <string name="group_volume_levels">Níveis de volume</string>
+    <string name="group_watch_screens">Telas do relógio</string>
+    <string name="group_find_music">Encontrar e reproduzir</string>
+    <string name="action_open_face_picker">Abrir seletor de mostrador</string>
+    <string name="action_close_watch_app">Fechar app no relógio</string>
     <string name="group_streaming_shortcuts">Faixas, álbuns e playlists</string>
     <string name="pick_action">Escolher ação</string>
     <string name="action_opens_more">Múltiplas opções</string>
@@ -186,6 +205,16 @@
     <string name="swipe_gesture_label_up">Cima</string>
     <string name="swipe_gesture_label_down">Baixo</string>
     <string name="swipe_gesture_label_left">Esquerda</string>
+
+    <string name="hand_gestures">GESTOS COM A MÃO</string>
+    <string name="hand_gestures_hint">Disponível em relógios compatíveis enquanto o Svartifoss estiver aberto.</string>
+    <string name="hand_gestures_hint_disconnected">Conecte e abra o Svartifoss no relógio para ver se ele tem suporte a gestos com a mão.</string>
+    <string name="hand_gestures_hint_outdated">Atualize o app do relógio para ver se ele tem suporte a gestos com a mão.</string>
+    <string name="hand_gestures_hint_unsupported">Este relógio não tem suporte a gestos com a mão, então a ação definida aqui nunca vai ser executada.</string>
+    <string name="hand_gestures_hint_disabled">Os gestos com a mão estão desativados neste relógio. Ative-os em Configurações \u2192 Gestos, no próprio relógio.</string>
+    <string name="hand_gestures_hint_ready">Pronto neste relógio: faça a pinça duas vezes com o player do Svartifoss aberto.</string>
+    <string name="hand_gesture_how_it_works">Toque o polegar no indicador duas vezes, rapidamente, com o pulso levantado. O Wear OS chama isso de ação principal, então um relógio de outra marca pode usar o gesto equivalente dele.\n\nSó funciona com o player do Svartifoss aberto no relógio e a tela ligada \u2014 não pelo mostrador, não sobre a fila ou o menu, e não na tela sempre ativa. A ação executada é a definida para o estado em que a reprodução estiver no momento, então defina nas duas páginas de Controles para funcionar dos dois jeitos.\n\nO gesto também precisa estar ativado em Configurações \u2192 Gestos, no próprio relógio.</string>
+    <string name="double_pinch">Pinça dupla</string>
 
     <string name="screen_buttons">MINI BOTÕES</string>
     <string name="tap_a_screen_button_to_configure">Até três botões visíveis perto da parte inferior da tela do relógio — toque em um espaço para atribuir uma ação</string>
@@ -334,6 +363,8 @@
     <string name="setting_dim_album_art_description">Adiciona o sombreamento escolhido entre a capa e os controles do player.</string>
     <string name="setting_album_art_style">Estilo da capa do álbum</string>
     <string name="setting_album_art_style_description">Escolha a aparência do fundo da tela de reprodução no relógio.</string>
+    <string name="setting_album_art_filter">Filtro da capa do álbum</string>
+    <string name="setting_album_art_filter_description">Aplique um tratamento de cor independente sobre qualquer estilo de capa.</string>
     <string name="setting_album_art_blur_radius">Intensidade do desfoque</string>
     <string name="setting_album_art_blur_radius_description">Força do desfoque em tela cheia sempre que o fundo selecionado usar desfoque. Atualmente <![CDATA[<b>%1$s px</b>]]>.</string>
     <string name="setting_album_art_dim_strength">Intensidade do escurecimento</string>
@@ -1291,6 +1322,27 @@
         <item>hidden</item>
     </string-array>
 
+    <string-array name="album_art_filter_entries">
+        <item>Nenhum</item>
+        <item>Monocromático</item>
+        <item>Quente</item>
+        <item>Frio</item>
+        <item>Hora dourada</item>
+        <item>Rosé</item>
+        <item>Filme vintage</item>
+        <item>Filme desbotado</item>
+        <item>Fosco</item>
+        <item>Vívido</item>
+        <item>Intenso</item>
+        <item>Pastel</item>
+        <item>Sépia</item>
+        <item>Cianótipo</item>
+        <item>Verde-azulado e laranja</item>
+        <item>Alto contraste</item>
+        <item>Luz suave</item>
+        <item>Nocturno</item>
+    </string-array>
+
 
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
@@ -1342,6 +1394,11 @@
     <string name="color_picker_title">Escolher cor de destaque</string>
     <string name="color_picker_reset">Restaurar</string>
     <string name="color_picker_apply">Aplicar</string>
+    <string name="setting_wear_title_centered">Centralizar o título</string>
+    <string name="setting_wear_title_centered_description">Fixa o título no meio da tela em vez do bloco de texto inteiro</string>
+    <string name="player_element_title_centered">Título centralizado</string>
+    <string name="color_picker_recent">Usadas recentemente</string>
+    <string name="color_picker_copied">Código da cor copiado</string>
     <string name="color_picker_default">Padrão</string>
     <string name="color_picker_invalid">Código de cor inválido</string>
     <string name="color_picker_current">Atual: %s</string>
@@ -1866,6 +1923,56 @@
         <item>@string/wear_font_varela_round</item>
         <item>@string/wear_font_yanone_kaffeesatz</item>
         <item>@string/wear_font_zilla_slab</item>
+        <item>@string/wear_font_lato</item>
+        <item>@string/wear_font_merriweather_sans</item>
+        <item>@string/wear_font_source_sans_3</item>
+        <item>@string/wear_font_source_serif_4</item>
+        <item>@string/wear_font_libre_baskerville</item>
+        <item>@string/wear_font_libre_franklin</item>
+        <item>@string/wear_font_ibm_plex_sans</item>
+        <item>@string/wear_font_ibm_plex_mono</item>
+        <item>@string/wear_font_ibm_plex_serif</item>
+        <item>@string/wear_font_work_sans</item>
+        <item>@string/wear_font_karla</item>
+        <item>@string/wear_font_sora</item>
+        <item>@string/wear_font_urbanist</item>
+        <item>@string/wear_font_be_vietnam_pro</item>
+        <item>@string/wear_font_red_hat_display</item>
+        <item>@string/wear_font_red_hat_text</item>
+        <item>@string/wear_font_red_hat_mono</item>
+        <item>@string/wear_font_syne</item>
+        <item>@string/wear_font_instrument_sans</item>
+        <item>@string/wear_font_figtree</item>
+        <item>@string/wear_font_gabarito</item>
+        <item>@string/wear_font_bricolage_grotesque</item>
+        <item>@string/wear_font_dm_serif_display</item>
+        <item>@string/wear_font_cormorant_garamond</item>
+        <item>@string/wear_font_cormorant</item>
+        <item>@string/wear_font_bitter</item>
+        <item>@string/wear_font_spectral</item>
+        <item>@string/wear_font_vollkorn</item>
+        <item>@string/wear_font_raleway</item>
+        <item>@string/wear_font_league_spartan</item>
+        <item>@string/wear_font_saira</item>
+        <item>@string/wear_font_signika</item>
+        <item>@string/wear_font_sofia_sans</item>
+        <item>@string/wear_font_overpass</item>
+        <item>@string/wear_font_public_sans</item>
+        <item>@string/wear_font_questrial</item>
+        <item>@string/wear_font_dosis</item>
+        <item>@string/wear_font_prompt</item>
+        <item>@string/wear_font_unbounded</item>
+        <item>@string/wear_font_recursive</item>
+        <item>@string/wear_font_trispace</item>
+        <item>@string/wear_font_noto_sans</item>
+        <item>@string/wear_font_noto_serif</item>
+        <item>@string/wear_font_noto_sans_mono</item>
+        <item>@string/wear_font_heebo</item>
+        <item>@string/wear_font_hind</item>
+        <item>@string/wear_font_hind_madurai</item>
+        <item>@string/wear_font_kumbh_sans</item>
+        <item>@string/wear_font_alegreya</item>
+        <item>@string/wear_font_assistant</item>
     </string-array>
 
     <string-array name="wear_font_descriptions">
@@ -1957,6 +2064,56 @@
         <item>@string/wear_font_varela_round_description</item>
         <item>@string/wear_font_yanone_kaffeesatz_description</item>
         <item>@string/wear_font_zilla_slab_description</item>
+        <item>@string/wear_font_lato_description</item>
+        <item>@string/wear_font_merriweather_sans_description</item>
+        <item>@string/wear_font_source_sans_3_description</item>
+        <item>@string/wear_font_source_serif_4_description</item>
+        <item>@string/wear_font_libre_baskerville_description</item>
+        <item>@string/wear_font_libre_franklin_description</item>
+        <item>@string/wear_font_ibm_plex_sans_description</item>
+        <item>@string/wear_font_ibm_plex_mono_description</item>
+        <item>@string/wear_font_ibm_plex_serif_description</item>
+        <item>@string/wear_font_work_sans_description</item>
+        <item>@string/wear_font_karla_description</item>
+        <item>@string/wear_font_sora_description</item>
+        <item>@string/wear_font_urbanist_description</item>
+        <item>@string/wear_font_be_vietnam_pro_description</item>
+        <item>@string/wear_font_red_hat_display_description</item>
+        <item>@string/wear_font_red_hat_text_description</item>
+        <item>@string/wear_font_red_hat_mono_description</item>
+        <item>@string/wear_font_syne_description</item>
+        <item>@string/wear_font_instrument_sans_description</item>
+        <item>@string/wear_font_figtree_description</item>
+        <item>@string/wear_font_gabarito_description</item>
+        <item>@string/wear_font_bricolage_grotesque_description</item>
+        <item>@string/wear_font_dm_serif_display_description</item>
+        <item>@string/wear_font_cormorant_garamond_description</item>
+        <item>@string/wear_font_cormorant_description</item>
+        <item>@string/wear_font_bitter_description</item>
+        <item>@string/wear_font_spectral_description</item>
+        <item>@string/wear_font_vollkorn_description</item>
+        <item>@string/wear_font_raleway_description</item>
+        <item>@string/wear_font_league_spartan_description</item>
+        <item>@string/wear_font_saira_description</item>
+        <item>@string/wear_font_signika_description</item>
+        <item>@string/wear_font_sofia_sans_description</item>
+        <item>@string/wear_font_overpass_description</item>
+        <item>@string/wear_font_public_sans_description</item>
+        <item>@string/wear_font_questrial_description</item>
+        <item>@string/wear_font_dosis_description</item>
+        <item>@string/wear_font_prompt_description</item>
+        <item>@string/wear_font_unbounded_description</item>
+        <item>@string/wear_font_recursive_description</item>
+        <item>@string/wear_font_trispace_description</item>
+        <item>@string/wear_font_noto_sans_description</item>
+        <item>@string/wear_font_noto_serif_description</item>
+        <item>@string/wear_font_noto_sans_mono_description</item>
+        <item>@string/wear_font_heebo_description</item>
+        <item>@string/wear_font_hind_description</item>
+        <item>@string/wear_font_hind_madurai_description</item>
+        <item>@string/wear_font_kumbh_sans_description</item>
+        <item>@string/wear_font_alegreya_description</item>
+        <item>@string/wear_font_assistant_description</item>
     </string-array>
 
     <string-array name="wear_cover_shape_entries">
@@ -2138,7 +2295,7 @@
     <string name="watch_back_to_overview">Voltar às áreas do Relógio</string>
     <string name="settings_overview_description">Escolha uma área. As opções relacionadas ficam juntas, e a busca ainda pode levar você diretamente a qualquer configuração.</string>
     <string name="settings_back_to_overview">Voltar às áreas de configurações</string>
-    <string name="action_search_hint">Buscar nesta lista</string>
+    <string name="action_search_hint">Buscar em todas as ações</string>
     <string name="action_search_empty">Nenhuma ação corresponde a esta busca.</string>
     <string name="control_assignment_tap">Toque: %1$s</string>
     <string name="control_assignment_hold">Segurar: %1$s</string>
@@ -2193,9 +2350,110 @@
     <string name="wear_font_archivo_black_description">Display densa e muito pesada para máximo contraste</string>
     <string name="wear_font_dancing_script">Dancing Script</string>
     <string name="wear_font_dancing_script_description">Caligrafia fluida e manuscrita, viva e pessoal</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Sans humanista amigável, com formas abertas e legíveis</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Sans acolhedora, com formas firmes para leitura confortável</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Sans humanista versátil, criada para interfaces claras</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Serifada refinada para textos com tom editorial</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Serifada clássica de livro, ajustada para telas</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Sans grotesca prática, com ritmo amplo e firme</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Sans humanista técnica, com proporções precisas</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Monoespaçada técnica, polida e fácil de ler</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Serifada contemporânea com personalidade projetada</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Sans limpa e funcional, com formas compactas</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Grotesca singular, com proporções amigáveis</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Sans geométrica com sensação futurista e espaçosa</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Sans geométrica moderna, com linhas urbanas elegantes</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Sans contemporânea equilibrada, feita para telas pequenas</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Sans display confiante, com proporções expressivas</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Sans legível para informações mais longas da faixa</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Monoespaçada nítida com tom técnico moderno</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Sans incomum, com formas lúdicas e direção artística</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Sans contemporânea flexível, com precisão discreta</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Sans limpa e acessível, para leitura sem esforço</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Sans display arredondada, com personalidade alegre</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Grotesca viva que mistura estrutura e detalhes inesperados</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Serifada display de alto contraste para títulos dramáticos</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Serifada literária elegante e de alto contraste</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Serifada display graciosa, com detalhes caligráficos</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Serifada slab robusta, clara mesmo em tamanhos pequenos</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Serifada versátil para leitura densa e expressiva</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Serifada old-style acolhedora, com voz de livro</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Sans elegante, com formas distintas e refinadas</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Sans geométrica pesada, feita para títulos fortes</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Sans que aceita condensação, com energia atlética</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Sans suave, com contraformas abertas e energia de sinalização</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Sans versátil que equilibra calor humanista e clareza</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Sans clara inspirada em transporte, com ritmo confiante</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Sans neutra e acessível para interfaces do dia a dia</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Sans geométrica leve, com curvas modernas e suaves</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Sans estreita e arredondada com toque futurista suave</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Sans geométrica limpa, com personalidade inspirada no tailandês</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Display futurista larga para máxima presença</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Família variável de sans a mono, com voz técnica e lúdica</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Monoespaçada variável com textura digital singular</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Sans muito legível, com suporte amplo a sistemas de escrita</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Serifada confiável, com suporte amplo a sistemas de escrita</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Monoespaçada multilíngue de ritmo consistente</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Sans moderna compacta, com ritmo nítido influenciado pelo hebraico</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Sans humanista firme, otimizada para leitura clara</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Sans amigável para telas, com textura arredondada e aberta</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Sans geométrica compacta, com proporções distintas</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Serifada caligráfica viva, com personalidade literária</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Sans humanista limpa, com excelente leitura em interfaces</string>
     <string name="watch_preview_expand">Abrir uma prévia maior</string>
     <string name="watch_preview_fullscreen_dismiss">Toque em qualquer lugar para fechar</string>
     <!-- Editor contextual da aba Fundo: a arte embaixo e a pilha ordenada de tratamentos por cima. -->
+    <string name="pref_numeric_range">Entre %1$d e %2$d.</string>
     <string name="background_editor_artwork">Arte</string>
     <string name="background_editor_layers">Camadas</string>
     <string name="background_editor_layers_count">%1$d de %2$d</string>
@@ -2226,4 +2484,74 @@
     <string name="background_layer_color_custom">Cor personalizada</string>
     <string name="background_layer_reset_title">Restaurar as camadas?</string>
     <string name="background_layer_reset_message">A pilha volta ao sombreamento e ao piso de destaque definidos nas linhas de sempre, que é o que um relógio com uma versão mais antiga já renderiza.</string>
+
+    <!-- The edge ring's position mark. Entries pair with wear_seek_marker_values by index. -->
+    <string name="setting_wear_seek_marker">Marca de posição</string>
+    <string name="setting_wear_seek_marker_description">Quando a linha curta que cruza o anel de progresso, marcando onde a música está, fica visível.</string>
+    <string-array name="wear_seek_marker_entries">
+        <item>Sempre</item>
+        <item>Só ao mexer no progresso</item>
+        <item>Ao mexer no progresso e na pausa</item>
+        <item>Só na pausa</item>
+    </string-array>
+
+    <!-- Title/artist text shadow. Entries pair with the untranslated
+         wear_text_shadow_*_values arrays BY INDEX. -->
+    <string name="setting_wear_title_shadow_style">Sombra do título</string>
+    <string name="setting_wear_title_shadow_color">Cor da sombra do título</string>
+    <string name="setting_wear_title_shadow_custom_color">Cor personalizada da sombra do título</string>
+    <string name="setting_wear_title_shadow_strength">Intensidade da sombra do título</string>
+    <string name="setting_wear_artist_shadow_style">Sombra do artista</string>
+    <string name="setting_wear_artist_shadow_color">Cor da sombra do artista</string>
+    <string name="setting_wear_artist_shadow_custom_color">Cor personalizada da sombra do artista</string>
+    <string name="setting_wear_artist_shadow_strength">Intensidade da sombra do artista</string>
+    <string name="setting_wear_text_shadow_strength_description">Porcentagem do tamanho e da profundidade da própria sombra escolhida.</string>
+    <string-array name="wear_text_shadow_style_entries">
+        <item>Nenhuma</item>
+        <item>Suave</item>
+        <item>Dura</item>
+        <item>Brilho</item>
+        <item>Elevada</item>
+        <item>Sutil</item>
+    </string-array>
+    <string-array name="wear_text_shadow_color_entries">
+        <item>Preto</item>
+        <item>Cor do álbum</item>
+        <item>Branco</item>
+        <item>Personalizada</item>
+    </string-array>
+
+    <!-- Title/artist outline. Entries pair with the untranslated
+         wear_text_outline_style_values array BY INDEX. -->
+    <string name="setting_wear_title_outline_style">Contorno do título</string>
+    <string name="setting_wear_title_outline_color">Cor do contorno do título</string>
+    <string name="setting_wear_title_outline_custom_color">Cor personalizada do contorno do título</string>
+    <string name="setting_wear_artist_outline_style">Contorno do artista</string>
+    <string name="setting_wear_artist_outline_color">Cor do contorno do artista</string>
+    <string name="setting_wear_artist_outline_custom_color">Cor personalizada do contorno do artista</string>
+    <string-array name="wear_text_outline_style_entries">
+        <item>Nenhum</item>
+        <item>Fio de cabelo</item>
+        <item>Fino</item>
+        <item>Médio</item>
+        <item>Grosso</item>
+    </string-array>
+
+    <!-- Title/artist text backdrop. Entries pair with the untranslated
+         wear_text_backdrop_style_values array BY INDEX. -->
+    <string name="setting_wear_title_text_bg_style">Fundo do título</string>
+    <string name="setting_wear_title_text_bg_color">Cor do fundo do título</string>
+    <string name="setting_wear_title_text_bg_custom_color">Cor personalizada do fundo do título</string>
+    <string name="setting_wear_title_text_bg_opacity">Opacidade do fundo do título</string>
+    <string name="setting_wear_artist_text_bg_style">Fundo do artista</string>
+    <string name="setting_wear_artist_text_bg_color">Cor do fundo do artista</string>
+    <string name="setting_wear_artist_text_bg_custom_color">Cor personalizada do fundo do artista</string>
+    <string name="setting_wear_artist_text_bg_opacity">Opacidade do fundo do artista</string>
+    <string name="setting_wear_text_bg_opacity_description">Porcentagem da opacidade do próprio fundo escolhido.</string>
+    <string-array name="wear_text_backdrop_style_entries">
+        <item>Nenhum</item>
+        <item>Marca-texto</item>
+        <item>Suave</item>
+        <item>Bloco</item>
+    </string-array>
 </resources>

@@ -39,6 +39,21 @@
                 android:contentDescription="@null"
                 android:importantForAccessibility="no" />
 
+            <!--
+                The author's photograph, over the rendered miniature rather than replacing it. The
+                render stays live underneath, so turning the setting off reveals it with no reload.
+            -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/community_theme_screenshot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="6dp"
+                android:contentDescription="@null"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Svartifoss.Circle" />
+
             <ImageView
                 android:id="@+id/community_theme_preview_placeholder"
                 android:layout_width="44dp"
@@ -118,47 +133,90 @@
             app:lineHeight="20sp"
             tools:text="Midnight Bloom" />
 
+        <!--
+            The byline owns a whole line, and is the theme's link to its author: tapping it filters
+            the gallery down to everything that author published. It used to share one line with
+            both counters, which on the two-column phone grid the gallery actually uses left it
+            about twenty dp, so every author was rendered as a single letter and an ellipsis.
+        -->
         <TextView
             android:id="@+id/community_theme_byline"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="13dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="8dp"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
             android:ellipsize="end"
+            android:focusable="true"
             android:fontFamily="@font/google_sans"
             android:includeFontPadding="false"
             android:maxLines="1"
+            android:paddingStart="4dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="4dp"
+            android:paddingBottom="3dp"
             android:textColor="@color/lyra_text_secondary"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/community_theme_likes"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/community_theme_name"
-            app:layout_constraintVertical_bias="0"
             tools:text="By Aurora" />
 
+        <!--
+            Likes and downloads sit on one line of their own rather than getting a row each: the
+            two figures answer the same question from different sides (what people chose to praise
+            against what people actually put on their watch) and separating them would make one of
+            them look like the real one. Their glyphs are resized to the figure beside them at bind
+            time, because the vectors declare 24dp: next to a 12sp number that is half again the
+            height of what it labels.
+        -->
         <TextView
             android:id="@+id/community_theme_likes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="28dp"
-            android:layout_marginEnd="10dp"
-            android:drawablePadding="4dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="13dp"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
             android:fontFamily="@font/google_sans"
-            android:gravity="center"
+            android:gravity="center_vertical"
             android:importantForAccessibility="no"
             android:includeFontPadding="false"
             android:maxLines="1"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
             android:textColor="@color/lyra_text_secondary"
             android:textSize="12sp"
             app:drawableStartCompat="@drawable/ic_favorite_border"
-            app:layout_constraintBaseline_toBaselineOf="@id/community_theme_byline"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/community_theme_byline"
+            app:layout_constraintVertical_bias="0"
             tools:text="24" />
+
+        <TextView
+            android:id="@+id/community_theme_downloads"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="12dp"
+            android:drawablePadding="5dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans"
+            android:gravity="center_vertical"
+            android:importantForAccessibility="no"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/ic_download"
+            app:layout_constraintBottom_toBottomOf="@id/community_theme_likes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintStart_toEndOf="@id/community_theme_likes"
+            app:layout_constraintTop_toTopOf="@id/community_theme_likes"
+            tools:text="120" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

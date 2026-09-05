@@ -1,0 +1,58 @@
+Modifications to oxanium_regular.ttf
+====================================
+
+The SIL Open Font License permits modification and does not require this notice,
+but it is recorded for the same reason `special-elite/MODIFICATIONS.txt` in this
+repository is: a binary font file carries no diff, so without a written record a
+future re-download of the upstream release would silently undo the fix.
+
+The bundled copies of this font (mobile/src/main/res/font/oxanium_regular.ttf and
+wear/src/main/res/font/oxanium_regular.ttf) have been modified from the upstream
+release at https://github.com/google/fonts/tree/main/ofl/oxanium. Only the
+vertical metrics were changed; no glyph outline, character mapping, name table or
+Reserved Font Name was touched.
+
+  hhea.ascent           790  ->   917
+  hhea.descent         -210  ->  -227
+  hhea.lineGap          250  ->   250   (unchanged - see below)
+  OS/2.sTypoAscender    790  ->   917
+  OS/2.sTypoDescender  -210  ->  -227
+  OS/2.sTypoLineGap     250  ->   250   (unchanged)
+  OS/2.usWinAscent     1000  ->   957
+  OS/2.usWinDescent     250  ->   207
+
+Why, and the one way this correction differs from its neighbours
+------------------------------------------------------------------
+
+Every renderer centres a line of text by its line box. This font's box centre sat
+0.055 em below its own capital letters, which reads as text sitting low in a
+centred pill or chip.
+
+Every other correction recorded in this directory tree preserves the font's
+original ascent + |descent| exactly, moving only where the baseline sits within
+that unchanged total. That was not possible here without clipping ordinary text:
+this font's upstream box already had almost no spare room below its own lowercase
+descenders (g, j, p, q, y cleared the old descent line by only 0.003 em), and
+simply sliding the baseline up to fix the top would have pushed those same
+everyday letters below the new descent line by roughly 0.05 em - trading a visible
+"sits low" defect for a new "clips descenders" one, on some of the most common
+letters in the alphabet.
+
+So the total box height grows here: from 1000 to 1144 units (in this font's
+1000-unit em), a genuine ~14% increase in line height for this specific font. The
+new ascent and descent are chosen to satisfy two things exactly: the box still
+centres on the flat capital letters (E, F, H, I, L - which for this font also
+matches the digits), and the descent still clears every realistic descender
+(g, j, p, q, y, and the accented Latin letters used across the app's supported
+languages) by at least 0.02 em. It is the smallest growth that achieves both.
+
+hhea.lineGap (250 units, already present upstream) is left untouched rather than
+folded into ascent/descent or zeroed, so the *additional* space a renderer that
+adds lineGap on top of ascent+descent reserves is unaffected by this fix; only the
+ascent/descent split moved.
+
+usWinAscent/usWinDescent were narrowed to the font's real ink extents
+(head.yMax/yMin), which upstream's values exceeded.
+
+Pinned by BundledFontMetricsTest, so a re-download from upstream fails the build
+rather than silently reverting the fix.

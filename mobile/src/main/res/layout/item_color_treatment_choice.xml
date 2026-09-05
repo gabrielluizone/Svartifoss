@@ -20,6 +20,7 @@
         android:layout_weight="1"
         android:includeFontPadding="false"
         android:textSize="16sp"
+        android:ellipsize="end"
         android:maxLines="1"
         android:fontFamily="@font/google_sans"
         android:textColor="@color/lyra_on_surface" />

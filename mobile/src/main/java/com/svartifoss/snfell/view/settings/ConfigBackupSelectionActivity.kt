@@ -42,12 +42,15 @@ class ConfigBackupSelectionActivity : AppCompatActivity() {
         restoreSelection(savedInstanceState)
         stylePrimaryButton(findViewById(R.id.button_export))
 
+        val accent = LyraAccent.resolve(this)
         findViewById<ImageButton>(R.id.button_back).setOnClickListener { finish() }
-        findViewById<MaterialButton>(R.id.button_select_all).setOnClickListener {
-            setAllSelected(true)
+        findViewById<MaterialButton>(R.id.button_select_all).apply {
+            setTextColor(accent)
+            setOnClickListener { setAllSelected(true) }
         }
-        findViewById<MaterialButton>(R.id.button_clear_all).setOnClickListener {
-            setAllSelected(false)
+        findViewById<MaterialButton>(R.id.button_clear_all).apply {
+            setTextColor(accent)
+            setOnClickListener { setAllSelected(false) }
         }
         findViewById<MaterialButton>(R.id.button_export).setOnClickListener {
             if (selectedSections.isEmpty()) {
@@ -118,7 +121,13 @@ class ConfigBackupSelectionActivity : AppCompatActivity() {
             finish()
         } catch (e: Exception) {
             Timber.e(e, "Config export failed")
-            Toast.makeText(this, R.string.export_config_failed, Toast.LENGTH_LONG).show()
+            val reason = e.message
+            val message = if (reason.isNullOrBlank()) {
+                getString(R.string.export_config_failed)
+            } else {
+                getString(R.string.export_config_failed_detail, reason)
+            }
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show()
         }
     }
 

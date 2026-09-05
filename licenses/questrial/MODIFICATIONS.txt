@@ -1,0 +1,46 @@
+Modifications to questrial_regular.ttf
+======================================
+
+The SIL Open Font License permits modification and does not require this
+notice, but it is recorded for the same reason `special-
+elite/MODIFICATIONS.txt` in this repository is: a binary font file carries no
+diff, so without a written record a future re-download of the upstream release
+would silently undo the fix.
+
+The bundled copies of this font
+(mobile/src/main/res/font/questrial_regular.ttf and
+wear/src/main/res/font/questrial_regular.ttf) have been modified from the
+upstream release at https://github.com/google/fonts/tree/main/ofl/questrial.
+Only the vertical metrics were changed; no glyph outline, character mapping,
+name table or Reserved Font Name was touched.
+
+Why, and the one way this correction differs from most of its neighbours
+------------------------------------------------------------------------
+
+Every renderer centres a line of text by its line box. This font's box centre
+sat 0.0260 em below its own capital letters, which reads as text sitting low
+in a centred pill or chip.
+
+Most corrections recorded in this directory tree preserve the font's original
+ascent + |descent| exactly, moving only where the baseline sits within that
+unchanged total. That was not possible here without clipping ordinary text:
+this font's ordinary lowercase descenders (g, j, p, q, y) already reached
+close to the old descent line, and sliding the baseline to fix the cap-height
+alignment would have pushed them past it.
+
+  hhea.ascent            820  ->   888
+  hhea.descent          -210  ->  -226
+  hhea.lineGap             0  ->     0   (unchanged)
+  OS/2.sTypoAscender     820  ->   888
+  OS/2.sTypoDescender   -210  ->  -226
+  OS/2.sTypoLineGap        0  ->     0   (unchanged)
+
+Total box height: 1030 -> 1114 units in this font's 1000-unit em (+8.2%). The
+new ascent and descent are chosen to satisfy two things exactly: the box still
+centres on the flat capital letters (E, F, H, I, L), and the descent still
+clears every realistic descender (g, j, p, q, y, and the accented Latin
+letters used across the app's supported languages) by at least 0.02 em. It is
+the smallest growth that achieves both.
+
+Pinned by BundledFontMetricsTest, so a re-download from upstream fails the
+build rather than silently reverting the fix.

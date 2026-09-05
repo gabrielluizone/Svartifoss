@@ -36,3 +36,19 @@
 # <uses-library> in the manifest), so it's absent from the compile classpath - suppress the
 # R8 missing-class error for it.
 -dontwarn com.google.android.wearable.intent.RemoteIntent
+
+# protobuf-javalite ships no consumer rule of its own, and the `!field/*` term above is a
+# no-op under R8 (it only recognizes the coarse -dontoptimize/-optimizations toggle, not
+# ProGuard's fine-grained categories), so nothing was stopping R8 from removing a message
+# field it saw no live getter/setter for - e.g. MusicState.time, written by the phone but never
+# read on the watch. That field's Java declaration is gone from the release build, but the
+# schema table protoc baked into the class's static initializer still names it for every
+# field, so the *first* MusicState.parseFrom() call resolves that table via reflection, fails
+# to find the field, and throws for the whole message - not just that one field. Caught by
+# launchWithErrorHandling, this is exactly the release-only "always shows ERROR, taps still
+# control playback" bug: outbound commands are raw byte payloads that never touch protobuf,
+# only the DataItem-carried MusicState does. Keeping every declared field on every generated
+# message class is the standard fix Google's own protobuf-lite consumer rule would supply.
+-keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite {
+    <fields>;
+}

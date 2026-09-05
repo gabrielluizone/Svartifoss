@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 01-09-2026**
+**Last updated: 02-09-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -12,11 +12,12 @@ watch control, or Community-theme browsing; does not operate its own backend
 server; and does not sell or share your data with advertisers.** The phone and
 watch talk to each other directly over your local Bluetooth/Wi-Fi connection.
 Optional update checks and the opt-in Community themes gallery contact GitHub
-Pages. If you explicitly submit one of your themes, tap **Like** on a
-published Community theme, or select its private **Liked** filter, Google
-Firebase Authentication can process the Google credential needed for that
-action and Google Cloud Firestore keeps the corresponding private record; your
-Google account name and email are not published. The phone app also includes
+Pages. If you explicitly submit one of your themes, Google Firebase
+Authentication processes the Google credential needed for that action; your
+Google account name and email are not published. Liking a published theme,
+installing one, and reporting one need no Google account at all — they use a
+silent, anonymous Firebase identity — and Google Cloud Firestore keeps the
+corresponding private record in each case. The phone app also includes
 Google Firebase Crashlytics and
 Analytics for diagnostics, plus Firebase Cloud Messaging for occasional
 developer announcements. Crash reporting and announcement notifications are
@@ -62,7 +63,7 @@ all.
 | Vibrate                                                      | Haptic feedback on the watch when you press a button, if you enable that setting.                                                                                                              |
 | Run Tasker tasks                                             | Only relevant if you have the separate Tasker app installed and choose to bind a Tasker task to a button. Svartifoss does not read Tasker's data — it only triggers a task you've configured. |
 | Music and audio (Android 13+) / Storage (older versions)     | Only used to read album covers for entries in the playback queue, when the music app publishes them as references into your music library rather than as images. Requested from Settings → Apps, never at startup, and only ever read locally — nothing is uploaded. Decline it and the queue simply shows blank thumbnails. On very old Android versions the same legacy Storage permission also covers saving the current album art to your gallery, which only happens if you tap that option. |
-| Internet                                                     | Used for optional update checks, the opt-in Community themes gallery, and — only after you explicitly choose to submit a theme, like one, or select the private Liked filter — Google Sign-In/Firebase Authentication and Firestore. It is also used for the Firebase diagnostics described below, looking up song lyrics when you open the lyrics screen on the watch, and — only if you turn them on — fetching shortcut artwork from the streaming service and downloading queue covers that the music app published as links. Core playback mirroring and control work locally between your two devices.                         |
+| Internet                                                     | Used for optional update checks, the opt-in Community themes gallery, and — only after you explicitly choose to submit a theme (Google Sign-In/Firebase Authentication) or to like, install or report one (a silent anonymous Firebase identity) — Firebase Authentication and Firestore. It is also used for the Firebase diagnostics described below, looking up song lyrics when you open the lyrics screen on the watch, and — only if you turn them on — fetching shortcut artwork from the streaming service and downloading queue covers that the music app published as links. Core playback mirroring and control work locally between your two devices.                         |
 
 ## What's stored locally on your phone
 
@@ -78,7 +79,7 @@ queue, described below.
 - Your private theme library and other app preferences (theme, colors,
   timeouts, etc.). A profile leaves the device only if you select it for an
   explicit Community-theme submission.
-- A disposable cache of the public Community themes catalogue and theme files after you open that gallery. It contains only the public JSON served from this project's GitHub Pages site, is not included in configuration backups, and can be cleared with Android's app-cache controls.
+- A disposable cache of the public Community themes catalogue, theme files and author screenshots after you open that gallery. It contains only the public JSON served from this project's GitHub Pages site, is not included in configuration backups, and can be cleared with Android's app-cache controls.
 
 Uninstalling the app removes all of this data. If you use the app's
 Export Config feature, that file is saved wherever you choose to save it
@@ -178,14 +179,20 @@ public content and are not part of a configuration backup.
 ### Likes
 
 Liking a published Community theme is optional and starts only when you tap its
-**Like** button. If you are not already authenticated, that explicit tap is
-what offers Google Sign-In; simply browsing, searching, filtering by base
-layout, sorting, or opening a detail page does not open a sign-in prompt. The
-separate **Liked** filter is also explicit: selecting it can offer Google
-Sign-In and then reads only that person's reactions for IDs already in the
-downloaded public catalogue. A person who is already signed in may have only
-their own reaction read when a detail page opens so the button can show its
-current state.
+**Like** button. **It never asks you to sign in.** If this device has no
+Firebase identity yet, that explicit tap silently creates an anonymous one,
+which is not linked to a Google account, a name, or an email address. The
+separate **Liked** filter works the same way and reads only that identity's
+reactions for IDs already in the downloaded public catalogue. Opening a detail
+page may read only your own reaction for that theme, so the button can show its
+current state. Browsing, searching, filtering by base layout and sorting read
+nothing from Firebase at all.
+
+Because that identity lives only in this app's local Firebase state, clearing
+the app's data produces a new one. A reaction left under the old identity stays
+counted and can no longer be removed from this device. The count is a rough
+popularity signal rather than an audited ballot, and it is stated that way
+rather than implying a precision the design does not have.
 
 Each like is a private per-account document at
 `communityThemeLikes/<theme ID>/voters/<Firebase Auth UID>`. It contains only a
@@ -205,6 +212,59 @@ catalogue, so a like or unlike can take until the next publication that
 rewrites it — and at most about a week — to appear there or affect the **most
 liked** ordering. Your own reaction is shown immediately on your own device.
 The public count never identifies who reacted.
+
+### Download counts
+
+Each gallery card and detail page shows how many people have installed the
+theme. Because the catalogue is a static file served from GitHub Pages, nothing
+on the serving side ever observes a download — refreshing the catalogue, or
+fetching a profile to preview it, is not counted and could not be told apart
+from browsing.
+
+What is counted is the moment an install actually succeeds on a phone. Adding a
+theme to **My themes** from the gallery writes one private document at
+`communityThemeInstalls/<theme ID>/installers/<Firebase Auth UID>`, containing
+only a schema version and a Firestore server timestamp — no Google name, no
+email, no device identifier, and nothing about the phone or its music. It uses
+the same silent anonymous identity described under [Likes](#likes) and never
+asks you to sign in. Firestore rules permit you to create only your own
+document; no client can list installers, read another person's document, change
+one, or write a public count. If the write fails for any reason the install
+still succeeds — nothing about your theme depends on it.
+
+Unlike a like, an install record cannot be removed by the app and removing the
+theme from **My themes** does not decrement the number: it records that a
+download happened, not that a theme is still installed. As with likes, the
+public total is aggregated by the trusted GitHub publisher and can take until
+its next run — at most about a week — to move. Deleting your community account
+removes your own install records; see [Deleting your community
+account](#deleting-your-community-account).
+
+### Reporting a theme
+
+Every published theme's detail page has a **Report theme** control. Reporting
+also needs no Google account: it uses the same silent anonymous identity as a
+like, because asking someone to identify themselves before they can flag
+offensive content puts the cost on the wrong person.
+
+A report is one private document at
+`communityThemeReports/<theme ID>/themeReporters/<Firebase Auth UID>`
+containing a schema version, a Firestore server timestamp, a reason chosen from
+a fixed list, and — only if you type one — a short note of at most 300
+characters. Nothing else about you, your phone, or your music is included.
+
+Reports are **not public**. No count is ever published in the catalogue, no
+client can read another person's report, and the author of the reported theme
+can never read reports about it or learn who filed one. Only the project's
+moderators can read the queue. A report cannot be edited or withdrawn once
+sent, and only one is kept per identity per theme.
+
+Moderators act on a report by leaving the theme in place, correcting its public
+name, or withdrawing it from the gallery — the same actions available for any
+listing. When a theme is withdrawn, the reports about it are deleted along with
+it: once the listing is gone, the only thing they still record is who
+complained about what. Deleting your community account also removes any reports
+you filed.
 
 ### Submitting a theme
 
@@ -326,9 +386,10 @@ leaving its published content behind. For the same reason the request cannot be
 edited or withdrawn from the app once confirmed, and the screen says so before
 asking.
 
-An account that exists only for likes — the silent anonymous one described
-above — can be deleted the same way. It owns no themes, so it is not asked the
-question; its identity and its private like documents are removed.
+An account that exists only for likes, installs or reports — the silent
+anonymous one described above — can be deleted the same way. It owns no themes,
+so it is not asked the question; its identity and its private like, install and
+report documents are all removed.
 
 Two limits are worth stating plainly. Removing a public listing cannot erase
 information already committed to Git history or copied into forks, clones,
@@ -340,7 +401,8 @@ retract a submission or a private reaction already stored in Firestore.
 
 You can remove a single reaction at any time by tapping **Unlike** on that
 theme's detail page, for as long as the app still holds the identifier that
-created it. For a takedown request about someone else's theme, or help
+created it. Install and report records cannot be removed individually; deleting
+the community account removes them all. For a takedown request about someone else's theme, or help
 identifying a community-theme record, email the address in [Contact](#contact);
 those requests are handled manually.
 
@@ -478,8 +540,8 @@ does not control these separate automatic Analytics events.
 ## What we don't do
 
 - We don't require an account to use playback controls, browse Community
-  themes, or like them. An optional Google sign-in is offered only when you
-  explicitly submit a Community theme.
+  themes, or to like, install or report one. An optional Google sign-in is
+  offered only when you explicitly submit a Community theme.
 - We don't run our own backend server that your data passes through.
 - We don't sell, rent, or share your data with advertisers or data brokers.
 - We don't show ads.

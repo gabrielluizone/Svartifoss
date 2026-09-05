@@ -9,11 +9,14 @@ import android.graphics.Path
 import android.graphics.PixelFormat
 import android.graphics.PorterDuff
 import android.graphics.RadialGradient
+import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.SweepGradient
 import android.graphics.drawable.Drawable
 import androidx.core.graphics.ColorUtils
 import com.svartifoss.snfell.common.AccentFloorStyle
+import com.svartifoss.snfell.common.AlbumFillSlot
+import com.svartifoss.snfell.common.OverlayBackdropPatterns
 import com.svartifoss.snfell.common.PaletteTransforms
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.ResolvedBackgroundLayer
@@ -33,7 +36,11 @@ class PlayerBackgroundDrawable(
         private val secondary: Int,
         private val tertiary: Int,
         private val materialSurface: Int,
-        private val materialSurfaceSoftened: Boolean
+        private val materialSurfaceSoftened: Boolean,
+        /** Only the drawn patterns need it, but they need a *real* one: their dot pitch and line
+         *  weights are in dp, and `Resources.getSystem()` reports the default display rather than
+         *  the watch's. */
+        private val density: Float
 ) : Drawable() {
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val stroke = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -445,6 +452,516 @@ class PlayerBackgroundDrawable(
                                 ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.18f)),
                                 ColorUtils.setAlphaComponent(0xFF1B0810.toInt(), authoredAlpha(.68f))),
                         floatArrayOf(0f, .55f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.PRISMATIC -> {
+                paint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.28f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = LinearGradient(left, top, right, bottom,
+                        intArrayOf(ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.48f)),
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.22f)),
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.36f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.72f))),
+                        floatArrayOf(0f, .34f, .67f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                stroke.shader = SweepGradient(cx, cy,
+                        intArrayOf(tunedPrimary, tunedSecondary, tunedTertiary, tunedPrimary), null)
+                stroke.strokeWidth = minDimension * .10f
+                stroke.alpha = fixedAlpha(.42f)
+                canvas.drawCircle(cx, cy, minDimension * .41f, stroke)
+                stroke.shader = null
+                stroke.alpha = 255
+            }
+
+            PlayerBackgroundStyle.CRESCENT -> {
+                paint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.34f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                stroke.shader = SweepGradient(cx, cy, intArrayOf(Color.TRANSPARENT,
+                        ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.72f)),
+                        ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.28f)),
+                        Color.TRANSPARENT), null)
+                stroke.style = Paint.Style.STROKE
+                stroke.strokeWidth = minDimension * .12f
+                stroke.alpha = fixedAlpha(.72f)
+                canvas.drawArc(cx - minDimension * .54f, cy - minDimension * .54f,
+                        cx + minDimension * .54f, cy + minDimension * .54f, 138f, 196f,
+                        false, stroke)
+                stroke.style = Paint.Style.FILL
+                stroke.shader = null
+                stroke.alpha = 255
+            }
+
+            PlayerBackgroundStyle.TIDAL -> {
+                paint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.20f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                listOf(Triple(.34f, tunedPrimary, .11f), Triple(.55f, tunedSecondary, .08f),
+                        Triple(.76f, tunedTertiary, .06f)).forEachIndexed { index, (y, color, width) ->
+                    val wave = Path().apply {
+                        moveTo(left, top + height * y)
+                        cubicTo(left + width * .24f, top + height * (y - .11f + index * .02f),
+                                left + width * .70f, top + height * (y + .10f),
+                                right, top + height * (y - .03f))
+                    }
+                    stroke.color = color
+                    stroke.strokeWidth = minDimension * width
+                    stroke.alpha = authoredAlpha(.78f)
+                    canvas.drawPath(wave, stroke)
+                }
+                stroke.alpha = 255
+            }
+
+            PlayerBackgroundStyle.PAPER -> {
+                paint.color = ColorUtils.setAlphaComponent(0xFFFFF3DF.toInt(), authoredAlpha(.18f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = LinearGradient(0f, top, 0f, bottom,
+                        intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.62f))),
+                        floatArrayOf(0f, .64f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                stroke.color = Color.WHITE
+                stroke.style = Paint.Style.STROKE
+                stroke.strokeWidth = minDimension * .009f
+                stroke.alpha = fixedAlpha(.44f)
+                canvas.drawRect(left + minDimension * .065f, top + minDimension * .065f,
+                        right - minDimension * .065f, bottom - minDimension * .065f, stroke)
+                stroke.style = Paint.Style.FILL
+                stroke.alpha = 255
+            }
+
+            PlayerBackgroundStyle.LANTERN -> {
+                paint.shader = LinearGradient(0f, top, 0f, bottom,
+                        intArrayOf(ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.55f)),
+                                Color.TRANSPARENT, ColorUtils.setAlphaComponent(deep, authoredAlpha(.72f))),
+                        floatArrayOf(0f, .46f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(cx, top + height * .82f, minDimension * .41f,
+                        intArrayOf(ColorUtils.setAlphaComponent(0xFFFFC857.toInt(), fixedAlpha(.52f)),
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.18f)),
+                                Color.TRANSPARENT), floatArrayOf(0f, .45f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.MIRAGE -> {
+                paint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.18f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .08f, top + height * .38f,
+                        minDimension * .58f, intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.46f)),
+                                Color.TRANSPARENT), floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(right - width * .08f, top + height * .62f,
+                        minDimension * .58f, intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.42f)),
+                                Color.TRANSPARENT), floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.GRID -> {
+                paint.color = ColorUtils.setAlphaComponent(deep, authoredAlpha(.64f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                stroke.color = ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.22f))
+                stroke.strokeWidth = minDimension * .006f
+                stroke.alpha = authoredAlpha(.72f)
+                for (step in 1..5) {
+                    val x = left + width * step / 6f
+                    val y = top + height * step / 6f
+                    canvas.drawLine(x, top, x, bottom, stroke)
+                    canvas.drawLine(left, y, right, y, stroke)
+                }
+                stroke.alpha = 255
+            }
+
+            PlayerBackgroundStyle.NOCTURNE -> {
+                paint.color = ColorUtils.setAlphaComponent(0xFF070B25.toInt(), authoredAlpha(.72f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .68f, top + height * .28f,
+                        minDimension * .58f, intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.36f)),
+                                Color.TRANSPARENT), floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = null
+                listOf(.16f to .22f, .72f to .18f, .37f to .58f, .82f to .72f).forEach { (x, y) ->
+                    paint.color = ColorUtils.setAlphaComponent(Color.WHITE, fixedAlpha(.62f))
+                    canvas.drawCircle(left + width * x, top + height * y, minDimension * .009f, paint)
+                }
+            }
+
+            PlayerBackgroundStyle.CLOUD -> {
+                paint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.16f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                listOf(Triple(.22f, .34f, tunedPrimary), Triple(.74f, .30f, tunedSecondary),
+                        Triple(.50f, .78f, tunedTertiary)).forEach { (x, y, color) ->
+                    paint.shader = RadialGradient(left + width * x, top + height * y,
+                            minDimension * .49f, intArrayOf(
+                                    ColorUtils.setAlphaComponent(color, fixedAlpha(.32f)),
+                                    Color.TRANSPARENT), floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                    canvas.drawRect(left, top, right, bottom, paint)
+                }
+            }
+
+            PlayerBackgroundStyle.LIQUID -> {
+                paint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.30f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                listOf(Triple(.18f, .72f, tunedPrimary), Triple(.62f, .42f, tunedSecondary),
+                        Triple(.86f, .76f, tunedTertiary)).forEach { (x, y, color) ->
+                    paint.shader = RadialGradient(left + width * x, top + height * y,
+                            minDimension * .38f, intArrayOf(
+                                    ColorUtils.setAlphaComponent(color, fixedAlpha(.52f)),
+                                    ColorUtils.setAlphaComponent(color, fixedAlpha(.12f)),
+                                    Color.TRANSPARENT), floatArrayOf(0f, .48f, 1f), Shader.TileMode.CLAMP)
+                    canvas.drawRect(left, top, right, bottom, paint)
+                }
+            }
+
+            PlayerBackgroundStyle.MONOLITH -> {
+                paint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.58f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = LinearGradient(left, 0f, left + width * .34f, 0f,
+                        intArrayOf(ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.58f)),
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.12f)),
+                                Color.TRANSPARENT), null, Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, left + width * .48f, bottom, paint)
+                paint.shader = LinearGradient(0f, top, 0f, bottom,
+                        intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.76f))),
+                        floatArrayOf(0f, .64f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.SPLIT_TONE -> {
+                paint.shader = LinearGradient(0f, top, 0f, bottom,
+                        intArrayOf(ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.36f)),
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.20f)),
+                                ColorUtils.setAlphaComponent(deep, authoredAlpha(.78f))),
+                        floatArrayOf(0f, .49f, .51f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                stroke.color = ColorUtils.setAlphaComponent(Color.WHITE, fixedAlpha(.48f))
+                stroke.strokeWidth = minDimension * .006f
+                stroke.alpha = authoredAlpha(.76f)
+                canvas.drawLine(left, top + height * .50f, right, top + height * .50f, stroke)
+                stroke.alpha = 255
+            }
+
+            PlayerBackgroundStyle.GRADIENT -> {
+                paint.shader = LinearGradient(left, top, right, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.46f)),
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.30f))),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.DUOTONE -> {
+                paint.shader = LinearGradient(left, cy, right, cy,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.40f)),
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.40f))),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.BANDS -> {
+                paint.shader = LinearGradient(0f, top, 0f, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.30f)),
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.44f)),
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.18f)),
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.38f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.82f))),
+                        floatArrayOf(0f, .25f, .5f, .75f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.VIGNETTE -> {
+                paint.shader = null
+                paint.color = ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.20f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(cx, cy, minDimension * .68f,
+                        intArrayOf(
+                                Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.14f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.90f))),
+                        floatArrayOf(0f, .52f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.GRAPHITE -> {
+                paint.shader = null
+                paint.color = ColorUtils.setAlphaComponent(0xFF111318.toInt(), authoredAlpha(.86f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = LinearGradient(left, top, right, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(0xFF292D34.toInt(), authoredAlpha(.62f)),
+                                Color.TRANSPARENT,
+                                ColorUtils.setAlphaComponent(0xFF1D2026.toInt(), authoredAlpha(.62f))),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.CINEMA -> {
+                paint.shader = LinearGradient(0f, top, 0f, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.94f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.88f)),
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.34f)),
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.24f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.88f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.94f))),
+                        floatArrayOf(0f, .2f, .4f, .6f, .8f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.ACRYLIC -> {
+                paint.shader = LinearGradient(left, top, right, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.40f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.72f))),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.MESH -> {
+                paint.shader = null
+                paint.color = ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.14f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .18f, top + height * .22f,
+                        minDimension * .72f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.44f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .86f, top + height * .78f,
+                        minDimension * .68f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.38f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.NEBULA -> {
+                paint.shader = null
+                paint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.42f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .16f, top + height * .24f,
+                        minDimension * .70f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.42f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .84f, top + height * .32f,
+                        minDimension * .64f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.38f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .50f, top + height * .94f,
+                        minDimension * .58f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.34f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.BIOLUMINESCENCE -> {
+                paint.shader = null
+                paint.color = ColorUtils.setAlphaComponent(0xFF041A19.toInt(), authoredAlpha(.66f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .20f, top + height * .74f,
+                        minDimension * .62f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.52f)),
+                                ColorUtils.setAlphaComponent(0xFF0A6A62.toInt(), fixedAlpha(.26f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .82f, top + height * .24f,
+                        minDimension * .54f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.44f)),
+                                ColorUtils.setAlphaComponent(0xFF1AB5A2.toInt(), fixedAlpha(.18f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.IRIDESCENT -> {
+                paint.shader = LinearGradient(left, top, right, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.36f)),
+                                ColorUtils.setAlphaComponent(0xFF4A2F72.toInt(), fixedAlpha(.44f)),
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.42f)),
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.30f)),
+                                ColorUtils.setAlphaComponent(0xFF0B101A.toInt(), authoredAlpha(.82f))),
+                        floatArrayOf(0f, .25f, .5f, .75f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.ORBIT -> {
+                paint.shader = null
+                paint.color = ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.13f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .16f, top + height * .30f,
+                        minDimension * .64f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.46f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .84f, top + height * .72f,
+                        minDimension * .62f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.38f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = RadialGradient(left + width * .50f, top + height * .50f,
+                        minDimension * .26f,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.34f)),
+                                Color.TRANSPARENT,),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.INK_WASH -> {
+                paint.shader = null
+                paint.color = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.34f))
+                canvas.drawRect(left, top, right, bottom, paint)
+                paint.shader = LinearGradient(left, top, right, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.44f)),
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.16f)),
+                                Color.TRANSPARENT),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.BLOSSOM -> {
+                paint.shader = LinearGradient(left, bottom, right, top,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(0xFF160B1D.toInt(), authoredAlpha(.80f)),
+                                ColorUtils.setAlphaComponent(0xFF542047.toInt(), fixedAlpha(.52f)),
+                                ColorUtils.setAlphaComponent(0xFFB84B74.toInt(), fixedAlpha(.44f)),
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.34f)),
+                                ColorUtils.setAlphaComponent(0xFF08050B.toInt(), authoredAlpha(.84f))),
+                        floatArrayOf(0f, .25f, .5f, .75f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.FJORD -> {
+                paint.shader = LinearGradient(left, top, right, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(0xFF0A2030.toInt(), authoredAlpha(.76f)),
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.34f)),
+                                ColorUtils.setAlphaComponent(0xFF0A5960.toInt(), fixedAlpha(.44f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.86f))),
+                        floatArrayOf(0f, .33f, .66f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.DOT_MATRIX -> {
+                paint.shader = null
+                OverlayBackdropPatterns.drawDotMatrix(
+                        canvas, RectF(left, top, right, bottom), density,
+                        baseColor = Color.TRANSPARENT,
+                        dotColor = ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.44f)))
+            }
+
+            PlayerBackgroundStyle.SCANLINES -> {
+                paint.shader = null
+                OverlayBackdropPatterns.drawScanlines(
+                        canvas, RectF(left, top, right, bottom), density,
+                        baseColor = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.34f)),
+                        lineColor = ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.52f)))
+            }
+
+            PlayerBackgroundStyle.RADAR -> {
+                paint.shader = null
+                OverlayBackdropPatterns.drawRadarRings(
+                        canvas, RectF(left, top, right, bottom), density,
+                        cx = cx, cy = cy, radius = minDimension / 2f,
+                        baseColor = ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.12f)),
+                        ringColor = ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.50f)),
+                        sweepColor = ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.42f)))
+            }
+
+            PlayerBackgroundStyle.CONTOUR -> {
+                paint.shader = null
+                OverlayBackdropPatterns.drawContourLines(
+                        canvas, RectF(left, top, right, bottom), density,
+                        cx = cx, cy = cy, radius = minDimension / 2f,
+                        baseColor = ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.12f)),
+                        lineColor = ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.46f)),
+                        accent = tunedPrimary)
+            }
+
+            PlayerBackgroundStyle.FACETED -> {
+                paint.shader = null
+                OverlayBackdropPatterns.drawFacetedCrystal(
+                        canvas, RectF(left, top, right, bottom), density,
+                        primary = ColorUtils.setAlphaComponent(tunedPrimary, fixedAlpha(.42f)),
+                        secondary = ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.38f)),
+                        tertiary = ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.34f)),
+                        accent = tunedPrimary)
+            }
+
+            PlayerBackgroundStyle.SOLID_ALBUM,
+            PlayerBackgroundStyle.SOLID_SECONDARY,
+            PlayerBackgroundStyle.SOLID_TERTIARY -> {
+                paint.shader = null
+                paint.color = PaletteTransforms.tonalSurface(
+                        when (style.flatAlbumFill) {
+                            AlbumFillSlot.SECONDARY -> secondary
+                            AlbumFillSlot.TERTIARY -> tertiary
+                            else -> primary
+                        },
+                        .24f, PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.GLASS -> {
+                paint.shader = LinearGradient(0f, top, 0f, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(Color.WHITE, fixedAlpha(.18f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.72f))),
+                        floatArrayOf(0f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.MIDNIGHT -> {
+                paint.shader = LinearGradient(0f, top, 0f, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.30f)),
+                                ColorUtils.setAlphaComponent(0xFF070914.toInt(), authoredAlpha(.66f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.86f))),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.SMOKE -> {
+                paint.shader = LinearGradient(left, top, right, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(tunedTertiary, fixedAlpha(.24f)),
+                                ColorUtils.setAlphaComponent(0xFF323238.toInt(), authoredAlpha(.56f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.82f))),
+                        floatArrayOf(0f, .5f, 1f), Shader.TileMode.CLAMP)
+                canvas.drawRect(left, top, right, bottom, paint)
+            }
+
+            PlayerBackgroundStyle.TIDELINE -> {
+                paint.shader = LinearGradient(0f, top, 0f, bottom,
+                        intArrayOf(
+                                ColorUtils.setAlphaComponent(0xFF031423.toInt(), authoredAlpha(.72f)),
+                                ColorUtils.setAlphaComponent(0xFF07516A.toInt(), fixedAlpha(.52f)),
+                                ColorUtils.setAlphaComponent(tunedSecondary, fixedAlpha(.30f)),
+                                ColorUtils.setAlphaComponent(Color.BLACK, authoredAlpha(.84f))),
+                        floatArrayOf(0f, .33f, .66f, 1f), Shader.TileMode.CLAMP)
                 canvas.drawRect(left, top, right, bottom, paint)
             }
 

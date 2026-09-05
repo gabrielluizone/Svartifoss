@@ -128,6 +128,7 @@ private fun BoxWithConstraintsScope.FrameCard(state: NowPlayingFaceState, screen
                 AdaptiveTitleText(
                         text = state.title,
                         mode = state.titleTextMode,
+                        state = state,
                         color = titleTextColor(state, Color.White),
                         fontSize = FaceGeometry.Frame.TITLE_TEXT_SIZE_SP.sp,
                         fontWeight = FontWeight.Bold,

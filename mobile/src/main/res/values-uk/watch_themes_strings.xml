@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Оновити теми спільноти</string>
     <string name="online_theme_list_description">Теми годинника, створені спільнотою</string>
     <string name="online_theme_byline">Від %1$s</string>
+    <string name="online_theme_filter_author">Теми від %1$s</string>
+    <string name="online_theme_filter_author_selected">Показано теми від %1$s</string>
     <string name="online_theme_row_description">%1$s від %2$s. Макет %3$s.</string>
     <string name="online_theme_apply">Додати й застосувати</string>
     <string name="online_theme_loading">Завантаження тем спільноти…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Теми, які ви вже додали, показано</string>
     <string name="online_theme_search_empty_all_installed">Ви вже додали всі теми спільноти.</string>
     <string name="online_theme_search_empty_all_installed_hint">Вимкніть «Нові для мене», щоб знову їх побачити.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Найбільше завантажень</string>
+    <string name="online_theme_sort_most_downloaded_short">Завантаження</string>
+    <string name="community_theme_detail_downloads">Завантаження</string>
+    <string name="community_theme_report_action">Поскаржитися</string>
+    <string name="community_theme_report_already">Скаргу надіслано</string>
+    <string name="community_theme_report_description">Поскаржитися модераторам на «%1$s»</string>
+    <string name="community_theme_report_title">Поскаржитися на цю тему</string>
+    <string name="community_theme_report_intro">Розкажіть модераторам, що не так із цією темою.</string>
+    <string name="community_theme_report_reason_inappropriate">Образливий або недоречний вміст</string>
+    <string name="community_theme_report_reason_impersonation">Видається за чужу роботу</string>
+    <string name="community_theme_report_reason_misleading">Не відповідає тому, що показано</string>
+    <string name="community_theme_report_reason_illegible">Непридатна на годиннику</string>
+    <string name="community_theme_report_reason_spam">Спам або дублікат</string>
+    <string name="community_theme_report_reason_other">Інше</string>
+    <string name="community_theme_report_details_hint">Що ще варто знати модераторам (необов\'язково)</string>
+    <string name="community_theme_report_privacy">Вашу скаргу читають лише модератори. Автор ніколи не дізнається, хто її надіслав.</string>
+    <string name="community_theme_report_submit">Надіслати скаргу</string>
+    <string name="community_theme_report_sent">Скаргу надіслано. Модератори перевірять цю тему.</string>
+    <string name="community_theme_report_already_sent">Ви вже поскаржилися на цю тему.</string>
+    <string name="community_theme_report_not_ready">На цю тему поки що не можна поскаржитися. Спробуйте пізніше.</string>
+    <string name="community_theme_report_error">Не вдалося надіслати скаргу. Перевірте з\'єднання і спробуйте ще раз.</string>
 </resources>

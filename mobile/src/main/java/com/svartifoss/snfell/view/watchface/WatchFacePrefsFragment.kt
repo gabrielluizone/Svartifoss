@@ -37,6 +37,11 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiniButtonPlacement
 import com.svartifoss.snfell.common.ColorModifier
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.TextBackdropStyle
+import com.svartifoss.snfell.common.TextOutlineStyle
+import com.svartifoss.snfell.common.TextShadowColorMode
+import com.svartifoss.snfell.common.TextShadowStyle
+import com.svartifoss.snfell.common.OverlayBackdropResolver
 import com.svartifoss.snfell.common.BackgroundLayer
 import com.svartifoss.snfell.common.BackgroundLayerColor
 import com.svartifoss.snfell.common.BackgroundLayerKind
@@ -68,6 +73,7 @@ import com.svartifoss.snfell.view.settings.showLyraColorPickerDialog
 import com.svartifoss.snfell.view.settings.scrollToAndPulsePreference
 import com.svartifoss.snfell.view.settings.tintOpenLyraPreferenceDialog
 import com.matejdro.wearutils.preferences.compat.PreferenceFragmentCompatEx
+import com.svartifoss.snfell.view.NEUTRAL_WATCH_ACCENT
 
 /**
  * The preference-list half of the Watch tab (see [WatchFaceFragment]), filtered into focused
@@ -90,7 +96,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         private const val STATE_TYPOGRAPHY_TARGET = "watchTypographyTarget"
         private const val STATE_COLOR_TARGET = "watchColorTarget"
         private const val STATE_PANEL_TARGET = "watchPanelTarget"
-        private const val DEFAULT_SWATCH_COLOR = 0xFF86A69D.toInt()
+        private const val DEFAULT_SWATCH_COLOR = NEUTRAL_WATCH_ACCENT
         private const val TYPOGRAPHY_EDITOR_CATEGORY = "cat_wf_typography_editor"
         private const val TYPOGRAPHY_EDITOR_KEY = "typography_editor_surface"
         private const val TYPOGRAPHY_SIZE_STEP = 5
@@ -341,6 +347,21 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 desaturatedKey = null,
                 customColorDescription = R.string.setting_wear_clock_custom_color_description
         )
+        // The three text effects on Text -> Title/Artist. Their hex rows were the only custom
+        // colours in the app with no picker wired to them at all: initAccentColorTarget covers the
+        // nine colour *targets*, and these six were added later with the effects themselves. So
+        // choosing Custom set the mode and left no way, on this page or anywhere else, to say which
+        // colour it meant. Not initAccentColorTarget, because that also owns a mode row's
+        // visibility dependencies and these modes have none - the compact editor decides what is on
+        // screen here.
+        listOf(
+                MiscPreferences.WEAR_TITLE_SHADOW_CUSTOM_COLOR,
+                MiscPreferences.WEAR_TITLE_OUTLINE_CUSTOM_COLOR,
+                MiscPreferences.WEAR_TITLE_TEXT_BG_CUSTOM_COLOR,
+                MiscPreferences.WEAR_ARTIST_SHADOW_CUSTOM_COLOR,
+                MiscPreferences.WEAR_ARTIST_OUTLINE_CUSTOM_COLOR,
+                MiscPreferences.WEAR_ARTIST_TEXT_BG_CUSTOM_COLOR
+        ).forEach { initTextEffectCustomColorRow(it.key) }
         findPreference<Preference>("screen_buttons_hint")?.onPreferenceClickListener =
                 Preference.OnPreferenceClickListener {
                     (activity as? com.svartifoss.snfell.view.mainactivity.MainActivity)?.openControls()
@@ -375,6 +396,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             "wear_quick_panel_source",
             "wear_queue_style",
             "album_art_style",
+            "album_art_filter",
             "wear_player_shading_style",
             "wear_color_treatment",
             "wear_artist_color_mode",
@@ -464,6 +486,53 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         root.findViewById<MaterialButton>(R.id.typography_behavior_button).setOnClickListener {
             openPreferenceDialog(MiscPreferences.WEAR_TITLE_TEXT_MODE.key)
         }
+        root.findViewById<MaterialButton>(R.id.typography_shadow_button).setOnClickListener {
+            settingKey(typographyTarget, TypographyControl.SHADOW)?.let(::openPreferenceDialog)
+        }
+        root.findViewById<MaterialButton>(R.id.typography_shadow_color_button).setOnClickListener {
+            // The mode picker, not the hex dot: picking "Custom" is what makes the hex meaningful,
+            // and the mode dialog is where that choice lives. HexColorDotPreference stays reachable
+            // from search, which resolves to this same control.
+            settingKey(typographyTarget, TypographyControl.SHADOW_COLOR)?.let(::openPreferenceDialog)
+        }
+        root.findViewById<MaterialButton>(R.id.typography_shadow_strength_button).setOnClickListener {
+            settingKey(typographyTarget, TypographyControl.SHADOW_STRENGTH)
+                    ?.let(::showTypographySlider)
+        }
+        root.findViewById<MaterialButton>(R.id.typography_shadow_custom_color_button)
+                .setOnClickListener {
+                    customColorKey(typographyTarget, TypographyControl.SHADOW_COLOR)
+                            ?.let(::openColorPicker)
+                }
+        root.findViewById<MaterialButton>(R.id.typography_outline_custom_color_button)
+                .setOnClickListener {
+                    customColorKey(typographyTarget, TypographyControl.OUTLINE_COLOR)
+                            ?.let(::openColorPicker)
+                }
+        root.findViewById<MaterialButton>(R.id.typography_backdrop_custom_color_button)
+                .setOnClickListener {
+                    customColorKey(typographyTarget, TypographyControl.BACKDROP_COLOR)
+                            ?.let(::openColorPicker)
+                }
+        root.findViewById<MaterialButton>(R.id.typography_outline_button).setOnClickListener {
+            settingKey(typographyTarget, TypographyControl.OUTLINE)?.let(::openPreferenceDialog)
+        }
+        root.findViewById<MaterialButton>(R.id.typography_outline_color_button).setOnClickListener {
+            settingKey(typographyTarget, TypographyControl.OUTLINE_COLOR)
+                    ?.let(::openPreferenceDialog)
+        }
+        root.findViewById<MaterialButton>(R.id.typography_backdrop_button).setOnClickListener {
+            settingKey(typographyTarget, TypographyControl.BACKDROP)?.let(::openPreferenceDialog)
+        }
+        root.findViewById<MaterialButton>(R.id.typography_backdrop_color_button).setOnClickListener {
+            settingKey(typographyTarget, TypographyControl.BACKDROP_COLOR)
+                    ?.let(::openPreferenceDialog)
+        }
+        root.findViewById<MaterialButton>(R.id.typography_backdrop_opacity_button)
+                .setOnClickListener {
+                    settingKey(typographyTarget, TypographyControl.BACKDROP_OPACITY)
+                            ?.let(::showTypographySlider)
+                }
 
         renderTypographyEditor(root)
     }
@@ -618,6 +687,109 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                     MiscPreferences.WEAR_TITLE_TEXT_MODE.key, behaviorButton.text)
         }
 
+        val shadowButton = root.findViewById<MaterialButton>(R.id.typography_shadow_button)
+        val shadowColorButton = root.findViewById<MaterialButton>(R.id.typography_shadow_color_button)
+        val shadowStrengthButton =
+                root.findViewById<MaterialButton>(R.id.typography_shadow_strength_button)
+        val shadowDetailRow = root.findViewById<View>(R.id.typography_shadow_detail_row)
+        val shadowKey = settingKey(typographyTarget, TypographyControl.SHADOW)
+        shadowButton.isVisible = shadowKey != null
+        var shadowOn = false
+        shadowKey?.let { key ->
+            val value = readStringPreference(key, choiceDefault(key))
+            shadowOn = TextShadowStyle.fromPreference(value) != TextShadowStyle.NONE
+            shadowButton.text = choiceLabel(key, value)
+            shadowButton.contentDescription = buildPreferenceDescription(key, shadowButton.text)
+        }
+        // Colour and intensity only exist once there is a shadow for them to change.
+        shadowDetailRow.isVisible = shadowButton.isVisible && shadowOn
+        var shadowCustom = false
+        if (shadowDetailRow.isVisible) {
+            settingKey(typographyTarget, TypographyControl.SHADOW_COLOR)?.let { key ->
+                val value = readStringPreference(key, choiceDefault(key))
+                shadowCustom = typographyCustomColorApplies(value)
+                shadowColorButton.text = choiceLabel(key, value)
+                shadowColorButton.contentDescription =
+                        buildPreferenceDescription(key, shadowColorButton.text)
+            }
+            settingKey(typographyTarget, TypographyControl.SHADOW_STRENGTH)?.let { key ->
+                val value = readTypographyNumber(key)
+                shadowStrengthButton.text = "$value%"
+                shadowStrengthButton.contentDescription =
+                        buildPreferenceDescription(key, shadowStrengthButton.text)
+            }
+        }
+        bindTypographyCustomColor(
+                root.findViewById(R.id.typography_shadow_custom_color_button),
+                TypographyControl.SHADOW_COLOR,
+                shadowDetailRow.isVisible && shadowCustom)
+
+        val outlineButton = root.findViewById<MaterialButton>(R.id.typography_outline_button)
+        val outlineColorButton =
+                root.findViewById<MaterialButton>(R.id.typography_outline_color_button)
+        val outlineKey = settingKey(typographyTarget, TypographyControl.OUTLINE)
+        outlineButton.isVisible = outlineKey != null
+        var outlineOn = false
+        outlineKey?.let { key ->
+            val value = readStringPreference(key, choiceDefault(key))
+            outlineOn = TextOutlineStyle.fromPreference(value) != TextOutlineStyle.NONE
+            outlineButton.text = choiceLabel(key, value)
+            outlineButton.contentDescription = buildPreferenceDescription(key, outlineButton.text)
+        }
+        outlineColorButton.isVisible = outlineButton.isVisible && outlineOn
+        var outlineCustom = false
+        if (outlineColorButton.isVisible) {
+            settingKey(typographyTarget, TypographyControl.OUTLINE_COLOR)?.let { key ->
+                val value = readStringPreference(key, choiceDefault(key))
+                outlineCustom = typographyCustomColorApplies(value)
+                outlineColorButton.text = choiceLabel(key, value)
+                outlineColorButton.contentDescription =
+                        buildPreferenceDescription(key, outlineColorButton.text)
+            }
+        }
+        bindTypographyCustomColor(
+                root.findViewById(R.id.typography_outline_custom_color_button),
+                TypographyControl.OUTLINE_COLOR,
+                outlineColorButton.isVisible && outlineCustom)
+
+        val backdropButton = root.findViewById<MaterialButton>(R.id.typography_backdrop_button)
+        val backdropColorButton =
+                root.findViewById<MaterialButton>(R.id.typography_backdrop_color_button)
+        val backdropOpacityButton =
+                root.findViewById<MaterialButton>(R.id.typography_backdrop_opacity_button)
+        val backdropDetailRow = root.findViewById<View>(R.id.typography_backdrop_detail_row)
+        val backdropKey = settingKey(typographyTarget, TypographyControl.BACKDROP)
+        backdropButton.isVisible = backdropKey != null
+        var backdropOn = false
+        backdropKey?.let { key ->
+            val value = readStringPreference(key, choiceDefault(key))
+            backdropOn = TextBackdropStyle.fromPreference(value) != TextBackdropStyle.NONE
+            backdropButton.text = choiceLabel(key, value)
+            backdropButton.contentDescription =
+                    buildPreferenceDescription(key, backdropButton.text)
+        }
+        backdropDetailRow.isVisible = backdropButton.isVisible && backdropOn
+        var backdropCustom = false
+        if (backdropDetailRow.isVisible) {
+            settingKey(typographyTarget, TypographyControl.BACKDROP_COLOR)?.let { key ->
+                val value = readStringPreference(key, choiceDefault(key))
+                backdropCustom = typographyCustomColorApplies(value)
+                backdropColorButton.text = choiceLabel(key, value)
+                backdropColorButton.contentDescription =
+                        buildPreferenceDescription(key, backdropColorButton.text)
+            }
+            settingKey(typographyTarget, TypographyControl.BACKDROP_OPACITY)?.let { key ->
+                val value = readTypographyNumber(key)
+                backdropOpacityButton.text = "$value%"
+                backdropOpacityButton.contentDescription =
+                        buildPreferenceDescription(key, backdropOpacityButton.text)
+            }
+        }
+        val backdropCustomColorButton = bindTypographyCustomColor(
+                root.findViewById(R.id.typography_backdrop_custom_color_button),
+                TypographyControl.BACKDROP_COLOR,
+                backdropDetailRow.isVisible && backdropCustom)
+
         listOfNotNull(
                 elementFontButton.takeIf { it.isVisible },
                 elementFlexButton.takeIf { it.isVisible },
@@ -627,6 +799,19 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 opacityButton.takeIf { it.isVisible },
                 trackingButton.takeIf { it.isVisible },
                 caseButton.takeIf { it.isVisible },
+                shadowButton.takeIf { it.isVisible },
+                shadowColorButton.takeIf { shadowDetailRow.isVisible },
+                shadowStrengthButton.takeIf { shadowDetailRow.isVisible },
+                outlineButton.takeIf { it.isVisible },
+                outlineColorButton.takeIf { it.isVisible },
+                backdropButton.takeIf { it.isVisible },
+                backdropColorButton.takeIf { backdropDetailRow.isVisible },
+                backdropOpacityButton.takeIf { backdropDetailRow.isVisible },
+                root.findViewById<MaterialButton>(R.id.typography_shadow_custom_color_button)
+                        .takeIf { it.isVisible },
+                root.findViewById<MaterialButton>(R.id.typography_outline_custom_color_button)
+                        .takeIf { it.isVisible },
+                backdropCustomColorButton.takeIf { it.isVisible },
                 behaviorButton.takeIf { it.isVisible }
         ).forEach { it.isEnabled = elementVisible }
 
@@ -772,6 +957,28 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     }
 
     /** Opens the real Preference's own dialog, so both compact editors stay a view over it. */
+    /**
+     * Shows the picked-colour swatch for one of the three text effects, when it has one to show.
+     *
+     * The swatch exists because the mode row and the hex row behind it are one control on this
+     * page: the mode button opens a `ListPreference` dialog, which only reports an actual change,
+     * so re-picking Custom to reach the colour did nothing and the hex row - hidden here like every
+     * other legacy row - had no other way in. Choosing Custom now reveals a second button, exactly
+     * as the Colors page pairs its mode with a swatch.
+     */
+    private fun bindTypographyCustomColor(
+            button: MaterialButton,
+            control: TypographyControl,
+            applies: Boolean
+    ): MaterialButton {
+        val key = customColorKey(typographyTarget, control)
+        button.isVisible = applies && key != null
+        if (button.isVisible && key != null) {
+            bindColorSwatchButton(button, key, findPreference<Preference>(key)?.title)
+        }
+        return button
+    }
+
     private fun openPreferenceDialog(key: String) {
         val preference = findPreference<Preference>(key) ?: return
         notifyPreviewInteraction(key, null)
@@ -954,9 +1161,15 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     }
 
     private fun settingKey(target: TypographyTarget, control: TypographyControl): String? =
-            TypographyEditorModel.specsFor(target)
-                    .firstOrNull { it.control == control && it.persisted }
-                    ?.key
+            TypographyEditorModel.settingKeyFor(target, control)
+
+    /** The picked-colour row behind a colour control, or null where that control has none. */
+    private fun customColorKey(target: TypographyTarget, control: TypographyControl): String? =
+            TypographyEditorModel.customColorKeyFor(target, control)
+
+    /** Whether a [TextShadowColorMode] value is the one that makes a picked colour meaningful. */
+    private fun typographyCustomColorApplies(mode: String?): Boolean =
+            TextShadowColorMode.fromPreference(mode) == TextShadowColorMode.CUSTOM
 
     /**
      * The typeface [target] actually renders in: its own override, or the track font it follows.
@@ -1105,7 +1318,16 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         else -> null
     }
 
-    private fun controlIdFor(target: TypographySearchTarget): Int = when (target.control) {
+    private fun controlIdFor(target: TypographySearchTarget): Int = when {
+        target.hex -> when (target.control) {
+            TypographyControl.SHADOW_COLOR -> R.id.typography_shadow_custom_color_button
+            TypographyControl.OUTLINE_COLOR -> R.id.typography_outline_custom_color_button
+            else -> R.id.typography_backdrop_custom_color_button
+        }
+        else -> controlIdForMode(target.control)
+    }
+
+    private fun controlIdForMode(control: TypographyControl): Int = when (control) {
         TypographyControl.FONT -> R.id.typography_font_button
         TypographyControl.FONT_SCOPE -> R.id.typography_all_screens_switch
         TypographyControl.ELEMENT_FONT -> R.id.typography_element_font_button
@@ -1117,6 +1339,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         TypographyControl.OPACITY -> R.id.typography_opacity_button
         TypographyControl.TRACKING -> R.id.typography_tracking_button
         TypographyControl.CASE -> R.id.typography_case_button
+        TypographyControl.SHADOW -> R.id.typography_shadow_button
+        TypographyControl.SHADOW_COLOR -> R.id.typography_shadow_color_button
+        TypographyControl.SHADOW_STRENGTH -> R.id.typography_shadow_strength_button
+        TypographyControl.OUTLINE -> R.id.typography_outline_button
+        TypographyControl.OUTLINE_COLOR -> R.id.typography_outline_color_button
+        TypographyControl.BACKDROP -> R.id.typography_backdrop_button
+        TypographyControl.BACKDROP_COLOR -> R.id.typography_backdrop_color_button
+        TypographyControl.BACKDROP_OPACITY -> R.id.typography_backdrop_opacity_button
         TypographyControl.GLOBAL_FLEX -> R.id.typography_flex_button
         TypographyControl.FLEX -> R.id.typography_element_flex_button
     }
@@ -1650,10 +1880,21 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
         val blurKey = MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS.key
         val blurButton = root.findViewById<MaterialButton>(R.id.panel_editor_blur_button)
-        val blurValue = store.getInt(
-                blurKey, MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS.defaultValue)
-        blurButton.text = "${getString(R.string.category_wf_panel_effects)} · $blurValue"
-        blurButton.contentDescription = buildPreferenceDescription(blurKey, blurValue)
+        // Most OverlayBackdrop treatments are solid fields or authored gradients this radius has
+        // no effect on - see panelControlApplies(PanelControl.BLUR). Showing it regardless of the
+        // chosen background made the control read as broken for whichever style was current.
+        // The button is the sole child of its own fixed-height scroll row, so that row is hidden
+        // too - otherwise it survives as an empty 56dp band between the backdrop picker and the
+        // target tabs.
+        val blurApplies = panelControlApplies(PanelControl.BLUR, blurKey)
+        blurButton.isVisible = blurApplies
+        root.findViewById<View>(R.id.panel_editor_global_scroll).isVisible = blurApplies
+        if (blurApplies) {
+            val blurValue = store.getInt(
+                    blurKey, MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS.defaultValue)
+            blurButton.text = "${getString(R.string.category_wf_panel_effects)} · $blurValue"
+            blurButton.contentDescription = buildPreferenceDescription(blurKey, blurValue)
+        }
 
         val targetGroup = root.findViewById<MaterialButtonToggleGroup>(R.id.panel_editor_target_group)
         if (targetGroup.checkedButtonId != panelButtonIdFor(panelTarget)) {
@@ -1739,6 +1980,22 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         PanelControl.RING_GRADIENT ->
             panelControlApplies(PanelControl.RING_STYLE, key) &&
                     readStringPreference(MiscPreferences.WEAR_PROGRESS_STYLE.key, "solid") == "solid"
+        // Only a minority of OverlayBackdrop's ~35 treatments actually sample the blurred cover
+        // (OverlayBackdrop.usesAlbumBlur) - the rest are solid fields or authored gradients this
+        // radius has no effect on. The row is anchored to Volume (see PanelEditorModel's class
+        // doc), so it resolves through that surface's own content style - the same resolution
+        // OverlayBackdropDrawables.build ends up running for the real Volume overlay - rather
+        // than the raw stored value alone, so "Follow style" is judged by what it actually
+        // follows into instead of always reading as "no blur".
+        PanelControl.BLUR ->
+            OverlayBackdropResolver.resolve(
+                    readStringPreference(
+                            MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE.key,
+                            MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE.defaultValue),
+                    readStringPreference(
+                            MiscPreferences.WEAR_VOLUME_STYLE.key,
+                            MiscPreferences.WEAR_VOLUME_STYLE.defaultValue))
+                    .usesAlbumBlur
         else -> true
     }
 
@@ -1951,9 +2208,18 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         renderPlayerChips(
                 root.findViewById(R.id.player_editor_element_chips),
                 PlayerEditorModel.visibleIn(PlayerSlot.ELEMENT, face))
+        // The one choice row gated by another preference rather than by the face: the position
+        // mark is drawn on the shared edge ring, so switching that ring off leaves it with nothing
+        // to sit on. A picker that changes nothing reads as broken, which is the same reason the
+        // control-style and per-face rows above are hidden rather than merely inert.
+        val edgeArcOn = store.getBoolean(
+                MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key,
+                MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.defaultValue)
         renderPlayerChoiceRows(
                 root.findViewById(R.id.player_editor_choice_rows),
-                PlayerEditorModel.visibleIn(PlayerSlot.CHOICE, face))
+                PlayerEditorModel.visibleIn(PlayerSlot.CHOICE, face).filter { spec ->
+                    spec.control != PlayerControl.SEEK_MARKER || edgeArcOn
+                })
 
         val details = PlayerEditorModel.visibleIn(PlayerSlot.DETAIL, face)
         root.findViewById<View>(R.id.player_editor_details_card).isVisible = details.isNotEmpty()
@@ -2032,6 +2298,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 maxLines = 1
                 ellipsize = android.text.TextUtils.TruncateAt.END
                 typeface = ResourcesCompat.getFont(requireContext(), R.font.google_sans)
+                // The same google_sans metric fix LyraGestureButton carries, and for the same
+                // reason: this font's ascent leaves the label riding a few dp high in a
+                // fixed-height row, so a picker row built here sat visibly higher in its box than
+                // the identical-looking rows inflated from that style. These are the only rows in
+                // the editor constructed in code rather than from it, which is exactly why they
+                // were the ones missing it.
+                includeFontPadding = false
                 // 12sp, and the insets zeroed to match LyraGestureButton. A MaterialButton keeps
                 // 6dp of inset top and bottom by default, which leaves a 48dp row only 36dp of
                 // content box; a 13sp line plus its font padding overran that, and an overrun is
@@ -2877,6 +3150,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
         root.findViewById<MaterialButton>(R.id.background_editor_artwork_button)
                 .setOnClickListener { openPreferenceDialog(MiscPreferences.ALBUM_ART_STYLE.key) }
+        root.findViewById<MaterialButton>(R.id.background_editor_filter_button)
+                .setOnClickListener { openPreferenceDialog(MiscPreferences.ALBUM_ART_FILTER.key) }
         root.findViewById<MaterialButton>(R.id.background_editor_blur_button)
                 .setOnClickListener {
                     openPreferenceDialog(MiscPreferences.ALBUM_ART_BLUR_RADIUS.key)
@@ -2897,6 +3172,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 artworkKey, MiscPreferences.ALBUM_ART_STYLE.defaultValue)
         artworkButton.text = choiceLabel(artworkKey, artworkValue)
         artworkButton.contentDescription = buildPreferenceDescription(artworkKey, artworkButton.text)
+
+        val filterKey = MiscPreferences.ALBUM_ART_FILTER.key
+        val filterButton = root.findViewById<MaterialButton>(R.id.background_editor_filter_button)
+        val filterValue = readStringPreference(
+                filterKey, MiscPreferences.ALBUM_ART_FILTER.defaultValue)
+        filterButton.text = choiceLabel(filterKey, filterValue)
+        filterButton.contentDescription = buildPreferenceDescription(filterKey, filterButton.text)
 
         // Blurring is the only artwork control that does not apply to every treatment, and a
         // radius beside a style that never blurs reads as broken rather than as inapplicable -
@@ -3251,6 +3533,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
     private fun backgroundControlIdFor(control: BackgroundControl): Int = when (control) {
         BackgroundControl.ARTWORK -> R.id.background_editor_artwork_button
+        BackgroundControl.FILTER -> R.id.background_editor_filter_button
         BackgroundControl.BLUR -> R.id.background_editor_blur_button
         BackgroundControl.FADE -> R.id.background_editor_fade_switch
         BackgroundControl.LAYERS -> R.id.background_editor_layer_list
@@ -3313,6 +3596,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
         listOf(
                 R.id.background_editor_artwork_button,
+                R.id.background_editor_filter_button,
                 R.id.background_editor_blur_button
         ).forEach { id ->
             root.findViewById<MaterialButton>(id)?.apply {
@@ -3519,6 +3803,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // Background and layout are independent now, including Eclipse: selecting Poster,
         // Material or Expressive here must work without replacing the structural renderer.
         findPreference<Preference>("album_art_style")?.isVisible = true
+        findPreference<Preference>("album_art_filter")?.isVisible = true
         findPreference<Preference>("wear_split_panel")?.isVisible =
                 (overrideFace ?: readStringPreference("wear_screen_face", "classic")) == "split"
         updateBlurRadiusEnabled()
@@ -3660,6 +3945,44 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                     }
                     true
                 }
+    }
+
+    /**
+     * Wires one text-effect hex row to the shared Lyra picker.
+     *
+     * The same write path [initAccentColorTarget] uses - through the face-scoped store, and
+     * persisting `""` on reset rather than removing the key, because preference sync carries no
+     * removals and the watch would keep rendering the old colour forever. No summary description:
+     * these rows never had one, and the compact editor labels its swatch from the row's title.
+     */
+    private fun initTextEffectCustomColorRow(customColorKey: String) {
+        val colorPref = findPreference<Preference>(customColorKey) ?: return
+        updateTextEffectCustomColorSummary(colorPref, customColorKey)
+        colorPref.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            showLyraColorPickerDialog(
+                    initialColor = parseHexOrDefault(store.getString(customColorKey, null)),
+                    onReset = {
+                        store.putString(customColorKey, "")
+                        updateTextEffectCustomColorSummary(colorPref, customColorKey)
+                    },
+                    onApply = { hex ->
+                        store.putString(customColorKey, hex)
+                        updateTextEffectCustomColorSummary(colorPref, customColorKey)
+                    },
+                    onPreviewColor = { hex -> notifyPreviewInteraction(customColorKey, hex) },
+                    onPreviewCancelled = {
+                        notifyPreviewInteraction(
+                                customColorKey, store.getString(customColorKey, null))
+                    }
+            )
+            true
+        }
+    }
+
+    private fun updateTextEffectCustomColorSummary(pref: Preference, customColorKey: String) {
+        val saved = store.getString(customColorKey, null)?.takeUnless { it.isBlank() }
+        pref.summary = saved?.let { getString(R.string.color_picker_current, it) }
+        (pref as? HexColorDotPreference)?.refreshDot()
     }
 
     private fun updateAccentColorTargetSummary(pref: Preference?, customColorKey: String, descriptionRes: Int) {

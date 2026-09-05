@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Uppdatera communityteman</string>
     <string name="online_theme_list_description">Klockteman skapade av communityn</string>
     <string name="online_theme_byline">Av %1$s</string>
+    <string name="online_theme_filter_author">Teman av %1$s</string>
+    <string name="online_theme_filter_author_selected">Visar teman av %1$s</string>
     <string name="online_theme_row_description">%1$s av %2$s. Layouten %3$s.</string>
     <string name="online_theme_apply">Lägg till och använd</string>
     <string name="online_theme_loading">Läser in communityteman…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Visar teman du redan lagt till</string>
     <string name="online_theme_search_empty_all_installed">Du har redan lagt till alla community-teman.</string>
     <string name="online_theme_search_empty_all_installed_hint">Stäng av ”Nytt för mig” för att se dem igen.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Mest nedladdade</string>
+    <string name="online_theme_sort_most_downloaded_short">Nedladdningar</string>
+    <string name="community_theme_detail_downloads">Nedladdningar</string>
+    <string name="community_theme_report_action">Anmäl tema</string>
+    <string name="community_theme_report_already">Temat anmält</string>
+    <string name="community_theme_report_description">Anmäl ”%1$s” till moderatorerna</string>
+    <string name="community_theme_report_title">Anmäl det här temat</string>
+    <string name="community_theme_report_intro">Berätta för moderatorerna vad som är fel med det här temat.</string>
+    <string name="community_theme_report_reason_inappropriate">Stötande eller olämpligt innehåll</string>
+    <string name="community_theme_report_reason_impersonation">Utges för att vara någon annans</string>
+    <string name="community_theme_report_reason_misleading">Stämmer inte med det som visas</string>
+    <string name="community_theme_report_reason_illegible">Oanvändbart på klockan</string>
+    <string name="community_theme_report_reason_spam">Skräp eller en dubblett</string>
+    <string name="community_theme_report_reason_other">Något annat</string>
+    <string name="community_theme_report_details_hint">Något annat moderatorerna bör veta (valfritt)</string>
+    <string name="community_theme_report_privacy">Bara moderatorerna läser din anmälan. Skaparen får aldrig veta vem som skickade den.</string>
+    <string name="community_theme_report_submit">Skicka anmälan</string>
+    <string name="community_theme_report_sent">Anmälan skickad. Moderatorerna tittar på det här temat.</string>
+    <string name="community_theme_report_already_sent">Du har redan anmält det här temat.</string>
+    <string name="community_theme_report_not_ready">Det här temat går inte att anmäla än. Försök igen senare.</string>
+    <string name="community_theme_report_error">Anmälan kunde inte skickas. Kontrollera anslutningen och försök igen.</string>
 </resources>

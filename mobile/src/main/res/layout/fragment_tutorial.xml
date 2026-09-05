@@ -39,6 +39,7 @@
         <!-- Put the first useful decision before the full reference. This is also a compact map
              of the two configuration surfaces a new user needs most often. -->
         <TextView
+            android:id="@+id/tutorial_tip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"

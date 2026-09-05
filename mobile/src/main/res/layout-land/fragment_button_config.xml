@@ -41,6 +41,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="2dp"
             android:fontFamily="@font/google_sans"
+            android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/tap_a_zone_to_configure"
             android:textColor="@color/lyra_pref_summary"
@@ -80,7 +81,6 @@
             app:layout_constraintStart_toStartOf="@+id/four_way_touch"
             app:layout_constraintTop_toTopOf="@+id/four_way_touch"
             tools:ignore="ContentDescription" />
-
 
         <ImageView
             android:id="@+id/icon_left"
@@ -234,6 +234,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/swipe_gestures_hint" />
 
+        
+
         <TextView
             android:id="@+id/screen_buttons_caption"
             style="@style/TextAppearance.AppCompat.Caption"
@@ -277,6 +279,49 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/screen_buttons_hint" />
 
+<TextView
+            android:id="@+id/hand_gestures_caption"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/google_sans"
+            android:letterSpacing="0.08"
+            android:text="@string/hand_gestures"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/screen_button_container" />
+
+        <TextView
+            android:id="@+id/hand_gestures_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/google_sans"
+            android:text="@string/hand_gestures_hint"
+            android:textColor="@color/lyra_pref_summary"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hand_gestures_caption" />
+
+        <LinearLayout
+            android:id="@+id/hand_gesture_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hand_gestures_hint" />
+
         <!-- Kept in step with the portrait layout: the quick actions panel is the one input
              surface configured from the Actions tab, so both orientations need the pointer. -->
         <LinearLayout
@@ -298,7 +343,7 @@
             android:paddingBottom="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/screen_button_container">
+            app:layout_constraintTop_toBottomOf="@+id/hand_gesture_container">
 
             <ImageView
                 android:id="@+id/quick_panel_link_icon"

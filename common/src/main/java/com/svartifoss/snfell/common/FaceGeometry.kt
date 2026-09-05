@@ -59,6 +59,28 @@ object FaceGeometry {
 
         /** The playing app's mark beside the artist line, in dp. */
         const val SOURCE_ICON_SIZE_DP = 12f
+
+        /** The uppercase rail text is letterspaced; the ambient variant keeps the same tracking. */
+        const val TITLE_TRACKING_SP = 0.12f
+
+        /**
+         * The always-on variant: one card, no neighbours, and the text moved below it.
+         *
+         * Its own numbers rather than the awake ones. With the rail gone the single card is free
+         * to sit where one cover reads best instead of where the middle of five did, and the text
+         * drops to the foot of the screen it no longer has to share.
+         */
+        object Ambient {
+            const val CARD_FRACTION = .5f
+            /** How far above centre the lone card sits, leaving the text the lower third. */
+            const val CARD_RISE_FRACTION = .07f
+            const val CARD_CORNER_DP = 12f
+            const val TEXT_BOTTOM_FRACTION = .16f
+            const val TITLE_SP = 13f
+            const val TITLE_ALPHA = .82f
+            const val ARTIST_SP = 10f
+            const val ARTIST_ALPHA = .48f
+        }
     }
 
     /** The session as a messaging thread. */
@@ -123,6 +145,26 @@ object FaceGeometry {
                 .30f, .55f, .80f, .45f, 1f, .65f, .35f, .75f, .50f, .90f,
                 .40f, .70f, .25f, .60f, .85f, .45f, .30f, .55f
         )
+
+        /**
+         * The always-on variant: the thread reduced to one outlined bubble.
+         *
+         * The history bubbles are dropped rather than outlined - on an always-on screen they are
+         * stale by definition - so the one that remains is centred and carries its own padding and
+         * type sizes instead of the thread's bottom-anchored ones.
+         */
+        object Ambient {
+            const val SIDE_PADDING_FRACTION = .14f
+            const val BUBBLE_MAX_WIDTH_DP = 190f
+            const val BUBBLE_CORNER_DP = 12f
+            const val BUBBLE_TAIL_CORNER_DP = 3f
+            const val BUBBLE_BORDER_DP = 1f
+            const val BUBBLE_HORIZONTAL_PADDING_DP = 10f
+            const val BUBBLE_VERTICAL_PADDING_DP = 6f
+            const val TITLE_SP = 13f
+            const val ARTIST_SP = 11f
+            const val ARTIST_ALPHA = .7f
+        }
     }
 
     /** Full-bleed cover with the text block grounded over its lower scrim. */
@@ -157,6 +199,25 @@ object FaceGeometry {
 
         /** The source mark's footprint on the seam. */
         const val BADGE_FRACTION = .21f
+
+        /**
+         * The always-on variant: the two-tone composition reduced to a hairline and the text.
+         *
+         * A filled half-screen band is the most expensive thing an AOD can draw, so the panel goes
+         * and only the seam it created stays. The text then has the whole lower screen rather than
+         * a coloured box, which is why these insets are the ambient block's own.
+         */
+        object Ambient {
+            const val SEAM_INSET_FRACTION = .18f
+            const val SEAM_ALPHA = .5f
+            /** How far below the seam the text block starts. */
+            const val TEXT_TOP_GAP_FRACTION = .07f
+            const val SIDE_PADDING_FRACTION = .16f
+            const val ARTIST_SP = 13f
+            const val ARTIST_ALPHA = .7f
+            const val TITLE_SP = 18f
+            const val TITLE_MAX_LINES = 2
+        }
     }
 
     /** The minimal face: a small cover disc and one centred sentence. */
@@ -173,6 +234,14 @@ object FaceGeometry {
          * `RoundScreenText` for is measured at exactly this depth.
          */
         const val MAX_LINES = 3
+
+        /** The always-on variant: the same sentence, wider, with the cover dropped - a filled
+         *  disc is expensive on an always-on panel and its outline says nothing the text does not. */
+        object Ambient {
+            const val SIDE_PADDING_FRACTION = .18f
+            const val TEXT_SP = 15f
+            const val LINE_HEIGHT_SP = 18f
+        }
     }
 
     /**
@@ -363,6 +432,26 @@ object FaceGeometry {
         /** The block is centred within the band, not on the screen - the band reaches into the
          *  strip the composition leaves empty below the words. */
         const val BAND_CENTER = (BAND_TOP + BAND_BOTTOM) / 2f
+
+        /**
+         * The always-on variant: the running head and the current line alone.
+         *
+         * The display refreshes about once a minute, so the neighbouring lines would be wrong most
+         * of the time and are dropped along with the hairline. The block is shorter than the awake
+         * reel, so it asks `RoundScreenText` about its own depth rather than the band's.
+         */
+        object Ambient {
+            const val BAND_TOP = 0.34f
+            const val BAND_BOTTOM = 0.66f
+            const val TITLE_SP = 10f
+            const val TITLE_ALPHA = 0.45f
+            const val TITLE_TRACKING_EM = 0.16f
+            const val TITLE_TO_LINE_GAP_DP = 10f
+            const val LINE_SP = 15f
+            const val LINE_HEIGHT_SP = 19f
+            const val LINE_ALPHA = 0.85f
+            const val LINE_MAX_LINES = 3
+        }
     }
 
     /** The Material 3 Expressive controls: the cookie play/pause button and its contour ring. */
@@ -380,5 +469,23 @@ object FaceGeometry {
         const val ROW_HEIGHT_DP = 13f
         const val MIN_ROWS = 4
         const val MAX_ROWS = 12
+
+        /**
+         * The always-on variant: the identity and the first couple of rows.
+         *
+         * A dense table redrawn once a minute is a wall of small text that is mostly stale, and a
+         * static grid is exactly what an always-on panel must not burn in. What survives is what
+         * answers "what am I listening to" at a glance.
+         */
+        object Ambient {
+            const val SIDE_PADDING_FRACTION = 0.16f
+            const val TITLE_SP = 15f
+            const val TITLE_LINE_HEIGHT_SP = 19f
+            const val TITLE_ALPHA = 0.9f
+            const val TITLE_MAX_LINES = 2
+            const val ROW_SP = 10f
+            const val ROW_ALPHA = 0.6f
+            const val ROWS = 2
+        }
     }
 }

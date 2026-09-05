@@ -258,6 +258,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/swipe_gestures_hint" />
 
+        
+
         <!-- Section header: On-screen buttons -->
         <TextView
             android:id="@+id/screen_buttons_caption"
@@ -307,6 +309,55 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/screen_buttons_hint" />
 
+        <!-- System-recognized primary hand gesture, kept last: it is the one input here that not
+             every watch has, so a row that may be inert on the user's hardware sits after the
+             gestures and mini buttons every watch does have rather than between them. Its single
+             tile fills the row so the assignment stays as readable as the direction tiles. -->
+        <TextView
+            android:id="@+id/hand_gestures_caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/google_sans"
+            android:letterSpacing="0.08"
+            android:text="@string/hand_gestures"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:textSize="11sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/screen_button_container" />
+
+        <TextView
+            android:id="@+id/hand_gestures_hint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/google_sans"
+            android:text="@string/hand_gestures_hint"
+            android:textColor="@color/lyra_pref_summary"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hand_gestures_caption" />
+
+        <LinearLayout
+            android:id="@+id/hand_gesture_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/hand_gestures_hint" />
+
         <!-- Cross-link to the quick actions panel, which is the one input surface configured
              outside this screen: its four slots live in the Actions tab, beside the watch menu,
              because both are lists of actions rather than a physical input. Someone assigning
@@ -332,7 +383,7 @@
             android:paddingBottom="14dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/screen_button_container">
+            app:layout_constraintTop_toBottomOf="@+id/hand_gesture_container">
 
             <ImageView
                 android:id="@+id/quick_panel_link_icon"

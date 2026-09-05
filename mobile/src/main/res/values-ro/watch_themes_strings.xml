@@ -44,6 +44,8 @@
     <string name="online_theme_refresh">Reîmprospătează temele comunității</string>
     <string name="online_theme_list_description">Teme de ceas create de comunitate</string>
     <string name="online_theme_byline">De %1$s</string>
+    <string name="online_theme_filter_author">Teme de %1$s</string>
+    <string name="online_theme_filter_author_selected">Se afișează temele de %1$s</string>
     <string name="online_theme_row_description">%1$s de %2$s. Aspect %3$s.</string>
     <string name="online_theme_apply">Adaugă și aplică</string>
     <string name="online_theme_loading">Se încarcă temele comunității…</string>
@@ -83,4 +85,27 @@
     <string name="online_theme_filter_not_installed_off">Temele pe care le-ai adăugat deja sunt afișate</string>
     <string name="online_theme_search_empty_all_installed">Ai adăugat deja toate temele comunității.</string>
     <string name="online_theme_search_empty_all_installed_hint">Dezactivează „Noi pentru mine” ca să le vezi din nou.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Cele mai descărcate</string>
+    <string name="online_theme_sort_most_downloaded_short">Descărcări</string>
+    <string name="community_theme_detail_downloads">Descărcări</string>
+    <string name="community_theme_report_action">Raportează tema</string>
+    <string name="community_theme_report_already">Temă raportată</string>
+    <string name="community_theme_report_description">Raportează „%1$s” moderatorilor</string>
+    <string name="community_theme_report_title">Raportează această temă</string>
+    <string name="community_theme_report_intro">Spune-le moderatorilor ce nu este în regulă cu această temă.</string>
+    <string name="community_theme_report_reason_inappropriate">Conținut ofensator sau nepotrivit</string>
+    <string name="community_theme_report_reason_impersonation">Dată drept a altcuiva</string>
+    <string name="community_theme_report_reason_misleading">Nu corespunde cu ce arată</string>
+    <string name="community_theme_report_reason_illegible">Inutilizabilă pe ceas</string>
+    <string name="community_theme_report_reason_spam">Spam sau duplicat</string>
+    <string name="community_theme_report_reason_other">Alt motiv</string>
+    <string name="community_theme_report_details_hint">Orice altceva ce ar trebui să știe moderatorii (opțional)</string>
+    <string name="community_theme_report_privacy">Doar moderatorii îți citesc raportul. Autorului nu i se spune niciodată cine l-a trimis.</string>
+    <string name="community_theme_report_submit">Trimite raportul</string>
+    <string name="community_theme_report_sent">Raport trimis. Moderatorii vor analiza această temă.</string>
+    <string name="community_theme_report_already_sent">Ai raportat deja această temă.</string>
+    <string name="community_theme_report_not_ready">Această temă nu poate fi raportată încă. Încearcă mai târziu.</string>
+    <string name="community_theme_report_error">Raportul nu a putut fi trimis. Verifică conexiunea și încearcă din nou.</string>
 </resources>

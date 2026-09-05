@@ -4,6 +4,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.content.res.Configuration
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
@@ -17,14 +19,16 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
-import androidx.core.widget.TextViewCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
@@ -46,11 +50,16 @@ import com.svartifoss.snfell.update.UpdateChecker
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.MusicLoadingBarsView
 import com.svartifoss.snfell.view.applyLyraDialogStyling
+import com.google.android.material.imageview.ShapeableImageView
+import com.svartifoss.snfell.common.CommunityThemeScreenshots
 import com.svartifoss.snfell.view.watchface.WatchPreviewView
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -60,6 +69,26 @@ private data class OnlineThemeKey(
 )
 
 private fun OnlineThemeSummary.key(): OnlineThemeKey = OnlineThemeKey(id, revision)
+
+/**
+ * Height of a card metric's glyph, in dp, and the reason it is set here rather than in the layout.
+ *
+ * A compound drawable has no size attribute: `setCompoundDrawablesRelativeWithIntrinsicBounds`
+ * draws the vector at whatever it declares, and every icon in this set declares 24dp. Beside a
+ * 12sp figure that is half again the height of the number it labels, which is what made the
+ * likes/downloads line read as two mismatched controls rather than as one metric row.
+ */
+private const val METRIC_ICON_DP = 15f
+
+/** Sets a card metric's leading glyph at [METRIC_ICON_DP], already tinted to the row's colour. */
+private fun TextView.setMetricIcon(@DrawableRes icon: Int, tint: Int) {
+    val drawable = AppCompatResources.getDrawable(context, icon)?.mutate()?.apply {
+        val size = (METRIC_ICON_DP * resources.displayMetrics.density).toInt()
+        setBounds(0, 0, size, size)
+        DrawableCompat.setTint(this, tint)
+    }
+    setCompoundDrawablesRelative(drawable, null, null, null)
+}
 
 /** Adaptive grid policy kept pure so narrow phones and large text cannot create crushed cards. */
 internal fun communityGallerySpanCount(viewportWidthDp: Int, fontScale: Float): Int {
@@ -102,6 +131,7 @@ class OnlineThemesActivity : AppCompatActivity() {
     private lateinit var sortChip: Chip
     private lateinit var installedFilterChip: Chip
     private lateinit var likedFilterChip: Chip
+    private lateinit var authorFilterChip: Chip
     private lateinit var clearFiltersChip: Chip
     private lateinit var galleryList: RecyclerView
     private lateinit var refreshButton: ImageButton
@@ -127,6 +157,16 @@ class OnlineThemesActivity : AppCompatActivity() {
     private val previewJobs = mutableMapOf<OnlineThemeKey, Job>()
     private val detailJobs = mutableMapOf<OnlineThemeKey, Job>()
     private val parsedProfiles = mutableMapOf<OnlineThemeKey, WatchThemeProfile>()
+
+    /*
+     * The author photographs the cards show, and the fetches in flight for them.
+     *
+     * Kept beside the parsed profiles because the profile a card already downloads is what declares
+     * whether a photograph exists -- the index deliberately does not carry it, since the detail
+     * screen fetches the profile anyway and so, it turns out, does every visible card.
+     */
+    private val screenshotSurfaces = mutableMapOf<OnlineThemeKey, List<String>>()
+    private val screenshotJobs = mutableMapOf<OnlineThemeKey, Job>()
     private var allThemes: List<OnlineThemeSummary> = emptyList()
     private var availableFaces: List<String> = emptyList()
     private var discoveryRequest = OnlineThemeDiscoveryRequest()
@@ -197,6 +237,12 @@ class OnlineThemesActivity : AppCompatActivity() {
                 likeDeltas[themeId] = (likeDeltas[themeId] ?: 0) + likeDelta
                 adapter.updateLikeDeltas(likeDeltas)
             }
+            // Tapping an author on the detail screen closes it and lands here, because the list of
+            // that author's work is this screen -- opening a second gallery on top of the first
+            // would leave two of them on the back stack showing overlapping catalogues.
+            data?.getStringExtra(CommunityThemeDetailActivity.EXTRA_AUTHOR_FILTER)
+                    ?.takeIf(String::isNotBlank)
+                    ?.let(::filterByAuthor)
         }
     }
 
@@ -239,6 +285,7 @@ class OnlineThemesActivity : AppCompatActivity() {
                         ?.let { saved -> OnlineThemeSort.values().firstOrNull { it.name == saved } }
                         ?: OnlineThemeSort.NEWEST,
                 likedOnly = savedInstanceState?.getBoolean(STATE_LIKED_ONLY) ?: false,
+                author = savedInstanceState?.getString(STATE_AUTHOR),
                 hideInstalled = savedInstanceState?.getBoolean(STATE_HIDE_INSTALLED) ?: true)
 
         state = findViewById(R.id.community_gallery_state)
@@ -256,6 +303,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         sortChip = findViewById(R.id.community_gallery_sort)
         installedFilterChip = findViewById(R.id.community_gallery_installed_filter)
         likedFilterChip = findViewById(R.id.community_gallery_liked_filter)
+        authorFilterChip = findViewById(R.id.community_gallery_author_filter)
         clearFiltersChip = findViewById(R.id.community_gallery_clear_filters)
         galleryList = findViewById(R.id.community_gallery_list)
         refreshButton = findViewById(R.id.community_gallery_refresh)
@@ -270,7 +318,10 @@ class OnlineThemesActivity : AppCompatActivity() {
 
         adapter = CommunityGalleryAdapter(
                 onPreviewRequired = ::loadPreview,
-                onDetails = ::openDetails)
+                onScreenshotRequired = ::loadCardScreenshot,
+                showScreenshots = ::showAuthorScreenshots,
+                onDetails = ::openDetails,
+                onAuthor = ::filterByAuthor)
         adapter.stateRestorationPolicy =
                 RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         galleryList.apply {
@@ -303,6 +354,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         sortChip.setOnClickListener { showSortDialog() }
         installedFilterChip.setOnClickListener { toggleInstalledFilter() }
         likedFilterChip.setOnClickListener { toggleLikedFilter() }
+        authorFilterChip.setOnClickListener { filterByAuthor(null) }
         searchInput.apply {
             setText(discoveryRequest.query)
             setSelection(text?.length ?: 0)
@@ -362,6 +414,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         }
         outState.putString(STATE_SORT, discoveryRequest.sort.name)
         outState.putBoolean(STATE_LIKED_ONLY, discoveryRequest.likedOnly)
+        discoveryRequest.author?.let { outState.putString(STATE_AUTHOR, it) }
         outState.putBoolean(STATE_HIDE_INSTALLED, discoveryRequest.hideInstalled)
         outState.putStringArrayList(STATE_LIKED_IDS, ArrayList(likedThemeIds))
         outState.putBundle(STATE_LIKE_DELTAS, Bundle().apply {
@@ -480,7 +533,8 @@ class OnlineThemesActivity : AppCompatActivity() {
         val sorts = OnlineThemeSort.values()
         val labels = arrayOf(
                 getString(R.string.online_theme_sort_newest),
-                getString(R.string.online_theme_sort_most_liked))
+                getString(R.string.online_theme_sort_most_liked),
+                getString(R.string.online_theme_sort_most_downloaded))
         showDiscoveryChoiceDialog(
                 title = getString(R.string.online_theme_sort),
                 labels = labels,
@@ -675,6 +729,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         updateSortControl()
         updateInstalledFilterControl()
         updateLikedFilterControl()
+        updateAuthorFilterControl()
         updateClearControl()
         applyRuntimeAccent(refreshCards = false)
     }
@@ -728,6 +783,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         styleFilterChip(sortChip, selected = false)
         styleFilterChip(installedFilterChip, discoveryRequest.hideInstalled)
         styleFilterChip(likedFilterChip, discoveryRequest.likedOnly)
+        styleFilterChip(authorFilterChip, selected = true)
         styleClearFiltersChip()
 
         retryButton.backgroundTintList = ColorStateList.valueOf(accent)
@@ -747,6 +803,9 @@ class OnlineThemesActivity : AppCompatActivity() {
                     R.string.online_theme_sort_newest
             OnlineThemeSort.MOST_LIKED -> R.string.online_theme_sort_most_liked_short to
                     R.string.online_theme_sort_most_liked
+            OnlineThemeSort.MOST_DOWNLOADED ->
+                    R.string.online_theme_sort_most_downloaded_short to
+                            R.string.online_theme_sort_most_downloaded
         }
         sortChip.setText(shortLabel)
         sortChip.contentDescription = getString(
@@ -774,6 +833,37 @@ class OnlineThemesActivity : AppCompatActivity() {
             discoveryRequest.likedOnly -> R.string.online_theme_filter_liked_selected
             else -> R.string.online_theme_filter_liked
         })
+    }
+
+    /**
+     * Narrows the gallery to one author, or clears that filter when given null.
+     *
+     * The search box is cleared alongside it. Arriving here is always a tap on a name, and a query
+     * still sitting in the field would silently intersect with it -- the user would see "themes by
+     * Aurora" on the chip and a list that had also been narrowed by whatever they last typed.
+     */
+    private fun filterByAuthor(author: String?) {
+        val requested = author?.takeIf(String::isNotBlank)
+        if (requested == discoveryRequest.author && searchInput.text.isNullOrEmpty()) return
+        discoveryRequest = discoveryRequest.copy(author = requested, query = "")
+        if (searchInput.text?.isNotEmpty() == true) {
+            // The watcher reads the already-cleared request, so this does not discover twice.
+            searchInput.setText("")
+        }
+        updateDiscoveryControls()
+        if (allThemes.isNotEmpty()) applyDiscovery(resetScroll = true)
+    }
+
+    private fun updateAuthorFilterControl() {
+        val author = discoveryRequest.author?.takeIf(String::isNotBlank)
+        authorFilterChip.visibility = if (author == null) View.GONE else View.VISIBLE
+        if (author == null) return
+        // The author's own name is the label; a fixed word would leave the one filter you reach by
+        // tapping a name unable to say which name it was.
+        authorFilterChip.text = author
+        authorFilterChip.contentDescription = getString(
+                R.string.online_theme_filter_author_selected,
+                author)
     }
 
     private fun updateClearControl() {
@@ -881,6 +971,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         layoutFilterChip.isEnabled = available && availableFaces.isNotEmpty()
         sortChip.isEnabled = available
         installedFilterChip.isEnabled = available
+        authorFilterChip.isEnabled = available
         likedFilterChip.isEnabled = available && !likedThemesLoading
         applyRuntimeAccent(refreshCards = false)
     }
@@ -888,6 +979,7 @@ class OnlineThemesActivity : AppCompatActivity() {
     private fun hasActiveFilters(): Boolean =
             discoveryRequest.query.isNotBlank() ||
                     discoveryRequest.baseFace !is OnlineThemeBaseFaceFilter.All ||
+                    !discoveryRequest.author.isNullOrBlank() ||
                     discoveryRequest.likedOnly
 
     private fun hasNonDefaultDiscoveryControls(): Boolean =
@@ -1043,6 +1135,9 @@ class OnlineThemesActivity : AppCompatActivity() {
         parsedProfiles[key]?.let { return it }
         return try {
             val onlineTheme = catalogRepository.loadTheme(summary)
+            if (generation == galleryGeneration) {
+                screenshotSurfaces[key] = onlineTheme.screenshots
+            }
             (themeRepository.parsePublishedProfile(onlineTheme.profileJson)
                     // The compatibility reader itself is pinned to one Phase-1 public ID. It is
                     // intentionally only attempted for a Pages profile after the catalogue has
@@ -1056,6 +1151,47 @@ class OnlineThemesActivity : AppCompatActivity() {
             null
         }
     }
+
+    /**
+     * Loads the author's photograph for one card, once.
+     *
+     * The same lazy-on-bind shape the profile above already uses, and for the same reason: the list
+     * only ever pays for the rows somebody actually scrolled to. Reuses the repository's ETag disk
+     * cache, so a card that has been seen once costs nothing again.
+     */
+    private fun loadCardScreenshot(summary: OnlineThemeSummary) {
+        if (!showAuthorScreenshots()) return
+        val key = summary.key()
+        if (key in screenshotJobs || adapter.hasScreenshot(key)) return
+        if (CommunityThemeScreenshots.SURFACE_PLAYER !in screenshotSurfaces[key].orEmpty()) return
+        val generation = galleryGeneration
+        screenshotJobs[key] = lifecycleScope.launch {
+            val bitmap = try {
+                catalogRepository.loadScreenshot(
+                        summary.id,
+                        CommunityThemeScreenshots.SURFACE_PLAYER)
+                        ?.let { bytes ->
+                            withContext(Dispatchers.Default) {
+                                BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                            }
+                        }
+            } catch (e: CancellationException) {
+                throw e
+            } catch (error: Exception) {
+                Timber.d(error, "Could not load the card screenshot of %s", summary.id)
+                null
+            }
+            screenshotJobs -= key
+            // A photograph that never arrives leaves the rendered miniature in place, which is what
+            // every theme without one already shows.
+            if (bitmap != null && generation == galleryGeneration) {
+                adapter.setScreenshot(summary, bitmap)
+            }
+        }
+    }
+
+    private fun showAuthorScreenshots(): Boolean = defaultPrefs.getBoolean(
+            CommunityThemeDetailActivity.PREF_SHOW_SCREENSHOTS, true)
 
     /** Opens a validated detail screen; it deliberately does not add or apply a theme itself. */
     private fun openDetails(summary: OnlineThemeSummary) {
@@ -1088,6 +1224,7 @@ class OnlineThemesActivity : AppCompatActivity() {
                         minimumAppVersion = summary.minimumAppVersion,
                         publishedAt = summary.publishedAt,
                         likes = displayedLikeCount(summary),
+                        installs = summary.installs,
                         canInstall = compatibility(summary) == OnlineThemeCompatibility.SUPPORTED,
                         profileJson = onlineTheme.profileJson.toString()))
             } catch (e: CancellationException) {
@@ -1141,6 +1278,10 @@ class OnlineThemesActivity : AppCompatActivity() {
          * the search terms and layout chip still apply.
          */
         val onlyHiddenByInstalled = discoveryRequest.hideInstalled &&
+                // The all-installed message says "every community theme", which stops being true
+                // the moment the list is one author's. Under that filter the generic message is
+                // the accurate one, and it offers the same Clear.
+                discoveryRequest.author == null &&
                 allThemes.isNotEmpty() &&
                 OnlineThemeDiscovery.discover(
                         themes = allThemes,
@@ -1212,12 +1353,16 @@ class OnlineThemesActivity : AppCompatActivity() {
 
     private inner class CommunityGalleryAdapter(
             private val onPreviewRequired: (OnlineThemeSummary) -> Unit,
-            private val onDetails: (OnlineThemeSummary) -> Unit
+            private val onScreenshotRequired: (OnlineThemeSummary) -> Unit,
+            private val showScreenshots: () -> Boolean,
+            private val onDetails: (OnlineThemeSummary) -> Unit,
+            private val onAuthor: (String) -> Unit
     ) : RecyclerView.Adapter<CommunityGalleryAdapter.ThemeHolder>() {
 
         private var themes: List<OnlineThemeSummary> = emptyList()
         private var catalogue: List<OnlineThemeSummary> = emptyList()
         private val previews = mutableMapOf<OnlineThemeKey, WatchThemeProfile>()
+        private val screenshots = mutableMapOf<OnlineThemeKey, Bitmap>()
         private val loadingPreviews = mutableSetOf<OnlineThemeKey>()
         private val failedPreviews = mutableSetOf<OnlineThemeKey>()
         private val opening = mutableSetOf<OnlineThemeKey>()
@@ -1233,6 +1378,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         ) {
             catalogue = newCatalogue
             previews.clear()
+            screenshots.clear()
             loadingPreviews.clear()
             failedPreviews.clear()
             opening.clear()
@@ -1304,6 +1450,14 @@ class OnlineThemesActivity : AppCompatActivity() {
             notifyThemeChanged(key)
         }
 
+        fun hasScreenshot(key: OnlineThemeKey): Boolean = key in screenshots
+
+        fun setScreenshot(summary: OnlineThemeSummary, bitmap: Bitmap) {
+            val key = summary.key()
+            screenshots[key] = bitmap
+            notifyThemeChanged(key)
+        }
+
         fun setPreview(summary: OnlineThemeSummary, profile: WatchThemeProfile) {
             val key = summary.key()
             previews[key] = profile
@@ -1343,6 +1497,8 @@ class OnlineThemesActivity : AppCompatActivity() {
             private val card: MaterialCardView = view.findViewById(R.id.community_theme_card)
             private val artwork: View = view.findViewById(R.id.community_theme_artwork)
             private val preview: WatchPreviewView = view.findViewById(R.id.community_theme_preview)
+            private val screenshot: ShapeableImageView =
+                    view.findViewById(R.id.community_theme_screenshot)
             private val previewPlaceholder: ImageView =
                     view.findViewById(R.id.community_theme_preview_placeholder)
             private val previewLoading: MusicLoadingBarsView =
@@ -1350,6 +1506,7 @@ class OnlineThemesActivity : AppCompatActivity() {
             private val name: TextView = view.findViewById(R.id.community_theme_name)
             private val byline: TextView = view.findViewById(R.id.community_theme_byline)
             private val likes: TextView = view.findViewById(R.id.community_theme_likes)
+            private val downloads: TextView = view.findViewById(R.id.community_theme_downloads)
             private val status: TextView = view.findViewById(R.id.community_theme_status)
             private val installedMarker: ImageView =
                     view.findViewById(R.id.community_theme_installed_marker)
@@ -1371,6 +1528,23 @@ class OnlineThemesActivity : AppCompatActivity() {
                 byline.text = getString(
                         R.string.online_theme_byline,
                         summary.author)
+                /*
+                 * The byline is a control, not a caption: it narrows the gallery to this author's
+                 * other themes. It is a child of a clickable card, so it has to take the touch
+                 * itself -- and it announces the destination rather than the label it displays,
+                 * since "By Aurora" says nothing about what a tap would do.
+                 */
+                byline.setTextColor(if (summary.author.isBlank()) secondary else accentOnSurface)
+                byline.isClickable = summary.author.isNotBlank()
+                byline.isFocusable = summary.author.isNotBlank()
+                byline.setOnClickListener {
+                    if (summary.author.isNotBlank()) onAuthor(summary.author)
+                }
+                byline.contentDescription = if (summary.author.isBlank()) {
+                    byline.text
+                } else {
+                    getString(R.string.online_theme_filter_author, summary.author)
+                }
 
                 val likedByUser = summary.id in knownLikedIds
                 // The count is shown even at zero. Hiding it made the reaction look like a control
@@ -1383,23 +1557,30 @@ class OnlineThemesActivity : AppCompatActivity() {
                         likeCount,
                         formatCount(likeCount))
                 likes.text = formatCount(likeCount)
-                likes.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                        if (likedByUser) R.drawable.ic_favorite else R.drawable.ic_favorite_border,
-                        0,
-                        0,
-                        0)
                 val likeColor = if (likedByUser) accentOnSurface else secondary
                 likes.background = null
+                likes.setMetricIcon(
+                        if (likedByUser) R.drawable.ic_favorite else R.drawable.ic_favorite_border,
+                        likeColor)
                 likes.setTextColor(likeColor)
-                TextViewCompat.setCompoundDrawableTintList(
-                        likes,
-                        ColorStateList.valueOf(likeColor))
                 likes.visibility = View.VISIBLE
                 likes.contentDescription = if (likedByUser) {
                     getString(R.string.online_theme_liked_by_you, likeDescription)
                 } else {
                     likeDescription
                 }
+
+                // No session delta beside this one, unlike the heart. Installing closes the
+                // gallery's detail screen and the count is republished by the publisher, so there
+                // is no moment where a stale figure sits in front of the person who moved it.
+                val downloadCount = summary.installs.coerceAtLeast(0)
+                downloads.text = formatCount(downloadCount)
+                downloads.setTextColor(secondary)
+                downloads.setMetricIcon(R.drawable.ic_download, secondary)
+                downloads.contentDescription = resources.getQuantityString(
+                        R.plurals.online_theme_downloads_count,
+                        downloadCount,
+                        formatCount(downloadCount))
 
                 val baseDescription = getString(
                         R.string.online_theme_row_description,
@@ -1419,6 +1600,22 @@ class OnlineThemesActivity : AppCompatActivity() {
                     preview.clearThemeProfile()
                     preview.visibility = View.INVISIBLE
                 }
+                /*
+                 * The photograph covers the miniature rather than replacing it, so the render stays
+                 * underneath: turning the setting off reveals it again with no reload, and a theme
+                 * whose picture never arrives simply keeps showing what every theme without one
+                 * shows. Requested only once the profile is in hand, because the profile is what
+                 * declares whether a photograph exists at all.
+                 */
+                val authorShot = screenshots[key].takeIf { showScreenshots() }
+                screenshot.setImageBitmap(authorShot)
+                screenshot.visibility = if (authorShot != null) View.VISIBLE else View.GONE
+                if (canOpenDetails && profile != null && authorShot == null && showScreenshots()) {
+                    itemView.post {
+                        if (boundKey == key) onScreenshotRequired(summary)
+                    }
+                }
+
                 val loading = canOpenDetails && key in loadingPreviews
                 val isOpening = key in opening
                 val failed = key in failedPreviews
@@ -1513,6 +1710,8 @@ class OnlineThemesActivity : AppCompatActivity() {
                     } else {
                         append(likeDescription)
                     }
+                    append(' ')
+                    append(downloads.contentDescription)
                     if (!statusDescription.isNullOrBlank()) {
                         append(' ')
                         append(statusDescription)
@@ -1534,6 +1733,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         const val STATE_BASE_FACE = "online_themes.base_face"
         const val STATE_SORT = "online_themes.sort"
         const val STATE_LIKED_ONLY = "online_themes.liked_only"
+        const val STATE_AUTHOR = "online_themes.author"
         const val STATE_HIDE_INSTALLED = "online_themes.hide_installed"
         const val STATE_LIKED_IDS = "online_themes.liked_ids"
         const val STATE_LIKE_DELTAS = "online_themes.like_deltas"

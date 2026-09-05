@@ -26,15 +26,24 @@ object StandardActionTitles {
             StandardActions.ACTION_PLAY_PAUSE to R.string.action_name_play_pause,
             StandardActions.ACTION_STOP to R.string.action_name_stop,
             StandardActions.ACTION_RESTART to R.string.action_name_restart,
+            StandardActions.ACTION_FAST_FORWARD to R.string.action_name_fast_forward,
+            StandardActions.ACTION_REWIND to R.string.action_name_rewind,
+            StandardActions.ACTION_SET_PLAYBACK_SPEED to R.string.action_name_set_speed,
+            StandardActions.ACTION_SEEK_TO_PERCENT to R.string.action_name_seek_position,
             StandardActions.ACTION_MUTE to R.string.action_name_mute,
+            StandardActions.ACTION_SET_VOLUME_PERCENT to R.string.action_name_set_volume,
             StandardActions.ACTION_SEARCH to R.string.action_name_search,
             StandardActions.ACTION_LIKE to R.string.quick_action_like,
             StandardActions.ACTION_SHUFFLE to R.string.quick_action_shuffle,
             StandardActions.ACTION_REPEAT to R.string.quick_action_repeat,
             StandardActions.ACTION_REPEAT_ONE to R.string.quick_action_repeat_one,
+            StandardActions.ACTION_SET_SHUFFLE_MODE to R.string.action_name_set_shuffle,
+            StandardActions.ACTION_SET_REPEAT_MODE to R.string.action_name_set_repeat,
             StandardActions.ACTION_OPEN_PLAYLIST_MENU to R.string.quick_action_up_next,
             StandardActions.ACTION_OPEN_VOLUME_SCREEN to R.string.action_name_open_volume_screen,
-            StandardActions.ACTION_OPEN_PROGRESS_SCREEN to R.string.action_name_open_progress_screen
+            StandardActions.ACTION_OPEN_PROGRESS_SCREEN to R.string.action_name_open_progress_screen,
+            StandardActions.ACTION_OPEN_FACE_PICKER to R.string.action_name_open_face_picker,
+            StandardActions.ACTION_CLOSE_WATCH_APP to R.string.action_name_close_watch_app
     )
 
     /**

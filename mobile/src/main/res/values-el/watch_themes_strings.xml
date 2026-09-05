@@ -44,6 +44,8 @@
     <string name="online_theme_refresh">Ανανέωση θεμάτων κοινότητας</string>
     <string name="online_theme_list_description">Θέματα ρολογιού που δημιούργησε η κοινότητα</string>
     <string name="online_theme_byline">Από %1$s</string>
+    <string name="online_theme_filter_author">Θέματα από %1$s</string>
+    <string name="online_theme_filter_author_selected">Εμφανίζονται τα θέματα από %1$s</string>
     <string name="online_theme_row_description">%1$s από %2$s. Διάταξη %3$s.</string>
     <string name="online_theme_apply">Προσθήκη και εφαρμογή</string>
     <string name="online_theme_loading">Φόρτωση θεμάτων κοινότητας…</string>
@@ -83,4 +85,27 @@
     <string name="online_theme_filter_not_installed_off">Τα θέματα που έχετε ήδη προσθέσει εμφανίζονται</string>
     <string name="online_theme_search_empty_all_installed">Έχετε ήδη προσθέσει όλα τα θέματα της κοινότητας.</string>
     <string name="online_theme_search_empty_all_installed_hint">Απενεργοποιήστε το «Νέα για εμένα» για να τα δείτε ξανά.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Με τις περισσότερες λήψεις</string>
+    <string name="online_theme_sort_most_downloaded_short">Λήψεις</string>
+    <string name="community_theme_detail_downloads">Λήψεις</string>
+    <string name="community_theme_report_action">Αναφορά θέματος</string>
+    <string name="community_theme_report_already">Έγινε αναφορά</string>
+    <string name="community_theme_report_description">Αναφορά του «%1$s» στους συντονιστές</string>
+    <string name="community_theme_report_title">Αναφορά αυτού του θέματος</string>
+    <string name="community_theme_report_intro">Πείτε στους συντονιστές τι δεν πάει καλά με αυτό το θέμα.</string>
+    <string name="community_theme_report_reason_inappropriate">Προσβλητικό ή ακατάλληλο περιεχόμενο</string>
+    <string name="community_theme_report_reason_impersonation">Παρουσιάζεται ως ξένο έργο</string>
+    <string name="community_theme_report_reason_misleading">Δεν ταιριάζει με αυτό που δείχνει</string>
+    <string name="community_theme_report_reason_illegible">Άχρηστο στο ρολόι</string>
+    <string name="community_theme_report_reason_spam">Ανεπιθύμητο ή διπλότυπο</string>
+    <string name="community_theme_report_reason_other">Άλλος λόγος</string>
+    <string name="community_theme_report_details_hint">Οτιδήποτε άλλο πρέπει να ξέρουν οι συντονιστές (προαιρετικό)</string>
+    <string name="community_theme_report_privacy">Μόνο οι συντονιστές διαβάζουν την αναφορά σας. Ο δημιουργός δεν μαθαίνει ποτέ ποιος την έστειλε.</string>
+    <string name="community_theme_report_submit">Αποστολή αναφοράς</string>
+    <string name="community_theme_report_sent">Η αναφορά στάλθηκε. Οι συντονιστές θα εξετάσουν αυτό το θέμα.</string>
+    <string name="community_theme_report_already_sent">Έχετε ήδη αναφέρει αυτό το θέμα.</string>
+    <string name="community_theme_report_not_ready">Αυτό το θέμα δεν μπορεί να αναφερθεί ακόμη. Δοκιμάστε αργότερα.</string>
+    <string name="community_theme_report_error">Η αναφορά σας δεν στάλθηκε. Ελέγξτε τη σύνδεση και δοκιμάστε ξανά.</string>
 </resources>

@@ -5,6 +5,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.svartifoss.snfell.BuildConfig
+import com.svartifoss.snfell.common.CommunityThemeScreenshots
 import com.svartifoss.snfell.common.CommunityThemeSettingValue
 import com.svartifoss.snfell.common.CommunityThemeSettings
 import com.svartifoss.snfell.common.CommunityThemeSubmissionPolicy
@@ -16,6 +17,7 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.tasks.await
+import timber.log.Timber
 
 /**
  * The initial local gate is intentionally conservative. It is user feedback rather than a
@@ -30,7 +32,7 @@ const val COMMUNITY_THEME_SUBMISSION_WINDOW_MILLIS = 24L * 60L * 60L * 1_000L
  * the same number named once so the gallery's picker cannot offer more themes than the quota
  * would accept and leave the last pick failing at the write.
  */
-const val COMMUNITY_THEME_SUBMISSIONS_PER_WINDOW = 3
+const val COMMUNITY_THEME_SUBMISSIONS_PER_WINDOW = 10
 
 sealed interface CommunityThemeSubmissionPreflight {
     data class Ready(
@@ -83,15 +85,16 @@ sealed interface CommunityThemeQueueResult {
  * Legacy and malformed quota documents deliberately return false so their normal rule path stays
  * fail-closed instead of being mislabeled as a rate limit.
  */
-internal fun isRollingSubmissionLimitReached(
+internal fun isSubmissionWindowFull(
         quotaSchemaVersion: Long?,
-        recentSubmissionCount: Int?,
-        recentSubmissionFirstAtMillis: Long?,
+        windowSubmissionCount: Int?,
+        windowStartedAtMillis: Long?,
         nowMillis: Long
-): Boolean = quotaSchemaVersion == 2L &&
-        recentSubmissionCount == COMMUNITY_THEME_SUBMISSIONS_PER_WINDOW &&
-        recentSubmissionFirstAtMillis != null &&
-        nowMillis < recentSubmissionFirstAtMillis + COMMUNITY_THEME_SUBMISSION_WINDOW_MILLIS
+): Boolean = quotaSchemaVersion == 3L &&
+        windowSubmissionCount != null &&
+        windowSubmissionCount >= COMMUNITY_THEME_SUBMISSIONS_PER_WINDOW &&
+        windowStartedAtMillis != null &&
+        nowMillis < windowStartedAtMillis + COMMUNITY_THEME_SUBMISSION_WINDOW_MILLIS
 
 /** Android/Firebase-free adapter from a strict local draft into the shared policy model. */
 internal object CommunityThemeSubmissionPreflightEvaluator {
@@ -305,23 +308,31 @@ class CommunityThemeSubmissionRepository(
                 // history intentionally avoids a Firestore server-timestamp sentinel in an array.
                 val previousQuota = transaction.get(quotaDocument)
                 val previousCount = previousQuota.getLong("submissionCount") ?: 0L
-                val recentCount = previousQuota.getLong("recentSubmissionCount")
+                val schemaVersion = previousQuota.getLong("quotaSchemaVersion")
+                val now = System.currentTimeMillis()
+
+                val windowCount = previousQuota.getLong("windowSubmissionCount")
+                        ?.takeIf { it in 1L..COMMUNITY_THEME_SUBMISSIONS_PER_WINDOW.toLong() }
+                        ?.toInt()
+                val windowStartedAt = previousQuota.getTimestamp("windowStartedAt")
+                val isWindowQuota = schemaVersion == SUBMISSION_QUOTA_SCHEMA_VERSION.toLong() &&
+                        windowCount != null && windowStartedAt != null
+
+                // A v2 record still carries a real window. Migrating must not hand back a fresh
+                // allowance, so the new window opens at the oldest submission v2 remembers and
+                // inherits its count -- the rules assert exactly the same thing.
+                val rollingCount = previousQuota.getLong("recentSubmissionCount")
                         ?.takeIf { it in 1L..3L }
                         ?.toInt()
-                val recentFirstAt = previousQuota.getTimestamp("recentSubmissionFirstAt")
-                val recentSecondAt = previousQuota.getTimestamp("recentSubmissionSecondAt")
-                val previousLastAt = previousQuota.getTimestamp("lastSubmissionAt")
-                val isRollingQuota = previousQuota.getLong("quotaSchemaVersion") ==
-                        SUBMISSION_QUOTA_SCHEMA_VERSION.toLong() &&
-                        recentCount != null && recentCount in 1..3 &&
-                        recentFirstAt != null &&
-                        previousLastAt != null &&
-                        (recentCount != 3 || recentSecondAt != null)
-                if (isRollingQuota && isRollingSubmissionLimitReached(
-                                quotaSchemaVersion = previousQuota.getLong("quotaSchemaVersion"),
-                                recentSubmissionCount = recentCount,
-                                recentSubmissionFirstAtMillis = recentFirstAt?.toDate()?.time,
-                                nowMillis = System.currentTimeMillis())) {
+                val rollingFirstAt = previousQuota.getTimestamp("recentSubmissionFirstAt")
+                val isRollingQuota = schemaVersion == LEGACY_ROLLING_QUOTA_SCHEMA_VERSION.toLong() &&
+                        rollingCount != null && rollingFirstAt != null
+
+                if (isWindowQuota && isSubmissionWindowFull(
+                                quotaSchemaVersion = schemaVersion,
+                                windowSubmissionCount = windowCount,
+                                windowStartedAtMillis = windowStartedAt?.toDate()?.time,
+                                nowMillis = now)) {
                     return@runTransaction CommunityThemeQueueResult.SubmissionLimitReached
                 }
                 val quota = hashMapOf<String, Any>(
@@ -330,27 +341,24 @@ class CommunityThemeSubmissionRepository(
                         "submissionCount" to previousCount + 1L,
                         "lastSubmissionAt" to FieldValue.serverTimestamp(),
                         "lastSubmissionId" to draft.id)
-                when (recentCount.takeIf { isRollingQuota }) {
-                    1 -> {
-                        quota["recentSubmissionCount"] = 2
-                        quota["recentSubmissionFirstAt"] = recentFirstAt!!
-                    }
-                    2 -> {
-                        quota["recentSubmissionCount"] = 3
-                        quota["recentSubmissionFirstAt"] = recentFirstAt!!
-                        quota["recentSubmissionSecondAt"] = previousLastAt!!
-                    }
-                    3 -> {
-                        quota["recentSubmissionCount"] = 3
-                        quota["recentSubmissionFirstAt"] = recentSecondAt!!
-                        quota["recentSubmissionSecondAt"] = previousLastAt!!
-                    }
-                    else -> {
-                        // A v1/legacy document has no trustworthy rolling history. The rules
-                        // permit exactly this one migration write without a 24-hour wait.
-                        quota["recentSubmissionCount"] = 1
-                        quota["recentSubmissionFirstAt"] = FieldValue.serverTimestamp()
-                    }
+                val carriedWindowStart = when {
+                    isWindowQuota && now < windowStartedAt!!.toDate().time +
+                            COMMUNITY_THEME_SUBMISSION_WINDOW_MILLIS ->
+                        windowStartedAt to windowCount!! + 1
+                    isRollingQuota && now < rollingFirstAt!!.toDate().time +
+                            COMMUNITY_THEME_SUBMISSION_WINDOW_MILLIS ->
+                        rollingFirstAt to rollingCount!! + 1
+                    // Either the window has expired, or this is a v1/legacy document with no
+                    // trustworthy history at all. Both open a window at `now`, which is the one
+                    // migration write the rules permit without a wait.
+                    else -> null
+                }
+                if (carriedWindowStart == null) {
+                    quota["windowStartedAt"] = FieldValue.serverTimestamp()
+                    quota["windowSubmissionCount"] = 1
+                } else {
+                    quota["windowStartedAt"] = carriedWindowStart.first
+                    quota["windowSubmissionCount"] = carriedWindowStart.second
                 }
                 if (existingIdentity == null) {
                     transaction.set(accountDocument, hashMapOf<String, Any>(
@@ -396,6 +404,55 @@ class CommunityThemeSubmissionRepository(
         }
     }
 
+    /**
+     * Attaches one author screenshot to a submission that has already been queued.
+     *
+     * Deliberately its own write, *after* the intake transaction, and both halves matter.
+     *
+     * Its own, because that transaction writes four documents whose rules share one 1000-expression
+     * budget -- a limit reached only on an account's second submission and reported as an
+     * indistinguishable PERMISSION_DENIED. A picture has nothing to do with quota or name
+     * reservation, so it must not spend that budget.
+     *
+     * After, because the rules bind a screenshot to an intake that already exists, belongs to the
+     * caller, and is still pending. Written first it could only be checked against an invented
+     * UUID, which would let any signed-in account store unlimited 128 KB documents outside the
+     * three-per-day limit.
+     *
+     * Returns false rather than throwing: the theme is already submitted at this point, and a
+     * missing picture is exactly the state of an author who attached none.
+     */
+    suspend fun attachScreenshot(
+            themeId: String,
+            surface: String,
+            webpBase64: String
+    ): Boolean {
+        if (!isCanonicalUuid(themeId) ||
+                surface !in CommunityThemeScreenshots.SURFACES ||
+                !CommunityThemeScreenshots.isSubmittableEncoding(webpBase64)) {
+            return false
+        }
+        val user = auth.currentUser ?: return false
+        return try {
+            firestore.collection(SHOTS_COLLECTION)
+                    .document(themeId)
+                    .collection(SHOT_SURFACES_SUBCOLLECTION)
+                    .document(surface)
+                    .set(hashMapOf<String, Any>(
+                            "ownerUid" to user.uid,
+                            "surface" to surface,
+                            "webpBase64" to webpBase64,
+                            "createdAt" to FieldValue.serverTimestamp()))
+                    .await()
+            true
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: Exception) {
+            Timber.w(error, "Could not attach the screenshot of a community theme")
+            false
+        }
+    }
+
     /** Mirrors the UUIDv4-only Firestore document-id contract. */
     private fun isCanonicalUuid(raw: String): Boolean = UUID_V4.matches(raw)
 
@@ -404,8 +461,11 @@ class CommunityThemeSubmissionRepository(
         const val SUBMISSION_QUOTA_COLLECTION = "communityThemeSubmissionQuota"
         const val AUTHOR_ACCOUNT_COLLECTION = "communityThemeAccounts"
         const val AUTHOR_NAME_COLLECTION = "communityThemeAuthorNames"
+        const val SHOTS_COLLECTION = "themeIntakeShots"
+        const val SHOT_SURFACES_SUBCOLLECTION = "surfaces"
         const val SUBMISSION_SCHEMA_VERSION = 2
-        const val SUBMISSION_QUOTA_SCHEMA_VERSION = 2
+        const val SUBMISSION_QUOTA_SCHEMA_VERSION = 3
+        const val LEGACY_ROLLING_QUOTA_SCHEMA_VERSION = 2
         const val MAX_PUBLIC_TEXT_LENGTH = 48
         const val MAX_PROFILE_JSON_LENGTH = 24 * 1024
         const val MAX_PREVIEW_BASE64_LENGTH = 64 * 1024

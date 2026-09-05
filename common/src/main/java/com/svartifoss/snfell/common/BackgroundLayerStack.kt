@@ -17,12 +17,13 @@ package com.svartifoss.snfell.common
  *
  * ## What is *not* a layer
  *
- * The artwork itself. [MiscPreferences.ALBUM_ART_STYLE] keeps owning how the bitmap is treated -
- * blurred, monochrome, frosted, filtered, square-fit or hidden - because that facet is read far
- * outside this file: `albumArtHidden` decides what `AdaptiveTextContrast` measures, `usesBlurRadius`
- * decides whether the blur row is even enabled, and the host ImageView is what actually holds the
- * bitmap. A photograph is also opaque, so there is nothing meaningful to put underneath it. The
- * base is the floor of the stack, always, and everything else is above it.
+ * The artwork itself. [MiscPreferences.ALBUM_ART_STYLE] keeps owning its geometry and compositing -
+ * blurred, frosted, square-fit or hidden - while [MiscPreferences.ALBUM_ART_FILTER] is the
+ * independent colour pass applied to that bitmap. Both are resolved before this overlay stack:
+ * `albumArtHidden` decides what `AdaptiveTextContrast` measures, `usesBlurRadius` decides whether
+ * the blur row is enabled, and the host ImageView is what actually holds the bitmap. A photograph
+ * is opaque, so there is nothing meaningful to put underneath it. The base is the floor of the
+ * stack, always, and everything else is above it.
  *
  * The *wash* half of that same preference is a layer, though - Poster's gradients, Aurora's ribbon,
  * Ocean's rise. Which is why [implicitStack] hands it back as a [BackgroundLayerKind.WASH] entry:

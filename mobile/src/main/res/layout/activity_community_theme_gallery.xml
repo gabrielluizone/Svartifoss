@@ -182,6 +182,22 @@
                     app:chipIcon="@drawable/ic_favorite_border"
                     app:chipIconVisible="true" />
 
+                <!--
+                    Only ever shown while an author filter is on, and labelled with the author's
+                    own name rather than a fixed word: it is the one filter the user arrives at by
+                    tapping something else, so the chip has to say which author it landed on.
+                -->
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/community_gallery_author_filter"
+                    style="@style/LyraCommunityGalleryChip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:chipIcon="@drawable/ic_person"
+                    app:chipIconVisible="true"
+                    tools:text="Aurora"
+                    tools:visibility="visible" />
+
                 <com.google.android.material.chip.Chip
                     android:id="@+id/community_gallery_clear_filters"
                     style="@style/LyraCommunityGalleryChip"

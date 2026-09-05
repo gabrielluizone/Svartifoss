@@ -17,6 +17,10 @@ message WatchInfo {
   // Absent when the watch runs a build from before these fields existed.
   optional int32 appVersionCode = 7;
   optional string appVersionName = 8;
+  // HandGestureAvailability.code for Wear OS's primary one-handed gesture (double pinch).
+  // Absent on watch builds from before the field, which the phone reads back as UNKNOWN - the
+  // watch is the only side that can answer, and every failure of that input is otherwise silent.
+  optional int32 handGesture = 9;
 
   message WatchButton {
     required string label = 1;

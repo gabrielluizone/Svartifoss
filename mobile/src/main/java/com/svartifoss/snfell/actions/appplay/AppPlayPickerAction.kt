@@ -8,26 +8,19 @@ import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.actions.PhoneAction
-import com.svartifoss.snfell.view.buttonconfig.ActionPickerViewModel
+import com.svartifoss.snfell.actions.PickerActionGroup
 
-class AppPlayPickerAction : PhoneAction {
+class AppPlayPickerAction : PickerActionGroup {
     constructor(context: Context) : super(context)
     constructor(context: Context, bundle: PersistableBundle) : super(context, bundle)
-
-    override val opensMoreOptions: Boolean
-        get() = true
 
     override fun retrieveTitle(): String = context.getString(R.string.start_playback)
     override val defaultIcon: Drawable
         get() = AppCompatResources.getDrawable(context, R.drawable.ic_apps)!!
 
-    override fun onActionPicked(actionPicker: ActionPickerViewModel) {
-        val actions = getAllMusicApps(context)
+    override fun pickerChildren(): List<PhoneAction> = getAllMusicApps(context)
                 .map { AppPlayAction(context, it) }
                 .sortedBy { it.title }
-
-        actionPicker.updateDisplayedActionsWithBackStack(title, actions)
-    }
 
     companion object {
         fun getAllMusicApps(context: Context): List<ComponentName> {
@@ -40,8 +33,10 @@ class AppPlayPickerAction : PhoneAction {
                         val activityInfo = it.activityInfo
                         ComponentName(activityInfo.packageName, activityInfo.name)
                     }
-                    .groupBy { it.packageName }
-                    .flatMap { it.value }
+                    // A player may register several MEDIA_BUTTON receivers. They all represent
+                    // the same launch destination in this picker, so keep one stable component
+                    // instead of listing the app two or three times.
+                    .distinctBy { it.packageName }
         }
     }
 }

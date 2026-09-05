@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Освежи теме заједнице</string>
     <string name="online_theme_list_description">Теме сата које је креирала заједница</string>
     <string name="online_theme_byline">Аутор: %1$s</string>
+    <string name="online_theme_filter_author">Теме аутора %1$s</string>
+    <string name="online_theme_filter_author_selected">Приказују се теме аутора %1$s</string>
     <string name="online_theme_row_description">%1$s, аутор %2$s. Распоред %3$s.</string>
     <string name="online_theme_apply">Додај и примени</string>
     <string name="online_theme_loading">Учитавање тема заједнице…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Теме које сте већ додали су приказане</string>
     <string name="online_theme_search_empty_all_installed">Већ сте додали све теме заједнице.</string>
     <string name="online_theme_search_empty_all_installed_hint">Искључите „Ново за мене“ да их поново видите.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Најпреузиманије</string>
+    <string name="online_theme_sort_most_downloaded_short">Преузимања</string>
+    <string name="community_theme_detail_downloads">Преузимања</string>
+    <string name="community_theme_report_action">Пријави тему</string>
+    <string name="community_theme_report_already">Тема пријављена</string>
+    <string name="community_theme_report_description">Пријави „%1$s“ модераторима</string>
+    <string name="community_theme_report_title">Пријави ову тему</string>
+    <string name="community_theme_report_intro">Реците модераторима шта није у реду са овом темом.</string>
+    <string name="community_theme_report_reason_inappropriate">Увредљив или неприкладан садржај</string>
+    <string name="community_theme_report_reason_impersonation">Представљена као туђи рад</string>
+    <string name="community_theme_report_reason_misleading">Не одговара ономе што приказује</string>
+    <string name="community_theme_report_reason_illegible">Неупотребљива на сату</string>
+    <string name="community_theme_report_reason_spam">Нежељени садржај или дупликат</string>
+    <string name="community_theme_report_reason_other">Нешто друго</string>
+    <string name="community_theme_report_details_hint">Било шта друго што модератори треба да знају (необавезно)</string>
+    <string name="community_theme_report_privacy">Вашу пријаву читају само модератори. Аутору се никад не каже ко ју је послао.</string>
+    <string name="community_theme_report_submit">Пошаљи пријаву</string>
+    <string name="community_theme_report_sent">Пријава послата. Модератори ће погледати ову тему.</string>
+    <string name="community_theme_report_already_sent">Већ сте пријавили ову тему.</string>
+    <string name="community_theme_report_not_ready">Ова тема још не може да се пријави. Покушајте касније.</string>
+    <string name="community_theme_report_error">Пријава није могла да се пошаље. Проверите везу и покушајте поново.</string>
 </resources>

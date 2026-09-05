@@ -24,4 +24,304 @@
         <copyright>Copyright (c) 2010 by Brian J. Bonislawsky DBA Astigmatic (AOETI)</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
+    <notice>
+        <name>Lato</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/lato</url>
+        <copyright>Copyright (c) 2010-2014 by tyPoland Lukasz Dziedzic (team@latofonts.com) with Reserved Font Name "Lato"</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Merriweather Sans</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/merriweathersans</url>
+        <copyright>Copyright 2019 The Merriweather Project Authors (https://github.com/SorkinType/Merriweather-Sans)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Source Sans 3</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/sourcesans3</url>
+        <copyright>Copyright 2010-2020 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe in the United States and/or other countries.</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Source Serif 4</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/sourceserif4</url>
+        <copyright>Copyright 2014 The Source Serif 4 Project Authors (https://github.com/adobe-fonts/source-serif)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Libre Baskerville</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/librebaskerville</url>
+        <copyright>Copyright 2012 The Libre Baskerville Project Authors (https://github.com/impallari/Libre-Baskerville) with Reserved Font Name Libre Baskerville.</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Libre Franklin</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/librefranklin</url>
+        <copyright>Copyright 2020 The Libre Franklin Project Authors (https://github.com/googlefonts/Libre-Franklin)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>IBM Plex Sans</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/ibmplexsans</url>
+        <copyright>Copyright © 2017 IBM Corp. with Reserved Font Name "Plex"</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>IBM Plex Mono</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/ibmplexmono</url>
+        <copyright>Copyright © 2017 IBM Corp. with Reserved Font Name "Plex"</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>IBM Plex Serif</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/ibmplexserif</url>
+        <copyright>Copyright © 2017 IBM Corp. with Reserved Font Name "Plex"</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Work Sans</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/worksans</url>
+        <copyright>Copyright 2019 The Work Sans Project Authors (https://github.com/weiweihuanghuang/Work-Sans)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Karla</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/karla</url>
+        <copyright>Copyright 2019 The Karla Project Authors (https://github.com/googlefonts/karla)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Sora</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/sora</url>
+        <copyright>Copyright 2019 The Sora Project Authors (https://github.com/sora-xor/sora-font)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Urbanist</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/urbanist</url>
+        <copyright>Copyright 2021 The Urbanist Project Authors (https://github.com/coreyhu/Urbanist)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Be Vietnam Pro</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/bevietnampro</url>
+        <copyright>Copyright 2021 The Be Vietnam Pro Project Authors (https://github.com/bettergui/BeVietnamPro),</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Red Hat Display</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/redhatdisplay</url>
+        <copyright>Copyright 2024 The Red Hat Project Authors (https://github.com/RedHatOfficial/RedHatFont)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Red Hat Text</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/redhattext</url>
+        <copyright>Copyright 2024 The Red Hat Project Authors (https://github.com/RedHatOfficial/RedHatFont)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Red Hat Mono</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/redhatmono</url>
+        <copyright>Copyright 2024 The Red Hat Project Authors (https://github.com/RedHatOfficial/RedHatFont)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Syne</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/syne</url>
+        <copyright>Copyright 2017 The Syne Project Authors (https://gitlab.com/bonjour-monde/fonderie/syne-typeface)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Instrument Sans</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/instrumentsans</url>
+        <copyright>Copyright 2022 The Instrument Sans Project Authors (https://github.com/Instrument/instrument-sans)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Figtree</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/figtree</url>
+        <copyright>Copyright 2022 The Figtree Project Authors (https://github.com/erikdkennedy/figtree)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Gabarito</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/gabarito</url>
+        <copyright>Copyright 2023 The Gabarito Project Authors (https://github.com/naipefoundry/gabarito)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Bricolage Grotesque</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/bricolagegrotesque</url>
+        <copyright>Copyright 2022 The Bricolage Grotesque Project Authors (https://github.com/ateliertriay/bricolage)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>DM Serif Display</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/dmserifdisplay</url>
+        <copyright>Copyright 2014-2018 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe in the United States and/or other countries. Copyright 2019 Google LLC.</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Cormorant Garamond</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/cormorantgaramond</url>
+        <copyright>Copyright 2015 the Cormorant Project Authors (github.com/CatharsisFonts/Cormorant)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Cormorant</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/cormorant</url>
+        <copyright>Copyright 2015 the Cormorant Project Authors (github.com/CatharsisFonts/Cormorant)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Bitter</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/bitter</url>
+        <copyright>Copyright 2011 The Bitter Project Authors (https://github.com/solmatas/BitterPro)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Spectral</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/spectral</url>
+        <copyright>Copyright 2017 The Spectral Project Authors (https://github.com/productiontype/Spectral)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Vollkorn</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/vollkorn</url>
+        <copyright>Copyright 2017 The Vollkorn Project Authors (https://github.com/FAlthausen/Vollkorn-Typeface)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Raleway</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/raleway</url>
+        <copyright>Copyright 2010 The Raleway Project Authors (impallari@gmail.com), with Reserved Font Name "Raleway".</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>League Spartan</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/leaguespartan</url>
+        <copyright>Copyright 2020 The League Spartan Project Authors (https://github.com/theleagueof/league-spartan)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Saira</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/saira</url>
+        <copyright>Copyright 2020 The Saira Project Authors (https://github.com/Omnibus-Type/Saira)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Signika</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/signika</url>
+        <copyright>Copyright 2018 The Signika Project Authors (https://github.com/googlefonts/Signika).</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Sofia Sans</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/sofiasans</url>
+        <copyright>Copyright 2019 The Sofia Sans Project Authors (https://github.com/lettersoup/Sofia-Sans)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Overpass</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/overpass</url>
+        <copyright>Copyright 2021 The Overpass Project Authors (https://github.com/RedHatOfficial/Overpass)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Public Sans</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/publicsans</url>
+        <copyright>Copyright 2015 The Public Sans Project Authors (https://github.com/uswds/public-sans)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Questrial</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/questrial</url>
+        <copyright>Copyright 2011 The Questrial Project Authors (https://github.com/googlefonts/questrial)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Dosis</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/dosis</url>
+        <copyright>Copyright 2011 The Dosis Project Authors (https://github.com/googlefonts/dosis-vf)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Prompt</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/prompt</url>
+        <copyright>Copyright (c) 2015, Cadson Demak (info@cadsondemak.com)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Unbounded</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/unbounded</url>
+        <copyright>Copyright 2022 The Unbounded Project Authors (https://github.com/googlefonts/unbounded)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Recursive</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/recursive</url>
+        <copyright>Copyright 2020 The Recursive Project Authors (https://github.com/arrowtype/recursive)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Trispace</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/trispace</url>
+        <copyright>Copyright 2020 The Trispace Project Authors (https://github.com/Etcetera-Type-Co/Trispace)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Noto Sans</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/notosans</url>
+        <copyright>Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Noto Serif</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/notoserif</url>
+        <copyright>Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Noto Sans Mono</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/notosansmono</url>
+        <copyright>Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Heebo</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/heebo</url>
+        <copyright>Copyright 2014 The Heebo Project Authors (https://github.com/OdedEzer/heebo)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Hind</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/hind</url>
+        <copyright>Copyright (c) 2014, Indian Type Foundry (info@indiantypefoundry.com).</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Hind Madurai</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/hindmadurai</url>
+        <copyright>Copyright (c) 2015 Indian Type Foundry (info@indiantypefoundry.com)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Kumbh Sans</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/kumbhsans</url>
+        <copyright>Copyright 2020 The KumbhSans Project Authors (https://github.com/xconsau/KumbhSans)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Alegreya</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/alegreya</url>
+        <copyright>Copyright 2011 The Alegreya Project Authors (https://github.com/huertatipografica/Alegreya)</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
+    <notice>
+        <name>Assistant</name>
+        <url>https://github.com/google/fonts/tree/main/ofl/assistant</url>
+        <copyright>Copyright 2020 The Assistant Project Authors (https://github.com/hafontia/Assistant).</copyright>
+        <license>SIL Open Font License v1.1</license>
+    </notice>
 </notices>

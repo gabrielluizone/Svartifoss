@@ -238,6 +238,36 @@ class WatchSearchTargetResolverTest {
     }
 
     @Test
+    fun `overlay blur leads to backdrop style unless the resolved backdrop uses it`() {
+        // "solid_black" never samples the blurred cover, whatever surface it resolves through.
+        assertRedirect(
+                resolve(
+                        key = "wear_overlay_blur_radius",
+                        strings = mapOf("wear_overlay_backdrop_style" to "black")),
+                WatchFacePrefsFragment.SECTION_PANELS,
+                "wear_overlay_backdrop_style")
+        // "glass" always does.
+        assertFalse(resolve(
+                key = "wear_overlay_blur_radius",
+                strings = mapOf("wear_overlay_backdrop_style" to "glass")).redirected)
+        // "follow" resolves through Volume's own content style - a glass-family style there
+        // means the backdrop it follows into does use the blur.
+        assertFalse(resolve(
+                key = "wear_overlay_blur_radius",
+                strings = mapOf(
+                        "wear_overlay_backdrop_style" to "follow",
+                        "wear_volume_style" to "glass")).redirected)
+        assertRedirect(
+                resolve(
+                        key = "wear_overlay_blur_radius",
+                        strings = mapOf(
+                                "wear_overlay_backdrop_style" to "follow",
+                                "wear_volume_style" to "tonal")),
+                WatchFacePrefsFragment.SECTION_PANELS,
+                "wear_overlay_backdrop_style")
+    }
+
+    @Test
     fun `normal color leads to color treatment unless Normal is active`() {
         assertRedirect(
                 resolve(

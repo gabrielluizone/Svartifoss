@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Обновяване на темите на общността</string>
     <string name="online_theme_list_description">Създадени от общността теми за часовника</string>
     <string name="online_theme_byline">От %1$s</string>
+    <string name="online_theme_filter_author">Теми от %1$s</string>
+    <string name="online_theme_filter_author_selected">Показват се темите от %1$s</string>
     <string name="online_theme_row_description">%1$s от %2$s. Оформление %3$s.</string>
     <string name="online_theme_apply">Добавяне и прилагане</string>
     <string name="online_theme_loading">Зареждат се темите на общността…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Темите, които вече сте добавили, се показват</string>
     <string name="online_theme_search_empty_all_installed">Вече сте добавили всички теми на общността.</string>
     <string name="online_theme_search_empty_all_installed_hint">Изключете „Нови за мен“, за да ги видите отново.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Най-изтегляни</string>
+    <string name="online_theme_sort_most_downloaded_short">Изтегляния</string>
+    <string name="community_theme_detail_downloads">Изтегляния</string>
+    <string name="community_theme_report_action">Докладване на тема</string>
+    <string name="community_theme_report_already">Темата е докладвана</string>
+    <string name="community_theme_report_description">Докладване на „%1$s“ на модераторите</string>
+    <string name="community_theme_report_title">Докладване на тази тема</string>
+    <string name="community_theme_report_intro">Кажете на модераторите какво не е наред с тази тема.</string>
+    <string name="community_theme_report_reason_inappropriate">Обидно или неподходящо съдържание</string>
+    <string name="community_theme_report_reason_impersonation">Представена като чужда</string>
+    <string name="community_theme_report_reason_misleading">Не съответства на показаното</string>
+    <string name="community_theme_report_reason_illegible">Неизползваема на часовника</string>
+    <string name="community_theme_report_reason_spam">Спам или дубликат</string>
+    <string name="community_theme_report_reason_other">Друга причина</string>
+    <string name="community_theme_report_details_hint">Нещо друго, което модераторите трябва да знаят (по избор)</string>
+    <string name="community_theme_report_privacy">Само модераторите четат доклада ви. На автора никога не се казва кой го е изпратил.</string>
+    <string name="community_theme_report_submit">Изпращане на доклада</string>
+    <string name="community_theme_report_sent">Докладът е изпратен. Модераторите ще прегледат тази тема.</string>
+    <string name="community_theme_report_already_sent">Вече сте докладвали тази тема.</string>
+    <string name="community_theme_report_not_ready">Тази тема още не може да бъде докладвана. Опитайте по-късно.</string>
+    <string name="community_theme_report_error">Докладът ви не можа да бъде изпратен. Проверете връзката и опитайте отново.</string>
 </resources>

@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">重新整理社群主題</string>
     <string name="online_theme_list_description">社群建立的手錶主題</string>
     <string name="online_theme_byline">由 %1$s 製作</string>
+    <string name="online_theme_filter_author">%1$s 的主題</string>
+    <string name="online_theme_filter_author_selected">正在顯示 %1$s 的主題</string>
     <string name="online_theme_row_description">%1$s，由 %2$s 製作。%3$s 版面配置。</string>
     <string name="online_theme_apply">新增並套用</string>
     <string name="online_theme_loading">正在載入社群主題…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">正在顯示你加入過的主題</string>
     <string name="online_theme_search_empty_all_installed">你已加入所有社群主題。</string>
     <string name="online_theme_search_empty_all_installed_hint">關閉「未加入」即可再次查看。</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">下載最多</string>
+    <string name="online_theme_sort_most_downloaded_short">下載次數</string>
+    <string name="community_theme_detail_downloads">下載次數</string>
+    <string name="community_theme_report_action">檢舉主題</string>
+    <string name="community_theme_report_already">已檢舉</string>
+    <string name="community_theme_report_description">向管理員檢舉「%1$s」</string>
+    <string name="community_theme_report_title">檢舉此主題</string>
+    <string name="community_theme_report_intro">告訴管理員這個主題有什麼問題。</string>
+    <string name="community_theme_report_reason_inappropriate">冒犯或不當內容</string>
+    <string name="community_theme_report_reason_impersonation">冒充他人作品</string>
+    <string name="community_theme_report_reason_misleading">與呈現的內容不符</string>
+    <string name="community_theme_report_reason_illegible">在手錶上無法使用</string>
+    <string name="community_theme_report_reason_spam">垃圾內容或重複</string>
+    <string name="community_theme_report_reason_other">其他原因</string>
+    <string name="community_theme_report_details_hint">還有什麼想讓管理員知道的（選填）</string>
+    <string name="community_theme_report_privacy">只有管理員能看到你的檢舉。作者永遠不會知道是誰檢舉的。</string>
+    <string name="community_theme_report_submit">送出檢舉</string>
+    <string name="community_theme_report_sent">檢舉已送出。管理員會查看這個主題。</string>
+    <string name="community_theme_report_already_sent">你已經檢舉過這個主題了。</string>
+    <string name="community_theme_report_not_ready">此主題暫時無法檢舉，請稍後再試。</string>
+    <string name="community_theme_report_error">檢舉送出失敗。請檢查網路連線後重試。</string>
 </resources>

@@ -2,30 +2,53 @@
 <resources>
     <!-- Additive catalogs keep existing localized arrays index-stable. -->
     <string-array name="album_art_style_extra_entries">
-        <item>Ocean wash</item>
-        <item>Sunset wash</item>
+        <item>Ocean</item>
+        <item>Sunset</item>
         <item>Center spotlight</item>
         <item>Glass veil</item>
         <item>Velvet</item>
         <item>Noir spotlight</item>
         <item>Ice wash</item>
         <item>Rose bloom</item>
-        <item>Filter · Warm</item>
-        <item>Filter · Cool</item>
-        <item>Filter · Golden hour</item>
-        <item>Filter · Rosé</item>
-        <item>Filter · Vintage film</item>
-        <item>Filter · Faded film</item>
-        <item>Filter · Matte</item>
-        <item>Filter · Vivid</item>
-        <item>Filter · Punch</item>
-        <item>Filter · Pastel</item>
-        <item>Filter · Sepia</item>
-        <item>Filter · Cyanotype</item>
-        <item>Filter · Teal &amp; orange</item>
-        <item>Filter · High contrast</item>
-        <item>Filter · Soft light</item>
-        <item>Filter · Night</item>
+        <item>Prism</item>
+        <item>Crescent rim</item>
+        <item>Tidal bands</item>
+        <item>Paper sleeve</item>
+        <item>Lantern rise</item>
+        <item>Mirage split</item>
+        <item>Quiet grid</item>
+        <item>Nocturne</item>
+        <item>Cloud study</item>
+        <item>Liquid pools</item>
+        <item>Colour monolith</item>
+        <item>Split tone</item>
+        <item>Gradient</item>
+        <item>Duotone</item>
+        <item>Bands</item>
+        <item>Vignette</item>
+        <item>Graphite</item>
+        <item>Cinema</item>
+        <item>Acrylic</item>
+        <item>Mesh</item>
+        <item>Nebula</item>
+        <item>Bioluminescence</item>
+        <item>Iridescent</item>
+        <item>Orbit</item>
+        <item>Ink wash</item>
+        <item>Blossom</item>
+        <item>Fjord</item>
+        <item>Dot matrix</item>
+        <item>Scanlines</item>
+        <item>Radar</item>
+        <item>Contour</item>
+        <item>Faceted</item>
+        <item>Album fill</item>
+        <item>Secondary fill</item>
+        <item>Tertiary fill</item>
+        <item>Glass</item>
+        <item>Midnight</item>
+        <item>Smoke</item>
+        <item>Tideline</item>
     </string-array>
     <string-array name="album_art_style_extra_values" translatable="false">
         <item>ocean</item>
@@ -36,22 +59,74 @@
         <item>noir</item>
         <item>ice</item>
         <item>rose</item>
-        <item>filter_warm</item>
-        <item>filter_cool</item>
-        <item>filter_golden</item>
-        <item>filter_rose</item>
-        <item>filter_vintage</item>
-        <item>filter_faded</item>
-        <item>filter_matte</item>
-        <item>filter_vivid</item>
-        <item>filter_punch</item>
-        <item>filter_pastel</item>
-        <item>filter_sepia</item>
-        <item>filter_cyanotype</item>
-        <item>filter_teal_orange</item>
-        <item>filter_high_contrast</item>
-        <item>filter_soft_light</item>
-        <item>filter_night</item>
+        <item>prismatic</item>
+        <item>crescent</item>
+        <item>tidal</item>
+        <item>paper</item>
+        <item>lantern</item>
+        <item>mirage</item>
+        <item>grid</item>
+        <item>nocturne</item>
+        <item>cloud</item>
+        <item>liquid</item>
+        <item>monolith</item>
+        <item>split_tone</item>
+        <item>gradient</item>
+        <item>duotone</item>
+        <item>bands</item>
+        <item>vignette</item>
+        <item>graphite</item>
+        <item>cinema</item>
+        <item>acrylic</item>
+        <item>mesh</item>
+        <item>nebula</item>
+        <item>bioluminescence</item>
+        <item>iridescent</item>
+        <item>orbit</item>
+        <item>ink_wash</item>
+        <item>blossom</item>
+        <item>fjord</item>
+        <item>dot_matrix</item>
+        <item>scanlines</item>
+        <item>radar</item>
+        <item>contour</item>
+        <item>faceted</item>
+        <item>album</item>
+        <item>secondary</item>
+        <item>tertiary</item>
+        <item>glass</item>
+        <item>midnight</item>
+        <item>smoke</item>
+        <item>tideline</item>
+    </string-array>
+
+    <string-array name="album_art_filter_extra_entries">
+        <item>Moss</item>
+        <item>Lavender haze</item>
+        <item>Cherry</item>
+        <item>Deep sea</item>
+        <item>Dust</item>
+        <item>Bleach</item>
+        <item>Moonlight</item>
+        <item>Dream</item>
+        <item>Infrared</item>
+        <item>Forest</item>
+        <item>Silver</item>
+        <item>Candy</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_values" translatable="false">
+        <item>moss</item>
+        <item>lavender</item>
+        <item>cherry</item>
+        <item>deep_sea</item>
+        <item>dust</item>
+        <item>bleach</item>
+        <item>moonlight</item>
+        <item>dream</item>
+        <item>infrared</item>
+        <item>forest</item>
+        <item>silver</item>
+        <item>candy</item>
     </string-array>
 
     <string-array name="player_shading_style_extra_entries">

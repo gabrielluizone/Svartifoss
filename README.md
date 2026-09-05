@@ -85,9 +85,9 @@ the fork.
 - A dozen+ seek and volume readout styles (glass pill, expressive, material,
   giant, position/total, terminal, mono, hairline, and more), plus volume
   layouts that can sit on any edge of the bezel or wrap it as a full ring.
-- 36 typefaces for track text, including Inter, Atkinson Hyperlegible, Lora,
-  Fraunces, Space Mono, Barlow Condensed and more; title, artist, lyrics,
-  clock and track time can each use their own choice.
+- 138 typefaces for track text, including Inter, Source Sans 3, IBM Plex,
+  Noto, Cormorant, Recursive and more; title, artist, lyrics, clock and track
+  time can each use their own choice.
 
 <p align="center">
   <img src="docs/images/watch-studio.jpg" width="215" alt="Studio face" />

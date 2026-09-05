@@ -17,8 +17,11 @@ import com.svartifoss.snfell.common.MiscPreferences
  * the same arrangement the Text, Color, Panel and Player pages already use.
  */
 internal enum class BackgroundControl {
-    /** How the cover itself is treated: blurred, monochrome, filtered, square-fit or hidden. */
+    /** How the cover itself is composed: square-fit, blurred or hidden. */
     ARTWORK,
+
+    /** The independent colour layer applied over the selected artwork style. */
+    FILTER,
 
     /** Blur radius, meaningful only for the artwork treatments that blur. */
     BLUR,
@@ -35,6 +38,7 @@ internal object BackgroundEditorModel {
     /** The artwork controls, top to bottom, in the order the editor renders them. */
     val artworkKeys: List<String> = listOf(
             MiscPreferences.ALBUM_ART_STYLE.key,
+            MiscPreferences.ALBUM_ART_FILTER.key,
             MiscPreferences.ALBUM_ART_BLUR_RADIUS.key,
             MiscPreferences.WEAR_ALBUM_ART_FADE.key)
 
@@ -59,6 +63,7 @@ internal object BackgroundEditorModel {
 
     fun controlFor(key: String): BackgroundControl? = when (key) {
         MiscPreferences.ALBUM_ART_STYLE.key -> BackgroundControl.ARTWORK
+        MiscPreferences.ALBUM_ART_FILTER.key -> BackgroundControl.FILTER
         MiscPreferences.ALBUM_ART_BLUR_RADIUS.key -> BackgroundControl.BLUR
         MiscPreferences.WEAR_ALBUM_ART_FADE.key -> BackgroundControl.FADE
         in layerKeys -> BackgroundControl.LAYERS

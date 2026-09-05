@@ -71,16 +71,9 @@ class LikeAction : SelectableAction {
 
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<LikeAction> {
         override suspend fun handleAction(action: LikeAction) {
-            val playbackState = service.currentMediaController?.playbackState ?: return
-            val likeAction = findLikeCustomAction(playbackState) ?: return
-
-            service.currentMediaController?.transportControls
-                    ?.sendCustomAction(likeAction.action, likeAction.extras)
-
-            // Some apps don't immediately re-publish their playback state after toggling the like
-            // (so onPlaybackStateChanged never fires). Schedule a forced re-read so the watch
-            // button shows the correct liked/unliked state within ~500 ms.
-            service.scheduleStateRefresh()
+            // Use the same complete route as the panel's built-in Like button: MediaSession
+            // custom action first, then the notification action used by players such as Spotify.
+            service.executeLikeCommand()
         }
     }
 }

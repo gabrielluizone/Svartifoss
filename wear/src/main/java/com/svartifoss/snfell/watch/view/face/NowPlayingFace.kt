@@ -4,6 +4,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
@@ -131,6 +132,16 @@ data class QueueCard(
         val art: androidx.compose.ui.graphics.ImageBitmap?
 )
 
+/**
+ * A resolved outline: the colour to stroke in, and how wide relative to the text size.
+ *
+ * The width stays a fraction here on purpose. An outline is drawn as a second pass at whatever
+ * size the text actually settled on, and for a title that is only known after `AdaptiveTitleText`
+ * has finished shrinking - a pixel width resolved by the host would be right for the designed size
+ * and wrong for every size the cascade lands on instead.
+ */
+data class TextOutlinePaint(val color: Color, val widthFraction: Float, val minWidthPx: Float)
+
 data class NowPlayingFaceState(
         val title: String = "",
         val artist: String = "",
@@ -256,6 +267,12 @@ data class NowPlayingFaceState(
          * mode is in effect. [PlayerBackgroundTreatment] walks it; a face composes what goes *on*
          * the background and never how the background is stacked.
          */
+        /**
+         * Anchor the title's own centre to the middle of the screen, rather than the centre of the
+         * block it sits in. Only the faces that centre such a block read it - see
+         * `PlayerEditorModel.TITLE_CENTERED_FACES`; everywhere else it is inert by construction.
+         */
+        val titleCentered: Boolean = false,
         val backgroundLayers: List<ResolvedBackgroundLayer> = emptyList(),
         /**
          * True while an explicit stack is in charge, which suppresses the three legacy slots.
@@ -353,6 +370,29 @@ data class NowPlayingFaceState(
         val ambientShowProgress: Boolean = true,
         /** Whether the static outlined Up Next pill shows in supported ambient faces. */
         val ambientShowPills: Boolean = true,
+        /**
+         * The cover as the always-on artwork controls resolved it, for a face that draws it
+         * inside its own composition instead of relying on the host's full-screen ambient
+         * backdrop - Carousel's single card is the one place that happens today.
+         *
+         * Deliberately *not* [albumArt]. That one carries the awake treatment (the frosted rim,
+         * the interactive photo filter) and is published whether the always-on artwork controls
+         * asked for a cover or not, so a face reading it in ambient shows a picture the user
+         * turned off and shows it under the wrong filter. This is null exactly when the resolved
+         * always-on policy says no artwork, so a face can simply not draw it, and it carries the
+         * ambient photo treatment already applied. Ignored while [ambient] is false.
+         */
+        val ambientAlbumArt: androidx.compose.ui.graphics.ImageBitmap? = null,
+        /** Whether [ambientAlbumArt] is to be blurred by whoever draws it. The blur stays a flag
+         *  rather than being baked in for the same reason [albumArtBlurred] does: the face knows
+         *  the size it is drawing at, and on API 31+ the host's own backdrop blurs with a
+         *  RenderEffect that produces no bitmap to hand over. */
+        val ambientAlbumArtBlurred: Boolean = false,
+        /** How visible [ambientAlbumArt] should be
+         *  (MiscPreferences.AMBIENT_ALBUM_ART_OPACITY), the same 0..1 the host applies to its own
+         *  ambient backdrop. The third of the always-on artwork controls, and it reaches a face
+         *  that draws the cover itself for the same reason the other two do. */
+        val ambientAlbumArtAlpha: Float = .55f,
         /** The global fallback font for title/artist text (MiscPreferences.WEAR_FONT key).
          *  Per-line "follow" choices resolve through it. */
         val fontKey: String = "google_sans",
@@ -433,6 +473,40 @@ data class NowPlayingFaceState(
         /** As [titleTypography], for the artist line. Independent on purpose - a heavier title
          *  against a lighter artist line is the common ask. */
         val artistTypography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT,
+        /**
+         * The title's shadow, already resolved to a colour against the current album accent.
+         *
+         * Resolved by the host rather than carried as a [com.svartifoss.snfell.common.TextShadowSpec]
+         * so a face never has to know where the accent comes from - and, more importantly, so the
+         * "album" colour mode is recomputed in `applyAccentColor` along with every other
+         * accent-derived value, which is the one place that can be right about it. Null means no
+         * shadow, which is what every face renders when nobody has asked for one.
+         */
+        val titleShadow: Shadow? = null,
+        /** As [titleShadow], for the artist line. */
+        val artistShadow: Shadow? = null,
+        /**
+         * The title's outline, already resolved to a stroke colour, or null for none.
+         *
+         * Carried as the pair the renderer needs rather than as a
+         * [com.svartifoss.snfell.common.TextOutlineSpec] for [titleShadow]'s reason: the width
+         * depends on the *rendered* text size, which only the composable knows after its own
+         * shrink cascade, so the fraction travels and the pixels are computed at the draw.
+         */
+        val titleOutline: TextOutlinePaint? = null,
+        /** As [titleOutline], for the artist line. */
+        val artistOutline: TextOutlinePaint? = null,
+        /**
+         * A filled box behind the title, already resolved to a colour, or null for none.
+         *
+         * A [Color] rather than a spec because Compose paints this through `TextStyle.background`,
+         * which takes exactly one colour and decides the box itself - the reason
+         * `TextBackdropStyle` offers no padding or radius, and the reason this can travel already
+         * resolved where an outline's width cannot.
+         */
+        val titleBackdrop: Color? = null,
+        /** As [titleBackdrop], for the artist line. */
+        val artistBackdrop: Color? = null,
         /** Typography deltas for the elapsed/total readout. The family stays face-authored until
          *  [trackTimeFontKey] is explicitly selected. */
         val trackTimeTypography: WatchTypography.TextSpec = WatchTypography.IDENTITY_TEXT,

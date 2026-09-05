@@ -1,0 +1,56 @@
+Modifications to aleo_regular.ttf
+=================================
+
+The SIL Open Font License permits modification and does not require this notice,
+but it is recorded for the same reason `special-elite/MODIFICATIONS.txt` in this
+repository is: a binary font file carries no diff, so without a written record a
+future re-download of the upstream release would silently undo the fix.
+
+The bundled copies of this font (mobile/src/main/res/font/aleo_regular.ttf and
+wear/src/main/res/font/aleo_regular.ttf) have been modified from the upstream
+release at https://github.com/google/fonts/tree/main/ofl/aleo. Only the vertical
+metrics were changed; no glyph outline, character mapping, name table or Reserved
+Font Name was touched.
+
+  hhea.ascent           905  ->   958
+  hhea.descent         -295  ->  -242
+  hhea.lineGap            0  ->     0   (unchanged)
+  OS/2.sTypoAscender    905  ->   958
+  OS/2.sTypoDescender  -295  ->  -242
+  OS/2.sTypoLineGap       0  ->     0   (unchanged)
+  OS/2.usWinAscent     1177  ->  1140
+  OS/2.usWinDescent     372  ->   335
+
+Why
+---
+
+Every renderer centres a line of text by its line box. This font's box centre sat
+0.054 em below its own capital letters - the opposite direction from most of the
+faces corrected in this pass - which reads as text sitting low in a centred pill
+or chip.
+
+The correction centres the box on the font's flat capital letters - E, F, H, I, L,
+which are perfectly uniform in this font. Unlike Crete Round and Zilla Slab (two
+other slab serifs already corrected in an earlier pass), this font's digits are
+ordinary lining figures, not old-style ones - none dips below the baseline by more
+than a normal optical overshoot - so the digit target and the flat-cap target
+agree closely, and there was no old-style-figure trade-off to make here.
+
+The single deepest character in this font's whole character set is a Baltic
+capital with a cedilla (U+0122) that no content in this app's supported locales
+is expected to use; measuring against it would have understated how much headroom
+ordinary text actually needs, so the correction (and its safety margin, below) is
+checked against realistic descenders instead: g, j, p, q, y and the accented Latin
+letters that do appear in the app's supported languages.
+
+ascent + |descent| is unchanged (1200 units in this font's 1000-unit em), so line
+height, spacing, wrapping and every reserved height are the same as upstream; only
+where the ink sits inside that box moves. The flat-cap band now lands within
+0.0005 em of the box centre, and every realistic descender still clears the new
+descent line by 0.059 em.
+
+usWinAscent/usWinDescent were narrowed to the font's real ink extents
+(head.yMax/yMin).
+
+Pinned by BundledFontMetricsTest, so a re-download from upstream fails the build
+rather than silently reverting the fix.

@@ -21,6 +21,17 @@
         android:visible="false"
         app:showAsAction="always" />
 
+    <!-- The community gallery. Always available: it is a destination rather than a control for
+         whatever tab is showing, and a shortcut that appears on some tabs and not others is one
+         nobody learns. The shopping-bag glyph is the same one the Watch themes screen's own row
+         carries - a palette would read as "customize the look" rather than "browse what other
+         people published", and one glyph should keep one meaning. -->
+    <item
+        android:id="@+id/menu_community_themes"
+        android:icon="@drawable/ic_shopping_bag"
+        android:title="@string/online_themes_title"
+        app:showAsAction="always" />
+
     <!-- The usage guide, formerly the "Guide" bottom-nav tab - its slot now hosts the watch
          face customization screen, so the guide moved up here as a help action. -->
     <item

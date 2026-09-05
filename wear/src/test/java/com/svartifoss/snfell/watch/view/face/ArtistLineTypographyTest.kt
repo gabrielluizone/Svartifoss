@@ -37,6 +37,11 @@ class ArtistLineTypographyTest {
          * rule does. Adding an entry means naming the composable that opted out.
          */
         val ALLOWED_BARE_ARTIST_FONT = mapOf(
+                // --- ArtistLineText's own body. It is the merge this test exists to enforce, not
+                // a face bypassing it: the helper was split into a pass so an outline can render
+                // the identical line twice, stroke under fill, without a second copy of the merge.
+                "ArtistLineTextPass" to "ArtistLineText's own drawing pass",
+
                 // --- Always-on variants: AOD is styled by WEAR_AOD_* and must not read the awake
                 // artist spec at all.
                 "CarouselAmbient" to "AOD variant",

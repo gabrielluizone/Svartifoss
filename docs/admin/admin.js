@@ -15,19 +15,42 @@ const DISABLED_REASON_SELF = "A different moderator must review this submission.
 const DISABLED_REASON_CHECKING = "Checking the submitted profile\u2026";
 const DISABLED_REASON_PAYLOAD = "This profile did not pass the payload check. See the message above.";
 
+const REPORTS_COLLECTION = "communityThemeReports";
+/*
+ * Not "reporters". firestore.rules authorises this collection-group query with a
+ * recursive-wildcard rule, which applies to every same-named subcollection in the database, so
+ * the name has to be one nothing else will plausibly claim. Renaming it here alone silently
+ * empties the queue rather than erroring.
+ */
+const REPORTERS_SUBCOLLECTION = "themeReporters";
+const REPORT_REASON_TITLES = {
+  inappropriate: "Offensive or inappropriate",
+  impersonation: "Passed off as someone else's",
+  misleading: "Not what the listing shows",
+  illegible: "Unusable on the watch",
+  spam: "Spam or duplicate",
+  other: "Other"
+};
+const MAX_REPORTED_THEMES = 100;
 const SHOTS_COLLECTION = "themeIntakeShots";
 const SHOT_SURFACES_SUBCOLLECTION = "surfaces";
 /* Mirrors SHOT_SURFACES in the publisher and the literal list in firestore.rules. */
 const SHOT_SURFACES = ["player"];
 const MAX_SHOT_BASE64_LENGTH = 128 * 1024;
 const STATUSES = ["pending", "approved", "published", "rejected", "withdrawn"];
+/*
+ * Not a status. Reports live in their own collection and cut across every status, so the filter
+ * bar treats this as a sixth tab that loads a different query rather than a sixth `status` value.
+ */
+const REPORTED_FILTER = "reported";
 const STATUS_TITLES = {
   pending: "Pending review",
   approved: "Approved, awaiting publication",
   published: "Published in the gallery",
   rejected: "Rejected",
   withdrawn: "Withdrawn, awaiting removal",
-  all: "Every submission"
+  all: "Every submission",
+  [REPORTED_FILTER]: "Reported by users"
 };
 const BASE64 = /^[A-Za-z0-9+/]+={0,2}$/;
 const DIGEST = /^sha256:[0-9a-f]{64}$/;
@@ -90,6 +113,7 @@ async function boot() {
     where: firestoreApi.where,
     getDocs: firestoreApi.getDocs,
     getDoc: firestoreApi.getDoc,
+    collectionGroup: firestoreApi.collectionGroup,
     doc: firestoreApi.doc,
     updateDoc: firestoreApi.updateDoc,
     writeBatch: firestoreApi.writeBatch,
@@ -161,6 +185,10 @@ function onAuthChanged(user) {
  */
 async function loadSubmissions() {
   if (!signedInUser) return;
+  if (selectedStatus === REPORTED_FILTER) {
+    await loadReportedThemes();
+    return;
+  }
   try {
     const submissions = firebase.collection(firebase.db, INTAKE_COLLECTION);
     const wanted = selectedStatus === "all" ? STATUSES : [selectedStatus];
@@ -182,6 +210,91 @@ async function loadSubmissions() {
   }
 }
 
+/**
+ * The report queue: every theme somebody has flagged, newest complaint first.
+ *
+ * One collection-group read rather than a per-theme walk, because nothing else knows which themes
+ * have reports — there is deliberately no public counter for anyone to consult, and a summary
+ * document maintained by clients would be a counter with extra steps. The intake documents are
+ * then fetched by id, which a moderator may read in every status.
+ *
+ * A theme whose intake is already gone (withdrawn and removed by a publisher run that has not yet
+ * cleared its reports) is skipped rather than rendered as a stub: there is nothing left to act on.
+ */
+async function loadReportedThemes() {
+  try {
+    const snapshot = await firebase.getDocs(
+      firebase.collectionGroup(firebase.db, REPORTERS_SUBCOLLECTION)
+    );
+    if (signedInUser !== firebase.auth.currentUser) return;
+
+    const byTheme = new Map();
+    snapshot.docs.forEach((document) => {
+      const themeId = document.ref.parent.parent?.id;
+      if (typeof themeId !== "string" || !UUID.test(themeId)) return;
+      const reports = byTheme.get(themeId) ?? [];
+      reports.push(document.data());
+      byTheme.set(themeId, reports);
+    });
+
+    const themeIds = [...byTheme.keys()]
+      .sort((left, right) => newestReportMillis(byTheme.get(right)) - newestReportMillis(byTheme.get(left)))
+      .slice(0, MAX_REPORTED_THEMES);
+    const documents = await Promise.all(themeIds.map((themeId) =>
+      firebase.getDoc(firebase.doc(firebase.db, INTAKE_COLLECTION, themeId))
+    ));
+    if (signedInUser !== firebase.auth.currentUser) return;
+
+    const rows = documents
+      .map((document, index) => ({ document, themeId: themeIds[index] }))
+      .filter(({ document }) => document.exists())
+      .map(({ document, themeId }) => ({
+        id: themeId,
+        data: document.data(),
+        reports: byTheme.get(themeId) ?? []
+      }));
+    renderRows(rows);
+    showStatus(rows.length
+      ? "Reports are private. The author is never told who filed one."
+      : "No themes have been reported.");
+  } catch (error) {
+    console.error("Could not load the report queue", error);
+    elements.queue.hidden = true;
+    showStatus("This account cannot read reports. Its Firebase Auth UID must have a document in communityThemeModerators.", true);
+  }
+}
+
+function newestReportMillis(reports) {
+  return reports.reduce((newest, report) => Math.max(newest, createdMillis(report)), 0);
+}
+
+/** The reports themselves, rendered below the card's ordinary moderation controls. */
+function reportDetails(reports) {
+  const section = document.createElement("details");
+  section.className = "json";
+  const summary = document.createElement("summary");
+  summary.textContent = `${reports.length} report${reports.length === 1 ? "" : "s"}`;
+  section.append(summary);
+  const sorted = [...reports].sort((left, right) => createdMillis(right) - createdMillis(left));
+  sorted.forEach((report) => {
+    const reason = REPORT_REASON_TITLES[report?.reason] ?? stringOr(report?.reason, "Unknown reason");
+    const filed = createdMillis(report);
+    const when = filed > 0 ? new Date(filed).toISOString().slice(0, 10) : "unknown date";
+    const line = textElement("p", "meta", `${reason} · ${when}`);
+    section.append(line);
+    // Reporter-supplied text. Written into textContent, never as markup, and never republished
+    // anywhere: this is the only surface it is ever shown on.
+    const details = stringOr(report?.details, "");
+    if (details) {
+      const quote = textElement("p", "meta", details);
+      quote.style.whiteSpace = "pre-wrap";
+      quote.style.opacity = ".85";
+      section.append(quote);
+    }
+  });
+  return section;
+}
+
 function renderRows(rows) {
   elements.cards.replaceChildren();
   elements.queueTitle.textContent = STATUS_TITLES[selectedStatus] ?? "Submissions";
@@ -189,14 +302,16 @@ function renderRows(rows) {
   if (!rows.length) {
     const empty = document.createElement("p");
     empty.className = "panel empty";
-    empty.textContent = "Nothing here right now.";
+    empty.textContent = selectedStatus === REPORTED_FILTER
+      ? "No themes have been reported."
+      : "Nothing here right now.";
     elements.cards.append(empty);
     return;
   }
   rows.forEach((row) => elements.cards.append(buildCard(row)));
 }
 
-function buildCard({ id, data }) {
+function buildCard({ id, data, reports }) {
   const card = document.createElement("article");
   card.className = "card";
   const preview = previewElement(data.moderationPreviewWebpBase64);
@@ -249,6 +364,7 @@ function buildCard({ id, data }) {
     ));
   }
   body.append(statusTag, title, byline, metadata, previewNotice, payloadStatus, actions);
+  if (Array.isArray(reports) && reports.length > 0) body.append(reportDetails(reports));
   const editor = metadataEditor(id, data, status);
   if (editor) body.append(editor);
   const submittedJson = profileJsonDetails(data.profileJson);

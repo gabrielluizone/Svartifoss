@@ -15,6 +15,8 @@ internal object AppearanceOptionCatalog {
     private val extensions = listOf(
             Extension("album_art_style", R.array.album_art_style_extra_entries,
                     R.array.album_art_style_extra_values),
+            Extension("album_art_filter", R.array.album_art_filter_extra_entries,
+                    R.array.album_art_filter_extra_values),
             Extension("wear_player_shading_style", R.array.player_shading_style_extra_entries,
                     R.array.player_shading_style_extra_values),
             Extension("screen_buttons_shape", R.array.screen_buttons_shape_extra_entries,

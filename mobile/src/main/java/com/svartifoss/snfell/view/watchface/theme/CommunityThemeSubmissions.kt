@@ -38,7 +38,9 @@ internal data class CommunityThemeSubmissionRecord(
          * Firestore. Null whenever there is no published entry to count -- a submission still in
          * review has no public existence, so zero would be a claim rather than an absence.
          */
-        val likes: Int? = null
+        val likes: Int? = null,
+        /** [likes] for the download figure, with the same null-means-not-public meaning. */
+        val installs: Int? = null
 )
 
 internal sealed interface CommunityThemeWithdrawalResult {
@@ -69,11 +71,19 @@ internal object CommunityThemeSubmissionOrder {
      * lists. A submission still in review has no public entry, and showing it a zero would state
      * that nobody liked it rather than that there was nothing to like yet.
      */
-    fun withLikes(
+    /**
+     * Attaches the public figures to each record.
+     *
+     * Both maps come from the one already-downloaded catalogue, so a record the catalogue does not
+     * list gets null rather than zero in both — a submission still in review has no public
+     * existence, and reporting it as zero downloads would be a claim rather than an absence.
+     */
+    fun withPublicCounts(
             records: List<CommunityThemeSubmissionRecord>,
-            likesById: Map<String, Int>
+            likesById: Map<String, Int>,
+            installsById: Map<String, Int>
     ): List<CommunityThemeSubmissionRecord> = records.map { record ->
-        record.copy(likes = likesById[record.id])
+        record.copy(likes = likesById[record.id], installs = installsById[record.id])
     }
 }
 

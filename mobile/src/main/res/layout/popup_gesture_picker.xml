@@ -1,201 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!--
+    Scrolls as one piece, buttons included. The dialog window is not itself scrollable, so before
+    this the tallest arrangement this screen can produce - a note, three assignable gestures and
+    their action-config fragments - simply had its OK button clipped off the bottom in landscape,
+    with nothing on screen to say so. A separate pinned button row would need the scroll region to
+    carry a weight, and a weighted child in a wrap_content LinearLayout grows as readily as it
+    shrinks, which would hold every short picker open at full screen height.
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minWidth="280dp"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <!-- Change icon chip (only for screen buttons). app:icon (not android:drawableStart) so
-         app:iconTint actually applies - a compound drawable ignores iconTint entirely. -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/customize_icon"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/google_sans"
-        android:includeFontPadding="false"
-        android:text="@string/change_icon"
-        android:textColor="@color/lyra_accent"
-        android:textSize="13sp"
-        app:icon="@drawable/ic_palette"
-        app:iconGravity="textStart"
-        app:iconPadding="8dp"
-        app:iconTint="@color/lyra_accent"
-        app:rippleColor="@color/lyra_ripple"
-        android:visibility="gone" />
-
-    <!-- Single tap section -->
-    <TextView
-        android:id="@+id/single_press_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/google_sans"
-        android:letterSpacing="0.08"
-        android:text="@string/gesture_single_press"
-        android:textAllCaps="true"
-        android:textColor="@color/lyra_accent"
-        android:textSize="10sp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/single_press_button"
-        style="@style/LyraGestureButton"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        tools:text="Volume up" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/single_press_config_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        tools:name="com.svartifoss.snfell.view.actionconfigs.SkipSecondsConfigFragment" />
-
-    <!-- Center-button-only note: double tap and long press aren't editable here, so this
-         explains what they still do (shown only when configuring the center tap zone). -->
-    <TextView
-        android:id="@+id/center_button_note"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/google_sans"
-        android:lineSpacingMultiplier="1.15"
-        android:text="@string/center_button_quick_panel_note"
-        android:textColor="@color/lyra_pref_summary"
-        android:textSize="12sp"
-        android:visibility="gone" />
-
-    <!-- Double tap section -->
-    <TextView
-        android:id="@+id/double_press_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/google_sans"
-        android:letterSpacing="0.08"
-        android:text="@string/gesture_double_press"
-        android:textAllCaps="true"
-        android:textColor="@color/lyra_accent"
-        android:textSize="10sp" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/double_press_button"
-        style="@style/LyraGestureButton"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        tools:text="Skip next" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/double_press_config_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        tools:name="com.svartifoss.snfell.view.actionconfigs.SkipSecondsConfigFragment" />
-
-    <!-- Long press section -->
-    <TextView
-        android:id="@+id/long_press_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
-        android:fontFamily="@font/google_sans"
-        android:letterSpacing="0.08"
-        android:text="@string/gesture_long_press"
-        android:textAllCaps="true"
-        android:textColor="@color/lyra_accent"
-        android:textSize="10sp"
-        android:visibility="gone" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/long_press_button"
-        style="@style/LyraGestureButton"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="16dp"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:visibility="gone"
-        tools:text="Pause" />
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/long_press_config_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        tools:name="com.svartifoss.snfell.view.actionconfigs.SkipSecondsConfigFragment" />
-
-    <!-- Divider before action buttons -->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="@color/lyra_divider" />
-
-    <!-- OK / Cancel row -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end"
-        android:orientation="horizontal"
-        android:paddingStart="8dp"
-        android:paddingTop="4dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="8dp">
+        android:minWidth="280dp"
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/cancel_button"
-            style="?attr/buttonBarButtonStyle"
+        <!-- Change icon chip (only for screen buttons). app:icon (not android:drawableStart) so
+             app:iconTint actually applies - a compound drawable ignores iconTint entirely. -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/customize_icon"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/google_sans"
-            android:text="@android:string/cancel"
-            android:textColor="@color/lyra_text_secondary"
-            android:textSize="14sp" />
-
-        <Button
-            android:id="@+id/ok_button"
-            style="?attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/google_sans"
-            android:text="@android:string/ok"
+            android:includeFontPadding="false"
+            android:text="@string/change_icon"
             android:textColor="@color/lyra_accent"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="13sp"
+            app:icon="@drawable/ic_palette"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            app:iconTint="@color/lyra_accent"
+            app:rippleColor="@color/lyra_ripple"
+            android:visibility="gone" />
+
+        <!-- How-it-works note, shown above the assignment for inputs whose behaviour cannot be
+             guessed from their name. The hand gesture is the case that forced it: whether it fires
+             at all depends on the watch's hardware and on a switch in the watch's own settings, and
+             every one of those failures is silent, so the explanation has to be read *before* the
+             action is picked rather than discovered afterwards. Text comes from the caller, which is
+             the side that knows what the watch reported. -->
+        <TextView
+            android:id="@+id/input_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/google_sans"
+            android:lineSpacingMultiplier="1.15"
+            android:textColor="@color/lyra_pref_summary"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:text="Pinch your thumb and index finger together twice." />
+
+        <!-- Single tap section -->
+        <TextView
+            android:id="@+id/single_press_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/google_sans"
+            android:letterSpacing="0.08"
+            android:text="@string/gesture_single_press"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:textSize="10sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/single_press_button"
+            style="@style/LyraGestureButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            tools:text="Volume up" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/single_press_config_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            tools:name="com.svartifoss.snfell.view.actionconfigs.SkipSecondsConfigFragment" />
+
+        <!-- Center-button-only note: double tap and long press aren't editable here, so this
+             explains what they still do (shown only when configuring the center tap zone). -->
+        <TextView
+            android:id="@+id/center_button_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/google_sans"
+            android:lineSpacingMultiplier="1.15"
+            android:text="@string/center_button_quick_panel_note"
+            android:textColor="@color/lyra_pref_summary"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <!-- Double tap section -->
+        <TextView
+            android:id="@+id/double_press_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/google_sans"
+            android:letterSpacing="0.08"
+            android:text="@string/gesture_double_press"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:textSize="10sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/double_press_button"
+            style="@style/LyraGestureButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            tools:text="Skip next" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/double_press_config_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            tools:name="com.svartifoss.snfell.view.actionconfigs.SkipSecondsConfigFragment" />
+
+        <!-- Long press section -->
+        <TextView
+            android:id="@+id/long_press_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/google_sans"
+            android:letterSpacing="0.08"
+            android:text="@string/gesture_long_press"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:textSize="10sp"
+            android:visibility="gone" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/long_press_button"
+            style="@style/LyraGestureButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:visibility="gone"
+            tools:text="Pause" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/long_press_config_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            tools:name="com.svartifoss.snfell.view.actionconfigs.SkipSecondsConfigFragment" />
+
+        <!-- Divider before action buttons -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="@color/lyra_divider" />
+
+        <!-- OK / Cancel row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:orientation="horizontal"
+            android:paddingStart="8dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp">
+
+            <Button
+                android:id="@+id/cancel_button"
+                style="?attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans"
+                android:text="@android:string/cancel"
+                android:textColor="@color/lyra_text_secondary"
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/ok_button"
+                style="?attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans"
+                android:text="@android:string/ok"
+                android:textColor="@color/lyra_accent"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

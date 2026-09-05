@@ -45,4 +45,11 @@
     <string name="community_theme_detail_requires_app_version">Este tema precisa do Svartifoss %1$s antes de poder ser adicionado.</string>
     <string name="community_theme_detail_load_error">Não foi possível carregar os detalhes deste tema. Volte aos temas da comunidade e tente novamente.</string>
     <string name="community_theme_detail_profile_mismatch">O perfil baixado não corresponde aos detalhes públicos deste tema. Volte aos temas da comunidade e tente novamente.</string>
+    <!-- Prints do autor: uma foto real do relógio do autor, exibida na superfície do Player. -->
+    <string name="community_theme_detail_screenshot_description">Foto deste tema no relógio do autor</string>
+    <string name="community_theme_detail_source_author">Relógio do autor</string>
+    <string name="community_theme_detail_source_rendered">Prévia gerada</string>
+    <string name="community_theme_detail_show_rendered">Ver prévia gerada</string>
+    <string name="community_theme_detail_show_author">Ver foto do autor</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
 </resources>

@@ -44,6 +44,8 @@
     <string name="online_theme_refresh">Community-Themes aktualisieren</string>
     <string name="online_theme_list_description">Von der Community erstellte Watch-Themes</string>
     <string name="online_theme_byline">Von %1$s</string>
+    <string name="online_theme_filter_author">Designs von %1$s</string>
+    <string name="online_theme_filter_author_selected">Designs von %1$s werden angezeigt</string>
     <string name="online_theme_row_description">%1$s von %2$s. %3$s-Layout.</string>
     <string name="online_theme_apply">Hinzufügen und anwenden</string>
     <string name="online_theme_loading">Community-Themes werden geladen…</string>
@@ -83,4 +85,27 @@
     <string name="online_theme_filter_not_installed_off">Bereits hinzugefügte Designs werden angezeigt</string>
     <string name="online_theme_search_empty_all_installed">Du hast bereits alle Community-Designs hinzugefügt.</string>
     <string name="online_theme_search_empty_all_installed_hint">Schalte „Neu für mich“ aus, um sie wieder zu sehen.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Meiste Downloads</string>
+    <string name="online_theme_sort_most_downloaded_short">Downloads</string>
+    <string name="community_theme_detail_downloads">Downloads</string>
+    <string name="community_theme_report_action">Design melden</string>
+    <string name="community_theme_report_already">Design gemeldet</string>
+    <string name="community_theme_report_description">„%1$s“ den Moderatoren melden</string>
+    <string name="community_theme_report_title">Dieses Design melden</string>
+    <string name="community_theme_report_intro">Sag den Moderatoren, was mit diesem Design nicht stimmt.</string>
+    <string name="community_theme_report_reason_inappropriate">Anstößige oder unangemessene Inhalte</string>
+    <string name="community_theme_report_reason_impersonation">Als fremdes Werk ausgegeben</string>
+    <string name="community_theme_report_reason_misleading">Entspricht nicht der Darstellung</string>
+    <string name="community_theme_report_reason_illegible">Auf der Uhr unbrauchbar</string>
+    <string name="community_theme_report_reason_spam">Spam oder Dublette</string>
+    <string name="community_theme_report_reason_other">Etwas anderes</string>
+    <string name="community_theme_report_details_hint">Sonst noch etwas, das die Moderatoren wissen sollten (optional)</string>
+    <string name="community_theme_report_privacy">Nur die Moderatoren lesen deine Meldung. Der Autor erfährt nie, wer sie gesendet hat.</string>
+    <string name="community_theme_report_submit">Meldung senden</string>
+    <string name="community_theme_report_sent">Meldung gesendet. Die Moderatoren sehen sich dieses Design an.</string>
+    <string name="community_theme_report_already_sent">Du hast dieses Design bereits gemeldet.</string>
+    <string name="community_theme_report_not_ready">Dieses Design kann noch nicht gemeldet werden. Versuche es später erneut.</string>
+    <string name="community_theme_report_error">Die Meldung konnte nicht gesendet werden. Prüfe die Verbindung und versuche es erneut.</string>
 </resources>

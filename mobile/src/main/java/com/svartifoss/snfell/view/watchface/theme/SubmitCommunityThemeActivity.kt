@@ -3,7 +3,12 @@ package com.svartifoss.snfell.view.watchface.theme
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Base64
@@ -12,6 +17,8 @@ import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.ColorUtils
@@ -19,16 +26,20 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.CommunityThemeScreenshots
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.MusicLoadingBarsView
 import com.svartifoss.snfell.view.applyLyraDialogStyling
 import com.svartifoss.snfell.view.watchface.WatchPreviewView
 import java.io.ByteArrayOutputStream
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 
 /**
@@ -52,6 +63,29 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
     private lateinit var error: TextView
     private lateinit var progress: MusicLoadingBarsView
     private lateinit var submitButton: MaterialButton
+    private lateinit var screenshotImage: ShapeableImageView
+    private lateinit var screenshotEmpty: TextView
+    private lateinit var screenshotStatus: TextView
+    private lateinit var chooseScreenshotButton: MaterialButton
+    private lateinit var removeScreenshotButton: MaterialButton
+
+    /** The normalized, already-encoded picture, or null when the author attached none. */
+    private var attachedScreenshot: String? = null
+
+    /**
+     * Kept so a recreated Activity can rebuild the attachment.
+     *
+     * The encoded picture itself is deliberately not saved: at up to 128 KB it is the wrong thing
+     * to put through a saved-state binder transaction. Re-normalizing from the URI is cheap, works
+     * for the case this actually happens in (a rotation, same process, read grant still held), and
+     * after process death the grant is gone and the slot honestly returns to empty.
+     */
+    private var pickedScreenshotUri: Uri? = null
+
+    private val screenshotPicker = registerForActivityResult(
+            ActivityResultContracts.PickVisualMedia()) { uri: Uri? ->
+        if (uri != null) applyPickedScreenshot(uri, reportErrors = true)
+    }
 
     private lateinit var profileId: String
     private var submissionInProgress = false
@@ -91,6 +125,11 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
         error = findViewById(R.id.submission_error)
         progress = findViewById(R.id.submission_progress)
         submitButton = findViewById(R.id.button_submit_theme)
+        screenshotImage = findViewById(R.id.submission_screenshot)
+        screenshotEmpty = findViewById(R.id.submission_screenshot_empty)
+        screenshotStatus = findViewById(R.id.submission_screenshot_status)
+        chooseScreenshotButton = findViewById(R.id.button_choose_screenshot)
+        removeScreenshotButton = findViewById(R.id.button_remove_screenshot)
         applyRuntimeAccent()
         updateSubmitButtonLabel()
 
@@ -109,8 +148,23 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
         }
         updateAuthorPresentation(anonymousAuthorSwitch.isChecked)
         submitButton.setOnClickListener { submit() }
+        chooseScreenshotButton.setOnClickListener {
+            screenshotPicker.launch(PickVisualMediaRequest(
+                    ActivityResultContracts.PickVisualMedia.ImageOnly))
+        }
+        removeScreenshotButton.setOnClickListener { clearScreenshot() }
+        savedInstanceState?.getString(STATE_SCREENSHOT_URI)?.let { saved ->
+            // Silent on failure: the author did nothing wrong, and an error about a picture they
+            // picked before a rotation explains nothing they can act on.
+            applyPickedScreenshot(Uri.parse(saved), reportErrors = false)
+        }
 
         loadInitialTheme()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        pickedScreenshotUri?.let { outState.putString(STATE_SCREENSHOT_URI, it.toString()) }
     }
 
     override fun onStart() {
@@ -179,6 +233,36 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
                         ColorUtils.setAlphaComponent(accentOnBackground, 0x80),
                         getColor(R.color.lyra_divider)))
         anonymousAuthorSwitch.jumpDrawablesToCurrentState()
+
+        // The two screenshot actions are stock TextButtons, so their labels came from the theme's
+        // colorPrimary - the static Lyra sage, resolved once at inflation and unable to follow a
+        // custom or album-derived accent. They arrived with the author screenshot, after this
+        // function was written, and were the last controls on the screen still reading green. It
+        // is the same omission the detail card's report row made, for the same reason: a filled
+        // button announces its colour and gets tinted, while a text button looks like a label.
+        //
+        // Measured against the card rather than the page: these two sit on lyra_surface, and a
+        // very light album accent needs more lifting there than the controls on the background do.
+        val accentTextOnSurface = LyraAccent.contrastSafe(
+                accent,
+                getColor(R.color.lyra_surface),
+                minimumContrast = 4.5)
+        // Choosing a picture disables its own button while the image is normalized, so the colour
+        // carries a disabled entry instead of being one flat value the state never reaches.
+        val screenshotActionColor = ColorStateList(
+                arrayOf(intArrayOf(-android.R.attr.state_enabled), intArrayOf()),
+                intArrayOf(
+                        ColorUtils.setAlphaComponent(
+                                accentTextOnSurface,
+                                (0xFF * DISABLED_CONTROL_ALPHA).toInt()),
+                        accentTextOnSurface))
+        // Set alongside the label for the reason the detail card records: the default ripple is
+        // drawn from that same static primary.
+        val ripple = ColorStateList.valueOf(getColor(R.color.lyra_ripple))
+        listOf(chooseScreenshotButton, removeScreenshotButton).forEach { button ->
+            button.setTextColor(screenshotActionColor)
+            button.rippleColor = ripple
+        }
     }
 
     private fun renderSubmitButtonEnabledState() {
@@ -383,7 +467,16 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
                             publishAnonymously,
                             moderationPreview)) {
                         CommunityThemeQueueResult.Queued -> {
-                            showSuccess()
+                            // After the intake, never inside its transaction, and never a reason to
+                            // report failure: the theme is already submitted, and a theme with no
+                            // picture is the ordinary state of this feature.
+                            val screenshot = attachedScreenshot
+                            val attached = screenshot == null ||
+                                    submissionRepository.attachScreenshot(
+                                            preflight.draft.id,
+                                            CommunityThemeScreenshots.SURFACE_PLAYER,
+                                            screenshot)
+                            showSuccess(screenshotFailed = !attached)
                         }
                         CommunityThemeQueueResult.SubmissionLimitReached -> {
                             setLoading(false)
@@ -439,6 +532,159 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
         }
     }
 
+    private fun applyPickedScreenshot(uri: Uri, reportErrors: Boolean) {
+        chooseScreenshotButton.isEnabled = false
+        lifecycleScope.launch {
+            val result = withContext(Dispatchers.IO) { normalizeScreenshot(uri) }
+            chooseScreenshotButton.isEnabled = true
+            if (result is ScreenshotResult.Ready) {
+                attachedScreenshot = result.base64
+                pickedScreenshotUri = uri
+                screenshotImage.setImageBitmap(result.preview)
+                renderScreenshotSlot(R.string.community_theme_submit_screenshot_attached)
+                clearError()
+                return@launch
+            }
+            pickedScreenshotUri = null
+            if (!reportErrors) return@launch
+            showError(when (result) {
+                ScreenshotResult.TooSmall -> getString(
+                        R.string.community_theme_submit_screenshot_too_small,
+                        CommunityThemeScreenshots.MIN_PIXELS)
+                ScreenshotResult.TooLarge ->
+                        getString(R.string.community_theme_submit_screenshot_too_large)
+                else -> getString(R.string.community_theme_submit_screenshot_unreadable)
+            })
+        }
+    }
+
+    private fun clearScreenshot() {
+        attachedScreenshot = null
+        pickedScreenshotUri = null
+        screenshotImage.setImageDrawable(null)
+        renderScreenshotSlot(R.string.community_theme_submit_screenshot_placeholder)
+        clearError()
+    }
+
+    private fun renderScreenshotSlot(statusRes: Int) {
+        val attached = attachedScreenshot != null
+        screenshotImage.visibility = if (attached) View.VISIBLE else View.GONE
+        screenshotEmpty.visibility = if (attached) View.GONE else View.VISIBLE
+        removeScreenshotButton.visibility = if (attached) View.VISIBLE else View.GONE
+        chooseScreenshotButton.setText(if (attached) {
+            R.string.community_theme_submit_screenshot_replace
+        } else {
+            R.string.community_theme_submit_screenshot_add
+        })
+        screenshotStatus.setText(statusRes)
+    }
+
+    /**
+     * Turns a picked gallery image into the exact bytes the submission will carry.
+     *
+     * Three things happen here that are not obvious from the call site. The source is *sampled*
+     * while decoding, because a phone gallery holds pictures far larger than a watch screen and
+     * decoding one at full size to immediately shrink it is how an attach slot runs out of memory.
+     * It is composited onto an **opaque** ground, which makes libwebp drop the alpha channel and
+     * emit a simple `VP8 ` chunk -- the plain form the publisher accepts without having to reason
+     * about an extended container. And re-encoding at all is what strips EXIF: an image that
+     * passed through a phone gallery can carry a location, and this is the only point at which
+     * that is removed rather than merely disallowed.
+     */
+    private fun normalizeScreenshot(uri: Uri): ScreenshotResult {
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        if (!decode(uri, bounds)) return ScreenshotResult.Unreadable
+        if (bounds.outWidth <= 0 || bounds.outHeight <= 0) return ScreenshotResult.Unreadable
+        val shorterSide = minOf(bounds.outWidth, bounds.outHeight)
+        if (CommunityThemeScreenshots.targetSize(shorterSide) == 0) return ScreenshotResult.TooSmall
+
+        val options = BitmapFactory.Options().apply {
+            inSampleSize = CommunityThemeScreenshots.sampleSize(shorterSide)
+            inPreferredConfig = Bitmap.Config.ARGB_8888
+        }
+        val source = decodeBitmap(uri, options) ?: return ScreenshotResult.Unreadable
+        val size = CommunityThemeScreenshots.targetSize(minOf(source.width, source.height))
+        if (size == 0) {
+            source.recycle()
+            return ScreenshotResult.TooSmall
+        }
+        val square = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+        val cropSize = minOf(source.width, source.height)
+        val left = CommunityThemeScreenshots.cropLeft(source.width, source.height)
+        val top = CommunityThemeScreenshots.cropTop(source.width, source.height)
+        Canvas(square).apply {
+            drawColor(Color.BLACK)
+            drawBitmap(
+                    source,
+                    Rect(left, top, left + cropSize, top + cropSize),
+                    Rect(0, 0, size, size),
+                    Paint(Paint.FILTER_BITMAP_FLAG))
+        }
+        source.recycle()
+
+        val encoded = encodeWithinBudget(square)
+        if (encoded == null) {
+            square.recycle()
+            return ScreenshotResult.TooLarge
+        }
+        return ScreenshotResult.Ready(encoded, square)
+    }
+
+    private fun decode(uri: Uri, options: BitmapFactory.Options): Boolean = try {
+        contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, options) }
+        true
+    } catch (error: Exception) {
+        Timber.w(error, "Could not read a picked community-theme screenshot")
+        false
+    }
+
+    private fun decodeBitmap(uri: Uri, options: BitmapFactory.Options): Bitmap? = try {
+        contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, options) }
+    } catch (error: Exception) {
+        Timber.w(error, "Could not decode a picked community-theme screenshot")
+        null
+    }
+
+    /**
+     * Walks the quality ladder until the result fits the transport budget.
+     *
+     * An ordinary screenshot clears the first rung; the rest exist so an unusually noisy picture
+     * fails here, where the message can name the picture, rather than at the Firestore write, where
+     * it would surface as a bare permission error after the author has already signed in.
+     */
+    private fun encodeWithinBudget(bitmap: Bitmap): String? {
+        for (quality in CommunityThemeScreenshots.QUALITY_LADDER) {
+            val bytes = compressWebp(bitmap, quality) ?: continue
+            if (bytes.size > CommunityThemeScreenshots.MAX_BYTES) continue
+            val encoded = Base64.encodeToString(bytes, Base64.NO_WRAP)
+            if (CommunityThemeScreenshots.isSubmittableEncoding(encoded)) return encoded
+        }
+        return null
+    }
+
+    private fun compressWebp(bitmap: Bitmap, quality: Int): ByteArray? = try {
+        ByteArrayOutputStream().use { output ->
+            val format = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                Bitmap.CompressFormat.WEBP_LOSSY
+            } else {
+                @Suppress("DEPRECATION")
+                Bitmap.CompressFormat.WEBP
+            }
+            if (bitmap.compress(format, quality, output)) output.toByteArray() else null
+        }
+    } catch (error: Exception) {
+        Timber.w(error, "Could not encode a community-theme image")
+        null
+    }
+
+    private sealed interface ScreenshotResult {
+        /** [preview] is the normalized square the slot displays: what is approved is what is sent. */
+        data class Ready(val base64: String, val preview: Bitmap) : ScreenshotResult
+        object TooSmall : ScreenshotResult
+        object TooLarge : ScreenshotResult
+        object Unreadable : ScreenshotResult
+    }
+
     /**
      * Renders an isolated, fixed-size review image. Its profile mode forces the bundled sample
      * track/artwork and moderation mode fixes the clock, so neither local playback nor device time
@@ -456,16 +702,7 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
         val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
         try {
             offscreenPreview.draw(Canvas(bitmap))
-            val bytes = ByteArrayOutputStream().use { output ->
-                val format = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    Bitmap.CompressFormat.WEBP_LOSSY
-                } else {
-                    @Suppress("DEPRECATION")
-                    Bitmap.CompressFormat.WEBP
-                }
-                if (!bitmap.compress(format, MODERATION_PREVIEW_QUALITY, output)) return null
-                output.toByteArray()
-            }
+            val bytes = compressWebp(bitmap, MODERATION_PREVIEW_QUALITY) ?: return null
             Base64.encodeToString(bytes, Base64.NO_WRAP)
         } finally {
             bitmap.recycle()
@@ -493,11 +730,17 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
         if (!submissionInProgress) error.visibility = View.GONE
     }
 
-    private fun showSuccess() {
+    private fun showSuccess(screenshotFailed: Boolean = false) {
         setLoading(false)
+        val message = if (screenshotFailed) {
+            getString(R.string.community_theme_submit_success_message) + "\n\n" +
+                    getString(R.string.community_theme_submit_screenshot_failed)
+        } else {
+            getString(R.string.community_theme_submit_success_message)
+        }
         val dialog = AlertDialog.Builder(this)
                 .setTitle(R.string.community_theme_submit_success_title)
-                .setMessage(R.string.community_theme_submit_success_message)
+                .setMessage(message)
                 .setPositiveButton(android.R.string.ok) { _, _ ->
                     setResult(RESULT_OK)
                     finish()
@@ -546,6 +789,7 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_PROFILE_ID = "community_theme_profile_id"
 
+        private const val STATE_SCREENSHOT_URI = "community_theme_screenshot_uri"
         private const val MODERATION_PREVIEW_PIXELS = 200
         private const val MODERATION_PREVIEW_QUALITY = 84
         private const val DISABLED_CONTROL_ALPHA = 0.5f

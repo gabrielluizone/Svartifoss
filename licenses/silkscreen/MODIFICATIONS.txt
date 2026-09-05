@@ -1,0 +1,43 @@
+Modifications to silkscreen_regular.ttf
+=======================================
+
+The SIL Open Font License permits modification and does not require this notice,
+but it is recorded for the same reason `special-elite/MODIFICATIONS.txt` in this
+repository is: a binary font file carries no diff, so without a written record a
+future re-download of the upstream release would silently undo the fix.
+
+The bundled copies of this font (mobile/src/main/res/font/silkscreen_regular.ttf
+and wear/src/main/res/font/silkscreen_regular.ttf) have been modified from the
+upstream release at https://github.com/googlefonts/silkscreen. Only the vertical
+metrics were changed; no glyph outline, character mapping, name table or Reserved
+Font Name was touched.
+
+  hhea.ascent          1030  ->   952
+  hhea.descent         -250  ->  -328
+  hhea.lineGap            0  ->     0   (unchanged)
+  OS/2.sTypoAscender   1030  ->   952
+  OS/2.sTypoDescender  -250  ->  -328
+  OS/2.sTypoLineGap       0  ->     0   (unchanged)
+  OS/2.usWinAscent     1000  ->  1000   (unchanged - already the font's real ink height)
+  OS/2.usWinDescent     250  ->   250   (unchanged, for the same reason)
+
+Why
+---
+
+Every renderer centres a line of text by its line box, so where a font's ink sits
+inside that box is the font's decision, not the app's. This is a pixel-grid
+typeface where every glyph, digits included, occupies the same fixed-height cell -
+so there is no old-style-figure or swash-tail complication here the way there is in
+several of the other faces corrected alongside it; centring on the flat capitals
+(E, F, H, I, L) and centring on the digits land on the same answer, within rounding.
+The upstream box centre sat 0.078 em above that cell, which is roughly the largest
+offset among the faces corrected in this pass after Special Elite itself.
+
+ascent + |descent| is unchanged (1280 units in this font's 1000-unit em - the extra
+headroom above one em is original to this font, not something this fix introduced),
+so line height, spacing, wrapping and every reserved height are the same as
+upstream; only where the ink sits inside that box moves. The flat-cap band now
+lands within 0.0005 em of the box centre.
+
+Pinned by BundledFontMetricsTest, so a re-download from upstream fails the build
+rather than silently reverting the fix.

@@ -44,6 +44,8 @@
     <string name="online_theme_refresh">به‌روزرسانی تم‌های انجمن</string>
     <string name="online_theme_list_description">تم‌های ساعت ساخته‌شده توسط انجمن</string>
     <string name="online_theme_byline">توسط %1$s</string>
+    <string name="online_theme_filter_author">طرح‌های %1$s</string>
+    <string name="online_theme_filter_author_selected">نمایش طرح‌های %1$s</string>
     <string name="online_theme_row_description">%1$s توسط %2$s. چیدمان %3$s.</string>
     <string name="online_theme_apply">افزودن و اعمال</string>
     <string name="online_theme_loading">در حال بارگیری تم‌های انجمن…</string>
@@ -83,4 +85,27 @@
     <string name="online_theme_filter_not_installed_off">پوسته‌هایی که افزوده‌اید نمایش داده می‌شوند</string>
     <string name="online_theme_search_empty_all_installed">شما همهٔ پوسته‌های انجمن را افزوده‌اید.</string>
     <string name="online_theme_search_empty_all_installed_hint">برای دیدن دوبارهٔ آن‌ها «تازه برای من» را خاموش کنید.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">پردانلودترین</string>
+    <string name="online_theme_sort_most_downloaded_short">دانلودها</string>
+    <string name="community_theme_detail_downloads">دانلودها</string>
+    <string name="community_theme_report_action">گزارش پوسته</string>
+    <string name="community_theme_report_already">گزارش شد</string>
+    <string name="community_theme_report_description">گزارش «%1$s» به ناظران</string>
+    <string name="community_theme_report_title">گزارش این پوسته</string>
+    <string name="community_theme_report_intro">به ناظران بگویید مشکل این پوسته چیست.</string>
+    <string name="community_theme_report_reason_inappropriate">محتوای توهین‌آمیز یا نامناسب</string>
+    <string name="community_theme_report_reason_impersonation">به نام شخص دیگری جا زده شده</string>
+    <string name="community_theme_report_reason_misleading">با آنچه نشان می‌دهد نمی‌خواند</string>
+    <string name="community_theme_report_reason_illegible">روی ساعت غیرقابل استفاده</string>
+    <string name="community_theme_report_reason_spam">هرزنامه یا تکراری</string>
+    <string name="community_theme_report_reason_other">دلیل دیگر</string>
+    <string name="community_theme_report_details_hint">هر چیز دیگری که ناظران باید بدانند (اختیاری)</string>
+    <string name="community_theme_report_privacy">گزارش شما را فقط ناظران می‌خوانند. هرگز به سازنده گفته نمی‌شود چه کسی آن را فرستاده است.</string>
+    <string name="community_theme_report_submit">ارسال گزارش</string>
+    <string name="community_theme_report_sent">گزارش ارسال شد. ناظران این پوسته را بررسی می‌کنند.</string>
+    <string name="community_theme_report_already_sent">شما قبلاً این پوسته را گزارش کرده‌اید.</string>
+    <string name="community_theme_report_not_ready">هنوز نمی‌توان این پوسته را گزارش کرد. بعداً دوباره تلاش کنید.</string>
+    <string name="community_theme_report_error">گزارش شما ارسال نشد. اتصال را بررسی کنید و دوباره تلاش کنید.</string>
 </resources>

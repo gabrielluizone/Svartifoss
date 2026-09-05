@@ -46,6 +46,15 @@ It lists submissions by status — pending, approved, published, rejected, withd
 than only the pending queue, so an approval made by mistake is visible instead of disappearing
 until the next publication run.
 
+A seventh tab, **Reported**, is not a status: it lists the themes users have flagged, newest
+complaint first, with each report's reason and optional note expandable under the card. It is one
+collection-group read over `communityThemeReports/<theme>/themeReporters`, which is why
+`firestore.rules` carries a recursive-wildcard rule granting `list` on that subcollection to
+moderators alone. A report is private in both directions: no count is ever published, and the
+reported author can never read one or learn who filed it. Report queue entries carry the same four
+actions as any other card, so a flagged theme is corrected or withdrawn through the normal path —
+and withdrawing it deletes its reports along with its file and its likes on the next publisher run.
+
 Four actions, each written as one atomic batch that updates `themeIntake` and records who acted in
 `themeIntakeReview`. The rules verify the pair with `getAfter`, so neither write is accepted alone:
 
@@ -54,8 +63,8 @@ Four actions, each written as one atomic batch that updates `themeIntake` and re
 - **Reopen for review** an approved or rejected one, which is the way back from a mistaken verdict
   while the theme is still not public.
 - **Withdraw / Delete**, available in every state including on a moderator's own theme. It only
-  sets the status; the publisher removes the file, the catalogue entry and the likes on its next
-  run, then deletes the record. A listing nobody can take down would be worse than one its own
+  sets the status; the publisher removes the file, the catalogue entry, the likes, the install
+  records and the reports on its next run, then deletes the record. A listing nobody can take down would be worse than one its own
   author could also remove, which is why the self-moderation ban does not extend to this.
 - **Correct public theme name**, available only before the theme is public. An author name is an
   immutable account reservation and cannot be edited by a moderator. Once the file is committed to

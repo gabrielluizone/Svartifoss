@@ -14,6 +14,7 @@ import com.svartifoss.snfell.util.BundleJson
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
 import org.json.JSONArray
 import org.json.JSONObject
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
 
@@ -116,6 +117,7 @@ object ConfigBackup {
             "current_accent_color",
             MiscPreferences.LAST_MENU_DISPLAYED.key,
             "center_long_press_repaired",
+            "shortcut_artwork_store_repaired",
             "notification_access_prompted",
             "face_reset_prompt_handled",
             "update_last_check_ms",
@@ -534,23 +536,31 @@ object ConfigBackup {
 
     private fun exportAssets(context: Context): JSONObject {
         val assetsJson = JSONObject()
-        var totalBytes = 0L
         for (store in ASSET_STORES) {
             val files = store.folder(context).listFiles()
                     ?.filter { it.isFile && SAFE_ASSET_NAME.matches(it.name) }
                     ?.sortedBy { it.name }
                     ?: emptyList()
-            if (files.size > MAX_ASSETS_PER_STORE) {
-                throw IOException("Too many ${store.jsonKey} assets to back up")
-            }
             val entries = JSONArray()
+            var totalBytes = 0L
             for (file in files) {
                 val bytes = file.readBytes()
-                validateAssetSize(store.jsonKey, bytes.size, totalBytes)
+                // A zero-byte or outsized file here is a partial write or an interrupted
+                // download, not something the user asked to back up - skipping it is what keeps
+                // one stray file in one store from failing every other selected section too.
+                if (bytes.isEmpty() || bytes.size > MAX_SINGLE_ASSET_BYTES ||
+                        totalBytes + bytes.size > MAX_TOTAL_ASSET_BYTES) {
+                    Timber.w("Skipping invalid %s asset '%s' (%d bytes)",
+                            store.jsonKey, file.name, bytes.size)
+                    continue
+                }
                 totalBytes += bytes.size
                 entries.put(JSONObject()
                         .put("name", file.name)
                         .put("data", Base64.encodeToString(bytes, Base64.NO_WRAP)))
+            }
+            if (entries.length() > MAX_ASSETS_PER_STORE) {
+                throw IOException("Too many ${store.jsonKey} assets to back up")
             }
             assetsJson.put(store.jsonKey, entries)
         }
@@ -630,24 +640,30 @@ object ConfigBackup {
                 }
                 .toList()
                 .sortedBy { it.first }
-        if (candidates.size > MAX_INTERNAL_FILES) {
-            throw IOException("Too many internal files to back up")
-        }
 
         var totalBytes = 0L
-        return JSONArray().also { filesJson ->
-            candidates.forEach { (path, file) ->
-                val bytes = file.readBytes()
-                if (bytes.isEmpty() || bytes.size > MAX_SINGLE_INTERNAL_FILE_BYTES ||
-                        totalBytes + bytes.size > MAX_TOTAL_INTERNAL_FILE_BYTES) {
-                    throw IOException("Invalid internal file size")
-                }
-                totalBytes += bytes.size
-                filesJson.put(JSONObject()
-                        .put("path", path)
-                        .put("data", Base64.encodeToString(bytes, Base64.NO_WRAP)))
+        val filesJson = JSONArray()
+        candidates.forEach { (path, file) ->
+            val bytes = file.readBytes()
+            // This sweep exists to catch future user data nobody has modeled here yet - not to
+            // gate every other selected section on whatever else happens to sit in filesDir. A
+            // zero-byte file (a partial write, a quarantined ".corrupt" config) or one this
+            // device has no business backing up (a stray multi-megabyte download) is skipped
+            // rather than failing the whole export.
+            if (bytes.isEmpty() || bytes.size > MAX_SINGLE_INTERNAL_FILE_BYTES ||
+                    totalBytes + bytes.size > MAX_TOTAL_INTERNAL_FILE_BYTES) {
+                Timber.w("Skipping invalid internal file '%s' (%d bytes)", path, bytes.size)
+                return@forEach
             }
+            totalBytes += bytes.size
+            filesJson.put(JSONObject()
+                    .put("path", path)
+                    .put("data", Base64.encodeToString(bytes, Base64.NO_WRAP)))
         }
+        if (filesJson.length() > MAX_INTERNAL_FILES) {
+            throw IOException("Too many internal files to back up")
+        }
+        return filesJson
     }
 
     private fun parseInternalFiles(json: JSONObject): List<BackupInternalFile> {

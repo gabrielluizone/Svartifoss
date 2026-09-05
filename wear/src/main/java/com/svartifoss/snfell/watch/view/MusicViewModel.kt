@@ -137,6 +137,7 @@ class MusicViewModel @Inject constructor(
      *  read what they need from the MusicState PhoneConnection already holds. */
     val openVolumeScreen = SingleLiveEvent<Unit>()
     val openProgressScreen = SingleLiveEvent<Unit>()
+    val openFacePicker = SingleLiveEvent<Unit>()
 
     /**
      * Lyrics for the current track, for the Verse face.
@@ -340,6 +341,14 @@ class MusicViewModel @Inject constructor(
             }
             StandardActions.ACTION_OPEN_PROGRESS_SCREEN -> {
                 openProgressScreen.call()
+                true
+            }
+            StandardActions.ACTION_OPEN_FACE_PICKER -> {
+                openFacePicker.call()
+                true
+            }
+            StandardActions.ACTION_CLOSE_WATCH_APP -> {
+                closeApp.call()
                 true
             }
             else -> false

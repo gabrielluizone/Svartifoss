@@ -2,6 +2,8 @@ package com.svartifoss.snfell.view.watchface
 
 import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.TextBackdropSpec
+import com.svartifoss.snfell.common.TextShadowSpec
 import com.svartifoss.snfell.common.WatchTypography
 
 /** The piece of watch text currently being edited. */
@@ -35,6 +37,36 @@ internal enum class TypographyControl {
     OPACITY,
     TRACKING,
     CASE,
+
+    /** The shadow's shape. The entry point: with it on None, the two below are not offered. */
+    SHADOW,
+
+    /**
+     * Where the shadow's colour comes from, plus the custom colour behind it.
+     *
+     * Two legacy rows on one control, the way [FLEX] already collapses four axes and the way the
+     * Colors page pairs a treatment with its custom hex - a colour mode and the colour it may
+     * point at are one decision, not two.
+     */
+    SHADOW_COLOR,
+
+    /** How far the selected shadow is pushed, as a percentage of its own geometry. */
+    SHADOW_STRENGTH,
+
+    /** The stroke drawn around the glyphs. Its colour rows share [OUTLINE_COLOR]. */
+    OUTLINE,
+
+    /** The outline's colour mode and the custom colour behind it, paired like [SHADOW_COLOR]. */
+    OUTLINE_COLOR,
+
+    /** The filled box behind the line. */
+    BACKDROP,
+
+    /** The backdrop's colour mode and the custom colour behind it. */
+    BACKDROP_COLOR,
+
+    /** How opaque that box is. */
+    BACKDROP_OPACITY,
     GLOBAL_FLEX,
     FLEX
 }
@@ -47,6 +79,19 @@ internal sealed interface TypographyValueSpec {
     data class Choice(val defaultValue: String) : TypographyValueSpec
     data class Toggle(val defaultValue: Boolean) : TypographyValueSpec
     data class Number(val defaultValue: Int, val range: IntRange) : TypographyValueSpec
+
+    /**
+     * A picked colour, stored as a hex string.
+     *
+     * Kept apart from [Choice] for the reason [ColorValueSpec.Hex] records - both persist a string
+     * and neither is the other - and for a second one this page learned the hard way. The colour
+     * controls below pair a *mode* row with the hex row behind it, and the editor resolved a
+     * control to whichever spec came first. Both being `Choice` made that the mode row every time,
+     * so picking "Custom" left the hex row with nothing on screen that could open it: the mode was
+     * set and the colour could never be chosen. Being a distinct kind is what lets the editor ask
+     * for one or the other by name.
+     */
+    data class Hex(val defaultValue: String) : TypographyValueSpec
 
     /** Explanatory UI with a searchable key, but no value in SharedPreferences. */
     data object Information : TypographyValueSpec
@@ -63,7 +108,9 @@ internal data class TypographySettingSpec(
 
 internal data class TypographySearchTarget(
         val target: TypographyTarget,
-        val control: TypographyControl)
+        val control: TypographyControl,
+        /** True for the hex row of a paired colour control, which has its own swatch button. */
+        val hex: Boolean = false)
 
 /**
  * Pure description of every row that historically lived in a `cat_wf_typography_*` category.
@@ -128,6 +175,52 @@ internal object TypographyEditorModel {
                     MiscPreferences.WEAR_TITLE_TEXT_CASE,
                     TypographyTarget.TITLE,
                     TypographyControl.CASE),
+            choice(
+                    MiscPreferences.WEAR_TITLE_SHADOW_STYLE,
+                    TypographyTarget.TITLE,
+                    TypographyControl.SHADOW),
+            choice(
+                    MiscPreferences.WEAR_TITLE_SHADOW_COLOR_MODE,
+                    TypographyTarget.TITLE,
+                    TypographyControl.SHADOW_COLOR),
+            hex(
+                    MiscPreferences.WEAR_TITLE_SHADOW_CUSTOM_COLOR,
+                    TypographyTarget.TITLE,
+                    TypographyControl.SHADOW_COLOR),
+            number(
+                    MiscPreferences.WEAR_TITLE_SHADOW_STRENGTH,
+                    TypographyTarget.TITLE,
+                    TypographyControl.SHADOW_STRENGTH,
+                    TextShadowSpec.MIN_STRENGTH_PERCENT..TextShadowSpec.MAX_STRENGTH_PERCENT),
+            choice(
+                    MiscPreferences.WEAR_TITLE_OUTLINE_STYLE,
+                    TypographyTarget.TITLE,
+                    TypographyControl.OUTLINE),
+            choice(
+                    MiscPreferences.WEAR_TITLE_OUTLINE_COLOR_MODE,
+                    TypographyTarget.TITLE,
+                    TypographyControl.OUTLINE_COLOR),
+            hex(
+                    MiscPreferences.WEAR_TITLE_OUTLINE_CUSTOM_COLOR,
+                    TypographyTarget.TITLE,
+                    TypographyControl.OUTLINE_COLOR),
+            choice(
+                    MiscPreferences.WEAR_TITLE_TEXT_BG_STYLE,
+                    TypographyTarget.TITLE,
+                    TypographyControl.BACKDROP),
+            choice(
+                    MiscPreferences.WEAR_TITLE_TEXT_BG_COLOR_MODE,
+                    TypographyTarget.TITLE,
+                    TypographyControl.BACKDROP_COLOR),
+            hex(
+                    MiscPreferences.WEAR_TITLE_TEXT_BG_CUSTOM_COLOR,
+                    TypographyTarget.TITLE,
+                    TypographyControl.BACKDROP_COLOR),
+            number(
+                    MiscPreferences.WEAR_TITLE_TEXT_BG_OPACITY,
+                    TypographyTarget.TITLE,
+                    TypographyControl.BACKDROP_OPACITY,
+                    TextBackdropSpec.MIN_OPACITY_PERCENT..TextBackdropSpec.MAX_OPACITY_PERCENT),
             flexAxes(
                     MiscPreferences.WEAR_TITLE_FONT_FLEX_WIDTH,
                     TypographyTarget.TITLE,
@@ -215,6 +308,52 @@ internal object TypographyEditorModel {
                     MiscPreferences.WEAR_ARTIST_TEXT_CASE,
                     TypographyTarget.ARTIST,
                     TypographyControl.CASE),
+            choice(
+                    MiscPreferences.WEAR_ARTIST_SHADOW_STYLE,
+                    TypographyTarget.ARTIST,
+                    TypographyControl.SHADOW),
+            choice(
+                    MiscPreferences.WEAR_ARTIST_SHADOW_COLOR_MODE,
+                    TypographyTarget.ARTIST,
+                    TypographyControl.SHADOW_COLOR),
+            hex(
+                    MiscPreferences.WEAR_ARTIST_SHADOW_CUSTOM_COLOR,
+                    TypographyTarget.ARTIST,
+                    TypographyControl.SHADOW_COLOR),
+            number(
+                    MiscPreferences.WEAR_ARTIST_SHADOW_STRENGTH,
+                    TypographyTarget.ARTIST,
+                    TypographyControl.SHADOW_STRENGTH,
+                    TextShadowSpec.MIN_STRENGTH_PERCENT..TextShadowSpec.MAX_STRENGTH_PERCENT),
+            choice(
+                    MiscPreferences.WEAR_ARTIST_OUTLINE_STYLE,
+                    TypographyTarget.ARTIST,
+                    TypographyControl.OUTLINE),
+            choice(
+                    MiscPreferences.WEAR_ARTIST_OUTLINE_COLOR_MODE,
+                    TypographyTarget.ARTIST,
+                    TypographyControl.OUTLINE_COLOR),
+            hex(
+                    MiscPreferences.WEAR_ARTIST_OUTLINE_CUSTOM_COLOR,
+                    TypographyTarget.ARTIST,
+                    TypographyControl.OUTLINE_COLOR),
+            choice(
+                    MiscPreferences.WEAR_ARTIST_TEXT_BG_STYLE,
+                    TypographyTarget.ARTIST,
+                    TypographyControl.BACKDROP),
+            choice(
+                    MiscPreferences.WEAR_ARTIST_TEXT_BG_COLOR_MODE,
+                    TypographyTarget.ARTIST,
+                    TypographyControl.BACKDROP_COLOR),
+            hex(
+                    MiscPreferences.WEAR_ARTIST_TEXT_BG_CUSTOM_COLOR,
+                    TypographyTarget.ARTIST,
+                    TypographyControl.BACKDROP_COLOR),
+            number(
+                    MiscPreferences.WEAR_ARTIST_TEXT_BG_OPACITY,
+                    TypographyTarget.ARTIST,
+                    TypographyControl.BACKDROP_OPACITY,
+                    TextBackdropSpec.MIN_OPACITY_PERCENT..TextBackdropSpec.MAX_OPACITY_PERCENT),
             flexAxes(
                     MiscPreferences.WEAR_ARTIST_FONT_FLEX_WIDTH,
                     TypographyTarget.ARTIST,
@@ -379,9 +518,28 @@ internal object TypographyEditorModel {
     fun specsFor(target: TypographyTarget): List<TypographySettingSpec> =
             specs.filter { it.target == target }
 
+    /**
+     * The row a control's own button edits - the mode row of a colour pair, never its hex row.
+     *
+     * Resolved by value kind rather than by declaration order, so moving a spec in the list above
+     * cannot silently change which of a pair the editor opens.
+     */
+    fun settingKeyFor(target: TypographyTarget, control: TypographyControl): String? =
+            specsFor(target).firstOrNull {
+                it.control == control && it.persisted && it.value !is TypographyValueSpec.Hex
+            }?.key
+
+    /** The picked-colour row behind a colour control, or null where the control has none. */
+    fun customColorKeyFor(target: TypographyTarget, control: TypographyControl): String? =
+            specsFor(target).firstOrNull {
+                it.control == control && it.value is TypographyValueSpec.Hex
+            }?.key
+
     /** Destination used when Settings search opens the compact editor for a legacy row key. */
     fun searchTargetFor(key: String): TypographySearchTarget? =
-            specFor(key)?.let { TypographySearchTarget(it.target, it.control) }
+            specFor(key)?.let {
+                TypographySearchTarget(it.target, it.control, it.value is TypographyValueSpec.Hex)
+            }
 
     private fun choice(
             definition: PreferenceDefinition<String>,
@@ -392,6 +550,16 @@ internal object TypographyEditorModel {
             target,
             control,
             TypographyValueSpec.Choice(definition.defaultValue))
+
+    private fun hex(
+            definition: PreferenceDefinition<String>,
+            target: TypographyTarget,
+            control: TypographyControl
+    ) = TypographySettingSpec(
+            definition.key,
+            target,
+            control,
+            TypographyValueSpec.Hex(definition.defaultValue))
 
     private fun toggle(
             definition: PreferenceDefinition<Boolean>,

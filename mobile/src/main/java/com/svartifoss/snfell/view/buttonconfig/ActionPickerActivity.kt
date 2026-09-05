@@ -30,6 +30,7 @@ class ActionPickerActivity : AppCompatActivity() {
         const val EXTRA_ACTION_BUNDLE = "Action"
         const val VIEW_MODEL_REQUEST_CODE = 7961
         const val EXTRA_DISPLAY_NONE = "DisplayNone"
+        const val EXTRA_SURFACE = "Surface"
     }
 
     private val viewModel : ActionPickerViewModel by viewModels { viewModelFactory }
@@ -58,7 +59,7 @@ class ActionPickerActivity : AppCompatActivity() {
         viewModel.displayedActions.observe(this, listObserver)
         viewModel.pageTitle.observe(this) { title ->
             binding.pickerTitle.text = title ?: getString(R.string.pick_action)
-            binding.actionSearchInput.setText("")
+            applyFilter(binding.actionSearchInput.text?.toString().orEmpty())
         }
         viewModel.selectedAction.observe(this, pickObserver)
         viewModel.activityStarter.observe(this, activityOpenObserver)
@@ -95,7 +96,7 @@ class ActionPickerActivity : AppCompatActivity() {
     }
 
     private fun applyFilter(query: String) {
-        adapter.submit(viewModel.displayedActions.value.orEmpty(), query)
+        adapter.submit(viewModel.rowsFor(query))
         val isEmpty = adapter.itemCount == 0
         if (isEmpty) {
             binding.actionSearchEmpty.setText(
@@ -123,11 +124,19 @@ class ActionPickerActivity : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
+        if (clearSearch()) return
         if (!viewModel.tryGoBack()) super.onBackPressed()
     }
 
     private fun navigateBackOrFinish() {
+        if (clearSearch()) return
         if (!viewModel.tryGoBack()) finish()
+    }
+
+    private fun clearSearch(): Boolean {
+        if (binding.actionSearchInput.text.isNullOrEmpty()) return false
+        binding.actionSearchInput.setText("")
+        return true
     }
 
     @Deprecated("Deprecated in Java")
@@ -140,16 +149,14 @@ class ActionPickerActivity : AppCompatActivity() {
     }
 
     private inner class ActionsAdapter : RecyclerView.Adapter<ActionsHolder>() {
-        private var items: List<IndexedValue<PhoneAction>> = emptyList()
+        private var items: List<ActionPickerRow> = emptyList()
 
-        fun submit(actions: List<PhoneAction>, query: String) {
-            val needle = query.trim()
-            items = actions.withIndex()
-                    .filter { needle.isEmpty() || it.value.title.contains(needle, ignoreCase = true) }
+        fun submit(rows: List<ActionPickerRow>) {
+            items = rows
             notifyDataSetChanged()
         }
 
-        fun originalIndexAt(position: Int): Int? = items.getOrNull(position)?.index
+        fun rowAt(position: Int): ActionPickerRow? = items.getOrNull(position)
 
         override fun getItemCount(): Int {
             return items.size
@@ -161,7 +168,8 @@ class ActionPickerActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: ActionsHolder, position: Int) {
-            val action = items.getOrNull(position)?.value ?: return
+            val row = items.getOrNull(position) ?: return
+            val action = row.action
 
             val icon = customIconStorage[action]
             if (action.iconTintable) {
@@ -176,7 +184,8 @@ class ActionPickerActivity : AppCompatActivity() {
 
             // Entries that open another chooser get a chevron + hint so they don't read as a
             // single action.
-            holder.subtitleView.isVisible = action.opensMoreOptions
+            holder.subtitleView.text = row.breadcrumb ?: getString(R.string.action_opens_more)
+            holder.subtitleView.isVisible = row.breadcrumb != null || action.opensMoreOptions
             holder.chevronView.isVisible = action.opensMoreOptions
         }
 
@@ -195,9 +204,8 @@ class ActionPickerActivity : AppCompatActivity() {
                     return@setOnClickListener
                 }
 
-                val originalIndex = adapter.originalIndexAt(position)
-                    ?: return@setOnClickListener
-                viewModel.onActionTapped(originalIndex)
+                val action = adapter.rowAt(position)?.action ?: return@setOnClickListener
+                viewModel.onActionTapped(action)
             }
         }
     }
@@ -207,5 +215,11 @@ class ActionPickerActivity : AppCompatActivity() {
         @Provides
         @Named(ActionPickerViewModel.ARG_SHOW_NONE)
         fun displayNone(actionPickerActivity: ActionPickerActivity) = actionPickerActivity.displayNone
+
+        @Provides
+        @Named(ActionPickerViewModel.ARG_SURFACE)
+        fun surface(actionPickerActivity: ActionPickerActivity): ActionPickerSurface =
+                ActionPickerSurface.fromExtra(
+                        actionPickerActivity.intent.getStringExtra(EXTRA_SURFACE))
     }
 }

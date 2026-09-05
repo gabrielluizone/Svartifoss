@@ -78,7 +78,7 @@
             android:id="@+id/submission_remove"
             style="@style/LyraGestureButton"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
+            android:layout_height="48dp"
             android:layout_marginTop="12dp"
             android:gravity="center"
             android:text="@string/community_theme_submissions_remove"

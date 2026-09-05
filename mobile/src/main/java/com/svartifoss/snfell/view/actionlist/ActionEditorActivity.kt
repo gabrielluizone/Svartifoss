@@ -101,6 +101,9 @@ class ActionEditorActivity : AppCompatActivity() {
     private fun swapAction() {
         val startIntent = Intent(this, ActionPickerActivity::class.java)
         startIntent.putExtra(ActionPickerActivity.EXTRA_DISPLAY_NONE, false)
+        startIntent.putExtra(
+                ActionPickerActivity.EXTRA_SURFACE,
+                com.svartifoss.snfell.view.buttonconfig.ActionPickerSurface.WATCH_MENU.name)
         startActivityForResult(startIntent, REQUEST_CODE_PICK_ACTION)
     }
 

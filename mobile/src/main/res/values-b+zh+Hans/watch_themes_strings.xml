@@ -42,6 +42,8 @@
     <string name="online_theme_refresh">刷新社区主题</string>
     <string name="online_theme_list_description">社区创作的手表主题</string>
     <string name="online_theme_byline">由 %1$s 创作</string>
+    <string name="online_theme_filter_author">%1$s 的主题</string>
+    <string name="online_theme_filter_author_selected">正在显示 %1$s 的主题</string>
     <string name="online_theme_row_description">%1$s，由 %2$s 创作。%3$s 布局。</string>
     <string name="online_theme_apply">添加并应用</string>
     <string name="online_theme_loading">正在加载社区主题…</string>
@@ -81,4 +83,27 @@
     <string name="online_theme_filter_not_installed_off">正在显示你添加过的主题</string>
     <string name="online_theme_search_empty_all_installed">你已添加所有社区主题。</string>
     <string name="online_theme_search_empty_all_installed_hint">关闭“未添加”即可再次查看。</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">下载最多</string>
+    <string name="online_theme_sort_most_downloaded_short">下载量</string>
+    <string name="community_theme_detail_downloads">下载量</string>
+    <string name="community_theme_report_action">举报主题</string>
+    <string name="community_theme_report_already">已举报</string>
+    <string name="community_theme_report_description">向管理员举报“%1$s”</string>
+    <string name="community_theme_report_title">举报此主题</string>
+    <string name="community_theme_report_intro">告诉管理员这个主题有什么问题。</string>
+    <string name="community_theme_report_reason_inappropriate">冒犯或不当内容</string>
+    <string name="community_theme_report_reason_impersonation">冒充他人作品</string>
+    <string name="community_theme_report_reason_misleading">与展示的内容不符</string>
+    <string name="community_theme_report_reason_illegible">在手表上无法使用</string>
+    <string name="community_theme_report_reason_spam">垃圾内容或重复</string>
+    <string name="community_theme_report_reason_other">其他原因</string>
+    <string name="community_theme_report_details_hint">还有什么想让管理员知道的（可选）</string>
+    <string name="community_theme_report_privacy">只有管理员能看到你的举报。作者永远不会知道是谁举报的。</string>
+    <string name="community_theme_report_submit">发送举报</string>
+    <string name="community_theme_report_sent">举报已发送。管理员会查看这个主题。</string>
+    <string name="community_theme_report_already_sent">你已经举报过这个主题了。</string>
+    <string name="community_theme_report_not_ready">此主题暂时无法举报，请稍后再试。</string>
+    <string name="community_theme_report_error">举报发送失败。请检查网络连接后重试。</string>
 </resources>

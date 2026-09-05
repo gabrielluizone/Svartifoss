@@ -168,6 +168,7 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                     AdaptiveTitleText(
                             text = state.title,
                             mode = state.titleTextMode,
+                            state = state,
                             typography = state.titleTypography,
                             color = titleTextColor(state, Color.White),
                             fontSize = 16.sp,

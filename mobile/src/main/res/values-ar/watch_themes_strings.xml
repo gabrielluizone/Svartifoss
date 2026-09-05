@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">تحديث سمات المجتمع</string>
     <string name="online_theme_list_description">سمات ساعة أنشأها المجتمع</string>
     <string name="online_theme_byline">بواسطة %1$s</string>
+    <string name="online_theme_filter_author">سمات %1$s</string>
+    <string name="online_theme_filter_author_selected">عرض سمات %1$s</string>
     <string name="online_theme_row_description">%1$s بواسطة %2$s. تخطيط %3$s.</string>
     <string name="online_theme_apply">أضف وطبّق</string>
     <string name="online_theme_loading">جارٍ تحميل سمات المجتمع…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">عرض السمات التي أضفتها بالفعل</string>
     <string name="online_theme_search_empty_all_installed">لقد أضفت بالفعل كل سمات المجتمع.</string>
     <string name="online_theme_search_empty_all_installed_hint">أوقف ”جديد لي“ لعرضها مجددًا.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">الأكثر تنزيلاً</string>
+    <string name="online_theme_sort_most_downloaded_short">التنزيلات</string>
+    <string name="community_theme_detail_downloads">التنزيلات</string>
+    <string name="community_theme_report_action">الإبلاغ عن السمة</string>
+    <string name="community_theme_report_already">تم الإبلاغ</string>
+    <string name="community_theme_report_description">الإبلاغ عن “%1$s” للمشرفين</string>
+    <string name="community_theme_report_title">الإبلاغ عن هذه السمة</string>
+    <string name="community_theme_report_intro">أخبر المشرفين بما هو خطأ في هذه السمة.</string>
+    <string name="community_theme_report_reason_inappropriate">محتوى مسيء أو غير لائق</string>
+    <string name="community_theme_report_reason_impersonation">منسوبة زوراً إلى شخص آخر</string>
+    <string name="community_theme_report_reason_misleading">لا تطابق ما تعرضه</string>
+    <string name="community_theme_report_reason_illegible">غير قابلة للاستخدام على الساعة</string>
+    <string name="community_theme_report_reason_spam">بريد عشوائي أو نسخة مكررة</string>
+    <string name="community_theme_report_reason_other">سبب آخر</string>
+    <string name="community_theme_report_details_hint">أي شيء آخر يجب أن يعرفه المشرفون (اختياري)</string>
+    <string name="community_theme_report_privacy">المشرفون وحدهم يقرؤون بلاغك. ولا يُخبر المؤلف أبداً بمن أرسله.</string>
+    <string name="community_theme_report_submit">إرسال البلاغ</string>
+    <string name="community_theme_report_sent">تم إرسال البلاغ. سيراجع المشرفون هذه السمة.</string>
+    <string name="community_theme_report_already_sent">سبق أن أبلغت عن هذه السمة.</string>
+    <string name="community_theme_report_not_ready">لا يمكن الإبلاغ عن هذه السمة بعد. حاول لاحقاً.</string>
+    <string name="community_theme_report_error">تعذّر إرسال بلاغك. تحقق من الاتصال وحاول مرة أخرى.</string>
 </resources>

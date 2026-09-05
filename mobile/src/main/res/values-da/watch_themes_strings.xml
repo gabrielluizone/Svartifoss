@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Opdater fællesskabstemaer</string>
     <string name="online_theme_list_description">Fællesskabsskabte urtemaer</string>
     <string name="online_theme_byline">Af %1$s</string>
+    <string name="online_theme_filter_author">Temaer af %1$s</string>
+    <string name="online_theme_filter_author_selected">Viser temaer af %1$s</string>
     <string name="online_theme_row_description">%1$s af %2$s. Layoutet %3$s.</string>
     <string name="online_theme_apply">Tilføj og anvend</string>
     <string name="online_theme_loading">Indlæser fællesskabstemaer…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Viser temaer, du allerede har tilføjet</string>
     <string name="online_theme_search_empty_all_installed">Du har allerede tilføjet alle fællesskabstemaer.</string>
     <string name="online_theme_search_empty_all_installed_hint">Slå “Nyt for mig” fra for at se dem igen.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Flest downloads</string>
+    <string name="online_theme_sort_most_downloaded_short">Downloads</string>
+    <string name="community_theme_detail_downloads">Downloads</string>
+    <string name="community_theme_report_action">Anmeld tema</string>
+    <string name="community_theme_report_already">Temaet er anmeldt</string>
+    <string name="community_theme_report_description">Anmeld “%1$s” til moderatorerne</string>
+    <string name="community_theme_report_title">Anmeld dette tema</string>
+    <string name="community_theme_report_intro">Fortæl moderatorerne, hvad der er galt med dette tema.</string>
+    <string name="community_theme_report_reason_inappropriate">Stødende eller upassende indhold</string>
+    <string name="community_theme_report_reason_impersonation">Udgivet for at være en andens</string>
+    <string name="community_theme_report_reason_misleading">Passer ikke med det, der vises</string>
+    <string name="community_theme_report_reason_illegible">Ubrugeligt på uret</string>
+    <string name="community_theme_report_reason_spam">Spam eller en dublet</string>
+    <string name="community_theme_report_reason_other">Noget andet</string>
+    <string name="community_theme_report_details_hint">Andet, moderatorerne bør vide (valgfrit)</string>
+    <string name="community_theme_report_privacy">Kun moderatorerne læser din anmeldelse. Skaberen får aldrig at vide, hvem der sendte den.</string>
+    <string name="community_theme_report_submit">Send anmeldelse</string>
+    <string name="community_theme_report_sent">Anmeldelsen er sendt. Moderatorerne kigger på dette tema.</string>
+    <string name="community_theme_report_already_sent">Du har allerede anmeldt dette tema.</string>
+    <string name="community_theme_report_not_ready">Dette tema kan ikke anmeldes endnu. Prøv igen senere.</string>
+    <string name="community_theme_report_error">Din anmeldelse kunne ikke sendes. Tjek forbindelsen, og prøv igen.</string>
 </resources>

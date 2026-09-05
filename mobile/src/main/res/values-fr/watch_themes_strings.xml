@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Actualiser les thèmes de la communauté</string>
     <string name="online_theme_list_description">Thèmes de montre créés par la communauté</string>
     <string name="online_theme_byline">Par %1$s</string>
+    <string name="online_theme_filter_author">Thèmes de %1$s</string>
+    <string name="online_theme_filter_author_selected">Affichage des thèmes de %1$s</string>
     <string name="online_theme_row_description">%1$s par %2$s. Disposition %3$s.</string>
     <string name="online_theme_apply">Ajouter et appliquer</string>
     <string name="online_theme_loading">Chargement des thèmes de la communauté…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Les thèmes déjà ajoutés sont affichés</string>
     <string name="online_theme_search_empty_all_installed">Vous avez déjà ajouté tous les thèmes de la communauté.</string>
     <string name="online_theme_search_empty_all_installed_hint">Désactivez « Nouveaux pour moi » pour les revoir.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Les plus téléchargés</string>
+    <string name="online_theme_sort_most_downloaded_short">Téléchargements</string>
+    <string name="community_theme_detail_downloads">Téléchargements</string>
+    <string name="community_theme_report_action">Signaler le thème</string>
+    <string name="community_theme_report_already">Thème signalé</string>
+    <string name="community_theme_report_description">Signaler « %1$s » aux modérateurs</string>
+    <string name="community_theme_report_title">Signaler ce thème</string>
+    <string name="community_theme_report_intro">Dites aux modérateurs ce qui ne va pas avec ce thème.</string>
+    <string name="community_theme_report_reason_inappropriate">Contenu offensant ou inapproprié</string>
+    <string name="community_theme_report_reason_impersonation">Présenté comme celui de quelqu\'un d\'autre</string>
+    <string name="community_theme_report_reason_misleading">Ne correspond pas à ce qui est montré</string>
+    <string name="community_theme_report_reason_illegible">Inutilisable sur la montre</string>
+    <string name="community_theme_report_reason_spam">Spam ou doublon</string>
+    <string name="community_theme_report_reason_other">Autre motif</string>
+    <string name="community_theme_report_details_hint">Autre chose que les modérateurs devraient savoir (facultatif)</string>
+    <string name="community_theme_report_privacy">Seuls les modérateurs lisent votre signalement. L\'auteur ne sait jamais qui l\'a envoyé.</string>
+    <string name="community_theme_report_submit">Envoyer le signalement</string>
+    <string name="community_theme_report_sent">Signalement envoyé. Les modérateurs examineront ce thème.</string>
+    <string name="community_theme_report_already_sent">Vous avez déjà signalé ce thème.</string>
+    <string name="community_theme_report_not_ready">Ce thème ne peut pas encore être signalé. Réessayez plus tard.</string>
+    <string name="community_theme_report_error">Le signalement n\'a pas pu être envoyé. Vérifiez votre connexion et réessayez.</string>
 </resources>

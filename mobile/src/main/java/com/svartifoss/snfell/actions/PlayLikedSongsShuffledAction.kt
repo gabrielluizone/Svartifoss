@@ -23,6 +23,8 @@ class PlayLikedSongsShuffledAction : SelectableAction {
     override fun retrieveTitle(): String = context.getString(R.string.action_play_liked_songs_shuffled)
     override val defaultIcon: Drawable
         get() = AppCompatResources.getDrawable(context, com.svartifoss.snfell.common.R.drawable.action_liked_songs)!!
+    override val remoteUri: String
+        get() = PlayPlaylistShortcutAction(context, title, LIKED_SONGS_SHUFFLED_LINK).remoteUri
 
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<PlayLikedSongsShuffledAction> {
         override suspend fun handleAction(action: PlayLikedSongsShuffledAction) {

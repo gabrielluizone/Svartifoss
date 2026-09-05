@@ -147,9 +147,24 @@ object AdaptiveTextContrast {
      */
     fun backdropLuminance(
             style: PlayerBackgroundStyle,
+            /**
+             * The luminance of the flat field a style paints in place of the artwork, for the
+             * styles that hide it behind something other than black.
+             *
+             * Returning null keeps the historical answer, which is what HIDDEN and Eclipse want -
+             * they really do paint black. The flat *album* fills do not, and reporting black for
+             * them would tell adaptive contrast to darken text sitting on a light album tone.
+             *
+             * Declared *before* [artworkBandLuminance] on purpose: that one is the trailing lambda
+             * every existing caller passes without naming it, and moving it would silently rebind
+             * those call sites to this parameter instead.
+             */
+            flatFillLuminance: (AlbumFillSlot) -> Float? = { null },
             artworkBandLuminance: () -> Float?
-    ): Float? =
-            if (style.hidesArtwork) HIDDEN_BACKDROP_LUMINANCE else artworkBandLuminance()
+    ): Float? = when {
+        !style.hidesArtwork -> artworkBandLuminance()
+        else -> style.flatAlbumFill?.let(flatFillLuminance) ?: HIDDEN_BACKDROP_LUMINANCE
+    }
 
     fun adapt(color: Int, backgroundLuminance: Float): Int {
         val hsl = FloatArray(3)

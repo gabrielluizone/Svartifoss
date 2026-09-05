@@ -264,6 +264,7 @@ private fun BoxWithConstraintsScope.RibbonMetadata(state: NowPlayingFaceState, s
         AdaptiveTitleText(
                 text = state.title,
                 mode = state.titleTextMode,
+                state = state,
                 color = titleTextColor(state, Color.White),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,

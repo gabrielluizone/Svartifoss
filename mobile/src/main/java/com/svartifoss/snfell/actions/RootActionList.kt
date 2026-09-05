@@ -3,7 +3,6 @@ package com.svartifoss.snfell.actions
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
-import com.svartifoss.snfell.actions.appplay.AppPlayPickerAction
 import com.svartifoss.snfell.actions.playback.PlaybackActionList
 import com.svartifoss.snfell.actions.tasker.TaskerTaskPickerAction
 import com.svartifoss.snfell.actions.volume.VolumeActionList
@@ -21,7 +20,7 @@ class RootActionList : PhoneAction {
         this.showNone = true
     }
 
-    override fun onActionPicked(actionPicker: ActionPickerViewModel) {
+    fun pickerChildren(): List<PhoneAction> {
         val actions = ArrayList<PhoneAction>(20)
 
         if (showNone) {
@@ -30,24 +29,20 @@ class RootActionList : PhoneAction {
 
         actions.addAll(listOf(PlaybackActionList(context),
                 VolumeActionList(context),
-                AppPlayPickerAction(context),
+                WatchScreenActionList(context),
+                FindMusicActionList(context),
                 StreamingShortcutActionList(context),
-                OpenMenuAction(context),
-                OpenQuickActionsPanelAction(context),
-                OpenPlaylistAction(context),
-                OpenLyricsAction(context),
-                OpenVolumeScreenAction(context),
-                OpenProgressScreenAction(context),
-                SearchAction(context),
-                OpenSearchHistoryAction(context),
-                OpenLibraryAction(context)
         ))
 
         if (isTaskerInstalled()) {
             actions.add(TaskerTaskPickerAction(context))
         }
 
-        actionPicker.displayedActions.value = actions
+        return actions
+    }
+
+    override fun onActionPicked(actionPicker: ActionPickerViewModel) {
+        actionPicker.displayedActions.value = pickerChildren()
     }
 
     override fun retrieveTitle(): String {

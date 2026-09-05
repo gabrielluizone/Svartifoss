@@ -1393,6 +1393,56 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>@string/wear_font_varela_round</item>
         <item>@string/wear_font_yanone_kaffeesatz</item>
         <item>@string/wear_font_zilla_slab</item>
+        <item>@string/wear_font_lato</item>
+        <item>@string/wear_font_merriweather_sans</item>
+        <item>@string/wear_font_source_sans_3</item>
+        <item>@string/wear_font_source_serif_4</item>
+        <item>@string/wear_font_libre_baskerville</item>
+        <item>@string/wear_font_libre_franklin</item>
+        <item>@string/wear_font_ibm_plex_sans</item>
+        <item>@string/wear_font_ibm_plex_mono</item>
+        <item>@string/wear_font_ibm_plex_serif</item>
+        <item>@string/wear_font_work_sans</item>
+        <item>@string/wear_font_karla</item>
+        <item>@string/wear_font_sora</item>
+        <item>@string/wear_font_urbanist</item>
+        <item>@string/wear_font_be_vietnam_pro</item>
+        <item>@string/wear_font_red_hat_display</item>
+        <item>@string/wear_font_red_hat_text</item>
+        <item>@string/wear_font_red_hat_mono</item>
+        <item>@string/wear_font_syne</item>
+        <item>@string/wear_font_instrument_sans</item>
+        <item>@string/wear_font_figtree</item>
+        <item>@string/wear_font_gabarito</item>
+        <item>@string/wear_font_bricolage_grotesque</item>
+        <item>@string/wear_font_dm_serif_display</item>
+        <item>@string/wear_font_cormorant_garamond</item>
+        <item>@string/wear_font_cormorant</item>
+        <item>@string/wear_font_bitter</item>
+        <item>@string/wear_font_spectral</item>
+        <item>@string/wear_font_vollkorn</item>
+        <item>@string/wear_font_raleway</item>
+        <item>@string/wear_font_league_spartan</item>
+        <item>@string/wear_font_saira</item>
+        <item>@string/wear_font_signika</item>
+        <item>@string/wear_font_sofia_sans</item>
+        <item>@string/wear_font_overpass</item>
+        <item>@string/wear_font_public_sans</item>
+        <item>@string/wear_font_questrial</item>
+        <item>@string/wear_font_dosis</item>
+        <item>@string/wear_font_prompt</item>
+        <item>@string/wear_font_unbounded</item>
+        <item>@string/wear_font_recursive</item>
+        <item>@string/wear_font_trispace</item>
+        <item>@string/wear_font_noto_sans</item>
+        <item>@string/wear_font_noto_serif</item>
+        <item>@string/wear_font_noto_sans_mono</item>
+        <item>@string/wear_font_heebo</item>
+        <item>@string/wear_font_hind</item>
+        <item>@string/wear_font_hind_madurai</item>
+        <item>@string/wear_font_kumbh_sans</item>
+        <item>@string/wear_font_alegreya</item>
+        <item>@string/wear_font_assistant</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1483,6 +1533,56 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>@string/wear_font_varela_round_description</item>
         <item>@string/wear_font_yanone_kaffeesatz_description</item>
         <item>@string/wear_font_zilla_slab_description</item>
+        <item>@string/wear_font_lato_description</item>
+        <item>@string/wear_font_merriweather_sans_description</item>
+        <item>@string/wear_font_source_sans_3_description</item>
+        <item>@string/wear_font_source_serif_4_description</item>
+        <item>@string/wear_font_libre_baskerville_description</item>
+        <item>@string/wear_font_libre_franklin_description</item>
+        <item>@string/wear_font_ibm_plex_sans_description</item>
+        <item>@string/wear_font_ibm_plex_mono_description</item>
+        <item>@string/wear_font_ibm_plex_serif_description</item>
+        <item>@string/wear_font_work_sans_description</item>
+        <item>@string/wear_font_karla_description</item>
+        <item>@string/wear_font_sora_description</item>
+        <item>@string/wear_font_urbanist_description</item>
+        <item>@string/wear_font_be_vietnam_pro_description</item>
+        <item>@string/wear_font_red_hat_display_description</item>
+        <item>@string/wear_font_red_hat_text_description</item>
+        <item>@string/wear_font_red_hat_mono_description</item>
+        <item>@string/wear_font_syne_description</item>
+        <item>@string/wear_font_instrument_sans_description</item>
+        <item>@string/wear_font_figtree_description</item>
+        <item>@string/wear_font_gabarito_description</item>
+        <item>@string/wear_font_bricolage_grotesque_description</item>
+        <item>@string/wear_font_dm_serif_display_description</item>
+        <item>@string/wear_font_cormorant_garamond_description</item>
+        <item>@string/wear_font_cormorant_description</item>
+        <item>@string/wear_font_bitter_description</item>
+        <item>@string/wear_font_spectral_description</item>
+        <item>@string/wear_font_vollkorn_description</item>
+        <item>@string/wear_font_raleway_description</item>
+        <item>@string/wear_font_league_spartan_description</item>
+        <item>@string/wear_font_saira_description</item>
+        <item>@string/wear_font_signika_description</item>
+        <item>@string/wear_font_sofia_sans_description</item>
+        <item>@string/wear_font_overpass_description</item>
+        <item>@string/wear_font_public_sans_description</item>
+        <item>@string/wear_font_questrial_description</item>
+        <item>@string/wear_font_dosis_description</item>
+        <item>@string/wear_font_prompt_description</item>
+        <item>@string/wear_font_unbounded_description</item>
+        <item>@string/wear_font_recursive_description</item>
+        <item>@string/wear_font_trispace_description</item>
+        <item>@string/wear_font_noto_sans_description</item>
+        <item>@string/wear_font_noto_serif_description</item>
+        <item>@string/wear_font_noto_sans_mono_description</item>
+        <item>@string/wear_font_heebo_description</item>
+        <item>@string/wear_font_hind_description</item>
+        <item>@string/wear_font_hind_madurai_description</item>
+        <item>@string/wear_font_kumbh_sans_description</item>
+        <item>@string/wear_font_alegreya_description</item>
+        <item>@string/wear_font_assistant_description</item>
     </string-array>
 
     <string name="action_open_library">Kitaplığa göz at</string>
@@ -1855,6 +1955,11 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     <string name="color_picker_title">Vurgu rengini seç</string>
     <string name="color_picker_reset">Sıfırla</string>
     <string name="color_picker_apply">Uygula</string>
+    <string name="setting_wear_title_centered">Başlığı ortala</string>
+    <string name="setting_wear_title_centered_description">Metin bloğunun tamamı yerine başlığı ekranın ortasına sabitler</string>
+    <string name="player_element_title_centered">Ortalanmış başlık</string>
+    <string name="color_picker_recent">Son kullanılanlar</string>
+    <string name="color_picker_copied">Renk kodu kopyalandı</string>
     <string name="color_picker_default">Varsayılan</string>
     <string name="color_picker_invalid">Geçersiz renk kodu</string>
     <string name="color_picker_current">Geçerli: %s</string>
@@ -2118,4 +2223,74 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     <string name="setting_metadata_lookup_description">Çalan uygulamanın yayımlamadığı bilgileri — ISRC, plak şirketi, yayın tarihi — ücretsiz açık bir veritabanı olan MusicBrainz’den tamamlar. Varsayılan olarak kapalıdır. Meta veriler saat yüzü onsuz da çalışır; bu yalnızca ek satırlar ekler. Siz bunu açıp o yüzü seçmedikçe hiçbir şey gönderilmez; yalnızca parça adı ve sanatçı gönderilir.</string>
     <string name="watch_preview_expand">Daha büyük bir önizleme aç</string>
     <string name="watch_preview_fullscreen_dismiss">Kapatmak için herhangi bir yere dokunun</string>
+
+    <!-- The edge ring's position mark. Entries pair with wear_seek_marker_values by index. -->
+    <string name="setting_wear_seek_marker">Konum işareti</string>
+    <string name="setting_wear_seek_marker_description">İlerleme halkasını kesen ve parçanın nerede olduğunu gösteren kısa çizginin ne zaman görünür kaldığı.</string>
+    <string-array name="wear_seek_marker_entries">
+        <item>Her zaman</item>
+        <item>Yalnızca sarma sırasında</item>
+        <item>Sarma sırasında ve duraklatmada</item>
+        <item>Yalnızca duraklatmada</item>
+    </string-array>
+
+    <!-- Title/artist text shadow. Entries pair with the untranslated
+         wear_text_shadow_*_values arrays BY INDEX. -->
+    <string name="setting_wear_title_shadow_style">Başlık gölgesi</string>
+    <string name="setting_wear_title_shadow_color">Başlık gölgesi rengi</string>
+    <string name="setting_wear_title_shadow_custom_color">Özel başlık gölgesi rengi</string>
+    <string name="setting_wear_title_shadow_strength">Başlık gölgesi yoğunluğu</string>
+    <string name="setting_wear_artist_shadow_style">Sanatçı gölgesi</string>
+    <string name="setting_wear_artist_shadow_color">Sanatçı gölgesi rengi</string>
+    <string name="setting_wear_artist_shadow_custom_color">Özel sanatçı gölgesi rengi</string>
+    <string name="setting_wear_artist_shadow_strength">Sanatçı gölgesi yoğunluğu</string>
+    <string name="setting_wear_text_shadow_strength_description">Seçilen gölgenin kendi boyut ve derinliğinin yüzdesi.</string>
+    <string-array name="wear_text_shadow_style_entries">
+        <item>Yok</item>
+        <item>Yumuşak</item>
+        <item>Sert</item>
+        <item>Parıltı</item>
+        <item>Yükseltilmiş</item>
+        <item>İnce</item>
+    </string-array>
+    <string-array name="wear_text_shadow_color_entries">
+        <item>Siyah</item>
+        <item>Albüm rengi</item>
+        <item>Beyaz</item>
+        <item>Özel</item>
+    </string-array>
+
+    <!-- Title/artist outline. Entries pair with the untranslated
+         wear_text_outline_style_values array BY INDEX. -->
+    <string name="setting_wear_title_outline_style">Başlık konturu</string>
+    <string name="setting_wear_title_outline_color">Başlık kontur rengi</string>
+    <string name="setting_wear_title_outline_custom_color">Özel başlık kontur rengi</string>
+    <string name="setting_wear_artist_outline_style">Sanatçı konturu</string>
+    <string name="setting_wear_artist_outline_color">Sanatçı kontur rengi</string>
+    <string name="setting_wear_artist_outline_custom_color">Özel sanatçı kontur rengi</string>
+    <string-array name="wear_text_outline_style_entries">
+        <item>Yok</item>
+        <item>Kıl gibi</item>
+        <item>İnce</item>
+        <item>Orta</item>
+        <item>Kalın</item>
+    </string-array>
+
+    <!-- Title/artist text backdrop. Entries pair with the untranslated
+         wear_text_backdrop_style_values array BY INDEX. -->
+    <string name="setting_wear_title_text_bg_style">Başlık zemini</string>
+    <string name="setting_wear_title_text_bg_color">Başlık zemini rengi</string>
+    <string name="setting_wear_title_text_bg_custom_color">Özel başlık zemini rengi</string>
+    <string name="setting_wear_title_text_bg_opacity">Başlık zemini opaklığı</string>
+    <string name="setting_wear_artist_text_bg_style">Sanatçı zemini</string>
+    <string name="setting_wear_artist_text_bg_color">Sanatçı zemini rengi</string>
+    <string name="setting_wear_artist_text_bg_custom_color">Özel sanatçı zemini rengi</string>
+    <string name="setting_wear_artist_text_bg_opacity">Sanatçı zemini opaklığı</string>
+    <string name="setting_wear_text_bg_opacity_description">Seçilen zeminin kendi opaklığının yüzdesi.</string>
+    <string-array name="wear_text_backdrop_style_entries">
+        <item>Yok</item>
+        <item>Vurgu</item>
+        <item>Hafif</item>
+        <item>Blok</item>
+    </string-array>
 </resources>

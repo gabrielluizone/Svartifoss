@@ -16,12 +16,24 @@ object StandardActions {
     const val ACTION_PLAY_PAUSE = "com.svartifoss.snfell.actions.playback.PlayPauseToggleAction"
     const val ACTION_STOP = "com.svartifoss.snfell.actions.playback.StopAction"
     const val ACTION_RESTART = "com.svartifoss.snfell.actions.playback.RestartTrackAction"
+    const val ACTION_FAST_FORWARD = "com.svartifoss.snfell.actions.playback.FastForwardAction"
+    const val ACTION_REWIND = "com.svartifoss.snfell.actions.playback.RewindAction"
+    const val ACTION_SET_PLAYBACK_SPEED =
+            "com.svartifoss.snfell.actions.playback.SetPlaybackSpeedAction"
+    const val ACTION_SEEK_TO_PERCENT =
+            "com.svartifoss.snfell.actions.playback.SeekToPercentAction"
     const val ACTION_MUTE = "com.svartifoss.snfell.actions.volume.MuteToggleAction"
+    const val ACTION_SET_VOLUME_PERCENT =
+            "com.svartifoss.snfell.actions.volume.SetVolumePercentAction"
     const val ACTION_SEARCH = "com.svartifoss.snfell.actions.SearchAction"
     const val ACTION_LIKE = "com.svartifoss.snfell.actions.playback.LikeAction"
     const val ACTION_SHUFFLE = "com.svartifoss.snfell.actions.playback.ShuffleAction"
     const val ACTION_REPEAT = "com.svartifoss.snfell.actions.playback.RepeatAction"
     const val ACTION_REPEAT_ONE = "com.svartifoss.snfell.actions.playback.RepeatOneAction"
+    const val ACTION_SET_SHUFFLE_MODE =
+            "com.svartifoss.snfell.actions.playback.SetShuffleModeAction"
+    const val ACTION_SET_REPEAT_MODE =
+            "com.svartifoss.snfell.actions.playback.SetRepeatModeAction"
 
     /** Not watch-local like the others above in the sense of never reaching the phone - it still
      *  requests a fresh queue from the phone - but the watch intercepts it to launch its own
@@ -49,4 +61,10 @@ object StandardActions {
     /** Opens the watch's dedicated progress screen (skip/seek/speed) - fully watch-local like
      *  [ACTION_OPEN_VOLUME_SCREEN]. */
     const val ACTION_OPEN_PROGRESS_SCREEN = "com.svartifoss.snfell.actions.OpenProgressScreenAction"
+
+    /** Opens the on-watch face picker from an assigned action. */
+    const val ACTION_OPEN_FACE_PICKER = "com.svartifoss.snfell.actions.OpenFacePickerAction"
+
+    /** Closes only the watch UI; playback and the phone service keep running. */
+    const val ACTION_CLOSE_WATCH_APP = "com.svartifoss.snfell.actions.CloseWatchAppAction"
 }

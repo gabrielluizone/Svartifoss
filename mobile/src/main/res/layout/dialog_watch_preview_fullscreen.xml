@@ -23,6 +23,20 @@
         android:contentDescription="@string/watch_preview_description"
         android:importantForAccessibility="yes" />
 
+    <!--
+        The author's photograph, for a theme that carries one. Same geometry as the preview it
+        replaces, so enlarging either answers the same question at the same size.
+    -->
+    <com.google.android.material.imageview.ShapeableImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/watch_preview_fullscreen_image"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Svartifoss.Circle" />
+
     <TextView
         android:id="@+id/watch_preview_fullscreen_hint"
         android:layout_width="wrap_content"

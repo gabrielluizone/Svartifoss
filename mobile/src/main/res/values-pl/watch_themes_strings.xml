@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Odśwież motywy społeczności</string>
     <string name="online_theme_list_description">Motywy zegarka stworzone przez społeczność</string>
     <string name="online_theme_byline">Autor: %1$s</string>
+    <string name="online_theme_filter_author">Motywy autora %1$s</string>
+    <string name="online_theme_filter_author_selected">Wyświetlane są motywy autora %1$s</string>
     <string name="online_theme_row_description">%1$s — autor: %2$s. Układ %3$s.</string>
     <string name="online_theme_apply">Dodaj i zastosuj</string>
     <string name="online_theme_loading">Wczytywanie motywów społeczności…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Motywy, które już dodano, są widoczne</string>
     <string name="online_theme_search_empty_all_installed">Masz już dodane wszystkie motywy społeczności.</string>
     <string name="online_theme_search_empty_all_installed_hint">Wyłącz „Nowe dla mnie”, aby zobaczyć je ponownie.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Najczęściej pobierane</string>
+    <string name="online_theme_sort_most_downloaded_short">Pobrania</string>
+    <string name="community_theme_detail_downloads">Pobrania</string>
+    <string name="community_theme_report_action">Zgłoś motyw</string>
+    <string name="community_theme_report_already">Motyw zgłoszony</string>
+    <string name="community_theme_report_description">Zgłoś „%1$s” moderatorom</string>
+    <string name="community_theme_report_title">Zgłoś ten motyw</string>
+    <string name="community_theme_report_intro">Powiedz moderatorom, co jest nie tak z tym motywem.</string>
+    <string name="community_theme_report_reason_inappropriate">Obraźliwe lub nieodpowiednie treści</string>
+    <string name="community_theme_report_reason_impersonation">Podszywa się pod cudzy motyw</string>
+    <string name="community_theme_report_reason_misleading">Nie zgadza się z tym, co pokazuje</string>
+    <string name="community_theme_report_reason_illegible">Bezużyteczny na zegarku</string>
+    <string name="community_theme_report_reason_spam">Spam lub duplikat</string>
+    <string name="community_theme_report_reason_other">Coś innego</string>
+    <string name="community_theme_report_details_hint">Coś jeszcze, co moderatorzy powinni wiedzieć (opcjonalnie)</string>
+    <string name="community_theme_report_privacy">Twoje zgłoszenie czytają tylko moderatorzy. Autor nigdy nie dowiaduje się, kto je wysłał.</string>
+    <string name="community_theme_report_submit">Wyślij zgłoszenie</string>
+    <string name="community_theme_report_sent">Zgłoszenie wysłane. Moderatorzy przyjrzą się temu motywowi.</string>
+    <string name="community_theme_report_already_sent">Ten motyw został już przez Ciebie zgłoszony.</string>
+    <string name="community_theme_report_not_ready">Tego motywu nie można jeszcze zgłosić. Spróbuj później.</string>
+    <string name="community_theme_report_error">Nie udało się wysłać zgłoszenia. Sprawdź połączenie i spróbuj ponownie.</string>
 </resources>

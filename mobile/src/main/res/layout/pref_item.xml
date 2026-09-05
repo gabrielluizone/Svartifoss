@@ -49,6 +49,7 @@
             android:textSize="13sp"
             android:textColor="@color/lyra_pref_summary_selector"
             android:fontFamily="@font/google_sans"
+            android:ellipsize="end"
             android:maxLines="4" />
 
     </LinearLayout>

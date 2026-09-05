@@ -193,6 +193,7 @@ private fun androidx.compose.foundation.layout.BoxWithConstraintsScope.Header(
             AdaptiveTitleText(
                     text = state.title,
                     mode = state.titleTextMode,
+                    state = state,
                     fontSize = 13.sp,
                     color = titleTextColor(state, Color.White.copy(alpha = 0.92f)),
                     fontWeight = state.titleFontWeight,
@@ -427,6 +428,7 @@ private fun androidx.compose.foundation.layout.BoxWithConstraintsScope.ElapsedTi
  */
 @Composable
 private fun VerseAmbient(state: NowPlayingFaceState) {
+    val geo = FaceGeometry.Verse.Ambient
     val tint = Color(state.ambientTint)
 
     BoxWithConstraints(
@@ -438,7 +440,7 @@ private fun VerseAmbient(state: NowPlayingFaceState) {
         // when it is on. Painting black here made those AOD preferences do nothing on this face -
         // the same mistake as the awake side, in the one place it is easiest to justify.
         val screen = maxWidth
-        val inset = RoundScreenText.sideInsetFor(top = 0.34f, bottom = 0.66f)
+        val inset = RoundScreenText.sideInsetFor(top = geo.BAND_TOP, bottom = geo.BAND_BOTTOM)
         val line = state.lyricLines
                 .getOrNull(LyricsParser.indexAt(state.lyricLines, state.positionMs))
 
@@ -449,26 +451,26 @@ private fun VerseAmbient(state: NowPlayingFaceState) {
             if (state.ambientShowTrackInfo && state.title.isNotEmpty()) {
                 Text(
                         text = state.title.uppercase(),
-                        color = tint.copy(alpha = 0.45f * state.ambientIntensity),
+                        color = tint.copy(alpha = geo.TITLE_ALPHA * state.ambientIntensity),
                         fontFamily = state.titleFont,
-                        fontSize = 10.sp,
-                        letterSpacing = 0.16.em,
+                        fontSize = geo.TITLE_SP.sp,
+                        letterSpacing = geo.TITLE_TRACKING_EM.em,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                         textAlign = TextAlign.Center)
-                Box(Modifier.height(10.dp))
+                Box(Modifier.height(geo.TITLE_TO_LINE_GAP_DP.dp))
             }
 
-            val ambientColor = tint.copy(alpha = 0.85f * state.ambientIntensity)
+            val ambientColor = tint.copy(alpha = geo.LINE_ALPHA * state.ambientIntensity)
             Text(
                     text = rememberLyricText(
                             line?.text?.ifBlank { INSTRUMENTAL_MARKER } ?: state.artist),
                     color = ambientColor,
                     fontFamily = state.lyricFont,
                     inlineContent = svartifossNoteContent(ambientColor),
-                    fontSize = 15.sp,
-                    lineHeight = 19.sp,
-                    maxLines = 3,
+                    fontSize = geo.LINE_SP.sp,
+                    lineHeight = geo.LINE_HEIGHT_SP.sp,
+                    maxLines = geo.LINE_MAX_LINES,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Center)
         }

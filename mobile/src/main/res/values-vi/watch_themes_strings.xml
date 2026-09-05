@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Làm mới chủ đề cộng đồng</string>
     <string name="online_theme_list_description">Chủ đề đồng hồ do cộng đồng tạo</string>
     <string name="online_theme_byline">Bởi %1$s</string>
+    <string name="online_theme_filter_author">Chủ đề của %1$s</string>
+    <string name="online_theme_filter_author_selected">Đang hiển thị chủ đề của %1$s</string>
     <string name="online_theme_row_description">%1$s bởi %2$s. Bố cục %3$s.</string>
     <string name="online_theme_apply">Thêm và áp dụng</string>
     <string name="online_theme_loading">Đang tải chủ đề cộng đồng…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Đang hiện các chủ đề bạn đã thêm</string>
     <string name="online_theme_search_empty_all_installed">Bạn đã thêm tất cả chủ đề cộng đồng.</string>
     <string name="online_theme_search_empty_all_installed_hint">Tắt “Mới với tôi” để xem lại.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Tải nhiều nhất</string>
+    <string name="online_theme_sort_most_downloaded_short">Lượt tải</string>
+    <string name="community_theme_detail_downloads">Lượt tải</string>
+    <string name="community_theme_report_action">Báo cáo chủ đề</string>
+    <string name="community_theme_report_already">Đã báo cáo</string>
+    <string name="community_theme_report_description">Báo cáo “%1$s” cho người kiểm duyệt</string>
+    <string name="community_theme_report_title">Báo cáo chủ đề này</string>
+    <string name="community_theme_report_intro">Hãy cho người kiểm duyệt biết chủ đề này có vấn đề gì.</string>
+    <string name="community_theme_report_reason_inappropriate">Nội dung phản cảm hoặc không phù hợp</string>
+    <string name="community_theme_report_reason_impersonation">Mạo nhận là của người khác</string>
+    <string name="community_theme_report_reason_misleading">Không đúng như những gì hiển thị</string>
+    <string name="community_theme_report_reason_illegible">Không dùng được trên đồng hồ</string>
+    <string name="community_theme_report_reason_spam">Spam hoặc trùng lặp</string>
+    <string name="community_theme_report_reason_other">Lý do khác</string>
+    <string name="community_theme_report_details_hint">Điều gì khác người kiểm duyệt nên biết (không bắt buộc)</string>
+    <string name="community_theme_report_privacy">Chỉ người kiểm duyệt đọc được báo cáo của bạn. Tác giả không bao giờ biết ai đã gửi.</string>
+    <string name="community_theme_report_submit">Gửi báo cáo</string>
+    <string name="community_theme_report_sent">Đã gửi báo cáo. Người kiểm duyệt sẽ xem xét chủ đề này.</string>
+    <string name="community_theme_report_already_sent">Bạn đã báo cáo chủ đề này rồi.</string>
+    <string name="community_theme_report_not_ready">Chưa thể báo cáo chủ đề này. Hãy thử lại sau.</string>
+    <string name="community_theme_report_error">Không gửi được báo cáo. Kiểm tra kết nối và thử lại.</string>
 </resources>

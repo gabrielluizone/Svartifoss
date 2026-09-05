@@ -44,6 +44,8 @@
     <string name="online_theme_refresh">Aggiorna i temi della community</string>
     <string name="online_theme_list_description">Temi per orologio creati dalla community</string>
     <string name="online_theme_byline">Di %1$s</string>
+    <string name="online_theme_filter_author">Temi di %1$s</string>
+    <string name="online_theme_filter_author_selected">Sono mostrati i temi di %1$s</string>
     <string name="online_theme_row_description">%1$s di %2$s. Layout %3$s.</string>
     <string name="online_theme_apply">Aggiungi e applica</string>
     <string name="online_theme_loading">Caricamento dei temi della community…</string>
@@ -83,4 +85,27 @@
     <string name="online_theme_filter_not_installed_off">I temi già aggiunti sono visibili</string>
     <string name="online_theme_search_empty_all_installed">Hai già aggiunto tutti i temi della community.</string>
     <string name="online_theme_search_empty_all_installed_hint">Disattiva “Nuovi per me” per rivederli.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Più scaricati</string>
+    <string name="online_theme_sort_most_downloaded_short">Download</string>
+    <string name="community_theme_detail_downloads">Download</string>
+    <string name="community_theme_report_action">Segnala tema</string>
+    <string name="community_theme_report_already">Tema segnalato</string>
+    <string name="community_theme_report_description">Segnala “%1$s” ai moderatori</string>
+    <string name="community_theme_report_title">Segnala questo tema</string>
+    <string name="community_theme_report_intro">Di’ ai moderatori cosa non va in questo tema.</string>
+    <string name="community_theme_report_reason_inappropriate">Contenuti offensivi o inappropriati</string>
+    <string name="community_theme_report_reason_impersonation">Spacciato per opera di un altro</string>
+    <string name="community_theme_report_reason_misleading">Non corrisponde a quanto mostrato</string>
+    <string name="community_theme_report_reason_illegible">Inutilizzabile sull\'orologio</string>
+    <string name="community_theme_report_reason_spam">Spam o duplicato</string>
+    <string name="community_theme_report_reason_other">Altro motivo</string>
+    <string name="community_theme_report_details_hint">Altro che i moderatori dovrebbero sapere (facoltativo)</string>
+    <string name="community_theme_report_privacy">Solo i moderatori leggono la tua segnalazione. All\'autore non viene mai detto chi l\'ha inviata.</string>
+    <string name="community_theme_report_submit">Invia segnalazione</string>
+    <string name="community_theme_report_sent">Segnalazione inviata. I moderatori esamineranno questo tema.</string>
+    <string name="community_theme_report_already_sent">Hai già segnalato questo tema.</string>
+    <string name="community_theme_report_not_ready">Questo tema non può ancora essere segnalato. Riprova più tardi.</string>
+    <string name="community_theme_report_error">Impossibile inviare la segnalazione. Controlla la connessione e riprova.</string>
 </resources>

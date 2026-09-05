@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Päivitä yhteisöteemat</string>
     <string name="online_theme_list_description">Yhteisön luomat kelloteemat</string>
     <string name="online_theme_byline">Tekijä %1$s</string>
+    <string name="online_theme_filter_author">Tekijän %1$s teemat</string>
+    <string name="online_theme_filter_author_selected">Näytetään tekijän %1$s teemat</string>
     <string name="online_theme_row_description">%1$s, tekijä %2$s. %3$s-asettelu.</string>
     <string name="online_theme_apply">Lisää ja käytä</string>
     <string name="online_theme_loading">Ladataan yhteisöteemoja…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Jo lisäämäsi teemat näytetään</string>
     <string name="online_theme_search_empty_all_installed">Olet jo lisännyt kaikki yhteisöteemat.</string>
     <string name="online_theme_search_empty_all_installed_hint">Poista ”Uudet minulle” käytöstä nähdäksesi ne uudelleen.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Ladatuimmat</string>
+    <string name="online_theme_sort_most_downloaded_short">Lataukset</string>
+    <string name="community_theme_detail_downloads">Lataukset</string>
+    <string name="community_theme_report_action">Ilmianna teema</string>
+    <string name="community_theme_report_already">Teema ilmiannettu</string>
+    <string name="community_theme_report_description">Ilmianna “%1$s” valvojille</string>
+    <string name="community_theme_report_title">Ilmianna tämä teema</string>
+    <string name="community_theme_report_intro">Kerro valvojille, mikä tässä teemassa on vialla.</string>
+    <string name="community_theme_report_reason_inappropriate">Loukkaavaa tai sopimatonta sisältöä</string>
+    <string name="community_theme_report_reason_impersonation">Esitetään toisen tekemänä</string>
+    <string name="community_theme_report_reason_misleading">Ei vastaa sitä, mitä näytetään</string>
+    <string name="community_theme_report_reason_illegible">Käyttökelvoton kellossa</string>
+    <string name="community_theme_report_reason_spam">Roskaa tai kaksoiskappale</string>
+    <string name="community_theme_report_reason_other">Jokin muu</string>
+    <string name="community_theme_report_details_hint">Muuta, mitä valvojien pitäisi tietää (valinnainen)</string>
+    <string name="community_theme_report_privacy">Vain valvojat lukevat ilmoituksesi. Tekijälle ei koskaan kerrota, kuka sen lähetti.</string>
+    <string name="community_theme_report_submit">Lähetä ilmoitus</string>
+    <string name="community_theme_report_sent">Ilmoitus lähetetty. Valvojat katsovat tämän teeman.</string>
+    <string name="community_theme_report_already_sent">Olet jo ilmiantanut tämän teeman.</string>
+    <string name="community_theme_report_not_ready">Tätä teemaa ei voi vielä ilmiantaa. Yritä myöhemmin uudelleen.</string>
+    <string name="community_theme_report_error">Ilmoitusta ei voitu lähettää. Tarkista yhteys ja yritä uudelleen.</string>
 </resources>

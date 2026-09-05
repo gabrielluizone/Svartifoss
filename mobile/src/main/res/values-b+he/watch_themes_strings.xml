@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">רענון ערכות נושא מהקהילה</string>
     <string name="online_theme_list_description">ערכות נושא לשעון שנוצרו בידי הקהילה</string>
     <string name="online_theme_byline">מאת %1$s</string>
+    <string name="online_theme_filter_author">ערכות נושא מאת %1$s</string>
+    <string name="online_theme_filter_author_selected">מוצגות ערכות הנושא מאת %1$s</string>
     <string name="online_theme_row_description">%1$s מאת %2$s. פריסת %3$s.</string>
     <string name="online_theme_apply">הוספה והחלה</string>
     <string name="online_theme_loading">טוען ערכות נושא מהקהילה…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">ערכות שכבר הוספת מוצגות</string>
     <string name="online_theme_search_empty_all_installed">כבר הוספת את כל ערכות הקהילה.</string>
     <string name="online_theme_search_empty_all_installed_hint">כבו את ”חדש עבורי“ כדי לראות אותן שוב.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">הכי מורדות</string>
+    <string name="online_theme_sort_most_downloaded_short">הורדות</string>
+    <string name="community_theme_detail_downloads">הורדות</string>
+    <string name="community_theme_report_action">דיווח על ערכה</string>
+    <string name="community_theme_report_already">דווח</string>
+    <string name="community_theme_report_description">לדווח למנהלים על “%1$s”</string>
+    <string name="community_theme_report_title">דיווח על הערכה הזו</string>
+    <string name="community_theme_report_intro">ספרו למנהלים מה לא בסדר בערכה הזו.</string>
+    <string name="community_theme_report_reason_inappropriate">תוכן פוגעני או לא הולם</string>
+    <string name="community_theme_report_reason_impersonation">מוצגת כשל מישהו אחר</string>
+    <string name="community_theme_report_reason_misleading">לא תואמת למה שמוצג</string>
+    <string name="community_theme_report_reason_illegible">לא שמישה בשעון</string>
+    <string name="community_theme_report_reason_spam">ספאם או כפילות</string>
+    <string name="community_theme_report_reason_other">משהו אחר</string>
+    <string name="community_theme_report_details_hint">משהו נוסף שכדאי שהמנהלים יידעו (רשות)</string>
+    <string name="community_theme_report_privacy">רק המנהלים קוראים את הדיווח שלכם. היוצר לעולם לא יידע מי שלח אותו.</string>
+    <string name="community_theme_report_submit">שליחת דיווח</string>
+    <string name="community_theme_report_sent">הדיווח נשלח. המנהלים יבדקו את הערכה הזו.</string>
+    <string name="community_theme_report_already_sent">כבר דיווחתם על הערכה הזו.</string>
+    <string name="community_theme_report_not_ready">אי אפשר עדיין לדווח על הערכה הזו. נסו שוב מאוחר יותר.</string>
+    <string name="community_theme_report_error">לא הצלחנו לשלוח את הדיווח. בדקו את החיבור ונסו שוב.</string>
 </resources>

@@ -1,10 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- Material Symbols "download" (fonts.google.com/icons). Derived from this repository's own
+     icons/icons_3/upload_24dp_..._wght400_...svg by mirroring its arrow inside the identical
+     tray, so it carries the same wght400 outlined weight as the rest of the icon set. The
+     legacy filled "file_download" it replaces was the only heavy glyph in the gallery card's
+     metric row and read as a different family beside the outlined heart.
+     viewBox 0 -960 960 960 shifted into Android's coordinate space via the group translate.
+     Tinted at usage. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
-    android:viewportWidth="24"
-    android:viewportHeight="24">
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M19,9h-4V3H9v6H5l7,7 7,-7zM5,18v2h14v-2H5z" />
+    android:viewportWidth="960"
+    android:viewportHeight="960"
+    android:tint="?attr/colorControlNormal">
+    <group android:translateY="960">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M440-800v326L336-578l-56 58 200 200 200-200-56-58-104 104v-326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z" />
+    </group>
 </vector>

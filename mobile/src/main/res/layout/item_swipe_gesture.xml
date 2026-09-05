@@ -48,6 +48,7 @@
         android:fontFamily="@font/google_sans"
         android:gravity="center"
         android:importantForAccessibility="no"
+        android:ellipsize="end"
         android:maxLines="4"
         android:minHeight="24dp"
         android:textColor="@color/lyra_pref_summary"

@@ -55,6 +55,7 @@ import kotlin.math.abs
 import kotlin.math.min
 import kotlin.math.roundToInt
 import timber.log.Timber
+import com.svartifoss.snfell.view.NEUTRAL_WATCH_ACCENT
 
 private const val PLAYBACK_TICK_INTERVAL_MS = 500L
 
@@ -93,7 +94,7 @@ class WatchFaceFragment : Fragment() {
         private const val ARG_SECTION = "initialWatchSection"
         private const val ARG_HIGHLIGHT_KEY = "initialWatchHighlightKey"
         private var lastSelectedSection = 0
-        private const val NEUTRAL_ACCENT = 0xFF86A69D.toInt()
+        private const val NEUTRAL_ACCENT = NEUTRAL_WATCH_ACCENT
 
         /** Opens straight at [section], scrolled to [highlightKey]. Used by the settings search;
          *  with both null this is the same as the plain constructor. */
@@ -183,10 +184,22 @@ class WatchFaceFragment : Fragment() {
     }
     private val themeManagerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK && _binding != null) {
-            updateThemeCard()
-            previews { it.refresh() }
-        }
+        if (result.resultCode == Activity.RESULT_OK) onThemeLibraryChanged()
+    }
+
+    /**
+     * Re-reads the active theme after something outside this tab changed it.
+     *
+     * This tab's own preference listener is unregistered while another Activity is in front, so a
+     * theme applied from the themes screen - or from the toolbar's community-gallery shortcut,
+     * which opens the same gallery without going through this tab at all - lands while nothing
+     * here is listening. Without this the card and the miniature keep showing the previous theme
+     * until the user happens to touch a setting.
+     */
+    internal fun onThemeLibraryChanged() {
+        if (_binding == null) return
+        updateThemeCard()
+        previews { it.refresh() }
     }
 
     private val pageCallback = object : ViewPager2.OnPageChangeCallback() {

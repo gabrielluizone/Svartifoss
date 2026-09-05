@@ -45,4 +45,11 @@
     <string name="community_theme_detail_requires_app_version">This theme needs Svartifoss %1$s before it can be added.</string>
     <string name="community_theme_detail_load_error">Couldn’t load this theme’s details. Return to Community themes and try again.</string>
     <string name="community_theme_detail_profile_mismatch">The downloaded profile does not match this theme’s public details. Return to Community themes and try again.</string>
+    <!-- Author screenshots: a real photo of the author's watch, shown on the Player surface. -->
+    <string name="community_theme_detail_screenshot_description">Photo of this theme on its author\'s watch</string>
+    <string name="community_theme_detail_source_author">Author\'s watch</string>
+    <string name="community_theme_detail_source_rendered">Generated preview</string>
+    <string name="community_theme_detail_show_rendered">Show generated preview</string>
+    <string name="community_theme_detail_show_author">Show author\'s photo</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
 </resources>

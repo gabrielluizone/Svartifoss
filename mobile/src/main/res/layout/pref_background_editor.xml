@@ -56,6 +56,16 @@
                 tools:text="Cover" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/background_editor_filter_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:icon="@drawable/ic_tune"
+                tools:text="Filter · None" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/background_editor_blur_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
@@ -186,6 +196,7 @@
                     android:layout_marginStart="8dp"
                     android:fontFamily="@font/google_sans"
                     android:includeFontPadding="false"
+                    android:ellipsize="end"
                     android:maxLines="1"
                     android:text="@string/background_editor_reset_layers"
                     android:textAllCaps="false"

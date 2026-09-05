@@ -1,30 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="album_art_style_extra_entries">
-        <item>Banho oceânico</item>
-        <item>Banho de pôr do sol</item>
+        <item>Oceano</item>
+        <item>Pôr do sol</item>
         <item>Holofote central</item>
         <item>Véu de vidro</item>
         <item>Veludo</item>
         <item>Holofote noir</item>
         <item>Banho de gelo</item>
         <item>Flor rosa</item>
-        <item>Filtro · Quente</item>
-        <item>Filtro · Frio</item>
-        <item>Filtro · Hora dourada</item>
-        <item>Filtro · Rosé</item>
-        <item>Filtro · Filme vintage</item>
-        <item>Filtro · Filme desbotado</item>
-        <item>Filtro · Fosco</item>
-        <item>Filtro · Vívido</item>
-        <item>Filtro · Intenso</item>
-        <item>Filtro · Pastel</item>
-        <item>Filtro · Sépia</item>
-        <item>Filtro · Cianótipo</item>
-        <item>Filtro · Verde-azulado e laranja</item>
-        <item>Filtro · Alto contraste</item>
-        <item>Filtro · Luz suave</item>
-        <item>Filtro · Noturno</item>
+        <item>Prisma</item>
+        <item>Borda crescente</item>
+        <item>Faixas de maré</item>
+        <item>Capa de papel</item>
+        <item>Ascensão de lanterna</item>
+        <item>Divisão miragem</item>
+        <item>Grade silenciosa</item>
+        <item>Nocturno</item>
+        <item>Estudo de nuvens</item>
+        <item>Poças líquidas</item>
+        <item>Monólito de cor</item>
+        <item>Tom dividido</item>
+        <item>Gradiente</item>
+        <item>Duotom</item>
+        <item>Faixas</item>
+        <item>Vinheta</item>
+        <item>Grafite</item>
+        <item>Cinema</item>
+        <item>Acrílico</item>
+        <item>Malha</item>
+        <item>Nebulosa</item>
+        <item>Bioluminescência</item>
+        <item>Iridescente</item>
+        <item>Órbita</item>
+        <item>Aguada de tinta</item>
+        <item>Flor</item>
+        <item>Fiorde</item>
+        <item>Matriz de pontos</item>
+        <item>Linhas de varredura</item>
+        <item>Radar</item>
+        <item>Curvas de nível</item>
+        <item>Facetado</item>
+        <item>Preenchimento do álbum</item>
+        <item>Preenchimento secundário</item>
+        <item>Preenchimento terciário</item>
+        <item>Vidro</item>
+        <item>Meia-noite</item>
+        <item>Fumaça</item>
+        <item>Linha de maré</item>
     </string-array>
     <string-array name="player_shading_style_extra_entries">
         <item>Degradê superior</item>
@@ -58,5 +81,19 @@
         <item>Vidro do álbum</item>
         <item>Cor terciária do álbum</item>
         <item>Contorno neon</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Musgo</item>
+        <item>Névoa lavanda</item>
+        <item>Cereja</item>
+        <item>Mar profundo</item>
+        <item>Poeira</item>
+        <item>Alvejante</item>
+        <item>Luz da lua</item>
+        <item>Sonho</item>
+        <item>Infravermelho</item>
+        <item>Floresta</item>
+        <item>Prata</item>
+        <item>Doce</item>
     </string-array>
 </resources>

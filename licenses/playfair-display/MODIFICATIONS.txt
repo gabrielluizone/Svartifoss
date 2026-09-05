@@ -1,0 +1,61 @@
+Modifications to playfair_display_regular.ttf
+==============================================
+
+The SIL Open Font License permits modification and does not require this notice
+(there is no clause analogous to Apache 2.0's 4(b) here), but it is recorded for
+the same reason `special-elite/MODIFICATIONS.txt` in this repository is: a binary
+font file carries no diff, so without a written record a future re-download of the
+upstream release would silently undo the fix.
+
+The bundled copies of this font (mobile/src/main/res/font/playfair_display_regular.ttf
+and wear/src/main/res/font/playfair_display_regular.ttf) have been modified from the
+upstream release at https://github.com/google/fonts/tree/main/ofl/playfairdisplay.
+Only the vertical metrics were changed; no glyph outline, character mapping, name
+table or Reserved Font Name was touched.
+
+  hhea.ascent          1082  ->  1020
+  hhea.descent         -251  ->  -313
+  hhea.lineGap            0  ->     0   (unchanged)
+  OS/2.sTypoAscender   1082  ->  1020
+  OS/2.sTypoDescender  -251  ->  -313
+  OS/2.sTypoLineGap       0  ->     0   (unchanged)
+  OS/2.usWinAscent     1082  ->  1159
+  OS/2.usWinDescent     251  ->   241
+
+Why
+---
+
+Every renderer centres a line of text by its line box (ascent..descent), so where a
+font's ink sits inside that box is the font's decision, not the app's. This font's
+box centre sat 0.062 em above its own capital letters, which reads as text (titles,
+clock digits, anything set in this face) sitting visibly high in a centred pill or
+chip.
+
+The correction centres the box on the font's flat capital letters - E, F, H, I, L,
+picked because their ink has a genuinely flat top and bottom. Two features of this
+particular font make that the deliberate choice over centring on the raw digit ink,
+which the same method used for `wear_font`/Text-page pickers would otherwise suggest:
+
+- This font's numerals are old-style (text) figures, not lining figures: 3, 4, 5, 7
+  and 9 dip well below the baseline by design (an intentional stylistic choice, the
+  same reason lowercase g/j/p/q/y have descenders), while 0, 1, 2, 6, 8 do not.
+  Averaging over all ten digits would pull the whole box down to accommodate five
+  characters that are supposed to hang low, and would then place every capital
+  letter and the other five digits too high to compensate. Centring on the flat
+  caps instead treats the old-style figures the same way any face's ordinary
+  descenders are treated: an intentional, asymmetric extension below the box, not
+  something the box itself needs to be re-balanced around.
+- The capital Q carries a swash tail that drops well below the baseline. Averaging
+  over the full alphabet (as opposed to the flat-only subset) would let that one
+  glyph pull the reference down the same way the old-style figures would.
+
+ascent + |descent| is unchanged (1333 units in this font's 1000-unit em - the extra
+headroom above one em is original to this font, not something this fix introduced),
+so line height, spacing, wrapping and every reserved height are the same as
+upstream; only where the ink sits inside that box moves. The flat-cap band now lands
+within 0.001 em of the box centre.
+
+usWinAscent/usWinDescent were widened to the font's real ink extents (head.yMax/yMin).
+
+Pinned by BundledFontMetricsTest, so a re-download from upstream fails the build
+rather than silently reverting the fix.

@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">Atualizar temas da comunidade</string>
     <string name="online_theme_list_description">Temas de relógio criados pela comunidade</string>
     <string name="online_theme_byline">Por %1$s</string>
+    <string name="online_theme_filter_author">Temas de %1$s</string>
+    <string name="online_theme_filter_author_selected">Exibindo os temas de %1$s</string>
     <string name="online_theme_row_description">%1$s por %2$s. Layout %3$s.</string>
     <string name="online_theme_apply">Adicionar e aplicar</string>
     <string name="online_theme_opening_details">Abrindo…</string>
@@ -90,7 +92,7 @@
     <string name="watch_theme_submit_community">Enviar para a comunidade</string>
     <string name="community_theme_submit_title">Enviar tema</string>
     <string name="community_theme_submit_preview_description">Prévia do tema que será enviado</string>
-    <string name="community_theme_submit_intro">Ele será revisado antes de aparecer nos temas da comunidade. Você pode enviar até 3 temas a cada 24 horas.</string>
+    <string name="community_theme_submit_intro">Ele será revisado antes de aparecer nos temas da comunidade. Você pode enviar até 10 temas a cada 24 horas.</string>
     <string name="community_theme_submit_public_name">Nome público do tema</string>
     <string name="community_theme_submit_author">Nome público do autor</string>
     <string name="community_theme_submit_author_helper">Escolha uma vez: A–Z, 0–9, espaços, ponto, sublinhado, apóstrofo ou hífen. Ele é único e fica fixo até a conta ser excluída.</string>
@@ -112,7 +114,7 @@
     <string name="community_theme_submit_unsupported_setting">A galeria não aceita a opção %1$s deste tema. Altere-a e envie o tema de novo.</string>
     <string name="community_theme_submit_duplicate">Um tema com exatamente estas configurações já está publicado neste layout. Mude algo visível antes de enviá-lo.</string>
     <string name="community_theme_submit_sign_in_cancelled">O login do Google foi cancelado. Seu tema não foi enviado.</string>
-    <string name="community_theme_submit_limit_reached">Você já enviou 3 temas nas últimas 24 horas. Tente novamente quando o envio mais antigo completar 24 horas.</string>
+    <string name="community_theme_submit_limit_reached">Você já enviou 10 temas neste período de 24 horas. Tente novamente quando ele terminar.</string>
     <string name="community_theme_submit_error">Não foi possível enviar este tema. Verifique a conexão e tente novamente.</string>
     <string name="community_theme_submit_preview_error">Não foi possível preparar a prévia para revisão. Tente novamente.</string>
     <string name="community_theme_submit_success_title">Enviado para revisão</string>
@@ -228,4 +230,54 @@
     <string name="online_theme_filter_not_installed_off">Mostrando temas que você já adicionou</string>
     <string name="online_theme_search_empty_all_installed">Você já adicionou todos os temas da comunidade.</string>
     <string name="online_theme_search_empty_all_installed_hint">Desative “Novos para mim” para vê-los de novo.</string>
+    <!-- Print do autor: uma foto opcional do próprio relógio, apenas da tela do Player. -->
+    <string name="community_theme_submit_screenshot_title">Foto do seu relógio</string>
+    <string name="community_theme_submit_screenshot_optional">Opcional</string>
+    <string name="community_theme_submit_screenshot_intro">Adicione um print do Player no seu próprio relógio e a galeria vai mostrá-lo ao lado da prévia gerada. Ele se torna público permanentemente, incluindo a capa do álbum, a música e o relógio que aparecem nele, e permanece no histórico do repositório mesmo se o tema for removido depois.</string>
+    <string name="community_theme_submit_screenshot_add">Escolher foto</string>
+    <string name="community_theme_submit_screenshot_replace">Trocar foto</string>
+    <string name="community_theme_submit_screenshot_remove">Remover</string>
+    <string name="community_theme_submit_screenshot_description">Print anexado a este envio</string>
+    <string name="community_theme_submit_screenshot_placeholder">Nenhuma foto anexada. A galeria vai mostrar apenas a prévia gerada.</string>
+    <string name="community_theme_submit_screenshot_attached">Foto pronta para enviar.</string>
+    <string name="community_theme_submit_screenshot_unreadable">Não foi possível ler essa imagem. Escolha outra.</string>
+    <string name="community_theme_submit_screenshot_too_small">Essa imagem é pequena demais. Um print de relógio tem pelo menos %1$d pixels no lado menor.</string>
+    <string name="community_theme_submit_screenshot_too_large">Essa imagem tem detalhe demais para enviar. Use um print em vez de uma foto da tela.</string>
+    <string name="community_theme_submit_screenshot_failed">Seu tema foi enviado, mas a foto não pôde ser anexada a ele.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Mais baixados</string>
+    <string name="online_theme_sort_most_downloaded_short">Downloads</string>
+    <string name="community_theme_detail_downloads">Downloads</string>
+    <string name="community_theme_report_action">Denunciar tema</string>
+    <string name="community_theme_report_already">Tema denunciado</string>
+    <string name="community_theme_report_description">Denunciar “%1$s” aos moderadores</string>
+    <string name="community_theme_report_title">Denunciar este tema</string>
+    <string name="community_theme_report_intro">Diga aos moderadores o que há de errado com este tema.</string>
+    <string name="community_theme_report_reason_inappropriate">Conteúdo ofensivo ou impróprio</string>
+    <string name="community_theme_report_reason_impersonation">Passado como sendo de outra pessoa</string>
+    <string name="community_theme_report_reason_misleading">Não é o que o anúncio mostra</string>
+    <string name="community_theme_report_reason_illegible">Inutilizável no relógio</string>
+    <string name="community_theme_report_reason_spam">Spam ou duplicata</string>
+    <string name="community_theme_report_reason_other">Outro motivo</string>
+    <string name="community_theme_report_details_hint">Mais alguma coisa que os moderadores devam saber (opcional)</string>
+    <string name="community_theme_report_privacy">Só os moderadores leem a sua denúncia. O autor nunca fica sabendo quem a enviou.</string>
+    <string name="community_theme_report_submit">Enviar denúncia</string>
+    <string name="community_theme_report_sent">Denúncia enviada. Os moderadores vão analisar este tema.</string>
+    <string name="community_theme_report_already_sent">Você já denunciou este tema.</string>
+    <string name="community_theme_report_not_ready">Este tema ainda não pode ser denunciado. Tente de novo mais tarde.</string>
+    <string name="community_theme_report_error">Não foi possível enviar a denúncia. Verifique a conexão e tente de novo.</string>
+
+    <plurals name="online_theme_downloads_count">
+        <item quantity="one">%1$s download</item>
+        <item quantity="other">%1$s downloads</item>
+    </plurals>
+    <plurals name="community_theme_detail_downloads_count">
+        <item quantity="one">%1$s download</item>
+        <item quantity="other">%1$s downloads</item>
+    </plurals>
+    <plurals name="community_theme_submissions_downloads">
+        <item quantity="one">%1$d download</item>
+        <item quantity="other">%1$d downloads</item>
+    </plurals>
 </resources>

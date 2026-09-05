@@ -14,6 +14,7 @@ import com.svartifoss.snfell.BuildConfig
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.buttonconfig.SpecialButtonCodes
+import com.svartifoss.snfell.watch.input.DoublePinchGestureController
 import com.svartifoss.snfell.proto.WatchInfo
 import com.svartifoss.snfell.watch.util.WatchLanguage
 import com.matejdro.wearutils.miscutils.BitmapUtils
@@ -37,6 +38,11 @@ class WatchInfoSender(private val context: Context, private val urgent: Boolean)
         builder.displayHeight = displaySize.y
         builder.appVersionCode = BuildConfig.VERSION_CODE
         builder.appVersionName = BuildConfig.VERSION_NAME
+        // The hand gesture is the one input on the Controls screen a watch can simply not have,
+        // and all three of its failure states are silent from the wrist. Only the watch can tell
+        // them apart, so it answers here and the phone renders the answer rather than offering
+        // the assignment with the same confidence it offers a screen tap.
+        builder.handGesture = DoublePinchGestureController.availability(context).code
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // These labels are rendered by the *phone*, in the Controls screen, so they have to be

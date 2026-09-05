@@ -193,6 +193,10 @@ object FaceScopedPreferences {
             "wear_dynamic_accent",
             "wear_edge_progress_visible",
             "wear_edge_seek_enabled",
+            // Per face like the ring it is drawn on: a face that hides the edge arc has
+            // nowhere to put the tick, so a global value would be meaningless on some
+            // faces and load-bearing on others.
+            "wear_seek_marker",
             "wear_expressive_seek_mode",
             "wear_font",
             // Queue, menus and Quick actions are opened from a face, so whether they inherit its
@@ -201,6 +205,7 @@ object FaceScopedPreferences {
             "wear_carousel_card_shape",
             "wear_note_cover_shape",
             "wear_note_show_cover",
+            "wear_title_centered",
             "wear_chat_cover_shape",
             "wear_chat_show_cover",
             "wear_metadata_cover_shape",
@@ -235,6 +240,31 @@ object FaceScopedPreferences {
             "wear_show_track_artist",
             "wear_show_track_title",
             "wear_title_text_mode",
+            // The title/artist shadow. Scoped like the rest of the typography: a shadow
+            // tuned to lift a title off a full-bleed cover is wrong on a face that paints
+            // its own dark panel, and a saved theme has to carry it.
+            "wear_title_shadow_style",
+            "wear_title_shadow_color_mode",
+            "wear_title_shadow_custom_color",
+            "wear_title_shadow_strength",
+            "wear_artist_shadow_style",
+            "wear_artist_shadow_color_mode",
+            "wear_artist_shadow_custom_color",
+            "wear_artist_shadow_strength",
+            "wear_title_outline_style",
+            "wear_title_outline_color_mode",
+            "wear_title_outline_custom_color",
+            "wear_artist_outline_style",
+            "wear_artist_outline_color_mode",
+            "wear_artist_outline_custom_color",
+            "wear_title_text_bg_style",
+            "wear_title_text_bg_color_mode",
+            "wear_title_text_bg_custom_color",
+            "wear_title_text_bg_opacity",
+            "wear_artist_text_bg_style",
+            "wear_artist_text_bg_color_mode",
+            "wear_artist_text_bg_custom_color",
+            "wear_artist_text_bg_opacity",
             "wear_track_time_mode",
             "wear_volume_style",
             "wear_volume_layout",

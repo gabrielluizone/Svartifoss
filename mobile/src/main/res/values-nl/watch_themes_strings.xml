@@ -42,6 +42,8 @@
     <string name="online_theme_refresh">Communitythema\'s vernieuwen</string>
     <string name="online_theme_list_description">Door de community gemaakte horlogethema\'s</string>
     <string name="online_theme_byline">Door %1$s</string>
+    <string name="online_theme_filter_author">Thema’s van %1$s</string>
+    <string name="online_theme_filter_author_selected">Thema’s van %1$s worden getoond</string>
     <string name="online_theme_row_description">%1$s door %2$s. Lay-out %3$s.</string>
     <string name="online_theme_apply">Toevoegen en toepassen</string>
     <string name="online_theme_loading">Communitythema\'s laden…</string>
@@ -81,4 +83,27 @@
     <string name="online_theme_filter_not_installed_off">Al toegevoegde thema’s worden getoond</string>
     <string name="online_theme_search_empty_all_installed">Je hebt alle communitythema’s al toegevoegd.</string>
     <string name="online_theme_search_empty_all_installed_hint">Schakel ‘Nieuw voor mij’ uit om ze weer te zien.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Meest gedownload</string>
+    <string name="online_theme_sort_most_downloaded_short">Downloads</string>
+    <string name="community_theme_detail_downloads">Downloads</string>
+    <string name="community_theme_report_action">Thema melden</string>
+    <string name="community_theme_report_already">Thema gemeld</string>
+    <string name="community_theme_report_description">“%1$s” melden bij de moderators</string>
+    <string name="community_theme_report_title">Dit thema melden</string>
+    <string name="community_theme_report_intro">Vertel de moderators wat er mis is met dit thema.</string>
+    <string name="community_theme_report_reason_inappropriate">Aanstootgevende of ongepaste inhoud</string>
+    <string name="community_theme_report_reason_impersonation">Doet zich voor als dat van iemand anders</string>
+    <string name="community_theme_report_reason_misleading">Komt niet overeen met wat er te zien is</string>
+    <string name="community_theme_report_reason_illegible">Onbruikbaar op het horloge</string>
+    <string name="community_theme_report_reason_spam">Spam of een duplicaat</string>
+    <string name="community_theme_report_reason_other">Iets anders</string>
+    <string name="community_theme_report_details_hint">Iets anders dat de moderators moeten weten (optioneel)</string>
+    <string name="community_theme_report_privacy">Alleen de moderators lezen je melding. De maker hoort nooit wie hem heeft verstuurd.</string>
+    <string name="community_theme_report_submit">Melding versturen</string>
+    <string name="community_theme_report_sent">Melding verstuurd. De moderators bekijken dit thema.</string>
+    <string name="community_theme_report_already_sent">Je hebt dit thema al gemeld.</string>
+    <string name="community_theme_report_not_ready">Dit thema kan nog niet worden gemeld. Probeer het later opnieuw.</string>
+    <string name="community_theme_report_error">Je melding kon niet worden verstuurd. Controleer je verbinding en probeer het opnieuw.</string>
 </resources>

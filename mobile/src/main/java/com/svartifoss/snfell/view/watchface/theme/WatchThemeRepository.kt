@@ -6,8 +6,9 @@ import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.WATCH_SNAPSHOT_GUARD_BYTES
 import com.svartifoss.snfell.estimateWatchPreferenceSnapshotBytes
-import com.svartifoss.snfell.shouldSyncWatchPreference
+import com.svartifoss.snfell.selectWatchPreferenceSnapshot
 import com.svartifoss.snfell.common.AppearanceContext
+import com.svartifoss.snfell.common.AppearanceNumericRanges
 import com.svartifoss.snfell.common.BackgroundLayerStack
 import com.svartifoss.snfell.common.ArchivedFaces
 import com.svartifoss.snfell.common.FaceScopedPreferences
@@ -646,7 +647,10 @@ class WatchThemeRepository(context: Context) {
         val index = state.profiles.indexOfFirst { it.id == profileId }
         if (index < 0) return null
         val old = state.profiles[index]
-        if (old.settings.keys == FaceScopedPreferences.SCOPED_DEFINITIONS_BY_KEY.keys) return old
+        if (old.settings.keys == FaceScopedPreferences.SCOPED_DEFINITIONS_BY_KEY.keys &&
+                old.settings.all { (key, value) -> inRange(key, value) === value }) {
+            return old
+        }
         val normalized = normalizeProfile(old, defaultPrefs) ?: return old
         val updated = state.profiles.toMutableList().apply { set(index, normalized) }
         saveState(state.copy(profiles = updated))
@@ -785,6 +789,20 @@ class WatchThemeRepository(context: Context) {
     }
 
     /** Imported/old profiles are completed against their base preset and unknown keys disappear. */
+    /**
+     * [value] brought inside its key's declared range, or returned as-is.
+     *
+     * A theme saved before the phone's numeric fields clamped can hold a number the gallery
+     * refuses - and the watch was already rendering it clamped, so bringing it into range here
+     * changes nothing anybody can see while turning an unsubmittable theme into a submittable one.
+     * Identity is preserved for an already-valid value so callers can test whether anything moved.
+     */
+    private fun inRange(key: String, value: WatchThemeValue): WatchThemeValue {
+        if (value !is WatchThemeValue.Number) return value
+        val clamped = AppearanceNumericRanges.clamp(key, value.value)
+        return if (clamped == value.value) value else WatchThemeValue.Number(clamped)
+    }
+
     private fun normalizeProfile(
             profile: WatchThemeProfile,
             defaultPrefs: SharedPreferences
@@ -795,7 +813,7 @@ class WatchThemeRepository(context: Context) {
         val complete = FaceScopedPreferences.SCOPED_DEFINITIONS.associate { definition ->
             val candidate = profile.settings[definition.key]
             definition.key to if (valueMatchesDefinition(candidate, definition.defaultValue)) {
-                candidate!!
+                inRange(definition.key, candidate!!)
             } else {
                 defaults.getValue(definition.key)
             }
@@ -949,17 +967,23 @@ class WatchThemeRepository(context: Context) {
                     MAX_PUBLISHED_MATERIALIZED_BYTES
 
     /**
-     * A gallery profile joins, rather than replaces, other face-scoped settings already synced to
-     * the watch. Estimate the final snapshot before committing default preferences so a download
-     * can never report success while creating a Data Layer payload the watch cannot receive.
+     * Estimates the Data Layer payload this profile would produce, so a download can never report
+     * success while creating a snapshot the watch cannot receive.
+     *
+     * Measured against what is actually **transmitted**, not against the phone's whole preference
+     * file. Those were the same thing once, which is why installing a theme used to be refused for
+     * a reason the user could do nothing reasonable about: a library with several customised faces
+     * carried every one of their scopes over the wire, so the twenty-first scope was rejected on
+     * behalf of the twenty the watch cannot read. [selectWatchPreferenceSnapshot] now sends the
+     * active scope - which, for a theme being applied, is exactly this profile - plus the behaviour
+     * keys, and drops inactive scopes to stay in budget. So this bounds one theme's own snapshot
+     * against the transport, and the size of the rest of the library no longer enters into it.
      */
     private fun fitsWatchSyncSnapshot(
             defaultPrefs: SharedPreferences,
             profile: WatchThemeProfile
     ): Boolean {
-        val projected = defaultPrefs.all
-                .filterKeys(::shouldSyncWatchPreference)
-                .toMutableMap()
+        val projected = defaultPrefs.all.toMutableMap()
         profile.settings.forEach { (key, value) ->
             projected[FaceScopedPreferences.scopedKey(key, ThemeAppearance.CUSTOM_SCOPE)] =
                     materializedThemeValue(value)
@@ -970,7 +994,13 @@ class WatchThemeRepository(context: Context) {
                 ThemeAppearance.CURRENT_SCHEMA.toString()
         projected[MiscPreferences.WEAR_CUSTOM_THEME_REVISION.key] = profile.revision.toString()
         projected[MiscPreferences.WEAR_CUSTOM_THEME_COMPLETE.key] = true
-        return estimateWatchPreferenceSnapshotBytes(projected) < WATCH_SNAPSHOT_GUARD_BYTES
+        // Applying a theme makes the custom snapshot the active scope, so that is the scope the
+        // selector must be asked about - asking about the current one would measure the face the
+        // install is about to switch away from.
+        val transmitted = selectWatchPreferenceSnapshot(
+                projected,
+                ThemeAppearance.CUSTOM_SCOPE).values
+        return estimateWatchPreferenceSnapshotBytes(transmitted) < WATCH_SNAPSHOT_GUARD_BYTES
     }
 
     private fun materializedThemeValue(value: WatchThemeValue): Any = when (value) {

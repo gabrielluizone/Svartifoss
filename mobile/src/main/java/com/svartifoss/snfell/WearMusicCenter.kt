@@ -11,6 +11,8 @@ import com.svartifoss.snfell.logging.CrashlyticsExceptionWearHandler
 import com.svartifoss.snfell.logging.CrashReporting
 import com.svartifoss.snfell.notifications.AnnouncementNotifications
 import com.svartifoss.snfell.logging.TimberCrashlytics
+import com.svartifoss.snfell.music.PlaylistShortcutStorage
+import com.svartifoss.snfell.music.ShortcutArtworkStore
 import com.matejdro.wearutils.logging.FileLogger
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
@@ -54,6 +56,7 @@ class WearMusicCenter : Application(), HasAndroidInjector {
         Timber.plant(fileLogger)
 
         repairCenterLongPressPreference()
+        repairShortcutArtworkStore()
         // The on-watch face picker reads the theme library from a synced preference that only the
         // library's own save path writes, so a library created before that key existed never
         // reached the watch. Same once-per-process repair as the preference snapshot re-publish.
@@ -69,6 +72,40 @@ class WearMusicCenter : Application(), HasAndroidInjector {
         // Application lifetime, rather than a Settings Fragment lifecycle, owns phone -> watch
         // preference delivery. This also performs one startup repair sync for a stale watch.
         watchPreferenceSync = WatchPreferenceSyncCoordinator(this).also { it.start() }
+    }
+
+    /**
+     * Drops the queue covers that the shortcut-thumbnail store accumulated while the two shared
+     * one folder (see [com.svartifoss.snfell.music.RemoteArtworkCache]).
+     *
+     * Queue covers now have a cache of their own, so nothing writes foreign files there any more -
+     * but an install that opened a few streaming queues before this build already has hundreds of
+     * them on disk, which is enough to push the shortcut asset store past the backup's per-store
+     * cap and fail the whole export. Nothing prunes them on its own: `retainOnly` runs only when
+     * the shortcut library is edited, so a user who never touches that screen would stay unable to
+     * back up.
+     *
+     * This is exactly the same prune the shortcut screen already performs, so it can only ever
+     * remove a thumbnail no saved shortcut refers to, and a thumbnail lost to a mistake here is
+     * re-downloadable. Off the main thread because it is a folder listing plus up to a few hundred
+     * deletes, and the flag is written before the work rather than after it: a prune interrupted
+     * by the process dying leaves the rest to the shortcut screen's own `retainOnly`, which is a
+     * far better outcome than re-listing the folder on every launch forever. The flag is a
+     * completed migration, so it belongs to the backup's selectable local-app-state section
+     * ([com.svartifoss.snfell.config.ConfigBackup]) rather than travelling with app settings.
+     */
+    private fun repairShortcutArtworkStore() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        if (prefs.getBoolean(SHORTCUT_ARTWORK_REPAIRED, false)) return
+        prefs.edit().putBoolean(SHORTCUT_ARTWORK_REPAIRED, true).apply()
+        Thread {
+            try {
+                ShortcutArtworkStore.retainOnly(
+                        this, PlaylistShortcutStorage.load(this).map { it.link })
+            } catch (e: RuntimeException) {
+                Timber.w(e, "Could not prune the shortcut artwork store")
+            }
+        }.apply { isDaemon = true }.start()
     }
 
     /**
@@ -110,5 +147,6 @@ class WearMusicCenter : Application(), HasAndroidInjector {
 
     private companion object {
         const val CENTER_LONG_PRESS_REPAIRED = "center_long_press_repaired"
+        const val SHORTCUT_ARTWORK_REPAIRED = "shortcut_artwork_store_repaired"
     }
 }

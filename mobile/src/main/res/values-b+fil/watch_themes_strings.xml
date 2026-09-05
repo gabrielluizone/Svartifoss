@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">I-refresh ang mga theme ng komunidad</string>
     <string name="online_theme_list_description">Mga watch theme na ginawa ng komunidad</string>
     <string name="online_theme_byline">Ni %1$s</string>
+    <string name="online_theme_filter_author">Mga tema ni %1$s</string>
+    <string name="online_theme_filter_author_selected">Ipinapakita ang mga tema ni %1$s</string>
     <string name="online_theme_row_description">%1$s ni %2$s. %3$s layout.</string>
     <string name="online_theme_apply">Idagdag at i-apply</string>
     <string name="online_theme_loading">Naglo-load ng mga theme ng komunidad…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">Ipinapakita ang mga temang naidagdag mo na</string>
     <string name="online_theme_search_empty_all_installed">Naidagdag mo na ang lahat ng tema ng komunidad.</string>
     <string name="online_theme_search_empty_all_installed_hint">I-off ang “Bago sa akin” para makita ulit ang mga ito.</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">Pinakamaraming download</string>
+    <string name="online_theme_sort_most_downloaded_short">Mga download</string>
+    <string name="community_theme_detail_downloads">Mga download</string>
+    <string name="community_theme_report_action">I-report ang tema</string>
+    <string name="community_theme_report_already">Na-report na</string>
+    <string name="community_theme_report_description">I-report ang “%1$s” sa mga moderator</string>
+    <string name="community_theme_report_title">I-report ang temang ito</string>
+    <string name="community_theme_report_intro">Sabihin sa mga moderator kung ano ang mali sa temang ito.</string>
+    <string name="community_theme_report_reason_inappropriate">Nakakasakit o hindi angkop na nilalaman</string>
+    <string name="community_theme_report_reason_impersonation">Ipinapasang gawa ng iba</string>
+    <string name="community_theme_report_reason_misleading">Hindi tugma sa ipinapakita</string>
+    <string name="community_theme_report_reason_illegible">Hindi magamit sa relo</string>
+    <string name="community_theme_report_reason_spam">Spam o duplicate</string>
+    <string name="community_theme_report_reason_other">Iba pang dahilan</string>
+    <string name="community_theme_report_details_hint">Iba pang dapat malaman ng mga moderator (opsyonal)</string>
+    <string name="community_theme_report_privacy">Mga moderator lang ang makakabasa ng report mo. Hindi kailanman malalaman ng may-akda kung sino ang nagpadala.</string>
+    <string name="community_theme_report_submit">Ipadala ang report</string>
+    <string name="community_theme_report_sent">Naipadala ang report. Titingnan ng mga moderator ang temang ito.</string>
+    <string name="community_theme_report_already_sent">Na-report mo na ang temang ito.</string>
+    <string name="community_theme_report_not_ready">Hindi pa maaaring i-report ang temang ito. Subukan ulit mamaya.</string>
+    <string name="community_theme_report_error">Hindi naipadala ang report mo. Suriin ang koneksyon at subukan ulit.</string>
 </resources>

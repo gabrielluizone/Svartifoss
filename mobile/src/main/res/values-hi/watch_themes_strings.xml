@@ -45,6 +45,8 @@
     <string name="online_theme_refresh">कम्युनिटी थीम रीफ़्रेश करें</string>
     <string name="online_theme_list_description">कम्युनिटी द्वारा बनाई गई घड़ी की थीम</string>
     <string name="online_theme_byline">%1$s द्वारा</string>
+    <string name="online_theme_filter_author">%1$s की थीम</string>
+    <string name="online_theme_filter_author_selected">%1$s की थीम दिखाई जा रही हैं</string>
     <string name="online_theme_row_description">%1$s, %2$s द्वारा। %3$s लेआउट।</string>
     <string name="online_theme_apply">जोड़ें और लागू करें</string>
     <string name="online_theme_loading">कम्युनिटी थीम लोड हो रही हैं…</string>
@@ -84,4 +86,27 @@
     <string name="online_theme_filter_not_installed_off">आपके जोड़े गए थीम दिखाए जा रहे हैं</string>
     <string name="online_theme_search_empty_all_installed">आपने सभी कम्युनिटी थीम जोड़ लिए हैं।</string>
     <string name="online_theme_search_empty_all_installed_hint">उन्हें फिर से देखने के लिए “मेरे लिए नए” बंद करें।</string>
+
+    <!-- Download figure and theme reporting. -->
+    <string name="online_theme_sort_most_downloaded">सबसे ज़्यादा डाउनलोड</string>
+    <string name="online_theme_sort_most_downloaded_short">डाउनलोड</string>
+    <string name="community_theme_detail_downloads">डाउनलोड</string>
+    <string name="community_theme_report_action">थीम की शिकायत करें</string>
+    <string name="community_theme_report_already">शिकायत भेजी गई</string>
+    <string name="community_theme_report_description">“%1$s” की मॉडरेटर से शिकायत करें</string>
+    <string name="community_theme_report_title">इस थीम की शिकायत करें</string>
+    <string name="community_theme_report_intro">मॉडरेटर को बताएँ कि इस थीम में क्या गड़बड़ है।</string>
+    <string name="community_theme_report_reason_inappropriate">आपत्तिजनक या अनुचित सामग्री</string>
+    <string name="community_theme_report_reason_impersonation">किसी और की बताकर पेश की गई</string>
+    <string name="community_theme_report_reason_misleading">जो दिखाया गया है उससे मेल नहीं खाती</string>
+    <string name="community_theme_report_reason_illegible">घड़ी पर इस्तेमाल लायक नहीं</string>
+    <string name="community_theme_report_reason_spam">स्पैम या नकल</string>
+    <string name="community_theme_report_reason_other">कोई और वजह</string>
+    <string name="community_theme_report_details_hint">मॉडरेटर को और कुछ बताना हो तो (वैकल्पिक)</string>
+    <string name="community_theme_report_privacy">आपकी शिकायत सिर्फ़ मॉडरेटर पढ़ते हैं। लेखक को कभी नहीं बताया जाता कि किसने भेजी।</string>
+    <string name="community_theme_report_submit">शिकायत भेजें</string>
+    <string name="community_theme_report_sent">शिकायत भेज दी गई। मॉडरेटर इस थीम को देखेंगे।</string>
+    <string name="community_theme_report_already_sent">आप इस थीम की शिकायत पहले ही कर चुके हैं।</string>
+    <string name="community_theme_report_not_ready">इस थीम की शिकायत अभी नहीं की जा सकती। बाद में कोशिश करें।</string>
+    <string name="community_theme_report_error">आपकी शिकायत नहीं भेजी जा सकी। कनेक्शन जाँचें और फिर कोशिश करें।</string>
 </resources>

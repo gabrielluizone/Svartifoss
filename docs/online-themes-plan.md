@@ -426,6 +426,38 @@ they can reuse the `revision` field the profile already carries, re-enter the qu
 `docs/themes/<id>.json`, bump the index, and let the app compare with the locally installed revision
 to offer a choice.
 
+## 9a. Amendment: downloads and reports (3.4)
+
+Two things this plan did not have, added on top of the ledger shape §5 already established for
+likes.
+
+**A download figure.** §3 chose a static catalogue served from Pages precisely so browsing costs
+no backend, and the consequence nobody wrote down is that nothing on the serving side can ever
+observe a download — a request there measures a phone refreshing its cached copy of the whole
+list, and the profile fetch on the way to a detail screen is a preview, not an install. So the
+number counts the one event that *is* observable: an install succeeding on a phone, written as
+`communityThemeInstalls/<theme>/installers/<uid>` and totalled by the publisher exactly like a
+like. It is create-only — removing a theme from My themes does not un-download it, and a delete
+would make a periodically-republished number walk backwards. It rides the like-refresh interval
+rather than taking one of its own, so the two figures on a card were last correct at the same
+moment. That interval is twelve hours; it began at a week, and a week turned the deferral into the
+bug it was meant to prevent — the published figures visibly never moved, which reads as votes not
+being counted rather than as votes not yet being committed.
+
+**A report path.** §6 built moderation as a queue a person reads, with no way for anyone but the
+moderator to put something into it — which is a gap rather than a design, and one Play's
+user-generated-content policy requires closing. `communityThemeReports/<theme>/themeReporters/<uid>`
+is the same private per-account document, with three differences that follow from it being the one
+write made about somebody else: no count is ever aggregated into the catalogue, the reported
+author can never read a report or learn who filed one, and it cannot be withdrawn. Like a like, it
+takes an anonymous account: demanding an identity before somebody can flag offensive content puts
+the cost on the wrong person. The moderator page reads them with a collection-group query, which
+needs a recursive-wildcard rule and therefore a subcollection name (`themeReporters`) that nothing
+else in the database will claim.
+
+Neither changes §7's privacy position or §4's rejected alternatives. Both are recorded in
+`docs/privacy-policy.md` and its hand-transcribed HTML twin.
+
 ## 10. Open questions
 
 - Whether the current 12-applicable-setting originality threshold should be raised or lowered after reviewing

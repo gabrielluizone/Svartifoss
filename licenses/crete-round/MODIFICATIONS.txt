@@ -1,0 +1,48 @@
+Modifications to crete_round_regular.ttf
+========================================
+
+The SIL Open Font License permits modification and does not require this notice,
+but it is recorded for the same reason `special-elite/MODIFICATIONS.txt` in this
+repository is: a binary font file carries no diff, so without a written record a
+future re-download of the upstream release would silently undo the fix.
+
+The bundled copies of this font (mobile/src/main/res/font/crete_round_regular.ttf
+and wear/src/main/res/font/crete_round_regular.ttf) have been modified from the
+upstream release at https://github.com/google/fonts/tree/main/ofl/creteround.
+Only the vertical metrics were changed; no glyph outline, character mapping, name
+table or Reserved Font Name was touched.
+
+  hhea.ascent           990  ->   946
+  hhea.descent         -286  ->  -330
+  hhea.lineGap            0  ->     0   (unchanged)
+  OS/2.sTypoAscender    990  ->   946
+  OS/2.sTypoDescender  -286  ->  -330
+  OS/2.sTypoLineGap       0  ->     0   (unchanged)
+  OS/2.usWinAscent      990  ->   990
+  OS/2.usWinDescent     286  ->   277
+
+Why
+---
+
+Every renderer centres a line of text by its line box (ascent..descent). This
+font's box centre sat 0.044 em above its own capital letters - modest next to the
+other faces corrected alongside it, but the same direction and the same underlying
+cause, so it is normalized here too rather than left as the one exception.
+
+The correction centres the box on the font's flat capital letters - E, F, H, I, L -
+rather than on the raw digit ink. This font's numerals are old-style (text)
+figures: 3, 4, 5, 7 and 9 dip below the baseline by design, the same way lowercase
+descenders do, while 0, 1, 2, 6, 8 do not. Averaging over all ten digits would pull
+the box down to fit the five that are meant to hang low, then push every capital
+letter too high to compensate; centring on the flat caps instead leaves the
+old-style figures to extend below the box exactly as designed.
+
+ascent + |descent| is unchanged (1276 units in this font's 1000-unit em), so line
+height, spacing, wrapping and every reserved height are the same as upstream; only
+where the ink sits inside that box moves. The flat-cap band now lands within
+0.0001 em of the box centre.
+
+usWinAscent/usWinDescent were widened to the font's real ink extents (head.yMax/yMin).
+
+Pinned by BundledFontMetricsTest, so a re-download from upstream fails the build
+rather than silently reverting the fix.
