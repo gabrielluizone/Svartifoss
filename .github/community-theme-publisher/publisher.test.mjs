@@ -11,6 +11,7 @@ import {
     COMMUNITY_THEME_CONSTRAINTS,
     defaultSettingsForFace,
     isOriginalityApplicableSetting,
+    MINIMUM_APP_VERSION,
     SETTING_KEYS,
     SETTING_TYPES,
 } from "./schema.mjs";
@@ -540,6 +541,29 @@ test("individual title and artist fonts retain their Flex contracts", () => {
             assert.equal(isOriginalityApplicableSetting(`${prefix}_${axis}`, settings, "poster"), false);
         }
     }
+});
+
+/*
+ * The published vocabulary and the app version able to read it are one decision, not two.
+ *
+ * Every published profile is materialized complete -- all of SETTING_KEYS, whatever its author
+ * actually changed -- and the phone refuses one it does not fully recognise: first on the key
+ * count exceeding its own registry, and again on the first key it has never heard of. So the run
+ * after this list grows publishes themes no older build can install, and minimumAppVersion is the
+ * only thing that makes the gallery say "requires a newer app" instead of offering an Add button
+ * that fails with nothing on screen naming a cause.
+ *
+ * Nothing else ties the two together: the constant is hand-written in schema.mjs while the
+ * vocabulary grows in Kotlin, a module and a language away. That gap has already been crossed
+ * once, in the direction that costs nothing only because no release had gone out yet. If this
+ * fails because you added a setting, raise MINIMUM_APP_VERSION to the version that ships it --
+ * updating the count alone is the change this test exists to refuse.
+ */
+test("the published vocabulary is pinned to the app version that can read it", () => {
+    assert.deepEqual(
+        { settings: SETTING_KEYS.length, minimumAppVersion: MINIMUM_APP_VERSION },
+        { settings: 156, minimumAppVersion: "3.3" },
+    );
 });
 
 test("a complete approved intake creates a preview-free public profile", () => {
