@@ -43,6 +43,7 @@ object FaceScopedPreferences {
             // not a trade anyone would choose.
             "wear_keep_screen_on",
             "album_art_style",
+            "album_art_filter",
             "album_art_blur_radius",
             "album_art_dim_strength",
             "ambient_album_art_opacity",

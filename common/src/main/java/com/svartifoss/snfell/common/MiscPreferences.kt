@@ -146,6 +146,10 @@ object MiscPreferences {
     /** How the now-playing screen background is rendered on the watch. */
     val ALBUM_ART_STYLE: PreferenceDefinition<String> = SimplePreferenceDefinition("album_art_style", "cover")
 
+    /** Independent album-art colour treatment, composited after the structural style. */
+    val ALBUM_ART_FILTER: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("album_art_filter", "none")
+
     /** Blur radius in pixels when album art style is set to blur (API 31+ GPU blur). */
     val ALBUM_ART_BLUR_RADIUS: PreferenceDefinition<Int> = SimplePreferenceDefinition("album_art_blur_radius", 35)
 
@@ -1208,7 +1212,8 @@ object MiscPreferences {
             WEAR_PAUSED_HOLD, WEAR_IDLE_BUTTON_ACTION, WEAR_IDLE_AUTO_OPEN,
             WEAR_KEEP_SCREEN_ON, LYRICS_ENABLED,
             ENABLE_NOTIFICATION_POPUP, NOTIFICATION_TIMEOUT,
-            ALWAYS_SELECT_CENTER_ACTION, DIM_ALBUM_ART, ALBUM_ART_STYLE, ALBUM_ART_BLUR_RADIUS,
+            ALWAYS_SELECT_CENTER_ACTION, DIM_ALBUM_ART, ALBUM_ART_STYLE, ALBUM_ART_FILTER,
+            ALBUM_ART_BLUR_RADIUS,
             ALBUM_ART_DIM_STRENGTH, WEAR_PLAYER_SHADING_STYLE, WEAR_PLAYER_SHADING_INTENSITY,
             WEAR_SHADING_COLOR_MODE, WEAR_SHADING_CUSTOM_COLOR, WEAR_SHOW_SOURCE_ICON,
             VOLUME_OVERLAY_TIMEOUT, ROTARY_DEADZONE, AMBIENT_ALBUM_ART_OPACITY,
