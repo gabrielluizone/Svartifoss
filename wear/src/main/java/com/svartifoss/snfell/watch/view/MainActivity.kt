@@ -2132,6 +2132,15 @@ class MainActivity : WearCompanionWatchActivity(),
                     tertiaryAccentColor = resolvedTertiaryAccent(),
                     // Album/desaturated/custom shading tones follow the current accent.
                     backdropShadingColor = resolvedShadingColor(),
+                    // ...and so does every layer of the stack, which is where those tones and
+                    // the accent floor's colour actually reach a Compose face. Only the legacy
+                    // single-slot tint above was refreshed here, so `applyPlayerBackground` below
+                    // repainted Classic with the new album's colours while every face that reads
+                    // `backgroundLayers` off this state kept the previous track's - the floor
+                    // being the one layer big and bright enough for anybody to notice. The stack's
+                    // *structure* does not change with a track, so this re-resolves the colours
+                    // rather than re-reading the preference.
+                    backgroundLayers = resolvedBackgroundLayers(),
                     progressColor = binding.seekBar.progressColor,
                     artistColor = binding.textArtist.currentTextColor,
                     titleColor = resolvedTitleTextColor(),
