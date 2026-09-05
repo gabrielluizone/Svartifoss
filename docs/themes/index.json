@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-01T17:25:50.970Z",
+  "generatedAt": "2026-09-05T01:13:16.113Z",
   "themes": [
     {
       "id": "3cd19361-3b3b-4e65-b558-f77f75d18a46",
@@ -11,8 +11,9 @@
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-09-01T17:25:50.970Z",
-      "likes": 0,
-      "settingsDigest": "sha256:e063f3bd72d2b4c05eef6e3b79e8bb82dc538a641dcb1c4eb013464e1a1893a3"
+      "likes": 1,
+      "settingsDigest": "sha256:e063f3bd72d2b4c05eef6e3b79e8bb82dc538a641dcb1c4eb013464e1a1893a3",
+      "installs": 1
     },
     {
       "id": "67962205-07a0-4261-9551-4c98d2879449",
@@ -23,8 +24,9 @@
       "schemaVersion": 1,
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-09-01T17:19:44.687Z",
-      "likes": 0,
-      "settingsDigest": "sha256:825e20d09e88d064e3358da36ad05c855a156b8f4abbe367195c9dd63096bc26"
+      "likes": 1,
+      "settingsDigest": "sha256:825e20d09e88d064e3358da36ad05c855a156b8f4abbe367195c9dd63096bc26",
+      "installs": 0
     },
     {
       "id": "17e4176a-8429-40cb-bd15-e7ce181406f3",
@@ -36,7 +38,8 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-28T03:12:39.323Z",
       "likes": 2,
-      "settingsDigest": "sha256:0e3edcdae2fd8e52b453caf37512f5435e775e515efb913749c00494fa1a0921"
+      "settingsDigest": "sha256:0e3edcdae2fd8e52b453caf37512f5435e775e515efb913749c00494fa1a0921",
+      "installs": 1
     },
     {
       "id": "09ea139e-8e25-443d-a065-09e8d10da102",
@@ -48,7 +51,8 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 0,
-      "settingsDigest": "sha256:7e61465bab6baa77d7b24fb0ab1bb1a3ca461be98f7c972ad4b558c68808c388"
+      "settingsDigest": "sha256:7e61465bab6baa77d7b24fb0ab1bb1a3ca461be98f7c972ad4b558c68808c388",
+      "installs": 0
     },
     {
       "id": "2a9e18c9-1e57-426a-82be-dfbd5b964bf5",
@@ -60,7 +64,8 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 1,
-      "settingsDigest": "sha256:109d5040112763776d2cba1347780e97e214f7e81f5fe1edb3f48cb2c1be26b8"
+      "settingsDigest": "sha256:109d5040112763776d2cba1347780e97e214f7e81f5fe1edb3f48cb2c1be26b8",
+      "installs": 0
     },
     {
       "id": "3f038d6e-c0e1-49e5-91e3-70a13ce3dbac",
@@ -72,7 +77,8 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 0,
-      "settingsDigest": "sha256:a87c4b3e741cf89a8865ca2e09f42f57ec41e6d646559063a68f92192e812546"
+      "settingsDigest": "sha256:a87c4b3e741cf89a8865ca2e09f42f57ec41e6d646559063a68f92192e812546",
+      "installs": 0
     },
     {
       "id": "5de63f5e-d61e-426a-9269-27d9e3ddd24a",
@@ -84,7 +90,8 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 0,
-      "settingsDigest": "sha256:3f8e7da2fb234316ed75f1c4193655eb7b694585c1f791709a5a4a21cfc0025d"
+      "settingsDigest": "sha256:3f8e7da2fb234316ed75f1c4193655eb7b694585c1f791709a5a4a21cfc0025d",
+      "installs": 0
     }
   ]
 }
