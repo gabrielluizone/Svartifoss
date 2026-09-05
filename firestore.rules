@@ -177,6 +177,92 @@ service cloud.firestore {
     }
 
     /*
+     * An install is the download signal the static catalogue cannot produce on its own.
+     *
+     * The gallery is JSON committed to Git and served from Pages, so nothing on the serving side
+     * ever sees a download: a byte count there would measure how often a phone refreshed its
+     * cached catalogue, not how often somebody took a theme. This ledger is therefore what the
+     * public "downloads" number actually counts -- one document per account per theme, written
+     * when an install succeeds, aggregated by the trusted publisher exactly like a like.
+     *
+     * Two differences from a like, both deliberate. It is **create-only**: removing a theme from
+     * My themes does not un-download it, and offering a client the delete would turn the number
+     * into a live installed-count that walks backwards while the catalogue it is baked into only
+     * ever rewrites weekly. And an existing document is left alone rather than refused loudly --
+     * the app writes through a transaction that skips the write when one is already there, so
+     * re-installing the same theme is silent instead of an error the user cannot act on.
+     *
+     * Like a vote, it accepts an anonymous account and carries the same accepted cost: clearing
+     * app data yields a new UID and lets the same person be counted twice. A popularity signal,
+     * not a metered distribution count, and the privacy policy says so.
+     */
+    match /communityThemeInstalls/{themeId}/installers/{uid} {
+      allow get: if signedIn() && uid == request.auth.uid;
+      allow create: if communityWritesAllowed()
+          && uid == request.auth.uid
+          && validThemeId(themeId)
+          && isPublishedCommunityTheme(themeId)
+          && validNewCommunityThemeInstall();
+
+      // Deliberately omitted: an install is never mutable, deletable or listable from a client.
+    }
+
+    /*
+     * A report is the one thing in this feature written *about* somebody else, and every rule
+     * here follows from that.
+     *
+     * It is **moderator-readable and author-readable, never public**: a visible report count
+     * would be a brigading tool, and the publisher deliberately never aggregates one into the
+     * Pages catalogue. The reporter can read back only their own document, which is what lets the
+     * app say "you already reported this" instead of silently accepting a second one.
+     *
+     * A moderator may `list` the subcollection, which is also what makes the collection-group
+     * query behind the moderator page's queue possible. Nothing else may enumerate reporters:
+     * knowing who reported a theme is exactly the information an author must not have.
+     *
+     * It accepts an anonymous account for the same reason a like does -- demanding a Google
+     * identity before someone can flag offensive content asks the wrong person to pay -- and
+     * carries the same disposable-account caveat. One report per account per theme is all the
+     * document id can promise, and the moderator queue is read by a person, not by a threshold.
+     *
+     * `reason` is a closed vocabulary rather than free text so the queue can be triaged without
+     * reading prose. `details` is the optional free-text half, capped hard, moderator-only, never
+     * republished anywhere, and deleted with the account that wrote it.
+     */
+    match /communityThemeReports/{themeId}/themeReporters/{uid} {
+      allow get: if signedIn()
+          && (uid == request.auth.uid || isCommunityThemeModerator());
+      allow list: if isCommunityThemeModerator();
+      allow create: if communityWritesAllowed()
+          && uid == request.auth.uid
+          && validThemeId(themeId)
+          && isPublishedCommunityTheme(themeId)
+          && validNewCommunityThemeReport();
+
+      // Deliberately omitted: a report is never mutable or deletable from a client. Withdrawing
+      // one would let a coordinated group probe which reports a moderator had already acted on.
+    }
+
+    /*
+     * The moderator queue reads every theme's reports at once, and a collection-group query is
+     * the only way to do that without already knowing which themes have any.
+     *
+     * A rule bound to a concrete parent path does not authorise one: a collection-group query is
+     * evaluated against a recursive-wildcard path, so without this block the moderator page falls
+     * through to the fail-closed catch-all and reports stay invisible to the only people who can
+     * act on them. That is also why the subcollection is named `themeReporters` rather than the
+     * obvious `reporters` -- a wildcard rule is written once and then silently applies to every
+     * same-named subcollection anywhere in the database, so the name has to be one nothing else
+     * will ever plausibly claim.
+     *
+     * Only `list`, and only for a moderator. Reading a single report keeps going through the
+     * concrete rule above, which is the one that also lets a reporter read their own.
+     */
+    match /{path=**}/themeReporters/{uid} {
+      allow list: if isCommunityThemeModerator();
+    }
+
+    /*
      * A person's own request to erase their community account, and the one place where the choice
      * about their published themes is recorded.
      *
@@ -297,6 +383,38 @@ service cloud.firestore {
           && data.schemaVersion is int
           && data.schemaVersion == 1
           && data.createdAt is timestamp;
+    }
+
+    function validNewCommunityThemeInstall() {
+      let data = request.resource.data;
+      return data.keys().hasOnly(["schemaVersion", "createdAt"])
+          && data.keys().size() == 2
+          && data.schemaVersion is int
+          && data.schemaVersion == 1
+          && data.createdAt is timestamp
+          && data.createdAt == request.time;
+    }
+
+    /*
+     * `details` is optional, so the shape is checked as "these keys at most, those three exactly"
+     * rather than by a single size comparison.
+     *
+     * The length cap is deliberately small. This text is read by a moderator triaging a queue,
+     * never rendered to another user and never published, so the only thing extra room buys is a
+     * larger surface for someone to store arbitrary content behind a report button.
+     */
+    function validNewCommunityThemeReport() {
+      let data = request.resource.data;
+      return data.keys().hasOnly(["schemaVersion", "createdAt", "reason", "details"])
+          && data.keys().hasAll(["schemaVersion", "createdAt", "reason"])
+          && data.schemaVersion is int
+          && data.schemaVersion == 1
+          && data.createdAt is timestamp
+          && data.createdAt == request.time
+          && data.reason in [
+            "inappropriate", "impersonation", "misleading", "illegible", "spam", "other"
+          ]
+          && (!data.keys().hasAny(["details"]) || validShortText(data.details, 300));
     }
 
     function validNewAccountDeletionRequest(uid) {

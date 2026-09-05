@@ -26,6 +26,13 @@ const REPOSITORY_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../.."
 const INTAKE_COLLECTION = "themeIntake";
 const LIKES_COLLECTION = "communityThemeLikes";
 const LIKE_VOTERS_COLLECTION = "voters";
+const INSTALLS_COLLECTION = "communityThemeInstalls";
+const INSTALLERS_SUBCOLLECTION = "installers";
+// The subcollection name is deliberately unlike "reporters": firestore.rules authorises the
+// moderator queue with a recursive-wildcard rule, which applies to every same-named
+// subcollection in the database. See the block above it there.
+const REPORTS_COLLECTION = "communityThemeReports";
+const REPORTERS_SUBCOLLECTION = "themeReporters";
 const PUBLISHED_THEMES_COLLECTION = "communityThemePublished";
 const SUBMISSION_QUOTA_COLLECTION = "communityThemeSubmissionQuota";
 const ACCOUNT_DELETION_COLLECTION = "communityThemeAccountDeletion";
@@ -71,12 +78,20 @@ const LIKE_COUNT_CONCURRENCY = 16;
 /*
  * How stale a published like count is allowed to get before the catalogue is rewritten for its own
  * sake. Counts are re-read every run and ride along free whenever a theme is published or withdrawn;
- * this interval governs only the case where *nothing else* changed. Without it the daily cron
- * commits whenever any count moves, which turns a popularity number into a daily commit in the
- * application's own history. A person who just tapped Like still sees their own vote immediately --
- * the gallery applies it locally on top of the published figure.
+ * this interval governs only the case where *nothing else* changed. Without any interval a run that
+ * merely observed a moved count would commit, so a cron firing more often than daily would put a
+ * popularity number into the application's own history several times a day.
+ *
+ * It is deliberately shorter than the cron period rather than longer. At a week the mechanism did
+ * the opposite of what it was built for: every daily run logged "counts moved but are not due" and
+ * the public figures on the cards stood still for days at a time, which is indistinguishable from
+ * likes not being recorded at all -- and they *were* being recorded, in Firestore, the whole time.
+ * The commit this defers is one per day at the very most, and only on a day somebody actually
+ * reacted; the misreading it caused was permanent. Twelve hours is under the 24 the cron leaves
+ * between runs, so a count that moves is published by the next one and the fencepost where a run
+ * lands a few minutes early cannot push it another whole day out.
  */
-const LIKE_REFRESH_INTERVAL_MS = 7 * 24 * 60 * 60 * 1000;
+const LIKE_REFRESH_INTERVAL_MS = 12 * 60 * 60 * 1000;
 const PUBLISHED_MARKER_BATCH_SIZE = 400;
 // OnlineThemesRepository permits a 128 KiB enriched Pages profile. The 24 KiB submission cap is
 // intentionally narrower and applies only to the raw profileJson coming from Firestore.
@@ -122,11 +137,12 @@ const PUBLISHED_PROFILE_KEYS = [
  */
 const OPTIONAL_PUBLISHED_PROFILE_KEYS = ["screenshots"];
 /*
- * Entries gained `likes` and then `settingsDigest` after the first catalogues were published, so
- * both are optional on read and always written. A catalogue missing either is upgraded on the next
- * run rather than waiting for the like-refresh interval: an absent field is not a stale value.
+ * Entries gained `likes`, then `settingsDigest`, then `installs` after the first catalogues were
+ * published, so all three are optional on read and always written. A catalogue missing any of them
+ * is upgraded on the next run rather than waiting for the reaction-refresh interval: an absent
+ * field is not a stale value.
  */
-const OPTIONAL_INDEX_ENTRY_KEYS = ["likes", "settingsDigest"];
+const OPTIONAL_INDEX_ENTRY_KEYS = ["likes", "settingsDigest", "installs"];
 const INDEX_ENTRY_KEYS = [
     "id",
     "name",
@@ -138,6 +154,7 @@ const INDEX_ENTRY_KEYS = [
     "publishedAt",
     "likes",
     "settingsDigest",
+    "installs",
 ];
 const INDEX_ROOT_KEYS = ["schemaVersion", "generatedAt", "themes"];
 
@@ -761,8 +778,16 @@ function buildPublishedProfile(profile, author, publishedAt, screenshots = []) {
     };
 }
 
-function buildIndexEntry(profile, author, publishedAt, likes = 0, settingsDigest = undefined) {
+function buildIndexEntry(
+    profile,
+    author,
+    publishedAt,
+    likes = 0,
+    settingsDigest = undefined,
+    installs = 0,
+) {
     if (!Number.isSafeInteger(likes) || likes < 0) fail("invalid-index-likes");
+    if (!Number.isSafeInteger(installs) || installs < 0) fail("invalid-index-installs");
     const entry = {
         id: profile.id,
         name: profile.name,
@@ -780,6 +805,7 @@ function buildIndexEntry(profile, author, publishedAt, likes = 0, settingsDigest
         }
         entry.settingsDigest = settingsDigest;
     }
+    entry.installs = installs;
     return entry;
 }
 
@@ -870,6 +896,10 @@ function validateIndexEntry(rawEntry) {
             fail("invalid-index-settings-digest");
         }
         normalized.settingsDigest = entry.settingsDigest;
+    }
+    if (hasOwn(entry, "installs")) {
+        if (!Number.isSafeInteger(entry.installs) || entry.installs < 0) fail("invalid-index-installs");
+        normalized.installs = entry.installs;
     }
     return normalized;
 }
@@ -1041,15 +1071,33 @@ async function collectPublishedDigestState(catalog) {
  * grow with its likes.
  */
 async function countAuthoritativeLikes(firestore, themeId) {
+    return countLedger(firestore, LIKES_COLLECTION, LIKE_VOTERS_COLLECTION, themeId, "like");
+}
+
+/**
+ * The downloads number, counted the only way a statically hosted catalogue can count one.
+ *
+ * Nothing on the serving side sees a download: the catalogue is JSON in Git behind GitHub Pages,
+ * so a request there measures cache refreshes, not installs. What this counts is the per-account
+ * ledger the app writes when an install actually succeeds -- the same shape, and the same accepted
+ * imprecision, as a like: an account is free and disposable, so this is a popularity signal rather
+ * than a metered distribution count.
+ */
+async function countAuthoritativeInstalls(firestore, themeId) {
+    return countLedger(firestore, INSTALLS_COLLECTION, INSTALLERS_SUBCOLLECTION, themeId, "install");
+}
+
+/** The shared aggregate read. `kind` only ever reaches a failure code, never a log line. */
+async function countLedger(firestore, collectionName, subcollectionName, themeId, kind) {
     try {
-        const voters = firestore.collection(LIKES_COLLECTION).doc(themeId).collection(LIKE_VOTERS_COLLECTION);
-        const aggregate = await voters.count().get();
+        const ledger = firestore.collection(collectionName).doc(themeId).collection(subcollectionName);
+        const aggregate = await ledger.count().get();
         const count = aggregate.data()?.count;
-        if (!Number.isSafeInteger(count) || count < 0) fail("invalid-authoritative-like-count");
+        if (!Number.isSafeInteger(count) || count < 0) fail(`invalid-authoritative-${kind}-count`);
         return count;
     } catch (error) {
         if (error instanceof ValidationError) throw error;
-        throw new Error("Could not count authoritative community-theme likes");
+        throw new Error(`Could not count authoritative community-theme ${kind}s`);
     }
 }
 
@@ -1070,7 +1118,7 @@ export function isLikeRefreshDue(generatedAt, now, intervalMs = LIKE_REFRESH_INT
 }
 
 /** Limits concurrent aggregate queries instead of bursting once per catalogue entry at Firestore. */
-async function collectAuthoritativeLikeCounts(firestore, themeIds) {
+async function collectAuthoritativeCounts(firestore, themeIds, countOne) {
     const ids = [...new Set(themeIds)].sort();
     const counts = new Map();
     let next = 0;
@@ -1079,7 +1127,7 @@ async function collectAuthoritativeLikeCounts(firestore, themeIds) {
             const index = next;
             next += 1;
             const id = ids[index];
-            counts.set(id, await countAuthoritativeLikes(firestore, id));
+            counts.set(id, await countOne(firestore, id));
         }
     };
     await Promise.all(Array.from({ length: Math.min(LIKE_COUNT_CONCURRENCY, ids.length) }, worker));
@@ -1304,6 +1352,18 @@ async function applyWithdrawals({ firestore, withdrawals, logger }) {
             voters.map((reference) => (batch) => batch.delete(reference)),
             "Could not erase the votes of a withdrawn community theme",
         );
+        const installers = await collectInstallerReferences(firestore, id);
+        await commitInBatches(
+            firestore,
+            installers.map((reference) => (batch) => batch.delete(reference)),
+            "Could not erase the installs of a withdrawn community theme",
+        );
+        const reporters = await collectReporterReferences(firestore, id);
+        await commitInBatches(
+            firestore,
+            reporters.map((reference) => (batch) => batch.delete(reference)),
+            "Could not erase the reports of a withdrawn community theme",
+        );
         await commitInBatches(
             firestore,
             [
@@ -1383,14 +1443,35 @@ async function commitInBatches(firestore, operations, failureMessage) {
 
 /** Every vote on a theme that is itself being withdrawn; the document ids are voter UIDs. */
 async function collectVoterReferences(firestore, themeId) {
+    return collectLedgerReferences(firestore, LIKES_COLLECTION, LIKE_VOTERS_COLLECTION, themeId, "votes");
+}
+
+/** The install ledger of a theme being withdrawn. Same lifetime as its votes. */
+async function collectInstallerReferences(firestore, themeId) {
+    return collectLedgerReferences(firestore, INSTALLS_COLLECTION, INSTALLERS_SUBCOLLECTION, themeId, "installs");
+}
+
+/**
+ * The reports filed against a theme being withdrawn.
+ *
+ * They go with it rather than being kept as a record: a report exists so a moderator can act on a
+ * public listing, and once that listing is gone the only thing the document still holds is a link
+ * between a person and a complaint they made. The moderator page reads the queue while the theme
+ * is up, which is when a report is worth anything.
+ */
+async function collectReporterReferences(firestore, themeId) {
+    return collectLedgerReferences(firestore, REPORTS_COLLECTION, REPORTERS_SUBCOLLECTION, themeId, "reports");
+}
+
+async function collectLedgerReferences(firestore, collectionName, subcollectionName, themeId, kind) {
     try {
         return await firestore
-            .collection(LIKES_COLLECTION)
+            .collection(collectionName)
             .doc(themeId)
-            .collection(LIKE_VOTERS_COLLECTION)
+            .collection(subcollectionName)
             .listDocuments();
     } catch (_error) {
-        throw new Error("Could not read the votes of a withdrawn community theme");
+        throw new Error(`Could not read the ${kind} of a withdrawn community theme`);
     }
 }
 
@@ -1467,7 +1548,7 @@ async function applyAccountErasure({ firestore, auth, request, catalogIds, logge
         await deleteThemeScreenshots(firestore, themeId);
     }
 
-    // Other people's votes on a theme that no longer exists publicly.
+    // Other people's votes, installs and reports on a theme that no longer exists publicly.
     for (const themeId of request.removedThemeIds) {
         const voters = await collectVoterReferences(firestore, themeId);
         await commitInBatches(
@@ -1475,10 +1556,24 @@ async function applyAccountErasure({ firestore, auth, request, catalogIds, logge
             voters.map((reference) => (batch) => batch.delete(reference)),
             "Could not erase the votes of a withdrawn community theme",
         );
+        const installers = await collectInstallerReferences(firestore, themeId);
+        await commitInBatches(
+            firestore,
+            installers.map((reference) => (batch) => batch.delete(reference)),
+            "Could not erase the installs of a withdrawn community theme",
+        );
+        const reporters = await collectReporterReferences(firestore, themeId);
+        await commitInBatches(
+            firestore,
+            reporters.map((reference) => (batch) => batch.delete(reference)),
+            "Could not erase the reports of a withdrawn community theme",
+        );
     }
 
-    // This account's own votes. The voters subcollection cannot be queried by voter UID, so the
-    // bounded public catalogue is walked instead -- the same shape the app's Liked filter uses.
+    // This account's own votes, installs and reports. None of the three subcollections can be
+    // queried by the acting UID, so the bounded public catalogue is walked instead -- the same
+    // shape the app's Liked filter uses. A delete of a document that is not there is a no-op, so
+    // the walk costs one write per catalogue entry and needs no read to decide.
     const remainingThemeIds = [...catalogIds].filter((id) => !request.removedThemeIds.includes(id)).sort();
     await commitInBatches(
         firestore,
@@ -1486,6 +1581,20 @@ async function applyAccountErasure({ firestore, auth, request, catalogIds, logge
             firestore.collection(LIKES_COLLECTION).doc(themeId).collection(LIKE_VOTERS_COLLECTION).doc(request.uid),
         )),
         "Could not erase the votes of a deleted community account",
+    );
+    await commitInBatches(
+        firestore,
+        remainingThemeIds.map((themeId) => (batch) => batch.delete(
+            firestore.collection(INSTALLS_COLLECTION).doc(themeId).collection(INSTALLERS_SUBCOLLECTION).doc(request.uid),
+        )),
+        "Could not erase the installs of a deleted community account",
+    );
+    await commitInBatches(
+        firestore,
+        remainingThemeIds.map((themeId) => (batch) => batch.delete(
+            firestore.collection(REPORTS_COLLECTION).doc(themeId).collection(REPORTERS_SUBCOLLECTION).doc(request.uid),
+        )),
+        "Could not erase the reports of a deleted community account",
     );
 
     await commitInBatches(
@@ -1861,24 +1970,29 @@ async function buildPublicationPlan({ firestore, root, now, logger, refreshLikes
     // reach Git before it is represented in the manifest that later finalizes it.
     const eligible = plans.length;
     const selectedPlans = plans.slice(0, MAX_MANIFEST_ENTRIES);
-    const likeCounts = await collectAuthoritativeLikeCounts(
-        firestore,
-        [...remainingEntries.map((entry) => entry.id), ...selectedPlans.map((plan) => plan.id)],
-    );
+    const countedIds = [...remainingEntries.map((entry) => entry.id), ...selectedPlans.map((plan) => plan.id)];
+    const likeCounts = await collectAuthoritativeCounts(firestore, countedIds, countAuthoritativeLikes);
+    const installCounts = await collectAuthoritativeCounts(firestore, countedIds, countAuthoritativeInstalls);
     const refreshedEntries = remainingEntries.map((entry) => ({
         ...entry,
         likes: likeCounts.get(entry.id),
         // Recomputed from the published file rather than carried over, so a catalogue written
         // before this field existed gains a digest that is provably the one the profile hashes to.
         settingsDigest: publishedDigestState.digestById.get(entry.id) ?? entry.settingsDigest,
+        installs: installCounts.get(entry.id),
     }));
-    const likesMoved = remainingEntries.some((entry, index) =>
-        !hasOwn(entry, "likes") || entry.likes !== refreshedEntries[index].likes);
+    // Installs share the like counts' deferral rather than getting a clock of their own. They move
+    // for the same reason and at the same kind of rate, and a second interval would only mean the
+    // two numbers in one card were last correct at two different times.
+    const countsMoved = remainingEntries.some((entry, index) =>
+        !hasOwn(entry, "likes") || entry.likes !== refreshedEntries[index].likes ||
+        !hasOwn(entry, "installs") || entry.installs !== refreshedEntries[index].installs);
     // An entry carrying no count at all is not a stale number but a missing one -- the app reads
     // the absent field as zero -- so it is never made to wait out the refresh interval. A missing
     // settingsDigest is the same kind of gap: without it a phone cannot refuse a duplicate before
     // submitting one, which is the whole reason the field is published.
-    const likesMissing = remainingEntries.some((entry) => !hasOwn(entry, "likes"));
+    const countsMissing = remainingEntries.some((entry) =>
+        !hasOwn(entry, "likes") || !hasOwn(entry, "installs"));
     const digestsMissing = remainingEntries.some((entry, index) =>
         entry.settingsDigest !== refreshedEntries[index].settingsDigest);
 
@@ -1892,6 +2006,7 @@ async function buildPublicationPlan({ firestore, root, now, logger, refreshLikes
         candidate.summary = {
             ...candidate.summary,
             likes: likeCounts.get(candidate.id),
+            installs: installCounts.get(candidate.id),
         };
         if (selectedEntriesById.has(candidate.id)) continue;
         addedEntries.push(candidate.summary);
@@ -1902,15 +2017,15 @@ async function buildPublicationPlan({ firestore, root, now, logger, refreshLikes
     // Fresh counts are written whenever the file is being rewritten anyway, and otherwise only
     // once the interval has elapsed. Deferring costs a number some accuracy for a while; writing
     // every time costs a commit a day in a repository that is mainly an Android application.
-    const writeRefreshed = (likesMoved || digestsMissing) && (
-        likesMissing ||
+    const writeRefreshed = (countsMoved || digestsMissing) && (
+        countsMissing ||
         digestsMissing ||
         publicationChanged ||
         refreshLikes ||
         isLikeRefreshDue(catalog.generatedAt, publishedAt));
     const selectedEntries = [...(writeRefreshed ? refreshedEntries : remainingEntries), ...addedEntries];
-    if (likesMoved && !writeRefreshed) {
-        log(logger, "log", "Like counts moved but are not due for publication; deferring the catalogue rewrite.");
+    if (countsMoved && !writeRefreshed) {
+        log(logger, "log", "Reaction counts moved but are not due for publication; deferring the catalogue rewrite.");
     }
 
     const catalogChanged = publicationChanged || writeRefreshed;

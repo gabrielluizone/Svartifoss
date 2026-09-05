@@ -8,7 +8,8 @@ It accepts no project ID, key file or application credential. The only Firebase 
 JSON service-account value in `FIREBASE_SERVICE_ACCOUNT`. In GitHub, create a repository secret
 with exactly that name and paste the full service-account JSON into it. Give that service account
 the minimum Firestore access needed by the queue, author-account/name reservations, moderation,
-likes and account-erasure collections, plus Firebase Authentication user administration -- carrying
+author screenshots (`themeIntakeShots`, which the run reads and then deletes once the bytes are
+committed), likes and account-erasure collections, plus Firebase Authentication user administration -- carrying
 out an account erasure ends by deleting the identity itself, and a service account without that
 permission fails the run rather than half-erasing an account. Do not add the JSON file to the
 repository or to an APK.
@@ -46,13 +47,15 @@ This two-phase order means a failed Git push cannot make Firestore claim that a 
 
 Every run re-reads the authoritative vote counts, but not every run writes them. A count is written
 whenever the catalogue is being rewritten anyway -- a publication or a withdrawal -- and otherwise
-only once `LIKE_REFRESH_INTERVAL_MS` (a week) has elapsed since the catalogue's own `generatedAt`.
-The catalogue is its own clock, so there is no extra state to keep in step.
+only once `LIKE_REFRESH_INTERVAL_MS` (twelve hours) has elapsed since the catalogue's own
+`generatedAt`. The catalogue is its own clock, so there is no extra state to keep in step.
 
-The point is the commit, not the read: without the interval the daily cron commits whenever any
-count moves, which turns a popularity number into a daily commit in a repository that is mainly an
-Android application. The person who tapped Like is not the one waiting -- the gallery applies their
-own vote locally on top of the published figure.
+The interval is deliberately **shorter than the gap between cron runs**, so a count that moves is
+published by the next run at the latest. It started at a week, and at a week it defeated its own
+purpose: every daily run logged "counts moved but are not due" and the public figures stood still
+for days on end, which from the app is indistinguishable from likes not being recorded at all --
+while they were being recorded in Firestore the whole time. What it still buys is that a run firing
+more than once a day, or a manual dispatch, cannot commit twice to move the same number.
 
 Two exceptions are deliberate. An entry carrying no `likes` field at all is a missing count rather
 than a stale one, since the app reads the absent field as zero, so it is written immediately. And

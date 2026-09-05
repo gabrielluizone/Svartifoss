@@ -190,6 +190,30 @@ function like() {
   };
 }
 
+function installer(db, themeId, uid) {
+  return doc(db, "communityThemeInstalls", themeId).collection("installers").doc(uid);
+}
+
+function install() {
+  return {
+    schemaVersion: 1,
+    createdAt: serverTimestamp(),
+  };
+}
+
+function reporter(db, themeId, uid) {
+  return doc(db, "communityThemeReports", themeId).collection("themeReporters").doc(uid);
+}
+
+function report(overrides = {}) {
+  return {
+    schemaVersion: 1,
+    createdAt: serverTimestamp(),
+    reason: "inappropriate",
+    ...overrides,
+  };
+}
+
 /**
  * Somebody who signed in with a real provider, which is what submitting a theme requires.
  *
@@ -871,6 +895,112 @@ test("an anonymous account still cannot vote for or read someone else", async ()
   await assertFails(getDoc(anonDb, voter(anonDb, FIRST_ID, OTHER_AUTHOR)));
   await assertFails(getDocs(anonDb,
     doc(anonDb, "communityThemeLikes", FIRST_ID).collection("voters")));
+});
+
+test("an install is a private create-only download signal on a published theme", async () => {
+  const installerDb = authenticatedDb(OTHER_AUTHOR);
+  const otherDb = authenticatedDb(MODERATOR);
+  await seedPending(AUTHOR, FIRST_ID);
+
+  await assertFails(setDoc(installerDb, installer(installerDb, FIRST_ID, OTHER_AUTHOR), install()));
+  await seedPublished(FIRST_ID);
+
+  await assertFails(setDoc(installerDb, installer(installerDb, FIRST_ID, OTHER_AUTHOR), {
+    ...install(),
+    untrustedCount: 999,
+  }));
+  await assertSucceeds(setDoc(installerDb, installer(installerDb, FIRST_ID, OTHER_AUTHOR), install()));
+  await assertSucceeds(getDoc(installerDb, installer(installerDb, FIRST_ID, OTHER_AUTHOR)));
+  await assertFails(getDoc(otherDb, installer(otherDb, FIRST_ID, OTHER_AUTHOR)));
+  await assertFails(getDocs(installerDb,
+    doc(installerDb, "communityThemeInstalls", FIRST_ID).collection("installers")));
+});
+
+test("an install can never be rewritten, removed or written for somebody else", async () => {
+  // Create-only is the whole difference from a like: taking a theme out of My themes does not
+  // un-download it, and a client-side delete would make the published number walk backwards.
+  const installerDb = authenticatedDb(OTHER_AUTHOR);
+  await seedPublished(FIRST_ID);
+  await assertSucceeds(setDoc(installerDb, installer(installerDb, FIRST_ID, OTHER_AUTHOR), install()));
+
+  await assertFails(updateDoc(installerDb, installer(installerDb, FIRST_ID, OTHER_AUTHOR), {
+    createdAt: serverTimestamp(),
+  }));
+  await assertFails(deleteDoc(installerDb, installer(installerDb, FIRST_ID, OTHER_AUTHOR)));
+  await assertFails(setDoc(installerDb, installer(installerDb, FIRST_ID, MODERATOR), install()));
+});
+
+test("an anonymous account can record its own install and read it back", async () => {
+  const anonDb = anonymousDb(ANONYMOUS);
+  await seedPublished(FIRST_ID);
+
+  await assertSucceeds(setDoc(anonDb, installer(anonDb, FIRST_ID, ANONYMOUS), install()));
+  await assertSucceeds(getDoc(anonDb, installer(anonDb, FIRST_ID, ANONYMOUS)));
+  await assertFails(setDoc(anonDb, installer(anonDb, FIRST_ID, SECOND_ANONYMOUS), install()));
+});
+
+test("a report needs a closed reason and only reaches a published theme", async () => {
+  const reporterDb = authenticatedDb(OTHER_AUTHOR);
+  await seedPending(AUTHOR, FIRST_ID);
+
+  await assertFails(setDoc(reporterDb, reporter(reporterDb, FIRST_ID, OTHER_AUTHOR), report()));
+  await seedPublished(FIRST_ID);
+
+  await assertFails(setDoc(reporterDb, reporter(reporterDb, FIRST_ID, OTHER_AUTHOR),
+    report({ reason: "because-i-say-so" })));
+  await assertFails(setDoc(reporterDb, reporter(reporterDb, FIRST_ID, OTHER_AUTHOR),
+    report({ details: "x".repeat(301) })));
+  await assertFails(setDoc(reporterDb, reporter(reporterDb, FIRST_ID, OTHER_AUTHOR),
+    report({ reporterEmail: "someone@example.com" })));
+
+  await assertSucceeds(setDoc(reporterDb, reporter(reporterDb, FIRST_ID, OTHER_AUTHOR),
+    report({ reason: "impersonation", details: "This copies another author's listing." })));
+});
+
+test("a report is readable by its author and by a moderator, and never rewritable", async () => {
+  const reporterDb = authenticatedDb(OTHER_AUTHOR);
+  const authorDb = authenticatedDb(AUTHOR);
+  await seedPublished(FIRST_ID);
+  await seedModerator(MODERATOR);
+  const moderatorDb = authenticatedDb(MODERATOR);
+
+  await assertSucceeds(setDoc(reporterDb, reporter(reporterDb, FIRST_ID, OTHER_AUTHOR), report()));
+
+  await assertSucceeds(getDoc(reporterDb, reporter(reporterDb, FIRST_ID, OTHER_AUTHOR)));
+  await assertSucceeds(getDoc(moderatorDb, reporter(moderatorDb, FIRST_ID, OTHER_AUTHOR)));
+  // The reported author is exactly who must not learn who reported them.
+  await assertFails(getDoc(authorDb, reporter(authorDb, FIRST_ID, OTHER_AUTHOR)));
+
+  await assertFails(updateDoc(reporterDb, reporter(reporterDb, FIRST_ID, OTHER_AUTHOR), {
+    reason: "spam",
+  }));
+  await assertFails(deleteDoc(reporterDb, reporter(reporterDb, FIRST_ID, OTHER_AUTHOR)));
+});
+
+test("only a moderator can enumerate the reporters behind a theme", async () => {
+  const reporterDb = authenticatedDb(OTHER_AUTHOR);
+  await seedPublished(FIRST_ID);
+  await seedModerator(MODERATOR);
+  const moderatorDb = authenticatedDb(MODERATOR);
+
+  await assertSucceeds(setDoc(reporterDb, reporter(reporterDb, FIRST_ID, OTHER_AUTHOR), report()));
+
+  await assertFails(getDocs(reporterDb,
+    doc(reporterDb, "communityThemeReports", FIRST_ID).collection("themeReporters")));
+  await assertSucceeds(getDocs(moderatorDb,
+    doc(moderatorDb, "communityThemeReports", FIRST_ID).collection("themeReporters")));
+  // The moderator queue is one collection-group query over the same rule.
+  await assertSucceeds(getDocs(moderatorDb, moderatorDb.collectionGroup("themeReporters")));
+  await assertFails(getDocs(reporterDb, reporterDb.collectionGroup("themeReporters")));
+});
+
+test("an anonymous account can report, because flagging must not cost an identity", async () => {
+  const anonDb = anonymousDb(ANONYMOUS);
+  await seedPublished(FIRST_ID);
+
+  await assertSucceeds(setDoc(anonDb, reporter(anonDb, FIRST_ID, ANONYMOUS), report()));
+  await assertSucceeds(getDoc(anonDb, reporter(anonDb, FIRST_ID, ANONYMOUS)));
+  await assertFails(setDoc(anonDb, reporter(anonDb, FIRST_ID, SECOND_ANONYMOUS), report()));
 });
 
 test("an anonymous account cannot submit a theme or open a submission quota", async () => {

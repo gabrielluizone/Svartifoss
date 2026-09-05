@@ -112,6 +112,13 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
     const voters = new Map(
         Object.entries(options.voters ?? {}).map(([themeId, uids]) => [themeId, new Set(uids)]),
     );
+    const installers = new Map(
+        Object.entries(options.installers ?? {}).map(([themeId, uids]) => [themeId, new Set(uids)]),
+    );
+    const reporters = new Map(
+        Object.entries(options.reporters ?? {}).map(([themeId, uids]) => [themeId, new Set(uids)]),
+    );
+    const installs = new Map(Object.entries(options.installs ?? {}));
     const quotas = new Set(options.quotas ?? []);
     const reviews = new Map(Object.entries(options.reviews ?? {}));
     // Author screenshots, keyed "<themeId>/<surface>" so one flat map models the subcollection.
@@ -143,7 +150,7 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
     const events = options.events ?? [];
     const removed = {
         intake: [], markers: [], votes: [], quotas: [], requests: [], reviews: [], accounts: [], authorNames: [],
-        shots: [],
+        shots: [], installs: [], reports: [],
     };
 
     const snapshotFor = (target) => {
@@ -222,6 +229,16 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
         if (segments[0] === "communityThemeLikes") {
             voters.get(segments[1])?.delete(target.id);
             removed.votes.push(`${segments[1]}/${target.id}`);
+            return;
+        }
+        if (segments[0] === "communityThemeInstalls") {
+            installers.get(segments[1])?.delete(target.id);
+            removed.installs.push(`${segments[1]}/${target.id}`);
+            return;
+        }
+        if (segments[0] === "communityThemeReports") {
+            reporters.get(segments[1])?.delete(target.id);
+            removed.reports.push(`${segments[1]}/${target.id}`);
             return;
         }
         if (segments[0] === "communityThemeSubmissionQuota") {
@@ -358,33 +375,39 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
                     },
                 };
             }
-            if (collectionName === "communityThemeLikes") {
+            // The three per-theme ledgers are the same shape: one document per account under a
+            // fixed subcollection, counted by aggregate and listed for withdrawal cleanup.
+            const ledgers = {
+                communityThemeLikes: { sub: "voters", members: voters, counts: likes },
+                communityThemeInstalls: { sub: "installers", members: installers, counts: installs },
+                communityThemeReports: { sub: "themeReporters", members: reporters, counts: new Map() },
+            };
+            if (Object.hasOwn(ledgers, collectionName)) {
+                const { sub, members, counts } = ledgers[collectionName];
                 return {
                     doc(themeId) {
                         return {
-                            collection(votersCollection) {
-                                assert.equal(votersCollection, "voters");
+                            collection(subcollectionName) {
+                                assert.equal(subcollectionName, sub);
+                                const pathFor = (uid) => `${collectionName}/${themeId}/${sub}/${uid}`;
                                 return {
                                     count() {
                                         return {
                                             get: async () => ({
                                                 data: () => ({
-                                                    count: likes.get(themeId) ?? voters.get(themeId)?.size ?? 0,
+                                                    count: counts.get(themeId) ?? members.get(themeId)?.size ?? 0,
                                                 }),
                                             }),
                                         };
                                     },
                                     async listDocuments() {
-                                        return [...(voters.get(themeId) ?? [])].sort().map((uid) => ({
+                                        return [...(members.get(themeId) ?? [])].sort().map((uid) => ({
                                             id: uid,
-                                            path: `communityThemeLikes/${themeId}/voters/${uid}`,
+                                            path: pathFor(uid),
                                         }));
                                     },
                                     doc(uid) {
-                                        return {
-                                            id: uid,
-                                            path: `communityThemeLikes/${themeId}/voters/${uid}`,
-                                        };
+                                        return { id: uid, path: pathFor(uid) };
                                     },
                                 };
                             },
@@ -430,8 +453,8 @@ function fakeFirestore(input, likesByTheme = {}, options = {}) {
         },
     };
     return Object.assign(firestore, {
-        publishedThemeMarkers, deletionRequests, voters, quotas, reviews, removed, byId,
-        accounts, authorNames, deletedAccounts, events,
+        publishedThemeMarkers, deletionRequests, voters, installers, reporters, quotas, reviews,
+        removed, byId, accounts, authorNames, deletedAccounts, events,
     });
 }
 
@@ -856,12 +879,12 @@ test("the publisher derives catalogue likes from private voter documents", async
     const profileBeforeRefresh = await readFile(join(root, "docs", "themes", `${ID}.json`), "utf8");
     const staleFile = await readFile(join(root, "docs", "themes", "index.json"), "utf8");
 
-    // One day later the number is wrong and known to be wrong, and is still left alone: a daily
-    // commit to move a popularity count is not worth the history it writes.
+    // Hours later the number is wrong and known to be wrong, and is still left alone: a run that
+    // fires again the same day should not commit a second time to move a popularity count.
     const deferred = await publishApprovedThemes({
         firestore: fakeFirestore(document, { [ID]: 7 }),
         root,
-        now: new Date("2026-08-25T12:00:00Z"),
+        now: new Date("2026-08-24T20:00:00Z"),
         logger,
         publish: true,
         manifestPath: join(root, "deferred-likes-manifest.json"),
@@ -869,10 +892,12 @@ test("the publisher derives catalogue likes from private voter documents", async
     assert.equal(deferred.catalogChanged, false);
     assert.equal(await readFile(join(root, "docs", "themes", "index.json"), "utf8"), staleFile);
 
+    // The next daily run publishes it. Holding a moved count for longer than the gap between runs
+    // is what made the public figures look like they had stopped counting altogether.
     const refresh = await publishApprovedThemes({
         firestore: fakeFirestore(document, { [ID]: 7 }),
         root,
-        now: new Date("2026-09-01T12:00:00Z"),
+        now: new Date("2026-08-25T12:00:00Z"),
         logger,
         publish: true,
         manifestPath: join(root, "likes-manifest.json"),
@@ -931,6 +956,87 @@ test("a catalogue entry with no like count at all never waits for the refresh in
     assert.equal(written.themes[0].likes, 4);
 });
 
+test("the publisher derives catalogue installs from private installer documents", async (t) => {
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    const logger = { log() {}, warn() {} };
+    const seedManifest = join(root, "seed-manifest.json");
+    const seedFirestore = fakeFirestore(document);
+    await publishApprovedThemes({
+        firestore: seedFirestore,
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: seedManifest,
+    });
+    await finalizePublishedThemes({ firestore: seedFirestore, root, manifestPath: seedManifest, logger });
+
+    const seeded = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    assert.equal(seeded.themes[0].installs, 0);
+    const seededFile = await readFile(join(root, "docs", "themes", "index.json"), "utf8");
+
+    // Installs ride the like counts' deferral rather than carrying a clock of their own: two
+    // intervals would mean the two numbers on one card were last correct at different moments.
+    const deferred = await publishApprovedThemes({
+        firestore: fakeFirestore(document, {}, { installs: { [ID]: 12 } }),
+        root,
+        now: new Date("2026-08-24T20:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "deferred-installs-manifest.json"),
+    });
+    assert.equal(deferred.catalogChanged, false);
+    assert.equal(await readFile(join(root, "docs", "themes", "index.json"), "utf8"), seededFile);
+
+    const refresh = await publishApprovedThemes({
+        firestore: fakeFirestore(document, {}, { installs: { [ID]: 12 } }),
+        root,
+        now: new Date("2026-08-25T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "installs-manifest.json"),
+    });
+    assert.equal(refresh.catalogChanged, true);
+    const refreshed = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    assert.equal(refreshed.themes[0].installs, 12);
+    assert.equal(refreshed.themes[0].likes, 0);
+});
+
+test("a catalogue entry with no install count at all never waits for the refresh interval", async (t) => {
+    // Exactly the state every already-published catalogue is in the first time this ships. The app
+    // reads the absent field as zero, so deferring would show 0 downloads everywhere until the
+    // window elapsed.
+    const root = await temporaryCatalogue(t);
+    const document = approvedDocument();
+    const logger = { log() {}, warn() {} };
+    await publishApprovedThemes({
+        firestore: fakeFirestore(document),
+        root,
+        now: new Date("2026-08-24T12:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "seed-manifest.json"),
+    });
+
+    const index = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    delete index.themes[0].installs;
+    await writeFile(join(root, "docs", "themes", "index.json"), `${JSON.stringify(index, null, 2)}\n`);
+
+    const result = await publishApprovedThemes({
+        firestore: fakeFirestore(document, {}, { installs: { [ID]: 5 } }),
+        root,
+        now: new Date("2026-08-24T18:00:00Z"),
+        logger,
+        publish: true,
+        manifestPath: join(root, "missing-installs-manifest.json"),
+    });
+
+    assert.equal(result.catalogChanged, true);
+    const written = JSON.parse(await readFile(join(root, "docs", "themes", "index.json"), "utf8"));
+    assert.equal(written.themes[0].installs, 5);
+});
+
 test("a publication carries fresh like counts even inside the refresh interval", async (t) => {
     const root = await temporaryCatalogue(t);
     const first = approvedDocument();
@@ -953,7 +1059,7 @@ test("a publication carries fresh like counts even inside the refresh interval",
     const result = await publishApprovedThemes({
         firestore: fakeFirestore([first, second], { [ID]: 11, [SECOND_ID]: 0 }),
         root,
-        now: new Date("2026-08-25T12:00:00Z"),
+        now: new Date("2026-08-24T20:00:00Z"),
         logger,
         publish: true,
         manifestPath: join(root, "second-manifest.json"),
@@ -966,8 +1072,12 @@ test("a publication carries fresh like counts even inside the refresh interval",
 
 test("the like refresh interval is measured from the catalogue's own timestamp", () => {
     const week = 7 * 24 * 60 * 60 * 1000;
-    assert.equal(isLikeRefreshDue("2026-08-24T12:00:00Z", "2026-08-30T12:00:00Z"), false);
-    assert.equal(isLikeRefreshDue("2026-08-24T12:00:00Z", "2026-08-31T12:00:00Z"), true);
+    // The default window is shorter than the cron period on purpose: a count that moves has to be
+    // published by the next daily run, not held back for another whole day by a run that fires a
+    // few minutes earlier than the one that wrote the catalogue.
+    assert.equal(isLikeRefreshDue("2026-08-24T12:00:00Z", "2026-08-24T20:00:00Z"), false);
+    assert.equal(isLikeRefreshDue("2026-08-24T12:00:00Z", "2026-08-25T00:00:00Z"), true);
+    assert.equal(isLikeRefreshDue("2026-08-24T12:00:00Z", "2026-08-25T11:50:00Z"), true);
     assert.equal(isLikeRefreshDue("2026-08-24T12:00:00Z", "2026-08-25T12:00:00Z", week), false);
     // A clock that ran backwards, or a timestamp that cannot be read, refreshes rather than
     // stalling until real time catches up with a window it cannot measure.
@@ -1192,10 +1302,13 @@ function deletionRequest(uid, themeDisposition, overrides = {}) {
 }
 
 /** Publishes one theme and marks it public, which is the starting point every erasure needs. */
-async function publishOneTheme(t, { uid = "firebase-user-id", voters = {} } = {}) {
+async function publishOneTheme(
+    t,
+    { uid = "firebase-user-id", voters = {}, installers = {}, reporters = {} } = {},
+) {
     const root = await temporaryCatalogue(t);
     const document = approvedDocument({ ownerUid: uid });
-    const firestore = fakeFirestore(document, {}, { voters, quotas: [uid] });
+    const firestore = fakeFirestore(document, {}, { voters, installers, reporters, quotas: [uid] });
     const manifestPath = join(root, "seed-manifest.json");
     const logger = { log() {}, warn() {} };
     await publishApprovedThemes({
@@ -1215,6 +1328,10 @@ test("deleting an account keeps its published themes when the author chose to ke
     const { root, document, firestore, logger } = await publishOneTheme(t, {
         uid,
         voters: { [ID]: [uid, "someone-else"] },
+        // An erased account's own download and report records go with its votes; other people's
+        // stay, because they are somebody else's data about a theme that is still public.
+        installers: { [ID]: [uid, "someone-else"] },
+        reporters: { [ID]: [uid, "someone-else"] },
     });
     firestore.deletionRequests.set(uid, deletionRequest(uid, "keep"));
     const manifestPath = join(root, "keep-manifest.json");
@@ -1242,6 +1359,8 @@ test("deleting an account keeps its published themes when the author chose to ke
     assert.ok(document.data.ownerErasedAt);
     assert.deepEqual(auth.deletedUids, [uid]);
     assert.deepEqual([...firestore.voters.get(ID)], ["someone-else"]);
+    assert.deepEqual([...firestore.installers.get(ID)], ["someone-else"]);
+    assert.deepEqual([...firestore.reporters.get(ID)], ["someone-else"]);
     assert.equal(firestore.quotas.size, 0);
     assert.equal(firestore.deletionRequests.size, 0);
     assert.equal(firestore.accounts.size, 0);
@@ -1482,6 +1601,8 @@ test("a moderator withdrawal removes the public files and then every Firestore t
     const { root, firestore, logger, document } = await publishOneTheme(t, {
         uid,
         voters: { [ID]: ["someone", "someone-else"] },
+        installers: { [ID]: ["someone", "a-third-person"] },
+        reporters: { [ID]: ["the-person-who-flagged-it"] },
     });
     // What a moderator's batch leaves behind for the publisher to act on.
     document.data.status = "withdrawn";
@@ -1510,6 +1631,10 @@ test("a moderator withdrawal removes the public files and then every Firestore t
     assert.deepEqual(firestore.removed.markers, [ID]);
     assert.deepEqual(firestore.removed.reviews, [ID]);
     assert.deepEqual([...firestore.voters.get(ID)], []);
+    assert.deepEqual([...firestore.installers.get(ID)], []);
+    // The reports go with the listing. Once it is gone the only thing they still record is who
+    // complained about what, which is not a record worth keeping about a person.
+    assert.deepEqual([...firestore.reporters.get(ID)], []);
 });
 
 test("a withdrawn submission is never published by the run that withdraws it", async (t) => {
