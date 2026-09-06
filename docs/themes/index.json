@@ -1,31 +1,18 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-06T18:35:35.395Z",
+  "generatedAt": "2026-09-06T19:52:46.982Z",
   "themes": [
     {
-      "id": "110b4b46-2049-4a12-9161-f04de8ce4f4c",
-      "name": "New Split",
-      "author": "Gabriel L Svafoss",
-      "baseFace": "poster",
+      "id": "567a2bdd-11e4-4a0f-8ddc-031c5db3905a",
+      "name": "Not Artist",
+      "author": "Anonymous",
+      "baseFace": "artist",
       "revision": 1,
       "schemaVersion": 1,
       "minimumAppVersion": "4.0",
-      "publishedAt": "2026-09-06T18:35:35.395Z",
+      "publishedAt": "2026-09-06T19:52:46.982Z",
       "likes": 0,
-      "settingsDigest": "sha256:426e8a65f68ff69bd991c735b7badf2d767af692107d45b5bcd226cc93279671",
-      "installs": 0
-    },
-    {
-      "id": "f9bc072f-1097-4bb9-85fc-c695fa64c5a6",
-      "name": "Material Design 2",
-      "author": "Gabriel L Svafoss",
-      "baseFace": "poster",
-      "revision": 1,
-      "schemaVersion": 1,
-      "minimumAppVersion": "4.0",
-      "publishedAt": "2026-09-06T18:35:35.395Z",
-      "likes": 0,
-      "settingsDigest": "sha256:78d3650ab932eddde0442d1f7c57535a88e9c51d5a842f3255ff95764fd2d6c7",
+      "settingsDigest": "sha256:6fa708250f5adbeca63efcdca834dcc9aa92db8da7a127839638151c78e586fb",
       "installs": 0
     },
     {
