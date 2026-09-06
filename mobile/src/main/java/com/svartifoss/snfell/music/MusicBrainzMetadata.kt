@@ -77,7 +77,7 @@ object MusicBrainzMetadata {
      * dressed as an answer, and on this screen a guess is worse than a blank: the user cannot tell
      * a wrong ISRC from a right one. Deliberately strict.
      */
-    private const val MIN_SCORE = 90
+    private const val MIN_SCORE = 60
 
     /**
      * Looks [title] by [artist] up, returning only what the service was confident about.
