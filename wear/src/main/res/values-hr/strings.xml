@@ -185,4 +185,21 @@
 
     <string name="metadata_about">O aplikaciji</string>
     <string name="metadata_source">Reproducira se u</string>
+    <string name="action_name_open_quick_actions_panel">Otvori ploču brzih radnji</string>
+    <string name="action_name_fast_forward">Premotaj unaprijed</string>
+    <string name="action_name_rewind">Premotaj unatrag</string>
+    <string name="action_name_set_speed">Postavi brzinu reprodukcije</string>
+    <string name="action_name_seek_position">Skoči na položaj pjesme</string>
+    <string name="action_name_set_volume">Postavi glasnoću</string>
+    <string name="action_name_set_shuffle">Postavi nasumičnu reprodukciju</string>
+    <string name="action_name_set_repeat">Postavi ponavljanje</string>
+    <string name="action_name_open_volume_screen">Otvori zaslon glasnoće</string>
+    <string name="action_name_open_progress_screen">Otvori zaslon napretka</string>
+    <string name="action_name_open_face_picker">Otvori birač lica</string>
+    <string name="action_name_close_watch_app">Zatvori aplikaciju na satu</string>
+    <string name="volume_screen_title">Glasnoća</string>
+    <string name="progress_screen_title">Napredak</string>
+    <string name="progress_screen_cancel_seek">Otkaži traženje</string>
+    <string name="progress_screen_skip_back">Preskoči unatrag %1$d sekundi</string>
+    <string name="progress_screen_skip_forward">Preskoči unaprijed %1$d sekundi</string>
 </resources>

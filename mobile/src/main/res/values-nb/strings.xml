@@ -1898,6 +1898,11 @@ Hvis du opplever dette, kan du aktivere dette alternativet for å deaktivere dob
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1941,6 +1946,11 @@ Hvis du opplever dette, kan du aktivere dette alternativet for å deaktivere dob
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2387,4 +2397,463 @@ Når Vibration Center får klokken til å vibrere, viser Svartifoss en popup med
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Kopier</string>
+    <string name="dev_report_copied">Rapport kopiert</string>
+    <string name="dev_watch_snapshot_inspector">Øyeblikksbilde av klokkeinnstillinger</string>
+    <string name="dev_watch_snapshot_inspector_description">Det som faktisk ville blitt sendt til klokken akkurat nå: aktivt utseendeomfang, estimert størrelse og hvilke inaktive cacher per urskive som ble fjernet for å holde seg innenfor budsjettet</string>
+    <string name="dev_data_layer_inspector">Data Layer-inspektør</string>
+    <string name="dev_data_layer_inspector_description">Tilkoblede Wearable-noder og siste WatchInfo som klokkeappen svarte med — råtilstanden bak «Ingen klokke tilkoblet»</string>
+    <string name="dev_media_sessions_inspector">MediaSession-utforsker</string>
+    <string name="dev_media_sessions_inspector_description">Alle MediaSession som er aktive akkurat nå, ikke bare den som spores: annonserte handlinger, kø og avspillingsrute</string>
+    <string name="dev_view_phone_log">Vis telefonlogg</string>
+    <string name="dev_view_phone_log_description">Slutten av Timber-loggen på disken, pluss klokkens logg hvis «Send logger» har hentet den tidligere</string>
+    <string name="dev_theme_submission_preflight">Forhåndskontroll av temainnsending</string>
+    <string name="dev_theme_submission_preflight_description">Kjører hvert lagrede klokketema gjennom kontrollen for fellesskapsinnsending og navngir den nøyaktige innstillingen som blokkerer det, hvis noen</string>
+    <string name="dev_appearance_resolution_inspector">Inspektør for utseendeoppløsning</string>
+    <string name="dev_appearance_resolution_inspector_description">For hver utseendenøkkel med omfang viser den hvilket av de fire oppløsningstrinnene som faktisk vant — eksplisitt urskiveverdi, standard per urskive, eldre global verdi eller definisjonsstandard — og verdien hvert trinn returnerer</string>
+    <string name="action_fast_forward">Spol fremover</string>
+    <string name="action_rewind">Spol tilbake</string>
+    <string name="action_set_playback_speed">Sett hastighet til %1$s×</string>
+    <string name="action_seek_to_percent">Hopp til %1$d%%</string>
+    <string name="action_set_volume_percent">Sett volum til %1$d%%</string>
+    <string name="action_set_shuffle_on">Slå på tilfeldig rekkefølge</string>
+    <string name="action_set_shuffle_off">Slå av tilfeldig rekkefølge</string>
+    <string name="action_set_repeat_off">Slå av gjentakelse</string>
+    <string name="action_set_repeat_all">Gjenta alle</string>
+    <string name="action_set_repeat_one">Gjenta én</string>
+    <string name="group_playback_speed">Avspillingshastighet</string>
+    <string name="group_track_position">Sporposisjon</string>
+    <string name="group_shuffle_mode">Tilfeldig rekkefølge</string>
+    <string name="group_repeat_mode">Gjentakelsesmodus</string>
+    <string name="group_volume_levels">Volumnivåer</string>
+    <string name="group_watch_screens">Klokkeskjermer</string>
+    <string name="group_find_music">Finn og spill</string>
+    <string name="action_open_face_picker">Åpne urskivevelger</string>
+    <string name="action_close_watch_app">Lukk klokkeappen</string>
+    <string name="hand_gestures">HÅNDBEVEGELSER</string>
+    <string name="hand_gestures_hint">Tilgjengelig på kompatible klokker mens Svartifoss er åpen.</string>
+    <string name="hand_gestures_hint_disconnected">Koble til og åpne Svartifoss på klokken for å se om den støtter håndbevegelser.</string>
+    <string name="hand_gestures_hint_outdated">Oppdater klokkeappen for å se om denne klokken støtter håndbevegelser.</string>
+    <string name="hand_gestures_hint_unsupported">Denne klokken støtter ikke håndbevegelser, så en handling som er tilordnet her vil aldri bli kjørt.</string>
+    <string name="hand_gestures_hint_disabled">Håndbevegelser er slått av på denne klokken. Slå dem på på selve klokken under Innstillinger \u2192 Bevegelser.</string>
+    <string name="hand_gestures_hint_ready">Klar på denne klokken: knip to ganger mens Svartifoss-spilleren er åpen.</string>
+    <string name="hand_gesture_how_it_works">Knip tommel og pekefinger raskt sammen to ganger med håndleddet løftet. Wear OS kaller dette den primære handlingen, så en klokke fra en annen produsent kan bruke sin egen tilsvarende håndbevegelse.\n\nDet fungerer bare mens Svartifoss-spilleren er åpen på klokken og skjermen er på \u2014 ikke fra urskiven, ikke over køen eller menyen og ikke på alltid-på-skjermen. Handlingen som kjøres er den som er satt for avspillingsstatusen akkurat nå, så sett den på begge Kontroll-sidene for at den skal fungere i begge tilstander.\n\nBevegelsen må også være slått på i klokkens egne Innstillinger \u2192 Bevegelser.</string>
+    <string name="double_pinch">Dobbelt knip</string>
+    <string name="icon_selection_search_hint">Søk etter ikoner</string>
+    <string name="icon_selection_search_empty">Ingen ikoner samsvarer med søket ditt</string>
+    <string name="open_quick_actions_panel">Åpne hurtighandlingspanelet</string>
+    <string name="open_volume_screen">Åpne volumskjermen</string>
+    <string name="open_progress_screen">Åpne fremdriftsskjermen</string>
+    <string name="export_config_failed_detail">Kunne ikke eksportere sikkerhetskopien: %1$s</string>
+    <string name="backup_selection_title">Velg innhold i sikkerhetskopien</string>
+    <string name="backup_selection_description">Velg delene av Svartifoss du vil lagre. Alt er valgt som standard; deler som ikke er valgt, forblir uendret når sikkerhetskopien importeres.</string>
+    <string name="backup_selection_select_all">Velg alle</string>
+    <string name="backup_selection_clear_all">Fjern alle</string>
+    <string name="backup_selection_export">Eksporter sikkerhetskopi</string>
+    <string name="backup_selection_empty">Velg minst ett element</string>
+    <string name="backup_section_buttons">Knappkonfigurasjoner</string>
+    <string name="backup_section_buttons_description">Handlinger for knapp, krone og bevegelser når musikk spilles eller er stoppet.</string>
+    <string name="backup_section_actions">Handlingsliste</string>
+    <string name="backup_section_actions_description">Den ordnede listen over handlinger som vises i klokkas handlingsmeny.</string>
+    <string name="backup_section_app_settings">Appinnstillinger</string>
+    <string name="backup_section_app_settings_description">Telefoninnstillinger, klokkeatferd, språk, avspilling og integrasjoner.</string>
+    <string name="backup_section_watch_appearance">Klokkeutseende og temaer</string>
+    <string name="backup_section_watch_appearance_description">Klokkeoppsett, farger, typografi, paneler, AOD og lagrede egendefinerte temaer.</string>
+    <string name="backup_section_playlist_shortcuts">Spillelistesnarveier</string>
+    <string name="backup_section_playlist_shortcuts_description">Lagret musikk og lenker til album, artister, spillelister og andre strømmetjenester.</string>
+    <string name="backup_section_history">Søke- og avspillingshistorikk</string>
+    <string name="backup_section_history_description">Nylige søk og nylig spilte spor.</string>
+    <string name="backup_section_icons">Innlastede ikoner og bilder</string>
+    <string name="backup_section_icons_description">Egendefinerte handlingsikoner, snarveisomslag og bufrede appikoner.</string>
+    <string name="backup_section_privacy">Personvern og varsler</string>
+    <string name="backup_section_privacy_description">Krasjrapporter, kunngjøringsvarsler og andre samtykkevalg lagret av appen.</string>
+    <string name="backup_section_local_app_state">Lokal appstatus</string>
+    <string name="backup_section_local_app_state_description">Gjeldende aksent, siste menyposisjon, fullførte meldinger og oppdateringsstatus.</string>
+    <string name="backup_section_auxiliary_data">Andre appdata</string>
+    <string name="backup_section_auxiliary_data_description">Ytterligere innstillinger og interne filer som eies av appen, inkludert fremtidige datalagre.</string>
+    <string name="pref_numeric_range">Mellom %1$d og %2$d.</string>
+    <string name="background_editor_artwork">Omslag</string>
+    <string name="background_editor_layers">Lag</string>
+    <string name="background_editor_layers_count">%1$d av %2$d</string>
+    <string name="background_editor_add_layer">Legg til lag</string>
+    <string name="background_editor_reset_layers">Tilbakestill</string>
+    <string name="background_editor_empty">Ingen lag. Omslaget vises alene.</string>
+    <string name="background_editor_note">Laget øverst i denne listen tegnes over alt annet; laget nederst ligger nærmest omslaget.</string>
+    <string name="background_editor_full">Du kan stable opptil %1$d lag.</string>
+    <string name="background_layer_kind_wash">Bakgrunn</string>
+    <string name="background_layer_kind_shade">Skyggelegging</string>
+    <string name="background_layer_kind_floor">Aksentbunn</string>
+    <string name="background_layer_move_up">Flytt dette laget opp</string>
+    <string name="background_layer_move_down">Flytt dette laget ned</string>
+    <string name="background_layer_more">Flere alternativer for dette laget</string>
+    <string name="background_layer_add_title">Legg til et lag</string>
+    <string name="background_layer_style_title">%1$s-lag</string>
+    <string name="background_layer_opacity">Styrke</string>
+    <string name="background_layer_color">Farge</string>
+    <string name="background_layer_custom_color">Velg en farge</string>
+    <string name="background_layer_duplicate">Dupliser</string>
+    <string name="background_layer_remove">Fjern</string>
+    <string name="background_layer_color_default">Standard</string>
+    <string name="background_layer_color_album">Albumfarge</string>
+    <string name="background_layer_color_secondary">Andre albumfarge</string>
+    <string name="background_layer_color_tertiary">Tredje albumfarge</string>
+    <string name="background_layer_color_desaturated">Dempet albumfarge</string>
+    <string name="background_layer_color_black">Svart</string>
+    <string name="background_layer_color_custom">Egendefinert farge</string>
+    <string name="background_layer_reset_title">Tilbakestille lagene?</string>
+    <string name="background_layer_reset_message">Lagstakken går tilbake til skyggeleggingen og aksentbunnen som er angitt på sine egne rader, som også er det en klokke med en eldre versjon gjengir.</string>
+    <string name="watch_element_progress">Fremdrift</string>
+    <string name="watch_element_volume">Volum</string>
+    <string name="watch_element_quick_panel">Hurtighandlinger</string>
+    <string name="watch_element_queue">Kø</string>
+    <string name="watch_element_lyrics">Sangtekster</string>
+    <string name="player_section_on_screen">På skjermen</string>
+    <string name="player_element_app_icon">Appikon</string>
+    <string name="player_element_controls">Spillerkontroller</string>
+    <string name="player_element_tap_flash">Trykkblink</string>
+    <string name="player_element_inner_progress">Indre fremdrift</string>
+    <string name="player_element_edge_arc">Kantbue</string>
+    <string name="player_element_edge_seek">Søk langs kanten</string>
+    <string name="player_element_clock">Klokke</string>
+    <string name="player_element_cover_art">Omslagsbilde</string>
+    <string name="setting_album_art_filter">Filter for albumomslag</string>
+    <string name="setting_album_art_filter_description">Bruk en uavhengig fargebehandling over hvilken som helst stil for albumomslag.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto med en ekstra lett strek for et delikat skjermuttrykk.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto med en lett, luftig strek og familiens velkjente proporsjoner.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto med en sterkere mellomtykk strek for kompakte, lesbare etiketter.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto med sin tyngste systemvekt for kraftig visningstekst.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto komprimert horisontalt slik at lengre titler får plass på mindre område.</string>
+    <string name="setting_wear_title_font">Skrifttype for tittel</string>
+    <string name="setting_wear_title_text_case">Bokstavtype for tittel</string>
+    <string name="setting_wear_artist_font">Skrifttype for artist</string>
+    <string name="setting_wear_artist_text_case">Bokstavtype for artist</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">En vennlig avrundet sans-serif laget for tidlig lesing</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">En Didone-displayfont med høy kontrast og redaksjonell tyngde</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">En robust plakatsans med håndtegnet tegneseriepreg</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">En rolig geometrisk sans med romslig, jevn avstand</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">En moderne slab-serif med mykt avrundede avslutninger</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">En massiv slab-serif laget for kraftige overskrifter</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">En smal håndtegnet font i små kapiteler</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">En tett kondensert sans for tydelige overskrifter</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">En geometrisk slab-serif som holder seg tydelig i små størrelser</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">En tegneseriepreget displayfont med høy energi</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">En militær sjablongbasert displayfont</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">En oppreist serif med varme, uformelle kurver</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">En humanistisk sans med lett avrundede hjørner</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">En grotesk sans med sterke, direkte former</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">En raffinert skrivemaskin-monospace laget for manus</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">En avrundet slab-serif med myk, boklig tone</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">En gammeldags bokserif tilpasset lange tekster</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">En geometrisk sans med lav kontrast og moderne uttrykk</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">En robust serif laget for å fungere godt i brødtekst</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">En moderne teknisk sans med kantede skjøter</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">En programmeringsmonospace med tydelige, særpregede tegn</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">En humanistisk monospace laget for kode på skjerm</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">En boblende håndskrift med avrundede strøk</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">En geometrisk sans med 1920-tallspreg</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">En geometrisk sans i Futura-tradisjonen</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">En løkkefri thai- og latin-sans med svak helning</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">En sans utformet for å redusere visuelt stress under lesing</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">En fet sammenhengende skriftskrift med retro skiltpreg</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">En halvgeometrisk sans som balanserer varme og presisjon</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">En minimalistisk sans laget for ren grensesnittstekst</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">En godt avrundet sans med myke avslutninger</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">En geometrisk sans med jevn, moderne rytme</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">En firkantet techno-font med spillpreg</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">En kompakt teknisk sans tegnet på et rutenett</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">En moderne grotesk med særpregede åpne kurver</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">En pikselfont rett fra et arkadekabinett</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">En avrundet geometrisk sans med mykt, lett preg</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">En firkantet kondensert sans med tekniske vinkler</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">En art deco-displayfont med røtter i retro skiltmaling</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Monospace-varianten av Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">En tykk displayfont med lekne, stumpe strøk</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">En bred industriell font med tunge firkantede former</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">En livlig skråstilt displayfont med gujaratiske røtter</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">En liten bitmapfont som minner om tidlige dataskjermer</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">En monospace laget for komfortabel kodelesing</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">En kondensert font i bare versaler med tydelig plakatpreg</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">En høy kondensert font for overskrifter på devanagari og latin</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">En firkantet humanistisk sans med teknisk preg</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">En helt avrundet sans med imøtekommende tone</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">En kondensert font inspirert av kaféskilt fra 1920-tallet</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">En slab-serif med mykt avkuttede, moderne avslutninger</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">En vennlig humanistisk sans med åpne, lesbare former</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">En varm sans med robuste former for behagelig lesing</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">En allsidig humanistisk sans laget for tydelige grensesnitt</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">En raffinert tekstserif med redaksjonell stemme</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">En klassisk bokserif tilpasset skjermlesing</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">En praktisk grotesk sans med bred, robust rytme</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">En teknisk humanistisk sans med presise proporsjoner</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">En teknisk monospace med polert, lesbar tekstur</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">En moderne serif med konstruert karakter</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">En ren arbeidshest-sans med kompakte, praktiske former</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">En særpreget grotesk med vennlige proporsjoner</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">En geometrisk sans med futuristisk, luftig preg</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">En moderne geometrisk sans med elegante, urbane linjer</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">En balansert moderne sans laget for små skjermer</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">En selvsikker display-sans med uttrykksfulle proporsjoner</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">En lesbar ledsagersans for lengre sporinformasjon</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">En skarp monospace med moderne teknisk tone</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">En ukonvensjonell sans med kunststyrte, lekne former</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">En fleksibel moderne sans med rolig presisjon</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">En ren, tilgjengelig sans for uanstrengt lesing</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">En avrundet display-sans med munter personlighet</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">En livlig grotesk som blander struktur med særegne detaljer</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">En display-serif med høy kontrast for dramatiske titler</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">En elegant litterær serif med høy kontrast</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">En elegant display-serif med kalligrafiske detaljer</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">En robust slab-serif som holder seg tydelig i små størrelser</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">En allsidig serif laget for tett, uttrykksfull lesing</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">En varm gammeldags serif med boklig stemme</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">En elegant sans med særpregede, raffinerte bokstavformer</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">En fet geometrisk sans laget for sterke overskrifter</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">En kondenseringsvennlig sans med atletisk, dynamisk energi</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">En myk sans med åpne innvendige former og vennlig skiltpreg</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">En allsidig sans som balanserer humanistisk varme og tydelighet</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">En tydelig transportinspirert sans med trygg rytme</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">En nøytral, tilgjengelig sans laget for hverdagsgrensesnitt</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">En lett geometrisk sans med glatte, moderne kurver</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">En avrundet smal sans med et mykt futuristisk preg</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">En ren geometrisk sans med subtilt thai-inspirert preg</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">En bred futuristisk displayfont for maksimal tilstedeværelse</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">En variabel sans-til-mono-familie med leken teknisk stemme</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">En monospace med variabel bredde og særpreget digital tekstur</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">En bred, svært lesbar sans med omfattende skriftsystemstøtte</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">En pålitelig serif med omfattende skriftsystemstøtte</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">En flerspråklig monospace laget for jevn rytme</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">En kompakt moderne sans med en skarp, hebraiskinspirert rytme</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">En robust humanistisk sans optimalisert for tydelig lesing</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">En vennlig skjermsans med avrundet, åpen tekstur</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">En kompakt geometrisk sans med særegne proporsjoner</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">En livlig kalligrafisk serif med litterær karakter</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">En ren humanistisk sans med svært god lesbarhet i grensesnitt</string>
+    <string name="setting_wear_note_show_cover">Omslagsbilde</string>
+    <string name="aod_element_artwork">Omslag</string>
+    <string name="aod_element_clock">Klokke</string>
+    <string name="aod_element_track_info">Sporinfo</string>
+    <string name="aod_element_transport">Avspillingskontroller</string>
+    <string name="aod_element_progress">Fremdrift</string>
+    <string name="aod_element_up_next">Neste</string>
+    <string name="aod_section_artwork">Omslag</string>
+    <string name="aod_control_tint">Fargetone</string>
+    <string name="aod_control_brightness">Lysstyrke</string>
+    <string name="aod_control_art_treatment">Behandling</string>
+    <string name="aod_control_art_opacity">Opasitet</string>
+    <string name="mini_button_control_visibility">Vis</string>
+    <string name="mini_button_control_arrangement">Plassering</string>
+    <string name="mini_button_control_shape">Form</string>
+    <string name="mini_button_control_background">Bakgrunn</string>
+    <string name="mini_button_control_opacity">Opasitet</string>
+    <string name="mini_button_assign_action">Tilordne handlinger</string>
+    <string name="mini_button_gestures_note">Sveip opp, ned og til venstre på spilleren. Sveip til høyre er alltid systemets lukkebevegelse og blir aldri fanget opp.</string>
+    <string name="setting_wear_chat_cover_shape">Form på chatavatar</string>
+    <string name="setting_wear_chat_show_cover">Omslagsbilde</string>
+    <string name="setting_wear_metadata_cover_shape">Form på metadataomslag</string>
+    <string name="setting_wear_metadata_show_cover">Omslagsbilde</string>
+    <string-array name="wear_text_case_entries">
+        <item>Normal</item>
+        <item>STORE BOKSTAVER</item>
+        <item>små bokstaver</item>
+        <item>Tittelstil</item>
+    </string-array>
+    <string name="wear_text_font_follow">Følg global skrifttype</string>
+    <string name="category_wf_typography_track_time">Sportid</string>
+    <string name="setting_wear_track_time_font">Skrifttype for sportid</string>
+    <string name="wear_track_time_font_follow">Følg designet</string>
+    <string name="setting_wear_track_time_font_weight">Tykkelse på sportid</string>
+    <string name="setting_wear_track_time_font_italic">Kursiv sportid</string>
+    <string name="setting_wear_track_time_font_scale">Størrelse på sportid</string>
+    <string name="setting_wear_track_time_font_opacity">Gjennomsiktighet for sportid</string>
+    <string name="setting_wear_track_time_font_tracking">Bokstavavstand for sportid</string>
+    <string-array name="album_art_filter_entries">
+        <item>Ingen</item>
+        <item>Monokrom</item>
+        <item>Varm</item>
+        <item>Kjølig</item>
+        <item>Gyllen time</item>
+        <item>Rosé</item>
+        <item>Vintagefilm</item>
+        <item>Falmet film</item>
+        <item>Matt</item>
+        <item>Livlig</item>
+        <item>Kraftig</item>
+        <item>Pastell</item>
+        <item>Sepia</item>
+        <item>Cyanotypi</item>
+        <item>Blågrønn og oransje</item>
+        <item>Høy kontrast</item>
+        <item>Mykt lys</item>
+        <item>Natt</item>
+    </string-array>
+    <string name="queue_item_now_playing">Spilles nå</string>
+    <string name="queue_item_unknown_title">Ukjent spor</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Avspillingskø · %1$d spor</item>
+        <item quantity="other">Avspillingskø · %1$d spor</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Farge på aksentbunn</string>
+    <string name="setting_wear_accent_floor_custom_color">Egendefinert bunnfarge</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Velg fargen som brukes når Farge på aksentbunn er satt til Egendefinert farge</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Albumaksent</item>
+        <item>Sekundær albumfarge</item>
+        <item>Tertiær albumfarge</item>
+        <item>Egendefinert farge</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">En nøytral, svært lesbar grensesnittsans for daglig lesing</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Tilgjengelighetsfokuserte bokstavformer med tydelige forskjeller som forblir klare i små størrelser</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">En mykt avrundet geometrisk sans — selvsikker og vennlig</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">En kompakt humanistisk sans som gir lange titler mer plass</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">En høy, kondensert displayfont med kraftig plakatenergi</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">En moderne serif laget for behagelig langlesing</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">En uttrykksfull myk serif med varme og karakter</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">En retrofuturistisk monospace med teknisk kant</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">En kompakt tung displayfont for maksimal kontrast</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">En flytende håndskrift med livlig, personlig preg</string>
+    <string name="setting_wear_artist_text_mode">Oppførsel for artisttekst</string>
+    <string name="setting_wear_album_art_source">Kilde for albumomslag</string>
+    <string name="setting_user_font">Min egen skrifttype</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Importer en .ttf- eller .otf-fil fra denne telefonen</string>
+    <string name="setting_user_font_loaded">%1$s · trykk for å erstatte eller fjerne</string>
+    <string name="user_font_pick">Velg en skriftfil</string>
+    <string name="user_font_replace">Erstatt</string>
+    <string name="user_font_remove">Fjern</string>
+    <string name="user_font_imported">«%1$s» ble importert. Velg den i en hvilken som helst skrifttypeliste; den sendes til klokken din.</string>
+    <string name="user_font_removed">Den importerte skrifttypen din ble fjernet.</string>
+    <string name="user_font_error_too_large">Filen er %1$s. En skrifttype må være under %2$s for å kunne nå klokken raskt.</string>
+    <string name="user_font_error_not_a_font">Filen er ikke en skrifttype denne telefonen kan lese. TrueType og OpenType (.ttf, .otf) fungerer; webskrifter (.woff, .woff2) gjør ikke det.</string>
+    <string name="user_font_error_unreadable">Filen kunne ikke leses. Prøv å velge den på nytt, eller kopier den først til denne telefonen.</string>
+    <string name="user_font_not_shareable">Temaer som bruker din egen skrifttype, blir på denne telefonen</string>
+    <string name="setting_custom_album_art_image">Bilde som skal brukes</string>
+    <string name="setting_custom_album_art_folder">Kildemappe</string>
+    <string name="setting_custom_album_art_none">Ikke valgt ennå — trykk for å velge</string>
+    <string name="setting_custom_album_art_chosen">%1$s · trykk for å endre</string>
+    <string name="custom_album_art_image_set">Det bildet vil nå ligge bak spilleren.</string>
+    <string name="custom_album_art_folder_set">Et bilde fra den mappen velges for hvert spor.</string>
+    <string name="custom_album_art_error">Det kunne ikke åpnes. Velg det på nytt, eller velg noe fra telefonens eget lagringsområde.</string>
+    <string name="custom_album_art_not_shareable">Temaer som bruker dine egne bilder, blir på denne telefonen</string>
+    <string name="setting_wear_text_block_align">Tekstjustering</string>
+    <string name="setting_wear_text_block_align_description">Hvilken kant sporets tekst justeres mot. Følg urskive beholder justeringen hver urskive er utformet for.</string>
+    <string name="setting_wear_text_block_position">Tekstposisjon</string>
+    <string name="setting_wear_text_block_position_description">Hvor sporets tekst ligger på skjermen. Følg urskive beholder posisjonen hver urskive er utformet for.</string>
+    <string name="setting_online_artwork">Nettbasert omslag</string>
+    <string name="setting_online_artwork_description">La urskiven vise et bilde som slås opp på nettet \u2014 artisten som spiller, eller et albumomslag når en spiller ikke publiserer noe. Telefonen gjør oppslaget i Deezers offentlige katalog og cacher resultatet; bare spor- og artistnavn sendes, og ingenting slås opp med mindre en urskive er satt til en av disse kildene. Når funksjonen er av, brukes spillerens eget omslag.</string>
 </resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Відомості про тему</string>
+    <string name="community_theme_detail_preview_screen">Екран попереднього перегляду</string>
+    <string name="community_theme_detail_surface_player">Програвач</string>
+    <string name="community_theme_detail_surface_aod">Завжди ввімкнено</string>
+    <string name="community_theme_detail_surface_volume">Гучність</string>
+    <string name="community_theme_detail_surface_progress">Прогрес</string>
+    <string name="community_theme_detail_surface_quick_panel">Швидка панель</string>
+    <string name="community_theme_detail_surface_queue">Черга</string>
+    <string name="community_theme_detail_preview_label">Попередній перегляд %1$s</string>
+    <string name="community_theme_detail_preview_description">Попередній перегляд %1$s на екрані %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Поточна обкладинка альбому може з’являтися лише в цьому попередньому перегляді на телефоні. Вона ніколи не завантажується; далі використовується приклад тексту й часу.</string>
+    <string name="community_theme_detail_information">Відомості про тему</string>
+    <string name="community_theme_detail_byline">Автор: %1$s</string>
+    <string name="community_theme_detail_layout">Базовий макет</string>
+    <string name="community_theme_detail_revision">Редакція</string>
+    <string name="community_theme_detail_minimum_version">Мінімальна версія Svartifoss</string>
+    <string name="community_theme_detail_published">Опубліковано</string>
+    <string name="community_theme_detail_visual_settings">Візуальні налаштування</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s візуальне налаштування</item>
+        <item quantity="other">%1$s візуальних налаштувань</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Недоступно</string>
+    <string name="community_theme_detail_add_apply">Додати й застосувати</string>
+    <string name="community_theme_detail_remove">Видалити тему</string>
+    <string name="community_theme_detail_remove_title">Видалити «%1$s» з розділу «Мої теми»?</string>
+    <string name="community_theme_detail_remove_message">Цю збережену копію та всі внесені до неї зміни буде видалено назавжди. Якщо вона зараз застосована, годинник повернеться до вбудованого базового макета.</string>
+    <string name="community_theme_detail_removed">Тему видалено з «Моїх тем»</string>
+    <string name="community_theme_detail_remove_error">Не вдалося видалити цю тему</string>
+    <string name="community_theme_detail_like">Подобається</string>
+    <string name="community_theme_detail_unlike">Прибрати вподобайку</string>
+    <string name="community_theme_detail_like_loading">Перевірка…</string>
+    <string name="community_theme_detail_like_description">Поставити «Подобається» для %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Прибрати вподобайку з %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Вхід через Google скасовано. Вашу вподобайку не збережено.</string>
+    <string name="community_theme_detail_like_error">Не вдалося зберегти вашу вподобайку. Перевірте з’єднання та повторіть спробу.</string>
+    <string name="community_theme_detail_like_not_ready">Вподобайки для цієї теми ще не готові. Оновіть теми спільноти після наступної публікації.</string>
+    <string name="community_theme_detail_like_saved">Вашу вподобайку збережено. Публічні лічильники оновляться під час наступної публікації каталогу.</string>
+    <string name="community_theme_detail_unlike_saved">Вашу вподобайку видалено. Публічні лічильники оновляться під час наступної публікації каталогу.</string>
+    <string name="community_theme_detail_apply_existing">Ця тема вже є в розділі «Мої теми» та застосована до вашого годинника</string>
+    <string name="community_theme_detail_requires_app_version">Для додавання цієї теми потрібна версія Svartifoss %1$s.</string>
+    <string name="community_theme_detail_load_error">Не вдалося завантажити відомості про цю тему. Поверніться до тем спільноти й повторіть спробу.</string>
+    <string name="community_theme_detail_profile_mismatch">Завантажений профіль не відповідає публічним відомостям цієї теми. Поверніться до тем спільноти й повторіть спробу.</string>
+    <string name="community_theme_detail_screenshot_description">Фото цієї теми на годиннику автора</string>
+    <string name="community_theme_detail_source_author">Годинник автора</string>
+    <string name="community_theme_detail_source_rendered">Створений попередній перегляд</string>
+    <string name="community_theme_detail_show_rendered">Показати створений попередній перегляд</string>
+    <string name="community_theme_detail_show_author">Показати фото автора</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

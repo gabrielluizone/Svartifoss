@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Тақырып мәліметтері</string>
+    <string name="community_theme_detail_preview_screen">Алдын ала қарау экраны</string>
+    <string name="community_theme_detail_surface_player">Ойнатқыш</string>
+    <string name="community_theme_detail_surface_aod">Әрқашан қосулы</string>
+    <string name="community_theme_detail_surface_volume">Дыбыс деңгейі</string>
+    <string name="community_theme_detail_surface_progress">Прогресс</string>
+    <string name="community_theme_detail_surface_quick_panel">Жылдам панель</string>
+    <string name="community_theme_detail_surface_queue">Кезек</string>
+    <string name="community_theme_detail_preview_label">%1$s алдын ала қарауы</string>
+    <string name="community_theme_detail_preview_description">%2$s экранындағы %1$s алдын ала қарауы</string>
+    <string name="community_theme_detail_preview_privacy">Ағымдағы альбом мұқабасы тек телефоныңыздағы осы алдын ала қарауда көрінуі мүмкін. Ол ешқашан жүктеп салынбайды; үлгі мәтін мен уақыт қолданылып тұрады.</string>
+    <string name="community_theme_detail_information">Тақырып туралы ақпарат</string>
+    <string name="community_theme_detail_byline">Авторы: %1$s</string>
+    <string name="community_theme_detail_layout">Негізгі орналасу</string>
+    <string name="community_theme_detail_revision">Нұсқа</string>
+    <string name="community_theme_detail_minimum_version">Svartifoss ең төменгі нұсқасы</string>
+    <string name="community_theme_detail_published">Жарияланды</string>
+    <string name="community_theme_detail_visual_settings">Көрнекі баптаулар</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s көрнекі баптау</item>
+        <item quantity="other">%1$s көрнекі баптау</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Қолжетімсіз</string>
+    <string name="community_theme_detail_add_apply">Қосу және қолдану</string>
+    <string name="community_theme_detail_remove">Тақырыпты жою</string>
+    <string name="community_theme_detail_remove_title">«%1$s» тақырыбын Менің тақырыптарымнан жою керек пе?</string>
+    <string name="community_theme_detail_remove_message">Бұл сақталған көшірме және оған жасаған барлық өзгерістеріңіз біржола жойылады. Егер ол қазір қолданылып тұрса, сағатыңыз кірістірілген негізгі орналасуына оралады.</string>
+    <string name="community_theme_detail_removed">Тақырып Менің тақырыптарымнан жойылды</string>
+    <string name="community_theme_detail_remove_error">Бұл тақырыпты жою мүмкін болмады</string>
+    <string name="community_theme_detail_like">Ұнату</string>
+    <string name="community_theme_detail_unlike">Ұнатудан бас тарту</string>
+    <string name="community_theme_detail_like_loading">Тексерілуде…</string>
+    <string name="community_theme_detail_like_description">%1$s ұнату. %2$s</string>
+    <string name="community_theme_detail_unlike_description">%1$s ұнатуын алып тастау. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google жүйесіне кіру тоқтатылды. Ұнатуыңыз сақталмады.</string>
+    <string name="community_theme_detail_like_error">Ұнатуыңызды сақтау мүмкін болмады. Қосылымды тексеріп, қайталап көріңіз.</string>
+    <string name="community_theme_detail_like_not_ready">Бұл тақырыптың ұнатулары әлі дайын емес. Келесі жарияланымнан кейін қауымдастық тақырыптарын жаңартыңыз.</string>
+    <string name="community_theme_detail_like_saved">Ұнатуыңыз сақталды. Жалпыға ортақ есептегіштер каталогтың келесі жарияланымында жаңартылады.</string>
+    <string name="community_theme_detail_unlike_saved">Ұнатуыңыз алынып тасталды. Жалпыға ортақ есептегіштер каталогтың келесі жарияланымында жаңартылады.</string>
+    <string name="community_theme_detail_apply_existing">Бұл тақырып Менің тақырыптарым бөлімінде бар және сағатыңызға қолданылған</string>
+    <string name="community_theme_detail_requires_app_version">Бұл тақырыпты қосу үшін алдымен Svartifoss %1$s қажет.</string>
+    <string name="community_theme_detail_load_error">Бұл тақырыптың мәліметтерін жүктеу мүмкін болмады. Қауымдастық тақырыптарына оралып, қайталап көріңіз.</string>
+    <string name="community_theme_detail_profile_mismatch">Жүктелген профиль осы тақырыптың жалпыға ортақ мәліметтеріне сәйкес келмейді. Қауымдастық тақырыптарына оралып, қайталап көріңіз.</string>
+    <string name="community_theme_detail_screenshot_description">Автордың сағатындағы осы тақырыптың фотосы</string>
+    <string name="community_theme_detail_source_author">Автордың сағаты</string>
+    <string name="community_theme_detail_source_rendered">Жасалған алдын ала қарау</string>
+    <string name="community_theme_detail_show_rendered">Жасалған алдын ала қарауды көрсету</string>
+    <string name="community_theme_detail_show_author">Автор фотосын көрсету</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

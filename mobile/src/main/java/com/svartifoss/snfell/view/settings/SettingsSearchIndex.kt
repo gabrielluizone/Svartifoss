@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.XmlResourceParser
 import androidx.annotation.XmlRes
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.update.UpdateGateway
 import com.svartifoss.snfell.view.watchface.WatchFacePrefsFragment
 import java.text.Normalizer
 import org.xmlpull.v1.XmlPullParser
@@ -48,6 +49,14 @@ object SettingsSearchIndex {
     /** Elements that group other rows rather than being settings themselves. */
     private const val CATEGORY_TAG_SUFFIX = "PreferenceCategory"
 
+    /**
+     * Categories whose rows this build hides, so search must not offer them - a result would land
+     * on an invisible row and read as broken. The Play flavor drops the in-app self-updater
+     * entirely (Play delivers updates), so its Updates category never appears.
+     */
+    private val EXCLUDED_CATEGORIES: Set<String> =
+            if (UpdateGateway.SUPPORTS_SELF_UPDATE) emptySet() else setOf("cat_updates")
+
     private val FORMAT_PLACEHOLDER =
             Regex("%(?:\\d+\\$)?[-#+ 0,(<]*\\d*(?:\\.\\d+)?[a-zA-Z%]")
 
@@ -83,9 +92,9 @@ object SettingsSearchIndex {
                         val title = parser.attr(context, "title")
                         if (parser.name.endsWith(CATEGORY_TAG_SUFFIX)) {
                             categoryTitle = title
-                            categorySection = key.takeIf { it.isNotEmpty() }?.let {
-                                SettingsCatalog.sectionForCategory(sections, it)
-                            }
+                            categorySection = key
+                                    .takeIf { it.isNotEmpty() && it !in EXCLUDED_CATEGORIES }
+                                    ?.let { SettingsCatalog.sectionForCategory(sections, it) }
                             categoryDepth = parser.depth
                         } else if (key.isNotEmpty() && title.isNotEmpty()) {
                             // A row outside any category, or in one no section shows, cannot be

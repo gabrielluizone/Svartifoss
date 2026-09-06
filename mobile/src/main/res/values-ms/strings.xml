@@ -1874,6 +1874,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1917,6 +1922,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2358,4 +2368,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Salin</string>
+    <string name="dev_report_copied">Laporan disalin</string>
+    <string name="dev_watch_snapshot_inspector">Petikan tetapan jam tangan</string>
+    <string name="dev_watch_snapshot_inspector_description">Apa yang sebenarnya akan dihantar ke jam tangan sekarang: skop penampilan aktif, anggaran saiz, dan cache skop muka tidak aktif yang dibuang supaya muat dalam had saiz</string>
+    <string name="dev_data_layer_inspector">Pemeriksa Data Layer</string>
+    <string name="dev_data_layer_inspector_description">Nod Wearable yang disambungkan dan WatchInfo terakhir yang dijawab oleh aplikasi jam tangan - keadaan mentah di sebalik "Tiada jam tangan disambungkan"</string>
+    <string name="dev_media_sessions_inspector">Peneroka MediaSession</string>
+    <string name="dev_media_sessions_inspector_description">Setiap MediaSession yang sedang aktif, bukan hanya yang dijejaki: tindakan yang diiklankan, baris gilir, laluan main balik</string>
+    <string name="dev_view_phone_log">Lihat log telefon</string>
+    <string name="dev_view_phone_log_description">Bahagian hujung log Timber pada storan, serta log jam tangan jika "Hantar log" pernah mendapatkannya sebelum ini</string>
+    <string name="dev_theme_submission_preflight">Semakan awal penyerahan tema</string>
+    <string name="dev_theme_submission_preflight_description">Menjalankan setiap tema jam tangan yang disimpan melalui semakan penyerahan komuniti dan menyatakan tetapan tepat yang menghalangnya, jika ada</string>
+    <string name="dev_appearance_resolution_inspector">Pemeriksa resolusi penampilan</string>
+    <string name="dev_appearance_resolution_inspector_description">Bagi setiap kunci penampilan dalam skop, yang mana satu daripada empat langkah resolusi benar-benar digunakan - nilai muka eksplisit, lalai setiap muka, global legasi, atau lalai definisi - serta nilai yang dikembalikan oleh setiap satu</string>
+    <string name="action_fast_forward">Mara pantas</string>
+    <string name="action_rewind">Undur</string>
+    <string name="action_set_playback_speed">Tetapkan kelajuan ke %1$s×</string>
+    <string name="action_seek_to_percent">Lompat ke %1$d%%</string>
+    <string name="action_set_volume_percent">Tetapkan kelantangan ke %1$d%%</string>
+    <string name="action_set_shuffle_on">Aktifkan rawak</string>
+    <string name="action_set_shuffle_off">Matikan rawak</string>
+    <string name="action_set_repeat_off">Matikan ulangan</string>
+    <string name="action_set_repeat_all">Ulangi semua</string>
+    <string name="action_set_repeat_one">Ulangi satu</string>
+    <string name="group_playback_speed">Kelajuan pemainan</string>
+    <string name="group_track_position">Posisi trek</string>
+    <string name="group_shuffle_mode">Mode rawak</string>
+    <string name="group_repeat_mode">Mode ulangan</string>
+    <string name="group_volume_levels">Tingkat kelantangan</string>
+    <string name="group_watch_screens">Skrin jam tangan</string>
+    <string name="group_find_music">Cari &amp; putar</string>
+    <string name="action_open_face_picker">Buka pemilih paparan</string>
+    <string name="action_close_watch_app">Tutup aplikasi jam tangan</string>
+    <string name="hand_gestures">GESTUR TANGAN</string>
+    <string name="hand_gestures_hint">Tersedia pada jam tangan yang serasi semasa Svartifoss dibuka.</string>
+    <string name="hand_gestures_hint_disconnected">Sambungkan dan buka Svartifoss pada jam tangan anda untuk melihat sama ada ia menyokong gerak isyarat tangan.</string>
+    <string name="hand_gestures_hint_outdated">Kemas kini aplikasi jam tangan untuk melihat sama ada jam tangan ini menyokong gerak isyarat tangan.</string>
+    <string name="hand_gestures_hint_unsupported">Jam tangan ini tidak menyokong gerak isyarat tangan, jadi tindakan yang ditetapkan di sini tidak akan pernah dijalankan.</string>
+    <string name="hand_gestures_hint_disabled">Gerak isyarat tangan dimatikan pada jam tangan ini. Hidupkannya dalam Tetapan \u2192 Gerak isyarat, pada jam tangan itu sendiri.</string>
+    <string name="hand_gestures_hint_ready">Sedia pada jam tangan ini: cubit dua kali semasa pemain Svartifoss dibuka.</string>
+    <string name="hand_gesture_how_it_works">Cubit ibu jari dan jari telunjuk anda bersama-sama dua kali dengan pantas sambil pergelangan tangan diangkat. Wear OS memanggilnya tindakan utama, jadi jam tangan daripada pengeluar lain mungkin menggunakan gerak isyarat tangan yang setara.\n\nIa hanya berjalan semasa pemain Svartifoss dibuka pada jam tangan dan skrin menyala \u2014 bukan dari muka jam, bukan di atas baris gilir atau menu, dan bukan pada paparan sentiasa hidup. Tindakan yang dijalankan ialah tindakan yang ditetapkan untuk keadaan main balik semasa, jadi tetapkannya pada kedua-dua halaman Kawalan supaya berfungsi dalam kedua-dua keadaan.\n\nGerak isyarat itu juga mesti dihidupkan dalam Tetapan \u2192 Gerak isyarat pada jam tangan.</string>
+    <string name="double_pinch">Cubitan ganda</string>
+    <string name="icon_selection_search_hint">Cari ikon</string>
+    <string name="icon_selection_search_empty">Tidak ada ikon yang sepadan dengan carian anda</string>
+    <string name="open_quick_actions_panel">Buka panel tindakan cepat</string>
+    <string name="open_volume_screen">Buka skrin kelantangan</string>
+    <string name="open_progress_screen">Buka skrin kemajuan</string>
+    <string name="export_config_failed_detail">Tidak dapat mengekspor sandaran: %1$s</string>
+    <string name="backup_selection_title">Pilih isi sandaran</string>
+    <string name="backup_selection_description">Pilih bagian Svartifoss yang ingin anda simpan. Semuanya dipilih secara lalai; bagian yang tidak dipilih tidak akan diubah saat sandaran ini diimpor.</string>
+    <string name="backup_selection_select_all">Pilih semua</string>
+    <string name="backup_selection_clear_all">Padam semua pilihan</string>
+    <string name="backup_selection_export">Ekspor sandaran</string>
+    <string name="backup_selection_empty">Pilih sekurang-kurangnya satu item</string>
+    <string name="backup_section_buttons">Konfigurasi tombol</string>
+    <string name="backup_section_buttons_description">Tindakan tombol, mahkota, dan gerak isyarat saat musik diputar maupun berhenti.</string>
+    <string name="backup_section_actions">Senarai tindakan</string>
+    <string name="backup_section_actions_description">Senarai tindakan berurutan yang dipaparkan di menu tindakan jam tangan.</string>
+    <string name="backup_section_app_settings">Tetapan aplikasi</string>
+    <string name="backup_section_app_settings_description">Tetapan telefon, perilaku jam tangan, bahasa, pemainan, dan integrasi.</string>
+    <string name="backup_section_watch_appearance">Paparan dan tema jam tangan</string>
+    <string name="backup_section_watch_appearance_description">Susun atur jam tangan, warna, tipografi, panel, AOD, dan tema tersuai yang disimpan.</string>
+    <string name="backup_section_playlist_shortcuts">Pintasan senarai main</string>
+    <string name="backup_section_playlist_shortcuts_description">Musik, album, artis, senarai main, dan pautan streaming lain yang anda simpan.</string>
+    <string name="backup_section_history">Sejarah carian dan pemainan</string>
+    <string name="backup_section_history_description">Carian terbaru dan trek yang baru diputar.</string>
+    <string name="backup_section_icons">Ikon dan karya seni yang dimuatkan</string>
+    <string name="backup_section_icons_description">Ikon tindakan tersuai, sampul pintasan, dan ikon aplikasi dalam cache.</string>
+    <string name="backup_section_privacy">Privasi dan pemberitahuan</string>
+    <string name="backup_section_privacy_description">Laporan ranap, pemberitahuan pengumuman, dan pilihan persetujuan lain yang disimpan aplikasi.</string>
+    <string name="backup_section_local_app_state">Status aplikasi lokal</string>
+    <string name="backup_section_local_app_state_description">Aksen semasa, posisi menu terakhir, gesaan yang selesai, dan status kemas kini.</string>
+    <string name="backup_section_auxiliary_data">Data aplikasi lainnya</string>
+    <string name="backup_section_auxiliary_data_description">Preferensi tambahan milik aplikasi dan file internal, termasuk penyimpanan data mendatang.</string>
+    <string name="pref_numeric_range">Antara %1$d dan %2$d.</string>
+    <string name="background_editor_artwork">Karya seni</string>
+    <string name="background_editor_layers">Lapisan</string>
+    <string name="background_editor_layers_count">%1$d daripada %2$d</string>
+    <string name="background_editor_add_layer">Tambah lapisan</string>
+    <string name="background_editor_reset_layers">Tetapkan semula</string>
+    <string name="background_editor_empty">Tidak ada lapisan. Karya seni dipaparkan sendiri.</string>
+    <string name="background_editor_note">Lapisan paling atas dalam senarai ini dilukis ke atas semua yang lain; lapisan paling bawah berada paling dekat dengan karya seni.</string>
+    <string name="background_editor_full">anda dapat menumpuk hingga %1$d lapisan.</string>
+    <string name="background_layer_kind_wash">Latar belakang</string>
+    <string name="background_layer_kind_shade">Lorekan</string>
+    <string name="background_layer_kind_floor">Lapisan asas aksen</string>
+    <string name="background_layer_move_up">Pindahkan lapisan ini ke atas</string>
+    <string name="background_layer_move_down">Pindahkan lapisan ini ke bawah</string>
+    <string name="background_layer_more">Pilihan lainnya untuk lapisan ini</string>
+    <string name="background_layer_add_title">Tambah lapisan</string>
+    <string name="background_layer_style_title">Lapisan %1$s</string>
+    <string name="background_layer_opacity">Kekuatan</string>
+    <string name="background_layer_color">Warna</string>
+    <string name="background_layer_custom_color">Pilih warna</string>
+    <string name="background_layer_duplicate">Duplikat</string>
+    <string name="background_layer_remove">Padam</string>
+    <string name="background_layer_color_default">Lalai</string>
+    <string name="background_layer_color_album">Warna album</string>
+    <string name="background_layer_color_secondary">Warna album kedua</string>
+    <string name="background_layer_color_tertiary">Warna album ketiga</string>
+    <string name="background_layer_color_desaturated">Warna album redup</string>
+    <string name="background_layer_color_black">Hitam</string>
+    <string name="background_layer_color_custom">Warna tersuai</string>
+    <string name="background_layer_reset_title">Tetapkan semula lapisan?</string>
+    <string name="background_layer_reset_message">Tumpukan kembali ke lorekan dan lapisan asas aksen yang ditetapkan pada barisnya masing-masing, yang juga merupakan paparan pada jam tangan dengan versi lama.</string>
+    <string name="watch_element_progress">Kemajuan</string>
+    <string name="watch_element_volume">Kelantangan</string>
+    <string name="watch_element_quick_panel">Tindakan cepat</string>
+    <string name="watch_element_queue">Baris gilir</string>
+    <string name="watch_element_lyrics">Lirik</string>
+    <string name="player_section_on_screen">Di skrin</string>
+    <string name="player_element_app_icon">Ikon aplikasi</string>
+    <string name="player_element_controls">Kontrol pemain</string>
+    <string name="player_element_tap_flash">Kilatan ketuk</string>
+    <string name="player_element_inner_progress">Kemajuan dalam</string>
+    <string name="player_element_edge_arc">Busur tepi</string>
+    <string name="player_element_edge_seek">Carian tepi</string>
+    <string name="player_element_clock">Jam</string>
+    <string name="player_element_cover_art">Karya seni</string>
+    <string name="setting_album_art_filter">Penapis gambar album</string>
+    <string name="setting_album_art_filter_description">Terapkan perlakuan warna independen pada gaya gambar album apa pun.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto dengan strok ekstra ringan untuk rupa paparan yang halus.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto dengan strok ringan dan lapang serta perkadaran keluarga yang biasa.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto dengan strok sederhana yang lebih kuat untuk label yang padat dan mudah dibaca.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto dengan berat sistem paling berat untuk teks paparan tebal.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto dimampatkan secara mendatar supaya tajuk yang lebih panjang muat dalam ruang yang lebih kecil.</string>
+    <string name="setting_wear_title_font">Rupa taip judul</string>
+    <string name="setting_wear_title_text_case">Huruf besar/kecil judul</string>
+    <string name="setting_wear_artist_font">Rupa taip artis</string>
+    <string name="setting_wear_artist_text_case">Huruf besar/kecil artis</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Sans membulat yang ramah, dibuat untuk pembaca pemula</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Jenis paparan Didone berkontras tinggi dengan bobot editorial</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Sans poster yang kokoh dengan nuansa komik tulisan tangan</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Sans geometris tenang dengan jarak yang lega dan merata</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Slab serif kontemporer dengan ujung yang membulat lembut</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Slab serif sangat tebal yang dijana untuk judul yang kuat</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Rupa taip sempit bergambar tangan dalam huruf kapital kecil</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Sans kondensasi rapat untuk judul yang tegas</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Slab serif geometris yang tetap kokoh pada ukuran kecil</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Jenis paparan ala komik dengan energi yang lantang</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Jenis paparan militer bergaya stensil</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Serif tegak dengan lengkungan hangat dan informal</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Sans humanis dengan sudut sedikit membulat</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Sans grotesk dengan bentuk kuat dan lugas</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Monospace mesin tik yang disempurnakan dan dibuat untuk naskah</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Slab serif membulat dengan nuansa lembut dan seperti buku</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Serif buku gaya lama yang disetel untuk teks panjang</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Sans geometris berkontras rendah dengan hasil akhir modern</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Serif kokoh yang dijana tetap jelas pada ukuran teks isi</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Sans teknis kontemporer dengan sambungan bersudut</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Monospace pemrograman dengan glif yang jelas dan mudah dibedakan</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Monospace humanis yang dirancang untuk kode di skrin</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Jenis tulisan tangan ceria dengan sapuan membulat</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Sans geometris dengan karakter vintage tahun 1920-an</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Sans geometris dalam tradisi Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Sans Thai dan Latin tanpa loop dengan sedikit kemiringan</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Sans yang dibentuk untuk mengurangi tekanan visual saat membaca</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Aksara tersambung tebal dengan nuansa papan nama retro</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Sans semi-geometris yang menyeimbangkan kehangatan dan presisi</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Sans minimalis yang dirancang untuk teks antarmuka bersih</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Sans sangat membulat dengan ujung lembut</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Sans geometris dengan ritme kontemporer yang merata</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Rupa taip techno bersudut persegi dengan nuansa gim</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Sans teknis ringkas yang dilukis berdasarkan kisi</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Grotesk modern dengan lengkungan terbuka yang khas</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Rupa taip piksel langsung dari kabinet arcade</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Sans geometris membulat dengan nuansa lembut dan ringan</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Sans kondensasi agak persegi dengan sudut teknis</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Jenis paparan art deco dengan akar pada lukisan papan nama retro</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Pendamping monospace untuk Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Jenis paparan tebal dengan sapuan tumpul yang menyenangkan</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Rupa taip industrial lebar dengan bentuk persegi berat</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Jenis paparan miring yang hidup dengan akar Gujarati</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Jenis bitmap kecil yang mengingatkan pada skrin komputer awal</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Monospace yang dirancang agar kode nyaman dibaca</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Rupa taip kondensasi serba kapital dengan kehadiran seperti poster</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Rupa taip tinggi dan kondensasi untuk judul Devanagari dan Latin</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Sans humanis agak persegi dengan nuansa teknis</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Sans sepenuhnya membulat dengan nuansa ramah</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Rupa taip kondensasi yang menggemakan papan nama kedai kopi tahun 1920-an</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Slab serif dengan ujung modern yang dipotong lembut</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Sans humanis ramah dengan bentuk terbuka dan mudah dibaca</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Sans hangat dengan bentuk kokoh untuk pembacaan nyaman</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Sans humanis serbaguna yang dirancang untuk antarmuka jelas</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Serif teks halus dengan suara editorial</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Serif buku klasik yang disetel untuk membaca di skrin</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Sans grotesk praktis dengan ritme lebar dan kokoh</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Sans humanis teknis dengan proporsi presisi</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Monospace teknis dengan tekstur rapi dan mudah dibaca</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Serif kontemporer dengan karakter terancang</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Sans serbaguna yang bersih dengan bentuk ringkas dan praktis</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Grotesk unik dengan proporsi yang ramah</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Sans geometris dengan nuansa futuristis dan lapang</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Sans geometris modern dengan garis urban yang elegan</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Sans kontemporer seimbang yang dijana untuk skrin kecil</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Sans paparan percaya diri dengan proporsi ekspresif</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Sans pendamping yang mudah dibaca untuk maklumat trek yang lebih panjang</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Monospace tajam dengan nuansa teknis modern</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Sans tidak konvensional dengan bentuk ceria bergaya arahan seni</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Sans kontemporer fleksibel dengan presisi yang tenang</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Sans bersih dan ramah untuk keterbacaan tanpa usaha</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Sans paparan membulat dengan kepribadian ceria</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Grotesk hidup yang memadukan struktur dengan butiran unik</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Serif paparan berkontras tinggi untuk judul dramatis</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Serif sastra elegan dengan kontras tinggi</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Serif paparan anggun dengan butiran kaligrafis</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Slab serif kokoh yang tetap jelas pada ukuran kecil</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Serif serbaguna untuk bacaan padat dan ekspresif</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Serif gaya lama yang hangat dengan karakter seperti buku</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Sans elegan dengan bentuk huruf khas dan halus</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Sans geometris tebal yang dijana untuk judul kuat</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Sans yang sepadan dikondensasi dengan energi atletis dan dinamis</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Sans lembut dengan ruang dalam huruf terbuka dan nuansa papan nama ramah</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Sans serbaguna yang menyeimbangkan kehangatan humanis dan kejernihan</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Sans jelas yang terinspirasi transportasi dengan ritme percaya diri</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Sans netral dan mudah diakses yang dijana untuk antarmuka sehari-hari</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Sans geometris ringan dengan lengkungan modern yang halus</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Sans sempit membulat dengan nuansa futuristis lembut</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Sans geometris bersih dengan karakter halus yang terinspirasi Thai</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Jenis paparan futuristis lebar untuk kehadiran maksimum</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Keluarga variabel dari sans hingga mono dengan suara teknis yang menyenangkan</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Monospace lebar variabel dengan tekstur digital yang khas</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Sans luas dan sangat terbaca dengan dukungan aksara yang ekstensif</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Serif andal dengan dukungan aksara yang ekstensif</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Monospace multibahasa yang dirancang untuk ritme konsisten</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Sans modern ringkas dengan ritme tegas yang dipengaruhi tipografi Ibrani</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Sans humanis kokoh yang dioptimalkan untuk pembacaan jelas</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Sans skrin ramah dengan tekstur terbuka dan membulat</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Sans geometris ringkas dengan proporsi khas</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Serif kaligrafis hidup dengan karakter sastra</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Sans humanis bersih dengan keterbacaan antarmuka yang sangat baik</string>
+    <string name="setting_wear_note_show_cover">Karya seni</string>
+    <string name="aod_element_artwork">Ilustrasi</string>
+    <string name="aod_element_clock">Jam</string>
+    <string name="aod_element_track_info">Maklumat trek</string>
+    <string name="aod_element_transport">Transport</string>
+    <string name="aod_element_progress">Kemajuan</string>
+    <string name="aod_element_up_next">Seterusnya</string>
+    <string name="aod_section_artwork">Ilustrasi</string>
+    <string name="aod_control_tint">Rona</string>
+    <string name="aod_control_brightness">Kecerahan</string>
+    <string name="aod_control_art_treatment">Perlakuan</string>
+    <string name="aod_control_art_opacity">Opasitas</string>
+    <string name="mini_button_control_visibility">Tampilkan</string>
+    <string name="mini_button_control_arrangement">Susunan</string>
+    <string name="mini_button_control_shape">Bentuk</string>
+    <string name="mini_button_control_background">Latar belakang</string>
+    <string name="mini_button_control_opacity">Opasitas</string>
+    <string name="mini_button_assign_action">Tetapkan tindakan</string>
+    <string name="mini_button_gestures_note">Leret ke atas, bawah dan kiri pada pemain. Leret ke kanan sentiasa merupakan gerak isyarat sistem untuk menutup dan tidak pernah dipintas.</string>
+    <string name="setting_wear_chat_cover_shape">Bentuk avatar chat</string>
+    <string name="setting_wear_chat_show_cover">Karya seni</string>
+    <string name="setting_wear_metadata_cover_shape">Bentuk sampul metadata</string>
+    <string name="setting_wear_metadata_show_cover">Karya seni</string>
+    <string-array name="wear_text_case_entries">
+        <item>Normal</item>
+        <item>HURUF BESAR</item>
+        <item>huruf kecil</item>
+        <item>Huruf Awal Besar</item>
+    </string-array>
+    <string name="wear_text_font_follow">Ikuti rupa taip global</string>
+    <string name="category_wf_typography_track_time">Masa trek</string>
+    <string name="setting_wear_track_time_font">Rupa taip masa trek</string>
+    <string name="wear_track_time_font_follow">Ikuti desain</string>
+    <string name="setting_wear_track_time_font_weight">Ketebalan masa trek</string>
+    <string name="setting_wear_track_time_font_italic">Masa trek miring</string>
+    <string name="setting_wear_track_time_font_scale">Ukuran masa trek</string>
+    <string name="setting_wear_track_time_font_opacity">Opasitas masa trek</string>
+    <string name="setting_wear_track_time_font_tracking">Jarak huruf masa trek</string>
+    <string-array name="album_art_filter_entries">
+        <item>Tidak ada</item>
+        <item>Monokrom</item>
+        <item>Hangat</item>
+        <item>Sejuk</item>
+        <item>Jam keemasan</item>
+        <item>Rosé</item>
+        <item>Film vintage</item>
+        <item>Film pudar</item>
+        <item>Matte</item>
+        <item>Cerah</item>
+        <item>Pukulan</item>
+        <item>Pastel</item>
+        <item>Sepia</item>
+        <item>Sianotipe</item>
+        <item>Teal &amp; oranye</item>
+        <item>Kontras tinggi</item>
+        <item>Cahaya lembut</item>
+        <item>Malam</item>
+    </string-array>
+    <string name="queue_item_now_playing">Sedang diputar</string>
+    <string name="queue_item_unknown_title">Trek tidak dikenal</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Baris gilir main balik · %1$d trek</item>
+        <item quantity="other">Baris gilir main balik · %1$d trek</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Warna lapisan asas aksen</string>
+    <string name="setting_wear_accent_floor_custom_color">Warna dasar tersuai</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Pilih warna yang digunakan saat Warna lapisan asas aksen ditetapkan ke Warna tersuai</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Aksen album</item>
+        <item>Sekunder album</item>
+        <item>Tersier album</item>
+        <item>Warna tersuai</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Sans antarmuka netral dan sangat terbaca untuk membaca sehari-hari</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Bentuk huruf yang mengutamakan aksesibilitas, dengan bentuk khas yang tetap jelas pada ukuran kecil</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Sans geometris membulat lembut — percaya diri dan ramah</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Sans humanis ringkas yang memberi ruang lebih pada judul panjang</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Jenis paparan tinggi dan kondensasi dengan energi poster yang kuat</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Serif kontemporer yang dirancang untuk pembacaan panjang yang nyaman</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Serif lembut ekspresif dengan kehangatan dan karakter</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Monospace retro-futuristis dengan sentuhan teknis</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Jenis paparan sangat tebal dan padat untuk kontras maksimum</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Aksara tulisan tangan mengalir dengan nuansa hidup dan personal</string>
+    <string name="setting_wear_artist_text_mode">Tingkah laku teks artis</string>
+    <string name="setting_wear_album_art_source">Sumber sampul album</string>
+    <string name="setting_user_font">Fon saya sendiri</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Import fail .ttf atau .otf daripada telefon ini</string>
+    <string name="setting_user_font_loaded">%1$s · ketik untuk mengganti atau mengalih keluar</string>
+    <string name="user_font_pick">Pilih fail fon</string>
+    <string name="user_font_replace">Ganti</string>
+    <string name="user_font_remove">Alih keluar</string>
+    <string name="user_font_imported">“%1$s” diimport. Pilihnya dalam mana-mana senarai fon; ia sedang dihantar ke jam tangan anda.</string>
+    <string name="user_font_removed">Fon yang anda import telah dialih keluar.</string>
+    <string name="user_font_error_too_large">Fail itu bersaiz %1$s. Fon mestilah kurang daripada %2$s supaya ia boleh sampai ke jam tangan dengan cepat.</string>
+    <string name="user_font_error_not_a_font">Fail itu bukan fon yang boleh dibaca oleh telefon ini. TrueType dan OpenType (.ttf, .otf) berfungsi; fon web (.woff, .woff2) tidak.</string>
+    <string name="user_font_error_unreadable">Fail itu tidak dapat dibaca. Cuba pilih sekali lagi, atau salin ke telefon ini dahulu.</string>
+    <string name="user_font_not_shareable">Tema yang menggunakan fon anda sendiri kekal pada telefon ini</string>
+    <string name="setting_custom_album_art_image">Imej yang digunakan</string>
+    <string name="setting_custom_album_art_folder">Folder untuk mengambil imej</string>
+    <string name="setting_custom_album_art_none">Belum dipilih — ketik untuk memilih</string>
+    <string name="setting_custom_album_art_chosen">%1$s · ketik untuk mengubah</string>
+    <string name="custom_album_art_image_set">Imej itu kini akan berada di belakang pemain.</string>
+    <string name="custom_album_art_folder_set">Satu imej daripada folder itu akan dilukis untuk setiap trek.</string>
+    <string name="custom_album_art_error">Itu tidak dapat dibuka. Pilih sekali lagi, atau pilih sesuatu daripada storan telefon ini sendiri.</string>
+    <string name="custom_album_art_not_shareable">Tema yang menggunakan imej anda sendiri kekal pada telefon ini</string>
+    <string name="setting_wear_text_block_align">Penjajaran teks</string>
+    <string name="setting_wear_text_block_align_description">Tepi tempat teks trek dijajarkan. Ikut muka mengekalkan penjajaran yang direka untuk setiap muka jam.</string>
+    <string name="setting_wear_text_block_position">Kedudukan teks</string>
+    <string name="setting_wear_text_block_position_description">Kedudukan teks trek pada skrin. Ikut muka mengekalkan kedudukan yang direka untuk setiap muka jam.</string>
+    <string name="setting_online_artwork">Ilustrasi dalam talian</string>
+    <string name="setting_online_artwork_description">Benarkan muka jam memaparkan imej yang dicari dalam talian \u2014 artis yang sedang dimainkan, atau kulit album bagi pemain yang tidak menerbitkan imej. Telefon anda membuat carian dalam katalog awam Deezer dan menyimpan hasil dalam cache; hanya nama trek dan artis dihantar, dan tiada carian dibuat melainkan muka ditetapkan kepada salah satu sumber tersebut. Jika dimatikan, ilustrasi milik pemain digunakan.</string>
 </resources>

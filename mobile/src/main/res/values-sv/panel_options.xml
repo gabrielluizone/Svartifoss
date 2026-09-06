@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Layout för förloppsring</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Helt transparent</item>
+        <item>Sekundär färg</item>
+        <item>Tertiär färg</item>
+        <item>Färgnät</item>
+        <item>Norrsken</item>
+        <item>Strålkastare</item>
+        <item>Vinjett</item>
+        <item>Delad ton</item>
+        <item>Färgband</item>
+        <item>Midnatt</item>
+        <item>Halo</item>
+        <item>Rökoskärpa</item>
+        <item>Solnedgång</item>
+        <item>Hav</item>
+        <item>Nebulosa</item>
+        <item>Glöd</item>
+        <item>Tidvattenlinje</item>
+        <item>Bioluminescens</item>
+        <item>Iriserande</item>
+        <item>Grafit</item>
+        <item>Bio</item>
+        <item>Omloppsbana</item>
+        <item>Horisont</item>
+        <item>Bläcktvätt</item>
+        <item>Blomning</item>
+        <item>Fjord</item>
+        <item>Punktrutnät</item>
+        <item>Skanningslinje</item>
+        <item>Radar</item>
+        <item>Konturlinjer</item>
+        <item>Fasetterad</item>
+        <item>Skymning</item>
+        <item>Is</item>
+        <item>Ros</item>
+        <item>Papper</item>
+        <item>Monolit</item>
+        <item>Lykta</item>
+        <item>Noir</item>
+        <item>Sammet</item>
+        <item>Hägring</item>
+        <item>Diffust sken</item>
+        <item>Moln</item>
+        <item>Nocturne</item>
+        <item>Flytande</item>
+        <item>Tidvatten</item>
+        <item>Vinyl</item>
+        <item>Korona</item>
+        <item>Halvmåne</item>
+        <item>Rutnät</item>
+        <item>Glasslöja</item>
+        <item>Material</item>
+        <item>Affisch</item>
+        <item>Studio</item>
+        <item>Spektrum</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Pärlor</item>
+        <item>Dubbel skena</item>
+        <item>Puls</item>
+        <item>Krom</item>
+        <item>Spektrum</item>
+        <item>Steg</item>
+        <item>Godis</item>
+        <item>Spöke</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Dubbel kant</item>
+        <item>Vertikal mätare (vänster)</item>
+        <item>Vertikal mätare (höger)</item>
+        <item>Övre mätare</item>
+        <item>Nedre mätare</item>
+        <item>Mitturtavla</item>
+        <item>Övre halo</item>
+        <item>Nedre halo</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Dubbel ring</item>
+        <item>Pärlor</item>
+        <item>Streck och punkt</item>
+        <item>24-timmarsmarkeringar</item>
+        <item>Endast förlopp</item>
+        <item>Sken</item>
+        <item>Duoton</item>
+        <item>Nål</item>
+        <item>Växlande</item>
+        <item>Gnista</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Boettkant</item>
+        <item>Infälld ring</item>
+        <item>Inre ring</item>
+        <item>Tjock ring</item>
+        <item>Öppen nedtill</item>
+        <item>Öppen upptill</item>
+        <item>Vänster båge</item>
+        <item>Höger båge</item>
+        <item>Dubbelt spår</item>
+        <item>Öppen till vänster</item>
+        <item>Öppen till höger</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Kompakt kapsel</item>
+        <item>Fyrkantigt album</item>
+        <item>Staplad kapsel</item>
+        <item>Märke</item>
+        <item>Glaslist</item>
+        <item>LCD</item>
+        <item>Konturfyrkant</item>
+        <item>Band</item>
+        <item>Tidsbubbla</item>
+        <item>Delad ton</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Tidslinje (upptill)</item>
+        <item>Tidslinje (nedtill)</item>
+        <item>Segment (upptill)</item>
+        <item>Vertikal tidslinje (vänster)</item>
+        <item>Vertikal tidslinje (höger)</item>
+        <item>Mitturtavla</item>
+        <item>Dubbel tidslinje</item>
+        <item>Segment (nedtill)</item>
+        <item>Mittstapel</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Mjuk</item>
+        <item>Krom</item>
+        <item>Holografisk</item>
+        <item>Bubbla</item>
+        <item>Skena</item>
+        <item>Solnedgång</item>
+        <item>Albumkontur</item>
+        <item>Mörkt glas</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Solfjäder</item>
+        <item>Omloppsbana</item>
+        <item>Nedre docka</item>
+        <item>Kolumn</item>
+        <item>Delad panel</item>
+        <item>Diamant</item>
+        <item>Karusell</item>
+        <item>Triangel</item>
+        <item>Trappa</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Mjuk</item>
+        <item>Platta</item>
+        <item>Bläck</item>
+        <item>Skena</item>
+        <item>Solnedgång</item>
+        <item>Bubbla</item>
+        <item>Krom</item>
+        <item>Holografisk</item>
+    </string-array>
+</resources>

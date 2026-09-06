@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">جزئیات تم</string>
+    <string name="community_theme_detail_preview_screen">صفحهٔ پیش‌نمایش</string>
+    <string name="community_theme_detail_surface_player">پخش‌کننده</string>
+    <string name="community_theme_detail_surface_aod">همیشه روشن</string>
+    <string name="community_theme_detail_surface_volume">صدا</string>
+    <string name="community_theme_detail_surface_progress">پیشرفت</string>
+    <string name="community_theme_detail_surface_quick_panel">پنل سریع</string>
+    <string name="community_theme_detail_surface_queue">صف</string>
+    <string name="community_theme_detail_preview_label">پیش‌نمایش %1$s</string>
+    <string name="community_theme_detail_preview_description">پیش‌نمایش %1$s در صفحهٔ %2$s</string>
+    <string name="community_theme_detail_preview_privacy">جلد آلبوم فعلی شما ممکن است فقط در همین پیش‌نمایش روی تلفنتان دیده شود. هرگز بارگذاری نمی‌شود؛ متن و زمان‌بندی نمونه همچنان استفاده می‌شوند.</string>
+    <string name="community_theme_detail_information">اطلاعات تم</string>
+    <string name="community_theme_detail_byline">توسط %1$s</string>
+    <string name="community_theme_detail_layout">چیدمان پایه</string>
+    <string name="community_theme_detail_revision">بازبینی</string>
+    <string name="community_theme_detail_minimum_version">حداقل نسخهٔ Svartifoss</string>
+    <string name="community_theme_detail_published">منتشرشده</string>
+    <string name="community_theme_detail_visual_settings">تنظیمات بصری</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s تنظیم بصری</item>
+        <item quantity="other">%1$s تنظیم بصری</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">در دسترس نیست</string>
+    <string name="community_theme_detail_add_apply">افزودن و اعمال</string>
+    <string name="community_theme_detail_remove">حذف تم</string>
+    <string name="community_theme_detail_remove_title">«%1$s» از تم‌های من حذف شود؟</string>
+    <string name="community_theme_detail_remove_message">این نسخهٔ ذخیره‌شده و هر ویرایشی که روی آن انجام داده‌اید برای همیشه حذف می‌شود. اگر اکنون اعمال شده باشد، ساعت شما به چیدمان پایهٔ داخلی خود برمی‌گردد.</string>
+    <string name="community_theme_detail_removed">تم از تم‌های من حذف شد</string>
+    <string name="community_theme_detail_remove_error">این تم حذف نشد</string>
+    <string name="community_theme_detail_like">پسندیدن</string>
+    <string name="community_theme_detail_unlike">برداشتن پسند</string>
+    <string name="community_theme_detail_like_loading">در حال بررسی…</string>
+    <string name="community_theme_detail_like_description">پسندیدن %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">برداشتن پسند از %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">ورود با Google لغو شد. پسند شما ذخیره نشد.</string>
+    <string name="community_theme_detail_like_error">پسند شما ذخیره نشد. اتصال خود را بررسی کنید و دوباره تلاش کنید.</string>
+    <string name="community_theme_detail_like_not_ready">پسندهای این تم هنوز آماده نیستند. پس از انتشار بعدی، تم‌های انجمن را تازه‌سازی کنید.</string>
+    <string name="community_theme_detail_like_saved">پسند شما ذخیره شد. شمارنده‌های عمومی با انتشار بعدی فهرست به‌روزرسانی می‌شوند.</string>
+    <string name="community_theme_detail_unlike_saved">پسند شما برداشته شد. شمارنده‌های عمومی با انتشار بعدی فهرست به‌روزرسانی می‌شوند.</string>
+    <string name="community_theme_detail_apply_existing">این تم از قبل در «تم‌های من» وجود دارد و روی ساعت شما اعمال شده است</string>
+    <string name="community_theme_detail_requires_app_version">برای افزودن این تم، ابتدا به Svartifoss %1$s نیاز دارید.</string>
+    <string name="community_theme_detail_load_error">جزئیات این تم بارگیری نشد. به تم‌های انجمن برگردید و دوباره تلاش کنید.</string>
+    <string name="community_theme_detail_profile_mismatch">نمایهٔ بارگیری‌شده با جزئیات عمومی این تم مطابقت ندارد. به تم‌های انجمن برگردید و دوباره تلاش کنید.</string>
+    <string name="community_theme_detail_screenshot_description">عکس این تم روی ساعت سازندهٔ آن</string>
+    <string name="community_theme_detail_source_author">ساعت سازنده</string>
+    <string name="community_theme_detail_source_rendered">پیش‌نمایش ساخته‌شده</string>
+    <string name="community_theme_detail_show_rendered">نمایش پیش‌نمایش ساخته‌شده</string>
+    <string name="community_theme_detail_show_author">نمایش عکس سازنده</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

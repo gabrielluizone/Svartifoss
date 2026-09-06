@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">テーマの詳細</string>
+    <string name="community_theme_detail_preview_screen">プレビュー画面</string>
+    <string name="community_theme_detail_surface_player">プレーヤー</string>
+    <string name="community_theme_detail_surface_aod">常時表示</string>
+    <string name="community_theme_detail_surface_volume">音量</string>
+    <string name="community_theme_detail_surface_progress">進捗</string>
+    <string name="community_theme_detail_surface_quick_panel">クイックパネル</string>
+    <string name="community_theme_detail_surface_queue">キュー</string>
+    <string name="community_theme_detail_preview_label">%1$s のプレビュー</string>
+    <string name="community_theme_detail_preview_description">%2$s 画面での %1$s のプレビュー</string>
+    <string name="community_theme_detail_preview_privacy">現在のアルバムカバーは、スマートフォン上のこのプレビューにのみ表示される場合があります。アップロードされることはありません。サンプルのテキストと時間表示は引き続き使用されます。</string>
+    <string name="community_theme_detail_information">テーマ情報</string>
+    <string name="community_theme_detail_byline">%1$s 作</string>
+    <string name="community_theme_detail_layout">基本レイアウト</string>
+    <string name="community_theme_detail_revision">リビジョン</string>
+    <string name="community_theme_detail_minimum_version">必要な Svartifoss の最小バージョン</string>
+    <string name="community_theme_detail_published">公開済み</string>
+    <string name="community_theme_detail_visual_settings">表示設定</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s 件のビジュアル設定</item>
+        <item quantity="other">%1$s 件のビジュアル設定</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">利用できません</string>
+    <string name="community_theme_detail_add_apply">追加して適用</string>
+    <string name="community_theme_detail_remove">テーマを削除</string>
+    <string name="community_theme_detail_remove_title">「%1$s」をマイテーマから削除しますか？</string>
+    <string name="community_theme_detail_remove_message">保存済みのこのコピーと加えた編集はすべて完全に削除されます。現在適用中の場合、ウォッチは内蔵の基本レイアウトに戻ります。</string>
+    <string name="community_theme_detail_removed">テーマをマイテーマから削除しました</string>
+    <string name="community_theme_detail_remove_error">このテーマを削除できませんでした</string>
+    <string name="community_theme_detail_like">いいね</string>
+    <string name="community_theme_detail_unlike">いいねを取り消す</string>
+    <string name="community_theme_detail_like_loading">確認しています…</string>
+    <string name="community_theme_detail_like_description">%1$s にいいね。%2$s</string>
+    <string name="community_theme_detail_unlike_description">%1$s のいいねを取り消す。%2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google ログインがキャンセルされました。いいねは保存されませんでした。</string>
+    <string name="community_theme_detail_like_error">いいねを保存できませんでした。接続を確認して、もう一度お試しください。</string>
+    <string name="community_theme_detail_like_not_ready">このテーマのいいね機能はまだ準備できていません。次回公開後にコミュニティテーマを更新してください。</string>
+    <string name="community_theme_detail_like_saved">いいねを保存しました。公開件数は次回のカタログ公開時に更新されます。</string>
+    <string name="community_theme_detail_unlike_saved">いいねを削除しました。公開件数は次回のカタログ公開時に更新されます。</string>
+    <string name="community_theme_detail_apply_existing">このテーマはすでにマイテーマにあり、ウォッチに適用されています</string>
+    <string name="community_theme_detail_requires_app_version">このテーマを追加するには Svartifoss %1$s が必要です。</string>
+    <string name="community_theme_detail_load_error">このテーマの詳細を読み込めませんでした。コミュニティテーマに戻って、もう一度お試しください。</string>
+    <string name="community_theme_detail_profile_mismatch">ダウンロードしたプロファイルが、このテーマの公開情報と一致しません。コミュニティテーマに戻って、もう一度お試しください。</string>
+    <string name="community_theme_detail_screenshot_description">作者のウォッチに表示したこのテーマの写真</string>
+    <string name="community_theme_detail_source_author">作者のウォッチ</string>
+    <string name="community_theme_detail_source_rendered">生成されたプレビュー</string>
+    <string name="community_theme_detail_show_rendered">生成されたプレビューを表示</string>
+    <string name="community_theme_detail_show_author">作者の写真を表示</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

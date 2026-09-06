@@ -9,9 +9,9 @@ Svartifoss is a Groovy-Gradle Android project split into four modules. `mobile/`
 Use JDK 21 and configure the Android SDK through root-level `local.properties`.
 
 - `git submodule update --init` initializes `wearutils/` before the first build.
-- `./gradlew assembleDebug` builds all debug APKs.
-- `./gradlew :mobile:assembleDebug` or `./gradlew :wear:assembleDebug` builds one app.
-- `./gradlew test` runs all JVM unit tests.
+- `./gradlew assembleGithubDebug` builds all debug APKs. Both app modules have `github` (default, with the in-app self-updater) and `play` (updater stripped, for the Play Store) product flavors; `assembleDebug` alone resolves to `github`.
+- `./gradlew :mobile:assembleGithubDebug` or `./gradlew :wear:assembleGithubDebug` builds one app.
+- `./gradlew test` runs all JVM unit tests (every flavor); single tasks gain the flavor, e.g. `:mobile:testGithubDebugUnitTest`.
 - `./gradlew :common:testDebugUnitTest` runs a module's tests; add `--tests "*.LyricsParserTest"` to target one class.
 - `./gradlew lint` runs Android lint, but the repository has a known backlog. Compare failures with `master` before attributing them to a change.
 

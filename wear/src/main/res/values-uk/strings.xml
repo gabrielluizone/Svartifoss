@@ -185,4 +185,21 @@
 
     <string name="metadata_about">Про програму</string>
     <string name="metadata_source">Відтворюється через</string>
+    <string name="action_name_open_quick_actions_panel">Відкрити панель швидких дій</string>
+    <string name="action_name_fast_forward">Перемотати вперед</string>
+    <string name="action_name_rewind">Перемотати назад</string>
+    <string name="action_name_set_speed">Установити швидкість відтворення</string>
+    <string name="action_name_seek_position">Перейти до позиції композиції</string>
+    <string name="action_name_set_volume">Установити гучність</string>
+    <string name="action_name_set_shuffle">Установити перемішування</string>
+    <string name="action_name_set_repeat">Установити повтор</string>
+    <string name="action_name_open_volume_screen">Відкрити екран гучності</string>
+    <string name="action_name_open_progress_screen">Відкрити екран прогресу</string>
+    <string name="action_name_open_face_picker">Відкрити вибір оформлення</string>
+    <string name="action_name_close_watch_app">Закрити застосунок на годиннику</string>
+    <string name="volume_screen_title">Гучність</string>
+    <string name="progress_screen_title">Прогрес</string>
+    <string name="progress_screen_cancel_seek">Скасувати перемотування</string>
+    <string name="progress_screen_skip_back">Назад на %1$d с</string>
+    <string name="progress_screen_skip_forward">Уперед на %1$d с</string>
 </resources>

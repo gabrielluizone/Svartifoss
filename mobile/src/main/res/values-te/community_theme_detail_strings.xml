@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">థీమ్ వివరాలు</string>
+    <string name="community_theme_detail_preview_screen">ప్రీవ్యూ స్క్రీన్</string>
+    <string name="community_theme_detail_surface_player">ప్లేయర్</string>
+    <string name="community_theme_detail_surface_aod">ఎల్లప్పుడూ ఆన్</string>
+    <string name="community_theme_detail_surface_volume">వాల్యూమ్</string>
+    <string name="community_theme_detail_surface_progress">ప్రోగ్రెస్</string>
+    <string name="community_theme_detail_surface_quick_panel">క్విక్ ప్యానెల్</string>
+    <string name="community_theme_detail_surface_queue">క్యూ</string>
+    <string name="community_theme_detail_preview_label">%1$s ప్రీవ్యూ</string>
+    <string name="community_theme_detail_preview_description">%2$s స్క్రీన్‌పై %1$s ప్రీవ్యూ</string>
+    <string name="community_theme_detail_preview_privacy">మీ ప్రస్తుత ఆల్బమ్ కవర్ మీ ఫోన్‌లోని ఈ ప్రీవ్యూలో మాత్రమే కనిపించవచ్చు. అది ఎప్పుడూ అప్లోడ్ చేయబడదు; నమూనా టెక్స్ట్ మరియు టైమింగ్ మాత్రమే ఉపయోగంలో ఉంటాయి.</string>
+    <string name="community_theme_detail_information">థీమ్ సమాచారం</string>
+    <string name="community_theme_detail_byline">%1$s ద్వారా</string>
+    <string name="community_theme_detail_layout">ప్రాథమిక లేఅవుట్</string>
+    <string name="community_theme_detail_revision">రివిజన్</string>
+    <string name="community_theme_detail_minimum_version">కనీస Svartifoss వెర్షన్</string>
+    <string name="community_theme_detail_published">ప్రచురించబడింది</string>
+    <string name="community_theme_detail_visual_settings">దృశ్య సెట్టింగ్‌లు</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s దృశ్య సెట్టింగ్</item>
+        <item quantity="other">%1$s దృశ్య సెట్టింగ్‌లు</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">అందుబాటులో లేదు</string>
+    <string name="community_theme_detail_add_apply">జోడించి వర్తింపజేయి</string>
+    <string name="community_theme_detail_remove">థీమ్‌ను తొలగించు</string>
+    <string name="community_theme_detail_remove_title">నా థీమ్‌ల నుంచి “%1$s” ను తొలగించాలా?</string>
+    <string name="community_theme_detail_remove_message">ఈ సేవ్ చేసిన కాపీ మరియు మీరు చేసిన మార్పులన్నీ శాశ్వతంగా తొలగించబడతాయి. ఇది ప్రస్తుతం వర్తింపజేసి ఉంటే, మీ వాచ్ దాని అంతర్నిర్మిత ప్రాథమిక లేఅవుట్‌కు తిరిగి వెళ్తుంది.</string>
+    <string name="community_theme_detail_removed">థీమ్ నా థీమ్‌ల నుంచి తొలగించబడింది</string>
+    <string name="community_theme_detail_remove_error">ఈ థీమ్‌ను తొలగించలేకపోయాం</string>
+    <string name="community_theme_detail_like">లైక్</string>
+    <string name="community_theme_detail_unlike">లైక్ తొలగించు</string>
+    <string name="community_theme_detail_like_loading">తనిఖీ చేస్తోంది…</string>
+    <string name="community_theme_detail_like_description">%1$s ను లైక్ చేయండి. %2$s</string>
+    <string name="community_theme_detail_unlike_description">%1$s పై లైక్ తొలగించండి. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google సైన్-ఇన్ రద్దు చేయబడింది. మీ లైక్ సేవ్ కాలేదు.</string>
+    <string name="community_theme_detail_like_error">మీ లైక్‌ను సేవ్ చేయలేకపోయాం. మీ కనెక్షన్‌ను తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.</string>
+    <string name="community_theme_detail_like_not_ready">ఈ థీమ్‌కు లైక్‌లు ఇంకా సిద్ధంగా లేవు. తదుపరి ప్రచురణ తర్వాత Community themes ను రిఫ్రెష్ చేయండి.</string>
+    <string name="community_theme_detail_like_saved">మీ లైక్ సేవ్ అయింది. పబ్లిక్ సంఖ్యలు తదుపరి క్యాటలాగ్ ప్రచురణతో నవీకరించబడతాయి.</string>
+    <string name="community_theme_detail_unlike_saved">మీ లైక్ తొలగించబడింది. పబ్లిక్ సంఖ్యలు తదుపరి క్యాటలాగ్ ప్రచురణతో నవీకరించబడతాయి.</string>
+    <string name="community_theme_detail_apply_existing">ఈ థీమ్ ఇప్పటికే నా థీమ్‌లలో ఉంది మరియు మీ వాచ్‌కు వర్తింపజేయబడింది</string>
+    <string name="community_theme_detail_requires_app_version">ఈ థీమ్‌ను జోడించడానికి ముందు Svartifoss %1$s అవసరం.</string>
+    <string name="community_theme_detail_load_error">ఈ థీమ్ వివరాలను లోడ్ చేయలేకపోయాం. Community themes కు తిరిగి వెళ్లి మళ్లీ ప్రయత్నించండి.</string>
+    <string name="community_theme_detail_profile_mismatch">డౌన్‌లోడ్ చేసిన ప్రొఫైల్ ఈ థీమ్ పబ్లిక్ వివరాలతో సరిపోలడం లేదు. Community themes కు తిరిగి వెళ్లి మళ్లీ ప్రయత్నించండి.</string>
+    <string name="community_theme_detail_screenshot_description">రచయిత వాచ్‌పై ఈ థీమ్ ఫోటో</string>
+    <string name="community_theme_detail_source_author">రచయిత వాచ్</string>
+    <string name="community_theme_detail_source_rendered">సృష్టించిన ప్రీవ్యూ</string>
+    <string name="community_theme_detail_show_rendered">సృష్టించిన ప్రీవ్యూ చూపించు</string>
+    <string name="community_theme_detail_show_author">రచయిత ఫోటో చూపించు</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

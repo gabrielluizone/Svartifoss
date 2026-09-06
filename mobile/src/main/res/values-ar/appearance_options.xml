@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>محيط</item>
+        <item>غروب</item>
+        <item>ضوء مركزي</item>
+        <item>ستار زجاجي</item>
+        <item>مخمل</item>
+        <item>ضوء نوار</item>
+        <item>غسل جليدي</item>
+        <item>تفتح الوردة</item>
+        <item>منشور</item>
+        <item>حافة الهلال</item>
+        <item>أشرطة المد والجزر</item>
+        <item>غلاف ورقي</item>
+        <item>صعود الفانوس</item>
+        <item>سراب منقسم</item>
+        <item>شبكة هادئة</item>
+        <item>نوكتورن</item>
+        <item>دراسة السحب</item>
+        <item>برك سائلة</item>
+        <item>كتلة لونية</item>
+        <item>نغمة منقسمة</item>
+        <item>تدرج</item>
+        <item>ثنائي اللون</item>
+        <item>أشرطة</item>
+        <item>تظليل الحواف</item>
+        <item>غرافيت</item>
+        <item>سينما</item>
+        <item>أكريليك</item>
+        <item>شبكة</item>
+        <item>سديم</item>
+        <item>تلألؤ حيوي</item>
+        <item>قزحي</item>
+        <item>مدار</item>
+        <item>غسل بالحبر</item>
+        <item>إزهار</item>
+        <item>فيورد</item>
+        <item>مصفوفة نقطية</item>
+        <item>خطوط مسح</item>
+        <item>رادار</item>
+        <item>محيط</item>
+        <item>متعدد الأوجه</item>
+        <item>تعبئة الألبوم</item>
+        <item>التعبئة الثانوية</item>
+        <item>التعبئة الثالثة</item>
+        <item>زجاج</item>
+        <item>منتصف الليل</item>
+        <item>دخان</item>
+        <item>خط المد</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>طحلب</item>
+        <item>ضباب الخزامى</item>
+        <item>كرز</item>
+        <item>بحر عميق</item>
+        <item>غبار</item>
+        <item>تبييض</item>
+        <item>ضوء القمر</item>
+        <item>حلم</item>
+        <item>أشعة تحت الحمراء</item>
+        <item>غابة</item>
+        <item>فضي</item>
+        <item>حلوى</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>تلاشي علوي</item>
+        <item>ضوء مركزي</item>
+        <item>ظل قطري</item>
+        <item>ستار أيسر</item>
+        <item>ستار أيمن</item>
+        <item>شريط وسطي</item>
+        <item>تلاشي متقاطع</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>ورقة معكوسة</item>
+        <item>قطرة معكوسة</item>
+        <item>حصاة</item>
+        <item>قوس</item>
+        <item>درع</item>
+        <item>قوس معكوس</item>
+        <item>درع معكوس</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>همس</item>
+        <item>مشع</item>
+        <item>غمر</item>
+        <item>وميض</item>
+        <item>توهج عميق</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>حدود الألبوم</item>
+        <item>تدرج الألبوم</item>
+        <item>لون الألبوم الثانوي</item>
+        <item>زجاج الألبوم</item>
+        <item>لون الألبوم الثالث</item>
+        <item>حدود نيون</item>
+    </string-array>
+</resources>

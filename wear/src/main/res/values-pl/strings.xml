@@ -185,4 +185,21 @@
 
     <string name="metadata_about">O aplikacji</string>
     <string name="metadata_source">Odtwarzanie w</string>
+    <string name="action_name_open_quick_actions_panel">Otwórz panel szybkich działań</string>
+    <string name="action_name_fast_forward">Przewiń do przodu</string>
+    <string name="action_name_rewind">Przewiń do tyłu</string>
+    <string name="action_name_set_speed">Ustaw szybkość odtwarzania</string>
+    <string name="action_name_seek_position">Przejdź do pozycji utworu</string>
+    <string name="action_name_set_volume">Ustaw głośność</string>
+    <string name="action_name_set_shuffle">Ustaw odtwarzanie losowe</string>
+    <string name="action_name_set_repeat">Ustaw powtarzanie</string>
+    <string name="action_name_open_volume_screen">Otwórz ekran głośności</string>
+    <string name="action_name_open_progress_screen">Otwórz ekran postępu</string>
+    <string name="action_name_open_face_picker">Otwórz wybór tarczy</string>
+    <string name="action_name_close_watch_app">Zamknij aplikację na zegarku</string>
+    <string name="volume_screen_title">Głośność</string>
+    <string name="progress_screen_title">Postęp</string>
+    <string name="progress_screen_cancel_seek">Anuluj przewijanie</string>
+    <string name="progress_screen_skip_back">Cofnij o %1$d s</string>
+    <string name="progress_screen_skip_forward">Przewiń o %1$d s do przodu</string>
 </resources>

@@ -185,4 +185,21 @@
 
     <string name="metadata_about">Về bản nhạc</string>
     <string name="metadata_source">Đang phát trong</string>
+    <string name="action_name_open_quick_actions_panel">Mở bảng thao tác nhanh</string>
+    <string name="action_name_fast_forward">Tua nhanh</string>
+    <string name="action_name_rewind">Tua lại</string>
+    <string name="action_name_set_speed">Đặt tốc độ phát</string>
+    <string name="action_name_seek_position">Nhảy đến vị trí bài hát</string>
+    <string name="action_name_set_volume">Đặt âm lượng</string>
+    <string name="action_name_set_shuffle">Đặt phát ngẫu nhiên</string>
+    <string name="action_name_set_repeat">Đặt lặp lại</string>
+    <string name="action_name_open_volume_screen">Mở màn hình âm lượng</string>
+    <string name="action_name_open_progress_screen">Mở màn hình tiến trình</string>
+    <string name="action_name_open_face_picker">Mở trình chọn mặt đồng hồ</string>
+    <string name="action_name_close_watch_app">Đóng ứng dụng trên đồng hồ</string>
+    <string name="volume_screen_title">Âm lượng</string>
+    <string name="progress_screen_title">Tiến trình</string>
+    <string name="progress_screen_cancel_seek">Hủy tua đến vị trí</string>
+    <string name="progress_screen_skip_back">Lùi %1$d giây</string>
+    <string name="progress_screen_skip_forward">Tiến %1$d giây</string>
 </resources>

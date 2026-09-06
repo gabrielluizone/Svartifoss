@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Океан</item>
+        <item>Закат</item>
+        <item>Центральный прожектор</item>
+        <item>Стеклянная вуаль</item>
+        <item>Бархат</item>
+        <item>Нуарный прожектор</item>
+        <item>Ледяная заливка</item>
+        <item>Цветение розы</item>
+        <item>Призма</item>
+        <item>Край полумесяца</item>
+        <item>Приливные полосы</item>
+        <item>Бумажный конверт</item>
+        <item>Восходящий фонарь</item>
+        <item>Разделённый мираж</item>
+        <item>Спокойная сетка</item>
+        <item>Ноктюрн</item>
+        <item>Этюд облаков</item>
+        <item>Жидкие лужицы</item>
+        <item>Цветовой монолит</item>
+        <item>Разделённый тон</item>
+        <item>Градиент</item>
+        <item>Дуотон</item>
+        <item>Полосы</item>
+        <item>Виньетка</item>
+        <item>Графит</item>
+        <item>Кино</item>
+        <item>Акрил</item>
+        <item>Сетка</item>
+        <item>Туманность</item>
+        <item>Биолюминесценция</item>
+        <item>Переливающийся</item>
+        <item>Орбита</item>
+        <item>Размывка тушью</item>
+        <item>Цветение</item>
+        <item>Фьорд</item>
+        <item>Точечная матрица</item>
+        <item>Строки развёртки</item>
+        <item>Радар</item>
+        <item>Контур</item>
+        <item>Гранёный</item>
+        <item>Заливка альбома</item>
+        <item>Вторичная заливка</item>
+        <item>Третичная заливка</item>
+        <item>Стекло</item>
+        <item>Полночь</item>
+        <item>Дым</item>
+        <item>Линия прилива</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Мох</item>
+        <item>Лавандовая дымка</item>
+        <item>Вишня</item>
+        <item>Глубокое море</item>
+        <item>Пыль</item>
+        <item>Выцветший</item>
+        <item>Лунный свет</item>
+        <item>Сон</item>
+        <item>Инфракрасный</item>
+        <item>Лес</item>
+        <item>Серебро</item>
+        <item>Конфета</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Верхнее затухание</item>
+        <item>Центральный прожектор</item>
+        <item>Диагональная тень</item>
+        <item>Левая штора</item>
+        <item>Правая штора</item>
+        <item>Центральная полоса</item>
+        <item>Перекрёстное затухание</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Обратный лист</item>
+        <item>Обратная капля</item>
+        <item>Галька</item>
+        <item>Дуга</item>
+        <item>Щит</item>
+        <item>Обратная дуга</item>
+        <item>Обратный щит</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Шёпот</item>
+        <item>Сияющий</item>
+        <item>Поток</item>
+        <item>Мерцание</item>
+        <item>Глубокое свечение</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Контур альбома</item>
+        <item>Градиент альбома</item>
+        <item>Вторичный цвет альбома</item>
+        <item>Стекло альбома</item>
+        <item>Третичный цвет альбома</item>
+        <item>Неоновый контур</item>
+    </string-array>
+</resources>

@@ -36,6 +36,20 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    // Mirrors mobile's distribution flavors (see docs/play-store-migration-plan.md). The watch's
+    // self-update receiver (watch/update/) and REQUEST_INSTALL_PACKAGES live in the `github` source
+    // set only; the `play` build cannot side-install a pushed APK because Play delivers watch
+    // updates itself. Kept in step with mobile so a single Play app carries matching form factors.
+    flavorDimensions "distribution"
+    productFlavors {
+        github {
+            dimension "distribution"
+            isDefault true
+        }
+        play {
+            dimension "distribution"
+        }
+    }
     buildFeatures {
         viewBinding true
         buildConfig true

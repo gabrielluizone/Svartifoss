@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+    <string name="music_control">Svartifoss</string>
+    <string name="music_control_active">Svartifoss सक्रिय</string>
+</resources>

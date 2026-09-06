@@ -185,4 +185,21 @@
 
     <string name="metadata_about">Относно</string>
     <string name="metadata_source">Възпроизвежда се в</string>
+    <string name="action_name_open_quick_actions_panel">Отваряне на панела за бързи действия</string>
+    <string name="action_name_fast_forward">Превъртане напред</string>
+    <string name="action_name_rewind">Превъртане назад</string>
+    <string name="action_name_set_speed">Задаване на скорост на възпроизвеждане</string>
+    <string name="action_name_seek_position">Преминаване към позиция в песента</string>
+    <string name="action_name_set_volume">Задаване на сила на звука</string>
+    <string name="action_name_set_shuffle">Задаване на разбъркване</string>
+    <string name="action_name_set_repeat">Задаване на повторение</string>
+    <string name="action_name_open_volume_screen">Отваряне на екрана за сила на звука</string>
+    <string name="action_name_open_progress_screen">Отваряне на екрана за напредък</string>
+    <string name="action_name_open_face_picker">Отваряне на избора на изглед</string>
+    <string name="action_name_close_watch_app">Затваряне на приложението на часовника</string>
+    <string name="volume_screen_title">Сила на звука</string>
+    <string name="progress_screen_title">Напредък</string>
+    <string name="progress_screen_cancel_seek">Отказ на преместването</string>
+    <string name="progress_screen_skip_back">Назад с %1$d секунди</string>
+    <string name="progress_screen_skip_forward">Напред с %1$d секунди</string>
 </resources>

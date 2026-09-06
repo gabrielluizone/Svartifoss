@@ -1875,6 +1875,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1918,6 +1923,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2362,4 +2372,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">কপি করুন</string>
+    <string name="dev_report_copied">রিপোর্ট কপি হয়েছে</string>
+    <string name="dev_watch_snapshot_inspector">ওয়াচ পছন্দের স্ন্যাপশট</string>
+    <string name="dev_watch_snapshot_inspector_description">এখন সত্যিই ঘড়িতে যা পাঠানো হবে: সক্রিয় অ্যাপিয়ারেন্স স্কোপ, আনুমানিক আকার, এবং আকারের সীমায় ফিট করতে কোন নিষ্ক্রিয় ফেস-স্কোপ ক্যাশ বাদ দেওয়া হয়েছে</string>
+    <string name="dev_data_layer_inspector">Data Layer ইনস্পেক্টর</string>
+    <string name="dev_data_layer_inspector_description">সংযুক্ত Wearable নোড এবং ঘড়ির অ্যাপ সর্বশেষ যে WatchInfo ফিরিয়েছে - "কোনো ঘড়ি সংযুক্ত নেই" বার্তার পেছনের কাঁচা অবস্থা</string>
+    <string name="dev_media_sessions_inspector">MediaSession এক্সপ্লোরার</string>
+    <string name="dev_media_sessions_inspector_description">বর্তমানে সক্রিয় প্রতিটি MediaSession, শুধু যেটি ট্র্যাক করা হচ্ছে সেটি নয়: প্রকাশিত অ্যাকশন, কিউ এবং প্লেব্যাক রুট</string>
+    <string name="dev_view_phone_log">ফোনের লগ দেখুন</string>
+    <string name="dev_view_phone_log_description">ডিস্কে থাকা Timber লগের শেষ অংশ, সঙ্গে ঘড়ির লগ যদি "লগ পাঠান" আগে কখনো সেটি নিয়ে থাকে</string>
+    <string name="dev_theme_submission_preflight">থিম সাবমিশন প্রিফ্লাইট</string>
+    <string name="dev_theme_submission_preflight_description">সেভ করা প্রতিটি ওয়াচ থিমকে কমিউনিটি সাবমিশন পরীক্ষার মধ্যে চালায় এবং কোনো সেটিং বাধা দিলে ঠিক সেই সেটিংটির নাম জানায়</string>
+    <string name="dev_appearance_resolution_inspector">অ্যাপিয়ারেন্স রেজোলিউশন ইনস্পেক্টর</string>
+    <string name="dev_appearance_resolution_inspector_description">স্কোপ করা প্রতিটি অ্যাপিয়ারেন্স কী-এর জন্য দেখায় চারটি রেজোলিউশন ধাপের কোনটি আসলে নির্বাচিত হয়েছে - স্পষ্ট ফেস মান, প্রতি-ফেস ডিফল্ট, পুরোনো গ্লোবাল বা ডেফিনিশন ডিফল্ট - এবং প্রতিটি কী মান ফেরত দেয়</string>
+    <string name="action_fast_forward">ফাস্ট ফরওয়ার্ড</string>
+    <string name="action_rewind">রিওয়াইন্ড</string>
+    <string name="action_set_playback_speed">গতি %1$s× সেট করুন</string>
+    <string name="action_seek_to_percent">%1$d%%-এ যান</string>
+    <string name="action_set_volume_percent">ভলিউম %1$d%% সেট করুন</string>
+    <string name="action_set_shuffle_on">শাফল চালু করুন</string>
+    <string name="action_set_shuffle_off">শাফল বন্ধ করুন</string>
+    <string name="action_set_repeat_off">পুনরাবৃত্তি বন্ধ করুন</string>
+    <string name="action_set_repeat_all">সব পুনরাবৃত্তি করুন</string>
+    <string name="action_set_repeat_one">একটি পুনরাবৃত্তি করুন</string>
+    <string name="group_playback_speed">প্লেব্যাক গতি</string>
+    <string name="group_track_position">ট্র্যাকের অবস্থান</string>
+    <string name="group_shuffle_mode">শাফল মোড</string>
+    <string name="group_repeat_mode">রিপিট মোড</string>
+    <string name="group_volume_levels">ভলিউম লেভেল</string>
+    <string name="group_watch_screens">ঘড়ির স্ক্রিন</string>
+    <string name="group_find_music">খুঁজুন ও চালান</string>
+    <string name="action_open_face_picker">ফেস পিকার খুলুন</string>
+    <string name="action_close_watch_app">ঘড়ির অ্যাপ বন্ধ করুন</string>
+    <string name="hand_gestures">হাতের জেসচার</string>
+    <string name="hand_gestures_hint">Svartifoss খোলা থাকলে সামঞ্জস্যপূর্ণ ঘড়িতে উপলভ্য।</string>
+    <string name="hand_gestures_hint_disconnected">আপনার ঘড়ি সংযুক্ত করে তাতে Svartifoss খুলুন, যাতে দেখা যায় এটি হাতের জেসচার সমর্থন করে কি না।</string>
+    <string name="hand_gestures_hint_outdated">ঘড়ির অ্যাপ আপডেট করুন যাতে দেখা যায় এই ঘড়ি হাতের জেসচার সমর্থন করে কি না।</string>
+    <string name="hand_gestures_hint_unsupported">এই ঘড়ি হাতের জেসচার সমর্থন করে না, তাই এখানে নির্ধারিত অ্যাকশন কখনো চলবে না।</string>
+    <string name="hand_gestures_hint_disabled">এই ঘড়িতে হাতের জেসচার বন্ধ আছে। ঘড়িতেই সেটিংস \u2192 জেসচার থেকে চালু করুন।</string>
+    <string name="hand_gestures_hint_ready">এই ঘড়িতে প্রস্তুত: Svartifoss প্লেয়ার খোলা থাকলে দুইবার পিঞ্চ করুন।</string>
+    <string name="hand_gesture_how_it_works">কবজি উঁচু রেখে বুড়ো আঙুল ও তর্জনী দ্রুত দুইবার একসঙ্গে পিঞ্চ করুন। Wear OS এটিকে প্রাইমারি অ্যাকশন বলে, তাই অন্য নির্মাতার ঘড়ি নিজস্ব সমতুল্য হাতের জেসচার ব্যবহার করতে পারে।\n\nএটি শুধু তখনই কাজ করে যখন ঘড়িতে Svartifoss প্লেয়ার খোলা থাকে এবং স্ক্রিন চালু থাকে \u2014 ওয়াচ ফেস থেকে নয়, কিউ বা মেনুর ওপর নয়, এবং অলওয়েজ-অন ডিসপ্লেতেও নয়। যে অ্যাকশনটি চলবে তা বর্তমান প্লেব্যাক অবস্থার জন্য সেট করা অ্যাকশন, তাই দুই অবস্থাতেই কাজ করাতে উভয় Controls পেজে সেট করুন।\n\nজেসচারটি ঘড়ির নিজস্ব সেটিংস \u2192 জেসচার-এও চালু করতে হবে।</string>
+    <string name="double_pinch">ডাবল পিঞ্চ</string>
+    <string name="icon_selection_search_hint">আইকন সার্চ করুন</string>
+    <string name="icon_selection_search_empty">আপনার সার্চের সঙ্গে কোনো আইকন মেলেনি</string>
+    <string name="open_quick_actions_panel">দ্রুত অ্যাকশন প্যানেল খুলুন</string>
+    <string name="open_volume_screen">ভলিউম স্ক্রিন খুলুন</string>
+    <string name="open_progress_screen">প্রগ্রেস স্ক্রিন খুলুন</string>
+    <string name="export_config_failed_detail">ব্যাকআপ এক্সপোর্ট করা যায়নি: %1$s</string>
+    <string name="backup_selection_title">ব্যাকআপের বিষয়বস্তু বেছে নিন</string>
+    <string name="backup_selection_description">Svartifoss-এর যে অংশগুলো সংরক্ষণ করতে চান সেগুলো বেছে নিন। ডিফল্টভাবে সবকিছু নির্বাচিত থাকে; এই ব্যাকআপ ইমপোর্ট করার সময় অনির্বাচিত অংশ অপরিবর্তিত থাকে।</string>
+    <string name="backup_selection_select_all">সব নির্বাচন করুন</string>
+    <string name="backup_selection_clear_all">সব মুছুন</string>
+    <string name="backup_selection_export">ব্যাকআপ এক্সপোর্ট করুন</string>
+    <string name="backup_selection_empty">অন্তত একটি আইটেম বেছে নিন</string>
+    <string name="backup_section_buttons">বোতাম কনফিগারেশন</string>
+    <string name="backup_section_buttons_description">সঙ্গীত চলা ও বন্ধ থাকা অবস্থায় বোতাম, ক্রাউন ও জেসচার অ্যাকশন।</string>
+    <string name="backup_section_actions">অ্যাকশন তালিকা</string>
+    <string name="backup_section_actions_description">ঘড়ির অ্যাকশন মেনুতে দেখানো ক্রমানুসার অ্যাকশন তালিকা।</string>
+    <string name="backup_section_app_settings">অ্যাপ সেটিংস</string>
+    <string name="backup_section_app_settings_description">ফোন সেটিংস, ঘড়ির আচরণ, ভাষা, প্লেব্যাক এবং ইন্টিগ্রেশন।</string>
+    <string name="backup_section_watch_appearance">ঘড়ির চেহারা ও থিম</string>
+    <string name="backup_section_watch_appearance_description">ঘড়ির লেআউট, রং, টাইপোগ্রাফি, প্যানেল, AOD এবং সংরক্ষিত কাস্টম থিম।</string>
+    <string name="backup_section_playlist_shortcuts">প্লেলিস্ট শর্টকাট</string>
+    <string name="backup_section_playlist_shortcuts_description">আপনার সংরক্ষিত মিউজিক, অ্যালবাম, শিল্পী, প্লেলিস্ট এবং অন্যান্য স্ট্রিমিং লিংক।</string>
+    <string name="backup_section_history">সার্চ ও প্লেব্যাক ইতিহাস</string>
+    <string name="backup_section_history_description">সাম্প্রতিক সার্চ এবং সম্প্রতি চালানো ট্র্যাক।</string>
+    <string name="backup_section_icons">লোড করা আইকন ও আর্টওয়ার্ক</string>
+    <string name="backup_section_icons_description">কাস্টম অ্যাকশন আইকন, শর্টকাট কভার এবং ক্যাশে রাখা অ্যাপ আইকন।</string>
+    <string name="backup_section_privacy">গোপনীয়তা ও নোটিফিকেশন</string>
+    <string name="backup_section_privacy_description">ক্র্যাশ রিপোর্ট, ঘোষণা নোটিফিকেশন এবং অ্যাপে সংরক্ষিত অন্যান্য সম্মতির পছন্দ।</string>
+    <string name="backup_section_local_app_state">লোকাল অ্যাপ স্টেট</string>
+    <string name="backup_section_local_app_state_description">বর্তমান অ্যাকসেন্ট, শেষ মেনু অবস্থান, সম্পন্ন প্রম্পট এবং আপডেট স্টেট।</string>
+    <string name="backup_section_auxiliary_data">অন্যান্য অ্যাপ ডেটা</string>
+    <string name="backup_section_auxiliary_data_description">অ্যাপের মালিকানাধীন অতিরিক্ত পছন্দ ও অভ্যন্তরীণ ফাইল, ভবিষ্যতের ডেটা স্টোরসহ।</string>
+    <string name="pref_numeric_range">%1$d থেকে %2$d-এর মধ্যে।</string>
+    <string name="background_editor_artwork">আর্টওয়ার্ক</string>
+    <string name="background_editor_layers">লেয়ার</string>
+    <string name="background_editor_layers_count">%2$d-এর মধ্যে %1$d</string>
+    <string name="background_editor_add_layer">লেয়ার যোগ করুন</string>
+    <string name="background_editor_reset_layers">রিসেট</string>
+    <string name="background_editor_empty">কোনো লেয়ার নেই। আর্টওয়ার্কটি নিজেই দেখানো হয়।</string>
+    <string name="background_editor_note">এই তালিকার ওপরের লেয়ারটি অন্য সবকিছুর ওপর আঁকা হয়; নিচের লেয়ারটি আর্টওয়ার্কের সবচেয়ে কাছে থাকে।</string>
+    <string name="background_editor_full">আপনি সর্বোচ্চ %1$dটি লেয়ার স্ট্যাক করতে পারেন।</string>
+    <string name="background_layer_kind_wash">ব্যাকগ্রাউন্ড</string>
+    <string name="background_layer_kind_shade">শেডিং</string>
+    <string name="background_layer_kind_floor">অ্যাকসেন্ট ফ্লোর</string>
+    <string name="background_layer_move_up">এই লেয়ারটি ওপরে সরান</string>
+    <string name="background_layer_move_down">এই লেয়ারটি নিচে সরান</string>
+    <string name="background_layer_more">এই লেয়ারের আরও অপশন</string>
+    <string name="background_layer_add_title">একটি লেয়ার যোগ করুন</string>
+    <string name="background_layer_style_title">%1$s লেয়ার</string>
+    <string name="background_layer_opacity">তীব্রতা</string>
+    <string name="background_layer_color">রং</string>
+    <string name="background_layer_custom_color">একটি রং বেছে নিন</string>
+    <string name="background_layer_duplicate">ডুপ্লিকেট</string>
+    <string name="background_layer_remove">সরান</string>
+    <string name="background_layer_color_default">ডিফল্ট</string>
+    <string name="background_layer_color_album">অ্যালবামের রং</string>
+    <string name="background_layer_color_secondary">দ্বিতীয় অ্যালবাম রং</string>
+    <string name="background_layer_color_tertiary">তৃতীয় অ্যালবাম রং</string>
+    <string name="background_layer_color_desaturated">মিউটেড অ্যালবাম রং</string>
+    <string name="background_layer_color_black">কালো</string>
+    <string name="background_layer_color_custom">কাস্টম রং</string>
+    <string name="background_layer_reset_title">লেয়ারগুলো রিসেট করবেন?</string>
+    <string name="background_layer_reset_message">স্ট্যাকটি শেডিং ও অ্যাকসেন্ট ফ্লোরে ফিরে যায়, যেগুলো তাদের নিজস্ব সারিতে সেট করা আছে; পুরোনো বিল্ড চালানো ঘড়িতেও এভাবেই রেন্ডার হয়।</string>
+    <string name="watch_element_progress">অগ্রগতি</string>
+    <string name="watch_element_volume">ভলিউম</string>
+    <string name="watch_element_quick_panel">দ্রুত অ্যাকশন</string>
+    <string name="watch_element_queue">কিউ</string>
+    <string name="watch_element_lyrics">লিরিক্স</string>
+    <string name="player_section_on_screen">স্ক্রিনে</string>
+    <string name="player_element_app_icon">অ্যাপ আইকন</string>
+    <string name="player_element_controls">প্লেয়ার কন্ট্রোল</string>
+    <string name="player_element_tap_flash">ট্যাপ ফ্ল্যাশ</string>
+    <string name="player_element_inner_progress">ভেতরের অগ্রগতি</string>
+    <string name="player_element_edge_arc">এজ আর্ক</string>
+    <string name="player_element_edge_seek">এজ সিক</string>
+    <string name="player_element_clock">ঘড়ি</string>
+    <string name="player_element_cover_art">কভার আর্ট</string>
+    <string name="setting_album_art_filter">অ্যালবাম আর্ট ফিল্টার</string>
+    <string name="setting_album_art_filter_description">যেকোনো অ্যালবাম আর্ট স্টাইলের ওপর আলাদা রঙের ট্রিটমেন্ট প্রয়োগ করুন।</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto-তে অতিরিক্ত হালকা স্ট্রোক আছে, সূক্ষ্ম ডিসপ্লে লুকের জন্য।</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto-তে হালকা, খোলামেলা স্ট্রোক এবং ফন্ট পরিবারের পরিচিত অনুপাত রয়েছে।</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto-তে শক্তিশালী মিডিয়াম স্ট্রোক আছে, যা কমপ্যাক্ট ও সহজপাঠ্য লেবেলের জন্য উপযোগী।</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto-র সবচেয়ে ভারী সিস্টেম ওয়েট, বোল্ড ডিসপ্লে টেক্সটের জন্য।</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto অনুভূমিকভাবে সংকুচিত করা হয়েছে যাতে লম্বা শিরোনাম কম জায়গায় ফিট হয়।</string>
+    <string name="setting_wear_title_font">শিরোনামের টাইপফেস</string>
+    <string name="setting_wear_title_text_case">শিরোনামের টেক্সট কেস</string>
+    <string name="setting_wear_artist_font">শিল্পীর টাইপফেস</string>
+    <string name="setting_wear_artist_text_case">শিল্পীর টেক্সট কেস</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">শুরুতে পড়ার জন্য তৈরি বন্ধুসুলভ গোলাকার sans</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">সম্পাদকীয় ওজনসহ উচ্চ-কনট্রাস্ট Didone ডিসপ্লে টাইপফেস</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">হাতে লেখা কমিক ছোঁয়াসহ মজবুত পোস্টার sans</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">উদার ও সমান ব্যবধানের শান্ত জ্যামিতিক sans</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">নরমভাবে গোলাকার টার্মিনালসহ সমসাময়িক slab serif</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">শিরোনামে প্রবল প্রভাবের জন্য তৈরি বিশাল slab serif</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">স্মল ক্যাপে আঁকা সরু হ্যান্ড-ড্রন টাইপফেস</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">জোরালো শিরোনামের জন্য ঘনভাবে প্যাক করা condensed sans</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">ছোট আকারেও দৃঢ় থাকা জ্যামিতিক slab serif</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">চেঁচামেচির শক্তিসম্পন্ন কমিক-বুক ডিসপ্লে টাইপফেস</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">স্টেনসিল করা সামরিক ডিসপ্লে টাইপফেস</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">উষ্ণ, অনানুষ্ঠানিক বাঁকসহ সোজা serif</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">সামান্য গোলাকার কোণসহ humanist sans</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">শক্তিশালী, সরল রূপের grotesque sans</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">স্ক্রিপ্টের জন্য তৈরি পরিমার্জিত টাইপরাইটার monospace</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">নরম, বইসুলভ স্বরের গোলাকার slab serif</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">দীর্ঘ অনুচ্ছেদের জন্য টিউন করা পুরোনো ধাঁচের বইয়ের serif</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">আধুনিক ফিনিশসহ কম-কনট্রাস্ট জ্যামিতিক sans</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">বডি টেক্সটের আকারেও দৃঢ় থাকার জন্য আঁকা শক্তিশালী serif</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">কৌণিক জয়েন্টসহ সমসাময়িক প্রযুক্তিগত sans</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">স্পষ্ট ও স্বতন্ত্র গ্লিফসহ প্রোগ্রামিং monospace</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">অন-স্ক্রিন কোডের জন্য তৈরি humanist monospace</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">গোলাকার স্ট্রোকের প্রাণবন্ত হাতে লেখা টাইপফেস</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">১৯২০-এর দশকের ভিন্টেজ চরিত্রের জ্যামিতিক sans</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Futura ঐতিহ্যের জ্যামিতিক sans</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">হালকা ঢালসহ লুপবিহীন থাই ও ল্যাটিন sans</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">পড়ার সময় চোখের চাপ কমাতে গড়া sans</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">রেট্রো সাইনেজের স্বাদযুক্ত বোল্ড সংযুক্ত স্ক্রিপ্ট</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">উষ্ণতা ও নির্ভুলতার ভারসাম্য রাখা আধা-জ্যামিতিক sans</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">পরিষ্কার ইন্টারফেস টেক্সটের জন্য আঁকা মিনিমালিস্ট sans</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">নরম টার্মিনালের ভালোভাবে গোলাকার sans</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">সমান, সমসাময়িক ছন্দের জ্যামিতিক sans</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">গেমিং অনুভূতির বর্গাকার টেকনো টাইপফেস</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">গ্রিডে আঁকা কমপ্যাক্ট প্রযুক্তিগত sans</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">স্বতন্ত্র খোলা বাঁকের আধুনিক grotesque</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">আর্কেড ক্যাবিনেট থেকে সরাসরি বেরিয়ে আসা পিক্সেল টাইপফেস</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">মৃদু, হালকা অনুভূতির গোলাকার জ্যামিতিক sans</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">প্রযুক্তিগত কোণের বর্গাকার condensed sans</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">রেট্রো সাইন-পেইন্টিং শিকড়ের art-deco ডিসপ্লে টাইপফেস</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Roboto-এর monospace সঙ্গী</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">খেলাচ্ছলে ভোঁতা স্ট্রোকের মোটা ডিসপ্লে টাইপফেস</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">ভারী বর্গাকার রূপের প্রশস্ত শিল্পধর্মী টাইপফেস</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">গুজরাটি শিকড়ের উজ্জ্বল তির্যক ডিসপ্লে টাইপফেস</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">প্রথম দিকের কম্পিউটার স্ক্রিন মনে করিয়ে দেওয়া ছোট bitmap টাইপফেস</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">আরামে কোড পড়ার জন্য তৈরি monospace</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">পোস্টারসুলভ উপস্থিতির condensed all-caps টাইপফেস</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">দেবনাগরি ও ল্যাটিন শিরোনামের জন্য লম্বা condensed টাইপফেস</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">প্রযুক্তিগত আবহের বর্গাকার humanist sans</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">আপন স্বরের সম্পূর্ণ গোলাকার sans</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">১৯২০-এর দশকের কফি-শপ সাইনেজ মনে করিয়ে দেওয়া condensed টাইপফেস</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">নরমভাবে কাটা আধুনিক টার্মিনালের slab serif</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">খোলা, পাঠযোগ্য রূপের বন্ধুসুলভ humanist sans</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">আরামদায়ক পড়ার জন্য মজবুত রূপের উষ্ণ sans</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">পরিষ্কার ইন্টারফেসের জন্য তৈরি বহুমুখী humanist sans</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">সম্পাদকীয় স্বরের পরিশীলিত টেক্সট serif</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">স্ক্রিনে পড়ার জন্য টিউন করা ক্লাসিক বইয়ের serif</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">প্রশস্ত, মজবুত ছন্দের ব্যবহারিক grotesk sans</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">নির্ভুল অনুপাতের প্রযুক্তিগত humanist sans</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">পরিশীলিত, পাঠযোগ্য টেক্সচারের প্রযুক্তিগত monospace</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">ইঞ্জিনিয়ার্ড চরিত্রের সমসাময়িক serif</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">কমপ্যাক্ট, ব্যবহারিক রূপের পরিষ্কার কাজের sans</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">বন্ধুসুলভ অনুপাতের অদ্ভুত grotesk</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">ভবিষ্যৎধর্মী, প্রশস্ত অনুভূতির জ্যামিতিক sans</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">মার্জিত শহুরে রেখার আধুনিক জ্যামিতিক sans</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">ছোট স্ক্রিনের জন্য তৈরি ভারসাম্যপূর্ণ সমসাময়িক sans</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">অভিব্যক্তিপূর্ণ অনুপাতের আত্মবিশ্বাসী ডিসপ্লে sans</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">দীর্ঘ ট্র্যাক তথ্যের জন্য পাঠযোগ্য সহচর sans</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">আধুনিক প্রযুক্তিগত স্বরের খাস্তা monospace</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">শিল্পনির্দেশিত, খেলাচ্ছলে রূপের অপ্রচলিত sans</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">নীরব নির্ভুলতার নমনীয় সমসাময়িক sans</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">সহজ পাঠযোগ্যতার জন্য পরিষ্কার ও আপন sans</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">আনন্দময় স্বভাবের গোলাকার ডিসপ্লে sans</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">গঠন ও অদ্ভুত বিবরণ মেশানো প্রাণবন্ত grotesk</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">নাটকীয় শিরোনামের জন্য উচ্চ-কনট্রাস্ট ডিসপ্লে serif</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">উচ্চ-কনট্রাস্টের পরিশীলিত সাহিত্যিক serif</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">ক্যালিগ্রাফিক বিবরণসহ মার্জিত ডিসপ্লে serif</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">ছোট আকারেও পরিষ্কার থাকা মজবুত slab serif</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">ঘন, অভিব্যক্তিপূর্ণ পড়ার জন্য তৈরি বহুমুখী serif</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">বইসুলভ স্বরের উষ্ণ পুরোনো-ধাঁচের serif</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">স্বতন্ত্র, পরিশীলিত অক্ষররূপের মার্জিত sans</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">শক্তিশালী শিরোনামের জন্য তৈরি বোল্ড জ্যামিতিক sans</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">খেলাধুলাপূর্ণ গতিশীল শক্তির condensed-বান্ধব sans</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">খোলা কাউন্টার ও বন্ধুসুলভ সাইনেজ শক্তির নরম sans</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">humanist উষ্ণতা ও স্বচ্ছতার ভারসাম্য রাখা বহুমুখী sans</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">আত্মবিশ্বাসী ছন্দের পরিবহন-প্রেরিত পরিষ্কার sans</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">দৈনন্দিন ইন্টারফেসের জন্য তৈরি নিরপেক্ষ, অ্যাক্সেসিবল sans</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">মসৃণ আধুনিক বাঁকের হালকা জ্যামিতিক sans</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">নরম ভবিষ্যৎধর্মী অনুভূতির গোলাকার সরু sans</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">সূক্ষ্ম থাই-প্রেরিত চরিত্রের পরিষ্কার জ্যামিতিক sans</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">সর্বোচ্চ উপস্থিতির জন্য প্রশস্ত ভবিষ্যৎধর্মী ডিসপ্লে টাইপফেস</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">খেলাচ্ছলে প্রযুক্তিগত স্বরের variable sans-to-mono পরিবার</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">স্বতন্ত্র ডিজিটাল টেক্সচারের variable-width monospace</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">বিস্তৃত স্ক্রিপ্ট সাপোর্টসহ প্রশস্ত, অত্যন্ত পাঠযোগ্য sans</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">বিস্তৃত স্ক্রিপ্ট সাপোর্টসহ নির্ভরযোগ্য serif</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">সামঞ্জস্যপূর্ণ ছন্দের জন্য তৈরি বহুভাষিক monospace</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">হিব্রু-প্রভাবিত খাস্তা ছন্দসহ কমপ্যাক্ট আধুনিক sans</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">পরিষ্কার পড়ার জন্য অপ্টিমাইজ করা মজবুত humanist sans</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">গোলাকার, খোলা টেক্সচারের বন্ধুসুলভ স্ক্রিন sans</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">স্বতন্ত্র অনুপাতের কমপ্যাক্ট জ্যামিতিক sans</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">সাহিত্যিক স্বভাবের প্রাণবন্ত ক্যালিগ্রাফিক serif</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">ইন্টারফেসে চমৎকার পাঠযোগ্যতার পরিষ্কার humanist sans</string>
+    <string name="setting_wear_note_show_cover">কভার আর্ট</string>
+    <string name="aod_element_artwork">আর্টওয়ার্ক</string>
+    <string name="aod_element_clock">ঘড়ি</string>
+    <string name="aod_element_track_info">ট্র্যাক তথ্য</string>
+    <string name="aod_element_transport">ট্রান্সপোর্ট</string>
+    <string name="aod_element_progress">অগ্রগতি</string>
+    <string name="aod_element_up_next">পরবর্তী</string>
+    <string name="aod_section_artwork">আর্টওয়ার্ক</string>
+    <string name="aod_control_tint">টিন্ট</string>
+    <string name="aod_control_brightness">উজ্জ্বলতা</string>
+    <string name="aod_control_art_treatment">ট্রিটমেন্ট</string>
+    <string name="aod_control_art_opacity">অস্বচ্ছতা</string>
+    <string name="mini_button_control_visibility">দেখান</string>
+    <string name="mini_button_control_arrangement">বিন্যাস</string>
+    <string name="mini_button_control_shape">আকার</string>
+    <string name="mini_button_control_background">পটভূমি</string>
+    <string name="mini_button_control_opacity">অস্বচ্ছতা</string>
+    <string name="mini_button_assign_action">অ্যাকশন নির্ধারণ করুন</string>
+    <string name="mini_button_gestures_note">প্লেয়ারে ওপরে, নিচে ও বামে সোয়াইপ করুন। ডানে সোয়াইপ সবসময় সিস্টেমের বন্ধ করার জেসচার এবং কখনোই আটকানো হয় না।</string>
+    <string name="setting_wear_chat_cover_shape">চ্যাট অবতারের আকৃতি</string>
+    <string name="setting_wear_chat_show_cover">কভার আর্ট</string>
+    <string name="setting_wear_metadata_cover_shape">মেটাডেটা কভারের আকৃতি</string>
+    <string name="setting_wear_metadata_show_cover">কভার আর্ট</string>
+    <string-array name="wear_text_case_entries">
+        <item>স্বাভাবিক</item>
+        <item>বড় হাতের অক্ষর</item>
+        <item>ছোট হাতের অক্ষর</item>
+        <item>টাইটেল কেস</item>
+    </string-array>
+    <string name="wear_text_font_follow">গ্লোবাল টাইপফেস অনুসরণ করুন</string>
+    <string name="category_wf_typography_track_time">ট্র্যাকের সময়</string>
+    <string name="setting_wear_track_time_font">ট্র্যাক-টাইম টাইপফেস</string>
+    <string name="wear_track_time_font_follow">ডিজাইন অনুসরণ করুন</string>
+    <string name="setting_wear_track_time_font_weight">ট্র্যাক-টাইম ওজন</string>
+    <string name="setting_wear_track_time_font_italic">ইটালিক ট্র্যাক টাইম</string>
+    <string name="setting_wear_track_time_font_scale">ট্র্যাক-টাইম আকার</string>
+    <string name="setting_wear_track_time_font_opacity">ট্র্যাক-টাইম অপাসিটি</string>
+    <string name="setting_wear_track_time_font_tracking">ট্র্যাক-টাইম অক্ষর ব্যবধান</string>
+    <string-array name="album_art_filter_entries">
+        <item>কিছু নেই</item>
+        <item>মনোক্রোম</item>
+        <item>উষ্ণ</item>
+        <item>ঠান্ডা</item>
+        <item>গোল্ডেন আওয়ার</item>
+        <item>রোজে</item>
+        <item>ভিনটেজ ফিল্ম</item>
+        <item>ফিকে ফিল্ম</item>
+        <item>ম্যাট</item>
+        <item>উজ্জ্বল</item>
+        <item>পাঞ্চ</item>
+        <item>প্যাস্টেল</item>
+        <item>সেপিয়া</item>
+        <item>সায়ানোটাইপ</item>
+        <item>টিল ও কমলা</item>
+        <item>উচ্চ কনট্রাস্ট</item>
+        <item>সফট লাইট</item>
+        <item>রাত</item>
+    </string-array>
+    <string name="queue_item_now_playing">এখন চলছে</string>
+    <string name="queue_item_unknown_title">অজানা ট্র্যাক</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">প্লেব্যাক কিউ · %1$d ট্র্যাক</item>
+        <item quantity="other">প্লেব্যাক কিউ · %1$d ট্র্যাক</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">অ্যাকসেন্ট ফ্লোরের রং</string>
+    <string name="setting_wear_accent_floor_custom_color">কাস্টম ফ্লোরের রং</string>
+    <string name="setting_wear_accent_floor_custom_color_description">অ্যাকসেন্ট ফ্লোরের রং কাস্টম রং-এ সেট করা হলে যে রং ব্যবহার হবে তা বেছে নিন</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>অ্যালবাম অ্যাকসেন্ট</item>
+        <item>অ্যালবাম সেকেন্ডারি</item>
+        <item>অ্যালবাম টারশিয়ারি</item>
+        <item>কাস্টম রঙ</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">দৈনন্দিন পড়ার জন্য তৈরি নিরপেক্ষ, অত্যন্ত পাঠযোগ্য ইন্টারফেস sans</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">অ্যাক্সেসিবিলিটিকে অগ্রাধিকার দেওয়া স্বতন্ত্র অক্ষররূপ, যা ছোট আকারেও পরিষ্কার থাকে</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">নরমভাবে গোলাকার জ্যামিতিক sans — আত্মবিশ্বাসী ও বন্ধুসুলভ</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">দীর্ঘ শিরোনামকে বেশি জায়গা দেওয়া কমপ্যাক্ট humanist sans</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">জোরালো পোস্টার শক্তিসম্পন্ন লম্বা condensed ডিসপ্লে টাইপফেস</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">আরামদায়ক দীর্ঘপাঠের জন্য তৈরি সমসাময়িক serif</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">উষ্ণতা ও চরিত্রের অভিব্যক্তিপূর্ণ নরম serif</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">প্রযুক্তিগত ধারসহ রেট্রো-ফিউচারিস্ট monospace</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">সর্বোচ্চ কনট্রাস্টের জন্য ঘন ভারী ডিসপ্লে টাইপফেস</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">প্রাণবন্ত, ব্যক্তিগত অনুভূতির প্রবাহমান হাতে লেখা স্ক্রিপ্ট</string>
+    <string name="setting_wear_artist_text_mode">আর্টিস্ট টেক্সটের আচরণ</string>
+    <string name="setting_wear_album_art_source">অ্যালবাম আর্টের উৎস</string>
+    <string name="setting_user_font">আমার নিজস্ব ফন্ট</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">এই ফোন থেকে .ttf বা .otf ফাইল ইমপোর্ট করুন</string>
+    <string name="setting_user_font_loaded">%1$s · বদলাতে বা সরাতে ট্যাপ করুন</string>
+    <string name="user_font_pick">ফন্ট ফাইল বেছে নিন</string>
+    <string name="user_font_replace">বদলান</string>
+    <string name="user_font_remove">সরান</string>
+    <string name="user_font_imported">“%1$s” ইমপোর্ট হয়েছে। যেকোনো ফন্ট তালিকা থেকে এটি বেছে নিন; এটি আপনার ঘড়িতে পাঠানো হচ্ছে।</string>
+    <string name="user_font_removed">আপনার ইমপোর্ট করা ফন্ট সরানো হয়েছে।</string>
+    <string name="user_font_error_too_large">ওই ফাইলটির আকার %1$s। ঘড়িতে দ্রুত পাঠাতে ফন্টটি %2$s-এর কম হতে হবে।</string>
+    <string name="user_font_error_not_a_font">ওই ফাইলটি এমন কোনো ফন্ট নয় যা এই ফোন পড়তে পারে। TrueType এবং OpenType (.ttf, .otf) কাজ করে; ওয়েব ফন্ট (.woff, .woff2) কাজ করে না।</string>
+    <string name="user_font_error_unreadable">ওই ফাইলটি পড়া যায়নি। আবার বেছে নিন, অথবা আগে এই ফোনে কপি করুন।</string>
+    <string name="user_font_not_shareable">নিজস্ব ফন্ট ব্যবহার করা থিম এই ফোনেই থাকবে</string>
+    <string name="setting_custom_album_art_image">ব্যবহার করার ছবি</string>
+    <string name="setting_custom_album_art_folder">যে ফোল্ডার থেকে ছবি নেওয়া হবে</string>
+    <string name="setting_custom_album_art_none">এখনও বেছে নেওয়া হয়নি — বেছে নিতে ট্যাপ করুন</string>
+    <string name="setting_custom_album_art_chosen">%1$s · পরিবর্তন করতে ট্যাপ করুন</string>
+    <string name="custom_album_art_image_set">ওই ছবিটি এখন প্লেয়ারের পেছনে থাকবে।</string>
+    <string name="custom_album_art_folder_set">ওই ফোল্ডারের একটি ছবি প্রতিটি ট্র্যাকের জন্য আঁকা হবে।</string>
+    <string name="custom_album_art_error">ওটি খোলা যায়নি। আবার বেছে নিন, অথবা এই ফোনের নিজস্ব স্টোরেজ থেকে কিছু বেছে নিন।</string>
+    <string name="custom_album_art_not_shareable">নিজস্ব ছবি ব্যবহার করা থিম এই ফোনেই থাকবে</string>
+    <string name="setting_wear_text_block_align">টেক্সট অ্যালাইনমেন্ট</string>
+    <string name="setting_wear_text_block_align_description">ট্র্যাক টেক্সট যে প্রান্তে অ্যালাইন হয়। Follow face প্রতিটি ফেসের জন্য ডিজাইন করা অ্যালাইনমেন্ট বজায় রাখে।</string>
+    <string name="setting_wear_text_block_position">টেক্সটের অবস্থান</string>
+    <string name="setting_wear_text_block_position_description">স্ক্রিনে ট্র্যাক টেক্সট যেখানে থাকে। Follow face প্রতিটি ফেসের জন্য ডিজাইন করা অবস্থান বজায় রাখে।</string>
+    <string name="setting_online_artwork">অনলাইন আর্টওয়ার্ক</string>
+    <string name="setting_online_artwork_description">ওয়াচ ফেসকে অনলাইনে খোঁজা ছবি দেখাতে দিন \u2014 বাজতে থাকা শিল্পী, অথবা এমন প্লেয়ারের জন্য অ্যালবাম কভার যা কোনো ছবি প্রকাশ করে না। আপনার ফোন Deezer-এর পাবলিক ক্যাটালগে খোঁজ করে এবং ফলাফল ক্যাশ করে; শুধু ট্র্যাক ও শিল্পীর নাম পাঠানো হয়, এবং কোনো ফেসকে ওই উৎসগুলোর একটিতে সেট না করা পর্যন্ত কিছু খোঁজা হয় না। বন্ধ থাকলে প্লেয়ারের নিজস্ব আর্টওয়ার্ক ব্যবহার করা হয়।</string>
 </resources>

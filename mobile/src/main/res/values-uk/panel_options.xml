@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Макет кільця прогресу</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Повністю прозорий</item>
+        <item>Вторинний колір</item>
+        <item>Третинний колір</item>
+        <item>Кольорова сітка</item>
+        <item>Аврора</item>
+        <item>Прожектор</item>
+        <item>Віньєтка</item>
+        <item>Розділений тон</item>
+        <item>Кольорові смуги</item>
+        <item>Північ</item>
+        <item>Ореол</item>
+        <item>Розмиття диму</item>
+        <item>Захід сонця</item>
+        <item>Океан</item>
+        <item>Туманність</item>
+        <item>Жар</item>
+        <item>Лінія припливу</item>
+        <item>Біолюмінесценція</item>
+        <item>Переливчастий</item>
+        <item>Графіт</item>
+        <item>Кіно</item>
+        <item>Орбіта</item>
+        <item>Горизонт</item>
+        <item>Розмив чорнила</item>
+        <item>Цвітіння</item>
+        <item>Фіорд</item>
+        <item>Сітка крапок</item>
+        <item>Лінія сканування</item>
+        <item>Радар</item>
+        <item>Контурні лінії</item>
+        <item>Гранований</item>
+        <item>Сутінки</item>
+        <item>Лід</item>
+        <item>Троянда</item>
+        <item>Папір</item>
+        <item>Моноліт</item>
+        <item>Ліхтар</item>
+        <item>Нуар</item>
+        <item>Оксамит</item>
+        <item>Міраж</item>
+        <item>Світіння</item>
+        <item>Хмара</item>
+        <item>Ноктюрн</item>
+        <item>Рідина</item>
+        <item>Припливний</item>
+        <item>Вініл</item>
+        <item>Корона</item>
+        <item>Півмісяць</item>
+        <item>Сітка</item>
+        <item>Скляна завіса</item>
+        <item>Material</item>
+        <item>Постер</item>
+        <item>Студія</item>
+        <item>Спектр</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Намистини</item>
+        <item>Подвійна рейка</item>
+        <item>Пульс</item>
+        <item>Хром</item>
+        <item>Спектр</item>
+        <item>Сходи</item>
+        <item>Цукерка</item>
+        <item>Привид</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Подвійний край</item>
+        <item>Вертикальний індикатор (ліворуч)</item>
+        <item>Вертикальний індикатор (праворуч)</item>
+        <item>Верхній індикатор</item>
+        <item>Нижній індикатор</item>
+        <item>Центральний циферблат</item>
+        <item>Верхній ореол</item>
+        <item>Нижній ореол</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Подвійне кільце</item>
+        <item>Намистини</item>
+        <item>Штрих і крапка</item>
+        <item>24-годинні позначки</item>
+        <item>Лише прогрес</item>
+        <item>Світіння</item>
+        <item>Двотоновий</item>
+        <item>Голка</item>
+        <item>Почергово</item>
+        <item>Іскра</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Край безеля</item>
+        <item>Вставлене кільце</item>
+        <item>Внутрішнє кільце</item>
+        <item>Товсте кільце</item>
+        <item>Відкрито знизу</item>
+        <item>Відкрито зверху</item>
+        <item>Ліва дуга</item>
+        <item>Права дуга</item>
+        <item>Подвійна доріжка</item>
+        <item>Відкрито ліворуч</item>
+        <item>Відкрито праворуч</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Компактна капсула</item>
+        <item>Квадратний альбом</item>
+        <item>Складена капсула</item>
+        <item>Значок</item>
+        <item>Скляна смуга</item>
+        <item>LCD</item>
+        <item>Квадратний контур</item>
+        <item>Стрічка</item>
+        <item>Бульбашка часу</item>
+        <item>Розділений тон</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Часова шкала (верх)</item>
+        <item>Часова шкала (низ)</item>
+        <item>Сегменти (верх)</item>
+        <item>Вертикальна часова шкала (ліворуч)</item>
+        <item>Вертикальна часова шкала (праворуч)</item>
+        <item>Центральний циферблат</item>
+        <item>Подвійна часова шкала</item>
+        <item>Сегменти (низ)</item>
+        <item>Центральний стос</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>М’який</item>
+        <item>Хром</item>
+        <item>Голографічний</item>
+        <item>Бульбашка</item>
+        <item>Рейка</item>
+        <item>Захід сонця</item>
+        <item>Контур альбому</item>
+        <item>Темне скло</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Віяло</item>
+        <item>Орбіта</item>
+        <item>Нижня панель</item>
+        <item>Стовпець</item>
+        <item>Розділена панель</item>
+        <item>Діамант</item>
+        <item>Карусель</item>
+        <item>Трикутник</item>
+        <item>Сходинка</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>М’який</item>
+        <item>Плитковий</item>
+        <item>Чорнило</item>
+        <item>Рейка</item>
+        <item>Захід сонця</item>
+        <item>Бульбашка</item>
+        <item>Хром</item>
+        <item>Голографічний</item>
+    </string-array>
+</resources>

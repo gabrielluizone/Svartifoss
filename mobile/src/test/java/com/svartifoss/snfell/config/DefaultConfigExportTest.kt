@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.config
 
+import com.svartifoss.snfell.common.MatejdroArtistAutosizeMigration
 import com.svartifoss.snfell.common.MiscPreferences
 import org.json.JSONObject
 import org.junit.Assert.assertEquals
@@ -33,7 +34,8 @@ class DefaultConfigExportTest {
                 MiscPreferences.CRASH_REPORTING_ENABLED.key,
                 MiscPreferences.ANNOUNCEMENTS_ENABLED.key,
                 "notification_access_prompted", "face_reset_prompt_handled",
-                "center_long_press_repaired", "update_last_check_ms").forEach { key ->
+                "center_long_press_repaired", "update_last_check_ms",
+                MatejdroArtistAutosizeMigration.MARKER_KEY).forEach { key ->
             assertFalse(
                     "$key must not ship as a default",
                     ConfigBackup.sectionForPreference(key) in DefaultConfigExport.INCLUDED_SECTIONS)

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Rozloženie prstenca priebehu</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Úplne priehľadné</item>
+        <item>Sekundárna farba</item>
+        <item>Terciárna farba</item>
+        <item>Barevná sieť</item>
+        <item>Polární záře</item>
+        <item>Reflektor</item>
+        <item>Viněta</item>
+        <item>Rozdělený tón</item>
+        <item>Farebné pásy</item>
+        <item>Polnoc</item>
+        <item>Halo</item>
+        <item>Rozostření kouře</item>
+        <item>Západ slnka</item>
+        <item>Oceán</item>
+        <item>Mlhovina</item>
+        <item>Žeravý uhlík</item>
+        <item>Linie přílivu</item>
+        <item>Bioluminiscence</item>
+        <item>Duhový</item>
+        <item>Grafit</item>
+        <item>Kino</item>
+        <item>Oběžná dráha</item>
+        <item>Horizont</item>
+        <item>Inkoustový nádech</item>
+        <item>Kvet</item>
+        <item>Fjord</item>
+        <item>Bodkovaná mriežka</item>
+        <item>Skenovací čára</item>
+        <item>Radar</item>
+        <item>Vrstevniče</item>
+        <item>Fasetovaný</item>
+        <item>Soumrak</item>
+        <item>Led</item>
+        <item>Ruža</item>
+        <item>Papier</item>
+        <item>Monolit</item>
+        <item>Lucerna</item>
+        <item>Noir</item>
+        <item>Zamat</item>
+        <item>Přelud</item>
+        <item>Rozkvět světla</item>
+        <item>Oblak</item>
+        <item>Nokturno</item>
+        <item>Tekutý</item>
+        <item>Příliv</item>
+        <item>Vinyl</item>
+        <item>Koróna</item>
+        <item>Srpek</item>
+        <item>Mriežka</item>
+        <item>Skleněný závoj</item>
+        <item>Material</item>
+        <item>Plakát</item>
+        <item>Studio</item>
+        <item>Spektrum</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Korálky</item>
+        <item>Dvojitá kolejniče</item>
+        <item>Pulz</item>
+        <item>Chrom</item>
+        <item>Spektrum</item>
+        <item>Schody</item>
+        <item>Bonbón</item>
+        <item>Duch</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Dvojitý okraj</item>
+        <item>Zvislý měřič (vľavo)</item>
+        <item>Zvislý měřič (vpravo)</item>
+        <item>Horné měřič</item>
+        <item>Spodné měřič</item>
+        <item>Stredový ciferník</item>
+        <item>Horné halo</item>
+        <item>Spodné halo</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Dvojitý prstenec</item>
+        <item>Korálky</item>
+        <item>Čiarka a tečka</item>
+        <item>Značky 24 hodin</item>
+        <item>Jen priebeh</item>
+        <item>Žiara</item>
+        <item>Dvojtón</item>
+        <item>Ihla</item>
+        <item>Střídavé</item>
+        <item>Iskra</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Okraj lunety</item>
+        <item>Zapuštěný prstenec</item>
+        <item>Vnitřní prstenec</item>
+        <item>Tučný prstenec</item>
+        <item>Otvoriť dole</item>
+        <item>Otvoriť nahoře</item>
+        <item>Ľavý oblouk</item>
+        <item>Pravý oblouk</item>
+        <item>Dvojitá stopa</item>
+        <item>Otvoriť vľavo</item>
+        <item>Otvoriť vpravo</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Kompaktní pilulka</item>
+        <item>Štvorcové album</item>
+        <item>Vrstvená pilulka</item>
+        <item>Odznak</item>
+        <item>Skleněný pruh</item>
+        <item>LCD</item>
+        <item>Štvorec s obrysem</item>
+        <item>Stuha</item>
+        <item>Bublina času</item>
+        <item>Rozdělený tón</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Časová os (nahoře)</item>
+        <item>Časová os (dole)</item>
+        <item>Segmenty (nahoře)</item>
+        <item>Zvislá časová os (vľavo)</item>
+        <item>Zvislá časová os (vpravo)</item>
+        <item>Stredový ciferník</item>
+        <item>Dvojitá časová os</item>
+        <item>Segmenty (dole)</item>
+        <item>Stredový zásobník</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Jemný</item>
+        <item>Chrom</item>
+        <item>Holografický</item>
+        <item>Bublina</item>
+        <item>Kolejniče</item>
+        <item>Západ slnka</item>
+        <item>Obrys alba</item>
+        <item>Tmavé sklo</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Vejár</item>
+        <item>Oběžná dráha</item>
+        <item>Spodné dok</item>
+        <item>Sloupec</item>
+        <item>Rozdělený panel</item>
+        <item>Diamant</item>
+        <item>Karusel</item>
+        <item>Trojuholník</item>
+        <item>Schod</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Jemný</item>
+        <item>Deska</item>
+        <item>Inkoust</item>
+        <item>Kolejniče</item>
+        <item>Západ slnka</item>
+        <item>Bublina</item>
+        <item>Chrom</item>
+        <item>Holografický</item>
+    </string-array>
+</resources>

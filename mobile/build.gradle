@@ -32,6 +32,21 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+    // Two distribution channels, one codebase (see docs/play-store-migration-plan.md):
+    //   github - the sideloadable build. Ships the in-app self-updater (update/ package) and
+    //            REQUEST_INSTALL_PACKAGES. Default, so `assembleDebug` etc. keep meaning this.
+    //   play   - the Play Store build. Google Play forbids an app updating itself outside Play,
+    //            so the updater source set and the permission are simply absent here.
+    flavorDimensions "distribution"
+    productFlavors {
+        github {
+            dimension "distribution"
+            isDefault true
+        }
+        play {
+            dimension "distribution"
+        }
+    }
     packagingOptions {
         exclude 'META-INF/gradle/*'
     }

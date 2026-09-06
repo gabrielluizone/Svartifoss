@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Layout for fremskridtsring</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Helt gennemsigtig</item>
+        <item>Sekundær farve</item>
+        <item>Tertiær farve</item>
+        <item>Farvenet</item>
+        <item>Nordlys</item>
+        <item>Spotlys</item>
+        <item>Vignet</item>
+        <item>Delt tone</item>
+        <item>Farvebånd</item>
+        <item>Midnat</item>
+        <item>Glorie</item>
+        <item>Røgsløring</item>
+        <item>Solnedgang</item>
+        <item>Hav</item>
+        <item>Nebula</item>
+        <item>Glød</item>
+        <item>Tidevandslinje</item>
+        <item>Bioluminescens</item>
+        <item>Iriserende</item>
+        <item>Grafit</item>
+        <item>Biograf</item>
+        <item>Bane</item>
+        <item>Horisont</item>
+        <item>Blækvask</item>
+        <item>Blomstring</item>
+        <item>Fjord</item>
+        <item>Prikgitter</item>
+        <item>Scanningslinje</item>
+        <item>Radar</item>
+        <item>Konturlinjer</item>
+        <item>Facetteret</item>
+        <item>Skumring</item>
+        <item>Is</item>
+        <item>Rose</item>
+        <item>Papir</item>
+        <item>Monolit</item>
+        <item>Lygte</item>
+        <item>Noir</item>
+        <item>Fløjl</item>
+        <item>Luftspejling</item>
+        <item>Diffus glød</item>
+        <item>Sky</item>
+        <item>Nocturne</item>
+        <item>Flydende</item>
+        <item>Tidevand</item>
+        <item>Vinyl</item>
+        <item>Korona</item>
+        <item>Halvmåne</item>
+        <item>Gitter</item>
+        <item>Glasslør</item>
+        <item>Materiale</item>
+        <item>Plakat</item>
+        <item>Studie</item>
+        <item>Spektrum</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Perler</item>
+        <item>Dobbelt skinne</item>
+        <item>Puls</item>
+        <item>Krom</item>
+        <item>Spektrum</item>
+        <item>Trin</item>
+        <item>Slik</item>
+        <item>Spøgelse</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Dobbelt kant</item>
+        <item>Lodret måler (venstre)</item>
+        <item>Lodret måler (højre)</item>
+        <item>Øvre måler</item>
+        <item>Nederste måler</item>
+        <item>Midterviser</item>
+        <item>Øvre glorie</item>
+        <item>Nederste glorie</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Dobbelt ring</item>
+        <item>Perler</item>
+        <item>Streg og prik</item>
+        <item>24-timersmarkeringer</item>
+        <item>Kun fremskridt</item>
+        <item>Glød</item>
+        <item>Duotone</item>
+        <item>Nål</item>
+        <item>Skiftende</item>
+        <item>Gnist</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Kant af krans</item>
+        <item>Indsat ring</item>
+        <item>Indre ring</item>
+        <item>Tyk ring</item>
+        <item>Åben nederst</item>
+        <item>Åben øverst</item>
+        <item>Venstre bue</item>
+        <item>Højre bue</item>
+        <item>Dobbelt spor</item>
+        <item>Åben til venstre</item>
+        <item>Åben til højre</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Kompakt kapsel</item>
+        <item>Firkantet album</item>
+        <item>Stablet kapsel</item>
+        <item>Mærke</item>
+        <item>Glasbjælke</item>
+        <item>LCD</item>
+        <item>Kontureret firkant</item>
+        <item>Bånd</item>
+        <item>Tidsboble</item>
+        <item>Delt tone</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Tidslinje (øverst)</item>
+        <item>Tidslinje (nederst)</item>
+        <item>Segmenter (øverst)</item>
+        <item>Lodret tidslinje (venstre)</item>
+        <item>Lodret tidslinje (højre)</item>
+        <item>Midterviser</item>
+        <item>Dobbelt tidslinje</item>
+        <item>Segmenter (nederst)</item>
+        <item>Midterstak</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Blød</item>
+        <item>Krom</item>
+        <item>Holografisk</item>
+        <item>Boble</item>
+        <item>Skinne</item>
+        <item>Solnedgang</item>
+        <item>Albumkontur</item>
+        <item>Mørkt glas</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Vifte</item>
+        <item>Bane</item>
+        <item>Nederste dock</item>
+        <item>Kolonne</item>
+        <item>Delt panel</item>
+        <item>Diamant</item>
+        <item>Karrusel</item>
+        <item>Trekant</item>
+        <item>Trappe</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Blød</item>
+        <item>Plade</item>
+        <item>Blæk</item>
+        <item>Skinne</item>
+        <item>Solnedgang</item>
+        <item>Boble</item>
+        <item>Krom</item>
+        <item>Holografisk</item>
+    </string-array>
+</resources>

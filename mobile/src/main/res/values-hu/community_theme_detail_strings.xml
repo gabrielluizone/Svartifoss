@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Téma részletei</string>
+    <string name="community_theme_detail_preview_screen">Előnézeti képernyő</string>
+    <string name="community_theme_detail_surface_player">Lejátszó</string>
+    <string name="community_theme_detail_surface_aod">Mindig bekapcsolva</string>
+    <string name="community_theme_detail_surface_volume">Hangerő</string>
+    <string name="community_theme_detail_surface_progress">Folyamat</string>
+    <string name="community_theme_detail_surface_quick_panel">Gyorspanel</string>
+    <string name="community_theme_detail_surface_queue">Lejátszási sor</string>
+    <string name="community_theme_detail_preview_label">%1$s előnézete</string>
+    <string name="community_theme_detail_preview_description">%1$s előnézete a(z) %2$s képernyőn</string>
+    <string name="community_theme_detail_preview_privacy">Az aktuális albumborító csak ebben az előnézetben jelenhet meg a telefonján. Soha nem kerül feltöltésre; továbbra is mintaszöveg és mintaidőzítés használatos.</string>
+    <string name="community_theme_detail_information">Téma információi</string>
+    <string name="community_theme_detail_byline">Készítette: %1$s</string>
+    <string name="community_theme_detail_layout">Alap elrendezés</string>
+    <string name="community_theme_detail_revision">Revízió</string>
+    <string name="community_theme_detail_minimum_version">Minimális Svartifoss-verzió</string>
+    <string name="community_theme_detail_published">Közzétéve</string>
+    <string name="community_theme_detail_visual_settings">Vizuális beállítások</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s vizuális beállítás</item>
+        <item quantity="other">%1$s vizuális beállítás</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Nem érhető el</string>
+    <string name="community_theme_detail_add_apply">Hozzáadás és alkalmazás</string>
+    <string name="community_theme_detail_remove">Téma eltávolítása</string>
+    <string name="community_theme_detail_remove_title">Eltávolítja a(z) „%1$s” témát a Saját témáimból?</string>
+    <string name="community_theme_detail_remove_message">Ez a mentett másolat és minden rajta végzett módosítás véglegesen törlődik. Ha jelenleg alkalmazva van, az óra visszatér a beépített alap elrendezéshez.</string>
+    <string name="community_theme_detail_removed">A téma eltávolítva a Saját témáimból</string>
+    <string name="community_theme_detail_remove_error">Nem sikerült eltávolítani ezt a témát</string>
+    <string name="community_theme_detail_like">Tetszik</string>
+    <string name="community_theme_detail_unlike">Már nem tetszik</string>
+    <string name="community_theme_detail_like_loading">Ellenőrzés…</string>
+    <string name="community_theme_detail_like_description">%1$s kedvelése. %2$s</string>
+    <string name="community_theme_detail_unlike_description">%1$s kedvelésének visszavonása. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">A Google-bejelentkezés megszakadt. A kedvelés nem lett mentve.</string>
+    <string name="community_theme_detail_like_error">Nem sikerült menteni a kedvelést. Ellenőrizze a kapcsolatot, és próbálja újra.</string>
+    <string name="community_theme_detail_like_not_ready">Ehhez a témához a kedvelések még nem állnak készen. Frissítse a közösségi témákat a következő közzététel után.</string>
+    <string name="community_theme_detail_like_saved">A kedvelés mentve. A nyilvános számlálók a katalógus következő közzétételekor frissülnek.</string>
+    <string name="community_theme_detail_unlike_saved">A kedvelés eltávolítva. A nyilvános számlálók a katalógus következő közzétételekor frissülnek.</string>
+    <string name="community_theme_detail_apply_existing">Ez a téma már a Saját témáim között van, és alkalmazva lett az órájára</string>
+    <string name="community_theme_detail_requires_app_version">Ehhez a témához Svartifoss %1$s szükséges, mielőtt hozzáadható.</string>
+    <string name="community_theme_detail_load_error">Nem sikerült betölteni a téma részleteit. Térjen vissza a közösségi témákhoz, és próbálja újra.</string>
+    <string name="community_theme_detail_profile_mismatch">A letöltött profil nem egyezik a téma nyilvános részleteivel. Térjen vissza a közösségi témákhoz, és próbálja újra.</string>
+    <string name="community_theme_detail_screenshot_description">Fotó erről a témáról a szerző óráján</string>
+    <string name="community_theme_detail_source_author">Szerző órája</string>
+    <string name="community_theme_detail_source_rendered">Generált előnézet</string>
+    <string name="community_theme_detail_show_rendered">Generált előnézet megjelenítése</string>
+    <string name="community_theme_detail_show_author">Szerző fotójának megjelenítése</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

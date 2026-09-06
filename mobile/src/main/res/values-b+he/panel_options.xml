@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">פריסת טבעת ההתקדמות</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>שקוף לחלוטין</item>
+        <item>צבע משני</item>
+        <item>צבע שלישוני</item>
+        <item>רשת צבע</item>
+        <item>זוהר צפוני</item>
+        <item>זרקור</item>
+        <item>וינייטה</item>
+        <item>גוון מפוצל</item>
+        <item>רצועות צבע</item>
+        <item>חצות</item>
+        <item>הילה</item>
+        <item>טשטוש עשן</item>
+        <item>שקיעה</item>
+        <item>אוקיינוס</item>
+        <item>ערפילית</item>
+        <item>גחל</item>
+        <item>קו גאות</item>
+        <item>ביולומינסנציה</item>
+        <item>ססגוני</item>
+        <item>גרפיט</item>
+        <item>קולנוע</item>
+        <item>מסלול</item>
+        <item>אופק</item>
+        <item>שטיפת דיו</item>
+        <item>פריחה</item>
+        <item>פיורד</item>
+        <item>רשת נקודות</item>
+        <item>קו סריקה</item>
+        <item>רדאר</item>
+        <item>קווי מתאר</item>
+        <item>רב־פאות</item>
+        <item>דמדומים</item>
+        <item>קרח</item>
+        <item>ורד</item>
+        <item>נייר</item>
+        <item>מונולית</item>
+        <item>פנס</item>
+        <item>נואר</item>
+        <item>קטיפה</item>
+        <item>מיראז׳</item>
+        <item>פריחה זוהרת</item>
+        <item>ענן</item>
+        <item>נוקטורן</item>
+        <item>נוזלי</item>
+        <item>גאות ושפל</item>
+        <item>ויניל</item>
+        <item>עטרה</item>
+        <item>סהר</item>
+        <item>רשת</item>
+        <item>וילון זכוכית</item>
+        <item>Material</item>
+        <item>פוסטר</item>
+        <item>סטודיו</item>
+        <item>ספקטרום</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>חרוזים</item>
+        <item>מסילה כפולה</item>
+        <item>דופק</item>
+        <item>כרום</item>
+        <item>ספקטרום</item>
+        <item>מדרגות</item>
+        <item>ממתק</item>
+        <item>רוח רפאים</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>קצה כפול</item>
+        <item>מד אנכי (שמאל)</item>
+        <item>מד אנכי (ימין)</item>
+        <item>מד עליון</item>
+        <item>מד תחתון</item>
+        <item>חוגה מרכזית</item>
+        <item>הילה עליונה</item>
+        <item>הילה תחתונה</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>טבעת כפולה</item>
+        <item>חרוזים</item>
+        <item>מקף ונקודה</item>
+        <item>סימוני 24 שעות</item>
+        <item>התקדמות בלבד</item>
+        <item>זוהר</item>
+        <item>דו־גוני</item>
+        <item>מחט</item>
+        <item>לסירוגין</item>
+        <item>ניצוץ</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>קצה המסגרת</item>
+        <item>טבעת שקועה</item>
+        <item>טבעת פנימית</item>
+        <item>טבעת עבה</item>
+        <item>פתיחה מלמטה</item>
+        <item>פתיחה מלמעלה</item>
+        <item>קשת שמאלית</item>
+        <item>קשת ימנית</item>
+        <item>מסלול כפול</item>
+        <item>פתיחה משמאל</item>
+        <item>פתיחה מימין</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>גלולה קומפקטית</item>
+        <item>אלבום מרובע</item>
+        <item>גלולה מוערמת</item>
+        <item>תג</item>
+        <item>פס זכוכית</item>
+        <item>LCD</item>
+        <item>ריבוע עם קו מתאר</item>
+        <item>סרט</item>
+        <item>בועת זמן</item>
+        <item>גוון מפוצל</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>ציר זמן (למעלה)</item>
+        <item>ציר זמן (למטה)</item>
+        <item>מקטעים (למעלה)</item>
+        <item>ציר זמן אנכי (שמאל)</item>
+        <item>ציר זמן אנכי (ימין)</item>
+        <item>חוגה מרכזית</item>
+        <item>ציר זמן כפול</item>
+        <item>מקטעים (למטה)</item>
+        <item>ערימה מרכזית</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>רך</item>
+        <item>כרום</item>
+        <item>הולוגרפי</item>
+        <item>בועה</item>
+        <item>מסילה</item>
+        <item>שקיעה</item>
+        <item>קו מתאר לאלבום</item>
+        <item>זכוכית כהה</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>מניפה</item>
+        <item>מסלול</item>
+        <item>מעגן תחתון</item>
+        <item>עמודה</item>
+        <item>לוח מפוצל</item>
+        <item>יהלום</item>
+        <item>קרוסלה</item>
+        <item>משולש</item>
+        <item>מדרגה</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>רך</item>
+        <item>לוח</item>
+        <item>דיו</item>
+        <item>מסילה</item>
+        <item>שקיעה</item>
+        <item>בועה</item>
+        <item>כרום</item>
+        <item>הולוגרפי</item>
+    </string-array>
+</resources>

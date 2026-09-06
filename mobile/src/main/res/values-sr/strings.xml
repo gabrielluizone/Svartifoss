@@ -1876,6 +1876,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1919,6 +1924,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2366,4 +2376,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Копирај</string>
+    <string name="dev_report_copied">Извештај је копиран</string>
+    <string name="dev_watch_snapshot_inspector">Снимак подешавања сата</string>
+    <string name="dev_watch_snapshot_inspector_description">Оно што би се управо сада стварно послало сату: активни опсег изгледа, процењена величина и које су кеш меморије неактивних опсега лица одбачене да би се стало у ограничење</string>
+    <string name="dev_data_layer_inspector">Инспектор Data Layer-а</string>
+    <string name="dev_data_layer_inspector_description">Повезани Wearable чворови и последњи WatchInfo на који је апликација сата одговорила — сирово стање иза поруке „Ниједан сат није повезан”</string>
+    <string name="dev_media_sessions_inspector">Истраживач MediaSession-а</string>
+    <string name="dev_media_sessions_inspector_description">Свака тренутно активна MediaSession, не само праћена: оглашене радње, ред чекања и путања репродукције</string>
+    <string name="dev_view_phone_log">Прикажи дневник телефона</string>
+    <string name="dev_view_phone_log_description">Завршетак Timber дневника на диску, плус дневник сата ако га је опција „Пошаљи дневнике” раније преузела</string>
+    <string name="dev_theme_submission_preflight">Провера пре слања теме</string>
+    <string name="dev_theme_submission_preflight_description">Проверава сваку сачувану тему сата према правилима слања заједници и наводи тачно подешавање које је блокира, ако постоји</string>
+    <string name="dev_appearance_resolution_inspector">Инспектор разрешавања изгледа</string>
+    <string name="dev_appearance_resolution_inspector_description">За сваки кључ изгледа у опсегу приказује који је од четири корака разрешавања стварно победио — изричита вредност лица, подразумевана вредност по лицу, наслеђена глобална вредност или подразумевана вредност дефиниције — и вредност коју сваки враћа</string>
+    <string name="action_fast_forward">Брзо унапред</string>
+    <string name="action_rewind">Премотај уназад</string>
+    <string name="action_set_playback_speed">Постави брзину на %1$s×</string>
+    <string name="action_seek_to_percent">Скочи на %1$d%%</string>
+    <string name="action_set_volume_percent">Постави гласноћу на %1$d%%</string>
+    <string name="action_set_shuffle_on">Укључи насумични редослијед</string>
+    <string name="action_set_shuffle_off">Искључи насумични редослијед</string>
+    <string name="action_set_repeat_off">Искључи понављање</string>
+    <string name="action_set_repeat_all">Понављај све</string>
+    <string name="action_set_repeat_one">Понављај једну</string>
+    <string name="group_playback_speed">Брзина репродукције</string>
+    <string name="group_track_position">Положај песме</string>
+    <string name="group_shuffle_mode">Насумични начин</string>
+    <string name="group_repeat_mode">Начин понављања</string>
+    <string name="group_volume_levels">Нивои гласноће</string>
+    <string name="group_watch_screens">Екрани сата</string>
+    <string name="group_find_music">Пронађи и репродукуј</string>
+    <string name="action_open_face_picker">Отвори бирач бројчаника</string>
+    <string name="action_close_watch_app">Затвори апликацију на сату</string>
+    <string name="hand_gestures">ПОКРЕТИ РУКОМ</string>
+    <string name="hand_gestures_hint">Доступно на компатибилним сатовима док је Svartifoss отворен.</string>
+    <string name="hand_gestures_hint_disconnected">Повежите сат и отворите Svartifoss на њему да бисте проверили да ли подржава покрете руком.</string>
+    <string name="hand_gestures_hint_outdated">Ажурирајте апликацију на сату да бисте видели да ли овај сат подржава покрете руком.</string>
+    <string name="hand_gestures_hint_unsupported">Овај сат не подржава покрете руком, па се радња додељена овде никада неће извршити.</string>
+    <string name="hand_gestures_hint_disabled">Покрети руком су искључени на овом сату. Укључите их на самом сату у Подешавања \u2192 Покрети.</string>
+    <string name="hand_gestures_hint_ready">Спремно на овом сату: двапут спојите прсте док је Svartifoss плејер отворен.</string>
+    <string name="hand_gesture_how_it_works">Брзо двапут спојите палац и кажипрст уз подигнут зглоб. Wear OS то назива примарном радњом, па сат другог произвођача може да користи сопствени одговарајући покрет руком.\n\nРади само док је Svartifoss плејер отворен на сату и екран укључен \u2014 не са бројчаника сата, не преко реда чекања или менија и не на увек укљученом екрану. Извршава се радња подешена за тренутно стање репродукције, па је подесите на обе странице Контроле како би радила у оба случаја.\n\nПокрет такође мора бити укључен у подешавањима самог сата: Подешавања \u2192 Покрети.</string>
+    <string name="double_pinch">Двоструки стисак</string>
+    <string name="icon_selection_search_hint">Претражи иконе</string>
+    <string name="icon_selection_search_empty">Ниједна икона не одговара вашем претраживању</string>
+    <string name="open_quick_actions_panel">Отвори панел брзих радњи</string>
+    <string name="open_volume_screen">Отвори екран гласноће</string>
+    <string name="open_progress_screen">Отвори екран напретка</string>
+    <string name="export_config_failed_detail">Резервну копију није могуће извести: %1$s</string>
+    <string name="backup_selection_title">Изаберите садржај резервне копије</string>
+    <string name="backup_selection_description">Изаберите делове Svartifoss које желите сачувати. Све је подразумевано изабрано; неизабрани дијелови остају непромењени при увозу ове резервне копије.</string>
+    <string name="backup_selection_select_all">Изабери све</string>
+    <string name="backup_selection_clear_all">Очисти све</string>
+    <string name="backup_selection_export">Извези резервну копију</string>
+    <string name="backup_selection_empty">Изаберите најмање једну ставку</string>
+    <string name="backup_section_buttons">Конфигурације дугмади</string>
+    <string name="backup_section_buttons_description">Радње дугмета, крунице и геста за време репродукције и заустављене музике.</string>
+    <string name="backup_section_actions">Листа радњи</string>
+    <string name="backup_section_actions_description">Уређена листа радњи приказан у менију радњи на сату.</string>
+    <string name="backup_section_app_settings">Подешавања апликације</string>
+    <string name="backup_section_app_settings_description">Подешавања телефона, понашање сата, језик, репродукција и интеграције.</string>
+    <string name="backup_section_watch_appearance">Изглед сата и теме</string>
+    <string name="backup_section_watch_appearance_description">Распореди сата, боје, типографија, панели, AOD и сачуване прилагођене теме.</string>
+    <string name="backup_section_playlist_shortcuts">Пречице листе за репродукцију</string>
+    <string name="backup_section_playlist_shortcuts_description">Ваша сачувана музика, албуми, извођачи, листе за репродукцију и друге везе за стриминг.</string>
+    <string name="backup_section_history">Историја претраживања и репродукције</string>
+    <string name="backup_section_history_description">Недавна претраживања и недавно репродуциране песме.</string>
+    <string name="backup_section_icons">Учитане иконе и омоти</string>
+    <string name="backup_section_icons_description">Прилагођене иконе радњи, омота пречица и предмемориране иконе апликација.</string>
+    <string name="backup_section_privacy">Приватност и обавештења</string>
+    <string name="backup_section_privacy_description">Извештаји о паду, обавештења о најавама и други избори пристанка које је апликација сачувала.</string>
+    <string name="backup_section_local_app_state">Локално стање апликације</string>
+    <string name="backup_section_local_app_state_description">Тренутни нагласак, задњи положај менија, завршени упити и стање ажурирања.</string>
+    <string name="backup_section_auxiliary_data">Остали подаци апликације</string>
+    <string name="backup_section_auxiliary_data_description">Додатна подешавања и интерне датотеке у власништву апликације, укључујући будућа складишта података.</string>
+    <string name="pref_numeric_range">Између %1$d и %2$d.</string>
+    <string name="background_editor_artwork">Омот</string>
+    <string name="background_editor_layers">Слојеви</string>
+    <string name="background_editor_layers_count">%1$d од %2$d</string>
+    <string name="background_editor_add_layer">Додај слој</string>
+    <string name="background_editor_reset_layers">Врати на подразумевано</string>
+    <string name="background_editor_empty">Нема слојева. Омот се приказује самостално.</string>
+    <string name="background_editor_note">Слој на врху овог листе црта се изнад свега осталог; слој на дну најближи је насловници.</string>
+    <string name="background_editor_full">Можете сложити до %1$d слојева.</string>
+    <string name="background_layer_kind_wash">Позадина</string>
+    <string name="background_layer_kind_shade">Сјенчање</string>
+    <string name="background_layer_kind_floor">Подлога нагласка</string>
+    <string name="background_layer_move_up">Помакни овај слој горе</string>
+    <string name="background_layer_move_down">Помакни овај слој доле</string>
+    <string name="background_layer_more">Више опције за овај слој</string>
+    <string name="background_layer_add_title">Додај слој</string>
+    <string name="background_layer_style_title">Слој %1$s</string>
+    <string name="background_layer_opacity">Јачина</string>
+    <string name="background_layer_color">Боја</string>
+    <string name="background_layer_custom_color">Изабери боју</string>
+    <string name="background_layer_duplicate">Дуплицирај</string>
+    <string name="background_layer_remove">Уклони</string>
+    <string name="background_layer_color_default">Подразумевано</string>
+    <string name="background_layer_color_album">Боја албума</string>
+    <string name="background_layer_color_secondary">Друга боја албума</string>
+    <string name="background_layer_color_tertiary">Трећа боја албума</string>
+    <string name="background_layer_color_desaturated">Пригушена боја албума</string>
+    <string name="background_layer_color_black">Црна</string>
+    <string name="background_layer_color_custom">Прилагођена боја</string>
+    <string name="background_layer_reset_title">Вратити слојеве на подразумевано?</string>
+    <string name="background_layer_reset_message">Стог се враћа на сјенчање и подлогу нагласка постављене у њиховим засебним редовима, што ионако приказује сат са старијом верзијом.</string>
+    <string name="watch_element_progress">Напредак</string>
+    <string name="watch_element_volume">Гласноћа</string>
+    <string name="watch_element_quick_panel">Брзе радње</string>
+    <string name="watch_element_queue">Ред чекања</string>
+    <string name="watch_element_lyrics">Текст песме</string>
+    <string name="player_section_on_screen">На екрану</string>
+    <string name="player_element_app_icon">Икона апликације</string>
+    <string name="player_element_controls">Контроле репродуктора</string>
+    <string name="player_element_tap_flash">Блесак додира</string>
+    <string name="player_element_inner_progress">Унутрашњи напредак</string>
+    <string name="player_element_edge_arc">Лук руба</string>
+    <string name="player_element_edge_seek">Премотавање по рубу</string>
+    <string name="player_element_clock">Сат</string>
+    <string name="player_element_cover_art">Омот</string>
+    <string name="setting_album_art_filter">Филтер омота албума</string>
+    <string name="setting_album_art_filter_description">Примијени неовисну обраду боје преко било којег стила омота албума.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto са изузетно лаганим потезом за нежан изглед приказног текста.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto са лаганим, прозрачним потезом и познатим пропорцијама породице.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto са јачим средњим потезом за компактне, читљиве ознаке.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto у најдебљој системској тежини за упадљив приказни текст.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto водоравно сужен да би дужи наслови стали у мање простора.</string>
+    <string name="setting_wear_title_font">Типографија наслова</string>
+    <string name="setting_wear_title_text_case">Велика/мала слова наслова</string>
+    <string name="setting_wear_artist_font">Типографија извођача</string>
+    <string name="setting_wear_artist_text_case">Велика/мала слова извођача</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Пријатељски заобљени санс израђен за почетно читање</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Didone приказни фонт високог контраста с уредничком тежином</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Чврсти постер санс с рубом ручно писаног стрипа</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Миран геометријски санс с великодушним, равномјерним размаком</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Сувремени слаб сериф с меко заобљеним завршецима</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Масивни слаб сериф направљен за снажан насловни дојам</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Уско ручно цртано писмо малим верзалима</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Збијени кондензирани санс за гласне наслове</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Геометријски слаб сериф који остаје чврст при малим величинама</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Приказни фонт у стилу стрипа с гласном енергијом</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Шаблонски војни приказни фонт</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Усправни сериф топлих, неформалних кривуља</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Хуманистички санс с благо заобљеним кутовима</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Гротеск санс снажних, изравних облика</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Профињени моноспаце писаћег строја израђен за сценарије</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Заобљени слаб сериф меког, књишког тона</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Старински књижни сериф прилагођен дугим одломцима</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Геометријски санс ниског контраста модерног завршетка</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Робустан сериф нацртан да издржи при величинама текста</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Сувремени технички санс с кутним спојевима</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Програмерски моноспаце с јасним, различитим глифовима</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Хуманистички моноспаце дизајниран за код на екрану</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Весело рукописно писмо заобљених потеза</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Геометријски санс винтаге карактера из 1920-их</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Геометријски санс у традицији Футуре</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Тајландски и латинични санс без петљи, благо нагнут</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Санс обликован за смањење визуалног напора при читању</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Подебљано повезано писмо с ретро угођајем натписа</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Полугеометријски санс који уравнотежује топлину и прецизност</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Минималистички санс нацртан за чисти текст интерфејса</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Добро заобљени санс меких завршетака</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Геометријски санс равномјерног, сувременог ритма</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Четвртасти тецхно фонт с играчким дојмом</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Компактни технички санс нацртан на мрежи</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Модерни гротеск препознатљивих отворених кривуља</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Пиксел фонт равно из аркадног аутомата</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Заобљени геометријски санс њежног, лаганог дојма</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Четвртасти кондензирани санс техничких кутова</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Арт-децо приказни фонт с коријенима у ретро осликавању натписа</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Моноспаце пратитељ Робота</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Здепасти приказни фонт разиграних, тупих потеза</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Широки индустријски фонт тешких четвртастих облика</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Живописни нагнути приказни фонт гуџаратских коријена</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Ситни битмап фонт који подсјећа на ране рачунарске екране</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Моноспаце дизајниран за угодно читање кода</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Кондензирани фонт само великим словима с постер присутношћу</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Високи кондензирани фонт за деванагарске и латиничне наслове</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Четвртасти хуманистички санс техничког угођаја</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Потпуно заобљени санс приступачног тона</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Кондензирани фонт који подсјећа на натписе кафић из 1920-их</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Слаб сериф с меко одрезаним, модерним завршецима</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Пријатељски хуманистички санс отворених, читљивих облика</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Топли санс чврстих облика за угодно читање</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Свестрани хуманистички санс дизајниран за јасна интерфејса</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Профињени текстуални сериф уредничког гласа</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Класични књижни сериф прилагођен читању на екрану</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Практични гротеск санс широког, чврстог ритма</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Технички хуманистички санс прецизних пропорција</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Технички моноспаце углађене, читљиве текстуре</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Сувремени сериф инжењерског карактера</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Чисти радни санс компактних, практичних облика</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Необични гротеск пријатељских пропорција</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Геометријски санс футуристичког, пространог дојма</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Модерни геометријски санс елегантних, урбаних линија</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Уравнотежени сувремени санс израђен за мале екране</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Самоувјерени приказни санс изражајних пропорција</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Читљиви пратећи санс за дуље информације о пјесми</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Оштар моноспаце модерног техничког тона</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Неконвенционални санс разиграних, умјетнички вођених облика</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Флексибилни сувремени санс тихе прецизности</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Чисти, приступачни санс за лако читање</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Заобљени приказни санс ведре особности</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Живахан гротеск који спаја структуру с необичним детаљима</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Приказни сериф високог контраста за драматичне наслове</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Елегантан књижевни сериф високог контраста</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Грациозни приказни сериф с калиграфским детаљима</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Робустан слаб сериф који остаје јасан при малим величинама</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Свестрани сериф за густо, изражајно читање</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Топли старински сериф књишког гласа</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Елегантан санс препознатљивих, профињених слова</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Подебљани геометријски санс за снажне наслове</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Санс погодан за кондензирање, атлетске и динамичне енергије</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Меки санс отворених унутрашњих простора и пријатељске енергије натписа</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Свестрани санс који уравнотежује хуманистичку топлину и јасноћу</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Јасан санс надахнут прометом, самоувјереног ритма</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Неутрални, приступачни санс израђен за свакодневна интерфејса</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Лагани геометријски санс глатких, модерних кривуља</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Заобљени уски санс меког футуристичког дојма</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Чисти геометријски санс суптилног тајландског карактера</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Широки футуристички приказни фонт за максималну присутност</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Промјењива обитељ од санса до моноспацеа разиграног техничког гласа</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Моноспаце промјењиве ширине препознатљиве дигиталне текстуре</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Широки, врло читљиви санс с опсежном подршком писама</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Поуздани сериф с опсежном подршком писама</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Вишејезични моноспаце дизајниран за уједначен ритам</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Компактни модерни санс оштрог ритма под утјецајем хебрејског</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Чврсти хуманистички санс оптимизиран за јасно читање</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Пријатељски екрански санс заобљене, отворене текстуре</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Компактни геометријски санс препознатљивих пропорција</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Живахан калиграфски сериф књижевног карактера</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Чисти хуманистички санс изврсне читљивости интерфејса</string>
+    <string name="setting_wear_note_show_cover">Омот</string>
+    <string name="aod_element_artwork">Слика</string>
+    <string name="aod_element_clock">Сат</string>
+    <string name="aod_element_track_info">Подаци о песми</string>
+    <string name="aod_element_transport">Контроле репродукције</string>
+    <string name="aod_element_progress">Напредак</string>
+    <string name="aod_element_up_next">Следеће</string>
+    <string name="aod_section_artwork">Слика</string>
+    <string name="aod_control_tint">Нијанса</string>
+    <string name="aod_control_brightness">Осветљеност</string>
+    <string name="aod_control_art_treatment">Обрада</string>
+    <string name="aod_control_art_opacity">Непровидност</string>
+    <string name="mini_button_control_visibility">Прикажи</string>
+    <string name="mini_button_control_arrangement">Распоред</string>
+    <string name="mini_button_control_shape">Облик</string>
+    <string name="mini_button_control_background">Позадина</string>
+    <string name="mini_button_control_opacity">Непровидност</string>
+    <string name="mini_button_assign_action">Додели радње</string>
+    <string name="mini_button_gestures_note">Превуците прстом нагоре, надоле и улево на плејеру. Превлачење удесно је увек системски покрет за затварање и никада се не пресреће.</string>
+    <string name="setting_wear_chat_cover_shape">Облик аватара разговора</string>
+    <string name="setting_wear_chat_show_cover">Омот</string>
+    <string name="setting_wear_metadata_cover_shape">Облик омота метаподатака</string>
+    <string name="setting_wear_metadata_show_cover">Омот</string>
+    <string-array name="wear_text_case_entries">
+        <item>Нормално</item>
+        <item>ВЕЛИКА СЛОВА</item>
+        <item>мала слова</item>
+        <item>Почетно Велико Слово</item>
+    </string-array>
+    <string name="wear_text_font_follow">Прати глобалну типографију</string>
+    <string name="category_wf_typography_track_time">Време песме</string>
+    <string name="setting_wear_track_time_font">Типографија времена песме</string>
+    <string name="wear_track_time_font_follow">Прати дизајн</string>
+    <string name="setting_wear_track_time_font_weight">Дебљина времена песме</string>
+    <string name="setting_wear_track_time_font_italic">Курзивно време песме</string>
+    <string name="setting_wear_track_time_font_scale">Величина времена песме</string>
+    <string name="setting_wear_track_time_font_opacity">Непрозирност времена песме</string>
+    <string name="setting_wear_track_time_font_tracking">Размак слова времена песме</string>
+    <string-array name="album_art_filter_entries">
+        <item>Ништа</item>
+        <item>Једнобојно</item>
+        <item>Топло</item>
+        <item>Хладно</item>
+        <item>Златни сат</item>
+        <item>Rosé</item>
+        <item>Старински филм</item>
+        <item>Избледели филм</item>
+        <item>Мат</item>
+        <item>Живо</item>
+        <item>Наглашено</item>
+        <item>Пастелно</item>
+        <item>Сепија</item>
+        <item>Цијанотипија</item>
+        <item>Тиркизно и наранџасто</item>
+        <item>Високи контраст</item>
+        <item>Меко светло</item>
+        <item>Ноћ</item>
+    </string-array>
+    <string name="queue_item_now_playing">Тренутно се репродуцира</string>
+    <string name="queue_item_unknown_title">Непозната песма</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Ред репродукције · %1$d песма</item>
+        <item quantity="other">Ред репродукције · %1$d песама</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Боја подлоге нагласка</string>
+    <string name="setting_wear_accent_floor_custom_color">Прилагођена боја подлоге</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Изаберите боју која се користи када је Боја подлоге нагласка постављена на Прилагођена боја</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Нагласак албума</item>
+        <item>Секундарна боја албума</item>
+        <item>Терцијарна боја албума</item>
+        <item>Прилагођена боја</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Неутрални, врло читљиви санс интерфејса за свакодневно читање</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Облици слова усмјерени на приступачност, с различитим облицима који остају јасни при малим величинама</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Меко заобљени геометријски санс — самоувјерен и пријатељски</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Компактни хуманистички санс који дугим насловима даје више простора</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Високи, кондензирани приказни фонт снажне постер енергије</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Сувремени сериф дизајниран за угодно дуго читање</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Изражајни меки сериф с топлином и карактером</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Ретро-футуристички моноспаце техничког руба</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Густи приказни фонт велике тежине за највећи контраст</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Текуће рукописно писмо живахног, особног дојма</string>
+    <string name="setting_wear_artist_text_mode">Понашање текста извођача</string>
+    <string name="setting_wear_album_art_source">Извор слике албума</string>
+    <string name="setting_user_font">Мој сопствени фонт</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Увезите .ttf или .otf датотеку са овог телефона</string>
+    <string name="setting_user_font_loaded">%1$s · додирните да замените или уклоните</string>
+    <string name="user_font_pick">Изаберите датотеку фонта</string>
+    <string name="user_font_replace">Замени</string>
+    <string name="user_font_remove">Уклони</string>
+    <string name="user_font_imported">„%1$s” је увезен. Изаберите га на било којој листи фонтова; управо се шаље на ваш сат.</string>
+    <string name="user_font_removed">Ваш увезени фонт је уклоњен.</string>
+    <string name="user_font_error_too_large">Та датотека има %1$s. Фонт мора бити мањи од %2$s како би брзо стигао на сат.</string>
+    <string name="user_font_error_not_a_font">Та датотека није фонт који овај телефон може да прочита. TrueType и OpenType (.ttf, .otf) раде; веб-фонтови (.woff, .woff2) не раде.</string>
+    <string name="user_font_error_unreadable">Та датотека није могла да се прочита. Покушајте поново да је изаберете или је најпре копирајте на овај телефон.</string>
+    <string name="user_font_not_shareable">Теме које користе ваш сопствени фонт остају на овом телефону</string>
+    <string name="setting_custom_album_art_image">Слика за употребу</string>
+    <string name="setting_custom_album_art_folder">Фасцикла из које се узимају слике</string>
+    <string name="setting_custom_album_art_none">Још није изабрано — додирните да изаберете</string>
+    <string name="setting_custom_album_art_chosen">%1$s · додирните да промените</string>
+    <string name="custom_album_art_image_set">Та слика ће сада бити иза плејера.</string>
+    <string name="custom_album_art_folder_set">За сваку песму биће приказана слика из те фасцикле.</string>
+    <string name="custom_album_art_error">То није могло да се отвори. Изаберите поново или изаберите нешто из сопственог складишта овог телефона.</string>
+    <string name="custom_album_art_not_shareable">Теме које користе ваше сопствене слике остају на овом телефону</string>
+    <string name="setting_wear_text_block_align">Поравнање текста</string>
+    <string name="setting_wear_text_block_align_description">Ивица уз коју се поравнава текст песме. „Прати лице” задржава поравнање за које је свако лице дизајнирано.</string>
+    <string name="setting_wear_text_block_position">Положај текста</string>
+    <string name="setting_wear_text_block_position_description">Место текста песме на екрану. „Прати лице” задржава положај за који је свако лице дизајнирано.</string>
+    <string name="setting_online_artwork">Слика са мреже</string>
+    <string name="setting_online_artwork_description">Дозволите бројчанику сата да приказује слику пронађену на мрежи \u2014 извођача песме или омот албума за плејер који га не објављује. Телефон претражује јавни каталог Deezer-а и кешира резултат; шаљу се само назив песме и име извођача, а ништа се не претражује осим ако је лице подешено на један од тих извора. Када је искључено, користи се слика коју објављује сам плејер.</string>
 </resources>

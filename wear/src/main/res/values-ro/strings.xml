@@ -165,4 +165,21 @@
     <string name="face_name_metadata" translatable="false">Metadata</string>
     <string name="face_name_ribbon" translatable="false">Ribbon</string>
     <string name="face_name_frame" translatable="false">Frame</string>
+    <string name="action_name_open_quick_actions_panel">Deschide panoul de acțiuni rapide</string>
+    <string name="action_name_fast_forward">Derulare rapidă înainte</string>
+    <string name="action_name_rewind">Derulare înapoi</string>
+    <string name="action_name_set_speed">Setează viteza de redare</string>
+    <string name="action_name_seek_position">Sari la o poziție din piesă</string>
+    <string name="action_name_set_volume">Setează volumul</string>
+    <string name="action_name_set_shuffle">Setează redarea aleatorie</string>
+    <string name="action_name_set_repeat">Setează repetarea</string>
+    <string name="action_name_open_volume_screen">Deschide ecranul de volum</string>
+    <string name="action_name_open_progress_screen">Deschide ecranul de progres</string>
+    <string name="action_name_open_face_picker">Deschide selectorul de cadran</string>
+    <string name="action_name_close_watch_app">Închide aplicația de pe ceas</string>
+    <string name="volume_screen_title">Volum</string>
+    <string name="progress_screen_title">Progres</string>
+    <string name="progress_screen_cancel_seek">Anulează căutarea poziției</string>
+    <string name="progress_screen_skip_back">Sari înapoi %1$d secunde</string>
+    <string name="progress_screen_skip_forward">Sari înainte %1$d secunde</string>
 </resources>

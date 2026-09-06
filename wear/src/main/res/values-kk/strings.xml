@@ -191,4 +191,21 @@
 
     <string name="metadata_about">Ақпарат</string>
     <string name="metadata_source">Ойнатылып жатқан қолданба</string>
+    <string name="action_name_open_quick_actions_panel">Жылдам әрекеттер панелін ашу</string>
+    <string name="action_name_fast_forward">Алға айналдыру</string>
+    <string name="action_name_rewind">Артқа айналдыру</string>
+    <string name="action_name_set_speed">Ойнату жылдамдығын орнату</string>
+    <string name="action_name_seek_position">Трек позициясына өту</string>
+    <string name="action_name_set_volume">Дыбыс деңгейін орнату</string>
+    <string name="action_name_set_shuffle">Араластырып ойнатуды орнату</string>
+    <string name="action_name_set_repeat">Қайталауды орнату</string>
+    <string name="action_name_open_volume_screen">Дыбыс деңгейі экранын ашу</string>
+    <string name="action_name_open_progress_screen">Орындалу экранын ашу</string>
+    <string name="action_name_open_face_picker">Бет таңдау құралын ашу</string>
+    <string name="action_name_close_watch_app">Сағаттағы қолданбаны жабу</string>
+    <string name="volume_screen_title">Дыбыс деңгейі</string>
+    <string name="progress_screen_title">Орындалу</string>
+    <string name="progress_screen_cancel_seek">Позицияны іздеуді болдырмау</string>
+    <string name="progress_screen_skip_back">%1$d секунд артқа өту</string>
+    <string name="progress_screen_skip_forward">%1$d секунд алға өту</string>
 </resources>

@@ -1875,6 +1875,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1918,6 +1923,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2362,4 +2372,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Копиране</string>
+    <string name="dev_report_copied">Отчетът е копиран</string>
+    <string name="dev_watch_snapshot_inspector">Снимка на предпочитанията на часовника</string>
+    <string name="dev_watch_snapshot_inspector_description">Това, което действително би се изпратило към часовника в момента: активният обхват на изгледа, приблизителният размер и кои кешове на неактивни обхвати на изгледите са били премахнати, за да се вместят в лимита</string>
+    <string name="dev_data_layer_inspector">Инспектор на Data Layer</string>
+    <string name="dev_data_layer_inspector_description">Свързаните Wearable възли и последният WatchInfo, на който приложението на часовника е отговорило — необработеното състояние зад съобщението „Няма свързан часовник”</string>
+    <string name="dev_media_sessions_inspector">Изследовател на MediaSession</string>
+    <string name="dev_media_sessions_inspector_description">Всяка активна в момента MediaSession, не само проследяваната: обявени действия, опашка и маршрут на възпроизвеждане</string>
+    <string name="dev_view_phone_log">Преглед на дневника на телефона</string>
+    <string name="dev_view_phone_log_description">Краят на записания на диска Timber дневник плюс дневника на часовника, ако „Изпращане на дневници” го е извличало преди</string>
+    <string name="dev_theme_submission_preflight">Предварителна проверка за изпращане на тема</string>
+    <string name="dev_theme_submission_preflight_description">Проверява всяка запазена тема за часовник спрямо правилата за изпращане към общността и посочва точната настройка, която я блокира, ако има такава</string>
+    <string name="dev_appearance_resolution_inspector">Инспектор за разрешаване на изгледа</string>
+    <string name="dev_appearance_resolution_inspector_description">За всеки ключ за изглед в съответния обхват показва коя от четирите стъпки за разрешаване реално е спечелила — изрична стойност на изгледа, стойност по подразбиране за изгледа, стара глобална стойност или стойност по подразбиране от дефиницията — и стойността, която всяка от тях връща</string>
+    <string name="action_fast_forward">Превъртане напред</string>
+    <string name="action_rewind">Превъртане назад</string>
+    <string name="action_set_playback_speed">Задаване на скорост %1$s×</string>
+    <string name="action_seek_to_percent">Преминаване към %1$d%%</string>
+    <string name="action_set_volume_percent">Задаване на сила на звука %1$d%%</string>
+    <string name="action_set_shuffle_on">Включване на разбъркването</string>
+    <string name="action_set_shuffle_off">Изключване на разбъркването</string>
+    <string name="action_set_repeat_off">Изключване на повторението</string>
+    <string name="action_set_repeat_all">Повтаряне на всичко</string>
+    <string name="action_set_repeat_one">Повтаряне на една песен</string>
+    <string name="group_playback_speed">Скорост на възпроизвеждане</string>
+    <string name="group_track_position">Позиция на песента</string>
+    <string name="group_shuffle_mode">Режим на разбъркване</string>
+    <string name="group_repeat_mode">Режим на повторение</string>
+    <string name="group_volume_levels">Нива на звука</string>
+    <string name="group_watch_screens">Екрани на часовника</string>
+    <string name="group_find_music">Намиране и пускане</string>
+    <string name="action_open_face_picker">Отваряне на избора на циферблат</string>
+    <string name="action_close_watch_app">Затваряне на приложението на часовника</string>
+    <string name="hand_gestures">ЖЕСТОВЕ С РЪКА</string>
+    <string name="hand_gestures_hint">Налично на съвместими часовници, докато Svartifoss е отворен.</string>
+    <string name="hand_gestures_hint_disconnected">Свържете часовника и отворете Svartifoss на него, за да проверите дали поддържа жестове с ръка.</string>
+    <string name="hand_gestures_hint_outdated">Актуализирайте приложението на часовника, за да проверите дали този часовник поддържа жестове с ръка.</string>
+    <string name="hand_gestures_hint_unsupported">Този часовник не поддържа жестове с ръка, затова зададеното тук действие никога няма да се изпълни.</string>
+    <string name="hand_gestures_hint_disabled">Жестовете с ръка са изключени на този часовник. Включете ги на самия часовник от Настройки \u2192 Жестове.</string>
+    <string name="hand_gestures_hint_ready">Готово на този часовник: съберете пръстите два пъти, докато плейърът Svartifoss е отворен.</string>
+    <string name="hand_gesture_how_it_works">Бързо съберете два пъти палеца и показалеца при повдигната китка. Wear OS нарича това основно действие, затова часовник от друг производител може да използва собствен еквивалентен жест с ръка.\n\nРаботи само докато плейърът Svartifoss е отворен на часовника и екранът е включен \u2014 не от циферблата, не върху опашката или менюто и не на постоянно включения дисплей. Изпълнява се действието, зададено за текущото състояние на възпроизвеждане, затова го задайте и на двете страници „Управление”, за да работи и в двата случая.\n\nЖестът трябва също да е включен в собствените настройки на часовника: Настройки \u2192 Жестове.</string>
+    <string name="double_pinch">Двойно щипване</string>
+    <string name="icon_selection_search_hint">Търсене на икони</string>
+    <string name="icon_selection_search_empty">Няма икони, съответстващи на търсенето ви</string>
+    <string name="open_quick_actions_panel">Отваряне на панела за бързи действия</string>
+    <string name="open_volume_screen">Отваряне на екрана за сила на звука</string>
+    <string name="open_progress_screen">Отваряне на екрана за напредък</string>
+    <string name="export_config_failed_detail">Архивът не можа да бъде експортиран: %1$s</string>
+    <string name="backup_selection_title">Изберете съдържанието на архива</string>
+    <string name="backup_selection_description">Изберете частите на Svartifoss, които искате да запазите. По подразбиране е избрано всичко; неизбраните части остават непроменени при импортиране на този архив.</string>
+    <string name="backup_selection_select_all">Избиране на всичко</string>
+    <string name="backup_selection_clear_all">Изчистване на всичко</string>
+    <string name="backup_selection_export">Експортиране на архив</string>
+    <string name="backup_selection_empty">Изберете поне един елемент</string>
+    <string name="backup_section_buttons">Конфигурации на бутоните</string>
+    <string name="backup_section_buttons_description">Действия за бутоните, коронката и жестовете при възпроизвеждане и спряна музика.</string>
+    <string name="backup_section_actions">Списък с действия</string>
+    <string name="backup_section_actions_description">Подреденият списък с действия, показван в менюто за действия на часовника.</string>
+    <string name="backup_section_app_settings">Настройки на приложението</string>
+    <string name="backup_section_app_settings_description">Настройки на телефона, поведение на часовника, език, възпроизвеждане и интеграции.</string>
+    <string name="backup_section_watch_appearance">Външен вид и теми на часовника</string>
+    <string name="backup_section_watch_appearance_description">Оформления на часовника, цветове, типография, панели, AOD и запазени персонализирани теми.</string>
+    <string name="backup_section_playlist_shortcuts">Преки пътища към плейлисти</string>
+    <string name="backup_section_playlist_shortcuts_description">Запазените ви връзки към музика, албуми, изпълнители, плейлисти и други стрийминг ресурси.</string>
+    <string name="backup_section_history">История на търсенето и възпроизвеждането</string>
+    <string name="backup_section_history_description">Последни търсения и наскоро възпроизведени песни.</string>
+    <string name="backup_section_icons">Заредени икони и обложки</string>
+    <string name="backup_section_icons_description">Персонализирани икони за действия, обложки на преки пътища и кеширани икони на приложения.</string>
+    <string name="backup_section_privacy">Поверителност и известия</string>
+    <string name="backup_section_privacy_description">Доклади за сривове, известия за съобщения и други избори за съгласие, запазени от приложението.</string>
+    <string name="backup_section_local_app_state">Локално състояние на приложението</string>
+    <string name="backup_section_local_app_state_description">Текущ акцент, последна позиция в менюто, завършени подкани и състояние на актуализацията.</string>
+    <string name="backup_section_auxiliary_data">Други данни на приложението</string>
+    <string name="backup_section_auxiliary_data_description">Допълнителни предпочитания и вътрешни файлове, собственост на приложението, включително бъдещи хранилища за данни.</string>
+    <string name="pref_numeric_range">Между %1$d и %2$d.</string>
+    <string name="background_editor_artwork">Обложка</string>
+    <string name="background_editor_layers">Слоеве</string>
+    <string name="background_editor_layers_count">%1$d от %2$d</string>
+    <string name="background_editor_add_layer">Добавяне на слой</string>
+    <string name="background_editor_reset_layers">Нулиране</string>
+    <string name="background_editor_empty">Няма слоеве. Обложката се показва самостоятелно.</string>
+    <string name="background_editor_note">Слоят в горната част на този списък се рисува върху всичко останало; този в долната част е най-близо до обложката.</string>
+    <string name="background_editor_full">Можете да подредите до %1$d слоя.</string>
+    <string name="background_layer_kind_wash">Фон</string>
+    <string name="background_layer_kind_shade">Затъмняване</string>
+    <string name="background_layer_kind_floor">Акцентна основа</string>
+    <string name="background_layer_move_up">Преместване на този слой нагоре</string>
+    <string name="background_layer_move_down">Преместване на този слой надолу</string>
+    <string name="background_layer_more">Още опции за този слой</string>
+    <string name="background_layer_add_title">Добавяне на слой</string>
+    <string name="background_layer_style_title">Слой %1$s</string>
+    <string name="background_layer_opacity">Сила</string>
+    <string name="background_layer_color">Цвят</string>
+    <string name="background_layer_custom_color">Избор на цвят</string>
+    <string name="background_layer_duplicate">Дублиране</string>
+    <string name="background_layer_remove">Премахване</string>
+    <string name="background_layer_color_default">По подразбиране</string>
+    <string name="background_layer_color_album">Цвят на албума</string>
+    <string name="background_layer_color_secondary">Втори цвят на албума</string>
+    <string name="background_layer_color_tertiary">Трети цвят на албума</string>
+    <string name="background_layer_color_desaturated">Приглушен цвят на албума</string>
+    <string name="background_layer_color_black">Черно</string>
+    <string name="background_layer_color_custom">Персонализиран цвят</string>
+    <string name="background_layer_reset_title">Нулиране на слоевете?</string>
+    <string name="background_layer_reset_message">Стекът се връща към затъмняването и акцентната основа, зададени в техните отделни редове, което така или иначе се визуализира от часовник с по-стара версия.</string>
+    <string name="watch_element_progress">Напредък</string>
+    <string name="watch_element_volume">Сила на звука</string>
+    <string name="watch_element_quick_panel">Бързи действия</string>
+    <string name="watch_element_queue">Опашка</string>
+    <string name="watch_element_lyrics">Текст на песента</string>
+    <string name="player_section_on_screen">На екрана</string>
+    <string name="player_element_app_icon">Икона на приложението</string>
+    <string name="player_element_controls">Контроли на плейъра</string>
+    <string name="player_element_tap_flash">Проблясък при докосване</string>
+    <string name="player_element_inner_progress">Вътрешен напредък</string>
+    <string name="player_element_edge_arc">Дъга по ръба</string>
+    <string name="player_element_edge_seek">Търсене по ръба</string>
+    <string name="player_element_clock">Часовник</string>
+    <string name="player_element_cover_art">Обложка</string>
+    <string name="setting_album_art_filter">Филтър за обложката на албума</string>
+    <string name="setting_album_art_filter_description">Прилагане на независимо цветово третиране върху всеки стил на обложката.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto с изключително лек щрих за деликатен вид на едър текст.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto с лек, въздушен щрих и познатите пропорции на семейството.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto с по-силен среден щрих за компактни и четливи етикети.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto с най-тежкото системно тегло за смел едър текст.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto, стеснен хоризонтално, за да побира по-дълги заглавия в по-малко пространство.</string>
+    <string name="setting_wear_title_font">Шрифт на заглавието</string>
+    <string name="setting_wear_title_text_case">Регистър на заглавието</string>
+    <string name="setting_wear_artist_font">Шрифт на изпълнителя</string>
+    <string name="setting_wear_artist_text_case">Регистър на изпълнителя</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Приятелски заоблен безсерифен шрифт, създаден за начално четене</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Висококонтрастен дисплеен Didone шрифт с редакционна тежест</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Стабилен плакатен безсерифен шрифт с ръкописен комиксов оттенък</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Спокоен геометричен безсерифен шрифт с щедро и равномерно разстояние</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Съвременен плочест серифен шрифт с меко заоблени окончания</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Масивен плочест серифен шрифт, създаден за силно въздействие в заглавия</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Тесен ръчно рисуван шрифт с малки главни букви</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Плътно сбит кондензиран безсерифен шрифт за силни заглавия</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Геометричен плочест серифен шрифт, който остава стабилен при малки размери</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Комиксов дисплеен шрифт с крещяща енергия</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Шаблонен военен дисплеен шрифт</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Изправен серифен шрифт с топли, неформални извивки</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Хуманистичен безсерифен шрифт с леко заоблени ъгли</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Grotesk безсерифен шрифт със силни и директни форми</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Усъвършенстван моноширинен шрифт тип пишеща машина, създаден за сценарии</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Заоблен плочест серифен шрифт с мек, книжовен тон</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Серифен шрифт в стар стил, настроен за дълги текстови пасажи</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Геометричен безсерифен шрифт с нисък контраст и модерен завършек</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Стабилен серифен шрифт, създаден да остава четлив при размери за основен текст</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Съвременен технически безсерифен шрифт с ъгловати връзки</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Програмен моноширинен шрифт с ясни и различими знаци</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Хуманистичен моноширинен шрифт, проектиран за код на екран</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Игрив ръкописен шрифт със заоблени щрихи</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Геометричен безсерифен шрифт с винтидж характер от 1920-те</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Геометричен безсерифен шрифт в традицията на Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Безсерифен тайландски и латински шрифт без примки с лек наклон</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Безсерифен шрифт, оформен така че да намалява зрителното напрежение при четене</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Удебелен свързан ръкописен шрифт с ретро дух на табели</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Полугеометричен безсерифен шрифт, балансиращ топлина и прецизност</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Минималистичен безсерифен шрифт, създаден за чист интерфейсен текст</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Добре заоблен безсерифен шрифт с меки окончания</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Геометричен безсерифен шрифт с равномерен съвременен ритъм</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Квадратен техно шрифт с усещане за игри</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Компактен технически безсерифен шрифт, изграден върху мрежа</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Модерен grotesk шрифт с отличителни отворени извивки</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Пикселен шрифт направо от аркадна машина</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Заоблен геометричен безсерифен шрифт с нежно и леко усещане</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Квадратен кондензиран безсерифен шрифт с технически ъгли</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Art-deco дисплеен шрифт с корени в ретро изписването на табели</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Моноширинният спътник на Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Едър дисплеен шрифт с игриви и груби щрихи</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Широк индустриален шрифт с тежки квадратни форми</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Ярък наклонен дисплеен шрифт с корени в Gujarati</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Малък bitmap шрифт, напомнящ ранните компютърни екрани</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Моноширинен шрифт, създаден за удобно четене на код</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Кондензиран шрифт само с главни букви и силно плакатно присъствие</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Висок кондензиран шрифт за заглавия на Devanagari и Latin</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Квадратен хуманистичен безсерифен шрифт с техническо излъчване</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Напълно заоблен безсерифен шрифт с приветлив тон</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Кондензиран шрифт, напомнящ табели на кафенета от 1920-те</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Плочест серифен шрифт с меко отсечени модерни окончания</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Приятелски хуманистичен безсерифен шрифт с отворени, четливи форми</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Топъл безсерифен шрифт със стабилни форми за удобно четене</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Гъвкав хуманистичен безсерифен шрифт за ясни интерфейси</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Изискан текстов серифен шрифт с редакционен глас</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Класически книжен серифен шрифт, настроен за четене от екран</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Практичен grotesk безсерифен шрифт с широк и стабилен ритъм</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Технически хуманистичен безсерифен шрифт с прецизни пропорции</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Технически моноширинен шрифт с полиран и четлив рисунък</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Съвременен серифен шрифт с инженерно излъчване</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Чист работен безсерифен шрифт с компактни и практични форми</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Необичаен grotesk шрифт с приятелски пропорции</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Геометричен безсерифен шрифт с футуристично и просторно усещане</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Модерен геометричен безсерифен шрифт с елегантни градски линии</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Балансиран съвременен безсерифен шрифт, създаден за малки екрани</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Уверен дисплеен безсерифен шрифт с изразителни пропорции</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Четлив придружаващ безсерифен шрифт за по-дълга информация за песента</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Ясен моноширинен шрифт с модерен технически тон</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Нетрадиционен безсерифен шрифт с художествено насочени, игриви форми</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Гъвкав съвременен безсерифен шрифт с тиха прецизност</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Чист и приветлив безсерифен шрифт за лесна четимост</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Заоблен дисплеен безсерифен шрифт с весела индивидуалност</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Жив grotesk шрифт, който съчетава структура с необичайни детайли</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Висококонтрастен дисплеен серифен шрифт за драматични заглавия</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Елегантен висококонтрастен литературен серифен шрифт</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Изящен дисплеен серифен шрифт с калиграфски детайли</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Здрав плочест серифен шрифт, който остава ясен при малки размери</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Гъвкав серифен шрифт за плътно и изразително четене</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Топъл серифен шрифт в стар стил с книжовен глас</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Елегантен безсерифен шрифт с отличителни и изискани буквени форми</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Удебелен геометричен безсерифен шрифт за силни заглавия</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Безсерифен шрифт, подходящ за кондензиране, със спортна и динамична енергия</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Мек безсерифен шрифт с отворени вътрешни пространства и приятелско усещане за табела</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Гъвкав безсерифен шрифт, който балансира хуманистична топлина и яснота</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Ясен безсерифен шрифт, вдъхновен от транспортната типография, с уверен ритъм</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Неутрален и достъпен безсерифен шрифт за всекидневни интерфейси</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Лек геометричен безсерифен шрифт с плавни модерни извивки</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Заоблен тесен безсерифен шрифт с меко футуристично усещане</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Чист геометричен безсерифен шрифт с фин тайландски характер</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Широк футуристичен дисплеен шрифт за максимално присъствие</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Променливо семейство от безсерифен до моноширинен шрифт с игрив технически глас</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Моноширинен шрифт с променлива ширина и отличителна цифрова текстура</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Широк, много четлив безсерифен шрифт с поддръжка на множество писмености</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Надежден серифен шрифт с поддръжка на множество писмености</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Многоезичен моноширинен шрифт, създаден за постоянен ритъм</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Компактен модерен безсерифен шрифт с отчетлив ритъм, повлиян от иврит</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Стабилен хуманистичен безсерифен шрифт, оптимизиран за ясно четене</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Приветлив екранен безсерифен шрифт със заоблена, отворена текстура</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Компактен геометричен безсерифен шрифт с отличителни пропорции</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Жив калиграфски серифен шрифт с литературен характер</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Чист хуманистичен безсерифен шрифт с отлична четимост в интерфейс</string>
+    <string name="setting_wear_note_show_cover">Обложка</string>
+    <string name="aod_element_artwork">Обложка</string>
+    <string name="aod_element_clock">Часовник</string>
+    <string name="aod_element_track_info">Информация за песента</string>
+    <string name="aod_element_transport">Управление на възпроизвеждането</string>
+    <string name="aod_element_progress">Напредък</string>
+    <string name="aod_element_up_next">Следва</string>
+    <string name="aod_section_artwork">Обложка</string>
+    <string name="aod_control_tint">Оттенък</string>
+    <string name="aod_control_brightness">Яркост</string>
+    <string name="aod_control_art_treatment">Обработка</string>
+    <string name="aod_control_art_opacity">Непрозрачност</string>
+    <string name="mini_button_control_visibility">Показване</string>
+    <string name="mini_button_control_arrangement">Подредба</string>
+    <string name="mini_button_control_shape">Форма</string>
+    <string name="mini_button_control_background">Фон</string>
+    <string name="mini_button_control_opacity">Непрозрачност</string>
+    <string name="mini_button_assign_action">Задаване на действия</string>
+    <string name="mini_button_gestures_note">Плъзнете нагоре, надолу и наляво върху плейъра. Плъзването надясно винаги е системният жест за затваряне и никога не се прихваща.</string>
+    <string name="setting_wear_chat_cover_shape">Форма на аватара в чата</string>
+    <string name="setting_wear_chat_show_cover">Обложка</string>
+    <string name="setting_wear_metadata_cover_shape">Форма на обложката за метаданни</string>
+    <string name="setting_wear_metadata_show_cover">Обложка</string>
+    <string-array name="wear_text_case_entries">
+        <item>Нормално</item>
+        <item>ГЛАВНИ БУКВИ</item>
+        <item>малки букви</item>
+        <item>Главни Начални Букви</item>
+    </string-array>
+    <string name="wear_text_font_follow">Следване на глобалния шрифт</string>
+    <string name="category_wf_typography_track_time">Време на песента</string>
+    <string name="setting_wear_track_time_font">Шрифт за времето на песента</string>
+    <string name="wear_track_time_font_follow">Следване на дизайна</string>
+    <string name="setting_wear_track_time_font_weight">Дебелина на шрифта за времето на песента</string>
+    <string name="setting_wear_track_time_font_italic">Курсив за времето на песента</string>
+    <string name="setting_wear_track_time_font_scale">Размер на времето на песента</string>
+    <string name="setting_wear_track_time_font_opacity">Непрозрачност на времето на песента</string>
+    <string name="setting_wear_track_time_font_tracking">Разстояние между буквите за времето на песента</string>
+    <string-array name="album_art_filter_entries">
+        <item>Няма</item>
+        <item>Монохромно</item>
+        <item>Топло</item>
+        <item>Студено</item>
+        <item>Златен час</item>
+        <item>Rosé</item>
+        <item>Винтидж филм</item>
+        <item>Избледнял филм</item>
+        <item>Матово</item>
+        <item>Ярко</item>
+        <item>Наситено</item>
+        <item>Пастел</item>
+        <item>Сепия</item>
+        <item>Цианотипия</item>
+        <item>Тюркоазено и оранжево</item>
+        <item>Висок контраст</item>
+        <item>Мека светлина</item>
+        <item>Нощ</item>
+    </string-array>
+    <string name="queue_item_now_playing">В момента се възпроизвежда</string>
+    <string name="queue_item_unknown_title">Неизвестна песен</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Опашка за възпроизвеждане · %1$d песен</item>
+        <item quantity="other">Опашка за възпроизвеждане · %1$d песни</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Цвят на акцентната основа</string>
+    <string name="setting_wear_accent_floor_custom_color">Персонализиран цвят на основата</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Изберете цвета, използван когато „Цвят на акцентната основа“ е зададен на „Персонализиран цвят“</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Акцент на албума</item>
+        <item>Вторичен цвят на албума</item>
+        <item>Третичен цвят на албума</item>
+        <item>Персонализиран цвят</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Неутрален, много четлив интерфейсен безсерифен шрифт за всекидневно четене</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Буквени форми с приоритет на достъпността и ясно различими очертания при малки размери</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Меко заоблен геометричен безсерифен шрифт — уверен и приятелски</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Компактен хуманистичен безсерифен шрифт, който дава повече пространство на дълги заглавия</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Висок кондензиран дисплеен шрифт с енергия на плакат</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Съвременен серифен шрифт за удобно четене на дълъг текст</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Изразителен мек серифен шрифт с топлина и характер</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Ретро-футуристичен моноширинен шрифт с технически оттенък</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Плътен свръхтежък дисплеен шрифт за максимален контраст</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Плавен ръкописен шрифт с живо, лично усещане</string>
+    <string name="setting_wear_artist_text_mode">Поведение на текста за изпълнителя</string>
+    <string name="setting_wear_album_art_source">Източник на обложката на албума</string>
+    <string name="setting_user_font">Моят собствен шрифт</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Импортирайте .ttf или .otf файл от този телефон</string>
+    <string name="setting_user_font_loaded">%1$s · докоснете за замяна или премахване</string>
+    <string name="user_font_pick">Изберете файл с шрифт</string>
+    <string name="user_font_replace">Замяна</string>
+    <string name="user_font_remove">Премахване</string>
+    <string name="user_font_imported">„%1$s” е импортиран. Изберете го от който и да е списък с шрифтове; в момента се изпраща към часовника ви.</string>
+    <string name="user_font_removed">Импортираният ви шрифт е премахнат.</string>
+    <string name="user_font_error_too_large">Този файл е %1$s. Шрифтът трябва да е под %2$s, за да може бързо да достигне часовника.</string>
+    <string name="user_font_error_not_a_font">Този файл не е шрифт, който този телефон може да прочете. TrueType и OpenType (.ttf, .otf) се поддържат; уеб шрифтовете (.woff, .woff2) не се поддържат.</string>
+    <string name="user_font_error_unreadable">Този файл не можа да бъде прочетен. Опитайте да го изберете отново или първо го копирайте на този телефон.</string>
+    <string name="user_font_not_shareable">Темите, които използват ваш собствен шрифт, остават на този телефон</string>
+    <string name="setting_custom_album_art_image">Изображение за използване</string>
+    <string name="setting_custom_album_art_folder">Папка, от която да се вземат изображения</string>
+    <string name="setting_custom_album_art_none">Все още не е избрано — докоснете, за да изберете</string>
+    <string name="setting_custom_album_art_chosen">%1$s · докоснете за промяна</string>
+    <string name="custom_album_art_image_set">Това изображение вече ще стои зад плейъра.</string>
+    <string name="custom_album_art_folder_set">За всяка песен ще се показва изображение от тази папка.</string>
+    <string name="custom_album_art_error">Това не можа да бъде отворено. Изберете го отново или изберете нещо от собственото хранилище на този телефон.</string>
+    <string name="custom_album_art_not_shareable">Темите, които използват ваши собствени изображения, остават на този телефон</string>
+    <string name="setting_wear_text_block_align">Подравняване на текста</string>
+    <string name="setting_wear_text_block_align_description">Към кой ръб се подравнява текстът на песента. „Следвай изгледа” запазва подравняването, за което е проектиран всеки изглед.</string>
+    <string name="setting_wear_text_block_position">Позиция на текста</string>
+    <string name="setting_wear_text_block_position_description">Мястото на текста на песента върху екрана. „Следвай изгледа” запазва позицията, за която е проектиран всеки изглед.</string>
+    <string name="setting_online_artwork">Онлайн обложка</string>
+    <string name="setting_online_artwork_description">Позволете на циферблата да показва изображение, намерено онлайн \u2014 изпълнителя на песента или обложка на албум за плейър, който не предоставя такава. Телефонът търси в публичния каталог на Deezer и кешира резултата; изпращат се само имената на песента и изпълнителя и не се извършва търсене, освен ако даден изглед не е зададен към един от тези източници. Когато е изключено, се използва собствената обложка на плейъра.</string>
 </resources>

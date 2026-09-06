@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Óceán</item>
+        <item>Naplemente</item>
+        <item>Középső reflektor</item>
+        <item>Üvegfátyol</item>
+        <item>Bársony</item>
+        <item>Noir reflektor</item>
+        <item>Jeges mosás</item>
+        <item>Rózsavirágzás</item>
+        <item>Prizma</item>
+        <item>Félholdperem</item>
+        <item>Árapálysávok</item>
+        <item>Papírtok</item>
+        <item>Emelkedő lámpás</item>
+        <item>Osztott délibáb</item>
+        <item>Nyugodt rács</item>
+        <item>Nocturne</item>
+        <item>Felhőtanulmány</item>
+        <item>Folyadékmedencék</item>
+        <item>Színmonolit</item>
+        <item>Osztott tónus</item>
+        <item>Színátmenet</item>
+        <item>Kéttónusú</item>
+        <item>Sávok</item>
+        <item>Vignetta</item>
+        <item>Grafit</item>
+        <item>Mozi</item>
+        <item>Akril</item>
+        <item>Háló</item>
+        <item>Köd</item>
+        <item>Biolumineszcencia</item>
+        <item>Irizáló</item>
+        <item>Pálya</item>
+        <item>Tusmosás</item>
+        <item>Virágzás</item>
+        <item>Fjord</item>
+        <item>Pontmátrix</item>
+        <item>Pásztázóvonalak</item>
+        <item>Radar</item>
+        <item>Kontúr</item>
+        <item>Fazettált</item>
+        <item>Albumkitöltés</item>
+        <item>Másodlagos kitöltés</item>
+        <item>Harmadlagos kitöltés</item>
+        <item>Üveg</item>
+        <item>Éjfél</item>
+        <item>Füst</item>
+        <item>Árapályvonal</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Moha</item>
+        <item>Levendulaköd</item>
+        <item>Cseresznye</item>
+        <item>Mélytenger</item>
+        <item>Por</item>
+        <item>Kifehérített</item>
+        <item>Holdfény</item>
+        <item>Álom</item>
+        <item>Infravörös</item>
+        <item>Erdő</item>
+        <item>Ezüst</item>
+        <item>Cukorka</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Felső elhalványítás</item>
+        <item>Középső reflektor</item>
+        <item>Átlós árnyék</item>
+        <item>Bal függöny</item>
+        <item>Jobb függöny</item>
+        <item>Középső sáv</item>
+        <item>Keresztátmenet</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Fordított levél</item>
+        <item>Fordított csepp</item>
+        <item>Kavics</item>
+        <item>Ív</item>
+        <item>Pajzs</item>
+        <item>Fordított ív</item>
+        <item>Fordított pajzs</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Suttogás</item>
+        <item>Sugárzó</item>
+        <item>Áradás</item>
+        <item>Csillogás</item>
+        <item>Mély ragyogás</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Albumkörvonal</item>
+        <item>Albumátmenet</item>
+        <item>Album másodlagos színe</item>
+        <item>Albumüveg</item>
+        <item>Album harmadlagos színe</item>
+        <item>Neonkörvonal</item>
+    </string-array>
+</resources>

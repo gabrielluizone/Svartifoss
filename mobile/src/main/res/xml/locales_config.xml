@@ -43,4 +43,9 @@
     <locale android:name="hr" />
     <locale android:name="ms" />
     <locale android:name="bn" />
+    <locale android:name="my" />
+    <locale android:name="ta" />
+    <locale android:name="te" />
+    <locale android:name="mr" />
+    <locale android:name="ckb" />
 </locale-config>

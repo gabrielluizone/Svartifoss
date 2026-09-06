@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>바다</item>
+        <item>일몰</item>
+        <item>중앙 스포트라이트</item>
+        <item>글래스 베일</item>
+        <item>벨벳</item>
+        <item>누아르 스포트라이트</item>
+        <item>아이스 워시</item>
+        <item>장미꽃</item>
+        <item>프리즘</item>
+        <item>초승달 테두리</item>
+        <item>타이달 밴드</item>
+        <item>종이 슬리브</item>
+        <item>랜턴 라이즈</item>
+        <item>미라지 스플릿</item>
+        <item>조용한 그리드</item>
+        <item>녹턴</item>
+        <item>구름 연구</item>
+        <item>리퀴드 풀</item>
+        <item>색상 모놀리스</item>
+        <item>스플릿 톤</item>
+        <item>그라데이션</item>
+        <item>듀오톤</item>
+        <item>밴드</item>
+        <item>비네트</item>
+        <item>그래파이트</item>
+        <item>시네마</item>
+        <item>아크릴</item>
+        <item>메시</item>
+        <item>성운</item>
+        <item>생물 발광</item>
+        <item>무지갯빛</item>
+        <item>오비트</item>
+        <item>잉크 워시</item>
+        <item>블로섬</item>
+        <item>피오르</item>
+        <item>도트 매트릭스</item>
+        <item>스캔라인</item>
+        <item>레이더</item>
+        <item>윤곽</item>
+        <item>패싯</item>
+        <item>앨범 채우기</item>
+        <item>보조 채우기</item>
+        <item>3차 채우기</item>
+        <item>글래스</item>
+        <item>자정</item>
+        <item>연기</item>
+        <item>타이드라인</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>이끼</item>
+        <item>라벤더 헤이즈</item>
+        <item>체리</item>
+        <item>심해</item>
+        <item>먼지</item>
+        <item>블리치</item>
+        <item>달빛</item>
+        <item>드림</item>
+        <item>적외선</item>
+        <item>숲</item>
+        <item>실버</item>
+        <item>캔디</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>상단 페이드</item>
+        <item>중앙 스포트라이트</item>
+        <item>대각선 그림자</item>
+        <item>왼쪽 커튼</item>
+        <item>오른쪽 커튼</item>
+        <item>중앙 밴드</item>
+        <item>크로스페이드</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>역방향 리프</item>
+        <item>역방향 드롭</item>
+        <item>자갈</item>
+        <item>아치</item>
+        <item>실드</item>
+        <item>역방향 아치</item>
+        <item>역방향 실드</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>위스퍼</item>
+        <item>래디언트</item>
+        <item>플러드</item>
+        <item>희미한 빛</item>
+        <item>딥 글로우</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>앨범 윤곽선</item>
+        <item>앨범 그라데이션</item>
+        <item>앨범 보조 색상</item>
+        <item>앨범 글래스</item>
+        <item>앨범 3차 색상</item>
+        <item>네온 윤곽선</item>
+    </string-array>
+</resources>

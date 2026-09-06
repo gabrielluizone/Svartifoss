@@ -185,4 +185,21 @@
 
     <string name="metadata_about">關於</string>
     <string name="metadata_source">播放位置</string>
+    <string name="action_name_open_quick_actions_panel">開啟快速動作面板</string>
+    <string name="action_name_fast_forward">快進</string>
+    <string name="action_name_rewind">倒帶</string>
+    <string name="action_name_set_speed">設定播放速度</string>
+    <string name="action_name_seek_position">跳到曲目位置</string>
+    <string name="action_name_set_volume">設定音量</string>
+    <string name="action_name_set_shuffle">設定隨機播放</string>
+    <string name="action_name_set_repeat">設定重復</string>
+    <string name="action_name_open_volume_screen">開啟音量畫面</string>
+    <string name="action_name_open_progress_screen">開啟進度畫面</string>
+    <string name="action_name_open_face_picker">開啟錶面選擇器</string>
+    <string name="action_name_close_watch_app">關閉手錶應用程式</string>
+    <string name="volume_screen_title">音量</string>
+    <string name="progress_screen_title">進度</string>
+    <string name="progress_screen_cancel_seek">取消跳轉</string>
+    <string name="progress_screen_skip_back">後退 %1$d 秒</string>
+    <string name="progress_screen_skip_forward">前進 %1$d 秒</string>
 </resources>

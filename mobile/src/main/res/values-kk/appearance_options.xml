@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Мұхит</item>
+        <item>Күн батуы</item>
+        <item>Ортаңғы прожектор</item>
+        <item>Әйнек перде</item>
+        <item>Барқыт</item>
+        <item>Нуар прожекторы</item>
+        <item>Мұзды реңк</item>
+        <item>Раушан гүлі</item>
+        <item>Призма</item>
+        <item>Жарты ай жиегі</item>
+        <item>Толқын жолақтары</item>
+        <item>Қағаз қаптама</item>
+        <item>Шамның көтерілуі</item>
+        <item>Бөлінген сағым</item>
+        <item>Тыныш тор</item>
+        <item>Ноктюрн</item>
+        <item>Бұлт этюді</item>
+        <item>Сұйық дақтары</item>
+        <item>Түсті монолит</item>
+        <item>Бөлінген реңк</item>
+        <item>Градиент</item>
+        <item>Қос реңк</item>
+        <item>Жолақтар</item>
+        <item>Виньетка</item>
+        <item>Графит</item>
+        <item>Кино</item>
+        <item>Акрил</item>
+        <item>Тор</item>
+        <item>Тұмандық</item>
+        <item>Биолюминесценция</item>
+        <item>Құбылмалы реңкті</item>
+        <item>Орбита</item>
+        <item>Сиялы бояу</item>
+        <item>Гүлдену</item>
+        <item>Фьорд</item>
+        <item>Нүктелік матрица</item>
+        <item>Сканерлеу сызықтары</item>
+        <item>Радар</item>
+        <item>Контур</item>
+        <item>Қырлы</item>
+        <item>Альбом бояуы</item>
+        <item>Қосымша бояу</item>
+        <item>Үшінші бояу</item>
+        <item>Әйнек</item>
+        <item>Түн ортасы</item>
+        <item>Түтін</item>
+        <item>Толқын сызығы</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Мүк</item>
+        <item>Лаванда тұманы</item>
+        <item>Шие</item>
+        <item>Терең теңіз</item>
+        <item>Шаң</item>
+        <item>Ағарту</item>
+        <item>Ай сәулесі</item>
+        <item>Түс</item>
+        <item>Инфрақызыл</item>
+        <item>Орман</item>
+        <item>Күміс</item>
+        <item>Кәмпит</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Жоғарғы өшу</item>
+        <item>Ортаңғы прожектор</item>
+        <item>Диагональ көлеңке</item>
+        <item>Сол жақ перде</item>
+        <item>Оң жақ перде</item>
+        <item>Ортаңғы жолақ</item>
+        <item>Айқас өшу</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Кері жапырақ</item>
+        <item>Кері тамшы</item>
+        <item>Малтатас</item>
+        <item>Доға</item>
+        <item>Қалқан</item>
+        <item>Кері доға</item>
+        <item>Кері қалқан</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Сыбыр</item>
+        <item>Сәулелі</item>
+        <item>Тасқын</item>
+        <item>Жылтыл</item>
+        <item>Терең жарқыл</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Альбом контуры</item>
+        <item>Альбом градиенті</item>
+        <item>Альбомның қосымша түсі</item>
+        <item>Альбом әйнегі</item>
+        <item>Альбомның үшінші түсі</item>
+        <item>Неон контуры</item>
+    </string-array>
+</resources>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">进度环布局</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>完全透明</item>
+        <item>次要颜色</item>
+        <item>第三颜色</item>
+        <item>彩色网格</item>
+        <item>极光</item>
+        <item>聚光</item>
+        <item>暗角</item>
+        <item>分割色调</item>
+        <item>彩色色带</item>
+        <item>午夜</item>
+        <item>光环</item>
+        <item>烟雾模糊</item>
+        <item>日落</item>
+        <item>海洋</item>
+        <item>星云</item>
+        <item>余烬</item>
+        <item>潮线</item>
+        <item>生物发光</item>
+        <item>虹彩</item>
+        <item>石墨</item>
+        <item>影院</item>
+        <item>轨道</item>
+        <item>地平线</item>
+        <item>水墨</item>
+        <item>花开</item>
+        <item>峡湾</item>
+        <item>点阵网格</item>
+        <item>扫描线</item>
+        <item>雷达</item>
+        <item>等高线</item>
+        <item>切面</item>
+        <item>黄昏</item>
+        <item>冰</item>
+        <item>玫瑰</item>
+        <item>纸张</item>
+        <item>巨石</item>
+        <item>灯笼</item>
+        <item>黑色电影</item>
+        <item>天鹅绒</item>
+        <item>海市蜃楼</item>
+        <item>绽放</item>
+        <item>云</item>
+        <item>夜曲</item>
+        <item>液态</item>
+        <item>潮汐</item>
+        <item>黑胶</item>
+        <item>日冕</item>
+        <item>新月</item>
+        <item>网格</item>
+        <item>玻璃幕</item>
+        <item>Material</item>
+        <item>海报</item>
+        <item>工作室</item>
+        <item>光谱</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>珠粒</item>
+        <item>双导轨</item>
+        <item>脉冲</item>
+        <item>铬</item>
+        <item>光谱</item>
+        <item>台阶</item>
+        <item>糖果</item>
+        <item>幽灵</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>双边缘</item>
+        <item>垂直计量条（左）</item>
+        <item>垂直计量条（右）</item>
+        <item>顶部计量条</item>
+        <item>底部计量条</item>
+        <item>中央表盘</item>
+        <item>顶部光环</item>
+        <item>底部光环</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>双环</item>
+        <item>珠粒</item>
+        <item>虚线与点</item>
+        <item>24 小时刻度</item>
+        <item>仅进度</item>
+        <item>辉光</item>
+        <item>双色调</item>
+        <item>指针</item>
+        <item>交替</item>
+        <item>火花</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>表圈边缘</item>
+        <item>内嵌环</item>
+        <item>内环</item>
+        <item>粗环</item>
+        <item>从底部打开</item>
+        <item>从顶部打开</item>
+        <item>左侧弧线</item>
+        <item>右侧弧线</item>
+        <item>双轨</item>
+        <item>从左侧打开</item>
+        <item>从右侧打开</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>紧凑胶囊</item>
+        <item>方形专辑</item>
+        <item>堆叠胶囊</item>
+        <item>徽章</item>
+        <item>玻璃条</item>
+        <item>LCD</item>
+        <item>轮廓方块</item>
+        <item>丝带</item>
+        <item>时间气泡</item>
+        <item>分割色调</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>时间线（顶部）</item>
+        <item>时间线（底部）</item>
+        <item>分段（顶部）</item>
+        <item>垂直时间线（左）</item>
+        <item>垂直时间线（右）</item>
+        <item>中央表盘</item>
+        <item>双时间线</item>
+        <item>分段（底部）</item>
+        <item>中央堆叠</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>柔和</item>
+        <item>铬</item>
+        <item>全息</item>
+        <item>气泡</item>
+        <item>导轨</item>
+        <item>日落</item>
+        <item>专辑轮廓</item>
+        <item>深色玻璃</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>扇形</item>
+        <item>轨道</item>
+        <item>底部停靠栏</item>
+        <item>列</item>
+        <item>分割面板</item>
+        <item>菱形</item>
+        <item>轮播</item>
+        <item>三角形</item>
+        <item>阶梯</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>柔和</item>
+        <item>平板</item>
+        <item>墨水</item>
+        <item>导轨</item>
+        <item>日落</item>
+        <item>气泡</item>
+        <item>铬</item>
+        <item>全息</item>
+    </string-array>
+</resources>

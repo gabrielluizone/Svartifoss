@@ -185,4 +185,21 @@
 
     <string name="metadata_about">Perihal</string>
     <string name="metadata_source">Dimainkan dalam</string>
+    <string name="action_name_open_quick_actions_panel">Buka panel tindakan pantas</string>
+    <string name="action_name_fast_forward">Maju pantas</string>
+    <string name="action_name_rewind">Undur</string>
+    <string name="action_name_set_speed">Tetapkan kelajuan main balik</string>
+    <string name="action_name_seek_position">Lompat ke posisi trek</string>
+    <string name="action_name_set_volume">Tetapkan kelantangan</string>
+    <string name="action_name_set_shuffle">Tetapkan rawak</string>
+    <string name="action_name_set_repeat">Tetapkan ulang</string>
+    <string name="action_name_open_volume_screen">Buka skrin kelantangan</string>
+    <string name="action_name_open_progress_screen">Buka skrin kemajuan</string>
+    <string name="action_name_open_face_picker">Buka pemilih muka jam</string>
+    <string name="action_name_close_watch_app">Tutup aplikasi jam tangan</string>
+    <string name="volume_screen_title">Volume</string>
+    <string name="progress_screen_title">Kemajuan</string>
+    <string name="progress_screen_cancel_seek">Batalkan pencarian kedudukan</string>
+    <string name="progress_screen_skip_back">Langkau ke belakang %1$d saat</string>
+    <string name="progress_screen_skip_forward">Langkau ke hadapan %1$d saat</string>
 </resources>

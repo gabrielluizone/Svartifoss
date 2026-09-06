@@ -191,4 +191,21 @@ Mindent személyre szabhat a telefon Vezérlők és Óra részében</string>
 
     <string name="metadata_about">Névjegy</string>
     <string name="metadata_source">Lejátszás itt:</string>
+    <string name="action_name_open_quick_actions_panel">Gyorsműveleti panel megnyitása</string>
+    <string name="action_name_fast_forward">Gyors előretekerés</string>
+    <string name="action_name_rewind">Visszatekerés</string>
+    <string name="action_name_set_speed">Lejátszási sebesség beállítása</string>
+    <string name="action_name_seek_position">Ugrás a szám egy pozíciójára</string>
+    <string name="action_name_set_volume">Hangerő beállítása</string>
+    <string name="action_name_set_shuffle">Véletlenszerű lejátszás beállítása</string>
+    <string name="action_name_set_repeat">Ismétlés beállítása</string>
+    <string name="action_name_open_volume_screen">Hangerőképernyő megnyitása</string>
+    <string name="action_name_open_progress_screen">Folyamatjelző képernyő megnyitása</string>
+    <string name="action_name_open_face_picker">Számlapválasztó megnyitása</string>
+    <string name="action_name_close_watch_app">Óraalkalmazás bezárása</string>
+    <string name="volume_screen_title">Hangerő</string>
+    <string name="progress_screen_title">Folyamat</string>
+    <string name="progress_screen_cancel_seek">Pozíciókeresés megszakítása</string>
+    <string name="progress_screen_skip_back">Ugrás vissza %1$d másodpercet</string>
+    <string name="progress_screen_skip_forward">Ugrás előre %1$d másodpercet</string>
 </resources>

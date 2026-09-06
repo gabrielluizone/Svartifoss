@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">פרטי ערכת נושא</string>
+    <string name="community_theme_detail_preview_screen">מסך תצוגה מקדימה</string>
+    <string name="community_theme_detail_surface_player">נגן</string>
+    <string name="community_theme_detail_surface_aod">תמיד פעיל</string>
+    <string name="community_theme_detail_surface_volume">עוצמת קול</string>
+    <string name="community_theme_detail_surface_progress">התקדמות</string>
+    <string name="community_theme_detail_surface_quick_panel">לוח מהיר</string>
+    <string name="community_theme_detail_surface_queue">תור</string>
+    <string name="community_theme_detail_preview_label">תצוגה מקדימה של %1$s</string>
+    <string name="community_theme_detail_preview_description">תצוגה מקדימה של %1$s במסך %2$s</string>
+    <string name="community_theme_detail_preview_privacy">עטיפת האלבום הנוכחית עשויה להופיע רק בתצוגה המקדימה הזו בטלפון שלך. היא לעולם לא מועלית; טקסט ותזמון לדוגמה ממשיכים לשמש.</string>
+    <string name="community_theme_detail_information">פרטי ערכת הנושא</string>
+    <string name="community_theme_detail_byline">מאת %1$s</string>
+    <string name="community_theme_detail_layout">פריסת בסיס</string>
+    <string name="community_theme_detail_revision">גרסה</string>
+    <string name="community_theme_detail_minimum_version">גרסת Svartifoss מינימלית</string>
+    <string name="community_theme_detail_published">פורסם</string>
+    <string name="community_theme_detail_visual_settings">הגדרות חזותיות</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s הגדרה חזותית</item>
+        <item quantity="other">%1$s הגדרות חזותיות</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">לא זמין</string>
+    <string name="community_theme_detail_add_apply">הוספה והחלה</string>
+    <string name="community_theme_detail_remove">הסרת ערכת נושא</string>
+    <string name="community_theme_detail_remove_title">להסיר את „%1$s” מערכות הנושא שלי?</string>
+    <string name="community_theme_detail_remove_message">העותק השמור הזה וכל שינוי שביצעת בו יוסרו לצמיתות. אם הוא מוחל כעת, השעון יחזור לפריסת הבסיס המובנית שלו.</string>
+    <string name="community_theme_detail_removed">ערכת הנושא הוסרה מערכות הנושא שלי</string>
+    <string name="community_theme_detail_remove_error">לא ניתן להסיר את ערכת הנושא הזו</string>
+    <string name="community_theme_detail_like">לייק</string>
+    <string name="community_theme_detail_unlike">הסרת לייק</string>
+    <string name="community_theme_detail_like_loading">בודק…</string>
+    <string name="community_theme_detail_like_description">לייק ל-%1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">הסרת לייק מ-%1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">הכניסה עם Google בוטלה. הלייק שלך לא נשמר.</string>
+    <string name="community_theme_detail_like_error">לא ניתן לשמור את הלייק שלך. בדקו את החיבור ונסו שוב.</string>
+    <string name="community_theme_detail_like_not_ready">הלייקים לערכת הנושא הזו עדיין לא מוכנים. רעננו את ערכות הנושא מהקהילה אחרי הפרסום הבא.</string>
+    <string name="community_theme_detail_like_saved">הלייק שלך נשמר. המונים הציבוריים יתעדכנו בפרסום הבא של הקטלוג.</string>
+    <string name="community_theme_detail_unlike_saved">הלייק שלך הוסר. המונים הציבוריים יתעדכנו בפרסום הבא של הקטלוג.</string>
+    <string name="community_theme_detail_apply_existing">ערכת הנושא הזו כבר נמצאת בערכות הנושא שלי והוחלה על השעון שלך</string>
+    <string name="community_theme_detail_requires_app_version">ערכת הנושא הזו דורשת Svartifoss %1$s לפני שניתן להוסיף אותה.</string>
+    <string name="community_theme_detail_load_error">לא ניתן לטעון את פרטי ערכת הנושא הזו. חזרו לערכות הנושא מהקהילה ונסו שוב.</string>
+    <string name="community_theme_detail_profile_mismatch">הפרופיל שהורד אינו תואם לפרטים הציבוריים של ערכת הנושא הזו. חזרו לערכות הנושא מהקהילה ונסו שוב.</string>
+    <string name="community_theme_detail_screenshot_description">תמונה של ערכת הנושא הזו בשעון של המחבר</string>
+    <string name="community_theme_detail_source_author">השעון של המחבר</string>
+    <string name="community_theme_detail_source_rendered">תצוגה מקדימה שנוצרה</string>
+    <string name="community_theme_detail_show_rendered">הצגת התצוגה המקדימה שנוצרה</string>
+    <string name="community_theme_detail_show_author">הצגת תמונת המחבר</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

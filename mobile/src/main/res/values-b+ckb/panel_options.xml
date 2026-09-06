@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">نەخشەی بازنەی پێشکەوتن</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>تەواو شەفاف</item>
+        <item>ڕەنگی دووەم</item>
+        <item>ڕەنگی سێیەم</item>
+        <item>Mesh ی ڕەنگ</item>
+        <item>Aurora</item>
+        <item>Spotlight</item>
+        <item>Vignette</item>
+        <item>Split tone</item>
+        <item>پشتێنی ڕەنگ</item>
+        <item>نیوەشەو</item>
+        <item>Halo</item>
+        <item>Blur ی دووکەڵ</item>
+        <item>خۆرئاوابوون</item>
+        <item>ئۆقیانوس</item>
+        <item>Nebula</item>
+        <item>پشکۆ</item>
+        <item>هێڵی مەوج</item>
+        <item>ڕووناکی زیندوو</item>
+        <item>ڕەنگاوڕەنگ</item>
+        <item>Graphite</item>
+        <item>Cinema</item>
+        <item>Orbit</item>
+        <item>ئاسۆ</item>
+        <item>Ink wash</item>
+        <item>گوڵکردن</item>
+        <item>Fjord</item>
+        <item>Grid ی خاڵ</item>
+        <item>Scanline</item>
+        <item>Radar</item>
+        <item>هێڵەکانی Contour</item>
+        <item>Facet ـدار</item>
+        <item>کاتی ئێوارە</item>
+        <item>سەهۆڵ</item>
+        <item>گوڵی سوور</item>
+        <item>کاغەز</item>
+        <item>Monolith</item>
+        <item>چرای دەستی</item>
+        <item>Noir</item>
+        <item>Velvet</item>
+        <item>Mirage</item>
+        <item>Bloom</item>
+        <item>Cloud</item>
+        <item>Nocturne</item>
+        <item>شل</item>
+        <item>Tidal</item>
+        <item>Vinyl</item>
+        <item>Corona</item>
+        <item>هلال</item>
+        <item>Grid</item>
+        <item>پەردەی شووشە</item>
+        <item>Material</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Spectrum</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>دانەکان</item>
+        <item>Dual rail</item>
+        <item>Pulse</item>
+        <item>Chrome</item>
+        <item>Spectrum</item>
+        <item>پەلەکان</item>
+        <item>Candy</item>
+        <item>Ghost</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>لێواری دوو قات</item>
+        <item>Meter ی ستوونی (چەپ)</item>
+        <item>Meter ی ستوونی (ڕاست)</item>
+        <item>Meter ی سەرەوە</item>
+        <item>Meter ی خوارەوە</item>
+        <item>Dial ی ناوەڕاست</item>
+        <item>Halo ی سەرەوە</item>
+        <item>Halo ی خوارەوە</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>بازنەی دوو قات</item>
+        <item>دانەکان</item>
+        <item>Dash و خاڵ</item>
+        <item>نیشانەکانی 24 کاتژمێر</item>
+        <item>تەنها پێشکەوتن</item>
+        <item>ڕووناکی</item>
+        <item>دوو ڕەنگ</item>
+        <item>دەرزی</item>
+        <item>یەک لە دوای یەک</item>
+        <item>پشکۆ</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>لێواری bezel</item>
+        <item>بازنەی inset</item>
+        <item>بازنەی ناوەوە</item>
+        <item>بازنەی قەڵەو</item>
+        <item>لە خوارەوە کراوە</item>
+        <item>لە سەرەوە کراوە</item>
+        <item>کەوانەی چەپ</item>
+        <item>کەوانەی ڕاست</item>
+        <item>Track ی دوو قات</item>
+        <item>لە چەپ کراوە</item>
+        <item>لە ڕاست کراوە</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Compact pill</item>
+        <item>ئالبومی چوارگۆشە</item>
+        <item>Stacked pill</item>
+        <item>Badge</item>
+        <item>Bar ی شووشە</item>
+        <item>LCD</item>
+        <item>چوارگۆشەی هێڵی دەرەوە</item>
+        <item>Ribbon</item>
+        <item>Bubble ی کات</item>
+        <item>Split tone</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Timeline (سەرەوە)</item>
+        <item>Timeline (خوارەوە)</item>
+        <item>بەشەکان (سەرەوە)</item>
+        <item>Timeline ی ستوونی (چەپ)</item>
+        <item>Timeline ی ستوونی (ڕاست)</item>
+        <item>Dial ی ناوەڕاست</item>
+        <item>Twin timeline</item>
+        <item>بەشەکان (خوارەوە)</item>
+        <item>Stack ی ناوەڕاست</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>نەرم</item>
+        <item>Chrome</item>
+        <item>Holographic</item>
+        <item>Bubble</item>
+        <item>Rail</item>
+        <item>خۆرئاوابوون</item>
+        <item>هێڵی دەرەوەی ئالبوم</item>
+        <item>شووشەی تاریک</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>بادەوان</item>
+        <item>Orbit</item>
+        <item>Dock ی خوارەوە</item>
+        <item>ستوون</item>
+        <item>Split deck</item>
+        <item>ئەڵماس</item>
+        <item>Carousel</item>
+        <item>سێگۆشە</item>
+        <item>پەلە</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>نەرم</item>
+        <item>Slab</item>
+        <item>مەرەکەب</item>
+        <item>Rail</item>
+        <item>خۆرئاوابوون</item>
+        <item>Bubble</item>
+        <item>Chrome</item>
+        <item>Holographic</item>
+    </string-array>
+</resources>

@@ -191,4 +191,21 @@ Tilpass alt under Kontroller og Klokke på telefonen</string>
 
     <string name="metadata_about">Om</string>
     <string name="metadata_source">Spilles i</string>
+    <string name="action_name_open_quick_actions_panel">Åpne hurtighandlingspanel</string>
+    <string name="action_name_fast_forward">Spol raskt fremover</string>
+    <string name="action_name_rewind">Spol tilbake</string>
+    <string name="action_name_set_speed">Angi avspillingshastighet</string>
+    <string name="action_name_seek_position">Hopp til posisjon i sporet</string>
+    <string name="action_name_set_volume">Angi volum</string>
+    <string name="action_name_set_shuffle">Angi tilfeldig avspilling</string>
+    <string name="action_name_set_repeat">Angi gjentakelse</string>
+    <string name="action_name_open_volume_screen">Åpne volumskjerm</string>
+    <string name="action_name_open_progress_screen">Åpne fremdriftsskjerm</string>
+    <string name="action_name_open_face_picker">Åpne urskivevelger</string>
+    <string name="action_name_close_watch_app">Lukk klokkeappen</string>
+    <string name="volume_screen_title">Volum</string>
+    <string name="progress_screen_title">Fremdrift</string>
+    <string name="progress_screen_cancel_seek">Avbryt søking</string>
+    <string name="progress_screen_skip_back">Hopp tilbake %1$d sekunder</string>
+    <string name="progress_screen_skip_forward">Hopp frem %1$d sekunder</string>
 </resources>

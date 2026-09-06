@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Сведения о теме</string>
+    <string name="community_theme_detail_preview_screen">Экран предпросмотра</string>
+    <string name="community_theme_detail_surface_player">Плеер</string>
+    <string name="community_theme_detail_surface_aod">Всегда включено</string>
+    <string name="community_theme_detail_surface_volume">Громкость</string>
+    <string name="community_theme_detail_surface_progress">Прогресс</string>
+    <string name="community_theme_detail_surface_quick_panel">Быстрая панель</string>
+    <string name="community_theme_detail_surface_queue">Очередь</string>
+    <string name="community_theme_detail_preview_label">Предпросмотр %1$s</string>
+    <string name="community_theme_detail_preview_description">Предпросмотр %1$s на экране %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Текущая обложка альбома может отображаться только в этом предпросмотре на телефоне. Она никогда не загружается; пример текста и времени продолжает использоваться.</string>
+    <string name="community_theme_detail_information">Информация о теме</string>
+    <string name="community_theme_detail_byline">Автор: %1$s</string>
+    <string name="community_theme_detail_layout">Базовый макет</string>
+    <string name="community_theme_detail_revision">Редакция</string>
+    <string name="community_theme_detail_minimum_version">Минимальная версия Svartifoss</string>
+    <string name="community_theme_detail_published">Опубликовано</string>
+    <string name="community_theme_detail_visual_settings">Визуальные настройки</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s визуальная настройка</item>
+        <item quantity="other">%1$s визуальных настроек</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Недоступно</string>
+    <string name="community_theme_detail_add_apply">Добавить и применить</string>
+    <string name="community_theme_detail_remove">Удалить тему</string>
+    <string name="community_theme_detail_remove_title">Удалить «%1$s» из «Моих тем»?</string>
+    <string name="community_theme_detail_remove_message">Эта сохранённая копия и все внесённые в неё изменения будут удалены безвозвратно. Если она сейчас применяется, часы вернутся к встроенному базовому макету.</string>
+    <string name="community_theme_detail_removed">Тема удалена из «Моих тем»</string>
+    <string name="community_theme_detail_remove_error">Не удалось удалить эту тему</string>
+    <string name="community_theme_detail_like">Нравится</string>
+    <string name="community_theme_detail_unlike">Больше не нравится</string>
+    <string name="community_theme_detail_like_loading">Проверка…</string>
+    <string name="community_theme_detail_like_description">Отметить %1$s как понравившееся. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Убрать отметку «Нравится» с %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Вход через Google отменён. Отметка «Нравится» не сохранена.</string>
+    <string name="community_theme_detail_like_error">Не удалось сохранить отметку «Нравится». Проверьте подключение и повторите попытку.</string>
+    <string name="community_theme_detail_like_not_ready">Отметки «Нравится» для этой темы пока недоступны. Обновите темы сообщества после следующей публикации.</string>
+    <string name="community_theme_detail_like_saved">Отметка «Нравится» сохранена. Публичные счётчики обновятся при следующей публикации каталога.</string>
+    <string name="community_theme_detail_unlike_saved">Отметка «Нравится» удалена. Публичные счётчики обновятся при следующей публикации каталога.</string>
+    <string name="community_theme_detail_apply_existing">Эта тема уже находится в «Моих темах» и применена к вашим часам</string>
+    <string name="community_theme_detail_requires_app_version">Для добавления этой темы требуется Svartifoss %1$s.</string>
+    <string name="community_theme_detail_load_error">Не удалось загрузить сведения об этой теме. Вернитесь к темам сообщества и повторите попытку.</string>
+    <string name="community_theme_detail_profile_mismatch">Загруженный профиль не соответствует публичным сведениям об этой теме. Вернитесь к темам сообщества и повторите попытку.</string>
+    <string name="community_theme_detail_screenshot_description">Фото этой темы на часах автора</string>
+    <string name="community_theme_detail_source_author">Часы автора</string>
+    <string name="community_theme_detail_source_rendered">Созданный предпросмотр</string>
+    <string name="community_theme_detail_show_rendered">Показать созданный предпросмотр</string>
+    <string name="community_theme_detail_show_author">Показать фото автора</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

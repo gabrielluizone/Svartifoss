@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Распоред прстена напретка</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Потпуно провидно</item>
+        <item>Секундарна боја</item>
+        <item>Терцијарна боја</item>
+        <item>Мрежа боја</item>
+        <item>Аурора</item>
+        <item>Рефлектор</item>
+        <item>Вињета</item>
+        <item>Подељени тон</item>
+        <item>Траке боја</item>
+        <item>Поноћ</item>
+        <item>Ореол</item>
+        <item>Замућење дима</item>
+        <item>Залазак сунца</item>
+        <item>Океан</item>
+        <item>Маглина</item>
+        <item>Жар</item>
+        <item>Линија плиме</item>
+        <item>Биолуминисценција</item>
+        <item>Преливајуће</item>
+        <item>Графит</item>
+        <item>Биоскоп</item>
+        <item>Орбита</item>
+        <item>Хоризонт</item>
+        <item>Испирање мастилом</item>
+        <item>Цветање</item>
+        <item>Фјорд</item>
+        <item>Мрежа тачака</item>
+        <item>Линија скенирања</item>
+        <item>Радар</item>
+        <item>Контурне линије</item>
+        <item>Фасетирано</item>
+        <item>Сумрак</item>
+        <item>Лед</item>
+        <item>Ружа</item>
+        <item>Папир</item>
+        <item>Монолит</item>
+        <item>Фењер</item>
+        <item>Ноар</item>
+        <item>Сомот</item>
+        <item>Фатаморгана</item>
+        <item>Расцветавање</item>
+        <item>Облак</item>
+        <item>Ноктурно</item>
+        <item>Течно</item>
+        <item>Плимно</item>
+        <item>Винил</item>
+        <item>Корона</item>
+        <item>Полумесец</item>
+        <item>Мрежа</item>
+        <item>Стаклени вео</item>
+        <item>Material</item>
+        <item>Плакат</item>
+        <item>Студио</item>
+        <item>Спектар</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Перле</item>
+        <item>Двострука шина</item>
+        <item>Пулс</item>
+        <item>Хром</item>
+        <item>Спектар</item>
+        <item>Степенице</item>
+        <item>Бомбона</item>
+        <item>Дух</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Двострука ивица</item>
+        <item>Усправни мерач (лево)</item>
+        <item>Усправни мерач (десно)</item>
+        <item>Горњи мерач</item>
+        <item>Доњи мерач</item>
+        <item>Средишњи бројчаник</item>
+        <item>Горњи ореол</item>
+        <item>Доњи ореол</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Двоструки прстен</item>
+        <item>Перле</item>
+        <item>Цртица и тачка</item>
+        <item>24-часовне ознаке</item>
+        <item>Само напредак</item>
+        <item>Сјај</item>
+        <item>Двотонски</item>
+        <item>Игла</item>
+        <item>Наизменично</item>
+        <item>Искра</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Ивица оквира</item>
+        <item>Увучени прстен</item>
+        <item>Унутрашњи прстен</item>
+        <item>Дебели прстен</item>
+        <item>Отворено при дну</item>
+        <item>Отворено при врху</item>
+        <item>Леви лук</item>
+        <item>Десни лук</item>
+        <item>Двострука стаза</item>
+        <item>Отворено са леве стране</item>
+        <item>Отворено са десне стране</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Компактна капсула</item>
+        <item>Квадратни албум</item>
+        <item>Наслагана капсула</item>
+        <item>Значка</item>
+        <item>Стаклена трака</item>
+        <item>LCD</item>
+        <item>Квадратни обрис</item>
+        <item>Трака</item>
+        <item>Мехурић времена</item>
+        <item>Подељени тон</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Временска линија (врх)</item>
+        <item>Временска линија (дно)</item>
+        <item>Сегменти (врх)</item>
+        <item>Усправна временска линија (лево)</item>
+        <item>Усправна временска линија (десно)</item>
+        <item>Средишњи бројчаник</item>
+        <item>Двострука временска линија</item>
+        <item>Сегменти (дно)</item>
+        <item>Средишњи стек</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Меко</item>
+        <item>Хром</item>
+        <item>Холографски</item>
+        <item>Мехурић</item>
+        <item>Шина</item>
+        <item>Залазак сунца</item>
+        <item>Обрис албума</item>
+        <item>Тамно стакло</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Лепеза</item>
+        <item>Орбита</item>
+        <item>Доње пристаниште</item>
+        <item>Колона</item>
+        <item>Подељена плоча</item>
+        <item>Дијамант</item>
+        <item>Вртешка</item>
+        <item>Троугао</item>
+        <item>Степеник</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Меко</item>
+        <item>Плочасти</item>
+        <item>Мастило</item>
+        <item>Шина</item>
+        <item>Залазак сунца</item>
+        <item>Мехурић</item>
+        <item>Хром</item>
+        <item>Холографски</item>
+    </string-array>
+</resources>

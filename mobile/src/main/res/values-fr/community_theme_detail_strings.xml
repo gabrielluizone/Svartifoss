@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Détails du thème</string>
+    <string name="community_theme_detail_preview_screen">Écran d’aperçu</string>
+    <string name="community_theme_detail_surface_player">Lecteur</string>
+    <string name="community_theme_detail_surface_aod">Toujours activé</string>
+    <string name="community_theme_detail_surface_volume">Volume</string>
+    <string name="community_theme_detail_surface_progress">Progression</string>
+    <string name="community_theme_detail_surface_quick_panel">Panneau rapide</string>
+    <string name="community_theme_detail_surface_queue">File d’attente</string>
+    <string name="community_theme_detail_preview_label">Aperçu de %1$s</string>
+    <string name="community_theme_detail_preview_description">Aperçu de %1$s sur l’écran %2$s</string>
+    <string name="community_theme_detail_preview_privacy">La pochette de l’album en cours peut apparaître uniquement dans cet aperçu sur votre téléphone. Elle n’est jamais envoyée ; le texte et les horaires d’exemple restent utilisés.</string>
+    <string name="community_theme_detail_information">Informations sur le thème</string>
+    <string name="community_theme_detail_byline">Par %1$s</string>
+    <string name="community_theme_detail_layout">Mise en page de base</string>
+    <string name="community_theme_detail_revision">Révision</string>
+    <string name="community_theme_detail_minimum_version">Version minimale de Svartifoss</string>
+    <string name="community_theme_detail_published">Publié</string>
+    <string name="community_theme_detail_visual_settings">Paramètres visuels</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s réglage visuel</item>
+        <item quantity="other">%1$s réglages visuels</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Non disponible</string>
+    <string name="community_theme_detail_add_apply">Ajouter et appliquer</string>
+    <string name="community_theme_detail_remove">Supprimer le thème</string>
+    <string name="community_theme_detail_remove_title">Supprimer « %1$s » de Mes thèmes ?</string>
+    <string name="community_theme_detail_remove_message">Cette copie enregistrée et toutes les modifications que vous y avez apportées seront supprimées définitivement. Si elle est actuellement appliquée, votre montre reviendra à sa mise en page de base intégrée.</string>
+    <string name="community_theme_detail_removed">Thème supprimé de Mes thèmes</string>
+    <string name="community_theme_detail_remove_error">Impossible de supprimer ce thème</string>
+    <string name="community_theme_detail_like">J’aime</string>
+    <string name="community_theme_detail_unlike">Je n’aime plus</string>
+    <string name="community_theme_detail_like_loading">Vérification…</string>
+    <string name="community_theme_detail_like_description">Aimer %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Ne plus aimer %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">La connexion Google a été annulée. Votre J’aime n’a pas été enregistré.</string>
+    <string name="community_theme_detail_like_error">Impossible d’enregistrer votre J’aime. Vérifiez votre connexion et réessayez.</string>
+    <string name="community_theme_detail_like_not_ready">Les J’aime de ce thème ne sont pas encore disponibles. Actualisez les thèmes de la communauté après la prochaine publication.</string>
+    <string name="community_theme_detail_like_saved">Votre J’aime a été enregistré. Les compteurs publics seront mis à jour lors de la prochaine publication du catalogue.</string>
+    <string name="community_theme_detail_unlike_saved">Votre J’aime a été retiré. Les compteurs publics seront mis à jour lors de la prochaine publication du catalogue.</string>
+    <string name="community_theme_detail_apply_existing">Ce thème est déjà dans Mes thèmes et a été appliqué à votre montre</string>
+    <string name="community_theme_detail_requires_app_version">Ce thème nécessite Svartifoss %1$s avant de pouvoir être ajouté.</string>
+    <string name="community_theme_detail_load_error">Impossible de charger les détails de ce thème. Revenez aux thèmes de la communauté et réessayez.</string>
+    <string name="community_theme_detail_profile_mismatch">Le profil téléchargé ne correspond pas aux détails publics de ce thème. Revenez aux thèmes de la communauté et réessayez.</string>
+    <string name="community_theme_detail_screenshot_description">Photo de ce thème sur la montre de son auteur</string>
+    <string name="community_theme_detail_source_author">Montre de l’auteur</string>
+    <string name="community_theme_detail_source_rendered">Aperçu généré</string>
+    <string name="community_theme_detail_show_rendered">Afficher l’aperçu généré</string>
+    <string name="community_theme_detail_show_author">Afficher la photo de l’auteur</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

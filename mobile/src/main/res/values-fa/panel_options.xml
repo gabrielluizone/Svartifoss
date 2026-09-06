@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">چیدمان حلقهٔ پیشرفت</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>کاملاً شفاف</item>
+        <item>رنگ دوم</item>
+        <item>رنگ سوم</item>
+        <item>مش رنگی</item>
+        <item>شفق قطبی</item>
+        <item>نورافکن</item>
+        <item>وینیت</item>
+        <item>تون دوپاره</item>
+        <item>نوارهای رنگی</item>
+        <item>نیمه‌شب</item>
+        <item>هاله</item>
+        <item>محو دود</item>
+        <item>غروب</item>
+        <item>اقیانوس</item>
+        <item>سحابی</item>
+        <item>اخگر</item>
+        <item>خط جزر و مد</item>
+        <item>زیست‌تابی</item>
+        <item>رنگین‌تاب</item>
+        <item>گرافیت</item>
+        <item>سینما</item>
+        <item>مدار</item>
+        <item>افق</item>
+        <item>شست‌وشوی جوهری</item>
+        <item>شکوفه</item>
+        <item>فیورد</item>
+        <item>شبکه نقطه‌ای</item>
+        <item>خط اسکن</item>
+        <item>رادار</item>
+        <item>خطوط کانتور</item>
+        <item>چندوجهی</item>
+        <item>گرگ‌ومیش</item>
+        <item>یخ</item>
+        <item>رز</item>
+        <item>کاغذ</item>
+        <item>یکپارچه</item>
+        <item>فانوس</item>
+        <item>نوآر</item>
+        <item>مخمل</item>
+        <item>سراب</item>
+        <item>شکوفایی نور</item>
+        <item>ابر</item>
+        <item>نوکتورن</item>
+        <item>مایع</item>
+        <item>جزر و مد</item>
+        <item>وینیل</item>
+        <item>تاج خورشیدی</item>
+        <item>هلال</item>
+        <item>شبکه</item>
+        <item>پرده شیشه‌ای</item>
+        <item>Material</item>
+        <item>پوستر</item>
+        <item>استودیو</item>
+        <item>طیف</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>مهره‌ها</item>
+        <item>ریل دوگانه</item>
+        <item>ضربان</item>
+        <item>کروم</item>
+        <item>طیف</item>
+        <item>پله‌ها</item>
+        <item>آبنبات</item>
+        <item>شبح</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>لبه دوگانه</item>
+        <item>نشانگر عمودی (چپ)</item>
+        <item>نشانگر عمودی (راست)</item>
+        <item>نشانگر بالا</item>
+        <item>نشانگر پایین</item>
+        <item>صفحه میانی</item>
+        <item>هاله بالا</item>
+        <item>هاله پایین</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>حلقه دوگانه</item>
+        <item>مهره‌ها</item>
+        <item>خط‌تیره و نقطه</item>
+        <item>نشانه‌های ۲۴ ساعته</item>
+        <item>فقط پیشرفت</item>
+        <item>درخشش</item>
+        <item>دو رنگ</item>
+        <item>سوزن</item>
+        <item>یکی‌درمیان</item>
+        <item>جرقه</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>لبه قاب</item>
+        <item>حلقه فرورفته</item>
+        <item>حلقه داخلی</item>
+        <item>حلقه ضخیم</item>
+        <item>باز شدن از پایین</item>
+        <item>باز شدن از بالا</item>
+        <item>قوس چپ</item>
+        <item>قوس راست</item>
+        <item>مسیر دوگانه</item>
+        <item>باز شدن از چپ</item>
+        <item>باز شدن از راست</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>کپسول فشرده</item>
+        <item>آلبوم مربعی</item>
+        <item>کپسول روی‌هم</item>
+        <item>نشان</item>
+        <item>نوار شیشه‌ای</item>
+        <item>LCD</item>
+        <item>مربع با خط دور</item>
+        <item>روبان</item>
+        <item>حباب زمان</item>
+        <item>تون دوپاره</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>خط زمانی (بالا)</item>
+        <item>خط زمانی (پایین)</item>
+        <item>بخش‌ها (بالا)</item>
+        <item>خط زمانی عمودی (چپ)</item>
+        <item>خط زمانی عمودی (راست)</item>
+        <item>صفحه میانی</item>
+        <item>خط زمانی دوگانه</item>
+        <item>بخش‌ها (پایین)</item>
+        <item>پشته میانی</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>نرم</item>
+        <item>کروم</item>
+        <item>هولوگرافیک</item>
+        <item>حباب</item>
+        <item>ریل</item>
+        <item>غروب</item>
+        <item>خط دور آلبوم</item>
+        <item>شیشه تیره</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>بادبزن</item>
+        <item>مدار</item>
+        <item>داک پایین</item>
+        <item>ستون</item>
+        <item>صفحه دوپاره</item>
+        <item>الماس</item>
+        <item>چرخ‌وفلک</item>
+        <item>مثلث</item>
+        <item>پله</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>نرم</item>
+        <item>تخته</item>
+        <item>جوهر</item>
+        <item>ریل</item>
+        <item>غروب</item>
+        <item>حباب</item>
+        <item>کروم</item>
+        <item>هولوگرافیک</item>
+    </string-array>
+</resources>

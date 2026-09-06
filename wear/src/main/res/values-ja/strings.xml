@@ -185,4 +185,21 @@
 
     <string name="metadata_about">情報</string>
     <string name="metadata_source">再生先</string>
+    <string name="action_name_open_quick_actions_panel">クイックアクションパネルを開く</string>
+    <string name="action_name_fast_forward">早送り</string>
+    <string name="action_name_rewind">巻き戻し</string>
+    <string name="action_name_set_speed">再生速度を設定</string>
+    <string name="action_name_seek_position">トラック位置へジャンプ</string>
+    <string name="action_name_set_volume">音量を設定</string>
+    <string name="action_name_set_shuffle">シャッフルを設定</string>
+    <string name="action_name_set_repeat">リピートを設定</string>
+    <string name="action_name_open_volume_screen">音量画面を開く</string>
+    <string name="action_name_open_progress_screen">進行状況画面を開く</string>
+    <string name="action_name_open_face_picker">フェイス選択を開く</string>
+    <string name="action_name_close_watch_app">時計アプリを閉じる</string>
+    <string name="volume_screen_title">音量</string>
+    <string name="progress_screen_title">進行状況</string>
+    <string name="progress_screen_cancel_seek">シークをキャンセル</string>
+    <string name="progress_screen_skip_back">%1$d 秒戻る</string>
+    <string name="progress_screen_skip_forward">%1$d 秒進む</string>
 </resources>

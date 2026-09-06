@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Base64
 import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.MatejdroArtistAutosizeMigration
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
@@ -118,6 +119,7 @@ object ConfigBackup {
             MiscPreferences.LAST_MENU_DISPLAYED.key,
             "center_long_press_repaired",
             "shortcut_artwork_store_repaired",
+            MatejdroArtistAutosizeMigration.MARKER_KEY,
             "notification_access_prompted",
             "face_reset_prompt_handled",
             "update_last_check_ms",

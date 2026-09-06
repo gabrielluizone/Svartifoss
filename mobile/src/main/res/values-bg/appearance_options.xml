@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Океан</item>
+        <item>Залез</item>
+        <item>Централен прожектор</item>
+        <item>Стъклен воал</item>
+        <item>Кадифе</item>
+        <item>Ноар прожектор</item>
+        <item>Леден оттенък</item>
+        <item>Разцъфнала роза</item>
+        <item>Призма</item>
+        <item>Ръб на полумесеца</item>
+        <item>Приливни ленти</item>
+        <item>Хартиена обложка</item>
+        <item>Изгрев на фенера</item>
+        <item>Разделен мираж</item>
+        <item>Спокойна мрежа</item>
+        <item>Ноктюрно</item>
+        <item>Етюд с облаци</item>
+        <item>Локви от течност</item>
+        <item>Цветен монолит</item>
+        <item>Разделен тон</item>
+        <item>Градиент</item>
+        <item>Двуцветно</item>
+        <item>Ленти</item>
+        <item>Винетка</item>
+        <item>Графит</item>
+        <item>Кино</item>
+        <item>Акрил</item>
+        <item>Мрежа</item>
+        <item>Мъглявина</item>
+        <item>Биолуминесценция</item>
+        <item>Иридесцентно</item>
+        <item>Орбита</item>
+        <item>Размиване с мастило</item>
+        <item>Цъфтеж</item>
+        <item>Фиорд</item>
+        <item>Точкова матрица</item>
+        <item>Сканиращи линии</item>
+        <item>Радар</item>
+        <item>Контур</item>
+        <item>Фасетирано</item>
+        <item>Запълване на албума</item>
+        <item>Вторично запълване</item>
+        <item>Третично запълване</item>
+        <item>Стъкло</item>
+        <item>Полунощ</item>
+        <item>Дим</item>
+        <item>Линия на прилива</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Мъх</item>
+        <item>Лавандулова мъгла</item>
+        <item>Череша</item>
+        <item>Дълбоко море</item>
+        <item>Прах</item>
+        <item>Избелване</item>
+        <item>Лунна светлина</item>
+        <item>Сън</item>
+        <item>Инфрачервено</item>
+        <item>Гора</item>
+        <item>Сребро</item>
+        <item>Бонбон</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Горно избледняване</item>
+        <item>Централен прожектор</item>
+        <item>Диагонална сянка</item>
+        <item>Лява завеса</item>
+        <item>Дясна завеса</item>
+        <item>Централна лента</item>
+        <item>Преливане</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Обратно листо</item>
+        <item>Обратна капка</item>
+        <item>Камъче</item>
+        <item>Дъга</item>
+        <item>Щит</item>
+        <item>Обратна дъга</item>
+        <item>Обратен щит</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Шепот</item>
+        <item>Сияйно</item>
+        <item>Заливане</item>
+        <item>Проблясък</item>
+        <item>Дълбоко сияние</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Контур на албума</item>
+        <item>Градиент на албума</item>
+        <item>Вторичен цвят на албума</item>
+        <item>Стъкло на албума</item>
+        <item>Третичен цвят на албума</item>
+        <item>Неонов контур</item>
+    </string-array>
+</resources>

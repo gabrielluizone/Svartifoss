@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Szczegóły motywu</string>
+    <string name="community_theme_detail_preview_screen">Ekran podglądu</string>
+    <string name="community_theme_detail_surface_player">Odtwarzacz</string>
+    <string name="community_theme_detail_surface_aod">Zawsze włączony</string>
+    <string name="community_theme_detail_surface_volume">Głośność</string>
+    <string name="community_theme_detail_surface_progress">Postęp</string>
+    <string name="community_theme_detail_surface_quick_panel">Panel szybkich akcji</string>
+    <string name="community_theme_detail_surface_queue">Kolejka</string>
+    <string name="community_theme_detail_preview_label">Podgląd %1$s</string>
+    <string name="community_theme_detail_preview_description">Podgląd %1$s na ekranie %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Bieżąca okładka albumu może pojawić się tylko w tym podglądzie na telefonie. Nigdy nie jest przesyłana; nadal używany jest przykładowy tekst i czas.</string>
+    <string name="community_theme_detail_information">Informacje o motywie</string>
+    <string name="community_theme_detail_byline">Autor: %1$s</string>
+    <string name="community_theme_detail_layout">Układ bazowy</string>
+    <string name="community_theme_detail_revision">Rewizja</string>
+    <string name="community_theme_detail_minimum_version">Minimalna wersja Svartifoss</string>
+    <string name="community_theme_detail_published">Opublikowano</string>
+    <string name="community_theme_detail_visual_settings">Ustawienia wizualne</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s ustawienie wizualne</item>
+        <item quantity="other">%1$s ustawień wizualnych</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Niedostępne</string>
+    <string name="community_theme_detail_add_apply">Dodaj i zastosuj</string>
+    <string name="community_theme_detail_remove">Usuń motyw</string>
+    <string name="community_theme_detail_remove_title">Usunąć „%1$s” z Moich motywów?</string>
+    <string name="community_theme_detail_remove_message">Ta zapisana kopia oraz wszystkie wprowadzone w niej zmiany zostaną trwale usunięte. Jeśli jest obecnie zastosowana, zegarek wróci do wbudowanego układu bazowego.</string>
+    <string name="community_theme_detail_removed">Motyw usunięty z Moich motywów</string>
+    <string name="community_theme_detail_remove_error">Nie udało się usunąć tego motywu</string>
+    <string name="community_theme_detail_like">Lubię to</string>
+    <string name="community_theme_detail_unlike">Cofnij polubienie</string>
+    <string name="community_theme_detail_like_loading">Sprawdzanie…</string>
+    <string name="community_theme_detail_like_description">Polub %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Cofnij polubienie %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Logowanie przez Google zostało anulowane. Polubienie nie zostało zapisane.</string>
+    <string name="community_theme_detail_like_error">Nie udało się zapisać polubienia. Sprawdź połączenie i spróbuj ponownie.</string>
+    <string name="community_theme_detail_like_not_ready">Polubienia tego motywu nie są jeszcze gotowe. Odśwież Motywy społeczności po kolejnej publikacji.</string>
+    <string name="community_theme_detail_like_saved">Twoje polubienie zostało zapisane. Publiczne liczniki zaktualizują się przy następnej publikacji katalogu.</string>
+    <string name="community_theme_detail_unlike_saved">Twoje polubienie zostało usunięte. Publiczne liczniki zaktualizują się przy następnej publikacji katalogu.</string>
+    <string name="community_theme_detail_apply_existing">Ten motyw jest już w Moich motywach i został zastosowany na zegarku</string>
+    <string name="community_theme_detail_requires_app_version">Ten motyw wymaga Svartifoss %1$s, zanim będzie można go dodać.</string>
+    <string name="community_theme_detail_load_error">Nie udało się wczytać szczegółów tego motywu. Wróć do Motywów społeczności i spróbuj ponownie.</string>
+    <string name="community_theme_detail_profile_mismatch">Pobrany profil nie odpowiada publicznym szczegółom tego motywu. Wróć do Motywów społeczności i spróbuj ponownie.</string>
+    <string name="community_theme_detail_screenshot_description">Zdjęcie tego motywu na zegarku autora</string>
+    <string name="community_theme_detail_source_author">Zegarek autora</string>
+    <string name="community_theme_detail_source_rendered">Wygenerowany podgląd</string>
+    <string name="community_theme_detail_show_rendered">Pokaż wygenerowany podgląd</string>
+    <string name="community_theme_detail_show_author">Pokaż zdjęcie autora</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

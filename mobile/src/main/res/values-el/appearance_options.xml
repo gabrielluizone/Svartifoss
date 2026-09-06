@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Ωκεανός</item>
+        <item>Ηλιοβασίλεμα</item>
+        <item>Κεντρικός προβολέας</item>
+        <item>Γυάλινο πέπλο</item>
+        <item>Βελούδο</item>
+        <item>Προβολέας νουάρ</item>
+        <item>Παγωμένο ξέπλυμα</item>
+        <item>Άνθιση τριαντάφυλλου</item>
+        <item>Πρίσμα</item>
+        <item>Χείλος ημισελήνου</item>
+        <item>Ζώνες παλίρροιας</item>
+        <item>Χάρτινη θήκη</item>
+        <item>Ανερχόμενο φανάρι</item>
+        <item>Διαιρεμένος αντικατοπτρισμός</item>
+        <item>Ήρεμο πλέγμα</item>
+        <item>Νυχτερινό</item>
+        <item>Μελέτη σύννεφων</item>
+        <item>Υγρές λίμνες</item>
+        <item>Μονόλιθος χρώματος</item>
+        <item>Διαιρεμένος τόνος</item>
+        <item>Διαβάθμιση</item>
+        <item>Διχρωμία</item>
+        <item>Ζώνες</item>
+        <item>Βινιέτα</item>
+        <item>Γραφίτης</item>
+        <item>Κινηματογράφος</item>
+        <item>Ακρυλικό</item>
+        <item>Πλέγμα</item>
+        <item>Νεφέλωμα</item>
+        <item>Βιοφωταύγεια</item>
+        <item>Ιριδίζον</item>
+        <item>Τροχιά</item>
+        <item>Ξέπλυμα μελανιού</item>
+        <item>Άνθιση</item>
+        <item>Φιόρδ</item>
+        <item>Μήτρα κουκκίδων</item>
+        <item>Γραμμές σάρωσης</item>
+        <item>Ραντάρ</item>
+        <item>Περίγραμμα</item>
+        <item>Πολυεδρικό</item>
+        <item>Γέμισμα άλμπουμ</item>
+        <item>Δευτερεύον γέμισμα</item>
+        <item>Τριτεύον γέμισμα</item>
+        <item>Γυαλί</item>
+        <item>Μεσάνυχτα</item>
+        <item>Καπνός</item>
+        <item>Γραμμή παλίρροιας</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Βρύο</item>
+        <item>Λεβαντί ομίχλη</item>
+        <item>Κεράσι</item>
+        <item>Βαθιά θάλασσα</item>
+        <item>Σκόνη</item>
+        <item>Ξεθωριασμένο</item>
+        <item>Σεληνόφως</item>
+        <item>Όνειρο</item>
+        <item>Υπέρυθρο</item>
+        <item>Δάσος</item>
+        <item>Ασημί</item>
+        <item>Καραμέλα</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Επάνω εξασθένιση</item>
+        <item>Κεντρικός προβολέας</item>
+        <item>Διαγώνια σκιά</item>
+        <item>Αριστερή κουρτίνα</item>
+        <item>Δεξιά κουρτίνα</item>
+        <item>Κεντρική ζώνη</item>
+        <item>Σταδιακή μετάβαση</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Αντίστροφο φύλλο</item>
+        <item>Αντίστροφη σταγόνα</item>
+        <item>Βότσαλο</item>
+        <item>Τόξο</item>
+        <item>Ασπίδα</item>
+        <item>Αντίστροφο τόξο</item>
+        <item>Αντίστροφη ασπίδα</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Ψίθυρος</item>
+        <item>Ακτινοβόλο</item>
+        <item>Πλημμύρα</item>
+        <item>Λαμπύρισμα</item>
+        <item>Βαθιά λάμψη</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Περίγραμμα άλμπουμ</item>
+        <item>Διαβάθμιση άλμπουμ</item>
+        <item>Δευτερεύον χρώμα άλμπουμ</item>
+        <item>Γυαλί άλμπουμ</item>
+        <item>Τριτεύον χρώμα άλμπουμ</item>
+        <item>Νέον περίγραμμα</item>
+    </string-array>
+</resources>

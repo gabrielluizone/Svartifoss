@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Valtameri</item>
+        <item>Auringonlasku</item>
+        <item>Keskikohdevalo</item>
+        <item>Lasiharso</item>
+        <item>Sametti</item>
+        <item>Noir-kohdevalo</item>
+        <item>Jääpesu</item>
+        <item>Ruusun kukinta</item>
+        <item>Prisma</item>
+        <item>Puolikuun reuna</item>
+        <item>Vuorovesiraidat</item>
+        <item>Paperikotelo</item>
+        <item>Nouseva lyhty</item>
+        <item>Jaettu kangastus</item>
+        <item>Rauhallinen ruudukko</item>
+        <item>Nokturno</item>
+        <item>Pilvitutkielma</item>
+        <item>Nestelammikot</item>
+        <item>Värimonoliitti</item>
+        <item>Jaettu sävy</item>
+        <item>Liukuväri</item>
+        <item>Kaksisävy</item>
+        <item>Raidat</item>
+        <item>Vinjetti</item>
+        <item>Grafiitti</item>
+        <item>Elokuva</item>
+        <item>Akryyli</item>
+        <item>Verkko</item>
+        <item>Sumu</item>
+        <item>Bioluminesenssi</item>
+        <item>Iridesoiva</item>
+        <item>Kiertorata</item>
+        <item>Mustepesu</item>
+        <item>Hehku</item>
+        <item>Vuono</item>
+        <item>Pistematriisi</item>
+        <item>Pyyhkäisyviivat</item>
+        <item>Tutka</item>
+        <item>Ääriviiva</item>
+        <item>Viisteinen</item>
+        <item>Albumin täyttö</item>
+        <item>Toissijainen täyttö</item>
+        <item>Kolmas täyttö</item>
+        <item>Lasi</item>
+        <item>Keskiyö</item>
+        <item>Savu</item>
+        <item>Vuorovesiraja</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Sammal</item>
+        <item>Laventeliusva</item>
+        <item>Kirsikka</item>
+        <item>Syvänmeri</item>
+        <item>Pöly</item>
+        <item>Valkaistu</item>
+        <item>Kuunvalo</item>
+        <item>Uni</item>
+        <item>Infrapuna</item>
+        <item>Metsä</item>
+        <item>Hopea</item>
+        <item>Karkki</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Ylähäivytys</item>
+        <item>Keskikohdevalo</item>
+        <item>Viistovarjo</item>
+        <item>Vasen verho</item>
+        <item>Oikea verho</item>
+        <item>Keskikaista</item>
+        <item>Ristihäivytys</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Käänteinen lehti</item>
+        <item>Käänteinen pisara</item>
+        <item>Kivi</item>
+        <item>Kaari</item>
+        <item>Kilpi</item>
+        <item>Käänteinen kaari</item>
+        <item>Käänteinen kilpi</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Kuiskaus</item>
+        <item>Säteilevä</item>
+        <item>Tulva</item>
+        <item>Kimallus</item>
+        <item>Syvä hehku</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Albumin ääriviiva</item>
+        <item>Albumiliukuväri</item>
+        <item>Albumin toissijainen väri</item>
+        <item>Albumilasi</item>
+        <item>Albumin kolmas väri</item>
+        <item>Neonääriviiva</item>
+    </string-array>
+</resources>

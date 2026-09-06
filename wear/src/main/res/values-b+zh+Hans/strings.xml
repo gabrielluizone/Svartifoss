@@ -164,4 +164,21 @@
     <string name="face_name_metadata" translatable="false">Metadata</string>
     <string name="face_name_ribbon" translatable="false">Ribbon</string>
     <string name="face_name_frame" translatable="false">Frame</string>
+    <string name="action_name_open_quick_actions_panel">打开快捷操作面板</string>
+    <string name="action_name_fast_forward">快进</string>
+    <string name="action_name_rewind">倒带</string>
+    <string name="action_name_set_speed">设置播放速度</string>
+    <string name="action_name_seek_position">跳到曲目位置</string>
+    <string name="action_name_set_volume">设置音量</string>
+    <string name="action_name_set_shuffle">设置随机播放</string>
+    <string name="action_name_set_repeat">设置重复</string>
+    <string name="action_name_open_volume_screen">打开音量屏幕</string>
+    <string name="action_name_open_progress_screen">打开进度屏幕</string>
+    <string name="action_name_open_face_picker">打开表盘选择器</string>
+    <string name="action_name_close_watch_app">关闭手表应用</string>
+    <string name="volume_screen_title">音量</string>
+    <string name="progress_screen_title">进度</string>
+    <string name="progress_screen_cancel_seek">取消跳转</string>
+    <string name="progress_screen_skip_back">后退 %1$d 秒</string>
+    <string name="progress_screen_skip_forward">前进 %1$d 秒</string>
 </resources>

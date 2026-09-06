@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Themadetails</string>
+    <string name="community_theme_detail_preview_screen">Voorbeeldscherm</string>
+    <string name="community_theme_detail_surface_player">Speler</string>
+    <string name="community_theme_detail_surface_aod">Altijd aan</string>
+    <string name="community_theme_detail_surface_volume">Volume</string>
+    <string name="community_theme_detail_surface_progress">Voortgang</string>
+    <string name="community_theme_detail_surface_quick_panel">Snelpaneel</string>
+    <string name="community_theme_detail_surface_queue">Wachtrij</string>
+    <string name="community_theme_detail_preview_label">Voorbeeld van %1$s</string>
+    <string name="community_theme_detail_preview_description">Voorbeeld van %1$s op het scherm %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Je huidige albumhoes kan alleen in dit voorbeeld op je telefoon verschijnen. Deze wordt nooit geüpload; voorbeeldtekst en voorbeeldtijden blijven in gebruik.</string>
+    <string name="community_theme_detail_information">Thema-informatie</string>
+    <string name="community_theme_detail_byline">Door %1$s</string>
+    <string name="community_theme_detail_layout">Basislay-out</string>
+    <string name="community_theme_detail_revision">Revisie</string>
+    <string name="community_theme_detail_minimum_version">Minimale Svartifoss-versie</string>
+    <string name="community_theme_detail_published">Gepubliceerd</string>
+    <string name="community_theme_detail_visual_settings">Visuele instellingen</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s visuele instelling</item>
+        <item quantity="other">%1$s visuele instellingen</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Niet beschikbaar</string>
+    <string name="community_theme_detail_add_apply">Toevoegen en toepassen</string>
+    <string name="community_theme_detail_remove">Thema verwijderen</string>
+    <string name="community_theme_detail_remove_title">‘%1$s’ uit Mijn thema’s verwijderen?</string>
+    <string name="community_theme_detail_remove_message">Deze opgeslagen kopie en alle wijzigingen die je eraan hebt gemaakt worden permanent verwijderd. Als het momenteel is toegepast, keert je horloge terug naar de ingebouwde basislay-out.</string>
+    <string name="community_theme_detail_removed">Thema verwijderd uit Mijn thema’s</string>
+    <string name="community_theme_detail_remove_error">Dit thema kon niet worden verwijderd</string>
+    <string name="community_theme_detail_like">Vind ik leuk</string>
+    <string name="community_theme_detail_unlike">Niet meer leuk vinden</string>
+    <string name="community_theme_detail_like_loading">Controleren…</string>
+    <string name="community_theme_detail_like_description">Vind %1$s leuk. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Vind %1$s niet meer leuk. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Aanmelden met Google is geannuleerd. Je vind-ik-leuk is niet opgeslagen.</string>
+    <string name="community_theme_detail_like_error">Je vind-ik-leuk kon niet worden opgeslagen. Controleer je verbinding en probeer het opnieuw.</string>
+    <string name="community_theme_detail_like_not_ready">Vind-ik-leuks voor dit thema zijn nog niet beschikbaar. Vernieuw Communitythema’s na de volgende publicatie.</string>
+    <string name="community_theme_detail_like_saved">Je vind-ik-leuk is opgeslagen. Openbare aantallen worden bij de volgende cataloguspublicatie bijgewerkt.</string>
+    <string name="community_theme_detail_unlike_saved">Je vind-ik-leuk is verwijderd. Openbare aantallen worden bij de volgende cataloguspublicatie bijgewerkt.</string>
+    <string name="community_theme_detail_apply_existing">Dit thema staat al in Mijn thema’s en is op je horloge toegepast</string>
+    <string name="community_theme_detail_requires_app_version">Voor dit thema is Svartifoss %1$s vereist voordat het kan worden toegevoegd.</string>
+    <string name="community_theme_detail_load_error">De details van dit thema konden niet worden geladen. Ga terug naar Communitythema’s en probeer het opnieuw.</string>
+    <string name="community_theme_detail_profile_mismatch">Het gedownloade profiel komt niet overeen met de openbare details van dit thema. Ga terug naar Communitythema’s en probeer het opnieuw.</string>
+    <string name="community_theme_detail_screenshot_description">Foto van dit thema op het horloge van de auteur</string>
+    <string name="community_theme_detail_source_author">Horloge van auteur</string>
+    <string name="community_theme_detail_source_rendered">Gegenereerd voorbeeld</string>
+    <string name="community_theme_detail_show_rendered">Gegenereerd voorbeeld tonen</string>
+    <string name="community_theme_detail_show_author">Foto van auteur tonen</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

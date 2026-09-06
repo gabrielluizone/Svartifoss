@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">प्रगती रिंग लेआउट</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>पूर्णपणे पारदर्शक</item>
+        <item>दुय्यम रंग</item>
+        <item>तृतीय रंग</item>
+        <item>रंग जाळी</item>
+        <item>ऑरोरा</item>
+        <item>स्पॉटलाइट</item>
+        <item>विन्येट</item>
+        <item>विभाजित टोन</item>
+        <item>रंग पट्टे</item>
+        <item>मध्यरात्र</item>
+        <item>हॅलो</item>
+        <item>धूर ब्लर</item>
+        <item>सूर्यास्त</item>
+        <item>महासागर</item>
+        <item>नेब्युला</item>
+        <item>निखारा</item>
+        <item>भरतीरेषा</item>
+        <item>जैवदीप्ती</item>
+        <item>इंद्रधनुषी</item>
+        <item>ग्रॅफाइट</item>
+        <item>सिनेमा</item>
+        <item>कक्षा</item>
+        <item>क्षितिज</item>
+        <item>इंक वॉश</item>
+        <item>फुलणे</item>
+        <item>फ्योर्ड</item>
+        <item>ठिपक्यांचे ग्रिड</item>
+        <item>स्कॅनलाइन</item>
+        <item>रडार</item>
+        <item>कॉन्टूर रेषा</item>
+        <item>फॅसेटेड</item>
+        <item>संधिप्रकाश</item>
+        <item>बर्फ</item>
+        <item>गुलाब</item>
+        <item>कागद</item>
+        <item>मोनोलिथ</item>
+        <item>कंदील</item>
+        <item>नॉयर</item>
+        <item>व्हेल्वेट</item>
+        <item>मृगजळ</item>
+        <item>ब्लूम</item>
+        <item>क्लाउड</item>
+        <item>नॉक्टर्न</item>
+        <item>द्रव</item>
+        <item>टायडल</item>
+        <item>विनाइल</item>
+        <item>कोरोना</item>
+        <item>अर्धचंद्र</item>
+        <item>ग्रिड</item>
+        <item>काच पडदा</item>
+        <item>मटेरियल</item>
+        <item>पोस्टर</item>
+        <item>स्टुडिओ</item>
+        <item>स्पेक्ट्रम</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>मणी</item>
+        <item>दुहेरी रेल</item>
+        <item>पल्स</item>
+        <item>क्रोम</item>
+        <item>स्पेक्ट्रम</item>
+        <item>पायऱ्या</item>
+        <item>कँडी</item>
+        <item>भूत</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>दुहेरी काठ</item>
+        <item>उभा मीटर (डावा)</item>
+        <item>उभा मीटर (उजवा)</item>
+        <item>वरचा मीटर</item>
+        <item>तळ मीटर</item>
+        <item>मध्य डायल</item>
+        <item>वरचा हॅलो</item>
+        <item>तळ हॅलो</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>दुहेरी रिंग</item>
+        <item>मणी</item>
+        <item>डॅश आणि ठिपका</item>
+        <item>24-तास खुणा</item>
+        <item>फक्त प्रगती</item>
+        <item>चमक</item>
+        <item>द्विरंगी</item>
+        <item>सुई</item>
+        <item>आलटून-पालटून</item>
+        <item>ठिणगी</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>बेझल काठ</item>
+        <item>इनसेट रिंग</item>
+        <item>आतील रिंग</item>
+        <item>ठळक रिंग</item>
+        <item>तळाशी उघडे</item>
+        <item>वर उघडे</item>
+        <item>डावी कमान</item>
+        <item>उजवी कमान</item>
+        <item>दुहेरी ट्रॅक</item>
+        <item>डावीकडे उघडे</item>
+        <item>उजवीकडे उघडे</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>कॉम्पॅक्ट पिल</item>
+        <item>चौकोनी अल्बम</item>
+        <item>स्टॅक्ड पिल</item>
+        <item>बॅज</item>
+        <item>काच बार</item>
+        <item>LCD</item>
+        <item>बाह्यरेषा चौकोन</item>
+        <item>रिबन</item>
+        <item>वेळ बबल</item>
+        <item>विभाजित टोन</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>टाइमलाइन (वर)</item>
+        <item>टाइमलाइन (तळ)</item>
+        <item>सेगमेंट्स (वर)</item>
+        <item>उभी टाइमलाइन (डावी)</item>
+        <item>उभी टाइमलाइन (उजवी)</item>
+        <item>मध्य डायल</item>
+        <item>दुहेरी टाइमलाइन</item>
+        <item>सेगमेंट्स (तळ)</item>
+        <item>मध्य स्टॅक</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>मऊ</item>
+        <item>क्रोम</item>
+        <item>होलोग्राफिक</item>
+        <item>बबल</item>
+        <item>रेल</item>
+        <item>सूर्यास्त</item>
+        <item>अल्बम बाह्यरेषा</item>
+        <item>गडद काच</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>पंखा</item>
+        <item>कक्षा</item>
+        <item>तळ डॉक</item>
+        <item>स्तंभ</item>
+        <item>विभाजित डेक</item>
+        <item>हिरा</item>
+        <item>कॅरुसेल</item>
+        <item>त्रिकोण</item>
+        <item>पायरी</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>मऊ</item>
+        <item>स्लॅब</item>
+        <item>शाई</item>
+        <item>रेल</item>
+        <item>सूर्यास्त</item>
+        <item>बबल</item>
+        <item>क्रोम</item>
+        <item>होलोग्राफिक</item>
+    </string-array>
+</resources>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>সমুদ্র</item>
+        <item>সূর্যাস্ত</item>
+        <item>মধ্যের স্পটলাইট</item>
+        <item>গ্লাস ভেইল</item>
+        <item>ভেলভেট</item>
+        <item>নোয়ার স্পটলাইট</item>
+        <item>আইস ওয়াশ</item>
+        <item>গোলাপের প্রস্ফুটন</item>
+        <item>প্রিজম</item>
+        <item>ক্রেসেন্ট রিম</item>
+        <item>জোয়ারের ব্যান্ড</item>
+        <item>পেপার স্লিভ</item>
+        <item>লণ্ঠনের উত্থান</item>
+        <item>মিরাজ স্প্লিট</item>
+        <item>শান্ত গ্রিড</item>
+        <item>নকটার্ন</item>
+        <item>মেঘ গবেষণা</item>
+        <item>তরল পুল</item>
+        <item>রঙের মনোলিথ</item>
+        <item>স্প্লিট টোন</item>
+        <item>গ্রেডিয়েন্ট</item>
+        <item>ডুয়োটোন</item>
+        <item>ব্যান্ড</item>
+        <item>ভিনিয়েট</item>
+        <item>গ্রাফাইট</item>
+        <item>সিনেমা</item>
+        <item>অ্যাক্রিলিক</item>
+        <item>মেশ</item>
+        <item>নেবুলা</item>
+        <item>জীবজ্যোতি</item>
+        <item>রঙধনু আভা</item>
+        <item>অরবিট</item>
+        <item>ইঙ্ক ওয়াশ</item>
+        <item>ব্লসম</item>
+        <item>ফিয়র্ড</item>
+        <item>ডট ম্যাট্রিক্স</item>
+        <item>স্ক্যানলাইন</item>
+        <item>রাডার</item>
+        <item>কনট্যুর</item>
+        <item>বহুমুখী</item>
+        <item>অ্যালবাম ফিল</item>
+        <item>সেকেন্ডারি ফিল</item>
+        <item>টারশিয়ারি ফিল</item>
+        <item>গ্লাস</item>
+        <item>মধ্যরাত</item>
+        <item>ধোঁয়া</item>
+        <item>জোয়ারের রেখা</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>শ্যাওলা</item>
+        <item>ল্যাভেন্ডার কুয়াশা</item>
+        <item>চেরি</item>
+        <item>গভীর সমুদ্র</item>
+        <item>ধুলো</item>
+        <item>ব্লিচ</item>
+        <item>চাঁদের আলো</item>
+        <item>স্বপ্ন</item>
+        <item>ইনফ্রারেড</item>
+        <item>বন</item>
+        <item>রূপালি</item>
+        <item>ক্যান্ডি</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>ওপরের ফেড</item>
+        <item>মধ্যের স্পটলাইট</item>
+        <item>তির্যক ছায়া</item>
+        <item>বাম পর্দা</item>
+        <item>ডান পর্দা</item>
+        <item>মধ্যের ব্যান্ড</item>
+        <item>ক্রসফেড</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>উল্টো পাতা</item>
+        <item>উল্টো ড্রপ</item>
+        <item>নুড়ি</item>
+        <item>আর্চ</item>
+        <item>শিল্ড</item>
+        <item>উল্টো আর্চ</item>
+        <item>উল্টো শিল্ড</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>ফিসফিস</item>
+        <item>দীপ্তিময়</item>
+        <item>ফ্লাড</item>
+        <item>ঝিলিক</item>
+        <item>ডিপ গ্লো</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>অ্যালবাম আউটলাইন</item>
+        <item>অ্যালবাম গ্রেডিয়েন্ট</item>
+        <item>সেকেন্ডারি অ্যালবাম রঙ</item>
+        <item>অ্যালবাম গ্লাস</item>
+        <item>টারশিয়ারি অ্যালবাম রঙ</item>
+        <item>নিয়ন আউটলাইন</item>
+    </string-array>
+</resources>

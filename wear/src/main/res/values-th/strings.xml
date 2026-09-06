@@ -185,4 +185,21 @@
 
     <string name="metadata_about">เกี่ยวกับ</string>
     <string name="metadata_source">กำลังเล่นใน</string>
+    <string name="action_name_open_quick_actions_panel">เปิดแผงการทำงานด่วน</string>
+    <string name="action_name_fast_forward">กรอไปข้างหน้า</string>
+    <string name="action_name_rewind">กรอกลับ</string>
+    <string name="action_name_set_speed">ตั้งค่าความเร็วการเล่น</string>
+    <string name="action_name_seek_position">ข้ามไปยังตำแหน่งแทร็ก</string>
+    <string name="action_name_set_volume">ตั้งค่าระดับเสียง</string>
+    <string name="action_name_set_shuffle">ตั้งค่าการสุ่ม</string>
+    <string name="action_name_set_repeat">ตั้งค่าการเล่นซ้ำ</string>
+    <string name="action_name_open_volume_screen">เปิดหน้าจอระดับเสียง</string>
+    <string name="action_name_open_progress_screen">เปิดหน้าจอความคืบหน้า</string>
+    <string name="action_name_open_face_picker">เปิดตัวเลือกหน้าปัด</string>
+    <string name="action_name_close_watch_app">ปิดแอปนาฬิกา</string>
+    <string name="volume_screen_title">ระดับเสียง</string>
+    <string name="progress_screen_title">ความคืบหน้า</string>
+    <string name="progress_screen_cancel_seek">ยกเลิกการเลื่อนไปยังตำแหน่ง</string>
+    <string name="progress_screen_skip_back">ข้ามย้อนกลับ %1$d วินาที</string>
+    <string name="progress_screen_skip_forward">ข้ามไปข้างหน้า %1$d วินาที</string>
 </resources>

@@ -1898,6 +1898,11 @@ Ha ezt tapasztalja, bekapcsolhatja ezt az opciót, hogy ambient módban teljesen
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1941,6 +1946,11 @@ Ha ezt tapasztalja, bekapcsolhatja ezt az opciót, hogy ambient módban teljesen
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2387,4 +2397,463 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Másolás</string>
+    <string name="dev_report_copied">Jelentés másolva</string>
+    <string name="dev_watch_snapshot_inspector">Órabeállítások pillanatképe</string>
+    <string name="dev_watch_snapshot_inspector_description">Ami ténylegesen elküldésre kerülne az órának most: aktív megjelenési hatókör, becsült méret és mely inaktív számlaphatókörű gyorsítótárak lettek eldobva a keretbe féréshez</string>
+    <string name="dev_data_layer_inspector">Data Layer-vizsgáló</string>
+    <string name="dev_data_layer_inspector_description">Csatlakoztatott Wearable-csomópontok és az utolsó WatchInfo, amellyel az óraalkalmazás válaszolt — a „Nincs csatlakoztatott óra” mögötti nyers állapot</string>
+    <string name="dev_media_sessions_inspector">MediaSession-böngésző</string>
+    <string name="dev_media_sessions_inspector_description">Minden jelenleg aktív MediaSession, nem csak a követett: meghirdetett műveletek, lejátszási sor és lejátszási útvonal</string>
+    <string name="dev_view_phone_log">Telefonnapló megtekintése</string>
+    <string name="dev_view_phone_log_description">A lemezen tárolt Timber-napló vége, valamint az óra naplója, ha a „Naplók küldése” korábban már lekérte</string>
+    <string name="dev_theme_submission_preflight">Témabeküldés előzetes ellenőrzése</string>
+    <string name="dev_theme_submission_preflight_description">Minden mentett óratémát lefuttat a közösségi beküldés ellenőrzésén, és megnevezi a pontos beállítást, amely blokkolja, ha van ilyen</string>
+    <string name="dev_appearance_resolution_inspector">Megjelenésfeloldás-vizsgáló</string>
+    <string name="dev_appearance_resolution_inspector_description">Minden hatókörrel rendelkező megjelenési kulcsnál megmutatja, hogy a négy feloldási lépés közül melyik nyert ténylegesen — explicit számlapérték, számlaponkénti alapérték, örökölt globális érték vagy definíciós alapérték — és hogy mindegyik milyen értéket ad vissza</string>
+    <string name="action_fast_forward">Gyors előretekerés</string>
+    <string name="action_rewind">Visszatekerés</string>
+    <string name="action_set_playback_speed">Sebesség beállítása: %1$s×</string>
+    <string name="action_seek_to_percent">Ugrás ide: %1$d%%</string>
+    <string name="action_set_volume_percent">Hangerő beállítása: %1$d%%</string>
+    <string name="action_set_shuffle_on">Véletlen sorrend bekapcsolása</string>
+    <string name="action_set_shuffle_off">Véletlen sorrend kikapcsolása</string>
+    <string name="action_set_repeat_off">Ismétlés kikapcsolása</string>
+    <string name="action_set_repeat_all">Összes ismétlése</string>
+    <string name="action_set_repeat_one">Egy szám ismétlése</string>
+    <string name="group_playback_speed">Lejátszási sebesség</string>
+    <string name="group_track_position">Szám pozíciója</string>
+    <string name="group_shuffle_mode">Véletlen sorrend mód</string>
+    <string name="group_repeat_mode">Ismétlési mód</string>
+    <string name="group_volume_levels">Hangerőszintek</string>
+    <string name="group_watch_screens">Óraképernyők</string>
+    <string name="group_find_music">Keresés és lejátszás</string>
+    <string name="action_open_face_picker">Számlapválasztó megnyitása</string>
+    <string name="action_close_watch_app">Óraalkalmazás bezárása</string>
+    <string name="hand_gestures">KÉZMOZDULATOK</string>
+    <string name="hand_gestures_hint">Kompatibilis órákon érhető el, amíg a Svartifoss meg van nyitva.</string>
+    <string name="hand_gestures_hint_disconnected">Csatlakoztasd az órádat, és nyisd meg rajta a Svartifosst annak ellenőrzéséhez, hogy támogatja-e a kézmozdulatokat.</string>
+    <string name="hand_gestures_hint_outdated">Frissítsd az óraalkalmazást annak ellenőrzéséhez, hogy ez az óra támogatja-e a kézmozdulatokat.</string>
+    <string name="hand_gestures_hint_unsupported">Ez az óra nem támogatja a kézmozdulatokat, ezért az itt hozzárendelt művelet soha nem fog lefutni.</string>
+    <string name="hand_gestures_hint_disabled">A kézmozdulatok ki vannak kapcsolva ezen az órán. Kapcsold be őket magán az órán a Beállítások \u2192 Gesztusok menüben.</string>
+    <string name="hand_gestures_hint_ready">Készen áll ezen az órán: csippents kétszer, miközben a Svartifoss lejátszó nyitva van.</string>
+    <string name="hand_gesture_how_it_works">Emelt csuklóval gyorsan érintsd össze kétszer a hüvelyk- és mutatóujjad. A Wear OS ezt elsődleges műveletnek nevezi, ezért egy másik gyártó órája a saját, ezzel egyenértékű kézmozdulatát használhatja.\n\nCsak akkor működik, amikor a Svartifoss lejátszó nyitva van az órán és a képernyő be van kapcsolva \u2014 nem a számlapról, nem a lejátszási sor vagy a menü felett, és nem a mindig bekapcsolt kijelzőn. Az éppen aktuális lejátszási állapothoz beállított művelet fut le, ezért állítsd be mindkét Vezérlők oldalon, hogy mindkét állapotban működjön.\n\nA gesztust az óra saját Beállítások \u2192 Gesztusok menüjében is be kell kapcsolni.</string>
+    <string name="double_pinch">Dupla csippentés</string>
+    <string name="icon_selection_search_hint">Ikonok keresése</string>
+    <string name="icon_selection_search_empty">Egyetlen ikon sem felel meg a keresésnek</string>
+    <string name="open_quick_actions_panel">Gyorsműveletek panel megnyitása</string>
+    <string name="open_volume_screen">Hangerőképernyő megnyitása</string>
+    <string name="open_progress_screen">Folyamatképernyő megnyitása</string>
+    <string name="export_config_failed_detail">Nem sikerült exportálni a biztonsági mentést: %1$s</string>
+    <string name="backup_selection_title">Biztonsági mentés tartalmának kiválasztása</string>
+    <string name="backup_selection_description">Válassza ki a Svartifoss menteni kívánt részeit. Alapértelmezés szerint minden ki van választva; a nem kiválasztott részek változatlanok maradnak a biztonsági mentés importálásakor.</string>
+    <string name="backup_selection_select_all">Összes kiválasztása</string>
+    <string name="backup_selection_clear_all">Összes törlése</string>
+    <string name="backup_selection_export">Biztonsági mentés exportálása</string>
+    <string name="backup_selection_empty">Válasszon legalább egy elemet</string>
+    <string name="backup_section_buttons">Gombkonfigurációk</string>
+    <string name="backup_section_buttons_description">Gomb-, korona- és gesztusműveletek zenelejátszáskor és leállított állapotban.</string>
+    <string name="backup_section_actions">Műveletlista</string>
+    <string name="backup_section_actions_description">Az óra műveletmenüjében megjelenő műveletek rendezett listája.</string>
+    <string name="backup_section_app_settings">Alkalmazásbeállítások</string>
+    <string name="backup_section_app_settings_description">Telefonbeállítások, óraviselkedés, nyelv, lejátszás és integrációk.</string>
+    <string name="backup_section_watch_appearance">Óra megjelenése és témái</string>
+    <string name="backup_section_watch_appearance_description">Óraelrendezések, színek, tipográfia, panelek, AOD és mentett egyéni témák.</string>
+    <string name="backup_section_playlist_shortcuts">Lejátszásilista-parancsikonok</string>
+    <string name="backup_section_playlist_shortcuts_description">Mentett zene-, album-, előadó-, lejátszásilista- és egyéb streaming hivatkozásai.</string>
+    <string name="backup_section_history">Keresési és lejátszási előzmények</string>
+    <string name="backup_section_history_description">Legutóbbi keresések és nemrég lejátszott számok.</string>
+    <string name="backup_section_icons">Betöltött ikonok és borítók</string>
+    <string name="backup_section_icons_description">Egyéni műveletikonok, parancsikonborítók és gyorsítótárazott alkalmazásikonok.</string>
+    <string name="backup_section_privacy">Adatvédelem és értesítések</string>
+    <string name="backup_section_privacy_description">Összeomlási jelentések, közleményértesítések és az alkalmazás által mentett egyéb hozzájárulási beállítások.</string>
+    <string name="backup_section_local_app_state">Helyi alkalmazásállapot</string>
+    <string name="backup_section_local_app_state_description">Aktuális kiemelés, utolsó menüpozíció, befejezett kérdések és frissítési állapot.</string>
+    <string name="backup_section_auxiliary_data">Egyéb alkalmazásadatok</string>
+    <string name="backup_section_auxiliary_data_description">További, az alkalmazáshoz tartozó beállítások és belső fájlok, beleértve a jövőbeli adattárakat.</string>
+    <string name="pref_numeric_range">%1$d és %2$d között.</string>
+    <string name="background_editor_artwork">Borítókép</string>
+    <string name="background_editor_layers">Rétegek</string>
+    <string name="background_editor_layers_count">%1$d / %2$d</string>
+    <string name="background_editor_add_layer">Réteg hozzáadása</string>
+    <string name="background_editor_reset_layers">Visszaállítás</string>
+    <string name="background_editor_empty">Nincsenek rétegek. A borítókép önmagában jelenik meg.</string>
+    <string name="background_editor_note">A lista tetején lévő réteg minden más fölé kerül; az alul lévő van a legközelebb a borítóképhez.</string>
+    <string name="background_editor_full">Legfeljebb %1$d réteg helyezhető egymásra.</string>
+    <string name="background_layer_kind_wash">Háttér</string>
+    <string name="background_layer_kind_shade">Árnyékolás</string>
+    <string name="background_layer_kind_floor">Kiemelési alap</string>
+    <string name="background_layer_move_up">Réteg feljebb mozgatása</string>
+    <string name="background_layer_move_down">Réteg lejjebb mozgatása</string>
+    <string name="background_layer_more">További beállítások ehhez a réteghez</string>
+    <string name="background_layer_add_title">Réteg hozzáadása</string>
+    <string name="background_layer_style_title">%1$s réteg</string>
+    <string name="background_layer_opacity">Erősség</string>
+    <string name="background_layer_color">Szín</string>
+    <string name="background_layer_custom_color">Szín kiválasztása</string>
+    <string name="background_layer_duplicate">Másolat készítése</string>
+    <string name="background_layer_remove">Eltávolítás</string>
+    <string name="background_layer_color_default">Alapértelmezett</string>
+    <string name="background_layer_color_album">Albumszín</string>
+    <string name="background_layer_color_secondary">Második albumszín</string>
+    <string name="background_layer_color_tertiary">Harmadik albumszín</string>
+    <string name="background_layer_color_desaturated">Tompított albumszín</string>
+    <string name="background_layer_color_black">Fekete</string>
+    <string name="background_layer_color_custom">Egyéni szín</string>
+    <string name="background_layer_reset_title">Visszaállítja a rétegeket?</string>
+    <string name="background_layer_reset_message">A rétegek visszaállnak a saját soraikban megadott árnyékolásra és kiemelési alapra, amelyet egy régebbi verziót futtató óra egyébként is megjelenít.</string>
+    <string name="watch_element_progress">Folyamat</string>
+    <string name="watch_element_volume">Hangerő</string>
+    <string name="watch_element_quick_panel">Gyorsműveletek</string>
+    <string name="watch_element_queue">Lejátszási sor</string>
+    <string name="watch_element_lyrics">Dalszöveg</string>
+    <string name="player_section_on_screen">A képernyőn</string>
+    <string name="player_element_app_icon">Alkalmazásikon</string>
+    <string name="player_element_controls">Lejátszóvezérlők</string>
+    <string name="player_element_tap_flash">Érintési villanás</string>
+    <string name="player_element_inner_progress">Belső folyamat</string>
+    <string name="player_element_edge_arc">Széli ív</string>
+    <string name="player_element_edge_seek">Széli tekerés</string>
+    <string name="player_element_clock">Óra</string>
+    <string name="player_element_cover_art">Borítókép</string>
+    <string name="setting_album_art_filter">Albumborító-szűrő</string>
+    <string name="setting_album_art_filter_description">Független színkezelés alkalmazása bármely albumborító-stílusra.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto extra könnyű vonalvezetéssel a finom kijelzőmegjelenéshez.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto könnyű, légies vonalvezetéssel és a család megszokott arányaival.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto erősebb közepes vonalvastagsággal a tömör, jól olvasható címkékhez.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto a legnehezebb rendszerbeli súllyal a hangsúlyos kijelzőszöveghez.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Vízszintesen sűrített Roboto, hogy a hosszabb címek kisebb helyen is elférjenek.</string>
+    <string name="setting_wear_title_font">Cím betűtípusa</string>
+    <string name="setting_wear_title_text_case">Cím kis-/nagybetűi</string>
+    <string name="setting_wear_artist_font">Előadó betűtípusa</string>
+    <string name="setting_wear_artist_text_case">Előadó kis-/nagybetűi</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Barátságos, lekerekített sans betűtípus, amelyet a korai olvasáshoz terveztek</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Nagy kontrasztú Didone kijelzőbetű szerkesztői hangsúllyal</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Masszív plakát sans kézzel írt, képregényes éllel</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Nyugodt geometrikus sans tágas, egyenletes térközzel</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Kortárs slab serif finoman lekerekített végződésekkel</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Hatalmas slab serif erőteljes címsorokhoz</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Keskeny, kézzel rajzolt betű kis kapitálisokkal</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Szorosan szedett condensed sans hangos címsorokhoz</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Geometrikus slab serif, amely kis méretben is stabil marad</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Képregényes kijelzőbetű kirobbanó energiával</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Stencil katonai kijelzőbetű</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Álló serif meleg, kötetlen ívekkel</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Humanista sans finoman lekerekített sarkokkal</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Groteszk sans erős, szókimondó formákkal</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Finomított írógépes monospace forgatókönyvekhez</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Lekerekített slab serif puha, könyves hangulattal</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Régi stílusú könyv-serif hosszabb szövegrészekhez hangolva</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Alacsony kontrasztú geometrikus sans modern kidolgozással</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Robusztus serif, amely törzsszöveg-méretben is jól tartja magát</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Kortárs technikai sans szögletes csatlakozásokkal</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Programozói monospace tiszta, jól megkülönböztethető jelekkel</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Humanista monospace képernyőn megjelenő kódhoz</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Buborékos kézírásos betű lekerekített vonásokkal</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Geometrikus sans az 1920-as évek vintage karakterével</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Geometrikus sans a Futura hagyományában</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Hurok nélküli thai és latin sans enyhe dőléssel</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Az olvasási vizuális terhelés csökkentésére formált sans</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Félkövér összekötött script retró felirat-hangulattal</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Félig geometrikus sans, amely egyensúlyozza a melegséget és pontosságot</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Minimalista sans tiszta felületi szöveghez</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Jól lekerekített sans puha végződésekkel</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Geometrikus sans egyenletes, modern ritmussal</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Szögletes techno betű gaming hangulattal</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Kompakt technikai sans rácsra rajzolva</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Modern groteszk jellegzetes nyitott ívekkel</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Pixeles betű, mintha egyenesen egy játéktermi gépből érkezett volna</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Lekerekített geometrikus sans gyengéd, könnyed érzettel</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Szögletes condensed sans technikai szögekkel</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Art-deco kijelzőbetű retró cégtábla-festészeti gyökerekkel</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">A Roboto monospace társa</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Zömök kijelzőbetű játékos, tompa vonásokkal</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Széles ipari betű nehéz, szögletes formákkal</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Élénk, döntött kijelzőbetű Gujarati gyökerekkel</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Apró bitmap betű, amely a korai számítógépes képernyőket idézi</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Monospace kényelmes kódolvasáshoz</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Keskeny, csupa nagybetűs betű erős plakátjelenléttel</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Magas, keskeny betű Devanagari és Latin címsorokhoz</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Szögletes humanista sans technikai hangulattal</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Teljesen lekerekített sans megközelíthető hangulattal</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Keskeny betű az 1920-as évek kávéházi feliratait idézve</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Slab serif finoman levágott, modern végződésekkel</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Barátságos humanista sans nyitott, jól olvasható formákkal</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Meleg sans masszív formákkal a kényelmes olvasásért</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Sokoldalú humanista sans tiszta felületekhez</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Finomított szöveg-serif szerkesztői hanggal</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Klasszikus könyv-serif képernyős olvasásra hangolva</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Praktikus groteszk sans széles, stabil ritmussal</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Technikai humanista sans pontos arányokkal</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Technikai monospace csiszolt, olvasható textúrával</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Kortárs serif mérnöki karakterrel</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Tiszta munkabetű kompakt, praktikus formákkal</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Játékos groteszk barátságos arányokkal</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Geometrikus sans futurisztikus, tágas érzettel</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Modern geometrikus sans elegáns, városi vonalakkal</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Kiegyensúlyozott kortárs sans kis képernyőkhöz</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Magabiztos kijelző sans kifejező arányokkal</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Jól olvasható kísérő sans hosszabb számadatokhoz</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Éles monospace modern technikai hangvétellel</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Szokatlan sans művészien irányított, játékos formákkal</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Rugalmas kortárs sans visszafogott pontossággal</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Tiszta, barátságos sans könnyed olvashatósághoz</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Lekerekített kijelző sans vidám személyiséggel</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Élénk groteszk, amely a szerkezetet szokatlan részletekkel ötvözi</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Nagy kontrasztú kijelző serif drámai címekhez</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Elegáns, nagy kontrasztú irodalmi serif</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Kecses kijelző serif kalligrafikus részletekkel</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Robusztus slab serif, amely kis méretben is tiszta marad</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Sokoldalú serif sűrű, kifejező olvasáshoz</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Meleg, régi stílusú serif könyves hanggal</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Elegáns sans jellegzetes, kifinomult betűformákkal</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Félkövér geometrikus sans erős címsorokhoz</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Keskenyítésre alkalmas sans sportos, dinamikus energiával</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Puha sans nyitott belső terekkel és barátságos felirat-hangulattal</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Sokoldalú sans, amely egyensúlyozza a humanista melegséget és tisztaságot</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Közlekedési tipográfiából ihletett tiszta sans magabiztos ritmussal</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Semleges, akadálymentes sans mindennapi felületekhez</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Könnyű geometrikus sans sima, modern ívekkel</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Lekerekített, keskeny sans enyhén futurisztikus érzettel</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Tiszta geometrikus sans finom thai ihletésű karakterrel</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Széles futurisztikus kijelzőbetű maximális jelenléthez</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Változó sans–mono család játékos technikai hanggal</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Változó szélességű monospace jellegzetes digitális textúrával</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Széles, nagyon jól olvasható sans kiterjedt írásrendszer-támogatással</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Megbízható serif kiterjedt írásrendszer-támogatással</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Többnyelvű monospace egyenletes ritmushoz</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Kompakt modern sans éles, héber hatású ritmussal</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Masszív humanista sans tiszta olvasásra optimalizálva</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Barátságos képernyős sans lekerekített, nyitott textúrával</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Kompakt geometrikus sans jellegzetes arányokkal</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Élénk kalligrafikus serif irodalmi karakterrel</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Tiszta humanista sans kiváló felületi olvashatósággal</string>
+    <string name="setting_wear_note_show_cover">Borítókép</string>
+    <string name="aod_element_artwork">Borítókép</string>
+    <string name="aod_element_clock">Óra</string>
+    <string name="aod_element_track_info">Száminformációk</string>
+    <string name="aod_element_transport">Lejátszásvezérlők</string>
+    <string name="aod_element_progress">Folyamat</string>
+    <string name="aod_element_up_next">Következő</string>
+    <string name="aod_section_artwork">Borítókép</string>
+    <string name="aod_control_tint">Árnyalat</string>
+    <string name="aod_control_brightness">Fényerő</string>
+    <string name="aod_control_art_treatment">Kezelés</string>
+    <string name="aod_control_art_opacity">Átlátszatlanság</string>
+    <string name="mini_button_control_visibility">Megjelenítés</string>
+    <string name="mini_button_control_arrangement">Elrendezés</string>
+    <string name="mini_button_control_shape">Alak</string>
+    <string name="mini_button_control_background">Háttér</string>
+    <string name="mini_button_control_opacity">Átlátszatlanság</string>
+    <string name="mini_button_assign_action">Műveletek hozzárendelése</string>
+    <string name="mini_button_gestures_note">Húzd felfelé, lefelé és balra a lejátszón. A jobbra húzás mindig a rendszer bezárási gesztusa, és soha nincs elfogva.</string>
+    <string name="setting_wear_chat_cover_shape">Csevegési avatar alakja</string>
+    <string name="setting_wear_chat_show_cover">Borítókép</string>
+    <string name="setting_wear_metadata_cover_shape">Metaadat-borító alakja</string>
+    <string name="setting_wear_metadata_show_cover">Borítókép</string>
+    <string-array name="wear_text_case_entries">
+        <item>Normál</item>
+        <item>NAGYBETŰ</item>
+        <item>kisbetű</item>
+        <item>Címstílus</item>
+    </string-array>
+    <string name="wear_text_font_follow">Globális betűtípus követése</string>
+    <string name="category_wf_typography_track_time">Szám ideje</string>
+    <string name="setting_wear_track_time_font">Számidő betűtípusa</string>
+    <string name="wear_track_time_font_follow">A dizájn követése</string>
+    <string name="setting_wear_track_time_font_weight">Számidő betűvastagsága</string>
+    <string name="setting_wear_track_time_font_italic">Dőlt számidő</string>
+    <string name="setting_wear_track_time_font_scale">Számidő mérete</string>
+    <string name="setting_wear_track_time_font_opacity">Számidő átlátszatlansága</string>
+    <string name="setting_wear_track_time_font_tracking">Számidő betűköze</string>
+    <string-array name="album_art_filter_entries">
+        <item>Nincs</item>
+        <item>Monokróm</item>
+        <item>Meleg</item>
+        <item>Hűvös</item>
+        <item>Aranyóra</item>
+        <item>Rozé</item>
+        <item>Vintage film</item>
+        <item>Fakult film</item>
+        <item>Matt</item>
+        <item>Élénk</item>
+        <item>Ütés</item>
+        <item>Pasztell</item>
+        <item>Szépia</item>
+        <item>Cianotípia</item>
+        <item>Kékeszöld és narancs</item>
+        <item>Nagy kontraszt</item>
+        <item>Lágy fény</item>
+        <item>Éjszaka</item>
+    </string-array>
+    <string name="queue_item_now_playing">Most játszott</string>
+    <string name="queue_item_unknown_title">Ismeretlen szám</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Lejátszási sor · %1$d szám</item>
+        <item quantity="other">Lejátszási sor · %1$d szám</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Kiemelési alap színe</string>
+    <string name="setting_wear_accent_floor_custom_color">Egyéni alapszín</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Válassza ki a használt színt, amikor a Kiemelési alap színe beállítás értéke Egyéni szín</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Albumkiemelés</item>
+        <item>Album másodlagos színe</item>
+        <item>Album harmadlagos színe</item>
+        <item>Egyéni szín</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Semleges, rendkívül olvasható felületi sans mindennapi olvasáshoz</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Akadálymentességre tervezett, jól megkülönböztethető betűformák, amelyek kis méretben is tiszták</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Finoman lekerekített geometrikus sans — magabiztos és barátságos</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Kompakt humanista sans, amely több helyet hagy a hosszú címeknek</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Magas, keskeny kijelzőbetű lendületes plakátenergiával</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Kortárs serif kényelmes hosszú szövegek olvasásához</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Kifejező, puha serif melegséggel és karakterrel</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Retró-futurisztikus monospace technikai éllel</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Sűrű, nehéz kijelzőbetű maximális kontraszthoz</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Folyó kézírásos script élénk, személyes érzettel</string>
+    <string name="setting_wear_artist_text_mode">Előadószöveg viselkedése</string>
+    <string name="setting_wear_album_art_source">Albumborító forrása</string>
+    <string name="setting_user_font">Saját betűtípusom</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">.tt﻿f vagy .otf fájl importálása erről a telefonról</string>
+    <string name="setting_user_font_loaded">%1$s · koppints a cseréhez vagy eltávolításhoz</string>
+    <string name="user_font_pick">Betűtípusfájl kiválasztása</string>
+    <string name="user_font_replace">Csere</string>
+    <string name="user_font_remove">Eltávolítás</string>
+    <string name="user_font_imported">A(z) „%1$s” importálva. Válaszd ki bármely betűtípuslistából; a rendszer éppen elküldi az órádra.</string>
+    <string name="user_font_removed">Az importált betűtípus eltávolítva.</string>
+    <string name="user_font_error_too_large">A fájl mérete %1$s. A betűtípusnak %2$s alatt kell lennie, hogy gyorsan eljusson az órára.</string>
+    <string name="user_font_error_not_a_font">Ez a fájl nem olyan betűtípus, amelyet ez a telefon olvasni tud. A TrueType és OpenType (.ttf, .otf) működik; a webes betűtípusok (.woff, .woff2) nem.</string>
+    <string name="user_font_error_unreadable">A fájl nem olvasható. Próbáld meg újra kiválasztani, vagy előbb másold erre a telefonra.</string>
+    <string name="user_font_not_shareable">A saját betűtípusodat használó témák ezen a telefonon maradnak</string>
+    <string name="setting_custom_album_art_image">Használandó kép</string>
+    <string name="setting_custom_album_art_folder">Forrásmappa</string>
+    <string name="setting_custom_album_art_none">Még nincs kiválasztva — koppints a kiválasztáshoz</string>
+    <string name="setting_custom_album_art_chosen">%1$s · koppints a módosításhoz</string>
+    <string name="custom_album_art_image_set">Ez a kép mostantól a lejátszó mögött jelenik meg.</string>
+    <string name="custom_album_art_folder_set">Minden számhoz egy kép lesz kiválasztva ebből a mappából.</string>
+    <string name="custom_album_art_error">Nem sikerült megnyitni. Válaszd ki újra, vagy válassz valamit a telefon saját tárhelyéről.</string>
+    <string name="custom_album_art_not_shareable">A saját képeidet használó témák ezen a telefonon maradnak</string>
+    <string name="setting_wear_text_block_align">Szöveg igazítása</string>
+    <string name="setting_wear_text_block_align_description">Az a szél, amelyhez a szám szövege igazodik. A „Számlap követése” megtartja azt az igazítást, amelyre az adott számlapot tervezték.</string>
+    <string name="setting_wear_text_block_position">Szöveg pozíciója</string>
+    <string name="setting_wear_text_block_position_description">Ahol a szám szövege a képernyőn helyezkedik el. A „Számlap követése” megtartja azt a pozíciót, amelyre az adott számlapot tervezték.</string>
+    <string name="setting_online_artwork">Online borítókép</string>
+    <string name="setting_online_artwork_description">Engedd, hogy a számlap online keresett képet mutasson \u2014 az éppen játszott előadót, vagy album borítóját, ha a lejátszó nem biztosít ilyet. A telefon a Deezer nyilvános katalógusában keres, és gyorsítótárazza az eredményt; csak a szám és az előadó neve kerül elküldésre, és semmi sem lesz lekérdezve, hacsak egy számlap nincs e források egyikére állítva. Kikapcsolva a lejátszó saját borítóképe használatos.</string>
 </resources>

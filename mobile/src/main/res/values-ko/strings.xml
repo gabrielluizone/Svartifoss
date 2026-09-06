@@ -1874,6 +1874,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1917,6 +1922,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2358,4 +2368,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">복사</string>
+    <string name="dev_report_copied">보고서 복사됨</string>
+    <string name="dev_watch_snapshot_inspector">시계 환경설정 스냅샷</string>
+    <string name="dev_watch_snapshot_inspector_description">지금 실제로 시계에 전송될 내용: 활성 모양 범위, 예상 크기, 그리고 크기 제한에 맞추기 위해 버린 비활성 페이스 범위 캐시</string>
+    <string name="dev_data_layer_inspector">Data Layer 검사기</string>
+    <string name="dev_data_layer_inspector_description">연결된 Wearable 노드와 시계 앱이 마지막으로 응답한 WatchInfo - "연결된 시계 없음" 뒤의 원시 상태</string>
+    <string name="dev_media_sessions_inspector">MediaSession 탐색기</string>
+    <string name="dev_media_sessions_inspector_description">현재 활성 상태인 모든 MediaSession을 표시합니다. 추적 중인 세션뿐 아니라 광고된 동작, 대기열, 재생 경로도 포함됩니다</string>
+    <string name="dev_view_phone_log">휴대전화 로그 보기</string>
+    <string name="dev_view_phone_log_description">디스크에 저장된 Timber 로그의 끝부분과, "로그 보내기"가 이전에 가져온 적이 있다면 시계 로그</string>
+    <string name="dev_theme_submission_preflight">테마 제출 사전 검사</string>
+    <string name="dev_theme_submission_preflight_description">저장된 모든 시계 테마를 커뮤니티 제출 검사에 통과시키고, 차단하는 설정이 있다면 정확히 어떤 설정인지 표시합니다</string>
+    <string name="dev_appearance_resolution_inspector">모양 해석 검사기</string>
+    <string name="dev_appearance_resolution_inspector_description">범위가 지정된 각 모양 키에 대해 네 단계의 해석 중 실제로 선택된 것 - 명시적 페이스 값, 페이스별 기본값, 레거시 전역값 또는 정의 기본값 - 과 각 단계가 반환하는 값을 표시합니다</string>
+    <string name="action_fast_forward">빨리 감기</string>
+    <string name="action_rewind">되감기</string>
+    <string name="action_set_playback_speed">속도를 %1$s×로 설정</string>
+    <string name="action_seek_to_percent">%1$d%%로 이동</string>
+    <string name="action_set_volume_percent">볼륨을 %1$d%%로 설정</string>
+    <string name="action_set_shuffle_on">셔플 켜기</string>
+    <string name="action_set_shuffle_off">셔플 끄기</string>
+    <string name="action_set_repeat_off">반복 끄기</string>
+    <string name="action_set_repeat_all">전체 반복</string>
+    <string name="action_set_repeat_one">한 곡 반복</string>
+    <string name="group_playback_speed">재생 속도</string>
+    <string name="group_track_position">트랙 위치</string>
+    <string name="group_shuffle_mode">셔플 모드</string>
+    <string name="group_repeat_mode">반복 모드</string>
+    <string name="group_volume_levels">볼륨 단계</string>
+    <string name="group_watch_screens">시계 화면</string>
+    <string name="group_find_music">찾아서 재생</string>
+    <string name="action_open_face_picker">워치 페이스 선택기 열기</string>
+    <string name="action_close_watch_app">시계 앱 닫기</string>
+    <string name="hand_gestures">손 제스처</string>
+    <string name="hand_gestures_hint">Svartifoss가 열려 있는 동안 호환되는 시계에서 사용할 수 있습니다.</string>
+    <string name="hand_gestures_hint_disconnected">시계를 연결하고 Svartifoss를 열어 손 제스처를 지원하는지 확인하세요.</string>
+    <string name="hand_gestures_hint_outdated">시계 앱을 업데이트하여 이 시계가 손 제스처를 지원하는지 확인하세요.</string>
+    <string name="hand_gestures_hint_unsupported">이 시계는 손 제스처를 지원하지 않으므로 여기에 지정한 동작은 실행되지 않습니다.</string>
+    <string name="hand_gestures_hint_disabled">이 시계에서 손 제스처가 꺼져 있습니다. 시계 자체의 설정 \u2192 제스처에서 켜세요.</string>
+    <string name="hand_gestures_hint_ready">이 시계에서 준비됨: Svartifoss 플레이어가 열린 상태에서 두 번 핀치하세요.</string>
+    <string name="hand_gesture_how_it_works">손목을 든 상태에서 엄지와 검지를 빠르게 두 번 맞대어 핀치하세요. Wear OS에서는 이를 기본 동작이라고 부르므로 다른 제조사의 시계는 자체적인 동등한 손 제스처를 사용할 수 있습니다.\n\n이 기능은 시계에서 Svartifoss 플레이어가 열려 있고 화면이 켜져 있을 때만 작동합니다 \u2014 시계 화면에서는 작동하지 않고, 대기열이나 메뉴 위에서도 작동하지 않으며, 항상 켜진 디스플레이에서도 작동하지 않습니다. 실행되는 동작은 현재 재생 상태에 설정된 동작이므로 어느 상태에서든 사용하려면 두 제어 페이지 모두에 설정하세요.\n\n제스처는 시계 자체의 설정 \u2192 제스처에서도 켜야 합니다.</string>
+    <string name="double_pinch">두 번 핀치</string>
+    <string name="icon_selection_search_hint">아이콘 검색</string>
+    <string name="icon_selection_search_empty">검색과 일치하는 아이콘이 없습니다</string>
+    <string name="open_quick_actions_panel">빠른 동작 패널 열기</string>
+    <string name="open_volume_screen">볼륨 화면 열기</string>
+    <string name="open_progress_screen">진행률 화면 열기</string>
+    <string name="export_config_failed_detail">백업을 내보낼 수 없습니다: %1$s</string>
+    <string name="backup_selection_title">백업 내용 선택</string>
+    <string name="backup_selection_description">저장할 Svartifoss 항목을 선택하세요. 기본적으로 모두 선택되며, 이 백업을 가져올 때 선택하지 않은 부분은 변경되지 않습니다.</string>
+    <string name="backup_selection_select_all">모두 선택</string>
+    <string name="backup_selection_clear_all">모두 지우기</string>
+    <string name="backup_selection_export">백업 내보내기</string>
+    <string name="backup_selection_empty">하나 이상 선택하세요</string>
+    <string name="backup_section_buttons">버튼 구성</string>
+    <string name="backup_section_buttons_description">음악 재생 중 및 정지 상태의 버튼, 크라운, 제스처 동작.</string>
+    <string name="backup_section_actions">동작 목록</string>
+    <string name="backup_section_actions_description">시계 동작 메뉴에 표시되는 순서가 지정된 동작 목록입니다.</string>
+    <string name="backup_section_app_settings">앱 설정</string>
+    <string name="backup_section_app_settings_description">휴대전화 설정, 시계 동작, 언어, 재생 및 연동.</string>
+    <string name="backup_section_watch_appearance">시계 모양 및 테마</string>
+    <string name="backup_section_watch_appearance_description">시계 레이아웃, 색상, 타이포그래피, 패널, AOD 및 저장된 사용자 지정 테마.</string>
+    <string name="backup_section_playlist_shortcuts">재생목록 바로가기</string>
+    <string name="backup_section_playlist_shortcuts_description">저장한 음악, 앨범, 아티스트, 재생목록 및 기타 스트리밍 링크.</string>
+    <string name="backup_section_history">검색 및 재생 기록</string>
+    <string name="backup_section_history_description">최근 검색과 최근 재생한 트랙.</string>
+    <string name="backup_section_icons">불러온 아이콘 및 아트워크</string>
+    <string name="backup_section_icons_description">사용자 지정 동작 아이콘, 바로가기 표지, 캐시된 앱 아이콘.</string>
+    <string name="backup_section_privacy">개인정보 보호 및 알림</string>
+    <string name="backup_section_privacy_description">충돌 보고서, 공지 알림 및 앱에 저장된 기타 동의 선택 사항.</string>
+    <string name="backup_section_local_app_state">로컬 앱 상태</string>
+    <string name="backup_section_local_app_state_description">현재 강조색, 마지막 메뉴 위치, 완료된 안내 및 업데이트 상태.</string>
+    <string name="backup_section_auxiliary_data">기타 앱 데이터</string>
+    <string name="backup_section_auxiliary_data_description">향후 데이터 저장소를 포함한 앱 소유 추가 환경설정 및 내부 파일.</string>
+    <string name="pref_numeric_range">%1$d~%2$d 사이.</string>
+    <string name="background_editor_artwork">아트워크</string>
+    <string name="background_editor_layers">레이어</string>
+    <string name="background_editor_layers_count">%1$d / %2$d</string>
+    <string name="background_editor_add_layer">레이어 추가</string>
+    <string name="background_editor_reset_layers">재설정</string>
+    <string name="background_editor_empty">레이어가 없습니다. 아트워크만 표시됩니다.</string>
+    <string name="background_editor_note">이 목록의 맨 위 레이어는 다른 모든 요소 위에 그려지고, 맨 아래 레이어는 아트워크에 가장 가깝게 배치됩니다.</string>
+    <string name="background_editor_full">최대 %1$d개의 레이어를 쌓을 수 있습니다.</string>
+    <string name="background_layer_kind_wash">배경</string>
+    <string name="background_layer_kind_shade">음영</string>
+    <string name="background_layer_kind_floor">강조색 바닥</string>
+    <string name="background_layer_move_up">이 레이어 위로 이동</string>
+    <string name="background_layer_move_down">이 레이어 아래로 이동</string>
+    <string name="background_layer_more">이 레이어의 추가 옵션</string>
+    <string name="background_layer_add_title">레이어 추가</string>
+    <string name="background_layer_style_title">%1$s 레이어</string>
+    <string name="background_layer_opacity">강도</string>
+    <string name="background_layer_color">색상</string>
+    <string name="background_layer_custom_color">색상 선택</string>
+    <string name="background_layer_duplicate">복제</string>
+    <string name="background_layer_remove">삭제</string>
+    <string name="background_layer_color_default">기본값</string>
+    <string name="background_layer_color_album">앨범 색상</string>
+    <string name="background_layer_color_secondary">두 번째 앨범 색상</string>
+    <string name="background_layer_color_tertiary">세 번째 앨범 색상</string>
+    <string name="background_layer_color_desaturated">채도를 낮춘 앨범 색상</string>
+    <string name="background_layer_color_black">검정</string>
+    <string name="background_layer_color_custom">사용자 지정 색상</string>
+    <string name="background_layer_reset_title">레이어를 재설정할까요?</string>
+    <string name="background_layer_reset_message">레이어 스택은 각각의 행에서 설정한 음영과 강조색 바닥으로 돌아갑니다. 이전 빌드의 시계에서도 동일하게 렌더링됩니다.</string>
+    <string name="watch_element_progress">진행률</string>
+    <string name="watch_element_volume">볼륨</string>
+    <string name="watch_element_quick_panel">빠른 동작</string>
+    <string name="watch_element_queue">대기열</string>
+    <string name="watch_element_lyrics">가사</string>
+    <string name="player_section_on_screen">화면에 표시</string>
+    <string name="player_element_app_icon">앱 아이콘</string>
+    <string name="player_element_controls">플레이어 컨트롤</string>
+    <string name="player_element_tap_flash">탭 플래시</string>
+    <string name="player_element_inner_progress">내부 진행률</string>
+    <string name="player_element_edge_arc">가장자리 호</string>
+    <string name="player_element_edge_seek">가장자리 탐색</string>
+    <string name="player_element_clock">시계</string>
+    <string name="player_element_cover_art">표지 이미지</string>
+    <string name="setting_album_art_filter">앨범 아트 필터</string>
+    <string name="setting_album_art_filter_description">모든 앨범 아트 스타일에 독립적인 색상 처리를 적용합니다.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto의 매우 가는 획으로 섬세한 디스플레이 느낌을 냅니다.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto의 가볍고 여유로운 획과 이 글꼴 패밀리 특유의 익숙한 비율입니다.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto의 더 강한 중간 굵기 획으로, 작고 읽기 쉬운 레이블에 적합합니다.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto의 시스템에서 가장 무거운 굵기로, 강한 디스플레이 텍스트에 적합합니다.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto를 가로로 압축해 긴 제목이 더 작은 공간에 들어가도록 합니다.</string>
+    <string name="setting_wear_title_font">제목 서체</string>
+    <string name="setting_wear_title_text_case">제목 대소문자</string>
+    <string name="setting_wear_artist_font">아티스트 서체</string>
+    <string name="setting_wear_artist_text_case">아티스트 대소문자</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">초기 읽기를 위해 만든 친근하고 둥근 산세리프</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">편집적인 무게감을 가진 고대비 Didone 디스플레이 서체</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">손글씨 만화 느낌이 있는 튼튼한 포스터 산세리프</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">넉넉하고 균일한 간격의 차분한 기하학적 산세리프</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">끝부분이 부드럽게 둥근 현대적인 슬랩 세리프</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">강한 제목을 위해 만든 매우 굵은 슬랩 세리프</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">소문자 크기의 대문자를 쓰는 좁은 손그림 서체</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">강렬한 제목을 위한 촘촘한 압축 산세리프</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">작은 크기에서도 단단하게 보이는 기하학적 슬랩 세리프</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">외치는 듯한 에너지를 가진 만화책 디스플레이 서체</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">스텐실 군사풍 디스플레이 서체</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">따뜻하고 비격식적인 곡선을 가진 직립 세리프</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">모서리가 살짝 둥근 휴머니스트 산세리프</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">강하고 담백한 형태의 그로테스크 산세리프</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">대본용으로 만든 세련된 타자기풍 고정폭 서체</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">부드럽고 책 같은 분위기의 둥근 슬랩 세리프</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">긴 글을 위해 조정된 올드스타일 책 세리프</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">현대적인 마감의 저대비 기하학적 산세리프</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">본문 크기에서도 견고한 세리프</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">각진 접합부가 있는 현대 기술 산세리프</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">글리프가 명확하게 구분되는 프로그래밍 고정폭 서체</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">화면 코드용으로 설계된 휴머니스트 고정폭 서체</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">둥근 획의 통통 튀는 손글씨 서체</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">1920년대 빈티지 성격의 기하학적 산세리프</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Futura 전통의 기하학적 산세리프</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">약간 기울어진 루프 없는 태국어·라틴 산세리프</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">읽을 때 시각적 부담을 줄이도록 설계된 산세리프</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">복고 간판 느낌의 굵은 연결 스크립트</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">따뜻함과 정밀함의 균형을 잡은 반기하학적 산세리프</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">깔끔한 인터페이스 텍스트를 위한 미니멀 산세리프</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">부드러운 끝부분의 둥근 산세리프</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">고르고 현대적인 리듬의 기하학적 산세리프</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">게임 느낌의 각진 테크노 서체</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">그리드 위에 그린 컴팩트한 기술 산세리프</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">독특하게 열린 곡선의 현대 그로테스크</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">아케이드 기기에서 바로 나온 듯한 픽셀 서체</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">부드럽고 가벼운 느낌의 둥근 기하학적 산세리프</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">기술적인 각을 가진 네모난 압축 산세리프</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">복고 간판 페인팅에 뿌리를 둔 아르데코 디스플레이 서체</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Roboto의 고정폭 동반 서체</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">장난스럽고 뭉툭한 획의 두툼한 디스플레이 서체</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">무거운 사각 형태의 넓은 산업풍 서체</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">구자라트 뿌리를 지닌 선명한 기울임 디스플레이 서체</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">초기 컴퓨터 화면을 떠올리게 하는 작은 비트맵 서체</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">코드를 편안하게 읽도록 설계된 고정폭 서체</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">포스터 존재감이 강한 전체 대문자 압축 서체</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">데바나가리와 라틴 제목을 위한 높고 압축된 서체</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">기술적인 분위기의 네모난 휴머니스트 산세리프</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">친근한 느낌의 완전히 둥근 산세리프</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">1920년대 커피숍 간판을 연상시키는 압축 서체</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">부드럽게 잘린 현대적 끝부분의 슬랩 세리프</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">열리고 읽기 쉬운 형태의 친근한 휴머니스트 산세리프</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">편안한 읽기를 위한 견고한 형태의 따뜻한 산세리프</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">명확한 인터페이스를 위해 만든 다용도 휴머니스트 산세리프</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">편집적인 목소리를 가진 세련된 본문 세리프</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">화면 읽기에 맞춘 고전 책 세리프</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">넓고 안정적인 리듬의 실용적인 그로테스크 산세리프</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">정확한 비율의 기술 휴머니스트 산세리프</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">세련되고 읽기 쉬운 질감의 기술 고정폭 서체</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">설계된 느낌을 지닌 현대 세리프</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">컴팩트하고 실용적인 형태의 깔끔한 작업용 산세리프</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">친근한 비율을 가진 독특한 그로테스크</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">미래적이고 넓은 느낌의 기하학적 산세리프</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">우아하고 도시적인 선의 현대 기하학적 산세리프</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">작은 화면을 위해 만든 균형 잡힌 현대 산세리프</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">표현력 있는 비율의 자신감 있는 디스플레이 산세리프</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">긴 트랙 정보를 위한 읽기 쉬운 보조 산세리프</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">현대 기술 분위기의 선명한 고정폭 서체</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">아트 디렉션 느낌의 장난스러운 형태를 가진 독특한 산세리프</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">조용한 정밀함을 가진 유연한 현대 산세리프</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">부담 없이 읽기 좋은 깔끔하고 친근한 산세리프</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">쾌활한 개성을 가진 둥근 디스플레이 산세리프</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">구조와 독특한 세부 요소를 섞은 활기찬 그로테스크</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">극적인 제목을 위한 고대비 디스플레이 세리프</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">우아한 고대비 문학 세리프</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">캘리그래피 디테일이 있는 우아한 디스플레이 세리프</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">작은 크기에서도 선명한 견고한 슬랩 세리프</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">조밀하고 표현력 있는 읽기에 적합한 다용도 세리프</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">책 같은 목소리를 가진 따뜻한 올드스타일 세리프</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">독특하고 세련된 글자 형태의 우아한 산세리프</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">강한 제목을 위한 굵은 기하학적 산세리프</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">운동감 있고 역동적인 에너지의 압축 친화적 산세리프</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">열린 속공간과 친근한 간판 느낌의 부드러운 산세리프</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">휴머니스트의 따뜻함과 선명함을 균형 있게 갖춘 다용도 산세리프</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">교통 체계에서 영감을 받은 명확하고 자신감 있는 산세리프</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">일상 인터페이스를 위해 만든 중립적이고 접근성 높은 산세리프</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">매끄럽고 현대적인 곡선의 가벼운 기하학적 산세리프</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">부드러운 미래감을 가진 둥근 좁은 산세리프</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">은은한 태국풍 성격의 깔끔한 기하학적 산세리프</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">최대 존재감을 위한 넓은 미래풍 디스플레이 서체</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">장난스러운 기술적 목소리를 가진 산세리프-고정폭 가변 패밀리</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">독특한 디지털 질감의 가변폭 고정폭 서체</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">광범위한 문자 체계를 지원하는 폭넓고 가독성 높은 산세리프</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">광범위한 문자 체계를 지원하는 안정적인 세리프</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">일관된 리듬을 위해 설계된 다국어 고정폭 서체</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">히브리 문자에서 영향을 받은 또렷한 리듬의 컴팩트한 현대 산세리프</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">명확한 읽기를 위해 최적화된 견고한 휴머니스트 산세리프</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">둥글고 열린 질감의 친근한 화면용 산세리프</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">특징적인 비율의 컴팩트한 기하학적 산세리프</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">문학적 성격을 지닌 생동감 있는 캘리그래피 세리프</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">인터페이스 가독성이 뛰어난 깔끔한 휴머니스트 산세리프</string>
+    <string name="setting_wear_note_show_cover">표지 이미지</string>
+    <string name="aod_element_artwork">아트워크</string>
+    <string name="aod_element_clock">시계</string>
+    <string name="aod_element_track_info">트랙 정보</string>
+    <string name="aod_element_transport">재생 제어</string>
+    <string name="aod_element_progress">진행률</string>
+    <string name="aod_element_up_next">다음 곡</string>
+    <string name="aod_section_artwork">아트워크</string>
+    <string name="aod_control_tint">틴트</string>
+    <string name="aod_control_brightness">밝기</string>
+    <string name="aod_control_art_treatment">처리</string>
+    <string name="aod_control_art_opacity">불투명도</string>
+    <string name="mini_button_control_visibility">표시</string>
+    <string name="mini_button_control_arrangement">배치</string>
+    <string name="mini_button_control_shape">모양</string>
+    <string name="mini_button_control_background">배경</string>
+    <string name="mini_button_control_opacity">불투명도</string>
+    <string name="mini_button_assign_action">동작 지정</string>
+    <string name="mini_button_gestures_note">플레이어에서 위, 아래, 왼쪽으로 스와이프하세요. 오른쪽 스와이프는 항상 시스템의 닫기 제스처이며 가로채지 않습니다.</string>
+    <string name="setting_wear_chat_cover_shape">채팅 아바타 모양</string>
+    <string name="setting_wear_chat_show_cover">표지 이미지</string>
+    <string name="setting_wear_metadata_cover_shape">메타데이터 표지 모양</string>
+    <string name="setting_wear_metadata_show_cover">표지 이미지</string>
+    <string-array name="wear_text_case_entries">
+        <item>일반</item>
+        <item>대문자</item>
+        <item>소문자</item>
+        <item>제목 형식</item>
+    </string-array>
+    <string name="wear_text_font_follow">전역 서체 따르기</string>
+    <string name="category_wf_typography_track_time">트랙 시간</string>
+    <string name="setting_wear_track_time_font">트랙 시간 서체</string>
+    <string name="wear_track_time_font_follow">디자인 따르기</string>
+    <string name="setting_wear_track_time_font_weight">트랙 시간 굵기</string>
+    <string name="setting_wear_track_time_font_italic">트랙 시간 기울임꼴</string>
+    <string name="setting_wear_track_time_font_scale">트랙 시간 크기</string>
+    <string name="setting_wear_track_time_font_opacity">트랙 시간 불투명도</string>
+    <string name="setting_wear_track_time_font_tracking">트랙 시간 자간</string>
+    <string-array name="album_art_filter_entries">
+        <item>없음</item>
+        <item>모노크롬</item>
+        <item>따뜻함</item>
+        <item>쿨</item>
+        <item>골든 아워</item>
+        <item>로제</item>
+        <item>빈티지 필름</item>
+        <item>바랜 필름</item>
+        <item>매트</item>
+        <item>선명함</item>
+        <item>펀치</item>
+        <item>파스텔</item>
+        <item>세피아</item>
+        <item>시아노타입</item>
+        <item>청록 &amp; 주황</item>
+        <item>고대비</item>
+        <item>소프트 라이트</item>
+        <item>밤</item>
+    </string-array>
+    <string name="queue_item_now_playing">재생 중</string>
+    <string name="queue_item_unknown_title">알 수 없는 트랙</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">재생 대기열 · 트랙 %1$d개</item>
+        <item quantity="other">재생 대기열 · 트랙 %1$d개</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">강조색 바닥 색상</string>
+    <string name="setting_wear_accent_floor_custom_color">사용자 지정 바닥 색상</string>
+    <string name="setting_wear_accent_floor_custom_color_description">강조색 바닥 색상을 사용자 지정 색상으로 설정했을 때 사용할 색상을 선택하세요</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>앨범 강조색</item>
+        <item>앨범 보조색</item>
+        <item>앨범 3차색</item>
+        <item>사용자 지정 색상</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">일상 읽기를 위해 만든 중립적이고 매우 읽기 쉬운 인터페이스 산세리프</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">작은 크기에서도 선명한 서로 다른 형태를 사용한 접근성 중심 글자꼴</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">부드럽게 둥근 기하학적 산세리프 — 자신감 있고 친근함</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">긴 제목에 여유를 주는 컴팩트한 휴머니스트 산세리프</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">강한 포스터 에너지를 가진 높고 압축된 디스플레이 서체</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">편안한 장문 읽기를 위해 만든 현대 세리프</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">따뜻함과 개성을 지닌 표현력 있는 부드러운 세리프</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">기술적 느낌의 복고 미래풍 고정폭 서체</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">최대 대비를 위한 조밀한 초굵기 디스플레이 서체</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">생동감 있고 개인적인 느낌의 흐르는 손글씨 스크립트</string>
+    <string name="setting_wear_artist_text_mode">아티스트 텍스트 동작</string>
+    <string name="setting_wear_album_art_source">앨범 아트 소스</string>
+    <string name="setting_user_font">내 글꼴</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">이 휴대전화에서 .ttf 또는 .otf 파일 가져오기</string>
+    <string name="setting_user_font_loaded">%1$s · 탭하여 교체 또는 제거</string>
+    <string name="user_font_pick">글꼴 파일 선택</string>
+    <string name="user_font_replace">교체</string>
+    <string name="user_font_remove">제거</string>
+    <string name="user_font_imported">“%1$s”을(를) 가져왔습니다. 모든 글꼴 목록에서 선택할 수 있으며 현재 시계로 전송 중입니다.</string>
+    <string name="user_font_removed">가져온 글꼴이 제거되었습니다.</string>
+    <string name="user_font_error_too_large">해당 파일의 크기는 %1$s입니다. 시계로 빠르게 전송하려면 글꼴이 %2$s보다 작아야 합니다.</string>
+    <string name="user_font_error_not_a_font">해당 파일은 이 휴대전화가 읽을 수 있는 글꼴이 아닙니다. TrueType 및 OpenType(.ttf, .otf)은 지원되지만 웹 글꼴(.woff, .woff2)은 지원되지 않습니다.</string>
+    <string name="user_font_error_unreadable">해당 파일을 읽을 수 없습니다. 다시 선택하거나 먼저 이 휴대전화에 복사해 보세요.</string>
+    <string name="user_font_not_shareable">내 글꼴을 사용하는 테마는 이 휴대전화에만 유지됩니다</string>
+    <string name="setting_custom_album_art_image">사용할 사진</string>
+    <string name="setting_custom_album_art_folder">그림을 가져올 폴더</string>
+    <string name="setting_custom_album_art_none">아직 선택하지 않음 — 탭하여 선택</string>
+    <string name="setting_custom_album_art_chosen">%1$s · 탭하여 변경</string>
+    <string name="custom_album_art_image_set">이제 해당 사진이 플레이어 뒤에 표시됩니다.</string>
+    <string name="custom_album_art_folder_set">해당 폴더의 사진이 각 트랙마다 하나씩 그려집니다.</string>
+    <string name="custom_album_art_error">열 수 없습니다. 다시 선택하거나 이 휴대전화 자체 저장공간에 있는 항목을 선택하세요.</string>
+    <string name="custom_album_art_not_shareable">내 사진을 사용하는 테마는 이 휴대전화에만 유지됩니다</string>
+    <string name="setting_wear_text_block_align">텍스트 정렬</string>
+    <string name="setting_wear_text_block_align_description">트랙 텍스트가 어느 가장자리에 맞춰지는지 설정합니다. 페이스 따르기는 각 페이스에 설계된 정렬을 유지합니다.</string>
+    <string name="setting_wear_text_block_position">텍스트 위치</string>
+    <string name="setting_wear_text_block_position_description">트랙 텍스트가 화면에 놓이는 위치입니다. 페이스 따르기는 각 페이스에 설계된 위치를 유지합니다.</string>
+    <string name="setting_online_artwork">온라인 아트워크</string>
+    <string name="setting_online_artwork_description">시계 화면에 온라인에서 찾은 이미지를 표시합니다 \u2014 재생 중인 아티스트 또는 이미지를 제공하지 않는 플레이어를 위한 앨범 커버입니다. 휴대전화가 Deezer 공개 카탈로그에서 검색하고 결과를 캐시합니다. 트랙 이름과 아티스트 이름만 전송되며, 페이스가 해당 소스 중 하나를 사용하도록 설정된 경우에만 검색합니다. 끄면 플레이어가 제공한 아트워크를 사용합니다.</string>
 </resources>

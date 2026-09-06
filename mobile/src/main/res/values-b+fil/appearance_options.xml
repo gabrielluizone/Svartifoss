@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Karagatan</item>
+        <item>Paglubog ng araw</item>
+        <item>Spotlight sa gitna</item>
+        <item>Glass veil</item>
+        <item>Velvet</item>
+        <item>Noir spotlight</item>
+        <item>Ice wash</item>
+        <item>Rose bloom</item>
+        <item>Prism</item>
+        <item>Gilid ng crescent</item>
+        <item>Tidal bands</item>
+        <item>Paper sleeve</item>
+        <item>Lantern rise</item>
+        <item>Mirage split</item>
+        <item>Tahimik na grid</item>
+        <item>Nocturne</item>
+        <item>Cloud study</item>
+        <item>Liquid pools</item>
+        <item>Monolith ng kulay</item>
+        <item>Split tone</item>
+        <item>Gradient</item>
+        <item>Duotone</item>
+        <item>Mga banda</item>
+        <item>Vignette</item>
+        <item>Graphite</item>
+        <item>Cinema</item>
+        <item>Acrylic</item>
+        <item>Mesh</item>
+        <item>Nebula</item>
+        <item>Bioluminescence</item>
+        <item>Iridescent</item>
+        <item>Orbit</item>
+        <item>Ink wash</item>
+        <item>Bulaklak</item>
+        <item>Fjord</item>
+        <item>Dot matrix</item>
+        <item>Mga scanline</item>
+        <item>Radar</item>
+        <item>Contour</item>
+        <item>Faceted</item>
+        <item>Fill ng album</item>
+        <item>Secondary na fill</item>
+        <item>Tertiary na fill</item>
+        <item>Glass</item>
+        <item>Hatinggabi</item>
+        <item>Usok</item>
+        <item>Tideline</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Lumot</item>
+        <item>Lavender haze</item>
+        <item>Cherry</item>
+        <item>Malalim na dagat</item>
+        <item>Alikabok</item>
+        <item>Bleach</item>
+        <item>Liwanag ng buwan</item>
+        <item>Panaginip</item>
+        <item>Infrared</item>
+        <item>Gubat</item>
+        <item>Pilak</item>
+        <item>Kendi</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Top fade</item>
+        <item>Spotlight sa gitna</item>
+        <item>Diagonal na anino</item>
+        <item>Kaliwang curtain</item>
+        <item>Kanang curtain</item>
+        <item>Banda sa gitna</item>
+        <item>Crossfade</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Baligtad na leaf</item>
+        <item>Baligtad na drop</item>
+        <item>Pebble</item>
+        <item>Arko</item>
+        <item>Shield</item>
+        <item>Baligtad na arko</item>
+        <item>Baligtad na shield</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Whisper</item>
+        <item>Radiant</item>
+        <item>Flood</item>
+        <item>Kislap</item>
+        <item>Malalim na glow</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Outline ng album</item>
+        <item>Gradient ng album</item>
+        <item>Secondary na kulay ng album</item>
+        <item>Glass ng album</item>
+        <item>Tertiary na kulay ng album</item>
+        <item>Neon outline</item>
+    </string-array>
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Temadetaljer</string>
+    <string name="community_theme_detail_preview_screen">Förhandsvisningsskärm</string>
+    <string name="community_theme_detail_surface_player">Spelare</string>
+    <string name="community_theme_detail_surface_aod">Alltid på</string>
+    <string name="community_theme_detail_surface_volume">Volym</string>
+    <string name="community_theme_detail_surface_progress">Förlopp</string>
+    <string name="community_theme_detail_surface_quick_panel">Snabbpanel</string>
+    <string name="community_theme_detail_surface_queue">Kö</string>
+    <string name="community_theme_detail_preview_label">Förhandsvisning av %1$s</string>
+    <string name="community_theme_detail_preview_description">Förhandsvisning av %1$s på skärmen %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Ditt aktuella albumomslag kan bara visas i den här förhandsvisningen på telefonen. Det laddas aldrig upp; exempeltext och tidsuppgifter används fortfarande.</string>
+    <string name="community_theme_detail_information">Temainformation</string>
+    <string name="community_theme_detail_byline">Av %1$s</string>
+    <string name="community_theme_detail_layout">Grundlayout</string>
+    <string name="community_theme_detail_revision">Revision</string>
+    <string name="community_theme_detail_minimum_version">Lägsta Svartifoss-version</string>
+    <string name="community_theme_detail_published">Publicerad</string>
+    <string name="community_theme_detail_visual_settings">Visuella inställningar</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s visuell inställning</item>
+        <item quantity="other">%1$s visuella inställningar</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Inte tillgänglig</string>
+    <string name="community_theme_detail_add_apply">Lägg till och använd</string>
+    <string name="community_theme_detail_remove">Ta bort tema</string>
+    <string name="community_theme_detail_remove_title">Ta bort ”%1$s” från Mina teman?</string>
+    <string name="community_theme_detail_remove_message">Den sparade kopian och alla ändringar du gjort i den tas bort permanent. Om den används just nu återgår klockan till sin inbyggda grundlayout.</string>
+    <string name="community_theme_detail_removed">Temat togs bort från Mina teman</string>
+    <string name="community_theme_detail_remove_error">Det gick inte att ta bort temat</string>
+    <string name="community_theme_detail_like">Gilla</string>
+    <string name="community_theme_detail_unlike">Sluta gilla</string>
+    <string name="community_theme_detail_like_loading">Kontrollerar…</string>
+    <string name="community_theme_detail_like_description">Gilla %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Sluta gilla %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google-inloggningen avbröts. Din gilla-markering sparades inte.</string>
+    <string name="community_theme_detail_like_error">Det gick inte att spara din gilla-markering. Kontrollera anslutningen och försök igen.</string>
+    <string name="community_theme_detail_like_not_ready">Gilla-markeringar för det här temat är inte klara än. Uppdatera Community-teman efter nästa publicering.</string>
+    <string name="community_theme_detail_like_saved">Din gilla-markering sparades. Offentliga antal uppdateras vid nästa katalogpublicering.</string>
+    <string name="community_theme_detail_unlike_saved">Din gilla-markering togs bort. Offentliga antal uppdateras vid nästa katalogpublicering.</string>
+    <string name="community_theme_detail_apply_existing">Det här temat finns redan i Mina teman och har använts på din klocka</string>
+    <string name="community_theme_detail_requires_app_version">Det här temat kräver Svartifoss %1$s innan det kan läggas till.</string>
+    <string name="community_theme_detail_load_error">Det gick inte att läsa in temats detaljer. Gå tillbaka till Community-teman och försök igen.</string>
+    <string name="community_theme_detail_profile_mismatch">Den hämtade profilen matchar inte temats offentliga detaljer. Gå tillbaka till Community-teman och försök igen.</string>
+    <string name="community_theme_detail_screenshot_description">Foto av temat på upphovspersonens klocka</string>
+    <string name="community_theme_detail_source_author">Upphovspersonens klocka</string>
+    <string name="community_theme_detail_source_rendered">Genererad förhandsvisning</string>
+    <string name="community_theme_detail_show_rendered">Visa genererad förhandsvisning</string>
+    <string name="community_theme_detail_show_author">Visa upphovspersonens foto</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

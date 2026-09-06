@@ -54,7 +54,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayout
 import androidx.lifecycle.lifecycleScope
-import com.svartifoss.snfell.update.UpdateChecker
+import com.svartifoss.snfell.update.UpdateGateway
 import kotlinx.coroutines.launch
 import com.matejdro.wearutils.companionnotice.WearCompanionPhoneActivity
 import com.matejdro.wearutils.preferences.definition.Preferences
@@ -74,6 +74,7 @@ private const val REQUEST_CODE_SETTINGS_SEARCH = 1003
 private const val NOTIFICATION_ACCESS_PROMPTED_PREF = "notification_access_prompted"
 
 private const val BUY_ME_A_COFFEE_URL = "https://buymeacoffee.com/gabrielsvafoss"
+private const val KOFI_URL = "https://ko-fi.com/gabrielsvafoss"
 private const val SVARTIFOSS_RELEASES_URL = "https://github.com/gabrielluizone/Svartifoss/releases"
 
 class MainActivity : WearCompanionPhoneActivity(),
@@ -210,14 +211,15 @@ class MainActivity : WearCompanionPhoneActivity(),
         // Covers users who open the app without playing music (MusicService has the same
         // throttled check for the reverse case).
         lifecycleScope.launch {
-            UpdateChecker.maybeCheckInBackground(this@MainActivity)
+            UpdateGateway.maybeCheckInBackground(this@MainActivity)
         }
 
         // First launch after an install that bumped the versionCode: show the same Updates
         // screen used everywhere else, now reporting "you're current" plus its release notes,
-        // instead of leaving the update a silent, undiscoverable fact.
-        if (UpdateChecker.consumePostUpdateWelcome(this)) {
-            startActivity(Intent(this, com.svartifoss.snfell.update.UpdateActivity::class.java))
+        // instead of leaving the update a silent, undiscoverable fact. (No-op on the Play build,
+        // which has no in-app update screen.)
+        if (UpdateGateway.consumePostUpdateWelcome(this)) {
+            UpdateGateway.openUpdateScreen(this)
         }
 
         // Users updating from a build older than 3.0's per-face appearance scoping: their old
@@ -430,10 +432,10 @@ class MainActivity : WearCompanionPhoneActivity(),
     /** Shows a green "update available" toolbar action next to help while a checked release is
      *  newer than what's installed - a nudge for someone who dismissed or missed the one-shot
      *  update notification. Re-evaluated every time the menu is invalidated (see onResume), so it
-     *  picks up both a fresh background check and an update just installed via
-     *  [com.svartifoss.snfell.update.UpdateActivity]. */
+     *  picks up both a fresh background check and an update just installed via the updater.
+     *  Always hidden on the Play build ([UpdateGateway.hasPendingUpdate] is a no-op there). */
     override fun onPrepareOptionsMenu(menu: android.view.Menu): Boolean {
-        menu.findItem(R.id.menu_update_available)?.isVisible = UpdateChecker.hasPendingUpdate(this)
+        menu.findItem(R.id.menu_update_available)?.isVisible = UpdateGateway.hasPendingUpdate(this)
         // A setting should be discoverable before the user knows whether it lives under Watch or
         // Settings. Keep search available from every primary tab; choosing a result performs the
         // cross-tab navigation and opens its owning section.
@@ -458,7 +460,7 @@ class MainActivity : WearCompanionPhoneActivity(),
                 return true
             }
             R.id.menu_update_available -> {
-                startActivity(Intent(this, com.svartifoss.snfell.update.UpdateActivity::class.java))
+                UpdateGateway.openUpdateScreen(this)
                 return true
             }
         }
@@ -1049,6 +1051,10 @@ class MainActivity : WearCompanionPhoneActivity(),
 
         header.findViewById<View>(R.id.drawer_support_button)?.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BUY_ME_A_COFFEE_URL)))
+        }
+
+        header.findViewById<View>(R.id.drawer_kofi_button)?.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(KOFI_URL)))
         }
     }
 

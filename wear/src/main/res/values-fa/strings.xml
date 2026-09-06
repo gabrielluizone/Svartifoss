@@ -165,4 +165,21 @@
     <string name="face_name_metadata" translatable="false">Metadata</string>
     <string name="face_name_ribbon" translatable="false">Ribbon</string>
     <string name="face_name_frame" translatable="false">Frame</string>
+    <string name="action_name_open_quick_actions_panel">باز کردن پنل کنش‌های سریع</string>
+    <string name="action_name_fast_forward">جلو بردن سریع</string>
+    <string name="action_name_rewind">عقب بردن</string>
+    <string name="action_name_set_speed">تنظیم سرعت پخش</string>
+    <string name="action_name_seek_position">پرش به موقعیت قطعه</string>
+    <string name="action_name_set_volume">تنظیم صدا</string>
+    <string name="action_name_set_shuffle">تنظیم پخش تصادفی</string>
+    <string name="action_name_set_repeat">تنظیم تکرار</string>
+    <string name="action_name_open_volume_screen">باز کردن صفحه صدا</string>
+    <string name="action_name_open_progress_screen">باز کردن صفحه پیشرفت</string>
+    <string name="action_name_open_face_picker">باز کردن انتخابگر صفحه</string>
+    <string name="action_name_close_watch_app">بستن برنامه ساعت</string>
+    <string name="volume_screen_title">صدا</string>
+    <string name="progress_screen_title">پیشرفت</string>
+    <string name="progress_screen_cancel_seek">لغو جابه‌جایی</string>
+    <string name="progress_screen_skip_back">%1$d ثانیه به عقب</string>
+    <string name="progress_screen_skip_forward">%1$d ثانیه به جلو</string>
 </resources>

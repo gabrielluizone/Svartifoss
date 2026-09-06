@@ -164,4 +164,21 @@
     <string name="face_name_metadata" translatable="false">Metadata</string>
     <string name="face_name_ribbon" translatable="false">Ribbon</string>
     <string name="face_name_frame" translatable="false">Frame</string>
+    <string name="action_name_open_quick_actions_panel">Buka panel tindakan cepat</string>
+    <string name="action_name_fast_forward">Maju cepat</string>
+    <string name="action_name_rewind">Putar mundur</string>
+    <string name="action_name_set_speed">Atur kecepatan pemutaran</string>
+    <string name="action_name_seek_position">Lompat ke posisi trek</string>
+    <string name="action_name_set_volume">Atur volume</string>
+    <string name="action_name_set_shuffle">Atur acak</string>
+    <string name="action_name_set_repeat">Atur pengulangan</string>
+    <string name="action_name_open_volume_screen">Buka layar volume</string>
+    <string name="action_name_open_progress_screen">Buka layar progres</string>
+    <string name="action_name_open_face_picker">Buka pemilih tampilan jam</string>
+    <string name="action_name_close_watch_app">Tutup aplikasi jam tangan</string>
+    <string name="volume_screen_title">Volume</string>
+    <string name="progress_screen_title">Progres</string>
+    <string name="progress_screen_cancel_seek">Batalkan pencarian</string>
+    <string name="progress_screen_skip_back">Lewati mundur %1$d detik</string>
+    <string name="progress_screen_skip_forward">Lewati maju %1$d detik</string>
 </resources>

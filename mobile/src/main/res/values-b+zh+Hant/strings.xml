@@ -1874,6 +1874,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1917,6 +1922,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2358,4 +2368,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">複製</string>
+    <string name="dev_report_copied">報告已複製</string>
+    <string name="dev_watch_snapshot_inspector">手錶偏好設定快照</string>
+    <string name="dev_watch_snapshot_inspector_description">此刻實際會傳送到手錶的內容：目前作用中的外觀範圍、預估大小，以及為符合大小限制而捨棄的非作用中錶面範圍快取</string>
+    <string name="dev_data_layer_inspector">Data Layer 檢查器</string>
+    <string name="dev_data_layer_inspector_description">已連接的 Wearable 節點，以及手錶應用程式最後一次回覆的 WatchInfo - 即「未連接手錶」背後的原始狀態</string>
+    <string name="dev_media_sessions_inspector">MediaSession 瀏覽器</string>
+    <string name="dev_media_sessions_inspector_description">所有目前處於作用中的 MediaSession，而不只是正在追蹤的那個：公開的動作、佇列、播放路徑</string>
+    <string name="dev_view_phone_log">檢視手機記錄檔</string>
+    <string name="dev_view_phone_log_description">磁碟上 Timber 記錄檔的尾端，加上「傳送記錄檔」先前曾擷取過的手錶記錄檔</string>
+    <string name="dev_theme_submission_preflight">主題提交預檢</string>
+    <string name="dev_theme_submission_preflight_description">讓每個已儲存的手錶主題通過社群提交檢查，並在有阻擋項目時指出確切是哪項設定</string>
+    <string name="dev_appearance_resolution_inspector">外觀解析檢查器</string>
+    <string name="dev_appearance_resolution_inspector_description">對於每個限定範圍的外觀鍵，四個解析步驟中實際採用的是哪一個 - 明確的錶面值、每個錶面的預設值、舊版全域值或定義預設值 - 以及各自傳回的值</string>
+    <string name="action_fast_forward">快進</string>
+    <string name="action_rewind">快退</string>
+    <string name="action_set_playback_speed">將速度設為 %1$s×</string>
+    <string name="action_seek_to_percent">跳轉到 %1$d%%</string>
+    <string name="action_set_volume_percent">將音量設為 %1$d%%</string>
+    <string name="action_set_shuffle_on">開啓隨機播放</string>
+    <string name="action_set_shuffle_off">關閉隨機播放</string>
+    <string name="action_set_repeat_off">關閉重復</string>
+    <string name="action_set_repeat_all">全部重復</string>
+    <string name="action_set_repeat_one">單曲重復</string>
+    <string name="group_playback_speed">播放速度</string>
+    <string name="group_track_position">曲目位置</string>
+    <string name="group_shuffle_mode">隨機播放模式</string>
+    <string name="group_repeat_mode">重復模式</string>
+    <string name="group_volume_levels">音量級別</string>
+    <string name="group_watch_screens">手錶螢幕</string>
+    <string name="group_find_music">尋找並播放</string>
+    <string name="action_open_face_picker">打開錶盤選擇器</string>
+    <string name="action_close_watch_app">關閉手錶應用</string>
+    <string name="hand_gestures">手勢</string>
+    <string name="hand_gestures_hint">Svartifoss 開啟時可在相容的手錶上使用。</string>
+    <string name="hand_gestures_hint_disconnected">連接並在手錶上開啟 Svartifoss，以查看它是否支援手勢。</string>
+    <string name="hand_gestures_hint_outdated">更新手錶應用程式，以查看此手錶是否支援手勢。</string>
+    <string name="hand_gestures_hint_unsupported">此手錶不支援手勢，因此在這裡指派的動作永遠不會執行。</string>
+    <string name="hand_gestures_hint_disabled">此手錶上的手勢已關閉。請直接在手錶的「設定 \u2192 手勢」中將其開啟。</string>
+    <string name="hand_gestures_hint_ready">此手錶已就緒：Svartifoss 播放器開啟時捏合兩次即可。</string>
+    <string name="hand_gesture_how_it_works">抬起手腕，快速將拇指和食指捏合兩次。Wear OS 將此稱為主要動作，因此其他廠牌的手錶可能會使用自己的等效手勢。\n\n它只會在手錶上的 Svartifoss 播放器處於開啟狀態且螢幕亮起時執行 \u2014 不會從錶面觸發，不會在佇列或選單上方觸發，也不會在螢幕恆亮顯示中觸發。實際執行的動作取決於目前的播放狀態，因此請在兩個「控制」頁面都設定，以便在任一狀態下使用。\n\n還必須在手錶本身的「設定 \u2192 手勢」中開啟該手勢。</string>
+    <string name="double_pinch">雙捏合</string>
+    <string name="icon_selection_search_hint">搜尋圖示</string>
+    <string name="icon_selection_search_empty">沒有與搜尋相符的圖示</string>
+    <string name="open_quick_actions_panel">打開快速動作面板</string>
+    <string name="open_volume_screen">打開音量螢幕</string>
+    <string name="open_progress_screen">打開進度螢幕</string>
+    <string name="export_config_failed_detail">無法導出備份：%1$s</string>
+    <string name="backup_selection_title">選擇備份內容</string>
+    <string name="backup_selection_description">選擇要儲存的 Svartifoss 內容。預設全部選中；導入此備份時，未選中的部分將保持不變。</string>
+    <string name="backup_selection_select_all">全選</string>
+    <string name="backup_selection_clear_all">全部清除</string>
+    <string name="backup_selection_export">導出備份</string>
+    <string name="backup_selection_empty">請至少選擇一項</string>
+    <string name="backup_section_buttons">按鈕配置</string>
+    <string name="backup_section_buttons_description">音樂播放或停止時的按鈕、表冠和手勢操作。</string>
+    <string name="backup_section_actions">操作清單</string>
+    <string name="backup_section_actions_description">手錶操作菜單中顯示的有序操作清單。</string>
+    <string name="backup_section_app_settings">應用程式設定</string>
+    <string name="backup_section_app_settings_description">手機設定、手錶行為、語言、播放和集成。</string>
+    <string name="backup_section_watch_appearance">手錶外觀和主題</string>
+    <string name="backup_section_watch_appearance_description">手錶版面配置、顏色、排版、面板、AOD 和儲存的自訂主題。</string>
+    <string name="backup_section_playlist_shortcuts">播放清單捷徑</string>
+    <string name="backup_section_playlist_shortcuts_description">你儲存的音樂、專輯、演出者、播放清單及其他流媒體鏈接。</string>
+    <string name="backup_section_history">搜尋和播放歷史</string>
+    <string name="backup_section_history_description">最近的搜尋以及最近播放的曲目。</string>
+    <string name="backup_section_icons">已載入的圖示和封面圖片</string>
+    <string name="backup_section_icons_description">自訂操作圖示、捷徑封面和緩存的應用程式圖示。</string>
+    <string name="backup_section_privacy">隱私和通知</string>
+    <string name="backup_section_privacy_description">當機報告、公告通知以及應用儲存的其他同意選項。</string>
+    <string name="backup_section_local_app_state">本地應用狀態</string>
+    <string name="backup_section_local_app_state_description">目前強調色、上次菜單位置、已完成提示和更新狀態。</string>
+    <string name="backup_section_auxiliary_data">其他應用資料</string>
+    <string name="backup_section_auxiliary_data_description">應用擁有的其他偏好設定和內部文件，包括未來的資料存儲。</string>
+    <string name="pref_numeric_range">介於 %1$d 和 %2$d 之間。</string>
+    <string name="background_editor_artwork">封面圖片</string>
+    <string name="background_editor_layers">圖層</string>
+    <string name="background_editor_layers_count">%1$d / %2$d</string>
+    <string name="background_editor_add_layer">新增圖層</string>
+    <string name="background_editor_reset_layers">重設</string>
+    <string name="background_editor_empty">沒有圖層。僅顯示封面圖片。</string>
+    <string name="background_editor_note">此清單頂部的圖層會繪制在其他所有內容之上；底部的圖層最靠近封面圖片。</string>
+    <string name="background_editor_full">最多可以疊加 %1$d 個圖層。</string>
+    <string name="background_layer_kind_wash">背景</string>
+    <string name="background_layer_kind_shade">遮罩</string>
+    <string name="background_layer_kind_floor">強調色底層</string>
+    <string name="background_layer_move_up">將此圖層上移</string>
+    <string name="background_layer_move_down">將此圖層下移</string>
+    <string name="background_layer_more">此圖層的更多選項</string>
+    <string name="background_layer_add_title">新增圖層</string>
+    <string name="background_layer_style_title">%1$s 圖層</string>
+    <string name="background_layer_opacity">強度</string>
+    <string name="background_layer_color">顏色</string>
+    <string name="background_layer_custom_color">選擇顏色</string>
+    <string name="background_layer_duplicate">複製</string>
+    <string name="background_layer_remove">移除</string>
+    <string name="background_layer_color_default">預設</string>
+    <string name="background_layer_color_album">專輯顏色</string>
+    <string name="background_layer_color_secondary">第二專輯顏色</string>
+    <string name="background_layer_color_tertiary">第三專輯顏色</string>
+    <string name="background_layer_color_desaturated">柔化的專輯顏色</string>
+    <string name="background_layer_color_black">黑色</string>
+    <string name="background_layer_color_custom">自訂顏色</string>
+    <string name="background_layer_reset_title">重設圖層？</string>
+    <string name="background_layer_reset_message">圖層堆棧會恢復為各自設定行中的遮罩和強調色底層，這也是運行舊版本的手錶會呈現的效果。</string>
+    <string name="watch_element_progress">進度</string>
+    <string name="watch_element_volume">音量</string>
+    <string name="watch_element_quick_panel">快速動作</string>
+    <string name="watch_element_queue">佇列</string>
+    <string name="watch_element_lyrics">歌詞</string>
+    <string name="player_section_on_screen">螢幕上</string>
+    <string name="player_element_app_icon">應用程式圖示</string>
+    <string name="player_element_controls">播放器控制</string>
+    <string name="player_element_tap_flash">點擊閃爍</string>
+    <string name="player_element_inner_progress">內部進度</string>
+    <string name="player_element_edge_arc">邊緣弧線</string>
+    <string name="player_element_edge_seek">邊緣定位</string>
+    <string name="player_element_clock">時鐘</string>
+    <string name="player_element_cover_art">封面圖片</string>
+    <string name="setting_album_art_filter">專輯封面濾鏡</string>
+    <string name="setting_album_art_filter_description">在任何專輯封面樣式上獨立應用顏色處理。</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto 採用超細筆畫，呈現精緻的顯示效果。</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto 採用輕盈通透的筆畫，並保留此字型家族熟悉的比例。</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto 採用更有力的中等字重筆畫，適合精簡且易讀的標籤。</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto 使用系統最粗字重，適合醒目的顯示文字。</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto 在水平方向壓縮，可讓較長的標題在較小空間內顯示。</string>
+    <string name="setting_wear_title_font">標題字型</string>
+    <string name="setting_wear_title_text_case">標題文字大小寫</string>
+    <string name="setting_wear_artist_font">演出者字型</string>
+    <string name="setting_wear_artist_text_case">演出者文字大小寫</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">友好圓潤的無襯線字型，適合初學閱讀</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">高對比度 Didone 展示字型，具有編輯風格的分量感</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">結實的海報無襯線字型，帶有手寫漫畫氣質</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">沈穩的幾何無襯線字型，字距寬松而均勻</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">現代板襯線字型，末端柔和圓潤</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">極粗的板襯線字型，專為醒目的標題設計</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">窄體手繪小型大寫字型</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">緊湊的窄體無襯線字型，適合有衝擊力的標題</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">幾何板襯線字型，在小字號下依然穩固清晰</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">充滿吶喊感的漫畫書展示字型</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">模板式軍事風展示字型</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">直立襯線字型，曲線溫暖而隨和</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">人文主義無襯線字型，邊角略微圓潤</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">造型有力、直截了當的 grotesk 無襯線字型</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">精致的打字機等寬字型，專為腳本設計</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">圓潤的板襯線字型，帶有柔和的書卷氣</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">傳統書籍襯線字型，針對長篇閱讀優化</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">低對比度幾何無襯線字型，具有現代質感</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">堅實的襯線字型，在正文大小下依然清楚</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">現代技術風無襯線字型，連接處富有稜角</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">編程等寬字型，字形清晰且易於區分</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">為螢幕代碼設計的人文主義等寬字型</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">圓潤活潑的手寫字型</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">幾何無襯線字型，帶有 1920 年代復古氣質</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">延續 Futura 傳統的幾何無襯線字型</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">無環結構的泰文與拉丁無襯線字型，略帶傾斜</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">為降低閱讀時的視覺壓力而設計的無襯線字型</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">粗體連寫字型，帶有復古招牌風格</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">半幾何無襯線字型，在溫暖感與精確度之間取得平衡</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">極簡無襯線字型，適合乾淨的界面文字</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">圓潤完整的無襯線字型，末端柔和</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">幾何無襯線字型，節奏均衡而現代</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">方正的科技風字型，帶有游戲感</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">基於網格繪制的緊湊技術風無襯線字型</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">現代 grotesk 字型，開放曲線十分鮮明</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">彷彿直接來自街機機櫃的像素字型</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">圓潤的幾何無襯線字型，感覺柔和輕盈</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">略顯方正的窄體無襯線字型，帶有技術感稜角</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">裝飾藝術風展示字型，源自復古招牌繪制</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Roboto 的等寬配套字型</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">粗壯的展示字型，筆畫鈍厚而活潑</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">寬體工業風字型，方正造型厚重</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">鮮明傾斜的展示字型，具有古吉拉特文化根源</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">小巧的位圖字型，讓人聯想到早期電腦螢幕</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">為舒適閱讀代碼而設計的等寬字型</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">全大寫窄體字型，具有強烈的海報存在感</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">高挑窄體字型，適合天城文與拉丁文標題</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">略方正的人文主義無襯線字型，帶有技術氣息</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">完全圓潤的無襯線字型，氣質親切</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">窄體字型，讓人聯想到 1920 年代咖啡館招牌</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">板襯線字型，末端柔和切角且富有現代感</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">友好的人文主義無襯線字型，字形開放易讀</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">溫暖的無襯線字型，字形堅實，閱讀舒適</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">多用途人文主義無襯線字型，專為清晰界面設計</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">精致的正文襯線字型，具有編輯氣質</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">經典書籍襯線字型，針對螢幕閱讀優化</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">實用的 grotesk 無襯線字型，節奏寬闊而穩重</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">技術風人文主義無襯線字型，比例精確</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">技術風等寬字型，質感精致且易讀</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">現代襯線字型，具有工程化設計感</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">乾淨可靠的無襯線字型，字形緊湊實用</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">別具一格的 grotesk 字型，比例親切</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">幾何無襯線字型，具有寬松的未來感</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">現代幾何無襯線字型，線條優雅而都市化</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">均衡的現代無襯線字型，專為小螢幕設計</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">自信的展示無襯線字型，比例富有表現力</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">易讀的配套無襯線字型，適合較長的曲目資訊</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">清晰利落的等寬字型，具有現代技術氣質</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">非常規無襯線字型，形狀俏皮且富有藝術指導感</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">靈活的現代無襯線字型，精確而克制</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">乾淨親切的無襯線字型，輕鬆易讀</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">圓潤的展示無襯線字型，氣質輕快愉悅</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">活潑的 grotesk 字型，將規整結構與獨特細節結合</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">高對比度展示襯線字型，適合富有戲劇感的標題</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">優雅的高對比度文學襯線字型</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">優雅的展示襯線字型，帶有書法細節</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">堅實的板襯線字型，小字號下仍然清晰</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">多用途襯線字型，適合緊湊而富有表現力的閱讀</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">溫暖的傳統襯線字型，帶有書卷氣</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">優雅的無襯線字型，字形精致而獨特</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">粗體幾何無襯線字型，專為強有力的標題設計</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">適合窄排的無襯線字型，充滿運動感與動態活力</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">柔和的無襯線字型，字腔開放，帶有親切的招牌感</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">多用途無襯線字型，兼顧人文溫度與清晰度</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">清晰的交通系統風格無襯線字型，節奏自信</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">中性且無障礙友好的無襯線字型，適合日常界面</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">輕盈的幾何無襯線字型，曲線流暢現代</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">圓潤窄體無襯線字型，帶有柔和的未來感</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">乾淨的幾何無襯線字型，帶有細微的泰式氣質</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">寬體未來風展示字型，追求最大的視覺存在感</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">可從無襯線變化到等寬的字型家族，技術感中帶有玩味</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">可變寬度等寬字型，具有獨特的數字質感</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">覆蓋廣、可讀性高的無襯線字型，支持大量文字系統</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">可靠的襯線字型，支持大量文字系統</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">多語言等寬字型，專為一致的文字節奏設計</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">緊湊現代的無襯線字型，節奏利落並帶有希伯來字型影響</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">堅實的人文主義無襯線字型，針對清晰閱讀優化</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">親切的螢幕無襯線字型，紋理圓潤而開放</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">緊湊的幾何無襯線字型，比例鮮明獨特</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">活潑的書法襯線字型，帶有文學氣質</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">乾淨的人文主義無襯線字型，界面可讀性出色</string>
+    <string name="setting_wear_note_show_cover">封面圖片</string>
+    <string name="aod_element_artwork">封面圖</string>
+    <string name="aod_element_clock">時鐘</string>
+    <string name="aod_element_track_info">曲目信息</string>
+    <string name="aod_element_transport">傳輸控制</string>
+    <string name="aod_element_progress">進度</string>
+    <string name="aod_element_up_next">接下來</string>
+    <string name="aod_section_artwork">封面圖</string>
+    <string name="aod_control_tint">色調</string>
+    <string name="aod_control_brightness">亮度</string>
+    <string name="aod_control_art_treatment">處理效果</string>
+    <string name="aod_control_art_opacity">不透明度</string>
+    <string name="mini_button_control_visibility">顯示</string>
+    <string name="mini_button_control_arrangement">版面配置</string>
+    <string name="mini_button_control_shape">形狀</string>
+    <string name="mini_button_control_background">背景</string>
+    <string name="mini_button_control_opacity">不透明度</string>
+    <string name="mini_button_assign_action">指派動作</string>
+    <string name="mini_button_gestures_note">在播放器上向上、向下及向左滑動。向右滑動永遠是系統的關閉手勢，不會被攔截。</string>
+    <string name="setting_wear_chat_cover_shape">聊天頭像形狀</string>
+    <string name="setting_wear_chat_show_cover">封面圖片</string>
+    <string name="setting_wear_metadata_cover_shape">元資料封面形狀</string>
+    <string name="setting_wear_metadata_show_cover">封面圖片</string>
+    <string-array name="wear_text_case_entries">
+        <item>正常</item>
+        <item>大寫</item>
+        <item>小寫</item>
+        <item>字首大寫</item>
+    </string-array>
+    <string name="wear_text_font_follow">跟隨全域字型</string>
+    <string name="category_wf_typography_track_time">曲目時間</string>
+    <string name="setting_wear_track_time_font">曲目時間字型</string>
+    <string name="wear_track_time_font_follow">跟隨設計</string>
+    <string name="setting_wear_track_time_font_weight">曲目時間字重</string>
+    <string name="setting_wear_track_time_font_italic">曲目時間斜體</string>
+    <string name="setting_wear_track_time_font_scale">曲目時間大小</string>
+    <string name="setting_wear_track_time_font_opacity">曲目時間不透明度</string>
+    <string name="setting_wear_track_time_font_tracking">曲目時間字間距</string>
+    <string-array name="album_art_filter_entries">
+        <item>無</item>
+        <item>單色</item>
+        <item>暖色</item>
+        <item>冷色</item>
+        <item>黃金時刻</item>
+        <item>桃紅</item>
+        <item>復古膠片</item>
+        <item>褪色膠片</item>
+        <item>啞光</item>
+        <item>鮮艷</item>
+        <item>衝擊</item>
+        <item>粉彩</item>
+        <item>棕褐色</item>
+        <item>藍曬</item>
+        <item>青綠與橙色</item>
+        <item>高對比度</item>
+        <item>柔光</item>
+        <item>夜晚</item>
+    </string-array>
+    <string name="queue_item_now_playing">正在播放</string>
+    <string name="queue_item_unknown_title">未知曲目</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">播放佇列 · %1$d 首曲目</item>
+        <item quantity="other">播放佇列 · %1$d 首曲目</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">強調色底層顏色</string>
+    <string name="setting_wear_accent_floor_custom_color">自訂底層顏色</string>
+    <string name="setting_wear_accent_floor_custom_color_description">當「強調色底層顏色」設為「自訂顏色」時，選擇所使用的顏色</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>專輯強調色</item>
+        <item>專輯次色</item>
+        <item>專輯第三色</item>
+        <item>自訂顏色</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">中性且高度易讀的界面無襯線字型，適合日常閱讀</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">以無障礙為優先的字形設計，形狀差異明顯，小字號下仍易辨認</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">柔和圓潤的幾何無襯線字型——自信而友好</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">緊湊的人文主義無襯線字型，讓長標題擁有更多空間</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">高挑窄體展示字型，具有強烈的海報衝擊力</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">現代襯線字型，適合舒適的長篇閱讀</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">富有表現力的柔和襯線字型，溫暖而有個性</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">復古未來主義等寬字型，帶有技術鋒芒</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">密實的超粗展示字型，提供最大對比度</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">流暢的手寫字型，感覺活潑而個人化</string>
+    <string name="setting_wear_artist_text_mode">藝人文字行為</string>
+    <string name="setting_wear_album_art_source">專輯封面來源</string>
+    <string name="setting_user_font">我自己的字型</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">從此手機匯入 .ttf 或 .otf 檔案</string>
+    <string name="setting_user_font_loaded">%1$s · 輕觸以取代或移除</string>
+    <string name="user_font_pick">選擇字型檔案</string>
+    <string name="user_font_replace">取代</string>
+    <string name="user_font_remove">移除</string>
+    <string name="user_font_imported">已匯入「%1$s」。可在任何字型清單中選擇它；字型正在傳送到你的手錶。</string>
+    <string name="user_font_removed">你匯入的字型已移除。</string>
+    <string name="user_font_error_too_large">該檔案大小為 %1$s。字型必須小於 %2$s，才能快速傳送到手錶。</string>
+    <string name="user_font_error_not_a_font">該檔案不是此手機可讀取的字型。支援 TrueType 和 OpenType（.ttf、.otf）；不支援網頁字型（.woff、.woff2）。</string>
+    <string name="user_font_error_unreadable">無法讀取該檔案。請嘗試重新選擇，或先將它複製到此手機。</string>
+    <string name="user_font_not_shareable">使用你自己字型的主題會留在此手機上</string>
+    <string name="setting_custom_album_art_image">要使用的圖片</string>
+    <string name="setting_custom_album_art_folder">圖片來源檔案夾</string>
+    <string name="setting_custom_album_art_none">尚未選擇 — 輕觸以選擇</string>
+    <string name="setting_custom_album_art_chosen">%1$s · 輕觸以更改</string>
+    <string name="custom_album_art_image_set">該圖片現在會顯示在播放器後方。</string>
+    <string name="custom_album_art_folder_set">該檔案夾中的圖片會為每首曲目繪制一張。</string>
+    <string name="custom_album_art_error">無法開啟該內容。請重新選擇，或選擇此手機本身儲存空間中的內容。</string>
+    <string name="custom_album_art_not_shareable">使用你自己圖片的主題會留在此手機上</string>
+    <string name="setting_wear_text_block_align">文本對齊</string>
+    <string name="setting_wear_text_block_align_description">曲目文字與哪一側對齊。「跟隨錶面」會保留每個錶面原本設計的對齊方式。</string>
+    <string name="setting_wear_text_block_position">文本位置</string>
+    <string name="setting_wear_text_block_position_description">曲目文字在螢幕上的位置。「跟隨錶面」會保留每個錶面原本設計的位置。</string>
+    <string name="setting_online_artwork">線上封面圖</string>
+    <string name="setting_online_artwork_description">讓錶面顯示在線上查詢的圖片 \u2014 可以是正在演出的藝人，也可以是在播放器未提供圖片時顯示專輯封面。手機會在 Deezer 的公開目錄中查詢並快取結果；只會傳送曲目名稱和藝人名稱，且只有當某個錶面設定為使用其中一個來源時才會進行查詢。關閉後，將使用播放器本身的封面圖。</string>
 </resources>

@@ -4,7 +4,7 @@ import com.svartifoss.snfell.BuildConfig
 import com.svartifoss.snfell.common.ArchivedFaces
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
-import com.svartifoss.snfell.update.UpdateChecker
+import com.svartifoss.snfell.update.AppVersionComparison
 import java.io.File
 import java.util.UUID
 import org.json.JSONObject
@@ -39,7 +39,7 @@ class OnlineThemeCatalogTest {
             assertFalse("$id must not republish an archived face", baseFace in ArchivedFaces.KEYS)
             assertFalse(
                     "$id requires a newer app than this catalogue release",
-                    UpdateChecker.isNewer(summary.getString("minimumAppVersion"), BuildConfig.VERSION_NAME))
+                    AppVersionComparison.isNewer(summary.getString("minimumAppVersion"), BuildConfig.VERSION_NAME))
 
             val profileFile = File(themesDirectory, "$id.json")
             assertTrue("$id is listed but has no profile file", profileFile.isFile)

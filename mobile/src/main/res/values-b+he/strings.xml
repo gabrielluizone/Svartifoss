@@ -1876,6 +1876,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1919,6 +1924,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2366,4 +2376,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">העתקה</string>
+    <string name="dev_report_copied">הדוח הועתק</string>
+    <string name="dev_watch_snapshot_inspector">תמונת מצב של העדפות השעון</string>
+    <string name="dev_watch_snapshot_inspector_description">מה שבאמת יישלח לשעון עכשיו: תחום המראה הפעיל, גודל משוער ואילו מטמוני תחומי פני שעון לא פעילים הושמטו כדי לעמוד במגבלת הגודל</string>
+    <string name="dev_data_layer_inspector">בודק Data Layer</string>
+    <string name="dev_data_layer_inspector_description">צומתי Wearable המחוברים וה־WatchInfo האחרון שאפליקציית השעון החזירה - המצב הגולמי שמאחורי "אין שעון מחובר"</string>
+    <string name="dev_media_sessions_inspector">סייר MediaSession</string>
+    <string name="dev_media_sessions_inspector_description">כל MediaSession שפעיל כרגע, ולא רק זה שנמצא במעקב: הפעולות שפורסמו, תור ההשמעה ונתיב ההשמעה</string>
+    <string name="dev_view_phone_log">הצגת יומן הטלפון</string>
+    <string name="dev_view_phone_log_description">סוף יומן Timber שעל הדיסק, ובנוסף יומן השעון אם "שליחת יומנים" משכה אותו בעבר</string>
+    <string name="dev_theme_submission_preflight">בדיקה מוקדמת לשליחת ערכת נושא</string>
+    <string name="dev_theme_submission_preflight_description">מריץ כל ערכת נושא שמורה של השעון דרך בדיקת השליחה לקהילה ומציין את ההגדרה המדויקת שחוסמת אותה, אם קיימת</string>
+    <string name="dev_appearance_resolution_inspector">בודק הכרעת הגדרות המראה</string>
+    <string name="dev_appearance_resolution_inspector_description">עבור כל מפתח מראה בתחום, מציג איזה מארבעת שלבי ההכרעה ניצח בפועל - ערך מפורש של פני השעון, ברירת מחדל לכל פני שעון, ערך גלובלי ישן או ברירת המחדל של ההגדרה - ואת הערך שכל אחד מחזיר</string>
+    <string name="action_fast_forward">הרצה קדימה</string>
+    <string name="action_rewind">הרצה אחורה</string>
+    <string name="action_set_playback_speed">הגדרת מהירות ל-%1$s×</string>
+    <string name="action_seek_to_percent">דילוג ל-%1$d%%</string>
+    <string name="action_set_volume_percent">הגדרת עוצמת קול ל-%1$d%%</string>
+    <string name="action_set_shuffle_on">הפעלת ערבוב</string>
+    <string name="action_set_shuffle_off">כיבוי ערבוב</string>
+    <string name="action_set_repeat_off">כיבוי חזרה</string>
+    <string name="action_set_repeat_all">חזרה על הכול</string>
+    <string name="action_set_repeat_one">חזרה על פריט אחד</string>
+    <string name="group_playback_speed">מהירות ניגון</string>
+    <string name="group_track_position">מיקום רצועה</string>
+    <string name="group_shuffle_mode">מצב ערבוב</string>
+    <string name="group_repeat_mode">מצב חזרה</string>
+    <string name="group_volume_levels">רמות עוצמת קול</string>
+    <string name="group_watch_screens">מסכי שעון</string>
+    <string name="group_find_music">חיפוש וניגון</string>
+    <string name="action_open_face_picker">פתיחת בורר פני השעון</string>
+    <string name="action_close_watch_app">סגירת אפליקציית השעון</string>
+    <string name="hand_gestures">מחוות יד</string>
+    <string name="hand_gestures_hint">זמין בשעונים תואמים כל עוד Svartifoss פתוח.</string>
+    <string name="hand_gestures_hint_disconnected">חבר ופתח את Svartifoss בשעון כדי לבדוק אם הוא תומך במחוות יד.</string>
+    <string name="hand_gestures_hint_outdated">עדכן את אפליקציית השעון כדי לבדוק אם השעון הזה תומך במחוות יד.</string>
+    <string name="hand_gestures_hint_unsupported">השעון הזה אינו תומך במחוות יד, ולכן פעולה שתוקצה כאן לעולם לא תפעל.</string>
+    <string name="hand_gestures_hint_disabled">מחוות היד כבויות בשעון הזה. הפעל אותן בשעון עצמו דרך הגדרות \u2192 מחוות.</string>
+    <string name="hand_gestures_hint_ready">מוכן בשעון הזה: צבוט פעמיים כשנגן Svartifoss פתוח.</string>
+    <string name="hand_gesture_how_it_works">צבוט במהירות את האגודל והאצבע המורה פעמיים כשהפרק מורם. Wear OS קורא לזה הפעולה הראשית, ולכן שעון של יצרן אחר עשוי להשתמש במחוות יד מקבילה משלו.\n\nהמחווה פועלת רק כאשר נגן Svartifoss פתוח בשעון והמסך דולק \u2014 לא מפני השעון, לא מעל תור ההשמעה או התפריט, ולא בתצוגה הפעילה תמיד. הפעולה שמופעלת היא זו שהוגדרה למצב ההשמעה הנוכחי, לכן הגדר אותה בשני דפי הפקדים כדי שתפעל בשני המצבים.\n\nיש להפעיל את המחווה גם דרך הגדרות \u2192 מחוות בשעון עצמו.</string>
+    <string name="double_pinch">צביטה כפולה</string>
+    <string name="icon_selection_search_hint">חיפוש סמלים</string>
+    <string name="icon_selection_search_empty">אין סמלים שתואמים לחיפוש שלך</string>
+    <string name="open_quick_actions_panel">פתיחת חלונית פעולות מהירות</string>
+    <string name="open_volume_screen">פתיחת מסך עוצמת קול</string>
+    <string name="open_progress_screen">פתיחת מסך התקדמות</string>
+    <string name="export_config_failed_detail">לא ניתן לייצא גיבוי: %1$s</string>
+    <string name="backup_selection_title">בחירת תוכן הגיבוי</string>
+    <string name="backup_selection_description">בחרו את החלקים של Svartifoss שברצונכם לשמור. הכול נבחר כברירת מחדל; חלקים שלא נבחרו נשארים ללא שינוי בעת ייבוא הגיבוי הזה.</string>
+    <string name="backup_selection_select_all">בחירת הכול</string>
+    <string name="backup_selection_clear_all">ניקוי הכול</string>
+    <string name="backup_selection_export">ייצוא גיבוי</string>
+    <string name="backup_selection_empty">בחרו לפחות פריט אחד</string>
+    <string name="backup_section_buttons">הגדרות כפתורים</string>
+    <string name="backup_section_buttons_description">פעולות כפתור, כתר ומחוות בזמן שהמוזיקה מתנגנת וכשהיא עצורה.</string>
+    <string name="backup_section_actions">רשימת פעולות</string>
+    <string name="backup_section_actions_description">הרשימה המסודרת של הפעולות שמופיעה בתפריט הפעולות בשעון.</string>
+    <string name="backup_section_app_settings">הגדרות אפליקציה</string>
+    <string name="backup_section_app_settings_description">הגדרות טלפון, התנהגות שעון, שפה, ניגון ואינטגרציות.</string>
+    <string name="backup_section_watch_appearance">מראה השעון וערכות נושא</string>
+    <string name="backup_section_watch_appearance_description">פריסות שעון, צבעים, טיפוגרפיה, לוחות, AOD וערכות נושא מותאמות אישית שנשמרו.</string>
+    <string name="backup_section_playlist_shortcuts">קיצורי דרך לרשימות השמעה</string>
+    <string name="backup_section_playlist_shortcuts_description">קישורים שמורים למוזיקה, אלבומים, אמנים, רשימות השמעה ושירותי סטרימינג אחרים.</string>
+    <string name="backup_section_history">היסטוריית חיפוש וניגון</string>
+    <string name="backup_section_history_description">חיפושים אחרונים ורצועות שהושמעו לאחרונה.</string>
+    <string name="backup_section_icons">סמלים וגרפיקה שנטענו</string>
+    <string name="backup_section_icons_description">סמלי פעולה מותאמים אישית, עטיפות קיצורי דרך וסמלי אפליקציה במטמון.</string>
+    <string name="backup_section_privacy">פרטיות והתראות</string>
+    <string name="backup_section_privacy_description">דוחות קריסה, התראות הכרזה ובחירות הסכמה אחרות שנשמרו על ידי האפליקציה.</string>
+    <string name="backup_section_local_app_state">מצב מקומי של האפליקציה</string>
+    <string name="backup_section_local_app_state_description">צבע ההדגשה הנוכחי, מיקום התפריט האחרון, הנחיות שהושלמו ומצב העדכון.</string>
+    <string name="backup_section_auxiliary_data">נתוני אפליקציה אחרים</string>
+    <string name="backup_section_auxiliary_data_description">העדפות וקבצים פנימיים נוספים שבבעלות האפליקציה, כולל מאגרי נתונים עתידיים.</string>
+    <string name="pref_numeric_range">בין %1$d ל-%2$d.</string>
+    <string name="background_editor_artwork">גרפיקה</string>
+    <string name="background_editor_layers">שכבות</string>
+    <string name="background_editor_layers_count">%1$d מתוך %2$d</string>
+    <string name="background_editor_add_layer">הוספת שכבה</string>
+    <string name="background_editor_reset_layers">איפוס</string>
+    <string name="background_editor_empty">אין שכבות. הגרפיקה מוצגת בפני עצמה.</string>
+    <string name="background_editor_note">השכבה שבראש הרשימה הזו מצוירת מעל כל השאר; זו שבתחתית נמצאת הכי קרוב לגרפיקה.</string>
+    <string name="background_editor_full">אפשר לערום עד %1$d שכבות.</string>
+    <string name="background_layer_kind_wash">רקע</string>
+    <string name="background_layer_kind_shade">הצללה</string>
+    <string name="background_layer_kind_floor">רצפת הדגשה</string>
+    <string name="background_layer_move_up">הזזת השכבה למעלה</string>
+    <string name="background_layer_move_down">הזזת השכבה למטה</string>
+    <string name="background_layer_more">אפשרויות נוספות לשכבה הזו</string>
+    <string name="background_layer_add_title">הוספת שכבה</string>
+    <string name="background_layer_style_title">שכבת %1$s</string>
+    <string name="background_layer_opacity">עוצמה</string>
+    <string name="background_layer_color">צבע</string>
+    <string name="background_layer_custom_color">בחירת צבע</string>
+    <string name="background_layer_duplicate">שכפול</string>
+    <string name="background_layer_remove">הסרה</string>
+    <string name="background_layer_color_default">ברירת מחדל</string>
+    <string name="background_layer_color_album">צבע אלבום</string>
+    <string name="background_layer_color_secondary">צבע אלבום שני</string>
+    <string name="background_layer_color_tertiary">צבע אלבום שלישי</string>
+    <string name="background_layer_color_desaturated">צבע אלבום מעומעם</string>
+    <string name="background_layer_color_black">שחור</string>
+    <string name="background_layer_color_custom">צבע מותאם אישית</string>
+    <string name="background_layer_reset_title">לאפס את השכבות?</string>
+    <string name="background_layer_reset_message">ערימת השכבות חוזרת להצללה ולרצפת ההדגשה שהוגדרו בשורות שלהן, וזה גם מה ששען שמריץ גרסה ישנה יותר מציג בכל מקרה.</string>
+    <string name="watch_element_progress">התקדמות</string>
+    <string name="watch_element_volume">עוצמת קול</string>
+    <string name="watch_element_quick_panel">פעולות מהירות</string>
+    <string name="watch_element_queue">תור</string>
+    <string name="watch_element_lyrics">מילים</string>
+    <string name="player_section_on_screen">על המסך</string>
+    <string name="player_element_app_icon">סמל אפליקציה</string>
+    <string name="player_element_controls">פקדי נגן</string>
+    <string name="player_element_tap_flash">הבזק נגיעה</string>
+    <string name="player_element_inner_progress">התקדמות פנימית</string>
+    <string name="player_element_edge_arc">קשת קצה</string>
+    <string name="player_element_edge_seek">חיפוש בקצה</string>
+    <string name="player_element_clock">שעון</string>
+    <string name="player_element_cover_art">עטיפת אלבום</string>
+    <string name="setting_album_art_filter">מסנן עטיפת אלבום</string>
+    <string name="setting_album_art_filter_description">החלת עיבוד צבע עצמאי על כל סגנון של עטיפת אלבום.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto עם קו דק במיוחד למראה תצוגה עדין.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto עם קו קליל ואוורירי והפרופורציות המוכרות של משפחת הגופן.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto עם קו בינוני חזק יותר עבור תוויות קומפקטיות וקריאות.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto במשקל המערכת הכבד ביותר עבור טקסט תצוגה מודגש.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto מכווץ אופקית כדי שכותרות ארוכות יותר יתאימו בפחות מקום.</string>
+    <string name="setting_wear_title_font">גופן כותרת</string>
+    <string name="setting_wear_title_text_case">רישיות כותרת</string>
+    <string name="setting_wear_artist_font">גופן אמן</string>
+    <string name="setting_wear_artist_text_case">רישיות שם אמן</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">sans עגול וידידותי שנוצר לקריאה ראשונית</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">גופן תצוגה Didone בעל ניגודיות גבוהה ומשקל עריכתי</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">sans כרזות יציב עם נגיעה קומיקסית של כתב יד</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">sans גאומטרי רגוע עם ריווח נדיב ואחיד</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">slab serif עכשווי עם סיומות מעוגלות בעדינות</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">slab serif מסיבי שנבנה לכותרות בעלות נוכחות חזקה</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">גופן צר מצויר ביד באותיות קטנות-גדולות</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">sans דחוס וצפוף לכותרות רועשות</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">slab serif גאומטרי שנשאר מוצק גם בגדלים קטנים</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">גופן תצוגה בסגנון קומיקס עם אנרגיה צעקנית</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">גופן תצוגה צבאי בסגנון שבלונה</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">serif זקוף עם קימורים חמים ולא רשמיים</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">sans הומניסטי עם פינות מעוגלות בעדינות</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">sans grotesque עם צורות חזקות וישירות</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">monospace מעודן בסגנון מכונת כתיבה שנבנה לתסריטים</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">slab serif מעוגל עם אופי רך וספרותי</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">serif ספרים בסגנון ישן שמכוון לקטעים ארוכים</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">sans גאומטרי בעל ניגודיות נמוכה וגימור מודרני</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">serif חסון שנועד להחזיק היטב בגדלי טקסט רגילים</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">sans טכני עכשווי עם חיבורים זוויתיים</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">monospace לתכנות עם גליפים ברורים ומובחנים</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">monospace הומניסטי שתוכנן לקוד על המסך</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">גופן כתב יד שובב עם משיכות מעוגלות</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">sans גאומטרי עם אופי וינטג׳ משנות ה-20</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">sans גאומטרי במסורת Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">sans תאילנדי ולטיני ללא לולאות עם נטייה קלה</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">sans שעוצב להפחתת עומס חזותי בזמן קריאה</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">כתב מחובר מודגש עם ניחוח של שילוט רטרו</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">sans חצי-גאומטרי שמאזן בין חמימות לדיוק</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">sans מינימליסטי שנועד לטקסט ממשק נקי</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">sans מעוגל היטב עם סיומות רכות</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">sans גאומטרי עם קצב עכשווי ואחיד</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">גופן טכנו מרובע עם תחושת גיימינג</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">sans טכני קומפקטי שמצויר על רשת</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">grotesque מודרני עם קימורים פתוחים ומובחנים</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">גופן פיקסלים שנראה כאילו יצא ישירות ממכונת ארקייד</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">sans גאומטרי מעוגל עם תחושה עדינה וקלה</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">sans דחוס ומרובע עם זוויות טכניות</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">גופן תצוגה בסגנון אר דקו עם שורשים בציור שלטים רטרו</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">הגרסה בעלת הרוחב הקבוע של Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">גופן תצוגה שמנמן עם משיכות שובבות ובוטות</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">גופן תעשייתי רחב עם צורות מרובעות וכבדות</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">גופן תצוגה נטוי ובוהק עם שורשים גוג׳ראטיים</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">גופן bitmap זעיר שמזכיר מסכי מחשב מוקדמים</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">monospace שתוכנן לקריאת קוד בנוחות</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">גופן דחוס באותיות גדולות בלבד עם נוכחות כרזתית</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">גופן גבוה ודחוס לכותרות בדוונאגרי ובלטינית</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">sans הומניסטי מרובע עם אופי טכני</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">sans מעוגל לחלוטין עם אופי נגיש</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">גופן דחוס שמזכיר שילוט של בתי קפה משנות ה-20</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">slab serif עם סיומות מודרניות חתוכות בעדינות</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">sans הומניסטי ידידותי עם צורות פתוחות וקריאות</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">sans חמים עם צורות חסונות לקריאה נוחה</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">sans הומניסטי רב-שימושי שתוכנן לממשקים ברורים</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">serif טקסט מעודן עם קול עריכתי</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">serif ספרים קלאסי שמכוון לקריאה על מסך</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">sans grotesk שימושי עם קצב רחב וחסון</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">sans הומניסטי טכני עם פרופורציות מדויקות</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">monospace טכני עם מרקם מלוטש וקריא</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">serif עכשווי עם אופי מהונדס</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">sans עבודה נקי עם צורות קומפקטיות ומעשיות</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">grotesk משונה מעט עם פרופורציות ידידותיות</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">sans גאומטרי עם תחושה עתידנית ומרווחת</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">sans גאומטרי מודרני עם קווים אורבניים אלגנטיים</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">sans עכשווי מאוזן שנבנה למסכים קטנים</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">sans תצוגה בטוח עם פרופורציות אקספרסיביות</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">sans מלווה וקריא למידע ארוך יותר על רצועות</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">monospace חד עם גוון טכני מודרני</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">sans לא שגרתי עם צורות שובבות ומכוונות אמנותית</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">sans עכשווי וגמיש עם דיוק שקט</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">sans נקי ונגיש לקריאות ללא מאמץ</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">sans תצוגה מעוגל עם אישיות עליזה</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">grotesk תוסס שמשלב מבנה עם פרטים מוזרים</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">serif תצוגה בעל ניגודיות גבוהה לכותרות דרמטיות</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">serif ספרותי אלגנטי בעל ניגודיות גבוהה</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">serif תצוגה חינני עם פרטים קליגרפיים</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">slab serif חסון שנשאר ברור בגדלים קטנים</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">serif רב-שימושי שנועד לקריאה צפופה ואקספרסיבית</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">serif חמים בסגנון ישן עם קול ספרותי</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">sans אלגנטי עם צורות אותיות מובחנות ומעודנות</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">sans גאומטרי מודגש שנועד לכותרות חזקות</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">sans שמתאים לדחיסה עם אנרגיה ספורטיבית ודינמית</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">sans רך עם חללים פנימיים פתוחים ואנרגיה ידידותית של שילוט</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">sans רב-שימושי שמאזן חמימות הומניסטית ובהירות</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">sans ברור בהשראת שילוט תחבורה עם קצב בטוח</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">sans ניטרלי ונגיש שנבנה לממשקים יומיומיים</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">sans גאומטרי קל עם קימורים מודרניים וחלקים</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">sans צר ומעוגל עם תחושה עתידנית רכה</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">sans גאומטרי נקי עם אופי עדין בהשראה תאילנדית</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">גופן תצוגה עתידני רחב לנוכחות מרבית</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">משפחה משתנה מ-sans ל-monospace עם קול טכני שובב</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">monospace ברוחב משתנה עם מרקם דיגיטלי מובחן</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">sans רחב וקריא מאוד עם תמיכה נרחבת במערכות כתב</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">serif אמין עם תמיכה נרחבת במערכות כתב</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">monospace רב-לשוני שתוכנן לקצב עקבי</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">sans מודרני קומפקטי עם קצב חד בהשפעה עברית</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">sans הומניסטי חסון שמותאם לקריאה ברורה</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">sans ידידותי למסכים עם מרקם פתוח ומעוגל</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">sans גאומטרי קומפקטי עם פרופורציות מובחנות</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">serif קליגרפי תוסס בעל אופי ספרותי</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">sans הומניסטי נקי עם קריאות מצוינת לממשקים</string>
+    <string name="setting_wear_note_show_cover">עטיפת אלבום</string>
+    <string name="aod_element_artwork">גרפיקה</string>
+    <string name="aod_element_clock">שעון</string>
+    <string name="aod_element_track_info">מידע על הרצועה</string>
+    <string name="aod_element_transport">פקדי השמעה</string>
+    <string name="aod_element_progress">התקדמות</string>
+    <string name="aod_element_up_next">הבא בתור</string>
+    <string name="aod_section_artwork">גרפיקה</string>
+    <string name="aod_control_tint">גוון</string>
+    <string name="aod_control_brightness">בהירות</string>
+    <string name="aod_control_art_treatment">עיבוד</string>
+    <string name="aod_control_art_opacity">אטימות</string>
+    <string name="mini_button_control_visibility">הצגה</string>
+    <string name="mini_button_control_arrangement">סידור</string>
+    <string name="mini_button_control_shape">צורה</string>
+    <string name="mini_button_control_background">רקע</string>
+    <string name="mini_button_control_opacity">אטימות</string>
+    <string name="mini_button_assign_action">הקצאת פעולות</string>
+    <string name="mini_button_gestures_note">החלק למעלה, למטה ושמאלה בנגן. החלקה ימינה היא תמיד מחוות הסגירה של המערכת ולעולם אינה נלכדת.</string>
+    <string name="setting_wear_chat_cover_shape">צורת אווטאר בצ׳אט</string>
+    <string name="setting_wear_chat_show_cover">עטיפת אלבום</string>
+    <string name="setting_wear_metadata_cover_shape">צורת עטיפת Metadata</string>
+    <string name="setting_wear_metadata_show_cover">עטיפת אלבום</string>
+    <string-array name="wear_text_case_entries">
+        <item>רגיל</item>
+        <item>אותיות גדולות</item>
+        <item>אותיות קטנות</item>
+        <item>רישיות כותרת</item>
+    </string-array>
+    <string name="wear_text_font_follow">שימוש בגופן הכללי</string>
+    <string name="category_wf_typography_track_time">זמן רצועה</string>
+    <string name="setting_wear_track_time_font">גופן זמן רצועה</string>
+    <string name="wear_track_time_font_follow">שימוש בעיצוב</string>
+    <string name="setting_wear_track_time_font_weight">משקל זמן רצועה</string>
+    <string name="setting_wear_track_time_font_italic">זמן רצועה נטוי</string>
+    <string name="setting_wear_track_time_font_scale">גודל זמן רצועה</string>
+    <string name="setting_wear_track_time_font_opacity">אטימות זמן רצועה</string>
+    <string name="setting_wear_track_time_font_tracking">מרווח אותיות בזמן רצועה</string>
+    <string-array name="album_art_filter_entries">
+        <item>ללא</item>
+        <item>מונוכרום</item>
+        <item>חם</item>
+        <item>קריר</item>
+        <item>שעת הזהב</item>
+        <item>רוזה</item>
+        <item>סרט וינטג׳</item>
+        <item>סרט דהוי</item>
+        <item>מט</item>
+        <item>חי</item>
+        <item>אגרוף</item>
+        <item>פסטל</item>
+        <item>ספיה</item>
+        <item>ציאנוטייפ</item>
+        <item>טורקיז וכתום</item>
+        <item>ניגודיות גבוהה</item>
+        <item>אור רך</item>
+        <item>לילה</item>
+    </string-array>
+    <string name="queue_item_now_playing">מתנגן כעת</string>
+    <string name="queue_item_unknown_title">רצועה לא ידועה</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">תור השמעה · רצועה %1$d</item>
+        <item quantity="other">תור השמעה · %1$d רצועות</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">צבע רצפת הדגשה</string>
+    <string name="setting_wear_accent_floor_custom_color">צבע רצפה מותאם אישית</string>
+    <string name="setting_wear_accent_floor_custom_color_description">בחרו את הצבע שישמש כאשר צבע רצפת ההדגשה מוגדר לצבע מותאם אישית</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>הדגשת אלבום</item>
+        <item>צבע משני לאלבום</item>
+        <item>צבע שלישוני לאלבום</item>
+        <item>צבע מותאם אישית</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">sans ממשק ניטרלי וקריא מאוד שתוכנן לקריאה יומיומית</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">צורות אותיות שמעדיפות נגישות, עם צורות מובחנות שנשארות ברורות בגדלים קטנים</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">sans גאומטרי מעוגל בעדינות — בטוח וידידותי</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">sans הומניסטי קומפקטי שנותן לכותרות ארוכות יותר מקום לנשום</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">גופן תצוגה גבוה ודחוס עם אנרגיית כרזה נמרצת</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">serif עכשווי שתוכנן לקריאה נוחה של טקסט ארוך</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">serif רך ובעל הבעה עם חמימות ואופי</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">monospace רטרו-עתידני עם קצה טכני</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">גופן תצוגה כבד וצפוף לניגודיות מרבית</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">כתב יד זורם עם תחושה חיה ואישית</string>
+    <string name="setting_wear_artist_text_mode">התנהגות טקסט האמן</string>
+    <string name="setting_wear_album_art_source">מקור תמונת האלבום</string>
+    <string name="setting_user_font">הגופן שלי</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">ייבוא קובץ .ttf או .otf מהטלפון הזה</string>
+    <string name="setting_user_font_loaded">%1$s · הקש כדי להחליף או להסיר</string>
+    <string name="user_font_pick">בחירת קובץ גופן</string>
+    <string name="user_font_replace">החלפה</string>
+    <string name="user_font_remove">הסרה</string>
+    <string name="user_font_imported">“%1$s” יובא. אפשר לבחור אותו בכל רשימת גופנים; הוא נשלח כעת לשעון שלך.</string>
+    <string name="user_font_removed">הגופן שייבאת הוסר.</string>
+    <string name="user_font_error_too_large">גודל הקובץ הוא %1$s. גופן חייב להיות קטן מ־%2$s כדי להגיע במהירות לשעון.</string>
+    <string name="user_font_error_not_a_font">הקובץ הזה אינו גופן שהטלפון יכול לקרוא. TrueType ו־OpenType (.ttf, .otf) נתמכים; גופני אינטרנט (.woff, .woff2) אינם נתמכים.</string>
+    <string name="user_font_error_unreadable">לא ניתן לקרוא את הקובץ הזה. נסה לבחור אותו שוב, או העתק אותו קודם לטלפון הזה.</string>
+    <string name="user_font_not_shareable">ערכות נושא שמשתמשות בגופן האישי שלך נשארות בטלפון הזה</string>
+    <string name="setting_custom_album_art_image">תמונה לשימוש</string>
+    <string name="setting_custom_album_art_folder">תיקייה שממנה נלקחות תמונות</string>
+    <string name="setting_custom_album_art_none">עדיין לא נבחר — הקש כדי לבחור</string>
+    <string name="setting_custom_album_art_chosen">%1$s · הקש כדי לשנות</string>
+    <string name="custom_album_art_image_set">התמונה הזו תופיע מעכשיו מאחורי הנגן.</string>
+    <string name="custom_album_art_folder_set">תמונה מהתיקייה הזו תצויר עבור כל רצועה.</string>
+    <string name="custom_album_art_error">לא ניתן לפתוח את זה. בחר שוב, או בחר משהו מהאחסון המקומי של הטלפון הזה.</string>
+    <string name="custom_album_art_not_shareable">ערכות נושא שמשתמשות בתמונות האישיות שלך נשארות בטלפון הזה</string>
+    <string name="setting_wear_text_block_align">יישור טקסט</string>
+    <string name="setting_wear_text_block_align_description">הקצה שאליו מיושר טקסט הרצועה. "לפי פני השעון" שומר את היישור שעבורו תוכננו כל פני שעון.</string>
+    <string name="setting_wear_text_block_position">מיקום טקסט</string>
+    <string name="setting_wear_text_block_position_description">המיקום של טקסט הרצועה על המסך. "לפי פני השעון" שומר את המיקום שעבורו תוכננו כל פני שעון.</string>
+    <string name="setting_online_artwork">גרפיקה מקוונת</string>
+    <string name="setting_online_artwork_description">אפשר לפני השעון להציג תמונה שנמצאה באינטרנט \u2014 האמן שמבצע, או עטיפת אלבום עבור נגן שאינו מפרסם תמונה. הטלפון שלך מבצע את החיפוש בקטלוג הציבורי של Deezer ושומר את התוצאה במטמון; רק שמות הרצועה והאמן נשלחים, ולא מתבצע חיפוש אלא אם פני שעון הוגדרו להשתמש באחד המקורות האלה. כשהאפשרות כבויה, נעשה שימוש בגרפיקה של הנגן עצמו.</string>
 </resources>

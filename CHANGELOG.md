@@ -20,6 +20,11 @@
   choosing a tone here substitutes for the global one instead of stacking two filters on top of
   each other. The Watch tab preview follows all three.
 
+- **Five more languages: Burmese, Tamil, Telugu, Marathi and Central Kurdish.** The phone and the
+  watch are fully translated into all five, and each appears in the in-app language picker and the
+  Android 13+ per-app language setting. Central Kurdish is right-to-left. That brings the app to 45
+  languages.
+
 - **Every panel surface can have a background of its own.** *Panel background* was one watch-wide
   choice, so the five surfaces that paint one could only ever agree. Volume, Progress, Quick
   actions, Queue and Lyrics each get their own picker on the Panels page: keep following the
@@ -251,6 +256,49 @@
 - **The streaming-shortcut playback ladder now narrates its own three steps to the phone log** (playFromUri, MediaBrowserService, the visible open) instead of only logging the cases it already had a reason to - so "View phone log" in Developer settings shows which step a shortcut actually took the next time one runs.
 
 ### Changed
+
+- **"Free" in the privacy policy now says which "free" it means.** The Open source section read
+  "free/open-source software (GPLv3)", which a paid store listing would make sound like a
+  contradiction. It now spells out that "free" is freedom, not price — the source stays available
+  to build and run at no cost — and that any listing price only pays for a pre-built,
+  auto-updating binary. The English page, its hand-kept HTML twin and the pt-BR/es translation
+  layer all carry the new wording; a new `LICENSING.md` sets out how the app's proprietary Google
+  dependencies (the Wearable Data Layer API, Firebase) sit under the GPLv3, including a section 7
+  additional permission for the project's own changes.
+
+- **The build now has two distribution flavors, `github` and `play`.** `github` is the default and
+  unchanged — it keeps the in-app self-updater that pulls new APKs from GitHub Releases. `play`
+  omits the updater and the `REQUEST_INSTALL_PACKAGES` permission entirely, because Google Play
+  forbids an app updating itself outside Play; the code moved to a `github`-only source set and
+  `src/main` talks to it through a small `UpdateGateway` seam. No change to a sideloaded install.
+  Groundwork for a paid Play Store listing — see `docs/play-store-migration-plan.md`.
+
+- **Every translated language is caught up.** A large backlog of untranslated strings had built
+  up across every non-English locale — the whole appearance and typography surface, the community
+  gallery, the watch-theme screens, the newer watch faces and their settings. All of it is now
+  translated in all 44 non-English languages, including three phone-settings files
+  (`appearance_options`, `panel_options`, `community_theme_detail_strings`) that most locales had
+  never carried at all. Picker `*_values` arrays stay untranslated, as the index contract requires.
+
+- **The About drawer's support line now says free/libre and open source (GPLv3), and that no
+  feature is gated behind a payment**, matching the README, and a **Ko-fi** button sits next to
+  Buy Me a Coffee.
+
+- **A fresh install starts from the current setup.** The bundled defaults a new install (or one
+  whose data was cleared) arrives wearing had drifted several schema versions behind the app -
+  before face scoping, the theme library and most of the appearance work. They have been replaced
+  with an up-to-date export: the button and action configuration, every watch-appearance and
+  behaviour setting, the saved theme library and the custom action icons. Developer mode ships
+  off. The author's language, search and play history, colour-picker history, and this-device-only
+  bits (the Firebase install id, a chosen `content://` album-art path, one-shot migration markers)
+  are left out, so nobody inherits a stranger's reference to a file that isn't there. Crash
+  reporting and developer announcements are unchanged: on by default as before, turned off in
+  Settings → Data & support → Privacy.
+
+- **`ConfigBackup` counts the Matejdro auto-size repair marker as device state.** It was mapped to
+  the general settings section, so *Export as app defaults* baked a "migration already ran" flag
+  into the shipped defaults; it now sits with the other one-shot repair markers and stays out of
+  both that export and a "clean first run" restore.
 
 - **The Immersive face's text sits on the floor of the screen again.** Its title, artist and
   playback time stopped a full eighth of the screen short of the bottom edge, which on a face whose

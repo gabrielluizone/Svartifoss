@@ -1,0 +1,2215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dev_report_copy">కాపీ చేయి</string>
+    <string name="dev_report_copied">రిపోర్ట్ కాపీ అయింది</string>
+    <string name="dev_watch_snapshot_inspector">వాచ్ ప్రిఫరెన్స్ స్నాప్‌షాట్</string>
+    <string name="dev_watch_snapshot_inspector_description">ఇప్పుడే వాచ్‌కు నిజంగా ఏమి పంపబడుతుంది: యాక్టివ్ appearance scope, అంచనా పరిమాణం, మరియు budget‌లో సరిపెట్టడానికి ఏ inactive face-scope caches తొలగించబడ్డాయి</string>
+    <string name="dev_data_layer_inspector">Data Layer ఇన్‌స్పెక్టర్</string>
+    <string name="dev_data_layer_inspector_description">కనెక్ట్ చేసిన Wearable nodes మరియు వాచ్ యాప్ చివరిగా సమాధానమిచ్చిన WatchInfo — \"No watch connected\" వెనుక ఉన్న ముడి స్థితి</string>
+    <string name="dev_media_sessions_inspector">MediaSession ఎక్స్‌ప్లోరర్</string>
+    <string name="dev_media_sessions_inspector_description">ట్రాక్ చేస్తున్నదే కాకుండా ప్రస్తుతం యాక్టివ్‌గా ఉన్న ప్రతి MediaSession: ప్రకటించిన యాక్షన్‌లు, క్యూ, ప్లేబ్యాక్ రూట్</string>
+    <string name="dev_view_phone_log">ఫోన్ లాగ్ చూడండి</string>
+    <string name="dev_view_phone_log_description">డిస్క్‌లోని Timber లాగ్ చివరి భాగం, అలాగే \"Send logs\" ముందుగా తీసుకువచ్చి ఉంటే వాచ్ లాగ్ కూడా</string>
+    <string name="dev_theme_submission_preflight">థీమ్ సమర్పణ ప్రీఫ్లైట్</string>
+    <string name="dev_theme_submission_preflight_description">సేవ్ చేసిన ప్రతి వాచ్ థీమ్‌ను community submission తనిఖీ ద్వారా నడిపి, దాన్ని అడ్డుకునే ఖచ్చితమైన సెట్టింగ్ ఉంటే దాని పేరును చెబుతుంది</string>
+    <string name="dev_appearance_resolution_inspector">అపియరెన్స్ రిజల్యూషన్ ఇన్‌స్పెక్టర్</string>
+    <string name="dev_appearance_resolution_inspector_description">ప్రతి scoped appearance key కోసం నాలుగు resolution దశల్లో ఏది నిజంగా గెలిచింది — explicit face value, per-face default, legacy global లేదా definition default — మరియు ప్రతి దశ ఇచ్చే విలువ</string>
+    <string name="action_fast_forward">ఫాస్ట్ ఫార్వర్డ్</string>
+    <string name="action_rewind">రివైండ్</string>
+    <string name="action_set_playback_speed">వేగాన్ని %1$s× కు సెట్ చేయి</string>
+    <string name="action_seek_to_percent">%1$d%% కు వెళ్లి</string>
+    <string name="action_set_volume_percent">వాల్యూమ్‌ను %1$d%% కు సెట్ చేయి</string>
+    <string name="action_set_shuffle_on">షఫుల్ ఆన్ చేయి</string>
+    <string name="action_set_shuffle_off">షఫుల్ ఆఫ్ చేయి</string>
+    <string name="action_set_repeat_off">రిపీట్ ఆఫ్ చేయి</string>
+    <string name="action_set_repeat_all">అన్నింటిని రిపీట్ చేయి</string>
+    <string name="action_set_repeat_one">ఒకదాన్ని రిపీట్ చేయి</string>
+    <string name="group_playback_speed">ప్లేబ్యాక్ వేగం</string>
+    <string name="group_track_position">ట్రాక్ స్థానం</string>
+    <string name="group_shuffle_mode">షఫుల్ మోడ్</string>
+    <string name="group_repeat_mode">రిపీట్ మోడ్</string>
+    <string name="group_volume_levels">వాల్యూమ్ స్థాయిలు</string>
+    <string name="group_watch_screens">వాచ్ స్క్రీన్‌లు</string>
+    <string name="group_find_music">కనుగొని ప్లే చేయి</string>
+    <string name="action_open_face_picker">వాచ్ ఫేస్ పికర్‌ను తెరువు</string>
+    <string name="action_close_watch_app">వాచ్ యాప్‌ను మూసివేయి</string>
+    <string name="hand_gestures">హ్యాండ్ జెస్చర్‌లు</string>
+    <string name="hand_gestures_hint">Svartifoss తెరిచి ఉన్నప్పుడు అనుకూల వాచ్‌లలో అందుబాటులో ఉంటుంది.</string>
+    <string name="hand_gestures_hint_disconnected">మీ వాచ్ హ్యాండ్ జెస్చర్‌లను మద్దతు ఇస్తుందో చూడటానికి దానిలో Svartifoss‌ను కనెక్ట్ చేసి తెరవండి.</string>
+    <string name="hand_gestures_hint_outdated">ఈ వాచ్ హ్యాండ్ జెస్చర్‌లను మద్దతు ఇస్తుందో చూడటానికి వాచ్ యాప్‌ను అప్‌డేట్ చేయండి.</string>
+    <string name="hand_gestures_hint_unsupported">ఈ వాచ్ హ్యాండ్ జెస్చర్‌లను మద్దతు ఇవ్వదు, కాబట్టి ఇక్కడ కేటాయించిన యాక్షన్ ఎప్పుడూ నడవదు.</string>
+    <string name="hand_gestures_hint_disabled">ఈ వాచ్‌లో హ్యాండ్ జెస్చర్‌లు ఆఫ్‌లో ఉన్నాయి. వాచ్‌లోనే Settings \u2192 Gestures కు వెళ్లి వాటిని ఆన్ చేయండి.</string>
+    <string name="hand_gestures_hint_ready">ఈ వాచ్‌లో సిద్ధంగా ఉంది: Svartifoss ప్లేయర్ తెరిచి ఉన్నప్పుడు రెండుసార్లు పించ్ చేయండి.</string>
+    <string name="hand_gesture_how_it_works">మీ మణికట్టును పైకి ఎత్తి, బొటనవేలు మరియు చూపుడు వేలిని త్వరగా రెండుసార్లు కలిపి పించ్ చేయండి. Wear OS దీనిని primary action అంటుంది, కాబట్టి మరొక తయారీదారు వాచ్ దానికి సమానమైన వేరే హ్యాండ్ జెస్చర్‌ను ఉపయోగించవచ్చు.\n\nవాచ్‌లో Svartifoss ప్లేయర్ తెరిచి ఉండి స్క్రీన్ ఆన్‌లో ఉన్నప్పుడు మాత్రమే ఇది పనిచేస్తుంది \u2014 వాచ్ ఫేస్ నుంచి కాదు, క్యూ లేదా మెనూ మీద కాదు, always-on display మీద కూడా కాదు. ప్రస్తుతం playback ఏ స్థితిలో ఉందో దానికి సెట్ చేసిన యాక్షన్ నడుస్తుంది; రెండు స్థితుల్లో పనిచేయాలంటే రెండు Controls పేజీల్లోనూ దాన్ని సెట్ చేయండి.\n\nవాచ్ స్వంత Settings \u2192 Gestures లో కూడా ఈ జెస్చర్ ఆన్‌లో ఉండాలి.</string>
+    <string name="double_pinch">డబుల్ పించ్</string>
+    <string name="icon_selection_search_hint">ఐకాన్‌లను వెతకండి</string>
+    <string name="icon_selection_search_empty">మీ సెర్చ్‌కు సరిపోలే ఐకాన్‌లు లేవు</string>
+    <string name="open_quick_actions_panel">క్విక్ యాక్షన్‌ల ప్యానెల్‌ను తెరువు</string>
+    <string name="open_volume_screen">వాల్యూమ్ స్క్రీన్‌ను తెరువు</string>
+    <string name="open_progress_screen">ప్రోగ్రెస్ స్క్రీన్‌ను తెరువు</string>
+    <string name="export_config_failed_detail">బ్యాకప్ ఎక్స్‌పోర్ట్ చేయలేకపోయాం: %1$s</string>
+    <string name="backup_selection_title">బ్యాకప్ కంటెంట్‌ను ఎంచుకోండి</string>
+    <string name="backup_selection_description">మీరు సేవ్ చేయాలనుకునే Svartifoss భాగాలను ఎంచుకోండి. డిఫాల్ట్‌గా అన్నీ ఎంచుకోబడతాయి; ఈ బ్యాకప్ దిగుమతి చేసినప్పుడు ఎంచుకోని భాగాలు మారవు.</string>
+    <string name="backup_selection_select_all">అన్నీ ఎంచుకోండి</string>
+    <string name="backup_selection_clear_all">అన్నీ క్లియర్ చేయి</string>
+    <string name="backup_selection_export">బ్యాకప్ ఎక్స్‌పోర్ట్ చేయి</string>
+    <string name="backup_selection_empty">కనీసం ఒక ఐటమ్‌ను ఎంచుకోండి</string>
+    <string name="backup_section_buttons">బటన్ కాన్ఫిగరేషన్‌లు</string>
+    <string name="backup_section_buttons_description">సంగీతం ప్లే అవుతున్నప్పుడు మరియు ఆగినప్పుడు బటన్, క్రౌన్ మరియు జెస్చర్ యాక్షన్‌లు.</string>
+    <string name="backup_section_actions">యాక్షన్ జాబితా</string>
+    <string name="backup_section_actions_description">వాచ్ యాక్షన్ మెనూలో చూపబడే క్రమబద్ధమైన యాక్షన్‌ల జాబితా.</string>
+    <string name="backup_section_app_settings">యాప్ సెట్టింగ్‌లు</string>
+    <string name="backup_section_app_settings_description">ఫోన్ సెట్టింగ్‌లు, వాచ్ ప్రవర్తన, భాష, ప్లేబ్యాక్ మరియు ఇంటిగ్రేషన్‌లు.</string>
+    <string name="backup_section_watch_appearance">వాచ్ రూపం మరియు థీమ్‌లు</string>
+    <string name="backup_section_watch_appearance_description">వాచ్ లేఅవుట్లు, రంగులు, టైపోగ్రఫీ, ప్యానెల్లు, AOD మరియు సేవ్ చేసిన కస్టమ్ థీమ్‌లు.</string>
+    <string name="backup_section_playlist_shortcuts">ప్లేలిస్ట్ షార్ట్‌కట్‌లు</string>
+    <string name="backup_section_playlist_shortcuts_description">మీరు సేవ్ చేసిన సంగీతం, ఆల్బమ్, ఆర్టిస్ట్, ప్లేలిస్ట్ మరియు ఇతర స్ట్రీమింగ్ లింకులు.</string>
+    <string name="backup_section_history">సెర్చ్ మరియు ప్లేబ్యాక్ హిస్టరీ</string>
+    <string name="backup_section_history_description">ఇటీవలి సెర్చ్‌లు మరియు ఇటీవల ప్లే చేసిన ట్రాక్‌లు.</string>
+    <string name="backup_section_icons">లోడ్ చేసిన ఐకాన్‌లు మరియు ఆర్ట్‌వర్క్</string>
+    <string name="backup_section_icons_description">కస్టమ్ యాక్షన్ ఐకాన్‌లు, షార్ట్‌కట్ కవర్లు మరియు క్యాష్ చేసిన యాప్ ఐకాన్‌లు.</string>
+    <string name="backup_section_privacy">గోప్యత మరియు నోటిఫికేషన్‌లు</string>
+    <string name="backup_section_privacy_description">క్రాష్ రిపోర్టులు, ప్రకటన నోటిఫికేషన్‌లు మరియు యాప్ సేవ్ చేసిన ఇతర సమ్మతి ఎంపికలు.</string>
+    <string name="backup_section_local_app_state">లోకల్ యాప్ స్థితి</string>
+    <string name="backup_section_local_app_state_description">ప్రస్తుత యాక్సెంట్, చివరి మెనూ స్థానం, పూర్తయిన ప్రాంప్ట్‌లు మరియు అప్‌డేట్ స్థితి.</string>
+    <string name="backup_section_auxiliary_data">ఇతర యాప్ డేటా</string>
+    <string name="backup_section_auxiliary_data_description">భవిష్యత్ డేటా స్టోర్లతో సహా యాప్‌కు చెందిన అదనపు ప్రిఫరెన్సులు మరియు అంతర్గత ఫైళ్లు.</string>
+    <string name="pref_numeric_range">%1$d మరియు %2$d మధ్య.</string>
+    <string name="background_editor_artwork">ఆర్ట్‌వర్క్</string>
+    <string name="background_editor_layers">లేయర్లు</string>
+    <string name="background_editor_layers_count">%2$d లో %1$d</string>
+    <string name="background_editor_add_layer">లేయర్ జోడించు</string>
+    <string name="background_editor_reset_layers">రీసెట్</string>
+    <string name="background_editor_empty">లేయర్లు లేవు. ఆర్ట్‌వర్క్ ఒంటరిగానే చూపబడుతుంది.</string>
+    <string name="background_editor_note">ఈ జాబితాలో పైభాగంలోని లేయర్ మిగతా అన్నింటిపై గీయబడుతుంది; దిగువ లేయర్ ఆర్ట్‌వర్క్‌కు అత్యంత దగ్గరగా ఉంటుంది.</string>
+    <string name="background_editor_full">మీరు గరిష్టంగా %1$d లేయర్లను స్టాక్ చేయవచ్చు.</string>
+    <string name="background_layer_kind_wash">బ్యాక్‌గ్రౌండ్</string>
+    <string name="background_layer_kind_shade">షేడింగ్</string>
+    <string name="background_layer_kind_floor">యాక్సెంట్ ఫ్లోర్</string>
+    <string name="background_layer_move_up">ఈ లేయర్‌ను పైకి జరపు</string>
+    <string name="background_layer_move_down">ఈ లేయర్‌ను క్రిందికి జరపు</string>
+    <string name="background_layer_more">ఈ లేయర్‌కు మరిన్ని ఎంపికలు</string>
+    <string name="background_layer_add_title">ఒక లేయర్ జోడించు</string>
+    <string name="background_layer_style_title">%1$s లేయర్</string>
+    <string name="background_layer_opacity">బలం</string>
+    <string name="background_layer_color">రంగు</string>
+    <string name="background_layer_custom_color">ఒక రంగును ఎంచుకోండి</string>
+    <string name="background_layer_duplicate">నకలు చేయి</string>
+    <string name="background_layer_remove">తొలగించు</string>
+    <string name="background_layer_color_default">డిఫాల్ట్</string>
+    <string name="background_layer_color_album">ఆల్బమ్ రంగు</string>
+    <string name="background_layer_color_secondary">రెండవ ఆల్బమ్ రంగు</string>
+    <string name="background_layer_color_tertiary">మూడవ ఆల్బమ్ రంగు</string>
+    <string name="background_layer_color_desaturated">మ్యూట్ చేసిన ఆల్బమ్ రంగు</string>
+    <string name="background_layer_color_black">నలుపు</string>
+    <string name="background_layer_color_custom">కస్టమ్ రంగు</string>
+    <string name="background_layer_reset_title">లేయర్లను రీసెట్ చేయాలా?</string>
+    <string name="background_layer_reset_message">స్టాక్ తన స్వంత వరుసల్లో సెట్ చేసిన షేడింగ్ మరియు యాక్సెంట్ ఫ్లోర్‌కు తిరిగి వెళ్తుంది; పాత బిల్డ్‌లో నడిచే వాచ్ కూడా ఇదే విధంగా రెండర్ చేస్తుంది.</string>
+    <string name="watch_element_progress">ప్రోగ్రెస్</string>
+    <string name="watch_element_volume">వాల్యూమ్</string>
+    <string name="watch_element_quick_panel">క్విక్ యాక్షన్‌లు</string>
+    <string name="watch_element_queue">క్యూ</string>
+    <string name="watch_element_lyrics">పాట సాహిత్యం</string>
+    <string name="player_section_on_screen">స్క్రీన్‌పై</string>
+    <string name="player_element_app_icon">యాప్ ఐకాన్</string>
+    <string name="player_element_controls">ప్లేయర్ కంట్రోల్స్</string>
+    <string name="player_element_tap_flash">ట్యాప్ ఫ్లాష్</string>
+    <string name="player_element_inner_progress">ఇన్నర్ ప్రోగ్రెస్</string>
+    <string name="player_element_edge_arc">ఎడ్జ్ ఆర్క్</string>
+    <string name="player_element_edge_seek">ఎడ్జ్ సీక్</string>
+    <string name="player_element_clock">గడియారం</string>
+    <string name="player_element_cover_art">కవర్ ఆర్ట్</string>
+    <string name="setting_album_art_filter">ఆల్బమ్ ఆర్ట్ ఫిల్టర్</string>
+    <string name="setting_album_art_filter_description">ఏ ఆల్బమ్ ఆర్ట్ స్టైల్‌పైనైనా స్వతంత్ర రంగు ట్రీట్‌మెంట్‌ను వర్తింపజేయండి.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">సున్నితమైన డిస్‌ప్లే రూపం కోసం extra-light స్ట్రోక్ ఉన్న Roboto.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">కుటుంబానికి సుపరిచితమైన నిష్పత్తులతో తేలికైన, గాలిలాంటి స్ట్రోక్ ఉన్న Roboto.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">కాంపాక్ట్, చదవదగిన లేబుళ్ల కోసం బలమైన medium స్ట్రోక్ ఉన్న Roboto.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">బోల్డ్ డిస్‌ప్లే టెక్స్ట్ కోసం అత్యంత భారీ system weight ఉన్న Roboto.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">తక్కువ స్థలంలో పొడవైన టైటిల్స్ సరిపోవడానికి Roboto ను అడ్డంగా condensed చేశారు.</string>
+    <string name="setting_wear_title_font">టైటిల్ టైప్‌ఫేస్</string>
+    <string name="setting_wear_title_text_case">టైటిల్ కేస్</string>
+    <string name="setting_wear_artist_font">ఆర్టిస్ట్ టైప్‌ఫేస్</string>
+    <string name="setting_wear_artist_text_case">ఆర్టిస్ట్ కేస్</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">ప్రారంభ పఠనం కోసం రూపొందించిన స్నేహపూర్వక గుండ్రని sans</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">ఎడిటోరియల్ బరువుతో ఉన్న హై-కాంట్రాస్ట్ Didone డిస్‌ప్లే టైప్‌ఫేస్</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">చేతిరాత కామిక్ అంచుతో ఉన్న బలమైన పోస్టర్ sans</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">విస్తారమైన, సమాన స్పేసింగ్‌తో ప్రశాంతమైన జ్యామితీయ sans</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">మృదువుగా గుండ్రని ముగింపులతో ఆధునిక slab serif</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">హెడ్‌లైన్ ప్రభావం కోసం రూపొందించిన భారీ slab serif</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">చిన్న క్యాపిటల్స్‌లో సన్నని చేతితో గీసిన టైప్‌ఫేస్</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">బలమైన హెడ్‌లైన్‌ల కోసం గట్టిగా ప్యాక్ చేసిన condensed sans</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">చిన్న పరిమాణాల్లో కూడా దృఢంగా ఉండే జ్యామితీయ slab serif</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">అరిచే ఉత్సాహంతో కామిక్-బుక్ డిస్‌ప్లే టైప్‌ఫేస్</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">స్టెన్సిల్ మిలిటరీ డిస్‌ప్లే టైప్‌ఫేస్</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">వెచ్చని, అనౌపచారిక వంపులతో నిలువు serif</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">సున్నితంగా గుండ్రని మూలలతో humanist sans</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">బలమైన, నేరుగా కనిపించే రూపాలతో grotesque sans</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">script‌ల కోసం రూపొందించిన మెరుగైన టైప్‌రైటర్ monospace</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">మృదువైన పుస్తక స్వభావంతో గుండ్రని slab serif</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">పొడవైన పాఠ్య భాగాల కోసం సర్దుబాటు చేసిన పాతశైలి పుస్తక serif</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">ఆధునిక ముగింపుతో లో-కాంట్రాస్ట్ జ్యామితీయ sans</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">బాడీ సైజుల్లో నిలబడేలా గీసిన బలమైన serif</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">కోణీయ జాయింట్లతో ఆధునిక సాంకేతిక sans</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">స్పష్టమైన, వేర్వేరు glyphలతో ప్రోగ్రామింగ్ monospace</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">స్క్రీన్‌పై కోడ్ కోసం రూపొందించిన humanist monospace</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">గుండ్రని స్ట్రోక్‌లతో బుడగలాంటి చేతిరాత టైప్‌ఫేస్</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">1920ల vintage స్వభావంతో జ్యామితీయ sans</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Futura సంప్రదాయంలోని జ్యామితీయ sans</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">స్వల్ప వంపుతో loopలేని Thai మరియు Latin sans</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">చదివేటప్పుడు దృశ్య ఒత్తిడిని తగ్గించేలా రూపొందించిన sans</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">రెట్రో సైనేజ్ శైలితో బోల్డ్ కనెక్టెడ్ script</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">వెచ్చదనం మరియు ఖచ్చితత్వాన్ని సమతుల్యం చేసే సెమీ-జ్యామితీయ sans</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">శుభ్రమైన ఇంటర్‌ఫేస్ టెక్స్ట్ కోసం గీసిన మినిమలిస్ట్ sans</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">మృదువైన చివరలతో చక్కగా గుండ్రని sans</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">సమాన, ఆధునిక రిథమ్‌తో జ్యామితీయ sans</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">గేమింగ్ భావంతో చతురస్ర techno టైప్‌ఫేస్</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">gridపై గీసిన కాంపాక్ట్ సాంకేతిక sans</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">విశిష్టమైన ఓపెన్ వంపులతో ఆధునిక grotesque</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">ఆర్కేడ్ క్యాబినెట్ నుంచి నేరుగా వచ్చినట్టు కనిపించే pixel టైప్‌ఫేస్</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">మృదువైన, తేలికైన భావంతో గుండ్రని జ్యామితీయ sans</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">సాంకేతిక కోణాలతో చతురస్ర condensed sans</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">రెట్రో సైన్ పెయింటింగ్ మూలాలతో art-deco డిస్‌ప్లే టైప్‌ఫేస్</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Roboto కు monospace సహచరుడు</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">ఆటపాటల, మందమైన స్ట్రోక్‌లతో చంకీ డిస్‌ప్లే టైప్‌ఫేస్</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">భారీ చతురస్ర ఆకృతులతో విస్తృత పారిశ్రామిక టైప్‌ఫేస్</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Gujarati మూలాలతో స్పష్టమైన వంపు డిస్‌ప్లే టైప్‌ఫేస్</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">పాత కంప్యూటర్ స్క్రీన్‌లను గుర్తుచేసే చిన్న bitmap టైప్‌ఫేస్</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">కోడ్‌ను సౌకర్యంగా చదవడానికి రూపొందించిన monospace</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">పోస్టర్ ప్రభావంతో condensed all-caps టైప్‌ఫేస్</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Devanagari మరియు Latin హెడ్‌లైన్‌ల కోసం పొడవైన condensed టైప్‌ఫేస్</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">సాంకేతిక భావంతో చతురస్ర humanist sans</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">స్నేహపూర్వక స్వరంతో పూర్తిగా గుండ్రని sans</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">1920ల కాఫీ-షాప్ signage ను గుర్తుచేసే condensed టైప్‌ఫేస్</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">మృదువుగా కత్తిరించిన ఆధునిక ముగింపులతో slab serif</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">ఓపెన్, చదవదగిన రూపాలతో స్నేహపూర్వక humanist sans</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">సౌకర్యవంతమైన పఠనం కోసం దృఢమైన ఆకృతులతో వెచ్చని sans</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">స్పష్టమైన ఇంటర్‌ఫేస్‌ల కోసం రూపొందించిన బహుముఖ humanist sans</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">ఎడిటోరియల్ స్వరంతో మెరుగైన టెక్స్ట్ serif</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">స్క్రీన్ పఠనం కోసం సర్దుబాటు చేసిన క్లాసిక్ పుస్తక serif</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">విస్తృత, దృఢమైన రిథమ్‌తో ప్రాక్టికల్ grotesk sans</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">ఖచ్చితమైన నిష్పత్తులతో సాంకేతిక humanist sans</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">మెరుగైన, చదవదగిన textureతో సాంకేతిక monospace</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">ఇంజినీర్డ్ స్వభావంతో ఆధునిక serif</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">కాంపాక్ట్, ప్రాక్టికల్ రూపాలతో శుభ్రమైన వర్క్‌హార్స్ sans</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">స్నేహపూర్వక నిష్పత్తులతో విచిత్రమైన grotesk</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">భవిష్యత్, విశాలమైన భావంతో జ్యామితీయ sans</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">సొగసైన నగర రేఖలతో ఆధునిక జ్యామితీయ sans</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">చిన్న స్క్రీన్‌ల కోసం రూపొందించిన సమతుల్య ఆధునిక sans</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">వ్యక్తీకరణాత్మక నిష్పత్తులతో ఆత్మవిశ్వాస డిస్‌ప్లే sans</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">పొడవైన ట్రాక్ సమాచారానికి చదవదగిన సహాయక sans</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">ఆధునిక సాంకేతిక టోన్‌తో స్పష్టమైన monospace</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">కళాత్మక దర్శకత్వంతో ఆటపాటల ఆకృతులున్న అసాధారణ sans</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">నిశ్శబ్ద ఖచ్చితత్వంతో అనుకూలమైన ఆధునిక sans</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">సులభంగా చదవడానికి శుభ్రమైన, స్నేహపూర్వక sans</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">ఆనందమైన వ్యక్తిత్వంతో గుండ్రని డిస్‌ప్లే sans</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">నిర్మాణాన్ని విచిత్రమైన వివరాలతో కలిపే చురుకైన grotesk</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">నాటకీయ టైటిల్స్ కోసం హై-కాంట్రాస్ట్ డిస్‌ప్లే serif</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">సొగసైన, హై-కాంట్రాస్ట్ సాహిత్య serif</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">కాలిగ్రాఫిక్ వివరాలతో అందమైన డిస్‌ప్లే serif</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">చిన్న పరిమాణాల్లో స్పష్టంగా ఉండే బలమైన slab serif</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">సాంద్రమైన, వ్యక్తీకరణ పఠనం కోసం రూపొందించిన బహుముఖ serif</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">పుస్తక స్వభావంతో వెచ్చని పాతశైలి serif</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">విశిష్టమైన, మెరుగైన అక్షరరూపాలతో సొగసైన sans</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">బలమైన హెడ్‌లైన్‌ల కోసం రూపొందించిన బోల్డ్ జ్యామితీయ sans</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">అథ్లెటిక్, డైనమిక్ ఉత్సాహంతో condensed‌కు అనుకూలమైన sans</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">ఓపెన్ counters మరియు స్నేహపూర్వక signage ఉత్సాహంతో మృదువైన sans</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">humanist వెచ్చదనం మరియు స్పష్టతను సమతుల్యం చేసే బహుముఖ sans</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">ఆత్మవిశ్వాస రిథమ్‌తో స్పష్టమైన ట్రాన్స్‌పోర్ట్-ప్రేరిత sans</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">రోజువారీ ఇంటర్‌ఫేస్‌ల కోసం రూపొందించిన తటస్థ, యాక్సెసిబుల్ sans</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">మృదువైన ఆధునిక వంపులతో లైట్ జ్యామితీయ sans</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">మృదువైన భవిష్యత్ భావంతో గుండ్రని సన్నని sans</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">సున్నితమైన Thai-ప్రేరిత స్వభావంతో శుభ్రమైన జ్యామితీయ sans</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">గరిష్ఠ ప్రభావం కోసం విస్తృత భవిష్యత్ డిస్‌ప్లే టైప్‌ఫేస్</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">ఆటపాటల సాంకేతిక స్వరంతో వేరియబుల్ sans-to-mono కుటుంబం</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">విశిష్ట డిజిటల్ textureతో వేరియబుల్-విడ్త్ monospace</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">విస్తృత script మద్దతుతో పెద్ద, అత్యంత చదవదగిన sans</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">విస్తృత script మద్దతుతో నమ్మదగిన serif</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">స్థిరమైన రిథమ్ కోసం రూపొందించిన బహుభాషా monospace</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Hebrew ప్రభావిత స్పష్టమైన రిథమ్‌తో కాంపాక్ట్ ఆధునిక sans</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">స్పష్టమైన పఠనం కోసం ఆప్టిమైజ్ చేసిన దృఢమైన humanist sans</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">గుండ్రని, ఓపెన్ textureతో స్నేహపూర్వక స్క్రీన్ sans</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">విశిష్ట నిష్పత్తులతో కాంపాక్ట్ జ్యామితీయ sans</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">సాహిత్య స్వభావంతో చురుకైన కాలిగ్రాఫిక్ serif</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">ఇంటర్‌ఫేస్‌లో అద్భుతమైన చదవగలిగే గుణంతో శుభ్రమైన humanist sans</string>
+    <string name="setting_wear_note_show_cover">కవర్ ఆర్ట్</string>
+    <string name="aod_element_artwork">ఆర్ట్‌వర్క్</string>
+    <string name="aod_element_clock">గడియారం</string>
+    <string name="aod_element_track_info">ట్రాక్ సమాచారం</string>
+    <string name="aod_element_transport">ట్రాన్స్‌పోర్ట్</string>
+    <string name="aod_element_progress">ప్రోగ్రెస్</string>
+    <string name="aod_element_up_next">తదుపరి</string>
+    <string name="aod_section_artwork">ఆర్ట్‌వర్క్</string>
+    <string name="aod_control_tint">టింట్</string>
+    <string name="aod_control_brightness">బ్రైట్‌నెస్</string>
+    <string name="aod_control_art_treatment">ట్రీట్‌మెంట్</string>
+    <string name="aod_control_art_opacity">అపాసిటీ</string>
+    <string name="mini_button_control_visibility">చూపించు</string>
+    <string name="mini_button_control_arrangement">అమరిక</string>
+    <string name="mini_button_control_shape">ఆకారం</string>
+    <string name="mini_button_control_background">బ్యాక్‌గ్రౌండ్</string>
+    <string name="mini_button_control_opacity">అపాసిటీ</string>
+    <string name="mini_button_assign_action">యాక్షన్‌లను కేటాయించు</string>
+    <string name="mini_button_gestures_note">ప్లేయర్‌పై పైకి, క్రిందికి మరియు ఎడమవైపు స్వైప్ చేయండి. కుడివైపు స్వైప్ ఎప్పుడూ సిస్టమ్ dismiss gesture; దాన్ని ఎప్పుడూ అడ్డుకోదు.</string>
+    <string name="setting_wear_chat_cover_shape">చాట్ అవతార్ ఆకారం</string>
+    <string name="setting_wear_chat_show_cover">కవర్ ఆర్ట్</string>
+    <string name="setting_wear_metadata_cover_shape">మెటాడేటా కవర్ ఆకారం</string>
+    <string name="setting_wear_metadata_show_cover">కవర్ ఆర్ట్</string>
+    <string-array name="wear_text_case_entries">
+        <item>సాధారణం</item>
+        <item>UPPERCASE</item>
+        <item>lowercase</item>
+        <item>Title Case</item>
+    </string-array>
+    <string name="wear_text_font_follow">గ్లోబల్ టైప్‌ఫేస్‌ను అనుసరించు</string>
+    <string name="category_wf_typography_track_time">ట్రాక్ సమయం</string>
+    <string name="setting_wear_track_time_font">ట్రాక్-టైమ్ టైప్‌ఫేస్</string>
+    <string name="wear_track_time_font_follow">డిజైన్‌ను అనుసరించు</string>
+    <string name="setting_wear_track_time_font_weight">ట్రాక్-టైమ్ వెయిట్</string>
+    <string name="setting_wear_track_time_font_italic">ఇటాలిక్ ట్రాక్ సమయం</string>
+    <string name="setting_wear_track_time_font_scale">ట్రాక్-టైమ్ సైజు</string>
+    <string name="setting_wear_track_time_font_opacity">ట్రాక్-టైమ్ అపాసిటీ</string>
+    <string name="setting_wear_track_time_font_tracking">ట్రాక్-టైమ్ అక్షరాల మధ్య అంతరం</string>
+    <string-array name="album_art_filter_entries">
+        <item>ఏదీ లేదు</item>
+        <item>మోనోక్రోమ్</item>
+        <item>వార్మ్</item>
+        <item>కూల్</item>
+        <item>గోల్డెన్ అవర్</item>
+        <item>రోసే</item>
+        <item>వింటేజ్ ఫిల్మ్</item>
+        <item>ఫేడెడ్ ఫిల్మ్</item>
+        <item>మ్యాట్</item>
+        <item>వివిడ్</item>
+        <item>పంచ్</item>
+        <item>పాస్టెల్</item>
+        <item>సెపియా</item>
+        <item>సయనోటైప్</item>
+        <item>టీల్ &amp; ఆరెంజ్</item>
+        <item>హై కాంట్రాస్ట్</item>
+        <item>సాఫ్ట్ లైట్</item>
+        <item>నైట్</item>
+    </string-array>
+    <string name="queue_item_now_playing">ఇప్పుడు ప్లే అవుతోంది</string>
+    <string name="queue_item_unknown_title">తెలియని ట్రాక్</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">ప్లేబ్యాక్ క్యూ · %1$d ట్రాక్</item>
+        <item quantity="other">ప్లేబ్యాక్ క్యూ · %1$d ట్రాక్‌లు</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">యాక్సెంట్ ఫ్లోర్ రంగు</string>
+    <string name="setting_wear_accent_floor_custom_color">కస్టమ్ ఫ్లోర్ రంగు</string>
+    <string name="setting_wear_accent_floor_custom_color_description">యాక్సెంట్ ఫ్లోర్ రంగును కస్టమ్ రంగుగా సెట్ చేసినప్పుడు ఉపయోగించే రంగును ఎంచుకోండి</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>ఆల్బమ్ యాక్సెంట్</item>
+        <item>ఆల్బమ్ సెకండరీ</item>
+        <item>ఆల్బమ్ టెర్షియరీ</item>
+        <item>కస్టమ్ రంగు</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">రోజువారీ పఠనం కోసం రూపొందించిన తటస్థ, అత్యంత చదవదగిన ఇంటర్‌ఫేస్ sans</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">చిన్న పరిమాణాల్లో కూడా స్పష్టంగా ఉండే ప్రత్యేక ఆకృతులతో యాక్సెసిబిలిటీకి ప్రాధాన్యం ఇచ్చే అక్షరరూపాలు</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">మృదువుగా గుండ్రని జ్యామితీయ sans — ఆత్మవిశ్వాసంతో మరియు స్నేహపూర్వకంగా</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">పొడవైన టైటిల్స్‌కు ఎక్కువ స్థలం ఇచ్చే కాంపాక్ట్ humanist sans</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">శక్తివంతమైన పోస్టర్ భావంతో పొడవైన condensed డిస్‌ప్లే టైప్‌ఫేస్</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">సౌకర్యవంతమైన దీర్ఘ పఠనం కోసం రూపొందించిన ఆధునిక serif</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">వెచ్చదనం మరియు వ్యక్తిత్వంతో వ్యక్తీకరణాత్మక మృదువైన serif</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">సాంకేతిక అంచుతో retro-futurist monospace టైప్‌ఫేస్</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">గరిష్ఠ కాంట్రాస్ట్ కోసం సాంద్రమైన హెవీవెయిట్ డిస్‌ప్లే టైప్‌ఫేస్</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">చురుకైన, వ్యక్తిగత అనుభూతితో ప్రవహించే చేతిరాత script</string>
+    <string name="setting_wear_artist_text_mode">ఆర్టిస్ట్ టెక్స్ట్ ప్రవర్తన</string>
+    <string name="setting_wear_album_art_source">ఆల్బమ్ ఆర్ట్ మూలం</string>
+    <string name="setting_user_font">నా స్వంత ఫాంట్</string>
+    <string name="wear_font_user_import">నా స్వంత ఫాంట్…</string>
+    <string name="setting_user_font_empty">ఈ ఫోన్ నుంచి .ttf లేదా .otf ఫైల్‌ను దిగుమతి చేయండి</string>
+    <string name="setting_user_font_loaded">%1$s · మార్చడానికి లేదా తొలగించడానికి ట్యాప్ చేయండి</string>
+    <string name="user_font_pick">ఫాంట్ ఫైల్‌ను ఎంచుకోండి</string>
+    <string name="user_font_replace">మార్చు</string>
+    <string name="user_font_remove">తొలగించు</string>
+    <string name="user_font_imported">“%1$s” దిగుమతి చేయబడింది. ఏ ఫాంట్ జాబితాలోనైనా దాన్ని ఎంచుకోండి; అది మీ వాచ్‌కు పంపబడుతోంది.</string>
+    <string name="user_font_removed">మీరు దిగుమతి చేసిన ఫాంట్ తొలగించబడింది.</string>
+    <string name="user_font_error_too_large">ఆ ఫైల్ %1$s. వాచ్‌కు త్వరగా చేరాలంటే ఫాంట్ %2$s కన్నా చిన్నదిగా ఉండాలి.</string>
+    <string name="user_font_error_not_a_font">ఆ ఫైల్ ఈ ఫోన్ చదవగల ఫాంట్ కాదు. TrueType మరియు OpenType (.ttf, .otf) పనిచేస్తాయి; web fonts (.woff, .woff2) పనిచేయవు.</string>
+    <string name="user_font_error_unreadable">ఆ ఫైల్‌ను చదవలేకపోయాం. మళ్లీ ఎంచుకోవడానికి ప్రయత్నించండి లేదా ముందుగా ఈ ఫోన్‌కు కాపీ చేయండి.</string>
+    <string name="user_font_not_shareable">మీ స్వంత ఫాంట్ ఉపయోగించే థీమ్‌లు ఈ ఫోన్‌లోనే ఉంటాయి</string>
+    <string name="setting_custom_album_art_image">ఉపయోగించాల్సిన చిత్రం</string>
+    <string name="setting_custom_album_art_folder">చిత్రం తీసుకునే ఫోల్డర్</string>
+    <string name="setting_custom_album_art_none">ఇంకా ఎంచుకోలేదు — ఎంచుకోవడానికి ట్యాప్ చేయండి</string>
+    <string name="setting_custom_album_art_chosen">%1$s · మార్చడానికి ట్యాప్ చేయండి</string>
+    <string name="custom_album_art_image_set">ఆ చిత్రం ఇప్పుడు ప్లేయర్ వెనుక ఉంటుంది.</string>
+    <string name="custom_album_art_folder_set">ఆ ఫోల్డర్‌లోని ఒక చిత్రం ప్రతి ట్రాక్‌కు గీయబడుతుంది.</string>
+    <string name="custom_album_art_error">దాన్ని తెరవలేకపోయాం. మళ్లీ ఎంచుకోండి లేదా ఈ ఫోన్ స్వంత స్టోరేజ్‌లోని ఏదైనా ఎంచుకోండి.</string>
+    <string name="custom_album_art_not_shareable">మీ స్వంత చిత్రాలు ఉపయోగించే థీమ్‌లు ఈ ఫోన్‌లోనే ఉంటాయి</string>
+    <string name="setting_wear_text_block_align">టెక్స్ట్ అలైన్‌మెంట్</string>
+    <string name="setting_wear_text_block_align_description">ట్రాక్ టెక్స్ట్ ఏ అంచుకు అలైన్ అవుతుంది. Follow face ప్రతి ఫేస్ కోసం రూపొందించిన అలైన్‌మెంట్‌ను అలాగే ఉంచుతుంది.</string>
+    <string name="setting_wear_text_block_position">టెక్స్ట్ స్థానం</string>
+    <string name="setting_wear_text_block_position_description">ట్రాక్ టెక్స్ట్ స్క్రీన్‌పై ఎక్కడ ఉంటుంది. Follow face ప్రతి ఫేస్ రూపొందించిన స్థానాన్ని అలాగే ఉంచుతుంది.</string>
+    <string name="setting_online_artwork">ఆన్‌లైన్ ఆర్ట్‌వర్క్</string>
+    <string name="setting_online_artwork_description">వాచ్ ఫేస్‌కు ఆన్‌లైన్‌లో వెతికిన చిత్రాన్ని చూపనివ్వండి \u2014 ప్రదర్శిస్తున్న ఆర్టిస్ట్, లేదా స్వంత ఆర్ట్‌వర్క్ ఇవ్వని ప్లేయర్‌కు ఆల్బమ్ కవర్. మీ ఫోన్ Deezer పబ్లిక్ క్యాటలాగ్‌లో వెతికి ఫలితాన్ని క్యాష్ చేస్తుంది; ట్రాక్ మరియు ఆర్టిస్ట్ పేర్లు మాత్రమే పంపబడతాయి, మరియు ఫేస్ ఆ మూలాల్లో ఏదో ఒకదానికి సెట్ చేయకపోతే ఏదీ వెతకదు. ఆఫ్‌లో ఉంటే ప్లేయర్ స్వంత ఆర్ట్‌వర్క్ ఉపయోగించబడుతుంది.</string>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+    <string name="setting_no_wearable_api_banner">ఈ పరికరంలో Wear OS కు మద్దతు లేదు</string>
+    <string name="setting_no_wearable_api_banner_description">ఈ పరికరంలో Google Play Services Wear OS భాగం లేదు; గడియారంతో మాట్లాడేందుకు Svartifoss కు అది అవసరం. పెయిర్ చేయడం ఉపయోగపడదు — ఇక్కడ ఫోన్ యాప్ గడియారాన్ని చేరుకోలదు. క్రింద ఉన్న ప్రతిదీ అయినప్పటికీ సేవ్ అవుతుంది; దీన్ని మద్దతు ఇచ్చే పరికరంలో Svartifoss ను ఇన్‌స్టాల్ చేస్తే అవి వర్తిస్తాయి.</string>
+    <string name="setting_no_watch_banner">ఏ గడియారం కనెక్ట్ కాలేదు</string>
+    <string name="setting_no_watch_banner_description">ఈ సెట్టింగ్‌లు మీ Wear OS గడియారంతో సింక్ అవుతాయి, కాబట్టి గడియారం పెయిర్ అయి కనెక్ట్ అయ్యే వరకు అవి కనిపించేలా వర్తించవు - కానీ క్రింద ఉన్న ప్రతిదీ మీరు ఇప్పుడే కాన్ఫిగర్ చేయవచ్చు.</string>
+    <string name="category_appearance">రూపం</string>
+    <string name="setting_theme">థీమ్</string>
+    <string name="theme_light">స్పష్టమైన తెలుపు</string>
+    <string name="theme_dark">పూర్తి నలుపు</string>
+    <string name="theme_system">సిస్టమ్‌ను అనుసరించు</string>
+    <string name="setting_language">భాష</string>
+    <string name="language_system">సిస్టమ్‌ను అనుసరించు</string>
+    <string name="language_change_watch_notice">సింక్ అయిన తర్వాత గడియారం కూడా ఇదే భాషను ఉపయోగిస్తుంది.</string>
+    <string name="category_developer">డెవలపర్</string>
+    <string name="dev_mode_unlocked">డెవలపర్ మోడ్ ప్రారంభించబడింది ✦</string>
+    <string name="dev_mode_clicks_remaining">డెవలపర్ మోడ్‌ను అన్‌లాక్ చేయడానికి ఇంకా %1$d ట్యాప్‌లు</string>
+    <string name="dev_disable_mode">డెవలపర్ మోడ్‌ను ఆపివేయి</string>
+    <string name="dev_disable_mode_description">ఈ విభాగాన్ని మళ్లీ దాచండి - తిరిగి చూపించడానికి \"ఇన్‌స్టాల్ చేసిన వెర్షన్\" ను ఏడు సార్లు ట్యాప్ చేయండి</string>
+    <string name="dev_mode_disabled">డెవలపర్ మోడ్ ఆపివేయబడింది</string>
+    <string name="dev_build_info">బిల్డ్ సమాచారం</string>
+    <string name="dev_sync_watch">గడియారం సెట్టింగ్‌లను బలవంతంగా సింక్ చేయి</string>
+    <string name="dev_sync_watch_description">ప్రస్తుత సెట్టింగ్‌లన్నింటినీ పెయిర్ చేసిన గడియారానికి వెంటనే పంపండి</string>
+    <string name="dev_sync_watch_done">సెట్టింగ్‌లు గడియారంతో సింక్ అయ్యాయి</string>
+    <string name="dev_copy_debug_info">డీబగ్ సమాచారాన్ని కాపీ చేయి</string>
+    <string name="dev_copy_debug_info_description">బిల్డ్ మరియు పరికర వివరాలను క్లిప్‌బోర్డ్‌కు కాపీ చేయండి</string>
+    <string name="dev_export_defaults">యాప్ డిఫాల్ట్‌లుగా ఎగుమతి చేయి</string>
+    <string name="dev_export_defaults_description">ఈ అమరికను default_config.json గా సేవ్ చేస్తుంది — కొత్త ఇన్‌స్టాల్ ప్రారంభమయ్యే స్థితి ఇదే. చరిత్ర, సమ్మతి ఎంపికలు మరియు ఈ ఫోన్‌కు ప్రత్యేకమైన స్థితి ఇందులో ఉండవు.</string>
+    <string name="dev_export_defaults_done">డిఫాల్ట్‌లు ఎగుమతి చేయబడ్డాయి (%1$s)</string>
+    <string name="dev_show_archived">ఆర్కైవ్ చేసిన ఎంపికలను చూపు</string>
+    <string name="dev_show_archived_description">తెలిసిన సమస్యల వల్ల ఆర్కైవ్ చేసిన గడియారం లేఅవుట్‌లు మరియు సెట్టింగ్‌లను చూపించు</string>
+    <string name="dev_copy_debug_info_done">డీబగ్ సమాచారం కాపీ చేయబడింది</string>
+    <string name="dev_open_update_screen">అప్‌డేట్ స్క్రీన్‌ను తెరువు</string>
+    <string name="dev_open_update_screen_description">నిజమైన విడుదల కోసం వేచి ఉండకుండా Updates స్క్రీన్‌ను (కవర్ బ్యానర్, విడుదల గమనికల లేఅవుట్) ప్రివ్యూ చేయండి</string>
+    <string name="dev_watch_layout_bounds">గడియారం లేఅవుట్ సరిహద్దులను చూపు</string>
+    <string name="dev_watch_layout_bounds_description">గడియారంపై కనిపించే ప్లేయర్ అంశాలు మరియు టచ్ ప్రాంతాల సరిహద్దులను చూపించండి. నిర్ధారణ ఓవర్లే మాత్రమే.</string>
+    <string name="dev_watch_player_info">గడియారం ప్లేయర్ సమాచారాన్ని చూపు</string>
+    <string name="dev_watch_player_info_description">సక్రియ ఫేస్, ప్లేబ్యాక్ స్థితి, ప్రగతి మరియు రెండర్ సమాచారాన్ని గడియారంపై ఓవర్లే చేయండి.</string>
+    <string name="pref_reset_default">డిఫాల్ట్‌కు రీసెట్ చేయి</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">మీరు దాగి ఉన్న జలపాతాన్ని కనుగొన్నారు.\n\nSvartifoss — నల్ల బసాల్ట్ స్తంభాలు\nఐస్‌లాండ్‌లోని జలపాతానికి అంచులుగా నిలిచి,\nరాతిలోంచి నీరు ప్రవహించినట్లే\nసంగీతం కూడా ప్రవహిస్తుందని గుర్తుచేస్తాయి.\n\n♪ శ్రద్ధతో నిర్మించబడింది. ♪</string>
+    <string name="easter_egg_ok">మూసివేయి</string>
+    <string name="nav_watch_face">గడియారం</string>
+    <string name="watch_face_header">గడియారం రూపం</string>
+    <string name="nav_controls">నియంత్రణలు</string>
+    <string name="nav_actions">చర్యలు</string>
+    <string name="nav_settings">సెట్టింగ్‌లు</string>
+    <string name="controls_header">నియంత్రణలు</string>
+    <string name="controls_state_playing">సంగీతం ప్లే అవుతోంది</string>
+    <string name="controls_state_stopped">ప్లేబ్యాక్ లేదు</string>
+    <string name="controls_playing_description">సంగీతం ప్లే అవుతున్నప్పుడు ప్రతి ఇన్‌పుట్ ఏమి చేయాలో ఎంచుకోండి. ఈ అమరిక ప్లేబ్యాక్ లేని స్థితి నుండి స్వతంత్రంగా ఉంటుంది.</string>
+    <string name="controls_stopped_description">ప్లేబ్యాక్ ప్రారంభం కావడానికి ముందు లేదా ఆగిన తర్వాత ప్రతి ఇన్‌పుట్ ఏమి చేయాలో ఎంచుకోండి. ఈ అమరిక ప్లే అవుతున్న స్థితి నుండి స్వతంత్రంగా ఉంటుంది.</string>
+    <string name="watch_live_preview">గడియారం ప్రత్యక్ష ప్రివ్యూ</string>
+    <string name="watch_preview_description">ఎంచుకున్న గడియారం ఉపరితలానికి ప్రత్యక్ష ప్రివ్యూ. మార్పులు గడియారంపై ప్రయత్నించే ముందు ఇక్కడ కనిపిస్తాయి.</string>
+    <string name="watch_preview_expand">పెద్ద ప్రివ్యూను తెరువు</string>
+    <string name="watch_preview_fullscreen_dismiss">మూసేందుకు ఎక్కడైనా ట్యాప్ చేయండి</string>
+    <string name="watch_section_style">ప్లేయర్</string>
+    <string name="watch_section_style_description">ప్లేయర్ లేఅవుట్‌ను మరియు దాని శీర్షిక, సమయం, ప్రగతి ఎలా ప్రవర్తించాలో ఎంచుకోండి.</string>
+    <string name="watch_section_background">నేపథ్యం</string>
+    <string name="watch_section_background_description">ప్లేయర్ వెనుక ఆల్బమ్ ఆర్ట్, బ్లర్, ఫేడింగ్ మరియు చదవగలిగే స్పష్టతను నియంత్రించండి.</string>
+    <string name="watch_section_colors">రంగులు</string>
+    <string name="watch_section_colors_description">బేస్, ప్రగతి మరియు ఆల్బమ్ యాక్సెంట్‌లను సెట్ చేసి, తర్వాత శీర్షిక, కళాకారుడు, గడియారం, వాల్యూమ్ మరియు ప్యానెల్ రంగులను సర్దుబాటు చేయండి.</string>
+    <string name="watch_section_typography">పాఠ్యం</string>
+    <string name="watch_section_typography_description">ఫాంట్‌లను ఎంచుకుని శీర్షిక, కళాకారుడు, గడియారం, యాప్ ఐకాన్, ద్వితీయ స్క్రీన్‌లు మరియు Flex పాఠ్యాన్ని సర్దుబాటు చేయండి.</string>
+    <string name="watch_section_aod">ఎల్లప్పుడూ ఆన్</string>
+    <string name="watch_section_aod_description">తక్కువ-శక్తి స్క్రీన్‌ను కాన్ఫిగర్ చేసి, ప్రివ్యూలో దాని ambient రూపాన్ని చూడండి.</string>
+    <string name="watch_section_panels">ప్యానెల్‌లు</string>
+    <string name="watch_section_panels_description">వాల్యూమ్, seek, క్విక్ ప్యానెల్ మరియు క్యూ శైలిని సెట్ చేయండి; ఒక వరుసపై ఫోకస్ చేస్తే ఆ ఉపరితలం ప్రివ్యూలో తెరుచుకుంటుంది.</string>
+    <string name="watch_section_mini_buttons">మినీ బటన్‌లు</string>
+    <string name="watch_section_mini_buttons_description">ఐచ్ఛిక షార్ట్‌కట్ వరుస శైలిని సెట్ చేయండి. దాని చర్యలను Controls లో కేటాయించడానికి క్రింద “మినీ బటన్‌లు” ను ట్యాప్ చేయండి.</string>
+    <string name="watch_overview_description">మీరు ఏది అనుకూలీకరించాలనుకుంటున్నారో ఎంచుకోండి. ప్రివ్యూ మరియు సేవ్ చేసిన థీమ్ ప్రతి విభాగంలో సక్రియంగా ఉంటాయి.</string>
+    <string name="watch_back_to_overview">గడియారం విభాగాలకు తిరుగు</string>
+    <string name="settings_section_general">సాధారణ</string>
+    <string name="settings_section_general_description">యాప్ థీమ్, యాక్సెంట్ రంగు మరియు అప్‌డేట్ ప్రాధాన్యతలు.</string>
+    <string name="settings_section_watch">ప్రవర్తన</string>
+    <string name="settings_section_watch_description">మీ గడియారంలోని crown, టచ్, haptics మరియు action-menu ప్రవర్తన.</string>
+    <string name="settings_section_automation">ఆటోమేషన్</string>
+    <string name="settings_section_automation_description">Svartifoss ఎప్పుడు స్వయంచాలకంగా తెరవాలి, మూసివేయాలో ఎంచుకోండి.</string>
+    <string name="settings_section_apps">యాప్‌లు</string>
+    <string name="settings_section_apps_description">లిరిక్స్ మరియు మెటాడేటాను కనుగొనండి, స్ట్రీమింగ్ షార్ట్‌కట్‌లు, క్యూ ఆర్ట్‌వర్క్ మరియు Android యాక్సెస్.</string>
+    <string name="settings_section_data">డేటా &amp; మద్దతు</string>
+    <string name="settings_section_data_description">మీ అమరికను బ్యాకప్ చేయండి, వెర్షన్‌ను తనిఖీ చేయండి, డయాగ్నస్టిక్స్ చేయండి లేదా సహాయం పొందండి.</string>
+    <string name="settings_overview_description">ఒక విభాగాన్ని ఎంచుకోండి. సంబంధిత ఎంపికలు కలిసి ఉంటాయి; శోధన ఇంకా మిమ్మల్ని నేరుగా ఏ సెట్టింగ్‌కైనా తీసుకెళ్తుంది.</string>
+    <string name="settings_back_to_overview">సెట్టింగ్ విభాగాలకు తిరుగు</string>
+    <string name="tutorial_header">Svartifoss ను ఎలా ఉపయోగించాలి</string>
+    <string name="tutorial_intro">Svartifoss మీ గడియారాన్ని ఫోన్‌లో ప్లే అవుతున్న సంగీతానికి రిమోట్‌గా మారుస్తుంది. మీ మణికట్టు నుంచే మీరు చేయగల ప్రతిదీ ఇక్కడ ఉంది.</string>
+    <string name="tutorial_taps_title">స్క్రీన్ జోన్‌లను ట్యాప్ చేయండి</string>
+    <string name="tutorial_taps_desc">గడియారం స్క్రీన్ నాలుగు జోన్‌లుగా విభజించబడింది — పై, కింది, ఎడమ, కుడి. ఒక జోన్‌ను ట్యాప్ చేస్తే దానికి మీరు కేటాయించిన చర్య నడుస్తుంది. డిఫాల్ట్‌గా ఎడమ జోన్ ప్లే/పాజ్ చేస్తుంది, కుడి జోన్ తదుపరి ట్రాక్‌కు వెళ్తుంది, పై మరియు కింది జోన్‌లు వాల్యూమ్‌ను మారుస్తాయి.</string>
+    <string name="tutorial_quick_panel_title">త్వరిత చర్యల ప్యానెల్</string>
+    <string name="tutorial_quick_panel_desc">ఇప్పుడు ప్లే అవుతున్న స్క్రీన్ మధ్యలో డబుల్-ట్యాప్ చేస్తే నాలుగు స్లాట్‌ల ప్యానెల్ తెరుచుకుంటుంది — మూడు గుండ్రని బటన్‌లు మరియు వాటి కింద ఒక వెడల్పాటి వరుస. మార్చకుండా వదిలితే, ప్లే చేస్తున్న యాప్ తన నోటిఫికేషన్‌లో చూపే బటన్‌లను ఇవి ప్రతిబింబిస్తాయి; అందువల్ల దాని నిజమైన like, shuffle, repeat నియంత్రణలు లభిస్తాయి. ఫోన్‌లోని Actions లో ఏ చర్యనైనా స్లాట్‌కు కేటాయించండి లేదా దాన్ని దాచడానికి \"ఏదీ లేదు\" గా సెట్ చేయండి.</string>
+    <string name="tutorial_gestures_title">ఒక్కసారి, రెండుసార్లు &amp; దీర్ఘంగా నొక్కడం</string>
+    <string name="tutorial_gestures_desc">నాలుగు అంచు జోన్‌లూ వేర్వేరు single, double మరియు long-press చర్యలకు మద్దతు ఇస్తాయి. మధ్యలో single tap ను కూడా కాన్ఫిగర్ చేయవచ్చు; double-tap ఎల్లప్పుడూ Quick actions ను తెరుస్తుంది, long-press Settings → Behavior ప్రకారం face picker, queue లేదా ఏదీ కాకపోవడాన్ని అమలు చేస్తుంది.</string>
+    <string name="tutorial_buttons_title">భౌతిక బటన్‌లు</string>
+    <string name="tutorial_buttons_desc">మీ గడియారానికి సైడ్ బటన్‌లు ఉంటే, వాటికీ single, double మరియు long-press చర్యలను కేటాయించవచ్చు. స్క్రీన్ ఆఫ్‌లో ఉన్నా అవి పనిచేస్తూనే ఉంటాయి.</string>
+    <string name="tutorial_rotary_title">తిరిగే క్రౌన్</string>
+    <string name="tutorial_rotary_desc">Settings → Behavior → Rotary crown / bezel లో తిరిగే crown లేదా bezel వాల్యూమ్ మార్చాలా, ట్రాక్‌లో seek చేయాలా లేదా ఏమీ చేయకూడదా ఎంచుకోండి. Crown మలుపులను బటన్‌లుగా చూపే గడియారాల్లో వాటిని Controls లో కేటాయించండి.</string>
+    <string name="tutorial_swipe_up_title">పైకి, కిందికి, ఎడమకు &amp; కుడికి స్వైప్ చేయండి</string>
+    <string name="tutorial_swipe_up_desc">ఇప్పుడు ప్లే అవుతున్న స్క్రీన్‌పై పైకి, కిందికి లేదా ఎడమకు స్వైప్ చేయడాన్ని ఏదైనా తెరవడానికి విడిగా కాన్ఫిగర్ చేయవచ్చు — చర్యల మెనూ, playback queue, ట్రాక్‌లను స్కిప్ చేయడం, మీ playlists మరియు మరెన్నో. Controls లో Music playing లేదా No playback ఎంచుకుని ప్రతి దిశను కాన్ఫిగర్ చేయండి. డిఫాల్ట్‌గా పైకి స్వైప్ చర్యల మెనూను తెరుస్తుంది; మిగతావి మీరు కేటాయించే వరకు ఏమీ చేయవు. కుడి స్వైప్‌ను అలాగే ఉంచాం — యాప్ నుంచి బయటకు రావడానికి అది సార్వత్రిక Wear OS gesture.</string>
+    <string name="tutorial_shortcuts_title">స్ట్రీమింగ్ షార్ట్‌కట్‌లు</string>
+    <string name="tutorial_shortcuts_desc">Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music లేదా SoundCloud నుంచి ట్రాక్, ఆల్బమ్, mix లేదా playlist లింక్‌ను సేవ్ చేసి దాన్ని ఏ బటన్, gesture లేదా panel slot కైనా కేటాయించండి. వేగమైన మార్గం streaming app నుంచి లింక్‌ను నేరుగా Svartifoss కు share చేయడం; కాపీ చేసిన లింక్‌ను paste చేయవచ్చు లేదా టైప్ చేయవచ్చు. ఖాతా లేదా login అవసరం లేదు — గడియారం ఫోన్‌ను playback ప్రారంభించమని అడుగుతుంది, అందువల్ల shortcut కేవలం యాప్ తెరవకుండా నేరుగా ప్లే చేస్తుంది.</string>
+    <string name="tutorial_yt_music_title">YouTube Music షార్ట్‌కట్‌లు</string>
+    <string name="tutorial_yt_music_desc">\"ఇష్టపడిన పాటలను ప్లే చేయి\", \"ఇష్టపడిన పాటలను shuffle చేసి ప్లే చేయి\" లేదా \"నా playlists\" ను ఏ బటన్, gesture లేదా swipe కైనా కేటాయించి ఫోన్‌ను తాకకుండా నేరుగా మీ సంగీతానికి వెళ్లండి. \"శోధన చరిత్ర\" గడియారంలోని ఇటీవల శోధనలను గుర్తుంచుకుంటుంది — ఒకదాన్ని తొలగించడానికి నొక్కి పట్టుకోండి.</string>
+    <string name="tutorial_exit_title">బయటకు రావడానికి స్వైప్ చేయండి</string>
+    <string name="tutorial_exit_desc">ప్లేయర్ నుంచి బయటకు రావడానికి ఎడమ అంచు నుంచి స్వైప్ చేయండి. బయటకు వచ్చినప్పుడు playback స్వయంచాలకంగా pause కావచ్చు — Settings లో దాన్ని ప్రారంభించండి.</string>
+    <string name="tutorial_tile_title">త్వరిత-నియంత్రణ Tile</string>
+    <string name="tutorial_tile_desc">యాప్ తెరవకుండా వెంటనే play, pause, skip చేయడానికి గడియారం ముఖంపై పక్కకు స్వైప్ చేసి Svartifoss Tile ను తెరవండి.</string>
+    <string name="tutorial_complication_title">వాచ్ ఫేస్ complication</string>
+    <string name="tutorial_complication_desc">ప్రస్తుత కవర్‌ను ఒక చూపులో చూడటానికి Svartifoss ఆల్బమ్ ఆర్ట్ complication ను మీ వాచ్ ఫేస్‌కు జోడించండి. ప్లేయర్‌ను తెరవడానికి దాన్ని ట్యాప్ చేయండి.</string>
+    <string name="tutorial_system_title">సిస్టమ్ మీడియా నియంత్రణలు</string>
+    <string name="tutorial_system_desc">ప్రస్తుత ట్రాక్ మీ గడియారం స్వంత మీడియా నియంత్రణల్లో మరియు ఇటీవలి యాప్‌లలో కూడా కనిపిస్తుంది, కాబట్టి అక్కడి నుంచీ playback ను నియంత్రించవచ్చు.</string>
+    <string name="tutorial_tip">చిట్కా: Controls లో రెండు స్థితులనూ కాన్ఫిగర్ చేసి, తర్వాత Actions లో మెనూను అమర్చండి.</string>
+    <string name="navigation_drawer_open">నావిగేషన్ డ్రాయర్‌ను తెరువు</string>
+    <string name="navigation_drawer_close">నావిగేషన్ డ్రాయర్‌ను మూసివేయి</string>
+    <string name="action_settings">సెట్టింగ్‌లు</string>
+    <string name="action_pause">పాజ్</string>
+    <string name="action_play">ప్లే</string>
+    <string name="action_skip_prev">మునుపటి ట్రాక్</string>
+    <string name="action_skip_next">తదుపరి ట్రాక్</string>
+    <string name="action_play_pause">ప్లే / పాజ్</string>
+    <string name="action_stop">ఆపు</string>
+    <string name="action_restart">ట్రాక్‌ను మళ్లీ ప్రారంభించు</string>
+    <string name="action_mute">మ్యూట్ / అన్‌మ్యూట్</string>
+    <string name="action_skip_seconds">%1$d సెకన్లు ముందుకు వెళ్లు</string>
+    <string name="action_reverse_seconds">%1$d సెకన్లు వెనక్కి వెళ్లు</string>
+    <string name="action_like">ఇష్టం</string>
+    <string name="action_shuffle">షఫుల్</string>
+    <string name="action_repeat">రిపీట్</string>
+    <string name="action_repeat_one">ఒక్కదాన్ని రిపీట్ చేయి</string>
+    <string name="action_search">సంగీతాన్ని శోధించు</string>
+    <string name="action_open_lyrics">సాహిత్యం</string>
+    <string name="group_playback_controls">ప్లేబ్యాక్ నియంత్రణలు</string>
+    <string name="group_streaming_shortcuts">ట్రాక్‌లు, ఆల్బమ్‌లు &amp; playlists</string>
+    <string name="pick_action">చర్యను ఎంచుకోండి</string>
+    <string name="action_search_hint">అన్ని చర్యలను శోధించండి</string>
+    <string name="action_search_empty">ఈ శోధనకు సరిపోలే చర్యలు లేవు.</string>
+    <string name="action_opens_more">బహుళ ఎంపికలు</string>
+    <string name="action_volume_up">వాల్యూమ్ పెంచు</string>
+    <string name="volume_down">వాల్యూమ్ తగ్గించు</string>
+    <string name="group_volume_controls">వాల్యూమ్ నియంత్రణలు</string>
+    <string name="no_watch_detected">గడియారం కనుగొనబడలేదు</string>
+    <string name="connection_instructions">కనెక్షన్ ప్రారంభించడానికి గడియారంపై Svartifoss ను తెరవండి</string>
+    <string name="playing_controls">ప్లే అవుతున్నప్పుడు నియంత్రణలు</string>
+    <string name="stopped_controls">ప్లేబ్యాక్ లేనప్పుడు నియంత్రణలు</string>
+    <string name="actions_menu">చర్యల మెనూ</string>
+    <string name="actions_intro">మీ గడియారంలోని రెండు చర్య ఉపరితలాలను playback నియంత్రణలు, apps లేదా సేవ్ చేసిన ట్రాక్‌లు, ఆల్బమ్‌లు మరియు playlists తో కాన్ఫిగర్ చేయండి. క్విక్ ప్యానెల్ కాంపాక్ట్‌గా ఉంటుంది; క్రింద మెనూలో ఎక్కువ పొడవైన క్రమబద్ధ జాబితాను ఉంచవచ్చు.</string>
+    <string name="actions_quick_panel_section">క్విక్ ప్యానెల్</string>
+    <string name="actions_watch_menu_section">గడియారంలోని మెనూ</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d చర్య · సవరించడానికి ట్యాప్ చేయండి · క్రమం మార్చడానికి నొక్కి లాగండి</item>
+        <item quantity="other">%1$d చర్యలు · సవరించడానికి ట్యాప్ చేయండి · క్రమం మార్చడానికి నొక్కి లాగండి</item>
+    </plurals>
+    <string name="actions_reorder_description">క్రమబద్ధ చర్యల మెనూ. లాగడానికి టచ్ చేసి పట్టుకోండి, accessibility చర్యల్లో Move up లేదా Move down వాడండి, లేదా కీబోర్డ్‌లో Ctrl+Up/Down నొక్కండి.</string>
+    <string name="actions_move_up">పైకి తరలించు</string>
+    <string name="actions_move_down">కిందికి తరలించు</string>
+    <string name="actions_moved_to_position">%1$s ను %3$d లో %2$d స్థానానికి తరలించారు.</string>
+    <string name="actions_empty">ఇంకా చర్యలు లేవు. మొదటిదాన్ని సృష్టించడానికి జోడించు బటన్‌ను ఉపయోగించండి.</string>
+    <string name="actions_add">చర్యను జోడించు</string>
+    <string name="on_screen_buttons">టచ్ జోన్‌లు</string>
+    <string name="physical_buttons">భౌతిక బటన్‌లు</string>
+    <string name="physical_buttons_disconnected">భౌతిక బటన్‌లను కాన్ఫిగర్ చేయడానికి గడియారంలో Svartifoss ను కనెక్ట్ చేసి తెరవండి. టచ్ జోన్‌లు, swipes మరియు మినీ బటన్‌లు ఇప్పుడే అందుబాటులో ఉన్నాయి.</string>
+    <string name="physical_buttons_unavailable">ఈ గడియారం కాన్ఫిగర్ చేయగల భౌతిక బటన్‌లను ఏవీ నివేదించలేదు.</string>
+    <string name="control_assignment_tap">ట్యాప్: %1$s</string>
+    <string name="control_assignment_hold">నొక్కిపట్టు: %1$s</string>
+    <string name="control_assignment_both">ట్యాప్: %1$s · నొక్కిపట్టు: %2$s</string>
+    <string name="tap_a_zone_to_configure">చర్యను కేటాయించడానికి గడియారంలోని జోన్‌ను ట్యాప్ చేయండి</string>
+    <string name="touch_zone_top">పై జోన్</string>
+    <string name="touch_zone_bottom">కింది జోన్</string>
+    <string name="touch_zone_left">ఎడమ జోన్</string>
+    <string name="touch_zone_right">కుడి జోన్</string>
+    <string name="touch_zone_center">మధ్య ట్యాప్</string>
+    <string name="touch_zone_action">%1$s: %2$s. కాన్ఫిగర్ చేయడానికి ట్యాప్ చేయండి.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+    <string name="swipe_gestures">స్వైప్ జెస్చర్‌లు</string>
+    <string name="tap_a_swipe_to_configure">ఏది తెరవాలో ఎంచుకోవడానికి ఒక దిశను ట్యాప్ చేయండి</string>
+    <string name="swipe_gesture_up">పైకి స్వైప్</string>
+    <string name="swipe_gesture_down">కిందికి స్వైప్</string>
+    <string name="swipe_gesture_left">ఎడమకు స్వైప్</string>
+    <string name="swipe_gesture_label_up">పైకి</string>
+    <string name="swipe_gesture_label_down">కిందికి</string>
+    <string name="swipe_gesture_label_left">ఎடమ</string>
+    <string name="screen_buttons">మినీ బటన్‌లు</string>
+    <string name="tap_a_screen_button_to_configure">గడియారం స్క్రీన్ దిగువకు దగ్గరగా గరిష్టంగా మూడు కనిపించే బటన్‌లు — చర్యను కేటాయించడానికి స్లాట్‌ను ట్యాప్ చేయండి</string>
+    <string name="screen_button_1">మినీ బటన్ 1 (ఎడమ)</string>
+    <string name="screen_button_2">మినీ బటన్ 2 (మధ్య)</string>
+    <string name="screen_button_3">మినీ బటన్ 3 (కుడి)</string>
+    <string name="screen_button_label_1">బటన్ 1</string>
+    <string name="screen_button_label_2">బటన్ 2</string>
+    <string name="screen_button_label_3">బటన్ 3</string>
+    <string name="no_action">చర్య లేదు</string>
+    <string name="gesture_single_press">ఒక్కసారి నొక్కు</string>
+    <string name="gesture_double_press">రెండుసార్లు నొక్కు</string>
+    <string name="gesture_long_press">దీర్ఘంగా నొక్కు</string>
+    <string name="gesture_swipe_action">చర్య</string>
+    <string name="center_button_quick_panel_note">మధ్యలో double-tap ఎల్లప్పుడూ Quick actions ను తెరుస్తుంది. Long-press Settings → Behavior లోని ఎంపికను అమలు చేస్తుంది. ఇక్కడ center tap ను కేటాయించినా ఈ రెండు gesture లు మారవు.</string>
+    <string name="start_playback">ప్లేబ్యాక్ ప్రారంభించు</string>
+    <string name="uninstalled_app">అన్‌ఇన్‌స్టాల్ చేసిన యాప్</string>
+    <string name="play_app">%1$s ను ప్లే చేయి</string>
+    <string name="tasker_task">Tasker Task</string>
+    <string name="icon_selection_title">ఐకాన్ ఎంపిక</string>
+    <string name="icon_selection_gallery">గ్యాలరీ నుంచి</string>
+    <string name="icon_selection_no_icon_pack">ఈ ఫీచర్ మీ చర్య కోసం కస్టమ్ ఐకాన్‌ను
+            ఇన్‌స్టాల్ చేసిన icon pack నుంచి ఎంచుకోవడానికి అనుమతిస్తుంది.\n\nదురదృష్టవశాత్తు మీ వద్ద ఏ icon pack కూడా ఇన్‌స్టాల్ కాలేదనిపిస్తోంది.</string>
+    <string name="icon_selection_no_storage_permission">ఈ ఫీచర్ మీ చర్య కోసం కస్టమ్ ఐకాన్‌ను
+            ఇన్‌స్టాల్ చేసిన icon pack నుంచి ఎంచుకోవడానికి అనుమతిస్తుంది.\n\nకొన్ని icon pack లకు యాప్‌లకు storage permission అవసరం. ఈ ఫీచర్‌ను ఉపయోగించడానికి దాన్ని అనుమతించాలి.</string>
+    <string name="delete">తొలగించు</string>
+    <string name="action_text">చర్య పాఠ్యం</string>
+    <string name="swap_action">చర్యను మార్చు</string>
+    <string name="open_actions_menu">చర్యల మెనూను తెరువు</string>
+    <string name="open_playlist_menu">ప్రస్తుత playlist ను చూపు</string>
+    <string name="misc_settings">ఇతర సెట్టింగ్‌లు</string>
+    <string name="category_backup">బ్యాకప్</string>
+    <string name="export_config">బ్యాకప్‌ను ఎగుమతి చేయి</string>
+    <string name="export_config_description">ఏవి చేర్చాలో ఎంచుకోండి — బటన్‌లు, షార్ట్‌కట్‌లు, ఐకాన్‌లు, రంగులు, థీమ్‌లు మరియు ఇతర యాప్ డేటా</string>
+    <string name="import_config">బ్యాకప్‌ను దిగుమతి చేయి</string>
+    <string name="import_config_description">బ్యాకప్ ఫైల్‌లో ఉన్న విభాగాలను పునరుద్ధరించండి; ఇతర డేటా మారదు</string>
+    <string name="export_config_done">బ్యాకప్ ఎగుమతి చేయబడింది</string>
+    <string name="export_config_failed">బ్యాకప్‌ను ఎగుమతి చేయలేకపోయాం</string>
+    <string name="import_config_done_title">దిగుమతి విజయవంతమైంది</string>
+    <string name="import_config_done_message">దిగుమతి చేసిన బ్యాకప్‌ను వర్తింపజేయడానికి Svartifoss ను మళ్లీ ప్రారంభించాలి.</string>
+    <string name="import_config_failed">బ్యాకప్‌ను దిగుమతి చేయలేకపోయాం — ఫైల్ చెల్లనిదిగా ఉండవచ్చు లేదా అనుకూలం కాని వెర్షన్‌ది కావచ్చు</string>
+    <string name="action_restart_now">ఇప్పుడే మళ్లీ ప్రారంభించు</string>
+    <string name="category_about">గురించి</string>
+    <string name="category_music_screen">సంగీత స్క్రీన్</string>
+    <string name="category_watch_screen">గడియారం స్క్రీన్</string>
+    <string name="category_mini_buttons">మినీ బటన్‌లు</string>
+    <string name="category_screen_face">ప్లేయర్ రూపం</string>
+    <string name="category_wf_screen_behavior">స్క్రీన్ ప్రవర్తన</string>
+    <string name="category_wf_player_progress">ప్రగతి, seek &amp; సమయం</string>
+    <string name="category_album_background">ఆల్బమ్ నేపథ్యం</string>
+    <string name="category_music_colors">సంగీతం నుంచి రంగులు</string>
+    <string name="category_wf_typography_font">టైప్‌ఫేస్</string>
+    <string name="category_wf_typography_title">శీర్షిక</string>
+    <string name="category_wf_typography_artist">కళాకారుడు</string>
+    <string name="category_wf_typography_icon">యాప్ ఐకాన్</string>
+    <string name="category_wf_typography_flex">Google Sans Flex అక్షాలు</string>
+    <string name="category_wf_metadata">మెటాడేటా ఫేస్ కంటెంట్</string>
+    <string name="category_wf_typography_secondary">ఇతర స్క్రీన్‌లపై పాఠ్యం</string>
+    <string name="category_wf_colors_title">శీర్షిక రంగులు</string>
+    <string name="category_wf_colors_artist">కళాకారుడి రంగులు</string>
+    <string name="category_wf_colors_clock">గడియారం రంగులు</string>
+    <string name="setting_wear_font_flex_hint_title">ఈ నియంత్రణల గురించి</string>
+    <string name="setting_wear_flex_axes_hint">ఈ నియంత్రణలు Google Sans Flex ను ప్రత్యేకంగా సూక్ష్మంగా సర్దుతాయి — వాటిని ఉపయోగించడానికి పైగా ఈ ఫాంట్‌ను ఎంచుకోండి. పై Title మరియు artist weight/italic ఇప్పటికే ఈ ఫాంట్‌కు చెందిన weight (wght), slant (slnt) అక్షాలను సెట్ చేస్తాయి; క్రింద ఉన్న నాలుగు నియంత్రణలు మొత్తం ఫేస్‌కు వర్తిస్తాయి.</string>
+    <string name="setting_wear_font_flex_width">వెడల్పు</string>
+    <string name="setting_wear_font_flex_width_description">అడ్డ విస్తరణ, కుదించినది నుంచి విస్తరించినది వరకు (25–151). 100 ఫాంట్ సాధారణ వెడల్పు.</string>
+    <string name="setting_wear_font_flex_optical_size">ఆప్టికల్ పరిమాణం</string>
+    <string name="setting_wear_font_flex_optical_size_description">పాఠ్యం యొక్క ప్రభావిత పరిమాణానికి stroke వివరాన్ని సర్దుతుంది (6–144). తక్కువ విలువలు చిన్న పాఠ్యానికి; ఎక్కువ విలువలు పెద్ద display పాఠ్యానికి సరిపోతాయి.</string>
+    <string name="setting_wear_font_flex_grade">గ్రేడ్</string>
+    <string name="setting_wear_font_flex_grade_description">లేఅవుట్ మార్చకుండా బరువును స్వల్పంగా మార్చుతుంది (0–100) — చీకటి స్క్రీన్‌పై contrast ను కొద్దిగా పెంచే సున్నితమైన మార్గం.</string>
+    <string name="setting_wear_font_flex_roundness">గుండ్రత్వం</string>
+    <string name="setting_wear_font_flex_roundness_description">మరింత స్నేహపూర్వక రూపానికి stroke చివరలను పదునైన (0) నుంచి పూర్తిగా గుండ్రని (100) వరకు మేళవిస్తుంది.</string>
+    <string name="preview_sample_title">పాట శీర్షిక</string>
+    <string name="preview_sample_artist">కళాకారుడి పేరు</string>
+    <string name="preview_sample_lyric_previous">మునుపటి పంక్తి</string>
+    <string name="preview_sample_lyric_current">ఇప్పుడు ప్లే అవుతున్న పంక్తి</string>
+    <string name="preview_sample_lyric_next">తదుపరి పంక్తి</string>
+    <string name="preview_sample_next_title">తదుపరి పాట</string>
+    <string name="preview_playback_stopped">ఆగింది</string>
+    <string name="preview_verse_previous">మునుపటి పంక్తి</string>
+    <string name="preview_verse_current">ఇప్పుడు ప్లే అవుతున్న పంక్తి</string>
+    <string name="preview_verse_next">మరియు దాని తర్వాతది</string>
+    <string name="preview_chat_today">ఈ రోజు</string>
+    <string name="category_gestures">జెస్చర్‌లు &amp; ఇన్‌పుట్</string>
+    <string name="category_watch_navigation">నావిగేషన్ &amp; షార్ట్‌కట్‌లు</string>
+    <string name="category_rotary_input">రోటరీ ఇన్‌పుట్ &amp; ట్యూనింగ్</string>
+    <string name="category_watch_feedback">ఫీడ్‌బ్యాక్ &amp; బయటకు వెళ్లే ప్రవర్తన</string>
+    <string name="category_watch_display">గడియారం స్క్రీన్</string>
+    <string name="setting_wear_keep_screen_on">స్క్రీన్‌ను ఆన్‌లో ఉంచు</string>
+    <string name="setting_wear_keep_screen_on_description">Svartifoss స్క్రీన్ తెరిచి ఉన్నప్పుడు inactivity timeout వల్ల గడియారం స్క్రీన్ ఆఫ్ కాకుండా నిరోధిస్తుంది. మణికట్టును కిందికి దించినప్పుడు గడియారం ఇంకా మసకబారుతుంది \u2014 ఆ gesture సిస్టమ్‌ది. ఎక్కువ బ్యాటరీ ఉపయోగిస్తుంది. ఈ సెట్టింగ్‌తో సంబంధం లేకుండా lyrics స్క్రీన్ ఎల్లప్పుడూ ఆన్‌లో ఉంటుంది.</string>
+    <string name="setting_lyrics_enabled">లిరిక్స్‌ను ఆన్‌లైన్‌లో వెతుకు</string>
+    <string name="setting_lyrics_enabled_description">గడియారంలో lyrics స్క్రీన్‌ను తెరిచినప్పుడు ఫోన్ LRCLIB నుంచి సింక్ అయిన లిరిక్స్‌ను తెచ్చుకోనివ్వండి. ట్రాక్ పేరు, కళాకారుడు, నిడివి మాత్రమే పంపబడతాయి; ఇంకేమీ కాదు, డిస్క్‌లో ఏదీ సేవ్ కాదు. దీన్ని ఆఫ్ చేస్తే lyrics స్క్రీన్ lookupలు నిలిపివేయబడ్డాయని చూపిస్తుంది.</string>
+    <string name="setting_overlay_blur_radius">ఓవర్లే బ్లర్</string>
+    <string name="setting_overlay_blur_radius_description">వాల్యూమ్/seek రింగ్‌లు మరియు క్విక్ actions ప్యానెల్ వెనుక frosted నేపథ్య blur బలం (px) — album art నేపథ్య blur నుంచి స్వతంత్రం</string>
+    <string name="category_action_list">చర్యల జాబితా</string>
+    <string name="category_automation">ఆటోమేషన్</string>
+    <string name="category_idle">ఏదీ ప్లే కానప్పుడు</string>
+    <string name="installed_version">ఇన్‌స్టాల్ చేసిన వెర్షన్</string>
+    <string name="get_support">మద్దతు పొందండి</string>
+    <string name="get_support_description">మద్దతు కోసం అప్లికేషన్ లాగ్‌లను డెవలపర్‌కు పంపండి</string>
+    <string name="contact_developer">డెవలపర్‌ను సంప్రదించండి</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — సంప్రదింపు</string>
+    <string name="contact_developer_chooser">ఇమెయిల్ పంపండి</string>
+    <string name="contact_developer_no_client">ఇమెయిల్ యాప్ ఇన్‌స్టాల్ కాలేదు. చిరునామా క్లిప్‌బోర్డ్‌కు కాపీ చేయబడింది.</string>
+    <string name="about_developer_title">డెవలపర్ గురించి</string>
+    <string name="about_developer_dialog_message">Svartifoss ఒక వ్యక్తిగత ప్రాజెక్ట్‌గా ప్రారంభమైంది — Music Center for Wear ను నేటి అవకాశాలకు సరిపోయేలా నవీకరించి, నేను ప్రతిరోజూ ఉపయోగించగలిగేలా చేయాలని అనుకున్నాను. అది బాగా రావడంతో అందరితో పంచుకోవాలని నిర్ణయించుకున్నాను. ఇది నా మొదటి యాప్; మీరు నిర్మించినది ఇతరులకు కూడా ఉపయోగపడటం చూడటం లాంటి ఆనందం మరొకటి లేదు.</string>
+    <string name="licenses">ఓపెన్ సోర్స్ లైసెన్స్‌లు</string>
+    <string name="setting_always_show_time">సమయాన్ని ఎల్లప్పుడూ చూపు</string>
+    <string name="setting_always_show_time_off_description">ప్రస్తుత సమయం ambient mode లో మాత్రమే చూపబడుతుంది</string>
+    <string name="setting_always_show_time_on_description">ప్రస్తుత సమయం ఎల్లప్పుడూ చూపబడుతుంది. పై చర్య ఐకాన్ కనిపించదు (దాని స్థానంలో గడియారం ఉంటుంది), కానీ చర్య సాధారణంగానే పనిచేస్తుంది.</string>
+    <string name="tap_to_force_stop">నియంత్రణలను ఆపడానికి ట్యాప్ చేయండి</string>
+    <string name="notification_action_stop">ఆపు</string>
+    <string name="notification_action_force_stop">బలవంతంగా ఆపు</string>
+    <string name="error_notification_access">నోటిఫికేషన్ యాక్సెస్ లేదు. ఫోన్‌ను తనిఖీ చేయండి.</string>
+    <string name="error_notifications">లోప నోటిఫికేషన్‌లు</string>
+    <string name="notification_access_notification_title">Svartifoss కు నోటిఫికేషన్ యాక్సెస్ అవసరం</string>
+    <string name="notification_access_notification_title_description">సమస్యను పరిష్కరించడానికి ఈ నోటిఫికేషన్‌ను ట్యాప్ చేసి Svartifoss ను తనిఖీ చేయండి</string>
+    <string name="error_service_not_enabled">నోటిఫికేషన్ యాక్సెస్ అవసరం</string>
+    <string name="error_service_not_enabled_description">గడియారం నుంచి సంగీతాన్ని నియంత్రించడానికి Svartifoss కు notification access అవసరం — ఏ యాప్ ప్లే అవుతోందో Android దీని ద్వారా చూడనిస్తుంది మరియు play, pause, skip ఆదేశాలు పంపనిస్తుంది.\n\nSvartifoss మీ నోటిఫికేషన్‌ల కంటెంట్‌ను ఎప్పుడూ చదవదు. సక్రియ media session ను గుర్తించడానికి మాత్రమే ఈ అనుమతిని ఉపయోగిస్తుంది.\n\n\"సెట్టింగ్‌లను తెరువు\" ను ట్యాప్ చేసి notification access లో Svartifoss ను ఆన్ చేయండి.</string>
+    <string name="action_open_settings">సెట్టింగ్‌లను తెరువు</string>
+    <string name="settings_search_title">సెట్టింగ్‌లను శోధించు</string>
+    <string name="settings_search_hint">సెట్టింగ్‌లను శోధించు</string>
+    <string name="settings_search_clear">శోధనను క్లియర్ చేయి</string>
+    <string name="settings_search_prompt">Settings మరియు Watch appearance లోని ప్రతి సెట్టింగ్‌ను పేరుతో శోధించండి.</string>
+    <string name="settings_search_no_results">దానికి సరిపోలే సెట్టింగ్ లేదు.</string>
+    <string name="settings_search_prerequisite">ఈ ఎంపిక మరో ఎంపికపై ఆధారపడి ఉంటుంది. దాన్ని చూపించడానికి ఇక్కడ చూపిన సెట్టింగ్‌ను సర్దండి.</string>
+    <string name="setting_numeric_range_error">%1$d నుంచి %2$d వరకు విలువను నమోదు చేయండి.</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">అనుమతించడానికి ట్యాప్ చేయండి — అప్పటి వరకు playback నియంత్రణ క్రియారహితంగా ఉంటుంది</string>
+    <string name="no_watch_app_title">మీ గడియారంలో Svartifoss ను ఇన్‌స్టాల్ చేయండి</string>
+    <string name="no_watch_app_description">పెయిర్ చేసిన Wear OS గడియారంలో Svartifoss తన watch app ను కనుగొనలేకపోయింది. ఫోన్ మరియు గడియారం apps కలిసి పనిచేస్తాయి — watch app లేకుండా మణికట్టు నుంచి playback నియంత్రణ పని చేయదు.\n\nSvartifoss Play Store లో లేదు — watch app ను విడిగా sideload చేయాలి (ఉదా. Wear Installer తో). GitHub releases పేజీ తెరిచి watch APK పొందడానికి \"విడుదలలను చూడండి\" ను ట్యాప్ చేయండి. ఇప్పుడే ఇన్‌స్టాల్ చేసి ఉంటే sync పూర్తవడానికి ఒక నిమిషం ఇవ్వండి.</string>
+    <string name="no_watch_app_button">విడుదలలను చూడండి</string>
+    <string name="required_permission">అవసరమైన అనుమతి</string>
+    <string name="setting_pause_on_swipe_exit">స్వైప్ చేసి బయటకు వెళ్లేటప్పుడు playback ను pause చేయి</string>
+    <string name="setting_pause_on_swipe_exit_description">గడియారంలో ఎడమకు స్వైప్ చేసి Svartifoss నుంచి బయటకు వచ్చినప్పుడు ఏ playback అయినా స్వయంచాలకంగా pause చేయండి.\n\nPower button ద్వారా బయటకు రావడం దీనిపై ప్రభావం చూపదు; అప్పుడు auto-pause ఎప్పుడూ జరగదు.</string>
+    <string name="setting_rotating_crown_off_period">స్క్రీన్ ఆన్ రోటరీ ఇన్‌పుట్ ఆలస్యం</string>
+    <string name="setting_rotating_crown_off_period_description">కొన్ని పరికరాల్లో rotating input (ఉదా. rotating crown) అధిక సున్నితంగా ఉండవచ్చు. అనుకోకుండా volume మార్పులను నివారించేందుకు స్క్రీన్ ఆన్ చేసిన తర్వాత &lt;b>%1$s milliseconds&lt;/b> వరకు rotary input నిలిపివేయబడుతుంది.</string>
+    <string name="setting_rotary_seek">రోటరీ క్రౌన్‌తో seek చేయి</string>
+    <string name="setting_rotary_seek_description">ప్రారంభించినప్పుడు crown తిప్పడం volume మార్చడం బదులు ప్రస్తుత ట్రాక్‌లో scrub చేస్తుంది. Volume ను స్క్రీన్ లేదా భౌతిక బటన్‌లతో ఇంకా మార్చవచ్చు.</string>
+    <string name="setting_wear_rotary_action">రోటరీ క్రౌన్ / bezel</string>
+    <string name="wear_rotary_action_volume">వాల్యూమ్ మార్చు</string>
+    <string name="wear_rotary_action_seek">ట్రాక్‌లో seek చేయి</string>
+    <string name="wear_rotary_action_off">ఏమీ చేయవద్దు</string>
+    <string name="setting_rotating_sensitivity">రోటరీ ఇన్‌పుట్ సున్నితత్వం</string>
+    <string name="setting_rotating_sensitivity_description">Rotary input సున్నితత్వం. ఎక్కువ సంఖ్య అంటే crown ను అదే విధంగా తిప్పితే volume మరింత పెరుగుతుంది. ప్రస్తుతం &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Ambient లో భౌతిక బటన్ double click ను ఆపివేయి</string>
+    <string name="setting_disable_ambient_physical_double_click_description">కొన్ని గడియారాల్లో బటన్ బగ్ వల్ల ambient mode లో భౌతిక బటన్ single click కొన్నిసార్లు double click గా నమోదవుతుంది.\n\nఇది ఎదురైతే ఈ ఎంపికను ప్రారంభించి ambient mode లో double click ను పూర్తిగా ఆపవచ్చు (ఉదా. రెండుసార్లు క్లిక్ చేసినా single click చర్య మాత్రమే జరుగుతుంది). గడియారం సక్రియంగా ఉన్నప్పుడు రెండు క్లిక్‌లపై ప్రభావం ఉండదు.</string>
+    <string name="setting_haptic_feedback">హాప్టిక్ ఫీడ్‌బ్యాక్</string>
+    <string name="setting_haptic_feedback_description">బటన్‌లు నొక్కినప్పుడు గడియారాన్ని వైబ్రేట్ చేయండి.</string>
+    <string name="setting_auto_start">Svartifoss ను స్వయంచాలకంగా తెరువు</string>
+    <string name="setting_auto_start_description">ఫోన్‌లో సంగీత playback ప్రారంభమైనప్పుడు గడియారంలో Svartifoss ను స్వయంచాలకంగా తెరవండి.</string>
+    <string name="setting_auto_start_apps_blacklist">ఆటో-స్టార్ట్ యాప్‌లు</string>
+    <string name="setting_auto_start_apps_blacklist_description">Svartifoss ను ఆటో-స్టార్ట్ చేయగల మీడియా యాప్‌ల జాబితా</string>
+    <string name="setting_dim_album_art">ప్లేయర్ షేడింగ్</string>
+    <string name="setting_dim_album_art_description">ఆర్ట్‌వర్క్ మరియు ప్లేయర్ నియంత్రణల మధ్య వినియోగదారు ఎంచుకున్న shadow treatment ను జోడించండి.</string>
+    <string name="setting_album_art_style">ఆల్బమ్ ఆర్ట్ శైలి</string>
+    <string name="setting_album_art_style_description">ఇప్పుడు ప్లే అవుతున్న నేపథ్యం గడియారంలో ఎలా కనిపించాలో ఎంచుకోండి.</string>
+    <string name="setting_album_art_blur_radius">బ్లర్ తీవ్రత</string>
+    <string name="setting_album_art_blur_radius_description">ఎంచుకున్న నేపథ్యం blur ఉపయోగించినప్పుడు పూర్తి-స్క్రీన్ blur బలం. ప్రస్తుతం &lt;b>%1$s px&lt;/b>.</string>
+    <string name="setting_album_art_dim_strength">డిమ్ బలం</string>
+    <string name="setting_album_art_dim_strength_description">పాఠ్యం చదవడానికి album art ఎంతగా చీకటిచేయాలో. ప్రస్తుతం &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_player_shading_style">షేడింగ్ శైలి</string>
+    <string name="setting_player_shading_intensity">షేడింగ్ తీవ్రత</string>
+    <string name="setting_player_shading_intensity_description">Shading నేపథ్యాన్ని ఎంతగా చీకటిచేస్తుందో. 100%% పూర్తి బలం; అదనపు contrast కోసం 150%% వరకు పెంచవచ్చు. ప్రస్తుతం &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="category_wf_layout_actions">లేఅవుట్</string>
+    <string name="setting_reset_appearance">ఈ లేఅవుట్‌ను రీసెట్ చేయి</string>
+    <string name="setting_reset_appearance_description">ఈ ఫేస్ రూపాన్ని అసలు డిఫాల్ట్‌లకు పునరుద్ధరించండి</string>
+    <string name="reset_appearance_confirm_title">ఈ లేఅవుట్‌ను రీసెట్ చేయాలా?</string>
+    <string name="reset_appearance_confirm_message">ఈ ఫేస్ రూప సెట్టింగ్‌లు డిఫాల్ట్‌లకు తిరుగుతాయి. మీ ప్రవర్తన సెట్టింగ్‌లు మరియు ఇతర ఫేస్‌లు ప్రభావితం కావు.</string>
+    <string name="reset_appearance_confirm_button">రీసెట్ చేయి</string>
+    <string name="reset_appearance_done">లేఅవుట్ డిఫాల్ట్‌లకు రీసెట్ అయింది</string>
+    <string name="setting_reset_all_faces">అన్ని ఫేస్‌లను డిఫాల్ట్‌కు రీసెట్ చేయి</string>
+    <string name="setting_reset_all_faces_description">ప్రతి built-in ఫేస్ రూపాన్ని దాని అసలు డిఫాల్ట్‌లకు పునరుద్ధరించండి</string>
+    <string name="reset_all_faces_confirm_title">అన్ని ఫేస్‌లను రీసెట్ చేయాలా?</string>
+    <string name="reset_all_faces_confirm_message">ప్రతి built-in ఫేస్ రూపం అసలు డిఫాల్ట్‌లకు తిరుగుతుంది మరియు సక్రియ custom theme ఆఫ్ అవుతుంది. మీ సేవ్ చేసిన custom themes, ప్రవర్తన సెట్టింగ్‌లు మరియు ఎంచుకున్న ఫేస్ అలాగే ఉంటాయి.</string>
+    <string name="reset_all_faces_confirm_button">అన్నింటిని రీసెట్ చేయి</string>
+    <string name="reset_all_faces_done">అన్ని ఫేస్‌లు డిఫాల్ట్‌లకు రీసెట్ అయ్యాయి</string>
+    <string name="face_reset_migration_title">మీ గడియారం రూపాన్ని నవీకరించండి</string>
+    <string name="face_reset_migration_message">మీరు పాత వెర్షన్ నుంచి నవీకరించారు; అందులో అన్ని watch faces ఒకే రూప సెట్టింగ్‌లను పంచుకునేవి. ఇప్పుడు ప్రతి face తన స్వంత సెట్టింగ్‌లను గుర్తుంచుకుంటుంది, కాబట్టి మీరు నేరుగా customize చేయని faces లో పాత సెట్టింగ్‌లు సరిపోనట్లు కనిపించవచ్చు. అన్ని faces ను కొత్త defaults కు reset చేయాలని లేదా పూర్తిగా కొత్త ప్రారంభానికి app data ను క్లియర్ చేయాలని సిఫార్సు చేస్తున్నాం.</string>
+    <string name="face_reset_migration_reset_button">అన్ని ఫేస్‌లను రీసెట్ చేయి</string>
+    <string name="face_reset_migration_clear_data_button">యాప్ డేటాను క్లియర్ చేయి</string>
+    <string name="setting_player_shading_color">షేడింగ్ రంగు</string>
+    <string name="setting_wear_shading_custom_color">కస్టమ్ షేడింగ్ రంగు</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>నలుపు</item>
+        <item>ఆల్బమ్ యాక్సెంట్</item>
+        <item>డీసాచ్యురేటెడ్ ఆల్బమ్</item>
+        <item>కస్టమ్ రంగు</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>ప్లేయర్ థీమ్‌ను అనుసరించు</item>
+        <item>ఎడ్జ్ విగ్నెట్</item>
+        <item>ఎడ్జ్ విగ్నెట్ (బలమైనది)</item>
+        <item>ఎడ్జ్ విగ్నెట్ (భారీ)</item>
+        <item>కింది మూల</item>
+        <item>కింది ఫేడ్</item>
+        <item>నేల మరియు పైకప్పు</item>
+        <item>పూర్తి-స్క్రీన్ ఫిల్టర్</item>
+        <item>ఆల్బమ్ కలర్ వాష్</item>
+        <item>రెండు-రంగుల ఆల్బమ్ గ్రేడియంట్</item>
+        <item>పక్క తెరలు</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Ambient ఆల్బమ్ ఆర్ట్ అపారదర్శకత</string>
+    <string name="setting_ambient_album_art_opacity_description">Ambient mode లో album art ఎంత కనిపిస్తుంది. ప్రస్తుతం &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_volume_overlay_timeout">వాల్యూమ్/seek ఓవర్లే టైమ్‌అవుట్</string>
+    <string name="setting_volume_overlay_timeout_description">సర్దుబాటు తర్వాత volume మరియు seek overlays స్క్రీన్‌పై ఎంతసేపు ఉంటాయి. ప్రస్తుతం &lt;b>%1$s ms&lt;/b>.</string>
+    <string name="setting_rotary_deadzone">రోటరీ డెడ్ జోన్</string>
+    <string name="setting_rotary_deadzone_description">Volume లేదా seek మార్పులు వర్తించడానికి ముందు అవసరమైన కనిష్ఠ crown కదలిక. అనుకోని సర్దుబాట్లను నివారించడంలో సహాయపడుతుంది. ప్రస్తుతం &lt;b>%1$s&lt;/b>.</string>
+    <string name="category_wear_experience">Wear అనుభవం</string>
+    <string name="setting_swipe_gestures_hint">స్వైప్ జెస్చర్‌లు</string>
+    <string name="setting_swipe_gestures_hint_description">పై/కింద/ఎడమ swipe ప్రతి ఒక్కటి ఏ చర్యనైనా తెరవగలదు. Music playing లేదా No playback కోసం కాన్ఫిగర్ చేయడానికి ఇక్కడ ట్యాప్ చేయండి. కుడి swipe యాప్ నుంచి బయటకు రావడానికి రిజర్వ్‌గా ఉంటుంది.</string>
+    <string name="setting_screen_buttons_hint">మినీ బటన్‌లు</string>
+    <string name="setting_screen_buttons_hint_description">గరిష్ఠంగా మూడు కనిపించే బటన్‌లు; ప్రతి దానికి tap మరియు long-press చర్యలు. Music playing లేదా No playback కోసం కాన్ఫిగర్ చేయడానికి ఇక్కడ ట్యాప్ చేయండి.</string>
+    <string name="dev_screen_buttons_offset">మినీ బటన్‌ల స్థానం</string>
+    <string name="dev_screen_buttons_offset_description">గడియారం స్క్రీన్ దిగువ నుంచి మినీ బటన్‌ల వరకు ఇష్టమైన దూరం dp లో (డిఫాల్ట్ 42). పొడవైన శీర్షికల నుంచి దూరంగా ఉండటానికి వరుస ఇంకా స్వయంచాలకంగా సర్దుతుంది.</string>
+    <string name="setting_screen_buttons_tilt">బటన్ వంపు</string>
+    <string name="setting_screen_buttons_tilt_description">పక్క బటన్‌లు స్క్రీన్ వంపును ఎంతగా అనుసరిస్తాయి. 0 = నేరుగా వరుస; 100 = వంగిన ఐకాన్‌లతో పూర్తి ఆర్క్ ఎత్తు.</string>
+    <string name="setting_screen_buttons_bg">మినీ బటన్‌ల నేపథ్యం</string>
+    <string name="setting_screen_buttons_opacity">మినీ బటన్‌ల అపారదర్శకత</string>
+    <string name="setting_screen_buttons_opacity_description">మొత్తం mini-button గుంపు opacity (0–100%%). ప్రస్తుతం &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="quick_panel_row_title">త్వరిత చర్యల ప్యానెల్</string>
+    <string name="quick_panel_link_summary">దాన్ని తెరవడానికి గడియారం స్క్రీన్ మధ్యలో double-tap చేయండి. Actions లో దాని నాలుగు slots ను సెట్ చేయడానికి ఇక్కడ ట్యాప్ చేయండి.</string>
+    <string name="quick_panel_config_hint">ఇవి గడియారం స్క్రీన్ మధ్యలో double-tap చేస్తే తెరుచుకునే panel లోని బటన్‌లు. ఒక row ను ట్యాప్ చేసి దాని చర్యను ఎంచుకోండి (\"ఏదీ లేదు\" దాన్ని దాచుతుంది); డిఫాల్ట్‌ను పునరుద్ధరించడానికి long-press చేయండి.</string>
+    <string name="quick_panel_slot_1">బటన్ 1</string>
+    <string name="quick_panel_slot_2">బటన్ 2</string>
+    <string name="quick_panel_slot_3">బటన్ 3</string>
+    <string name="quick_panel_slot_long">పొడవైన బటన్</string>
+    <string name="quick_panel_slot_default">%1$s (డిఫాల్ట్)</string>
+    <string name="quick_panel_slot_hidden">దాచబడింది</string>
+    <string name="quick_panel_default_like">ఇష్టం</string>
+    <string name="quick_panel_default_shuffle">షఫుల్</string>
+    <string name="quick_panel_default_repeat">రిపీట్</string>
+    <string name="quick_panel_default_up_next">తదుపరి</string>
+    <string name="setting_wear_center_long_press_queue">Queue కోసం మధ్యలో long-press</string>
+    <string name="setting_wear_center_long_press_queue_description">Playback queue ను తెరవడానికి ఇప్పుడు ప్లే అవుతున్న స్క్రీన్ మధ్యలో long-press చేయండి.</string>
+    <string name="setting_wear_center_long_press">మధ్యలో long-press</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>వాచ్ ఫేస్ మార్చు</item>
+        <item>Queue ను తెరువు</item>
+        <item>ఏదీ లేదు</item>
+    </string-array>
+    <string name="setting_wear_screen_face">బేస్ లేఅవుట్</string>
+    <string name="setting_wear_screen_face_description">ఈ థీమ్ ఉపయోగించే నిర్మాణాన్ని ఎంచుకోండి. సేవ్ చేసిన themes ఈ layout ను తమ font, colors, blur, shading, AOD మరియు panels తో కలపవచ్చు.</string>
+    <string name="setting_wear_show_track_title">పాట శీర్షికను చూపు</string>
+    <string name="setting_wear_show_track_title_description">ప్లేయర్‌పై ప్రస్తుత పాట పేరును చూపు</string>
+    <string name="setting_wear_show_track_artist">కళాకారుడి పేరును చూపు</string>
+    <string name="setting_wear_show_track_artist_description">ప్లేయర్‌పై ప్రస్తుత కళాకారుడిని చూపు</string>
+    <string name="setting_wear_show_source_icon">ప్లే చేస్తున్న యాప్ ఐకాన్‌ను చూపు</string>
+    <string name="setting_wear_show_source_icon_description">ప్రస్తుతం ప్లే చేస్తున్న యాప్ ఐకాన్‌ను కళాకారుడి పక్కన చూపండి. దాని media notification లోని ఐకాన్‌ను ఉపయోగిస్తుంది. ఆఫ్‌లో ఉంటే ఐకాన్ గడియారానికి ఎప్పుడూ పంపబడదు.</string>
+    <string name="setting_wear_player_controls_visible">ప్లేయర్ నియంత్రణలను చూపు</string>
+    <string name="setting_wear_player_controls_visible_description">Classic, Poster, Studio మరియు ఇతర కాన్ఫిగర్ చేయగల layouts లోని built-in బటన్‌లను వాటి touch targets ను నిలిపివేయకుండా చూపు లేదా దాచు</string>
+    <string name="setting_wear_quadrant_tap_flash">ట్యాప్ చేసినప్పుడు ఐకాన్‌ను మెరిపించు</string>
+    <string name="setting_wear_quadrant_tap_flash_description">మూల జోన్ చర్య అమలైనప్పుడు దాని ఐకాన్‌ను క్షణం పాటు పూర్తి ప్రకాశంతో మెరిపించండి - ముఖ్యంగా Hidden స్క్రీన్ థీమ్‌లో ఉపయోగకరం; అక్కడ ఐకాన్ కనిపించదు మరియు ఏ చర్య అమలైందో నిర్ధారణ ఉండదు.</string>
+    <string name="setting_wear_internal_progress_visible">లేఅవుట్ ప్రగతి సూచిక</string>
+    <string name="setting_wear_internal_progress_visible_description">ఈ layout కోసం రూపొందించిన అదనపు ప్రగతి సూచికను చూపండి. Expressive మరియు Material play-button rings వాటి నియంత్రణల్లో భాగం, అందుబాటులోనే ఉంటాయి.</string>
+    <string name="setting_wear_edge_progress_visible">అంచు ప్రగతి ఆర్క్‌ను చూపు</string>
+    <string name="setting_wear_edge_progress_visible_description">స్క్రీన్ చుట్టూ ఉన్న దృశ్య ఆర్క్‌ను మాత్రమే దాచండి. అంచు నుంచి seek చేయడం స్వతంత్ర ఎంపికగా ఉంటుంది.</string>
+    <string name="setting_wear_edge_seek_enabled">స్క్రీన్ అంచు నుంచి seek చేయి</string>
+    <string name="setting_wear_edge_seek_enabled_description">ఆర్క్ దాచినా ఖచ్చితమైన స్థానానికి వెళ్లడానికి స్క్రీన్ అంచుపై ట్యాప్ లేదా డ్రాగ్ చేయండి</string>
+    <string name="setting_wear_screen_theme">నియంత్రణ శైలి</string>
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">సమతుల్యం</string>
+    <string name="wear_screen_theme_default_description">ప్రామాణిక హైరార్కీ మరియు నియంత్రణ పరిమాణాలు.</string>
+    <string name="wear_screen_theme_minimal">మినిమల్</string>
+    <string name="wear_screen_theme_minimal_description">ప్రతి చర్య కనిపించేలా, ఉపయోగించగలిగేలా ఉంచుతూ చిన్న, మృదువైన నియంత్రణలను ఉపయోగిస్తుంది.</string>
+    <string name="wear_screen_theme_compact">కాంపాక్ట్</string>
+    <string name="wear_screen_theme_compact_description">మీ చర్యలను మార్చకుండా మరింత బిగువైన నియంత్రణ రూపాన్ని ఉపయోగిస్తుంది.</string>
+    <string name="wear_screen_theme_cinema">సినిమా</string>
+    <string name="wear_screen_theme_cinema_description">Artwork ను మార్చకుండా నియంత్రణలను మృదువుగా చేస్తుంది.</string>
+    <string name="wear_screen_theme_vivid">వైవిడ్</string>
+    <string name="wear_screen_theme_vivid_description">పెద్ద, మరింత స్పష్టమైన నియంత్రణలను ఉపయోగిస్తుంది.</string>
+    <string name="wear_screen_theme_contrast">అధిక కాంట్రాస్ట్</string>
+    <string name="wear_screen_theme_contrast_description">సులభంగా చదవడానికి పెద్ద నియంత్రణలను ఉపయోగిస్తుంది.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">కాంపాక్ట్, కొద్దిగా మసక నియంత్రణలను ఉపయోగిస్తుంది. నేపథ్యాన్ని స్వయంగా చీకటి చేయదు — దానికి background settings ఉపయోగించండి.</string>
+    <string name="wear_screen_theme_hidden">దాచబడింది</string>
+    <string name="wear_screen_theme_hidden_description">నియంత్రణ ఐకాన్‌లను పూర్తిగా దాచుతుంది. Touch targets సక్రియంగా, పూర్తిగా పనిచేస్తాయి.</string>
+    <string name="setting_wear_font">టైప్‌ఫేస్</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">యాప్ డిఫాల్ట్ టైప్‌ఫేస్.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">సర్దుబాటు చేయగల వెడల్పు, optical size, grade, roundness ఉన్న Google Sans variable వెర్షన్ — క్రింద axis controls ను అందుబాటులోకి తెస్తుంది.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Android యొక్క క్లాసిక్ system typeface.</string>
+    <string name="wear_font_rounded">గుండ్రని</string>
+    <string name="wear_font_rounded_description">మృదువుగా గుండ్రని చివరలతో స్నేహపూర్వక ఆధునిక అక్షరరూపాలు.</string>
+    <string name="wear_font_sans_light">ఆధునిక లైట్</string>
+    <string name="wear_font_sans_light_description">తేలికైన దృశ్య బరువుతో శుభ్రమైన, విస్తారమైన sans-serif.</string>
+    <string name="wear_font_sans_thin">అల్ట్రా థిన్</string>
+    <string name="wear_font_sans_thin_description">మినిమల్ ప్లేయర్ కోసం అదనపు-తేలిక display శైలి.</string>
+    <string name="wear_font_sans_medium">ఆధునిక మీడియం</string>
+    <string name="wear_font_sans_medium_description">బలమైన, కాంపాక్ట్ strokes తో స్పష్టమైన sans-serif.</string>
+    <string name="wear_font_sans_black">హెవీ</string>
+    <string name="wear_font_sans_black_description">గరిష్ఠ దృశ్య ప్రభావం ఉన్న bold display family.</string>
+    <string name="wear_font_small_caps">స్మాల్ క్యాప్స్</string>
+    <string name="wear_font_small_caps_description">ఎడిటోరియల్ ఫీల్ ఉన్న కాంపాక్ట్ capital-ఆకార రూపాలు.</string>
+    <string name="wear_font_casual">క్యాజువల్</string>
+    <string name="wear_font_casual_description">ఆటపాటల చేతిరాత system family.</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">గుండ్రని geometric sans; Circular శైలిలో ఉచిత (OFL) ప్రత్యామ్నాయం.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">శుభ్రమైన geometric sans; Proxima Nova శైలిలో ఉచిత (OFL) ప్రత్యామ్నాయం.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">అందమైన humanist roman; Optima శైలిలో ఉచిత (OFL) ప్రత్యామ్నాయం.</string>
+    <string name="wear_font_love_letter">Special Elite</string>
+    <string name="wear_font_love_letter_description">పాతబడిన analog లుక్‌తో distressed typewriter శైలి.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">క్లాసిక్ serif టైప్‌ఫేస్.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">ప్రత్యేక editorial/terminal లుక్‌తో fixed-width serif అక్షరాలు.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">స్థిర వెడల్పు, సాంకేతిక రూపం.</string>
+    <string name="wear_font_condensed">Condensed</string>
+    <string name="wear_font_condensed_description">ఎక్కువ పాఠ్యం సరిపోవడానికి సన్నని అక్షరరూపాలు.</string>
+    <string name="wear_font_condensed_light">Condensed Light</string>
+    <string name="wear_font_condensed_light_description">పొడవైన శీర్షికల కోసం సన్నని, తేలిక family.</string>
+    <string name="wear_font_condensed_medium">Condensed Medium</string>
+    <string name="wear_font_condensed_medium_description">బలమైన strokes మరియు అద్భుతమైన చదవగలిగే స్పష్టత ఉన్న సన్నని family.</string>
+    <string name="wear_font_cursive">Cursive</string>
+    <string name="wear_font_cursive_description">అలంకార script టైప్‌ఫేస్.</string>
+    <string name="setting_wear_dynamic_accent">గడియారంలో dynamic accent</string>
+    <string name="setting_wear_dynamic_accent_description">Album ఆధారిత గడియారం రంగులను ప్రస్తుత cover art కు సరిపోల్చండి. ఆఫ్‌లో ఉంటే Album color ఎంపికలు static theme accent ను ఉపయోగిస్తాయి.</string>
+    <string name="setting_wear_album_art_fade">ఆల్బమ్ ఆర్ట్ ఫేడ్ ట్రాన్సిషన్</string>
+    <string name="setting_wear_album_art_fade_description">ట్రాక్ మారినప్పుడు album art ను సున్నితంగా fade చేయండి.</string>
+    <string name="setting_wear_title_text_mode">శీర్షిక పాఠ్య ప్రవర్తన</string>
+    <string name="setting_wear_title_text_mode_description">ఇప్పుడు ప్లే అవుతున్న శీర్షిక సరిపోనప్పుడు ఎలా ప్రవర్తించాలి: Automatic shrink, wrap, scroll ను కలుపుతుంది; ఇతర ఎంపికలు ఒక్క ప్రవర్తనను మాత్రమే ఉపయోగిస్తాయి.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>స్వయంచాలక (చిన్నది చేయి, తర్వాత wrap, తర్వాత scroll)</item>
+        <item>స్క్రోల్ (marquee)</item>
+        <item>రెండు పంక్తులకు wrap చేయి</item>
+        <item>మూడు పంక్తులకు wrap చేయి</item>
+        <item>ఐదు పంక్తులకు wrap చేయి</item>
+        <item>స్థిరం (ఒక పంక్తి, scroll లేదా shrink లేదు)</item>
+        <item>సరిపడేలా చిన్నది చేయి</item>
+    </string-array>
+    <string name="setting_wear_artist_color">కళాకారుడి పాఠ్య రంగు</string>
+    <string name="setting_wear_artist_custom_color">కళాకారుడి కస్టమ్ రంగు</string>
+    <string name="setting_wear_artist_custom_color_description">Normal treatment తో ఉపయోగించే కళాకారుడి రంగును ఎంచుకోండి</string>
+    <string name="setting_wear_artist_desaturated">డీసాచ్యురేటెడ్ కళాకారుడి రంగు</string>
+    <string name="setting_wear_artist_desaturated_description">Album ఆధారిత కళాకారుడి పాఠ్య రంగును మృదువుగా చేయండి — \"Artist text color\" Album color గా ఉన్నప్పుడు మాత్రమే వర్తిస్తుంది</string>
+    <string name="setting_wear_progress_color">ప్రగతి బార్ రంగు</string>
+    <string name="setting_wear_progress_custom_color">ప్రగతి బార్ కస్టమ్ రంగు</string>
+    <string name="setting_wear_progress_custom_color_description">Normal treatment తో ఉపయోగించే progress మరియు seek రంగును ఎంచుకోండి</string>
+    <string name="setting_wear_progress_desaturated">డీసాచ్యురేటెడ్ ప్రగతి బార్ రంగు</string>
+    <string name="setting_wear_progress_desaturated_description">Album ఆధారిత progress bar రంగును మృదువుగా చేయండి — \"Progress bar color\" Album color గా ఉన్నప్పుడు మాత్రమే వర్తిస్తుంది</string>
+    <string name="setting_wear_volume_color">వాల్యూమ్ బార్ రంగు</string>
+    <string name="setting_wear_volume_custom_color">వాల్యూమ్ కస్టమ్ రంగు</string>
+    <string name="setting_wear_volume_custom_color_description">Normal treatment తో ఉపయోగించే volume రంగును ఎంచుకోండి</string>
+    <string name="setting_wear_quick_panel_color">Quick Actions రంగు</string>
+    <string name="setting_wear_quick_panel_custom_color">Quick Actions కస్టమ్ రంగు</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Normal treatment తో ఉపయోగించే Quick Actions రంగును ఎంచుకోండి</string>
+    <string name="setting_wear_lyrics_color">లిరిక్స్ రంగు</string>
+    <string name="setting_wear_lyrics_custom_color">లిరిక్స్ కస్టమ్ రంగు</string>
+    <string name="setting_wear_lyrics_custom_color_description">Normal treatment తో ఉపయోగించే లిరిక్స్ రంగును ఎంచుకోండి</string>
+    <string name="setting_wear_queue_color">Queue రంగు</string>
+    <string name="setting_wear_queue_custom_color">Queue కస్టమ్ రంగు</string>
+    <string name="setting_wear_queue_custom_color_description">Normal treatment తో ఉపయోగించే queue రంగును ఎంచుకోండి</string>
+    <string name="setting_wear_shading_custom_color_description">Shading gradient కు tint ఇచ్చే రంగును ఎంచుకోండి</string>
+    <string-array name="wear_accent_color_entries">
+        <item>న్యూట్రల్ (స్థిర థీమ్ రంగు)</item>
+        <item>ఆల్బమ్ రంగు</item>
+        <item>కస్టమ్ రంగు</item>
+    </string-array>
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Immersive</item>
+        <item>Depth</item>
+        <item>Carousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Verse</item>
+        <item>Metadata</item>
+        <item>కళాకారుడు</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
+        <item>MatejDro</item>
+    </string-array>
+    <string name="setting_wear_expressive_seek_mode">Expressive seek</string>
+    <string name="setting_wear_expressive_seek_mode_description">Expressive face పై touch తో track ను ఎలా scrub చేయాలి. Central ring play button చుట్టూ ring ను drag చేయగలిగేలా చేస్తుంది; Edge ring Classic bezel ring ను కూడా చూపుతుంది; None లో seek rotary crown తో మాత్రమే జరుగుతుంది.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>కేంద్ర రింగ్</item>
+        <item>అంచు రింగ్</item>
+        <item>ఏదీ లేదు</item>
+    </string-array>
+    <string name="category_wear_aod">ఎల్లప్పుడూ-ఆన్ డిస్ప్లే</string>
+    <string name="setting_wear_aod_style">ఎల్లప్పుడూ-ఆన్ శైలి</string>
+    <string name="setting_wear_aod_style_description">గడియారం ambient mode లో ఉన్నప్పుడు now-playing స్క్రీన్ ఎలా కనిపిస్తుంది. Follow face ఎంచుకున్న face కు సరిపోతుంది; Minimal ఎక్కువ బ్యాటరీ ఆయుష్షు కోసం స్వచ్ఛ నలుపు నేపథ్యంపై మసక పాఠ్యం మాత్రమే చూపుతుంది.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>ఫేస్‌ను అనుసరించు</item>
+        <item>Classic</item>
+        <item>Expressive (అవుట్‌లైన్)</item>
+        <item>Material (అవుట్‌లైన్)</item>
+        <item>AMOLED నియంత్రణలు</item>
+        <item>Chrono (పెద్ద గడియారం)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Carousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Verse</item>
+        <item>కళాకారుడు</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
+    </string-array>
+    <string name="setting_wear_aod_color">ఎల్లప్పుడూ-ఆన్ రంగు</string>
+    <string-array name="wear_aod_color_entries">
+        <item>తెలుపు</item>
+        <item>ఆల్బమ్ రంగు</item>
+        <item>కస్టమ్ రంగు</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>తెలుపు</item>
+        <item>Dynamic (గడియారం కింద ఉన్న ప్రాంతం ఆధారంగా)</item>
+        <item>ఆల్బమ్ రంగు</item>
+        <item>కస్టమ్ రంగు</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>ప్యానెల్ శైలిని అనుసరించు</item>
+        <item>పారదర్శకం (నేపథ్యం లేదు)</item>
+        <item>ఆల్బమ్ యాక్సెంట్</item>
+        <item>అర్ధపారదర్శకం</item>
+        <item>తెలుపు</item>
+        <item>ఫ్రాస్టెడ్ తెలుపు</item>
+        <item>నలుపు</item>
+        <item>Dynamic (ఆల్బమ్ tone)</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Up Next pill నేపథ్యం</string>
+    <string name="setting_wear_show_up_next_pill">ప్లేయర్‌పై Up Next pill</string>
+    <string name="setting_wear_show_up_next_pill_description">now-playing స్క్రీన్ దిగువన Up Next pill ను చూపండి. అది mini-buttons row తీసుకునే స్థలాన్ని నింపుతుంది, కాబట్టి ఆ row కనిపించనప్పుడు మాత్రమే కనిపిస్తుంది.</string>
+    <string name="category_wf_clock">గడియారం</string>
+    <string name="setting_wear_clock_color">గడియారం రంగు</string>
+    <string name="setting_wear_clock_custom_color">గడియారం కస్టమ్ రంగు</string>
+    <string name="setting_wear_clock_custom_color_description">Clock color Custom color గా ఉన్నప్పుడు ఉపయోగించే గడియారం రంగును ఎంచుకోవడానికి ట్యాప్ చేయండి</string>
+    <string name="setting_wear_clock_opacity">గడియారం అపారదర్శకత</string>
+    <string name="setting_wear_clock_opacity_description">ఎల్లప్పుడూ చూపబడే గడియారం opacity (10–100%%). ప్రస్తుతం &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_wear_aod_custom_color">ఎల్లప్పుడూ-ఆన్ కస్టమ్ రంగు</string>
+    <string name="setting_wear_aod_custom_color_description">\"Always-on color\" Custom color గా ఉన్నప్పుడు ఎల్లప్పుడూ-ఆన్ పాఠ్యం, నియంత్రణలు మరియు గడియారానికి ఉపయోగించే రంగును ఎంచుకోవడానికి ట్యాప్ చేయండి</string>
+    <string name="setting_wear_aod_intensity">ఎల్లప్పుడూ-ఆన్ ప్రకాశం</string>
+    <string name="setting_wear_aod_intensity_description">ఎల్లప్పుడూ-ఆన్ డిస్ప్లే ఎంత ప్రకాశంగా render అవుతుంది (20–100%%). తక్కువ అంటే మరింత మసకగా, తక్కువ బ్యాటరీ వినియోగం. ప్రస్తుతం &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_wear_aod_show_transport">ఎల్లప్పుడూ-ఆన్ డిస్ప్లేపై transport బటన్‌లు</string>
+    <string name="setting_wear_aod_show_transport_description">మద్దతు ఉన్న visual always-on శైలుల్లో outline చేసిన previous/play/next బటన్‌లను చూపండి. స్క్రీన్ మసకగా ఉన్నప్పుడు వాటిని ట్యాప్ చేయలేరు, కానీ ట్యాప్ గడియారాన్ని మేల్కొలిపి బటన్‌ను ఇప్పటికే మీ వేలి కింద ఉంచుతుంది.</string>
+    <string name="setting_wear_aod_show_progress">ఎల్లప్పుడూ-ఆన్ డిస్ప్లేపై ప్రగతి రింగ్</string>
+    <string name="setting_wear_aod_show_progress_description">ambient mode లో play button చుట్టూ ప్రగతి రింగ్‌ను చూపండి — అక్కడ స్థానం సుమారు నిమిషానికి ఒకసారి మాత్రమే నవీకరించబడుతుంది</string>
+    <string name="setting_wear_aod_show_pills">ఎల్లప్పుడూ-ఆన్ డిస్ప్లేపై Up Next</string>
+    <string name="setting_wear_aod_show_pills_description">visual always-on శైలుల దిగువన స్థిర outline చేసిన Up Next pill ను చూపండి</string>
+    <string name="category_wf_gestures">స్క్రీన్ జెస్చర్‌లు</string>
+    <string name="setting_wear_mini_buttons_mode">మినీ బటన్‌లను చూపు</string>
+    <string name="setting_wear_gestures_mode">స్క్రీన్ జెస్చర్‌లు</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>ఎల్లప్పుడూ</item>
+        <item>ప్లే అవుతున్నప్పుడు మాత్రమే</item>
+        <item>పాజ్‌లో ఉన్నప్పుడు మాత్రమే</item>
+        <item>ఎప్పుడూ కాదు</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">ఎల్లప్పుడూ-ఆన్ డిస్ప్లేపై ఆల్బమ్ ఆర్ట్</string>
+    <string name="setting_wear_aod_show_art_description">ambient mode లో మసకబారిన album art ను కనిపించేలా ఉంచుతుంది. ఆఫ్ చేస్తే స్వచ్ఛ నలుపు నేపథ్యం చూపిస్తుంది; AMOLED స్క్రీన్‌లలో ఇది గణనీయంగా బ్యాటరీని ఆదా చేస్తుంది.</string>
+    <string name="setting_wear_aod_art_treatment">ఎల్లప్పుడూ-ఆన్ ఆల్బమ్ ఆర్ట్ శైలి</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>మృదువైన బ్లర్</item>
+        <item>స్పష్టమైన కవర్</item>
+        <item>మోనోక్రోమ్ బ్లర్</item>
+        <item>ప్లేయర్ artwork treatment ను అనుసరించు</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">ఎల్లప్పుడూ-ఆన్ డిస్ప్లేపై గడియారం</string>
+    <string name="setting_wear_aod_show_clock_description">గడియారం ambient mode లో ఉన్నప్పుడు గడియారాన్ని చూపు</string>
+    <string name="setting_wear_aod_show_track_info">ఎల్లప్పుడూ-ఆన్ డిస్ప్లేపై ట్రాక్ సమాచారం</string>
+    <string name="setting_wear_aod_show_track_info_description">ambient mode లో ట్రాక్ శీర్షిక మరియు కళాకారుడిని చూపు</string>
+    <string name="category_overlays_queue">ఓవర్లేలు &amp; queue</string>
+    <string name="category_wf_panel_shared">పంచుకున్న ప్యానెల్ రూపం</string>
+    <string name="category_wf_panel_volume">వాల్యూమ్ ప్యానెల్</string>
+    <string name="category_wf_panel_seek">ప్రగతి &amp; seek ప్యానెల్</string>
+    <string name="category_wf_panel_quick">త్వరిత చర్యల ప్యానెల్</string>
+    <string name="category_wf_panel_queue">Queue &amp; జాబితాలు</string>
+    <string name="category_wf_panel_lyrics">సాహిత్యం</string>
+    <string name="category_wf_panel_effects">ప్యానెల్ ప్రభావాలు</string>
+    <string name="setting_wear_overlay_backdrop_style">ప్యానెల్ నేపథ్యం</string>
+    <string name="wear_backdrop_shared">పంచుకున్న ప్యానెల్ రూపాన్ని అనుసరించు</string>
+    <string name="setting_wear_volume_backdrop_style">వాల్యూమ్ నేపథ్యం</string>
+    <string name="setting_wear_progress_backdrop_style">ప్రగతి నేపథ్యం</string>
+    <string name="setting_wear_quick_panel_backdrop_style">త్వరిత చర్యల నేపథ్యం</string>
+    <string name="setting_wear_queue_backdrop_style">Queue నేపథ్యం</string>
+    <string name="setting_wear_lyrics_backdrop_style">లిరిక్స్ నేపథ్యం</string>
+    <string name="setting_wear_volume_style">వాల్యూమ్ శైలి</string>
+    <string name="setting_wear_volume_layout">వాల్యూమ్ లేఅవుట్</string>
+    <string name="setting_wear_quick_panel_style">క్విక్ ప్యానెల్ శైలి</string>
+    <string name="setting_wear_quick_panel_layout">క్విక్ ప్యానెల్ లేఅవుట్</string>
+    <string name="setting_wear_quick_panel_source">త్వరిత చర్యలు</string>
+    <string name="setting_wear_quick_panel_source_description">మీరు కాన్ఫిగర్ చేసిన బటన్‌లు లేదా ప్రస్తుతం ప్లే చేస్తున్న యాప్ ఇచ్చే చర్యలను ఎంచుకోండి.</string>
+    <string name="quick_panel_open_note_title">ప్యానెల్‌ను తెరవడం</string>
+    <string name="quick_panel_open_note_description">గడియారంలో క్విక్ actions ప్యానెల్‌ను తెరవడానికి now-playing స్క్రీన్ మధ్యలో double-tap చేయండి.</string>
+    <string name="preview_current_app_action">ప్రస్తుత యాప్ చర్య</string>
+    <string name="preview_notification_controls">media notification నుంచి ఐకాన్</string>
+    <string name="setting_wear_queue_style">Queue శైలి</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">షార్ట్‌కట్ కవర్‌లను నేపథ్యంగా ఉపయోగించు</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Queue style Cover వేరియంట్‌గా ఉన్నప్పుడు, తెచ్చుకున్న shortcut cover (track, playlist, artist…) ఉన్న quick-panel action row తన pill ను కూడా ఆ art తో నింపుతుంది, Up Next లాగా. తెచ్చుకున్న cover లేని shortcuts (సాధారణ app icon మాత్రమే) మారవు.</string>
+    <string name="setting_wear_list_row_size">జాబితా pill పరిమాణం</string>
+    <string name="setting_wear_list_row_size_description">Queue లో పూర్తి వెడల్పు rows ఎత్తు.</string>
+    <string name="setting_wear_progress_gradient">palette ను రింగ్‌లో కలపు</string>
+    <string name="setting_wear_progress_gradient_description">బహుళ-రంగు color treatment (Complementary, Triadic, Analogous, Duotone) ఉన్నప్పుడు solid ring మూడు రంగుల గుండా fade అవుతుంది. మిగతా చోట్ల album palette ఉంచుతూ single-color ring కోసం దీన్ని ఆఫ్ చేయండి.</string>
+    <string name="setting_wear_progress_style">ప్రగతి రింగ్ శైలి</string>
+    <string name="setting_wear_seek_style">Seek &amp; వాల్యూమ్ readout శైలి</string>
+    <string name="setting_wear_seek_layout">Seek ప్యానెల్ లేఅవుట్</string>
+    <string name="setting_wear_color_treatment">గడియారం రంగు ట్రీట్‌మెంట్</string>
+    <string name="setting_wear_normal_color">సాధారణ రంగు</string>
+    <string name="setting_wear_normal_color_description">Normal mode లో title accents, progress, volume, panels మరియు mini-button chrome కోసం ఉపయోగించే ఒక్క రంగును ఎంచుకోండి</string>
+    <string name="setting_wear_normal_color_multi">రంగు palette ను ఉపయోగించు</string>
+    <string name="setting_wear_normal_color_multi_description">ఆన్‌లో ఉంటే స్క్రీన్ ఒక ప్రధాన రంగు మరియు రెండు సహాయక tones ను ఉపయోగిస్తుంది. ఆఫ్‌లో ఉంటే అన్నిచోట్ల ఒక్క రంగే ఉపయోగిస్తుంది — album యొక్క రంగు లేదా మీరు ఎంచుకున్నది.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>సాధారణ (ఎంచుకున్న రంగు)</item>
+        <item>డీసాచ్యురేటెడ్ (మృదువైన album రంగు)</item>
+        <item>Expressive (పూర్తి album palette)</item>
+        <item>Complementary (album + వ్యతిరేకం)</item>
+        <item>Triadic (మూడు album hues)</item>
+        <item>Analogous (పక్కపక్కన ఉన్న hues)</item>
+        <item>Monochrome (ఒక hue, మూడు tones)</item>
+        <item>Duotone (రెండు album రంగులు)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>గడియారం treatment ను అనుసరించు</item>
+        <item>సాధారణ (ఎంచుకున్న రంగు)</item>
+        <item>డీసాచ్యురేటెడ్ (మృదువైన album రంగు)</item>
+        <item>Expressive (పూర్తి album palette)</item>
+        <item>Complementary (album + వ్యతిరేకం)</item>
+        <item>Triadic (మూడు album hues)</item>
+        <item>Analogous (పక్కపక్కన ఉన్న hues)</item>
+        <item>Monochrome (ఒక hue, మూడు tones)</item>
+        <item>Duotone (రెండు album రంగులు)</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">శీర్షిక బరువు</string>
+    <string name="setting_wear_title_font_italic">ఇటాలిక్ శీర్షిక</string>
+    <string name="setting_wear_title_font_scale">శీర్షిక పరిమాణం</string>
+    <string name="setting_wear_title_font_opacity">శీర్షిక opacity</string>
+    <string name="setting_wear_title_font_tracking">శీర్షిక అక్షర అంతరం</string>
+    <string name="setting_wear_title_color">శీర్షిక పాఠ్య రంగు</string>
+    <string name="setting_wear_title_custom_color">శీర్షిక కస్టమ్ రంగు</string>
+    <string name="wear_title_color_face_default">Face డిఫాల్ట్ (రూపొందించినట్లే)</string>
+    <string name="setting_wear_title_adaptive_contrast">కాంట్రాస్ట్ కోసం శీర్షిక రంగును సర్దు</string>
+    <string name="setting_wear_title_adaptive_contrast_description">శీర్షిక రంగు వెనుక artwork కు చాలా దగ్గరగా ఉంటే hue ను ఉంచి దాన్ని ప్రకాశంగా లేదా చీకటిగా చేస్తుంది. శీర్షిక face default లో ఉంటే ప్రభావం ఉండదు.</string>
+    <string name="setting_wear_artist_adaptive_contrast">కాంట్రాస్ట్ కోసం కళాకారుడి రంగును సర్దు</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Album రంగు వెనుక artwork కు చాలా దగ్గరగా ఉంటే hue ను ఉంచి కళాకారుడి పంక్తిని ప్రకాశంగా లేదా చీకటిగా చేస్తుంది. మొత్తం cover కాకుండా ఆ పంక్తి ఉన్న strip ను మాత్రమే కొలుస్తుంది.</string>
+    <string name="setting_wear_artist_font_weight">కళాకారుడి బరువు</string>
+    <string name="setting_wear_artist_font_italic">ఇటాలిక్ కళాకారుడు</string>
+    <string name="setting_wear_artist_font_scale">కళాకారుడి పరిమాణం</string>
+    <string name="setting_wear_artist_font_opacity">కళాకారుడి opacity</string>
+    <string name="setting_wear_artist_font_tracking">కళాకారుడి అక్షర అంతరం</string>
+    <string name="setting_wear_source_icon_scale">యాప్ ఐకాన్ పరిమాణం</string>
+    <string name="setting_wear_source_icon_opacity">యాప్ ఐకాన్ opacity</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 face యొక్క సాధారణ బరువు; ఎక్కువ అంటే మరింత bold. Google Sans Flex కోసం ఇది ఆ font యొక్క weight axis</string>
+    <string name="setting_wear_typography_scale_description">Face యొక్క స్వంత పరిమాణ శాతం (1–300). 100 ప్రతి layout రూపొందించిన పరిమాణాన్ని ఉంచుతుంది</string>
+    <string name="setting_wear_typography_opacity_description">శాతం (20–100). 100 face యొక్క స్వంత opacity ను ఉంచుతుంది</string>
+    <string name="setting_wear_typography_tracking_description">అక్షరాల మధ్య అదనపు స్థలం, em లో వందవ వంతులు (−5 నుంచి 20). 0 font యొక్క స్వంత spacing ను ఉంచుతుంది</string>
+    <string name="setting_wear_color_modifier">టోన్</string>
+    <string name="setting_wear_title_color_modifier">శీర్షిక టోన్</string>
+    <string name="setting_wear_artist_color_modifier">కళాకారుడి టోన్</string>
+    <string name="setting_wear_clock_color_modifier">గడియారం టోన్</string>
+    <string name="wear_color_modifier_follow">గడియారం టోన్‌ను అనుసరించు</string>
+    <string name="setting_wear_color_modifier_description">Palette ఎలా ఉత్పన్నమవుతుందో మార్చకుండా మొత్తం palette ను సర్దుతుంది — ప్రతి color treatment తో పని చేస్తుంది</string>
+    <string name="setting_wear_color_hue_shift">రంగు షిఫ్ట్</string>
+    <string name="setting_wear_color_hue_shift_description">Album palette ను color wheel చుట్టూ డిగ్రీల్లో (0–359) తిప్పుతుంది. ప్రతి treatment తన ప్రధాన రంగును album యొక్క hue పై ఉంచుతుంది, కాబట్టి దీనివల్లే అది మారుతుంది. 0 album రంగును అలాగే ఉపయోగిస్తుంది; fixed Normal color ఎప్పుడూ shift కాదు.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>ఏదీ లేదు</item>
+        <item>వైబ్రంట్</item>
+        <item>పాస్టెల్</item>
+        <item>వెచ్చని</item>
+        <item>చల్లని</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>అంచు ఆర్క్ (ఎడమ)</item>
+        <item>అంచు ఆర్క్ (ఎత్తైన)</item>
+        <item>అంచు ఆర్క్ (కుడి)</item>
+        <item>అంచు ఆర్క్ (పై)</item>
+        <item>అంచు ఆర్క్ (కింది)</item>
+        <item>పూర్తి రింగ్</item>
+        <item>కేంద్ర halo</item>
+        <item>అడ్డ meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>అంచు రింగ్</item>
+        <item>అంచు రింగ్ (సన్నని)</item>
+        <item>అంచు రింగ్ (మందమైన)</item>
+        <item>టైమ్‌లైన్</item>
+        <item>విభజిత టైమ్‌లైన్</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>ముందుగా metadata</item>
+        <item>ఆర్క్</item>
+        <item>Hero</item>
+        <item>గ్రిడ్</item>
+        <item>లేబుల్ ఉన్న వరుసలు</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>సాలిడ్</item>
+        <item>డాష్డ్</item>
+        <item>చుక్కలు</item>
+        <item>హెయిర్‌లైన్</item>
+        <item>కామెట్</item>
+        <item>60 గడియారం చుక్కలు</item>
+        <item>60 గడియారం ticks</item>
+        <item>12-గంట విభాగాలు</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>సాధారణ</item>
+        <item>గ్లాస్ pill</item>
+        <item>Expressive pill</item>
+        <item>Material pill</item>
+        <item>తెలుపు pill</item>
+        <item>జెయింట్</item>
+        <item>స్థానం / మొత్తం</item>
+        <item>తెలుపు గ్లాస్</item>
+        <item>అర్ధపారదర్శక album</item>
+        <item>గ్లో album</item>
+        <item>అవుట్‌లైన్</item>
+        <item>సాలిడ్ theme</item>
+        <item>సాలిడ్ album</item>
+        <item>మైక్రో</item>
+        <item>షాడో (chrome లేదు)</item>
+        <item>అండర్‌లైన్</item>
+        <item>హెయిర్‌లైన్ అవుట్‌లైన్</item>
+        <item>జెయింట్ album రంగు</item>
+        <item>Mono</item>
+        <item>టోనల్ డార్క్</item>
+        <item>Terminal</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>కాన్ఫిగర్ చేసిన బటన్‌లు</item>
+        <item>ప్రస్తుత media app నుంచి</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>ప్యానెల్ శైలిని అనుసరించు</item>
+        <item>Album blur (acrylic)</item>
+        <item>సాలిడ్ నలుపు</item>
+        <item>సాలిడ్ album రంగు</item>
+        <item>గ్లాస్</item>
+        <item>Album gradient</item>
+        <item>Album duotone</item>
+        <item>Prism</item>
+        <item>Liquid glass</item>
+        <item>Expressive blur</item>
+        <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>గ్లాస్</item>
+        <item>మినిమల్ (AMOLED)</item>
+        <item>Material</item>
+        <item>టోనల్</item>
+        <item>Neon</item>
+        <item>లైట్</item>
+        <item>గ్రేడియంట్</item>
+        <item>Mono</item>
+        <item>అవుట్‌లైన్</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>అధిక కాంట్రాస్ట్</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>సెగ్మెంట్‌లు</item>
+        <item>Aurora</item>
+        <item>Ink</item>
+        <item>Groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>కాంపాక్ట్</item>
+        <item>సాధారణ</item>
+        <item>ఎత్తైన</item>
+        <item>అదనపు ఎత్తు</item>
+    </string-array>
+    <string-array name="wear_overlay_style_entries">
+        <item>గ్లాస్</item>
+        <item>మినిమల్ (AMOLED)</item>
+        <item>Material</item>
+        <item>టోనల్</item>
+        <item>Neon</item>
+        <item>లైట్</item>
+        <item>గ్రేడియంట్</item>
+        <item>Mono</item>
+        <item>అవుట్‌లైన్</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>అధిక కాంట్రాస్ట్</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Cover</item>
+        <item>Cover Blur</item>
+        <item>Cover Tonal</item>
+        <item>Cover Square</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_entries">
+        <item>గ్లాస్</item>
+        <item>Glass White</item>
+        <item>Glass Tonal</item>
+        <item>మినిమల్ (AMOLED)</item>
+        <item>Material</item>
+        <item>టోనల్</item>
+        <item>Neon</item>
+        <item>లైట్</item>
+        <item>గ్రేడియంట్</item>
+        <item>Mono</item>
+        <item>అవుట్‌లైన్</item>
+        <item>Outline Glass White</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>అధిక కాంట్రాస్ట్</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Ghost (chrome లేదు)</item>
+        <item>Mist</item>
+        <item>Ink</item>
+        <item>Dot</item>
+        <item>Slab</item>
+    </string-array>
+    <string name="setting_wear_paused_hold">పాజ్ చేసిన తర్వాత యాప్‌ను సక్రియంగా ఉంచు</string>
+    <string name="setting_wear_paused_hold_description">పాజ్ చేసిన తర్వాత watch face నుంచి యాప్ ఎంతసేపు అందుబాటులో ఉండాలో, మళ్లీ తెరవకుండా మణికట్టు ఎత్తి resume చేయడానికి. ఎక్కువ సమయం సెట్టింగ్‌లు background service ను నడుపుతాయి.</string>
+    <string name="wear_paused_hold_off">ఉంచవద్దు</string>
+    <string name="wear_paused_hold_5">5 నిమిషాలు</string>
+    <string name="wear_paused_hold_15">15 నిమిషాలు</string>
+    <string name="wear_paused_hold_30">30 నిమిషాలు</string>
+    <string name="wear_paused_hold_60">1 గంట</string>
+    <string name="wear_paused_hold_always">Playback ముగిసే వరకు</string>
+    <string name="setting_wear_idle_button_action">ఏదీ ప్లే కానప్పుడు బటన్</string>
+    <string name="setting_wear_idle_auto_open">ఏదీ ప్లే కానప్పుడు తెరువు</string>
+    <string name="setting_wear_idle_auto_open_description">సంగీతం ప్లే కానప్పుడు watch app తెరిస్తే నేరుగా ఈ స్క్రీన్‌కు వెళ్తుంది.</string>
+    <string name="wear_idle_action_resume">చివరి యాప్‌ను resume చేయి</string>
+    <string name="wear_idle_action_shortcuts">Playlist షార్ట్‌కట్‌లు</string>
+    <string name="wear_idle_action_menu">చర్యల మెనూ</string>
+    <string name="wear_idle_action_search">శోధన</string>
+    <string name="wear_idle_action_queue">ఇటీవల ప్లే చేసినవి</string>
+    <string name="wear_idle_action_none">బటన్ లేదు</string>
+    <string name="wear_idle_auto_open_none">ప్లేయర్‌పైనే ఉండు</string>
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+        <item>@string/wear_font_inter</item>
+        <item>@string/wear_font_atkinson_hyperlegible</item>
+        <item>@string/wear_font_rubik</item>
+        <item>@string/wear_font_barlow_condensed</item>
+        <item>@string/wear_font_oswald</item>
+        <item>@string/wear_font_lora</item>
+        <item>@string/wear_font_fraunces</item>
+        <item>@string/wear_font_space_mono</item>
+        <item>@string/wear_font_archivo_black</item>
+        <item>@string/wear_font_dancing_script</item>
+        <item>@string/wear_font_abeezee</item>
+        <item>@string/wear_font_abril_fatface</item>
+        <item>@string/wear_font_acme</item>
+        <item>@string/wear_font_alata</item>
+        <item>@string/wear_font_aleo</item>
+        <item>@string/wear_font_alfa_slab_one</item>
+        <item>@string/wear_font_amatic_sc</item>
+        <item>@string/wear_font_anton</item>
+        <item>@string/wear_font_arvo</item>
+        <item>@string/wear_font_bangers</item>
+        <item>@string/wear_font_black_ops_one</item>
+        <item>@string/wear_font_bree_serif</item>
+        <item>@string/wear_font_cabin</item>
+        <item>@string/wear_font_chivo</item>
+        <item>@string/wear_font_courier_prime</item>
+        <item>@string/wear_font_crete_round</item>
+        <item>@string/wear_font_crimson_pro</item>
+        <item>@string/wear_font_dm_sans</item>
+        <item>@string/wear_font_domine</item>
+        <item>@string/wear_font_exo_2</item>
+        <item>@string/wear_font_fira_code</item>
+        <item>@string/wear_font_inconsolata</item>
+        <item>@string/wear_font_indie_flower</item>
+        <item>@string/wear_font_josefin_sans</item>
+        <item>@string/wear_font_jost</item>
+        <item>@string/wear_font_kanit</item>
+        <item>@string/wear_font_lexend</item>
+        <item>@string/wear_font_lobster</item>
+        <item>@string/wear_font_manrope</item>
+        <item>@string/wear_font_mulish</item>
+        <item>@string/wear_font_nunito</item>
+        <item>@string/wear_font_outfit</item>
+        <item>@string/wear_font_oxanium</item>
+        <item>@string/wear_font_play</item>
+        <item>@string/wear_font_plus_jakarta_sans</item>
+        <item>@string/wear_font_press_start_2p</item>
+        <item>@string/wear_font_quicksand</item>
+        <item>@string/wear_font_rajdhani</item>
+        <item>@string/wear_font_righteous</item>
+        <item>@string/wear_font_roboto_mono</item>
+        <item>@string/wear_font_rowdies</item>
+        <item>@string/wear_font_russo_one</item>
+        <item>@string/wear_font_shrikhand</item>
+        <item>@string/wear_font_silkscreen</item>
+        <item>@string/wear_font_source_code_pro</item>
+        <item>@string/wear_font_staatliches</item>
+        <item>@string/wear_font_teko</item>
+        <item>@string/wear_font_titillium_web</item>
+        <item>@string/wear_font_varela_round</item>
+        <item>@string/wear_font_yanone_kaffeesatz</item>
+        <item>@string/wear_font_zilla_slab</item>
+        <item>@string/wear_font_lato</item>
+        <item>@string/wear_font_merriweather_sans</item>
+        <item>@string/wear_font_source_sans_3</item>
+        <item>@string/wear_font_source_serif_4</item>
+        <item>@string/wear_font_libre_baskerville</item>
+        <item>@string/wear_font_libre_franklin</item>
+        <item>@string/wear_font_ibm_plex_sans</item>
+        <item>@string/wear_font_ibm_plex_mono</item>
+        <item>@string/wear_font_ibm_plex_serif</item>
+        <item>@string/wear_font_work_sans</item>
+        <item>@string/wear_font_karla</item>
+        <item>@string/wear_font_sora</item>
+        <item>@string/wear_font_urbanist</item>
+        <item>@string/wear_font_be_vietnam_pro</item>
+        <item>@string/wear_font_red_hat_display</item>
+        <item>@string/wear_font_red_hat_text</item>
+        <item>@string/wear_font_red_hat_mono</item>
+        <item>@string/wear_font_syne</item>
+        <item>@string/wear_font_instrument_sans</item>
+        <item>@string/wear_font_figtree</item>
+        <item>@string/wear_font_gabarito</item>
+        <item>@string/wear_font_bricolage_grotesque</item>
+        <item>@string/wear_font_dm_serif_display</item>
+        <item>@string/wear_font_cormorant_garamond</item>
+        <item>@string/wear_font_cormorant</item>
+        <item>@string/wear_font_bitter</item>
+        <item>@string/wear_font_spectral</item>
+        <item>@string/wear_font_vollkorn</item>
+        <item>@string/wear_font_raleway</item>
+        <item>@string/wear_font_league_spartan</item>
+        <item>@string/wear_font_saira</item>
+        <item>@string/wear_font_signika</item>
+        <item>@string/wear_font_sofia_sans</item>
+        <item>@string/wear_font_overpass</item>
+        <item>@string/wear_font_public_sans</item>
+        <item>@string/wear_font_questrial</item>
+        <item>@string/wear_font_dosis</item>
+        <item>@string/wear_font_prompt</item>
+        <item>@string/wear_font_unbounded</item>
+        <item>@string/wear_font_recursive</item>
+        <item>@string/wear_font_trispace</item>
+        <item>@string/wear_font_noto_sans</item>
+        <item>@string/wear_font_noto_serif</item>
+        <item>@string/wear_font_noto_sans_mono</item>
+        <item>@string/wear_font_heebo</item>
+        <item>@string/wear_font_hind</item>
+        <item>@string/wear_font_hind_madurai</item>
+        <item>@string/wear_font_kumbh_sans</item>
+        <item>@string/wear_font_alegreya</item>
+        <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+        <item>@string/wear_font_inter_description</item>
+        <item>@string/wear_font_atkinson_hyperlegible_description</item>
+        <item>@string/wear_font_rubik_description</item>
+        <item>@string/wear_font_barlow_condensed_description</item>
+        <item>@string/wear_font_oswald_description</item>
+        <item>@string/wear_font_lora_description</item>
+        <item>@string/wear_font_fraunces_description</item>
+        <item>@string/wear_font_space_mono_description</item>
+        <item>@string/wear_font_archivo_black_description</item>
+        <item>@string/wear_font_dancing_script_description</item>
+        <item>@string/wear_font_abeezee_description</item>
+        <item>@string/wear_font_abril_fatface_description</item>
+        <item>@string/wear_font_acme_description</item>
+        <item>@string/wear_font_alata_description</item>
+        <item>@string/wear_font_aleo_description</item>
+        <item>@string/wear_font_alfa_slab_one_description</item>
+        <item>@string/wear_font_amatic_sc_description</item>
+        <item>@string/wear_font_anton_description</item>
+        <item>@string/wear_font_arvo_description</item>
+        <item>@string/wear_font_bangers_description</item>
+        <item>@string/wear_font_black_ops_one_description</item>
+        <item>@string/wear_font_bree_serif_description</item>
+        <item>@string/wear_font_cabin_description</item>
+        <item>@string/wear_font_chivo_description</item>
+        <item>@string/wear_font_courier_prime_description</item>
+        <item>@string/wear_font_crete_round_description</item>
+        <item>@string/wear_font_crimson_pro_description</item>
+        <item>@string/wear_font_dm_sans_description</item>
+        <item>@string/wear_font_domine_description</item>
+        <item>@string/wear_font_exo_2_description</item>
+        <item>@string/wear_font_fira_code_description</item>
+        <item>@string/wear_font_inconsolata_description</item>
+        <item>@string/wear_font_indie_flower_description</item>
+        <item>@string/wear_font_josefin_sans_description</item>
+        <item>@string/wear_font_jost_description</item>
+        <item>@string/wear_font_kanit_description</item>
+        <item>@string/wear_font_lexend_description</item>
+        <item>@string/wear_font_lobster_description</item>
+        <item>@string/wear_font_manrope_description</item>
+        <item>@string/wear_font_mulish_description</item>
+        <item>@string/wear_font_nunito_description</item>
+        <item>@string/wear_font_outfit_description</item>
+        <item>@string/wear_font_oxanium_description</item>
+        <item>@string/wear_font_play_description</item>
+        <item>@string/wear_font_plus_jakarta_sans_description</item>
+        <item>@string/wear_font_press_start_2p_description</item>
+        <item>@string/wear_font_quicksand_description</item>
+        <item>@string/wear_font_rajdhani_description</item>
+        <item>@string/wear_font_righteous_description</item>
+        <item>@string/wear_font_roboto_mono_description</item>
+        <item>@string/wear_font_rowdies_description</item>
+        <item>@string/wear_font_russo_one_description</item>
+        <item>@string/wear_font_shrikhand_description</item>
+        <item>@string/wear_font_silkscreen_description</item>
+        <item>@string/wear_font_source_code_pro_description</item>
+        <item>@string/wear_font_staatliches_description</item>
+        <item>@string/wear_font_teko_description</item>
+        <item>@string/wear_font_titillium_web_description</item>
+        <item>@string/wear_font_varela_round_description</item>
+        <item>@string/wear_font_yanone_kaffeesatz_description</item>
+        <item>@string/wear_font_zilla_slab_description</item>
+        <item>@string/wear_font_lato_description</item>
+        <item>@string/wear_font_merriweather_sans_description</item>
+        <item>@string/wear_font_source_sans_3_description</item>
+        <item>@string/wear_font_source_serif_4_description</item>
+        <item>@string/wear_font_libre_baskerville_description</item>
+        <item>@string/wear_font_libre_franklin_description</item>
+        <item>@string/wear_font_ibm_plex_sans_description</item>
+        <item>@string/wear_font_ibm_plex_mono_description</item>
+        <item>@string/wear_font_ibm_plex_serif_description</item>
+        <item>@string/wear_font_work_sans_description</item>
+        <item>@string/wear_font_karla_description</item>
+        <item>@string/wear_font_sora_description</item>
+        <item>@string/wear_font_urbanist_description</item>
+        <item>@string/wear_font_be_vietnam_pro_description</item>
+        <item>@string/wear_font_red_hat_display_description</item>
+        <item>@string/wear_font_red_hat_text_description</item>
+        <item>@string/wear_font_red_hat_mono_description</item>
+        <item>@string/wear_font_syne_description</item>
+        <item>@string/wear_font_instrument_sans_description</item>
+        <item>@string/wear_font_figtree_description</item>
+        <item>@string/wear_font_gabarito_description</item>
+        <item>@string/wear_font_bricolage_grotesque_description</item>
+        <item>@string/wear_font_dm_serif_display_description</item>
+        <item>@string/wear_font_cormorant_garamond_description</item>
+        <item>@string/wear_font_cormorant_description</item>
+        <item>@string/wear_font_bitter_description</item>
+        <item>@string/wear_font_spectral_description</item>
+        <item>@string/wear_font_vollkorn_description</item>
+        <item>@string/wear_font_raleway_description</item>
+        <item>@string/wear_font_league_spartan_description</item>
+        <item>@string/wear_font_saira_description</item>
+        <item>@string/wear_font_signika_description</item>
+        <item>@string/wear_font_sofia_sans_description</item>
+        <item>@string/wear_font_overpass_description</item>
+        <item>@string/wear_font_public_sans_description</item>
+        <item>@string/wear_font_questrial_description</item>
+        <item>@string/wear_font_dosis_description</item>
+        <item>@string/wear_font_prompt_description</item>
+        <item>@string/wear_font_unbounded_description</item>
+        <item>@string/wear_font_recursive_description</item>
+        <item>@string/wear_font_trispace_description</item>
+        <item>@string/wear_font_noto_sans_description</item>
+        <item>@string/wear_font_noto_serif_description</item>
+        <item>@string/wear_font_noto_sans_mono_description</item>
+        <item>@string/wear_font_heebo_description</item>
+        <item>@string/wear_font_hind_description</item>
+        <item>@string/wear_font_hind_madurai_description</item>
+        <item>@string/wear_font_kumbh_sans_description</item>
+        <item>@string/wear_font_alegreya_description</item>
+        <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
+    </string-array>
+    <string name="action_open_library">లైబ్రరీని బ్రౌజ్ చేయండి</string>
+    <string name="library_up">వెనుకకు</string>
+    <string name="error_library_unavailable">ఈ యాప్‌లో బ్రౌజ్ చేయగల లైబ్రరీ లేదు</string>
+    <string name="error_library_empty">ఇక్కడ ఏమీ లేదు</string>
+    <string name="error_library_no_player">ముందుగా ఏదైనా ప్లే చేయండి</string>
+    <string name="setting_wear_carousel_card_shape">క్యారసెల్ కార్డ్ ఆకారం</string>
+    <string name="setting_wear_note_cover_shape">నోట్ కవర్ ఆకారం</string>
+    <string name="setting_wear_title_centered">శీర్షికను మధ్యలో ఉంచండి</string>
+    <string name="setting_wear_title_centered_description">మొత్తం టెక్స్ట్ బ్లాక్‌కు బదులుగా శీర్షికను స్క్రీన్ మధ్యలో స్థిరపరచండి</string>
+    <string name="player_element_title_centered">మధ్యలో శీర్షిక</string>
+    <string-array name="wear_cover_shape_entries">
+        <item>గుండ్రని</item>
+        <item>చతురస్రం</item>
+        <item>Squircle</item>
+        <item>వృత్తం</item>
+        <item>Samsung శైలి</item>
+    </string-array>
+    <string name="setting_wear_font_all_screens">ఫాంట్‌ను ఎక్కడైనా ఉపయోగించండి</string>
+    <string name="setting_wear_font_all_screens_description">ఎంచుకున్న ఫాంట్ ప్లేయర్‌కే కాకుండా మెనూలు, క్యూ మరియు Quick actions‌కు కూడా వర్తిస్తుంది. Display మరియు చేతిరాత ఫాంట్లు జాబితాల్లో చదవడానికి కష్టంగా ఉండవచ్చు.</string>
+    <string name="setting_wear_clock_font">గడియారం టైప్‌ఫేస్</string>
+    <string name="wear_clock_font_follow">ట్రాక్ ఫాంట్‌ను అనుసరించండి</string>
+    <string name="setting_wear_lyrics_font">లిరిక్స్ టైప్‌ఫేస్</string>
+    <string name="setting_wear_lyrics_font_description">పాట పదాలకు, Lyrics స్క్రీన్ మరియు Verse face‌లో ఉపయోగించే టైప్‌ఫేస్. ఇక్కడ వేరేదాన్ని ఎంచుకోకపోతే ట్రాక్ టైప్‌ఫేస్‌ను అనుసరిస్తుంది.</string>
+    <string name="wear_lyrics_font_follow">ట్రాక్ టైప్‌ఫేస్‌ను అనుసరించండి</string>
+    <string name="setting_wear_clock_font_weight">గడియారం ఫాంట్ బరువు</string>
+    <string name="setting_wear_clock_font_italic">ఇటాలిక్ గడియారం</string>
+    <string name="setting_wear_clock_font_scale">గడియారం పరిమాణం</string>
+    <string name="setting_wear_clock_font_tracking">గడియారం అక్షర అంతరం</string>
+    <string name="setting_wear_clock_adaptive_contrast">కాంట్రాస్ట్ కోసం గడియారం రంగును సర్దుబాటు చేయండి</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">ఆల్బమ్ రంగు వెనుక artwork‌కు చాలా దగ్గరగా ఉంటే, దాని hue‌ను ఉంచుతూ గడియారాన్ని ప్రకాశవంతం లేదా ముదురు చేస్తుంది. గడియారం రంగు Album color‌గా ఉన్నప్పుడే ఇది వర్తిస్తుంది.</string>
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">కండెన్స్‌డ్ ఆల్-క్యాప్స్ డిస్ప్లే — పోస్టర్‌లా, పొడవైన శీర్షికలకు సరిపోతుంది</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">హై-కాంట్రాస్ట్ ఎడిటోరియల్ serif — మ్యాగజైన్ అనుభూతి</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">విశిష్ట వివరాలతో సాంకేతిక జ్యామితీయ sans</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">చతురస్రాకార sci-fi డిస్ప్లే — బోల్డ్ మరియు భవిష్యత్ శైలి</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">చేతిరాత స్క్రిప్ట్ — సాధారణ మరియు వ్యక్తిగత</string>
+    <string name="setting_wear_title_shadow_style">శీర్షిక నీడ</string>
+    <string name="setting_wear_title_shadow_color">శీర్షిక నీడ రంగు</string>
+    <string name="setting_wear_title_shadow_custom_color">అనుకూల శీర్షిక నీడ రంగు</string>
+    <string name="setting_wear_title_shadow_strength">శీర్షిక నీడ తీవ్రత</string>
+    <string name="setting_wear_artist_shadow_style">కళాకారుడి నీడ</string>
+    <string name="setting_wear_artist_shadow_color">కళాకారుడి నీడ రంగు</string>
+    <string name="setting_wear_artist_shadow_custom_color">అనుకూల కళాకారుడి నీడ రంగు</string>
+    <string name="setting_wear_artist_shadow_strength">కళాకாரుడి నీడ తీవ్రత</string>
+    <string name="setting_wear_text_shadow_strength_description">ఎంచుకున్న నీడ యొక్క పరిమాణం మరియు లోతు శాతం.</string>
+    <string-array name="wear_text_shadow_style_entries">
+        <item>ఏదీ లేదు</item>
+        <item>మృదువైన</item>
+        <item>గట్టి</item>
+        <item>గ్లో</item>
+        <item>ఎత్తిన</item>
+        <item>సూక్ష్మ</item>
+    </string-array>
+    <string-array name="wear_text_shadow_color_entries">
+        <item>నలుపు</item>
+        <item>ఆల్బమ్ రంగు</item>
+        <item>తెలుపు</item>
+        <item>అనుకూల</item>
+    </string-array>
+    <string name="setting_wear_title_outline_style">శీర్షిక అవుట్‌లైన్</string>
+    <string name="setting_wear_title_outline_color">శీర్షిక అవుట్‌లైన్ రంగు</string>
+    <string name="setting_wear_title_outline_custom_color">అనుకూల శీర్షిక అవుట్‌లైన్ రంగు</string>
+    <string name="setting_wear_artist_outline_style">కళాకారుడి అవుట్‌లైన్</string>
+    <string name="setting_wear_artist_outline_color">కళాకారుడి అవుట్‌లైన్ రంగు</string>
+    <string name="setting_wear_artist_outline_custom_color">అనుకూల కళాకారుడి అవుట్‌లైన్ రంగు</string>
+    <string-array name="wear_text_outline_style_entries">
+        <item>ఏదీ లేదు</item>
+        <item>హెయిర్‌లైన్</item>
+        <item>సన్నని</item>
+        <item>మధ్యస్థ</item>
+        <item>బోల్డ్</item>
+    </string-array>
+    <string name="setting_wear_title_text_bg_style">శీర్షిక బ్యాక్‌డ్రాప్</string>
+    <string name="setting_wear_title_text_bg_color">శీర్షిక బ్యాక్‌డ్రాప్ రంగు</string>
+    <string name="setting_wear_title_text_bg_custom_color">అనుకూల శీర్షిక బ్యాక్‌డ్రాప్ రంగు</string>
+    <string name="setting_wear_title_text_bg_opacity">శీర్షిక బ్యాక్‌డ్రాప్ అపారదర్శకత</string>
+    <string name="setting_wear_artist_text_bg_style">కళాకారుడి బ్యాక్‌డ్రాప్</string>
+    <string name="setting_wear_artist_text_bg_color">కళాకారుడి బ్యాక్‌డ్రాప్ రంగు</string>
+    <string name="setting_wear_artist_text_bg_custom_color">అనుకూల కళాకారుడి బ్యాక్‌డ్రాప్ రంగు</string>
+    <string name="setting_wear_artist_text_bg_opacity">కళాకారుడి బ్యాక్‌డ్రాప్ అపారదర్శకత</string>
+    <string name="setting_wear_text_bg_opacity_description">ఎంచుకున్న బ్యాక్‌డ్రాప్ యొక్క స్వంత అపారదర్శకత శాతం.</string>
+    <string-array name="wear_text_backdrop_style_entries">
+        <item>ఏదీ లేదు</item>
+        <item>హైలైట్</item>
+        <item>మృదువైన</item>
+        <item>బ్లాక్</item>
+    </string-array>
+    <string name="setting_wear_seek_marker">స్థానం గుర్తు</string>
+    <string name="setting_wear_seek_marker_description">ట్రాక్ ఎక్కడ ఉందో చూపే progress ring పై చిన్న గీత స్క్రీన్‌పై ఎప్పుడు ఉంటుందో.</string>
+    <string-array name="wear_seek_marker_entries">
+        <item>ఎల్లప్పుడూ</item>
+        <item>Seek చేస్తున్నప్పుడు మాత్రమే</item>
+        <item>Seek చేస్తున్నప్పుడు మరియు pause‌లో</item>
+        <item>పాజ్‌లో ఉన్నప్పుడు మాత్రమే</item>
+    </string-array>
+    <string name="setting_wear_track_time_mode">ట్రాక్ సమయ ప్రదర్శన</string>
+    <string name="setting_wear_track_time_mode_description">Now-playing స్క్రీన్‌పై ట్రాక్ స్థానం (ఉదా. 1:23 / 3:45) ఎప్పుడు చూపించాలో.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>ఎల్లప్పుడూ</item>
+        <item>ప్లే అవుతున్నప్పుడు మాత్రమే</item>
+        <item>పాజ్‌లో ఉన్నప్పుడు మాత్రమే</item>
+        <item>ఎప్పుడూ కాదు</item>
+    </string-array>
+    <string name="setting_screen_buttons_curve">మినీ బటన్‌ల వక్రత</string>
+    <string name="setting_screen_buttons_curve_description">మినీ బటన్‌ల వక్రత శైలిని ఎంచుకోండి: ఫ్లాట్, ఆర్క్, సాఫ్ట్, కర్వ్డ్.</string>
+    <string name="setting_screen_buttons_shape">మినీ బటన్‌ల ఆకారం</string>
+    <string name="setting_screen_buttons_shape_description">మినీ బటన్‌ల ఆకారం మరియు layout ఫార్మాట్‌ను ఎంచుకోండి.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>పిల్ (డిఫాల్ట్)</item>
+        <item>వృత్తం</item>
+        <item>చతురస్రం</item>
+        <item>గుండ్రని చతురస్రం (సాఫ్ట్)</item>
+        <item>గుండ్రని చతురస్రం (మధ్యస్థ)</item>
+        <item>Squircle</item>
+        <item>ఆకు</item>
+        <item>చుక్క</item>
+        <item>పిల్ (వెడల్పు చిన్నది)</item>
+        <item>పిల్ (వెడల్పు మధ్యస్థ)</item>
+        <item>పిల్ (వెడల్పు పెద్దది)</item>
+        <item>పిల్ (వెడల్పు అతి పెద్దది)</item>
+        <item>గుండ్రని దీర్ఘచతురస్రం (చిన్నది)</item>
+        <item>గుండ్రని దీర్ఘచతురస్రం (మధ్యస్థ)</item>
+        <item>గుండ్రని దీర్ఘచతురస్రం (పెద్దది)</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>ఫ్లాట్</item>
+        <item>ఆర్క్</item>
+        <item>సున్నిత వక్రత</item>
+        <item>మృదువైన వక్రత</item>
+        <item>మధ్యస్థ వక్రత</item>
+        <item>వక్రంగా</item>
+        <item>అత్యంత వక్రత</item>
+        <item>అంచుల వరకు విస్తరించు</item>
+        <item>ఎడమ అంచు</item>
+        <item>కుడి అంచు</item>
+        <item>రెండు అంచులు</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>డిఫాల్ట్ నేపథ్యం</item>
+        <item>గ్లాస్ (ఏకరీతి)</item>
+        <item>గ్లాస్ (తేలిక)</item>
+        <item>పారదర్శక ఆల్బమ్</item>
+        <item>పారదర్శక ఆల్బమ్ Exp</item>
+        <item>ఆల్బమ్ గ్లో</item>
+        <item>గ్లో Exp</item>
+        <item>సాలిడ్ థీమ్</item>
+        <item>సాలిడ్ ఆల్బమ్</item>
+        <item>సాలిడ్ Exp ఆల్బమ్</item>
+        <item>అవుట్‌లైన్</item>
+        <item>అవుట్‌లైన్ Exp ఆల్బమ్</item>
+        <item>ఐకాన్ మాత్రమే (పారదర్శక)</item>
+        <item>ఐకాన్ Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_color_entries">
+        <item>తటస్థ</item>
+        <item>ఆల్బమ్ రంగు</item>
+        <item>కస్టమ్ రంగు</item>
+    </string-array>
+    <string-array name="album_art_style_entries">
+        <item>పూర్తి కవర్</item>
+        <item>బ్లర్ చేసిన నేపథ్యం</item>
+        <item>ఫ్రాస్టెడ్ అంచులు</item>
+        <item>చతురస్రం (పదునైన మూలలు)</item>
+        <item>చతురస్రం (మృదువైన మూలలు)</item>
+        <item>చతురస్రం (గుండ్రని మూలలు)</item>
+        <item>నలుపు &amp; తెలుపు</item>
+        <item>బ్లర్ చేసిన నలుపు &amp; తెలుపు</item>
+        <item>Expressive blur</item>
+        <item>Expressive</item>
+        <item>Material టోనల్ గ్రేడియంట్</item>
+        <item>పోస్టర్ కవర్</item>
+        <item>స్టూడియో గ్రేడియంట్</item>
+        <item>Vinyl రేడియల్ గ్లో</item>
+        <item>హాలో గ్లో</item>
+        <item>Aurora రిబ్బన్‌లు</item>
+        <item>స్పెక్ట్రమ్ గ్రేడియంట్</item>
+        <item>Corona స్వీప్</item>
+        <item>సంధ్యా ఫేడ్</item>
+        <item>బ్లూమ్</item>
+        <item>హోరైజన్ ఫేడ్</item>
+        <item>ఎంబర్ గ్లో</item>
+        <item>Eclipse AMOLED నలుపు</item>
+        <item>దాచినది (పూర్తి నలుపు)</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+    <string-array name="auto_start_modes_descriptions">
+        <item>నిలిపివేయப்பட்டது</item>
+        <item>మ్యూజిక్ watchface ఐకాన్ చూపించు (Wear 3.0 కోసం మాత్రమే)</item>
+        <item>Svartifoss‌ను తెరవండి</item>
+    </string-array>
+    <string name="setting_close_timeout">మూసివేత టైమ్‌అవుట్</string>
+    <string name="setting_close_timeout_description">సంగీతం ప్లే కాకపోతే &lt;b>%1$s seconds&lt;/b> తర్వాత Svartifoss స్వయంచాలకంగా మూసివేయబడుతుంది. టైమ్‌అవుట్‌ను 0 సెకన్లకు పెట్టితే ఈ ఫీచర్ నిలిపివేయబడుతుంది. బ్యాటరీ ఆదా కోసం ఇది ఎల్లప్పుడూ పూర్తిగా ఖచ్చితంగా ఉండకపోవచ్చు; మూసివేయడం ఒక నిమిషం వరకు ఆలస్యం కావచ్చు.</string>
+    <string name="setting_wear_close_on_idle">\"Nothing playing\" వద్ద మూసివేయి</string>
+    <string name="setting_wear_close_on_idle_description">వాచ్ యాప్ idle \"Nothing playing\" స్క్రీన్‌కు చేరిన సుమారు ఒక నిమిషం తర్వాత స్వయంచాలకంగా మూసివేయబడుతుంది, కాబట్టి అది అక్కడ ఉండదు. పై close timeout‌కు ఇది స్వతంత్రం; అది pause చేసిన ట్రాక్‌ను కవర్ చేస్తుంది.</string>
+    <string name="category_notifications">నోటిఫికేషన్ పాప్‌అప్</string>
+    <string name="setting_enable_notifications">నోటిఫికేషన్ పాప్‌అప్ చూపించు</string>
+    <string name="setting_enable_notifications_description">ఈ ఫీచర్‌కు నోటిఫికేషన్లను నిర్వహించడానికి మరో యాప్ (Vibration Center for Wear) అవసరం.\n\nVibration Center వాచ్‌ను వైబ్రేట్ చేసిన ప్రతిసారి Svartifoss నోటిఫికేషన్ టెక్స్ట్‌ను పాప్‌అప్‌గా చూపిస్తుంది, Svartifoss‌ను విడిచిపెట్టకుండా త్వరగా చూడవచ్చు.</string>
+    <string name="setting_notification_timeout">నోటిఫికేషన్ పాప్‌అప్ టైమ్‌అవుట్</string>
+    <string name="setting_notification_timeout_description">నోటిఫికేషన్ పాప్‌అప్ &lt;b>%1$s seconds&lt;/b> తర్వాత స్వయంచాలకంగా మూసివేయబడుతుంది. ఆటో-క్లోజ్‌ను నిలిపివేయడానికి 0 ఇవ్వండి.</string>
+    <string name="app_required">యాప్ అవసరం</string>
+    <string name="vibration_center_required_description">ఈ ఫీచర్‌ను ఉపయోగించడానికి మరో (ఉచిత) యాప్‌ను ఇన్‌స్టాల్ చేయాలి: Vibration Center for Wear.</string>
+    <string name="open_play_store">Play Store తెరవండి</string>
+    <string name="error_no_notification_service_support">క్షమించండి, మీ పరికరం నోటిఫికేషన్ సేవలకు మద్దతు ఇవ్వడం లేదు</string>
+    <string name="setting_always_select_center_action">ఎల్లప్పుడూ మధ్య చర్యను ఎంచుకోండి</string>
+    <string name="setting_always_select_center_action_description">ఎనేబుల్ చేసినప్పుడు action list‌లో ఎక్కడ ట్యాప్ చేసినా, మీరు ట్యాప్ చేసిన ఎంపికతో సంబంధం లేకుండా మధ్య (హైలైట్ చేసిన) ఎంపికే ఎంచుకోబడుతుంది.</string>
+    <string name="change_icon">ఐకాన్ మార్చండి</string>
+    <string name="please_wait">దయచేసి వేచి ఉండండి</string>
+    <string name="error_playlist_not_supported">ఈ మీడియా యాప్ మద్దతు ఇవ్వదు</string>
+    <string name="error_search_no_results">ఫలితాలు కనబడలేదు</string>
+    <string name="seconds_to_skip">ముందుకు దాటాల్సిన సెకన్లు:</string>
+    <string name="seconds_to_reverse">వెనక్కి వెళ్లాల్సిన సెకన్లు:</string>
+    <string name="setting_dynamic_accent_color">డైనమిక్ యాక్సెంట్ రంగు</string>
+    <string name="setting_dynamic_accent_color_description">ఎనేబుల్ చేసినప్పుడు యాక్సెంట్ రంగు (SeekBar, యాక్టివ్ queue item) ప్రస్తుత ఆల్బమ్ artwork ప్రధాన రంగుకు స్వయంచాలకంగా సరిపోతుంది.</string>
+    <string name="setting_desaturated_color">డీసాచురేటెడ్ రంగు</string>
+    <string name="setting_desaturated_color_description">యాక్టివ్ థీమ్ ఆధారంగా మంచి చదవగలిగే స్థాయి మరియు కాంట్రాస్ట్ కోసం తీసుకున్న రంగు saturation మరియు brightness‌ను సర్దుబాటు చేస్తుంది.</string>
+    <string name="queue_header">ప్లేబ్యాక్ క్యూ</string>
+    <string name="queue_unavailable">క్యూ అందుబాటులో లేదు</string>
+    <string name="setting_custom_accent_color">యాక్సెంట్ రంగు</string>
+    <string name="setting_custom_accent_color_description">యాప్ ఇంటర్‌ఫేస్ కోసం అనుకూల యాక్సెంట్ రంగును ఎంచుకోండి</string>
+    <string name="setting_mini_player">మినీ ప్లేయర్</string>
+    <string name="setting_mini_player_description">మీడియా యాక్టివ్‌గా ఉన్నప్పుడు బాటమ్ నావిగేషన్ పైన స్థిరమైన now-playing బార్ చూపిస్తుంది. డిఫాల్ట్‌గా ఎనేబుల్; ఆ స్థలాన్ని తిరిగి పొందడానికి ఆఫ్ చేయండి.</string>
+    <string name="color_picker_title">యాక్సెంట్ రంగును ఎంచుకోండి</string>
+    <string name="color_picker_reset">రీసెట్ చేయి</string>
+    <string name="color_picker_apply">వర్తింపజేయి</string>
+    <string name="color_picker_recent">ఇటీవల ఉపయోగించినవి</string>
+    <string name="color_picker_copied">రంగు కోడ్ కాపీ అయింది</string>
+    <string name="color_picker_default">డిఫాల్ట్</string>
+    <string name="color_picker_invalid">చెల్లని రంగు కోడ్</string>
+    <string name="color_picker_current">ప్రస్తుతం: %s</string>
+    <string name="drawer_version_format">వెర్షన్ %1$s</string>
+    <string name="drawer_tagline">Wear OS కోసం Companion App</string>
+    <string name="drawer_about_heading">గురించి</string>
+    <string name="drawer_about_summary">మీ Wear OS వాచ్ నుండి ఫోన్‌లోని సంగీతాన్ని నియంత్రించడానికి Svartifoss అనుమతిస్తుంది — మీ పరికరానికి సరిపోయే పూర్తిగా అనుకూలీకరించగల remote‌తో.</string>
+    <string name="drawer_name_heading">పేరు</string>
+    <string name="drawer_name_meaning">Icelandic‌లో Svartifoss అంటే “Black Falls” — Vatnajökull National Park‌లో ముదురు basalt స్తంభాలు సన్నని జలపాతాన్ని చుట్టుముట్టే ఆ జలపాతం పేరుతో పిలవబడింది. రాతిపై ప్రవహించే నీటిలా సంగీతం యాప్ ద్వారా ప్రవహిస్తుంది.</string>
+    <string name="drawer_sync_heading">సింక్</string>
+    <string name="drawer_sync_summary">వాచ్ సెట్టింగ్స్ ఇక్కడ ఫోన్‌లో కాన్ఫిగర్ చేయబడి జత చేసిన వాచ్‌తో స్వయంచాలకంగా సింక్ అవుతాయి.</string>
+    <string name="drawer_support_heading">మద్దతు</string>
+    <string name="drawer_support_summary">Svartifoss ఉచితం మరియు open source - మీకు ఉపయోగకరంగా ఉంటే నాకు ఒక coffee కొనిపెట్టండి :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">కవర్ ఆర్ట్ డౌన్‌లోడ్ చేయండి</string>
+    <string name="album_art_saved">కవర్ ఆర్ట్ గ్యాలరీలో సేవ్ అయింది</string>
+    <string name="album_art_save_error">కవర్ ఆర్ట్ సేవ్ చేయడం విఫలమైంది</string>
+    <string name="action_play_liked_songs">లైక్ చేసిన పాటలను ప్లే చేయండి (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">లైక్ చేసిన పాటలను ప్లే చేయండి (Spotify)</string>
+    <string name="action_play_soundcloud_likes">లైక్ చేసిన ట్రాక్‌లను ప్లే చేయండి (SoundCloud)</string>
+    <string name="action_my_playlists">స్ట్రీమింగ్ షార్ట్‌కట్‌లు</string>
+    <string name="action_play_specific_playlist">స్ట్రీమింగ్ షార్ట్‌కట్ తెరవండి</string>
+    <string name="action_choose_or_add_streaming_shortcut">స్ట్రీమింగ్ షార్ట్‌కట్‌ను ఎంచుకోండి లేదా జోడించండి</string>
+    <string name="action_show_streaming_library">సేవ్ చేసిన అన్ని షార్ట్‌కట్‌లను చూపించండి</string>
+    <string name="playlist_shortcut_pick_title">షార్ట్‌కట్ ఎంచుకోండి</string>
+    <string name="playlist_shortcut_pick_empty">ఇంకా streaming shortcuts సేవ్ చేయలేదు — కింద ఒకదాన్ని జోడించి, ఎంచుకోవడానికి దానిపై ట్యాప్ చేయండి</string>
+    <string name="playlist_shortcuts_empty">ఇంకా streaming shortcuts లేవు — ఫోన్ యాప్ సెట్టింగ్స్‌లో జోడించండి</string>
+    <string name="setting_playlist_shortcuts">స్ట్రీమింగ్ షార్ట్‌కట్‌లు</string>
+    <string name="setting_playlist_shortcuts_description">వాచ్ నుండి share links‌ను YouTube Music, Spotify మరియు ఇతర streaming apps‌లో తెరవండి</string>
+    <string name="setting_shortcut_artwork">షార్ట్‌కట్ artwork‌ను ఆన్‌లైన్‌లో పొందండి</string>
+    <string name="setting_shortcut_artwork_description">సర్వీస్ public preview artwork అందిస్తే thumbnail‌ను డౌన్‌లోడ్ చేస్తుంది; అది ఫోన్ జాబితా, వాచ్ మెను మరియు కేటాయించిన బటన్‌లలో చూపబడుతుంది. అందుబాటులో ఉన్న ప్రతి thumbnail ఒక్కసారి మాత్రమే తీసుకోబడుతుంది; public share link మాత్రమే పంపబడుతుంది. డిఫాల్ట్‌గా ఆఫ్.</string>
+    <string name="setting_queue_local_artwork">మీ లైబ్రరీ నుండి queue covers</string>
+    <string name="setting_queue_local_artwork_description">లోకల్ music players queue covers‌ను లైబ్రరీ references‌గా ప్రచురిస్తాయి. వాటిని వాచ్ queue‌లో చూపించడానికి media access ఇవ్వండి. ఇంటర్నెట్ యాక్సెస్ ఉపయోగించబడదు.</string>
+    <string name="setting_queue_local_artwork_granted">Media access అనుమతించబడింది — లోకల్ queue covers చూపబడతాయి</string>
+    <string name="setting_queue_local_artwork_denied">Media access నిరాకరించబడింది. లోకల్ queue covers చూపించడానికి Android సెట్టింగ్స్‌లో ఎనేబుల్ చేయండి.</string>
+    <string name="setting_queue_remote_artwork">queue covers‌ను ఆన్‌లైన్‌లో పొందండి</string>
+    <string name="setting_queue_remote_artwork_short_description">Streaming apps (YouTube Music clients, Echo Music…) queue covers‌ను చిత్రాలుగా కాక links‌గా ప్రచురిస్తాయి, కాబట్టి ఇవి డౌన్‌లోడ్ చేసి cache చేయబడతాయి. queue పూర్తిగా offline‌గా ఉండాలంటే ఆఫ్ చేయండి — అప్పుడు ఆ rows‌లో cover కనిపించదు.</string>
+    <string name="setting_queue_remote_artwork_description">Streaming players queue covers‌ను చిత్రాలుగా కాక links‌గా ప్రచురిస్తాయి. ప్రతి దానిని ఒక్కసారి డౌన్‌లోడ్ చేసి ఈ ఫోన్‌లో cache చేసి వాచ్ queue‌లో చూపండి. ప్లేయర్ ఇప్పటికే ప్రచురించిన cover URL మాత్రమే అభ్యర్థించబడుతుంది — account లేదా personal data కాదు. డిఫాల్ట్‌గా ఆన్; queue పూర్తిగా offline‌గా ఉంచడానికి ఆఫ్ చేయండి.</string>
+    <string name="watch_streaming_shortcuts_empty">Quick Actions మరియు వాచ్ మెను కోసం ట్రాక్‌లు, ఆల్బమ్‌లు లేదా ప్లేలిస్టులు జోడించండి</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d సేవ్ చేసిన షార్ట్‌కట్ · Quick Actions మరియు వాచ్ మెనులో అందుబాటులో ఉంది</item>
+        <item quantity="other">%1$d సేవ్ చేసిన షార్ట్‌కట్‌లు · Quick Actions మరియు వాచ్ మెనులో అందుబాటులో ఉన్నాయి</item>
+    </plurals>
+    <string name="category_music_apps">మ్యూజిక్ యాప్స్ &amp; సేవలు</string>
+    <string name="category_apps_content">లిరిక్స్ &amp; మెటాడేటా</string>
+    <string name="category_streaming_services">స్ట్రీమింగ్ షార్ట్‌కట్‌లు</string>
+    <string name="category_queue_artwork">Queue artwork</string>
+    <string name="category_system_access">Android యాక్సెస్ &amp; నోటిఫికేషన్లు</string>
+    <string name="setting_apps_integrations">మద్దతు ఉన్న సంగీత సేవలు</string>
+    <string name="setting_apps_integrations_description">Links YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music మరియు SoundCloud‌తో పని చేస్తాయి. Account access అవసరం లేదు.</string>
+    <string name="setting_apps_integrations_none">మద్దతు ఉన్న యాప్ కనబడలేదు. షార్ట్‌కట్‌లు ఇంకా బ్రౌజర్ లేదా మరో compatible app‌లో తెరవవచ్చు.</string>
+    <string name="setting_apps_integrations_installed">%2$d లో %1$d గుర్తించబడ్డాయి: %3$s</string>
+    <string name="setting_streaming_open_mode">స్ట్రీమింగ్ links‌ను దీనితో తెరవండి</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>గుర్తించిన స్ట్రీమింగ్ యాప్</item>
+        <item>Android డిఫాల్ట్</item>
+        <item>ప్రతిసారి అడుగు</item>
+    </string-array>
+    <string name="setting_persistent_notification">\"Svartifoss active\" నోటిఫికేషన్‌ను నిర్వహించండి</string>
+    <string name="setting_persistent_notification_description">ఈ నోటిఫికేషన్ Android సెట్టింగ్స్‌ను తెరుస్తుంది — mute చేయండి, lock screen నుండి దాచండి లేదా ఇతరంగా సర్దుబాటు చేయండి. పూర్తిగా ఆఫ్ చేయలేరు: వాచ్‌తో మాట్లాడే background service నడుస్తున్నప్పుడు Android ongoing notification అవసరం.</string>
+    <string name="setting_notification_access">మీడియా నోటిఫికేషన్ యాక్సెస్</string>
+    <string name="setting_notification_access_enabled">అనుమతించబడింది · Android సెట్టింగ్స్‌ను సమీక్షించడానికి ట్యాప్ చేయండి</string>
+    <string name="setting_notification_access_disabled">అనుమతి లేదు · నోటిఫికేషన్ media actions మరియు automatic launch filters కోసం అవసరం</string>
+    <string name="setting_notification_access_unavailable">ఈ పరికరంలో notification access సెట్టింగ్స్ అందుబాటులో లేవు</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d సేవ్ చేసిన షార్ట్‌కట్ · links నిర్వహించడానికి లేదా import చేయడానికి ట్యాప్ చేయండి</item>
+        <item quantity="other">%1$d సేవ్ చేసిన షార్ట్‌కట్‌లు · links నిర్వహించడానికి లేదా import చేయడానికి ట్యాప్ చేయండి</item>
+    </plurals>
+    <string name="category_privacy">గోప్యత</string>
+    <string name="setting_privacy_policy">గోప్యతా విధానం</string>
+    <string name="setting_privacy_policy_description">Svartifoss ఏ డేటాను ఉపయోగిస్తుంది మరియు ఏ online services ఐచ్ఛికమో చూడండి.</string>
+    <string name="setting_crash_reporting">క్రాష్ రిపోర్ట్‌లు పంపండి</string>
+    <string name="setting_crash_reporting_description">విఫలతలను సరిచేయడంలో సహాయం చేయడానికి Firebase Crashlytics diagnostics పంపండి. డిఫాల్ట్‌గా ఆన్; ఎప్పుడైనా ఆఫ్ చేయవచ్చు.</string>
+    <string name="setting_announcements">ప్రకటన నోటిఫికేషన్లు</string>
+    <string name="setting_announcements_description">డెవలపర్ నుండి అప్పుడప్పుడు నోటిఫికేషన్లు — కొత్త releases, ముఖ్యమైన ప్రకటనలు. Firebase Cloud Messaging ద్వారా పంపబడతాయి; account లేదా user list ఏదీ లేదు. డిఫాల్ట్‌గా ఆన్; ఎప్పుడైనా ఆఫ్ చేయవచ్చు.</string>
+    <string name="announcement_notification_channel">ప్రకటనలు</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">ప్లేలిస్ట్, ఆల్బమ్ లేదా ట్రాక్‌ను నేరుగా Svartifoss‌కు share చేయండి, కాపీ చేసిన link‌ను paste చేయండి లేదా మాన్యువల్‌గా జోడించండి. వాచ్ దాన్ని తెరవమని ఫోన్‌ను అడుగుతుంది; service login అవసరం లేదు.</string>
+    <string name="back">వెనుకకు</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">మీ సంగీతం, ఒక్క ట్యాప్ దూరంలో</string>
+    <string name="playlist_shortcuts_yours">మీ షార్ట్‌కట్‌లు</string>
+    <string name="playlist_shortcuts_empty_hint">Share చేసిన ట్రాక్, ఆల్బమ్ లేదా ప్లేలిస్ట్ link‌ను జోడించి వాచ్‌లో అందుబాటులో ఉంచండి.</string>
+    <string name="playlist_shortcuts_add">షార్ట్‌కట్ జోడించండి</string>
+    <string name="playlist_shortcuts_paste">Link‌ను paste చేయండి</string>
+    <string name="playlist_shortcuts_reload_covers">కవర్లను మళ్లీ లోడ్ చేయండి</string>
+    <string name="playlist_shortcuts_reloading_covers">కవర్లు మళ్లీ లోడ్ అవుతున్నాయి…</string>
+    <string name="playlist_shortcuts_covers_reloaded">కవర్లు మళ్లీ లోడ్ అయ్యాయి</string>
+    <string name="playlist_shortcuts_edit">షార్ట్‌కట్ సవరించండి</string>
+    <string name="playlist_shortcut_save">షార్ట్‌కట్ సేవ్ చేయండి</string>
+    <string name="playlist_shortcut_editor_hint">ఒక link‌ను paste చేయండి. Svartifoss దాని app మరియు content type‌ను స్వయంచాలకంగా గుర్తిస్తుంది.</string>
+    <string name="playlist_shortcut_detection_waiting">స్ట్రీమింగ్ link కోసం వేచి ఉంది</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify, YouTube Music, Apple Music, TIDAL, Deezer మరియు మరిన్ని మద్దతు పొందుతాయి.</string>
+    <string name="playlist_shortcut_detected_format">గుర్తించబడింది: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">పేరు</string>
+    <string name="playlist_shortcut_link_hint">Share link లేదా app URI</string>
+    <string name="playlist_shortcut_shuffle">షఫుల్ చేసి ప్లే చేయండి (YouTube Music మాత్రమే)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">లింక్</string>
+    <string name="playlist_type_track">ట్రాక్</string>
+    <string name="playlist_type_playlist">ప్లేలిస్ట్</string>
+    <string name="playlist_type_album">ఆల్బమ్</string>
+    <string name="playlist_type_artist">కళాకారుడు</string>
+    <string name="playlist_type_show">షో</string>
+    <string name="playlist_type_episode">ఎపిసోడ్</string>
+    <string name="playlist_type_mix">మిక్స్</string>
+    <string name="playlist_badge_shuffle">షఫుల్</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">ఇంకా streaming shortcuts జోడించలేదు</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d సేవ్ చేయబడింది</item>
+        <item quantity="other">%1$d సేవ్ చేయబడింది</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">క్రమబద్ధీకరించిన streaming shortcuts. డ్రాగ్ చేయడానికి తాకి పట్టుకోండి, Move up లేదా Move down accessibility actions ఉపయోగించండి, లేదా keyboard‌పై Ctrl+Up/Down నొక్కండి.</string>
+    <string name="playlist_shortcut_more_options">%1$s కోసం మరిన్ని ఎంపికలు</string>
+    <string name="playlist_shortcut_menu_edit">సవరించు</string>
+    <string name="playlist_shortcut_menu_open">ఇప్పుడే తెరవండి</string>
+    <string name="playlist_shortcut_menu_copy">Link‌ను కాపీ చేయండి</string>
+    <string name="playlist_shortcut_menu_duplicate">డూప్లికేట్ చేయండి</string>
+    <string name="playlist_shortcut_menu_share">షేర్ చేయండి</string>
+    <string name="playlist_shortcut_menu_delete">తొలగించు</string>
+    <string name="playlist_shortcut_open_failed">ఈ link‌ను ఏ యాప్ కూడా తెరవలేదు</string>
+    <string name="streaming_shortcut_choose_app">స్ట్రీమింగ్ link‌ను దీనితో తెరవండి</string>
+    <string name="playlist_shortcut_link_copied">Link కాపీ అయింది</string>
+    <string name="playlist_shortcut_import_invalid">షేర్ చేసిన టెక్స్ట్‌లో చెల్లుబాటు అయ్యే streaming link లేదు</string>
+    <string name="playlist_shortcut_clipboard_invalid">Clipboard‌లో చెల్లుబాటు అయ్యే streaming link లేదు</string>
+    <string name="playlist_shortcut_name_required">షార్ట్‌కట్ పేరు నమోదు చేయండి</string>
+    <string name="playlist_shortcut_link_invalid">చెల్లుబాటు అయ్యే web link లేదా app URI నమోదు చేయండి</string>
+    <string name="playlist_shortcut_service_invalid">సర్వీస్‌ను గుర్తించడానికి చెల్లుబాటు అయ్యే link‌ను paste చేయండి</string>
+    <string name="playlist_shortcut_service_generic">అనుకూల link · Android యాప్‌ను ఎంచుకుంటుంది</string>
+    <string name="playlist_shortcut_service_installed">%1$s ఇన్‌స్టాల్ అయింది · దాని యాప్‌లో తెరవడానికి సిద్ధంగా ఉంది</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s ఇన్‌స్టాల్ కాలేదు · browser లేదా compatible app ఉపయోగించవచ్చు</string>
+    <string name="playlist_shortcut_copy_name">%1$s కాపీ</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s కాపీ %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s సృష్టించబడింది</string>
+    <string name="playlist_shortcut_share_title">స్ట్రీమింగ్ షార్ట్‌కట్‌ను షేర్ చేయండి</string>
+    <string name="playlist_shortcut_share_failed">ఈ షార్ట్‌కట్‌ను షేర్ చేయడానికి యాప్ అందుబాటులో లేదు</string>
+    <string name="playlist_shortcut_deleted">%1$s తొలగించబడింది</string>
+    <string name="playlist_shortcut_undo">రద్దు చేయండి</string>
+    <string name="action_play_liked_songs_shuffled">లైక్ చేసిన పాటలను షఫుల్ చేసి ప్లే చేయండి (YT Music)</string>
+    <string name="action_search_history">శోధన చరిత్ర</string>
+    <string name="search_history_empty">ఇంకా ఇటీవలి శోధనలు లేవు</string>
+    <string name="category_updates">అప్‌డేట్లు</string>
+    <string name="setting_update_check">కొత్త వెర్షన్ల గురించి తెలియజేయండి</string>
+    <string name="setting_update_check_description">కొత్త releases కోసం రోజుకు సుమారు ఒకసారి GitHub‌ను తనిఖీ చేసి నోటిఫికేషన్ చూపిస్తుంది</string>
+    <string name="setting_update_prereleases">Pre-releases‌ను చేర్చండి</string>
+    <string name="setting_update_prereleases_description">బీటా వెర్షన్ల గురించి కూడా నోటిఫికేషన్ పొందండి</string>
+    <string name="setting_update_check_now">ఇప్పుడే అప్‌డేట్లను తనిఖీ చేయండి</string>
+    <string name="setting_update_check_now_description">తాజా వెర్షన్‌ను చూపించి Bluetooth ద్వారా వాచ్‌ను అప్‌డేట్ చేయడానికి అనుమతిస్తుంది</string>
+    <string name="update_screen_title">అప్‌డేట్లు</string>
+    <string name="update_cover_content_description">Svartifoss, యాప్ పేరు పెట్టబడిన జలపాతం</string>
+    <string name="update_notification_channel">యాప్ అప్‌డేట్లు</string>
+    <string name="update_available_title">Svartifoss %1$s అందుబాటులో ఉంది</string>
+    <string name="update_notification_text">అప్‌డేట్ చేయడానికి ట్యాప్ చేయండి</string>
+    <string name="update_available_action">అప్‌డేట్ అందుబాటులో ఉంది</string>
+    <string name="update_installed_phone">ఫోన్: %1$s</string>
+    <string name="update_installed_versions">ఫోన్: %1$s \u00b7 వాచ్: %2$s</string>
+    <string name="update_watch_version_unknown">తెలియదు</string>
+    <string name="update_checking">అప్‌డేట్లను తనిఖీ చేస్తోంది\u2026</string>
+    <string name="update_check_failed">అప్‌డేట్లను తనిఖీ చేయలేకపోయాం. కనెక్షన్‌ను తనిఖీ చేసి మళ్లీ ప్రయత్నించండి.</string>
+    <string name="update_available_line">కొత్త వెర్షన్: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(pre-release)</string>
+    <string name="update_up_to_date">మీరు తాజా వెర్షన్‌లో ఉన్నారు (%1$s)</string>
+    <string name="update_no_wear_asset">ఈ release‌లో పంపడానికి watch APK లేదు.</string>
+    <string name="update_watch_hint">\u201cవాచ్‌ను అప్‌డేట్ చేయండి\u201d కొత్త watch app‌ను డౌన్‌లోడ్ చేసి Bluetooth ద్వారా పంపుతుంది \u2014 ఇన్‌స్టాల్‌ను వాచ్‌పైనే మీరు నిర్ధారిస్తారు; cable లేదా Wear Installer అవసరం లేదు.</string>
+    <string name="update_downloading">డౌన్‌లోడ్ అవుతోంది\u2026 %1$d%%</string>
+    <string name="update_connecting_watch">వాచ్‌కు కనెక్ట్ అవుతోంది\u2026</string>
+    <string name="update_transferring">వాచ్‌కు పంపుతోంది\u2026 %1$d%%</string>
+    <string name="update_confirm_on_watch">పంపబడింది! వాచ్‌పై నోటిఫికేషన్ కనిపించింది \u2014 ఇన్‌స్టాల్ చేయడానికి అక్కడ ట్యాప్ చేయండి.</string>
+    <string name="update_no_watch">వాచ్ కనెక్ట్ కాలేదు.</string>
+    <string name="update_push_failed">అప్‌డేట్‌ను వాచ్‌కు పంపడం విఫలమైంది. మళ్లీ ప్రయత్నించండి.</string>
+    <string name="update_watch_button">వాచ్‌ను అప్‌డేట్ చేయండి</string>
+    <string name="update_open_release_button">Release పేజీని తెరవండి</string>
+    <string name="update_watch_behind">మీ వాచ్ ఇంకా %1$s లో ఉంది \u2014 కింది అప్‌డేట్‌ను దానికి పంపండి.</string>
+    <string name="update_subtitle">ఫోన్ మరియు వాచ్ యాప్స్‌ను సింక్‌లో ఉంచండి</string>
+    <string name="update_state_checking">అప్‌డేట్లను తనిఖీ చేస్తోంది\u2026</string>
+    <string name="update_state_current">మీ యాప్ తాజాగా ఉంది</string>
+    <string name="update_state_current_sub">తాజా release, %1$s నడుస్తోంది</string>
+    <string name="update_state_available">అప్‌డేట్ అందుబాటులో ఉంది</string>
+    <string name="update_state_available_sub">%1$s \u00b7 %2$s</string>
+    <string name="update_state_failed">అప్‌డేట్లను తనిఖీ చేయలేకపోయాం</string>
+    <string name="update_state_failed_sub">మీ కనెక్షన్‌ను తనిఖీ చేసి మళ్లీ ప్రయత్నించండి</string>
+    <string name="update_device_phone">ఫోన్</string>
+    <string name="update_device_watch">గడియారం</string>
+    <string name="update_versions_header">ఇన్‌స్టాల్ చేయப்பட்டது</string>
+    <string name="update_whats_new">కొత్తది ఏమిటి</string>
+    <string name="update_phone_button">ఫోన్‌ను అప్‌డేట్ చేయండి</string>
+    <string name="update_installing">Installer తెరుస్తోంది\u2026</string>
+    <string name="update_install_permission_needed">Svartifoss నుండి యాప్స్ ఇన్‌స్టాల్ చేయడానికి అనుమతించి, తర్వాత Update phone‌ను మళ్లీ ట్యాప్ చేయండి.</string>
+    <string name="update_phone_failed">ఫోన్ అప్‌డేట్‌ను డౌన్‌లోడ్ చేయడం విఫలమైంది. మళ్లీ ప్రయత్నించండి.</string>
+    <string name="update_install_notification_title">Svartifoss అప్‌డేట్</string>
+    <string name="update_install_notification_tap">కొత్త వెర్షన్‌ను ఇన్‌స్టాల్ చేయడానికి ట్యాప్ చేయండి</string>
+    <string name="update_install_notification_failed">ఇన్‌స్టాల్ విఫలమైంది. Settings‌లో Svartifoss నుండి installs‌ను అనుమతించి మళ్లీ ప్రయత్నించండి.</string>
+    <string name="setting_wear_album_accent_source">ఆల్బమ్ యాక్సెంట్ మూలం</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>సమతుల్యం</item>
+        <item>అత్యంత ప్రకాశవంతమైన</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>ఆఫ్</item>
+        <item>మృదువైన</item>
+        <item>ప్రామాణిక</item>
+        <item>బోల్డ్</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">యాక్సెంట్ కనిష్ఠ స్థాయి</string>
+    <string name="preview_metadata_album">ఆల్బమ్</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">ట్రాక్</string>
+    <string name="preview_metadata_composer">సంగీతకర్త</string>
+    <string name="preview_metadata_genre">జానర్</string>
+    <string name="preview_metadata_genre_value">ఆల్టర్నేటివ్</string>
+    <string name="preview_metadata_year">సంవత్సరం</string>
+    <string name="preview_metadata_format">ఫార్మాట్</string>
+    <string name="preview_metadata_bitrate">బిట్‌రేట్</string>
+    <string name="preview_metadata_position">స్థానం</string>
+    <string name="preview_metadata_output">అవుట్‌పుట్</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">ఆల్బమ్ వివరాలు</string>
+    <string name="setting_wear_metadata_core_description">ఆల్బమ్, ఆల్బమ్ ఆర్టిస్ట్, రికార్డ్‌లో స్థానం మరియు నిడివి.</string>
+    <string name="setting_wear_metadata_release">Release వివరాలు</string>
+    <string name="setting_wear_metadata_release_description">జానర్, సంవత్సరం, release తేదీ మరియు label.</string>
+    <string name="setting_wear_metadata_credits">క్రెడిట్స్</string>
+    <string name="setting_wear_metadata_credits_description">ప్లేయర్ ప్రచురిస్తే composer, writer మరియు author.</string>
+    <string name="setting_wear_metadata_technical">ఫైల్ వివరాలు</string>
+    <string name="setting_wear_metadata_technical_description">ఫార్మాట్, bitrate, sample rate, channels మరియు పరిమాణం. లోకల్ ట్రాక్‌లకు మాత్రమే.</string>
+    <string name="setting_split_panel">స్ప్లిట్ ప్యానెల్</string>
+    <string name="setting_split_panel_description">Split face దిగువ భాగాన్ని ఏది నింపాలో. Blurred artwork టెక్స్ట్ వెనుక అదే cover‌ను కొనసాగిస్తుంది; solid colour notification-card రూపాన్ని ఇస్తుంది.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>బ్లర్ చేసిన artwork</item>
+        <item>సాలిడ్ రంగు</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">ప్లేబ్యాక్ వివరాలు</string>
+    <string name="setting_wear_metadata_playback_description">మిల్లీసెకండ్ వరకు స్థానం, వేగం, audio output, మరియు శబ్దం ఎక్కడి నుంచి stream లేదా play అవుతోంది — ట్రాక్ address సహా. వివరించడానికి file లేని streaming track నింపగల ఏకైక block ఇది.</string>
+    <string name="setting_wear_metadata_identifiers">గుర్తింపులు</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC మరియు catalogue ids. డిఫాల్ట్‌గా ఆఫ్ — అవసరమైనప్పుడు ఉపయోగకరం, లేకపోతే అనవసర సమాచారం.</string>
+    <string name="setting_metadata_lookup">ట్రాక్ వివరాలను ఆన్‌లైన్‌లో వెతకండి</string>
+    <string name="setting_metadata_lookup_description">ప్లే అవుతున్న యాప్ ఇవ్వని వివరాలను — ISRC, label, release date — ఉచిత public database అయిన MusicBrainz నుండి నింపుతుంది. డిఫాల్ట్‌గా ఆఫ్. Metadata watch face ఇది లేకుండానే పనిచేస్తుంది; ఇది అదనపు rows మాత్రమే జోడిస్తుంది. మీరు దీన్ని ఆన్ చేసి ఆ face‌ను ఎంచుకోకపోతే ఏదీ పంపబడదు; track name మరియు artist మాత్రమే పంపబడతాయి.</string>
+    <string-array name="wear_text_block_align_entries">
+        <item>ఫేస్‌ను అనుసరించు</item>
+        <item>ప్రారంభం</item>
+        <item>మధ్యలో</item>
+        <item>ముగింపు</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>ఫేస్‌ను అనుసరించు</item>
+        <item>పైభాగం</item>
+        <item>మధ్య</item>
+        <item>కింద</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_entries">
+        <item>స్థిరం (ఒక పంక్తి, scroll లేదా shrink లేదు)</item>
+        <item>స్క్రోల్ (marquee)</item>
+        <item>సరిపడేలా చిన్నది చేయి</item>
+    </string-array>
+    <string-array name="wear_album_art_source_entries">
+        <item>మ్యూజిక్ యాప్ నుండి</item>
+        <item>ఆన్‌లైన్‌లో కనుగొనబడింది</item>
+        <item>కళాకారుడి చిత్రం</item>
+        <item>నా గ్యాలరీ నుండి చిత్రం</item>
+        <item>ఫోల్డర్ నుండి యాదృచ్ఛికం</item>
+    </string-array>
+</resources>

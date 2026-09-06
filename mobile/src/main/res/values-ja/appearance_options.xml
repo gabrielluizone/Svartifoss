@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>オーシャン</item>
+        <item>サンセット</item>
+        <item>中央スポットライト</item>
+        <item>ガラスベール</item>
+        <item>ベルベット</item>
+        <item>ノワールスポットライト</item>
+        <item>アイスウォッシュ</item>
+        <item>ローズブルーム</item>
+        <item>プリズム</item>
+        <item>クレセントリム</item>
+        <item>タイダルバンド</item>
+        <item>ペーパースリーブ</item>
+        <item>ランタンライズ</item>
+        <item>ミラージュ分割</item>
+        <item>クワイエットグリッド</item>
+        <item>ノクターン</item>
+        <item>クラウドスタディ</item>
+        <item>リキッドプール</item>
+        <item>カラーモノリス</item>
+        <item>スプリットトーン</item>
+        <item>グラデーション</item>
+        <item>デュオトーン</item>
+        <item>バンド</item>
+        <item>ビネット</item>
+        <item>グラファイト</item>
+        <item>シネマ</item>
+        <item>アクリル</item>
+        <item>メッシュ</item>
+        <item>ネビュラ</item>
+        <item>生物発光</item>
+        <item>イリデッセント</item>
+        <item>オービット</item>
+        <item>インクウォッシュ</item>
+        <item>ブロッサム</item>
+        <item>フィヨルド</item>
+        <item>ドットマトリクス</item>
+        <item>スキャンライン</item>
+        <item>レーダー</item>
+        <item>輪郭</item>
+        <item>ファセット</item>
+        <item>アルバム塗りつぶし</item>
+        <item>第2塗りつぶし</item>
+        <item>第3塗りつぶし</item>
+        <item>ガラス</item>
+        <item>ミッドナイト</item>
+        <item>スモーク</item>
+        <item>タイドライン</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>モス</item>
+        <item>ラベンダーヘイズ</item>
+        <item>チェリー</item>
+        <item>深海</item>
+        <item>ダスト</item>
+        <item>ブリーチ</item>
+        <item>月光</item>
+        <item>ドリーム</item>
+        <item>赤外線</item>
+        <item>フォレスト</item>
+        <item>シルバー</item>
+        <item>キャンディ</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>上部フェード</item>
+        <item>中央スポットライト</item>
+        <item>斜めの影</item>
+        <item>左カーテン</item>
+        <item>右カーテン</item>
+        <item>中央バンド</item>
+        <item>クロスフェード</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>逆リーフ</item>
+        <item>逆ドロップ</item>
+        <item>ペブル</item>
+        <item>アーチ</item>
+        <item>シールド</item>
+        <item>逆アーチ</item>
+        <item>逆シールド</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>ウィスパー</item>
+        <item>ラディアント</item>
+        <item>フラッド</item>
+        <item>きらめき</item>
+        <item>ディープグロー</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>アルバム輪郭</item>
+        <item>アルバムグラデーション</item>
+        <item>アルバム第2色</item>
+        <item>アルバムガラス</item>
+        <item>アルバム第3色</item>
+        <item>ネオン輪郭</item>
+    </string-array>
+</resources>

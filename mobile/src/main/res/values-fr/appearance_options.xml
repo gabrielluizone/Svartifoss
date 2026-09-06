@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Océan</item>
+        <item>Coucher de soleil</item>
+        <item>Projecteur central</item>
+        <item>Voile de verre</item>
+        <item>Velours</item>
+        <item>Projecteur noir</item>
+        <item>Lavis glacé</item>
+        <item>Floraison rose</item>
+        <item>Prisme</item>
+        <item>Bord en croissant</item>
+        <item>Bandes de marée</item>
+        <item>Pochette papier</item>
+        <item>Montée de lanterne</item>
+        <item>Mirage scindé</item>
+        <item>Grille discrète</item>
+        <item>Nocturne</item>
+        <item>Étude de nuages</item>
+        <item>Bassins liquides</item>
+        <item>Monolithe de couleur</item>
+        <item>Ton scindé</item>
+        <item>Dégradé</item>
+        <item>Bichromie</item>
+        <item>Bandes</item>
+        <item>Vignette</item>
+        <item>Graphite</item>
+        <item>Cinéma</item>
+        <item>Acrylique</item>
+        <item>Maillage</item>
+        <item>Nébuleuse</item>
+        <item>Bioluminescence</item>
+        <item>Iridescent</item>
+        <item>Orbite</item>
+        <item>Lavis d’encre</item>
+        <item>Floraison</item>
+        <item>Fjord</item>
+        <item>Matrice de points</item>
+        <item>Lignes de balayage</item>
+        <item>Radar</item>
+        <item>Contour</item>
+        <item>Facetté</item>
+        <item>Remplissage de l’album</item>
+        <item>Remplissage secondaire</item>
+        <item>Remplissage tertiaire</item>
+        <item>Verre</item>
+        <item>Minuit</item>
+        <item>Fumée</item>
+        <item>Ligne de marée</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Mousse</item>
+        <item>Brume lavande</item>
+        <item>Cerise</item>
+        <item>Grand large</item>
+        <item>Poussière</item>
+        <item>Décoloré</item>
+        <item>Clair de lune</item>
+        <item>Rêve</item>
+        <item>Infrarouge</item>
+        <item>Forêt</item>
+        <item>Argent</item>
+        <item>Bonbon</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Fondu supérieur</item>
+        <item>Projecteur central</item>
+        <item>Ombre diagonale</item>
+        <item>Rideau gauche</item>
+        <item>Rideau droit</item>
+        <item>Bande centrale</item>
+        <item>Fondu enchaîné</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Feuille inversée</item>
+        <item>Goutte inversée</item>
+        <item>Galet</item>
+        <item>Arc</item>
+        <item>Bouclier</item>
+        <item>Arc inversé</item>
+        <item>Bouclier inversé</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Murmure</item>
+        <item>Rayonnant</item>
+        <item>Inondation</item>
+        <item>Scintillement</item>
+        <item>Lueur profonde</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Contour de l’album</item>
+        <item>Dégradé de l’album</item>
+        <item>Couleur secondaire de l’album</item>
+        <item>Verre de l’album</item>
+        <item>Couleur tertiaire de l’album</item>
+        <item>Contour néon</item>
+    </string-array>
+</resources>

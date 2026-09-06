@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Hav</item>
+        <item>Solnedgång</item>
+        <item>Mittstrålkastare</item>
+        <item>Glasslöja</item>
+        <item>Sammet</item>
+        <item>Noir-strålkastare</item>
+        <item>Istvätt</item>
+        <item>Rosblomning</item>
+        <item>Prisma</item>
+        <item>Halvmånekant</item>
+        <item>Tidvattenband</item>
+        <item>Pappersfodral</item>
+        <item>Stigande lykta</item>
+        <item>Delad hägring</item>
+        <item>Lugnt rutnät</item>
+        <item>Nocturne</item>
+        <item>Molnstudie</item>
+        <item>Flytande pölar</item>
+        <item>Färgmonolit</item>
+        <item>Delad ton</item>
+        <item>Toning</item>
+        <item>Duoton</item>
+        <item>Band</item>
+        <item>Vinjett</item>
+        <item>Grafit</item>
+        <item>Bio</item>
+        <item>Akryl</item>
+        <item>Nät</item>
+        <item>Nebulosa</item>
+        <item>Bioluminescens</item>
+        <item>Iriserande</item>
+        <item>Omloppsbana</item>
+        <item>Bläcktvätt</item>
+        <item>Blomning</item>
+        <item>Fjord</item>
+        <item>Punktmatris</item>
+        <item>Skanningslinjer</item>
+        <item>Radar</item>
+        <item>Kontur</item>
+        <item>Fasetterad</item>
+        <item>Albumfyllning</item>
+        <item>Sekundär fyllning</item>
+        <item>Tertiär fyllning</item>
+        <item>Glas</item>
+        <item>Midnatt</item>
+        <item>Rök</item>
+        <item>Tidvattenlinje</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Mossa</item>
+        <item>Lavendeldis</item>
+        <item>Körsbär</item>
+        <item>Djuphav</item>
+        <item>Damm</item>
+        <item>Blekt</item>
+        <item>Månsken</item>
+        <item>Dröm</item>
+        <item>Infraröd</item>
+        <item>Skog</item>
+        <item>Silver</item>
+        <item>Godis</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Övre toning</item>
+        <item>Mittstrålkastare</item>
+        <item>Diagonal skugga</item>
+        <item>Vänster ridå</item>
+        <item>Höger ridå</item>
+        <item>Mittband</item>
+        <item>Övertoning</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Omvänt blad</item>
+        <item>Omvänd droppe</item>
+        <item>Småsten</item>
+        <item>Båge</item>
+        <item>Sköld</item>
+        <item>Omvänd båge</item>
+        <item>Omvänd sköld</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Viskning</item>
+        <item>Strålande</item>
+        <item>Flod</item>
+        <item>Skimmer</item>
+        <item>Djupt sken</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Albumkontur</item>
+        <item>Albumtoning</item>
+        <item>Sekundär albumfärg</item>
+        <item>Albumglas</item>
+        <item>Tertiär albumfärg</item>
+        <item>Neonkontur</item>
+    </string-array>
+</resources>

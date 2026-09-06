@@ -1874,6 +1874,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1917,6 +1922,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2358,4 +2368,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">コピー</string>
+    <string name="dev_report_copied">レポートをコピーしました</string>
+    <string name="dev_watch_snapshot_inspector">時計設定のスナップショット</string>
+    <string name="dev_watch_snapshot_inspector_description">今この瞬間に時計へ実際に送信される内容：アクティブな外観スコープ、推定サイズ、容量制限に収めるため破棄された非アクティブなフェイススコープのキャッシュ</string>
+    <string name="dev_data_layer_inspector">Data Layer インスペクター</string>
+    <string name="dev_data_layer_inspector_description">接続中の Wearable ノードと、時計アプリが最後に応答した WatchInfo - 「時計が接続されていません」の背後にある生の状態</string>
+    <string name="dev_media_sessions_inspector">MediaSession エクスプローラー</string>
+    <string name="dev_media_sessions_inspector_description">現在アクティブなすべての MediaSession。追跡中のものだけでなく、公開されているアクション、キュー、再生ルートも表示します</string>
+    <string name="dev_view_phone_log">スマートフォンのログを表示</string>
+    <string name="dev_view_phone_log_description">ディスク上の Timber ログ末尾と、「ログを送信」で以前取得している場合は時計のログ</string>
+    <string name="dev_theme_submission_preflight">テーマ投稿の事前チェック</string>
+    <string name="dev_theme_submission_preflight_description">保存済みの各ウォッチテーマをコミュニティ投稿チェックに通し、ブロックしている設定があれば正確に示します</string>
+    <string name="dev_appearance_resolution_inspector">外観設定解決インスペクター</string>
+    <string name="dev_appearance_resolution_inspector_description">スコープ内の各外観キーについて、4つの解決段階のうち実際に採用されたもの — 明示的なフェイス値、フェイスごとの既定値、旧グローバル値、定義の既定値 — と、それぞれが返す値を表示します</string>
+    <string name="action_fast_forward">早送り</string>
+    <string name="action_rewind">巻き戻し</string>
+    <string name="action_set_playback_speed">速度を %1$s× に設定</string>
+    <string name="action_seek_to_percent">%1$d%% に移動</string>
+    <string name="action_set_volume_percent">音量を %1$d%% に設定</string>
+    <string name="action_set_shuffle_on">シャッフルをオン</string>
+    <string name="action_set_shuffle_off">シャッフルをオフ</string>
+    <string name="action_set_repeat_off">リピートをオフ</string>
+    <string name="action_set_repeat_all">すべてリピート</string>
+    <string name="action_set_repeat_one">1曲リピート</string>
+    <string name="group_playback_speed">再生速度</string>
+    <string name="group_track_position">曲の位置</string>
+    <string name="group_shuffle_mode">シャッフルモード</string>
+    <string name="group_repeat_mode">リピートモード</string>
+    <string name="group_volume_levels">音量レベル</string>
+    <string name="group_watch_screens">ウォッチ画面</string>
+    <string name="group_find_music">検索して再生</string>
+    <string name="action_open_face_picker">フェイス選択を開く</string>
+    <string name="action_close_watch_app">ウォッチアプリを閉じる</string>
+    <string name="hand_gestures">ハンドジェスチャー</string>
+    <string name="hand_gestures_hint">Svartifoss を開いている間、対応する時計で利用できます。</string>
+    <string name="hand_gestures_hint_disconnected">時計を接続して Svartifoss を開き、ハンドジェスチャーに対応しているか確認してください。</string>
+    <string name="hand_gestures_hint_outdated">時計アプリを更新して、この時計がハンドジェスチャーに対応しているか確認してください。</string>
+    <string name="hand_gestures_hint_unsupported">この時計はハンドジェスチャーに対応していないため、ここに割り当てたアクションは実行されません。</string>
+    <string name="hand_gestures_hint_disabled">この時計ではハンドジェスチャーがオフになっています。時計本体の「設定 \u2192 ジェスチャー」でオンにしてください。</string>
+    <string name="hand_gestures_hint_ready">この時計で使用可能：Svartifoss プレーヤーを開いた状態で2回ピンチしてください。</string>
+    <string name="hand_gesture_how_it_works">手首を上げた状態で、親指と人差し指を素早く2回つまみ合わせます。Wear OS ではこれをプライマリアクションと呼ぶため、別メーカーの時計では独自の同等ハンドジェスチャーを使用する場合があります。\n\nこの操作が動作するのは、時計で Svartifoss プレーヤーが開いていて画面が点灯している間だけです \u2014 ウォッチフェイスから、キューやメニューの上から、または常時表示画面からは動作しません。実行されるアクションは現在の再生状態に設定されているものなので、どちらの状態でも動作させるには両方の「コントロール」ページで設定してください。\n\nジェスチャーは時計本体の「設定 \u2192 ジェスチャー」でもオンにする必要があります。</string>
+    <string name="double_pinch">ダブルピンチ</string>
+    <string name="icon_selection_search_hint">アイコンを検索</string>
+    <string name="icon_selection_search_empty">検索に一致するアイコンはありません</string>
+    <string name="open_quick_actions_panel">クイックアクションパネルを開く</string>
+    <string name="open_volume_screen">音量画面を開く</string>
+    <string name="open_progress_screen">進捗画面を開く</string>
+    <string name="export_config_failed_detail">バックアップをエクスポートできませんでした: %1$s</string>
+    <string name="backup_selection_title">バックアップ内容を選択</string>
+    <string name="backup_selection_description">保存する Svartifoss の内容を選択します。既定ではすべて選択されています。このバックアップをインポートするとき、選択していない項目は変更されません。</string>
+    <string name="backup_selection_select_all">すべて選択</string>
+    <string name="backup_selection_clear_all">すべてクリア</string>
+    <string name="backup_selection_export">バックアップをエクスポート</string>
+    <string name="backup_selection_empty">少なくとも1項目選択してください</string>
+    <string name="backup_section_buttons">ボタン設定</string>
+    <string name="backup_section_buttons_description">音楽の再生中・停止中に使う、ボタン、クラウン、ジェスチャーのアクション。</string>
+    <string name="backup_section_actions">アクションリスト</string>
+    <string name="backup_section_actions_description">ウォッチのアクションメニューに表示される、順序付きのアクション一覧です。</string>
+    <string name="backup_section_app_settings">アプリ設定</string>
+    <string name="backup_section_app_settings_description">スマートフォン設定、ウォッチの動作、言語、再生、連携。</string>
+    <string name="backup_section_watch_appearance">ウォッチの外観とテーマ</string>
+    <string name="backup_section_watch_appearance_description">ウォッチのレイアウト、色、タイポグラフィ、パネル、AOD、保存済みカスタムテーマ。</string>
+    <string name="backup_section_playlist_shortcuts">プレイリストのショートカット</string>
+    <string name="backup_section_playlist_shortcuts_description">保存した楽曲、アルバム、アーティスト、プレイリスト、その他のストリーミングリンク。</string>
+    <string name="backup_section_history">検索と再生の履歴</string>
+    <string name="backup_section_history_description">最近の検索と最近再生した曲。</string>
+    <string name="backup_section_icons">読み込まれたアイコンとアートワーク</string>
+    <string name="backup_section_icons_description">カスタムアクションアイコン、ショートカットのカバー、キャッシュされたアプリアイコン。</string>
+    <string name="backup_section_privacy">プライバシーと通知</string>
+    <string name="backup_section_privacy_description">クラッシュレポート、お知らせ通知、アプリが保存するその他の同意設定。</string>
+    <string name="backup_section_local_app_state">ローカルアプリ状態</string>
+    <string name="backup_section_local_app_state_description">現在のアクセント、最後のメニュー位置、完了した案内、更新状態。</string>
+    <string name="backup_section_auxiliary_data">その他のアプリデータ</string>
+    <string name="backup_section_auxiliary_data_description">今後のデータストアを含む、アプリ固有の追加設定と内部ファイル。</string>
+    <string name="pref_numeric_range">%1$d から %2$d の間。</string>
+    <string name="background_editor_artwork">アートワーク</string>
+    <string name="background_editor_layers">レイヤー</string>
+    <string name="background_editor_layers_count">%1$d / %2$d</string>
+    <string name="background_editor_add_layer">レイヤーを追加</string>
+    <string name="background_editor_reset_layers">リセット</string>
+    <string name="background_editor_empty">レイヤーはありません。アートワークのみ表示されます。</string>
+    <string name="background_editor_note">このリストの最上部のレイヤーはすべての上に描画され、最下部のレイヤーはアートワークに最も近い位置に置かれます。</string>
+    <string name="background_editor_full">最大 %1$d レイヤーまで重ねられます。</string>
+    <string name="background_layer_kind_wash">背景</string>
+    <string name="background_layer_kind_shade">シェーディング</string>
+    <string name="background_layer_kind_floor">アクセントフロア</string>
+    <string name="background_layer_move_up">このレイヤーを上へ移動</string>
+    <string name="background_layer_move_down">このレイヤーを下へ移動</string>
+    <string name="background_layer_more">このレイヤーのその他のオプション</string>
+    <string name="background_layer_add_title">レイヤーを追加</string>
+    <string name="background_layer_style_title">%1$s レイヤー</string>
+    <string name="background_layer_opacity">強度</string>
+    <string name="background_layer_color">色</string>
+    <string name="background_layer_custom_color">色を選択</string>
+    <string name="background_layer_duplicate">複製</string>
+    <string name="background_layer_remove">削除</string>
+    <string name="background_layer_color_default">デフォルト</string>
+    <string name="background_layer_color_album">アルバムの色</string>
+    <string name="background_layer_color_secondary">アルバムの第2色</string>
+    <string name="background_layer_color_tertiary">アルバムの第3色</string>
+    <string name="background_layer_color_desaturated">抑えたアルバム色</string>
+    <string name="background_layer_color_black">黒</string>
+    <string name="background_layer_color_custom">カスタム色</string>
+    <string name="background_layer_reset_title">レイヤーをリセットしますか？</string>
+    <string name="background_layer_reset_message">レイヤー構成は、それぞれの行で設定されているシェーディングとアクセントフロアに戻ります。古いビルドのウォッチでも同じ表示になります。</string>
+    <string name="watch_element_progress">進捗</string>
+    <string name="watch_element_volume">音量</string>
+    <string name="watch_element_quick_panel">クイックアクション</string>
+    <string name="watch_element_queue">キュー</string>
+    <string name="watch_element_lyrics">歌詞</string>
+    <string name="player_section_on_screen">画面上</string>
+    <string name="player_element_app_icon">アプリアイコン</string>
+    <string name="player_element_controls">プレーヤーコントロール</string>
+    <string name="player_element_tap_flash">タップフラッシュ</string>
+    <string name="player_element_inner_progress">内側の進捗</string>
+    <string name="player_element_edge_arc">エッジアーク</string>
+    <string name="player_element_edge_seek">エッジシーク</string>
+    <string name="player_element_clock">時計</string>
+    <string name="player_element_cover_art">カバーアート</string>
+    <string name="setting_album_art_filter">アルバムアートフィルター</string>
+    <string name="setting_album_art_filter_description">どのアルバムアートスタイルにも独立した色処理を適用します。</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto の極細ストロークで、繊細なディスプレイ表現に適しています。</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto の軽く空気感のあるストロークと、ファミリーらしい馴染みのある比率です。</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto のやや強いミディアムストロークで、コンパクトかつ読みやすいラベルに適しています。</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto のシステムで最も太いウェイトで、力強い表示テキストに適しています。</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto を水平方向に圧縮し、長いタイトルをより少ないスペースに収めます。</string>
+    <string name="setting_wear_title_font">タイトルの書体</string>
+    <string name="setting_wear_title_text_case">タイトルの文字ケース</string>
+    <string name="setting_wear_artist_font">アーティストの書体</string>
+    <string name="setting_wear_artist_text_case">アーティストの文字ケース</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">初期読書向けに設計された、親しみやすい丸みのあるサンセリフ</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">編集的な重厚感を持つ、高コントラストの Didone 系ディスプレイ書体</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">手描きコミックの雰囲気を持つ、力強いポスター向けサンセリフ</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">ゆったり均等な字間を持つ、落ち着いた幾何学サンセリフ</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">末端が柔らかく丸い、現代的なスラブセリフ</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">見出しのインパクトを最大化する極太スラブセリフ</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">スモールキャップの細身な手描き書体</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">強い見出し向けの、密度の高いコンデンスサンセリフ</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">小さいサイズでもしっかり読める幾何学スラブセリフ</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">叫ぶような勢いを持つコミックブック風ディスプレイ書体</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">ステンシル風のミリタリーディスプレイ書体</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">温かくくだけた曲線を持つ直立セリフ</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">角がわずかに丸いヒューマニストサンセリフ</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">力強く率直な形を持つグロテスクサンセリフ</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">脚本用に作られた洗練されたタイプライター風等幅書体</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">柔らかく本らしい印象の、丸みのあるスラブセリフ</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">長文向けに調整された、オールドスタイルの書籍用セリフ</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">モダンな仕上がりの低コントラスト幾何学サンセリフ</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">本文サイズでも崩れにくい、頑丈なセリフ</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">角張った接合部を持つ現代的なテクニカルサンセリフ</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">字形の区別が明確なプログラミング向け等幅書体</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">画面上のコード向けに設計されたヒューマニスト等幅書体</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">丸いストロークを持つ、弾むような手書き書体</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">1920年代のヴィンテージ感を持つ幾何学サンセリフ</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Futura の伝統を受け継ぐ幾何学サンセリフ</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">少し傾いた、ループレスのタイ語・ラテン文字サンセリフ</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">読書時の視覚的な負担を減らすよう設計されたサンセリフ</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">レトロな看板風の雰囲気を持つ太い連結スクリプト</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">温かさと精密さを両立するセミジオメトリックサンセリフ</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">すっきりしたUIテキスト向けのミニマルなサンセリフ</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">柔らかな末端を持つ、よく丸められたサンセリフ</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">均一で現代的なリズムを持つ幾何学サンセリフ</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">ゲーム感のある角張ったテクノ書体</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">グリッド上に描かれたコンパクトなテクニカルサンセリフ</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">特徴的な開いた曲線を持つ現代的なグロテスク</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">アーケード筐体から飛び出したようなピクセル書体</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">柔らかく軽い印象の、丸みある幾何学サンセリフ</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">技術的な角を持つ、やや四角いコンデンスサンセリフ</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">レトロな看板描きにルーツを持つアールデコ風ディスプレイ書体</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Roboto の等幅版</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">太く鈍いストロークを持つ、遊び心あるディスプレイ書体</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">重い四角形を持つ幅広いインダストリアル書体</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">グジャラート由来の、鮮やかに傾いたディスプレイ書体</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">初期のコンピューター画面を思わせる小さなビットマップ書体</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">コードを快適に読むために設計された等幅書体</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">ポスターの存在感を持つ、全大文字のコンデンス書体</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">デーヴァナーガリーとラテン文字の見出し向けの背高コンデンス書体</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">技術的な雰囲気を持つ、やや四角いヒューマニストサンセリフ</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">親しみやすい印象の、全面的に丸いサンセリフ</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">1920年代の喫茶店看板を思わせるコンデンス書体</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">柔らかく切り落とした現代的な末端を持つスラブセリフ</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">開放的で読みやすい形を持つ、親しみやすいヒューマニストサンセリフ</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">快適に読める、頑丈な形の温かいサンセリフ</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">明瞭なUI向けに設計された多用途ヒューマニストサンセリフ</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">編集的な雰囲気を持つ洗練された本文用セリフ</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">画面での読書向けに調整された古典的な書籍用セリフ</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">幅広く安定したリズムを持つ実用的なグロテスクサンセリフ</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">正確な比率を持つテクニカル系ヒューマニストサンセリフ</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">洗練され読みやすい質感を持つテクニカル等幅書体</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">設計された印象を持つ現代的なセリフ</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">コンパクトで実用的な形を持つ、すっきりした万能サンセリフ</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">親しみやすい比率を持つ個性的なグロテスク</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">未来的で広々した印象の幾何学サンセリフ</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">優雅で都会的な線を持つ現代的な幾何学サンセリフ</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">小画面向けに設計された、バランスの良い現代サンセリフ</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">表情豊かな比率を持つ、自信のあるディスプレイサンセリフ</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">長めの曲情報向けに読みやすく設計された補助サンセリフ</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">現代的なテクニカル感を持つ、くっきりした等幅書体</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">アートディレクション的で遊びのある形を持つ、型破りなサンセリフ</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">静かな精密さを持つ、柔軟で現代的なサンセリフ</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">気軽に読める、すっきり親しみやすいサンセリフ</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">明るい個性を持つ、丸みのあるディスプレイサンセリフ</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">構造的な形に意外なディテールを混ぜた、生き生きしたグロテスク</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">ドラマチックなタイトル向けの高コントラストディスプレイセリフ</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">上品で高コントラストな文学的セリフ</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">カリグラフィックな細部を持つ優雅なディスプレイセリフ</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">小さいサイズでも明瞭な、力強いスラブセリフ</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">密度の高い表現的な読書に向く多用途セリフ</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">本らしい声を持つ温かなオールドスタイルセリフ</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">洗練された特徴的な字形を持つ優雅なサンセリフ</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">強い見出し向けの太い幾何学サンセリフ</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">スポーティで動きのあるエネルギーを持つ、コンデンスに適したサンセリフ</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">開いたカウンターと親しみやすい看板感を持つ柔らかなサンセリフ</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">ヒューマニストの温かさと明瞭さを両立する多用途サンセリフ</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">交通標識に着想を得た、明瞭で自信あるリズムのサンセリフ</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">日常のUI向けに作られた、中立でアクセシブルなサンセリフ</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">滑らかで現代的な曲線を持つ軽快な幾何学サンセリフ</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">柔らかな未来感を持つ、丸みのある細身サンセリフ</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">わずかにタイ文字の雰囲気を持つ、すっきりした幾何学サンセリフ</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">最大限の存在感を狙った幅広い未来的ディスプレイ書体</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">遊び心ある技術的な声を持つ、サンセリフから等幅まで変化する可変ファミリー</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">独特なデジタル質感を持つ可変幅等幅書体</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">多数の文字体系を広くサポートする、高可読性サンセリフ</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">幅広い文字体系をサポートする信頼性の高いセリフ</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">一定したリズムのために設計された多言語等幅書体</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">ヘブライ文字のリズムを感じさせる、コンパクトで現代的なサンセリフ</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">明瞭な読書に最適化された、力強いヒューマニストサンセリフ</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">丸く開放的な質感を持つ、親しみやすい画面用サンセリフ</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">特徴的な比率を持つコンパクトな幾何学サンセリフ</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">文学的な雰囲気を持つ、生き生きしたカリグラフィックセリフ</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">インターフェースで高い可読性を持つ、すっきりしたヒューマニストサンセリフ</string>
+    <string name="setting_wear_note_show_cover">カバーアート</string>
+    <string name="aod_element_artwork">アートワーク</string>
+    <string name="aod_element_clock">時計</string>
+    <string name="aod_element_track_info">トラック情報</string>
+    <string name="aod_element_transport">トランスポート</string>
+    <string name="aod_element_progress">進行状況</string>
+    <string name="aod_element_up_next">次の曲</string>
+    <string name="aod_section_artwork">アートワーク</string>
+    <string name="aod_control_tint">ティント</string>
+    <string name="aod_control_brightness">明るさ</string>
+    <string name="aod_control_art_treatment">処理</string>
+    <string name="aod_control_art_opacity">不透明度</string>
+    <string name="mini_button_control_visibility">表示</string>
+    <string name="mini_button_control_arrangement">配置</string>
+    <string name="mini_button_control_shape">形状</string>
+    <string name="mini_button_control_background">背景</string>
+    <string name="mini_button_control_opacity">不透明度</string>
+    <string name="mini_button_assign_action">アクションを割り当て</string>
+    <string name="mini_button_gestures_note">プレーヤー上で上、下、左にスワイプします。右スワイプは常にシステムの閉じるジェスチャーで、遮断されることはありません。</string>
+    <string name="setting_wear_chat_cover_shape">チャットアバターの形</string>
+    <string name="setting_wear_chat_show_cover">カバーアート</string>
+    <string name="setting_wear_metadata_cover_shape">メタデータカバーの形</string>
+    <string name="setting_wear_metadata_show_cover">カバーアート</string>
+    <string-array name="wear_text_case_entries">
+        <item>標準</item>
+        <item>大文字</item>
+        <item>小文字</item>
+        <item>タイトルケース</item>
+    </string-array>
+    <string name="wear_text_font_follow">グローバル書体に従う</string>
+    <string name="category_wf_typography_track_time">曲の時間</string>
+    <string name="setting_wear_track_time_font">曲時間の書体</string>
+    <string name="wear_track_time_font_follow">デザインに従う</string>
+    <string name="setting_wear_track_time_font_weight">曲時間の太さ</string>
+    <string name="setting_wear_track_time_font_italic">曲時間を斜体にする</string>
+    <string name="setting_wear_track_time_font_scale">曲時間のサイズ</string>
+    <string name="setting_wear_track_time_font_opacity">曲時間の不透明度</string>
+    <string name="setting_wear_track_time_font_tracking">曲時間の文字間隔</string>
+    <string-array name="album_art_filter_entries">
+        <item>なし</item>
+        <item>モノクロ</item>
+        <item>ウォーム</item>
+        <item>クール</item>
+        <item>ゴールデンアワー</item>
+        <item>ロゼ</item>
+        <item>ビンテージフィルム</item>
+        <item>色あせたフィルム</item>
+        <item>マット</item>
+        <item>ビビッド</item>
+        <item>パンチ</item>
+        <item>パステル</item>
+        <item>セピア</item>
+        <item>サイアノタイプ</item>
+        <item>ティール＆オレンジ</item>
+        <item>ハイコントラスト</item>
+        <item>ソフトライト</item>
+        <item>ナイト</item>
+    </string-array>
+    <string name="queue_item_now_playing">再生中</string>
+    <string name="queue_item_unknown_title">不明な曲</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">再生キュー · %1$d トラック</item>
+        <item quantity="other">再生キュー · %1$d トラック</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">アクセントフロアの色</string>
+    <string name="setting_wear_accent_floor_custom_color">カスタムフロア色</string>
+    <string name="setting_wear_accent_floor_custom_color_description">アクセントフロアの色をカスタム色にしたときに使用する色を選択します</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>アルバムアクセント</item>
+        <item>アルバム第2色</item>
+        <item>アルバム第3色</item>
+        <item>カスタムカラー</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">日常の読書向けに設計された、中立で非常に読みやすいUIサンセリフ</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">小さくても判別しやすい形を採用した、アクセシビリティ重視の字形</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">柔らかく丸い幾何学サンセリフ — 自信があり親しみやすい</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">長いタイトルにも余裕を与える、コンパクトなヒューマニストサンセリフ</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">力強いポスター感を持つ、背の高いコンデンスディスプレイ書体</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">長文を快適に読むために設計された現代的なセリフ</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">温かさと個性を持つ、表情豊かな柔らかいセリフ</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">技術的なエッジを持つレトロフューチャーな等幅書体</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">最大のコントラストを狙った、高密度の超極太ディスプレイ書体</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">活発で個人的な雰囲気を持つ、流れるような手書きスクリプト</string>
+    <string name="setting_wear_artist_text_mode">アーティストテキストの動作</string>
+    <string name="setting_wear_album_art_source">アルバムアートのソース</string>
+    <string name="setting_user_font">自分のフォント</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">このスマートフォンから .ttf または .otf ファイルをインポート</string>
+    <string name="setting_user_font_loaded">%1$s · タップして置換または削除</string>
+    <string name="user_font_pick">フォントファイルを選択</string>
+    <string name="user_font_replace">置換</string>
+    <string name="user_font_remove">削除</string>
+    <string name="user_font_imported">「%1$s」をインポートしました。任意のフォント一覧から選択できます。時計へ送信中です。</string>
+    <string name="user_font_removed">インポートしたフォントを削除しました。</string>
+    <string name="user_font_error_too_large">そのファイルは %1$s です。時計へ素早く送るには、フォントを %2$s 未満にする必要があります。</string>
+    <string name="user_font_error_not_a_font">そのファイルはこのスマートフォンで読み取れるフォントではありません。TrueType と OpenType（.ttf、.otf）は使用できますが、Web フォント（.woff、.woff2）は使用できません。</string>
+    <string name="user_font_error_unreadable">そのファイルを読み取れませんでした。もう一度選ぶか、先にこのスマートフォンへコピーしてください。</string>
+    <string name="user_font_not_shareable">自分のフォントを使うテーマはこのスマートフォンにのみ残ります</string>
+    <string name="setting_custom_album_art_image">使用する画像</string>
+    <string name="setting_custom_album_art_folder">描画元フォルダー</string>
+    <string name="setting_custom_album_art_none">未選択 — タップして選択</string>
+    <string name="setting_custom_album_art_chosen">%1$s · タップして変更</string>
+    <string name="custom_album_art_image_set">その画像はプレーヤーの背後に表示されます。</string>
+    <string name="custom_album_art_folder_set">そのフォルダーの画像が各トラックごとに描画されます。</string>
+    <string name="custom_album_art_error">開けませんでした。もう一度選ぶか、このスマートフォン自身のストレージ内のものを選択してください。</string>
+    <string name="custom_album_art_not_shareable">自分の画像を使うテーマはこのスマートフォンにのみ残ります</string>
+    <string name="setting_wear_text_block_align">テキスト配置</string>
+    <string name="setting_wear_text_block_align_description">トラックテキストを揃える側です。「フェイスに従う」では、各フェイスに設計された配置を保持します。</string>
+    <string name="setting_wear_text_block_position">テキスト位置</string>
+    <string name="setting_wear_text_block_position_description">画面上でトラックテキストが置かれる位置です。「フェイスに従う」では、各フェイスに設計された位置を保持します。</string>
+    <string name="setting_online_artwork">オンラインアートワーク</string>
+    <string name="setting_online_artwork_description">ウォッチフェイスにオンラインで検索した画像を表示します \u2014 再生中のアーティスト、または画像を公開していないプレーヤー向けのアルバムカバーです。スマートフォンが Deezer の公開カタログを検索して結果をキャッシュします。送信されるのはトラック名とアーティスト名だけで、フェイスがこれらのソースのいずれかに設定されている場合にのみ検索します。オフの場合は、プレーヤー自身のアートワークを使用します。</string>
 </resources>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">प्रगति रिंग लेआउट</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>पूरी तरह पारदर्शी</item>
+        <item>सेकंडरी रंग</item>
+        <item>टर्शियरी रंग</item>
+        <item>कलर मेश</item>
+        <item>ऑरोरा</item>
+        <item>स्पॉटलाइट</item>
+        <item>विन्येट</item>
+        <item>स्प्लिट टोन</item>
+        <item>रंगीन बैंड</item>
+        <item>आधी रात</item>
+        <item>हेलो</item>
+        <item>स्मोक ब्लर</item>
+        <item>सूर्यास्त</item>
+        <item>महासागर</item>
+        <item>नेब्युला</item>
+        <item>अंगारा</item>
+        <item>टाइडलाइन</item>
+        <item>जैवदीप्ति</item>
+        <item>इरिडेसेंट</item>
+        <item>ग्रेफाइट</item>
+        <item>सिनेमा</item>
+        <item>ऑर्बिट</item>
+        <item>क्षितिज</item>
+        <item>इंक वॉश</item>
+        <item>ब्लॉसम</item>
+        <item>फियोर्ड</item>
+        <item>डॉट ग्रिड</item>
+        <item>स्कैनलाइन</item>
+        <item>रडार</item>
+        <item>कॉन्टूर लाइनें</item>
+        <item>फैसेटेड</item>
+        <item>सांझ</item>
+        <item>बर्फ़</item>
+        <item>गुलाब</item>
+        <item>कागज़</item>
+        <item>मोनोलिथ</item>
+        <item>लालटेन</item>
+        <item>नॉयर</item>
+        <item>वेलवेट</item>
+        <item>मिराज</item>
+        <item>ब्लूम</item>
+        <item>बादल</item>
+        <item>नॉक्टर्न</item>
+        <item>लिक्विड</item>
+        <item>ज्वार</item>
+        <item>विनाइल</item>
+        <item>कोरोना</item>
+        <item>क्रेसेंट</item>
+        <item>ग्रिड</item>
+        <item>ग्लास वेल</item>
+        <item>Material</item>
+        <item>पोस्टर</item>
+        <item>स्टूडियो</item>
+        <item>स्पेक्ट्रम</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>मोती</item>
+        <item>ड्युअल रेल</item>
+        <item>पल्स</item>
+        <item>क्रोम</item>
+        <item>स्पेक्ट्रम</item>
+        <item>सीढ़ियाँ</item>
+        <item>कैंडी</item>
+        <item>भूत</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>डबल एज</item>
+        <item>वर्टिकल मीटर (बाएँ)</item>
+        <item>वर्टिकल मीटर (दाएँ)</item>
+        <item>ऊपरी मीटर</item>
+        <item>नीचे का मीटर</item>
+        <item>बीच का डायल</item>
+        <item>ऊपरी हेलो</item>
+        <item>नीचे का हेलो</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>डबल रिंग</item>
+        <item>मोती</item>
+        <item>डैश और डॉट</item>
+        <item>24-घंटे के निशान</item>
+        <item>सिर्फ़ प्रगति</item>
+        <item>ग्लो</item>
+        <item>ड्युओटोन</item>
+        <item>सुई</item>
+        <item>बारी-बारी</item>
+        <item>चिंगारी</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>बेज़ल किनारा</item>
+        <item>इनसेट रिंग</item>
+        <item>इनर रिंग</item>
+        <item>मोटी रिंग</item>
+        <item>नीचे से खोलें</item>
+        <item>ऊपर से खोलें</item>
+        <item>बायाँ आर्क</item>
+        <item>दायाँ आर्क</item>
+        <item>डबल ट्रैक</item>
+        <item>बाएँ से खोलें</item>
+        <item>दाएँ से खोलें</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>कॉम्पैक्ट पिल</item>
+        <item>स्क्वायर एल्बम</item>
+        <item>स्टैक्ड पिल</item>
+        <item>बैज</item>
+        <item>ग्लास बार</item>
+        <item>LCD</item>
+        <item>आउटलाइन स्क्वायर</item>
+        <item>रिबन</item>
+        <item>समय बबल</item>
+        <item>स्प्लिट टोन</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>टाइमलाइन (ऊपर)</item>
+        <item>टाइमलाइन (नीचे)</item>
+        <item>सेगमेंट (ऊपर)</item>
+        <item>वर्टिकल टाइमलाइन (बाएँ)</item>
+        <item>वर्टिकल टाइमलाइन (दाएँ)</item>
+        <item>बीच का डायल</item>
+        <item>ट्विन टाइमलाइन</item>
+        <item>सेगमेंट (नीचे)</item>
+        <item>बीच का स्टैक</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>मुलायम</item>
+        <item>क्रोम</item>
+        <item>होलोग्राफ़िक</item>
+        <item>बबल</item>
+        <item>रेल</item>
+        <item>सूर्यास्त</item>
+        <item>एल्बम आउटलाइन</item>
+        <item>डार्क ग्लास</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>पंखा</item>
+        <item>ऑर्बिट</item>
+        <item>नीचे का डॉक</item>
+        <item>कॉलम</item>
+        <item>स्प्लिट डेक</item>
+        <item>डायमंड</item>
+        <item>कैरोसेल</item>
+        <item>त्रिकोण</item>
+        <item>सीढ़ी</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>मुलायम</item>
+        <item>स्लैब</item>
+        <item>स्याही</item>
+        <item>रेल</item>
+        <item>सूर्यास्त</item>
+        <item>बबल</item>
+        <item>क्रोम</item>
+        <item>होलोग्राफ़िक</item>
+    </string-array>
+</resources>

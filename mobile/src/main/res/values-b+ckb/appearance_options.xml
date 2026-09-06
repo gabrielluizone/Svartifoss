@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>ئۆقیانوس</item>
+        <item>خۆرئاوابوون</item>
+        <item>Spotlight ی ناوەڕاست</item>
+        <item>پەردەی شووشە</item>
+        <item>Velvet</item>
+        <item>Noir spotlight</item>
+        <item>Ice wash</item>
+        <item>گوڵکردنی گوڵی سوور</item>
+        <item>Prism</item>
+        <item>لێواری هلال</item>
+        <item>پشتێنەکانی Tidal</item>
+        <item>قاپی کاغەز</item>
+        <item>هەڵاتنی چرای دەستی</item>
+        <item>Mirage split</item>
+        <item>Grid ی ئارام</item>
+        <item>Nocturne</item>
+        <item>Cloud study</item>
+        <item>گۆماوی شل</item>
+        <item>Monolith ی ڕەنگ</item>
+        <item>Split tone</item>
+        <item>Gradient</item>
+        <item>دوو ڕەنگ</item>
+        <item>پشتێنەکان</item>
+        <item>Vignette</item>
+        <item>Graphite</item>
+        <item>Cinema</item>
+        <item>Acrylic</item>
+        <item>Mesh</item>
+        <item>Nebula</item>
+        <item>ڕووناکی زیندوو</item>
+        <item>ڕەنگاوڕەنگ</item>
+        <item>Orbit</item>
+        <item>Ink wash</item>
+        <item>گوڵکردن</item>
+        <item>Fjord</item>
+        <item>Dot matrix</item>
+        <item>Scanlines</item>
+        <item>Radar</item>
+        <item>Contour</item>
+        <item>Facet ـدار</item>
+        <item>پڕکردنەوەی ئالبوم</item>
+        <item>پڕکردنەوەی دووەم</item>
+        <item>پڕکردنەوەی سێیەم</item>
+        <item>شووشە</item>
+        <item>نیوەشەو</item>
+        <item>دووکەڵ</item>
+        <item>هێڵی مەوج</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Moss</item>
+        <item>تەمی Lavender</item>
+        <item>Cherry</item>
+        <item>دەریای قووڵ</item>
+        <item>تۆز</item>
+        <item>Bleach</item>
+        <item>ڕووناکی مانگ</item>
+        <item>خەون</item>
+        <item>Infrared</item>
+        <item>دارستان</item>
+        <item>زیو</item>
+        <item>Candy</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Fade ی سەرەوە</item>
+        <item>Spotlight ی ناوەڕاست</item>
+        <item>سێبەری لار</item>
+        <item>پەردەی چەپ</item>
+        <item>پەردەی ڕاست</item>
+        <item>پشتێنی ناوەڕاست</item>
+        <item>Crossfade</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>گەڵای پێچەوانە</item>
+        <item>دڵۆپی پێچەوانە</item>
+        <item>بەردۆکە</item>
+        <item>کەوانە</item>
+        <item>قەڵغان</item>
+        <item>کەوانەی پێچەوانە</item>
+        <item>قەڵغانی پێچەوانە</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>چرپە</item>
+        <item>Radiant</item>
+        <item>Flood</item>
+        <item>درەوشانەوە</item>
+        <item>ڕووناکی قووڵ</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>هێڵی دەرەوەی ئالبوم</item>
+        <item>Gradient ی ئالبوم</item>
+        <item>ڕەنگی دووەمی ئالبوم</item>
+        <item>شووشەی ئالبوم</item>
+        <item>ڕەنگی سێیەمی ئالبوم</item>
+        <item>هێڵی دەرەوەی Neon</item>
+    </string-array>
+</resources>

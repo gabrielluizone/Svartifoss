@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Ocean</item>
+        <item>Apus</item>
+        <item>Reflector central</item>
+        <item>Văl de sticlă</item>
+        <item>Catifea</item>
+        <item>Reflector noir</item>
+        <item>Spălare de gheață</item>
+        <item>Înflorire de trandafir</item>
+        <item>Prismă</item>
+        <item>Margine semilună</item>
+        <item>Benzi de maree</item>
+        <item>Husă de hârtie</item>
+        <item>Ridicare de felinar</item>
+        <item>Miraj împărțit</item>
+        <item>Grilă discretă</item>
+        <item>Nocturnă</item>
+        <item>Studiu de nori</item>
+        <item>Bazine lichide</item>
+        <item>Monolit de culoare</item>
+        <item>Ton împărțit</item>
+        <item>Gradient</item>
+        <item>Duoton</item>
+        <item>Benzi</item>
+        <item>Vignetă</item>
+        <item>Grafit</item>
+        <item>Cinema</item>
+        <item>Acrilic</item>
+        <item>Plasă</item>
+        <item>Nebuloasă</item>
+        <item>Bioluminescență</item>
+        <item>Iridescent</item>
+        <item>Orbită</item>
+        <item>Spălare cu cerneală</item>
+        <item>Înflorire</item>
+        <item>Fiord</item>
+        <item>Matrice de puncte</item>
+        <item>Linii de scanare</item>
+        <item>Radar</item>
+        <item>Contur</item>
+        <item>Fațetat</item>
+        <item>Umplere album</item>
+        <item>Umplere secundară</item>
+        <item>Umplere terțiară</item>
+        <item>Sticlă</item>
+        <item>Miezul nopții</item>
+        <item>Fum</item>
+        <item>Linia mareei</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Mușchi</item>
+        <item>Ceață de lavandă</item>
+        <item>Cireașă</item>
+        <item>Mare adâncă</item>
+        <item>Praf</item>
+        <item>Decolorat</item>
+        <item>Lumina lunii</item>
+        <item>Vis</item>
+        <item>Infraroșu</item>
+        <item>Pădure</item>
+        <item>Argintiu</item>
+        <item>Bomboană</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Estompare sus</item>
+        <item>Reflector central</item>
+        <item>Umbră diagonală</item>
+        <item>Cortină stângă</item>
+        <item>Cortină dreaptă</item>
+        <item>Bandă centrală</item>
+        <item>Tranziție încrucișată</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Frunză inversă</item>
+        <item>Picătură inversă</item>
+        <item>Pietricică</item>
+        <item>Arc</item>
+        <item>Scut</item>
+        <item>Arc invers</item>
+        <item>Scut invers</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Șoaptă</item>
+        <item>Radiant</item>
+        <item>Inundație</item>
+        <item>Licărire</item>
+        <item>Strălucire profundă</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Contur album</item>
+        <item>Gradient album</item>
+        <item>Culoare secundară album</item>
+        <item>Sticlă album</item>
+        <item>Culoare terțiară album</item>
+        <item>Contur neon</item>
+    </string-array>
+</resources>

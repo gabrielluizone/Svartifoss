@@ -1877,6 +1877,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1920,6 +1925,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2370,4 +2380,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Копіювати</string>
+    <string name="dev_report_copied">Звіт скопійовано</string>
+    <string name="dev_watch_snapshot_inspector">Знімок налаштувань годинника</string>
+    <string name="dev_watch_snapshot_inspector_description">Те, що фактично було б надіслано на годинник просто зараз: активна область оформлення, приблизний розмір і те, які кеші неактивних областей оформлень було відкинуто, щоб вкластися в ліміт</string>
+    <string name="dev_data_layer_inspector">Інспектор Data Layer</string>
+    <string name="dev_data_layer_inspector_description">Підключені вузли Wearable і останній WatchInfo, на який відповів застосунок годинника — необроблений стан за повідомленням «Годинник не підключено»</string>
+    <string name="dev_media_sessions_inspector">Оглядач MediaSession</string>
+    <string name="dev_media_sessions_inspector_description">Кожна наразі активна MediaSession, а не лише відстежувана: оголошені дії, черга та маршрут відтворення</string>
+    <string name="dev_view_phone_log">Переглянути журнал телефона</string>
+    <string name="dev_view_phone_log_description">Кінець журналу Timber на диску, а також журнал годинника, якщо функція «Надіслати журнали» вже отримувала його раніше</string>
+    <string name="dev_theme_submission_preflight">Перевірка перед надсиланням теми</string>
+    <string name="dev_theme_submission_preflight_description">Перевіряє кожну збережену тему годинника за правилами надсилання до спільноти й називає точне налаштування, яке її блокує, якщо таке є</string>
+    <string name="dev_appearance_resolution_inspector">Інспектор визначення оформлення</string>
+    <string name="dev_appearance_resolution_inspector_description">Для кожного ключа оформлення в межах області показує, який із чотирьох етапів визначення фактично переміг — явне значення оформлення, типове значення для оформлення, застаріле глобальне значення або типове значення визначення — і значення, яке повертає кожен із них</string>
+    <string name="action_fast_forward">Перемотати вперед</string>
+    <string name="action_rewind">Перемотати назад</string>
+    <string name="action_set_playback_speed">Установити швидкість %1$s×</string>
+    <string name="action_seek_to_percent">Перейти до %1$d%%</string>
+    <string name="action_set_volume_percent">Установити гучність %1$d%%</string>
+    <string name="action_set_shuffle_on">Увімкнути перемішування</string>
+    <string name="action_set_shuffle_off">Вимкнути перемішування</string>
+    <string name="action_set_repeat_off">Вимкнути повторення</string>
+    <string name="action_set_repeat_all">Повторювати все</string>
+    <string name="action_set_repeat_one">Повторювати одну композицію</string>
+    <string name="group_playback_speed">Швидкість відтворення</string>
+    <string name="group_track_position">Позиція композиції</string>
+    <string name="group_shuffle_mode">Режим перемішування</string>
+    <string name="group_repeat_mode">Режим повторення</string>
+    <string name="group_volume_levels">Рівні гучності</string>
+    <string name="group_watch_screens">Екрани годинника</string>
+    <string name="group_find_music">Знайти й відтворити</string>
+    <string name="action_open_face_picker">Відкрити вибір циферблата</string>
+    <string name="action_close_watch_app">Закрити застосунок на годиннику</string>
+    <string name="hand_gestures">ЖЕСТИ РУКОЮ</string>
+    <string name="hand_gestures_hint">Доступно на сумісних годинниках, поки відкрито Svartifoss.</string>
+    <string name="hand_gestures_hint_disconnected">Підключіть годинник і відкрийте на ньому Svartifoss, щоб перевірити, чи підтримує він жести рукою.</string>
+    <string name="hand_gestures_hint_outdated">Оновіть застосунок на годиннику, щоб перевірити, чи підтримує цей годинник жести рукою.</string>
+    <string name="hand_gestures_hint_unsupported">Цей годинник не підтримує жести рукою, тому призначена тут дія ніколи не виконається.</string>
+    <string name="hand_gestures_hint_disabled">Жести рукою вимкнено на цьому годиннику. Увімкніть їх безпосередньо на годиннику в Налаштування \u2192 Жести.</string>
+    <string name="hand_gestures_hint_ready">Готово на цьому годиннику: двічі зведіть пальці, поки відкрито програвач Svartifoss.</string>
+    <string name="hand_gesture_how_it_works">Швидко двічі зведіть великий і вказівний пальці, тримаючи зап’ясток піднятим. Wear OS називає це основною дією, тому годинник іншого виробника може використовувати власний еквівалентний жест рукою.\n\nВін працює лише тоді, коли програвач Svartifoss відкрито на годиннику й екран увімкнено \u2014 не з циферблата, не поверх черги чи меню та не на постійно ввімкненому дисплеї. Виконується дія, призначена для поточного стану відтворення, тому налаштуйте її на обох сторінках «Керування», щоб вона працювала в обох випадках.\n\nЖест також має бути ввімкнений у налаштуваннях самого годинника: Налаштування \u2192 Жести.</string>
+    <string name="double_pinch">Подвійний щипок</string>
+    <string name="icon_selection_search_hint">Шукати значки</string>
+    <string name="icon_selection_search_empty">Немає значків, що відповідають пошуку</string>
+    <string name="open_quick_actions_panel">Відкрити панель швидких дій</string>
+    <string name="open_volume_screen">Відкрити екран гучності</string>
+    <string name="open_progress_screen">Відкрити екран прогресу</string>
+    <string name="export_config_failed_detail">Не вдалося експортувати резервну копію: %1$s</string>
+    <string name="backup_selection_title">Вибрати вміст резервної копії</string>
+    <string name="backup_selection_description">Виберіть частини Svartifoss, які хочете зберегти. За замовчуванням вибрано все; невибрані частини не змінюються під час імпорту цієї резервної копії.</string>
+    <string name="backup_selection_select_all">Вибрати все</string>
+    <string name="backup_selection_clear_all">Очистити все</string>
+    <string name="backup_selection_export">Експортувати резервну копію</string>
+    <string name="backup_selection_empty">Виберіть принаймні один елемент</string>
+    <string name="backup_section_buttons">Налаштування кнопок</string>
+    <string name="backup_section_buttons_description">Дії кнопки, коронки й жестів, коли музика відтворюється або зупинена.</string>
+    <string name="backup_section_actions">Список дій</string>
+    <string name="backup_section_actions_description">Упорядкований список дій, що відображаються в меню дій годинника.</string>
+    <string name="backup_section_app_settings">Налаштування застосунку</string>
+    <string name="backup_section_app_settings_description">Налаштування телефона, поведінка годинника, мова, відтворення та інтеграції.</string>
+    <string name="backup_section_watch_appearance">Вигляд годинника й теми</string>
+    <string name="backup_section_watch_appearance_description">Макети годинника, кольори, типографіка, панелі, AOD і збережені власні теми.</string>
+    <string name="backup_section_playlist_shortcuts">Ярлики списків відтворення</string>
+    <string name="backup_section_playlist_shortcuts_description">Збережена музика та посилання на альбоми, виконавців, списки відтворення й інший потоковий вміст.</string>
+    <string name="backup_section_history">Історія пошуку та відтворення</string>
+    <string name="backup_section_history_description">Останні пошуки й нещодавно відтворені композиції.</string>
+    <string name="backup_section_icons">Завантажені значки й зображення</string>
+    <string name="backup_section_icons_description">Власні значки дій, обкладинки ярликів і кешовані значки застосунків.</string>
+    <string name="backup_section_privacy">Конфіденційність і сповіщення</string>
+    <string name="backup_section_privacy_description">Звіти про збої, сповіщення про оголошення та інші збережені застосунком параметри згоди.</string>
+    <string name="backup_section_local_app_state">Локальний стан застосунку</string>
+    <string name="backup_section_local_app_state_description">Поточний акцент, остання позиція меню, завершені підказки та стан оновлення.</string>
+    <string name="backup_section_auxiliary_data">Інші дані застосунку</string>
+    <string name="backup_section_auxiliary_data_description">Додаткові параметри й внутрішні файли застосунку, зокрема майбутні сховища даних.</string>
+    <string name="pref_numeric_range">Від %1$d до %2$d.</string>
+    <string name="background_editor_artwork">Обкладинка</string>
+    <string name="background_editor_layers">Шари</string>
+    <string name="background_editor_layers_count">%1$d з %2$d</string>
+    <string name="background_editor_add_layer">Додати шар</string>
+    <string name="background_editor_reset_layers">Скинути</string>
+    <string name="background_editor_empty">Шарів немає. Обкладинка показується окремо.</string>
+    <string name="background_editor_note">Шар угорі цього списку малюється поверх усього іншого; нижній шар розташований найближче до обкладинки.</string>
+    <string name="background_editor_full">Можна накласти до %1$d шарів.</string>
+    <string name="background_layer_kind_wash">Тло</string>
+    <string name="background_layer_kind_shade">Затінення</string>
+    <string name="background_layer_kind_floor">Основа акценту</string>
+    <string name="background_layer_move_up">Перемістити шар угору</string>
+    <string name="background_layer_move_down">Перемістити шар униз</string>
+    <string name="background_layer_more">Більше параметрів цього шару</string>
+    <string name="background_layer_add_title">Додати шар</string>
+    <string name="background_layer_style_title">Шар %1$s</string>
+    <string name="background_layer_opacity">Інтенсивність</string>
+    <string name="background_layer_color">Колір</string>
+    <string name="background_layer_custom_color">Вибрати колір</string>
+    <string name="background_layer_duplicate">Дублювати</string>
+    <string name="background_layer_remove">Видалити</string>
+    <string name="background_layer_color_default">За замовчуванням</string>
+    <string name="background_layer_color_album">Колір альбому</string>
+    <string name="background_layer_color_secondary">Другий колір альбому</string>
+    <string name="background_layer_color_tertiary">Третій колір альбому</string>
+    <string name="background_layer_color_desaturated">Приглушений колір альбому</string>
+    <string name="background_layer_color_black">Чорний</string>
+    <string name="background_layer_color_custom">Власний колір</string>
+    <string name="background_layer_reset_title">Скинути шари?</string>
+    <string name="background_layer_reset_message">Стос шарів повернеться до затінення й основи акценту, заданих у власних рядках, тобто до того, що також відображає годинник зі старішою збіркою.</string>
+    <string name="watch_element_progress">Прогрес</string>
+    <string name="watch_element_volume">Гучність</string>
+    <string name="watch_element_quick_panel">Швидкі дії</string>
+    <string name="watch_element_queue">Черга</string>
+    <string name="watch_element_lyrics">Текст пісні</string>
+    <string name="player_section_on_screen">На екрані</string>
+    <string name="player_element_app_icon">Значок застосунку</string>
+    <string name="player_element_controls">Елементи керування програвачем</string>
+    <string name="player_element_tap_flash">Спалах при дотику</string>
+    <string name="player_element_inner_progress">Внутрішній прогрес</string>
+    <string name="player_element_edge_arc">Дуга краю</string>
+    <string name="player_element_edge_seek">Перемотування по краю</string>
+    <string name="player_element_clock">Годинник</string>
+    <string name="player_element_cover_art">Обкладинка альбому</string>
+    <string name="setting_album_art_filter">Фільтр обкладинки альбому</string>
+    <string name="setting_album_art_filter_description">Застосувати незалежну обробку кольору поверх будь-якого стилю обкладинки альбому.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto з надлегким штрихом для делікатного вигляду великого тексту.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto з легким, повітряним штрихом і знайомими пропорціями родини.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto з виразнішим середнім штрихом для компактних і читабельних підписів.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto з найбільшою системною товщиною для виразного великого тексту.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto, горизонтально звужений, щоб довші заголовки вміщалися в меншому просторі.</string>
+    <string name="setting_wear_title_font">Шрифт назви</string>
+    <string name="setting_wear_title_text_case">Регістр назви</string>
+    <string name="setting_wear_artist_font">Шрифт виконавця</string>
+    <string name="setting_wear_artist_text_case">Регістр виконавця</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Дружній округлий шрифт без зарубок, створений для початкового читання</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Контрастний дисплейний Didone-шрифт із редакційною виразністю</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Міцний плакатний гротеск із рукописним коміксним відтінком</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Спокійний геометричний гротеск із щедрими рівними інтервалами</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Сучасний брусковий шрифт із м’яко округленими завершеннями</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Масивний брусковий шрифт для максимально виразних заголовків</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Вузький намальований вручну шрифт у малих капітелях</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Щільний конденсований гротеск для гучних заголовків</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Геометричний брусковий шрифт, що зберігає чіткість у малих розмірах</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Коміксний дисплейний шрифт із вибуховою енергією</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Трафаретний військовий дисплейний шрифт</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Прямий шрифт із зарубками з теплими неформальними вигинами</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Гуманістичний гротеск із злегка округленими кутами</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Гротеск із сильними прямолінійними формами</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Вишуканий моноширинний машинописний шрифт для сценаріїв</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Округлений брусковий шрифт із м’яким книжковим тоном</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Старостильний книжковий шрифт із зарубками для довгих текстів</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Низькоконтрастний геометричний гротеск із сучасним оздобленням</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Міцний шрифт із зарубками, створений для основного тексту</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Сучасний технічний гротеск із кутовими стиками</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Програмістський моноширинний шрифт із чіткими відмінними символами</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Гуманістичний моноширинний шрифт для коду на екрані</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Пухкий рукописний шрифт із округленими штрихами</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Геометричний гротеск із вінтажним характером 1920-х</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Геометричний гротеск у традиції Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Безпетельний тайський і латинський гротеск із легким нахилом</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Гротеск, сформований для зменшення візуального навантаження під час читання</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Жирний з’єднаний рукописний шрифт із ретро-стилем вивісок</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Напівгеометричний гротеск, що балансує тепло й точність</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Мінімалістичний гротеск для чистого тексту інтерфейсу</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Добре округлений гротеск із м’якими завершеннями</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Геометричний гротеск із рівним сучасним ритмом</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Квадратний техно-шрифт з ігровим відчуттям</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Компактний технічний гротеск, намальований по сітці</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Сучасний гротеск із виразними відкритими кривими</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Піксельний шрифт просто з аркадного автомата</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Округлений геометричний гротеск із м’яким легким відчуттям</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Квадратний конденсований гротеск із технічними кутами</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Дисплейний шрифт ар-деко з корінням у ретро-мальованих вивісках</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Моноширинний компаньйон Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Масивний дисплейний шрифт із грайливими тупими штрихами</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Широкий індустріальний шрифт із важкими квадратними формами</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Яскравий нахилений дисплейний шрифт із гуджаратським корінням</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Крихітний растровий шрифт, що нагадує ранні комп’ютерні екрани</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Моноширинний шрифт для комфортного читання коду</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Конденсований шрифт великими літерами з потужною плакатною присутністю</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Високий конденсований шрифт для заголовків деванагарі й латиницею</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Квадратний гуманістичний гротеск із технічним відтінком</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Повністю округлений гротеск із доступним тоном</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Конденсований шрифт, що нагадує вивіски кав’ярень 1920-х</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Брусковий шрифт із м’яко зрізаними сучасними завершеннями</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Дружній гуманістичний гротеск із відкритими читабельними формами</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Теплий гротеск із міцними формами для комфортного читання</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Універсальний гуманістичний гротеск для чітких інтерфейсів</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Вишуканий текстовий шрифт із зарубками з редакційним голосом</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Класичний книжковий шрифт із зарубками для читання з екрана</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Практичний гротеск із широким міцним ритмом</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Технічний гуманістичний гротеск із точними пропорціями</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Технічний моноширинний шрифт із відшліфованою читабельною текстурою</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Сучасний шрифт із зарубками з інженерним характером</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Чистий універсальний гротеск із компактними практичними формами</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Своєрідний гротеск із дружніми пропорціями</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Геометричний гротеск із футуристичним просторим відчуттям</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Сучасний геометричний гротеск з елегантними міськими лініями</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Збалансований сучасний гротеск для малих екранів</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Упевнений дисплейний гротеск із виразними пропорціями</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Читабельний супровідний гротеск для довшої інформації про композицію</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Чіткий моноширинний шрифт із сучасним технічним тоном</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Нетрадиційний гротеск із художньо спрямованими грайливими формами</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Гнучкий сучасний гротеск зі спокійною точністю</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Чистий доступний гротеск для легкого читання</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Округлений дисплейний гротеск із життєрадісною індивідуальністю</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Жвавий гротеск, що поєднує структуру з незвичними деталями</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Висококонтрастний дисплейний шрифт із зарубками для драматичних назв</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Елегантний висококонтрастний літературний шрифт із зарубками</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Витончений дисплейний шрифт із зарубками та каліграфічними деталями</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Міцний брусковий шрифт, що лишається чітким у малих розмірах</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Універсальний шрифт із зарубками для щільного виразного читання</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Теплий старостильний шрифт із зарубками з книжковим голосом</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Елегантний гротеск із характерними вишуканими формами літер</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Жирний геометричний гротеск для сильних заголовків</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Гротеск, придатний до конденсації, з атлетичною динамічною енергією</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">М’який гротеск із відкритими просвітами й дружньою енергією вивісок</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Універсальний гротеск, що балансує гуманістичне тепло й чіткість</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Чіткий транспортний гротеск із упевненим ритмом</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Нейтральний доступний гротеск для повсякденних інтерфейсів</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Легкий геометричний гротеск із плавними сучасними кривими</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Округлений вузький гротеск із м’яким футуристичним відчуттям</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Чистий геометричний гротеск із тонким тайським характером</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Широкий футуристичний дисплейний шрифт для максимальної присутності</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Варіативна родина від sans до mono з грайливим технічним голосом</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Моноширинний шрифт зі змінною шириною й характерною цифровою текстурою</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Широкий, дуже читабельний гротеск із підтримкою багатьох писемностей</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Надійний шрифт із зарубками з підтримкою багатьох писемностей</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Багатомовний моноширинний шрифт для стабільного ритму</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Компактний сучасний гротеск із чітким ритмом, натхненним івритом</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Міцний гуманістичний гротеск, оптимізований для ясного читання</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Дружній екранний гротеск з округлою відкритою текстурою</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Компактний геометричний гротеск із характерними пропорціями</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Жвавий каліграфічний шрифт із зарубками та літературним характером</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Чистий гуманістичний гротеск із чудовою читабельністю інтерфейсу</string>
+    <string name="setting_wear_note_show_cover">Обкладинка альбому</string>
+    <string name="aod_element_artwork">Обкладинка</string>
+    <string name="aod_element_clock">Годинник</string>
+    <string name="aod_element_track_info">Інформація про композицію</string>
+    <string name="aod_element_transport">Керування відтворенням</string>
+    <string name="aod_element_progress">Прогрес</string>
+    <string name="aod_element_up_next">Далі</string>
+    <string name="aod_section_artwork">Обкладинка</string>
+    <string name="aod_control_tint">Відтінок</string>
+    <string name="aod_control_brightness">Яскравість</string>
+    <string name="aod_control_art_treatment">Обробка</string>
+    <string name="aod_control_art_opacity">Непрозорість</string>
+    <string name="mini_button_control_visibility">Показати</string>
+    <string name="mini_button_control_arrangement">Компонування</string>
+    <string name="mini_button_control_shape">Форма</string>
+    <string name="mini_button_control_background">Тло</string>
+    <string name="mini_button_control_opacity">Непрозорість</string>
+    <string name="mini_button_assign_action">Призначити дії</string>
+    <string name="mini_button_gestures_note">Проведіть пальцем угору, вниз і ліворуч у програвачі. Проведення праворуч завжди є системним жестом закриття й ніколи не перехоплюється.</string>
+    <string name="setting_wear_chat_cover_shape">Форма аватара чату</string>
+    <string name="setting_wear_chat_show_cover">Обкладинка альбому</string>
+    <string name="setting_wear_metadata_cover_shape">Форма обкладинки метаданих</string>
+    <string name="setting_wear_metadata_show_cover">Обкладинка альбому</string>
+    <string-array name="wear_text_case_entries">
+        <item>Звичайний</item>
+        <item>ВЕЛИКІ ЛІТЕРИ</item>
+        <item>малі літери</item>
+        <item>З Великої Літери</item>
+    </string-array>
+    <string name="wear_text_font_follow">Використовувати глобальний шрифт</string>
+    <string name="category_wf_typography_track_time">Час композиції</string>
+    <string name="setting_wear_track_time_font">Шрифт часу композиції</string>
+    <string name="wear_track_time_font_follow">Відповідно до дизайну</string>
+    <string name="setting_wear_track_time_font_weight">Насиченість часу композиції</string>
+    <string name="setting_wear_track_time_font_italic">Курсивний час композиції</string>
+    <string name="setting_wear_track_time_font_scale">Розмір часу композиції</string>
+    <string name="setting_wear_track_time_font_opacity">Прозорість часу композиції</string>
+    <string name="setting_wear_track_time_font_tracking">Інтервал літер часу композиції</string>
+    <string-array name="album_art_filter_entries">
+        <item>Немає</item>
+        <item>Монохромний</item>
+        <item>Теплий</item>
+        <item>Холодний</item>
+        <item>Золота година</item>
+        <item>Rosé</item>
+        <item>Вінтажна плівка</item>
+        <item>Вицвіла плівка</item>
+        <item>Матовий</item>
+        <item>Яскравий</item>
+        <item>Насичений</item>
+        <item>Пастель</item>
+        <item>Сепія</item>
+        <item>Ціанотипія</item>
+        <item>Бірюзовий і помаранчевий</item>
+        <item>Високий контраст</item>
+        <item>М’яке світло</item>
+        <item>Ніч</item>
+    </string-array>
+    <string name="queue_item_now_playing">Зараз відтворюється</string>
+    <string name="queue_item_unknown_title">Невідома композиція</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Черга відтворення · %1$d композиція</item>
+        <item quantity="other">Черга відтворення · %1$d композицій</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Колір основи акценту</string>
+    <string name="setting_wear_accent_floor_custom_color">Власний колір основи</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Виберіть колір, що використовується, коли для параметра «Колір основи акценту» встановлено «Власний колір»</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Акцент альбому</item>
+        <item>Вторинний колір альбому</item>
+        <item>Третинний колір альбому</item>
+        <item>Власний колір</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Нейтральний, дуже читабельний інтерфейсний гротеск для щоденного читання</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Літерні форми, орієнтовані на доступність, із виразними відмінностями в малих розмірах</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">М’яко округлений геометричний гротеск — упевнений і дружній</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Компактний гуманістичний гротеск, що дає довгим назвам більше простору</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Високий конденсований дисплейний шрифт із потужною плакатною енергією</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Сучасний шрифт із зарубками для комфортного тривалого читання</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Виразний м’який шрифт із зарубками з теплом і характером</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Ретрофутуристичний моноширинний шрифт із технічним характером</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Щільний важкий дисплейний шрифт для максимального контрасту</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Плавний рукописний шрифт із живим особистим відчуттям</string>
+    <string name="setting_wear_artist_text_mode">Поведінка тексту виконавця</string>
+    <string name="setting_wear_album_art_source">Джерело обкладинки альбому</string>
+    <string name="setting_user_font">Мій власний шрифт</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Імпортуйте файл .ttf або .otf із цього телефона</string>
+    <string name="setting_user_font_loaded">%1$s · торкніться, щоб замінити або видалити</string>
+    <string name="user_font_pick">Виберіть файл шрифту</string>
+    <string name="user_font_replace">Замінити</string>
+    <string name="user_font_remove">Видалити</string>
+    <string name="user_font_imported">«%1$s» імпортовано. Виберіть його в будь-якому списку шрифтів; зараз він надсилається на ваш годинник.</string>
+    <string name="user_font_removed">Ваш імпортований шрифт видалено.</string>
+    <string name="user_font_error_too_large">Розмір цього файла — %1$s. Шрифт має бути меншим за %2$s, щоб його можна було швидко передати на годинник.</string>
+    <string name="user_font_error_not_a_font">Цей файл не є шрифтом, який може прочитати цей телефон. Підтримуються TrueType і OpenType (.ttf, .otf); вебшрифти (.woff, .woff2) не підтримуються.</string>
+    <string name="user_font_error_unreadable">Не вдалося прочитати цей файл. Спробуйте вибрати його ще раз або спочатку скопіюйте його на цей телефон.</string>
+    <string name="user_font_not_shareable">Теми з вашим власним шрифтом залишаються на цьому телефоні</string>
+    <string name="setting_custom_album_art_image">Зображення для використання</string>
+    <string name="setting_custom_album_art_folder">Папка, з якої брати зображення</string>
+    <string name="setting_custom_album_art_none">Ще не вибрано — торкніться, щоб вибрати</string>
+    <string name="setting_custom_album_art_chosen">%1$s · торкніться, щоб змінити</string>
+    <string name="custom_album_art_image_set">Це зображення тепер буде розташоване позаду програвача.</string>
+    <string name="custom_album_art_folder_set">Для кожної композиції відображатиметься зображення з цієї папки.</string>
+    <string name="custom_album_art_error">Не вдалося це відкрити. Виберіть ще раз або виберіть щось із власного сховища цього телефона.</string>
+    <string name="custom_album_art_not_shareable">Теми з вашими власними зображеннями залишаються на цьому телефоні</string>
+    <string name="setting_wear_text_block_align">Вирівнювання тексту</string>
+    <string name="setting_wear_text_block_align_description">Край, за яким вирівнюється текст композиції. «Відповідно до оформлення» зберігає вирівнювання, для якого було спроєктовано кожне оформлення.</string>
+    <string name="setting_wear_text_block_position">Позиція тексту</string>
+    <string name="setting_wear_text_block_position_description">Місце тексту композиції на екрані. «Відповідно до оформлення» зберігає позицію, для якої було спроєктовано кожне оформлення.</string>
+    <string name="setting_online_artwork">Онлайн-обкладинка</string>
+    <string name="setting_online_artwork_description">Дозвольте оформленню годинника показувати зображення, знайдене онлайн \u2014 виконавця композиції або обкладинку альбому для програвача, який її не надає. Телефон виконує пошук у публічному каталозі Deezer і кешує результат; надсилаються лише назви композиції та виконавця, а пошук не виконується, якщо оформлення не налаштовано на одне з цих джерел. Коли вимкнено, використовується власна обкладинка програвача.</string>
 </resources>

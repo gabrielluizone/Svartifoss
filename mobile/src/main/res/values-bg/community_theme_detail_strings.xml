@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Подробности за темата</string>
+    <string name="community_theme_detail_preview_screen">Екран за визуализация</string>
+    <string name="community_theme_detail_surface_player">Плейър</string>
+    <string name="community_theme_detail_surface_aod">Винаги включен</string>
+    <string name="community_theme_detail_surface_volume">Сила на звука</string>
+    <string name="community_theme_detail_surface_progress">Напредък</string>
+    <string name="community_theme_detail_surface_quick_panel">Бърз панел</string>
+    <string name="community_theme_detail_surface_queue">Опашка</string>
+    <string name="community_theme_detail_preview_label">Визуализация на %1$s</string>
+    <string name="community_theme_detail_preview_description">Визуализация на %1$s на екрана %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Текущата обложка на албума ви може да се показва само в тази визуализация на телефона. Тя никога не се качва; примерният текст и времето остават в употреба.</string>
+    <string name="community_theme_detail_information">Информация за темата</string>
+    <string name="community_theme_detail_byline">От %1$s</string>
+    <string name="community_theme_detail_layout">Основно оформление</string>
+    <string name="community_theme_detail_revision">Ревизия</string>
+    <string name="community_theme_detail_minimum_version">Минимална версия на Svartifoss</string>
+    <string name="community_theme_detail_published">Публикувано</string>
+    <string name="community_theme_detail_visual_settings">Визуални настройки</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s визуална настройка</item>
+        <item quantity="other">%1$s визуални настройки</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Не е налично</string>
+    <string name="community_theme_detail_add_apply">Добавяне и прилагане</string>
+    <string name="community_theme_detail_remove">Премахване на темата</string>
+    <string name="community_theme_detail_remove_title">Премахване на „%1$s“ от „Моите теми“?</string>
+    <string name="community_theme_detail_remove_message">Това запазено копие и всички направени по него промени ще бъдат премахнати завинаги. Ако в момента е приложено, часовникът ви ще се върне към вграденото основно оформление.</string>
+    <string name="community_theme_detail_removed">Темата е премахната от „Моите теми“</string>
+    <string name="community_theme_detail_remove_error">Тази тема не можа да бъде премахната</string>
+    <string name="community_theme_detail_like">Харесване</string>
+    <string name="community_theme_detail_unlike">Премахване на харесването</string>
+    <string name="community_theme_detail_like_loading">Проверка…</string>
+    <string name="community_theme_detail_like_description">Харесайте %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Премахнете харесването от %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Входът с Google беше отменен. Харесването ви не беше запазено.</string>
+    <string name="community_theme_detail_like_error">Харесването не можа да бъде запазено. Проверете връзката си и опитайте отново.</string>
+    <string name="community_theme_detail_like_not_ready">Харесванията за тази тема все още не са готови. Обновете темите на общността след следващото публикуване.</string>
+    <string name="community_theme_detail_like_saved">Харесването ви беше запазено. Публичните броячи се обновяват при следващото публикуване на каталога.</string>
+    <string name="community_theme_detail_unlike_saved">Харесването ви беше премахнато. Публичните броячи се обновяват при следващото публикуване на каталога.</string>
+    <string name="community_theme_detail_apply_existing">Тази тема вече е в „Моите теми“ и е приложена към часовника ви</string>
+    <string name="community_theme_detail_requires_app_version">Тази тема изисква Svartifoss %1$s, преди да може да бъде добавена.</string>
+    <string name="community_theme_detail_load_error">Подробностите за тази тема не можаха да бъдат заредени. Върнете се към темите на общността и опитайте отново.</string>
+    <string name="community_theme_detail_profile_mismatch">Изтегленият профил не съответства на публичните подробности за тази тема. Върнете се към темите на общността и опитайте отново.</string>
+    <string name="community_theme_detail_screenshot_description">Снимка на тази тема на часовника на автора</string>
+    <string name="community_theme_detail_source_author">Часовникът на автора</string>
+    <string name="community_theme_detail_source_rendered">Генерирана визуализация</string>
+    <string name="community_theme_detail_show_rendered">Показване на генерираната визуализация</string>
+    <string name="community_theme_detail_show_author">Показване на снимката на автора</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

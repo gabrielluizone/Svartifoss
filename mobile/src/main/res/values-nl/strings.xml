@@ -2081,6 +2081,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -2124,6 +2129,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
@@ -2345,4 +2355,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Kopiëren</string>
+    <string name="dev_report_copied">Rapport gekopieerd</string>
+    <string name="dev_watch_snapshot_inspector">Momentopname van horlogevoorkeuren</string>
+    <string name="dev_watch_snapshot_inspector_description">Wat nu daadwerkelijk naar het horloge zou worden verzonden: actief weergavebereik, geschatte grootte en welke inactieve caches per wijzerplaat zijn verwijderd om binnen het budget te blijven</string>
+    <string name="dev_data_layer_inspector">Data Layer-inspecteur</string>
+    <string name="dev_data_layer_inspector_description">Verbonden Wearable-knooppunten en de laatste WatchInfo waarop de horloge-app antwoordde — de ruwe toestand achter “Geen horloge verbonden”</string>
+    <string name="dev_media_sessions_inspector">MediaSession-verkenner</string>
+    <string name="dev_media_sessions_inspector_description">Elke momenteel actieve MediaSession, niet alleen de gevolgde: aangeboden acties, wachtrij en afspeelroute</string>
+    <string name="dev_view_phone_log">Telefoonlogboek bekijken</string>
+    <string name="dev_view_phone_log_description">Het einde van het Timber-logboek op schijf, plus het logboek van het horloge als “Logboeken verzenden” dit eerder heeft opgehaald</string>
+    <string name="dev_theme_submission_preflight">Voorcontrole thema-inzending</string>
+    <string name="dev_theme_submission_preflight_description">Voert elk opgeslagen horlogethema door de controle voor community-inzendingen en noemt de exacte instelling die het blokkeert, als die er is</string>
+    <string name="dev_appearance_resolution_inspector">Inspecteur voor weergaveresolutie</string>
+    <string name="dev_appearance_resolution_inspector_description">Voor elke weergavesleutel met bereik: welke van de vier resolutiestappen daadwerkelijk won — expliciete wijzerplaatwaarde, standaard per wijzerplaat, verouderde globale waarde of definitiestandaard — en de waarde die elke stap teruggeeft</string>
+    <string name="action_fast_forward">Snel vooruit</string>
+    <string name="action_rewind">Terugspoelen</string>
+    <string name="action_set_playback_speed">Snelheid instellen op %1$s×</string>
+    <string name="action_seek_to_percent">Naar %1$d%% springen</string>
+    <string name="action_set_volume_percent">Volume instellen op %1$d%%</string>
+    <string name="action_set_shuffle_on">Willekeurige volgorde inschakelen</string>
+    <string name="action_set_shuffle_off">Willekeurige volgorde uitschakelen</string>
+    <string name="action_set_repeat_off">Herhalen uitschakelen</string>
+    <string name="action_set_repeat_all">Alles herhalen</string>
+    <string name="action_set_repeat_one">Eén nummer herhalen</string>
+    <string name="group_playback_speed">Afspeelsnelheid</string>
+    <string name="group_track_position">Nummerpositie</string>
+    <string name="group_shuffle_mode">Shufflemodus</string>
+    <string name="group_repeat_mode">Herhaalmodus</string>
+    <string name="group_volume_levels">Volumeniveaus</string>
+    <string name="group_watch_screens">Horlogeschermen</string>
+    <string name="group_find_music">Zoeken en afspelen</string>
+    <string name="action_open_face_picker">Wijzerplaatkiezer openen</string>
+    <string name="action_close_watch_app">Horloge-app sluiten</string>
+    <string name="hand_gestures">HANDGEBAREN</string>
+    <string name="hand_gestures_hint">Beschikbaar op compatibele horloges terwijl Svartifoss is geopend.</string>
+    <string name="hand_gestures_hint_disconnected">Verbind je horloge en open Svartifoss erop om te zien of het handgebaren ondersteunt.</string>
+    <string name="hand_gestures_hint_outdated">Werk de horloge-app bij om te controleren of dit horloge handgebaren ondersteunt.</string>
+    <string name="hand_gestures_hint_unsupported">Dit horloge ondersteunt geen handgebaren, dus een hier toegewezen actie zal nooit worden uitgevoerd.</string>
+    <string name="hand_gestures_hint_disabled">Handgebaren zijn op dit horloge uitgeschakeld. Schakel ze op het horloge zelf in via Instellingen \u2192 Gebaren.</string>
+    <string name="hand_gestures_hint_ready">Klaar op dit horloge: knijp twee keer terwijl de Svartifoss-speler is geopend.</string>
+    <string name="hand_gesture_how_it_works">Knijp je duim en wijsvinger snel twee keer samen met je pols omhoog. Wear OS noemt dit de primaire actie, dus een horloge van een andere fabrikant kan een eigen gelijkwaardig handgebaar gebruiken.\n\nHet werkt alleen terwijl de Svartifoss-speler op het horloge is geopend en het scherm aan staat \u2014 niet vanaf de wijzerplaat, niet boven de wachtrij of het menu en niet op het always-on-scherm. De actie die wordt uitgevoerd is degene die is ingesteld voor de huidige afspeelstatus, dus stel deze op beide pagina’s met Bediening in om in beide situaties te werken.\n\nHet gebaar moet ook zijn ingeschakeld in Instellingen \u2192 Gebaren op het horloge zelf.</string>
+    <string name="double_pinch">Dubbele knijpbeweging</string>
+    <string name="icon_selection_search_hint">Pictogrammen zoeken</string>
+    <string name="icon_selection_search_empty">Geen pictogrammen komen overeen met je zoekopdracht</string>
+    <string name="open_quick_actions_panel">Paneel Snelle acties openen</string>
+    <string name="open_volume_screen">Volumescherm openen</string>
+    <string name="open_progress_screen">Voortgangsscherm openen</string>
+    <string name="export_config_failed_detail">Back-up kon niet worden geëxporteerd: %1$s</string>
+    <string name="backup_selection_title">Inhoud van back-up kiezen</string>
+    <string name="backup_selection_description">Selecteer de onderdelen van Svartifoss die je wilt opslaan. Alles is standaard geselecteerd; niet-geselecteerde onderdelen blijven ongewijzigd wanneer deze back-up wordt geïmporteerd.</string>
+    <string name="backup_selection_select_all">Alles selecteren</string>
+    <string name="backup_selection_clear_all">Alles wissen</string>
+    <string name="backup_selection_export">Back-up exporteren</string>
+    <string name="backup_selection_empty">Selecteer ten minste één item</string>
+    <string name="backup_section_buttons">Knopconfiguraties</string>
+    <string name="backup_section_buttons_description">Acties voor knoppen, kroon en gebaren wanneer muziek speelt of gestopt is.</string>
+    <string name="backup_section_actions">Actielijst</string>
+    <string name="backup_section_actions_description">De geordende lijst met acties die in het actiemenu van het horloge wordt getoond.</string>
+    <string name="backup_section_app_settings">App-instellingen</string>
+    <string name="backup_section_app_settings_description">Telefooninstellingen, gedrag van het horloge, taal, afspelen en integraties.</string>
+    <string name="backup_section_watch_appearance">Uiterlijk en thema’s van horloge</string>
+    <string name="backup_section_watch_appearance_description">Horlogelay-outs, kleuren, typografie, panelen, AOD en opgeslagen aangepaste thema’s.</string>
+    <string name="backup_section_playlist_shortcuts">Afspeellijstsnelkoppelingen</string>
+    <string name="backup_section_playlist_shortcuts_description">Je opgeslagen links naar muziek, albums, artiesten, afspeellijsten en andere streaminginhoud.</string>
+    <string name="backup_section_history">Zoek- en afspeelgeschiedenis</string>
+    <string name="backup_section_history_description">Recente zoekopdrachten en onlangs afgespeelde nummers.</string>
+    <string name="backup_section_icons">Geladen pictogrammen en artwork</string>
+    <string name="backup_section_icons_description">Aangepaste actiepictogrammen, hoezen van snelkoppelingen en gecachte app-pictogrammen.</string>
+    <string name="backup_section_privacy">Privacy en meldingen</string>
+    <string name="backup_section_privacy_description">Crashrapporten, aankondigingsmeldingen en andere toestemmingskeuzes die door de app zijn opgeslagen.</string>
+    <string name="backup_section_local_app_state">Lokale appstatus</string>
+    <string name="backup_section_local_app_state_description">Huidig accent, laatste menupositie, voltooide meldingen en updatestatus.</string>
+    <string name="backup_section_auxiliary_data">Andere appgegevens</string>
+    <string name="backup_section_auxiliary_data_description">Aanvullende voorkeuren en interne bestanden van de app, inclusief toekomstige gegevensopslag.</string>
+    <string name="pref_numeric_range">Tussen %1$d en %2$d.</string>
+    <string name="background_editor_artwork">Hoesafbeelding</string>
+    <string name="background_editor_layers">Lagen</string>
+    <string name="background_editor_layers_count">%1$d van %2$d</string>
+    <string name="background_editor_add_layer">Laag toevoegen</string>
+    <string name="background_editor_reset_layers">Herstellen</string>
+    <string name="background_editor_empty">Geen lagen. De artwork wordt op zichzelf getoond.</string>
+    <string name="background_editor_note">De laag bovenaan deze lijst wordt over al het andere getekend; de onderste ligt het dichtst bij de artwork.</string>
+    <string name="background_editor_full">Je kunt maximaal %1$d lagen stapelen.</string>
+    <string name="background_layer_kind_wash">Achtergrond</string>
+    <string name="background_layer_kind_shade">Schaduwing</string>
+    <string name="background_layer_kind_floor">Accentbasis</string>
+    <string name="background_layer_move_up">Deze laag omhoog verplaatsen</string>
+    <string name="background_layer_move_down">Deze laag omlaag verplaatsen</string>
+    <string name="background_layer_more">Meer opties voor deze laag</string>
+    <string name="background_layer_add_title">Een laag toevoegen</string>
+    <string name="background_layer_style_title">%1$s-laag</string>
+    <string name="background_layer_opacity">Sterkte</string>
+    <string name="background_layer_color">Kleur</string>
+    <string name="background_layer_custom_color">Een kleur kiezen</string>
+    <string name="background_layer_duplicate">Dupliceren</string>
+    <string name="background_layer_remove">Verwijderen</string>
+    <string name="background_layer_color_default">Standaard</string>
+    <string name="background_layer_color_album">Albumkleur</string>
+    <string name="background_layer_color_secondary">Tweede albumkleur</string>
+    <string name="background_layer_color_tertiary">Derde albumkleur</string>
+    <string name="background_layer_color_desaturated">Gedempte albumkleur</string>
+    <string name="background_layer_color_black">Zwart</string>
+    <string name="background_layer_color_custom">Aangepaste kleur</string>
+    <string name="background_layer_reset_title">Lagen herstellen?</string>
+    <string name="background_layer_reset_message">De stapel keert terug naar de schaduwing en accentbasis die op hun eigen regels zijn ingesteld; dat is ook wat een horloge met een oudere build weergeeft.</string>
+    <string name="watch_element_progress">Voortgang</string>
+    <string name="watch_element_volume">Volume</string>
+    <string name="watch_element_quick_panel">Snelle acties</string>
+    <string name="watch_element_queue">Wachtrij</string>
+    <string name="watch_element_lyrics">Songtekst</string>
+    <string name="player_section_on_screen">Op scherm</string>
+    <string name="player_element_app_icon">App-pictogram</string>
+    <string name="player_element_controls">Bediening speler</string>
+    <string name="player_element_tap_flash">Tikflits</string>
+    <string name="player_element_inner_progress">Binnenste voortgang</string>
+    <string name="player_element_edge_arc">Randboog</string>
+    <string name="player_element_edge_seek">Zoeken langs rand</string>
+    <string name="player_element_clock">Klok</string>
+    <string name="player_element_cover_art">Artwork</string>
+    <string name="setting_album_art_filter">Albumhoesfilter</string>
+    <string name="setting_album_art_filter_description">Pas een onafhankelijke kleurbehandeling toe op elke albumhoesstijl.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto met een extra lichte streek voor een verfijnde schermuitstraling.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto met een lichte, luchtige streek en de vertrouwde verhoudingen van de familie.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto met een sterkere middelzware streek voor compacte, leesbare labels.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto met het zwaarste systeemgewicht voor krachtige weergavetekst.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto horizontaal gecondenseerd zodat langere titels in minder ruimte passen.</string>
+    <string name="setting_wear_title_font">Lettertype titel</string>
+    <string name="setting_wear_title_text_case">Hoofdlettergebruik titel</string>
+    <string name="setting_wear_artist_font">Lettertype artiest</string>
+    <string name="setting_wear_artist_text_case">Hoofdlettergebruik artiest</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Een vriendelijke afgeronde schreefloze letter voor beginnende lezers</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Een Didone-displayletter met hoog contrast en redactioneel gewicht</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Een stevige postersans met een handgetekend striprandje</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Een rustige geometrische sans met ruime, gelijkmatige spatiëring</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Een eigentijdse slab serif met zacht afgeronde uiteinden</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Een massieve slab serif gebouwd voor impactvolle koppen</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Een smal handgetekend lettertype in kleinkapitalen</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Een strak opeengepakte gecondenseerde sans voor luide koppen</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Een geometrische slab serif die ook klein stevig blijft</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Een comic-displaylettertype met uitbundige energie</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Een militair stencil-displaylettertype</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Een rechtopstaande serif met warme, informele rondingen</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Een humanistische sans met subtiel afgeronde hoeken</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Een groteske sans met sterke, directe vormen</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Een verfijnde typemachine-monospace voor scripts</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Een afgeronde slab serif met een zachte, boekachtige toon</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Een klassieke boekserif afgestemd op lange passages</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Een geometrische sans met laag contrast en moderne afwerking</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Een robuuste serif ontworpen om goed stand te houden in tekstgroottes</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Een eigentijdse technische sans met hoekige verbindingen</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Een programmeer-monospace met heldere, onderscheidende tekens</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Een humanistische monospace ontworpen voor code op het scherm</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Een speels handschrift met afgeronde streken</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Een geometrische sans met vintage karakter uit de jaren 1920</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Een geometrische sans in de traditie van Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Een lusloze Thaise en Latijnse sans met een lichte helling</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Een sans gevormd om visuele belasting tijdens het lezen te verminderen</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Een vette verbonden scriptletter met retro-reclamebordgevoel</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Een semi-geometrische sans die warmte en precisie in balans brengt</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Een minimalistische sans voor heldere interfacetekst</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Een mooi afgeronde sans met zachte uiteinden</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Een geometrische sans met een gelijkmatig, eigentijds ritme</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Een vierkant technolettertype met een gamingsfeer</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Een compacte technische sans getekend op een raster</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Een moderne grotesk met opvallende open rondingen</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Een pixellettertype rechtstreeks uit een arcadekast</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Een afgeronde geometrische sans met een zachte, lichte uitstraling</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Een hoekige gecondenseerde sans met technische hoeken</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Een art-deco-displayletter met wortels in retro-bordenschildering</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">De monospaced metgezel van Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Een grof displaylettertype met speelse, stompe streken</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Een breed industrieel lettertype met zware vierkante vormen</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Een levendig schuin displaylettertype met Gujarati-wortels</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Een klein bitmaplettertype dat doet denken aan vroege computerschermen</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Een monospace ontworpen om code comfortabel te lezen</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Een gecondenseerd lettertype in kapitalen met sterke posteruitstraling</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Een hoog gecondenseerd lettertype voor Devanagari- en Latijnse koppen</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Een hoekige humanistische sans met een technische uitstraling</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Een volledig afgeronde sans met een toegankelijke toon</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Een gecondenseerd lettertype dat doet denken aan caféborden uit de jaren 1920</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Een slab serif met zacht afgeknotte, moderne uiteinden</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Een vriendelijke humanistische sans met open, leesbare vormen</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Een warme sans met stevige vormen voor comfortabel lezen</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Een veelzijdige humanistische sans voor heldere interfaces</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Een verfijnde tekstserif met redactionele stem</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Een klassieke boekserif afgestemd op lezen op schermen</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Een praktische groteske sans met een breed, stevig ritme</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Een technische humanistische sans met nauwkeurige verhoudingen</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Een technische monospace met een verzorgde, leesbare textuur</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Een eigentijdse serif met een technisch geconstrueerd karakter</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Een heldere werkpaard-sans met compacte, praktische vormen</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Een eigenzinnige grotesk met vriendelijke verhoudingen</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Een geometrische sans met een futuristisch, ruimtelijk gevoel</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Een moderne geometrische sans met elegante, stedelijke lijnen</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Een evenwichtige eigentijdse sans gemaakt voor kleine schermen</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Een zelfverzekerde displaysans met expressieve verhoudingen</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Een leesbare begeleidende sans voor langere nummerinformatie</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Een scherpe monospace met een moderne technische toon</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Een onconventionele sans met artistiek gestuurde, speelse vormen</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Een flexibele eigentijdse sans met stille precisie</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Een heldere, toegankelijke sans voor moeiteloos lezen</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Een afgeronde displaysans met een vrolijke persoonlijkheid</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Een levendige grotesk die structuur met eigenzinnige details combineert</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Een displayserif met hoog contrast voor dramatische titels</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Een elegante literaire serif met hoog contrast</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Een sierlijke displayserif met kalligrafische details</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Een robuuste slab serif die ook klein helder blijft</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Een veelzijdige serif voor dichte, expressieve tekst</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Een warme oldstyle-serif met een boekachtige stem</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Een elegante sans met onderscheidende, verfijnde lettervormen</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Een vette geometrische sans voor krachtige koppen</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Een sans die goed condenseert, met atletische, dynamische energie</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Een zachte sans met open binnenvormen en vriendelijke bewegwijzeringsenergie</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Een veelzijdige sans die humanistische warmte en helderheid in balans brengt</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Een heldere, door transportbelettering geïnspireerde sans met zelfverzekerd ritme</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Een neutrale, toegankelijke sans voor alledaagse interfaces</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Een lichte geometrische sans met vloeiende, moderne rondingen</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Een afgeronde smalle sans met een zachte futuristische sfeer</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Een heldere geometrische sans met een subtiel Thais geïnspireerd karakter</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Een breed futuristisch displaylettertype voor maximale aanwezigheid</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Een variabele familie van sans tot monospace met een speelse technische stem</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Een monospace met variabele breedte en een opvallende digitale textuur</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Een brede, zeer leesbare sans met uitgebreide schriftondersteuning</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Een betrouwbare serif met uitgebreide schriftondersteuning</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Een meertalige monospace ontworpen voor een gelijkmatig ritme</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Een compacte moderne sans met een helder, Hebreeuws beïnvloed ritme</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Een stevige humanistische sans geoptimaliseerd voor duidelijk lezen</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Een vriendelijke schermsans met een afgeronde, open textuur</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Een compacte geometrische sans met opvallende verhoudingen</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Een levendige kalligrafische serif met literair karakter</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Een heldere humanistische sans met uitstekende leesbaarheid in interfaces</string>
+    <string name="setting_wear_note_show_cover">Artwork</string>
+    <string name="aod_element_artwork">Hoesafbeelding</string>
+    <string name="aod_element_clock">Klok</string>
+    <string name="aod_element_track_info">Nummerinformatie</string>
+    <string name="aod_element_transport">Afspeelbediening</string>
+    <string name="aod_element_progress">Voortgang</string>
+    <string name="aod_element_up_next">Hierna</string>
+    <string name="aod_section_artwork">Hoesafbeelding</string>
+    <string name="aod_control_tint">Tint</string>
+    <string name="aod_control_brightness">Helderheid</string>
+    <string name="aod_control_art_treatment">Behandeling</string>
+    <string name="aod_control_art_opacity">Dekking</string>
+    <string name="mini_button_control_visibility">Tonen</string>
+    <string name="mini_button_control_arrangement">Indeling</string>
+    <string name="mini_button_control_shape">Vorm</string>
+    <string name="mini_button_control_background">Achtergrond</string>
+    <string name="mini_button_control_opacity">Dekking</string>
+    <string name="mini_button_assign_action">Acties toewijzen</string>
+    <string name="mini_button_gestures_note">Veeg op de speler omhoog, omlaag en naar links. Naar rechts vegen is altijd het systeemgebaar om te sluiten en wordt nooit onderschept.</string>
+    <string name="setting_wear_chat_cover_shape">Vorm chatavatar</string>
+    <string name="setting_wear_chat_show_cover">Artwork</string>
+    <string name="setting_wear_metadata_cover_shape">Vorm metadatahoes</string>
+    <string name="setting_wear_metadata_show_cover">Artwork</string>
+    <string-array name="wear_text_case_entries">
+        <item>Normaal</item>
+        <item>HOOFDLETTERS</item>
+        <item>kleine letters</item>
+        <item>Titelhoofdletters</item>
+    </string-array>
+    <string name="wear_text_font_follow">Globaal lettertype volgen</string>
+    <string name="category_wf_typography_track_time">Nummerduur</string>
+    <string name="setting_wear_track_time_font">Lettertype nummerduur</string>
+    <string name="wear_track_time_font_follow">Ontwerp volgen</string>
+    <string name="setting_wear_track_time_font_weight">Gewicht nummerduur</string>
+    <string name="setting_wear_track_time_font_italic">Cursieve nummerduur</string>
+    <string name="setting_wear_track_time_font_scale">Grootte nummerduur</string>
+    <string name="setting_wear_track_time_font_opacity">Dekking nummerduur</string>
+    <string name="setting_wear_track_time_font_tracking">Letterafstand nummerduur</string>
+    <string-array name="album_art_filter_entries">
+        <item>Geen</item>
+        <item>Monochroom</item>
+        <item>Warm</item>
+        <item>Koel</item>
+        <item>Gouden uur</item>
+        <item>Rosé</item>
+        <item>Vintagefilm</item>
+        <item>Vervaagde film</item>
+        <item>Mat</item>
+        <item>Levendig</item>
+        <item>Punch</item>
+        <item>Pastel</item>
+        <item>Sepia</item>
+        <item>Cyanotypie</item>
+        <item>Blauwgroen en oranje</item>
+        <item>Hoog contrast</item>
+        <item>Zacht licht</item>
+        <item>Nacht</item>
+    </string-array>
+    <string name="queue_item_now_playing">Nu afgespeeld</string>
+    <string name="queue_item_unknown_title">Onbekend nummer</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Afspeelwachtrij · %1$d nummer</item>
+        <item quantity="other">Afspeelwachtrij · %1$d nummers</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Kleur accentbasis</string>
+    <string name="setting_wear_accent_floor_custom_color">Aangepaste basiskleur</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Kies de kleur die wordt gebruikt wanneer Kleur accentbasis is ingesteld op Aangepaste kleur</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Albumaccent</item>
+        <item>Secundaire albumkleur</item>
+        <item>Tertiaire albumkleur</item>
+        <item>Aangepaste kleur</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Een neutrale, zeer leesbare interfacesans voor dagelijks lezen</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Toegankelijkheidsgerichte lettervormen met duidelijke verschillen die ook klein helder blijven</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Een zacht afgeronde geometrische sans — zelfverzekerd en vriendelijk</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Een compacte humanistische sans die lange titels meer ademruimte geeft</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Een hoog gecondenseerd displaylettertype met krachtige posterenergie</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Een eigentijdse serif ontworpen voor comfortabel lezen van lange teksten</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Een expressieve zachte serif met warmte en karakter</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Een retrofuturistische monospace met een technische rand</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Een dicht, zeer zwaar displaylettertype voor maximaal contrast</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Een vloeiend handschrift met een levendig, persoonlijk gevoel</string>
+    <string name="setting_wear_artist_text_mode">Gedrag van artiesttekst</string>
+    <string name="setting_wear_album_art_source">Bron voor albumhoes</string>
+    <string name="setting_user_font">Mijn eigen lettertype</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Een .ttf- of .otf-bestand van deze telefoon importeren</string>
+    <string name="setting_user_font_loaded">%1$s · tik om te vervangen of verwijderen</string>
+    <string name="user_font_pick">Lettertypebestand kiezen</string>
+    <string name="user_font_replace">Vervangen</string>
+    <string name="user_font_remove">Verwijderen</string>
+    <string name="user_font_imported">“%1$s” geïmporteerd. Kies het in een willekeurige lettertypenlijst; het wordt naar je horloge verzonden.</string>
+    <string name="user_font_removed">Je geïmporteerde lettertype is verwijderd.</string>
+    <string name="user_font_error_too_large">Dat bestand is %1$s. Een lettertype moet kleiner zijn dan %2$s om snel het horloge te kunnen bereiken.</string>
+    <string name="user_font_error_not_a_font">Dat bestand is geen lettertype dat deze telefoon kan lezen. TrueType en OpenType (.ttf, .otf) werken; webfonts (.woff, .woff2) niet.</string>
+    <string name="user_font_error_unreadable">Dat bestand kon niet worden gelezen. Probeer het opnieuw te kiezen of kopieer het eerst naar deze telefoon.</string>
+    <string name="user_font_not_shareable">Thema’s met je eigen lettertype blijven op deze telefoon</string>
+    <string name="setting_custom_album_art_image">Te gebruiken afbeelding</string>
+    <string name="setting_custom_album_art_folder">Bronmap</string>
+    <string name="setting_custom_album_art_none">Nog niet gekozen — tik om te selecteren</string>
+    <string name="setting_custom_album_art_chosen">%1$s · tik om te wijzigen</string>
+    <string name="custom_album_art_image_set">Die afbeelding staat voortaan achter de speler.</string>
+    <string name="custom_album_art_folder_set">Voor elk nummer wordt een afbeelding uit die map gekozen.</string>
+    <string name="custom_album_art_error">Dat kon niet worden geopend. Kies het opnieuw of selecteer iets uit de eigen opslag van deze telefoon.</string>
+    <string name="custom_album_art_not_shareable">Thema’s met je eigen afbeeldingen blijven op deze telefoon</string>
+    <string name="setting_wear_text_block_align">Tekstuitlijning</string>
+    <string name="setting_wear_text_block_align_description">Aan welke rand de nummertekst wordt uitgelijnd. Wijzerplaat volgen behoudt de uitlijning waarvoor elke wijzerplaat is ontworpen.</string>
+    <string name="setting_wear_text_block_position">Tekstpositie</string>
+    <string name="setting_wear_text_block_position_description">Waar de nummertekst op het scherm staat. Wijzerplaat volgen behoudt de positie waarvoor elke wijzerplaat is ontworpen.</string>
+    <string name="setting_online_artwork">Online hoesafbeelding</string>
+    <string name="setting_online_artwork_description">Laat de wijzerplaat een online opgezochte afbeelding tonen \u2014 de uitvoerende artiest of een albumhoes wanneer een speler er geen publiceert. Je telefoon zoekt in de openbare catalogus van Deezer en bewaart het resultaat in de cache; alleen de naam van het nummer en de artiest worden verzonden en er wordt niets opgezocht tenzij een wijzerplaat op een van die bronnen is ingesteld. Uitgeschakeld wordt de eigen hoesafbeelding van de speler gebruikt.</string>
 </resources>

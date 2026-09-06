@@ -2076,6 +2076,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -2119,6 +2124,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
@@ -2345,4 +2355,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Copia</string>
+    <string name="dev_report_copied">Report copiato</string>
+    <string name="dev_watch_snapshot_inspector">Istantanea preferenze orologio</string>
+    <string name="dev_watch_snapshot_inspector_description">Ciò che verrebbe realmente inviato all’orologio in questo momento: ambito di aspetto attivo, dimensione stimata e quali cache inattive per quadrante sono state eliminate per rientrare nel limite</string>
+    <string name="dev_data_layer_inspector">Ispettore Data Layer</string>
+    <string name="dev_data_layer_inspector_description">Nodi Wearable connessi e l’ultimo WatchInfo a cui ha risposto l’app dell’orologio: lo stato grezzo dietro “Nessun orologio connesso”</string>
+    <string name="dev_media_sessions_inspector">Esplora MediaSession</string>
+    <string name="dev_media_sessions_inspector_description">Tutte le MediaSession attualmente attive, non solo quella monitorata: azioni dichiarate, coda e percorso di riproduzione</string>
+    <string name="dev_view_phone_log">Visualizza log telefono</string>
+    <string name="dev_view_phone_log_description">Parte finale del log Timber salvato su disco, più il log dell’orologio se “Invia log” lo ha già recuperato in precedenza</string>
+    <string name="dev_theme_submission_preflight">Controllo preliminare invio tema</string>
+    <string name="dev_theme_submission_preflight_description">Sottopone ogni tema dell’orologio salvato al controllo di invio alla community e indica l’impostazione esatta che lo blocca, se presente</string>
+    <string name="dev_appearance_resolution_inspector">Ispettore risoluzione aspetto</string>
+    <string name="dev_appearance_resolution_inspector_description">Per ogni chiave di aspetto con ambito, mostra quale dei quattro passaggi di risoluzione ha davvero prevalso — valore esplicito del quadrante, predefinito per quadrante, globale legacy o predefinito della definizione — e il valore restituito da ciascuno</string>
+    <string name="action_fast_forward">Avanti veloce</string>
+    <string name="action_rewind">Riavvolgi</string>
+    <string name="action_set_playback_speed">Imposta velocità su %1$s×</string>
+    <string name="action_seek_to_percent">Vai al %1$d%%</string>
+    <string name="action_set_volume_percent">Imposta volume su %1$d%%</string>
+    <string name="action_set_shuffle_on">Attiva riproduzione casuale</string>
+    <string name="action_set_shuffle_off">Disattiva riproduzione casuale</string>
+    <string name="action_set_repeat_off">Disattiva ripetizione</string>
+    <string name="action_set_repeat_all">Ripeti tutto</string>
+    <string name="action_set_repeat_one">Ripeti uno</string>
+    <string name="group_playback_speed">Velocità di riproduzione</string>
+    <string name="group_track_position">Posizione brano</string>
+    <string name="group_shuffle_mode">Modalità casuale</string>
+    <string name="group_repeat_mode">Modalità ripetizione</string>
+    <string name="group_volume_levels">Livelli volume</string>
+    <string name="group_watch_screens">Schermate orologio</string>
+    <string name="group_find_music">Trova e riproduci</string>
+    <string name="action_open_face_picker">Apri selettore quadrante</string>
+    <string name="action_close_watch_app">Chiudi app dell’orologio</string>
+    <string name="hand_gestures">GESTI DELLA MANO</string>
+    <string name="hand_gestures_hint">Disponibile sugli orologi compatibili mentre Svartifoss è aperto.</string>
+    <string name="hand_gestures_hint_disconnected">Collega e apri Svartifoss sul tuo orologio per verificare se supporta i gesti della mano.</string>
+    <string name="hand_gestures_hint_outdated">Aggiorna l’app dell’orologio per verificare se questo orologio supporta i gesti della mano.</string>
+    <string name="hand_gestures_hint_unsupported">Questo orologio non supporta i gesti della mano, quindi un’azione assegnata qui non verrà mai eseguita.</string>
+    <string name="hand_gestures_hint_disabled">I gesti della mano sono disattivati su questo orologio. Attivali in Impostazioni \u2192 Gesti, direttamente sull’orologio.</string>
+    <string name="hand_gestures_hint_ready">Pronto su questo orologio: esegui due pizzichi mentre il player Svartifoss è aperto.</string>
+    <string name="hand_gesture_how_it_works">Unisci rapidamente pollice e indice due volte con il polso sollevato. Wear OS chiama questo gesto azione principale, quindi un orologio di un altro produttore potrebbe usare un proprio gesto equivalente.\n\nFunziona solo mentre il player Svartifoss è aperto sull’orologio e lo schermo è acceso \u2014 non dal quadrante, non sopra la coda o il menu e non sul display always-on. L’azione eseguita è quella impostata per lo stato in cui si trova la riproduzione in quel momento, quindi impostala su entrambe le pagine Controlli per farla funzionare in entrambi i casi.\n\nIl gesto deve anche essere attivato nelle Impostazioni \u2192 Gesti dell’orologio stesso.</string>
+    <string name="double_pinch">Doppio pizzico</string>
+    <string name="icon_selection_search_hint">Cerca icone</string>
+    <string name="icon_selection_search_empty">Nessuna icona corrisponde alla ricerca</string>
+    <string name="open_quick_actions_panel">Apri pannello azioni rapide</string>
+    <string name="open_volume_screen">Apri schermata volume</string>
+    <string name="open_progress_screen">Apri schermata avanzamento</string>
+    <string name="export_config_failed_detail">Impossibile esportare il backup: %1$s</string>
+    <string name="backup_selection_title">Scegli contenuto del backup</string>
+    <string name="backup_selection_description">Seleziona le parti di Svartifoss che vuoi salvare. Per impostazione predefinita è selezionato tutto; le parti non selezionate restano invariate quando importi questo backup.</string>
+    <string name="backup_selection_select_all">Seleziona tutto</string>
+    <string name="backup_selection_clear_all">Cancella tutto</string>
+    <string name="backup_selection_export">Esporta backup</string>
+    <string name="backup_selection_empty">Seleziona almeno un elemento</string>
+    <string name="backup_section_buttons">Configurazioni pulsanti</string>
+    <string name="backup_section_buttons_description">Azioni di pulsanti, corona e gesti per musica in riproduzione e arrestata.</string>
+    <string name="backup_section_actions">Elenco azioni</string>
+    <string name="backup_section_actions_description">L’elenco ordinato delle azioni mostrate nel menu azioni dell’orologio.</string>
+    <string name="backup_section_app_settings">Impostazioni app</string>
+    <string name="backup_section_app_settings_description">Impostazioni del telefono, comportamento dell’orologio, lingua, riproduzione e integrazioni.</string>
+    <string name="backup_section_watch_appearance">Aspetto e temi dell’orologio</string>
+    <string name="backup_section_watch_appearance_description">Layout, colori, tipografia, pannelli, AOD e temi personalizzati salvati dell’orologio.</string>
+    <string name="backup_section_playlist_shortcuts">Scorciatoie playlist</string>
+    <string name="backup_section_playlist_shortcuts_description">I tuoi link salvati a musica, album, artisti, playlist e altri contenuti in streaming.</string>
+    <string name="backup_section_history">Cronologia ricerca e riproduzione</string>
+    <string name="backup_section_history_description">Ricerche recenti e brani riprodotti di recente.</string>
+    <string name="backup_section_icons">Icone e copertine caricate</string>
+    <string name="backup_section_icons_description">Icone azione personalizzate, copertine delle scorciatoie e icone app in cache.</string>
+    <string name="backup_section_privacy">Privacy e notifiche</string>
+    <string name="backup_section_privacy_description">Segnalazioni di arresti anomali, notifiche di annunci e altre scelte di consenso salvate dall’app.</string>
+    <string name="backup_section_local_app_state">Stato locale dell’app</string>
+    <string name="backup_section_local_app_state_description">Accento corrente, ultima posizione del menu, prompt completati e stato aggiornamenti.</string>
+    <string name="backup_section_auxiliary_data">Altri dati dell’app</string>
+    <string name="backup_section_auxiliary_data_description">Preferenze aggiuntive di proprietà dell’app e file interni, inclusi futuri archivi dati.</string>
+    <string name="pref_numeric_range">Tra %1$d e %2$d.</string>
+    <string name="background_editor_artwork">Copertina</string>
+    <string name="background_editor_layers">Livelli</string>
+    <string name="background_editor_layers_count">%1$d di %2$d</string>
+    <string name="background_editor_add_layer">Aggiungi livello</string>
+    <string name="background_editor_reset_layers">Ripristina</string>
+    <string name="background_editor_empty">Nessun livello. La copertina viene mostrata da sola.</string>
+    <string name="background_editor_note">Il livello in cima a questo elenco viene disegnato sopra tutto il resto; quello in fondo è il più vicino alla copertina.</string>
+    <string name="background_editor_full">Puoi sovrapporre fino a %1$d livelli.</string>
+    <string name="background_layer_kind_wash">Sfondo</string>
+    <string name="background_layer_kind_shade">Ombreggiatura</string>
+    <string name="background_layer_kind_floor">Base accento</string>
+    <string name="background_layer_move_up">Sposta questo livello verso l’alto</string>
+    <string name="background_layer_move_down">Sposta questo livello verso il basso</string>
+    <string name="background_layer_more">Altre opzioni per questo livello</string>
+    <string name="background_layer_add_title">Aggiungi un livello</string>
+    <string name="background_layer_style_title">Livello %1$s</string>
+    <string name="background_layer_opacity">Intensità</string>
+    <string name="background_layer_color">Colore</string>
+    <string name="background_layer_custom_color">Scegli un colore</string>
+    <string name="background_layer_duplicate">Duplica</string>
+    <string name="background_layer_remove">Rimuovi</string>
+    <string name="background_layer_color_default">Predefinito</string>
+    <string name="background_layer_color_album">Colore album</string>
+    <string name="background_layer_color_secondary">Secondo colore album</string>
+    <string name="background_layer_color_tertiary">Terzo colore album</string>
+    <string name="background_layer_color_desaturated">Colore album attenuato</string>
+    <string name="background_layer_color_black">Nero</string>
+    <string name="background_layer_color_custom">Colore personalizzato</string>
+    <string name="background_layer_reset_title">Ripristinare i livelli?</string>
+    <string name="background_layer_reset_message">La pila torna all’ombreggiatura e alla base accento impostate nelle rispettive righe, che è comunque ciò che visualizza un orologio con una build precedente.</string>
+    <string name="watch_element_progress">Avanzamento</string>
+    <string name="watch_element_volume">Volume</string>
+    <string name="watch_element_quick_panel">Azioni rapide</string>
+    <string name="watch_element_queue">Coda</string>
+    <string name="watch_element_lyrics">Testi</string>
+    <string name="player_section_on_screen">Sullo schermo</string>
+    <string name="player_element_app_icon">Icona app</string>
+    <string name="player_element_controls">Controlli player</string>
+    <string name="player_element_tap_flash">Flash al tocco</string>
+    <string name="player_element_inner_progress">Avanzamento interno</string>
+    <string name="player_element_edge_arc">Arco bordo</string>
+    <string name="player_element_edge_seek">Ricerca sul bordo</string>
+    <string name="player_element_clock">Orologio</string>
+    <string name="player_element_cover_art">Copertina</string>
+    <string name="setting_album_art_filter">Filtro copertina album</string>
+    <string name="setting_album_art_filter_description">Applica un trattamento colore indipendente sopra qualsiasi stile di copertina album.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto con un tratto extra-leggero per un aspetto delicato sul display.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto con un tratto leggero e arioso e le proporzioni familiari della famiglia.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto con un tratto medio più marcato per etichette compatte e leggibili.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto con il peso di sistema più marcato per testo di grande impatto.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto condensato orizzontalmente per far entrare titoli più lunghi in meno spazio.</string>
+    <string name="setting_wear_title_font">Carattere titolo</string>
+    <string name="setting_wear_title_text_case">Maiuscole/minuscole titolo</string>
+    <string name="setting_wear_artist_font">Carattere artista</string>
+    <string name="setting_wear_artist_text_case">Maiuscole/minuscole artista</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Una sans arrotondata e amichevole pensata per le prime letture</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Un carattere Didone da display ad alto contrasto con peso editoriale</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Una sans da poster robusta con un tocco da fumetto disegnato a mano</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Una sans geometrica calma con spaziatura generosa e uniforme</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Una slab serif contemporanea con terminali dolcemente arrotondati</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Una slab serif massiccia costruita per titoli d’impatto</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Un carattere stretto disegnato a mano in maiuscoletto</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Una sans condensata molto compatta per titoli incisivi</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Una slab serif geometrica che resta solida a piccole dimensioni</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Un carattere display da fumetto dall’energia esplosiva</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Un carattere display militare stencil</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Una serif verticale con curve calde e informali</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Una sans umanista con angoli leggermente arrotondati</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Una sans grotesca con forme forti e dirette</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Una monospaziata da macchina da scrivere raffinata pensata per le sceneggiature</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Una slab serif arrotondata dal tono morbido e libresco</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Una serif da libro in stile antico ottimizzata per testi lunghi</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Una sans geometrica a basso contrasto con finitura moderna</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Una serif robusta disegnata per reggere bene alle dimensioni del testo</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Una sans tecnica contemporanea con giunzioni angolari</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Una monospaziata da programmazione con glifi chiari e distinti</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Una monospaziata umanista progettata per il codice su schermo</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Un carattere manoscritto vivace con tratti arrotondati</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Una sans geometrica dal carattere vintage anni Venti</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Una sans geometrica nella tradizione di Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Una sans tailandese e latina senza occhielli con una lieve inclinazione</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Una sans sagomata per ridurre l’affaticamento visivo durante la lettura</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Una scrittura collegata e grassetta dal fascino di insegna rétro</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Una sans semigeometrica che bilancia calore e precisione</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Una sans minimalista disegnata per testi di interfaccia puliti</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Una sans ben arrotondata con terminali morbidi</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Una sans geometrica dal ritmo uniforme e contemporaneo</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Un carattere techno squadrato dal sapore gaming</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Una sans tecnica compatta disegnata su una griglia</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Una grotesk moderna con curve aperte distintive</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Un carattere pixel direttamente da un cabinato arcade</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Una sans geometrica arrotondata dal tocco delicato e leggero</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Una sans condensata squadrata con angoli tecnici</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Un carattere display art déco con radici nella pittura di insegne rétro</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">La compagna monospaziata di Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Un carattere display massiccio con tratti giocosi e decisi</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Un carattere industriale largo con forme squadrate e pesanti</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Un carattere display inclinato e vivido con radici gujarati</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Un minuscolo carattere bitmap che ricorda i primi schermi dei computer</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Una monospaziata progettata per leggere il codice comodamente</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Un carattere condensato tutto maiuscolo con presenza da poster</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Un carattere alto e condensato per titoli in devanagari e latino</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Una sans umanista squadrata dall’aria tecnica</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Una sans completamente arrotondata dal tono accessibile</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Un carattere condensato che richiama le insegne dei caffè degli anni Venti</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Una slab serif con terminali moderni e dolcemente tagliati</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Una sans umanista amichevole con forme aperte e leggibili</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Una sans calda con forme robuste per una lettura comoda</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Una sans umanista versatile progettata per interfacce chiare</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Una serif da testo raffinata dalla voce editoriale</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Una serif classica da libro ottimizzata per la lettura su schermo</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Una sans grotesca pratica con un ritmo ampio e robusto</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Una sans umanista tecnica dalle proporzioni precise</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Una monospaziata tecnica con una trama rifinita e leggibile</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Una serif contemporanea dal carattere ingegnerizzato</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Una sans da lavoro pulita con forme compatte e pratiche</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Una grotesk originale dalle proporzioni amichevoli</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Una sans geometrica dal tocco futuristico e arioso</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Una sans geometrica moderna con linee urbane eleganti</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Una sans contemporanea equilibrata pensata per piccoli schermi</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Una sans display sicura con proporzioni espressive</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Una sans complementare leggibile per informazioni sul brano più lunghe</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Una monospaziata nitida dal tono tecnico moderno</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Una sans anticonvenzionale con forme giocose e direzione artistica marcata</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Una sans contemporanea flessibile con precisione discreta</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Una sans pulita e accogliente per una lettura senza sforzo</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Una sans display arrotondata dalla personalità allegra</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Una grotesk vivace che combina struttura e dettagli insoliti</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Una serif display ad alto contrasto per titoli drammatici</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Una serif letteraria elegante e ad alto contrasto</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Una serif display elegante con dettagli calligrafici</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Una slab serif robusta che resta chiara a piccole dimensioni</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Una serif versatile creata per una lettura densa ed espressiva</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Una serif calda in stile antico dal carattere libresco</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Una sans elegante con forme delle lettere distintive e raffinate</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Una sans geometrica audace pensata per titoli forti</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Una sans adatta alla condensazione con energia atletica e dinamica</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Una sans morbida con controforme aperte e un’energia da segnaletica amichevole</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Una sans versatile che bilancia calore umanista e chiarezza</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Una sans chiara ispirata alla segnaletica dei trasporti con ritmo deciso</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Una sans neutra e accessibile progettata per interfacce quotidiane</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Una sans geometrica leggera con curve morbide e moderne</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Una sans stretta e arrotondata con un morbido tocco futuristico</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Una sans geometrica pulita con un sottile carattere ispirato al tailandese</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Un carattere display futuristico e largo per la massima presenza</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Una famiglia variabile da sans a monospaziata con voce tecnica e giocosa</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Una monospaziata a larghezza variabile con una trama digitale distintiva</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Una sans ampia e molto leggibile con supporto esteso alle scritture</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Una serif affidabile con supporto esteso alle scritture</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Una monospaziata multilingue progettata per un ritmo uniforme</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Una sans moderna compatta con un ritmo nitido influenzato dall’ebraico</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Una sans umanista robusta ottimizzata per una lettura chiara</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Una sans per schermi amichevole con trama arrotondata e aperta</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Una sans geometrica compatta dalle proporzioni distintive</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Una serif calligrafica vivace dal carattere letterario</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Una sans umanista pulita con eccellente leggibilità nelle interfacce</string>
+    <string name="setting_wear_note_show_cover">Copertina</string>
+    <string name="aod_element_artwork">Copertina</string>
+    <string name="aod_element_clock">Orologio</string>
+    <string name="aod_element_track_info">Info brano</string>
+    <string name="aod_element_transport">Controlli di riproduzione</string>
+    <string name="aod_element_progress">Avanzamento</string>
+    <string name="aod_element_up_next">A seguire</string>
+    <string name="aod_section_artwork">Copertina</string>
+    <string name="aod_control_tint">Tinta</string>
+    <string name="aod_control_brightness">Luminosità</string>
+    <string name="aod_control_art_treatment">Trattamento</string>
+    <string name="aod_control_art_opacity">Opacità</string>
+    <string name="mini_button_control_visibility">Mostra</string>
+    <string name="mini_button_control_arrangement">Disposizione</string>
+    <string name="mini_button_control_shape">Forma</string>
+    <string name="mini_button_control_background">Sfondo</string>
+    <string name="mini_button_control_opacity">Opacità</string>
+    <string name="mini_button_assign_action">Assegna azioni</string>
+    <string name="mini_button_gestures_note">Scorri verso l’alto, il basso e sinistra sul player. Lo scorrimento a destra è sempre il gesto di chiusura del sistema e non viene mai intercettato.</string>
+    <string name="setting_wear_chat_cover_shape">Forma avatar chat</string>
+    <string name="setting_wear_chat_show_cover">Copertina</string>
+    <string name="setting_wear_metadata_cover_shape">Forma copertina metadati</string>
+    <string name="setting_wear_metadata_show_cover">Copertina</string>
+    <string-array name="wear_text_case_entries">
+        <item>Normale</item>
+        <item>MAIUSCOLO</item>
+        <item>minuscolo</item>
+        <item>Iniziali Maiuscole</item>
+    </string-array>
+    <string name="wear_text_font_follow">Segui carattere globale</string>
+    <string name="category_wf_typography_track_time">Tempo brano</string>
+    <string name="setting_wear_track_time_font">Carattere tempo brano</string>
+    <string name="wear_track_time_font_follow">Segui il design</string>
+    <string name="setting_wear_track_time_font_weight">Peso tempo brano</string>
+    <string name="setting_wear_track_time_font_italic">Tempo brano in corsivo</string>
+    <string name="setting_wear_track_time_font_scale">Dimensione tempo brano</string>
+    <string name="setting_wear_track_time_font_opacity">Opacità tempo brano</string>
+    <string name="setting_wear_track_time_font_tracking">Spaziatura lettere tempo brano</string>
+    <string-array name="album_art_filter_entries">
+        <item>Nessuno</item>
+        <item>Monocromatico</item>
+        <item>Caldo</item>
+        <item>Freddo</item>
+        <item>Ora d’oro</item>
+        <item>Rosé</item>
+        <item>Pellicola vintage</item>
+        <item>Pellicola sbiadita</item>
+        <item>Opaco</item>
+        <item>Vivido</item>
+        <item>Impatto</item>
+        <item>Pastello</item>
+        <item>Seppia</item>
+        <item>Cianotipia</item>
+        <item>Verde acqua e arancione</item>
+        <item>Contrasto elevato</item>
+        <item>Luce soffusa</item>
+        <item>Notte</item>
+    </string-array>
+    <string name="queue_item_now_playing">In riproduzione</string>
+    <string name="queue_item_unknown_title">Brano sconosciuto</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Coda di riproduzione · %1$d brano</item>
+        <item quantity="other">Coda di riproduzione · %1$d brani</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Colore base accento</string>
+    <string name="setting_wear_accent_floor_custom_color">Colore base personalizzato</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Scegli il colore usato quando Colore base accento è impostato su Colore personalizzato</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Accento album</item>
+        <item>Colore secondario album</item>
+        <item>Colore terziario album</item>
+        <item>Colore personalizzato</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Una sans neutra e molto leggibile per interfacce e lettura quotidiana</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Forme di lettere orientate all’accessibilità, ben distinguibili e chiare anche in piccolo</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Una sans geometrica dolcemente arrotondata — sicura e amichevole</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Una sans umanista compatta che dà più respiro ai titoli lunghi</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Un carattere display alto e condensato con energia da poster</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Una serif contemporanea progettata per una lettura confortevole di testi lunghi</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Una serif morbida ed espressiva con calore e carattere</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Una monospaziata retrofuturistica dal taglio tecnico</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Un carattere display denso e pesante per il massimo contrasto</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Una scrittura a mano fluida dal carattere vivace e personale</string>
+    <string name="setting_wear_artist_text_mode">Comportamento testo artista</string>
+    <string name="setting_wear_album_art_source">Origine copertina album</string>
+    <string name="setting_user_font">Il mio font</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Importa un file .ttf o .otf da questo telefono</string>
+    <string name="setting_user_font_loaded">%1$s · tocca per sostituire o rimuovere</string>
+    <string name="user_font_pick">Scegli un file font</string>
+    <string name="user_font_replace">Sostituisci</string>
+    <string name="user_font_remove">Rimuovi</string>
+    <string name="user_font_imported">“%1$s” importato. Sceglilo in qualsiasi elenco di font; lo stiamo inviando al tuo orologio.</string>
+    <string name="user_font_removed">Il font importato è stato rimosso.</string>
+    <string name="user_font_error_too_large">Quel file occupa %1$s. Un font deve essere inferiore a %2$s per poter raggiungere rapidamente l’orologio.</string>
+    <string name="user_font_error_not_a_font">Quel file non è un font leggibile da questo telefono. TrueType e OpenType (.ttf, .otf) funzionano; i font web (.woff, .woff2) no.</string>
+    <string name="user_font_error_unreadable">Impossibile leggere quel file. Prova a sceglierlo di nuovo oppure copialo prima su questo telefono.</string>
+    <string name="user_font_not_shareable">I temi che usano il tuo font restano su questo telefono</string>
+    <string name="setting_custom_album_art_image">Immagine da usare</string>
+    <string name="setting_custom_album_art_folder">Cartella di origine</string>
+    <string name="setting_custom_album_art_none">Non ancora scelto — tocca per selezionare</string>
+    <string name="setting_custom_album_art_chosen">%1$s · tocca per cambiare</string>
+    <string name="custom_album_art_image_set">Quell’immagine verrà ora mostrata dietro il player.</string>
+    <string name="custom_album_art_folder_set">Per ogni brano verrà scelta un’immagine da quella cartella.</string>
+    <string name="custom_album_art_error">Impossibile aprirlo. Sceglilo di nuovo oppure seleziona qualcosa dalla memoria locale di questo telefono.</string>
+    <string name="custom_album_art_not_shareable">I temi che usano le tue immagini restano su questo telefono</string>
+    <string name="setting_wear_text_block_align">Allineamento testo</string>
+    <string name="setting_wear_text_block_align_description">A quale bordo si allinea il testo del brano. Segui quadrante mantiene l’allineamento per cui è stato progettato ogni quadrante.</string>
+    <string name="setting_wear_text_block_position">Posizione testo</string>
+    <string name="setting_wear_text_block_position_description">Dove si trova il testo del brano sullo schermo. Segui quadrante mantiene la posizione per cui è stato progettato ogni quadrante.</string>
+    <string name="setting_online_artwork">Copertina online</string>
+    <string name="setting_online_artwork_description">Consenti al quadrante di mostrare un’immagine cercata online \u2014 l’artista in riproduzione oppure la copertina di un album quando il player non ne fornisce una. Il telefono esegue la ricerca nel catalogo pubblico di Deezer e memorizza il risultato nella cache; vengono inviati solo i nomi del brano e dell’artista e non viene cercato nulla a meno che un quadrante sia impostato su una di queste origini. Se disattivato, viene usata la copertina fornita dal player.</string>
 </resources>

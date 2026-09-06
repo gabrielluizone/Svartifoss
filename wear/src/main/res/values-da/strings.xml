@@ -185,4 +185,21 @@
 
     <string name="metadata_about">Om</string>
     <string name="metadata_source">Afspiller i</string>
+    <string name="action_name_open_quick_actions_panel">Åbn panel med hurtige handlinger</string>
+    <string name="action_name_fast_forward">Spol hurtigt frem</string>
+    <string name="action_name_rewind">Spol tilbage</string>
+    <string name="action_name_set_speed">Indstil afspilningshastighed</string>
+    <string name="action_name_seek_position">Hop til position i nummeret</string>
+    <string name="action_name_set_volume">Indstil lydstyrke</string>
+    <string name="action_name_set_shuffle">Indstil blanding</string>
+    <string name="action_name_set_repeat">Indstil gentagelse</string>
+    <string name="action_name_open_volume_screen">Åbn lydstyrkeskærm</string>
+    <string name="action_name_open_progress_screen">Åbn fremskridtsskærm</string>
+    <string name="action_name_open_face_picker">Åbn urskivevælger</string>
+    <string name="action_name_close_watch_app">Luk ur-app</string>
+    <string name="volume_screen_title">Lydstyrke</string>
+    <string name="progress_screen_title">Fremskridt</string>
+    <string name="progress_screen_cancel_seek">Annuller søgning</string>
+    <string name="progress_screen_skip_back">Hop %1$d sekunder tilbage</string>
+    <string name="progress_screen_skip_forward">Hop %1$d sekunder frem</string>
 </resources>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">ప్రోగ్రెస్ రింగ్ లేఅవుట్</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>పూర్తిగా పారదర్శకం</item>
+        <item>సెకండరీ రంగు</item>
+        <item>టెర్షియరీ రంగు</item>
+        <item>కలర్ మెష్</item>
+        <item>ఆరోరా</item>
+        <item>స్పాట్‌లైట్</item>
+        <item>విగ్నెట్</item>
+        <item>స్ప్లిట్ టోన్</item>
+        <item>కలర్ బ్యాండ్లు</item>
+        <item>మిడ్‌నైట్</item>
+        <item>హాలో</item>
+        <item>స్మోక్ బ్లర్</item>
+        <item>సన్‌సెట్</item>
+        <item>ఓషన్</item>
+        <item>నెబ్యులా</item>
+        <item>ఎంబర్</item>
+        <item>టైడ్‌లైన్</item>
+        <item>బయోల్యూమినెసెన్స్</item>
+        <item>ఇరిడిసెంట్</item>
+        <item>గ్రాఫైట్</item>
+        <item>సినిమా</item>
+        <item>ఆర్బిట్</item>
+        <item>హొరైజన్</item>
+        <item>ఇంక్ వాష్</item>
+        <item>బ్లాసమ్</item>
+        <item>ఫ్యోర్డ్</item>
+        <item>డాట్ గ్రిడ్</item>
+        <item>స్కాన్‌లైన్</item>
+        <item>రాడార్</item>
+        <item>కాంటూర్ లైన్లు</item>
+        <item>ఫాసెటెడ్</item>
+        <item>డస్క్</item>
+        <item>ఐస్</item>
+        <item>రోజ్</item>
+        <item>పేపర్</item>
+        <item>మోనోలిత్</item>
+        <item>లాంతరు</item>
+        <item>నోయర్</item>
+        <item>వెల్వెట్</item>
+        <item>మిరాజ్</item>
+        <item>బ్లూమ్</item>
+        <item>క్లౌడ్</item>
+        <item>నాక్టర్న్</item>
+        <item>లిక్విడ్</item>
+        <item>టైడల్</item>
+        <item>వినైల్</item>
+        <item>కరోనా</item>
+        <item>క్రెసెంట్</item>
+        <item>గ్రిడ్</item>
+        <item>గ్లాస్ వీల్</item>
+        <item>Material</item>
+        <item>పోస్టర్</item>
+        <item>స్టూడియో</item>
+        <item>స్పెక్ట్రం</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>పూసలు</item>
+        <item>డ్యూయల్ రైల్</item>
+        <item>పల్స్</item>
+        <item>క్రోమ్</item>
+        <item>స్పెక్ట్రం</item>
+        <item>మెట్లు</item>
+        <item>క్యాండీ</item>
+        <item>ఘోస్ట్</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>డబుల్ ఎడ్జ్</item>
+        <item>వర్టికల్ మీటర్ (ఎడమ)</item>
+        <item>వర్టికల్ మీటర్ (కుడి)</item>
+        <item>టాప్ మీటర్</item>
+        <item>బాటమ్ మీటర్</item>
+        <item>సెంటర్ డయల్</item>
+        <item>టాప్ హాలో</item>
+        <item>బాటమ్ హాలో</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>డబుల్ రింగ్</item>
+        <item>పూసలు</item>
+        <item>డ్యాష్ మరియు డాట్</item>
+        <item>24-గంటల టిక్స్</item>
+        <item>ప్రోగ్రెస్ మాత్రమే</item>
+        <item>గ్లో</item>
+        <item>డ్యుయోటోన్</item>
+        <item>నీడిల్</item>
+        <item>మారుతూ</item>
+        <item>స్పార్క్</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>బెజెల్ ఎడ్జ్</item>
+        <item>ఇన్‌సెట్ రింగ్</item>
+        <item>ఇన్నర్ రింగ్</item>
+        <item>బోల్డ్ రింగ్</item>
+        <item>క్రింద తెరవబడినది</item>
+        <item>పైభాగంలో తెరవబడినది</item>
+        <item>ఎడమ ఆర్క్</item>
+        <item>కుడి ఆర్క్</item>
+        <item>డబుల్ ట్రాక్</item>
+        <item>ఎడమవైపు తెరవబడినది</item>
+        <item>కుడివైపు తెరవబడినది</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>కాంపాక్ట్ పిల్</item>
+        <item>స్క్వేర్ ఆల్బమ్</item>
+        <item>స్టాక్డ్ పిల్</item>
+        <item>బ్యాడ్జ్</item>
+        <item>గ్లాస్ బార్</item>
+        <item>LCD</item>
+        <item>అవుట్‌లైన్ స్క్వేర్</item>
+        <item>రిబ్బన్</item>
+        <item>టైమ్ బబుల్</item>
+        <item>స్ప్లిట్ టోన్</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>టైమ్‌లైన్ (పై)</item>
+        <item>టైమ్‌లైన్ (క్రింద)</item>
+        <item>సెగ్మెంట్లు (పై)</item>
+        <item>వర్టికల్ టైమ్‌లైన్ (ఎడమ)</item>
+        <item>వర్టికల్ టైమ్‌లైన్ (కుడి)</item>
+        <item>సెంటర్ డయల్</item>
+        <item>ట్విన్ టైమ్‌లైన్</item>
+        <item>సెగ్మెంట్లు (క్రింద)</item>
+        <item>సెంటర్ స్టాక్</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>సాఫ్ట్</item>
+        <item>క్రోమ్</item>
+        <item>హోలోగ్రాఫిక్</item>
+        <item>బబుల్</item>
+        <item>రైల్</item>
+        <item>సన్‌సెట్</item>
+        <item>ఆల్బమ్ అవుట్‌లైన్</item>
+        <item>డార్క్ గ్లాస్</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>ఫ్యాన్</item>
+        <item>ఆర్బిట్</item>
+        <item>బాటమ్ డాక్</item>
+        <item>కాలమ్</item>
+        <item>స్ప్లిట్ డెక్</item>
+        <item>డైమండ్</item>
+        <item>క్యారసెల్</item>
+        <item>ట్రైయాంగిల్</item>
+        <item>మెట్టు</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>సాఫ్ట్</item>
+        <item>స్లాబ్</item>
+        <item>ఇంక్</item>
+        <item>రైల్</item>
+        <item>సన్‌సెట్</item>
+        <item>బబుల్</item>
+        <item>క్రోమ్</item>
+        <item>హోలోగ్రాఫిక్</item>
+    </string-array>
+</resources>

@@ -1898,6 +1898,11 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1941,6 +1946,11 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2387,4 +2397,463 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Kopyahin</string>
+    <string name="dev_report_copied">Nakopya ang report</string>
+    <string name="dev_watch_snapshot_inspector">Snapshot ng watch preferences</string>
+    <string name="dev_watch_snapshot_inspector_description">Ang aktuwal na ipapadala sa relo ngayon: active appearance scope, tinatayang laki, at kung aling inactive face-scope cache ang inalis para magkasya sa budget</string>
+    <string name="dev_data_layer_inspector">Inspector ng Data Layer</string>
+    <string name="dev_data_layer_inspector_description">Mga nakakonektang Wearable node at ang huling WatchInfo na isinagot ng watch app - ang raw na state sa likod ng "Walang nakakonektang relo"</string>
+    <string name="dev_media_sessions_inspector">Explorer ng MediaSession</string>
+    <string name="dev_media_sessions_inspector_description">Lahat ng kasalukuyang active na MediaSession, hindi lang ang sinusubaybayan: advertised actions, queue, playback route</string>
+    <string name="dev_view_phone_log">Tingnan ang phone log</string>
+    <string name="dev_view_phone_log_description">Dulo ng Timber log na nasa disk, kasama ang log ng relo kung nakuha na ito dati ng "Send logs"</string>
+    <string name="dev_theme_submission_preflight">Preflight ng theme submission</string>
+    <string name="dev_theme_submission_preflight_description">Pinapadaan ang bawat naka-save na watch theme sa community submission check at tinutukoy ang eksaktong setting na humaharang dito, kung mayroon</string>
+    <string name="dev_appearance_resolution_inspector">Inspector ng resolution ng appearance</string>
+    <string name="dev_appearance_resolution_inspector_description">Para sa bawat appearance key na nasa scope, kung alin sa apat na resolution step ang aktuwal na nanalo - explicit na face value, per-face default, legacy global, o definition default - at ang value na ibinabalik ng bawat isa</string>
+    <string name="action_fast_forward">Fast forward</string>
+    <string name="action_rewind">Rewind</string>
+    <string name="action_set_playback_speed">Itakda ang bilis sa %1$s×</string>
+    <string name="action_seek_to_percent">Tumalon sa %1$d%%</string>
+    <string name="action_set_volume_percent">Itakda ang volume sa %1$d%%</string>
+    <string name="action_set_shuffle_on">I-on ang shuffle</string>
+    <string name="action_set_shuffle_off">I-off ang shuffle</string>
+    <string name="action_set_repeat_off">I-off ang repeat</string>
+    <string name="action_set_repeat_all">Ulitin lahat</string>
+    <string name="action_set_repeat_one">Ulitin ang isa</string>
+    <string name="group_playback_speed">Bilis ng playback</string>
+    <string name="group_track_position">Posisyon ng track</string>
+    <string name="group_shuffle_mode">Shuffle mode</string>
+    <string name="group_repeat_mode">Repeat mode</string>
+    <string name="group_volume_levels">Mga level ng volume</string>
+    <string name="group_watch_screens">Mga screen ng relo</string>
+    <string name="group_find_music">Hanapin at i-play</string>
+    <string name="action_open_face_picker">Buksan ang face picker</string>
+    <string name="action_close_watch_app">Isara ang app sa relo</string>
+    <string name="hand_gestures">MGA HAND GESTURE</string>
+    <string name="hand_gestures_hint">Available sa mga compatible na relo habang bukas ang Svartifoss.</string>
+    <string name="hand_gestures_hint_disconnected">Ikonekta at buksan ang Svartifoss sa iyong relo para makita kung sinusuportahan nito ang mga hand gesture.</string>
+    <string name="hand_gestures_hint_outdated">I-update ang watch app para makita kung sinusuportahan ng relong ito ang mga hand gesture.</string>
+    <string name="hand_gestures_hint_unsupported">Hindi sinusuportahan ng relong ito ang mga hand gesture, kaya hindi kailanman tatakbo ang action na itinalaga rito.</string>
+    <string name="hand_gestures_hint_disabled">Naka-off ang mga hand gesture sa relong ito. I-on ang mga ito sa Settings \u2192 Gestures, sa mismong relo.</string>
+    <string name="hand_gestures_hint_ready">Handa sa relong ito: mag-pinch nang dalawang beses habang bukas ang Svartifoss player.</string>
+    <string name="hand_gesture_how_it_works">I-pinch nang magkasama ang hinlalaki at hintuturo nang dalawang beses, mabilis, habang nakataas ang pulsuhan. Tinatawag ito ng Wear OS na primary action, kaya maaaring gumamit ang relo ng ibang maker ng sarili nitong katumbas na hand gesture.\n\nGumagana lang ito habang bukas ang Svartifoss player sa relo at naka-on ang screen \u2014 hindi mula sa watch face, hindi sa ibabaw ng queue o menu, at hindi sa always-on display. Ang tatakbong action ay iyong nakatakda para sa kasalukuyang playback state, kaya itakda ito sa parehong Controls page para gumana sa alinmang state.\n\nKailangan ding naka-on ang gesture sa sariling Settings \u2192 Gestures ng relo.</string>
+    <string name="double_pinch">Dobleng pinch</string>
+    <string name="icon_selection_search_hint">Maghanap ng mga icon</string>
+    <string name="icon_selection_search_empty">Walang icon na tumutugma sa search mo</string>
+    <string name="open_quick_actions_panel">Buksan ang quick actions panel</string>
+    <string name="open_volume_screen">Buksan ang volume screen</string>
+    <string name="open_progress_screen">Buksan ang progress screen</string>
+    <string name="export_config_failed_detail">Hindi ma-export ang backup: %1$s</string>
+    <string name="backup_selection_title">Piliin ang laman ng backup</string>
+    <string name="backup_selection_description">Piliin ang mga bahagi ng Svartifoss na gusto mong i-save. Lahat ay selected bilang default; hindi mababago ang mga hindi piniling bahagi kapag in-import ang backup na ito.</string>
+    <string name="backup_selection_select_all">Piliin lahat</string>
+    <string name="backup_selection_clear_all">I-clear lahat</string>
+    <string name="backup_selection_export">I-export ang backup</string>
+    <string name="backup_selection_empty">Pumili ng kahit isang item</string>
+    <string name="backup_section_buttons">Mga configuration ng button</string>
+    <string name="backup_section_buttons_description">Mga action ng button, crown at gesture para sa tumutugtog at nakahintong musika.</string>
+    <string name="backup_section_actions">Listahan ng mga action</string>
+    <string name="backup_section_actions_description">Ang nakaayos na listahan ng mga action na ipinapakita sa action menu ng relo.</string>
+    <string name="backup_section_app_settings">Mga setting ng app</string>
+    <string name="backup_section_app_settings_description">Mga setting ng phone, behavior ng relo, wika, playback at integrations.</string>
+    <string name="backup_section_watch_appearance">Hitsura at mga theme ng relo</string>
+    <string name="backup_section_watch_appearance_description">Mga layout, kulay, typography, panel, AOD at naka-save na custom theme ng relo.</string>
+    <string name="backup_section_playlist_shortcuts">Mga playlist shortcut</string>
+    <string name="backup_section_playlist_shortcuts_description">Mga naka-save mong link sa music, album, artist, playlist at iba pang streaming content.</string>
+    <string name="backup_section_history">History ng search at playback</string>
+    <string name="backup_section_history_description">Mga kamakailang search at kamakailang pinatugtog na track.</string>
+    <string name="backup_section_icons">Mga na-load na icon at artwork</string>
+    <string name="backup_section_icons_description">Mga custom action icon, shortcut cover at cached app icon.</string>
+    <string name="backup_section_privacy">Privacy at notifications</string>
+    <string name="backup_section_privacy_description">Mga crash report, announcement notification at iba pang consent choice na sine-save ng app.</string>
+    <string name="backup_section_local_app_state">Local na state ng app</string>
+    <string name="backup_section_local_app_state_description">Kasalukuyang accent, huling posisyon ng menu, mga natapos na prompt at update state.</string>
+    <string name="backup_section_auxiliary_data">Iba pang data ng app</string>
+    <string name="backup_section_auxiliary_data_description">Karagdagang app-owned preferences at internal files, kabilang ang mga data store sa hinaharap.</string>
+    <string name="pref_numeric_range">Sa pagitan ng %1$d at %2$d.</string>
+    <string name="background_editor_artwork">Artwork</string>
+    <string name="background_editor_layers">Mga layer</string>
+    <string name="background_editor_layers_count">%1$d sa %2$d</string>
+    <string name="background_editor_add_layer">Magdagdag ng layer</string>
+    <string name="background_editor_reset_layers">I-reset</string>
+    <string name="background_editor_empty">Walang layer. Ang artwork lang ang ipinapakita.</string>
+    <string name="background_editor_note">Ang layer sa itaas ng listahang ito ang iginuguhit sa ibabaw ng lahat; ang nasa ibaba ang pinakamalapit sa artwork.</string>
+    <string name="background_editor_full">Maaari kang mag-stack ng hanggang %1$d layer.</string>
+    <string name="background_layer_kind_wash">Background</string>
+    <string name="background_layer_kind_shade">Shading</string>
+    <string name="background_layer_kind_floor">Accent floor</string>
+    <string name="background_layer_move_up">Ilipat pataas ang layer na ito</string>
+    <string name="background_layer_move_down">Ilipat pababa ang layer na ito</string>
+    <string name="background_layer_more">Higit pang opsyon para sa layer na ito</string>
+    <string name="background_layer_add_title">Magdagdag ng layer</string>
+    <string name="background_layer_style_title">%1$s layer</string>
+    <string name="background_layer_opacity">Lakas</string>
+    <string name="background_layer_color">Kulay</string>
+    <string name="background_layer_custom_color">Pumili ng kulay</string>
+    <string name="background_layer_duplicate">I-duplicate</string>
+    <string name="background_layer_remove">Alisin</string>
+    <string name="background_layer_color_default">Default</string>
+    <string name="background_layer_color_album">Kulay ng album</string>
+    <string name="background_layer_color_secondary">Pangalawang kulay ng album</string>
+    <string name="background_layer_color_tertiary">Pangatlong kulay ng album</string>
+    <string name="background_layer_color_desaturated">Muted na kulay ng album</string>
+    <string name="background_layer_color_black">Itim</string>
+    <string name="background_layer_color_custom">Custom na kulay</string>
+    <string name="background_layer_reset_title">I-reset ang mga layer?</string>
+    <string name="background_layer_reset_message">Babalik ang stack sa shading at accent floor na itinakda sa sarili nilang mga row, na siyang nire-render din ng relo na gumagamit ng mas lumang build.</string>
+    <string name="watch_element_progress">Progress</string>
+    <string name="watch_element_volume">Volume</string>
+    <string name="watch_element_quick_panel">Mabilisang action</string>
+    <string name="watch_element_queue">Queue</string>
+    <string name="watch_element_lyrics">Lyrics</string>
+    <string name="player_section_on_screen">Sa screen</string>
+    <string name="player_element_app_icon">Icon ng app</string>
+    <string name="player_element_controls">Mga control ng player</string>
+    <string name="player_element_tap_flash">Tap flash</string>
+    <string name="player_element_inner_progress">Inner progress</string>
+    <string name="player_element_edge_arc">Edge arc</string>
+    <string name="player_element_edge_seek">Edge seek</string>
+    <string name="player_element_clock">Orasan</string>
+    <string name="player_element_cover_art">Cover art</string>
+    <string name="setting_album_art_filter">Filter ng album art</string>
+    <string name="setting_album_art_filter_description">Mag-apply ng hiwalay na color treatment sa anumang album art style.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto na may extra-light na stroke para sa maselang display look.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto na may magaan at maaliwalas na stroke at pamilyar na proporsyon ng family.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto na may mas malakas na medium stroke para sa compact at madaling basahing mga label.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto na may pinakamabigat na system weight para sa bold na display text.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Pahalang na compressed ang Roboto para magkasya ang mas mahahabang title sa mas maliit na espasyo.</string>
+    <string name="setting_wear_title_font">Typeface ng title</string>
+    <string name="setting_wear_title_text_case">Case ng title</string>
+    <string name="setting_wear_artist_font">Typeface ng artist</string>
+    <string name="setting_wear_artist_text_case">Case ng artist</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Magiliw na rounded sans na ginawa para sa unang yugto ng pagbabasa</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">High-contrast na Didone display face na may editorial na bigat</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Matibay na poster sans na may hand-lettered comic na dating</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Kalmadong geometric sans na may maluwag at pantay na spacing</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Kontemporaryong slab serif na may malalambot na rounded terminal</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Napakabigat na slab serif na ginawa para sa malakas na impact ng headline</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Makitid na hand-drawn face sa maliliit na capital</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Siksik na condensed sans para sa malalakas na headline</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Geometric slab serif na nananatiling solid sa maliliit na size</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Comic-book display face na may sumisigaw na enerhiya</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Stencilled military display face</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Upright serif na may mainit at impormal na kurba</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Humanist sans na may bahagyang rounded na mga sulok</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Grotesque sans na may malalakas at diretsong anyo</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Pinong typewriter monospace na ginawa para sa mga script</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Rounded slab serif na may malambot at bookish na tono</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Old-style book serif na inayos para sa mahahabang passage</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Low-contrast geometric sans na may modernong finish</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Matibay na serif na ginawa para manatiling malinaw sa body-text size</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Kontemporaryong technical sans na may angular na joint</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Programming monospace na may malinaw at magkakaibang glyph</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Humanist monospace na ginawa para sa on-screen code</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Bubbly na handwritten face na may rounded stroke</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Geometric sans na may vintage na karakter ng 1920s</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Geometric sans sa tradisyon ng Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Loopless Thai at Latin sans na may bahagyang slant</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Sans na hinubog para mabawasan ang visual stress habang nagbabasa</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Bold na connected script na may retro signage na dating</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Semi-geometric sans na binabalanse ang init at precision</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Minimalist na sans na ginawa para sa malinis na interface text</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Well-rounded sans na may malalambot na terminal</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Geometric sans na may pantay at kontemporaryong rhythm</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Squared techno face na may gaming na pakiramdam</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Compact na technical sans na iginuhit sa grid</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Modernong grotesque na may natatanging bukas na kurba</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Pixel face na parang diretso mula sa arcade cabinet</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Rounded geometric sans na may banayad at magaan na pakiramdam</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Squarish condensed sans na may technical na anggulo</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Art-deco display face na may ugat sa retro sign painting</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Ang monospaced companion ng Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Chunky display face na may playful at blunt na stroke</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Malapad na industrial face na may mabibigat na squared form</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Vivid na slanted display face na may Gujarati na ugat</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Maliit na bitmap face na nagpapaalala sa mga unang computer screen</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Monospace na ginawa para sa komportableng pagbabasa ng code</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Condensed all-caps face na may malakas na poster presence</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Matangkad na condensed face para sa Devanagari at Latin headline</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Squarish humanist sans na may technical na dating</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Fully rounded sans na may approachable na tono</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Condensed face na nagpapaalala sa signage ng coffee shop noong 1920s</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Slab serif na may softly clipped at modernong terminal</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Friendly na humanist sans na may bukas at madaling basahing anyo</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Warm na sans na may matibay na hugis para sa komportableng pagbabasa</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Versatile na humanist sans na ginawa para sa malinaw na interface</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Refined na text serif na may editorial na voice</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Classic book serif na inayos para sa pagbabasa sa screen</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Practical na grotesk sans na may malapad at matibay na rhythm</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Technical humanist sans na may eksaktong proportion</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Technical monospace na may polished at readable na texture</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Kontemporaryong serif na may engineered na karakter</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Malinis na workhorse sans na may compact at practical na hugis</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Kakaibang grotesk na may friendly na proportion</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Geometric sans na may futuristic at spacious na pakiramdam</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Modernong geometric sans na may elegant at urban na linya</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Balanseng kontemporaryong sans na ginawa para sa maliliit na screen</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Confident na display sans na may expressive na proportion</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Readable na companion sans para sa mas mahabang impormasyon ng track</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Crisp na monospace na may modernong technical tone</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Unconventional sans na may art-directed at playful na hugis</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Flexible na kontemporaryong sans na may tahimik na precision</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Malinis at madaling lapitang sans para sa effortless na readability</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Rounded display sans na may masayang personalidad</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Masiglang grotesk na pinagsasama ang istruktura at kakaibang detalye</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">High-contrast display serif para sa dramatic na mga title</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Eleganteng high-contrast literary serif</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Graceful na display serif na may calligraphic na detalye</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Matibay na slab serif na nananatiling malinaw sa maliliit na size</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Versatile na serif na ginawa para sa dense at expressive na pagbabasa</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Warm na old-style serif na may bookish na voice</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Eleganteng sans na may natatangi at refined na letterform</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Bold na geometric sans na ginawa para sa malalakas na headline</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Condensed-friendly sans na may athletic at dynamic na enerhiya</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Soft na sans na may open counter at friendly signage energy</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Versatile na sans na binabalanse ang humanist warmth at clarity</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Malinaw na transport-inspired sans na may confident na rhythm</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Neutral at accessible na sans para sa araw-araw na interface</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Magaan na geometric sans na may makinis at modernong kurba</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Rounded na makitid na sans na may malambot na futuristic na pakiramdam</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Malinis na geometric sans na may subtle na Thai-inspired na karakter</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Malapad na futuristic display face para sa maximum na presence</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Variable na sans-to-mono family na may playful na technical voice</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Variable-width monospace na may natatanging digital na texture</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Malawak at napakalinaw na sans na may suporta sa maraming script</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Maaasahang serif na may suporta sa maraming script</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Multilingual monospace na ginawa para sa consistent na rhythm</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Compact na modernong sans na may crisp na rhythm na may impluwensiya ng Hebrew</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Matibay na humanist sans na optimized para sa malinaw na pagbabasa</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Friendly na screen sans na may rounded at open na texture</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Compact na geometric sans na may natatanging proportion</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Masiglang calligraphic serif na may literary na karakter</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Malinis na humanist sans na napakadaling basahin sa interface</string>
+    <string name="setting_wear_note_show_cover">Cover art</string>
+    <string name="aod_element_artwork">Artwork</string>
+    <string name="aod_element_clock">Orasan</string>
+    <string name="aod_element_track_info">Impormasyon ng track</string>
+    <string name="aod_element_transport">Transport</string>
+    <string name="aod_element_progress">Progress</string>
+    <string name="aod_element_up_next">Susunod</string>
+    <string name="aod_section_artwork">Artwork</string>
+    <string name="aod_control_tint">Tint</string>
+    <string name="aod_control_brightness">Liwanag</string>
+    <string name="aod_control_art_treatment">Treatment</string>
+    <string name="aod_control_art_opacity">Opacity</string>
+    <string name="mini_button_control_visibility">Ipakita</string>
+    <string name="mini_button_control_arrangement">Ayos</string>
+    <string name="mini_button_control_shape">Hugis</string>
+    <string name="mini_button_control_background">Background</string>
+    <string name="mini_button_control_opacity">Opacity</string>
+    <string name="mini_button_assign_action">Magtalaga ng mga action</string>
+    <string name="mini_button_gestures_note">Mag-swipe pataas, pababa at pakaliwa sa player. Ang swipe pakanan ay palaging dismiss gesture ng system at hindi kailanman ini-intercept.</string>
+    <string name="setting_wear_chat_cover_shape">Hugis ng chat avatar</string>
+    <string name="setting_wear_chat_show_cover">Cover art</string>
+    <string name="setting_wear_metadata_cover_shape">Hugis ng metadata cover</string>
+    <string name="setting_wear_metadata_show_cover">Cover art</string>
+    <string-array name="wear_text_case_entries">
+        <item>Normal</item>
+        <item>UPPERCASE</item>
+        <item>lowercase</item>
+        <item>Title Case</item>
+    </string-array>
+    <string name="wear_text_font_follow">Sundin ang global na typeface</string>
+    <string name="category_wf_typography_track_time">Oras ng track</string>
+    <string name="setting_wear_track_time_font">Typeface ng oras ng track</string>
+    <string name="wear_track_time_font_follow">Sundin ang design</string>
+    <string name="setting_wear_track_time_font_weight">Weight ng oras ng track</string>
+    <string name="setting_wear_track_time_font_italic">Italic na oras ng track</string>
+    <string name="setting_wear_track_time_font_scale">Laki ng oras ng track</string>
+    <string name="setting_wear_track_time_font_opacity">Opacity ng oras ng track</string>
+    <string name="setting_wear_track_time_font_tracking">Letter spacing ng oras ng track</string>
+    <string-array name="album_art_filter_entries">
+        <item>Wala</item>
+        <item>Monochrome</item>
+        <item>Mainit</item>
+        <item>Malamig</item>
+        <item>Golden hour</item>
+        <item>Rosé</item>
+        <item>Vintage film</item>
+        <item>Kupas na pelikula</item>
+        <item>Matte</item>
+        <item>Vivid</item>
+        <item>Punch</item>
+        <item>Pastel</item>
+        <item>Sepia</item>
+        <item>Cyanotype</item>
+        <item>Teal at orange</item>
+        <item>Mataas na contrast</item>
+        <item>Soft light</item>
+        <item>Gabi</item>
+    </string-array>
+    <string name="queue_item_now_playing">Tumutugtog ngayon</string>
+    <string name="queue_item_unknown_title">Hindi kilalang track</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Playback queue · %1$d track</item>
+        <item quantity="other">Playback queue · %1$d track</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Kulay ng accent floor</string>
+    <string name="setting_wear_accent_floor_custom_color">Custom na kulay ng floor</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Piliin ang kulay na gagamitin kapag naka-set sa Custom na kulay ang Kulay ng accent floor</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Accent ng album</item>
+        <item>Secondary ng album</item>
+        <item>Tertiary ng album</item>
+        <item>Custom na kulay</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Neutral at napakalinaw na interface sans para sa araw-araw na pagbabasa</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Mga letterform na inuuna ang accessibility, may natatanging hugis na malinaw kahit maliit</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Softly rounded geometric sans — confident at friendly</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Compact na humanist sans na nagbibigay ng mas maraming espasyo sa mahahabang title</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Matangkad at condensed na display face na may punchy poster energy</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Kontemporaryong serif na ginawa para sa komportableng long-form reading</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Expressive na soft serif na may init at karakter</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Retro-futurist monospaced face na may technical na edge</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Dense na heavyweight display face para sa maximum na contrast</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Dumadaloy na handwritten script na may masigla at personal na pakiramdam</string>
+    <string name="setting_wear_artist_text_mode">Gawi ng text ng artist</string>
+    <string name="setting_wear_album_art_source">Pinagmulan ng album art</string>
+    <string name="setting_user_font">Sarili kong font</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Mag-import ng .ttf o .otf file mula sa teleponong ito</string>
+    <string name="setting_user_font_loaded">%1$s · i-tap para palitan o alisin</string>
+    <string name="user_font_pick">Pumili ng font file</string>
+    <string name="user_font_replace">Palitan</string>
+    <string name="user_font_remove">Alisin</string>
+    <string name="user_font_imported">Na-import ang “%1$s”. Piliin ito sa anumang font list; ipinapadala na ito sa iyong relo.</string>
+    <string name="user_font_removed">Inalis ang na-import mong font.</string>
+    <string name="user_font_error_too_large">%1$s ang file na iyon. Kailangang mas maliit sa %2$s ang font para mabilis itong maipadala sa relo.</string>
+    <string name="user_font_error_not_a_font">Hindi font na kayang basahin ng teleponong ito ang file na iyon. Gumagana ang TrueType at OpenType (.ttf, .otf); hindi gumagana ang mga web font (.woff, .woff2).</string>
+    <string name="user_font_error_unreadable">Hindi mabasa ang file na iyon. Subukang piliin itong muli, o kopyahin muna ito sa teleponong ito.</string>
+    <string name="user_font_not_shareable">Nananatili sa teleponong ito ang mga theme na gumagamit ng sarili mong font</string>
+    <string name="setting_custom_album_art_image">Larawang gagamitin</string>
+    <string name="setting_custom_album_art_folder">Folder na pagkukunan</string>
+    <string name="setting_custom_album_art_none">Hindi pa napipili — i-tap para pumili</string>
+    <string name="setting_custom_album_art_chosen">%1$s · i-tap para baguhin</string>
+    <string name="custom_album_art_image_set">Mapupunta na ngayon ang larawang iyon sa likod ng player.</string>
+    <string name="custom_album_art_folder_set">Isang larawan mula sa folder na iyon ang iguguhit para sa bawat track.</string>
+    <string name="custom_album_art_error">Hindi iyon mabuksan. Piliin itong muli, o pumili ng nasa sariling storage ng teleponong ito.</string>
+    <string name="custom_album_art_not_shareable">Nananatili sa teleponong ito ang mga theme na gumagamit ng sarili mong mga larawan</string>
+    <string name="setting_wear_text_block_align">Alignment ng text</string>
+    <string name="setting_wear_text_block_align_description">Sa aling gilid naka-align ang track text. Pinapanatili ng Follow face ang alignment na idinisenyo para sa bawat face.</string>
+    <string name="setting_wear_text_block_position">Posisyon ng text</string>
+    <string name="setting_wear_text_block_position_description">Kung saan nakaposisyon ang track text sa screen. Pinapanatili ng Follow face ang posisyong idinisenyo para sa bawat face.</string>
+    <string name="setting_online_artwork">Online artwork</string>
+    <string name="setting_online_artwork_description">Hayaan ang watch face na magpakita ng larawang hinanap online \u2014 ang artist na tumutugtog, o album cover para sa player na walang inilalabas na larawan. Ang telepono mo ang naghahanap sa pampublikong catalog ng Deezer at nagca-cache ng resulta; pangalan lang ng track at artist ang ipinapadala, at walang hinahanap maliban kung nakatakda ang isang face sa isa sa mga source na iyon. Kapag naka-off, sariling artwork ng player ang ginagamit.</string>
 </resources>

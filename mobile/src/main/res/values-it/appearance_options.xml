@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Oceano</item>
+        <item>Tramonto</item>
+        <item>Faretto centrale</item>
+        <item>Velo di vetro</item>
+        <item>Velluto</item>
+        <item>Faretto noir</item>
+        <item>Lavaggio ghiaccio</item>
+        <item>Fioritura rosa</item>
+        <item>Prisma</item>
+        <item>Bordo crescente</item>
+        <item>Bande di marea</item>
+        <item>Custodia di carta</item>
+        <item>Lanterna ascendente</item>
+        <item>Miraggio diviso</item>
+        <item>Griglia discreta</item>
+        <item>Notturno</item>
+        <item>Studio di nuvole</item>
+        <item>Pozze liquide</item>
+        <item>Monolite di colore</item>
+        <item>Tono diviso</item>
+        <item>Sfumatura</item>
+        <item>Bicromia</item>
+        <item>Bande</item>
+        <item>Vignetta</item>
+        <item>Grafite</item>
+        <item>Cinema</item>
+        <item>Acrilico</item>
+        <item>Maglia</item>
+        <item>Nebulosa</item>
+        <item>Bioluminescenza</item>
+        <item>Iridescente</item>
+        <item>Orbita</item>
+        <item>Lavaggio a inchiostro</item>
+        <item>Fioritura</item>
+        <item>Fiordo</item>
+        <item>Matrice di punti</item>
+        <item>Linee di scansione</item>
+        <item>Radar</item>
+        <item>Contorno</item>
+        <item>Sfaccettato</item>
+        <item>Riempimento album</item>
+        <item>Riempimento secondario</item>
+        <item>Riempimento terziario</item>
+        <item>Vetro</item>
+        <item>Mezzanotte</item>
+        <item>Fumo</item>
+        <item>Linea di marea</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Muschio</item>
+        <item>Foschia lavanda</item>
+        <item>Ciliegia</item>
+        <item>Mare profondo</item>
+        <item>Polvere</item>
+        <item>Sbiancato</item>
+        <item>Chiaro di luna</item>
+        <item>Sogno</item>
+        <item>Infrarosso</item>
+        <item>Foresta</item>
+        <item>Argento</item>
+        <item>Caramella</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Dissolvenza superiore</item>
+        <item>Faretto centrale</item>
+        <item>Ombra diagonale</item>
+        <item>Tenda sinistra</item>
+        <item>Tenda destra</item>
+        <item>Banda centrale</item>
+        <item>Dissolvenza incrociata</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Foglia inversa</item>
+        <item>Goccia inversa</item>
+        <item>Ciottolo</item>
+        <item>Arco</item>
+        <item>Scudo</item>
+        <item>Arco inverso</item>
+        <item>Scudo inverso</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Sussurro</item>
+        <item>Radiante</item>
+        <item>Inondazione</item>
+        <item>Scintillio</item>
+        <item>Bagliore profondo</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Contorno album</item>
+        <item>Sfumatura album</item>
+        <item>Colore secondario album</item>
+        <item>Vetro album</item>
+        <item>Colore terziario album</item>
+        <item>Contorno neon</item>
+    </string-array>
+</resources>

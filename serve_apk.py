@@ -23,45 +23,62 @@ FAVICON_SVG = b"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
 <path fill="#f5f5f5" d="M20 8h-2.81c-.45-.78-1.07-1.45-1.82-1.96L17 4.41 15.59 3l-2.17 2.17C12.96 5.06 12.49 5 12 5s-.96.06-1.41.17L8.41 3 7 4.41l1.62 1.63C7.88 6.55 7.26 7.22 6.81 8H4v2h2.09c-.05.33-.09.66-.09 1v1H4v2h2v1c0 .34.04.67.09 1H4v2h2.81C7.85 19.79 9.78 21 12 21s4.15-1.21 5.19-3H20v-2h-2.09c.05-.33.09-.66.09-1v-1h2v-2h-2v-1c0-.34-.04-.67-.09-1H20V8zm-6 8h-4v-2h4v2zm0-4h-4v-2h4v2z"/>
 </svg>"""
 
+# Two product flavors (see docs/play-store-migration-plan.md):
+#   github - the sideload build, with the in-app self-updater. This is what you flash to a device.
+#   play   - the Play Store build, updater stripped. Sideloadable too, for checking that build.
 FILES = [
-    # Debug APKs: App first, then Wear OS.
+    # github debug APKs: App first, then Wear OS.
     (
         "mobile-debug.apk",
-        ROOT / "mobile/build/outputs/apk/debug/mobile-debug.apk",
+        ROOT / "mobile/build/outputs/apk/github/debug/mobile-github-debug.apk",
         "Svartifoss (phone)",
         APK_MIME,
     ),
     (
         "wear-debug.apk",
-        ROOT / "wear/build/outputs/apk/debug/wear-debug.apk",
+        ROOT / "wear/build/outputs/apk/github/debug/wear-github-debug.apk",
         "Svartifoss (watch)",
         APK_MIME,
     ),
 
-    # Release APKs: App first, then Wear OS.
+    # play debug APKs: for testing the Play build on a device before uploading.
+    (
+        "mobile-play-debug.apk",
+        ROOT / "mobile/build/outputs/apk/play/debug/mobile-play-debug.apk",
+        "Svartifoss (phone, Play build)",
+        APK_MIME,
+    ),
+    (
+        "wear-play-debug.apk",
+        ROOT / "wear/build/outputs/apk/play/debug/wear-play-debug.apk",
+        "Svartifoss (watch, Play build)",
+        APK_MIME,
+    ),
+
+    # github release APKs - the artifacts attached to a GitHub release.
     (
         "mobile-release.apk",
-        ROOT / "mobile/build/outputs/apk/release/mobile-release.apk",
+        ROOT / "mobile/build/outputs/apk/github/release/mobile-github-release.apk",
         "Svartifoss (phone, release)",
         APK_MIME,
     ),
     (
         "wear-release.apk",
-        ROOT / "wear/build/outputs/apk/release/wear-release.apk",
+        ROOT / "wear/build/outputs/apk/github/release/wear-github-release.apk",
         "Svartifoss (watch, release)",
         APK_MIME,
     ),
 
-    # Play Store bundles: App first, then Wear OS.
+    # play release bundles - what gets uploaded to the Play Console. App first, then Wear OS.
     (
         "mobile-release.aab",
-        ROOT / "mobile/build/outputs/bundle/release/mobile-release.aab",
+        ROOT / "mobile/build/outputs/bundle/playRelease/mobile-play-release.aab",
         "Svartifoss (phone, Play Store bundle)",
         AAB_MIME,
     ),
     (
         "wear-release.aab",
-        ROOT / "wear/build/outputs/bundle/release/wear-release.aab",
+        ROOT / "wear/build/outputs/bundle/playRelease/wear-play-release.aab",
         "Svartifoss (watch, Play Store bundle)",
         AAB_MIME,
     ),
@@ -127,13 +144,14 @@ def get_svf_version() -> str | None:
 
 def build_task(name: str) -> str:
     module = "wear" if name.startswith("wear-") else "mobile"
+    flavor = "Play" if "-play-" in name or name.endswith(".aab") else "Github"
 
     if name.endswith(".aab"):
-        task = "bundleRelease"
+        task = "bundlePlayRelease"
     elif "-release." in name:
-        task = "assembleRelease"
+        task = f"assemble{flavor}Release"
     else:
-        task = "assembleDebug"
+        task = f"assemble{flavor}Debug"
 
     return f":{module}:{task}"
 
@@ -145,8 +163,9 @@ def build_index() -> bytes:
 
     for name, path, _label, _mime in FILES:
         is_wear = name.startswith("wear")
-        is_release = "release" in name
+        is_release = "-release." in name
         is_aab = name.endswith(".aab")
+        is_play = "-play-" in name or is_aab
 
         device_icon = "watch" if is_wear else "phone_android"
 
@@ -163,9 +182,9 @@ def build_index() -> bytes:
         if is_aab:
             build_title = "Play Store Bundle"
         elif is_release:
-            build_title = "Release"
+            build_title = "Release (Play)" if is_play else "Release (GitHub)"
         else:
-            build_title = "Debug"
+            build_title = "Debug (Play build)" if is_play else "Debug"
 
         if path.is_file():
             stat = path.stat()
@@ -1053,9 +1072,10 @@ def main():
 
     with Server(("", PORT), Handler) as httpd:
         print(f"Serving Svartifoss{f' {version}' if version else ''} on http://{ip}:{PORT}/")
-        print(f"  Phone: http://{ip}:{PORT}/mobile-debug.apk")
-        print(f"  Watch: http://{ip}:{PORT}/wear-debug.apk")
-        print(f"  Play Store bundles: http://{ip}:{PORT}/mobile-release.aab , /wear-release.aab")
+        print(f"  Phone (github debug): http://{ip}:{PORT}/mobile-debug.apk")
+        print(f"  Watch (github debug): http://{ip}:{PORT}/wear-debug.apk")
+        print(f"  Play build APKs:      http://{ip}:{PORT}/mobile-play-debug.apk , /wear-play-debug.apk")
+        print(f"  Play Store bundles:   http://{ip}:{PORT}/mobile-release.aab , /wear-release.aab")
         print("Press Ctrl+C to stop.\n")
         try:
             httpd.serve_forever()

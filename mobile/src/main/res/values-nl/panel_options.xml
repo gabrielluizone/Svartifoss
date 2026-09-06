@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Lay-out voortgangsring</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Volledig transparant</item>
+        <item>Secundaire kleur</item>
+        <item>Tertiaire kleur</item>
+        <item>Kleurmesh</item>
+        <item>Aurora</item>
+        <item>Spotlicht</item>
+        <item>Vignet</item>
+        <item>Gesplitste toon</item>
+        <item>Kleurbanden</item>
+        <item>Middernacht</item>
+        <item>Halo</item>
+        <item>Rookvervaging</item>
+        <item>Zonsondergang</item>
+        <item>Oceaan</item>
+        <item>Nevel</item>
+        <item>Gloed</item>
+        <item>Getijlijn</item>
+        <item>Bioluminescentie</item>
+        <item>Iriserend</item>
+        <item>Grafiet</item>
+        <item>Cinema</item>
+        <item>Baan</item>
+        <item>Horizon</item>
+        <item>Inktwassing</item>
+        <item>Bloei</item>
+        <item>Fjord</item>
+        <item>Puntenraster</item>
+        <item>Scanlijn</item>
+        <item>Radar</item>
+        <item>Contourlijnen</item>
+        <item>Gefacetteerd</item>
+        <item>Schemering</item>
+        <item>IJs</item>
+        <item>Roos</item>
+        <item>Papier</item>
+        <item>Monoliet</item>
+        <item>Lantaarn</item>
+        <item>Noir</item>
+        <item>Fluweel</item>
+        <item>Luchtspiegeling</item>
+        <item>Diffuse gloed</item>
+        <item>Wolk</item>
+        <item>Nocturne</item>
+        <item>Vloeibaar</item>
+        <item>Getij</item>
+        <item>Vinyl</item>
+        <item>Corona</item>
+        <item>Halve maan</item>
+        <item>Raster</item>
+        <item>Glazen sluier</item>
+        <item>Materiaal</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Spectrum</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Kralen</item>
+        <item>Dubbele rail</item>
+        <item>Puls</item>
+        <item>Chroom</item>
+        <item>Spectrum</item>
+        <item>Treden</item>
+        <item>Snoep</item>
+        <item>Geest</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Dubbele rand</item>
+        <item>Verticale meter (links)</item>
+        <item>Verticale meter (rechts)</item>
+        <item>Bovenste meter</item>
+        <item>Onderste meter</item>
+        <item>Middenwijzerplaat</item>
+        <item>Bovenste halo</item>
+        <item>Onderste halo</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Dubbele ring</item>
+        <item>Kralen</item>
+        <item>Streep en punt</item>
+        <item>24-uursmarkeringen</item>
+        <item>Alleen voortgang</item>
+        <item>Gloed</item>
+        <item>Duotoon</item>
+        <item>Naald</item>
+        <item>Afwisselend</item>
+        <item>Vonk</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Rand van bezel</item>
+        <item>Ingezette ring</item>
+        <item>Binnenring</item>
+        <item>Dikke ring</item>
+        <item>Open onderaan</item>
+        <item>Open bovenaan</item>
+        <item>Linkerboog</item>
+        <item>Rechterboog</item>
+        <item>Dubbel spoor</item>
+        <item>Open links</item>
+        <item>Open rechts</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Compacte pil</item>
+        <item>Vierkant album</item>
+        <item>Gestapelde pil</item>
+        <item>Badge</item>
+        <item>Glazen balk</item>
+        <item>LCD</item>
+        <item>Omlijnd vierkant</item>
+        <item>Lint</item>
+        <item>Tijdbubbel</item>
+        <item>Gesplitste toon</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Tijdlijn (boven)</item>
+        <item>Tijdlijn (onder)</item>
+        <item>Segmenten (boven)</item>
+        <item>Verticale tijdlijn (links)</item>
+        <item>Verticale tijdlijn (rechts)</item>
+        <item>Middenwijzerplaat</item>
+        <item>Dubbele tijdlijn</item>
+        <item>Segmenten (onder)</item>
+        <item>Middenstapel</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Zacht</item>
+        <item>Chroom</item>
+        <item>Holografisch</item>
+        <item>Bubbel</item>
+        <item>Rail</item>
+        <item>Zonsondergang</item>
+        <item>Albumomtrek</item>
+        <item>Donker glas</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Waaier</item>
+        <item>Baan</item>
+        <item>Onderste dock</item>
+        <item>Kolom</item>
+        <item>Gesplitst deck</item>
+        <item>Diamant</item>
+        <item>Carrousel</item>
+        <item>Driehoek</item>
+        <item>Trap</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Zacht</item>
+        <item>Plaat</item>
+        <item>Inkt</item>
+        <item>Rail</item>
+        <item>Zonsondergang</item>
+        <item>Bubbel</item>
+        <item>Chroom</item>
+        <item>Holografisch</item>
+    </string-array>
+</resources>

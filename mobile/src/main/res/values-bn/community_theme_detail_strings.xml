@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">থিমের বিস্তারিত</string>
+    <string name="community_theme_detail_preview_screen">প্রিভিউ স্ক্রিন</string>
+    <string name="community_theme_detail_surface_player">প্লেয়ার</string>
+    <string name="community_theme_detail_surface_aod">সবসময় চালু</string>
+    <string name="community_theme_detail_surface_volume">ভলিউম</string>
+    <string name="community_theme_detail_surface_progress">অগ্রগতি</string>
+    <string name="community_theme_detail_surface_quick_panel">দ্রুত প্যানেল</string>
+    <string name="community_theme_detail_surface_queue">কিউ</string>
+    <string name="community_theme_detail_preview_label">%1$s প্রিভিউ</string>
+    <string name="community_theme_detail_preview_description">%2$s স্ক্রিনে %1$s-এর প্রিভিউ</string>
+    <string name="community_theme_detail_preview_privacy">আপনার বর্তমান অ্যালবাম কভারটি কেবল ফোনের এই প্রিভিউতে দেখা যেতে পারে। এটি কখনও আপলোড করা হয় না; নমুনা টেক্সট ও টাইমিং ব্যবহার হতে থাকে।</string>
+    <string name="community_theme_detail_information">থিমের তথ্য</string>
+    <string name="community_theme_detail_byline">%1$s-এর তৈরি</string>
+    <string name="community_theme_detail_layout">বেস লেআউট</string>
+    <string name="community_theme_detail_revision">রিভিশন</string>
+    <string name="community_theme_detail_minimum_version">Svartifoss-এর ন্যূনতম সংস্করণ</string>
+    <string name="community_theme_detail_published">প্রকাশিত</string>
+    <string name="community_theme_detail_visual_settings">ভিজ্যুয়াল সেটিংস</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s ভিজ্যুয়াল সেটিং</item>
+        <item quantity="other">%1$s ভিজ্যুয়াল সেটিংস</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">উপলভ্য নয়</string>
+    <string name="community_theme_detail_add_apply">যোগ করুন এবং প্রয়োগ করুন</string>
+    <string name="community_theme_detail_remove">থিম সরান</string>
+    <string name="community_theme_detail_remove_title">আমার থিম থেকে “%1$s” সরাবেন?</string>
+    <string name="community_theme_detail_remove_message">এই সংরক্ষিত কপি এবং এতে আপনার করা সব পরিবর্তন স্থায়ীভাবে সরিয়ে দেওয়া হবে। এটি বর্তমানে প্রয়োগ করা থাকলে, আপনার ঘড়ি তার বিল্ট-ইন বেস লেআউটে ফিরে যাবে।</string>
+    <string name="community_theme_detail_removed">আমার থিম থেকে থিমটি সরানো হয়েছে</string>
+    <string name="community_theme_detail_remove_error">এই থিমটি সরানো যায়নি</string>
+    <string name="community_theme_detail_like">লাইক</string>
+    <string name="community_theme_detail_unlike">লাইক সরান</string>
+    <string name="community_theme_detail_like_loading">যাচাই করা হচ্ছে…</string>
+    <string name="community_theme_detail_like_description">%1$s-কে লাইক করুন। %2$s</string>
+    <string name="community_theme_detail_unlike_description">%1$s-এর লাইক সরান। %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google সাইন-ইন বাতিল করা হয়েছে। আপনার লাইক সংরক্ষিত হয়নি।</string>
+    <string name="community_theme_detail_like_error">আপনার লাইক সংরক্ষণ করা যায়নি। সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।</string>
+    <string name="community_theme_detail_like_not_ready">এই থিমের লাইক এখনও প্রস্তুত নয়। পরবর্তী প্রকাশনার পর কমিউনিটি থিম রিফ্রেশ করুন।</string>
+    <string name="community_theme_detail_like_saved">আপনার লাইক সংরক্ষিত হয়েছে। পরবর্তী ক্যাটালগ প্রকাশনার সঙ্গে পাবলিক কাউন্ট আপডেট হবে।</string>
+    <string name="community_theme_detail_unlike_saved">আপনার লাইক সরানো হয়েছে। পরবর্তী ক্যাটালগ প্রকাশনার সঙ্গে পাবলিক কাউন্ট আপডেট হবে।</string>
+    <string name="community_theme_detail_apply_existing">এই থিমটি ইতিমধ্যেই আমার থিমে আছে এবং আপনার ঘড়িতে প্রয়োগ করা হয়েছে</string>
+    <string name="community_theme_detail_requires_app_version">এই থিমটি যোগ করার আগে Svartifoss %1$s প্রয়োজন।</string>
+    <string name="community_theme_detail_load_error">এই থিমের বিস্তারিত লোড করা যায়নি। কমিউনিটি থিমে ফিরে গিয়ে আবার চেষ্টা করুন।</string>
+    <string name="community_theme_detail_profile_mismatch">ডাউনলোড করা প্রোফাইলটি এই থিমের পাবলিক বিস্তারিত তথ্যের সঙ্গে মেলে না। কমিউনিটি থিমে ফিরে গিয়ে আবার চেষ্টা করুন।</string>
+    <string name="community_theme_detail_screenshot_description">লেখকের ঘড়িতে এই থিমের ছবি</string>
+    <string name="community_theme_detail_source_author">লেখকের ঘড়ি</string>
+    <string name="community_theme_detail_source_rendered">তৈরি করা প্রিভিউ</string>
+    <string name="community_theme_detail_show_rendered">তৈরি করা প্রিভিউ দেখান</string>
+    <string name="community_theme_detail_show_author">লেখকের ছবি দেখান</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

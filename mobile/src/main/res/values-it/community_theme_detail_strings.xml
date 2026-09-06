@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Dettagli tema</string>
+    <string name="community_theme_detail_preview_screen">Schermata di anteprima</string>
+    <string name="community_theme_detail_surface_player">Player</string>
+    <string name="community_theme_detail_surface_aod">Sempre attivo</string>
+    <string name="community_theme_detail_surface_volume">Volume</string>
+    <string name="community_theme_detail_surface_progress">Avanzamento</string>
+    <string name="community_theme_detail_surface_quick_panel">Pannello rapido</string>
+    <string name="community_theme_detail_surface_queue">Coda</string>
+    <string name="community_theme_detail_preview_label">Anteprima di %1$s</string>
+    <string name="community_theme_detail_preview_description">Anteprima di %1$s nella schermata %2$s</string>
+    <string name="community_theme_detail_preview_privacy">La copertina dell’album corrente può apparire solo in questa anteprima sul telefono. Non viene mai caricata; il testo e i tempi di esempio restano in uso.</string>
+    <string name="community_theme_detail_information">Informazioni sul tema</string>
+    <string name="community_theme_detail_byline">Di %1$s</string>
+    <string name="community_theme_detail_layout">Layout di base</string>
+    <string name="community_theme_detail_revision">Revisione</string>
+    <string name="community_theme_detail_minimum_version">Versione minima di Svartifoss</string>
+    <string name="community_theme_detail_published">Pubblicato</string>
+    <string name="community_theme_detail_visual_settings">Impostazioni visive</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s impostazione visiva</item>
+        <item quantity="other">%1$s impostazioni visive</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Non disponibile</string>
+    <string name="community_theme_detail_add_apply">Aggiungi e applica</string>
+    <string name="community_theme_detail_remove">Rimuovi tema</string>
+    <string name="community_theme_detail_remove_title">Rimuovere “%1$s” da I miei temi?</string>
+    <string name="community_theme_detail_remove_message">Questa copia salvata e tutte le modifiche apportate verranno rimosse definitivamente. Se è attualmente applicata, l’orologio tornerà al layout di base integrato.</string>
+    <string name="community_theme_detail_removed">Tema rimosso da I miei temi</string>
+    <string name="community_theme_detail_remove_error">Impossibile rimuovere questo tema</string>
+    <string name="community_theme_detail_like">Mi piace</string>
+    <string name="community_theme_detail_unlike">Non mi piace più</string>
+    <string name="community_theme_detail_like_loading">Controllo…</string>
+    <string name="community_theme_detail_like_description">Mi piace %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Rimuovi Mi piace da %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">L’accesso con Google è stato annullato. Il tuo Mi piace non è stato salvato.</string>
+    <string name="community_theme_detail_like_error">Impossibile salvare il tuo Mi piace. Controlla la connessione e riprova.</string>
+    <string name="community_theme_detail_like_not_ready">I Mi piace per questo tema non sono ancora disponibili. Aggiorna Temi della community dopo la prossima pubblicazione.</string>
+    <string name="community_theme_detail_like_saved">Il tuo Mi piace è stato salvato. I conteggi pubblici si aggiorneranno con la prossima pubblicazione del catalogo.</string>
+    <string name="community_theme_detail_unlike_saved">Il tuo Mi piace è stato rimosso. I conteggi pubblici si aggiorneranno con la prossima pubblicazione del catalogo.</string>
+    <string name="community_theme_detail_apply_existing">Questo tema è già in I miei temi ed è stato applicato al tuo orologio</string>
+    <string name="community_theme_detail_requires_app_version">Questo tema richiede Svartifoss %1$s prima di poter essere aggiunto.</string>
+    <string name="community_theme_detail_load_error">Impossibile caricare i dettagli di questo tema. Torna a Temi della community e riprova.</string>
+    <string name="community_theme_detail_profile_mismatch">Il profilo scaricato non corrisponde ai dettagli pubblici di questo tema. Torna a Temi della community e riprova.</string>
+    <string name="community_theme_detail_screenshot_description">Foto di questo tema sull’orologio dell’autore</string>
+    <string name="community_theme_detail_source_author">Orologio dell’autore</string>
+    <string name="community_theme_detail_source_rendered">Anteprima generata</string>
+    <string name="community_theme_detail_show_rendered">Mostra anteprima generata</string>
+    <string name="community_theme_detail_show_author">Mostra foto dell’autore</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">تفاصيل السمة</string>
+    <string name="community_theme_detail_preview_screen">شاشة المعاينة</string>
+    <string name="community_theme_detail_surface_player">المشغّل</string>
+    <string name="community_theme_detail_surface_aod">تشغيل دائم</string>
+    <string name="community_theme_detail_surface_volume">مستوى الصوت</string>
+    <string name="community_theme_detail_surface_progress">التقدم</string>
+    <string name="community_theme_detail_surface_quick_panel">اللوحة السريعة</string>
+    <string name="community_theme_detail_surface_queue">قائمة الانتظار</string>
+    <string name="community_theme_detail_preview_label">معاينة %1$s</string>
+    <string name="community_theme_detail_preview_description">معاينة %1$s على شاشة %2$s</string>
+    <string name="community_theme_detail_preview_privacy">قد يظهر غلاف الألبوم الحالي فقط في هذه المعاينة على هاتفك. لا يتم رفعه مطلقًا؛ ويستمر استخدام النص والتوقيت النموذجيين.</string>
+    <string name="community_theme_detail_information">معلومات السمة</string>
+    <string name="community_theme_detail_byline">بواسطة %1$s</string>
+    <string name="community_theme_detail_layout">التخطيط الأساسي</string>
+    <string name="community_theme_detail_revision">المراجعة</string>
+    <string name="community_theme_detail_minimum_version">الحد الأدنى لإصدار Svartifoss</string>
+    <string name="community_theme_detail_published">منشورة</string>
+    <string name="community_theme_detail_visual_settings">الإعدادات المرئية</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s إعداد مرئي</item>
+        <item quantity="other">%1$s إعدادات مرئية</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">غير متاح</string>
+    <string name="community_theme_detail_add_apply">أضف وطبّق</string>
+    <string name="community_theme_detail_remove">إزالة السمة</string>
+    <string name="community_theme_detail_remove_title">إزالة ”%1$s“ من سماتي؟</string>
+    <string name="community_theme_detail_remove_message">ستتم إزالة هذه النسخة المحفوظة وأي تعديلات أجريتها عليها نهائيًا. إذا كانت مطبّقة حاليًا، فستعود ساعتك إلى التخطيط الأساسي المضمّن.</string>
+    <string name="community_theme_detail_removed">تمت إزالة السمة من سماتي</string>
+    <string name="community_theme_detail_remove_error">تعذّرت إزالة هذه السمة</string>
+    <string name="community_theme_detail_like">إعجاب</string>
+    <string name="community_theme_detail_unlike">إلغاء الإعجاب</string>
+    <string name="community_theme_detail_like_loading">جارٍ التحقق…</string>
+    <string name="community_theme_detail_like_description">الإعجاب بـ %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">إلغاء الإعجاب بـ %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">تم إلغاء تسجيل الدخول باستخدام Google. لم يتم حفظ إعجابك.</string>
+    <string name="community_theme_detail_like_error">تعذّر حفظ إعجابك. تحقّق من اتصالك وحاول مرة أخرى.</string>
+    <string name="community_theme_detail_like_not_ready">الإعجابات بهذه السمة ليست جاهزة بعد. حدّث سمات المجتمع بعد النشر التالي.</string>
+    <string name="community_theme_detail_like_saved">تم حفظ إعجابك. يتم تحديث الأعداد العامة مع النشر التالي للكتالوج.</string>
+    <string name="community_theme_detail_unlike_saved">تمت إزالة إعجابك. يتم تحديث الأعداد العامة مع النشر التالي للكتالوج.</string>
+    <string name="community_theme_detail_apply_existing">هذه السمة موجودة بالفعل في سماتي وتم تطبيقها على ساعتك</string>
+    <string name="community_theme_detail_requires_app_version">تحتاج هذه السمة إلى Svartifoss %1$s قبل أن يمكن إضافتها.</string>
+    <string name="community_theme_detail_load_error">تعذّر تحميل تفاصيل هذه السمة. ارجع إلى سمات المجتمع وحاول مرة أخرى.</string>
+    <string name="community_theme_detail_profile_mismatch">الملف الشخصي الذي تم تنزيله لا يطابق التفاصيل العامة لهذه السمة. ارجع إلى سمات المجتمع وحاول مرة أخرى.</string>
+    <string name="community_theme_detail_screenshot_description">صورة لهذه السمة على ساعة مؤلفها</string>
+    <string name="community_theme_detail_source_author">ساعة المؤلف</string>
+    <string name="community_theme_detail_source_rendered">معاينة مُنشأة</string>
+    <string name="community_theme_detail_show_rendered">عرض المعاينة المُنشأة</string>
+    <string name="community_theme_detail_show_author">عرض صورة المؤلف</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">முன்னேற்ற வளைய அமைப்பு</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>முழுமையாகத் தெளிவானது</item>
+        <item>இரண்டாம் நிறம்</item>
+        <item>மூன்றாம் நிறம்</item>
+        <item>நிற வலை</item>
+        <item>ஆரோரா</item>
+        <item>ஸ்பாட்லைட்</item>
+        <item>வின்யெட்</item>
+        <item>பிளந்த டோன்</item>
+        <item>நிறப் பட்டைகள்</item>
+        <item>நள்ளிரவு</item>
+        <item>ஹேலோ</item>
+        <item>புகை மங்கல்</item>
+        <item>சூரிய அஸ்தமனம்</item>
+        <item>கடல்</item>
+        <item>நெபுலா</item>
+        <item>நெருப்புத்துணுக்கு</item>
+        <item>அலைவரை</item>
+        <item>உயிரொளிர்வு</item>
+        <item>வானவில் ஒளிர்வு</item>
+        <item>கிராஃபைட்</item>
+        <item>சினிமா</item>
+        <item>சுற்றுப்பாதை</item>
+        <item>தொடுவானம்</item>
+        <item>மை கழுவல்</item>
+        <item>மலர்ச்சி</item>
+        <item>ஃபியோர்டு</item>
+        <item>புள்ளி grid</item>
+        <item>ஸ்கேன் கோடு</item>
+        <item>ரேடார்</item>
+        <item>விளிம்பு கோடுகள்</item>
+        <item>பல முகங்கள்</item>
+        <item>மாலைமங்கல்</item>
+        <item>பனி</item>
+        <item>ரோஜா</item>
+        <item>காகிதம்</item>
+        <item>மோனோலித்</item>
+        <item>விளக்கு</item>
+        <item>நுவார்</item>
+        <item>வெல்வெட்</item>
+        <item>கானல்</item>
+        <item>ப்ளூம்</item>
+        <item>மேகம்</item>
+        <item>நாக்டர்ன்</item>
+        <item>திரவம்</item>
+        <item>டைடல்</item>
+        <item>வினைல்</item>
+        <item>கொரோனா</item>
+        <item>பிறை</item>
+        <item>grid</item>
+        <item>கண்ணாடித் திரை</item>
+        <item>Material</item>
+        <item>போஸ்டர்</item>
+        <item>ஸ்டுடியோ</item>
+        <item>நிறமாலை</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>மணிகள்</item>
+        <item>இரட்டை rail</item>
+        <item>துடிப்பு</item>
+        <item>குரோம்</item>
+        <item>நிறமாலை</item>
+        <item>படிகள்</item>
+        <item>கேண்டி</item>
+        <item>பேய்</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>இரட்டை விளிம்பு</item>
+        <item>செங்குத்து மீட்டர் (இடது)</item>
+        <item>செங்குத்து மீட்டர் (வலது)</item>
+        <item>மேல் மீட்டர்</item>
+        <item>கீழ் மீட்டர்</item>
+        <item>மைய டயல்</item>
+        <item>மேல் ஹேலோ</item>
+        <item>கீழ் ஹேலோ</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>இரட்டை வளையம்</item>
+        <item>மணிகள்</item>
+        <item>கோடும் புள்ளியும்</item>
+        <item>24-மணி குறியீடுகள்</item>
+        <item>முன்னேற்றம் மட்டும்</item>
+        <item>ஒளிர்வு</item>
+        <item>இருநிறம்</item>
+        <item>ஊசி</item>
+        <item>மாறி மாறி</item>
+        <item>பொறி</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>பெசல் விளிம்பு</item>
+        <item>உள்ளடங்கிய வளையம்</item>
+        <item>உள் வளையம்</item>
+        <item>தடித்த வளையம்</item>
+        <item>கீழே திறப்பு</item>
+        <item>மேலே திறப்பு</item>
+        <item>இடது வளைவு</item>
+        <item>வலது வளைவு</item>
+        <item>இரட்டை track</item>
+        <item>இடப்புறம் திறப்பு</item>
+        <item>வலப்புறம் திறப்பு</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>சுருக்கமான பில்</item>
+        <item>சதுர ஆல்பம்</item>
+        <item>அடுக்கப்பட்ட பில்</item>
+        <item>பேட்ஜ்</item>
+        <item>கண்ணாடிப் பட்டை</item>
+        <item>LCD</item>
+        <item>வெளிக்கோடு சதுரம்</item>
+        <item>ரிப்பன்</item>
+        <item>நேரக் குமிழி</item>
+        <item>பிளந்த டோன்</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>காலவரிசை (மேல்)</item>
+        <item>காலவரிசை (கீழ்)</item>
+        <item>பகுதிகள் (மேல்)</item>
+        <item>செங்குத்து காலவரிசை (இடது)</item>
+        <item>செங்குத்து காலவரிசை (வலது)</item>
+        <item>மைய டயல்</item>
+        <item>இரட்டை காலவரிசை</item>
+        <item>பகுதிகள் (கீழ்)</item>
+        <item>மைய அடுக்கு</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>மென்மை</item>
+        <item>குரோம்</item>
+        <item>ஹோலோகிராபிக்</item>
+        <item>குமிழி</item>
+        <item>rail</item>
+        <item>சூரிய அஸ்தமனம்</item>
+        <item>ஆல்பம் வெளிக்கோடு</item>
+        <item>கருமைக் கண்ணாடி</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>விசிறி</item>
+        <item>சுற்றுப்பாதை</item>
+        <item>கீழ் டாக்</item>
+        <item>நெடுவரிசை</item>
+        <item>பிளந்த டெக்</item>
+        <item>வைரம்</item>
+        <item>கரூசல்</item>
+        <item>முக்கோணம்</item>
+        <item>படி</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>மென்மை</item>
+        <item>ஸ்லாப்</item>
+        <item>மை</item>
+        <item>rail</item>
+        <item>சூரிய அஸ்தமனம்</item>
+        <item>குமிழி</item>
+        <item>குரோம்</item>
+        <item>ஹோலோகிராபிக்</item>
+    </string-array>
+</resources>

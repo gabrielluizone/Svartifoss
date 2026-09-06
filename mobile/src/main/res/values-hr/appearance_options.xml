@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Ocean</item>
+        <item>Zalazak sunca</item>
+        <item>Središnji reflektor</item>
+        <item>Stakleni veo</item>
+        <item>Baršun</item>
+        <item>Noir reflektor</item>
+        <item>Ledeni preljev</item>
+        <item>Cvat ruže</item>
+        <item>Prizma</item>
+        <item>Rub polumjeseca</item>
+        <item>Plimne trake</item>
+        <item>Papirnati omot</item>
+        <item>Uspon fenjera</item>
+        <item>Podijeljena fatamorgana</item>
+        <item>Mirna mreža</item>
+        <item>Nokturno</item>
+        <item>Studija oblaka</item>
+        <item>Lokve tekućine</item>
+        <item>Monolit boje</item>
+        <item>Podijeljeni ton</item>
+        <item>Gradijent</item>
+        <item>Dvotonski</item>
+        <item>Trake</item>
+        <item>Vinjeta</item>
+        <item>Grafit</item>
+        <item>Kino</item>
+        <item>Akril</item>
+        <item>Mreža</item>
+        <item>Maglica</item>
+        <item>Bioluminiscencija</item>
+        <item>Prelijevajuće</item>
+        <item>Orbita</item>
+        <item>Ispiranje tintom</item>
+        <item>Cvat</item>
+        <item>Fjord</item>
+        <item>Matrica točaka</item>
+        <item>Linije skeniranja</item>
+        <item>Radar</item>
+        <item>Kontura</item>
+        <item>Fasetirano</item>
+        <item>Ispuna albuma</item>
+        <item>Sekundarna ispuna</item>
+        <item>Tercijarna ispuna</item>
+        <item>Staklo</item>
+        <item>Ponoć</item>
+        <item>Dim</item>
+        <item>Linija plime</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Mahovina</item>
+        <item>Maglica lavande</item>
+        <item>Trešnja</item>
+        <item>Duboko more</item>
+        <item>Prašina</item>
+        <item>Izbjeljivanje</item>
+        <item>Mjesečina</item>
+        <item>San</item>
+        <item>Infracrveno</item>
+        <item>Šuma</item>
+        <item>Srebro</item>
+        <item>Slatkiš</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Gornje blijeđenje</item>
+        <item>Središnji reflektor</item>
+        <item>Dijagonalna sjena</item>
+        <item>Lijeva zavjesa</item>
+        <item>Desna zavjesa</item>
+        <item>Središnja traka</item>
+        <item>Pretapanje</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Obrnuti list</item>
+        <item>Obrnuta kap</item>
+        <item>Oblutak</item>
+        <item>Luk</item>
+        <item>Štit</item>
+        <item>Obrnuti luk</item>
+        <item>Obrnuti štit</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Šapat</item>
+        <item>Blistavo</item>
+        <item>Poplava</item>
+        <item>Svjetlucanje</item>
+        <item>Duboki sjaj</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Obris albuma</item>
+        <item>Gradijent albuma</item>
+        <item>Sekundarna boja albuma</item>
+        <item>Staklo albuma</item>
+        <item>Tercijarna boja albuma</item>
+        <item>Neonski obris</item>
+    </string-array>
+</resources>

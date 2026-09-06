@@ -165,4 +165,21 @@
     <string name="face_name_metadata" translatable="false">Metadata</string>
     <string name="face_name_ribbon" translatable="false">Ribbon</string>
     <string name="face_name_frame" translatable="false">Frame</string>
+    <string name="action_name_open_quick_actions_panel">Открыть панель быстрых действий</string>
+    <string name="action_name_fast_forward">Быстрая перемотка вперёд</string>
+    <string name="action_name_rewind">Перемотать назад</string>
+    <string name="action_name_set_speed">Установить скорость воспроизведения</string>
+    <string name="action_name_seek_position">Перейти к позиции композиции</string>
+    <string name="action_name_set_volume">Установить громкость</string>
+    <string name="action_name_set_shuffle">Установить перемешивание</string>
+    <string name="action_name_set_repeat">Установить повтор</string>
+    <string name="action_name_open_volume_screen">Открыть экран громкости</string>
+    <string name="action_name_open_progress_screen">Открыть экран прогресса</string>
+    <string name="action_name_open_face_picker">Открыть выбор циферблата</string>
+    <string name="action_name_close_watch_app">Закрыть приложение на часах</string>
+    <string name="volume_screen_title">Громкость</string>
+    <string name="progress_screen_title">Прогресс</string>
+    <string name="progress_screen_cancel_seek">Отменить перемотку</string>
+    <string name="progress_screen_skip_back">Назад на %1$d сек.</string>
+    <string name="progress_screen_skip_forward">Вперёд на %1$d сек.</string>
 </resources>

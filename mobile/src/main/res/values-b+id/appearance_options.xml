@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Lautan</item>
+        <item>Matahari terbenam</item>
+        <item>Sorotan tengah</item>
+        <item>Tirai kaca</item>
+        <item>Beludru</item>
+        <item>Sorotan noir</item>
+        <item>Sapuan es</item>
+        <item>Mawar mekar</item>
+        <item>Prisma</item>
+        <item>Tepi bulan sabit</item>
+        <item>Pita pasang surut</item>
+        <item>Selubung kertas</item>
+        <item>Lentera naik</item>
+        <item>Belah fatamorgana</item>
+        <item>Kisi tenang</item>
+        <item>Nokturnal</item>
+        <item>Studi awan</item>
+        <item>Kolam cair</item>
+        <item>Monolit warna</item>
+        <item>Nada terbelah</item>
+        <item>Gradien</item>
+        <item>Duotone</item>
+        <item>Pita</item>
+        <item>Vinyet</item>
+        <item>Grafit</item>
+        <item>Sinema</item>
+        <item>Akrilik</item>
+        <item>Jaring</item>
+        <item>Nebula</item>
+        <item>Bioluminesensi</item>
+        <item>Iridesen</item>
+        <item>Orbit</item>
+        <item>Sapuan tinta</item>
+        <item>Bunga</item>
+        <item>Fjord</item>
+        <item>Matriks titik</item>
+        <item>Garis pindai</item>
+        <item>Radar</item>
+        <item>Kontur</item>
+        <item>Berfaset</item>
+        <item>Isian album</item>
+        <item>Isian sekunder</item>
+        <item>Isian tersier</item>
+        <item>Kaca</item>
+        <item>Tengah malam</item>
+        <item>Asap</item>
+        <item>Garis pasang</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Lumut</item>
+        <item>Kabut lavender</item>
+        <item>Ceri</item>
+        <item>Laut dalam</item>
+        <item>Debu</item>
+        <item>Pemutih</item>
+        <item>Cahaya bulan</item>
+        <item>Mimpi</item>
+        <item>Inframerah</item>
+        <item>Hutan</item>
+        <item>Perak</item>
+        <item>Permen</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Pudar atas</item>
+        <item>Sorotan tengah</item>
+        <item>Bayangan diagonal</item>
+        <item>Tirai kiri</item>
+        <item>Tirai kanan</item>
+        <item>Pita tengah</item>
+        <item>Crossfade</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Daun terbalik</item>
+        <item>Tetes terbalik</item>
+        <item>Kerikil</item>
+        <item>Lengkung</item>
+        <item>Perisai</item>
+        <item>Lengkung terbalik</item>
+        <item>Perisai terbalik</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Bisikan</item>
+        <item>Bercahaya</item>
+        <item>Banjir</item>
+        <item>Kilau</item>
+        <item>Cahaya dalam</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Garis luar album</item>
+        <item>Gradien album</item>
+        <item>Warna album sekunder</item>
+        <item>Kaca album</item>
+        <item>Warna album tersier</item>
+        <item>Garis luar neon</item>
+    </string-array>
+</resources>

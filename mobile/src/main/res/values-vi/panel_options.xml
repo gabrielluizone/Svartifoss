@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Bố cục vòng tiến trình</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Hoàn toàn trong suốt</item>
+        <item>Màu phụ</item>
+        <item>Màu bậc ba</item>
+        <item>Lưới màu</item>
+        <item>Cực quang</item>
+        <item>Điểm sáng</item>
+        <item>Làm tối viền</item>
+        <item>Tông chia đôi</item>
+        <item>Dải màu</item>
+        <item>Nửa đêm</item>
+        <item>Quầng sáng</item>
+        <item>Mờ khói</item>
+        <item>Hoàng hôn</item>
+        <item>Đại dương</item>
+        <item>Tinh vân</item>
+        <item>Than hồng</item>
+        <item>Đường thủy triều</item>
+        <item>Phát quang sinh học</item>
+        <item>Óng ánh</item>
+        <item>Than chì</item>
+        <item>Điện ảnh</item>
+        <item>Quỹ đạo</item>
+        <item>Đường chân trời</item>
+        <item>Loang mực</item>
+        <item>Hoa nở</item>
+        <item>Vịnh hẹp</item>
+        <item>Lưới chấm</item>
+        <item>Đường quét</item>
+        <item>Radar</item>
+        <item>Các đường đồng mức</item>
+        <item>Đa diện</item>
+        <item>Chạng vạng</item>
+        <item>Băng</item>
+        <item>Hoa hồng</item>
+        <item>Giấy</item>
+        <item>Khối đơn</item>
+        <item>Đèn lồng</item>
+        <item>Noir</item>
+        <item>Nhung</item>
+        <item>Ảo ảnh</item>
+        <item>Nở sáng</item>
+        <item>Mây</item>
+        <item>Dạ khúc</item>
+        <item>Chất lỏng</item>
+        <item>Thủy triều</item>
+        <item>Vinyl</item>
+        <item>Vầng nhật hoa</item>
+        <item>Trăng lưỡi liềm</item>
+        <item>Lưới</item>
+        <item>Màn kính</item>
+        <item>Material</item>
+        <item>Áp phích</item>
+        <item>Studio</item>
+        <item>Quang phổ</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Hạt</item>
+        <item>Thanh ray đôi</item>
+        <item>Xung</item>
+        <item>Chrome</item>
+        <item>Quang phổ</item>
+        <item>Các bậc</item>
+        <item>Kẹo</item>
+        <item>Bóng ma</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Viền kép</item>
+        <item>Đồng hồ đo dọc (trái)</item>
+        <item>Đồng hồ đo dọc (phải)</item>
+        <item>Đồng hồ đo trên</item>
+        <item>Đồng hồ đo dưới</item>
+        <item>Mặt số giữa</item>
+        <item>Quầng sáng trên</item>
+        <item>Quầng sáng dưới</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Vòng kép</item>
+        <item>Hạt</item>
+        <item>Gạch và chấm</item>
+        <item>Vạch 24 giờ</item>
+        <item>Chỉ tiến trình</item>
+        <item>Phát sáng</item>
+        <item>Hai tông màu</item>
+        <item>Kim</item>
+        <item>Xen kẽ</item>
+        <item>Tia sáng</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Cạnh viền đồng hồ</item>
+        <item>Vòng lõm</item>
+        <item>Vòng trong</item>
+        <item>Vòng đậm</item>
+        <item>Mở ở dưới</item>
+        <item>Mở ở trên</item>
+        <item>Cung trái</item>
+        <item>Cung phải</item>
+        <item>Rãnh kép</item>
+        <item>Mở bên trái</item>
+        <item>Mở bên phải</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Viên thuốc gọn</item>
+        <item>Album vuông</item>
+        <item>Viên thuốc xếp chồng</item>
+        <item>Huy hiệu</item>
+        <item>Thanh kính</item>
+        <item>LCD</item>
+        <item>Hình vuông có viền</item>
+        <item>Ruy băng</item>
+        <item>Bong bóng thời gian</item>
+        <item>Tông chia đôi</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Dòng thời gian (trên)</item>
+        <item>Dòng thời gian (dưới)</item>
+        <item>Các đoạn (trên)</item>
+        <item>Dòng thời gian dọc (trái)</item>
+        <item>Dòng thời gian dọc (phải)</item>
+        <item>Mặt số giữa</item>
+        <item>Dòng thời gian kép</item>
+        <item>Các đoạn (dưới)</item>
+        <item>Chồng giữa</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Mềm</item>
+        <item>Chrome</item>
+        <item>Ba chiều</item>
+        <item>Bong bóng</item>
+        <item>Thanh ray</item>
+        <item>Hoàng hôn</item>
+        <item>Viền album</item>
+        <item>Kính tối</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Quạt</item>
+        <item>Quỹ đạo</item>
+        <item>Thanh neo dưới</item>
+        <item>Cột</item>
+        <item>Bố cục chia đôi</item>
+        <item>Kim cương</item>
+        <item>Băng chuyền</item>
+        <item>Tam giác</item>
+        <item>Bậc thang</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Mềm</item>
+        <item>Phiến</item>
+        <item>Mực</item>
+        <item>Thanh ray</item>
+        <item>Hoàng hôn</item>
+        <item>Bong bóng</item>
+        <item>Chrome</item>
+        <item>Ba chiều</item>
+    </string-array>
+</resources>

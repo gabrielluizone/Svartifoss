@@ -284,4 +284,6 @@
         <item quantity="one">%1$d download</item>
         <item quantity="other">%1$d downloads</item>
     </plurals>
+    <string name="watch_theme_custom_subtitle_authored">%1$s · %2$s</string>
+    <string name="watch_theme_face_artist">Artista</string>
 </resources>

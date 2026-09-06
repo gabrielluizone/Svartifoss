@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Ozean</item>
+        <item>Sonnenuntergang</item>
+        <item>Mittlerer Lichtkegel</item>
+        <item>Glasschleier</item>
+        <item>Samt</item>
+        <item>Noir-Lichtkegel</item>
+        <item>Eiswaschung</item>
+        <item>Rosenblüte</item>
+        <item>Prisma</item>
+        <item>Sichelrand</item>
+        <item>Gezeitenbänder</item>
+        <item>Papierhülle</item>
+        <item>Aufsteigende Laterne</item>
+        <item>Geteilte Fata Morgana</item>
+        <item>Ruhiges Raster</item>
+        <item>Nocturne</item>
+        <item>Wolkenstudie</item>
+        <item>Flüssige Flächen</item>
+        <item>Farbmonolith</item>
+        <item>Geteilter Ton</item>
+        <item>Verlauf</item>
+        <item>Duoton</item>
+        <item>Bänder</item>
+        <item>Vignette</item>
+        <item>Graphit</item>
+        <item>Kino</item>
+        <item>Acryl</item>
+        <item>Netz</item>
+        <item>Nebel</item>
+        <item>Biolumineszenz</item>
+        <item>Irisierend</item>
+        <item>Umlaufbahn</item>
+        <item>Tuschewaschung</item>
+        <item>Blüte</item>
+        <item>Fjord</item>
+        <item>Punktmatrix</item>
+        <item>Abtastlinien</item>
+        <item>Radar</item>
+        <item>Kontur</item>
+        <item>Facettiert</item>
+        <item>Albumfüllung</item>
+        <item>Sekundärfüllung</item>
+        <item>Tertiärfüllung</item>
+        <item>Glas</item>
+        <item>Mitternacht</item>
+        <item>Rauch</item>
+        <item>Gezeitenlinie</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Moos</item>
+        <item>Lavendeldunst</item>
+        <item>Kirsche</item>
+        <item>Tiefsee</item>
+        <item>Staub</item>
+        <item>Ausgebleicht</item>
+        <item>Mondlicht</item>
+        <item>Traum</item>
+        <item>Infrarot</item>
+        <item>Wald</item>
+        <item>Silber</item>
+        <item>Bonbon</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Obere Überblendung</item>
+        <item>Mittlerer Lichtkegel</item>
+        <item>Diagonaler Schatten</item>
+        <item>Linker Vorhang</item>
+        <item>Rechter Vorhang</item>
+        <item>Mittleres Band</item>
+        <item>Überblendung</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Umgekehrtes Blatt</item>
+        <item>Umgekehrter Tropfen</item>
+        <item>Kiesel</item>
+        <item>Bogen</item>
+        <item>Schild</item>
+        <item>Umgekehrter Bogen</item>
+        <item>Umgekehrter Schild</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Hauch</item>
+        <item>Strahlend</item>
+        <item>Flut</item>
+        <item>Schimmer</item>
+        <item>Tiefes Leuchten</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Albumkontur</item>
+        <item>Albumverlauf</item>
+        <item>Sekundärfarbe des Albums</item>
+        <item>Albumglas</item>
+        <item>Tertiärfarbe des Albums</item>
+        <item>Neonkontur</item>
+    </string-array>
+</resources>

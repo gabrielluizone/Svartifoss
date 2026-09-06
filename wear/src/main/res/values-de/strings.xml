@@ -165,4 +165,21 @@
     <string name="face_name_metadata" translatable="false">Metadata</string>
     <string name="face_name_ribbon" translatable="false">Ribbon</string>
     <string name="face_name_frame" translatable="false">Frame</string>
+    <string name="action_name_open_quick_actions_panel">Schnellaktionspanel öffnen</string>
+    <string name="action_name_fast_forward">Schneller Vorlauf</string>
+    <string name="action_name_rewind">Zurückspulen</string>
+    <string name="action_name_set_speed">Wiedergabegeschwindigkeit festlegen</string>
+    <string name="action_name_seek_position">Zur Titelposition springen</string>
+    <string name="action_name_set_volume">Lautstärke festlegen</string>
+    <string name="action_name_set_shuffle">Zufallswiedergabe festlegen</string>
+    <string name="action_name_set_repeat">Wiederholung festlegen</string>
+    <string name="action_name_open_volume_screen">Lautstärkebildschirm öffnen</string>
+    <string name="action_name_open_progress_screen">Fortschrittsbildschirm öffnen</string>
+    <string name="action_name_open_face_picker">Zifferblattauswahl öffnen</string>
+    <string name="action_name_close_watch_app">Uhren-App schließen</string>
+    <string name="volume_screen_title">Lautstärke</string>
+    <string name="progress_screen_title">Fortschritt</string>
+    <string name="progress_screen_cancel_seek">Spulen abbrechen</string>
+    <string name="progress_screen_skip_back">%1$d Sekunden zurückspringen</string>
+    <string name="progress_screen_skip_forward">%1$d Sekunden vorspringen</string>
 </resources>

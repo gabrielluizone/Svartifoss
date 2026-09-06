@@ -1,0 +1,2215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dev_report_copy">کۆپی بکە</string>
+    <string name="dev_report_copied">ڕاپۆرت کۆپی کرا</string>
+    <string name="dev_watch_snapshot_inspector">Snapshot ی هەڵبژاردەکانی کاتژمێر</string>
+    <string name="dev_watch_snapshot_inspector_description">ئەوەی ئێستا بەڕاستی بۆ کاتژمێر دەنێردرێت: appearance scope ی چالاک، قەبارەی خەمڵێنراو، و کام cache ـە inactive face-scope ـەکان بۆ گونجاندن لە budget لابراون</string>
+    <string name="dev_data_layer_inspector">پشکنەری Data Layer</string>
+    <string name="dev_data_layer_inspector_description">Wearable node ـە پەیوەستکراوەکان و دوایین WatchInfo کە ئەپی کاتژمێر وەڵامی داوەتەوە — دۆخی خامی پشت \"No watch connected\"</string>
+    <string name="dev_media_sessions_inspector">MediaSession explorer</string>
+    <string name="dev_media_sessions_inspector_description">هەموو MediaSession ـە چالاکەکانی ئێستا، نە تەنها ئەوەی شوێنکەوتووە: کردارە ڕاگەیەنراوەکان، ڕیز، ڕێگای پەخشکردن</string>
+    <string name="dev_view_phone_log">Log ی مۆبایل ببینە</string>
+    <string name="dev_view_phone_log_description">کۆتایی log ی Timber لەسەر disk، لەگەڵ log ی کاتژمێر ئەگەر \"Send logs\" پێشتر هێنابێتی</string>
+    <string name="dev_theme_submission_preflight">پشکنینی پێش ناردنی ڕووکار</string>
+    <string name="dev_theme_submission_preflight_description">هەر ڕووکاری کاتژمێری پاشەکەوتکراو لە پشکنینی ناردنی community تێدەپەڕێنێت و ئەگەر ڕێکخستنێک ڕێگری بکات ناوی وردی دەڵێت</string>
+    <string name="dev_appearance_resolution_inspector">پشکنەری resolution ی دیمەن</string>
+    <string name="dev_appearance_resolution_inspector_description">بۆ هەر appearance key ـێکی scoped، کام لە چوار هەنگاوی resolution بەڕاستی بردییەوە — explicit face value، per-face default، legacy global یان definition default — و نرخی هەر یەک</string>
+    <string name="action_fast_forward">خێرا بۆ پێشەوە</string>
+    <string name="action_rewind">گەڕاندنەوە</string>
+    <string name="action_set_playback_speed">خێرایی بکە بە %1$s×</string>
+    <string name="action_seek_to_percent">بڕۆ بۆ %1$d%%</string>
+    <string name="action_set_volume_percent">دەنگ بکە بە %1$d%%</string>
+    <string name="action_set_shuffle_on">تێکەڵکردن چالاک بکە</string>
+    <string name="action_set_shuffle_off">تێکەڵکردن ناچالاک بکە</string>
+    <string name="action_set_repeat_off">دووبارەکردنەوە ناچالاک بکە</string>
+    <string name="action_set_repeat_all">هەموو دووبارە بکەرەوە</string>
+    <string name="action_set_repeat_one">یەک دانە دووبارە بکەرەوە</string>
+    <string name="group_playback_speed">خێرایی پەخشکردن</string>
+    <string name="group_track_position">شوێنی تراک</string>
+    <string name="group_shuffle_mode">دۆخی تێکەڵکردن</string>
+    <string name="group_repeat_mode">دۆخی دووبارەکردنەوە</string>
+    <string name="group_volume_levels">ئاستەکانی دەنگ</string>
+    <string name="group_watch_screens">شاشەکانی کاتژمێر</string>
+    <string name="group_find_music">بدۆزەرەوە و پەخش بکە</string>
+    <string name="action_open_face_picker">هەڵبژێری ڕووی کاتژمێر بکەرەوە</string>
+    <string name="action_close_watch_app">ئەپەکەی کاتژمێر دابخە</string>
+    <string name="hand_gestures">ئاماژەکانی دەست</string>
+    <string name="hand_gestures_hint">لە کاتێکدا Svartifoss کراوەتەوە لەسەر کاتژمێرە گونجاوەکان بەردەستە.</string>
+    <string name="hand_gestures_hint_disconnected">Svartifoss لەسەر کاتژمێرەکەت پەیوەست و بکەرەوە بۆ ئەوەی ببینیت ئایا ئاماژەکانی دەست پشتگیری دەکات.</string>
+    <string name="hand_gestures_hint_outdated">ئەپی کاتژمێر نوێ بکەرەوە بۆ ئەوەی ببینیت ئایا ئەم کاتژمێرە ئاماژەکانی دەست پشتگیری دەکات.</string>
+    <string name="hand_gestures_hint_unsupported">ئەم کاتژمێرە ئاماژەکانی دەست پشتگیری ناکات، بۆیە کردارێک کە لێرە دیاری کراوە هەرگیز کار ناکات.</string>
+    <string name="hand_gestures_hint_disabled">ئاماژەکانی دەست لەم کاتژمێرە ناچالاکن. لەسەر خودی کاتژمێر لە Settings \u2192 Gestures چالاکیان بکە.</string>
+    <string name="hand_gestures_hint_ready">لەم کاتژمێرە ئامادەیە: کاتێک پڵەیەری Svartifoss کراوەتەوە دووجار pinch بکە.</string>
+    <string name="hand_gesture_how_it_works">مچەکت بەرز بکە و پەنجە گەورە و پەنجە ئیشارەکەت دووجار بە خێرایی لەیەک نزیک بکەرەوە. Wear OS ئەمە بە primary action ناودەبات، بۆیە کاتژمێرێکی دروستکەری تر ڕەنگە ئاماژەی دەستی هاوتای خۆی بەکاربهێنێت.\n\nتەنها کاتێک کاردەکات کە پڵەیەری Svartifoss لەسەر کاتژمێر کراوەتەوە و شاشەکە چالاکە \u2014 نە لە ڕووی کاتژمێر، نە لەسەر ڕیز یان مێنیو، و نە لە always-on display. ئەو کردارە کاردەکات کە بۆ دۆخی ئێستای playback دانراوە، بۆیە بۆ کارکردن لە هەردوو دۆخدا لە هەردوو پەڕەی Controls دایبنێ.\n\nئاماژەکە دەبێت لە Settings \u2192 Gestures ی خودی کاتژمێریش چالاک بێت.</string>
+    <string name="double_pinch">Double pinch</string>
+    <string name="icon_selection_search_hint">گەڕان بۆ ئایکۆن</string>
+    <string name="icon_selection_search_empty">هیچ ئایکۆنێک لەگەڵ گەڕانەکەت ناگونجێت</string>
+    <string name="open_quick_actions_panel">پانێڵی کردارە خێراکان بکەرەوە</string>
+    <string name="open_volume_screen">شاشەی دەنگ بکەرەوە</string>
+    <string name="open_progress_screen">شاشەی پێشکەوتن بکەرەوە</string>
+    <string name="export_config_failed_detail">نەتوانرا backup هەناردە بکرێت: %1$s</string>
+    <string name="backup_selection_title">ناوەڕۆکی backup هەڵبژێرە</string>
+    <string name="backup_selection_description">ئەو بەشانەی Svartifoss هەڵبژێرە کە دەتەوێت پاشەکەوتیان بکەیت. بە بنەڕەت هەموو شت هەڵبژێردراوە؛ کاتێک ئەم backup ـە هاوردە دەکرێت، بەشە هەڵنەبژێردراوەکان ناگۆڕدرێن.</string>
+    <string name="backup_selection_select_all">هەموو هەڵبژێرە</string>
+    <string name="backup_selection_clear_all">هەمووی پاک بکەرەوە</string>
+    <string name="backup_selection_export">Backup هەناردە بکە</string>
+    <string name="backup_selection_empty">لانیکەم یەک دانە هەڵبژێرە</string>
+    <string name="backup_section_buttons">ڕێکخستنەکانی دوگمە</string>
+    <string name="backup_section_buttons_description">کردارەکانی دوگمە، تاج و ئاماژە لە کاتی پەخشبوون و وەستانی میوزیک.</string>
+    <string name="backup_section_actions">لیستی کردارەکان</string>
+    <string name="backup_section_actions_description">لیستی ڕیزکراوی کردارەکان کە لە مێنیوی کردارەکانی کاتژمێر پیشان دەدرێن.</string>
+    <string name="backup_section_app_settings">ڕێکخستنەکانی ئەپ</string>
+    <string name="backup_section_app_settings_description">ڕێکخستنەکانی مۆبایل، هەڵسوکەوتی کاتژمێر، زمان، پەخشکردن و یەکخستنەکان.</string>
+    <string name="backup_section_watch_appearance">دیمەن و ڕووکارەکانی کاتژمێر</string>
+    <string name="backup_section_watch_appearance_description">نەخشە، ڕەنگ، تایپۆگرافی، پانێڵ، AOD و ڕووکارە تایبەتە پاشەکەوتکراوەکانی کاتژمێر.</string>
+    <string name="backup_section_playlist_shortcuts">Shortcut ی playlist</string>
+    <string name="backup_section_playlist_shortcuts_description">میوزیک، ئالبوم، هونەرمەند، playlist و بەستەرە streaming ە پاشەکەوتکراوەکانت.</string>
+    <string name="backup_section_history">مێژووی گەڕان و پەخشکردن</string>
+    <string name="backup_section_history_description">گەڕانە نوێیەکان و تراکە نوێ پەخشکراوەکان.</string>
+    <string name="backup_section_icons">ئایکۆن و وێنە هونەرییە بارکراوەکان</string>
+    <string name="backup_section_icons_description">ئایکۆنی کرداری تایبەت، بەرگی shortcut و ئایکۆنی ئەپی cache کراو.</string>
+    <string name="backup_section_privacy">تایبەتمەندی و ئاگادارکردنەوەکان</string>
+    <string name="backup_section_privacy_description">ڕاپۆرتی crash، ئاگادارکردنەوەی ڕاگەیاندن و هەڵبژاردەکانی ڕەزامەندی کە ئەپ پاشەکەوتی کردوون.</string>
+    <string name="backup_section_local_app_state">دۆخی ناوخۆیی ئەپ</string>
+    <string name="backup_section_local_app_state_description">Accent ی ئێستا، شوێنی دوایین مێنیو، prompt ە تەواوکراوەکان و دۆخی نوێکردنەوە.</string>
+    <string name="backup_section_auxiliary_data">داتای تری ئەپ</string>
+    <string name="backup_section_auxiliary_data_description">هەڵبژاردە و فایلە ناوخۆییە زیادەکانی خاوەندارێتی ئەپ، لەگەڵ کۆگاکانی داتای داهاتوو.</string>
+    <string name="pref_numeric_range">لە نێوان %1$d و %2$d.</string>
+    <string name="background_editor_artwork">وێنەی هونەری</string>
+    <string name="background_editor_layers">چینەکان</string>
+    <string name="background_editor_layers_count">%1$d لە %2$d</string>
+    <string name="background_editor_add_layer">چین زیاد بکە</string>
+    <string name="background_editor_reset_layers">گەڕاندنەوە بۆ بنەڕەت</string>
+    <string name="background_editor_empty">هیچ چینێک نییە. وێنەی هونەری بە تەنها پیشان دەدرێت.</string>
+    <string name="background_editor_note">چینی سەرەوەی ئەم لیستە لەسەر هەموو شتێکی تر دەکێشرێت؛ چینی خوارەوە نزیکترینە بە وێنەی هونەری.</string>
+    <string name="background_editor_full">دەتوانیت تا %1$d چین لەسەر یەک دابنێیت.</string>
+    <string name="background_layer_kind_wash">پاشبنەما</string>
+    <string name="background_layer_kind_shade">سێبەرکردن</string>
+    <string name="background_layer_kind_floor">بنکەی Accent</string>
+    <string name="background_layer_move_up">ئەم چینە بۆ سەرەوە بگوازەوە</string>
+    <string name="background_layer_move_down">ئەم چینە بۆ خوارەوە بگوازەوە</string>
+    <string name="background_layer_more">هەڵبژاردەی زیاتر بۆ ئەم چینە</string>
+    <string name="background_layer_add_title">چینێک زیاد بکە</string>
+    <string name="background_layer_style_title">چینی %1$s</string>
+    <string name="background_layer_opacity">هێز</string>
+    <string name="background_layer_color">ڕەنگ</string>
+    <string name="background_layer_custom_color">ڕەنگێک هەڵبژێرە</string>
+    <string name="background_layer_duplicate">کۆپی بکە</string>
+    <string name="background_layer_remove">لابردن</string>
+    <string name="background_layer_color_default">بنەڕەتی</string>
+    <string name="background_layer_color_album">ڕەنگی ئالبوم</string>
+    <string name="background_layer_color_secondary">ڕەنگی دووەمی ئالبوم</string>
+    <string name="background_layer_color_tertiary">ڕەنگی سێیەمی ئالبوم</string>
+    <string name="background_layer_color_desaturated">ڕەنگی کزکراوی ئالبوم</string>
+    <string name="background_layer_color_black">ڕەش</string>
+    <string name="background_layer_color_custom">ڕەنگی تایبەت</string>
+    <string name="background_layer_reset_title">چینەکان بگەڕێندرێنەوە بۆ بنەڕەت؟</string>
+    <string name="background_layer_reset_message">کۆی چینەکان دەگەڕێتەوە بۆ سێبەرکردن و بنکەی Accent کە لە ڕیزە تایبەتەکانیاندا دانراون؛ کاتژمێرێکی بە build ی کۆنیش هەمان شت دەکێشێت.</string>
+    <string name="watch_element_progress">پێشکەوتن</string>
+    <string name="watch_element_volume">دەنگ</string>
+    <string name="watch_element_quick_panel">کردارە خێراکان</string>
+    <string name="watch_element_queue">ڕیز</string>
+    <string name="watch_element_lyrics">دەقی گۆرانی</string>
+    <string name="player_section_on_screen">لەسەر شاشە</string>
+    <string name="player_element_app_icon">ئایکۆنی ئەپ</string>
+    <string name="player_element_controls">کۆنترۆڵەکانی پڵەیەر</string>
+    <string name="player_element_tap_flash">فلاش لە کاتی تاپ</string>
+    <string name="player_element_inner_progress">پێشکەوتنی ناوەوە</string>
+    <string name="player_element_edge_arc">کەوانەی لێوار</string>
+    <string name="player_element_edge_seek">Seek ی لێوار</string>
+    <string name="player_element_clock">کاتژمێر</string>
+    <string name="player_element_cover_art">وێنەی بەرگ</string>
+    <string name="setting_album_art_filter">فلتەری وێنەی ئالبوم</string>
+    <string name="setting_album_art_filter_description">چارەسەری ڕەنگی سەربەخۆ لەسەر هەر شێوازێکی وێنەی ئالبوم جێبەجێ بکە.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto بە stroke ـێکی extra-light بۆ دیمەنێکی ناسک.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto بە stroke ـێکی سووک و هەوایی و ڕێژە ناسراوەکانی خێزانەکە.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto بە stroke ـێکی medium و بەهێزتر بۆ label ی compact و خوێندراو.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto بە قورس‌ترین system weight بۆ دەقی display ی bold.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto بە ئاسۆیی condensed کراوە بۆ ئەوەی ناونیشانی درێژ لە شوێنی کەمتر جێبێتەوە.</string>
+    <string name="setting_wear_title_font">فۆنتی ناونیشان</string>
+    <string name="setting_wear_title_text_case">شێوازی پیتی ناونیشان</string>
+    <string name="setting_wear_artist_font">فۆنتی هونەرمەند</string>
+    <string name="setting_wear_artist_text_case">شێوازی پیتی هونەرمەند</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Sans ـێکی گۆڵاو و دۆستانە کە بۆ خوێندنەوەی سەرەتایی دروست کراوە</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Display typeface ـێکی Didone بە جیاوازی بەرز و هێزی دەستکاریی نووسین</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Poster sans ـێکی بەهێز بە هەستی کۆمیکی دەستنووس</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Geometric sans ـێکی ئارام بە بۆشایی فراوان و یەکسان</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Slab serif ـێکی هاوچەرخ بە کۆتاییە گۆڵاوە نەرمەکان</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Slab serif ـێکی زۆر قەڵەو کە بۆ کاریگەری ناونیشان دروست کراوە</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Typeface ـێکی باریک و دەستکێشراو بە small capitals</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Condensed sans ـێکی چڕ بۆ ناونیشانی بەهێز</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Geometric slab serif ـێک کە لە قەبارەی بچووکیش بەهێز دەمێنێتەوە</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Comic-book display typeface ـێک بە هێزی هاوارکردن</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Display typeface ـێکی سەربازی stencil</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Serif ـێکی ڕاست بە کەوانە گەرم و نافەرمییەکان</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Humanist sans ـێک بە گۆشە گۆڵاوە نەرمەکان</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Grotesque sans ـێک بە شێوە بەهێز و سادەکان</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Monospace ـێکی typewriter ی ڕێک و پێک کە بۆ script ـەکان دروست کراوە</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Slab serif ـێکی گۆڵاو بە هەستی نەرم و کتێبی</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Serif ـێکی کتێبی کۆن شێواز کە بۆ دەقی درێژ ڕێکخراوە</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Geometric sans ـێکی جیاوازی کەم بە تەواوبوونی هاوچەرخ</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Serif ـێکی بەهێز کە بۆ دەرکەوتن لە قەبارەی دەقی ئاسایی کێشراوە</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Sans ـێکی تەکنیکی هاوچەرخ بە پەیوەندییە گۆشەدارەکان</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Programming monospace ـێک بە glyph ی ڕوون و جیاواز</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Humanist monospace ـێک کە بۆ code لەسەر شاشە دروست کراوە</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Typeface ـێکی دەستنووسی پف‌دار بە stroke ی گۆڵاو</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Geometric sans ـێک بە کارەکتەری vintage ی ساڵانی 1920</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Geometric sans ـێک لە نەریتی Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Thai و Latin sans ـێکی بێ loop بە لاربوونێکی کەم</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Sans ـێک کە بۆ کەمکردنەوەی فشارە بیناییەکان لە کاتی خوێندن دروست کراوە</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Script ـێکی bold و پەیوەست بە هەستی signage ی retro</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Semi-geometric sans ـێک کە گەرمی و وردی هاوسەنگ دەکات</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Minimalist sans ـێک بۆ دەقی پاکی interface</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Sans ـێکی باش گۆڵاو بە کۆتاییە نەرمەکان</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Geometric sans ـێک بە ریتمێکی یەکسان و هاوچەرخ</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Techno typeface ـێکی چوارگۆشە بە هەستی gaming</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Technical sans ـێکی compact کە لەسەر grid کێشراوە</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Grotesque ـێکی هاوچەرخ بە کەوانە کراوە جیاوازەکان</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Pixel typeface ـێک وەک ئەوەی ڕاستەوخۆ لە کابینەی arcade هاتبێت</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Geometric sans ـێکی گۆڵاو بە هەستی نەرم و سووک</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Condensed sans ـێکی چوارگۆشە بە گۆشە تەکنیکییەکان</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Art-deco display typeface ـێک بە ڕەگی retro sign-painting</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">هاوڕێی monospace ی Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Display typeface ـێکی قەڵەو بە stroke ی یاریگەر و کوت</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Typeface ـێکی صنعتی فراوان بە شێوە چوارگۆشە قورسەکان</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Display typeface ـێکی لار و زیندوو بە ڕەگی Gujarati</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Bitmap typeface ـێکی بچووک کە شاشەکانی کۆمپیوتەری سەرەتایی بەبیر دەهێنێتەوە</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Monospace ـێک کە بۆ خوێندنەوەی code بە ئاسوودەیی دروست کراوە</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Typeface ـێکی condensed all-caps بە ئامادەبوونی poster</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Typeface ـێکی بەرز و condensed بۆ ناونیشانی Devanagari و Latin</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Humanist sans ـێکی چوارگۆشە بە هەستی تەکنیکی</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Sans ـێکی تەواو گۆڵاو بە هەستی دۆستانە</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Typeface ـێکی condensed کە signage ی coffee-shop ی ساڵانی 1920 بەبیر دەهێنێتەوە</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Slab serif ـێک بە کۆتاییە هاوچەرخ و نەرم بڕاوەکان</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Humanist sans ـێکی دۆستانە بە شێوە کراوە و خوێندراوەکان</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Sans ـێکی گەرم بە شێوە بەهێزەکان بۆ خوێندنەوەی ئاسوودە</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Humanist sans ـێکی فرەبەکار بۆ interface ی ڕوون</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Text serif ـێکی پاک بە دەنگی ئیدیتۆریاڵ</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Serif ـێکی کتێبی کلاسیک کە بۆ خوێندنەوە لەسەر شاشە ڕێکخراوە</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Grotesk sans ـێکی کارامە بە ریتمێکی فراوان و بەهێز</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Technical humanist sans ـێک بە ڕێژەی ورد</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Technical monospace ـێک بە texture ی پاک و خوێندراو</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Serif ـێکی هاوچەرخ بە کارەکتەری ئەندازیاری</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Workhorse sans ـێکی پاک بە شێوە compact و کارامەکان</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Grotesk ـێکی سەیر بە ڕێژەی دۆستانە</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Geometric sans ـێک بە هەستی فراوان و ئایندەیی</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Geometric sans ـێکی هاوچەرخ بە هێڵە شارستانییە ناسکەکان</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Sans ـێکی هاوچەرخی هاوسەنگ بۆ شاشە بچووکەکان</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Display sans ـێکی متمانەپێکراو بە ڕێژەی دەربڕین‌دار</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Sans ـێکی هاوڕێ و خوێندراو بۆ زانیاریی درێژی تراک</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Monospace ـێکی تیژ بە دەنگێکی تەکنیکی هاوچەرخ</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Sans ـێکی نائاسایی بە شێوە یاریگەر و art-directed</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Sans ـێکی هاوچەرخ و گونجاو بە وردیی ئارام</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Sans ـێکی پاک و دۆستانە بۆ خوێندنەوەی ئاسان</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Display sans ـێکی گۆڵاو بە کارەکتەری خۆشحاڵ</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Grotesk ـێکی زیندوو کە پێکهاتە و وردەکاریی سەیر تێکەڵ دەکات</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Display serif ـێکی جیاوازی بەرز بۆ ناونیشانی دراماتیکی</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Serif ـێکی ئەدەبی و ناسک بە جیاوازی بەرز</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Display serif ـێکی جوان بە وردەکاریی calligraphic</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Slab serif ـێکی بەهێز کە لە قەبارەی بچووکیش ڕوونە</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Serif ـێکی فرەبەکار بۆ خوێندنەوەی چڕ و دەربڕین‌دار</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Serif ـێکی کۆن شێوازی گەرم بە دەنگی کتێبی</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Sans ـێکی ناسک بە شێوە پیتی جیاواز و ڕێک و پێک</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Geometric sans ـێکی bold بۆ ناونیشانی بەهێز</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Sans ـێکی گونجاو بۆ condensed بە هێزی وەرزشی و جوڵاو</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Sans ـێکی نەرم بە counter ی کراوە و هێزی signage ی دۆستانە</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Sans ـێکی فرەبەکار کە گەرمی humanist و ڕوونی هاوسەنگ دەکات</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Sans ـێکی ڕوون و هاتووچۆ-هەڵگرتوو بە ریتمێکی متمانەپێکراو</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Sans ـێکی بێلایەن و accessible بۆ interface ی ڕۆژانە</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Geometric sans ـێکی سووک بە کەوانە نەرم و هاوچەرخ</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Sans ـێکی باریک و گۆڵاو بە هەستی ئایندەیی نەرم</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Geometric sans ـێکی پاک بە کارەکتەری کەمێک Thai</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Display typeface ـێکی فراوان و ئایندەیی بۆ زۆرترین ئامادەبوون</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">خێزانێکی variable sans-to-mono بە دەنگێکی تەکنیکی و یاریگەر</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Monospace ـێکی variable-width بە texture ی دیجیتاڵی جیاواز</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Sans ـێکی فراوان و زۆر خوێندراو بە پشتیوانی فراوانی script</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Serif ـێکی پشتپێبەستراو بە پشتیوانی فراوانی script</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Monospace ـێکی فرەزمانە بۆ ریتمێکی یەکسان</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Sans ـێکی compact و هاوچەرخ بە ریتمێکی ڕوون کە کاریگەری Hebrew ی هەیە</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Humanist sans ـێکی بەهێز کە بۆ خوێندنەوەی ڕوون باشکراوە</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Screen sans ـێکی دۆستانە بە texture ی گۆڵاو و کراوە</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Geometric sans ـێکی compact بە ڕێژەی جیاواز</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Calligraphic serif ـێکی زیندوو بە کارەکتەری ئەدەبی</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Humanist sans ـێکی پاک بە خوێندنەوەی زۆر باش بۆ interface</string>
+    <string name="setting_wear_note_show_cover">وێنەی بەرگ</string>
+    <string name="aod_element_artwork">وێنەی هونەری</string>
+    <string name="aod_element_clock">کاتژمێر</string>
+    <string name="aod_element_track_info">زانیاری تراک</string>
+    <string name="aod_element_transport">Transport</string>
+    <string name="aod_element_progress">پێشکەوتن</string>
+    <string name="aod_element_up_next">داهاتوو</string>
+    <string name="aod_section_artwork">وێنەی هونەری</string>
+    <string name="aod_control_tint">Tint</string>
+    <string name="aod_control_brightness">ڕووناکی</string>
+    <string name="aod_control_art_treatment">Treatment</string>
+    <string name="aod_control_art_opacity">ناشەفافی</string>
+    <string name="mini_button_control_visibility">پیشان بدە</string>
+    <string name="mini_button_control_arrangement">ڕێکخستن</string>
+    <string name="mini_button_control_shape">شێوە</string>
+    <string name="mini_button_control_background">پاشبنەما</string>
+    <string name="mini_button_control_opacity">ناشەفافی</string>
+    <string name="mini_button_assign_action">کردار دیاری بکە</string>
+    <string name="mini_button_gestures_note">لەسەر پڵەیەر بۆ سەرەوە، خوارەوە و چەپ swipe بکە. Swipe ی ڕاست هەمیشە gesture ی dismiss ی سیستەمە و هەرگیز ناگیرێت.</string>
+    <string name="setting_wear_chat_cover_shape">شێوەی avatar ی chat</string>
+    <string name="setting_wear_chat_show_cover">وێنەی بەرگ</string>
+    <string name="setting_wear_metadata_cover_shape">شێوەی بەرگی metadata</string>
+    <string name="setting_wear_metadata_show_cover">وێنەی بەرگ</string>
+    <string-array name="wear_text_case_entries">
+        <item>ئاسایی</item>
+        <item>UPPERCASE</item>
+        <item>lowercase</item>
+        <item>Title Case</item>
+    </string-array>
+    <string name="wear_text_font_follow">فۆنتی گشتی پەیڕەو بکە</string>
+    <string name="category_wf_typography_track_time">کاتی تراک</string>
+    <string name="setting_wear_track_time_font">فۆنتی کاتی تراک</string>
+    <string name="wear_track_time_font_follow">دیزاین پەیڕەو بکە</string>
+    <string name="setting_wear_track_time_font_weight">قەڵەوی کاتی تراک</string>
+    <string name="setting_wear_track_time_font_italic">کاتی تراکی italic</string>
+    <string name="setting_wear_track_time_font_scale">قەبارەی کاتی تراک</string>
+    <string name="setting_wear_track_time_font_opacity">ڕووناکی کاتی تراک</string>
+    <string name="setting_wear_track_time_font_tracking">بۆشایی نێوان پیتەکانی کاتی تراک</string>
+    <string-array name="album_art_filter_entries">
+        <item>هیچ</item>
+        <item>یەک ڕەنگ</item>
+        <item>گەرم</item>
+        <item>سارد</item>
+        <item>کاتی زێڕین</item>
+        <item>Rosé</item>
+        <item>Vintage film</item>
+        <item>فیلمی کاڵبوو</item>
+        <item>Matte</item>
+        <item>زیندوو</item>
+        <item>Punch</item>
+        <item>Pastel</item>
+        <item>Sepia</item>
+        <item>Cyanotype</item>
+        <item>Teal &amp; پرتەقاڵی</item>
+        <item>جیاوازی بەرز</item>
+        <item>ڕووناکی نەرم</item>
+        <item>شەو</item>
+    </string-array>
+    <string name="queue_item_now_playing">ئێستا پەخش دەکرێت</string>
+    <string name="queue_item_unknown_title">تراکی نەناسراو</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">ڕیزی پەخشکردن · %1$d تراک</item>
+        <item quantity="other">ڕیزی پەخشکردن · %1$d تراک</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">ڕەنگی بنکەی Accent</string>
+    <string name="setting_wear_accent_floor_custom_color">ڕەنگی تایبەتی بنکە</string>
+    <string name="setting_wear_accent_floor_custom_color_description">ئەو ڕەنگە هەڵبژێرە کە کاتێک ڕەنگی بنکەی Accent لەسەر ڕەنگی تایبەت دانراوە بەکاردێت</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Accent ی ئالبوم</item>
+        <item>ڕەنگی دووەمی ئالبوم</item>
+        <item>ڕەنگی سێیەمی ئالبوم</item>
+        <item>ڕەنگی تایبەت</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Interface sans ـێکی بێلایەن و زۆر خوێندراو بۆ خوێندنەوەی ڕۆژانە</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">شێوە پیتی جیاواز کە بۆ accessibility دروست کراون و لە قەبارەی بچووکیش ڕوون دەمێننەوە</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Geometric sans ـێکی نەرم گۆڵاو — متمانەپێکراو و دۆستانە</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Humanist sans ـێکی compact کە بۆ ناونیشانی درێژ بۆشایی زیاتر دەدات</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Display typeface ـێکی بەرز و condensed بە هێزی poster</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Serif ـێکی هاوچەرخ بۆ خوێندنەوەی درێژی ئاسوودە</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Serif ـێکی نەرم و دەربڕین‌دار بە گەرمی و کارەکتەر</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Monospace typeface ـێکی retro-futurist بە لێواری تەکنیکی</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Display typeface ـێکی زۆر قەڵەو و چڕ بۆ زۆرترین جیاوازی</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Script ـێکی دەستنووسی ڕەوان بە هەستی زیندوو و کەسی</string>
+    <string name="setting_wear_artist_text_mode">هەڵسوکەوتی دەقی هونەرمەند</string>
+    <string name="setting_wear_album_art_source">سەرچاوەی وێنەی ئالبوم</string>
+    <string name="setting_user_font">فۆنتی خۆم</string>
+    <string name="wear_font_user_import">فۆنتی خۆم…</string>
+    <string name="setting_user_font_empty">فایلی .ttf یان .otf لەم مۆبایلەوە هاوردە بکە</string>
+    <string name="setting_user_font_loaded">%1$s · بۆ گۆڕین یان لابردن تاپ بکە</string>
+    <string name="user_font_pick">فایلی فۆنت هەڵبژێرە</string>
+    <string name="user_font_replace">جێگۆڕکێ</string>
+    <string name="user_font_remove">لابردن</string>
+    <string name="user_font_imported">“%1$s” هاوردە کرا. لە هەر لیستێکی فۆنتدا هەڵیبژێرە؛ بۆ کاتژمێرەکەت دەنێردرێت.</string>
+    <string name="user_font_removed">فۆنتە هاوردەکراوەکەت لابرا.</string>
+    <string name="user_font_error_too_large">ئەو فایلە %1$s ـە. فۆنت دەبێت لە %2$s بچووکتر بێت بۆ ئەوەی بە خێرایی بگاتە کاتژمێر.</string>
+    <string name="user_font_error_not_a_font">ئەو فایلە فۆنتێک نییە کە ئەم مۆبایلە بتوانێت بیخوێنێتەوە. TrueType و OpenType (.ttf, .otf) کاردەکەن؛ web fonts (.woff, .woff2) کارناکەن.</string>
+    <string name="user_font_error_unreadable">نەتوانرا ئەو فایلە بخوێندرێتەوە. دووبارە هەڵیبژێرە یان سەرەتا بیگوازەوە بۆ ئەم مۆبایلە.</string>
+    <string name="user_font_not_shareable">ڕووکارەکانی بەکارهێنەری فۆنتی خۆت تەنها لەم مۆبایلە دەمێننەوە</string>
+    <string name="setting_custom_album_art_image">وێنەی بەکارهێنان</string>
+    <string name="setting_custom_album_art_folder">بوخچەی وێنەکان</string>
+    <string name="setting_custom_album_art_none">هێشتا هەڵنەبژێردراوە — بۆ هەڵبژاردن تاپ بکە</string>
+    <string name="setting_custom_album_art_chosen">%1$s · بۆ گۆڕین تاپ بکە</string>
+    <string name="custom_album_art_image_set">ئەو وێنەیە لە ئێستاوە لە پشت پڵەیەر دەبێت.</string>
+    <string name="custom_album_art_folder_set">لەو بوخچەیە وێنەیەک بۆ هەر تراکێک دەکێشرێت.</string>
+    <string name="custom_album_art_error">نەتوانرا بکرێتەوە. دووبارە هەڵیبژێرە، یان شتێک لە بیرگەی خودی ئەم مۆبایلە هەڵبژێرە.</string>
+    <string name="custom_album_art_not_shareable">ڕووکارەکانی بەکارهێنەری وێنەکانی خۆت تەنها لەم مۆبایلە دەمێننەوە</string>
+    <string name="setting_wear_text_block_align">ڕێکخستنی دەق</string>
+    <string name="setting_wear_text_block_align_description">دەقی تراک لەگەڵ کام لێوار ڕێکدەخرێت. Follow face ڕێکخستنی هەر ڕووێک کە بۆی دیزاین کراوە دەپارێزێت.</string>
+    <string name="setting_wear_text_block_position">شوێنی دەق</string>
+    <string name="setting_wear_text_block_position_description">دەقی تراک لە کوێی شاشە دادەنیشێت. Follow face شوێنەکەی هەر ڕووێک کە بۆی دیزاین کراوە دەپارێزێت.</string>
+    <string name="setting_online_artwork">وێنەی هونەری ئۆنلاین</string>
+    <string name="setting_online_artwork_description">ڕێگە بدە ڕووی کاتژمێر وێنەیەکی لە ئۆنلاین دۆزراوە پیشان بدات \u2014 هونەرمەندی پەخشکراو، یان بەرگی ئالبوم بۆ پڵەیەرێک کە هیچ وێنەیەک بڵاوناکاتەوە. مۆبایلەکەت لە کاتەلۆگی گشتی Deezer دەگەڕێت و ئەنجامەکە cache دەکات؛ تەنها ناوی تراک و هونەرمەند دەنێردرێن، و هیچ گەڕانێک ناکرێت مەگەر ڕووێک لەسەر یەکێک لەو سەرچاوانە دانرابێت. ئەگەر ناچالاک بێت، وێنەی خۆی پڵەیەر بەکاردێت.</string>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+    <string name="setting_no_wearable_api_banner">Wear OS لەم ئامێرەدا پشتگیری ناکرێت</string>
+    <string name="setting_no_wearable_api_banner_description">ئەم ئامێرە پێکهاتەی Wear OS ـی Google Play Services دابین ناکات، کە Svartifoss بۆ پەیوەندیکردن بە کاتژمێر پێویستی پێیەتی. هاوتاکردن یارمەتیدەر نابێت — ئەپی مۆبایل لێرە ناتوانێت بگاتە کاتژمێر. هەموو ڕێکخستنەکانی خوارەوە هەر پاشەکەوت دەبن و ئەگەر Svartifoss لە ئامێرێک دابمەزرێنیت کە پشتگیری دەکات، جێبەجێ دەبن.</string>
+    <string name="setting_no_watch_banner">هیچ کاتژمێرێک پەیوەست نییە</string>
+    <string name="setting_no_watch_banner_description">ئەم ڕێکخستنانە لەگەڵ کاتژمێری Wear OS ـەکەت هاوکات دەبن، بۆیە تا کاتژمێرەکە هاوتا و پەیوەست نەبێت بە شێوەی بینراو جێبەجێ نابن - بەڵام هەموو ئەوانەی خوارەوە هەر ئێستا دەتوانیت ڕێکیان بخەیت.</string>
+    <string name="category_appearance">دەرکەوتن</string>
+    <string name="setting_theme">ڕووکار</string>
+    <string name="theme_light">سپی ڕوون</string>
+    <string name="theme_dark">تەنها ڕەش</string>
+    <string name="theme_system">شوێن سیستەم بکەوە</string>
+    <string name="setting_language">زمان</string>
+    <string name="language_system">شوێن سیستەم بکەوە</string>
+    <string name="language_change_watch_notice">دوای هاوکاتبوون، کاتژمێرەکەش هەمان زمان بەکاردەهێنێت.</string>
+    <string name="category_developer">گەشەپێدەر</string>
+    <string name="dev_mode_unlocked">دۆخی گەشەپێدەر چالاک کرا ✦</string>
+    <string name="dev_mode_clicks_remaining">بۆ کردنەوەی دۆخی گەشەپێدەر %1$d لێدانێکی تر</string>
+    <string name="dev_disable_mode">دۆخی گەشەپێدەر ناچالاک بکە</string>
+    <string name="dev_disable_mode_description">ئەم بەشە دووبارە بشارەوە - بۆ گەڕاندنەوەی، حەوت جار لە \"وەشانی دامەزراو\" بدە</string>
+    <string name="dev_mode_disabled">دۆخی گەشەپێدەر ناچالاک کرا</string>
+    <string name="dev_build_info">زانیاری Build</string>
+    <string name="dev_sync_watch">ڕێکخستنەکانی کاتژمێر بەزۆر هاوکات بکە</string>
+    <string name="dev_sync_watch_description">هەموو ڕێکخستنە ئێستاکان دەستبەجێ بنێرە بۆ کاتژمێری هاوتاکراو</string>
+    <string name="dev_sync_watch_done">ڕێکخستنەکان لەگەڵ کاتژمێر هاوکات کران</string>
+    <string name="dev_copy_debug_info">زانیاری Debug کۆپی بکە</string>
+    <string name="dev_copy_debug_info_description">وردەکاری Build و ئامێر بۆ clipboard کۆپی بکە</string>
+    <string name="dev_export_defaults">وەک بنەڕەتی ئەپ هەناردە بکە</string>
+    <string name="dev_export_defaults_description">ئەم ڕێکخستنە وەک default_config.json پاشەکەوت دەکات — ئەو دۆخەیە کە دامەزراندنێکی نوێ پێی دەستپێدەکات. مێژوو، هەڵبژاردەکانی ڕەزامەندی و دۆخی تایبەتی ئەم مۆبایلە تێدا نابێت.</string>
+    <string name="dev_export_defaults_done">بنەڕەتەکان هەناردە کران (%1$s)</string>
+    <string name="dev_show_archived">هەڵبژاردە ئەرشیڤکراوەکان پیشان بدە</string>
+    <string name="dev_show_archived_description">Layout و ڕێکخستنەکانی کاتژمێر کە بەهۆی کێشە ناسراوەکان ئەرشیڤ کراون پیشان بدە</string>
+    <string name="dev_copy_debug_info_done">زانیاری Debug کۆپی کرا</string>
+    <string name="dev_open_update_screen">شاشەی نوێکردنەوە بکەرەوە</string>
+    <string name="dev_open_update_screen_description">بێ چاوەڕوانی بڵاوکردنەوەی ڕاستەقینە، پێشبینینی شاشەی Updates (بانەری سەرەوە، layout ـی تێبینییەکانی وەشان) بکە</string>
+    <string name="dev_watch_layout_bounds">سنووری layout ـی کاتژمێر پیشان بدە</string>
+    <string name="dev_watch_layout_bounds_description">سنووری توخمە دیارەکانی player و ناوچەکانی دەستدان لەسەر کاتژمێر دیاری بکە. تەنها overlay ـێکی پشکنینە.</string>
+    <string name="dev_watch_player_info">زانیاری player ـی کاتژمێر پیشان بدە</string>
+    <string name="dev_watch_player_info_description">Face ـی چالاک، دۆخی پخش، پێشکەوتن و زانیاری render لەسەر کاتژمێر overlay بکە.</string>
+    <string name="pref_reset_default">بۆ بنەڕەت ڕێکبخەرەوە</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">تۆ ئەو ئاوشارە شاراوەیەت دۆزییەوە.\n\nSvartifoss — ستوونە ڕەشەکانی بازاڵت\nئاوشارێک لە ئایسلەندا چوارچێوە دەکەن،\nیادخەرەوەی ئەوەی کە مۆسیقا دەڕوات\nوەک ئاو لە ناو بەرددا.\n\n♪ بە خەمخۆری دروست کراوە. ♪</string>
+    <string name="easter_egg_ok">داخە</string>
+    <string name="nav_watch_face">کاتژمێر</string>
+    <string name="watch_face_header">دەرکەوتنی کاتژمێر</string>
+    <string name="nav_controls">کۆنترۆڵەکان</string>
+    <string name="nav_actions">کردارەکان</string>
+    <string name="nav_settings">ڕێکخستنەکان</string>
+    <string name="controls_header">کۆنترۆڵەکان</string>
+    <string name="controls_state_playing">مۆسیقا پخش دەبێت</string>
+    <string name="controls_state_stopped">پخش نییە</string>
+    <string name="controls_playing_description">هەڵبژێرە هەر input ـێک لە کاتی پخشکردنی مۆسیقادا چی بکات. ئەم ڕێکخستنە لە دۆخی بێ پخش سەربەخۆیە.</string>
+    <string name="controls_stopped_description">هەڵبژێرە هەر input ـێک پێش دەستپێکردنی پخش یان دوای وەستانی چی بکات. ئەم ڕێکخستنە لە دۆخی پخشکردن سەربەخۆیە.</string>
+    <string name="watch_live_preview">پێشبینینی ڕاستەوخۆی کاتژمێر</string>
+    <string name="watch_preview_description">پێشبینینی ڕاستەوخۆی ڕووکاری هەڵبژێردراوی کاتژمێر. گۆڕانکارییەکان پێش تاقیکردنەوەیان لەسەر کاتژمێر لێرە دەردەکەون.</string>
+    <string name="watch_preview_expand">پێشبینینێکی گەورەتر بکەرەوە</string>
+    <string name="watch_preview_fullscreen_dismiss">بۆ داخستن لە هەر شوێنێک بدە</string>
+    <string name="watch_section_style">Player</string>
+    <string name="watch_section_style_description">Layout ـی player و چۆنیەتی کارکردنی ناونیشان، کات و پێشکەوتنی هەڵبژێرە.</string>
+    <string name="watch_section_background">پاشبنەما</string>
+    <string name="watch_section_background_description">وێنەی ئەلبوم، blur، کاڵبوونەوە و خوێندنەوە لە پشت player کۆنترۆڵ بکە.</string>
+    <string name="watch_section_colors">ڕەنگەکان</string>
+    <string name="watch_section_colors_description">ڕەنگی بنەڕەت، پێشکەوتن و accent ـی ئەلبوم دابنێ، پاشان ڕەنگی ناونیشان، هونەرمەند، کاتژمێر، دەنگ و panel ڕێکبخە.</string>
+    <string name="watch_section_typography">دەق</string>
+    <string name="watch_section_typography_description">Font هەڵبژێرە و ناونیشان، هونەرمەند، کاتژمێر، ئایکۆنی ئەپ، شاشە لاوەکییەکان و دەقی Flex ڕێکبخە.</string>
+    <string name="watch_section_aod">هەمیشە چالاک</string>
+    <string name="watch_section_aod_description">شاشەی کەم-وزە ڕێکبخە و دەرکەوتنی ambient ـی لە پێشبینین ببینە.</string>
+    <string name="watch_section_panels">Panel ـەکان</string>
+    <string name="watch_section_panels_description">شێوازی دەنگ، seek، quick panel و queue دابنێ؛ فوکەسکردن لەسەر ڕیزێک ئەو ڕووکارە لە پێشبینین دەکاتەوە.</string>
+    <string name="watch_section_mini_buttons">دوگمە بچووکەکان</string>
+    <string name="watch_section_mini_buttons_description">شێوازی ڕیزی shortcut ـی ئارەزوومەندانە دابنێ. بۆ دیاریکردنی کردارەکانی لە Controls، لە خوارەوە لە “دوگمە بچووکەکان” بدە.</string>
+    <string name="watch_overview_description">هەڵبژێرە چی دەتەوێت بەدڵی خۆت ڕێکی بخەیت. پێشبینین و ڕووکاری پاشەکەوتکراو لە هەموو بەشەکاندا چالاک دەمێننەوە.</string>
+    <string name="watch_back_to_overview">گەڕانەوە بۆ بەشەکانی کاتژمێر</string>
+    <string name="settings_section_general">گشتی</string>
+    <string name="settings_section_general_description">ڕووکاری ئەپ، ڕەنگی accent و هەڵبژاردەکانی نوێکردنەوە.</string>
+    <string name="settings_section_watch">ڕەفتار</string>
+    <string name="settings_section_watch_description">ڕەفتاری crown، دەستدان، haptics و action-menu لە کاتژمێرەکەت.</string>
+    <string name="settings_section_automation">خۆکارکردن</string>
+    <string name="settings_section_automation_description">هەڵبژێرە Svartifoss کەی بەخۆکار بکرێتەوە و دابخرێت.</string>
+    <string name="settings_section_apps">ئەپەکان</string>
+    <string name="settings_section_apps_description">دەقی گۆرانی و metadata بدۆزەوە، shortcut ـەکانی streaming، وێنەی queue و دەستگەیشتنی Android.</string>
+    <string name="settings_section_data">داتا و پشتگیری</string>
+    <string name="settings_section_data_description">ڕێکخستنەکەت backup بکە، وەشان بپشکنە، پشکنین بکە یان یارمەتی وەربگرە.</string>
+    <string name="settings_overview_description">بەشێک هەڵبژێرە. هەڵبژاردە پەیوەندیدارەکان لەیەک شوێن دەمێننەوە، و گەڕان هەروا دەتوانێت ڕاستەوخۆ بباتت بۆ هەر ڕێکخستنێک.</string>
+    <string name="settings_back_to_overview">گەڕانەوە بۆ بەشەکانی ڕێکخستن</string>
+    <string name="tutorial_header">چۆنیەتی بەکارهێنانی Svartifoss</string>
+    <string name="tutorial_intro">Svartifoss کاتژمێرەکەت دەکاتە کۆنترۆڵێکی دوور بۆ ئەو مۆسیقایەی لە مۆبایلەکەت پخش دەبێت. ئەمانە هەموو ئەو شتانەن کە دەتوانیت لە مەچەکتەوە بیکەیت.</string>
+    <string name="tutorial_taps_title">لە ناوچەکانی شاشە بدە</string>
+    <string name="tutorial_taps_desc">شاشەی کاتژمێر بە چوار ناوچە دابەشکراوە — سەرەوە، خوارەوە، چەپ و ڕاست. دان لە ناوچەیەک کردارە دیاریکراوەکەت جێبەجێ دەکات. بە بنەڕەت، چەپ پخش/وەستان دەکات، ڕاست دەچێتە تراکی داهاتوو، و سەرەوە و خوارەوە دەنگ دەگۆڕن.</string>
+    <string name="tutorial_quick_panel_title">پانێڵی کردارە خێراکان</string>
+    <string name="tutorial_quick_panel_desc">دوو جار لە ناوەڕاستی شاشەی پخش بدە بۆ کردنەوەی پانێڵێکی چوار خانە — سێ دوگمەی بازنەیی و ڕیزێکی پانی لە خوارەوە. ئەگەر دەستیان لێ نەدەیت، خانەکان هەمان دوگمەکانی ئەپی پخشکار لە ئاگادارکردنەوەکەی پیشان دەدەن، بۆیە کۆنترۆڵی ڕاستەقینەی like، shuffle و repeat بەدەست دەهێنیت. لە Actions ـی مۆبایل هەر کردارێک بۆ خانەیەک دیاری بکە، یان بۆ شاردنەوەی بە \"هیچ\" دایبنێ.</string>
+    <string name="tutorial_gestures_title">یەکجار، دووجار و درێژ دان</string>
+    <string name="tutorial_gestures_desc">هەر چوار ناوچەی لێوارەکان کردارە جیاوازەکانی یەکجار، دووجار و درێژ دان پشتگیری دەکەن. یەک دان لە ناوەڕاستیش دەتوانرێت ڕێکبخرێت؛ دووجار دان هەمیشە Quick actions دەکاتەوە، و درێژ دان بەگوێرەی Settings → Behavior هەڵبژێری face، queue یان هیچ دەکاتەوە.</string>
+    <string name="tutorial_buttons_title">دوگمە فیزیکییەکان</string>
+    <string name="tutorial_buttons_desc">ئەگەر کاتژمێرەکەت دوگمەی لاوەکی هەبێت، دەتوانیت کردارەکانی یەکجار، دووجار و درێژ دانیش بۆیان دیاری بکەیت. تەنانەت کاتێک شاشە کوژاوەتەوەش کار دەکەن.</string>
+    <string name="tutorial_rotary_title">crown ـی سووڕاو</string>
+    <string name="tutorial_rotary_desc">لە Settings → Behavior → Rotary crown / bezel هەڵبژێرە crown یان bezel ـی سووڕاو دەنگ بگۆڕێت، لە تراکدا seek بکات یان هیچ نەکات. لەو کاتژمێرانەی سووڕاندنی crown وەک دوگمە پیشان دەدەن، لە Controls دیاریان بکە.</string>
+    <string name="tutorial_swipe_up_title">بۆ سەرەوە، خوارەوە، چەپ و ڕاست swipe بکە</string>
+    <string name="tutorial_swipe_up_desc">لە شاشەی ئێستا-پخشدا swipe بۆ سەرەوە، خوارەوە یان چەپ هەر یەک دەتوانرێت بۆ کردنەوەی هەر شتێک ڕێکبخرێت — مێنیوی کردارەکان، queue ـی پخش، پەڕاندنی تراک، playlist ـەکانت و زیاتر. لە Controls هەر ئاراستەیەک بە هەڵبژاردنی Music playing یان No playback ڕێکبخە. بە بنەڕەت swipe بۆ سەرەوە مێنیوی کردارەکان دەکاتەوە و ئەوانی تر تا دیارییان نەکەیت هیچ ناکەن. Swipe بۆ ڕاست دەست لێ نەدراوە — ئەو gesture ـە گشتییەی Wear OS ـە بۆ دەرچوون لە ئەپ.</string>
+    <string name="tutorial_shortcuts_title">Shortcut ـەکانی streaming</string>
+    <string name="tutorial_shortcuts_desc">لینکی تراک، ئەلبوم، mix یان playlist لە Spotify، YouTube Music، Apple Music، TIDAL، Deezer، Amazon Music یان SoundCloud پاشەکەوت بکە و پاشان بۆ هەر دوگمە، gesture یان خانەی panel دیاری بکە. خێراترین ڕێگا ئەوەیە لینکەکە ڕاستەوخۆ لە ئەپی streaming بۆ Svartifoss share بکەیت؛ دەتوانیت لینکێکی کۆپیکراویش paste بکەیت یان بنووسیت. هیچ هەژمار یان login پێویست نییە — کاتژمێر داوا لە مۆبایل دەکات پخش دەستپێبکات، بۆیە shortcut ـەکە لەبری تەنها کردنەوەی ئەپ، ڕاستەوخۆ پخش دەکات.</string>
+    <string name="tutorial_yt_music_title">Shortcut ـەکانی YouTube Music</string>
+    <string name="tutorial_yt_music_desc">\"گۆرانییە دڵخوازەکان پخش بکە\"، \"گۆرانییە دڵخوازەکان بە shuffle پخش بکە\" یان \"playlist ـەکانم\" بۆ هەر دوگمە، gesture یان swipe دیاری بکە بۆ ئەوەی بێ دەستدان لە مۆبایل ڕاستەوخۆ بچیتە مۆسیقاکەت. \"مێژووی گەڕان\" گەڕانە نوێیەکانت لە کاتژمێر لەبیر دەگرێت — بۆ سڕینەوەی یەکێک درێژ لێی بدە.</string>
+    <string name="tutorial_exit_title">بۆ دەرچوون swipe بکە</string>
+    <string name="tutorial_exit_desc">بۆ دەرچوون لە player لە لێواری چەپەوە swipe بکە. دەتوانێت لە کاتی دەرچووندا پخش بەخۆکار pause بکات — لە Settings چالاکی بکە.</string>
+    <string name="tutorial_tile_title">Tile ـی کۆنترۆڵی خێرا</string>
+    <string name="tutorial_tile_desc">لەسەر face ـی کاتژمێر بۆ لا swipe بکە بۆ Tile ـی Svartifoss، بۆ play، pause و skip ـی خێرا بێ کردنەوەی ئەپ.</string>
+    <string name="tutorial_complication_title">complication ـی face ـی کاتژمێر</string>
+    <string name="tutorial_complication_desc">complication ـی وێنەی ئەلبومی Svartifoss زیاد بکە بۆ face ـی کاتژمێرەکەت تا کاڤەری ئێستا بە یەک نیگا ببینیت. بۆ کردنەوەی player لێی بدە.</string>
+    <string name="tutorial_system_title">کۆنترۆڵەکانی میدیای سیستەم</string>
+    <string name="tutorial_system_desc">تراکی ئێستا لە کۆنترۆڵەکانی میدیای خۆی کاتژمێر و ئەپە نوێیەکانیش دەردەکەوێت، بۆیە لەوێش دەتوانیت پخش کۆنترۆڵ بکەیت.</string>
+    <string name="tutorial_tip">ئامۆژگاری: هەردوو دۆخ لە Controls ڕێکبخە، پاشان مێنیو لە Actions ڕێکبخە.</string>
+    <string name="navigation_drawer_open">drawer ـی گەڕان بکەرەوە</string>
+    <string name="navigation_drawer_close">drawer ـی گەڕان داخە</string>
+    <string name="action_settings">ڕێکخستنەکان</string>
+    <string name="action_pause">وەستانی کاتی</string>
+    <string name="action_play">پخش بکە</string>
+    <string name="action_skip_prev">تراکی پێشوو</string>
+    <string name="action_skip_next">تراکی داهاتوو</string>
+    <string name="action_play_pause">پخش / وەستان</string>
+    <string name="action_stop">بوەستێنە</string>
+    <string name="action_restart">تراک لەسەرەتاوە دەستپێبکە</string>
+    <string name="action_mute">بێدەنگ / دەنگدار</string>
+    <string name="action_skip_seconds">%1$d چرکە بپەڕە</string>
+    <string name="action_reverse_seconds">%1$d چرکە بگەڕێوە دواوە</string>
+    <string name="action_like">دڵخواز</string>
+    <string name="action_shuffle">Shuffle</string>
+    <string name="action_repeat">دووبارەکردنەوە</string>
+    <string name="action_repeat_one">یەکێک دووبارە بکە</string>
+    <string name="action_search">بەدوای مۆسیقادا بگەڕێ</string>
+    <string name="action_open_lyrics">دەقی گۆرانی</string>
+    <string name="group_playback_controls">کۆنترۆڵەکانی پخش</string>
+    <string name="group_streaming_shortcuts">تراک، ئەلبوم و playlist ـەکان</string>
+    <string name="pick_action">کردار هەڵبژێرە</string>
+    <string name="action_search_hint">لە هەموو کردارەکان بگەڕێ</string>
+    <string name="action_search_empty">هیچ کردارێک لەگەڵ ئەم گەڕانە ناگونجێت.</string>
+    <string name="action_opens_more">چەند هەڵبژاردە</string>
+    <string name="action_volume_up">دەنگ زیاد بکە</string>
+    <string name="volume_down">دەنگ کەم بکە</string>
+    <string name="group_volume_controls">کۆنترۆڵەکانی دەنگ</string>
+    <string name="no_watch_detected">کاتژمێر نەدۆزرایەوە</string>
+    <string name="connection_instructions">بۆ دەستپێکردنی پەیوەندی Svartifoss لەسەر کاتژمێر بکەرەوە</string>
+    <string name="playing_controls">کۆنترۆڵەکان لە کاتی پخشدا</string>
+    <string name="stopped_controls">کۆنترۆڵەکان لە دۆخی بێ پخشدا</string>
+    <string name="actions_menu">مێنیوی کردارەکان</string>
+    <string name="actions_intro">هەردوو ڕووکاری کردارەکانی کاتژمێر بە کۆنترۆڵەکانی پخش، ئەپەکان، یان تراک، ئەلبوم و playlist ـە پاشەکەوتکراوەکان ڕێکبخە. quick panel بچووک دەمێنێتەوە؛ مێنیوی خوارەوە دەتوانێت لیستێکی درێژتری ڕیزکراو هەڵبگرێت.</string>
+    <string name="actions_quick_panel_section">quick panel</string>
+    <string name="actions_watch_menu_section">مێنیو لەسەر کاتژمێر</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d کردار · بۆ دەستکاریکردن بدە · بۆ ڕیزکردنەوە درێژ لێبدە و ڕابکێشە</item>
+        <item quantity="other">%1$d کردار · بۆ دەستکاریکردن بدە · بۆ ڕیزکردنەوە درێژ لێبدە و ڕابکێشە</item>
+    </plurals>
+    <string name="actions_reorder_description">مێنیوی کردارە ڕیزکراوەکان. بۆ ڕاکێشان دەست لێبدە و بگرە، کردارەکانی accessibility ـی Move up یان Move down بەکاربهێنە، یان Ctrl+Up/Down لە کیبۆرد دابگرە.</string>
+    <string name="actions_move_up">بۆ سەرەوە بگوازەوە</string>
+    <string name="actions_move_down">بۆ خوارەوە بگوازەوە</string>
+    <string name="actions_moved_to_position">%1$s گوازرایەوە بۆ شوێنی %2$d لە %3$d.</string>
+    <string name="actions_empty">هێشتا هیچ کردارێک نییە. بۆ دروستکردنی یەکەم، دوگمەی زیادکردن بەکاربهێنە.</string>
+    <string name="actions_add">کردار زیاد بکە</string>
+    <string name="on_screen_buttons">ناوچەکانی دەستدان</string>
+    <string name="physical_buttons">دوگمە فیزیکییەکان</string>
+    <string name="physical_buttons_disconnected">بۆ ڕێکخستنی دوگمە فیزیکییەکان، Svartifoss لەسەر کاتژمێرەکەت پەیوەست و بکەرەوە. ناوچەکانی دەستدان، swipe و دوگمە بچووکەکان هەر ئێستا بەردەستن.</string>
+    <string name="physical_buttons_unavailable">ئەم کاتژمێرە هیچ دوگمەی فیزیکیی ڕێکخراوی ڕاپۆرت نەکردووە.</string>
+    <string name="control_assignment_tap">دان: %1$s</string>
+    <string name="control_assignment_hold">درێژ دان: %1$s</string>
+    <string name="control_assignment_both">دان: %1$s · درێژ دان: %2$s</string>
+    <string name="tap_a_zone_to_configure">بۆ دیاریکردنی کردار، لە ناوچەیەک لەسەر کاتژمێر بدە</string>
+    <string name="touch_zone_top">ناوچەی سەرەوە</string>
+    <string name="touch_zone_bottom">ناوچەی خوارەوە</string>
+    <string name="touch_zone_left">ناوچەی چەپ</string>
+    <string name="touch_zone_right">ناوچەی ڕاست</string>
+    <string name="touch_zone_center">دان لە ناوەڕاست</string>
+    <string name="touch_zone_action">%1$s: %2$s. بۆ ڕێکخستن بدە.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+    <string name="swipe_gestures">Gesture ـەکانی swipe</string>
+    <string name="tap_a_swipe_to_configure">ئاراستەیەک بدە بۆ هەڵبژاردنی ئەوەی چی بکاتەوە</string>
+    <string name="swipe_gesture_up">Swipe بۆ سەرەوە</string>
+    <string name="swipe_gesture_down">Swipe بۆ خوارەوە</string>
+    <string name="swipe_gesture_left">Swipe بۆ چەپ</string>
+    <string name="swipe_gesture_label_up">سەرەوە</string>
+    <string name="swipe_gesture_label_down">خوارەوە</string>
+    <string name="swipe_gesture_label_left">چەپ</string>
+    <string name="screen_buttons">دوگمە بچووکەکان</string>
+    <string name="tap_a_screen_button_to_configure">تا سێ دوگمەی دیار لە نزیک خوارەوەی شاشەی کاتژمێر — بۆ دیاریکردنی کردار لە خانەیەک بدە</string>
+    <string name="screen_button_1">دوگمەی بچووک 1 (چەپ)</string>
+    <string name="screen_button_2">دوگمەی بچووک 2 (ناوەڕاست)</string>
+    <string name="screen_button_3">دوگمەی بچووک 3 (ڕاست)</string>
+    <string name="screen_button_label_1">دوگمە 1</string>
+    <string name="screen_button_label_2">دوگمە 2</string>
+    <string name="screen_button_label_3">دوگمە 3</string>
+    <string name="no_action">هیچ کردارێک</string>
+    <string name="gesture_single_press">یەکجار بدە</string>
+    <string name="gesture_double_press">دووجار بدە</string>
+    <string name="gesture_long_press">درێژ بدە</string>
+    <string name="gesture_swipe_action">کردار</string>
+    <string name="center_button_quick_panel_note">دووجار دان لە ناوەڕاست هەمیشە Quick actions دەکاتەوە. درێژ دان هەڵبژاردەی Settings → Behavior جێبەجێ دەکات. دیاریکردنی center tap لێرە ئەم دوو gesture ـە ناگۆڕێت.</string>
+    <string name="start_playback">پخش دەستپێبکە</string>
+    <string name="uninstalled_app">ئەپی سڕاوە</string>
+    <string name="play_app">%1$s پخش بکە</string>
+    <string name="tasker_task">Task ـی Tasker</string>
+    <string name="icon_selection_title">هەڵبژاردنی ئایکۆن</string>
+    <string name="icon_selection_gallery">لە گەلەری</string>
+    <string name="icon_selection_no_icon_pack">ئەم تایبەتمەندییە ڕێگەت پێدەدات ئایکۆنێکی تایبەت بۆ کردارەکەت
+            لە icon pack ـێکی دامەزراو هەڵبژێریت.\n\nبەداخەوە وا دیارە هیچ icon pack ـێکت دامەزراندووە نییە.</string>
+    <string name="icon_selection_no_storage_permission">ئەم تایبەتمەندییە ڕێگەت پێدەدات ئایکۆنێکی تایبەت بۆ کردارەکەت
+            لە icon pack ـێکی دامەزراو هەڵبژێریت.\n\nهەندێک icon pack پێویستیان بە مۆڵەتی storage بۆ ئەپەکان هەیە. بۆ بەکارهێنانی ئەم تایبەتمەندییە دەبێت مۆڵەتەکە بدەیت.</string>
+    <string name="delete">بسڕەوە</string>
+    <string name="action_text">دەقی کردار</string>
+    <string name="swap_action">کردار بگۆڕە</string>
+    <string name="open_actions_menu">مێنیوی کردارەکان بکەرەوە</string>
+    <string name="open_playlist_menu">playlist ـی ئێستا پیشان بدە</string>
+    <string name="misc_settings">ڕێکخستنە جۆراوجۆرەکان</string>
+    <string name="category_backup">Backup</string>
+    <string name="export_config">Backup هەناردە بکە</string>
+    <string name="export_config_description">هەڵبژێرە چی تێدا بێت — دوگمەکان، shortcut ـەکان، ئایکۆنەکان، ڕەنگەکان، ڕووکارەکان و داتای تری ئەپ</string>
+    <string name="import_config">Backup هاوردە بکە</string>
+    <string name="import_config_description">ئەو بەشانەی لە فایلی backup دان بگەڕێنەوە؛ داتای تر ناگۆڕێت</string>
+    <string name="export_config_done">Backup هەناردە کرا</string>
+    <string name="export_config_failed">نەتوانرا backup هەناردە بکرێت</string>
+    <string name="import_config_done_title">هاوردەکردن سەرکەوتوو بوو</string>
+    <string name="import_config_done_message">بۆ جێبەجێکردنی backup ـی هاوردەکراو، پێویستە Svartifoss دووبارە دەستپێبکات.</string>
+    <string name="import_config_failed">نەتوانرا backup هاوردە بکرێت — لەوانەیە فایلەکە نادروست بێت یان لە وەشانێکی ناگونجاو بێت</string>
+    <string name="action_restart_now">ئێستا دووبارە دەستپێبکە</string>
+    <string name="category_about">دەربارە</string>
+    <string name="category_music_screen">شاشەی مۆسیقا</string>
+    <string name="category_watch_screen">شاشەی کاتژمێر</string>
+    <string name="category_mini_buttons">دوگمە بچووکەکان</string>
+    <string name="category_screen_face">دەرکەوتنی player</string>
+    <string name="category_wf_screen_behavior">ڕەفتاری شاشە</string>
+    <string name="category_wf_player_progress">پێشکەوتن، seek و کات</string>
+    <string name="category_album_background">پاشبنەمای ئەلبوم</string>
+    <string name="category_music_colors">ڕەنگەکان لە مۆسیقاوە</string>
+    <string name="category_wf_typography_font">Typeface</string>
+    <string name="category_wf_typography_title">ناونیشان</string>
+    <string name="category_wf_typography_artist">هونەرمەند</string>
+    <string name="category_wf_typography_icon">ئایکۆنی ئەپ</string>
+    <string name="category_wf_typography_flex">تەوەرەکانی Google Sans Flex</string>
+    <string name="category_wf_metadata">ناوەڕۆکی metadata ـی face</string>
+    <string name="category_wf_typography_secondary">دەق لە شاشەکانی تر</string>
+    <string name="category_wf_colors_title">ڕەنگەکانی ناونیشان</string>
+    <string name="category_wf_colors_artist">ڕەنگەکانی هونەرمەند</string>
+    <string name="category_wf_colors_clock">ڕەنگەکانی کاتژمێر</string>
+    <string name="setting_wear_font_flex_hint_title">دەربارەی ئەم کۆنترۆڵانە</string>
+    <string name="setting_wear_flex_axes_hint">ئەم کۆنترۆڵانە بە تایبەتی Google Sans Flex ورد ڕێکدەخەن — بۆ بەکارهێنانیان font ـەکە لە سەرەوە هەڵبژێرە. weight/italic ـی Title و artist لە سەرەوە پێشتر تەوەرەکانی weight (wght) و slant (slnt) ـی ئەم font ـەیان داناوە؛ چوار کۆنترۆڵی خوارەوە بۆ هەموو face جێبەجێ دەبن.</string>
+    <string name="setting_wear_font_flex_width">پانی</string>
+    <string name="setting_wear_font_flex_width_description">کشانەوەی ئاسۆیی، لە باریکەوە بۆ فراوان (25–151). 100 پانی ئاسایی font ـەکەیە.</string>
+    <string name="setting_wear_font_flex_optical_size">قەبارەی optical</string>
+    <string name="setting_wear_font_flex_optical_size_description">وردەکاری stroke بەپێی قەبارەی کاری دەق ڕێکدەخات (6–144). بەهای نزم بۆ دەقی بچووک و بەهای بەرز بۆ دەقی گەورەی display گونجاوە.</string>
+    <string name="setting_wear_font_flex_grade">Grade</string>
+    <string name="setting_wear_font_flex_grade_description">بێ گۆڕینی layout کێش کەمێک دەگۆڕێت (0–100) — ڕێگایەکی ناسک بۆ زیادکردنی contrast لە شاشەی تاریک.</string>
+    <string name="setting_wear_font_flex_roundness">خڕی</string>
+    <string name="setting_wear_font_flex_roundness_description">کۆتایی stroke ـەکان لە تیژ (0) بۆ تەواو خڕ (100) تێکەڵ دەکات بۆ هەستێکی دۆستانەتر.</string>
+    <string name="preview_sample_title">ناونیشانی گۆرانی</string>
+    <string name="preview_sample_artist">ناوی هونەرمەند</string>
+    <string name="preview_sample_lyric_previous">دێڕی پێشوو</string>
+    <string name="preview_sample_lyric_current">دێڕی ئێستا پخش دەبێت</string>
+    <string name="preview_sample_lyric_next">دێڕی دواتر</string>
+    <string name="preview_sample_next_title">گۆرانیی داهاتوو</string>
+    <string name="preview_playback_stopped">وەستاوە</string>
+    <string name="preview_verse_previous">دێڕی پێشوو</string>
+    <string name="preview_verse_current">دێڕی ئێستا پخش دەبێت</string>
+    <string name="preview_verse_next">و ئەوەی دوای ئەو</string>
+    <string name="preview_chat_today">ئەمڕۆ</string>
+    <string name="category_gestures">Gesture و input</string>
+    <string name="category_watch_navigation">گەڕان و shortcut ـەکان</string>
+    <string name="category_rotary_input">Rotary input و ڕێکخستن</string>
+    <string name="category_watch_feedback">Feedback و ڕەفتاری دەرچوون</string>
+    <string name="category_watch_display">شاشەی کاتژمێر</string>
+    <string name="setting_wear_keep_screen_on">شاشە هەڵگیرساو بهێڵەوە</string>
+    <string name="setting_wear_keep_screen_on_description">کاتێک شاشەی Svartifoss کراوەتەوە، ڕێگری لە تاریکبوونی شاشەی کاتژمێر دوای timeout ـی بێکاری دەکات. نزمکردنەوەی مەچەکەت هێشتا کاتژمێر کاڵ دەکات \u2014 ئەو gesture ـە هی سیستەمە. باتری زیاتر بەکاردەهێنێت. شاشەی دەقی گۆرانی بێگوێدان بەو ڕێکخستنە هەمیشە چالاک دەمێنێتەوە.</string>
+    <string name="setting_lyrics_enabled">دەقی گۆرانی ئۆنلاین بدۆزەوە</string>
+    <string name="setting_lyrics_enabled_description">کاتێک شاشەی دەقی گۆرانی لە کاتژمێر دەکەیتەوە، ڕێگا بدە مۆبایل دەقی هاوکاتکراو لە LRCLIB وەربگرێت. ناوی تراک، هونەرمەند و ماوەکە دەنێردرێن؛ هیچ شتێکی تر نا، و هیچ لەسەر دیسک پاشەکەوت ناکرێت. ئەگەر خامۆشی بکەیت، شاشەی دەقی گۆرانی دەڵێت گەڕان ناچالاکە.</string>
+    <string name="setting_overlay_blur_radius">Blur ـی overlay</string>
+    <string name="setting_overlay_blur_radius_description">هێزی blur (px) ـی پاشبنەمای frosted لە پشت حلقەکانی volume/seek و پانێڵی کردارە خێراکان — سەربەخۆ لە blur ـی پاشبنەمای وێنەی ئەلبوم</string>
+    <string name="category_action_list">لیستی کردارەکان</string>
+    <string name="category_automation">خۆکارکردن</string>
+    <string name="category_idle">کاتێک هیچ پخش نابێت</string>
+    <string name="installed_version">وەشانی دامەزراو</string>
+    <string name="get_support">پشتگیری وەربگرە</string>
+    <string name="get_support_description">بۆ پشتگیری log ـەکانی ئەپ بنێرە بۆ گەشەپێدەر</string>
+    <string name="contact_developer">پەیوەندی بە گەشەپێدەرەوە بکە</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — پەیوەندی</string>
+    <string name="contact_developer_chooser">ئیمەیڵ بنێرە</string>
+    <string name="contact_developer_no_client">هیچ ئەپی ئیمەیڵ دامەزراو نییە. ناونیشان بۆ clipboard کۆپی کرا.</string>
+    <string name="about_developer_title">دەربارەی گەشەپێدەر</string>
+    <string name="about_developer_dialog_message">Svartifoss وەک پرۆژەیەکی کەسی دەستی پێکرد — دەمویست Music Center for Wear بەوەی ئەمڕۆ دەکرێت نوێ بکەمەوە، تەنها بۆ ئەوەی خۆم هەموو ڕۆژێک بەکاری بهێنم. ئەنجامەکە هێندە باش بوو کە بڕیارم دا لەگەڵ هەمووان بەشی بکەم. ئەمە یەکەم ئەپی منە، و شتێک نییە وەک بینینی ئەوەی شتێک کە دروستت کردووە بۆ خەڵکی تریش سوودبەخش بێت.</string>
+    <string name="licenses">مۆڵەتەکانی سەرچاوەکراوە</string>
+    <string name="setting_always_show_time">هەمیشە کات پیشان بدە</string>
+    <string name="setting_always_show_time_off_description">کاتی ئێستا تەنها لە دۆخی ambient پیشان دەدرێت</string>
+    <string name="setting_always_show_time_on_description">کاتی ئێستا هەمیشە پیشان دەدرێت. ئایکۆنی کردار لە سەرەوە دیار نابێت (کاتژمێر جێگای دەگرێتەوە)، بەڵام کردارەکە هەر ئاسایی کار دەکات.</string>
+    <string name="tap_to_force_stop">بۆ وەستاندنی کۆنترۆڵەکان بدە</string>
+    <string name="notification_action_stop">بوەستێنە</string>
+    <string name="notification_action_force_stop">بەزۆر بوەستێنە</string>
+    <string name="error_notification_access">دەستگەیشتنی ئاگادارکردنەوە نییە. مۆبایل بپشکنە.</string>
+    <string name="error_notifications">ئاگادارکردنەوەکانی هەڵە</string>
+    <string name="notification_access_notification_title">Svartifoss پێویستی بە دەستگەیشتنی ئاگادارکردنەوە هەیە</string>
+    <string name="notification_access_notification_title_description">بۆ چارەسەرکردنی کێشەکە لەم ئاگادارکردنەوەیە بدە و Svartifoss بپشکنە</string>
+    <string name="error_service_not_enabled">دەستگەیشتنی ئاگادارکردنەوە پێویستە</string>
+    <string name="error_service_not_enabled_description">بۆ کۆنترۆڵکردنی مۆسیقا لە کاتژمێرەوە، Svartifoss پێویستی بە دەستگەیشتنی ئاگادارکردنەوە هەیە — Android بەو ڕێگایە دەزانێت کام ئەپ پخش دەکات و فرمانی play، pause و skip دەنێرێت.\n\nSvartifoss هەرگیز ناوەڕۆکی ئاگادارکردنەوەکانت ناخوێنێتەوە. تەنها بۆ دۆزینەوەی media session ـی چالاک ئەم مۆڵەتە بەکاردەهێنێت.\n\nلە \"ڕێکخستنەکان بکەرەوە\" بدە، پاشان Svartifoss لە notification access چالاک بکە.</string>
+    <string name="action_open_settings">ڕێکخستنەکان بکەرەوە</string>
+    <string name="settings_search_title">لە ڕێکخستنەکان بگەڕێ</string>
+    <string name="settings_search_hint">لە ڕێکخستنەکان بگەڕێ</string>
+    <string name="settings_search_clear">گەڕان پاک بکە</string>
+    <string name="settings_search_prompt">هەموو ڕێکخستنێک لە Settings و Watch appearance بە ناو بگەڕێ.</string>
+    <string name="settings_search_no_results">هیچ ڕێکخستنێک ناگونجێت.</string>
+    <string name="settings_search_prerequisite">ئەم هەڵبژاردەیە پەیوەستە بە هەڵبژاردەیەکی تر. بۆ دەرکەوتنی، ڕێکخستنە پیشاندراوەکە لێرە بگۆڕە.</string>
+    <string name="setting_numeric_range_error">بەهایەک لە %1$d تا %2$d بنووسە.</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">بۆ مۆڵەتدان بدە — تا ئەو کاتە کۆنترۆڵی پخش ناچالاک دەمێنێتەوە</string>
+    <string name="no_watch_app_title">Svartifoss لەسەر کاتژمێرەکەت دابمەزرێنە</string>
+    <string name="no_watch_app_description">Svartifoss نەیتوانی ئەپی کاتژمێری خۆی لەسەر کاتژمێری Wear OS ـی هاوتاکراو بدۆزێتەوە. ئەپی مۆبایل و کاتژمێر پێکەوە کار دەکەن — بێ ئەپی کاتژمێر، کۆنترۆڵکردنی پخش لە مەچەکەت کار ناکات.\n\nSvartifoss لە Play Store نییە — ئەپی کاتژمێر بە جیا sideload دەکرێت (بۆ نموونە بە Wear Installer). لە \"وەشانەکان ببینە\" بدە بۆ کردنەوەی پەڕەی GitHub releases و وەرگرتنی watch APK. ئەگەر هەر ئێستا دامەزراندووتە، یەک خولەک بدە تا sync تەواو بێت.</string>
+    <string name="no_watch_app_button">وەشانەکان ببینە</string>
+    <string name="required_permission">مۆڵەتی پێویست</string>
+    <string name="setting_pause_on_swipe_exit">لە دەرچوون بە swipe پخش pause بکە</string>
+    <string name="setting_pause_on_swipe_exit_description">کاتێک بە swipe بۆ چەپ لە Svartifoss لە کاتژمێر دەردەچیت، هەر پخشێک بەخۆکار pause بکە.\n\nدەرچوون بە دوگمەی power کاریگەری لەسەر نییە و هەرگیز auto-pause ناکات.</string>
+    <string name="setting_rotating_crown_off_period">دواکەوتنی rotary input دوای هەڵگیرسانی شاشە</string>
+    <string name="setting_rotating_crown_off_period_description">لە هەندێک ئامێردا input ـی سووڕاو (وەک rotating crown) دەتوانێت زۆر هەستیار بێت. بۆ ڕێگریکردن لە گۆڕینی دەنگ بە هەڵە، rotary input بۆ &lt;b>%1$s milliseconds&lt;/b> دوای هەڵگیرسانی شاشە ناچالاک دەبێت.</string>
+    <string name="setting_rotary_seek">بە rotary crown seek بکە</string>
+    <string name="setting_rotary_seek_description">کاتێک چالاکە، سووڕاندنی crown لەبری گۆڕینی دەنگ لە ناو تراکی ئێستا scrub دەکات. دەنگ هەروا بە دوگمەکانی سەرشاشە یان فیزیکی دەگۆڕدرێت.</string>
+    <string name="setting_wear_rotary_action">Rotary crown / bezel</string>
+    <string name="wear_rotary_action_volume">دەنگ بگۆڕە</string>
+    <string name="wear_rotary_action_seek">لە تراکدا seek بکە</string>
+    <string name="wear_rotary_action_off">هیچ مەکە</string>
+    <string name="setting_rotating_sensitivity">هەستیاری rotary input</string>
+    <string name="setting_rotating_sensitivity_description">هەستیاری rotary input. ژمارەی بەرزتر واتە بە هەمان سووڕاندنی crown دەنگ زیاتر زیاد دەبێت. ئێستا &lt;b>%1$s%%&lt;/b> دانراوە.</string>
+    <string name="setting_disable_ambient_physical_double_click">دووجار دان لە دوگمەی فیزیکی لە ambient ناچالاک بکە</string>
+    <string name="setting_disable_ambient_physical_double_click_description">لە هەندێک کاتژمێردا دوگمەکان کێشەیان هەیە و یەک دان لە دوگمەی فیزیکی لە ambient هەندێک جار وەک دووجار دان تۆمار دەبێت.\n\nئەگەر ئەمە ڕووبدات، دەتوانیت ئەم هەڵبژاردەیە چالاک بکەیت بۆ ناچالاککردنی تەواوی دووجار دان لە ambient (بۆ نموونە، دووجار دان تەنها کرداری یەکجار دان چالاک دەکات). دووجار دان کاتێک کاتژمێر چالاکە کاریگەری لەسەر نابێت.</string>
+    <string name="setting_haptic_feedback">Haptic feedback</string>
+    <string name="setting_haptic_feedback_description">کاتێک دوگمەکان دەدەیت کاتژمێر بلەرزێنە.</string>
+    <string name="setting_auto_start">Svartifoss بەخۆکار بکەرەوە</string>
+    <string name="setting_auto_start_description">کاتێک پخشی مۆسیقا لە مۆبایل دەستپێدەکات، Svartifoss بەخۆکار لەسەر کاتژمێر بکەرەوە.</string>
+    <string name="setting_auto_start_apps_blacklist">ئەپەکانی auto-start</string>
+    <string name="setting_auto_start_apps_blacklist_description">لیستی ئەو ئەپە میدیاییانەی دەتوانن Svartifoss بەخۆکار دەستپێبکەن</string>
+    <string name="setting_dim_album_art">Shading ـی player</string>
+    <string name="setting_dim_album_art_description">چارەسەری سێبەری هەڵبژێردراو لەلایەن بەکارهێنەر لەنێوان artwork و کۆنترۆڵەکانی player زیاد بکە.</string>
+    <string name="setting_album_art_style">شێوازی وێنەی ئەلبوم</string>
+    <string name="setting_album_art_style_description">هەڵبژێرە پاشبنەمای ئێستا-پخش لەسەر کاتژمێر چۆن دیار بێت.</string>
+    <string name="setting_album_art_blur_radius">هێزی blur</string>
+    <string name="setting_album_art_blur_radius_description">هێزی blur ـی تەواوی شاشە کاتێک پاشبنەمای هەڵبژێردراو blur بەکاردەهێنێت. ئێستا &lt;b>%1$s px&lt;/b>.</string>
+    <string name="setting_album_art_dim_strength">هێزی تاریککردن</string>
+    <string name="setting_album_art_dim_strength_description">وێنەی ئەلبوم چەند تاریک بکرێت بۆ خوێندنەوەی دەق. ئێستا &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_player_shading_style">شێوازی shading</string>
+    <string name="setting_player_shading_intensity">هێزی shading</string>
+    <string name="setting_player_shading_intensity_description">Shading پاشبنەما چەند تاریک دەکات. 100%% هێزی تەواوە؛ بۆ contrast ـی زیاتر تا 150%% زیاد بکە. ئێستا &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="category_wf_layout_actions">Layout</string>
+    <string name="setting_reset_appearance">ئەم layout ـە reset بکە</string>
+    <string name="setting_reset_appearance_description">دەرکەوتنی ئەم face ـە بگەڕێنەوە بۆ بنەڕەتە ڕەسەنەکانی</string>
+    <string name="reset_appearance_confirm_title">ئەم layout ـە reset بکرێت؟</string>
+    <string name="reset_appearance_confirm_message">ڕێکخستنەکانی دەرکەوتنی ئەم face ـە دەگەڕێنەوە بۆ بنەڕەت. ڕێکخستنەکانی ڕەفتار و face ـەکانی ترت کاریگەریان لەسەر نابێت.</string>
+    <string name="reset_appearance_confirm_button">Reset بکە</string>
+    <string name="reset_appearance_done">Layout بۆ بنەڕەت reset کرا</string>
+    <string name="setting_reset_all_faces">هەموو face ـەکان بۆ بنەڕەت reset بکە</string>
+    <string name="setting_reset_all_faces_description">دەرکەوتنی هەر face ـێکی built-in بگەڕێنەوە بۆ بنەڕەتە ڕەسەنەکانی</string>
+    <string name="reset_all_faces_confirm_title">هەموو face ـەکان reset بکرێن؟</string>
+    <string name="reset_all_faces_confirm_message">دەرکەوتنی هەر face ـێکی built-in دەگەڕێتەوە بۆ بنەڕەتە ڕەسەنەکانی و custom theme ـی چالاک ناچالاک دەبێت. custom theme ـە پاشەکەوتکراوەکان، ڕێکخستنەکانی ڕەفتار و face ـی هەڵبژێردراو دەمێننەوە.</string>
+    <string name="reset_all_faces_confirm_button">هەمووی reset بکە</string>
+    <string name="reset_all_faces_done">هەموو face ـەکان بۆ بنەڕەت reset کران</string>
+    <string name="face_reset_migration_title">دەرکەوتنی کاتژمێرەکەت نوێ بکەرەوە</string>
+    <string name="face_reset_migration_message">تۆ لە وەشانێکی کۆنەوە نوێت کردووەتەوە کە هەموو watch face ـەکان یەک کۆمەڵە ڕێکخستنی دەرکەوتنیان هاوبەش بوو. ئێستا هەر face ـێک ڕێکخستنەکانی خۆی لەبیر دەگرێت، بۆیە ڕێکخستنە کۆنەکان لە face ـانەی ڕاستەوخۆ customize ـت نەکردوون لەوانەیە ناگونجاو دیار بن. پێشنیار دەکەین هەموو face ـەکان بۆ defaults ـی نوێ reset بکەیت یان بۆ دەستپێکێکی تەواو نوێ app data پاک بکەیت.</string>
+    <string name="face_reset_migration_reset_button">هەموو face ـەکان reset بکە</string>
+    <string name="face_reset_migration_clear_data_button">داتای ئەپ پاک بکە</string>
+    <string name="setting_player_shading_color">ڕەنگی shading</string>
+    <string name="setting_wear_shading_custom_color">ڕەنگی shading ـی تایبەت</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>ڕەش</item>
+        <item>Accent ـی ئەلبوم</item>
+        <item>ئەلبومی کەمڕەنگ</item>
+        <item>ڕەنگی تایبەت</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>شوێن ڕووکاری player بکەوە</item>
+        <item>Vignette ـی لێوار</item>
+        <item>Vignette ـی لێوار (بەهێز)</item>
+        <item>Vignette ـی لێوار (زۆر بەهێز)</item>
+        <item>گۆشەی خوارەوە</item>
+        <item>Fade ـی خوارەوە</item>
+        <item>ژێرەوە و سەرەوە</item>
+        <item>فلتەری تەواوی شاشە</item>
+        <item>Color wash ـی ئەلبوم</item>
+        <item>Gradient ـی دووڕەنگی ئەلبوم</item>
+        <item>پەردەکانی لا</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Opacity ـی وێنەی ئەلبوم لە ambient</string>
+    <string name="setting_ambient_album_art_opacity_description">وێنەی ئەلبوم لە دۆخی ambient چەند دیار دەمێنێتەوە. ئێستا &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_volume_overlay_timeout">Timeout ـی overlay ـی volume/seek</string>
+    <string name="setting_volume_overlay_timeout_description">دوای ڕێکخستن overlay ـەکانی volume و seek چەند لەسەر شاشە دەمێننەوە. ئێستا &lt;b>%1$s ms&lt;/b>.</string>
+    <string name="setting_rotary_deadzone">Dead zone ـی rotary</string>
+    <string name="setting_rotary_deadzone_description">کەمترین جوڵەی crown پێش ئەوەی گۆڕانکاری volume یان seek جێبەجێ بێت. یارمەتی ڕێگریکردن لە ڕێکخستنی بە هەڵە دەدات. ئێستا &lt;b>%1$s&lt;/b>.</string>
+    <string name="category_wear_experience">ئەزموونی Wear</string>
+    <string name="setting_swipe_gestures_hint">Gesture ـەکانی swipe</string>
+    <string name="setting_swipe_gestures_hint_description">Swipe بۆ سەرەوە/خوارەوە/چەپ هەر یەک دەتوانێت هەر کردارێک بکاتەوە. لێرە بدە بۆ ڕێکخستنیان بۆ Music playing یان No playback. Swipe بۆ ڕاست هەر بۆ دەرچوون لە ئەپ پارێزراو دەمێنێت.</string>
+    <string name="setting_screen_buttons_hint">دوگمە بچووکەکان</string>
+    <string name="setting_screen_buttons_hint_description">تا سێ دوگمەی دیار، هەر یەک کردارەکانی tap و long-press هەیە. لێرە بدە بۆ ڕێکخستنیان بۆ Music playing یان No playback.</string>
+    <string name="dev_screen_buttons_offset">شوێنی دوگمە بچووکەکان</string>
+    <string name="dev_screen_buttons_offset_description">دووری پەسەندکراو بە dp لە خوارەوەی شاشەی کاتژمێر تا دوگمە بچووکەکان (بنەڕەت 42). ڕیزەکە هەروا بەخۆکار خۆی لە ناونیشانە درێژەکان دوور ڕێکدەخات.</string>
+    <string name="setting_screen_buttons_tilt">لاربوونی دوگمە</string>
+    <string name="setting_screen_buttons_tilt_description">دوگمە لاوەکییەکان چەند شوێن کەوانەی شاشە دەکەون. 0 = ڕیزی ڕاست؛ 100 = هەڵکشانەوەی تەواوی کەوان لەگەڵ ئایکۆنی لار.</string>
+    <string name="setting_screen_buttons_bg">پاشبنەمای دوگمە بچووکەکان</string>
+    <string name="setting_screen_buttons_opacity">Opacity ـی دوگمە بچووکەکان</string>
+    <string name="setting_screen_buttons_opacity_description">Opacity ـی هەموو گروپی mini-button (0–100%%). ئێستا &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="quick_panel_row_title">پانێڵی کردارە خێراکان</string>
+    <string name="quick_panel_link_summary">بۆ کردنەوەی دووجار لە ناوەڕاستی شاشەی کاتژمێر بدە. لێرە بدە بۆ ڕێکخستنی چوار خانەکەی لە Actions.</string>
+    <string name="quick_panel_config_hint">ئەمانە دوگمەکانی ئەو panel ـەن کە بە دووجار دان لە ناوەڕاستی شاشەی کاتژمێر دەکرێتەوە. لە ڕیزێک بدە بۆ هەڵبژاردنی کردارەکەی (\"هیچ\" دەیشارێتەوە)؛ بۆ گەڕاندنەوەی بنەڕەت درێژ لێبدە.</string>
+    <string name="quick_panel_slot_1">دوگمە 1</string>
+    <string name="quick_panel_slot_2">دوگمە 2</string>
+    <string name="quick_panel_slot_3">دوگمە 3</string>
+    <string name="quick_panel_slot_long">دوگمەی درێژ</string>
+    <string name="quick_panel_slot_default">%1$s (بنەڕەت)</string>
+    <string name="quick_panel_slot_hidden">شاراوە</string>
+    <string name="quick_panel_default_like">دڵخواز</string>
+    <string name="quick_panel_default_shuffle">Shuffle</string>
+    <string name="quick_panel_default_repeat">دووبارەکردنەوە</string>
+    <string name="quick_panel_default_up_next">داهاتوو</string>
+    <string name="setting_wear_center_long_press_queue">درێژ دان لە ناوەڕاست بۆ queue</string>
+    <string name="setting_wear_center_long_press_queue_description">بۆ کردنەوەی queue ـی پخش، درێژ لە ناوەڕاستی شاشەی ئێستا-پخش بدە.</string>
+    <string name="setting_wear_center_long_press">درێژ دان لە ناوەڕاست</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>Face ـی کاتژمێر بگۆڕە</item>
+        <item>Queue بکەرەوە</item>
+        <item>هیچ</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Layout ـی بنەڕەت</string>
+    <string name="setting_wear_screen_face_description">پێکهاتەی بەکارهاتوو لەلایەن ئەم ڕووکارە هەڵبژێرە. ڕووکارە پاشەکەوتکراوەکان دەتوانن ئەم layout ـە لەگەڵ font، ڕەنگ، blur، shading، AOD و panel ـەکانی خۆیان تێکەڵ بکەن.</string>
+    <string name="setting_wear_show_track_title">ناونیشانی گۆرانی پیشان بدە</string>
+    <string name="setting_wear_show_track_title_description">ناوی گۆرانی ئێستا لە player پیشان بدە</string>
+    <string name="setting_wear_show_track_artist">ناوی هونەرمەند پیشان بدە</string>
+    <string name="setting_wear_show_track_artist_description">هونەرمەندی ئێستا لە player پیشان بدە</string>
+    <string name="setting_wear_show_source_icon">ئایکۆنی ئەپی پخشکار پیشان بدە</string>
+    <string name="setting_wear_show_source_icon_description">ئایکۆنی ئەپی ئێستا پخشکار لە تەنیشت هونەرمەند پیشان بدە. ئایکۆنی media notification ـی بەکاردەهێنێت. ئەگەر ناچالاک بێت، ئایکۆن هەرگیز بۆ کاتژمێر نانێردرێت.</string>
+    <string name="setting_wear_player_controls_visible">کۆنترۆڵەکانی player پیشان بدە</string>
+    <string name="setting_wear_player_controls_visible_description">دوگمە built-in ـەکان لە Classic، Poster، Studio و layout ـە ڕێکخراوەکانی تر پیشان بدە یان بشارەوە بێ ناچالاککردنی touch target ـەکانیان</string>
+    <string name="setting_wear_quadrant_tap_flash">ئایکۆن لە کاتی داندا بریقێنەوە</string>
+    <string name="setting_wear_quadrant_tap_flash_description">کاتێک کرداری ناوچەی گۆشە جێبەجێ دەبێت، ئایکۆنەکەی بۆ ماوەیەکی کورت بە ڕووناکی تەواو بریقێنەوە - بە تایبەتی لە ڕووکاری شاشەی Hidden بەسوودە، چونکە لەوێ ئایکۆنەکە دیار نییە و دڵنیایی نییە کام کردار جێبەجێ بوو.</string>
+    <string name="setting_wear_internal_progress_visible">نیشاندەری پێشکەوتنی layout</string>
+    <string name="setting_wear_internal_progress_visible_description">نیشاندەری پێشکەوتنی زیادەی دروستکراو بۆ ئەم layout ـە پیشان بدە. حلقەکانی play-button ـی Expressive و Material بەشێکن لە کۆنترۆڵەکانیان و هەر بەردەست دەمێننەوە.</string>
+    <string name="setting_wear_edge_progress_visible">کەوانی پێشکەوتن لە لێوار پیشان بدە</string>
+    <string name="setting_wear_edge_progress_visible_description">تەنها کەوانە بینراوەکەی دەوری شاشە بشارەوە. seek لە لێوار هەر هەڵبژاردەیەکی سەربەخۆ دەمێنێتەوە.</string>
+    <string name="setting_wear_edge_seek_enabled">لە لێواری شاشەوە seek بکە</string>
+    <string name="setting_wear_edge_seek_enabled_description">تەنانەت ئەگەر کەوانەکە شاراوە بێت، لە لێواری شاشە بدە یان ڕابکێشە بۆ پەڕین بۆ خاڵێکی ورد</string>
+    <string name="setting_wear_screen_theme">شێوازی کۆنترۆڵ</string>
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">هاوسەنگ</string>
+    <string name="wear_screen_theme_default_description">پلەبەندی و قەبارەی کۆنترۆڵی ستاندارد.</string>
+    <string name="wear_screen_theme_minimal">مینیمال</string>
+    <string name="wear_screen_theme_minimal_description">کۆنترۆڵی بچووکتر و ئارامتر بەکاردەهێنێت لەگەڵ ئەوەی هەموو کردارێک دیار و بەکارهێنراو بێت.</string>
+    <string name="wear_screen_theme_compact">کۆمپاکت</string>
+    <string name="wear_screen_theme_compact_description">شێوازی کۆنترۆڵێکی چڕتر بەکاردەهێنێت بێ گۆڕینی کردارەکانت.</string>
+    <string name="wear_screen_theme_cinema">سینەما</string>
+    <string name="wear_screen_theme_cinema_description">کۆنترۆڵەکان نەرمتر دەکات بێ گۆڕینی artwork.</string>
+    <string name="wear_screen_theme_vivid">ڕوون</string>
+    <string name="wear_screen_theme_vivid_description">کۆنترۆڵی گەورەتر و دیارتر بەکاردەهێنێت.</string>
+    <string name="wear_screen_theme_contrast">Contrast ـی بەرز</string>
+    <string name="wear_screen_theme_contrast_description">کۆنترۆڵی گەورەتر بەکاردەهێنێت بۆ خوێندنەوەی ئاسانتر.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">کۆنترۆڵی کۆمپاکت و کەمێک تاریک بەکاردەهێنێت. خۆی پاشبنەما تاریک ناکات — بۆ ئەوە background settings بەکاربهێنە.</string>
+    <string name="wear_screen_theme_hidden">شاراوە</string>
+    <string name="wear_screen_theme_hidden_description">ئایکۆنەکانی کۆنترۆڵ بە تەواوی دەشارێتەوە. Touch target ـەکان چالاک و بە تەواوی کارا دەمێننەوە.</string>
+    <string name="setting_wear_font">Typeface</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">Typeface ـی بنەڕەتی ئەپ.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">وەشانێکی variable ـی Google Sans بە پانی، optical size، grade و خڕی ڕێکخراو — کۆنترۆڵەکانی axis لە خوارەوە دەکاتەوە.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Typeface ـی کلاسیکی سیستەمی Android.</string>
+    <string name="wear_font_rounded">خڕ</string>
+    <string name="wear_font_rounded_description">شێوە پیتی مۆدێرن و دۆستانە بە کۆتاییە نەرم و خڕەکان.</string>
+    <string name="wear_font_sans_light">مۆدێرن سووک</string>
+    <string name="wear_font_sans_light_description">Sans-serif ـێکی پاک و هەوادار بە کێشی بینراوی سووکتر.</string>
+    <string name="wear_font_sans_thin">زۆر باریک</string>
+    <string name="wear_font_sans_thin_description">شێوازێکی display ـی زۆر سووک بۆ player ـی مینیمال.</string>
+    <string name="wear_font_sans_medium">مۆدێرن ناوەند</string>
+    <string name="wear_font_sans_medium_description">Sans-serif ـێکی ڕوون بە stroke ـی بەهێز و کۆمپاکت.</string>
+    <string name="wear_font_sans_black">قورس</string>
+    <string name="wear_font_sans_black_description">خێزانێکی display ـی bold بە کاریگەری بینراوی زۆرترین.</string>
+    <string name="wear_font_small_caps">Small Caps</string>
+    <string name="wear_font_small_caps_description">شێوەی کۆمپاکتی پیتی گەورە بە هەستی دەستکاریکاری.</string>
+    <string name="wear_font_casual">ئاسایی</string>
+    <string name="wear_font_casual_description">خێزانێکی system ـی دەستنوس و یاریگەر.</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">Geometric sans ـێکی خڕ، جێگرەوەیەکی ئازاد (OFL) بە هەستی Circular.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">Geometric sans ـێکی پاک، جێگرەوەیەکی ئازاد (OFL) بە هەستی Proxima Nova.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">Humanist roman ـێکی جوان، جێگرەوەیەکی ئازاد (OFL) بە هەستی Optima.</string>
+    <string name="wear_font_love_letter">Special Elite</string>
+    <string name="wear_font_love_letter_description">شێوازێکی typewriter ـی کون و distressed بە دەرکەوتنی analog.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">Typeface ـێکی کلاسیکی serif.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">پیتی serif ـی fixed-width بە دەرکەوتنی تایبەتی دەستکاریکاری/terminal.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">دەرکەوتنی تەکنیکی بە پانی جێگیر.</string>
+    <string name="wear_font_condensed">Condensed</string>
+    <string name="wear_font_condensed_description">شێوە پیتی باریکتر بۆ جێکردنەوەی دەقی زیاتر.</string>
+    <string name="wear_font_condensed_light">Condensed Light</string>
+    <string name="wear_font_condensed_light_description">خێزانێکی باریک و سووک بۆ ناونیشانی درێژ.</string>
+    <string name="wear_font_condensed_medium">Condensed Medium</string>
+    <string name="wear_font_condensed_medium_description">خێزانێکی باریک بە stroke ـی بەهێز و خوێندنەوەی زۆر باش.</string>
+    <string name="wear_font_cursive">Cursive</string>
+    <string name="wear_font_cursive_description">Typeface ـێکی script ـی ڕازاندنەوە.</string>
+    <string name="setting_wear_dynamic_accent">Dynamic accent لەسەر کاتژمێر</string>
+    <string name="setting_wear_dynamic_accent_description">ڕەنگەکانی کاتژمێر کە لە ئەلبوم وەرگیراون لەگەڵ cover art ـی ئێستا بگونجێنە. ئەگەر ناچالاک بێت، هەڵبژاردەکانی Album color accent ـی static theme بەکاردەهێنن.</string>
+    <string name="setting_wear_album_art_fade">Transition ـی fade ـی وێنەی ئەلبوم</string>
+    <string name="setting_wear_album_art_fade_description">کاتێک تراک دەگۆڕێت وێنەی ئەلبوم بە نەرمی fade بکە.</string>
+    <string name="setting_wear_title_text_mode">ڕەفتاری دەقی ناونیشان</string>
+    <string name="setting_wear_title_text_mode_description">چۆنیەتی ڕەفتاری ناونیشانی ئێستا-پخش کاتێک جێ نابێتەوە: Automatic shrink، wrap و scroll تێکەڵ دەکات؛ هەڵبژاردەکانی تر تەنها یەک ڕەفتار بەکاردەهێنن.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>خۆکار (shrink، پاشان wrap، پاشان scroll)</item>
+        <item>Scroll (marquee)</item>
+        <item>بۆ دوو دێڕ wrap بکە</item>
+        <item>بۆ سێ دێڕ wrap بکە</item>
+        <item>بۆ پێنج دێڕ wrap بکە</item>
+        <item>جێگیر (یەک دێڕ، بێ scroll یان shrink)</item>
+        <item>Shrink بکە بۆ جێبوونەوە</item>
+    </string-array>
+    <string name="setting_wear_artist_color">ڕەنگی دەقی هونەرمەند</string>
+    <string name="setting_wear_artist_custom_color">ڕەنگی تایبەتی هونەرمەند</string>
+    <string name="setting_wear_artist_custom_color_description">ڕەنگی هونەرمەند هەڵبژێرە کە لەگەڵ Normal treatment بەکاردێت</string>
+    <string name="setting_wear_artist_desaturated">ڕەنگی کەمڕەنگی هونەرمەند</string>
+    <string name="setting_wear_artist_desaturated_description">ڕەنگی دەقی هونەرمەند کە لە ئەلبوم وەرگیراوە نەرمتر بکە — تەنها کاتێک \"Artist text color\" لەسەر Album color دانراوە جێبەجێ دەبێت</string>
+    <string name="setting_wear_progress_color">ڕەنگی progress bar</string>
+    <string name="setting_wear_progress_custom_color">ڕەنگی تایبەتی progress bar</string>
+    <string name="setting_wear_progress_custom_color_description">ڕەنگی progress و seek هەڵبژێرە کە لەگەڵ Normal treatment بەکاردێت</string>
+    <string name="setting_wear_progress_desaturated">ڕەنگی کەمڕەنگی progress bar</string>
+    <string name="setting_wear_progress_desaturated_description">ڕەنگی progress bar کە لە ئەلبوم وەرگیراوە نەرمتر بکە — تەنها کاتێک \"Progress bar color\" لەسەر Album color دانراوە جێبەجێ دەبێت</string>
+    <string name="setting_wear_volume_color">ڕەنگی volume bar</string>
+    <string name="setting_wear_volume_custom_color">ڕەنگی تایبەتی volume</string>
+    <string name="setting_wear_volume_custom_color_description">ڕەنگی volume هەڵبژێرە کە لەگەڵ Normal treatment بەکاردێت</string>
+    <string name="setting_wear_quick_panel_color">ڕەنگی Quick Actions</string>
+    <string name="setting_wear_quick_panel_custom_color">ڕەنگی تایبەتی Quick Actions</string>
+    <string name="setting_wear_quick_panel_custom_color_description">ڕەنگی Quick Actions هەڵبژێرە کە لەگەڵ Normal treatment بەکاردێت</string>
+    <string name="setting_wear_lyrics_color">ڕەنگی دەقی گۆرانی</string>
+    <string name="setting_wear_lyrics_custom_color">ڕەنگی تایبەتی دەقی گۆرانی</string>
+    <string name="setting_wear_lyrics_custom_color_description">ڕەنگی دەقی گۆرانی هەڵبژێرە کە لەگەڵ Normal treatment بەکاردێت</string>
+    <string name="setting_wear_queue_color">ڕەنگی queue</string>
+    <string name="setting_wear_queue_custom_color">ڕەنگی تایبەتی queue</string>
+    <string name="setting_wear_queue_custom_color_description">ڕەنگی queue هەڵبژێرە کە لەگەڵ Normal treatment بەکاردێت</string>
+    <string name="setting_wear_shading_custom_color_description">ڕەنگێک هەڵبژێرە کە tint بە gradient ـی shading دەدات</string>
+    <string-array name="wear_accent_color_entries">
+        <item>بێلایەن (ڕەنگی static theme)</item>
+        <item>ڕەنگی ئەلبوم</item>
+        <item>ڕەنگی تایبەت</item>
+    </string-array>
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Immersive</item>
+        <item>Depth</item>
+        <item>Carousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Verse</item>
+        <item>Metadata</item>
+        <item>هونەرمەند</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
+        <item>MatejDro</item>
+    </string-array>
+    <string name="setting_wear_expressive_seek_mode">Expressive seek</string>
+    <string name="setting_wear_expressive_seek_mode_description">چۆنیەتی scrub کردنی تراک بە touch لە Expressive face. Central ring حلقەی دەوری play button دەکاتە draggable؛ Edge ring هەروەها Classic bezel ring پیشان دەدات؛ None seek تەنها بە rotary crown دەهێڵێتەوە.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>حلقەی ناوەڕاست</item>
+        <item>حلقەی لێوار</item>
+        <item>هیچ</item>
+    </string-array>
+    <string name="category_wear_aod">شاشەی هەمیشە چالاک</string>
+    <string name="setting_wear_aod_style">شێوازی هەمیشە چالاک</string>
+    <string name="setting_wear_aod_style_description">چۆنیەتی دەرکەوتنی شاشەی now-playing کاتێک کاتژمێر لە ambient mode ـە. Follow face لەگەڵ face ـی هەڵبژێردراو دەگونجێت؛ Minimal تەنها دەقی تاریک لەسەر پاشبنەمای ڕەشی پاک پیشان دەدات بۆ درێژترین تەمەنی باتری.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>شوێن face بکەوە</item>
+        <item>Classic</item>
+        <item>Expressive (outline)</item>
+        <item>Material (outline)</item>
+        <item>کۆنترۆڵەکانی AMOLED</item>
+        <item>Chrono (کاتژمێری گەورە)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Carousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Verse</item>
+        <item>هونەرمەند</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
+    </string-array>
+    <string name="setting_wear_aod_color">ڕەنگی هەمیشە چالاک</string>
+    <string-array name="wear_aod_color_entries">
+        <item>سپی</item>
+        <item>ڕەنگی ئەلبوم</item>
+        <item>ڕەنگی تایبەت</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>سپی</item>
+        <item>Dynamic (بەپێی ناوچەی ژێر کاتژمێر)</item>
+        <item>ڕەنگی ئەلبوم</item>
+        <item>ڕەنگی تایبەت</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>شوێن شێوازی panel بکەوە</item>
+        <item>شفاف (بێ پاشبنەما)</item>
+        <item>Accent ـی ئەلبوم</item>
+        <item>نیوەشفاف</item>
+        <item>سپی</item>
+        <item>سپی frosted</item>
+        <item>ڕەش</item>
+        <item>Dynamic (تۆنی ئەلبوم)</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">پاشبنەمای Up Next pill</string>
+    <string name="setting_wear_show_up_next_pill">Up Next pill لە player</string>
+    <string name="setting_wear_show_up_next_pill_description">Up Next pill لە خوارەوەی شاشەی now-playing پیشان بدە. شوێنی mini-buttons row پڕ دەکاتەوە، بۆیە تەنها کاتێک ئەو row ـە دیار نییە دەردەکەوێت.</string>
+    <string name="category_wf_clock">کاتژمێر</string>
+    <string name="setting_wear_clock_color">ڕەنگی کاتژمێر</string>
+    <string name="setting_wear_clock_custom_color">ڕەنگی تایبەتی کاتژمێر</string>
+    <string name="setting_wear_clock_custom_color_description">کاتێک Clock color لەسەر Custom color دانراوە، بدە بۆ هەڵبژاردنی ڕەنگی کاتژمێر</string>
+    <string name="setting_wear_clock_opacity">Opacity ـی کاتژمێر</string>
+    <string name="setting_wear_clock_opacity_description">Opacity ـی کاتژمێری هەمیشە پیشاندراو (10–100%%). ئێستا &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_wear_aod_custom_color">ڕەنگی تایبەتی هەمیشە چالاک</string>
+    <string name="setting_wear_aod_custom_color_description">کاتێک \"Always-on color\" لەسەر Custom color دانراوە، بدە بۆ هەڵبژاردنی ڕەنگی دەق، کۆنترۆڵ و کاتژمێری هەمیشە چالاک</string>
+    <string name="setting_wear_aod_intensity">ڕووناکی هەمیشە چالاک</string>
+    <string name="setting_wear_aod_intensity_description">شاشەی هەمیشە چالاک چەند ڕوون render دەبێت (20–100%%). کەمتر تاریکترە و باتری کەمتر بەکاردەهێنێت. ئێستا &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_wear_aod_show_transport">دوگمە transport ـەکان لە شاشەی هەمیشە چالاک</string>
+    <string name="setting_wear_aod_show_transport_description">دوگمە outline ـەکانی previous/play/next لە شێوازە visual always-on ـە پشتگیریکراوەکان پیشان بدە. کاتێک شاشە تاریکە ناتوانرێت لێیان بدرێت، بەڵام دانێک کاتژمێر هەڵدەستێنێت لە کاتێکدا دوگمەکە پێشتر لە ژێر پەنجەتە.</string>
+    <string name="setting_wear_aod_show_progress">حلقەی پێشکەوتن لە شاشەی هەمیشە چالاک</string>
+    <string name="setting_wear_aod_show_progress_description">حلقەی پێشکەوتنی دەوری play button لە ambient mode پیشان بدە — شوێنەکە لەوێ نزیکەی هەر خولەکێک یەکجار نوێ دەبێتەوە</string>
+    <string name="setting_wear_aod_show_pills">Up Next لە شاشەی هەمیشە چالاک</string>
+    <string name="setting_wear_aod_show_pills_description">Up Next pill ـێکی static outline لە خوارەوەی شێوازە visual always-on ـەکان پیشان بدە</string>
+    <string name="category_wf_gestures">Gesture ـەکانی شاشە</string>
+    <string name="setting_wear_mini_buttons_mode">دوگمە بچووکەکان پیشان بدە</string>
+    <string name="setting_wear_gestures_mode">Gesture ـەکانی شاشە</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>هەمیشە</item>
+        <item>تەنها لە کاتی پخشدا</item>
+        <item>تەنها لە کاتی pause ـدا</item>
+        <item>هەرگیز</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">وێنەی ئەلبوم لە شاشەی هەمیشە چالاک</string>
+    <string name="setting_wear_aod_show_art_description">وێنەی ئەلبومی تاریککراو لە ambient mode دیار بهێڵەوە. ئەگەر ناچالاکی بکەیت پاشبنەمای ڕەشی پاک پیشان دەدرێت، کە لە شاشەی AMOLED باتری بە شێوەی دیار پاشەکەوت دەکات.</string>
+    <string name="setting_wear_aod_art_treatment">شێوازی وێنەی ئەلبومی هەمیشە چالاک</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>Blur ـی نەرم</item>
+        <item>کاڤەری ڕوون</item>
+        <item>Blur ـی مۆنۆکرۆم</item>
+        <item>شوێن player artwork treatment بکەوە</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">کاتژمێر لە شاشەی هەمیشە چالاک</string>
+    <string name="setting_wear_aod_show_clock_description">کاتژمێر پیشان بدە کاتێک لە ambient mode ـە</string>
+    <string name="setting_wear_aod_show_track_info">زانیاری تراک لە شاشەی هەمیشە چالاک</string>
+    <string name="setting_wear_aod_show_track_info_description">ناونیشانی تراک و هونەرمەند لە ambient mode پیشان بدە</string>
+    <string name="category_overlays_queue">Overlay و queue</string>
+    <string name="category_wf_panel_shared">دەرکەوتنی هاوبەشی panel</string>
+    <string name="category_wf_panel_volume">Panel ـی volume</string>
+    <string name="category_wf_panel_seek">Panel ـی progress و seek</string>
+    <string name="category_wf_panel_quick">پانێڵی کردارە خێراکان</string>
+    <string name="category_wf_panel_queue">Queue و لیستەکان</string>
+    <string name="category_wf_panel_lyrics">دەقی گۆرانی</string>
+    <string name="category_wf_panel_effects">کاریگەرییەکانی panel</string>
+    <string name="setting_wear_overlay_backdrop_style">پاشبنەمای panel</string>
+    <string name="wear_backdrop_shared">شوێن دەرکەوتنی هاوبەشی panel بکەوە</string>
+    <string name="setting_wear_volume_backdrop_style">پاشبنەمای volume</string>
+    <string name="setting_wear_progress_backdrop_style">پاشبنەمای progress</string>
+    <string name="setting_wear_quick_panel_backdrop_style">پاشبنەمای کردارە خێراکان</string>
+    <string name="setting_wear_queue_backdrop_style">پاشبنەمای queue</string>
+    <string name="setting_wear_lyrics_backdrop_style">پاشبنەمای دەقی گۆرانی</string>
+    <string name="setting_wear_volume_style">شێوازی دەنگ</string>
+    <string name="setting_wear_volume_layout">Layout ـی دەنگ</string>
+    <string name="setting_wear_quick_panel_style">شێوازی quick panel</string>
+    <string name="setting_wear_quick_panel_layout">Layout ـی quick panel</string>
+    <string name="setting_wear_quick_panel_source">کردارە خێراکان</string>
+    <string name="setting_wear_quick_panel_source_description">دوگمە ڕێکخراوەکانت یان کردارە دابینکراوەکان لەلایەن ئەپی ئێستا پخشکار هەڵبژێرە.</string>
+    <string name="quick_panel_open_note_title">کردنەوەی panel</string>
+    <string name="quick_panel_open_note_description">بۆ کردنەوەی پانێڵی کردارە خێراکان لە کاتژمێر، دووجار لە ناوەڕاستی شاشەی now-playing بدە.</string>
+    <string name="preview_current_app_action">کرداری ئەپی ئێستا</string>
+    <string name="preview_notification_controls">ئایکۆن لە media notification</string>
+    <string name="setting_wear_queue_style">شێوازی queue</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">کاڤەری shortcut وەک پاشبنەما بەکاربهێنە</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">کاتێک Queue style یەکێکە لە جۆرەکانی Cover، ڕیزی کرداری quick-panel کە کاڤەری shortcut ـی وەرگیراوی هەیە (track، playlist، artist…) pill ـەکەشی بە هەمان art پڕ دەکات، وەک Up Next. Shortcut ـەکان بێ کاڤەری وەرگیراو (تەنها app icon ـێکی سادە) ناگۆڕێن.</string>
+    <string name="setting_wear_list_row_size">قەبارەی list pill</string>
+    <string name="setting_wear_list_row_size_description">بەرزی ڕیزە full-width ـەکان لە queue.</string>
+    <string name="setting_wear_progress_gradient">Palette تێکەڵ بە حلقە بکە</string>
+    <string name="setting_wear_progress_gradient_description">لە color treatment ـی چەندڕەنگ (Complementary، Triadic، Analogous، Duotone) حلقەی solid لە هەر سێ ڕەنگدا fade دەبێت. بۆ حلقەی یەکڕەنگ ئەمە ناچالاک بکە و palette ـی ئەلبوم لە شوێنەکانی تر بهێڵەوە.</string>
+    <string name="setting_wear_progress_style">شێوازی حلقەی پێشکەوتن</string>
+    <string name="setting_wear_seek_style">شێوازی readout ـی seek و volume</string>
+    <string name="setting_wear_seek_layout">Layout ـی panel ـی seek</string>
+    <string name="setting_wear_color_treatment">Treatment ـی ڕەنگی کاتژمێر</string>
+    <string name="setting_wear_normal_color">ڕەنگی ئاسایی</string>
+    <string name="setting_wear_normal_color_description">یەک ڕەنگ هەڵبژێرە بۆ title accents، progress، volume، panels و mini-button chrome لە Normal mode</string>
+    <string name="setting_wear_normal_color_multi">Palette ـی ڕەنگ بەکاربهێنە</string>
+    <string name="setting_wear_normal_color_multi_description">کاتێک چالاکە، شاشە یەک ڕەنگی سەرەکی لەگەڵ دوو تۆنی پشتگیر بەکاردەهێنێت. کاتێک ناچالاکە، یەک ڕەنگ لە هەموو شوێنێک بەکاردێت — ڕەنگی خۆی ئەلبوم یان ئەوەی تۆ هەڵتبژاردووە.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>ئاسایی (ڕەنگی هەڵبژێردراو)</item>
+        <item>کەمڕەنگ (ڕەنگی نەرمەکەی ئەلبوم)</item>
+        <item>Expressive (palette ـی تەواوی ئەلبوم)</item>
+        <item>Complementary (ئەلبوم + پێچەوانە)</item>
+        <item>Triadic (سێ hue ـی ئەلبوم)</item>
+        <item>Analogous (hue ـە دراوسێکان)</item>
+        <item>Monochrome (یەک hue، سێ tone)</item>
+        <item>Duotone (دوو ڕەنگی ئەلبوم)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>شوێن treatment ـی کاتژمێر بکەوە</item>
+        <item>ئاسایی (ڕەنگی هەڵبژێردراو)</item>
+        <item>کەمڕەنگ (ڕەنگی نەرمەکەی ئەلبوم)</item>
+        <item>Expressive (palette ـی تەواوی ئەلبوم)</item>
+        <item>Complementary (ئەلبوم + پێچەوانە)</item>
+        <item>Triadic (سێ hue ـی ئەلبوم)</item>
+        <item>Analogous (hue ـە دراوسێکان)</item>
+        <item>Monochrome (یەک hue، سێ tone)</item>
+        <item>Duotone (دوو ڕەنگی ئەلبوم)</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">کێشی ناونیشان</string>
+    <string name="setting_wear_title_font_italic">ناونیشانی italic</string>
+    <string name="setting_wear_title_font_scale">قەبارەی ناونیشان</string>
+    <string name="setting_wear_title_font_opacity">Opacity ـی ناونیشان</string>
+    <string name="setting_wear_title_font_tracking">بۆشایی پیتەکانی ناونیشان</string>
+    <string name="setting_wear_title_color">ڕەنگی دەقی ناونیشان</string>
+    <string name="setting_wear_title_custom_color">ڕەنگی تایبەتی ناونیشان</string>
+    <string name="wear_title_color_face_default">Face default (وەک دیزاین کراوە)</string>
+    <string name="setting_wear_title_adaptive_contrast">ڕەنگی ناونیشان بۆ contrast بگونجێنە</string>
+    <string name="setting_wear_title_adaptive_contrast_description">ئەگەر ڕەنگی ناونیشان زۆر نزیک بێت لە artwork ـی پشتی، بە پاراستنی hue ڕوونتر یان تاریکتری دەکات. کاتێک ناونیشان face default دەپارێزێت کاریگەری نییە.</string>
+    <string name="setting_wear_artist_adaptive_contrast">ڕەنگی هونەرمەند بۆ contrast بگونجێنە</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">ئەگەر ڕەنگی ئەلبوم زۆر نزیک بێت لە artwork ـی پشتی، بە پاراستنی hue دێڕی هونەرمەند ڕوونتر یان تاریکتر دەکات. تەنها strip ـی ئەو دێڕە دەپێوێت، نە هەموو cover.</string>
+    <string name="setting_wear_artist_font_weight">کێشی هونەرمەند</string>
+    <string name="setting_wear_artist_font_italic">هونەرمەندی italic</string>
+    <string name="setting_wear_artist_font_scale">قەبارەی هونەرمەند</string>
+    <string name="setting_wear_artist_font_opacity">Opacity ـی هونەرمەند</string>
+    <string name="setting_wear_artist_font_tracking">بۆشایی پیتەکانی هونەرمەند</string>
+    <string name="setting_wear_source_icon_scale">قەبارەی ئایکۆنی ئەپ</string>
+    <string name="setting_wear_source_icon_opacity">Opacity ـی ئایکۆنی ئەپ</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 کێشی ئاسایی face ـە؛ بەرزتر bold ـترە. بۆ Google Sans Flex ئەمە weight axis ـی خۆی font ـەکەیە</string>
+    <string name="setting_wear_typography_scale_description">ڕێژەی سەدی قەبارەی خۆی face (1–300). 100 قەبارەی دیزاینکراوی هەر layout ـێک دەپارێزێت</string>
+    <string name="setting_wear_typography_opacity_description">ڕێژەی سەدی (20–100). 100 opacity ـی خۆی face دەپارێزێت</string>
+    <string name="setting_wear_typography_tracking_description">بۆشایی زیادە لەنێوان پیتەکان، بە سەدەمی em (−5 تا 20). 0 spacing ـی خۆی font دەپارێزێت</string>
+    <string name="setting_wear_color_modifier">تۆن</string>
+    <string name="setting_wear_title_color_modifier">تۆنی ناونیشان</string>
+    <string name="setting_wear_artist_color_modifier">تۆنی هونەرمەند</string>
+    <string name="setting_wear_clock_color_modifier">تۆنی کاتژمێر</string>
+    <string name="wear_color_modifier_follow">شوێن تۆنی کاتژمێر بکەوە</string>
+    <string name="setting_wear_color_modifier_description">هەموو palette ڕێکدەخات بێ گۆڕینی چۆنیەتی دروستبوونی — لەگەڵ هەموو color treatment کار دەکات</string>
+    <string name="setting_wear_color_hue_shift">گۆڕینی ڕەنگ</string>
+    <string name="setting_wear_color_hue_shift_description">Palette ـی ئەلبوم بە پلە (0–359) دەوری color wheel دەسووڕێنێت. هەر treatment ـێک ڕەنگی سەرەکی لە hue ـی خۆی ئەلبوم دەپارێزێت، بۆیە ئەمەیە کە دەیگۆڕێت. 0 ڕەنگی ئەلبوم وەک خۆی بەکاردەهێنێت؛ fixed Normal color هەرگیز shift ناکرێت.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>هیچ</item>
+        <item>زیندوو</item>
+        <item>پاستێل</item>
+        <item>گەرم</item>
+        <item>سارد</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>کەوانی لێوار (چەپ)</item>
+        <item>کەوانی لێوار (بەرز)</item>
+        <item>کەوانی لێوار (ڕاست)</item>
+        <item>کەوانی لێوار (سەرەوە)</item>
+        <item>کەوانی لێوار (خوارەوە)</item>
+        <item>حلقەی تەواو</item>
+        <item>Halo ـی ناوەڕاست</item>
+        <item>Meter ـی ئاسۆیی</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>حلقەی لێوار</item>
+        <item>حلقەی لێوار (باریک)</item>
+        <item>حلقەی لێوار (قورس)</item>
+        <item>Timeline</item>
+        <item>Timeline ـی بەشکراو</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Metadata یەکەم</item>
+        <item>کەوان</item>
+        <item>Hero</item>
+        <item>Grid</item>
+        <item>ڕیزە label کراوەکان</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Solid</item>
+        <item>Dashed</item>
+        <item>خاڵەکان</item>
+        <item>Hairline</item>
+        <item>کۆمێت</item>
+        <item>60 خاڵی کاتژمێر</item>
+        <item>60 tick ـی کاتژمێر</item>
+        <item>بەشەکانی 12 کاتژمێر</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>سادە</item>
+        <item>Glass pill</item>
+        <item>Expressive pill</item>
+        <item>Material pill</item>
+        <item>Pill ـی سپی</item>
+        <item>گەورە</item>
+        <item>شوێن / کۆی گشتی</item>
+        <item>Glass ـی سپی</item>
+        <item>ئەلبومی نیوەشفاف</item>
+        <item>Glow ـی ئەلبوم</item>
+        <item>Outline</item>
+        <item>Solid theme</item>
+        <item>Solid album</item>
+        <item>Micro</item>
+        <item>Shadow (بێ chrome)</item>
+        <item>Underline</item>
+        <item>Hairline outline</item>
+        <item>ڕەنگی گەورەی ئەلبوم</item>
+        <item>Mono</item>
+        <item>Tonal dark</item>
+        <item>Terminal</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>دوگمە ڕێکخراوەکان</item>
+        <item>لە media app ـی ئێستا</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>شوێن شێوازی panel بکەوە</item>
+        <item>Blur ـی ئەلبوم (acrylic)</item>
+        <item>ڕەشی solid</item>
+        <item>ڕەنگی solid ـی ئەلبوم</item>
+        <item>Glass</item>
+        <item>Gradient ـی ئەلبوم</item>
+        <item>Duotone ـی ئەلبوم</item>
+        <item>Prism</item>
+        <item>Liquid glass</item>
+        <item>Expressive blur</item>
+        <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Glass</item>
+        <item>مینیمال (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Light</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Outline</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>Contrast ـی بەرز</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>بەشەکان</item>
+        <item>Aurora</item>
+        <item>Ink</item>
+        <item>Groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>کۆمپاکت</item>
+        <item>ئاسایی</item>
+        <item>بەرز</item>
+        <item>زۆر بەرز</item>
+    </string-array>
+    <string-array name="wear_overlay_style_entries">
+        <item>Glass</item>
+        <item>مینیمال (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Light</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Outline</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>Contrast ـی بەرز</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Cover</item>
+        <item>Cover Blur</item>
+        <item>Cover Tonal</item>
+        <item>Cover Square</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Glass</item>
+        <item>Glass White</item>
+        <item>Glass Tonal</item>
+        <item>مینیمال (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Light</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Outline</item>
+        <item>Outline Glass White</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>Contrast ـی بەرز</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Ghost (بێ chrome)</item>
+        <item>Mist</item>
+        <item>Ink</item>
+        <item>Dot</item>
+        <item>Slab</item>
+    </string-array>
+    <string name="setting_wear_paused_hold">دوای pause ئەپ چالاک بهێڵەوە</string>
+    <string name="setting_wear_paused_hold_description">دوای pause، ئەپ چەند لە watch face ـەوە بەردەست دەمێنێتەوە تا لەبری دووبارە کردنەوە بە بەرزکردنەوەی مەچەکت resume بکەیت. ڕێکخستنە درێژەکان background service بەردەوام دەکەن.</string>
+    <string name="wear_paused_hold_off">مەیهێڵەوە</string>
+    <string name="wear_paused_hold_5">5 خولەک</string>
+    <string name="wear_paused_hold_15">15 خولەک</string>
+    <string name="wear_paused_hold_30">30 خولەک</string>
+    <string name="wear_paused_hold_60">1 کاتژمێر</string>
+    <string name="wear_paused_hold_always">تا پخش کۆتایی دێت</string>
+    <string name="setting_wear_idle_button_action">دوگمە کاتێک هیچ پخش نابێت</string>
+    <string name="setting_wear_idle_auto_open">بکەرەوە کاتێک هیچ پخش نابێت</string>
+    <string name="setting_wear_idle_auto_open_description">کاتێک هیچ مۆسیقا پخش نابێت و watch app دەکەیتەوە، ڕاستەوخۆ دەچێتە ئەم شاشەیە.</string>
+    <string name="wear_idle_action_resume">ئەپی کۆتایی resume بکە</string>
+    <string name="wear_idle_action_shortcuts">Shortcut ـەکانی playlist</string>
+    <string name="wear_idle_action_menu">مێنیوی کردار</string>
+    <string name="wear_idle_action_search">گەڕان</string>
+    <string name="wear_idle_action_queue">بەم دواییە پخشکراو</string>
+    <string name="wear_idle_action_none">بێ دوگمە</string>
+    <string name="wear_idle_auto_open_none">لە player بمێنەوە</string>
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+        <item>@string/wear_font_inter</item>
+        <item>@string/wear_font_atkinson_hyperlegible</item>
+        <item>@string/wear_font_rubik</item>
+        <item>@string/wear_font_barlow_condensed</item>
+        <item>@string/wear_font_oswald</item>
+        <item>@string/wear_font_lora</item>
+        <item>@string/wear_font_fraunces</item>
+        <item>@string/wear_font_space_mono</item>
+        <item>@string/wear_font_archivo_black</item>
+        <item>@string/wear_font_dancing_script</item>
+        <item>@string/wear_font_abeezee</item>
+        <item>@string/wear_font_abril_fatface</item>
+        <item>@string/wear_font_acme</item>
+        <item>@string/wear_font_alata</item>
+        <item>@string/wear_font_aleo</item>
+        <item>@string/wear_font_alfa_slab_one</item>
+        <item>@string/wear_font_amatic_sc</item>
+        <item>@string/wear_font_anton</item>
+        <item>@string/wear_font_arvo</item>
+        <item>@string/wear_font_bangers</item>
+        <item>@string/wear_font_black_ops_one</item>
+        <item>@string/wear_font_bree_serif</item>
+        <item>@string/wear_font_cabin</item>
+        <item>@string/wear_font_chivo</item>
+        <item>@string/wear_font_courier_prime</item>
+        <item>@string/wear_font_crete_round</item>
+        <item>@string/wear_font_crimson_pro</item>
+        <item>@string/wear_font_dm_sans</item>
+        <item>@string/wear_font_domine</item>
+        <item>@string/wear_font_exo_2</item>
+        <item>@string/wear_font_fira_code</item>
+        <item>@string/wear_font_inconsolata</item>
+        <item>@string/wear_font_indie_flower</item>
+        <item>@string/wear_font_josefin_sans</item>
+        <item>@string/wear_font_jost</item>
+        <item>@string/wear_font_kanit</item>
+        <item>@string/wear_font_lexend</item>
+        <item>@string/wear_font_lobster</item>
+        <item>@string/wear_font_manrope</item>
+        <item>@string/wear_font_mulish</item>
+        <item>@string/wear_font_nunito</item>
+        <item>@string/wear_font_outfit</item>
+        <item>@string/wear_font_oxanium</item>
+        <item>@string/wear_font_play</item>
+        <item>@string/wear_font_plus_jakarta_sans</item>
+        <item>@string/wear_font_press_start_2p</item>
+        <item>@string/wear_font_quicksand</item>
+        <item>@string/wear_font_rajdhani</item>
+        <item>@string/wear_font_righteous</item>
+        <item>@string/wear_font_roboto_mono</item>
+        <item>@string/wear_font_rowdies</item>
+        <item>@string/wear_font_russo_one</item>
+        <item>@string/wear_font_shrikhand</item>
+        <item>@string/wear_font_silkscreen</item>
+        <item>@string/wear_font_source_code_pro</item>
+        <item>@string/wear_font_staatliches</item>
+        <item>@string/wear_font_teko</item>
+        <item>@string/wear_font_titillium_web</item>
+        <item>@string/wear_font_varela_round</item>
+        <item>@string/wear_font_yanone_kaffeesatz</item>
+        <item>@string/wear_font_zilla_slab</item>
+        <item>@string/wear_font_lato</item>
+        <item>@string/wear_font_merriweather_sans</item>
+        <item>@string/wear_font_source_sans_3</item>
+        <item>@string/wear_font_source_serif_4</item>
+        <item>@string/wear_font_libre_baskerville</item>
+        <item>@string/wear_font_libre_franklin</item>
+        <item>@string/wear_font_ibm_plex_sans</item>
+        <item>@string/wear_font_ibm_plex_mono</item>
+        <item>@string/wear_font_ibm_plex_serif</item>
+        <item>@string/wear_font_work_sans</item>
+        <item>@string/wear_font_karla</item>
+        <item>@string/wear_font_sora</item>
+        <item>@string/wear_font_urbanist</item>
+        <item>@string/wear_font_be_vietnam_pro</item>
+        <item>@string/wear_font_red_hat_display</item>
+        <item>@string/wear_font_red_hat_text</item>
+        <item>@string/wear_font_red_hat_mono</item>
+        <item>@string/wear_font_syne</item>
+        <item>@string/wear_font_instrument_sans</item>
+        <item>@string/wear_font_figtree</item>
+        <item>@string/wear_font_gabarito</item>
+        <item>@string/wear_font_bricolage_grotesque</item>
+        <item>@string/wear_font_dm_serif_display</item>
+        <item>@string/wear_font_cormorant_garamond</item>
+        <item>@string/wear_font_cormorant</item>
+        <item>@string/wear_font_bitter</item>
+        <item>@string/wear_font_spectral</item>
+        <item>@string/wear_font_vollkorn</item>
+        <item>@string/wear_font_raleway</item>
+        <item>@string/wear_font_league_spartan</item>
+        <item>@string/wear_font_saira</item>
+        <item>@string/wear_font_signika</item>
+        <item>@string/wear_font_sofia_sans</item>
+        <item>@string/wear_font_overpass</item>
+        <item>@string/wear_font_public_sans</item>
+        <item>@string/wear_font_questrial</item>
+        <item>@string/wear_font_dosis</item>
+        <item>@string/wear_font_prompt</item>
+        <item>@string/wear_font_unbounded</item>
+        <item>@string/wear_font_recursive</item>
+        <item>@string/wear_font_trispace</item>
+        <item>@string/wear_font_noto_sans</item>
+        <item>@string/wear_font_noto_serif</item>
+        <item>@string/wear_font_noto_sans_mono</item>
+        <item>@string/wear_font_heebo</item>
+        <item>@string/wear_font_hind</item>
+        <item>@string/wear_font_hind_madurai</item>
+        <item>@string/wear_font_kumbh_sans</item>
+        <item>@string/wear_font_alegreya</item>
+        <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+        <item>@string/wear_font_inter_description</item>
+        <item>@string/wear_font_atkinson_hyperlegible_description</item>
+        <item>@string/wear_font_rubik_description</item>
+        <item>@string/wear_font_barlow_condensed_description</item>
+        <item>@string/wear_font_oswald_description</item>
+        <item>@string/wear_font_lora_description</item>
+        <item>@string/wear_font_fraunces_description</item>
+        <item>@string/wear_font_space_mono_description</item>
+        <item>@string/wear_font_archivo_black_description</item>
+        <item>@string/wear_font_dancing_script_description</item>
+        <item>@string/wear_font_abeezee_description</item>
+        <item>@string/wear_font_abril_fatface_description</item>
+        <item>@string/wear_font_acme_description</item>
+        <item>@string/wear_font_alata_description</item>
+        <item>@string/wear_font_aleo_description</item>
+        <item>@string/wear_font_alfa_slab_one_description</item>
+        <item>@string/wear_font_amatic_sc_description</item>
+        <item>@string/wear_font_anton_description</item>
+        <item>@string/wear_font_arvo_description</item>
+        <item>@string/wear_font_bangers_description</item>
+        <item>@string/wear_font_black_ops_one_description</item>
+        <item>@string/wear_font_bree_serif_description</item>
+        <item>@string/wear_font_cabin_description</item>
+        <item>@string/wear_font_chivo_description</item>
+        <item>@string/wear_font_courier_prime_description</item>
+        <item>@string/wear_font_crete_round_description</item>
+        <item>@string/wear_font_crimson_pro_description</item>
+        <item>@string/wear_font_dm_sans_description</item>
+        <item>@string/wear_font_domine_description</item>
+        <item>@string/wear_font_exo_2_description</item>
+        <item>@string/wear_font_fira_code_description</item>
+        <item>@string/wear_font_inconsolata_description</item>
+        <item>@string/wear_font_indie_flower_description</item>
+        <item>@string/wear_font_josefin_sans_description</item>
+        <item>@string/wear_font_jost_description</item>
+        <item>@string/wear_font_kanit_description</item>
+        <item>@string/wear_font_lexend_description</item>
+        <item>@string/wear_font_lobster_description</item>
+        <item>@string/wear_font_manrope_description</item>
+        <item>@string/wear_font_mulish_description</item>
+        <item>@string/wear_font_nunito_description</item>
+        <item>@string/wear_font_outfit_description</item>
+        <item>@string/wear_font_oxanium_description</item>
+        <item>@string/wear_font_play_description</item>
+        <item>@string/wear_font_plus_jakarta_sans_description</item>
+        <item>@string/wear_font_press_start_2p_description</item>
+        <item>@string/wear_font_quicksand_description</item>
+        <item>@string/wear_font_rajdhani_description</item>
+        <item>@string/wear_font_righteous_description</item>
+        <item>@string/wear_font_roboto_mono_description</item>
+        <item>@string/wear_font_rowdies_description</item>
+        <item>@string/wear_font_russo_one_description</item>
+        <item>@string/wear_font_shrikhand_description</item>
+        <item>@string/wear_font_silkscreen_description</item>
+        <item>@string/wear_font_source_code_pro_description</item>
+        <item>@string/wear_font_staatliches_description</item>
+        <item>@string/wear_font_teko_description</item>
+        <item>@string/wear_font_titillium_web_description</item>
+        <item>@string/wear_font_varela_round_description</item>
+        <item>@string/wear_font_yanone_kaffeesatz_description</item>
+        <item>@string/wear_font_zilla_slab_description</item>
+        <item>@string/wear_font_lato_description</item>
+        <item>@string/wear_font_merriweather_sans_description</item>
+        <item>@string/wear_font_source_sans_3_description</item>
+        <item>@string/wear_font_source_serif_4_description</item>
+        <item>@string/wear_font_libre_baskerville_description</item>
+        <item>@string/wear_font_libre_franklin_description</item>
+        <item>@string/wear_font_ibm_plex_sans_description</item>
+        <item>@string/wear_font_ibm_plex_mono_description</item>
+        <item>@string/wear_font_ibm_plex_serif_description</item>
+        <item>@string/wear_font_work_sans_description</item>
+        <item>@string/wear_font_karla_description</item>
+        <item>@string/wear_font_sora_description</item>
+        <item>@string/wear_font_urbanist_description</item>
+        <item>@string/wear_font_be_vietnam_pro_description</item>
+        <item>@string/wear_font_red_hat_display_description</item>
+        <item>@string/wear_font_red_hat_text_description</item>
+        <item>@string/wear_font_red_hat_mono_description</item>
+        <item>@string/wear_font_syne_description</item>
+        <item>@string/wear_font_instrument_sans_description</item>
+        <item>@string/wear_font_figtree_description</item>
+        <item>@string/wear_font_gabarito_description</item>
+        <item>@string/wear_font_bricolage_grotesque_description</item>
+        <item>@string/wear_font_dm_serif_display_description</item>
+        <item>@string/wear_font_cormorant_garamond_description</item>
+        <item>@string/wear_font_cormorant_description</item>
+        <item>@string/wear_font_bitter_description</item>
+        <item>@string/wear_font_spectral_description</item>
+        <item>@string/wear_font_vollkorn_description</item>
+        <item>@string/wear_font_raleway_description</item>
+        <item>@string/wear_font_league_spartan_description</item>
+        <item>@string/wear_font_saira_description</item>
+        <item>@string/wear_font_signika_description</item>
+        <item>@string/wear_font_sofia_sans_description</item>
+        <item>@string/wear_font_overpass_description</item>
+        <item>@string/wear_font_public_sans_description</item>
+        <item>@string/wear_font_questrial_description</item>
+        <item>@string/wear_font_dosis_description</item>
+        <item>@string/wear_font_prompt_description</item>
+        <item>@string/wear_font_unbounded_description</item>
+        <item>@string/wear_font_recursive_description</item>
+        <item>@string/wear_font_trispace_description</item>
+        <item>@string/wear_font_noto_sans_description</item>
+        <item>@string/wear_font_noto_serif_description</item>
+        <item>@string/wear_font_noto_sans_mono_description</item>
+        <item>@string/wear_font_heebo_description</item>
+        <item>@string/wear_font_hind_description</item>
+        <item>@string/wear_font_hind_madurai_description</item>
+        <item>@string/wear_font_kumbh_sans_description</item>
+        <item>@string/wear_font_alegreya_description</item>
+        <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
+    </string-array>
+    <string name="action_open_library">گەڕان لە کتێبخانە</string>
+    <string name="library_up">گەڕانەوە</string>
+    <string name="error_library_unavailable">ئەم ئەپە کتێبخانەیەکی گەڕانپێکراوی نییە</string>
+    <string name="error_library_empty">هیچ شتێک لێرە نییە</string>
+    <string name="error_library_no_player">سەرەتا شتێک پخش بکە</string>
+    <string name="setting_wear_carousel_card_shape">شێوەی کارتی carousel</string>
+    <string name="setting_wear_note_cover_shape">شێوەی بەرگی Note</string>
+    <string name="setting_wear_title_centered">ناونیشان بخەرە ناوەڕاست</string>
+    <string name="setting_wear_title_centered_description">لەبری هەموو بلۆکی دەق، ناونیشان لە ناوەڕاستی شاشە جێگیر بکە</string>
+    <string name="player_element_title_centered">ناونیشانی ناوەڕاست</string>
+    <string-array name="wear_cover_shape_entries">
+        <item>خڕ</item>
+        <item>چوارگۆشە</item>
+        <item>Squircle</item>
+        <item>بازنە</item>
+        <item>شێوازی Samsung</item>
+    </string-array>
+    <string name="setting_wear_font_all_screens">فۆنت لە هەموو شوێنێک بەکاربهێنە</string>
+    <string name="setting_wear_font_all_screens_description">فۆنتی هەڵبژێردراو تەنها بۆ player نییە، بۆ menu و queue و Quick actions ـیش بەکاردێت. فۆنتە display و دەستنووسەکان لە لیستەکاندا ڕەنگە خوێندنەوەیان سەخت بێت.</string>
+    <string name="setting_wear_clock_font">جۆری فۆنتی کاتژمێر</string>
+    <string name="wear_clock_font_follow">شوێنی فۆنتی track بکەوە</string>
+    <string name="setting_wear_lyrics_font">جۆری فۆنتی دەقی گۆرانی</string>
+    <string name="setting_wear_lyrics_font_description">جۆری فۆنتی وشەکانی گۆرانی لە شاشەی Lyrics و ڕووخساری Verse. ئەگەر لێرە یەکێک هەڵنەبژێریت، شوێنی جۆری فۆنتی track دەکەوێت.</string>
+    <string name="wear_lyrics_font_follow">شوێنی جۆری فۆنتی track بکەوە</string>
+    <string name="setting_wear_clock_font_weight">کێشی فۆنتی کاتژمێر</string>
+    <string name="setting_wear_clock_font_italic">کاتژمێری italic</string>
+    <string name="setting_wear_clock_font_scale">قەبارەی کاتژمێر</string>
+    <string name="setting_wear_clock_font_tracking">بۆشایی نێوان پیتەکانی کاتژمێر</string>
+    <string name="setting_wear_clock_adaptive_contrast">ڕەنگی کاتژمێر بۆ کۆنتراست بگونجێنە</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">ئەگەر ڕەنگی ئەلبووم زۆر نزیک بێت لە artwork ـی پشتەوە، ڕوونتر یان تاریکتری دەکات بە پاراستنی hue ـەکە. تەنها کاتێک کاردەکات کە ڕەنگی کاتژمێر لەسەر Album color بێت.</string>
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">Display ـێکی all-caps ـی کورتکراو — وەک پۆستەر، بۆ ناونیشانی درێژ گونجاوە</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Serif ـی editorial بە کۆنتراستی بەرز — هەستی گۆڤار</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">Sans ـێکی ئەندازیاری تەکنیکی بە وردەکاری تایبەت</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">Display ـێکی sci-fi چوارگۆشەیی — بۆڵد و داهاتووگەر</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">Script ـی دەستنووس — ئاسایی و کەسی</string>
+    <string name="setting_wear_title_shadow_style">سێبەری ناونیشان</string>
+    <string name="setting_wear_title_shadow_color">ڕەنگی سێبەری ناونیشان</string>
+    <string name="setting_wear_title_shadow_custom_color">ڕەنگی سێبەری ناونیشانی تایبەت</string>
+    <string name="setting_wear_title_shadow_strength">توندی سێبەری ناونیشان</string>
+    <string name="setting_wear_artist_shadow_style">سێبەری هونەرمەند</string>
+    <string name="setting_wear_artist_shadow_color">ڕەنگی سێبەری هونەرمەند</string>
+    <string name="setting_wear_artist_shadow_custom_color">ڕەنگی سێبەری هونەرمەندی تایبەت</string>
+    <string name="setting_wear_artist_shadow_strength">توندی سێبەری هونەرمەند</string>
+    <string name="setting_wear_text_shadow_strength_description">ڕێژەی سەدی قەبارە و قوڵایی خۆی سێبەری هەڵبژێردراو.</string>
+    <string-array name="wear_text_shadow_style_entries">
+        <item>هیچ</item>
+        <item>نەرم</item>
+        <item>توند</item>
+        <item>درەوشانەوە</item>
+        <item>بەرزکراوە</item>
+        <item>ناسک</item>
+    </string-array>
+    <string-array name="wear_text_shadow_color_entries">
+        <item>ڕەش</item>
+        <item>ڕەنگی ئەلبوم</item>
+        <item>سپی</item>
+        <item>تایبەت</item>
+    </string-array>
+    <string name="setting_wear_title_outline_style">هێڵی دەوری ناونیشان</string>
+    <string name="setting_wear_title_outline_color">ڕەنگی هێڵی دەوری ناونیشان</string>
+    <string name="setting_wear_title_outline_custom_color">ڕەنگی تایبەتی هێڵی دەوری ناونیشان</string>
+    <string name="setting_wear_artist_outline_style">هێڵی دەوری هونەرمەند</string>
+    <string name="setting_wear_artist_outline_color">ڕەنگی هێڵی دەوری هونەرمەند</string>
+    <string name="setting_wear_artist_outline_custom_color">ڕەنگی تایبەتی هێڵی دەوری هونەرمەند</string>
+    <string-array name="wear_text_outline_style_entries">
+        <item>هیچ</item>
+        <item>Hairline</item>
+        <item>باریک</item>
+        <item>مامناوەند</item>
+        <item>بۆڵد</item>
+    </string-array>
+    <string name="setting_wear_title_text_bg_style">پاشبنەمای ناونیشان</string>
+    <string name="setting_wear_title_text_bg_color">ڕەنگی پاشبنەمای ناونیشان</string>
+    <string name="setting_wear_title_text_bg_custom_color">ڕەنگی تایبەتی پاشبنەمای ناونیشان</string>
+    <string name="setting_wear_title_text_bg_opacity">ناڕوونی پاشبنەمای ناونیشان</string>
+    <string name="setting_wear_artist_text_bg_style">پاشبنەمای هونەرمەند</string>
+    <string name="setting_wear_artist_text_bg_color">ڕەنگی پاشبنەمای هونەرمەند</string>
+    <string name="setting_wear_artist_text_bg_custom_color">ڕەنگی تایبەتی پاشبنەمای هونەرمەند</string>
+    <string name="setting_wear_artist_text_bg_opacity">ناڕوونی پاشبنەمای هونەرمەند</string>
+    <string name="setting_wear_text_bg_opacity_description">ڕێژەی سەدی ناڕوونی خۆی پاشبنەمای هەڵبژێردراو.</string>
+    <string-array name="wear_text_backdrop_style_entries">
+        <item>هیچ</item>
+        <item>Highlight</item>
+        <item>نەرم</item>
+        <item>Block</item>
+    </string-array>
+    <string name="setting_wear_seek_marker">نیشانەی شوێن</string>
+    <string name="setting_wear_seek_marker_description">کەی هێڵە کورتەکەی سەر progress ring کە شوێنی track نیشان دەدات لەسەر شاشە دەمێنێتەوە.</string>
+    <string-array name="wear_seek_marker_entries">
+        <item>هەمیشە</item>
+        <item>تەنها لە کاتی seek</item>
+        <item>لە کاتی seek و pause</item>
+        <item>تەنها لە کاتی pause ـدا</item>
+    </string-array>
+    <string name="setting_wear_track_time_mode">پیشاندانی کاتی track</string>
+    <string name="setting_wear_track_time_mode_description">کەی شوێنی track (بۆ نموونە 1:23 / 3:45) لە شاشەی now-playing پیشان بدرێت.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>هەمیشە</item>
+        <item>تەنها لە کاتی پخشدا</item>
+        <item>تەنها لە کاتی pause ـدا</item>
+        <item>هەرگیز</item>
+    </string-array>
+    <string name="setting_screen_buttons_curve">چەماوەی دوگمە بچووکەکان</string>
+    <string name="setting_screen_buttons_curve_description">شێوازی چەماوەی دوگمە بچووکەکان هەڵبژێرە: flat، arc، soft، curved.</string>
+    <string name="setting_screen_buttons_shape">شێوەی دوگمە بچووکەکان</string>
+    <string name="setting_screen_buttons_shape_description">شێوە و فۆرماتی layout ـی دوگمە بچووکەکان هەڵبژێرە.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Pill (بنەڕەت)</item>
+        <item>بازنە</item>
+        <item>چوارگۆشە</item>
+        <item>چوارگۆشەی گۆشەخڕ (نەرم)</item>
+        <item>چوارگۆشەی گۆشەخڕ (مامناوەند)</item>
+        <item>Squircle</item>
+        <item>گەڵا</item>
+        <item>دڵۆپ</item>
+        <item>Pill (پانی بچووک)</item>
+        <item>Pill (پانی مامناوەند)</item>
+        <item>Pill (پانی گەورە)</item>
+        <item>Pill (پانی زۆر گەورە)</item>
+        <item>چوارگۆشەی درێژی گۆشەخڕ (بچووک)</item>
+        <item>چوارگۆشەی درێژی گۆشەخڕ (مامناوەند)</item>
+        <item>چوارگۆشەی درێژی گۆشەخڕ (گەورە)</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>تەخت</item>
+        <item>کەوان</item>
+        <item>چەماوەی هێواش</item>
+        <item>چەماوەی نەرم</item>
+        <item>چەماوەی مامناوەند</item>
+        <item>چەماو</item>
+        <item>چەماوەی زۆر</item>
+        <item>تا لێوارەکان بڵاوبکەرەوە</item>
+        <item>لێواری چەپ</item>
+        <item>لێواری ڕاست</item>
+        <item>هەردوو لێوار</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>پاشبنەمای بنەڕەت</item>
+        <item>شووشە (یەکسان)</item>
+        <item>شووشە (سووک)</item>
+        <item>ئەلبوومی نیمچەڕوون</item>
+        <item>ئەلبوومی نیمچەڕوون Exp</item>
+        <item>درەوشانەوەی ئەلبووم</item>
+        <item>Glow Exp</item>
+        <item>Theme ـی ڕەق</item>
+        <item>ئەلبوومی ڕەق</item>
+        <item>ئەلبوومی ڕەقی Exp</item>
+        <item>Outline</item>
+        <item>ئەلبوومی Outline Exp</item>
+        <item>تەنها ئایکۆن (ڕوون)</item>
+        <item>Icon Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_color_entries">
+        <item>بێلایەن</item>
+        <item>ڕەنگی ئەلبوم</item>
+        <item>ڕەنگی تایبەت</item>
+    </string-array>
+    <string-array name="album_art_style_entries">
+        <item>بەرگی تەواو</item>
+        <item>پاشبنەمای بلورکراو</item>
+        <item>لێوارە ماتکراوەکان</item>
+        <item>چوارگۆشە (گۆشە تیژەکان)</item>
+        <item>چوارگۆشە (گۆشە نەرمەکان)</item>
+        <item>چوارگۆشە (گۆشە خڕەکان)</item>
+        <item>ڕەش و سپی</item>
+        <item>ڕەش و سپی بلورکراو</item>
+        <item>Expressive blur</item>
+        <item>Expressive</item>
+        <item>گرادیێنتی tonal ـی Material</item>
+        <item>بەرگی پۆستەر</item>
+        <item>گرادیێنتی ستۆدیۆ</item>
+        <item>درەوشانەوەی radial ـی Vinyl</item>
+        <item>درەوشانەوەی Halo</item>
+        <item>ڕیبۆنی Aurora</item>
+        <item>گرادیێنتی سپێکترەم</item>
+        <item>سوێپی Corona</item>
+        <item>کاڵبوونەوەی ئێوارە</item>
+        <item>Bloom</item>
+        <item>کاڵبوونەوەی ئاسۆ</item>
+        <item>درەوشانەوەی پشکۆ</item>
+        <item>ڕەشی AMOLED ـی Eclipse</item>
+        <item>شاراوە (ڕەشی ڕەق)</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+    <string-array name="auto_start_modes_descriptions">
+        <item>ناچالاک</item>
+        <item>ئایکۆنی watchface ـی مۆسیقا پیشان بدە (تەنها بۆ Wear 3.0)</item>
+        <item>Svartifoss بکەرەوە</item>
+    </string-array>
+    <string name="setting_close_timeout">کاتی داخستن</string>
+    <string name="setting_close_timeout_description">کاتێک هیچ مۆسیقایەک پخش نابێت، Svartifoss دوای &lt;b>%1$s seconds&lt;/b> خۆکارانە دادەخرێت. ئەگەر timeout لە 0 چرکە دابنرێت، ئەم تایبەتمەندییە ناچالاک دەبێت. بۆ پاشەکەوتی باتری، کاتەکە هەمیشە زۆر ورد نییە و ڕەنگە تا یەک خولەک داخستن دوا بکەوێت.</string>
+    <string name="setting_wear_close_on_idle">لە \"Nothing playing\" دابخە</string>
+    <string name="setting_wear_close_on_idle_description">ئەپی کاتژمێر نزیکەی یەک خولەک دوای گەیشتن بە شاشەی بێکاری \"Nothing playing\" خۆکارانە دادەخرێت، بۆ ئەوەی لەوێ نەماوێتەوە. سەربەخۆی close timeout ـی سەرەوەیە؛ ئەوە track ـی pause کراو دادەپۆشێت.</string>
+    <string name="category_notifications">popup ـی ئاگادارکردنەوە</string>
+    <string name="setting_enable_notifications">popup ـی ئاگادارکردنەوە پیشان بدە</string>
+    <string name="setting_enable_notifications_description">ئەم تایبەتمەندییە پێویستی بە ئەپێکی تر هەیە بۆ بەڕێوەبردنی ئاگادارکردنەوەکان (Vibration Center for Wear).\n\nهەر کات Vibration Center کاتژمێر دەهەژێنێت، Svartifoss دەقی ئاگادارکردنەوەکە وەک popup پیشان دەدات تا بەخێرایی و بێ جێهێشتنی Svartifoss بیبینیت.</string>
+    <string name="setting_notification_timeout">کاتی popup ـی ئاگادارکردنەوە</string>
+    <string name="setting_notification_timeout_description">popup ـی ئاگادارکردنەوە دوای &lt;b>%1$s seconds&lt;/b> خۆکارانە دادەخرێت. بۆ ناچالاککردنی auto-close ژمارەی 0 بنووسە.</string>
+    <string name="app_required">ئەپ پێویستە</string>
+    <string name="vibration_center_required_description">بۆ بەکارهێنانی ئەم تایبەتمەندییە پێویستە ئەپێکی تری (بەخۆڕایی) دابمەزرێنیت: Vibration Center for Wear.</string>
+    <string name="open_play_store">Play Store بکەرەوە</string>
+    <string name="error_no_notification_service_support">ببورە، وا دیارە ئامێرەکەت پشتگیری خزمەتگوزاری ئاگادارکردنەوە ناکات</string>
+    <string name="setting_always_select_center_action">هەمیشە کرداری ناوەڕاست هەڵبژێرە</string>
+    <string name="setting_always_select_center_action_description">کاتێک چالاک بێت، هەر شوێنێک لە action list بدەیت هەمیشە هەڵبژاردەی ناوەڕاست (highlight کراو) هەڵدەبژێردرێت، بێ گوێدان بەوەی کامت لێداوە.</string>
+    <string name="change_icon">ئایکۆن بگۆڕە</string>
+    <string name="please_wait">تکایە چاوەڕێ بکە</string>
+    <string name="error_playlist_not_supported">لە لایەن ئەم media app ـە پشتگیری ناکرێت</string>
+    <string name="error_search_no_results">هیچ ئەنجامێک نەدۆزرایەوە</string>
+    <string name="seconds_to_skip">چرکە بۆ پەڕاندن:</string>
+    <string name="seconds_to_reverse">چرکە بۆ گەڕاندنەوە:</string>
+    <string name="setting_dynamic_accent_color">ڕەنگی accent ـی dynamic</string>
+    <string name="setting_dynamic_accent_color_description">کاتێک چالاک بێت، ڕەنگی accent (SeekBar، queue item ـی چالاک) خۆکارانە لەگەڵ ڕەنگی زاڵی artwork ـی ئەلبوومی ئێستا دەگونجێت.</string>
+    <string name="setting_desaturated_color">ڕەنگی کەم‌تێر</string>
+    <string name="setting_desaturated_color_description">Saturation و brightness ـی ڕەنگی دەرهێنراو ڕێکدەخات بۆ دڵنیابوون لە خوێندنەوە و کۆنتراستی بەرز بەپێی theme ـی چالاک.</string>
+    <string name="queue_header">ڕیزی پخش</string>
+    <string name="queue_unavailable">Queue بەردەست نییە</string>
+    <string name="setting_custom_accent_color">ڕەنگی accent</string>
+    <string name="setting_custom_accent_color_description">ڕەنگێکی accent ـی تایبەت بۆ ڕووکارەکەی ئەپ هەڵبژێرە</string>
+    <string name="setting_mini_player">Mini player</string>
+    <string name="setting_mini_player_description">کاتێک media چالاکە، bar ـێکی now-playing بەردەوام لەسەر navigation ـی خوارەوە پیشان دەدات. بە بنەڕەت چالاکە؛ بۆ گەڕاندنەوەی ئەو بۆشاییە ناچالاکی بکە.</string>
+    <string name="color_picker_title">ڕەنگی accent هەڵبژێرە</string>
+    <string name="color_picker_reset">Reset بکە</string>
+    <string name="color_picker_apply">جێبەجێ بکە</string>
+    <string name="color_picker_recent">بەکارهێنانی دوایی</string>
+    <string name="color_picker_copied">کۆدی ڕەنگ کۆپی کرا</string>
+    <string name="color_picker_default">بنەڕەت</string>
+    <string name="color_picker_invalid">کۆدی ڕەنگ نادروستە</string>
+    <string name="color_picker_current">ئێستا: %s</string>
+    <string name="drawer_version_format">وەشان %1$s</string>
+    <string name="drawer_tagline">Companion App بۆ Wear OS</string>
+    <string name="drawer_about_heading">دەربارە</string>
+    <string name="drawer_about_summary">Svartifoss ڕێگەت پێدەدات مۆسیقای ناو مۆبایلەکەت لە کاتژمێری Wear OS کۆنترۆڵ بکەیت — بە remote ـێکی تەواو سازکراو بۆ ئامێرەکەت.</string>
+    <string name="drawer_name_heading">ناو</string>
+    <string name="drawer_name_meaning">Svartifoss بە زمانی Icelandic واتای “Black Falls” دەدات — ناوی ئەو ئاوشارەیە لە Vatnajökull National Park، کە ستوونە تاریکەکانی basalt لە دەوری ئاوشارێکی باریکن. وەک ئاوی سەر بەرد، مۆسیقا بەناو ئەپەکەدا دەڕوات.</string>
+    <string name="drawer_sync_heading">Sync</string>
+    <string name="drawer_sync_summary">ڕێکخستنەکانی کاتژمێر لێرە لە مۆبایل ڕێکدەخرێن و خۆکارانە لەگەڵ کاتژمێری پەیوەست sync دەبن.</string>
+    <string name="drawer_support_heading">پشتگیری</string>
+    <string name="drawer_support_summary">Svartifoss بەخۆڕایی و open source ـە - ئەگەر بەسوودە بۆت، coffee ـێکم بۆ بکڕە :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">cover art دابگرە</string>
+    <string name="album_art_saved">cover art لە gallery پاشەکەوت کرا</string>
+    <string name="album_art_save_error">پاشەکەوتکردنی cover art سەرکەوتوو نەبوو</string>
+    <string name="action_play_liked_songs">گۆرانییە حەزپێکراوەکان پخش بکە (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">گۆرانییە حەزپێکراوەکان پخش بکە (Spotify)</string>
+    <string name="action_play_soundcloud_likes">track ـە حەزپێکراوەکان پخش بکە (SoundCloud)</string>
+    <string name="action_my_playlists">Shortcut ـەکانی streaming</string>
+    <string name="action_play_specific_playlist">streaming shortcut بکەرەوە</string>
+    <string name="action_choose_or_add_streaming_shortcut">streaming shortcut هەڵبژێرە یان زیاد بکە</string>
+    <string name="action_show_streaming_library">هەموو shortcut ـە پاشەکەوتکراوەکان پیشان بدە</string>
+    <string name="playlist_shortcut_pick_title">shortcut هەڵبژێرە</string>
+    <string name="playlist_shortcut_pick_empty">هێشتا هیچ streaming shortcut ـێک پاشەکەوت نەکراوە — یەکێک لە خوارەوە زیاد بکە، پاشان بۆ هەڵبژاردن لێی بدە</string>
+    <string name="playlist_shortcuts_empty">هێشتا streaming shortcut نییە — لە ڕێکخستنەکانی phone app زیاد بکە</string>
+    <string name="setting_playlist_shortcuts">Shortcut ـەکانی streaming</string>
+    <string name="setting_playlist_shortcuts_description">share link ـەکان لە کاتژمێرەوە لە YouTube Music و Spotify و streaming app ـەکانی تر بکەرەوە</string>
+    <string name="setting_shortcut_artwork">artwork ـی shortcut لە online وەربگرە</string>
+    <string name="setting_shortcut_artwork_description">ئەگەر خزمەتگوزارییەکە public preview artwork دابین بکات، thumbnail دابەزێنێت و لە لیستی مۆبایل، menu ـی کاتژمێر و دوگمە دیاریکراوەکان پیشانی دەدات. هەر thumbnail ـێک تەنها جارێک وەردەگیرێت؛ تەنها public share link نێردرێت. بە بنەڕەت ناچالاکە.</string>
+    <string name="setting_queue_local_artwork">cover ـەکانی queue لە کتێبخانەکەتەوە</string>
+    <string name="setting_queue_local_artwork_description">music player ـە ناوخۆییەکان cover ـەکانی queue وەک library reference بڵاودەکەنەوە. بۆ پیشاندانیان لە queue ـی کاتژمێر media access بدە. هیچ دەستگەیشتنێکی ئینتەرنێت بەکارناهێنرێت.</string>
+    <string name="setting_queue_local_artwork_granted">Media access ڕێگەپێدرا — cover ـە ناوخۆییەکانی queue پیشان دەدرێن</string>
+    <string name="setting_queue_local_artwork_denied">Media access ڕەتکرایەوە. بۆ پیشاندانی cover ـە ناوخۆییەکانی queue لە ڕێکخستنەکانی Android چالاکی بکە.</string>
+    <string name="setting_queue_remote_artwork">cover ـەکانی queue لە online وەربگرە</string>
+    <string name="setting_queue_remote_artwork_short_description">Streaming apps (YouTube Music clients, Echo Music…) cover ـەکانی queue وەک link بڵاودەکەنەوە نەک وێنە، بۆیە دایاندەگرێت و cache یان دەکات. بۆ offline هێشتنەوەی تەواوی queue ناچالاکی بکە — ئەو rows ـانە ئینجا هیچ cover ـێک پیشان نادەن.</string>
+    <string name="setting_queue_remote_artwork_description">Streaming players cover ـەکانی queue وەک link بڵاودەکەنەوە نەک وێنە. هەر یەکێک جارێک دابگرە و لەم مۆبایلە cache بکە بۆ پیشاندانی لە queue ـی کاتژمێر. تەنها cover URL ـەکەی player کە پێشتر بڵاویکردووەتەوە داوا دەکرێت — نە account و نە personal data. بە بنەڕەت چالاکە؛ بۆ offline هێشتنەوەی تەواوی queue ناچالاکی بکە.</string>
+    <string name="watch_streaming_shortcuts_empty">track و album یان playlist بۆ Quick Actions و menu ـی کاتژمێر زیاد بکە</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d shortcut ـی پاشەکەوتکراو · لە Quick Actions و menu ـی کاتژمێر بەردەستە</item>
+        <item quantity="other">%1$d shortcut ـی پاشەکەوتکراو · لە Quick Actions و menu ـی کاتژمێر بەردەستن</item>
+    </plurals>
+    <string name="category_music_apps">ئەپ و خزمەتگوزارییەکانی مۆسیقا</string>
+    <string name="category_apps_content">دەقی گۆرانی و metadata</string>
+    <string name="category_streaming_services">Shortcut ـەکانی streaming</string>
+    <string name="category_queue_artwork">Artwork ـی queue</string>
+    <string name="category_system_access">دەستگەیشتنی Android و ئاگادارکردنەوەکان</string>
+    <string name="setting_apps_integrations">خزمەتگوزاری مۆسیقای پشتگیریکراو</string>
+    <string name="setting_apps_integrations_description">Link ـەکان لەگەڵ YouTube Music و Spotify و Deezer و TIDAL و Apple Music و Amazon Music و SoundCloud کاردەکەن. هیچ account access ـێک پێویست نییە.</string>
+    <string name="setting_apps_integrations_none">هیچ ئەپی پشتگیریکراوێک نەدۆزرایەوە. shortcut ـەکان هێشتا دەتوانن لە browser یان ئەپێکی گونجاوی تر بکرێنەوە.</string>
+    <string name="setting_apps_integrations_installed">%1$d لە %2$d دۆزرایەوە: %3$s</string>
+    <string name="setting_streaming_open_mode">streaming link ـەکان بە ئەمە بکەرەوە</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>streaming app ـی دۆزراوە</item>
+        <item>بنەڕەتی Android</item>
+        <item>هەر جارێک بپرسە</item>
+    </string-array>
+    <string name="setting_persistent_notification">ئاگادارکردنەوەی \"Svartifoss active\" بەڕێوەببە</string>
+    <string name="setting_persistent_notification_description">ڕێکخستنەکانی Android ـی ئەم ئاگادارکردنەوەیە دەکاتەوە — mute ی بکە، لە lock screen بیشارەوە یان ڕێکی بخە. بە تەواوی ناکرێت ناچالاک بکرێت: Android پێویستی بە ongoing notification هەیە کاتێک background service ـەکەی قسەکردن لەگەڵ کاتژمێر کاردەکات.</string>
+    <string name="setting_notification_access">دەستگەیشتنی media notification</string>
+    <string name="setting_notification_access_enabled">ڕێگەپێدراوە · بۆ پشکنینی ڕێکخستنەکانی Android لێبدە</string>
+    <string name="setting_notification_access_disabled">ڕێگەپێنەدراوە · بۆ notification media actions و automatic launch filters پێویستە</string>
+    <string name="setting_notification_access_unavailable">ڕێکخستنەکانی notification access لەم ئامێرەدا بەردەست نین</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d shortcut ـی پاشەکەوتکراو · بۆ بەڕێوەبردن یان import ـی link ـەکان لێبدە</item>
+        <item quantity="other">%1$d shortcut ـی پاشەکەوتکراو · بۆ بەڕێوەبردن یان import ـی link ـەکان لێبدە</item>
+    </plurals>
+    <string name="category_privacy">تایبەتمەندی</string>
+    <string name="setting_privacy_policy">سیاسەتی تایبەتمەندی</string>
+    <string name="setting_privacy_policy_description">ببینە Svartifoss چ data ـێک بەکاردێنێت و کام online services ئارەزوومەندانەن.</string>
+    <string name="setting_crash_reporting">report ـی crash بنێرە</string>
+    <string name="setting_crash_reporting_description">diagnostics ـی Firebase Crashlytics بنێرە بۆ یارمەتیدان لە چارەسەرکردنی هەڵەکان. بە بنەڕەت چالاکە؛ هەر کاتێک دەتوانیت ناچالاکی بکەیت.</string>
+    <string name="setting_announcements">ئاگادارکردنەوەی ڕاگەیاندن</string>
+    <string name="setting_announcements_description">ئاگادارکردنەوەی هەندێک جار لەلایەن گەشەپێدەرەوە — release ـی نوێ و ئاگاداری گرنگ. بە Firebase Cloud Messaging نێردرێن؛ هیچ account یان user list ـێک لە ئارادا نییە. بە بنەڕەت چالاکە؛ هەر کاتێک دەتوانیت ناچالاکی بکەیت.</string>
+    <string name="announcement_notification_channel">ڕاگەیاندنەکان</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">playlist یان album یان track ڕاستەوخۆ بۆ Svartifoss share بکە، link ـی کۆپیکراو paste بکە یان بەدەستی زیاد بکە. کاتژمێر داوا لە مۆبایل دەکات بیکاتەوە؛ service login پێویست نییە.</string>
+    <string name="back">گەڕانەوە</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">مۆسیقاکەت، بە یەک لێدان</string>
+    <string name="playlist_shortcuts_yours">shortcut ـەکانت</string>
+    <string name="playlist_shortcuts_empty_hint">link ـی track یان album یان playlist ـی share کراو زیاد بکە تا لە کاتژمێر بەردەست بێت.</string>
+    <string name="playlist_shortcuts_add">shortcut زیاد بکە</string>
+    <string name="playlist_shortcuts_paste">link paste بکە</string>
+    <string name="playlist_shortcuts_reload_covers">cover ـەکان دووبارە باربکە</string>
+    <string name="playlist_shortcuts_reloading_covers">cover ـەکان دووبارە بار دەبن…</string>
+    <string name="playlist_shortcuts_covers_reloaded">cover ـەکان دووبارە بارکران</string>
+    <string name="playlist_shortcuts_edit">shortcut دەستکاری بکە</string>
+    <string name="playlist_shortcut_save">shortcut پاشەکەوت بکە</string>
+    <string name="playlist_shortcut_editor_hint">یەک link paste بکە. Svartifoss ئەپ و جۆری content ـەکەی خۆکارانە دەناسێتەوە.</string>
+    <string name="playlist_shortcut_detection_waiting">چاوەڕێی streaming link ـە</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify و YouTube Music و Apple Music و TIDAL و Deezer و زیاتر پشتگیریکراون.</string>
+    <string name="playlist_shortcut_detected_format">دۆزرایەوە: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">ناو</string>
+    <string name="playlist_shortcut_link_hint">Share link یان app URI</string>
+    <string name="playlist_shortcut_shuffle">بە shuffle پخش بکە (تەنها YouTube Music)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">link</string>
+    <string name="playlist_type_track">track</string>
+    <string name="playlist_type_playlist">playlist</string>
+    <string name="playlist_type_album">album</string>
+    <string name="playlist_type_artist">هونەرمەند</string>
+    <string name="playlist_type_show">show</string>
+    <string name="playlist_type_episode">episode</string>
+    <string name="playlist_type_mix">Mix</string>
+    <string name="playlist_badge_shuffle">Shuffle</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">هێشتا هیچ streaming shortcut ـێک زیاد نەکراوە</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d پاشەکەوت کراوە</item>
+        <item quantity="other">%1$d پاشەکەوت کراوە</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">streaming shortcut ـە ڕیزکراوەکان. بۆ drag دەست لەسەر بگرە، کردارە accessibility ـەکانی Move up یان Move down بەکاربهێنە، یان لە keyboard Ctrl+Up/Down دابگرە.</string>
+    <string name="playlist_shortcut_more_options">هەڵبژاردەی زیاتر بۆ %1$s</string>
+    <string name="playlist_shortcut_menu_edit">دەستکاری بکە</string>
+    <string name="playlist_shortcut_menu_open">ئێستا بکەرەوە</string>
+    <string name="playlist_shortcut_menu_copy">link کۆپی بکە</string>
+    <string name="playlist_shortcut_menu_duplicate">دووبارەی بکە</string>
+    <string name="playlist_shortcut_menu_share">share بکە</string>
+    <string name="playlist_shortcut_menu_delete">بسڕەوە</string>
+    <string name="playlist_shortcut_open_failed">هیچ ئەپێک ناتوانێت ئەم link ـە بکاتەوە</string>
+    <string name="streaming_shortcut_choose_app">streaming link بە ئەمە بکەرەوە</string>
+    <string name="playlist_shortcut_link_copied">link کۆپی کرا</string>
+    <string name="playlist_shortcut_import_invalid">دەقی share کراو streaming link ـێکی دروستی تێدا نییە</string>
+    <string name="playlist_shortcut_clipboard_invalid">clipboard streaming link ـێکی دروستی تێدا نییە</string>
+    <string name="playlist_shortcut_name_required">ناوی shortcut بنووسە</string>
+    <string name="playlist_shortcut_link_invalid">web link یان app URI ـێکی دروست بنووسە</string>
+    <string name="playlist_shortcut_service_invalid">link ـێکی دروست paste بکە بۆ ناسینەوەی خزمەتگوزاری</string>
+    <string name="playlist_shortcut_service_generic">link ـی گونجاو · Android ئەپێک هەڵدەبژێرێت</string>
+    <string name="playlist_shortcut_service_installed">%1$s دامەزراوە · ئامادەیە لە ئەپەکەی بکرێتەوە</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s دانەمەزراوە · browser یان ئەپێکی گونجاو دەتوانرێت بەکاربهێنرێت</string>
+    <string name="playlist_shortcut_copy_name">کۆپی %1$s</string>
+    <string name="playlist_shortcut_copy_name_numbered">کۆپی %1$s %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s دروست کرا</string>
+    <string name="playlist_shortcut_share_title">streaming shortcut share بکە</string>
+    <string name="playlist_shortcut_share_failed">هیچ ئەپێک بۆ share کردنی ئەم shortcut ـە بەردەست نییە</string>
+    <string name="playlist_shortcut_deleted">%1$s سڕایەوە</string>
+    <string name="playlist_shortcut_undo">گەڕاندنەوە</string>
+    <string name="action_play_liked_songs_shuffled">گۆرانییە حەزپێکراوەکان بە shuffle پخش بکە (YT Music)</string>
+    <string name="action_search_history">مێژووی گەڕان</string>
+    <string name="search_history_empty">هێشتا هیچ گەڕانێکی دوایی نییە</string>
+    <string name="category_updates">نوێکردنەوەکان</string>
+    <string name="setting_update_check">لە وەشانە نوێکان ئاگادار بکەرەوە</string>
+    <string name="setting_update_check_description">نزیکەی ڕۆژانە جارێک GitHub بۆ release ـی نوێ دەپشکنێت و ئاگادارکردنەوە پیشان دەدات</string>
+    <string name="setting_update_prereleases">pre-release ـەکانیش بخەرە ناو</string>
+    <string name="setting_update_prereleases_description">لە وەشانە beta ـکانیش ئاگادار بکرێرەوە</string>
+    <string name="setting_update_check_now">ئێستا نوێکردنەوە بپشکنە</string>
+    <string name="setting_update_check_now_description">نوێترین وەشان پیشان دەدات و ڕێگەت پێدەدات کاتژمێر بە Bluetooth نوێ بکەیتەوە</string>
+    <string name="update_screen_title">نوێکردنەوەکان</string>
+    <string name="update_cover_content_description">Svartifoss، ئەو ئاوشارەی ناوی ئەپەکە لێی هاتووە</string>
+    <string name="update_notification_channel">نوێکردنەوەکانی ئەپ</string>
+    <string name="update_available_title">Svartifoss %1$s بەردەستە</string>
+    <string name="update_notification_text">بۆ نوێکردنەوە لێبدە</string>
+    <string name="update_available_action">نوێکردنەوە بەردەستە</string>
+    <string name="update_installed_phone">مۆبایل: %1$s</string>
+    <string name="update_installed_versions">مۆبایل: %1$s \u00b7 کاتژمێر: %2$s</string>
+    <string name="update_watch_version_unknown">نەزانراو</string>
+    <string name="update_checking">نوێکردنەوە دەپشکنرێت\u2026</string>
+    <string name="update_check_failed">نەتوانرا نوێکردنەوە بپشکنرێت. پەیوەندییەکەت بپشکنە و دووبارە هەوڵ بدە.</string>
+    <string name="update_available_line">وەشانی نوێ: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(pre-release)</string>
+    <string name="update_up_to_date">لە نوێترین وەشانیت (%1$s)</string>
+    <string name="update_no_wear_asset">ئەم release ـە watch APK ـێکی بۆ ناردن نییە.</string>
+    <string name="update_watch_hint">\u201cکاتژمێر نوێ بکەرەوە\u201d ئەپی نوێی کاتژمێر دادەگرێت و بە Bluetooth دەنێرێت \u2014 تۆ لەسەر خودی کاتژمێر دامەزراندن پشتڕاست دەکەیتەوە؛ cable یان Wear Installer پێویست نییە.</string>
+    <string name="update_downloading">دابەزاندن\u2026 %1$d%%</string>
+    <string name="update_connecting_watch">پەیوەندی بە کاتژمێرەوە\u2026</string>
+    <string name="update_transferring">ناردن بۆ کاتژمێر\u2026 %1$d%%</string>
+    <string name="update_confirm_on_watch">نێردرا! ئاگادارکردنەوەیەک لە کاتژمێر دەرکەوت \u2014 لەوێ لێبدە بۆ دامەزراندن.</string>
+    <string name="update_no_watch">هیچ کاتژمێرێک پەیوەست نییە.</string>
+    <string name="update_push_failed">ناردنی نوێکردنەوە بۆ کاتژمێر سەرکەوتوو نەبوو. دووبارە هەوڵ بدە.</string>
+    <string name="update_watch_button">کاتژمێر نوێ بکەرەوە</string>
+    <string name="update_open_release_button">پەڕەی release بکەرەوە</string>
+    <string name="update_watch_behind">کاتژمێرەکەت هێشتا لە %1$s ـە \u2014 نوێکردنەوەی خوارەوەی بۆ بنێرە.</string>
+    <string name="update_subtitle">ئەپی مۆبایل و کاتژمێر لە sync بهێڵەوە</string>
+    <string name="update_state_checking">نوێکردنەوە دەپشکنرێت\u2026</string>
+    <string name="update_state_current">نوێترین وەشان بەکاردەهێنیت</string>
+    <string name="update_state_current_sub">نوێترین release، %1$s کاردەکات</string>
+    <string name="update_state_available">نوێکردنەوە بەردەستە</string>
+    <string name="update_state_available_sub">%1$s \u00b7 %2$s</string>
+    <string name="update_state_failed">نەتوانرا نوێکردنەوە بپشکنرێت</string>
+    <string name="update_state_failed_sub">پەیوەندییەکەت بپشکنە و دووبارە هەوڵ بدە</string>
+    <string name="update_device_phone">مۆبایل</string>
+    <string name="update_device_watch">کاتژمێر</string>
+    <string name="update_versions_header">دامەزراو</string>
+    <string name="update_whats_new">چی نوێیە</string>
+    <string name="update_phone_button">مۆبایل نوێ بکەرەوە</string>
+    <string name="update_installing">installer دەکرێتەوە\u2026</string>
+    <string name="update_install_permission_needed">ڕێگە بدە ئەپ لە Svartifoss ـەوە دابمەزرێت، پاشان Update phone دووبارە لێبدە.</string>
+    <string name="update_phone_failed">دابەزاندنی نوێکردنەوەی مۆبایل سەرکەوتوو نەبوو. دووبارە هەوڵ بدە.</string>
+    <string name="update_install_notification_title">نوێکردنەوەی Svartifoss</string>
+    <string name="update_install_notification_tap">بۆ دامەزراندنی وەشانی نوێ لێبدە</string>
+    <string name="update_install_notification_failed">دامەزراندن سەرکەوتوو نەبوو. لە Settings ڕێگە بە installs لە Svartifoss بدە و دووبارە هەوڵ بدە.</string>
+    <string name="setting_wear_album_accent_source">سەرچاوەی accent ـی ئەلبووم</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>هاوسەنگ</item>
+        <item>زیاترین تۆخ</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>ناچالاک</item>
+        <item>نەرم</item>
+        <item>ستاندارد</item>
+        <item>بۆڵد</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">ئاستی کەمینەی accent</string>
+    <string name="preview_metadata_album">album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">track</string>
+    <string name="preview_metadata_composer">ئاوازدانەر</string>
+    <string name="preview_metadata_genre">ژانر</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">ساڵ</string>
+    <string name="preview_metadata_format">فۆرمات</string>
+    <string name="preview_metadata_bitrate">Bitrate</string>
+    <string name="preview_metadata_position">شوێن</string>
+    <string name="preview_metadata_output">Output</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">وردەکارییەکانی ئەلبووم</string>
+    <string name="setting_wear_metadata_core_description">ئەلبووم، هونەرمەندی ئەلبووم، شوێن لە تۆمار و ماوە.</string>
+    <string name="setting_wear_metadata_release">وردەکارییەکانی release</string>
+    <string name="setting_wear_metadata_release_description">ژانر، ساڵ، بەرواری release و label.</string>
+    <string name="setting_wear_metadata_credits">ناوی بەشداربووان</string>
+    <string name="setting_wear_metadata_credits_description">composer و writer و author، ئەگەر player بڵاویان بکاتەوە.</string>
+    <string name="setting_wear_metadata_technical">وردەکارییەکانی فایل</string>
+    <string name="setting_wear_metadata_technical_description">فۆرمات، bitrate، sample rate، channels و قەبارە. تەنها بۆ track ـە ناوخۆییەکان.</string>
+    <string name="setting_split_panel">پانێڵی دابەشکراو</string>
+    <string name="setting_split_panel_description">چی نیوەی خوارەوەی Split face پڕ بکات. Blurred artwork هەمان cover لە پشت دەق بەردەوام دەکات؛ solid colour شێوەی notification-card ـە.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>artwork ـی بلورکراو</item>
+        <item>ڕەنگی ڕەق</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">وردەکارییەکانی پخش</string>
+    <string name="setting_wear_metadata_playback_description">شوێن تا millisecond، خێرایی، audio output، و ئەوەی دەنگ لە کوێوە stream یان play دەکرێت — لەگەڵ address ـی track. تەنها block ـێکە کە streaming track دەتوانێت پڕی بکات کاتێک فایلێک نییە بۆ وەسفکردن.</string>
+    <string name="setting_wear_metadata_identifiers">ناسێنەرەکان</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC و catalogue ids. بە بنەڕەت ناچالاکە — کاتێک پێویستە بەسوودە، کاتێک نا پێویستە زانیاری زیادەیە.</string>
+    <string name="setting_metadata_lookup">وردەکاری track لە online بدۆزەرەوە</string>
+    <string name="setting_metadata_lookup_description">ئەو زانیارییانە پڕ دەکاتەوە کە ئەپی پخشکار بڵاوی نەکردوونەتەوە — ISRC، label، release date — لە MusicBrainz، database ـێکی گشتی و بەخۆڕایی. بە بنەڕەت ناچالاکە. Metadata watch face بەبێ ئەمەش کاردەکات؛ ئەمە تەنها rows ـی زیاتر زیاد دەکات. هیچ شتێک نانێردرێت مەگەر ئەمە چالاک بکەیت و ئەو face ـە هەڵبژێریت، و تەنها track name و artist نێردرێن.</string>
+    <string-array name="wear_text_block_align_entries">
+        <item>شوێن face بکەوە</item>
+        <item>دەستپێک</item>
+        <item>ناوەڕاست</item>
+        <item>کۆتایی</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>شوێن face بکەوە</item>
+        <item>سەرەوە</item>
+        <item>ناوەڕاست</item>
+        <item>خوارەوە</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_entries">
+        <item>جێگیر (یەک دێڕ، بێ scroll یان shrink)</item>
+        <item>Scroll (marquee)</item>
+        <item>Shrink بکە بۆ جێبوونەوە</item>
+    </string-array>
+    <string-array name="wear_album_art_source_entries">
+        <item>لە ئەپی مۆسیقاوە</item>
+        <item>لە online دۆزراوە</item>
+        <item>وێنەی هونەرمەند</item>
+        <item>وێنە لە gallery ـی من</item>
+        <item>هەڕەمەکی لە folder</item>
+    </string-array>
+</resources>

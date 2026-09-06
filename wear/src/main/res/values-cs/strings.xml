@@ -191,4 +191,21 @@ Vše si přizpůsobíte v Ovládání a Hodinky na telefonu</string>
 
     <string name="metadata_about">O aplikaci</string>
     <string name="metadata_source">Přehrává se v</string>
+    <string name="action_name_open_quick_actions_panel">Otevřít panel rychlých akcí</string>
+    <string name="action_name_fast_forward">Rychle vpřed</string>
+    <string name="action_name_rewind">Přetočit zpět</string>
+    <string name="action_name_set_speed">Nastavit rychlost přehrávání</string>
+    <string name="action_name_seek_position">Přejít na pozici skladby</string>
+    <string name="action_name_set_volume">Nastavit hlasitost</string>
+    <string name="action_name_set_shuffle">Nastavit náhodné přehrávání</string>
+    <string name="action_name_set_repeat">Nastavit opakování</string>
+    <string name="action_name_open_volume_screen">Otevřít obrazovku hlasitosti</string>
+    <string name="action_name_open_progress_screen">Otevřít obrazovku průběhu</string>
+    <string name="action_name_open_face_picker">Otevřít výběr ciferníku</string>
+    <string name="action_name_close_watch_app">Zavřít aplikaci v hodinkách</string>
+    <string name="volume_screen_title">Hlasitost</string>
+    <string name="progress_screen_title">Průběh</string>
+    <string name="progress_screen_cancel_seek">Zrušit posun</string>
+    <string name="progress_screen_skip_back">Přeskočit o %1$d sekund zpět</string>
+    <string name="progress_screen_skip_forward">Přeskočit o %1$d sekund vpřed</string>
 </resources>

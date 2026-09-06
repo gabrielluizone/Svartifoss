@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Aspectul inelului de progres</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Complet transparent</item>
+        <item>Culoare secundară</item>
+        <item>Culoare terțiară</item>
+        <item>Plasă de culori</item>
+        <item>Auroră</item>
+        <item>Reflector</item>
+        <item>Vignetă</item>
+        <item>Ton împărțit</item>
+        <item>Benzi de culoare</item>
+        <item>Miezul nopții</item>
+        <item>Halou</item>
+        <item>Estompare cu fum</item>
+        <item>Apus</item>
+        <item>Ocean</item>
+        <item>Nebuloasă</item>
+        <item>Jar</item>
+        <item>Linia mareei</item>
+        <item>Bioluminescență</item>
+        <item>Iridescent</item>
+        <item>Grafit</item>
+        <item>Cinema</item>
+        <item>Orbită</item>
+        <item>Orizont</item>
+        <item>Spălare cu cerneală</item>
+        <item>Înflorire</item>
+        <item>Fiord</item>
+        <item>Grilă de puncte</item>
+        <item>Linie de scanare</item>
+        <item>Radar</item>
+        <item>Linii de contur</item>
+        <item>Fațetat</item>
+        <item>Amurg</item>
+        <item>Gheață</item>
+        <item>Trandafir</item>
+        <item>Hârtie</item>
+        <item>Monolit</item>
+        <item>Felinar</item>
+        <item>Noir</item>
+        <item>Catifea</item>
+        <item>Miraj</item>
+        <item>Strălucire difuză</item>
+        <item>Nor</item>
+        <item>Nocturnă</item>
+        <item>Lichid</item>
+        <item>Maree</item>
+        <item>Vinil</item>
+        <item>Coroană</item>
+        <item>Semilună</item>
+        <item>Grilă</item>
+        <item>Văl de sticlă</item>
+        <item>Material</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Spectru</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Mărgele</item>
+        <item>Șină dublă</item>
+        <item>Puls</item>
+        <item>Crom</item>
+        <item>Spectru</item>
+        <item>Trepte</item>
+        <item>Bomboană</item>
+        <item>Fantomă</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Margine dublă</item>
+        <item>Indicator vertical (stânga)</item>
+        <item>Indicator vertical (dreapta)</item>
+        <item>Indicator superior</item>
+        <item>Indicator inferior</item>
+        <item>Cadran central</item>
+        <item>Halou superior</item>
+        <item>Halou inferior</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Inel dublu</item>
+        <item>Mărgele</item>
+        <item>Linie și punct</item>
+        <item>Marcaje pentru 24 de ore</item>
+        <item>Doar progres</item>
+        <item>Strălucire</item>
+        <item>Duoton</item>
+        <item>Ac</item>
+        <item>Alternant</item>
+        <item>Scânteie</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Marginea ramei</item>
+        <item>Inel retras</item>
+        <item>Inel interior</item>
+        <item>Inel gros</item>
+        <item>Deschis jos</item>
+        <item>Deschis sus</item>
+        <item>Arc stâng</item>
+        <item>Arc drept</item>
+        <item>Pistă dublă</item>
+        <item>Deschis în stânga</item>
+        <item>Deschis în dreapta</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Pastilă compactă</item>
+        <item>Album pătrat</item>
+        <item>Pastilă stivuită</item>
+        <item>Insignă</item>
+        <item>Bară de sticlă</item>
+        <item>LCD</item>
+        <item>Pătrat conturat</item>
+        <item>Panglică</item>
+        <item>Bulă de timp</item>
+        <item>Ton împărțit</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Cronologie (sus)</item>
+        <item>Cronologie (jos)</item>
+        <item>Segmente (sus)</item>
+        <item>Cronologie verticală (stânga)</item>
+        <item>Cronologie verticală (dreapta)</item>
+        <item>Cadran central</item>
+        <item>Cronologie dublă</item>
+        <item>Segmente (jos)</item>
+        <item>Stivă centrală</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Moale</item>
+        <item>Crom</item>
+        <item>Holografic</item>
+        <item>Bulă</item>
+        <item>Șină</item>
+        <item>Apus</item>
+        <item>Contur album</item>
+        <item>Sticlă întunecată</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Evantai</item>
+        <item>Orbită</item>
+        <item>Dock inferior</item>
+        <item>Coloană</item>
+        <item>Panou împărțit</item>
+        <item>Romb</item>
+        <item>Carusel</item>
+        <item>Triunghi</item>
+        <item>Scară</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Moale</item>
+        <item>Placă</item>
+        <item>Cerneală</item>
+        <item>Șină</item>
+        <item>Apus</item>
+        <item>Bulă</item>
+        <item>Crom</item>
+        <item>Holografic</item>
+    </string-array>
+</resources>

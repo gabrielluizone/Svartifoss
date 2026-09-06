@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Układ pierścienia postępu</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Całkowicie przezroczysty</item>
+        <item>Drugi kolor</item>
+        <item>Trzeci kolor</item>
+        <item>Kolorowa siatka</item>
+        <item>Zorza</item>
+        <item>Reflektor</item>
+        <item>Winieta</item>
+        <item>Podzielona tonacja</item>
+        <item>Kolorowe pasma</item>
+        <item>Północ</item>
+        <item>Aureola</item>
+        <item>Rozmycie dymu</item>
+        <item>Zachód słońca</item>
+        <item>Ocean</item>
+        <item>Mgławica</item>
+        <item>Żar</item>
+        <item>Linia przypływu</item>
+        <item>Bioluminescencja</item>
+        <item>Opalizujący</item>
+        <item>Grafit</item>
+        <item>Kino</item>
+        <item>Orbita</item>
+        <item>Horyzont</item>
+        <item>Rozmyty atrament</item>
+        <item>Rozkwit</item>
+        <item>Fiord</item>
+        <item>Siatka kropek</item>
+        <item>Linia skanowania</item>
+        <item>Radar</item>
+        <item>Linie konturowe</item>
+        <item>Fasetowany</item>
+        <item>Zmierzch</item>
+        <item>Lód</item>
+        <item>Róża</item>
+        <item>Papier</item>
+        <item>Monolit</item>
+        <item>Latarnia</item>
+        <item>Noir</item>
+        <item>Aksamit</item>
+        <item>Miraż</item>
+        <item>Poświata</item>
+        <item>Chmura</item>
+        <item>Nokturn</item>
+        <item>Płyn</item>
+        <item>Pływowy</item>
+        <item>Winyl</item>
+        <item>Korona</item>
+        <item>Półksiężyc</item>
+        <item>Siatka</item>
+        <item>Szklana zasłona</item>
+        <item>Material</item>
+        <item>Plakat</item>
+        <item>Studio</item>
+        <item>Widmo</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Koraliki</item>
+        <item>Podwójna szyna</item>
+        <item>Puls</item>
+        <item>Chrom</item>
+        <item>Widmo</item>
+        <item>Stopnie</item>
+        <item>Cukierkowy</item>
+        <item>Duch</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Podwójna krawędź</item>
+        <item>Pionowy miernik (lewy)</item>
+        <item>Pionowy miernik (prawy)</item>
+        <item>Górny miernik</item>
+        <item>Dolny miernik</item>
+        <item>Środkowa tarcza</item>
+        <item>Górna aureola</item>
+        <item>Dolna aureola</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Podwójny pierścień</item>
+        <item>Koraliki</item>
+        <item>Kreska i kropka</item>
+        <item>Znaczniki 24-godzinne</item>
+        <item>Tylko postęp</item>
+        <item>Blask</item>
+        <item>Duoton</item>
+        <item>Igła</item>
+        <item>Naprzemiennie</item>
+        <item>Iskra</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Krawędź pierścienia</item>
+        <item>Wpuszczony pierścień</item>
+        <item>Wewnętrzny pierścień</item>
+        <item>Gruby pierścień</item>
+        <item>Otwarcie u dołu</item>
+        <item>Otwarcie u góry</item>
+        <item>Lewy łuk</item>
+        <item>Prawy łuk</item>
+        <item>Podwójna ścieżka</item>
+        <item>Otwarcie po lewej</item>
+        <item>Otwarcie po prawej</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Kompaktowa kapsułka</item>
+        <item>Kwadratowy album</item>
+        <item>Ułożona kapsułka</item>
+        <item>Odznaka</item>
+        <item>Szklany pasek</item>
+        <item>LCD</item>
+        <item>Kwadratowy obrys</item>
+        <item>Wstęga</item>
+        <item>Bańka czasu</item>
+        <item>Podzielona tonacja</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Oś czasu (góra)</item>
+        <item>Oś czasu (dół)</item>
+        <item>Segmenty (góra)</item>
+        <item>Pionowa oś czasu (lewa)</item>
+        <item>Pionowa oś czasu (prawa)</item>
+        <item>Środkowa tarcza</item>
+        <item>Podwójna oś czasu</item>
+        <item>Segmenty (dół)</item>
+        <item>Środkowy stos</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Miękki</item>
+        <item>Chrom</item>
+        <item>Holograficzny</item>
+        <item>Bańka</item>
+        <item>Szyna</item>
+        <item>Zachód słońca</item>
+        <item>Obrys albumu</item>
+        <item>Ciemne szkło</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Wachlarz</item>
+        <item>Orbita</item>
+        <item>Dolny dok</item>
+        <item>Kolumna</item>
+        <item>Podzielony panel</item>
+        <item>Diament</item>
+        <item>Karuzela</item>
+        <item>Trójkąt</item>
+        <item>Schodek</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Miękki</item>
+        <item>Płytowy</item>
+        <item>Atrament</item>
+        <item>Szyna</item>
+        <item>Zachód słońca</item>
+        <item>Bańka</item>
+        <item>Chrom</item>
+        <item>Holograficzny</item>
+    </string-array>
+</resources>

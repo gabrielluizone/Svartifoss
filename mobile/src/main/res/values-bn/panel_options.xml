@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">প্রগ্রেস রিং লেআউট</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>সম্পূর্ণ স্বচ্ছ</item>
+        <item>সেকেন্ডারি রঙ</item>
+        <item>টারশিয়ারি রঙ</item>
+        <item>রঙের মেশ</item>
+        <item>অরোরা</item>
+        <item>স্পটলাইট</item>
+        <item>ভিনিয়েট</item>
+        <item>স্প্লিট টোন</item>
+        <item>রঙের ব্যান্ড</item>
+        <item>মধ্যরাত</item>
+        <item>হ্যালো</item>
+        <item>স্মোক ব্লার</item>
+        <item>সূর্যাস্ত</item>
+        <item>সমুদ্র</item>
+        <item>নেবুলা</item>
+        <item>অঙ্গার</item>
+        <item>জোয়ারের রেখা</item>
+        <item>জীবজ্যোতি</item>
+        <item>রঙধনু আভা</item>
+        <item>গ্রাফাইট</item>
+        <item>সিনেমা</item>
+        <item>অরবিট</item>
+        <item>দিগন্ত</item>
+        <item>ইঙ্ক ওয়াশ</item>
+        <item>ব্লসম</item>
+        <item>ফিয়র্ড</item>
+        <item>ডট গ্রিড</item>
+        <item>স্ক্যানলাইন</item>
+        <item>রাডার</item>
+        <item>কনট্যুর লাইন</item>
+        <item>বহুমুখী</item>
+        <item>গোধূলি</item>
+        <item>বরফ</item>
+        <item>গোলাপ</item>
+        <item>কাগজ</item>
+        <item>মনোলিথ</item>
+        <item>লণ্ঠন</item>
+        <item>নোয়ার</item>
+        <item>ভেলভেট</item>
+        <item>মিরাজ</item>
+        <item>ব্লুম</item>
+        <item>মেঘ</item>
+        <item>নকটার্ন</item>
+        <item>তরল</item>
+        <item>জোয়ার</item>
+        <item>ভিনাইল</item>
+        <item>করোনা</item>
+        <item>ক্রেসেন্ট</item>
+        <item>গ্রিড</item>
+        <item>গ্লাস ভেইল</item>
+        <item>Material</item>
+        <item>পোস্টার</item>
+        <item>স্টুডিও</item>
+        <item>স্পেকট্রাম</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>পুঁতি</item>
+        <item>ডুয়াল রেল</item>
+        <item>পালস</item>
+        <item>ক্রোম</item>
+        <item>স্পেকট্রাম</item>
+        <item>ধাপ</item>
+        <item>ক্যান্ডি</item>
+        <item>ভূত</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>ডাবল এজ</item>
+        <item>ভার্টিক্যাল মিটার (বাম)</item>
+        <item>ভার্টিক্যাল মিটার (ডান)</item>
+        <item>ওপরের মিটার</item>
+        <item>নিচের মিটার</item>
+        <item>মধ্যের ডায়াল</item>
+        <item>ওপরের হ্যালো</item>
+        <item>নিচের হ্যালো</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>ডাবল রিং</item>
+        <item>পুঁতি</item>
+        <item>ড্যাশ ও ডট</item>
+        <item>২৪-ঘণ্টার চিহ্ন</item>
+        <item>শুধু অগ্রগতি</item>
+        <item>গ্লো</item>
+        <item>ডুয়োটোন</item>
+        <item>সুঁই</item>
+        <item>পরপর বিকল্প</item>
+        <item>স্ফুলিঙ্গ</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>বেজেলের প্রান্ত</item>
+        <item>ইনসেট রিং</item>
+        <item>ভেতরের রিং</item>
+        <item>মোটা রিং</item>
+        <item>নিচ থেকে খুলুন</item>
+        <item>ওপর থেকে খুলুন</item>
+        <item>বাম আর্ক</item>
+        <item>ডান আর্ক</item>
+        <item>ডাবল ট্র্যাক</item>
+        <item>বাম দিক থেকে খুলুন</item>
+        <item>ডান দিক থেকে খুলুন</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>কমপ্যাক্ট পিল</item>
+        <item>স্কোয়ার অ্যালবাম</item>
+        <item>স্ট্যাকড পিল</item>
+        <item>ব্যাজ</item>
+        <item>গ্লাস বার</item>
+        <item>LCD</item>
+        <item>আউটলাইন স্কোয়ার</item>
+        <item>রিবন</item>
+        <item>সময়ের বাবল</item>
+        <item>স্প্লিট টোন</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>টাইমলাইন (ওপরে)</item>
+        <item>টাইমলাইন (নিচে)</item>
+        <item>সেগমেন্ট (ওপরে)</item>
+        <item>ভার্টিক্যাল টাইমলাইন (বাম)</item>
+        <item>ভার্টিক্যাল টাইমলাইন (ডান)</item>
+        <item>মধ্যের ডায়াল</item>
+        <item>টুইন টাইমলাইন</item>
+        <item>সেগমেন্ট (নিচে)</item>
+        <item>মধ্যের স্ট্যাক</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>নরম</item>
+        <item>ক্রোম</item>
+        <item>হলোগ্রাফিক</item>
+        <item>বাবল</item>
+        <item>রেল</item>
+        <item>সূর্যাস্ত</item>
+        <item>অ্যালবাম আউটলাইন</item>
+        <item>গাঢ় গ্লাস</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>ফ্যান</item>
+        <item>অরবিট</item>
+        <item>নিচের ডক</item>
+        <item>কলাম</item>
+        <item>স্প্লিট ডেক</item>
+        <item>ডায়মন্ড</item>
+        <item>ক্যারোসেল</item>
+        <item>ত্রিভুজ</item>
+        <item>সিঁড়ি</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>নরম</item>
+        <item>স্ল্যাব</item>
+        <item>কালি</item>
+        <item>রেল</item>
+        <item>সূর্যাস্ত</item>
+        <item>বাবল</item>
+        <item>ক্রোম</item>
+        <item>হলোগ্রাফিক</item>
+    </string-array>
+</resources>

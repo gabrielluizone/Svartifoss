@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Detail tema</string>
+    <string name="community_theme_detail_preview_screen">Layar pratinjau</string>
+    <string name="community_theme_detail_surface_player">Pemutar</string>
+    <string name="community_theme_detail_surface_aod">Selalu aktif</string>
+    <string name="community_theme_detail_surface_volume">Volume</string>
+    <string name="community_theme_detail_surface_progress">Progres</string>
+    <string name="community_theme_detail_surface_quick_panel">Panel cepat</string>
+    <string name="community_theme_detail_surface_queue">Antrean</string>
+    <string name="community_theme_detail_preview_label">Pratinjau %1$s</string>
+    <string name="community_theme_detail_preview_description">Pratinjau %1$s pada layar %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Sampul album Anda saat ini mungkin hanya muncul dalam pratinjau ini di ponsel. Sampul tidak pernah diunggah; teks contoh dan waktu tetap digunakan.</string>
+    <string name="community_theme_detail_information">Informasi tema</string>
+    <string name="community_theme_detail_byline">Oleh %1$s</string>
+    <string name="community_theme_detail_layout">Tata letak dasar</string>
+    <string name="community_theme_detail_revision">Revisi</string>
+    <string name="community_theme_detail_minimum_version">Versi minimum Svartifoss</string>
+    <string name="community_theme_detail_published">Dipublikasikan</string>
+    <string name="community_theme_detail_visual_settings">Pengaturan visual</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s pengaturan visual</item>
+        <item quantity="other">%1$s pengaturan visual</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Tidak tersedia</string>
+    <string name="community_theme_detail_add_apply">Tambahkan dan terapkan</string>
+    <string name="community_theme_detail_remove">Hapus tema</string>
+    <string name="community_theme_detail_remove_title">Hapus “%1$s” dari Tema saya?</string>
+    <string name="community_theme_detail_remove_message">Salinan tersimpan ini dan setiap perubahan yang Anda buat akan dihapus permanen. Jika sedang diterapkan, jam tangan Anda akan kembali ke tata letak dasar bawaan.</string>
+    <string name="community_theme_detail_removed">Tema dihapus dari Tema saya</string>
+    <string name="community_theme_detail_remove_error">Tidak dapat menghapus tema ini</string>
+    <string name="community_theme_detail_like">Suka</string>
+    <string name="community_theme_detail_unlike">Batal suka</string>
+    <string name="community_theme_detail_like_loading">Memeriksa…</string>
+    <string name="community_theme_detail_like_description">Sukai %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Batalkan suka %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Login Google dibatalkan. Tanda suka Anda tidak disimpan.</string>
+    <string name="community_theme_detail_like_error">Tidak dapat menyimpan tanda suka Anda. Periksa koneksi dan coba lagi.</string>
+    <string name="community_theme_detail_like_not_ready">Tanda suka untuk tema ini belum siap. Segarkan Tema komunitas setelah publikasi berikutnya.</string>
+    <string name="community_theme_detail_like_saved">Tanda suka Anda telah disimpan. Jumlah publik diperbarui pada publikasi katalog berikutnya.</string>
+    <string name="community_theme_detail_unlike_saved">Tanda suka Anda telah dihapus. Jumlah publik diperbarui pada publikasi katalog berikutnya.</string>
+    <string name="community_theme_detail_apply_existing">Tema ini sudah ada di Tema saya dan telah diterapkan ke jam tangan Anda</string>
+    <string name="community_theme_detail_requires_app_version">Tema ini memerlukan Svartifoss %1$s sebelum dapat ditambahkan.</string>
+    <string name="community_theme_detail_load_error">Tidak dapat memuat detail tema ini. Kembali ke Tema komunitas dan coba lagi.</string>
+    <string name="community_theme_detail_profile_mismatch">Profil yang diunduh tidak sesuai dengan detail publik tema ini. Kembali ke Tema komunitas dan coba lagi.</string>
+    <string name="community_theme_detail_screenshot_description">Foto tema ini pada jam tangan pembuatnya</string>
+    <string name="community_theme_detail_source_author">Jam tangan pembuat</string>
+    <string name="community_theme_detail_source_rendered">Pratinjau yang dibuat</string>
+    <string name="community_theme_detail_show_rendered">Tampilkan pratinjau yang dibuat</string>
+    <string name="community_theme_detail_show_author">Tampilkan foto pembuat</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

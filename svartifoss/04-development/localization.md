@@ -18,9 +18,9 @@ Unknown or newer tags fall back to the system language rather than forcing a loc
 
 ## Supported set
 
-The current source registry has 40 locales including English:
+The current source registry has 45 locales including English:
 
-`en`, `pt-BR`, `pt-PT`, `de`, `es`, `it`, `nl`, `ru`, `el`, `ro`, `id`, `fa`, `zh-Hans`, `is`, `fr`, `tr`, `vi`, `cs`, `sv`, `nb`, `hu`, `ar`, `hi`, `fil`, `kk`, `ja`, `ko`, `pl`, `zh-Hant`, `uk`, `th`, `he`, `da`, `fi`, `sk`, `bg`, `sr`, `hr`, `ms`, and `bn`.
+`en`, `pt-BR`, `pt-PT`, `de`, `es`, `it`, `nl`, `ru`, `el`, `ro`, `id`, `fa`, `zh-Hans`, `is`, `fr`, `tr`, `vi`, `cs`, `sv`, `nb`, `hu`, `ar`, `hi`, `fil`, `kk`, `ja`, `ko`, `pl`, `zh-Hant`, `uk`, `th`, `he`, `da`, `fi`, `sk`, `bg`, `sr`, `hr`, `ms`, `bn`, `my`, `ta`, `te`, `mr`, and `ckb`.
 
 This is a source-tree snapshot; `AppLocales.SUPPORTED` is the authority. Some older public copy still states a smaller historical count.
 
@@ -33,13 +33,14 @@ Keep these places aligned:
 3. `mobile/src/main/res/xml/locales_config.xml`;
 4. `app_language_entries` and `app_language_values`.
 
-Verify the actual Android resource qualifier. Five current locales use BCP-47 folder syntax:
+Verify the actual Android resource qualifier. Six current locales use BCP-47 folder syntax:
 
 - `values-b+id`
 - `values-b+fil`
 - `values-b+he`
 - `values-b+zh+Hans`
 - `values-b+zh+Hant`
+- `values-b+ckb`
 
 Modern tags and legacy Android folder codes are not interchangeable. A plausible-looking folder can remain dead without a compile error.
 

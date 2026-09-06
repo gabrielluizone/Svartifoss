@@ -1902,6 +1902,11 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1945,6 +1950,11 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2403,4 +2413,463 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">نسخ</string>
+    <string name="dev_report_copied">تم نسخ التقرير</string>
+    <string name="dev_watch_snapshot_inspector">لقطة لتفضيلات الساعة</string>
+    <string name="dev_watch_snapshot_inspector_description">ما سيتم إرساله فعليًا إلى الساعة الآن: نطاق المظهر النشط، والحجم المقدّر، وذاكرات التخزين المؤقت لنطاقات الواجهات غير النشطة التي أُسقطت لتلائم حد الحجم</string>
+    <string name="dev_data_layer_inspector">فاحص Data Layer</string>
+    <string name="dev_data_layer_inspector_description">عُقد Wearable المتصلة وآخر WatchInfo ردّ به تطبيق الساعة - الحالة الخام خلف «لا توجد ساعة متصلة»</string>
+    <string name="dev_media_sessions_inspector">مستكشف MediaSession</string>
+    <string name="dev_media_sessions_inspector_description">كل MediaSession نشطة حاليًا، وليس فقط التي تتم متابعتها: الإجراءات المعلنة، وقائمة الانتظار، ومسار التشغيل</string>
+    <string name="dev_view_phone_log">عرض سجل الهاتف</string>
+    <string name="dev_view_phone_log_description">ذيل سجل Timber الموجود على القرص، بالإضافة إلى سجل الساعة إذا كان «إرسال السجلات» قد جلبه من قبل</string>
+    <string name="dev_theme_submission_preflight">فحص مسبق لإرسال المظهر</string>
+    <string name="dev_theme_submission_preflight_description">يمرّر كل مظهر ساعة محفوظ عبر فحص الإرسال إلى المجتمع ويذكر الإعداد المحدد الذي يمنعه، إن وُجد</string>
+    <string name="dev_appearance_resolution_inspector">فاحص حسم إعدادات المظهر</string>
+    <string name="dev_appearance_resolution_inspector_description">لكل مفتاح مظهر ضمن النطاق، يعرض أي خطوة من خطوات الحسم الأربع فازت فعليًا - قيمة الواجهة الصريحة، أو القيمة الافتراضية لكل واجهة، أو القيمة العامة القديمة، أو القيمة الافتراضية للتعريف - والقيمة التي تعيدها كل خطوة</string>
+    <string name="action_fast_forward">تقديم سريع</string>
+    <string name="action_rewind">إرجاع</string>
+    <string name="action_set_playback_speed">ضبط السرعة على %1$s×</string>
+    <string name="action_seek_to_percent">الانتقال إلى %1$d%%</string>
+    <string name="action_set_volume_percent">ضبط مستوى الصوت على %1$d%%</string>
+    <string name="action_set_shuffle_on">تشغيل التشغيل العشوائي</string>
+    <string name="action_set_shuffle_off">إيقاف التشغيل العشوائي</string>
+    <string name="action_set_repeat_off">إيقاف التكرار</string>
+    <string name="action_set_repeat_all">تكرار الكل</string>
+    <string name="action_set_repeat_one">تكرار عنصر واحد</string>
+    <string name="group_playback_speed">سرعة التشغيل</string>
+    <string name="group_track_position">موضع المقطع</string>
+    <string name="group_shuffle_mode">وضع التشغيل العشوائي</string>
+    <string name="group_repeat_mode">وضع التكرار</string>
+    <string name="group_volume_levels">مستويات الصوت</string>
+    <string name="group_watch_screens">شاشات الساعة</string>
+    <string name="group_find_music">بحث وتشغيل</string>
+    <string name="action_open_face_picker">فتح منتقي الواجهة</string>
+    <string name="action_close_watch_app">إغلاق تطبيق الساعة</string>
+    <string name="hand_gestures">إيماءات اليد</string>
+    <string name="hand_gestures_hint">متاح على الساعات المتوافقة أثناء فتح Svartifoss.</string>
+    <string name="hand_gestures_hint_disconnected">صِل ساعتك وافتح Svartifoss عليها لمعرفة ما إذا كانت تدعم إيماءات اليد.</string>
+    <string name="hand_gestures_hint_outdated">حدّث تطبيق الساعة لمعرفة ما إذا كانت هذه الساعة تدعم إيماءات اليد.</string>
+    <string name="hand_gestures_hint_unsupported">هذه الساعة لا تدعم إيماءات اليد، لذلك لن يعمل أي إجراء معيّن هنا.</string>
+    <string name="hand_gestures_hint_disabled">إيماءات اليد متوقفة على هذه الساعة. شغّلها من الإعدادات \u2192 الإيماءات على الساعة نفسها.</string>
+    <string name="hand_gestures_hint_ready">جاهز على هذه الساعة: اضغط بإصبعين مرتين أثناء فتح مشغّل Svartifoss.</string>
+    <string name="hand_gesture_how_it_works">اضمم إبهامك وسبابتك معًا مرتين بسرعة مع رفع معصمك. يسمّي Wear OS هذا الإجراء الأساسي، لذلك قد تستخدم ساعة من شركة أخرى إيماءة يد مكافئة خاصة بها.\n\nلا يعمل هذا إلا عندما يكون مشغّل Svartifoss مفتوحًا على الساعة والشاشة مضاءة \u2014 ليس من واجهة الساعة، ولا فوق قائمة الانتظار أو القائمة، ولا على الشاشة الدائمة. الإجراء الذي يُنفّذ هو المحدد لحالة التشغيل الحالية، لذا عيّنه في صفحتي عناصر التحكم ليعمل في الحالتين.\n\nيجب أيضًا تشغيل الإيماءة من الإعدادات \u2192 الإيماءات في الساعة نفسها.</string>
+    <string name="double_pinch">قرص مزدوج</string>
+    <string name="icon_selection_search_hint">البحث عن أيقونات</string>
+    <string name="icon_selection_search_empty">لا توجد أيقونات تطابق بحثك</string>
+    <string name="open_quick_actions_panel">فتح لوحة الإجراءات السريعة</string>
+    <string name="open_volume_screen">فتح شاشة مستوى الصوت</string>
+    <string name="open_progress_screen">فتح شاشة التقدم</string>
+    <string name="export_config_failed_detail">تعذّر تصدير النسخة الاحتياطية: %1$s</string>
+    <string name="backup_selection_title">اختيار محتويات النسخة الاحتياطية</string>
+    <string name="backup_selection_description">حدّد أجزاء Svartifoss التي تريد حفظها. يتم تحديد كل شيء افتراضيًا؛ وتظل الأجزاء غير المحددة دون تغيير عند استيراد هذه النسخة الاحتياطية.</string>
+    <string name="backup_selection_select_all">تحديد الكل</string>
+    <string name="backup_selection_clear_all">مسح الكل</string>
+    <string name="backup_selection_export">تصدير النسخة الاحتياطية</string>
+    <string name="backup_selection_empty">حدّد عنصرًا واحدًا على الأقل</string>
+    <string name="backup_section_buttons">إعدادات الأزرار</string>
+    <string name="backup_section_buttons_description">إجراءات الأزرار والتاج والإيماءات عند تشغيل الموسيقى وتوقفها.</string>
+    <string name="backup_section_actions">قائمة الإجراءات</string>
+    <string name="backup_section_actions_description">القائمة المرتبة للإجراءات الظاهرة في قائمة إجراءات الساعة.</string>
+    <string name="backup_section_app_settings">إعدادات التطبيق</string>
+    <string name="backup_section_app_settings_description">إعدادات الهاتف وسلوك الساعة واللغة والتشغيل وعمليات التكامل.</string>
+    <string name="backup_section_watch_appearance">مظهر الساعة والسمات</string>
+    <string name="backup_section_watch_appearance_description">تخطيطات الساعة والألوان والطباعة واللوحات ووضع التشغيل الدائم والسمات المخصصة المحفوظة.</string>
+    <string name="backup_section_playlist_shortcuts">اختصارات قوائم التشغيل</string>
+    <string name="backup_section_playlist_shortcuts_description">روابط الموسيقى والألبومات والفنانين وقوائم التشغيل وخدمات البث الأخرى التي حفظتها.</string>
+    <string name="backup_section_history">سجل البحث والتشغيل</string>
+    <string name="backup_section_history_description">عمليات البحث الأخيرة والمقاطع التي تم تشغيلها مؤخرًا.</string>
+    <string name="backup_section_icons">الأيقونات والأعمال الفنية المحمّلة</string>
+    <string name="backup_section_icons_description">أيقونات إجراءات مخصصة وأغلفة اختصارات وأيقونات تطبيقات مخزنة مؤقتًا.</string>
+    <string name="backup_section_privacy">الخصوصية والإشعارات</string>
+    <string name="backup_section_privacy_description">تقارير الأعطال وإشعارات الإعلانات وخيارات الموافقة الأخرى التي يحفظها التطبيق.</string>
+    <string name="backup_section_local_app_state">حالة التطبيق المحلية</string>
+    <string name="backup_section_local_app_state_description">لون التمييز الحالي وآخر موضع في القائمة والمطالبات المكتملة وحالة التحديث.</string>
+    <string name="backup_section_auxiliary_data">بيانات تطبيق أخرى</string>
+    <string name="backup_section_auxiliary_data_description">تفضيلات وملفات داخلية إضافية يملكها التطبيق، بما في ذلك مخازن البيانات المستقبلية.</string>
+    <string name="pref_numeric_range">بين %1$d و%2$d.</string>
+    <string name="background_editor_artwork">العمل الفني</string>
+    <string name="background_editor_layers">الطبقات</string>
+    <string name="background_editor_layers_count">%1$d من %2$d</string>
+    <string name="background_editor_add_layer">إضافة طبقة</string>
+    <string name="background_editor_reset_layers">إعادة تعيين</string>
+    <string name="background_editor_empty">لا توجد طبقات. يظهر العمل الفني بمفرده.</string>
+    <string name="background_editor_note">تُرسم الطبقة الموجودة أعلى هذه القائمة فوق كل شيء آخر؛ أما الطبقة في الأسفل فتكون الأقرب إلى العمل الفني.</string>
+    <string name="background_editor_full">يمكنك تكديس ما يصل إلى %1$d طبقات.</string>
+    <string name="background_layer_kind_wash">الخلفية</string>
+    <string name="background_layer_kind_shade">التظليل</string>
+    <string name="background_layer_kind_floor">أرضية التمييز</string>
+    <string name="background_layer_move_up">نقل هذه الطبقة إلى أعلى</string>
+    <string name="background_layer_move_down">نقل هذه الطبقة إلى أسفل</string>
+    <string name="background_layer_more">خيارات إضافية لهذه الطبقة</string>
+    <string name="background_layer_add_title">إضافة طبقة</string>
+    <string name="background_layer_style_title">طبقة %1$s</string>
+    <string name="background_layer_opacity">القوة</string>
+    <string name="background_layer_color">اللون</string>
+    <string name="background_layer_custom_color">اختيار لون</string>
+    <string name="background_layer_duplicate">تكرار</string>
+    <string name="background_layer_remove">إزالة</string>
+    <string name="background_layer_color_default">افتراضي</string>
+    <string name="background_layer_color_album">لون الألبوم</string>
+    <string name="background_layer_color_secondary">لون الألبوم الثاني</string>
+    <string name="background_layer_color_tertiary">لون الألبوم الثالث</string>
+    <string name="background_layer_color_desaturated">لون ألبوم مكتوم</string>
+    <string name="background_layer_color_black">أسود</string>
+    <string name="background_layer_color_custom">لون مخصص</string>
+    <string name="background_layer_reset_title">إعادة تعيين الطبقات؟</string>
+    <string name="background_layer_reset_message">تعود مجموعة الطبقات إلى التظليل وأرضية التمييز المحددين في صفّيهما، وهو أيضًا ما تعرضه الساعة التي تعمل بإصدار أقدم.</string>
+    <string name="watch_element_progress">التقدم</string>
+    <string name="watch_element_volume">مستوى الصوت</string>
+    <string name="watch_element_quick_panel">الإجراءات السريعة</string>
+    <string name="watch_element_queue">قائمة الانتظار</string>
+    <string name="watch_element_lyrics">الكلمات</string>
+    <string name="player_section_on_screen">على الشاشة</string>
+    <string name="player_element_app_icon">أيقونة التطبيق</string>
+    <string name="player_element_controls">عناصر تحكم المشغّل</string>
+    <string name="player_element_tap_flash">وميض اللمس</string>
+    <string name="player_element_inner_progress">التقدم الداخلي</string>
+    <string name="player_element_edge_arc">قوس الحافة</string>
+    <string name="player_element_edge_seek">التنقل على الحافة</string>
+    <string name="player_element_clock">الساعة</string>
+    <string name="player_element_cover_art">غلاف الألبوم</string>
+    <string name="setting_album_art_filter">مرشح غلاف الألبوم</string>
+    <string name="setting_album_art_filter_description">تطبيق معالجة لونية مستقلة فوق أي نمط لغلاف الألبوم.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto بضربة فائقة الخفة لمظهر عرض رقيق.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto بضربة خفيفة وهوائية ونِسَب مألوفة لعائلة الخط.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto بضربة متوسطة أقوى لملصقات مضغوطة وسهلة القراءة.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto بأثقل وزن نظام لنص عرض عريض.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto مضغوط أفقيًا ليتسع للعناوين الأطول في مساحة أقل.</string>
+    <string name="setting_wear_title_font">نوع خط العنوان</string>
+    <string name="setting_wear_title_text_case">حالة أحرف العنوان</string>
+    <string name="setting_wear_artist_font">نوع خط الفنان</string>
+    <string name="setting_wear_artist_text_case">حالة أحرف الفنان</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">خط sans دائري وودود مصمم للقراءة المبكرة</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">خط عرض Didone عالي التباين بطابع تحريري قوي</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">خط sans متين للملصقات بلمسة كوميدية مرسومة يدويًا</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">خط sans هندسي هادئ بتباعد واسع ومتوازن</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">خط slab serif معاصر بنهايات مستديرة برفق</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">خط slab serif ضخم مصمم لعناوين شديدة التأثير</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">خط ضيق مرسوم يدويًا بأحرف كبيرة صغيرة</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">خط sans مكثف ومضغوط لعناوين صاخبة</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">خط slab serif هندسي يحافظ على ثباته في الأحجام الصغيرة</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">خط عرض بأسلوب القصص المصورة بطاقة صاخبة</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">خط عرض عسكري بقالب استنسل</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">خط serif قائم بمنحنيات دافئة وغير رسمية</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">خط sans إنساني بزوايا مستديرة قليلًا</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">خط sans grotesque بأشكال قوية ومباشرة</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">خط monospace مصقول بطابع الآلة الكاتبة ومصمم للنصوص</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">خط slab serif مستدير بنبرة ناعمة تشبه الكتب</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">خط serif قديم الطراز للكتب مضبوط للنصوص الطويلة</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">خط sans هندسي منخفض التباين بلمسة حديثة</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">خط serif قوي مصمم ليظل واضحًا في أحجام النص الأساسي</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">خط sans تقني معاصر بوصلات زاوية</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">خط monospace للبرمجة بحروف واضحة ومتميزة</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">خط monospace إنساني مصمم لشفرة البرمجة على الشاشة</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">خط يدوي مرح بضربات مستديرة</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">خط sans هندسي بطابع كلاسيكي من عشرينيات القرن الماضي</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">خط sans هندسي على تقليد Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">خط sans تايلندي ولاتيني بلا حلقات مع ميل خفيف</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">خط sans مصمم لتقليل الإجهاد البصري أثناء القراءة</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">خط متصل عريض بروح لافتات قديمة</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">خط sans شبه هندسي يوازن بين الدفء والدقة</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">خط sans بسيط مصمم لنص واجهة نظيف</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">خط sans مستدير جيدًا بنهايات ناعمة</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">خط sans هندسي بإيقاع معاصر ومتوازن</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">خط تقني مربع بإحساس ألعاب</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">خط sans تقني مدمج مرسوم على شبكة</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">خط grotesque حديث بمنحنيات مفتوحة مميزة</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">خط بكسلي خارج مباشرة من جهاز ألعاب أركيد</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">خط sans هندسي مستدير بإحساس لطيف وخفيف</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">خط sans مكثف شبه مربع بزوايا تقنية</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">خط عرض Art Deco بجذور رسم لافتات قديمة</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">رفيق Roboto أحادي المسافة</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">خط عرض سميك بضربات مرحة وحادة</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">خط صناعي عريض بأشكال مربعة ثقيلة</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">خط عرض مائل وحيوي بجذور غوجاراتية</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">خط bitmap صغير يستحضر شاشات الحاسوب القديمة</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">خط monospace مصمم لقراءة الشفرة براحة</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">خط مكثف بأحرف كبيرة فقط وحضور ملصقي</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">خط طويل ومكثف لعناوين الديفاناغاري واللاتينية</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">خط sans إنساني شبه مربع بطابع تقني</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">خط sans مستدير بالكامل بنبرة ودودة</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">خط مكثف يستحضر لافتات المقاهي في عشرينيات القرن الماضي</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">خط slab serif بنهايات حديثة مقصوصة برفق</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">خط sans إنساني ودود بأشكال مفتوحة وسهلة القراءة</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">خط sans دافئ بأشكال متينة لقراءة مريحة</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">خط sans إنساني متعدد الاستخدامات لواجهات واضحة</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">خط serif نصي مصقول بصوت تحريري</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">خط serif كلاسيكي للكتب مضبوط للقراءة على الشاشة</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">خط sans grotesk عملي بإيقاع واسع ومتين</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">خط sans إنساني تقني بنسب دقيقة</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">خط monospace تقني بنسيج مصقول وسهل القراءة</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">خط serif معاصر بطابع هندسي</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">خط sans عملي ونظيف بأشكال مدمجة وعملية</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">خط grotesk غريب قليلًا بنسب ودودة</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">خط sans هندسي بإحساس مستقبلي واسع</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">خط sans هندسي حديث بخطوط حضرية أنيقة</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">خط sans معاصر متوازن مصمم للشاشات الصغيرة</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">خط sans عرض واثق بنسب معبّرة</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">خط sans مرافق سهل القراءة لمعلومات المقاطع الأطول</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">خط monospace واضح بنبرة تقنية حديثة</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">خط sans غير تقليدي بأشكال مرحة وموجّهة فنيًا</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">خط sans معاصر مرن بدقة هادئة</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">خط sans نظيف وودود لقراءة سهلة</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">خط sans عرض مستدير بطابع مرح</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">خط grotesk نابض يمزج البنية بتفاصيل غير مألوفة</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">خط serif عرض عالي التباين لعناوين درامية</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">خط serif أدبي أنيق عالي التباين</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">خط serif عرض رشيق بتفاصيل خطية</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">خط slab serif قوي يظل واضحًا في الأحجام الصغيرة</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">خط serif متعدد الاستخدامات لقراءة كثيفة وتعبيرية</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">خط serif دافئ قديم الطراز بصوت يشبه الكتب</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">خط sans أنيق بأشكال حروف مميزة ومصقولة</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">خط sans هندسي عريض للعناوين القوية</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">خط sans مناسب للتكثيف بطاقة رياضية وديناميكية</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">خط sans ناعم بفراغات داخلية مفتوحة وطاقة لافتات ودودة</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">خط sans متعدد الاستخدامات يوازن دفء الطابع الإنساني مع الوضوح</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">خط sans واضح مستوحى من النقل بإيقاع واثق</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">خط sans محايد وسهل الوصول للواجهات اليومية</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">خط sans هندسي خفيف بمنحنيات حديثة وناعمة</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">خط sans ضيق ومستدير بإحساس مستقبلي ناعم</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">خط sans هندسي نظيف بطابع خفيف مستوحى من التايلندية</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">خط عرض مستقبلي عريض لأقصى حضور</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">عائلة متغيرة من sans إلى monospace بصوت تقني مرح</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">خط monospace بعرض متغير ونسيج رقمي مميز</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">خط sans واسع عالي الوضوح مع دعم كبير لأنظمة الكتابة</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">خط serif موثوق مع دعم كبير لأنظمة الكتابة</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">خط monospace متعدد اللغات مصمم لإيقاع متسق</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">خط sans حديث مدمج بإيقاع واضح متأثر بالعبرية</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">خط sans إنساني متين محسّن للقراءة الواضحة</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">خط sans ودود للشاشة بنسيج مفتوح ومستدير</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">خط sans هندسي مدمج بنسب مميزة</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">خط serif خطّي نابض بالحياة بطابع أدبي</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">خط sans إنساني نظيف بوضوح ممتاز للواجهات</string>
+    <string name="setting_wear_note_show_cover">غلاف الألبوم</string>
+    <string name="aod_element_artwork">العمل الفني</string>
+    <string name="aod_element_clock">الساعة</string>
+    <string name="aod_element_track_info">معلومات المقطع</string>
+    <string name="aod_element_transport">عناصر النقل</string>
+    <string name="aod_element_progress">التقدم</string>
+    <string name="aod_element_up_next">التالي</string>
+    <string name="aod_section_artwork">العمل الفني</string>
+    <string name="aod_control_tint">صبغة</string>
+    <string name="aod_control_brightness">السطوع</string>
+    <string name="aod_control_art_treatment">معالجة</string>
+    <string name="aod_control_art_opacity">العتامة</string>
+    <string name="mini_button_control_visibility">إظهار</string>
+    <string name="mini_button_control_arrangement">ترتيب</string>
+    <string name="mini_button_control_shape">شكل</string>
+    <string name="mini_button_control_background">الخلفية</string>
+    <string name="mini_button_control_opacity">العتامة</string>
+    <string name="mini_button_assign_action">تعيين الإجراءات</string>
+    <string name="mini_button_gestures_note">مرّر لأعلى ولأسفل ولليسار على المشغّل. التمرير لليمين هو دائمًا إيماءة النظام للإغلاق ولا يتم اعتراضه أبدًا.</string>
+    <string name="setting_wear_chat_cover_shape">شكل صورة الدردشة</string>
+    <string name="setting_wear_chat_show_cover">غلاف الألبوم</string>
+    <string name="setting_wear_metadata_cover_shape">شكل غلاف البيانات الوصفية</string>
+    <string name="setting_wear_metadata_show_cover">غلاف الألبوم</string>
+    <string-array name="wear_text_case_entries">
+        <item>عادي</item>
+        <item>أحرف كبيرة</item>
+        <item>أحرف صغيرة</item>
+        <item>حالة عنوان</item>
+    </string-array>
+    <string name="wear_text_font_follow">اتباع نوع الخط العام</string>
+    <string name="category_wf_typography_track_time">وقت المقطع</string>
+    <string name="setting_wear_track_time_font">نوع خط وقت المقطع</string>
+    <string name="wear_track_time_font_follow">اتباع التصميم</string>
+    <string name="setting_wear_track_time_font_weight">سُمك وقت المقطع</string>
+    <string name="setting_wear_track_time_font_italic">وقت المقطع مائل</string>
+    <string name="setting_wear_track_time_font_scale">حجم وقت المقطع</string>
+    <string name="setting_wear_track_time_font_opacity">شفافية وقت المقطع</string>
+    <string name="setting_wear_track_time_font_tracking">تباعد أحرف وقت المقطع</string>
+    <string-array name="album_art_filter_entries">
+        <item>لا شيء</item>
+        <item>أحادي اللون</item>
+        <item>دافئ</item>
+        <item>بارد</item>
+        <item>الساعة الذهبية</item>
+        <item>وردي</item>
+        <item>فيلم عتيق</item>
+        <item>فيلم باهت</item>
+        <item>مطفي</item>
+        <item>زاهٍ</item>
+        <item>دفعة</item>
+        <item>باستيل</item>
+        <item>بني داكن</item>
+        <item>سيانوتايب</item>
+        <item>فيروزي وبرتقالي</item>
+        <item>تباين عالٍ</item>
+        <item>ضوء ناعم</item>
+        <item>ليل</item>
+    </string-array>
+    <string name="queue_item_now_playing">قيد التشغيل الآن</string>
+    <string name="queue_item_unknown_title">مقطع غير معروف</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">قائمة التشغيل · %1$d مقطع</item>
+        <item quantity="other">قائمة التشغيل · %1$d مقاطع</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">لون أرضية التمييز</string>
+    <string name="setting_wear_accent_floor_custom_color">لون أرضية مخصص</string>
+    <string name="setting_wear_accent_floor_custom_color_description">اختر اللون المستخدم عندما يكون لون أرضية التمييز مضبوطًا على لون مخصص</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>لون إبراز الألبوم</item>
+        <item>اللون الثانوي للألبوم</item>
+        <item>اللون الثالث للألبوم</item>
+        <item>لون مخصص</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">خط sans محايد عالي الوضوح للواجهات ومصمم للقراءة اليومية</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">أشكال حروف تراعي سهولة الوصول أولًا، مميزة وتبقى واضحة في الأحجام الصغيرة</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">خط sans هندسي مستدير برفق — واثق وودود</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">خط sans إنساني مدمج يتيح مساحة أكبر للعناوين الطويلة</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">خط عرض طويل ومكثف بطاقة ملصقات قوية</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">خط serif معاصر مصمم لقراءة مريحة للنصوص الطويلة</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">خط serif ناعم وتعبيري بدفء وشخصية</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">خط monospace رجعي-مستقبلي بحافة تقنية</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">خط عرض كثيف ثقيل للغاية لأقصى تباين</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">خط يدوي متدفق بإحساس شخصي وحيوي</string>
+    <string name="setting_wear_artist_text_mode">سلوك نص الفنان</string>
+    <string name="setting_wear_album_art_source">مصدر صورة الألبوم</string>
+    <string name="setting_user_font">خطي الخاص</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">استيراد ملف .ttf أو .otf من هذا الهاتف</string>
+    <string name="setting_user_font_loaded">%1$s · اضغط للاستبدال أو الإزالة</string>
+    <string name="user_font_pick">اختيار ملف خط</string>
+    <string name="user_font_replace">استبدال</string>
+    <string name="user_font_remove">إزالة</string>
+    <string name="user_font_imported">تم استيراد «%1$s». اختره من أي قائمة خطوط؛ يجري إرساله إلى ساعتك.</string>
+    <string name="user_font_removed">تمت إزالة الخط الذي استوردته.</string>
+    <string name="user_font_error_too_large">حجم ذلك الملف %1$s. يجب أن يكون الخط أصغر من %2$s حتى يصل إلى الساعة بسرعة.</string>
+    <string name="user_font_error_not_a_font">ذلك الملف ليس خطًا يمكن لهذا الهاتف قراءته. تعمل TrueType وOpenType (.ttf، .otf)؛ أما خطوط الويب (.woff، .woff2) فلا تعمل.</string>
+    <string name="user_font_error_unreadable">تعذرت قراءة ذلك الملف. حاول اختياره مرة أخرى، أو انسخه إلى هذا الهاتف أولًا.</string>
+    <string name="user_font_not_shareable">المظاهر التي تستخدم خطك الخاص تبقى على هذا الهاتف</string>
+    <string name="setting_custom_album_art_image">الصورة المراد استخدامها</string>
+    <string name="setting_custom_album_art_folder">المجلد الذي تُؤخذ منه الصور</string>
+    <string name="setting_custom_album_art_none">لم يتم الاختيار بعد — اضغط للاختيار</string>
+    <string name="setting_custom_album_art_chosen">%1$s · اضغط للتغيير</string>
+    <string name="custom_album_art_image_set">ستظهر تلك الصورة الآن خلف المشغّل.</string>
+    <string name="custom_album_art_folder_set">سيتم رسم صورة من ذلك المجلد لكل مقطع.</string>
+    <string name="custom_album_art_error">تعذر فتح ذلك. اختره مرة أخرى، أو اختر شيئًا من مساحة التخزين الخاصة بهذا الهاتف.</string>
+    <string name="custom_album_art_not_shareable">المظاهر التي تستخدم صورك الخاصة تبقى على هذا الهاتف</string>
+    <string name="setting_wear_text_block_align">محاذاة النص</string>
+    <string name="setting_wear_text_block_align_description">الحافة التي يصطف معها نص المقطع. «اتباع الواجهة» يحافظ على المحاذاة التي صُممت بها كل واجهة.</string>
+    <string name="setting_wear_text_block_position">موضع النص</string>
+    <string name="setting_wear_text_block_position_description">موضع نص المقطع على الشاشة. «اتباع الواجهة» يحافظ على الموضع الذي صُممت به كل واجهة.</string>
+    <string name="setting_online_artwork">عمل فني عبر الإنترنت</string>
+    <string name="setting_online_artwork_description">اسمح لواجهة الساعة بعرض صورة يتم البحث عنها عبر الإنترنت \u2014 الفنان المؤدي، أو غلاف ألبوم لمشغّل لا ينشر صورة. يجري هاتفك البحث في كتالوج Deezer العام ويخزّن النتيجة مؤقتًا؛ لا يتم إرسال سوى اسم المقطع والفنان، ولا يحدث أي بحث إلا إذا ضُبطت واجهة على أحد هذه المصادر. عند الإيقاف، يُستخدم العمل الفني الخاص بالمشغّل.</string>
 </resources>

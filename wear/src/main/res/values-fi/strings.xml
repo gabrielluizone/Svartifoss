@@ -185,4 +185,21 @@
 
     <string name="metadata_about">Tietoja</string>
     <string name="metadata_source">Toistetaan kohteessa</string>
+    <string name="action_name_open_quick_actions_panel">Avaa pikatoimintopaneeli</string>
+    <string name="action_name_fast_forward">Pikakelaus eteen</string>
+    <string name="action_name_rewind">Kelaa taakse</string>
+    <string name="action_name_set_speed">Aseta toistonopeus</string>
+    <string name="action_name_seek_position">Siirry kappaleen kohtaan</string>
+    <string name="action_name_set_volume">Aseta äänenvoimakkuus</string>
+    <string name="action_name_set_shuffle">Aseta satunnaistoisto</string>
+    <string name="action_name_set_repeat">Aseta toisto</string>
+    <string name="action_name_open_volume_screen">Avaa äänenvoimakkuusnäyttö</string>
+    <string name="action_name_open_progress_screen">Avaa edistymisnäyttö</string>
+    <string name="action_name_open_face_picker">Avaa kellotauluvalitsin</string>
+    <string name="action_name_close_watch_app">Sulje kellosovellus</string>
+    <string name="volume_screen_title">Äänenvoimakkuus</string>
+    <string name="progress_screen_title">Edistyminen</string>
+    <string name="progress_screen_cancel_seek">Peruuta siirtyminen</string>
+    <string name="progress_screen_skip_back">Hyppää %1$d sekuntia taakse</string>
+    <string name="progress_screen_skip_forward">Hyppää %1$d sekuntia eteen</string>
 </resources>

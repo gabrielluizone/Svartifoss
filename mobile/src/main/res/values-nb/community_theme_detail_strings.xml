@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Temadetaljer</string>
+    <string name="community_theme_detail_preview_screen">Forhåndsvisningsskjerm</string>
+    <string name="community_theme_detail_surface_player">Spiller</string>
+    <string name="community_theme_detail_surface_aod">Alltid på</string>
+    <string name="community_theme_detail_surface_volume">Volum</string>
+    <string name="community_theme_detail_surface_progress">Fremdrift</string>
+    <string name="community_theme_detail_surface_quick_panel">Hurtigpanel</string>
+    <string name="community_theme_detail_surface_queue">Kø</string>
+    <string name="community_theme_detail_preview_label">Forhåndsvisning av %1$s</string>
+    <string name="community_theme_detail_preview_description">Forhåndsvisning av %1$s på %2$s-skjermen</string>
+    <string name="community_theme_detail_preview_privacy">Det gjeldende albumomslaget ditt kan bare vises i denne forhåndsvisningen på telefonen. Det lastes aldri opp; eksempeltekst og tidsinformasjon brukes fortsatt.</string>
+    <string name="community_theme_detail_information">Temainformasjon</string>
+    <string name="community_theme_detail_byline">Av %1$s</string>
+    <string name="community_theme_detail_layout">Grunnoppsett</string>
+    <string name="community_theme_detail_revision">Revisjon</string>
+    <string name="community_theme_detail_minimum_version">Minimum Svartifoss-versjon</string>
+    <string name="community_theme_detail_published">Publisert</string>
+    <string name="community_theme_detail_visual_settings">Visuelle innstillinger</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s visuell innstilling</item>
+        <item quantity="other">%1$s visuelle innstillinger</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Ikke tilgjengelig</string>
+    <string name="community_theme_detail_add_apply">Legg til og bruk</string>
+    <string name="community_theme_detail_remove">Fjern tema</string>
+    <string name="community_theme_detail_remove_title">Fjerne «%1$s» fra Mine temaer?</string>
+    <string name="community_theme_detail_remove_message">Denne lagrede kopien og alle endringer du har gjort i den, fjernes permanent. Hvis den er i bruk, går klokken tilbake til det innebygde grunnoppsettet.</string>
+    <string name="community_theme_detail_removed">Tema fjernet fra Mine temaer</string>
+    <string name="community_theme_detail_remove_error">Kunne ikke fjerne dette temaet</string>
+    <string name="community_theme_detail_like">Lik</string>
+    <string name="community_theme_detail_unlike">Fjern liker</string>
+    <string name="community_theme_detail_like_loading">Kontrollerer…</string>
+    <string name="community_theme_detail_like_description">Lik %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Fjern liker på %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google-påloggingen ble avbrutt. Likemarkeringen din ble ikke lagret.</string>
+    <string name="community_theme_detail_like_error">Kunne ikke lagre likemarkeringen din. Kontroller tilkoblingen og prøv igjen.</string>
+    <string name="community_theme_detail_like_not_ready">Likemarkeringer for dette temaet er ikke klare ennå. Oppdater Fellesskapstemaer etter neste publisering.</string>
+    <string name="community_theme_detail_like_saved">Likemarkeringen din ble lagret. Offentlige antall oppdateres ved neste katalogpublisering.</string>
+    <string name="community_theme_detail_unlike_saved">Likemarkeringen din ble fjernet. Offentlige antall oppdateres ved neste katalogpublisering.</string>
+    <string name="community_theme_detail_apply_existing">Dette temaet finnes allerede i Mine temaer og er brukt på klokken din</string>
+    <string name="community_theme_detail_requires_app_version">Dette temaet krever Svartifoss %1$s før det kan legges til.</string>
+    <string name="community_theme_detail_load_error">Kunne ikke laste inn detaljene for temaet. Gå tilbake til Fellesskapstemaer og prøv igjen.</string>
+    <string name="community_theme_detail_profile_mismatch">Den nedlastede profilen samsvarer ikke med temaets offentlige detaljer. Gå tilbake til Fellesskapstemaer og prøv igjen.</string>
+    <string name="community_theme_detail_screenshot_description">Bilde av dette temaet på opphavspersonens klokke</string>
+    <string name="community_theme_detail_source_author">Opphavspersonens klokke</string>
+    <string name="community_theme_detail_source_rendered">Generert forhåndsvisning</string>
+    <string name="community_theme_detail_show_rendered">Vis generert forhåndsvisning</string>
+    <string name="community_theme_detail_show_author">Vis opphavspersonens bilde</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

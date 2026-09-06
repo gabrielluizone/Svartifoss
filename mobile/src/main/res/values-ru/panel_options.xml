@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Макет кольца прогресса</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Полностью прозрачный</item>
+        <item>Вторичный цвет</item>
+        <item>Третичный цвет</item>
+        <item>Цветовая сетка</item>
+        <item>Аврора</item>
+        <item>Прожектор</item>
+        <item>Виньетка</item>
+        <item>Разделённый тон</item>
+        <item>Цветные полосы</item>
+        <item>Полночь</item>
+        <item>Ореол</item>
+        <item>Размытие дыма</item>
+        <item>Закат</item>
+        <item>Океан</item>
+        <item>Туманность</item>
+        <item>Угольки</item>
+        <item>Линия прилива</item>
+        <item>Биолюминесценция</item>
+        <item>Переливающийся</item>
+        <item>Графит</item>
+        <item>Кино</item>
+        <item>Орбита</item>
+        <item>Горизонт</item>
+        <item>Размывка тушью</item>
+        <item>Цветение</item>
+        <item>Фьорд</item>
+        <item>Точечная сетка</item>
+        <item>Строка развёртки</item>
+        <item>Радар</item>
+        <item>Контурные линии</item>
+        <item>Гранёный</item>
+        <item>Сумерки</item>
+        <item>Лёд</item>
+        <item>Роза</item>
+        <item>Бумага</item>
+        <item>Монолит</item>
+        <item>Фонарь</item>
+        <item>Нуар</item>
+        <item>Бархат</item>
+        <item>Мираж</item>
+        <item>Рассеянное свечение</item>
+        <item>Облако</item>
+        <item>Ноктюрн</item>
+        <item>Жидкость</item>
+        <item>Прилив</item>
+        <item>Винил</item>
+        <item>Корона</item>
+        <item>Полумесяц</item>
+        <item>Сетка</item>
+        <item>Стеклянная вуаль</item>
+        <item>Материал</item>
+        <item>Постер</item>
+        <item>Студия</item>
+        <item>Спектр</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Бусины</item>
+        <item>Двойная полоса</item>
+        <item>Пульс</item>
+        <item>Хром</item>
+        <item>Спектр</item>
+        <item>Ступени</item>
+        <item>Конфета</item>
+        <item>Призрак</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Двойной край</item>
+        <item>Вертикальный индикатор (слева)</item>
+        <item>Вертикальный индикатор (справа)</item>
+        <item>Верхний индикатор</item>
+        <item>Нижний индикатор</item>
+        <item>Центральный циферблат</item>
+        <item>Верхний ореол</item>
+        <item>Нижний ореол</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Двойное кольцо</item>
+        <item>Бусины</item>
+        <item>Штрих и точка</item>
+        <item>24-часовые отметки</item>
+        <item>Только прогресс</item>
+        <item>Свечение</item>
+        <item>Дуотон</item>
+        <item>Стрелка</item>
+        <item>Чередование</item>
+        <item>Искра</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Край безеля</item>
+        <item>Смещённое внутрь кольцо</item>
+        <item>Внутреннее кольцо</item>
+        <item>Толстое кольцо</item>
+        <item>Открыто снизу</item>
+        <item>Открыто сверху</item>
+        <item>Левая дуга</item>
+        <item>Правая дуга</item>
+        <item>Двойная дорожка</item>
+        <item>Открыто слева</item>
+        <item>Открыто справа</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Компактная капсула</item>
+        <item>Квадратный альбом</item>
+        <item>Сложенная капсула</item>
+        <item>Значок</item>
+        <item>Стеклянная панель</item>
+        <item>LCD</item>
+        <item>Квадрат с контуром</item>
+        <item>Лента</item>
+        <item>Пузырь времени</item>
+        <item>Разделённый тон</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Временная шкала (сверху)</item>
+        <item>Временная шкала (снизу)</item>
+        <item>Сегменты (сверху)</item>
+        <item>Вертикальная временная шкала (слева)</item>
+        <item>Вертикальная временная шкала (справа)</item>
+        <item>Центральный циферблат</item>
+        <item>Двойная временная шкала</item>
+        <item>Сегменты (снизу)</item>
+        <item>Центральная стопка</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Мягкий</item>
+        <item>Хром</item>
+        <item>Голографический</item>
+        <item>Пузырь</item>
+        <item>Полоса</item>
+        <item>Закат</item>
+        <item>Контур альбома</item>
+        <item>Тёмное стекло</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Веер</item>
+        <item>Орбита</item>
+        <item>Нижняя панель</item>
+        <item>Столбец</item>
+        <item>Разделённая панель</item>
+        <item>Ромб</item>
+        <item>Карусель</item>
+        <item>Треугольник</item>
+        <item>Лестница</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Мягкий</item>
+        <item>Плита</item>
+        <item>Чернила</item>
+        <item>Полоса</item>
+        <item>Закат</item>
+        <item>Пузырь</item>
+        <item>Хром</item>
+        <item>Голографический</item>
+    </string-array>
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">थीमचे तपशील</string>
+    <string name="community_theme_detail_preview_screen">पूर्वदृश्य स्क्रीन</string>
+    <string name="community_theme_detail_surface_player">प्लेअर</string>
+    <string name="community_theme_detail_surface_aod">नेहमी चालू</string>
+    <string name="community_theme_detail_surface_volume">आवाज</string>
+    <string name="community_theme_detail_surface_progress">प्रगती</string>
+    <string name="community_theme_detail_surface_quick_panel">द्रुत पॅनेल</string>
+    <string name="community_theme_detail_surface_queue">रांग</string>
+    <string name="community_theme_detail_preview_label">%1$s पूर्वदृश्य</string>
+    <string name="community_theme_detail_preview_description">%2$s स्क्रीनवर %1$s चे पूर्वदृश्य</string>
+    <string name="community_theme_detail_preview_privacy">तुमचे सध्याचे अल्बम कव्हर फक्त फोनवरील या पूर्वदृश्यात दिसू शकते. ते कधीही अपलोड केले जात नाही; नमुना मजकूर आणि वेळेची माहितीच वापरात राहते.</string>
+    <string name="community_theme_detail_information">थीमची माहिती</string>
+    <string name="community_theme_detail_byline">%1$s कडून</string>
+    <string name="community_theme_detail_layout">मूलभूत लेआउट</string>
+    <string name="community_theme_detail_revision">आवृत्ती पुनरावलोकन</string>
+    <string name="community_theme_detail_minimum_version">किमान Svartifoss आवृत्ती</string>
+    <string name="community_theme_detail_published">प्रकाशित</string>
+    <string name="community_theme_detail_visual_settings">दृश्य सेटिंग्ज</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s दृश्य सेटिंग</item>
+        <item quantity="other">%1$s दृश्य सेटिंग्ज</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">उपलब्ध नाही</string>
+    <string name="community_theme_detail_add_apply">जोडा आणि लागू करा</string>
+    <string name="community_theme_detail_remove">थीम काढा</string>
+    <string name="community_theme_detail_remove_title">माझ्या थीममधून “%1$s” काढायची?</string>
+    <string name="community_theme_detail_remove_message">ही जतन केलेली प्रत आणि तुम्ही केलेले सर्व बदल कायमचे काढले जातील. ती सध्या लागू असल्यास, तुमचे घड्याळ त्याच्या अंगभूत मूलभूत लेआउटवर परत जाईल.</string>
+    <string name="community_theme_detail_removed">थीम माझ्या थीममधून काढली</string>
+    <string name="community_theme_detail_remove_error">ही थीम काढता आली नाही</string>
+    <string name="community_theme_detail_like">आवडले</string>
+    <string name="community_theme_detail_unlike">आवड काढा</string>
+    <string name="community_theme_detail_like_loading">तपासत आहे…</string>
+    <string name="community_theme_detail_like_description">%1$s ला आवड दर्शवा. %2$s</string>
+    <string name="community_theme_detail_unlike_description">%1$s वरील आवड काढा. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google साइन-इन रद्द करण्यात आले. तुमची आवड जतन झाली नाही.</string>
+    <string name="community_theme_detail_like_error">तुमची आवड जतन करता आली नाही. तुमचे कनेक्शन तपासा आणि पुन्हा प्रयत्न करा.</string>
+    <string name="community_theme_detail_like_not_ready">या थीमसाठी आवडी अद्याप तयार नाहीत. पुढील प्रकाशनानंतर Community themes रीफ्रेश करा.</string>
+    <string name="community_theme_detail_like_saved">तुमची आवड जतन झाली. सार्वजनिक संख्या पुढील कॅटलॉग प्रकाशनासह अद्ययावत होईल.</string>
+    <string name="community_theme_detail_unlike_saved">तुमची आवड काढली. सार्वजनिक संख्या पुढील कॅटलॉग प्रकाशनासह अद्ययावत होईल.</string>
+    <string name="community_theme_detail_apply_existing">ही थीम आधीच माझ्या थीममध्ये आहे आणि तुमच्या घड्याळावर लागू करण्यात आली आहे</string>
+    <string name="community_theme_detail_requires_app_version">ही थीम जोडण्यापूर्वी Svartifoss %1$s आवश्यक आहे.</string>
+    <string name="community_theme_detail_load_error">या थीमचे तपशील लोड करता आले नाहीत. Community themes वर परत जा आणि पुन्हा प्रयत्न करा.</string>
+    <string name="community_theme_detail_profile_mismatch">डाउनलोड केलेले प्रोफाइल या थीमच्या सार्वजनिक तपशीलांशी जुळत नाही. Community themes वर परत जा आणि पुन्हा प्रयत्न करा.</string>
+    <string name="community_theme_detail_screenshot_description">लेखकाच्या घड्याळावरील या थीमचा फोटो</string>
+    <string name="community_theme_detail_source_author">लेखकाचे घड्याळ</string>
+    <string name="community_theme_detail_source_rendered">निर्मित पूर्वदृश्य</string>
+    <string name="community_theme_detail_show_rendered">निर्मित पूर्वदृश्य दाखवा</string>
+    <string name="community_theme_detail_show_author">लेखकाचा फोटो दाखवा</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

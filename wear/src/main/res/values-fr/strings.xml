@@ -185,4 +185,21 @@
 
     <string name="metadata_about">À propos</string>
     <string name="metadata_source">En lecture dans</string>
+    <string name="action_name_open_quick_actions_panel">Ouvrir le panneau d’actions rapides</string>
+    <string name="action_name_fast_forward">Avance rapide</string>
+    <string name="action_name_rewind">Rembobiner</string>
+    <string name="action_name_set_speed">Définir la vitesse de lecture</string>
+    <string name="action_name_seek_position">Aller à une position du morceau</string>
+    <string name="action_name_set_volume">Définir le volume</string>
+    <string name="action_name_set_shuffle">Définir la lecture aléatoire</string>
+    <string name="action_name_set_repeat">Définir la répétition</string>
+    <string name="action_name_open_volume_screen">Ouvrir l’écran du volume</string>
+    <string name="action_name_open_progress_screen">Ouvrir l’écran de progression</string>
+    <string name="action_name_open_face_picker">Ouvrir le sélecteur de cadran</string>
+    <string name="action_name_close_watch_app">Fermer l’application de la montre</string>
+    <string name="volume_screen_title">Volume</string>
+    <string name="progress_screen_title">Progression</string>
+    <string name="progress_screen_cancel_seek">Annuler le déplacement</string>
+    <string name="progress_screen_skip_back">Reculer de %1$d secondes</string>
+    <string name="progress_screen_skip_forward">Avancer de %1$d secondes</string>
 </resources>

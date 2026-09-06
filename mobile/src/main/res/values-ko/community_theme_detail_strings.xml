@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">테마 세부정보</string>
+    <string name="community_theme_detail_preview_screen">미리보기 화면</string>
+    <string name="community_theme_detail_surface_player">플레이어</string>
+    <string name="community_theme_detail_surface_aod">항상 켜짐</string>
+    <string name="community_theme_detail_surface_volume">볼륨</string>
+    <string name="community_theme_detail_surface_progress">진행률</string>
+    <string name="community_theme_detail_surface_quick_panel">빠른 패널</string>
+    <string name="community_theme_detail_surface_queue">대기열</string>
+    <string name="community_theme_detail_preview_label">%1$s 미리보기</string>
+    <string name="community_theme_detail_preview_description">%2$s 화면에서 %1$s 미리보기</string>
+    <string name="community_theme_detail_preview_privacy">현재 앨범 표지는 휴대전화의 이 미리보기에서만 표시될 수 있습니다. 업로드되지 않으며 샘플 텍스트와 시간은 계속 사용됩니다.</string>
+    <string name="community_theme_detail_information">테마 정보</string>
+    <string name="community_theme_detail_byline">%1$s 제작</string>
+    <string name="community_theme_detail_layout">기본 레이아웃</string>
+    <string name="community_theme_detail_revision">리비전</string>
+    <string name="community_theme_detail_minimum_version">최소 Svartifoss 버전</string>
+    <string name="community_theme_detail_published">게시됨</string>
+    <string name="community_theme_detail_visual_settings">시각 설정</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">시각적 설정 %1$s개</item>
+        <item quantity="other">시각적 설정 %1$s개</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">사용할 수 없음</string>
+    <string name="community_theme_detail_add_apply">추가하고 적용</string>
+    <string name="community_theme_detail_remove">테마 삭제</string>
+    <string name="community_theme_detail_remove_title">내 테마에서 “%1$s”을(를) 삭제할까요?</string>
+    <string name="community_theme_detail_remove_message">저장된 사본과 수정한 내용이 모두 영구적으로 삭제됩니다. 현재 적용 중이라면 시계가 기본 내장 레이아웃으로 돌아갑니다.</string>
+    <string name="community_theme_detail_removed">내 테마에서 테마가 삭제되었습니다</string>
+    <string name="community_theme_detail_remove_error">이 테마를 삭제할 수 없습니다</string>
+    <string name="community_theme_detail_like">좋아요</string>
+    <string name="community_theme_detail_unlike">좋아요 취소</string>
+    <string name="community_theme_detail_like_loading">확인 중…</string>
+    <string name="community_theme_detail_like_description">%1$s에 좋아요. %2$s</string>
+    <string name="community_theme_detail_unlike_description">%1$s 좋아요 취소. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google 로그인이 취소되었습니다. 좋아요가 저장되지 않았습니다.</string>
+    <string name="community_theme_detail_like_error">좋아요를 저장할 수 없습니다. 연결을 확인하고 다시 시도하세요.</string>
+    <string name="community_theme_detail_like_not_ready">이 테마의 좋아요 기능은 아직 준비되지 않았습니다. 다음 게시 후 커뮤니티 테마를 새로고침하세요.</string>
+    <string name="community_theme_detail_like_saved">좋아요가 저장되었습니다. 공개 수치는 다음 카탈로그 게시 때 업데이트됩니다.</string>
+    <string name="community_theme_detail_unlike_saved">좋아요가 삭제되었습니다. 공개 수치는 다음 카탈로그 게시 때 업데이트됩니다.</string>
+    <string name="community_theme_detail_apply_existing">이 테마는 이미 내 테마에 있으며 시계에 적용되었습니다</string>
+    <string name="community_theme_detail_requires_app_version">이 테마를 추가하려면 Svartifoss %1$s이(가) 필요합니다.</string>
+    <string name="community_theme_detail_load_error">이 테마의 세부정보를 불러올 수 없습니다. 커뮤니티 테마로 돌아가 다시 시도하세요.</string>
+    <string name="community_theme_detail_profile_mismatch">다운로드한 프로필이 이 테마의 공개 세부정보와 일치하지 않습니다. 커뮤니티 테마로 돌아가 다시 시도하세요.</string>
+    <string name="community_theme_detail_screenshot_description">제작자의 시계에 표시된 이 테마 사진</string>
+    <string name="community_theme_detail_source_author">제작자의 시계</string>
+    <string name="community_theme_detail_source_rendered">생성된 미리보기</string>
+    <string name="community_theme_detail_show_rendered">생성된 미리보기 표시</string>
+    <string name="community_theme_detail_show_author">제작자 사진 표시</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

@@ -2411,6 +2411,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -2454,6 +2459,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2527,8 +2537,9 @@
     <string name="drawer_sync_heading">Sync</string>
     <string name="drawer_sync_summary">Watch settings are configured here on the phone and synced automatically to your paired watch.</string>
     <string name="drawer_support_heading">Support</string>
-    <string name="drawer_support_summary">Svartifoss is free and open source - buy me a coffee if it\'s useful to you :D</string>
+    <string name="drawer_support_summary">Svartifoss is free/libre and open source (GPLv3), and no feature is gated behind a payment. Buy me a coffee if it\'s useful to you :D</string>
     <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Download cover art</string>
     <string name="album_art_saved">Cover art saved to gallery</string>
     <string name="album_art_save_error">Failed to save cover art</string>

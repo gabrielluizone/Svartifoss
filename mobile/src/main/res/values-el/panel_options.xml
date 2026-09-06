@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Διάταξη δακτυλίου προόδου</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Πλήρως διαφανές</item>
+        <item>Δευτερεύον χρώμα</item>
+        <item>Τριτεύον χρώμα</item>
+        <item>Πλέγμα χρωμάτων</item>
+        <item>Σέλας</item>
+        <item>Προβολέας</item>
+        <item>Βινιέτα</item>
+        <item>Διαιρεμένος τόνος</item>
+        <item>Ζώνες χρώματος</item>
+        <item>Μεσάνυχτα</item>
+        <item>Άλω</item>
+        <item>Θόλωση καπνού</item>
+        <item>Ηλιοβασίλεμα</item>
+        <item>Ωκεανός</item>
+        <item>Νεφέλωμα</item>
+        <item>Χόβολη</item>
+        <item>Γραμμή παλίρροιας</item>
+        <item>Βιοφωταύγεια</item>
+        <item>Ιριδίζον</item>
+        <item>Γραφίτης</item>
+        <item>Κινηματογράφος</item>
+        <item>Τροχιά</item>
+        <item>Ορίζοντας</item>
+        <item>Ξέπλυμα μελανιού</item>
+        <item>Άνθιση</item>
+        <item>Φιόρδ</item>
+        <item>Πλέγμα κουκκίδων</item>
+        <item>Γραμμή σάρωσης</item>
+        <item>Ραντάρ</item>
+        <item>Γραμμές περιγράμματος</item>
+        <item>Πολυεδρικό</item>
+        <item>Λυκόφως</item>
+        <item>Πάγος</item>
+        <item>Τριαντάφυλλο</item>
+        <item>Χαρτί</item>
+        <item>Μονόλιθος</item>
+        <item>Φανάρι</item>
+        <item>Νουάρ</item>
+        <item>Βελούδο</item>
+        <item>Αντικατοπτρισμός</item>
+        <item>Διάχυτη λάμψη</item>
+        <item>Σύννεφο</item>
+        <item>Νυχτερινό</item>
+        <item>Υγρό</item>
+        <item>Παλίρροια</item>
+        <item>Βινύλιο</item>
+        <item>Κορόνα</item>
+        <item>Ημισέληνος</item>
+        <item>Πλέγμα</item>
+        <item>Γυάλινο πέπλο</item>
+        <item>Υλικό</item>
+        <item>Αφίσα</item>
+        <item>Στούντιο</item>
+        <item>Φάσμα</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Χάντρες</item>
+        <item>Διπλή ράγα</item>
+        <item>Παλμός</item>
+        <item>Χρώμιο</item>
+        <item>Φάσμα</item>
+        <item>Σκαλοπάτια</item>
+        <item>Καραμέλα</item>
+        <item>Φάντασμα</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Διπλή άκρη</item>
+        <item>Κατακόρυφος μετρητής (αριστερά)</item>
+        <item>Κατακόρυφος μετρητής (δεξιά)</item>
+        <item>Επάνω μετρητής</item>
+        <item>Κάτω μετρητής</item>
+        <item>Κεντρικός επιλογέας</item>
+        <item>Επάνω άλω</item>
+        <item>Κάτω άλω</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Διπλός δακτύλιος</item>
+        <item>Χάντρες</item>
+        <item>Παύλα και τελεία</item>
+        <item>Ενδείξεις 24 ωρών</item>
+        <item>Μόνο πρόοδος</item>
+        <item>Λάμψη</item>
+        <item>Διχρωμία</item>
+        <item>Βελόνα</item>
+        <item>Εναλλασσόμενο</item>
+        <item>Σπίθα</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Άκρη στεφάνης</item>
+        <item>Εσοχή δακτυλίου</item>
+        <item>Εσωτερικός δακτύλιος</item>
+        <item>Παχύς δακτύλιος</item>
+        <item>Ανοικτό κάτω</item>
+        <item>Ανοικτό πάνω</item>
+        <item>Αριστερό τόξο</item>
+        <item>Δεξί τόξο</item>
+        <item>Διπλή διαδρομή</item>
+        <item>Ανοικτό αριστερά</item>
+        <item>Ανοικτό δεξιά</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Συμπαγής κάψουλα</item>
+        <item>Τετράγωνο άλμπουμ</item>
+        <item>Στοιβαγμένη κάψουλα</item>
+        <item>Σήμα</item>
+        <item>Γυάλινη μπάρα</item>
+        <item>LCD</item>
+        <item>Τετράγωνο με περίγραμμα</item>
+        <item>Κορδέλα</item>
+        <item>Φούσκα χρόνου</item>
+        <item>Διαιρεμένος τόνος</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Χρονογραμμή (πάνω)</item>
+        <item>Χρονογραμμή (κάτω)</item>
+        <item>Τμήματα (πάνω)</item>
+        <item>Κατακόρυφη χρονογραμμή (αριστερά)</item>
+        <item>Κατακόρυφη χρονογραμμή (δεξιά)</item>
+        <item>Κεντρικός επιλογέας</item>
+        <item>Διπλή χρονογραμμή</item>
+        <item>Τμήματα (κάτω)</item>
+        <item>Κεντρική στοίβα</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Απαλό</item>
+        <item>Χρώμιο</item>
+        <item>Ολογραφικό</item>
+        <item>Φούσκα</item>
+        <item>Ράγα</item>
+        <item>Ηλιοβασίλεμα</item>
+        <item>Περίγραμμα άλμπουμ</item>
+        <item>Σκούρο γυαλί</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Βεντάλια</item>
+        <item>Τροχιά</item>
+        <item>Κάτω βάση</item>
+        <item>Στήλη</item>
+        <item>Διαιρεμένο πάνελ</item>
+        <item>Διαμάντι</item>
+        <item>Καρουζέλ</item>
+        <item>Τρίγωνο</item>
+        <item>Σκάλα</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Απαλό</item>
+        <item>Πλάκα</item>
+        <item>Μελάνι</item>
+        <item>Ράγα</item>
+        <item>Ηλιοβασίλεμα</item>
+        <item>Φούσκα</item>
+        <item>Χρώμιο</item>
+        <item>Ολογραφικό</item>
+    </string-array>
+</resources>

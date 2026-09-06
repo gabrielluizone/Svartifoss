@@ -2080,6 +2080,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -2123,6 +2128,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
@@ -2349,4 +2359,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Copiază</string>
+    <string name="dev_report_copied">Raport copiat</string>
+    <string name="dev_watch_snapshot_inspector">Instantaneu al preferințelor ceasului</string>
+    <string name="dev_watch_snapshot_inspector_description">Ce s-ar trimite efectiv pe ceas chiar acum: domeniul de aspect activ, dimensiunea estimată și ce cache-uri inactive per cadran au fost eliminate pentru a respecta limita</string>
+    <string name="dev_data_layer_inspector">Inspector Data Layer</string>
+    <string name="dev_data_layer_inspector_description">Noduri Wearable conectate și ultimul WatchInfo la care a răspuns aplicația de pe ceas — starea brută din spatele mesajului „Niciun ceas conectat”</string>
+    <string name="dev_media_sessions_inspector">Explorator MediaSession</string>
+    <string name="dev_media_sessions_inspector_description">Toate sesiunile MediaSession active în prezent, nu doar cea urmărită: acțiuni declarate, coadă și rută de redare</string>
+    <string name="dev_view_phone_log">Vezi jurnalul telefonului</string>
+    <string name="dev_view_phone_log_description">Finalul jurnalului Timber salvat pe disc, plus jurnalul ceasului dacă „Trimite jurnale” l-a preluat anterior</string>
+    <string name="dev_theme_submission_preflight">Verificare preliminară a trimiterii temei</string>
+    <string name="dev_theme_submission_preflight_description">Trece fiecare temă de ceas salvată prin verificarea de trimitere către comunitate și indică exact setarea care o blochează, dacă există</string>
+    <string name="dev_appearance_resolution_inspector">Inspector pentru rezoluția aspectului</string>
+    <string name="dev_appearance_resolution_inspector_description">Pentru fiecare cheie de aspect cu domeniu, arată care dintre cei patru pași de rezoluție a câștigat efectiv — valoarea explicită a cadranului, valoarea implicită per cadran, valoarea globală moștenită sau valoarea implicită a definiției — și valoarea returnată de fiecare</string>
+    <string name="action_fast_forward">Derulare rapidă înainte</string>
+    <string name="action_rewind">Derulare înapoi</string>
+    <string name="action_set_playback_speed">Setează viteza la %1$s×</string>
+    <string name="action_seek_to_percent">Salt la %1$d%%</string>
+    <string name="action_set_volume_percent">Setează volumul la %1$d%%</string>
+    <string name="action_set_shuffle_on">Activează redarea aleatorie</string>
+    <string name="action_set_shuffle_off">Dezactivează redarea aleatorie</string>
+    <string name="action_set_repeat_off">Dezactivează repetarea</string>
+    <string name="action_set_repeat_all">Repetă tot</string>
+    <string name="action_set_repeat_one">Repetă una</string>
+    <string name="group_playback_speed">Viteză de redare</string>
+    <string name="group_track_position">Poziția piesei</string>
+    <string name="group_shuffle_mode">Mod aleatoriu</string>
+    <string name="group_repeat_mode">Mod repetare</string>
+    <string name="group_volume_levels">Niveluri volum</string>
+    <string name="group_watch_screens">Ecrane ceas</string>
+    <string name="group_find_music">Găsește și redă</string>
+    <string name="action_open_face_picker">Deschide selectorul de cadran</string>
+    <string name="action_close_watch_app">Închide aplicația de pe ceas</string>
+    <string name="hand_gestures">GESTURI CU MÂNA</string>
+    <string name="hand_gestures_hint">Disponibil pe ceasurile compatibile cât timp Svartifoss este deschis.</string>
+    <string name="hand_gestures_hint_disconnected">Conectează și deschide Svartifoss pe ceas pentru a vedea dacă acesta acceptă gesturi cu mâna.</string>
+    <string name="hand_gestures_hint_outdated">Actualizează aplicația de pe ceas pentru a verifica dacă acest ceas acceptă gesturi cu mâna.</string>
+    <string name="hand_gestures_hint_unsupported">Acest ceas nu acceptă gesturi cu mâna, deci o acțiune atribuită aici nu se va executa niciodată.</string>
+    <string name="hand_gestures_hint_disabled">Gesturile cu mâna sunt dezactivate pe acest ceas. Activează-le chiar pe ceas din Setări \u2192 Gesturi.</string>
+    <string name="hand_gestures_hint_ready">Gata pe acest ceas: ciupește de două ori cât timp playerul Svartifoss este deschis.</string>
+    <string name="hand_gesture_how_it_works">Apropie rapid degetul mare de arătător de două ori, cu încheietura ridicată. Wear OS numește aceasta acțiunea principală, așa că un ceas de la alt producător poate folosi propriul gest echivalent.\n\nFuncționează doar cât timp playerul Svartifoss este deschis pe ceas și ecranul este aprins \u2014 nu din cadran, nu peste coadă sau meniu și nu pe afișajul permanent. Acțiunea executată este cea setată pentru starea în care se află redarea în acel moment, așa că seteaz-o pe ambele pagini de Comenzi pentru a funcționa în ambele situații.\n\nGestul trebuie, de asemenea, activat în Setări \u2192 Gesturi chiar pe ceas.</string>
+    <string name="double_pinch">Ciupire dublă</string>
+    <string name="icon_selection_search_hint">Caută pictograme</string>
+    <string name="icon_selection_search_empty">Nicio pictogramă nu corespunde căutării tale</string>
+    <string name="open_quick_actions_panel">Deschide panoul de acțiuni rapide</string>
+    <string name="open_volume_screen">Deschide ecranul de volum</string>
+    <string name="open_progress_screen">Deschide ecranul de progres</string>
+    <string name="export_config_failed_detail">Backupul nu a putut fi exportat: %1$s</string>
+    <string name="backup_selection_title">Alege conținutul backupului</string>
+    <string name="backup_selection_description">Selectează părțile din Svartifoss pe care vrei să le salvezi. Totul este selectat implicit; părțile neselectate rămân neschimbate când acest backup este importat.</string>
+    <string name="backup_selection_select_all">Selectează tot</string>
+    <string name="backup_selection_clear_all">Șterge tot</string>
+    <string name="backup_selection_export">Exportă backup</string>
+    <string name="backup_selection_empty">Selectează cel puțin un element</string>
+    <string name="backup_section_buttons">Configurări butoane</string>
+    <string name="backup_section_buttons_description">Acțiuni pentru butoane, coroană și gesturi când muzica rulează sau este oprită.</string>
+    <string name="backup_section_actions">Listă de acțiuni</string>
+    <string name="backup_section_actions_description">Lista ordonată de acțiuni afișată în meniul de acțiuni al ceasului.</string>
+    <string name="backup_section_app_settings">Setări aplicație</string>
+    <string name="backup_section_app_settings_description">Setări telefon, comportamentul ceasului, limbă, redare și integrări.</string>
+    <string name="backup_section_watch_appearance">Aspect și teme pentru ceas</string>
+    <string name="backup_section_watch_appearance_description">Aspecte, culori, tipografie, panouri, AOD și teme personalizate salvate pentru ceas.</string>
+    <string name="backup_section_playlist_shortcuts">Scurtături pentru playlisturi</string>
+    <string name="backup_section_playlist_shortcuts_description">Linkurile tale salvate către muzică, albume, artiști, playlisturi și alte servicii de streaming.</string>
+    <string name="backup_section_history">Istoric de căutare și redare</string>
+    <string name="backup_section_history_description">Căutări recente și piese redate recent.</string>
+    <string name="backup_section_icons">Pictograme și coperți încărcate</string>
+    <string name="backup_section_icons_description">Pictograme personalizate pentru acțiuni, coperți pentru scurtături și pictograme de aplicații din cache.</string>
+    <string name="backup_section_privacy">Confidențialitate și notificări</string>
+    <string name="backup_section_privacy_description">Rapoarte de blocare, notificări de anunțuri și alte opțiuni de consimțământ salvate de aplicație.</string>
+    <string name="backup_section_local_app_state">Stare locală a aplicației</string>
+    <string name="backup_section_local_app_state_description">Accentul curent, ultima poziție din meniu, solicitările finalizate și starea actualizării.</string>
+    <string name="backup_section_auxiliary_data">Alte date ale aplicației</string>
+    <string name="backup_section_auxiliary_data_description">Preferințe suplimentare deținute de aplicație și fișiere interne, inclusiv viitoare stocări de date.</string>
+    <string name="pref_numeric_range">Între %1$d și %2$d.</string>
+    <string name="background_editor_artwork">Copertă</string>
+    <string name="background_editor_layers">Straturi</string>
+    <string name="background_editor_layers_count">%1$d din %2$d</string>
+    <string name="background_editor_add_layer">Adaugă strat</string>
+    <string name="background_editor_reset_layers">Resetează</string>
+    <string name="background_editor_empty">Nu există straturi. Coperta este afișată singură.</string>
+    <string name="background_editor_note">Stratul din partea de sus a listei este desenat peste toate celelalte; cel de jos se află cel mai aproape de copertă.</string>
+    <string name="background_editor_full">Poți suprapune până la %1$d straturi.</string>
+    <string name="background_layer_kind_wash">Fundal</string>
+    <string name="background_layer_kind_shade">Umbrire</string>
+    <string name="background_layer_kind_floor">Bază de accent</string>
+    <string name="background_layer_move_up">Mută acest strat în sus</string>
+    <string name="background_layer_move_down">Mută acest strat în jos</string>
+    <string name="background_layer_more">Mai multe opțiuni pentru acest strat</string>
+    <string name="background_layer_add_title">Adaugă un strat</string>
+    <string name="background_layer_style_title">Strat %1$s</string>
+    <string name="background_layer_opacity">Intensitate</string>
+    <string name="background_layer_color">Culoare</string>
+    <string name="background_layer_custom_color">Alege o culoare</string>
+    <string name="background_layer_duplicate">Duplică</string>
+    <string name="background_layer_remove">Elimină</string>
+    <string name="background_layer_color_default">Implicit</string>
+    <string name="background_layer_color_album">Culoarea albumului</string>
+    <string name="background_layer_color_secondary">A doua culoare a albumului</string>
+    <string name="background_layer_color_tertiary">A treia culoare a albumului</string>
+    <string name="background_layer_color_desaturated">Culoare estompată a albumului</string>
+    <string name="background_layer_color_black">Negru</string>
+    <string name="background_layer_color_custom">Culoare personalizată</string>
+    <string name="background_layer_reset_title">Resetezi straturile?</string>
+    <string name="background_layer_reset_message">Stiva revine la umbrirea și baza de accent setate pe rândurile lor, adică exact ceea ce redă oricum un ceas cu o versiune mai veche.</string>
+    <string name="watch_element_progress">Progres</string>
+    <string name="watch_element_volume">Volum</string>
+    <string name="watch_element_quick_panel">Acțiuni rapide</string>
+    <string name="watch_element_queue">Coadă</string>
+    <string name="watch_element_lyrics">Versuri</string>
+    <string name="player_section_on_screen">Pe ecran</string>
+    <string name="player_element_app_icon">Pictograma aplicației</string>
+    <string name="player_element_controls">Comenzi player</string>
+    <string name="player_element_tap_flash">Flash la atingere</string>
+    <string name="player_element_inner_progress">Progres interior</string>
+    <string name="player_element_edge_arc">Arc de margine</string>
+    <string name="player_element_edge_seek">Căutare pe margine</string>
+    <string name="player_element_clock">Ceas</string>
+    <string name="player_element_cover_art">Copertă</string>
+    <string name="setting_album_art_filter">Filtru copertă album</string>
+    <string name="setting_album_art_filter_description">Aplică un tratament de culoare independent peste orice stil al copertei albumului.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto cu o linie extra-ușoară pentru un aspect delicat pe ecran.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto cu o linie ușoară și aerisită și proporțiile familiare ale familiei.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto cu o linie medie mai puternică pentru etichete compacte și lizibile.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto cu cea mai grea grosime de sistem pentru text de afișare îndrăzneț.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto condensat pe orizontală pentru ca titlurile mai lungi să încapă în mai puțin spațiu.</string>
+    <string name="setting_wear_title_font">Tip de literă titlu</string>
+    <string name="setting_wear_title_text_case">Majuscule/minuscule titlu</string>
+    <string name="setting_wear_artist_font">Tip de literă artist</string>
+    <string name="setting_wear_artist_text_case">Majuscule/minuscule artist</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Un sans rotunjit și prietenos, conceput pentru primele etape ale lecturii</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Un font Didone de afișaj, cu contrast ridicat și greutate editorială</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Un sans robust de poster, cu o notă de bandă desenată scrisă de mână</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Un sans geometric calm, cu spațiere generoasă și uniformă</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Un slab serif contemporan, cu terminații ușor rotunjite</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Un slab serif masiv, creat pentru impact în titluri</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Un font îngust desenat de mână în capitale mici</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Un sans condensat și compact pentru titluri puternice</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Un slab serif geometric care rămâne solid la dimensiuni mici</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Un font de afișaj de bandă desenată cu energie explozivă</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Un font militar de afișaj în stil șablon</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Un serif vertical cu curbe calde și informale</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Un sans umanist cu colțuri subtil rotunjite</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Un sans grotesc cu forme puternice și directe</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Un monospațiat rafinat de mașină de scris, creat pentru scenarii</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Un slab serif rotunjit, cu un ton blând și livresc</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Un serif clasic de carte, optimizat pentru pasaje lungi</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Un sans geometric cu contrast redus și finisaj modern</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Un serif robust, desenat să reziste bine la dimensiuni de text</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Un sans tehnic contemporan, cu îmbinări unghiulare</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Un monospațiat pentru programare, cu glife clare și distincte</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Un monospațiat umanist conceput pentru cod pe ecran</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Un font de mână jucăuș, cu tușe rotunjite</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Un sans geometric cu caracter vintage din anii 1920</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Un sans geometric în tradiția Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Un sans thailandez și latin fără bucle, cu o ușoară înclinare</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Un sans modelat pentru a reduce stresul vizual în timpul citirii</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Un script legat și îndrăzneț, cu aer de firmă retro</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Un sans semigeometric care echilibrează căldura și precizia</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Un sans minimalist, desenat pentru text de interfață curat</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Un sans bine rotunjit, cu terminații moi</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Un sans geometric cu ritm uniform și contemporan</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Un font techno pătrățos, cu aer de jocuri</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Un sans tehnic compact, desenat pe o grilă</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Un grotesk modern, cu curbe deschise distinctive</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Un font pixel direct dintr-un cabinet arcade</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Un sans geometric rotunjit, cu senzație blândă și ușoară</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Un sans condensat pătrățos, cu unghiuri tehnice</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Un font de afișaj art-deco cu rădăcini în pictura firmelor retro</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Varianta monospațiată care însoțește Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Un font de afișaj masiv, cu tușe jucăușe și ferme</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Un font industrial lat, cu forme grele și pătrate</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Un font de afișaj viu și înclinat, cu rădăcini gujarati</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Un mic font bitmap care amintește de primele ecrane de calculator</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Un monospațiat conceput pentru citirea confortabilă a codului</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Un font condensat cu majuscule, cu prezență de poster</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Un font înalt și condensat pentru titluri devanagari și latine</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Un sans umanist pătrățos, cu aer tehnic</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Un sans complet rotunjit, cu ton accesibil</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Un font condensat care evocă firmele cafenelelor din anii 1920</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Un slab serif cu terminații moderne, ușor tăiate</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Un sans umanist prietenos, cu forme deschise și lizibile</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Un sans cald, cu forme solide pentru lectură confortabilă</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Un sans umanist versatil, conceput pentru interfețe clare</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Un serif de text rafinat, cu voce editorială</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Un serif clasic de carte, optimizat pentru citire pe ecran</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Un sans grotesc practic, cu ritm larg și robust</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Un sans umanist tehnic, cu proporții precise</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Un monospațiat tehnic, cu textură finisată și lizibilă</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Un serif contemporan, cu caracter inginerește construit</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Un sans de lucru curat, cu forme compacte și practice</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Un grotesk neobișnuit, cu proporții prietenoase</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Un sans geometric cu senzație futuristă și aerisită</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Un sans geometric modern, cu linii urbane elegante</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Un sans contemporan echilibrat, creat pentru ecrane mici</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Un sans de afișaj încrezător, cu proporții expresive</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Un sans complementar lizibil pentru informații mai lungi despre piesă</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Un monospațiat clar, cu ton tehnic modern</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Un sans neconvențional cu forme jucăușe, atent dirijate artistic</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Un sans contemporan flexibil, cu precizie discretă</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Un sans curat și accesibil pentru citire fără efort</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Un sans de afișaj rotunjit, cu personalitate veselă</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Un grotesk vioi care combină structura cu detalii neobișnuite</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Un serif de afișaj cu contrast ridicat pentru titluri dramatice</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Un serif literar elegant, cu contrast ridicat</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Un serif de afișaj grațios cu detalii caligrafice</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Un slab serif robust care rămâne clar la dimensiuni mici</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Un serif versatil creat pentru lectură densă și expresivă</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Un serif cald de stil vechi, cu voce livrescă</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Un sans elegant, cu forme de litere distinctive și rafinate</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Un sans geometric îndrăzneț, creat pentru titluri puternice</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Un sans potrivit pentru condensare, cu energie atletică și dinamică</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Un sans moale, cu spații interioare deschise și energie prietenoasă de semnalistică</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Un sans versatil care echilibrează căldura umanistă și claritatea</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Un sans clar inspirat de semnalistica de transport, cu ritm sigur</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Un sans neutru și accesibil, creat pentru interfețe de zi cu zi</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Un sans geometric ușor, cu curbe netede și moderne</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Un sans îngust și rotunjit, cu un aer ușor futurist</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Un sans geometric curat, cu un caracter subtil inspirat de thailandeză</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Un font futurist de afișaj, lat, pentru prezență maximă</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">O familie variabilă de la sans la monospațiat, cu o voce tehnică și jucăușă</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Un monospațiat cu lățime variabilă și textură digitală distinctă</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Un sans larg și foarte lizibil, cu suport extins pentru sisteme de scriere</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Un serif de încredere, cu suport extins pentru sisteme de scriere</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Un monospațiat multilingv conceput pentru ritm constant</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Un sans modern compact, cu ritm clar influențat de ebraică</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Un sans umanist robust, optimizat pentru lectură clară</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Un sans prietenos pentru ecran, cu textură rotunjită și deschisă</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Un sans geometric compact, cu proporții distinctive</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Un serif caligrafic vioi, cu caracter literar</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Un sans umanist curat, cu lizibilitate excelentă în interfețe</string>
+    <string name="setting_wear_note_show_cover">Copertă</string>
+    <string name="aod_element_artwork">Copertă</string>
+    <string name="aod_element_clock">Ceas</string>
+    <string name="aod_element_track_info">Informații piesă</string>
+    <string name="aod_element_transport">Comenzi de redare</string>
+    <string name="aod_element_progress">Progres</string>
+    <string name="aod_element_up_next">Urmează</string>
+    <string name="aod_section_artwork">Copertă</string>
+    <string name="aod_control_tint">Tentă</string>
+    <string name="aod_control_brightness">Luminozitate</string>
+    <string name="aod_control_art_treatment">Tratament</string>
+    <string name="aod_control_art_opacity">Opacitate</string>
+    <string name="mini_button_control_visibility">Afișează</string>
+    <string name="mini_button_control_arrangement">Aranjare</string>
+    <string name="mini_button_control_shape">Formă</string>
+    <string name="mini_button_control_background">Fundal</string>
+    <string name="mini_button_control_opacity">Opacitate</string>
+    <string name="mini_button_assign_action">Atribuie acțiuni</string>
+    <string name="mini_button_gestures_note">Glisează în sus, în jos și spre stânga pe player. Glisarea spre dreapta este întotdeauna gestul de închidere al sistemului și nu este interceptată niciodată.</string>
+    <string name="setting_wear_chat_cover_shape">Forma avatarului de chat</string>
+    <string name="setting_wear_chat_show_cover">Copertă</string>
+    <string name="setting_wear_metadata_cover_shape">Forma copertei metadatelor</string>
+    <string name="setting_wear_metadata_show_cover">Copertă</string>
+    <string-array name="wear_text_case_entries">
+        <item>Normal</item>
+        <item>MAJUSCULE</item>
+        <item>litere mici</item>
+        <item>Inițiale Majuscule</item>
+    </string-array>
+    <string name="wear_text_font_follow">Urmează tipul de literă global</string>
+    <string name="category_wf_typography_track_time">Timp piesă</string>
+    <string name="setting_wear_track_time_font">Tip de literă pentru timpul piesei</string>
+    <string name="wear_track_time_font_follow">Urmează designul</string>
+    <string name="setting_wear_track_time_font_weight">Greutatea timpului piesei</string>
+    <string name="setting_wear_track_time_font_italic">Timpul piesei cu italic</string>
+    <string name="setting_wear_track_time_font_scale">Dimensiunea timpului piesei</string>
+    <string name="setting_wear_track_time_font_opacity">Opacitatea timpului piesei</string>
+    <string name="setting_wear_track_time_font_tracking">Spațierea literelor timpului piesei</string>
+    <string-array name="album_art_filter_entries">
+        <item>Niciunul</item>
+        <item>Monocrom</item>
+        <item>Cald</item>
+        <item>Rece</item>
+        <item>Ora de aur</item>
+        <item>Rosé</item>
+        <item>Film vintage</item>
+        <item>Film estompat</item>
+        <item>Mat</item>
+        <item>Viu</item>
+        <item>Impact</item>
+        <item>Pastel</item>
+        <item>Sepia</item>
+        <item>Cianotipie</item>
+        <item>Turcoaz și portocaliu</item>
+        <item>Contrast ridicat</item>
+        <item>Lumină difuză</item>
+        <item>Noapte</item>
+    </string-array>
+    <string name="queue_item_now_playing">În redare</string>
+    <string name="queue_item_unknown_title">Piesă necunoscută</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Coadă de redare · %1$d piesă</item>
+        <item quantity="other">Coadă de redare · %1$d piese</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Culoarea bazei de accent</string>
+    <string name="setting_wear_accent_floor_custom_color">Culoare de bază personalizată</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Alege culoarea folosită când Culoarea bazei de accent este setată la Culoare personalizată</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Accent album</item>
+        <item>Culoare secundară album</item>
+        <item>Culoare terțiară album</item>
+        <item>Culoare personalizată</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Un sans neutru și foarte lizibil pentru interfețe și lectură zilnică</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Forme de litere orientate spre accesibilitate, distincte și clare chiar și la dimensiuni mici</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Un sans geometric ușor rotunjit — încrezător și prietenos</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Un sans umanist compact care oferă mai mult spațiu titlurilor lungi</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Un font de afișaj înalt și condensat, cu energie de poster</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Un serif contemporan conceput pentru citire confortabilă a textelor lungi</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Un serif moale și expresiv, cu căldură și caracter</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Un monospațiat retro-futurist, cu muchie tehnică</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Un font de afișaj dens și foarte greu pentru contrast maxim</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Un script de mână cursiv, cu o senzație vie și personală</string>
+    <string name="setting_wear_artist_text_mode">Comportamentul textului artistului</string>
+    <string name="setting_wear_album_art_source">Sursa copertei albumului</string>
+    <string name="setting_user_font">Fontul meu</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Importă un fișier .ttf sau .otf de pe acest telefon</string>
+    <string name="setting_user_font_loaded">%1$s · atinge pentru a înlocui sau elimina</string>
+    <string name="user_font_pick">Alege un fișier de font</string>
+    <string name="user_font_replace">Înlocuiește</string>
+    <string name="user_font_remove">Elimină</string>
+    <string name="user_font_imported">„%1$s” a fost importat. Alege-l din orice listă de fonturi; este trimis către ceasul tău.</string>
+    <string name="user_font_removed">Fontul importat a fost eliminat.</string>
+    <string name="user_font_error_too_large">Fișierul are %1$s. Un font trebuie să aibă sub %2$s pentru a putea ajunge rapid pe ceas.</string>
+    <string name="user_font_error_not_a_font">Fișierul nu este un font pe care acest telefon îl poate citi. TrueType și OpenType (.ttf, .otf) funcționează; fonturile web (.woff, .woff2) nu.</string>
+    <string name="user_font_error_unreadable">Fișierul nu a putut fi citit. Încearcă să-l alegi din nou sau copiază-l mai întâi pe acest telefon.</string>
+    <string name="user_font_not_shareable">Temele care folosesc fontul tău rămân pe acest telefon</string>
+    <string name="setting_custom_album_art_image">Imagine de utilizat</string>
+    <string name="setting_custom_album_art_folder">Dosar sursă</string>
+    <string name="setting_custom_album_art_none">Nu a fost ales încă — atinge pentru a selecta</string>
+    <string name="setting_custom_album_art_chosen">%1$s · atinge pentru a schimba</string>
+    <string name="custom_album_art_image_set">Imaginea va apărea acum în spatele playerului.</string>
+    <string name="custom_album_art_folder_set">Pentru fiecare piesă va fi aleasă o imagine din acel dosar.</string>
+    <string name="custom_album_art_error">Nu s-a putut deschide. Alege-l din nou sau selectează ceva din spațiul de stocare local al acestui telefon.</string>
+    <string name="custom_album_art_not_shareable">Temele care folosesc imaginile tale rămân pe acest telefon</string>
+    <string name="setting_wear_text_block_align">Alinierea textului</string>
+    <string name="setting_wear_text_block_align_description">Marginea la care se aliniază textul piesei. Urmează cadranul păstrează alinierea pentru care a fost proiectat fiecare cadran.</string>
+    <string name="setting_wear_text_block_position">Poziția textului</string>
+    <string name="setting_wear_text_block_position_description">Locul în care apare textul piesei pe ecran. Urmează cadranul păstrează poziția pentru care a fost proiectat fiecare cadran.</string>
+    <string name="setting_online_artwork">Copertă online</string>
+    <string name="setting_online_artwork_description">Permite cadranului să afișeze o imagine căutată online \u2014 artistul care cântă sau coperta unui album atunci când playerul nu furnizează niciuna. Telefonul face căutarea în catalogul public Deezer și păstrează rezultatul în cache; sunt trimise doar numele piesei și al artistului și nu se caută nimic decât dacă un cadran este setat să folosească una dintre aceste surse. Dacă opțiunea este oprită, se folosește coperta furnizată de player.</string>
 </resources>

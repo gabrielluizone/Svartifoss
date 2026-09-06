@@ -3034,7 +3034,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // The imported font is injected at runtime rather than declared in `wear_font_entries`,
         // because whether it exists is a property of this phone: an XML row would offer a font that
         // is not there on every install that has not imported one, and would also have to be
-        // translated into forty locales to say a name the user chose themselves. It leads the list
+        // translated into forty-five locales to say a name the user chose themselves. It leads the list
         // - it is the one entry the person put there, and an alphabetical position among 143
         // families would bury it.
         val userFont = importedFontChoice(showArchived, current) ?: return catalog

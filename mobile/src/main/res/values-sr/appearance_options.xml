@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Океан</item>
+        <item>Залазак сунца</item>
+        <item>Средишњи рефлектор</item>
+        <item>Стаклени вео</item>
+        <item>Сомот</item>
+        <item>Ноар рефлектор</item>
+        <item>Ледени прелив</item>
+        <item>Цветање руже</item>
+        <item>Призма</item>
+        <item>Ивица полумесеца</item>
+        <item>Плимне траке</item>
+        <item>Папирни омот</item>
+        <item>Успон фењера</item>
+        <item>Подељена фатаморгана</item>
+        <item>Мирна мрежа</item>
+        <item>Ноктурно</item>
+        <item>Студија облака</item>
+        <item>Баре течности</item>
+        <item>Монолит боје</item>
+        <item>Подељени тон</item>
+        <item>Градијент</item>
+        <item>Двотонски</item>
+        <item>Траке</item>
+        <item>Вињета</item>
+        <item>Графит</item>
+        <item>Биоскоп</item>
+        <item>Акрил</item>
+        <item>Мрежа</item>
+        <item>Маглина</item>
+        <item>Биолуминисценција</item>
+        <item>Преливајуће</item>
+        <item>Орбита</item>
+        <item>Испирање мастилом</item>
+        <item>Цветање</item>
+        <item>Фјорд</item>
+        <item>Матрица тачака</item>
+        <item>Линије скенирања</item>
+        <item>Радар</item>
+        <item>Контура</item>
+        <item>Фасетирано</item>
+        <item>Испуна албума</item>
+        <item>Секундарна испуна</item>
+        <item>Терцијарна испуна</item>
+        <item>Стакло</item>
+        <item>Поноћ</item>
+        <item>Дим</item>
+        <item>Линија плиме</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Маховина</item>
+        <item>Маглица лаванде</item>
+        <item>Трешња</item>
+        <item>Дубоко море</item>
+        <item>Прашина</item>
+        <item>Избељивање</item>
+        <item>Месечина</item>
+        <item>Сан</item>
+        <item>Инфрацрвено</item>
+        <item>Шума</item>
+        <item>Сребро</item>
+        <item>Бомбона</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Горње блеђење</item>
+        <item>Средишњи рефлектор</item>
+        <item>Дијагонална сенка</item>
+        <item>Лева завеса</item>
+        <item>Десна завеса</item>
+        <item>Средишња трака</item>
+        <item>Претапање</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Обрнути лист</item>
+        <item>Обрнута кап</item>
+        <item>Облутак</item>
+        <item>Лук</item>
+        <item>Штит</item>
+        <item>Обрнути лук</item>
+        <item>Обрнути штит</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Шапат</item>
+        <item>Блиставо</item>
+        <item>Поплава</item>
+        <item>Светлуцање</item>
+        <item>Дубоки сјај</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Обрис албума</item>
+        <item>Градијент албума</item>
+        <item>Секундарна боја албума</item>
+        <item>Стакло албума</item>
+        <item>Терцијарна боја албума</item>
+        <item>Неонски обрис</item>
+    </string-array>
+</resources>

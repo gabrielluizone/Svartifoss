@@ -165,4 +165,21 @@
     <string name="face_name_metadata" translatable="false">Metadata</string>
     <string name="face_name_ribbon" translatable="false">Ribbon</string>
     <string name="face_name_frame" translatable="false">Frame</string>
+    <string name="action_name_open_quick_actions_panel">Apri pannello azioni rapide</string>
+    <string name="action_name_fast_forward">Avanzamento rapido</string>
+    <string name="action_name_rewind">Riavvolgi</string>
+    <string name="action_name_set_speed">Imposta velocità di riproduzione</string>
+    <string name="action_name_seek_position">Vai a una posizione del brano</string>
+    <string name="action_name_set_volume">Imposta volume</string>
+    <string name="action_name_set_shuffle">Imposta riproduzione casuale</string>
+    <string name="action_name_set_repeat">Imposta ripetizione</string>
+    <string name="action_name_open_volume_screen">Apri schermata volume</string>
+    <string name="action_name_open_progress_screen">Apri schermata avanzamento</string>
+    <string name="action_name_open_face_picker">Apri selettore quadrante</string>
+    <string name="action_name_close_watch_app">Chiudi app sull’orologio</string>
+    <string name="volume_screen_title">Volume</string>
+    <string name="progress_screen_title">Avanzamento</string>
+    <string name="progress_screen_cancel_seek">Annulla ricerca posizione</string>
+    <string name="progress_screen_skip_back">Torna indietro di %1$d secondi</string>
+    <string name="progress_screen_skip_forward">Vai avanti di %1$d secondi</string>
 </resources>

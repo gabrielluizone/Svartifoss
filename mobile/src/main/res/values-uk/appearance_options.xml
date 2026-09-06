@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Океан</item>
+        <item>Захід сонця</item>
+        <item>Центральний прожектор</item>
+        <item>Скляна завіса</item>
+        <item>Оксамит</item>
+        <item>Нуарний прожектор</item>
+        <item>Крижане сяйво</item>
+        <item>Цвітіння троянди</item>
+        <item>Призма</item>
+        <item>Край півмісяця</item>
+        <item>Припливні смуги</item>
+        <item>Паперова обкладинка</item>
+        <item>Схід ліхтаря</item>
+        <item>Розділений міраж</item>
+        <item>Спокійна сітка</item>
+        <item>Ноктюрн</item>
+        <item>Етюд хмар</item>
+        <item>Калюжі рідини</item>
+        <item>Кольоровий моноліт</item>
+        <item>Розділений тон</item>
+        <item>Градієнт</item>
+        <item>Двотоновий</item>
+        <item>Смуги</item>
+        <item>Віньєтка</item>
+        <item>Графіт</item>
+        <item>Кіно</item>
+        <item>Акрил</item>
+        <item>Сітка</item>
+        <item>Туманність</item>
+        <item>Біолюмінесценція</item>
+        <item>Переливчастий</item>
+        <item>Орбіта</item>
+        <item>Розмив чорнила</item>
+        <item>Цвітіння</item>
+        <item>Фіорд</item>
+        <item>Точкова матриця</item>
+        <item>Лінії сканування</item>
+        <item>Радар</item>
+        <item>Контур</item>
+        <item>Гранований</item>
+        <item>Заливка альбому</item>
+        <item>Вторинна заливка</item>
+        <item>Третинна заливка</item>
+        <item>Скло</item>
+        <item>Північ</item>
+        <item>Дим</item>
+        <item>Лінія припливу</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Мох</item>
+        <item>Лавандовий серпанок</item>
+        <item>Вишня</item>
+        <item>Глибоке море</item>
+        <item>Пил</item>
+        <item>Вибілювання</item>
+        <item>Місячне сяйво</item>
+        <item>Сон</item>
+        <item>Інфрачервоний</item>
+        <item>Ліс</item>
+        <item>Срібло</item>
+        <item>Цукерка</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Верхнє згасання</item>
+        <item>Центральний прожектор</item>
+        <item>Діагональна тінь</item>
+        <item>Ліва завіса</item>
+        <item>Права завіса</item>
+        <item>Центральна смуга</item>
+        <item>Перехресне згасання</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Зворотний листок</item>
+        <item>Зворотна крапля</item>
+        <item>Галька</item>
+        <item>Дуга</item>
+        <item>Щит</item>
+        <item>Зворотна дуга</item>
+        <item>Зворотний щит</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Шепіт</item>
+        <item>Променистий</item>
+        <item>Заливка</item>
+        <item>Мерехтіння</item>
+        <item>Глибоке світіння</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Контур альбому</item>
+        <item>Градієнт альбому</item>
+        <item>Вторинний колір альбому</item>
+        <item>Скло альбому</item>
+        <item>Третинний колір альбому</item>
+        <item>Неоновий контур</item>
+    </string-array>
+</resources>

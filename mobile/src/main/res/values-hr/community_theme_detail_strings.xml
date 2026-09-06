@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Pojedinosti teme</string>
+    <string name="community_theme_detail_preview_screen">Zaslon pretpregleda</string>
+    <string name="community_theme_detail_surface_player">Reproduktor</string>
+    <string name="community_theme_detail_surface_aod">Uvijek uključeno</string>
+    <string name="community_theme_detail_surface_volume">Glasnoća</string>
+    <string name="community_theme_detail_surface_progress">Napredak</string>
+    <string name="community_theme_detail_surface_quick_panel">Brzi panel</string>
+    <string name="community_theme_detail_surface_queue">Red čekanja</string>
+    <string name="community_theme_detail_preview_label">Pretpregled %1$s</string>
+    <string name="community_theme_detail_preview_description">Pretpregled %1$s na zaslonu %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Trenutačna naslovnica albuma može se pojaviti samo u ovom pretpregledu na telefonu. Nikada se ne prenosi; i dalje se koriste ogledni tekst i vrijeme.</string>
+    <string name="community_theme_detail_information">Informacije o temi</string>
+    <string name="community_theme_detail_byline">Autor: %1$s</string>
+    <string name="community_theme_detail_layout">Osnovni raspored</string>
+    <string name="community_theme_detail_revision">Revizija</string>
+    <string name="community_theme_detail_minimum_version">Najniža verzija Svartifossa</string>
+    <string name="community_theme_detail_published">Objavljeno</string>
+    <string name="community_theme_detail_visual_settings">Vizualne postavke</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s vizualna postavka</item>
+        <item quantity="other">%1$s vizualnih postavki</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Nije dostupno</string>
+    <string name="community_theme_detail_add_apply">Dodaj i primijeni</string>
+    <string name="community_theme_detail_remove">Ukloni temu</string>
+    <string name="community_theme_detail_remove_title">Ukloniti „%1$s” iz Mojih tema?</string>
+    <string name="community_theme_detail_remove_message">Ova spremljena kopija i sve vaše izmjene trajno će se ukloniti. Ako je trenutačno primijenjena, sat će se vratiti na ugrađeni osnovni raspored.</string>
+    <string name="community_theme_detail_removed">Tema je uklonjena iz Mojih tema</string>
+    <string name="community_theme_detail_remove_error">Nije moguće ukloniti ovu temu</string>
+    <string name="community_theme_detail_like">Sviđa mi se</string>
+    <string name="community_theme_detail_unlike">Više mi se ne sviđa</string>
+    <string name="community_theme_detail_like_loading">Provjera…</string>
+    <string name="community_theme_detail_like_description">Označi da vam se sviđa %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Ukloni oznaku sviđanja za %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Prijava putem Googlea je otkazana. Oznaka sviđanja nije spremljena.</string>
+    <string name="community_theme_detail_like_error">Nije moguće spremiti oznaku sviđanja. Provjerite vezu i pokušajte ponovno.</string>
+    <string name="community_theme_detail_like_not_ready">Oznake sviđanja za ovu temu još nisu spremne. Osvježite Teme zajednice nakon sljedeće objave.</string>
+    <string name="community_theme_detail_like_saved">Vaša je oznaka sviđanja spremljena. Javni se broj ažurira pri sljedećoj objavi kataloga.</string>
+    <string name="community_theme_detail_unlike_saved">Oznaka sviđanja je uklonjena. Javni se broj ažurira pri sljedećoj objavi kataloga.</string>
+    <string name="community_theme_detail_apply_existing">Ova je tema već u Mojim temama i primijenjena je na vaš sat</string>
+    <string name="community_theme_detail_requires_app_version">Za dodavanje ove teme potreban je Svartifoss %1$s.</string>
+    <string name="community_theme_detail_load_error">Nije moguće učitati pojedinosti ove teme. Vratite se na Teme zajednice i pokušajte ponovno.</string>
+    <string name="community_theme_detail_profile_mismatch">Preuzeti profil ne odgovara javnim pojedinostima ove teme. Vratite se na Teme zajednice i pokušajte ponovno.</string>
+    <string name="community_theme_detail_screenshot_description">Fotografija ove teme na satu autora</string>
+    <string name="community_theme_detail_source_author">Sat autora</string>
+    <string name="community_theme_detail_source_rendered">Generirani pretpregled</string>
+    <string name="community_theme_detail_show_rendered">Prikaži generirani pretpregled</string>
+    <string name="community_theme_detail_show_author">Prikaži fotografiju autora</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

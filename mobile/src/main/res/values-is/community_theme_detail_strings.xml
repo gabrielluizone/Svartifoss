@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Upplýsingar um þema</string>
+    <string name="community_theme_detail_preview_screen">Forskoðunarskjár</string>
+    <string name="community_theme_detail_surface_player">Spilari</string>
+    <string name="community_theme_detail_surface_aod">Alltaf kveikt</string>
+    <string name="community_theme_detail_surface_volume">Hljóðstyrkur</string>
+    <string name="community_theme_detail_surface_progress">Framvinda</string>
+    <string name="community_theme_detail_surface_quick_panel">Flýtispjald</string>
+    <string name="community_theme_detail_surface_queue">Biðröð</string>
+    <string name="community_theme_detail_preview_label">Forskoðun á %1$s</string>
+    <string name="community_theme_detail_preview_description">Forskoðun á %1$s á %2$s-skjánum</string>
+    <string name="community_theme_detail_preview_privacy">Núverandi plötuumslag þitt getur aðeins birst í þessari forskoðun á símanum þínum. Því er aldrei hlaðið upp; sýnishornstexti og tímasetningar eru áfram notuð.</string>
+    <string name="community_theme_detail_information">Upplýsingar um þema</string>
+    <string name="community_theme_detail_byline">Eftir %1$s</string>
+    <string name="community_theme_detail_layout">Grunnútlit</string>
+    <string name="community_theme_detail_revision">Endurskoðun</string>
+    <string name="community_theme_detail_minimum_version">Lágmarksútgáfa Svartifoss</string>
+    <string name="community_theme_detail_published">Birt</string>
+    <string name="community_theme_detail_visual_settings">Sjónrænar stillingar</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s sjónræn stilling</item>
+        <item quantity="other">%1$s sjónrænar stillingar</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Ekki tiltækt</string>
+    <string name="community_theme_detail_add_apply">Bæta við og nota</string>
+    <string name="community_theme_detail_remove">Fjarlægja þema</string>
+    <string name="community_theme_detail_remove_title">Fjarlægja „%1$s“ úr Mínum þemum?</string>
+    <string name="community_theme_detail_remove_message">Þetta vistaða eintak og allar breytingar sem þú gerðir á því verða fjarlægðar varanlega. Ef það er nú í notkun fer úrið aftur í innbyggða grunnútlitið.</string>
+    <string name="community_theme_detail_removed">Þema fjarlægt úr Mínum þemum</string>
+    <string name="community_theme_detail_remove_error">Ekki tókst að fjarlægja þetta þema</string>
+    <string name="community_theme_detail_like">Líkar</string>
+    <string name="community_theme_detail_unlike">Fjarlægja líkar</string>
+    <string name="community_theme_detail_like_loading">Athuga…</string>
+    <string name="community_theme_detail_like_description">Líka við %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Fjarlægja líkar við %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google-innskráningu var hætt. Líkið þitt var ekki vistað.</string>
+    <string name="community_theme_detail_like_error">Ekki tókst að vista líkið þitt. Athugaðu tenginguna og reyndu aftur.</string>
+    <string name="community_theme_detail_like_not_ready">Lík við þetta þema eru ekki tilbúin enn. Endurnýjaðu Samfélagsþemu eftir næstu útgáfu.</string>
+    <string name="community_theme_detail_like_saved">Líkið þitt var vistað. Opinberar tölur uppfærast við næstu útgáfu vörulistans.</string>
+    <string name="community_theme_detail_unlike_saved">Líkið þitt var fjarlægt. Opinberar tölur uppfærast við næstu útgáfu vörulistans.</string>
+    <string name="community_theme_detail_apply_existing">Þetta þema er þegar í Mínum þemum og hefur verið notað á úrið þitt</string>
+    <string name="community_theme_detail_requires_app_version">Þetta þema krefst Svartifoss %1$s áður en hægt er að bæta því við.</string>
+    <string name="community_theme_detail_load_error">Ekki tókst að hlaða upplýsingum um þemað. Farðu aftur í Samfélagsþemu og reyndu aftur.</string>
+    <string name="community_theme_detail_profile_mismatch">Niðurhalaði prófíllinn samsvarar ekki opinberum upplýsingum þessa þema. Farðu aftur í Samfélagsþemu og reyndu aftur.</string>
+    <string name="community_theme_detail_screenshot_description">Mynd af þessu þema á úri höfundarins</string>
+    <string name="community_theme_detail_source_author">Úr höfundar</string>
+    <string name="community_theme_detail_source_rendered">Mynduð forskoðun</string>
+    <string name="community_theme_detail_show_rendered">Sýna myndaða forskoðun</string>
+    <string name="community_theme_detail_show_author">Sýna mynd höfundar</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

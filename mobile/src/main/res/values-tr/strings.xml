@@ -1897,6 +1897,11 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1940,6 +1945,11 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2383,4 +2393,463 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Kopyala</string>
+    <string name="dev_report_copied">Rapor kopyalandı</string>
+    <string name="dev_watch_snapshot_inspector">Saat tercihleri anlık görüntüsü</string>
+    <string name="dev_watch_snapshot_inspector_description">Şu anda saate gerçekten gönderilecek olanlar: etkin görünüm kapsamı, tahmini boyut ve bütçeye sığmak için hangi etkin olmayan kadran kapsamı önbelleklerinin bırakıldığı</string>
+    <string name="dev_data_layer_inspector">Data Layer denetçisi</string>
+    <string name="dev_data_layer_inspector_description">Bağlı Wearable düğümleri ve saat uygulamasının yanıt verdiği son WatchInfo — “Saat bağlı değil” mesajının arkasındaki ham durum</string>
+    <string name="dev_media_sessions_inspector">MediaSession gezgini</string>
+    <string name="dev_media_sessions_inspector_description">Şu anda etkin olan tüm MediaSession’lar, yalnızca izlenen değil: bildirilen eylemler, kuyruk ve oynatma rotası</string>
+    <string name="dev_view_phone_log">Telefon günlüğünü görüntüle</string>
+    <string name="dev_view_phone_log_description">Diskteki Timber günlüğünün son kısmı ve “Günlükleri gönder” daha önce getirdiyse saatin günlüğü</string>
+    <string name="dev_theme_submission_preflight">Tema gönderimi ön kontrolü</string>
+    <string name="dev_theme_submission_preflight_description">Kaydedilmiş her saat temasını topluluk gönderim kontrolünden geçirir ve varsa onu engelleyen tam ayarı belirtir</string>
+    <string name="dev_appearance_resolution_inspector">Görünüm çözümleme denetçisi</string>
+    <string name="dev_appearance_resolution_inspector_description">Kapsamlı her görünüm anahtarı için dört çözümleme adımından hangisinin gerçekten kazandığını — açık kadran değeri, kadran başına varsayılan, eski genel değer veya tanım varsayılanı — ve her birinin döndürdüğü değeri gösterir</string>
+    <string name="action_fast_forward">İleri sar</string>
+    <string name="action_rewind">Geri sar</string>
+    <string name="action_set_playback_speed">Hızı %1$s× olarak ayarla</string>
+    <string name="action_seek_to_percent">%1$d%% konumuna atla</string>
+    <string name="action_set_volume_percent">Sesi %1$d%% olarak ayarla</string>
+    <string name="action_set_shuffle_on">Karıştırmayı aç</string>
+    <string name="action_set_shuffle_off">Karıştırmayı kapat</string>
+    <string name="action_set_repeat_off">Tekrarı kapat</string>
+    <string name="action_set_repeat_all">Tümünü tekrarla</string>
+    <string name="action_set_repeat_one">Birini tekrarla</string>
+    <string name="group_playback_speed">Oynatma hızı</string>
+    <string name="group_track_position">Parça konumu</string>
+    <string name="group_shuffle_mode">Karıştırma modu</string>
+    <string name="group_repeat_mode">Tekrar modu</string>
+    <string name="group_volume_levels">Ses seviyeleri</string>
+    <string name="group_watch_screens">Saat ekranları</string>
+    <string name="group_find_music">Bul ve oynat</string>
+    <string name="action_open_face_picker">Kadran seçiciyi aç</string>
+    <string name="action_close_watch_app">Saat uygulamasını kapat</string>
+    <string name="hand_gestures">EL HAREKETLERİ</string>
+    <string name="hand_gestures_hint">Svartifoss açıkken uyumlu saatlerde kullanılabilir.</string>
+    <string name="hand_gestures_hint_disconnected">El hareketlerini destekleyip desteklemediğini görmek için saatinizi bağlayın ve Svartifoss’u saatte açın.</string>
+    <string name="hand_gestures_hint_outdated">Bu saatin el hareketlerini destekleyip desteklemediğini görmek için saat uygulamasını güncelleyin.</string>
+    <string name="hand_gestures_hint_unsupported">Bu saat el hareketlerini desteklemiyor; bu nedenle buraya atanmış bir eylem hiçbir zaman çalışmaz.</string>
+    <string name="hand_gestures_hint_disabled">Bu saatte el hareketleri kapalı. Saatin kendi Ayarlar \u2192 Hareketler bölümünden açın.</string>
+    <string name="hand_gestures_hint_ready">Bu saatte hazır: Svartifoss oynatıcısı açıkken iki kez sıkıştırın.</string>
+    <string name="hand_gesture_how_it_works">Bileğiniz yukarıdayken başparmağınızı ve işaret parmağınızı hızlıca iki kez birleştirin. Wear OS buna birincil eylem der; başka bir üreticinin saati kendi eşdeğer el hareketini kullanabilir.\n\nYalnızca Svartifoss oynatıcısı saatte açıkken ve ekran açıkken çalışır \u2014 saat yüzünden, kuyruğun veya menünün üzerinden ya da her zaman açık ekranda çalışmaz. Çalıştırılan eylem, oynatmanın o anda bulunduğu duruma atanmış olandır; her iki durumda da çalışması için iki Kontroller sayfasında da ayarlayın.\n\nHareket ayrıca saatin kendi Ayarlar \u2192 Hareketler bölümünde etkinleştirilmiş olmalıdır.</string>
+    <string name="double_pinch">Çift sıkıştırma</string>
+    <string name="icon_selection_search_hint">Simgeleri ara</string>
+    <string name="icon_selection_search_empty">Aramanızla eşleşen simge yok</string>
+    <string name="open_quick_actions_panel">Hızlı eylemler panelini aç</string>
+    <string name="open_volume_screen">Ses ekranını aç</string>
+    <string name="open_progress_screen">İlerleme ekranını aç</string>
+    <string name="export_config_failed_detail">Yedek dışa aktarılamadı: %1$s</string>
+    <string name="backup_selection_title">Yedek içeriğini seç</string>
+    <string name="backup_selection_description">Kaydetmek istediğiniz Svartifoss bölümlerini seçin. Varsayılan olarak her şey seçilidir; bu yedek içe aktarıldığında seçilmeyen bölümler değişmeden kalır.</string>
+    <string name="backup_selection_select_all">Tümünü seç</string>
+    <string name="backup_selection_clear_all">Tümünü temizle</string>
+    <string name="backup_selection_export">Yedeği dışa aktar</string>
+    <string name="backup_selection_empty">En az bir öğe seçin</string>
+    <string name="backup_section_buttons">Düğme yapılandırmaları</string>
+    <string name="backup_section_buttons_description">Müzik çalarken ve durmuşken düğme, tepe ve hareket eylemleri.</string>
+    <string name="backup_section_actions">Eylem listesi</string>
+    <string name="backup_section_actions_description">Saat eylem menüsünde gösterilen sıralı eylem listesi.</string>
+    <string name="backup_section_app_settings">Uygulama ayarları</string>
+    <string name="backup_section_app_settings_description">Telefon ayarları, saat davranışı, dil, oynatma ve entegrasyonlar.</string>
+    <string name="backup_section_watch_appearance">Saat görünümü ve temalar</string>
+    <string name="backup_section_watch_appearance_description">Saat düzenleri, renkler, tipografi, paneller, AOD ve kaydedilmiş özel temalar.</string>
+    <string name="backup_section_playlist_shortcuts">Çalma listesi kısayolları</string>
+    <string name="backup_section_playlist_shortcuts_description">Kaydettiğiniz müzik, albüm, sanatçı, çalma listesi ve diğer akış bağlantıları.</string>
+    <string name="backup_section_history">Arama ve oynatma geçmişi</string>
+    <string name="backup_section_history_description">Son aramalar ve yakın zamanda çalınan parçalar.</string>
+    <string name="backup_section_icons">Yüklenen simgeler ve albüm görselleri</string>
+    <string name="backup_section_icons_description">Özel eylem simgeleri, kısayol kapakları ve önbelleğe alınmış uygulama simgeleri.</string>
+    <string name="backup_section_privacy">Gizlilik ve bildirimler</string>
+    <string name="backup_section_privacy_description">Kilitlenme raporları, duyuru bildirimleri ve uygulama tarafından kaydedilen diğer onay seçimleri.</string>
+    <string name="backup_section_local_app_state">Yerel uygulama durumu</string>
+    <string name="backup_section_local_app_state_description">Geçerli vurgu, son menü konumu, tamamlanan istemler ve güncelleme durumu.</string>
+    <string name="backup_section_auxiliary_data">Diğer uygulama verileri</string>
+    <string name="backup_section_auxiliary_data_description">Gelecekteki veri depoları dahil olmak üzere uygulamaya ait ek tercihler ve dahili dosyalar.</string>
+    <string name="pref_numeric_range">%1$d ile %2$d arasında.</string>
+    <string name="background_editor_artwork">Albüm görseli</string>
+    <string name="background_editor_layers">Katmanlar</string>
+    <string name="background_editor_layers_count">%1$d / %2$d</string>
+    <string name="background_editor_add_layer">Katman ekle</string>
+    <string name="background_editor_reset_layers">Sıfırla</string>
+    <string name="background_editor_empty">Katman yok. Albüm görseli tek başına gösterilir.</string>
+    <string name="background_editor_note">Bu listenin en üstündeki katman diğer her şeyin üzerine çizilir; en alttaki katman albüm görseline en yakın konumdadır.</string>
+    <string name="background_editor_full">En fazla %1$d katmanı üst üste koyabilirsiniz.</string>
+    <string name="background_layer_kind_wash">Arka plan</string>
+    <string name="background_layer_kind_shade">Gölgelendirme</string>
+    <string name="background_layer_kind_floor">Vurgu tabanı</string>
+    <string name="background_layer_move_up">Bu katmanı yukarı taşı</string>
+    <string name="background_layer_move_down">Bu katmanı aşağı taşı</string>
+    <string name="background_layer_more">Bu katman için daha fazla seçenek</string>
+    <string name="background_layer_add_title">Katman ekle</string>
+    <string name="background_layer_style_title">%1$s katmanı</string>
+    <string name="background_layer_opacity">Güç</string>
+    <string name="background_layer_color">Renk</string>
+    <string name="background_layer_custom_color">Renk seç</string>
+    <string name="background_layer_duplicate">Çoğalt</string>
+    <string name="background_layer_remove">Kaldır</string>
+    <string name="background_layer_color_default">Varsayılan</string>
+    <string name="background_layer_color_album">Albüm rengi</string>
+    <string name="background_layer_color_secondary">İkinci albüm rengi</string>
+    <string name="background_layer_color_tertiary">Üçüncü albüm rengi</string>
+    <string name="background_layer_color_desaturated">Soluk albüm rengi</string>
+    <string name="background_layer_color_black">Siyah</string>
+    <string name="background_layer_color_custom">Özel renk</string>
+    <string name="background_layer_reset_title">Katmanlar sıfırlansın mı?</string>
+    <string name="background_layer_reset_message">Yığın, kendi satırlarında ayarlanan gölgelendirme ve vurgu tabanına döner; eski bir yapıyı çalıştıran saat de zaten bunu oluşturur.</string>
+    <string name="watch_element_progress">İlerleme</string>
+    <string name="watch_element_volume">Ses</string>
+    <string name="watch_element_quick_panel">Hızlı eylemler</string>
+    <string name="watch_element_queue">Kuyruk</string>
+    <string name="watch_element_lyrics">Şarkı sözleri</string>
+    <string name="player_section_on_screen">Ekranda</string>
+    <string name="player_element_app_icon">Uygulama simgesi</string>
+    <string name="player_element_controls">Oynatıcı kontrolleri</string>
+    <string name="player_element_tap_flash">Dokunma flaşı</string>
+    <string name="player_element_inner_progress">İç ilerleme</string>
+    <string name="player_element_edge_arc">Kenar yayı</string>
+    <string name="player_element_edge_seek">Kenar arama</string>
+    <string name="player_element_clock">Saat</string>
+    <string name="player_element_cover_art">Kapak görseli</string>
+    <string name="setting_album_art_filter">Albüm görseli filtresi</string>
+    <string name="setting_album_art_filter_description">Herhangi bir albüm görseli stilinin üzerine bağımsız bir renk işlemi uygulayın.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Narin bir ekran görünümü için ekstra hafif çizgili Roboto.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Hafif, ferah bir çizgiye ve ailenin tanıdık oranlarına sahip Roboto.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Kompakt ve okunaklı etiketler için daha güçlü orta kalınlıkta Roboto.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Cesur ekran metni için en ağır sistem ağırlığına sahip Roboto.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Daha uzun başlıkları daha az alana sığdırmak için yatay olarak daraltılmış Roboto.</string>
+    <string name="setting_wear_title_font">Başlık yazı tipi</string>
+    <string name="setting_wear_title_text_case">Başlık harf biçimi</string>
+    <string name="setting_wear_artist_font">Sanatçı yazı tipi</string>
+    <string name="setting_wear_artist_text_case">Sanatçı harf biçimi</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">İlk okuma için çizilmiş, samimi ve yuvarlak bir sans</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Editoryal ağırlığı olan yüksek kontrastlı Didone ekran yazı tipi</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">El yazısı çizgi roman havasına sahip sağlam bir poster sansı</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Geniş ve eşit aralıklı sakin bir geometrik sans</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Yumuşak yuvarlatılmış uçlara sahip çağdaş bir slab serif</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Başlıklarda güçlü etki için yapılmış çok kalın bir slab serif</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Küçük büyük harflerle dar, elle çizilmiş bir yazı tipi</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Yüksek sesli başlıklar için sıkıştırılmış dar bir sans</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Küçük boyutlarda sağlam kalan geometrik bir slab serif</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Bağıran bir enerjiye sahip çizgi roman ekran yazı tipi</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Şablonlu askerî ekran yazı tipi</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Sıcak ve gayriresmî kıvrımlara sahip dik bir serif</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Hafif yuvarlak köşelere sahip hümanist bir sans</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Güçlü ve yalın biçimlere sahip grotesk bir sans</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Senaryolar için yapılmış rafine bir daktilo monospace</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Yumuşak, kitabi bir tona sahip yuvarlak slab serif</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Uzun pasajlar için ayarlanmış eski tarz kitap serifi</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Modern bitişli düşük kontrastlı geometrik sans</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Gövde boyutlarında sağlam kalan güçlü bir serif</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Köşeli birleşimlere sahip çağdaş teknik sans</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Net, ayırt edilebilir gliflere sahip programlama monospace\'i</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Ekrandaki kod için tasarlanmış hümanist monospace</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Yuvarlak vuruşlara sahip kabarcıklı el yazısı</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">1920\'ler vintage karakterine sahip geometrik sans</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Futura geleneğinde geometrik sans</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Hafif eğimli, döngüsüz Tay ve Latin sansı</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Okuma sırasında görsel stresi azaltacak şekilde biçimlendirilmiş sans</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Retro tabela havasına sahip kalın bağlı yazı</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Sıcaklık ve hassasiyeti dengeleyen yarı geometrik sans</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Temiz arayüz metni için çizilmiş minimalist sans</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Yumuşak uçlara sahip iyi yuvarlatılmış sans</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Eşit ve çağdaş ritme sahip geometrik sans</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Oyun hissi veren kare techno yazı tipi</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Izgara üzerinde çizilmiş kompakt teknik sans</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Ayırt edici açık kıvrımlara sahip modern grotesk</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Doğrudan bir arcade kabininden çıkmış piksel yazı tipi</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Nazik ve hafif his veren yuvarlak geometrik sans</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Teknik açılara sahip karemsi dar sans</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Retro tabela boyama köklerine sahip art-deco ekran yazı tipi</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Roboto\'nun eş aralıklı eşlikçisi</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Oyunbaz ve kör vuruşlara sahip iri ekran yazı tipi</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Ağır kare biçimlere sahip geniş endüstriyel yazı tipi</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Gujarati köklerine sahip canlı eğimli ekran yazı tipi</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">İlk bilgisayar ekranlarını anımsatan küçük bitmap yazı tipi</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Kodu rahat okumak için tasarlanmış monospace</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Poster varlığına sahip, tamamı büyük harfli dar yazı tipi</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Devanagari ve Latin başlıkları için uzun dar yazı tipi</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Teknik havalı karemsi hümanist sans</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Yaklaşılabilir tona sahip tamamen yuvarlak sans</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">1920\'lerin kahve dükkânı tabelalarını çağrıştıran dar yazı tipi</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Yumuşak kesilmiş modern uçlara sahip slab serif</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Açık ve okunaklı biçimlere sahip samimi hümanist sans</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Rahat okuma için sağlam biçimlere sahip sıcak sans</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Net arayüzler için tasarlanmış çok yönlü hümanist sans</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Editoryal bir sese sahip rafine metin serifi</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Ekran okumaya göre ayarlanmış klasik kitap serifi</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Geniş ve sağlam ritme sahip pratik grotesk sans</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Hassas oranlara sahip teknik hümanist sans</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Cilalı, okunaklı dokulu teknik monospace</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Mühendislik karakteri taşıyan çağdaş serif</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Kompakt, pratik biçimlere sahip temiz ve güvenilir sans</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Samimi oranlara sahip sıra dışı grotesk</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Fütüristik ve ferah hisli geometrik sans</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Zarif, kentsel çizgilere sahip modern geometrik sans</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Küçük ekranlar için yapılmış dengeli çağdaş bir sans</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Etkileyici oranlara sahip kendinden emin ekran sansı</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Daha uzun parça bilgileri için okunaklı yardımcı sans</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Modern teknik tona sahip keskin monospace</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Sanat yönetimli, oyunbaz biçimlere sahip alışılmadık sans</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Sessiz bir hassasiyete sahip esnek çağdaş sans</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Zahmetsiz okunabilirlik için temiz ve yaklaşılabilir bir sans</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Neşeli kişiliğe sahip yuvarlak ekran sansı</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Yapıyı sıra dışı ayrıntılarla karıştıran canlı bir grotesk</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Dramatik başlıklar için yüksek kontrastlı ekran serifi</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Zarif ve yüksek kontrastlı edebî bir serif</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Kaligrafik ayrıntılara sahip zarif bir ekran serifi</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Küçük boyutlarda net kalan sağlam bir slab serif</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Yoğun, ifade dolu okuma için yapılmış çok yönlü serif</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Kitabi bir sese sahip sıcak eski tarz serif</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Ayırt edici rafine harf biçimlerine sahip zarif sans</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Güçlü başlıklar için yapılmış kalın geometrik sans</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Atletik ve dinamik enerjiye sahip daraltmaya uygun sans</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Açık iç boşluklar ve samimi tabela enerjisine sahip yumuşak sans</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Hümanist sıcaklığı ve netliği dengeleyen çok yönlü sans</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Ulaşımdan esinlenmiş, kendinden emin ritme sahip net sans</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Günlük arayüzler için yapılmış nötr ve erişilebilir sans</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Pürüzsüz modern kıvrımlara sahip hafif geometrik sans</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Yumuşak fütüristik hisli, yuvarlak ve dar bir sans</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">İnce Tay esintili karaktere sahip temiz geometrik sans</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Maksimum görünürlük için geniş fütüristik ekran yazı tipi</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Oyunbaz teknik sese sahip sans\'tan mono\'ya değişken aile</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Ayırt edici dijital dokulu değişken genişlikte monospace</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Geniş yazı sistemi desteğine sahip kapsamlı ve çok okunaklı sans</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Geniş yazı sistemi desteğine sahip güvenilir serif</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Tutarlı ritim için tasarlanmış çok dilli monospace</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">İbrani etkili keskin ritme sahip kompakt modern sans</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Net okumaya göre optimize edilmiş sağlam hümanist sans</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Yuvarlak ve açık dokulu, samimi ekran sansı</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Ayırt edici oranlara sahip kompakt geometrik sans</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Edebi karakter taşıyan canlı, kaligrafik bir serif</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Arayüzde mükemmel okunabilirliğe sahip temiz bir hümanist sans</string>
+    <string name="setting_wear_note_show_cover">Kapak görseli</string>
+    <string name="aod_element_artwork">Kapak görseli</string>
+    <string name="aod_element_clock">Saat</string>
+    <string name="aod_element_track_info">Parça bilgisi</string>
+    <string name="aod_element_transport">Oynatma kontrolleri</string>
+    <string name="aod_element_progress">İlerleme</string>
+    <string name="aod_element_up_next">Sıradaki</string>
+    <string name="aod_section_artwork">Kapak görseli</string>
+    <string name="aod_control_tint">Renk tonu</string>
+    <string name="aod_control_brightness">Parlaklık</string>
+    <string name="aod_control_art_treatment">İşleme</string>
+    <string name="aod_control_art_opacity">Opaklık</string>
+    <string name="mini_button_control_visibility">Göster</string>
+    <string name="mini_button_control_arrangement">Düzen</string>
+    <string name="mini_button_control_shape">Şekil</string>
+    <string name="mini_button_control_background">Arka plan</string>
+    <string name="mini_button_control_opacity">Opaklık</string>
+    <string name="mini_button_assign_action">Eylemleri ata</string>
+    <string name="mini_button_gestures_note">Oynatıcı üzerinde yukarı, aşağı ve sola kaydırın. Sağa kaydırma her zaman sistemin kapatma hareketidir ve hiçbir zaman engellenmez.</string>
+    <string name="setting_wear_chat_cover_shape">Sohbet avatarı şekli</string>
+    <string name="setting_wear_chat_show_cover">Kapak görseli</string>
+    <string name="setting_wear_metadata_cover_shape">Meta veri kapağı şekli</string>
+    <string name="setting_wear_metadata_show_cover">Kapak görseli</string>
+    <string-array name="wear_text_case_entries">
+        <item>Normal</item>
+        <item>BÜYÜK HARF</item>
+        <item>küçük harf</item>
+        <item>Başlık Biçimi</item>
+    </string-array>
+    <string name="wear_text_font_follow">Genel yazı tipini izle</string>
+    <string name="category_wf_typography_track_time">Parça süresi</string>
+    <string name="setting_wear_track_time_font">Parça süresi yazı tipi</string>
+    <string name="wear_track_time_font_follow">Tasarımı izle</string>
+    <string name="setting_wear_track_time_font_weight">Parça süresi kalınlığı</string>
+    <string name="setting_wear_track_time_font_italic">İtalik parça süresi</string>
+    <string name="setting_wear_track_time_font_scale">Parça süresi boyutu</string>
+    <string name="setting_wear_track_time_font_opacity">Parça süresi opaklığı</string>
+    <string name="setting_wear_track_time_font_tracking">Parça süresi harf aralığı</string>
+    <string-array name="album_art_filter_entries">
+        <item>Yok</item>
+        <item>Tek renk</item>
+        <item>Sıcak</item>
+        <item>Soğuk</item>
+        <item>Altın saat</item>
+        <item>Roze</item>
+        <item>Vintage film</item>
+        <item>Solmuş film</item>
+        <item>Mat</item>
+        <item>Canlı</item>
+        <item>Vurgu</item>
+        <item>Pastel</item>
+        <item>Sepya</item>
+        <item>Siyanotip</item>
+        <item>Camgöbeği ve turuncu</item>
+        <item>Yüksek kontrast</item>
+        <item>Yumuşak ışık</item>
+        <item>Gece</item>
+    </string-array>
+    <string name="queue_item_now_playing">Şimdi oynatılıyor</string>
+    <string name="queue_item_unknown_title">Bilinmeyen parça</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Oynatma kuyruğu · %1$d parça</item>
+        <item quantity="other">Oynatma kuyruğu · %1$d parça</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Vurgu tabanı rengi</string>
+    <string name="setting_wear_accent_floor_custom_color">Özel taban rengi</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Vurgu tabanı rengi Özel renk olarak ayarlandığında kullanılacak rengi seçin</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Albüm vurgu rengi</item>
+        <item>Albüm ikincil rengi</item>
+        <item>Albüm üçüncül rengi</item>
+        <item>Özel renk</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Günlük okuma için tasarlanmış nötr ve son derece okunaklı arayüz sansı</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Küçük boyutlarda net kalan ayırt edici şekillere sahip, erişilebilirlik odaklı harf biçimleri</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Yumuşak yuvarlak geometrik sans — kendinden emin ve samimi</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Uzun başlıklara daha fazla alan veren kompakt bir hümanist sans</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Güçlü poster enerjisine sahip uzun, dar ekran yazı tipi</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Rahat uzun okuma için tasarlanmış çağdaş serif</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Sıcaklık ve karakter taşıyan etkileyici, yumuşak bir serif</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Teknik kenarlı retro-fütüristik monospace</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Maksimum kontrast için yoğun ve çok kalın bir ekran yazı tipi</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Canlı ve kişisel his veren akıcı bir el yazısı</string>
+    <string name="setting_wear_artist_text_mode">Sanatçı metni davranışı</string>
+    <string name="setting_wear_album_art_source">Albüm kapağı kaynağı</string>
+    <string name="setting_user_font">Kendi yazı tipim</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Bu telefondan bir .ttf veya .otf dosyası içe aktar</string>
+    <string name="setting_user_font_loaded">%1$s · değiştirmek veya kaldırmak için dokunun</string>
+    <string name="user_font_pick">Yazı tipi dosyası seç</string>
+    <string name="user_font_replace">Değiştir</string>
+    <string name="user_font_remove">Kaldır</string>
+    <string name="user_font_imported">“%1$s” içe aktarıldı. Herhangi bir yazı tipi listesinden seçin; saatinize gönderiliyor.</string>
+    <string name="user_font_removed">İçe aktardığınız yazı tipi kaldırıldı.</string>
+    <string name="user_font_error_too_large">Bu dosya %1$s. Saatin hızlıca alabilmesi için bir yazı tipi %2$s değerinden küçük olmalıdır.</string>
+    <string name="user_font_error_not_a_font">Bu dosya telefonun okuyabildiği bir yazı tipi değil. TrueType ve OpenType (.ttf, .otf) çalışır; web yazı tipleri (.woff, .woff2) çalışmaz.</string>
+    <string name="user_font_error_unreadable">Dosya okunamadı. Tekrar seçmeyi deneyin veya önce bu telefona kopyalayın.</string>
+    <string name="user_font_not_shareable">Kendi yazı tipinizi kullanan temalar bu telefonda kalır</string>
+    <string name="setting_custom_album_art_image">Kullanılacak resim</string>
+    <string name="setting_custom_album_art_folder">Kaynak klasör</string>
+    <string name="setting_custom_album_art_none">Henüz seçilmedi — seçmek için dokunun</string>
+    <string name="setting_custom_album_art_chosen">%1$s · değiştirmek için dokunun</string>
+    <string name="custom_album_art_image_set">Bu resim artık oynatıcının arkasında yer alacak.</string>
+    <string name="custom_album_art_folder_set">Her parça için o klasörden bir resim seçilir.</string>
+    <string name="custom_album_art_error">Açılamadı. Tekrar seçin veya bu telefonun kendi depolamasından bir şey seçin.</string>
+    <string name="custom_album_art_not_shareable">Kendi resimlerinizi kullanan temalar bu telefonda kalır</string>
+    <string name="setting_wear_text_block_align">Metin hizalama</string>
+    <string name="setting_wear_text_block_align_description">Parça metninin hangi kenara hizalandığı. Kadranı izle, her kadranın tasarlandığı hizalamayı korur.</string>
+    <string name="setting_wear_text_block_position">Metin konumu</string>
+    <string name="setting_wear_text_block_position_description">Parça metninin ekranda nerede durduğu. Kadranı izle, her kadranın tasarlandığı konumu korur.</string>
+    <string name="setting_online_artwork">Çevrimiçi kapak görseli</string>
+    <string name="setting_online_artwork_description">Saat yüzünün çevrimiçi bulunan bir resmi göstermesine izin verin \u2014 çalan sanatçı veya oynatıcının sağlamadığı durumlarda albüm kapağı. Telefonunuz Deezer’ın herkese açık kataloğunda arama yapar ve sonucu önbelleğe alır; yalnızca parça ve sanatçı adları gönderilir ve bir saat yüzü bu kaynaklardan birine ayarlanmadıkça hiçbir şey aranmaz. Kapalıyken oynatıcının kendi kapak görseli kullanılır.</string>
 </resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Teeman tiedot</string>
+    <string name="community_theme_detail_preview_screen">Esikatselunäyttö</string>
+    <string name="community_theme_detail_surface_player">Soitin</string>
+    <string name="community_theme_detail_surface_aod">Aina päällä</string>
+    <string name="community_theme_detail_surface_volume">Äänenvoimakkuus</string>
+    <string name="community_theme_detail_surface_progress">Edistyminen</string>
+    <string name="community_theme_detail_surface_quick_panel">Pikapaneeli</string>
+    <string name="community_theme_detail_surface_queue">Jono</string>
+    <string name="community_theme_detail_preview_label">Kohteen %1$s esikatselu</string>
+    <string name="community_theme_detail_preview_description">Kohteen %1$s esikatselu %2$s-näytöllä</string>
+    <string name="community_theme_detail_preview_privacy">Nykyinen albumikuvasi voi näkyä vain tässä puhelimesi esikatselussa. Sitä ei koskaan lähetetä palvelimelle; esimerkkitekstiä ja ajoitusta käytetään edelleen.</string>
+    <string name="community_theme_detail_information">Teeman tiedot</string>
+    <string name="community_theme_detail_byline">Tekijä %1$s</string>
+    <string name="community_theme_detail_layout">Perusasettelu</string>
+    <string name="community_theme_detail_revision">Versio</string>
+    <string name="community_theme_detail_minimum_version">Svartifossin vähimmäisversio</string>
+    <string name="community_theme_detail_published">Julkaistu</string>
+    <string name="community_theme_detail_visual_settings">Visuaaliset asetukset</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s visuaalinen asetus</item>
+        <item quantity="other">%1$s visuaalista asetusta</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Ei saatavilla</string>
+    <string name="community_theme_detail_add_apply">Lisää ja käytä</string>
+    <string name="community_theme_detail_remove">Poista teema</string>
+    <string name="community_theme_detail_remove_title">Poistetaanko ”%1$s” Omista teemoista?</string>
+    <string name="community_theme_detail_remove_message">Tämä tallennettu kopio ja kaikki siihen tekemäsi muutokset poistetaan pysyvästi. Jos se on parhaillaan käytössä, kellosi palaa sisäiseen perusasetteluunsa.</string>
+    <string name="community_theme_detail_removed">Teema poistettu Omista teemoista</string>
+    <string name="community_theme_detail_remove_error">Teemaa ei voitu poistaa</string>
+    <string name="community_theme_detail_like">Tykkää</string>
+    <string name="community_theme_detail_unlike">Poista tykkäys</string>
+    <string name="community_theme_detail_like_loading">Tarkistetaan…</string>
+    <string name="community_theme_detail_like_description">Tykkää kohteesta %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Poista tykkäys kohteesta %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google-kirjautuminen peruutettiin. Tykkäystäsi ei tallennettu.</string>
+    <string name="community_theme_detail_like_error">Tykkäystäsi ei voitu tallentaa. Tarkista yhteys ja yritä uudelleen.</string>
+    <string name="community_theme_detail_like_not_ready">Tämän teeman tykkäykset eivät ole vielä valmiita. Päivitä yhteisöteemat seuraavan julkaisun jälkeen.</string>
+    <string name="community_theme_detail_like_saved">Tykkäyksesi tallennettiin. Julkiset määrät päivittyvät seuraavan luettelon julkaisun yhteydessä.</string>
+    <string name="community_theme_detail_unlike_saved">Tykkäyksesi poistettiin. Julkiset määrät päivittyvät seuraavan luettelon julkaisun yhteydessä.</string>
+    <string name="community_theme_detail_apply_existing">Tämä teema on jo Omissa teemoissa ja sitä käytetään kellossasi</string>
+    <string name="community_theme_detail_requires_app_version">Tämä teema vaatii Svartifoss %1$s:n ennen kuin sen voi lisätä.</string>
+    <string name="community_theme_detail_load_error">Teeman tietoja ei voitu ladata. Palaa yhteisöteemoihin ja yritä uudelleen.</string>
+    <string name="community_theme_detail_profile_mismatch">Ladattu profiili ei vastaa tämän teeman julkisia tietoja. Palaa yhteisöteemoihin ja yritä uudelleen.</string>
+    <string name="community_theme_detail_screenshot_description">Kuva tästä teemasta tekijän kellossa</string>
+    <string name="community_theme_detail_source_author">Tekijän kello</string>
+    <string name="community_theme_detail_source_rendered">Luotu esikatselu</string>
+    <string name="community_theme_detail_show_rendered">Näytä luotu esikatselu</string>
+    <string name="community_theme_detail_show_author">Näytä tekijän kuva</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

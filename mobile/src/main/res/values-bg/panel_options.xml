@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Оформление на пръстена за напредък</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Напълно прозрачно</item>
+        <item>Вторичен цвят</item>
+        <item>Третичен цвят</item>
+        <item>Цветна мрежа</item>
+        <item>Аврора</item>
+        <item>Прожектор</item>
+        <item>Винетка</item>
+        <item>Разделен тон</item>
+        <item>Цветни ленти</item>
+        <item>Полунощ</item>
+        <item>Ореол</item>
+        <item>Размазване на дим</item>
+        <item>Залез</item>
+        <item>Океан</item>
+        <item>Мъглявина</item>
+        <item>Жар</item>
+        <item>Линия на прилива</item>
+        <item>Биолуминесценция</item>
+        <item>Иридесцентно</item>
+        <item>Графит</item>
+        <item>Кино</item>
+        <item>Орбита</item>
+        <item>Хоризонт</item>
+        <item>Размиване с мастило</item>
+        <item>Цъфтеж</item>
+        <item>Фиорд</item>
+        <item>Мрежа от точки</item>
+        <item>Сканираща линия</item>
+        <item>Радар</item>
+        <item>Контурни линии</item>
+        <item>Фасетирано</item>
+        <item>Здрач</item>
+        <item>Лед</item>
+        <item>Роза</item>
+        <item>Хартия</item>
+        <item>Монолит</item>
+        <item>Фенер</item>
+        <item>Ноар</item>
+        <item>Кадифе</item>
+        <item>Мираж</item>
+        <item>Разцъфване на светлината</item>
+        <item>Облак</item>
+        <item>Ноктюрно</item>
+        <item>Течност</item>
+        <item>Приливно</item>
+        <item>Винил</item>
+        <item>Корона</item>
+        <item>Полумесец</item>
+        <item>Мрежа</item>
+        <item>Стъклен воал</item>
+        <item>Material</item>
+        <item>Плакат</item>
+        <item>Студио</item>
+        <item>Спектър</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Мъниста</item>
+        <item>Двойна релса</item>
+        <item>Пулс</item>
+        <item>Хром</item>
+        <item>Спектър</item>
+        <item>Стъпки</item>
+        <item>Бонбон</item>
+        <item>Призрак</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Двоен ръб</item>
+        <item>Вертикален индикатор (ляв)</item>
+        <item>Вертикален индикатор (десен)</item>
+        <item>Горен индикатор</item>
+        <item>Долен индикатор</item>
+        <item>Централен циферблат</item>
+        <item>Горен ореол</item>
+        <item>Долен ореол</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Двоен пръстен</item>
+        <item>Мъниста</item>
+        <item>Тире и точка</item>
+        <item>24-часови деления</item>
+        <item>Само напредък</item>
+        <item>Сияние</item>
+        <item>Двуцветно</item>
+        <item>Игла</item>
+        <item>Редуващо се</item>
+        <item>Искра</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Ръб на безела</item>
+        <item>Вдлъбнат пръстен</item>
+        <item>Вътрешен пръстен</item>
+        <item>Дебел пръстен</item>
+        <item>Отворено отдолу</item>
+        <item>Отворено отгоре</item>
+        <item>Лява дъга</item>
+        <item>Дясна дъга</item>
+        <item>Двойна пътека</item>
+        <item>Отворено отляво</item>
+        <item>Отворено отдясно</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Компактна капсула</item>
+        <item>Квадратен албум</item>
+        <item>Подредена капсула</item>
+        <item>Значка</item>
+        <item>Стъклена лента</item>
+        <item>LCD</item>
+        <item>Квадратен контур</item>
+        <item>Лента</item>
+        <item>Балон за време</item>
+        <item>Разделен тон</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Времева линия (горе)</item>
+        <item>Времева линия (долу)</item>
+        <item>Сегменти (горе)</item>
+        <item>Вертикална времева линия (лява)</item>
+        <item>Вертикална времева линия (дясна)</item>
+        <item>Централен циферблат</item>
+        <item>Двойна времева линия</item>
+        <item>Сегменти (долу)</item>
+        <item>Централен стек</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Меко</item>
+        <item>Хром</item>
+        <item>Холографско</item>
+        <item>Балон</item>
+        <item>Релса</item>
+        <item>Залез</item>
+        <item>Контур на албума</item>
+        <item>Тъмно стъкло</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Ветрило</item>
+        <item>Орбита</item>
+        <item>Долен док</item>
+        <item>Колона</item>
+        <item>Разделен панел</item>
+        <item>Диамант</item>
+        <item>Въртележка</item>
+        <item>Триъгълник</item>
+        <item>Стъпало</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Меко</item>
+        <item>Плочест</item>
+        <item>Мастило</item>
+        <item>Релса</item>
+        <item>Залез</item>
+        <item>Балон</item>
+        <item>Хром</item>
+        <item>Холографско</item>
+    </string-array>
+</resources>

@@ -191,4 +191,21 @@
 
     <string name="metadata_about">حول</string>
     <string name="metadata_source">يتم التشغيل في</string>
+    <string name="action_name_open_quick_actions_panel">فتح لوحة الإجراءات السريعة</string>
+    <string name="action_name_fast_forward">تقديم سريع</string>
+    <string name="action_name_rewind">إرجاع</string>
+    <string name="action_name_set_speed">ضبط سرعة التشغيل</string>
+    <string name="action_name_seek_position">الانتقال إلى موضع المقطع</string>
+    <string name="action_name_set_volume">ضبط مستوى الصوت</string>
+    <string name="action_name_set_shuffle">ضبط التشغيل العشوائي</string>
+    <string name="action_name_set_repeat">ضبط التكرار</string>
+    <string name="action_name_open_volume_screen">فتح شاشة مستوى الصوت</string>
+    <string name="action_name_open_progress_screen">فتح شاشة التقدم</string>
+    <string name="action_name_open_face_picker">فتح منتقي الواجهة</string>
+    <string name="action_name_close_watch_app">إغلاق تطبيق الساعة</string>
+    <string name="volume_screen_title">مستوى الصوت</string>
+    <string name="progress_screen_title">التقدم</string>
+    <string name="progress_screen_cancel_seek">إلغاء الانتقال</string>
+    <string name="progress_screen_skip_back">تخطي للخلف %1$d ثانية</string>
+    <string name="progress_screen_skip_forward">تخطي للأمام %1$d ثانية</string>
 </resources>

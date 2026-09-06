@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">တိုးတက်မှုကွင်း အပြင်အဆင်</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>လုံးဝ ဖောက်ထွင်းမြင်ရ</item>
+        <item>ဒုတိယအရောင်</item>
+        <item>တတိယအရောင်</item>
+        <item>အရောင် mesh</item>
+        <item>Aurora</item>
+        <item>Spotlight</item>
+        <item>Vignette</item>
+        <item>Split tone</item>
+        <item>အရောင်တန်းများ</item>
+        <item>သန်းခေါင်</item>
+        <item>Halo</item>
+        <item>မီးခိုး blur</item>
+        <item>နေဝင်ချိန်</item>
+        <item>သမုဒ္ဒရာ</item>
+        <item>Nebula</item>
+        <item>မီးခဲ</item>
+        <item>ဒီရေမျဉ်း</item>
+        <item>ဇီဝအလင်းရောင်</item>
+        <item>ရောင်စုံတောက်ပ</item>
+        <item>Graphite</item>
+        <item>Cinema</item>
+        <item>ပတ်လမ်း</item>
+        <item>မိုးကုတ်စက်ဝိုင်း</item>
+        <item>Ink wash</item>
+        <item>ပန်းပွင့်ခြင်း</item>
+        <item>Fjord</item>
+        <item>Dot grid</item>
+        <item>Scanline</item>
+        <item>Radar</item>
+        <item>Contour လိုင်းများ</item>
+        <item>မျက်နှာပြင်ခွဲ</item>
+        <item>ညနေမှောင်</item>
+        <item>ရေခဲ</item>
+        <item>နှင်းဆီ</item>
+        <item>စက္ကူ</item>
+        <item>Monolith</item>
+        <item>မီးအိမ်</item>
+        <item>Noir</item>
+        <item>Velvet</item>
+        <item>Mirage</item>
+        <item>Bloom</item>
+        <item>Cloud</item>
+        <item>Nocturne</item>
+        <item>အရည်</item>
+        <item>Tidal</item>
+        <item>Vinyl</item>
+        <item>Corona</item>
+        <item>လခြမ်း</item>
+        <item>Grid</item>
+        <item>ဖန် veil</item>
+        <item>Material</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Spectrum</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>ပုတီးများ</item>
+        <item>နှစ်ထပ် rail</item>
+        <item>Pulse</item>
+        <item>Chrome</item>
+        <item>Spectrum</item>
+        <item>လှေကားများ</item>
+        <item>Candy</item>
+        <item>Ghost</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>နှစ်ထပ်အစွန်း</item>
+        <item>ဒေါင်လိုက် Meter (ဘယ်)</item>
+        <item>ဒေါင်လိုက် Meter (ညာ)</item>
+        <item>အပေါ် Meter</item>
+        <item>အောက် Meter</item>
+        <item>အလယ် Dial</item>
+        <item>အပေါ် Halo</item>
+        <item>အောက် Halo</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>နှစ်ထပ်ကွင်း</item>
+        <item>ပုတီးများ</item>
+        <item>Dash နှင့် Dot</item>
+        <item>24 နာရီ အမှတ်များ</item>
+        <item>တိုးတက်မှုသာ</item>
+        <item>တောက်ပမှု</item>
+        <item>နှစ်ရောင်</item>
+        <item>အပ်</item>
+        <item>အလှည့်ကျ</item>
+        <item>မီးပွား</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Bezel အစွန်း</item>
+        <item>Inset ကွင်း</item>
+        <item>အတွင်းကွင်း</item>
+        <item>ထူသော ကွင်း</item>
+        <item>အောက်ဘက် ဖွင့်</item>
+        <item>အပေါ်ဘက် ဖွင့်</item>
+        <item>ဘယ်ဘက်ကွေး</item>
+        <item>ညာဘက်ကွေး</item>
+        <item>နှစ်ထပ် track</item>
+        <item>ဘယ်ဘက် ဖွင့်</item>
+        <item>ညာဘက် ဖွင့်</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Compact pill</item>
+        <item>စတုရန်းအယ်လ်ဘမ်</item>
+        <item>Stacked pill</item>
+        <item>Badge</item>
+        <item>ဖန် bar</item>
+        <item>LCD</item>
+        <item>အနားသတ် စတုရန်း</item>
+        <item>Ribbon</item>
+        <item>အချိန် bubble</item>
+        <item>Split tone</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Timeline (အပေါ်)</item>
+        <item>Timeline (အောက်)</item>
+        <item>အစိတ်အပိုင်းများ (အပေါ်)</item>
+        <item>ဒေါင်လိုက် Timeline (ဘယ်)</item>
+        <item>ဒေါင်လိုက် Timeline (ညာ)</item>
+        <item>အလယ် Dial</item>
+        <item>Twin timeline</item>
+        <item>အစိတ်အပိုင်းများ (အောက်)</item>
+        <item>အလယ် Stack</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>ပျော့</item>
+        <item>Chrome</item>
+        <item>Holographic</item>
+        <item>Bubble</item>
+        <item>Rail</item>
+        <item>နေဝင်ချိန်</item>
+        <item>အယ်လ်ဘမ် အနားသတ်</item>
+        <item>မည်းနက်ဖန်</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>ယပ်တောင်</item>
+        <item>ပတ်လမ်း</item>
+        <item>အောက် Dock</item>
+        <item>တိုင်</item>
+        <item>Split deck</item>
+        <item>စိန်</item>
+        <item>Carousel</item>
+        <item>တြိဂံ</item>
+        <item>လှေကားတစ်ဆင့်</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>ပျော့</item>
+        <item>Slab</item>
+        <item>မင်</item>
+        <item>Rail</item>
+        <item>နေဝင်ချိန်</item>
+        <item>Bubble</item>
+        <item>Chrome</item>
+        <item>Holographic</item>
+    </string-array>
+</resources>

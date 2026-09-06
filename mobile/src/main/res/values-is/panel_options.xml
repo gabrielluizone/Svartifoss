@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Útlit framvinduhrings</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Alveg gegnsætt</item>
+        <item>Aukalitur</item>
+        <item>Þriðji litur</item>
+        <item>Litanet</item>
+        <item>Norðurljós</item>
+        <item>Kastljós</item>
+        <item>Vinjetta</item>
+        <item>Skiptur tónn</item>
+        <item>Litabönd</item>
+        <item>Miðnætti</item>
+        <item>Geislabaugur</item>
+        <item>Reykþoka</item>
+        <item>Sólsetur</item>
+        <item>Haf</item>
+        <item>Geimþoka</item>
+        <item>Glóð</item>
+        <item>Flóðlína</item>
+        <item>Lífljómun</item>
+        <item>Regnbogaljómi</item>
+        <item>Grafít</item>
+        <item>Kvikmynd</item>
+        <item>Sporbraut</item>
+        <item>Sjóndeildarhringur</item>
+        <item>Blekþvottur</item>
+        <item>Blómgun</item>
+        <item>Fjörður</item>
+        <item>Punktanet</item>
+        <item>Skönnunarlína</item>
+        <item>Ratsjá</item>
+        <item>Hæðarlínur</item>
+        <item>Flötótt</item>
+        <item>Rökkur</item>
+        <item>Ís</item>
+        <item>Rós</item>
+        <item>Pappír</item>
+        <item>Monólít</item>
+        <item>Lukt</item>
+        <item>Noir</item>
+        <item>Flauel</item>
+        <item>Hillingar</item>
+        <item>Dreifður ljómi</item>
+        <item>Ský</item>
+        <item>Næturljóð</item>
+        <item>Fljótandi</item>
+        <item>Sjávarföll</item>
+        <item>Vínyl</item>
+        <item>Kóróna</item>
+        <item>Hálfmáni</item>
+        <item>Net</item>
+        <item>Glerslæða</item>
+        <item>Efni</item>
+        <item>Veggspjald</item>
+        <item>Stúdíó</item>
+        <item>Litróf</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Perlur</item>
+        <item>Tvöföld slá</item>
+        <item>Púls</item>
+        <item>Króm</item>
+        <item>Litróf</item>
+        <item>Tröppur</item>
+        <item>Nammi</item>
+        <item>Draugur</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Tvöföld brún</item>
+        <item>Lóðréttur mælir (vinstri)</item>
+        <item>Lóðréttur mælir (hægri)</item>
+        <item>Efri mælir</item>
+        <item>Neðri mælir</item>
+        <item>Miðskífa</item>
+        <item>Efri geislabaugur</item>
+        <item>Neðri geislabaugur</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Tvöfaldur hringur</item>
+        <item>Perlur</item>
+        <item>Strik og punktur</item>
+        <item>24 stunda merkingar</item>
+        <item>Aðeins framvinda</item>
+        <item>Ljómi</item>
+        <item>Tvílitur</item>
+        <item>Nál</item>
+        <item>Víxlandi</item>
+        <item>Neisti</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Brún úrramma</item>
+        <item>Innfellt hringur</item>
+        <item>Innri hringur</item>
+        <item>Þykkur hringur</item>
+        <item>Opið neðst</item>
+        <item>Opið efst</item>
+        <item>Vinstri bogi</item>
+        <item>Hægri bogi</item>
+        <item>Tvöföld braut</item>
+        <item>Opið vinstra megin</item>
+        <item>Opið hægra megin</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Þétt hylki</item>
+        <item>Ferhyrnd plata</item>
+        <item>Staflað hylki</item>
+        <item>Merki</item>
+        <item>Glerstöng</item>
+        <item>LCD</item>
+        <item>Útlínuferningur</item>
+        <item>Borði</item>
+        <item>Tímabóla</item>
+        <item>Skiptur tónn</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Tímalína (efst)</item>
+        <item>Tímalína (neðst)</item>
+        <item>Hlutar (efst)</item>
+        <item>Lóðrétt tímalína (vinstri)</item>
+        <item>Lóðrétt tímalína (hægri)</item>
+        <item>Miðskífa</item>
+        <item>Tvöföld tímalína</item>
+        <item>Hlutar (neðst)</item>
+        <item>Miðstafli</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Mjúkt</item>
+        <item>Króm</item>
+        <item>Heilmynd</item>
+        <item>Bóla</item>
+        <item>Slá</item>
+        <item>Sólsetur</item>
+        <item>Útlína plötu</item>
+        <item>Dökkt gler</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Vifta</item>
+        <item>Sporbraut</item>
+        <item>Neðri bryggja</item>
+        <item>Dálkur</item>
+        <item>Skipt spjald</item>
+        <item>Demantur</item>
+        <item>Hringekja</item>
+        <item>Þríhyrningur</item>
+        <item>Stigi</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Mjúkt</item>
+        <item>Plata</item>
+        <item>Blek</item>
+        <item>Slá</item>
+        <item>Sólsetur</item>
+        <item>Bóla</item>
+        <item>Króm</item>
+        <item>Heilmynd</item>
+    </string-array>
+</resources>

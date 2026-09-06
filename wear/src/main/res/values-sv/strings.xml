@@ -191,4 +191,21 @@ Anpassa allt under Kontroller och Klocka på telefonen</string>
 
     <string name="metadata_about">Om</string>
     <string name="metadata_source">Spelas i</string>
+    <string name="action_name_open_quick_actions_panel">Öppna panelen för snabbåtgärder</string>
+    <string name="action_name_fast_forward">Snabbspola framåt</string>
+    <string name="action_name_rewind">Spola tillbaka</string>
+    <string name="action_name_set_speed">Ställ in uppspelningshastighet</string>
+    <string name="action_name_seek_position">Hoppa till position i spåret</string>
+    <string name="action_name_set_volume">Ställ in volym</string>
+    <string name="action_name_set_shuffle">Ställ in blandning</string>
+    <string name="action_name_set_repeat">Ställ in upprepning</string>
+    <string name="action_name_open_volume_screen">Öppna volymskärmen</string>
+    <string name="action_name_open_progress_screen">Öppna förloppsskärmen</string>
+    <string name="action_name_open_face_picker">Öppna urtavleväljaren</string>
+    <string name="action_name_close_watch_app">Stäng klockappen</string>
+    <string name="volume_screen_title">Volym</string>
+    <string name="progress_screen_title">Förlopp</string>
+    <string name="progress_screen_cancel_seek">Avbryt sökning</string>
+    <string name="progress_screen_skip_back">Hoppa tillbaka %1$d sekunder</string>
+    <string name="progress_screen_skip_forward">Hoppa framåt %1$d sekunder</string>
 </resources>

@@ -1897,6 +1897,11 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1940,6 +1945,11 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2383,4 +2393,463 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Sao chép</string>
+    <string name="dev_report_copied">Đã sao chép báo cáo</string>
+    <string name="dev_watch_snapshot_inspector">Ảnh chụp tùy chọn đồng hồ</string>
+    <string name="dev_watch_snapshot_inspector_description">Những gì thực sự sẽ được gửi đến đồng hồ ngay lúc này: phạm vi giao diện đang hoạt động, kích thước ước tính và những bộ nhớ đệm phạm vi mặt đồng hồ không hoạt động nào đã bị bỏ để vừa giới hạn dung lượng</string>
+    <string name="dev_data_layer_inspector">Trình kiểm tra Data Layer</string>
+    <string name="dev_data_layer_inspector_description">Các nút Wearable đang kết nối và WatchInfo gần nhất mà ứng dụng đồng hồ phản hồi - trạng thái thô phía sau thông báo "Không có đồng hồ được kết nối"</string>
+    <string name="dev_media_sessions_inspector">Trình khám phá MediaSession</string>
+    <string name="dev_media_sessions_inspector_description">Mọi MediaSession đang hoạt động, không chỉ phiên đang được theo dõi: các hành động được công bố, hàng đợi, tuyến phát lại</string>
+    <string name="dev_view_phone_log">Xem nhật ký điện thoại</string>
+    <string name="dev_view_phone_log_description">Phần cuối nhật ký Timber trên ổ đĩa, cộng với nhật ký đồng hồ nếu "Gửi nhật ký" đã từng lấy về trước đó</string>
+    <string name="dev_theme_submission_preflight">Kiểm tra trước khi gửi chủ đề</string>
+    <string name="dev_theme_submission_preflight_description">Chạy mọi chủ đề đồng hồ đã lưu qua bước kiểm tra gửi lên cộng đồng và nêu chính xác cài đặt nào đang chặn, nếu có</string>
+    <string name="dev_appearance_resolution_inspector">Trình kiểm tra phân giải giao diện</string>
+    <string name="dev_appearance_resolution_inspector_description">Với mỗi khóa giao diện trong phạm vi, bước nào trong bốn bước phân giải thực sự được chọn - giá trị mặt đồng hồ tường minh, mặc định theo từng mặt, giá trị toàn cục cũ hoặc mặc định của định nghĩa - cùng giá trị mà từng bước trả về</string>
+    <string name="action_fast_forward">Tua nhanh</string>
+    <string name="action_rewind">Tua lại</string>
+    <string name="action_set_playback_speed">Đặt tốc độ thành %1$s×</string>
+    <string name="action_seek_to_percent">Nhảy đến %1$d%%</string>
+    <string name="action_set_volume_percent">Đặt âm lượng thành %1$d%%</string>
+    <string name="action_set_shuffle_on">Bật phát ngẫu nhiên</string>
+    <string name="action_set_shuffle_off">Tắt phát ngẫu nhiên</string>
+    <string name="action_set_repeat_off">Tắt lặp lại</string>
+    <string name="action_set_repeat_all">Lặp lại tất cả</string>
+    <string name="action_set_repeat_one">Lặp lại một bài</string>
+    <string name="group_playback_speed">Tốc độ phát</string>
+    <string name="group_track_position">Vị trí bài hát</string>
+    <string name="group_shuffle_mode">Chế độ phát ngẫu nhiên</string>
+    <string name="group_repeat_mode">Chế độ lặp lại</string>
+    <string name="group_volume_levels">Mức âm lượng</string>
+    <string name="group_watch_screens">Màn hình đồng hồ</string>
+    <string name="group_find_music">Tìm &amp; phát</string>
+    <string name="action_open_face_picker">Mở trình chọn mặt đồng hồ</string>
+    <string name="action_close_watch_app">Đóng ứng dụng đồng hồ</string>
+    <string name="hand_gestures">CỬ CHỈ TAY</string>
+    <string name="hand_gestures_hint">Khả dụng trên đồng hồ tương thích khi Svartifoss đang mở.</string>
+    <string name="hand_gestures_hint_disconnected">Kết nối và mở Svartifoss trên đồng hồ để xem thiết bị có hỗ trợ cử chỉ tay hay không.</string>
+    <string name="hand_gestures_hint_outdated">Cập nhật ứng dụng đồng hồ để xem đồng hồ này có hỗ trợ cử chỉ tay hay không.</string>
+    <string name="hand_gestures_hint_unsupported">Đồng hồ này không hỗ trợ cử chỉ tay, vì vậy hành động được gán ở đây sẽ không bao giờ chạy.</string>
+    <string name="hand_gestures_hint_disabled">Cử chỉ tay đang tắt trên đồng hồ này. Hãy bật trong Cài đặt \u2192 Cử chỉ ngay trên đồng hồ.</string>
+    <string name="hand_gestures_hint_ready">Sẵn sàng trên đồng hồ này: chụm hai lần khi trình phát Svartifoss đang mở.</string>
+    <string name="hand_gesture_how_it_works">Chụm ngón cái và ngón trỏ với nhau hai lần thật nhanh khi cổ tay đang giơ lên. Wear OS gọi đây là hành động chính, vì vậy đồng hồ của hãng khác có thể dùng cử chỉ tay tương đương của riêng họ.\n\nCử chỉ chỉ chạy khi trình phát Svartifoss đang mở trên đồng hồ và màn hình đang bật \u2014 không chạy từ mặt đồng hồ, không chạy trên hàng đợi hoặc menu, và không chạy trên màn hình luôn bật. Hành động được thực thi là hành động được đặt cho trạng thái phát hiện tại, vì vậy hãy đặt nó trên cả hai trang Điều khiển để dùng được trong cả hai trạng thái.\n\nCử chỉ cũng phải được bật trong Cài đặt \u2192 Cử chỉ của chính đồng hồ.</string>
+    <string name="double_pinch">Chụm hai lần</string>
+    <string name="icon_selection_search_hint">Tìm kiếm biểu tượng</string>
+    <string name="icon_selection_search_empty">Không có biểu tượng nào khớp với tìm kiếm</string>
+    <string name="open_quick_actions_panel">Mở bảng hành động nhanh</string>
+    <string name="open_volume_screen">Mở màn hình âm lượng</string>
+    <string name="open_progress_screen">Mở màn hình tiến trình</string>
+    <string name="export_config_failed_detail">Không thể xuất bản sao lưu: %1$s</string>
+    <string name="backup_selection_title">Chọn nội dung sao lưu</string>
+    <string name="backup_selection_description">Chọn các phần của Svartifoss bạn muốn lưu. Mọi thứ được chọn theo mặc định; các phần không chọn sẽ không thay đổi khi nhập bản sao lưu này.</string>
+    <string name="backup_selection_select_all">Chọn tất cả</string>
+    <string name="backup_selection_clear_all">Xóa tất cả</string>
+    <string name="backup_selection_export">Xuất bản sao lưu</string>
+    <string name="backup_selection_empty">Chọn ít nhất một mục</string>
+    <string name="backup_section_buttons">Cấu hình nút</string>
+    <string name="backup_section_buttons_description">Hành động của nút, núm xoay và cử chỉ khi nhạc đang phát hoặc dừng.</string>
+    <string name="backup_section_actions">Danh sách hành động</string>
+    <string name="backup_section_actions_description">Danh sách hành động theo thứ tự được hiển thị trong menu hành động của đồng hồ.</string>
+    <string name="backup_section_app_settings">Cài đặt ứng dụng</string>
+    <string name="backup_section_app_settings_description">Cài đặt điện thoại, hành vi đồng hồ, ngôn ngữ, phát lại và tích hợp.</string>
+    <string name="backup_section_watch_appearance">Giao diện và chủ đề đồng hồ</string>
+    <string name="backup_section_watch_appearance_description">Bố cục đồng hồ, màu sắc, kiểu chữ, bảng, AOD và các chủ đề tùy chỉnh đã lưu.</string>
+    <string name="backup_section_playlist_shortcuts">Lối tắt danh sách phát</string>
+    <string name="backup_section_playlist_shortcuts_description">Nhạc, album, nghệ sĩ, danh sách phát và các liên kết phát trực tuyến khác đã lưu.</string>
+    <string name="backup_section_history">Lịch sử tìm kiếm và phát lại</string>
+    <string name="backup_section_history_description">Các tìm kiếm gần đây và bài hát vừa phát.</string>
+    <string name="backup_section_icons">Biểu tượng và ảnh bìa đã tải</string>
+    <string name="backup_section_icons_description">Biểu tượng hành động tùy chỉnh, bìa lối tắt và biểu tượng ứng dụng được lưu đệm.</string>
+    <string name="backup_section_privacy">Quyền riêng tư và thông báo</string>
+    <string name="backup_section_privacy_description">Báo cáo sự cố, thông báo tin tức và các lựa chọn đồng ý khác do ứng dụng lưu.</string>
+    <string name="backup_section_local_app_state">Trạng thái ứng dụng cục bộ</string>
+    <string name="backup_section_local_app_state_description">Màu nhấn hiện tại, vị trí menu cuối, lời nhắc đã hoàn tất và trạng thái cập nhật.</string>
+    <string name="backup_section_auxiliary_data">Dữ liệu ứng dụng khác</string>
+    <string name="backup_section_auxiliary_data_description">Tùy chọn bổ sung thuộc ứng dụng và tệp nội bộ, bao gồm cả kho dữ liệu trong tương lai.</string>
+    <string name="pref_numeric_range">Từ %1$d đến %2$d.</string>
+    <string name="background_editor_artwork">Ảnh bìa</string>
+    <string name="background_editor_layers">Các lớp</string>
+    <string name="background_editor_layers_count">%1$d / %2$d</string>
+    <string name="background_editor_add_layer">Thêm lớp</string>
+    <string name="background_editor_reset_layers">Đặt lại</string>
+    <string name="background_editor_empty">Không có lớp. Ảnh bìa được hiển thị riêng.</string>
+    <string name="background_editor_note">Lớp ở đầu danh sách này được vẽ lên trên mọi thứ khác; lớp ở cuối nằm gần ảnh bìa nhất.</string>
+    <string name="background_editor_full">Bạn có thể xếp chồng tối đa %1$d lớp.</string>
+    <string name="background_layer_kind_wash">Nền</string>
+    <string name="background_layer_kind_shade">Lớp tối</string>
+    <string name="background_layer_kind_floor">Nền nhấn</string>
+    <string name="background_layer_move_up">Di chuyển lớp này lên</string>
+    <string name="background_layer_move_down">Di chuyển lớp này xuống</string>
+    <string name="background_layer_more">Tùy chọn khác cho lớp này</string>
+    <string name="background_layer_add_title">Thêm lớp</string>
+    <string name="background_layer_style_title">Lớp %1$s</string>
+    <string name="background_layer_opacity">Cường độ</string>
+    <string name="background_layer_color">Màu</string>
+    <string name="background_layer_custom_color">Chọn màu</string>
+    <string name="background_layer_duplicate">Nhân bản</string>
+    <string name="background_layer_remove">Xóa</string>
+    <string name="background_layer_color_default">Mặc định</string>
+    <string name="background_layer_color_album">Màu album</string>
+    <string name="background_layer_color_secondary">Màu album thứ hai</string>
+    <string name="background_layer_color_tertiary">Màu album thứ ba</string>
+    <string name="background_layer_color_desaturated">Màu album dịu</string>
+    <string name="background_layer_color_black">Đen</string>
+    <string name="background_layer_color_custom">Màu tùy chỉnh</string>
+    <string name="background_layer_reset_title">Đặt lại các lớp?</string>
+    <string name="background_layer_reset_message">Ngăn xếp trở về lớp tối và nền nhấn được đặt ở các hàng riêng của chúng, cũng chính là cách đồng hồ chạy bản dựng cũ hiển thị.</string>
+    <string name="watch_element_progress">Tiến trình</string>
+    <string name="watch_element_volume">Âm lượng</string>
+    <string name="watch_element_quick_panel">Hành động nhanh</string>
+    <string name="watch_element_queue">Hàng đợi</string>
+    <string name="watch_element_lyrics">Lời bài hát</string>
+    <string name="player_section_on_screen">Trên màn hình</string>
+    <string name="player_element_app_icon">Biểu tượng ứng dụng</string>
+    <string name="player_element_controls">Điều khiển trình phát</string>
+    <string name="player_element_tap_flash">Chớp khi chạm</string>
+    <string name="player_element_inner_progress">Tiến trình bên trong</string>
+    <string name="player_element_edge_arc">Cung cạnh</string>
+    <string name="player_element_edge_seek">Tua ở cạnh</string>
+    <string name="player_element_clock">Đồng hồ</string>
+    <string name="player_element_cover_art">Ảnh bìa</string>
+    <string name="setting_album_art_filter">Bộ lọc ảnh album</string>
+    <string name="setting_album_art_filter_description">Áp dụng một cách xử lý màu độc lập lên bất kỳ kiểu ảnh album nào.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto với nét cực mảnh cho kiểu hiển thị tinh tế.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto với nét nhẹ, thoáng và tỷ lệ quen thuộc của họ phông.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto với nét medium mạnh hơn để tạo nhãn gọn, dễ đọc.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto với độ đậm hệ thống lớn nhất cho chữ hiển thị đậm.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto được nén theo chiều ngang để các tiêu đề dài hơn vừa trong ít không gian hơn.</string>
+    <string name="setting_wear_title_font">Kiểu chữ tiêu đề</string>
+    <string name="setting_wear_title_text_case">Kiểu viết hoa tiêu đề</string>
+    <string name="setting_wear_artist_font">Kiểu chữ nghệ sĩ</string>
+    <string name="setting_wear_artist_text_case">Kiểu viết hoa nghệ sĩ</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Kiểu sans tròn thân thiện, được vẽ cho người mới đọc</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Kiểu hiển thị Didone tương phản cao với trọng lượng biên tập</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Kiểu sans áp phích chắc chắn với nét truyện tranh viết tay</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Kiểu sans hình học điềm tĩnh với khoảng cách rộng và đều</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Kiểu slab serif đương đại với đầu nét bo tròn nhẹ</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Kiểu slab serif cực đậm dành cho tiêu đề nổi bật</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Kiểu chữ hẹp vẽ tay bằng chữ hoa nhỏ</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Kiểu sans cô đọng sít cho tiêu đề mạnh</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Kiểu slab serif hình học vẫn chắc ở cỡ nhỏ</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Kiểu hiển thị truyện tranh với năng lượng mạnh mẽ</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Kiểu hiển thị quân đội dạng stencil</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Kiểu serif đứng với đường cong ấm và thân mật</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Kiểu sans nhân văn với góc bo nhẹ</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Kiểu sans grotesque với hình dạng mạnh và thẳng thắn</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Kiểu monospace máy đánh chữ tinh tế dành cho kịch bản</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Kiểu slab serif tròn với sắc thái mềm mại, như sách</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Kiểu serif sách cổ điển được chỉnh cho đoạn văn dài</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Kiểu sans hình học tương phản thấp với hoàn thiện hiện đại</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Kiểu serif chắc chắn ở kích thước văn bản thân</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Kiểu sans kỹ thuật đương đại với các khớp góc cạnh</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Kiểu monospace lập trình với glyph rõ và dễ phân biệt</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Kiểu monospace nhân văn dành cho mã trên màn hình</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Kiểu chữ viết tay vui nhộn với nét bo tròn</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Kiểu sans hình học mang tính cổ điển thập niên 1920</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Kiểu sans hình học theo truyền thống Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Kiểu sans Thái và Latin không vòng, hơi nghiêng</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Kiểu sans được tạo để giảm căng thẳng thị giác khi đọc</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Kiểu script nối đậm mang phong cách biển hiệu cổ điển</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Kiểu sans bán hình học cân bằng độ ấm và chính xác</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Kiểu sans tối giản dành cho văn bản giao diện sạch</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Kiểu sans tròn đều với đầu nét mềm</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Kiểu sans hình học với nhịp đều, đương đại</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Kiểu chữ techno vuông với cảm giác trò chơi</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Kiểu sans kỹ thuật gọn được vẽ trên lưới</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Kiểu grotesque hiện đại với đường cong mở đặc trưng</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Kiểu chữ pixel như bước ra từ máy arcade</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Kiểu sans hình học bo tròn với cảm giác dịu nhẹ</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Kiểu sans cô đọng hơi vuông với các góc kỹ thuật</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Kiểu hiển thị art deco có gốc từ vẽ biển hiệu cổ điển</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Kiểu monospace đồng hành với Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Kiểu hiển thị dày với nét thô vui nhộn</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Kiểu chữ công nghiệp rộng với dạng vuông nặng</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Kiểu hiển thị nghiêng nổi bật có nguồn gốc Gujarati</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Kiểu bitmap nhỏ gợi nhớ màn hình máy tính đời đầu</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Kiểu monospace dành cho đọc mã thoải mái</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Kiểu chữ cô đọng toàn chữ hoa với độ hiện diện như áp phích</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Kiểu chữ cao, cô đọng cho tiêu đề Devanagari và Latin</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Kiểu sans nhân văn hơi vuông với không khí kỹ thuật</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Kiểu sans bo tròn hoàn toàn với sắc thái dễ gần</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Kiểu chữ cô đọng gợi biển hiệu quán cà phê thập niên 1920</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Kiểu slab serif với đầu nét hiện đại được cắt nhẹ</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Kiểu sans nhân văn thân thiện với hình dạng mở, dễ đọc</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Kiểu sans ấm với hình dạng chắc để đọc thoải mái</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Kiểu sans nhân văn đa dụng dành cho giao diện rõ ràng</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Kiểu serif văn bản tinh tế với giọng biên tập</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Kiểu serif sách cổ điển được chỉnh cho đọc trên màn hình</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Kiểu sans grotesk thực dụng với nhịp rộng, chắc</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Kiểu sans nhân văn kỹ thuật với tỷ lệ chính xác</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Kiểu monospace kỹ thuật với kết cấu tinh tế, dễ đọc</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Kiểu serif đương đại mang tính kỹ thuật</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Kiểu sans đa năng sạch với hình dạng gọn, thực dụng</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Kiểu grotesk khác lạ với tỷ lệ thân thiện</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Kiểu sans hình học mang cảm giác tương lai, rộng rãi</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Kiểu sans hình học hiện đại với đường nét đô thị thanh lịch</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Kiểu sans đương đại cân bằng dành cho màn hình nhỏ</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Kiểu sans hiển thị tự tin với tỷ lệ biểu cảm</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Kiểu sans đi kèm dễ đọc cho thông tin bài hát dài hơn</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Kiểu monospace sắc nét với sắc thái kỹ thuật hiện đại</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Kiểu sans khác thường với hình dạng vui, có tính chỉ đạo nghệ thuật</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Kiểu sans đương đại linh hoạt với độ chính xác nhẹ nhàng</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Kiểu sans sạch, dễ gần để đọc nhẹ nhàng</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Kiểu sans hiển thị bo tròn với tính cách vui vẻ</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Kiểu grotesk sinh động kết hợp cấu trúc với chi tiết lạ</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Kiểu serif hiển thị tương phản cao cho tiêu đề kịch tính</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Kiểu serif văn chương thanh lịch, tương phản cao</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Kiểu serif hiển thị duyên dáng với chi tiết thư pháp</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Kiểu slab serif chắc chắn vẫn rõ ở cỡ nhỏ</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Kiểu serif đa dụng dành cho đọc dày và biểu cảm</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Kiểu serif cổ ấm với giọng như sách</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Kiểu sans thanh lịch với dạng chữ tinh tế, đặc trưng</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Kiểu sans hình học đậm dành cho tiêu đề mạnh</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Kiểu sans hợp với dạng cô đọng, mang năng lượng thể thao năng động</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Kiểu sans mềm với lòng chữ mở và sắc thái biển hiệu thân thiện</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Kiểu sans đa dụng cân bằng sự ấm áp nhân văn và rõ nét</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Kiểu sans rõ lấy cảm hứng giao thông với nhịp tự tin</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Kiểu sans trung tính, dễ tiếp cận cho giao diện hằng ngày</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Kiểu sans hình học nhẹ với đường cong hiện đại, mượt</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Kiểu sans hẹp bo tròn với cảm giác tương lai nhẹ nhàng</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Kiểu sans hình học sạch với nét Thái tinh tế</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Kiểu hiển thị tương lai rộng để tạo hiện diện tối đa</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Họ chữ biến đổi từ sans đến mono với phong cách kỹ thuật vui</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Kiểu monospace độ rộng biến đổi với kết cấu số đặc trưng</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Kiểu sans rộng, rất dễ đọc với hỗ trợ nhiều hệ chữ</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Kiểu serif đáng tin cậy với hỗ trợ nhiều hệ chữ</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Kiểu monospace đa ngôn ngữ dành cho nhịp nhất quán</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Kiểu sans hiện đại gọn với nhịp sắc nét chịu ảnh hưởng tiếng Do Thái</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Kiểu sans nhân văn chắc chắn, tối ưu cho đọc rõ</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Kiểu sans màn hình thân thiện với kết cấu mở và tròn</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Kiểu sans hình học gọn với tỷ lệ đặc trưng</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Kiểu serif thư pháp sinh động với tính văn chương</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Kiểu sans nhân văn sạch với khả năng đọc giao diện xuất sắc</string>
+    <string name="setting_wear_note_show_cover">Ảnh bìa</string>
+    <string name="aod_element_artwork">Ảnh minh họa</string>
+    <string name="aod_element_clock">Đồng hồ</string>
+    <string name="aod_element_track_info">Thông tin bài hát</string>
+    <string name="aod_element_transport">Điều khiển phát</string>
+    <string name="aod_element_progress">Tiến trình</string>
+    <string name="aod_element_up_next">Tiếp theo</string>
+    <string name="aod_section_artwork">Ảnh minh họa</string>
+    <string name="aod_control_tint">Sắc màu</string>
+    <string name="aod_control_brightness">Độ sáng</string>
+    <string name="aod_control_art_treatment">Xử lý</string>
+    <string name="aod_control_art_opacity">Độ mờ</string>
+    <string name="mini_button_control_visibility">Hiển thị</string>
+    <string name="mini_button_control_arrangement">Bố cục</string>
+    <string name="mini_button_control_shape">Hình dạng</string>
+    <string name="mini_button_control_background">Nền</string>
+    <string name="mini_button_control_opacity">Độ mờ</string>
+    <string name="mini_button_assign_action">Gán hành động</string>
+    <string name="mini_button_gestures_note">Vuốt lên, xuống và sang trái trên trình phát. Vuốt sang phải luôn là cử chỉ đóng của hệ thống và không bao giờ bị chặn.</string>
+    <string name="setting_wear_chat_cover_shape">Hình dạng ảnh đại diện trò chuyện</string>
+    <string name="setting_wear_chat_show_cover">Ảnh bìa</string>
+    <string name="setting_wear_metadata_cover_shape">Hình dạng bìa siêu dữ liệu</string>
+    <string name="setting_wear_metadata_show_cover">Ảnh bìa</string>
+    <string-array name="wear_text_case_entries">
+        <item>Bình thường</item>
+        <item>CHỮ HOA</item>
+        <item>chữ thường</item>
+        <item>Viết Hoa Chữ Cái Đầu</item>
+    </string-array>
+    <string name="wear_text_font_follow">Theo kiểu chữ toàn cục</string>
+    <string name="category_wf_typography_track_time">Thời gian bài hát</string>
+    <string name="setting_wear_track_time_font">Kiểu chữ thời gian bài hát</string>
+    <string name="wear_track_time_font_follow">Theo thiết kế</string>
+    <string name="setting_wear_track_time_font_weight">Độ đậm thời gian bài hát</string>
+    <string name="setting_wear_track_time_font_italic">Thời gian bài hát in nghiêng</string>
+    <string name="setting_wear_track_time_font_scale">Kích thước thời gian bài hát</string>
+    <string name="setting_wear_track_time_font_opacity">Độ mờ thời gian bài hát</string>
+    <string name="setting_wear_track_time_font_tracking">Khoảng cách chữ thời gian bài hát</string>
+    <string-array name="album_art_filter_entries">
+        <item>Không có</item>
+        <item>Đơn sắc</item>
+        <item>Ấm</item>
+        <item>Mát</item>
+        <item>Giờ vàng</item>
+        <item>Rosé</item>
+        <item>Phim cổ điển</item>
+        <item>Phim phai màu</item>
+        <item>Mờ lì</item>
+        <item>Sống động</item>
+        <item>Đậm nét</item>
+        <item>Pastel</item>
+        <item>Sepia</item>
+        <item>Cyanotype</item>
+        <item>Xanh ngọc &amp; cam</item>
+        <item>Tương phản cao</item>
+        <item>Ánh sáng mềm</item>
+        <item>Đêm</item>
+    </string-array>
+    <string name="queue_item_now_playing">Đang phát</string>
+    <string name="queue_item_unknown_title">Bài hát không xác định</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Hàng đợi phát · %1$d bài</item>
+        <item quantity="other">Hàng đợi phát · %1$d bài</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Màu nền nhấn</string>
+    <string name="setting_wear_accent_floor_custom_color">Màu nền tùy chỉnh</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Chọn màu dùng khi Màu nền nhấn được đặt thành Màu tùy chỉnh</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Điểm nhấn album</item>
+        <item>Màu phụ album</item>
+        <item>Màu bậc ba album</item>
+        <item>Màu tùy chỉnh</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Kiểu sans giao diện trung tính, rất dễ đọc dành cho đọc hằng ngày</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Dạng chữ ưu tiên khả năng tiếp cận, có hình dạng khác biệt và vẫn rõ ở cỡ nhỏ</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Kiểu sans hình học bo tròn nhẹ — tự tin và thân thiện</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Kiểu sans nhân văn gọn giúp tiêu đề dài có thêm khoảng thở</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Kiểu hiển thị cao, cô đọng với năng lượng áp phích mạnh</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Kiểu serif đương đại dành cho đọc dài thoải mái</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Kiểu serif mềm biểu cảm, ấm áp và có cá tính</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Kiểu monospace tương lai cổ điển với nét kỹ thuật</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Kiểu hiển thị siêu đậm, dày để tạo tương phản tối đa</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Kiểu chữ viết tay trôi chảy với cảm giác sinh động, cá nhân</string>
+    <string name="setting_wear_artist_text_mode">Cách hiển thị chữ nghệ sĩ</string>
+    <string name="setting_wear_album_art_source">Nguồn ảnh album</string>
+    <string name="setting_user_font">Phông chữ của tôi</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Nhập tệp .ttf hoặc .otf từ điện thoại này</string>
+    <string name="setting_user_font_loaded">%1$s · chạm để thay thế hoặc xóa</string>
+    <string name="user_font_pick">Chọn tệp phông chữ</string>
+    <string name="user_font_replace">Thay thế</string>
+    <string name="user_font_remove">Xóa</string>
+    <string name="user_font_imported">Đã nhập “%1$s”. Chọn nó trong bất kỳ danh sách phông chữ nào; phông đang được gửi đến đồng hồ của bạn.</string>
+    <string name="user_font_removed">Phông chữ bạn đã nhập đã bị xóa.</string>
+    <string name="user_font_error_too_large">Tệp đó có kích thước %1$s. Phông chữ phải nhỏ hơn %2$s để có thể chuyển nhanh đến đồng hồ.</string>
+    <string name="user_font_error_not_a_font">Tệp đó không phải phông chữ mà điện thoại này có thể đọc. TrueType và OpenType (.ttf, .otf) dùng được; phông web (.woff, .woff2) thì không.</string>
+    <string name="user_font_error_unreadable">Không thể đọc tệp đó. Hãy thử chọn lại hoặc sao chép tệp vào điện thoại này trước.</string>
+    <string name="user_font_not_shareable">Chủ đề dùng phông chữ riêng của bạn sẽ ở lại trên điện thoại này</string>
+    <string name="setting_custom_album_art_image">Hình ảnh sẽ dùng</string>
+    <string name="setting_custom_album_art_folder">Thư mục lấy hình</string>
+    <string name="setting_custom_album_art_none">Chưa chọn — chạm để chọn</string>
+    <string name="setting_custom_album_art_chosen">%1$s · chạm để thay đổi</string>
+    <string name="custom_album_art_image_set">Hình ảnh đó giờ sẽ nằm phía sau trình phát.</string>
+    <string name="custom_album_art_folder_set">Một hình ảnh từ thư mục đó sẽ được vẽ cho mỗi bài hát.</string>
+    <string name="custom_album_art_error">Không thể mở mục đó. Hãy chọn lại hoặc chọn thứ gì đó trong bộ nhớ riêng của điện thoại này.</string>
+    <string name="custom_album_art_not_shareable">Chủ đề dùng hình ảnh riêng của bạn sẽ ở lại trên điện thoại này</string>
+    <string name="setting_wear_text_block_align">Căn chỉnh văn bản</string>
+    <string name="setting_wear_text_block_align_description">Cạnh mà văn bản bài hát căn theo. Theo mặt đồng hồ sẽ giữ cách căn mà từng mặt được thiết kế sẵn.</string>
+    <string name="setting_wear_text_block_position">Vị trí văn bản</string>
+    <string name="setting_wear_text_block_position_description">Vị trí văn bản bài hát trên màn hình. Theo mặt đồng hồ sẽ giữ vị trí mà từng mặt được thiết kế sẵn.</string>
+    <string name="setting_online_artwork">Ảnh minh họa trực tuyến</string>
+    <string name="setting_online_artwork_description">Cho phép mặt đồng hồ hiển thị hình ảnh được tìm trực tuyến \u2014 nghệ sĩ đang biểu diễn hoặc bìa album cho trình phát không cung cấp ảnh. Điện thoại của bạn thực hiện tra cứu trong danh mục công khai của Deezer và lưu kết quả vào bộ nhớ đệm; chỉ tên bài hát và nghệ sĩ được gửi đi, và không có gì được tra cứu trừ khi một mặt đồng hồ được đặt dùng một trong các nguồn đó. Khi tắt, ảnh minh họa do chính trình phát cung cấp sẽ được dùng.</string>
 </resources>

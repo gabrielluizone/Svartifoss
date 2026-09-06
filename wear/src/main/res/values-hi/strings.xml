@@ -191,4 +191,21 @@
 
     <string name="metadata_about">इसके बारे में</string>
     <string name="metadata_source">इसमें चल रहा है</string>
+    <string name="action_name_open_quick_actions_panel">क्विक ऐक्शन पैनल खोलें</string>
+    <string name="action_name_fast_forward">फ़ास्ट फ़ॉरवर्ड</string>
+    <string name="action_name_rewind">रिवाइंड</string>
+    <string name="action_name_set_speed">प्लेबैक गति सेट करें</string>
+    <string name="action_name_seek_position">ट्रैक की स्थिति पर जाएँ</string>
+    <string name="action_name_set_volume">वॉल्यूम सेट करें</string>
+    <string name="action_name_set_shuffle">शफ़ल सेट करें</string>
+    <string name="action_name_set_repeat">रिपीट सेट करें</string>
+    <string name="action_name_open_volume_screen">वॉल्यूम स्क्रीन खोलें</string>
+    <string name="action_name_open_progress_screen">प्रोग्रेस स्क्रीन खोलें</string>
+    <string name="action_name_open_face_picker">फ़ेस पिकर खोलें</string>
+    <string name="action_name_close_watch_app">घड़ी ऐप बंद करें</string>
+    <string name="volume_screen_title">वॉल्यूम</string>
+    <string name="progress_screen_title">प्रगति</string>
+    <string name="progress_screen_cancel_seek">सीक रद्द करें</string>
+    <string name="progress_screen_skip_back">%1$d सेकंड पीछे जाएँ</string>
+    <string name="progress_screen_skip_forward">%1$d सेकंड आगे जाएँ</string>
 </resources>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>महासागर</item>
+        <item>सूर्यास्त</item>
+        <item>बीच की स्पॉटलाइट</item>
+        <item>ग्लास वेल</item>
+        <item>वेलवेट</item>
+        <item>नॉयर स्पॉटलाइट</item>
+        <item>आइस वॉश</item>
+        <item>गुलाब खिलना</item>
+        <item>प्रिज़्म</item>
+        <item>क्रेसेंट रिम</item>
+        <item>ज्वारीय बैंड</item>
+        <item>पेपर स्लीव</item>
+        <item>लैंटर्न राइज़</item>
+        <item>मिराज स्प्लिट</item>
+        <item>शांत ग्रिड</item>
+        <item>नॉक्टर्न</item>
+        <item>क्लाउड स्टडी</item>
+        <item>लिक्विड पूल</item>
+        <item>कलर मोनोलिथ</item>
+        <item>स्प्लिट टोन</item>
+        <item>ग्रेडिएंट</item>
+        <item>ड्युओटोन</item>
+        <item>बैंड</item>
+        <item>विन्येट</item>
+        <item>ग्रेफाइट</item>
+        <item>सिनेमा</item>
+        <item>ऐक्रिलिक</item>
+        <item>मेश</item>
+        <item>नेब्युला</item>
+        <item>जैवदीप्ति</item>
+        <item>इरिडेसेंट</item>
+        <item>ऑर्बिट</item>
+        <item>इंक वॉश</item>
+        <item>ब्लॉसम</item>
+        <item>फियोर्ड</item>
+        <item>डॉट मैट्रिक्स</item>
+        <item>स्कैनलाइनें</item>
+        <item>रडार</item>
+        <item>कॉन्टूर</item>
+        <item>फैसेटेड</item>
+        <item>एल्बम फ़िल</item>
+        <item>सेकंडरी फ़िल</item>
+        <item>टर्शियरी फ़िल</item>
+        <item>ग्लास</item>
+        <item>आधी रात</item>
+        <item>धुआँ</item>
+        <item>टाइडलाइन</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>काई</item>
+        <item>लैवेंडर धुंध</item>
+        <item>चेरी</item>
+        <item>गहरा समुद्र</item>
+        <item>धूल</item>
+        <item>ब्लीच</item>
+        <item>चाँदनी</item>
+        <item>सपना</item>
+        <item>इन्फ्रारेड</item>
+        <item>जंगल</item>
+        <item>सिल्वर</item>
+        <item>कैंडी</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>ऊपरी फ़ेड</item>
+        <item>बीच की स्पॉटलाइट</item>
+        <item>तिरछी छाया</item>
+        <item>बायाँ पर्दा</item>
+        <item>दायाँ पर्दा</item>
+        <item>बीच का बैंड</item>
+        <item>क्रॉसफ़ेड</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>रिवर्स लीफ़</item>
+        <item>रिवर्स ड्रॉप</item>
+        <item>कंकड़</item>
+        <item>आर्च</item>
+        <item>शील्ड</item>
+        <item>रिवर्स आर्च</item>
+        <item>रिवर्स शील्ड</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>फुसफुसाहट</item>
+        <item>रेडिएंट</item>
+        <item>फ़्लड</item>
+        <item>झिलमिलाहट</item>
+        <item>डीप ग्लो</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>एल्बम आउटलाइन</item>
+        <item>एल्बम ग्रेडिएंट</item>
+        <item>सेकंडरी एल्बम रंग</item>
+        <item>एल्बम ग्लास</item>
+        <item>टर्शियरी एल्बम रंग</item>
+        <item>नियॉन आउटलाइन</item>
+    </string-array>
+</resources>

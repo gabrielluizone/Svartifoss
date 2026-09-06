@@ -92,7 +92,7 @@ import com.svartifoss.snfell.proto.PlaybackSync
 import com.svartifoss.snfell.proto.TrackMetadata
 import com.svartifoss.snfell.proto.WatchActions
 import com.google.protobuf.ByteString
-import com.svartifoss.snfell.update.UpdateChecker
+import com.svartifoss.snfell.update.UpdateGateway
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.matejdro.wearutils.messages.sendMessageToNearestClient
 import com.matejdro.wearutils.lifecycle.EmptyObserver
@@ -466,7 +466,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // This service starts whenever media plays, making it the app's most reliable
         // background heartbeat for the sideload update check (throttled to once a day inside).
         lifecycleScope.launch {
-            UpdateChecker.maybeCheckInBackground(this@MusicService)
+            UpdateGateway.maybeCheckInBackground(this@MusicService)
         }
 
         messageClient = Wearable.getMessageClient(applicationContext)

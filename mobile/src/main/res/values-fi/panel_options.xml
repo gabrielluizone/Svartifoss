@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Edistymisrenkaan asettelu</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Täysin läpinäkyvä</item>
+        <item>Toissijainen väri</item>
+        <item>Kolmas väri</item>
+        <item>Väriverkko</item>
+        <item>Revontulet</item>
+        <item>Kohdevalo</item>
+        <item>Vinjetti</item>
+        <item>Jaettu sävy</item>
+        <item>Väriraidat</item>
+        <item>Keskiyö</item>
+        <item>Kehä</item>
+        <item>Savusumennus</item>
+        <item>Auringonlasku</item>
+        <item>Valtameri</item>
+        <item>Sumu</item>
+        <item>Hiillos</item>
+        <item>Vuorovesiraja</item>
+        <item>Bioluminesenssi</item>
+        <item>Iridesoiva</item>
+        <item>Grafiitti</item>
+        <item>Elokuva</item>
+        <item>Kiertorata</item>
+        <item>Horisontti</item>
+        <item>Mustepesu</item>
+        <item>Hehku</item>
+        <item>Vuono</item>
+        <item>Pisteruudukko</item>
+        <item>Pyyhkäisyviiva</item>
+        <item>Tutka</item>
+        <item>Korkeuskäyrät</item>
+        <item>Viisteinen</item>
+        <item>Hämärä</item>
+        <item>Jää</item>
+        <item>Ruusu</item>
+        <item>Paperi</item>
+        <item>Monoliitti</item>
+        <item>Lyhty</item>
+        <item>Noir</item>
+        <item>Sametti</item>
+        <item>Kangastus</item>
+        <item>Hajavalo</item>
+        <item>Pilvi</item>
+        <item>Nokturno</item>
+        <item>Nestemäinen</item>
+        <item>Vuorovesi</item>
+        <item>Vinyyli</item>
+        <item>Korona</item>
+        <item>Puolikuu</item>
+        <item>Ruudukko</item>
+        <item>Lasiharso</item>
+        <item>Materiaali</item>
+        <item>Juliste</item>
+        <item>Studio</item>
+        <item>Spektri</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Helmet</item>
+        <item>Kaksoiskisko</item>
+        <item>Pulssi</item>
+        <item>Kromi</item>
+        <item>Spektri</item>
+        <item>Askelmat</item>
+        <item>Karkki</item>
+        <item>Aave</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Kaksoisreuna</item>
+        <item>Pystymittari (vasen)</item>
+        <item>Pystymittari (oikea)</item>
+        <item>Ylämittari</item>
+        <item>Alamittari</item>
+        <item>Keskivalitsin</item>
+        <item>Yläkehä</item>
+        <item>Alakehä</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Kaksoisrengas</item>
+        <item>Helmet</item>
+        <item>Viiva ja piste</item>
+        <item>24 tunnin merkit</item>
+        <item>Vain edistyminen</item>
+        <item>Hehku</item>
+        <item>Kaksisävy</item>
+        <item>Neula</item>
+        <item>Vuorotteleva</item>
+        <item>Kipinä</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Kehyksen reuna</item>
+        <item>Sisennetty rengas</item>
+        <item>Sisärengas</item>
+        <item>Paksu rengas</item>
+        <item>Avoin alhaalta</item>
+        <item>Avoin ylhäältä</item>
+        <item>Vasen kaari</item>
+        <item>Oikea kaari</item>
+        <item>Kaksoisrata</item>
+        <item>Avoin vasemmalta</item>
+        <item>Avoin oikealta</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Kompakti kapseli</item>
+        <item>Neliöalbumi</item>
+        <item>Pinottu kapseli</item>
+        <item>Tunnus</item>
+        <item>Lasipalkki</item>
+        <item>LCD</item>
+        <item>Ääriviivaneliö</item>
+        <item>Nauha</item>
+        <item>Aikakupla</item>
+        <item>Jaettu sävy</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Aikajana (ylhäällä)</item>
+        <item>Aikajana (alhaalla)</item>
+        <item>Segmentit (ylhäällä)</item>
+        <item>Pystyaikajana (vasen)</item>
+        <item>Pystyaikajana (oikea)</item>
+        <item>Keskivalitsin</item>
+        <item>Kaksoisaikajana</item>
+        <item>Segmentit (alhaalla)</item>
+        <item>Keskipino</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Pehmeä</item>
+        <item>Kromi</item>
+        <item>Holografinen</item>
+        <item>Kupla</item>
+        <item>Kisko</item>
+        <item>Auringonlasku</item>
+        <item>Albumin ääriviiva</item>
+        <item>Tumma lasi</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Viuhka</item>
+        <item>Kiertorata</item>
+        <item>Alatelakka</item>
+        <item>Sarake</item>
+        <item>Jaettu paneeli</item>
+        <item>Timantti</item>
+        <item>Karuselli</item>
+        <item>Kolmio</item>
+        <item>Portaat</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Pehmeä</item>
+        <item>Laatta</item>
+        <item>Muste</item>
+        <item>Kisko</item>
+        <item>Auringonlasku</item>
+        <item>Kupla</item>
+        <item>Kromi</item>
+        <item>Holografinen</item>
+    </string-array>
+</resources>

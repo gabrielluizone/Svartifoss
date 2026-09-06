@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Océano</item>
+        <item>Atardecer</item>
+        <item>Foco central</item>
+        <item>Velo de cristal</item>
+        <item>Terciopelo</item>
+        <item>Foco noir</item>
+        <item>Lavado de hielo</item>
+        <item>Flor de rosa</item>
+        <item>Prisma</item>
+        <item>Borde creciente</item>
+        <item>Bandas de marea</item>
+        <item>Funda de papel</item>
+        <item>Ascenso de linterna</item>
+        <item>Espejismo dividido</item>
+        <item>Cuadrícula discreta</item>
+        <item>Nocturno</item>
+        <item>Estudio de nubes</item>
+        <item>Charcos líquidos</item>
+        <item>Monolito de color</item>
+        <item>Tono dividido</item>
+        <item>Degradado</item>
+        <item>Duotono</item>
+        <item>Bandas</item>
+        <item>Viñeta</item>
+        <item>Grafito</item>
+        <item>Cine</item>
+        <item>Acrílico</item>
+        <item>Malla</item>
+        <item>Nebulosa</item>
+        <item>Bioluminiscencia</item>
+        <item>Iridiscente</item>
+        <item>Órbita</item>
+        <item>Lavado de tinta</item>
+        <item>Floración</item>
+        <item>Fiordo</item>
+        <item>Matriz de puntos</item>
+        <item>Líneas de escaneo</item>
+        <item>Radar</item>
+        <item>Contorno</item>
+        <item>Facetado</item>
+        <item>Relleno del álbum</item>
+        <item>Relleno secundario</item>
+        <item>Relleno terciario</item>
+        <item>Cristal</item>
+        <item>Medianoche</item>
+        <item>Humo</item>
+        <item>Línea de marea</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Musgo</item>
+        <item>Bruma de lavanda</item>
+        <item>Cereza</item>
+        <item>Mar profundo</item>
+        <item>Polvo</item>
+        <item>Blanqueado</item>
+        <item>Luz de luna</item>
+        <item>Sueño</item>
+        <item>Infrarrojo</item>
+        <item>Bosque</item>
+        <item>Plata</item>
+        <item>Caramelo</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Fundido superior</item>
+        <item>Foco central</item>
+        <item>Sombra diagonal</item>
+        <item>Cortina izquierda</item>
+        <item>Cortina derecha</item>
+        <item>Banda central</item>
+        <item>Fundido cruzado</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Hoja invertida</item>
+        <item>Gota invertida</item>
+        <item>Guijarro</item>
+        <item>Arco</item>
+        <item>Escudo</item>
+        <item>Arco invertido</item>
+        <item>Escudo invertido</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Susurro</item>
+        <item>Radiante</item>
+        <item>Inundación</item>
+        <item>Destello</item>
+        <item>Resplandor profundo</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Contorno del álbum</item>
+        <item>Degradado del álbum</item>
+        <item>Color secundario del álbum</item>
+        <item>Cristal del álbum</item>
+        <item>Color terciario del álbum</item>
+        <item>Contorno neón</item>
+    </string-array>
+</resources>

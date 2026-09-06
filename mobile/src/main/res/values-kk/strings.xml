@@ -1897,6 +1897,11 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1940,6 +1945,11 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2383,4 +2393,463 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Көшіру</string>
+    <string name="dev_report_copied">Есеп көшірілді</string>
+    <string name="dev_watch_snapshot_inspector">Сағат параметрлерінің суреті</string>
+    <string name="dev_watch_snapshot_inspector_description">Дәл қазір сағатқа нақты не жіберілетінін көрсетеді: белсенді сыртқы көрініс ауқымы, шамаланған өлшем және шектеуге сыйдыру үшін белсенді емес бет ауқымдарының қай кэштері алынып тасталғаны</string>
+    <string name="dev_data_layer_inspector">Data Layer инспекторы</string>
+    <string name="dev_data_layer_inspector_description">Қосылған Wearable түйіндері және сағат қолданбасы жауап берген соңғы WatchInfo — «Сағат қосылмаған» хабарламасының артындағы өңделмеген күй</string>
+    <string name="dev_media_sessions_inspector">MediaSession шолғышы</string>
+    <string name="dev_media_sessions_inspector_description">Қазір белсенді әрбір MediaSession, тек бақыланып тұрғаны ғана емес: жарияланған әрекеттер, кезек және ойнату бағыты</string>
+    <string name="dev_view_phone_log">Телефон журналын көру</string>
+    <string name="dev_view_phone_log_description">Дискіде сақталған Timber журналының соңғы бөлігі, сондай-ақ «Журналдарды жіберу» оны бұрын алған болса, сағат журналы</string>
+    <string name="dev_theme_submission_preflight">Тақырыпты жіберу алдындағы тексеру</string>
+    <string name="dev_theme_submission_preflight_description">Сақталған әрбір сағат тақырыбын қауымдастыққа жіберу тексеруінен өткізіп, егер кедергі бар болса, оны бұғаттап тұрған нақты баптауды атайды</string>
+    <string name="dev_appearance_resolution_inspector">Сыртқы көрініс шешімінің инспекторы</string>
+    <string name="dev_appearance_resolution_inspector_description">Ауқымдағы әрбір сыртқы көрініс кілті үшін төрт шешім қадамының қайсысы нақты басым болғанын — беттің нақты мәні, әр бетке арналған әдепкі мән, ескі жаһандық мән немесе анықтаманың әдепкі мәні — және әрқайсысы қайтаратын мәнді көрсетеді</string>
+    <string name="action_fast_forward">Алға жылдам айналдыру</string>
+    <string name="action_rewind">Артқа айналдыру</string>
+    <string name="action_set_playback_speed">Жылдамдықты %1$s× мәніне орнату</string>
+    <string name="action_seek_to_percent">%1$d%% мәніне өту</string>
+    <string name="action_set_volume_percent">Дыбыс деңгейін %1$d%% мәніне орнату</string>
+    <string name="action_set_shuffle_on">Араластыруды қосу</string>
+    <string name="action_set_shuffle_off">Араластыруды өшіру</string>
+    <string name="action_set_repeat_off">Қайталауды өшіру</string>
+    <string name="action_set_repeat_all">Барлығын қайталау</string>
+    <string name="action_set_repeat_one">Біреуін қайталау</string>
+    <string name="group_playback_speed">Ойнату жылдамдығы</string>
+    <string name="group_track_position">Трек орны</string>
+    <string name="group_shuffle_mode">Араластыру режимі</string>
+    <string name="group_repeat_mode">Қайталау режимі</string>
+    <string name="group_volume_levels">Дыбыс деңгейлері</string>
+    <string name="group_watch_screens">Сағат экрандары</string>
+    <string name="group_find_music">Табу және ойнату</string>
+    <string name="action_open_face_picker">Циферблат таңдағышын ашу</string>
+    <string name="action_close_watch_app">Сағат қолданбасын жабу</string>
+    <string name="hand_gestures">ҚОЛ ҚИМЫЛДАРЫ</string>
+    <string name="hand_gestures_hint">Svartifoss ашық кезде үйлесімді сағаттарда қолжетімді.</string>
+    <string name="hand_gestures_hint_disconnected">Сағатты қосып, қол қимылдарын қолдайтынын тексеру үшін онда Svartifoss қолданбасын ашыңыз.</string>
+    <string name="hand_gestures_hint_outdated">Бұл сағат қол қимылдарын қолдайтынын тексеру үшін сағаттағы қолданбаны жаңартыңыз.</string>
+    <string name="hand_gestures_hint_unsupported">Бұл сағат қол қимылдарын қолдамайды, сондықтан мұнда тағайындалған әрекет ешқашан орындалмайды.</string>
+    <string name="hand_gestures_hint_disabled">Бұл сағатта қол қимылдары өшірулі. Оларды сағаттың өзіндегі Параметрлер \u2192 Қимылдар бөлімінен қосыңыз.</string>
+    <string name="hand_gestures_hint_ready">Бұл сағат дайын: Svartifoss ойнатқышы ашық кезде саусақтарды екі рет түйістіріңіз.</string>
+    <string name="hand_gesture_how_it_works">Білегіңізді көтеріп, бас бармақ пен сұқ саусақты жылдам екі рет түйістіріңіз. Wear OS мұны негізгі әрекет деп атайды, сондықтан басқа өндірушінің сағаты өзіне тән балама қол қимылын пайдалануы мүмкін.\n\nБұл қимыл Svartifoss ойнатқышы сағатта ашық және экран қосулы кезде ғана жұмыс істейді \u2014 сағат бетінен емес, кезек немесе мәзір үстінде емес және әрдайым қосулы дисплейде емес. Орындалатын әрекет дәл сол сәттегі ойнату күйіне тағайындалған әрекет болады, сондықтан екі күйде де жұмыс істеуі үшін оны «Басқару» бөлімінің екі бетінде де орнатыңыз.\n\nҚимыл сағаттың өзіндегі Параметрлер \u2192 Қимылдар бөлімінде де қосулы болуы керек.</string>
+    <string name="double_pinch">Қос шымшу</string>
+    <string name="icon_selection_search_hint">Белгішелерді іздеу</string>
+    <string name="icon_selection_search_empty">Іздеуіңізге сәйкес белгішелер жоқ</string>
+    <string name="open_quick_actions_panel">Жылдам әрекеттер панелін ашу</string>
+    <string name="open_volume_screen">Дыбыс экранын ашу</string>
+    <string name="open_progress_screen">Прогресс экранын ашу</string>
+    <string name="export_config_failed_detail">Сақтық көшірмені экспорттау мүмкін болмады: %1$s</string>
+    <string name="backup_selection_title">Сақтық көшірме мазмұнын таңдау</string>
+    <string name="backup_selection_description">Сақтағыңыз келетін Svartifoss бөліктерін таңдаңыз. Әдепкі бойынша бәрі таңдалады; бұл сақтық көшірме импортталғанда таңдалмаған бөліктер өзгеріссіз қалады.</string>
+    <string name="backup_selection_select_all">Барлығын таңдау</string>
+    <string name="backup_selection_clear_all">Барлығын тазалау</string>
+    <string name="backup_selection_export">Сақтық көшірмені экспорттау</string>
+    <string name="backup_selection_empty">Кемінде бір элементті таңдаңыз</string>
+    <string name="backup_section_buttons">Түйме конфигурациялары</string>
+    <string name="backup_section_buttons_description">Музыка ойнатылып тұрғанда және тоқтағанда түйме, тәж және қимыл әрекеттері.</string>
+    <string name="backup_section_actions">Әрекеттер тізімі</string>
+    <string name="backup_section_actions_description">Сағаттың әрекеттер мәзірінде көрсетілетін реттелген әрекеттер тізімі.</string>
+    <string name="backup_section_app_settings">Қолданба баптаулары</string>
+    <string name="backup_section_app_settings_description">Телефон баптаулары, сағат әрекеті, тіл, ойнату және интеграциялар.</string>
+    <string name="backup_section_watch_appearance">Сағат көрінісі және тақырыптары</string>
+    <string name="backup_section_watch_appearance_description">Сағат орналасулары, түстер, типография, панельдер, AOD және сақталған реттелетін тақырыптар.</string>
+    <string name="backup_section_playlist_shortcuts">Плейлист төте жолдары</string>
+    <string name="backup_section_playlist_shortcuts_description">Сақталған музыка, альбом, орындаушы, плейлист және басқа стриминг сілтемелері.</string>
+    <string name="backup_section_history">Іздеу және ойнату тарихы</string>
+    <string name="backup_section_history_description">Соңғы іздеулер және жақында ойнатылған тректер.</string>
+    <string name="backup_section_icons">Жүктелген белгішелер мен көркем суреттер</string>
+    <string name="backup_section_icons_description">Реттелетін әрекет белгішелері, төте жол мұқабалары және кэштелген қолданба белгішелері.</string>
+    <string name="backup_section_privacy">Құпиялылық және хабарландырулар</string>
+    <string name="backup_section_privacy_description">Ақау есептері, хабарландырулар және қолданба сақтаған басқа келісім таңдаулары.</string>
+    <string name="backup_section_local_app_state">Қолданбаның жергілікті күйі</string>
+    <string name="backup_section_local_app_state_description">Ағымдағы акцент, соңғы мәзір орны, аяқталған сұраулар және жаңарту күйі.</string>
+    <string name="backup_section_auxiliary_data">Қолданбаның басқа деректері</string>
+    <string name="backup_section_auxiliary_data_description">Қолданбаға тиесілі қосымша параметрлер мен ішкі файлдар, соның ішінде болашақ деректер қоймалары.</string>
+    <string name="pref_numeric_range">%1$d және %2$d аралығында.</string>
+    <string name="background_editor_artwork">Көркем сурет</string>
+    <string name="background_editor_layers">Қабаттар</string>
+    <string name="background_editor_layers_count">%2$d ішінен %1$d</string>
+    <string name="background_editor_add_layer">Қабат қосу</string>
+    <string name="background_editor_reset_layers">Қалпына келтіру</string>
+    <string name="background_editor_empty">Қабаттар жоқ. Көркем сурет өздігінен көрсетіледі.</string>
+    <string name="background_editor_note">Бұл тізімнің жоғарғы жағындағы қабат барлығының үстіне салынады; төменгі қабат көркем суретке ең жақын орналасады.</string>
+    <string name="background_editor_full">%1$d қабатқа дейін қабаттастыруға болады.</string>
+    <string name="background_layer_kind_wash">Фон</string>
+    <string name="background_layer_kind_shade">Көлеңкелеу</string>
+    <string name="background_layer_kind_floor">Акцент негізі</string>
+    <string name="background_layer_move_up">Осы қабатты жоғары жылжыту</string>
+    <string name="background_layer_move_down">Осы қабатты төмен жылжыту</string>
+    <string name="background_layer_more">Осы қабатқа арналған қосымша параметрлер</string>
+    <string name="background_layer_add_title">Қабат қосу</string>
+    <string name="background_layer_style_title">%1$s қабаты</string>
+    <string name="background_layer_opacity">Күші</string>
+    <string name="background_layer_color">Түс</string>
+    <string name="background_layer_custom_color">Түсті таңдау</string>
+    <string name="background_layer_duplicate">Көшірмелеу</string>
+    <string name="background_layer_remove">Жою</string>
+    <string name="background_layer_color_default">Әдепкі</string>
+    <string name="background_layer_color_album">Альбом түсі</string>
+    <string name="background_layer_color_secondary">Екінші альбом түсі</string>
+    <string name="background_layer_color_tertiary">Үшінші альбом түсі</string>
+    <string name="background_layer_color_desaturated">Бәсеңдетілген альбом түсі</string>
+    <string name="background_layer_color_black">Қара</string>
+    <string name="background_layer_color_custom">Реттелетін түс</string>
+    <string name="background_layer_reset_title">Қабаттарды қалпына келтіру керек пе?</string>
+    <string name="background_layer_reset_message">Қабаттар өз жолдарында орнатылған көлеңкелеу мен акцент негізіне қайтады; ескі нұсқадағы сағат бәрібір дәл осылай көрсетеді.</string>
+    <string name="watch_element_progress">Прогресс</string>
+    <string name="watch_element_volume">Дыбыс деңгейі</string>
+    <string name="watch_element_quick_panel">Жылдам әрекеттер</string>
+    <string name="watch_element_queue">Кезек</string>
+    <string name="watch_element_lyrics">Ән мәтіні</string>
+    <string name="player_section_on_screen">Экранда</string>
+    <string name="player_element_app_icon">Қолданба белгішесі</string>
+    <string name="player_element_controls">Ойнатқыш басқару элементтері</string>
+    <string name="player_element_tap_flash">Тию жарқылы</string>
+    <string name="player_element_inner_progress">Ішкі прогресс</string>
+    <string name="player_element_edge_arc">Шеткі доға</string>
+    <string name="player_element_edge_seek">Шеттен іздеу</string>
+    <string name="player_element_clock">Сағат</string>
+    <string name="player_element_cover_art">Мұқаба</string>
+    <string name="setting_album_art_filter">Альбом мұқабасының сүзгісі</string>
+    <string name="setting_album_art_filter_description">Кез келген альбом мұқабасы стиліне тәуелсіз түс өңдеуін қолданыңыз.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Нәзік дисплейлік көрініс үшін аса жеңіл сызығы бар Roboto.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Жеңіл, әуе тәрізді сызығы және осы қаріп тобына таныс пропорциялары бар Roboto.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Ықшам әрі анық оқылатын белгілер үшін күштірек орташа сызығы бар Roboto.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Айқын дисплей мәтініне арналған жүйедегі ең қалың салмағы бар Roboto.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Ұзын тақырыптар аз орынға сыйсын деп көлденеңінен ықшамдалған Roboto.</string>
+    <string name="setting_wear_title_font">Атау қаріп гарнитурасы</string>
+    <string name="setting_wear_title_text_case">Атау мәтінінің регистрі</string>
+    <string name="setting_wear_artist_font">Орындаушы қаріп гарнитурасы</string>
+    <string name="setting_wear_artist_text_case">Орындаушы мәтінінің регистрі</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Алғашқы оқуға арналған жылы, жұмыр sans қарпі</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Редакциялық салмағы бар жоғары контрастты Didone дисплей қарпі</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Қолмен жазылған комикс реңкі бар берік плакаттық sans</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Кең әрі біркелкі аралығы бар тыныш геометриялық sans</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Жұмсақ жұмырланған аяқтары бар заманауи slab serif</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Тақырыпқа күшті әсер беру үшін жасалған аса ірі slab serif</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Кіші бас әріптердегі тар қолмен салынған қаріп</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Күшті тақырыптарға арналған тығыз condensed sans</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Кіші өлшемде де берік көрінетін геометриялық slab serif</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Айқайлы энергиясы бар комикс стиліндегі дисплей қарпі</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Трафаретті әскери дисплей қарпі</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Жылы, бейресми иілімдері бар тік serif</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Сәл жұмырланған бұрыштары бар humanist sans</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Күшті, қарапайым пішіндері бар grotesque sans</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Сценарийлерге арналған жетілдірілген жазу машинасы стиліндегі monospace</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Жұмсақ, кітапқа тән реңкі бар жұмырланған slab serif</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Ұзақ мәтінге бейімделген ескі стильдегі кітап serif</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Заманауи өңдеуі бар төмен контрастты геометриялық sans</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Негізгі мәтін өлшемінде де анық қалатын берік serif</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Бұрышты түйіндері бар заманауи техникалық sans</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Анық, бір-бірінен ерекшеленетін глифтері бар бағдарламалау monospace</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Экрандағы кодқа арналған humanist monospace</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Жұмыр штрихтары бар ойнақы қолжазба қаріп</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">1920-жылдардағы винтаж мінезі бар геометриялық sans</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Futura дәстүріндегі геометриялық sans</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Сәл көлбеу, ілмексіз Thai және Latin sans</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Оқу кезіндегі көзге түсетін жүктемені азайтуға бейімделген sans</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Ретро маңдайша әсері бар қалың жалғанған script</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Жылылық пен дәлдікті теңестіретін жартылай геометриялық sans</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Таза интерфейс мәтініне арналған минималистік sans</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Жұмсақ аяқтары бар жақсы жұмырланған sans</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Біркелкі заманауи ырғақты геометриялық sans</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Ойынға тән әсері бар төртбұрышты techno қаріп</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Торға салынған ықшам техникалық sans</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Ерекше ашық иілімдері бар заманауи grotesque</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Аркада құрылғысынан шыққандай пиксельдік қаріп</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Жұмсақ әрі жеңіл әсері бар жұмырланған геометриялық sans</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Техникалық бұрыштары бар төртбұрышты condensed sans</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Ретро маңдайша кескіндемесінен бастау алатын art-deco дисплей қарпі</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Roboto қарпінің моноаралық серігі</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Ойнақы, доғал штрихтары бар ірі дисплей қарпі</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Ауыр төртбұрышты пішіндері бар кең өнеркәсіптік қаріп</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Gujarati тамыры бар жарқын көлбеу дисплей қарпі</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Ерте компьютер экрандарын еске түсіретін шағын bitmap қаріп</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Кодты жайлы оқуға арналған monospace</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Плакаттық әсері күшті, тек бас әріптен тұратын condensed қаріп</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Devanagari және Latin тақырыптарына арналған биік condensed қаріп</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Техникалық реңкі бар төртбұрышты humanist sans</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Жылы шырайлы толық жұмырланған sans</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">1920-жылдардағы кофехана маңдайшаларын еске түсіретін condensed қаріп</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Жұмсақ қиылған заманауи аяқтары бар slab serif</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Ашық, анық пішіндері бар достық humanist sans</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Жайлы оқуға арналған берік пішінді жылы sans</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Анық интерфейстерге арналған әмбебап humanist sans</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Редакциялық үні бар жетілдірілген мәтіндік serif</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Экраннан оқуға реттелген классикалық кітап serif</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Кең, тұрақты ырғақты практикалық grotesk sans</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Дәл пропорциялары бар техникалық humanist sans</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Тегіс әрі оқылымды құрылымы бар техникалық monospace</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Инженерлік мінезі бар заманауи serif</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Ықшам, практикалық пішіндері бар таза жұмысшы sans</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Достық пропорциялары бар ерекше grotesk</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Футуристік, кең әсері бар геометриялық sans</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Әсем қалалық сызықтары бар заманауи геометриялық sans</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Кіші экрандарға арналған теңгерімді заманауи sans</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Мәнерлі пропорциялары бар сенімді дисплей sans</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Ұзақ трек ақпаратына арналған оқылымды қосымша sans</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Заманауи техникалық реңкі бар анық monospace</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Көркем бағытталған, ойнақы пішіндері бар дәстүрден тыс sans</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Тыныш дәлдігі бар икемді заманауи sans</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Оңай оқылатын таза әрі қолжетімді sans</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Көңілді мінезі бар жұмырланған дисплей sans</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Құрылымды тосын бөлшектермен үйлестіретін жанды grotesk</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Драмалық тақырыптарға арналған жоғары контрастты дисплей serif</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Жоғары контрастты талғампаз әдеби serif</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Каллиграфиялық бөлшектері бар әсем дисплей serif</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Кіші өлшемде де анық көрінетін берік slab serif</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Тығыз әрі мәнерлі оқуға арналған әмбебап serif</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Кітапқа тән үні бар жылы ескі стильдегі serif</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Ерекше, талғампаз әріп пішіндері бар әсем sans</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Күшті тақырыптарға арналған қалың геометриялық sans</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Спорттық, серпінді энергиясы бар ықшамдалуға қолайлы sans</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Ашық ішкі кеңістіктері және достық маңдайша әсері бар жұмсақ sans</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Humanist жылылығы мен анықтығын теңестіретін әмбебап sans</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Көлік навигациясынан шабыт алған, сенімді ырғақты анық sans</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Күнделікті интерфейстерге арналған бейтарап, қолжетімді sans</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Тегіс заманауи иілімдері бар жеңіл геометриялық sans</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Жұмсақ футуристік әсері бар жұмырланған тар sans</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Нәзік Thai сипаты бар таза геометриялық sans</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Ең жоғары әсерге арналған кең футуристік дисплей қарпі</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Ойнақы техникалық дауысы бар sans-тен mono-ға дейінгі айнымалы отбасы</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Ерекше цифрлық құрылымы бар ені айнымалы monospace</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Көптеген жазу жүйесін қолдайтын кең, өте анық sans</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Көптеген жазу жүйесін қолдайтын сенімді serif</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Тұрақты ырғаққа арналған көптілді monospace</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Иврит ықпалы сезілетін айқын ырғақты ықшам заманауи sans</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Анық оқуға оңтайланған берік humanist sans</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Жұмыр, ашық құрылымы бар достық экрандық sans</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Өзіндік пропорциялары бар ықшам геометриялық sans</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Әдеби мінезі бар жанды каллиграфиялық serif</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Интерфейсте өте анық оқылатын таза humanist sans</string>
+    <string name="setting_wear_note_show_cover">Мұқаба</string>
+    <string name="aod_element_artwork">Мұқаба</string>
+    <string name="aod_element_clock">Сағат</string>
+    <string name="aod_element_track_info">Трек ақпараты</string>
+    <string name="aod_element_transport">Ойнатуды басқару</string>
+    <string name="aod_element_progress">Орындалу</string>
+    <string name="aod_element_up_next">Келесі</string>
+    <string name="aod_section_artwork">Мұқаба</string>
+    <string name="aod_control_tint">Реңк</string>
+    <string name="aod_control_brightness">Жарықтық</string>
+    <string name="aod_control_art_treatment">Өңдеу</string>
+    <string name="aod_control_art_opacity">Мөлдірлік деңгейі</string>
+    <string name="mini_button_control_visibility">Көрсету</string>
+    <string name="mini_button_control_arrangement">Орналасу</string>
+    <string name="mini_button_control_shape">Пішін</string>
+    <string name="mini_button_control_background">Фон</string>
+    <string name="mini_button_control_opacity">Мөлдірлік деңгейі</string>
+    <string name="mini_button_assign_action">Әрекеттерді тағайындау</string>
+    <string name="mini_button_gestures_note">Ойнатқышта жоғары, төмен және солға сырғытыңыз. Оңға сырғыту әрқашан жүйенің жабу қимылы болып табылады және ешқашан ұсталып қалмайды.</string>
+    <string name="setting_wear_chat_cover_shape">Чат аватарының пішіні</string>
+    <string name="setting_wear_chat_show_cover">Мұқаба</string>
+    <string name="setting_wear_metadata_cover_shape">Метадеректер мұқабасының пішіні</string>
+    <string name="setting_wear_metadata_show_cover">Мұқаба</string>
+    <string-array name="wear_text_case_entries">
+        <item>Қалыпты</item>
+        <item>БАС ӘРІПТЕР</item>
+        <item>кіші әріптер</item>
+        <item>Әр Сөз Бас Әріппен</item>
+    </string-array>
+    <string name="wear_text_font_follow">Жалпы қаріп гарнитурасын қолдану</string>
+    <string name="category_wf_typography_track_time">Трек уақыты</string>
+    <string name="setting_wear_track_time_font">Трек уақытының қаріп гарнитурасы</string>
+    <string name="wear_track_time_font_follow">Дизайнды қолдану</string>
+    <string name="setting_wear_track_time_font_weight">Трек уақытының қалыңдығы</string>
+    <string name="setting_wear_track_time_font_italic">Көлбеу трек уақыты</string>
+    <string name="setting_wear_track_time_font_scale">Трек уақытының өлшемі</string>
+    <string name="setting_wear_track_time_font_opacity">Трек уақытының мөлдірлігі</string>
+    <string name="setting_wear_track_time_font_tracking">Трек уақытының әріп аралығы</string>
+    <string-array name="album_art_filter_entries">
+        <item>Жоқ</item>
+        <item>Монохром</item>
+        <item>Жылы</item>
+        <item>Салқын</item>
+        <item>Алтын сағат</item>
+        <item>Rosé</item>
+        <item>Винтаж пленка</item>
+        <item>Оңған пленка</item>
+        <item>Күңгірт</item>
+        <item>Қанық</item>
+        <item>Айқын</item>
+        <item>Пастель</item>
+        <item>Сепия</item>
+        <item>Цианотипия</item>
+        <item>Көгілдір және қызғылт сары</item>
+        <item>Жоғары контраст</item>
+        <item>Жұмсақ жарық</item>
+        <item>Түн</item>
+    </string-array>
+    <string name="queue_item_now_playing">Қазір ойнатылуда</string>
+    <string name="queue_item_unknown_title">Белгісіз трек</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Ойнату кезегі · %1$d трек</item>
+        <item quantity="other">Ойнату кезегі · %1$d трек</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Акцент негізінің түсі</string>
+    <string name="setting_wear_accent_floor_custom_color">Реттелетін негіз түсі</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Акцент негізінің түсі «Реттелетін түс» күйіне орнатылғанда қолданылатын түсті таңдаңыз</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Альбом акценті</item>
+        <item>Альбомның қосымша түсі</item>
+        <item>Альбомның үшінші түсі</item>
+        <item>Арнайы түс</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Күнделікті оқуға арналған бейтарап, өте анық интерфейстік sans</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Қолжетімділікке басымдық берілген, кіші өлшемде де анық ажыратылатын әріп пішіндері</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Жұмсақ жұмырланған геометриялық sans — сенімді әрі достық</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Ұзын атауларға көбірек орын беретін ықшам humanist sans</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Плакаттық қуаты бар биік condensed дисплей қарпі</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Ұзақ мәтінді жайлы оқуға арналған заманауи serif</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Жылы әрі мінезді мәнерлі жұмсақ serif</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Техникалық қыры бар ретро-футуристік monospace</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Ең жоғары контрастқа арналған өте қалың дисплей қарпі</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Жанды, жеке әсері бар ағынды қолжазба script</string>
+    <string name="setting_wear_artist_text_mode">Орындаушы мәтінінің әрекеті</string>
+    <string name="setting_wear_album_art_source">Альбом мұқабасының көзі</string>
+    <string name="setting_user_font">Менің жеке қарпім</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Осы телефоннан .ttf немесе .otf файлын импорттаңыз</string>
+    <string name="setting_user_font_loaded">%1$s · ауыстыру немесе жою үшін түртіңіз</string>
+    <string name="user_font_pick">Қаріп файлын таңдаңыз</string>
+    <string name="user_font_replace">Ауыстыру</string>
+    <string name="user_font_remove">Жою</string>
+    <string name="user_font_imported">«%1$s» импортталды. Оны кез келген қаріп тізімінен таңдаңыз; ол қазір сағатыңызға жіберіліп жатыр.</string>
+    <string name="user_font_removed">Импортталған қаріп жойылды.</string>
+    <string name="user_font_error_too_large">Бұл файлдың өлшемі %1$s. Сағатқа жылдам жетуі үшін қаріп %2$s шамасынан кіші болуы керек.</string>
+    <string name="user_font_error_not_a_font">Бұл файл осы телефон оқи алатын қаріп емес. TrueType және OpenType (.ttf, .otf) жұмыс істейді; веб-қаріптер (.woff, .woff2) жұмыс істемейді.</string>
+    <string name="user_font_error_unreadable">Бұл файлды оқу мүмкін болмады. Оны қайта таңдап көріңіз немесе алдымен осы телефонға көшіріңіз.</string>
+    <string name="user_font_not_shareable">Өз қарпіңізді пайдаланатын тақырыптар осы телефонда қалады</string>
+    <string name="setting_custom_album_art_image">Пайдаланылатын сурет</string>
+    <string name="setting_custom_album_art_folder">Суреттер алынатын қалта</string>
+    <string name="setting_custom_album_art_none">Әлі таңдалмаған — таңдау үшін түртіңіз</string>
+    <string name="setting_custom_album_art_chosen">%1$s · өзгерту үшін түртіңіз</string>
+    <string name="custom_album_art_image_set">Бұл сурет енді ойнатқыштың артында орналасады.</string>
+    <string name="custom_album_art_folder_set">Әр трек үшін сол қалтадан бір сурет көрсетіледі.</string>
+    <string name="custom_album_art_error">Мұны ашу мүмкін болмады. Қайта таңдаңыз немесе осы телефонның өз жадынан бір нәрсе таңдаңыз.</string>
+    <string name="custom_album_art_not_shareable">Өз суреттеріңізді пайдаланатын тақырыптар осы телефонда қалады</string>
+    <string name="setting_wear_text_block_align">Мәтінді туралау</string>
+    <string name="setting_wear_text_block_align_description">Трек мәтіні тураланатын жиек. «Бетке сай» параметрі әр бет үшін жобаланған туралауды сақтайды.</string>
+    <string name="setting_wear_text_block_position">Мәтін орны</string>
+    <string name="setting_wear_text_block_position_description">Трек мәтінінің экранда орналасатын орны. «Бетке сай» параметрі әр бет үшін жобаланған орынды сақтайды.</string>
+    <string name="setting_online_artwork">Онлайн мұқаба</string>
+    <string name="setting_online_artwork_description">Сағат бетіне интернеттен табылған суретті көрсетуге рұқсат етіңіз \u2014 орындаушының суретін немесе мұқаба жарияламайтын ойнатқыш үшін альбом мұқабасын. Телефоныңыз Deezer ашық каталогынан іздеп, нәтижені кэшке сақтайды; тек трек пен орындаушы атаулары жіберіледі және бет осы көздердің біріне орнатылмаса, ештеңе ізделмейді. Өшірілген кезде ойнатқыштың өз мұқабасы пайдаланылады.</string>
 </resources>

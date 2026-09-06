@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">သီမ် အသေးစိတ်</string>
+    <string name="community_theme_detail_preview_screen">အကြိုကြည့်ရှု မျက်နှာပြင်</string>
+    <string name="community_theme_detail_surface_player">ပလေယာ</string>
+    <string name="community_theme_detail_surface_aod">အမြဲဖွင့်</string>
+    <string name="community_theme_detail_surface_volume">အသံအတိုးအကျယ်</string>
+    <string name="community_theme_detail_surface_progress">တိုးတက်မှု</string>
+    <string name="community_theme_detail_surface_quick_panel">အမြန် ပန်နယ်</string>
+    <string name="community_theme_detail_surface_queue">တန်းစီစာရင်း</string>
+    <string name="community_theme_detail_preview_label">%1$s အကြိုကြည့်ရှုမှု</string>
+    <string name="community_theme_detail_preview_description">%2$s မျက်နှာပြင်ပေါ်ရှိ %1$s အကြိုကြည့်ရှုမှု</string>
+    <string name="community_theme_detail_preview_privacy">လက်ရှိ အယ်လ်ဘမ်အဖုံးသည် သင့်ဖုန်းရှိ ဤအကြိုကြည့်ရှုမှုတွင်သာ ပေါ်နိုင်သည်။ ၎င်းကို မည်သည့်အခါမျှ အပ်လုဒ်မလုပ်ပါ။ နမူနာစာသားနှင့် အချိန်အချက်အလက်သာ ဆက်လက်အသုံးပြုပါမည်။</string>
+    <string name="community_theme_detail_information">သီမ် အချက်အလက်</string>
+    <string name="community_theme_detail_byline">%1$s မှ</string>
+    <string name="community_theme_detail_layout">အခြေခံ အပြင်အဆင်</string>
+    <string name="community_theme_detail_revision">ပြင်ဆင်ချက်</string>
+    <string name="community_theme_detail_minimum_version">အနည်းဆုံး Svartifoss ဗားရှင်း</string>
+    <string name="community_theme_detail_published">ထုတ်ဝေပြီး</string>
+    <string name="community_theme_detail_visual_settings">မြင်ကွင်း ဆက်တင်များ</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">မြင်ကွင်းဆက်တင် %1$s ခု</item>
+        <item quantity="other">မြင်ကွင်းဆက်တင် %1$s ခု</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">မရရှိနိုင်ပါ</string>
+    <string name="community_theme_detail_add_apply">ထည့်ပြီး အသုံးပြုမည်</string>
+    <string name="community_theme_detail_remove">သီမ်ကို ဖယ်ရှားမည်</string>
+    <string name="community_theme_detail_remove_title">My themes မှ “%1$s” ကို ဖယ်ရှားမလား။</string>
+    <string name="community_theme_detail_remove_message">သိမ်းထားသော ဤမိတ္တူနှင့် သင်ပြုလုပ်ထားသည့် ပြင်ဆင်မှုအားလုံးကို အပြီးတိုင် ဖယ်ရှားပါမည်။ လက်ရှိအသုံးပြုထားပါက သင့်နာရီသည် မူလပါရှိသော အခြေခံ အပြင်အဆင်သို့ ပြန်သွားပါမည်။</string>
+    <string name="community_theme_detail_removed">My themes မှသီမ်ကို ဖယ်ရှားပြီးပါပြီ</string>
+    <string name="community_theme_detail_remove_error">ဤသီမ်ကို ဖယ်ရှား၍ မရပါ</string>
+    <string name="community_theme_detail_like">နှစ်သက်မှု</string>
+    <string name="community_theme_detail_unlike">နှစ်သက်မှု ဖြုတ်မည်</string>
+    <string name="community_theme_detail_like_loading">စစ်ဆေးနေသည်…</string>
+    <string name="community_theme_detail_like_description">%1$s ကို နှစ်သက်ပါ။ %2$s</string>
+    <string name="community_theme_detail_unlike_description">%1$s ကို နှစ်သက်မှု ဖြုတ်ပါ။ %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google အကောင့်ဝင်ခြင်းကို ပယ်ဖျက်လိုက်သည်။ သင့်နှစ်သက်မှုကို မသိမ်းဆည်းခဲ့ပါ။</string>
+    <string name="community_theme_detail_like_error">သင့်နှစ်သက်မှုကို သိမ်းဆည်း၍ မရပါ။ ချိတ်ဆက်မှုကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။</string>
+    <string name="community_theme_detail_like_not_ready">ဤသီမ်အတွက် နှစ်သက်မှုများ မပြင်ဆင်ရသေးပါ။ နောက်တစ်ကြိမ် ထုတ်ဝေပြီးနောက် Community themes ကို ပြန်လည်စတင်ပါ။</string>
+    <string name="community_theme_detail_like_saved">သင့်နှစ်သက်မှုကို သိမ်းဆည်းပြီးပါပြီ။ အများမြင် အရေအတွက်များကို နောက်ကတ်တလောက် ထုတ်ဝေချိန်တွင် အပ်ဒိတ်လုပ်ပါမည်။</string>
+    <string name="community_theme_detail_unlike_saved">သင့်နှစ်သက်မှုကို ဖယ်ရှားပြီးပါပြီ။ အများမြင် အရေအတွက်များကို နောက်ကတ်တလောက် ထုတ်ဝေချိန်တွင် အပ်ဒိတ်လုပ်ပါမည်။</string>
+    <string name="community_theme_detail_apply_existing">ဤသီမ်သည် My themes ထဲတွင် ရှိပြီးသားဖြစ်ပြီး သင့်နာရီတွင် အသုံးပြုပြီးပါပြီ</string>
+    <string name="community_theme_detail_requires_app_version">ဤသီမ်ကို ထည့်ရန် Svartifoss %1$s လိုအပ်သည်။</string>
+    <string name="community_theme_detail_load_error">ဤသီမ်၏ အသေးစိတ်ကို ဖွင့်၍ မရပါ။ Community themes သို့ ပြန်သွားပြီး ထပ်မံကြိုးစားပါ။</string>
+    <string name="community_theme_detail_profile_mismatch">ဒေါင်းလုဒ်လုပ်ထားသော ပရိုဖိုင်သည် ဤသီမ်၏ အများမြင် အသေးစိတ်အချက်အလက်နှင့် မကိုက်ညီပါ။ Community themes သို့ ပြန်သွားပြီး ထပ်မံကြိုးစားပါ။</string>
+    <string name="community_theme_detail_screenshot_description">ရေးသားသူ၏ နာရီပေါ်ရှိ ဤသီမ်၏ ဓာတ်ပုံ</string>
+    <string name="community_theme_detail_source_author">ရေးသားသူ၏ နာရီ</string>
+    <string name="community_theme_detail_source_rendered">ဖန်တီးထားသော အကြိုကြည့်ရှုမှု</string>
+    <string name="community_theme_detail_show_rendered">ဖန်တီးထားသော အကြိုကြည့်ရှုမှုကို ပြမည်</string>
+    <string name="community_theme_detail_show_author">ရေးသားသူ ဓာတ်ပုံကို ပြမည်</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

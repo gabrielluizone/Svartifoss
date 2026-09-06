@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>கடல்</item>
+        <item>சூரிய அஸ்தமனம்</item>
+        <item>மைய ஸ்பாட்லைட்</item>
+        <item>கண்ணாடித் திரை</item>
+        <item>வெல்வெட்</item>
+        <item>நுவார் ஸ்பாட்லைட்</item>
+        <item>பனி கழுவல்</item>
+        <item>ரோஜா மலர்ச்சி</item>
+        <item>பிரிசம்</item>
+        <item>பிறை விளிம்பு</item>
+        <item>டைடல் பட்டைகள்</item>
+        <item>காகித உறை</item>
+        <item>விளக்கு எழுச்சி</item>
+        <item>பிளந்த கானல்</item>
+        <item>அமைதியான grid</item>
+        <item>நாக்டர்ன்</item>
+        <item>மேக ஆய்வு</item>
+        <item>திரவக் குளங்கள்</item>
+        <item>நிற மோனோலித்</item>
+        <item>பிளந்த டோன்</item>
+        <item>சாய்வு</item>
+        <item>இருநிறம்</item>
+        <item>பட்டைகள்</item>
+        <item>வின்யெட்</item>
+        <item>கிராஃபைட்</item>
+        <item>சினிமா</item>
+        <item>அக்ரிலிக்</item>
+        <item>வலை</item>
+        <item>நெபுலா</item>
+        <item>உயிரொளிர்வு</item>
+        <item>வானவில் ஒளிர்வு</item>
+        <item>சுற்றுப்பாதை</item>
+        <item>மை கழுவல்</item>
+        <item>மலர்ச்சி</item>
+        <item>ஃபியோர்டு</item>
+        <item>புள்ளி matrix</item>
+        <item>ஸ்கேன் கோடுகள்</item>
+        <item>ரேடார்</item>
+        <item>விளிம்பு வடிவம்</item>
+        <item>பல முகங்கள்</item>
+        <item>ஆல்பம் நிரப்பு</item>
+        <item>இரண்டாம் நிரப்பு</item>
+        <item>மூன்றாம் நிரப்பு</item>
+        <item>கண்ணாடி</item>
+        <item>நள்ளிரவு</item>
+        <item>புகை</item>
+        <item>அலைவரை</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>பாசி</item>
+        <item>லாவெண்டர் மூடுபனி</item>
+        <item>செர்ரி</item>
+        <item>ஆழ்கடல்</item>
+        <item>தூசி</item>
+        <item>ப்ளீச்</item>
+        <item>நிலவொளி</item>
+        <item>கனவு</item>
+        <item>இன்ஃப்ராரெட்</item>
+        <item>காடு</item>
+        <item>வெள்ளி</item>
+        <item>கேண்டி</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>மேல் மங்கல்</item>
+        <item>மைய ஸ்பாட்லைட்</item>
+        <item>சாய்வு நிழல்</item>
+        <item>இடது திரை</item>
+        <item>வலது திரை</item>
+        <item>மையப் பட்டை</item>
+        <item>குறுக்கு மங்கல்</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>மறுமுனை இலை</item>
+        <item>மறுமுனை துளி</item>
+        <item>கூழாங்கல்</item>
+        <item>வளைவு</item>
+        <item>கேடயம்</item>
+        <item>மறுமுனை வளைவு</item>
+        <item>மறுமுனை கேடயம்</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>இசைவு</item>
+        <item>ஒளிவீசும்</item>
+        <item>வெள்ள நிரப்பு</item>
+        <item>மினுமினுப்பு</item>
+        <item>ஆழ்ந்த ஒளிர்வு</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>ஆல்பம் வெளிக்கோடு</item>
+        <item>ஆல்பம் சாய்வு</item>
+        <item>இரண்டாம் ஆல்பம் நிறம்</item>
+        <item>ஆல்பம் கண்ணாடி</item>
+        <item>மூன்றாம் ஆல்பம் நிறம்</item>
+        <item>நியான் வெளிக்கோடு</item>
+    </string-array>
+</resources>

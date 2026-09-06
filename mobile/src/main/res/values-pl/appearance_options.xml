@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Ocean</item>
+        <item>Zachód słońca</item>
+        <item>Środkowy reflektor</item>
+        <item>Szklana zasłona</item>
+        <item>Aksamit</item>
+        <item>Reflektor noir</item>
+        <item>Lodowa poświata</item>
+        <item>Rozkwit róży</item>
+        <item>Pryzmat</item>
+        <item>Krawędź półksiężyca</item>
+        <item>Pasma pływowe</item>
+        <item>Papierowa obwoluta</item>
+        <item>Wschód latarni</item>
+        <item>Podzielony miraż</item>
+        <item>Spokojna siatka</item>
+        <item>Nokturn</item>
+        <item>Studium chmur</item>
+        <item>Kałuże płynu</item>
+        <item>Kolorowy monolit</item>
+        <item>Podzielona tonacja</item>
+        <item>Gradient</item>
+        <item>Duoton</item>
+        <item>Pasma</item>
+        <item>Winieta</item>
+        <item>Grafit</item>
+        <item>Kino</item>
+        <item>Akryl</item>
+        <item>Splot</item>
+        <item>Mgławica</item>
+        <item>Bioluminescencja</item>
+        <item>Opalizujący</item>
+        <item>Orbita</item>
+        <item>Rozmyty atrament</item>
+        <item>Rozkwit</item>
+        <item>Fiord</item>
+        <item>Matryca punktowa</item>
+        <item>Linie skanowania</item>
+        <item>Radar</item>
+        <item>Kontur</item>
+        <item>Fasetowany</item>
+        <item>Wypełnienie albumu</item>
+        <item>Drugie wypełnienie</item>
+        <item>Trzecie wypełnienie</item>
+        <item>Szkło</item>
+        <item>Północ</item>
+        <item>Dym</item>
+        <item>Linia przypływu</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Mech</item>
+        <item>Lawendowa mgiełka</item>
+        <item>Wiśnia</item>
+        <item>Głębokie morze</item>
+        <item>Pył</item>
+        <item>Wybielenie</item>
+        <item>Światło księżyca</item>
+        <item>Sen</item>
+        <item>Podczerwień</item>
+        <item>Las</item>
+        <item>Srebro</item>
+        <item>Cukierkowy</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Górne zanikanie</item>
+        <item>Środkowy reflektor</item>
+        <item>Ukośny cień</item>
+        <item>Lewa kurtyna</item>
+        <item>Prawa kurtyna</item>
+        <item>Środkowe pasmo</item>
+        <item>Przenikanie</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Odwrócony liść</item>
+        <item>Odwrócona kropla</item>
+        <item>Otoczak</item>
+        <item>Łuk</item>
+        <item>Tarcza</item>
+        <item>Odwrócony łuk</item>
+        <item>Odwrócona tarcza</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Szept</item>
+        <item>Promienny</item>
+        <item>Zalanie</item>
+        <item>Migotanie</item>
+        <item>Głęboka poświata</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Obrys albumu</item>
+        <item>Gradient albumu</item>
+        <item>Drugi kolor albumu</item>
+        <item>Szkło albumu</item>
+        <item>Trzeci kolor albumu</item>
+        <item>Neonowy obrys</item>
+    </string-array>
+</resources>

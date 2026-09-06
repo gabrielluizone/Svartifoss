@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>ఓషన్</item>
+        <item>సన్‌సెట్</item>
+        <item>సెంటర్ స్పాట్‌లైట్</item>
+        <item>గ్లాస్ వీల్</item>
+        <item>వెల్వెట్</item>
+        <item>నోయర్ స్పాట్‌లైట్</item>
+        <item>ఐస్ వాష్</item>
+        <item>రోజ్ బ్లూమ్</item>
+        <item>ప్రిజమ్</item>
+        <item>క్రెసెంట్ రిమ్</item>
+        <item>టైడల్ బ్యాండ్లు</item>
+        <item>పేపర్ స్లీవ్</item>
+        <item>లాంతరు ఉదయం</item>
+        <item>మిరాజ్ స్ప్లిట్</item>
+        <item>క్వైట్ గ్రిడ్</item>
+        <item>నాక్టర్న్</item>
+        <item>క్లౌడ్ స్టడీ</item>
+        <item>లిక్విడ్ పూల్స్</item>
+        <item>కలర్ మోనోలిత్</item>
+        <item>స్ప్లిట్ టోన్</item>
+        <item>గ్రేడియెంట్</item>
+        <item>డ్యుయోటోన్</item>
+        <item>బ్యాండ్లు</item>
+        <item>విగ్నెట్</item>
+        <item>గ్రాఫైట్</item>
+        <item>సినిమా</item>
+        <item>అక్రిలిక్</item>
+        <item>మెష్</item>
+        <item>నెబ్యులా</item>
+        <item>బయోల్యూమినెసెన్స్</item>
+        <item>ఇరిడిసెంట్</item>
+        <item>ఆర్బిట్</item>
+        <item>ఇంక్ వాష్</item>
+        <item>బ్లాసమ్</item>
+        <item>ఫ్యోర్డ్</item>
+        <item>డాట్ మ్యాట్రిక్స్</item>
+        <item>స్కాన్‌లైన్లు</item>
+        <item>రాడార్</item>
+        <item>కాంటూర్</item>
+        <item>ఫాసెటెడ్</item>
+        <item>ఆల్బమ్ ఫిల్</item>
+        <item>సెకండరీ ఫిల్</item>
+        <item>టెర్షియరీ ఫిల్</item>
+        <item>గ్లాస్</item>
+        <item>మిడ్‌నైట్</item>
+        <item>స్మోక్</item>
+        <item>టైడ్‌లైన్</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>మాస్</item>
+        <item>లావెండర్ హేజ్</item>
+        <item>చెర్రీ</item>
+        <item>డీప్ సీ</item>
+        <item>డస్ట్</item>
+        <item>బ్లీచ్</item>
+        <item>మూన్‌లైట్</item>
+        <item>డ్రీమ్</item>
+        <item>ఇన్‌ఫ్రారెడ్</item>
+        <item>ఫారెస్ట్</item>
+        <item>సిల్వర్</item>
+        <item>క్యాండీ</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>టాప్ ఫేడ్</item>
+        <item>సెంటర్ స్పాట్‌లైట్</item>
+        <item>డయాగనల్ షాడో</item>
+        <item>ఎడమ కర్టెన్</item>
+        <item>కుడి కర్టెన్</item>
+        <item>సెంటర్ బ్యాండ్</item>
+        <item>క్రాస్‌ఫేడ్</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>రివర్స్ లీఫ్</item>
+        <item>రివర్స్ డ్రాప్</item>
+        <item>పెబుల్</item>
+        <item>ఆర్క్</item>
+        <item>షీల్డ్</item>
+        <item>రివర్స్ ఆర్క్</item>
+        <item>రివర్స్ షీల్డ్</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>విస్పర్</item>
+        <item>రేడియంట్</item>
+        <item>ఫ్లడ్</item>
+        <item>గ్లిమర్</item>
+        <item>డీప్ గ్లో</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>ఆల్బమ్ అవుట్‌లైన్</item>
+        <item>ఆల్బమ్ గ్రేడియెంట్</item>
+        <item>సెకండరీ ఆల్బమ్ రంగు</item>
+        <item>ఆల్బమ్ గ్లాస్</item>
+        <item>టెర్షియరీ ఆల్బమ్ రంగు</item>
+        <item>నియాన్ అవుట్‌లైన్</item>
+    </string-array>
+</resources>

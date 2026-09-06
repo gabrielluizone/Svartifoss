@@ -1,0 +1,2215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dev_report_copy">நகலெடு</string>
+    <string name="dev_report_copied">அறிக்கை நகலெடுக்கப்பட்டது</string>
+    <string name="dev_watch_snapshot_inspector">கடிகார விருப்ப snapshot</string>
+    <string name="dev_watch_snapshot_inspector_description">இப்போது உண்மையில் கடிகாரத்திற்கு என்ன அனுப்பப்படும்: செயலில் உள்ள appearance scope, மதிப்பிடப்பட்ட அளவு, மேலும் budget-க்கு பொருந்த எந்த செயலற்ற face-scope cache-கள் நீக்கப்பட்டன</string>
+    <string name="dev_data_layer_inspector">Data Layer ஆய்வாளர்</string>
+    <string name="dev_data_layer_inspector_description">இணைக்கப்பட்ட Wearable nodes மற்றும் கடிகார பயன்பாடு கடைசியாக பதிலளித்த WatchInfo — \"No watch connected\" என்பதற்குப் பின்னுள்ள மூல நிலை</string>
+    <string name="dev_media_sessions_inspector">MediaSession explorer</string>
+    <string name="dev_media_sessions_inspector_description">கண்காணிக்கப்படும் ஒன்றை மட்டும் அல்லாமல் தற்போது செயலில் உள்ள ஒவ்வொரு MediaSession-மும்: அறிவிக்கப்பட்ட செயல்கள், வரிசை, இயக்க வழி</string>
+    <string name="dev_view_phone_log">தொலைபேசி log-ஐ பார்</string>
+    <string name="dev_view_phone_log_description">டிஸ்கில் உள்ள Timber log-ன் கடைசி பகுதி, மேலும் \"Send logs\" முன்பு எடுத்திருந்தால் கடிகாரத்தின் log-மும்</string>
+    <string name="dev_theme_submission_preflight">தீம் சமர்ப்பிப்பு முன்சோதனை</string>
+    <string name="dev_theme_submission_preflight_description">சேமிக்கப்பட்ட ஒவ்வொரு கடிகார தீமையும் community submission சரிபார்ப்பின் வழியாக இயக்கி, அதைத் தடுக்கிற துல்லியமான அமைப்பு இருந்தால் அதன் பெயரைச் சொல்கிறது</string>
+    <string name="dev_appearance_resolution_inspector">தோற்ற தீர்மான ஆய்வாளர்</string>
+    <string name="dev_appearance_resolution_inspector_description">ஒவ்வொரு வரையறுக்கப்பட்ட appearance key-க்கும் நான்கு resolution படிகளில் எது வென்றது — explicit face value, per-face default, legacy global அல்லது definition default — மற்றும் ஒவ்வொன்றும் தரும் மதிப்பு</string>
+    <string name="action_fast_forward">வேகமாக முன்னோக்கு</string>
+    <string name="action_rewind">பின்னோக்கு</string>
+    <string name="action_set_playback_speed">வேகத்தை %1$s× ஆக அமை</string>
+    <string name="action_seek_to_percent">%1$d%% க்கு செல்</string>
+    <string name="action_set_volume_percent">ஒலியளவை %1$d%% ஆக அமை</string>
+    <string name="action_set_shuffle_on">கலப்பை இயக்கு</string>
+    <string name="action_set_shuffle_off">கலப்பை அணை</string>
+    <string name="action_set_repeat_off">மீளியக்கத்தை அணை</string>
+    <string name="action_set_repeat_all">அனைத்தையும் மீண்டும் இயக்கு</string>
+    <string name="action_set_repeat_one">ஒன்றை மீண்டும் இயக்கு</string>
+    <string name="group_playback_speed">இயக்க வேகம்</string>
+    <string name="group_track_position">பாடல் நிலை</string>
+    <string name="group_shuffle_mode">கலப்பு முறை</string>
+    <string name="group_repeat_mode">மீளியக்க முறை</string>
+    <string name="group_volume_levels">ஒலியளவு நிலைகள்</string>
+    <string name="group_watch_screens">கடிகாரத் திரைகள்</string>
+    <string name="group_find_music">கண்டுபிடித்து இயக்கு</string>
+    <string name="action_open_face_picker">வாட்ச் ஃபேஸ் தேர்வியைத் திற</string>
+    <string name="action_close_watch_app">கடிகார பயன்பாட்டை மூடு</string>
+    <string name="hand_gestures">கைச் சைகைகள்</string>
+    <string name="hand_gestures_hint">Svartifoss திறந்திருக்கும் போது இணக்கமான கடிகாரங்களில் கிடைக்கும்.</string>
+    <string name="hand_gestures_hint_disconnected">உங்கள் கடிகாரம் கைச் சைகைகளை ஆதரிக்கிறதா என்பதைப் பார்க்க அதில் Svartifoss-ஐ இணைத்து திறக்கவும்.</string>
+    <string name="hand_gestures_hint_outdated">இந்த கடிகாரம் கைச் சைகைகளை ஆதரிக்கிறதா என்பதைப் பார்க்க கடிகார பயன்பாட்டைப் புதுப்பிக்கவும்.</string>
+    <string name="hand_gestures_hint_unsupported">இந்த கடிகாரம் கைச் சைகைகளை ஆதரிக்காது; எனவே இங்கே ஒதுக்கப்பட்ட செயல் ஒருபோதும் இயங்காது.</string>
+    <string name="hand_gestures_hint_disabled">இந்த கடிகாரத்தில் கைச் சைகைகள் அணைக்கப்பட்டுள்ளன. கடிகாரத்திலேயே Settings \u2192 Gestures-ல் அவற்றை இயக்கவும்.</string>
+    <string name="hand_gestures_hint_ready">இந்த கடிகாரத்தில் தயாராக உள்ளது: Svartifoss பிளேயர் திறந்திருக்கும் போது இருமுறை பிஞ்ச் செய்யவும்.</string>
+    <string name="hand_gesture_how_it_works">மணிக்கட்டை உயர்த்தியபடி உங்கள் பெருவிரலும் சுட்டுவிரலும் விரைவாக இருமுறை ஒன்றாகப் பிஞ்ச் செய்யவும். Wear OS இதை primary action என அழைக்கிறது; எனவே வேறு தயாரிப்பாளரின் கடிகாரம் அதற்குச் சமமான வேறு கைச் சைகையைப் பயன்படுத்தலாம்.\n\nகடிகாரத்தில் Svartifoss பிளேயர் திறந்திருக்கும் போதும் திரை இயக்கத்தில் இருக்கும் போதும் மட்டுமே இது இயங்கும் \u2014 வாட்ச் ஃபேஸிலிருந்து அல்ல, வரிசை அல்லது மெனு மேல் அல்ல, always-on display-யிலும் அல்ல. அப்போது playback எந்த நிலையில் இருக்கிறதோ அதற்காக அமைக்கப்பட்ட செயல் இயங்கும்; இரு நிலைகளிலும் செயல்பட இரு Controls பக்கங்களிலும் அதை அமைக்கவும்.\n\nகடிகாரத்தின் சொந்த Settings \u2192 Gestures-லும் இந்தச் சைகை இயக்கப்பட்டிருக்க வேண்டும்.</string>
+    <string name="double_pinch">இரட்டை பிஞ்ச்</string>
+    <string name="icon_selection_search_hint">ஐகான்களைத் தேடு</string>
+    <string name="icon_selection_search_empty">உங்கள் தேடலுடன் பொருந்தும் ஐகான்கள் இல்லை</string>
+    <string name="open_quick_actions_panel">விரைவு செயல்கள் பலகத்தைத் திற</string>
+    <string name="open_volume_screen">ஒலியளவு திரையைத் திற</string>
+    <string name="open_progress_screen">முன்னேற்றத் திரையைத் திற</string>
+    <string name="export_config_failed_detail">காப்புப்பிரதியை ஏற்றுமதி செய்ய முடியவில்லை: %1$s</string>
+    <string name="backup_selection_title">காப்புப்பிரதி உள்ளடக்கங்களைத் தேர்ந்தெடு</string>
+    <string name="backup_selection_description">நீங்கள் சேமிக்க விரும்பும் Svartifoss பகுதிகளைத் தேர்ந்தெடுக்கவும். இயல்பாக அனைத்தும் தேர்ந்தெடுக்கப்படும்; இந்த காப்புப்பிரதி இறக்குமதி செய்யப்படும் போது தேர்ந்தெடுக்காத பகுதிகள் மாறாமல் இருக்கும்.</string>
+    <string name="backup_selection_select_all">அனைத்தையும் தேர்ந்தெடு</string>
+    <string name="backup_selection_clear_all">அனைத்தையும் அழி</string>
+    <string name="backup_selection_export">காப்புப்பிரதியை ஏற்றுமதி செய்</string>
+    <string name="backup_selection_empty">குறைந்தது ஒரு உருப்படியைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="backup_section_buttons">பொத்தான் அமைப்புகள்</string>
+    <string name="backup_section_buttons_description">இசை இயங்கும் போதும் நிறுத்தப்பட்ட போதும் பொத்தான், கிரவுன் மற்றும் சைகை செயல்கள்.</string>
+    <string name="backup_section_actions">செயல் பட்டியல்</string>
+    <string name="backup_section_actions_description">கடிகாரத்தின் செயல் மெனுவில் காட்டப்படும் வரிசைப்படுத்தப்பட்ட செயல்களின் பட்டியல்.</string>
+    <string name="backup_section_app_settings">பயன்பாட்டு அமைப்புகள்</string>
+    <string name="backup_section_app_settings_description">தொலைபேசி அமைப்புகள், கடிகார நடத்தை, மொழி, இயக்கம் மற்றும் ஒருங்கிணைப்புகள்.</string>
+    <string name="backup_section_watch_appearance">கடிகார தோற்றமும் தீம்களும்</string>
+    <string name="backup_section_watch_appearance_description">கடிகார அமைப்புகள், நிறங்கள், எழுத்தமைப்பு, பலகங்கள், AOD மற்றும் சேமித்த தனிப்பயன் தீம்கள்.</string>
+    <string name="backup_section_playlist_shortcuts">பிளேலிஸ்ட் குறுக்குவழிகள்</string>
+    <string name="backup_section_playlist_shortcuts_description">நீங்கள் சேமித்த இசை, ஆல்பம், கலைஞர், பிளேலிஸ்ட் மற்றும் பிற ஸ்ட்ரீமிங் இணைப்புகள்.</string>
+    <string name="backup_section_history">தேடல் மற்றும் இயக்க வரலாறு</string>
+    <string name="backup_section_history_description">சமீபத்திய தேடல்கள் மற்றும் சமீபத்தில் இயக்கப்பட்ட பாடல்கள்.</string>
+    <string name="backup_section_icons">ஏற்றப்பட்ட ஐகான்களும் கலைப்படங்களும்</string>
+    <string name="backup_section_icons_description">தனிப்பயன் செயல் ஐகான்கள், குறுக்குவழி அட்டைகள் மற்றும் தற்காலிக சேமிப்பில் உள்ள பயன்பாட்டு ஐகான்கள்.</string>
+    <string name="backup_section_privacy">தனியுரிமை மற்றும் அறிவிப்புகள்</string>
+    <string name="backup_section_privacy_description">செயலிழப்பு அறிக்கைகள், அறிவிப்பு செய்திகள் மற்றும் பயன்பாடு சேமித்த பிற ஒப்புதல் தேர்வுகள்.</string>
+    <string name="backup_section_local_app_state">உள்ளூர் பயன்பாட்டு நிலை</string>
+    <string name="backup_section_local_app_state_description">தற்போதைய அக்சென்ட், கடைசி மெனு நிலை, முடிக்கப்பட்ட அறிவுறுத்தல்கள் மற்றும் புதுப்பிப்பு நிலை.</string>
+    <string name="backup_section_auxiliary_data">பிற பயன்பாட்டு தரவு</string>
+    <string name="backup_section_auxiliary_data_description">எதிர்கால தரவகங்கள் உட்பட பயன்பாட்டுக்குச் சொந்தமான கூடுதல் விருப்பங்களும் உள் கோப்புகளும்.</string>
+    <string name="pref_numeric_range">%1$d முதல் %2$d வரை.</string>
+    <string name="background_editor_artwork">கலைப்படம்</string>
+    <string name="background_editor_layers">அடுக்குகள்</string>
+    <string name="background_editor_layers_count">%2$d இல் %1$d</string>
+    <string name="background_editor_add_layer">அடுக்கைச் சேர்</string>
+    <string name="background_editor_reset_layers">மீட்டமை</string>
+    <string name="background_editor_empty">அடுக்குகள் இல்லை. கலைப்படம் தனியாகக் காட்டப்படுகிறது.</string>
+    <string name="background_editor_note">இந்தப் பட்டியலின் மேலுள்ள அடுக்கு மற்ற அனைத்தின் மீதும் வரையப்படும்; கீழுள்ள அடுக்கு கலைப்படத்திற்கு மிக அருகில் இருக்கும்.</string>
+    <string name="background_editor_full">அதிகபட்சம் %1$d அடுக்குகளை அடுக்கலாம்.</string>
+    <string name="background_layer_kind_wash">பின்னணி</string>
+    <string name="background_layer_kind_shade">நிழலிடல்</string>
+    <string name="background_layer_kind_floor">அக்சென்ட் அடித்தளம்</string>
+    <string name="background_layer_move_up">இந்த அடுக்கை மேலே நகர்த்து</string>
+    <string name="background_layer_move_down">இந்த அடுக்கை கீழே நகர்த்து</string>
+    <string name="background_layer_more">இந்த அடுக்கிற்கான கூடுதல் விருப்பங்கள்</string>
+    <string name="background_layer_add_title">ஒரு அடுக்கைச் சேர்</string>
+    <string name="background_layer_style_title">%1$s அடுக்கு</string>
+    <string name="background_layer_opacity">வலிமை</string>
+    <string name="background_layer_color">நிறம்</string>
+    <string name="background_layer_custom_color">ஒரு நிறத்தைத் தேர்ந்தெடு</string>
+    <string name="background_layer_duplicate">நகலெடு</string>
+    <string name="background_layer_remove">அகற்று</string>
+    <string name="background_layer_color_default">இயல்புநிலை</string>
+    <string name="background_layer_color_album">ஆல்பம் நிறம்</string>
+    <string name="background_layer_color_secondary">இரண்டாம் ஆல்பம் நிறம்</string>
+    <string name="background_layer_color_tertiary">மூன்றாம் ஆல்பம் நிறம்</string>
+    <string name="background_layer_color_desaturated">மங்கலான ஆல்பம் நிறம்</string>
+    <string name="background_layer_color_black">கருப்பு</string>
+    <string name="background_layer_color_custom">தனிப்பயன் நிறம்</string>
+    <string name="background_layer_reset_title">அடுக்குகளை மீட்டமைக்கவா?</string>
+    <string name="background_layer_reset_message">அடுக்கு குவியல் தனித்தனி வரிகளில் அமைக்கப்பட்ட நிழலிடல் மற்றும் அக்சென்ட் அடித்தளத்துக்கு திரும்பும்; பழைய உருவாக்கத்தில் இயங்கும் கடிகாரமும் இதையே வரையும்.</string>
+    <string name="watch_element_progress">முன்னேற்றம்</string>
+    <string name="watch_element_volume">ஒலியளவு</string>
+    <string name="watch_element_quick_panel">விரைவு செயல்கள்</string>
+    <string name="watch_element_queue">வரிசை</string>
+    <string name="watch_element_lyrics">பாடல்வரிகள்</string>
+    <string name="player_section_on_screen">திரையில்</string>
+    <string name="player_element_app_icon">பயன்பாட்டு ஐகான்</string>
+    <string name="player_element_controls">பிளேயர் கட்டுப்பாடுகள்</string>
+    <string name="player_element_tap_flash">தட்டல் ஒளிர்வு</string>
+    <string name="player_element_inner_progress">உள் முன்னேற்றம்</string>
+    <string name="player_element_edge_arc">விளிம்பு வளைவு</string>
+    <string name="player_element_edge_seek">விளிம்பு தேடல்</string>
+    <string name="player_element_clock">கடிகாரம்</string>
+    <string name="player_element_cover_art">அட்டை கலைப்படம்</string>
+    <string name="setting_album_art_filter">ஆல்பம் கலைப்பட வடிகட்டி</string>
+    <string name="setting_album_art_filter_description">எந்த ஆல்பம் கலைப்பட பாணியின்மீதும் தனித்த நிறச் செயலாக்கத்தைப் பயன்படுத்து.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">மென்மையான காட்சி தோற்றத்திற்காக மிக இலகுவான stroke கொண்ட Roboto.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">குடும்பத்தின் பழக்கமான விகிதங்களுடன் இலகுவான, காற்றோட்டமான stroke கொண்ட Roboto.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">சுருக்கமான, வாசிக்கத் தகுந்த லேபிள்களுக்காக வலுவான medium stroke கொண்ட Roboto.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">தடித்த காட்சி உரைக்காக அதன் மிக கனமான system weight கொண்ட Roboto.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">குறைந்த இடத்தில் நீண்ட தலைப்புகள் பொருந்த Roboto கிடைமட்டமாகச் சுருக்கப்பட்டுள்ளது.</string>
+    <string name="setting_wear_title_font">தலைப்பு எழுத்துரு</string>
+    <string name="setting_wear_title_text_case">தலைப்பு எழுத்து வடிவம்</string>
+    <string name="setting_wear_artist_font">கலைஞர் எழுத்துரு</string>
+    <string name="setting_wear_artist_text_case">கலைஞர் எழுத்து வடிவம்</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">ஆரம்ப வாசிப்பிற்காக வடிவமைக்கப்பட்ட நட்பான வட்டமான sans எழுத்துரு</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">தொகுப்பாசிரியர் தாக்கத்துடன் கூடிய உயர்-மாறுபாடு Didone காட்சி எழுத்துரு</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">கையெழுத்து காமிக் நுணுக்கத்துடன் உறுதியான போஸ்டர் sans</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">தாராளமான சம இடைவெளியுடன் அமைதியான வடிவியல் sans</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">மென்மையாக வட்டமிடப்பட்ட முனைகளுடன் நவீன slab serif</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">தலைப்பில் தாக்கத்திற்காக உருவாக்கப்பட்ட மிகப்பெரிய slab serif</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">சிறிய பெரியெழுத்துகளில் குறுகிய கையால் வரையப்பட்ட எழுத்துரு</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">உரத்த தலைப்புகளுக்கான நெருக்கமான condensed sans</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">சிறிய அளவிலும் உறுதியாக இருக்கும் வடிவியல் slab serif</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">கத்தும் ஆற்றலுடன் காமிக்-புத்தக காட்சி எழுத்துரு</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">ஸ்டென்சில் இராணுவ காட்சி எழுத்துரு</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">வெப்பமான, இயல்பான வளைவுகளுடன் நேரான serif</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">மெதுவாக வட்டமிட்ட மூலைகளுடன் humanist sans</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">வலுவான, நேரடியான வடிவங்களுடன் grotesque sans</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">ஸ்கிரிப்ட்களுக்காக உருவாக்கப்பட்ட செம்மையான டைப் ரைட்டர் monospace</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">மென்மையான, புத்தகத் தன்மை கொண்ட வட்டமான slab serif</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">நீண்ட பகுதிகளுக்காகச் சீரமைக்கப்பட்ட பழைய பாணி புத்தக serif</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">நவீன முடிப்புடன் குறைந்த-மாறுபாடு வடிவியல் sans</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">உட்பொருள் அளவிலும் நிலைத்திருக்க வரையப்பட்ட வலுவான serif</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">கோண இணைப்புகளுடன் நவீன தொழில்நுட்ப sans</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">தெளிவான வேறுபட்ட glyph-களுடன் நிரலாக்க monospace</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">திரை குறியீட்டிற்காக வடிவமைக்கப்பட்ட humanist monospace</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">வட்டமான stroke-களுடன் குமிழி போன்ற கையெழுத்து எழுத்துரு</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">1920களின் vintage தன்மையுள்ள வடிவியல் sans</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Futura மரபிலான வடிவியல் sans</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">சிறு சாய்வுடன் loop இல்லாத Thai மற்றும் Latin sans</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">வாசிக்கும் போது பார்வை அழுத்தத்தை குறைக்க வடிவமைக்கப்பட்ட sans</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">ரெட்ரோ சைன்போர்டு கவர்ச்சியுடன் இணைந்த தடித்த script</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">வெப்பத்தையும் துல்லியத்தையும் சமப்படுத்தும் அரை-வடிவியல் sans</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">சுத்தமான இடைமுக உரைக்காக வரையப்பட்ட குறைந்தபட்ச sans</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">மென்மையான முனைகளுடன் நன்றாக வட்டமிடப்பட்ட sans</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">சமமான, நவீன தாளத்துடன் வடிவியல் sans</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">கேமிங் உணர்வுள்ள சதுர techno எழுத்துரு</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">grid மீது வரையப்பட்ட சுருக்கமான தொழில்நுட்ப sans</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">தனித்துவமான திறந்த வளைவுகளுடன் நவீன grotesque</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">ஆர்கேட் இயந்திரத்திலிருந்து வந்தது போல pixel எழுத்துரு</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">மென்மையான, இலகுவான உணர்வுள்ள வட்ட வடிவியல் sans</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">தொழில்நுட்ப கோணங்களுடன் சதுரமான condensed sans</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">ரெட்ரோ சைன்-பெயிண்டிங் வேர்களுள்ள art-deco காட்சி எழுத்துரு</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Roboto-வின் monospace துணை</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">விளையாட்டுத்தனமான, மொத்தமான stroke-களுடன் தடித்த காட்சி எழுத்துரு</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">கனமான சதுர வடிவங்களுடன் பரந்த தொழில்துறை எழுத்துரு</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Gujarati வேர்களுடன் உயிரோட்டமான சாய்ந்த காட்சி எழுத்துரு</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">ஆரம்ப கணினித் திரைகளை நினைவூட்டும் சிறிய bitmap எழுத்துரு</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">குறியீட்டை வசதியாக வாசிக்க வடிவமைக்கப்பட்ட monospace</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">போஸ்டர் தாக்கமுள்ள condensed all-caps எழுத்துரு</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Devanagari மற்றும் Latin தலைப்புகளுக்கான உயரமான condensed எழுத்துரு</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">தொழில்நுட்ப உணர்வுள்ள சதுர humanist sans</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">அணுகத்தக்க உணர்வுடன் முழுமையாக வட்டமான sans</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">1920களின் காபி-ஷாப் சைன்போர்டை நினைவூட்டும் condensed எழுத்துரு</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">மென்மையாக வெட்டப்பட்ட நவீன முனைகளுடன் slab serif</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">திறந்த, வாசிக்க எளிதான வடிவங்களுடன் நட்பான humanist sans</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">வசதியான வாசிப்பிற்கான உறுதியான வடிவங்களுடன் வெப்பமான sans</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">தெளிவான இடைமுகங்களுக்காக வடிவமைக்கப்பட்ட பல்துறை humanist sans</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">தொகுப்பாசிரியர் குரலுள்ள செம்மையான உரை serif</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">திரை வாசிப்பிற்காகச் சீரமைக்கப்பட்ட பாரம்பரிய புத்தக serif</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">பரந்த, உறுதியான தாளத்துடன் நடைமுறை grotesk sans</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">துல்லியமான விகிதங்களுடன் தொழில்நுட்ப humanist sans</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">செம்மையான, வாசிக்க எளிதான texture கொண்ட தொழில்நுட்ப monospace</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">பொறியியல் தன்மையுள்ள நவீன serif</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">சுருக்கமான நடைமுறை வடிவங்களுடன் சுத்தமான வேலைக்கான sans</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">நட்பான விகிதங்களுள்ள வித்தியாசமான grotesk</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">எதிர்கால, விசாலமான உணர்வுள்ள வடிவியல் sans</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">நேர்த்தியான நகர்ப்புற கோடுகளுடன் நவீன வடிவியல் sans</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">சிறிய திரைகளுக்காக உருவாக்கப்பட்ட சமநிலையான நவீன sans</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">வெளிப்பாடான விகிதங்களுடன் தன்னம்பிக்கையான காட்சி sans</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">நீண்ட பாடல் தகவலுக்கான வாசிக்கத் தகுந்த துணை sans</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">நவீன தொழில்நுட்ப நுணுக்கத்துடன் தெளிவான monospace</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">கலை இயக்கம் கொண்ட விளையாட்டுத்தனமான வடிவங்களுடன் வழக்கமற்ற sans</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">அமைதியான துல்லியத்துடன் நெகிழ்வான நவீன sans</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">எளிதாக வாசிக்கத் தகுந்த சுத்தமான, அணுகத்தக்க sans</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">மகிழ்ச்சியான தன்மையுள்ள வட்டமான காட்சி sans</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">கட்டமைப்பையும் வித்தியாசமான விவரங்களையும் கலக்கும் உயிரோட்டமான grotesk</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">நாடகமிக்க தலைப்புகளுக்கான உயர்-மாறுபாடு காட்சி serif</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">நேர்த்தியான, உயர்-மாறுபாடு இலக்கிய serif</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">அழகெழுத்து விவரங்களுடன் நயமான காட்சி serif</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">சிறிய அளவிலும் தெளிவாக இருக்கும் வலுவான slab serif</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">அடர்த்தியான, வெளிப்பாடான வாசிப்பிற்கான பல்துறை serif</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">புத்தகத் தன்மையுள்ள வெப்பமான பழைய பாணி serif</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">தனித்துவமான செம்மையான எழுத்து வடிவங்களுடன் நேர்த்தியான sans</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">வலுவான தலைப்புகளுக்காக உருவாக்கப்பட்ட தடித்த வடிவியல் sans</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">விளையாட்டு, இயக்கமிக்க ஆற்றலுடன் condensed-க்கு ஏற்ற sans</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">திறந்த counters மற்றும் நட்பான சைன்போர்டு ஆற்றலுடன் மென்மையான sans</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">humanist வெப்பத்தையும் தெளிவையும் சமப்படுத்தும் பல்துறை sans</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">தன்னம்பிக்கையான தாளத்துடன் தெளிவான போக்குவரத்து-ஊக்கமுள்ள sans</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">தினசரி இடைமுகங்களுக்காக உருவாக்கப்பட்ட நடுநிலை, அணுகத்தக்க sans</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">மென்மையான நவீன வளைவுகளுடன் இலகு வடிவியல் sans</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">மென்மையான எதிர்கால உணர்வுள்ள வட்டமான குறுகிய sans</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">மென்மையான Thai-ஊக்க தன்மையுடன் சுத்தமான வடிவியல் sans</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">அதிகபட்ச தாக்கத்திற்கான பரந்த எதிர்கால காட்சி எழுத்துரு</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">விளையாட்டுத்தனமான தொழில்நுட்ப குரலுள்ள மாறும் sans-to-mono குடும்பம்</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">தனித்துவமான டிஜிட்டல் texture கொண்ட மாறும் அகல monospace</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">விரிவான script ஆதரவுடன் பரந்த, மிகத் தெளிவான sans</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">விரிவான script ஆதரவுள்ள நம்பகமான serif</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">ஒற்றுமையான தாளத்திற்காக வடிவமைக்கப்பட்ட பன்மொழி monospace</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Hebrew தாக்கமுள்ள தெளிவான தாளத்துடன் சுருக்கமான நவீன sans</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">தெளிவான வாசிப்பிற்காக மேம்படுத்தப்பட்ட உறுதியான humanist sans</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">வட்டமான, திறந்த texture கொண்ட நட்பான திரை sans</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">தனித்துவமான விகிதங்களுள்ள சுருக்கமான வடிவியல் sans</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">இலக்கிய பண்புடன் உயிரோட்டமான அழகெழுத்து serif</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">இடைமுகத்தில் சிறந்த வாசிப்புத் தெளிவுள்ள சுத்தமான humanist sans</string>
+    <string name="setting_wear_note_show_cover">அட்டை கலைப்படம்</string>
+    <string name="aod_element_artwork">கலைப்படம்</string>
+    <string name="aod_element_clock">கடிகாரம்</string>
+    <string name="aod_element_track_info">பாடல் தகவல்</string>
+    <string name="aod_element_transport">போக்குவரத்து</string>
+    <string name="aod_element_progress">முன்னேற்றம்</string>
+    <string name="aod_element_up_next">அடுத்து</string>
+    <string name="aod_section_artwork">கலைப்படம்</string>
+    <string name="aod_control_tint">நிறச்சாயம்</string>
+    <string name="aod_control_brightness">பிரகாசம்</string>
+    <string name="aod_control_art_treatment">செயலாக்கம்</string>
+    <string name="aod_control_art_opacity">ஒளிபுகாமை</string>
+    <string name="mini_button_control_visibility">காட்டு</string>
+    <string name="mini_button_control_arrangement">அமைவிடம்</string>
+    <string name="mini_button_control_shape">வடிவம்</string>
+    <string name="mini_button_control_background">பின்னணி</string>
+    <string name="mini_button_control_opacity">ஒளிபுகாமை</string>
+    <string name="mini_button_assign_action">செயல்களை ஒதுக்கு</string>
+    <string name="mini_button_gestures_note">பிளேயரில் மேலே, கீழே மற்றும் இடதுபுறம் swipe செய்யவும். வலதுபுற swipe எப்போதும் system dismiss gesture ஆகும்; அது ஒருபோதும் தடுக்கப்படாது.</string>
+    <string name="setting_wear_chat_cover_shape">அரட்டை அவதார் வடிவம்</string>
+    <string name="setting_wear_chat_show_cover">அட்டை கலைப்படம்</string>
+    <string name="setting_wear_metadata_cover_shape">மெட்டாடேட்டா அட்டை வடிவம்</string>
+    <string name="setting_wear_metadata_show_cover">அட்டை கலைப்படம்</string>
+    <string-array name="wear_text_case_entries">
+        <item>இயல்பு</item>
+        <item>UPPERCASE</item>
+        <item>lowercase</item>
+        <item>Title Case</item>
+    </string-array>
+    <string name="wear_text_font_follow">உலகளாவிய எழுத்துருவைப் பின்பற்று</string>
+    <string name="category_wf_typography_track_time">பாடல் நேரம்</string>
+    <string name="setting_wear_track_time_font">பாடல்-நேர எழுத்துரு</string>
+    <string name="wear_track_time_font_follow">வடிவமைப்பைப் பின்பற்று</string>
+    <string name="setting_wear_track_time_font_weight">பாடல்-நேர தடிமன்</string>
+    <string name="setting_wear_track_time_font_italic">சாய்வு பாடல் நேரம்</string>
+    <string name="setting_wear_track_time_font_scale">பாடல்-நேர அளவு</string>
+    <string name="setting_wear_track_time_font_opacity">பாடல்-நேர ஒளிபுகாமை</string>
+    <string name="setting_wear_track_time_font_tracking">பாடல்-நேர எழுத்து இடைவெளி</string>
+    <string-array name="album_art_filter_entries">
+        <item>எதுவுமில்லை</item>
+        <item>ஒற்றைநிறம்</item>
+        <item>வெப்பம்</item>
+        <item>குளிர்</item>
+        <item>பொற்காலம்</item>
+        <item>ரோசே</item>
+        <item>வின்டேஜ் படம்</item>
+        <item>மங்கிய படம்</item>
+        <item>மாட்</item>
+        <item>துடிப்பான</item>
+        <item>பஞ்ச்</item>
+        <item>பேஸ்டல்</item>
+        <item>செப்பியா</item>
+        <item>சயனோடைப்</item>
+        <item>டீல் &amp; ஆரஞ்சு</item>
+        <item>உயர் மாறுபாடு</item>
+        <item>மென்மையான ஒளி</item>
+        <item>இரவு</item>
+    </string-array>
+    <string name="queue_item_now_playing">இப்போது இயங்குகிறது</string>
+    <string name="queue_item_unknown_title">அறியப்படாத பாடல்</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">இயக்க வரிசை · %1$d பாடல்</item>
+        <item quantity="other">இயக்க வரிசை · %1$d பாடல்கள்</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">அக்சென்ட் அடித்தள நிறம்</string>
+    <string name="setting_wear_accent_floor_custom_color">தனிப்பயன் அடித்தள நிறம்</string>
+    <string name="setting_wear_accent_floor_custom_color_description">அக்சென்ட் அடித்தள நிறம் தனிப்பயன் நிறமாக அமைந்திருக்கும்போது பயன்படுத்த வேண்டிய நிறத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>ஆல்பம் அக்சென்ட்</item>
+        <item>ஆல்பம் இரண்டாம் நிறம்</item>
+        <item>ஆல்பம் மூன்றாம் நிறம்</item>
+        <item>தனிப்பயன் நிறம்</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">தினசரி வாசிப்பிற்காக வடிவமைக்கப்பட்ட நடுநிலையான, மிகத் தெளிவான இடைமுக sans</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">சிறிய அளவிலும் தெளிவாக இருக்கும் தனித்த வடிவங்களைக் கொண்ட அணுகலுக்கு முன்னுரிமை தரும் எழுத்துருக்கள்</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">மென்மையாக வட்டமிடப்பட்ட வடிவியல் sans — தன்னம்பிக்கையும் நட்பும்</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">நீண்ட தலைப்புகளுக்கு அதிக இடம் தரும் சுருக்கமான humanist sans</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">ஆற்றல்மிக்க போஸ்டர் தன்மையுடன் உயரமான condensed காட்சி எழுத்துரு</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">வசதியான நீளமான வாசிப்பிற்காக வடிவமைக்கப்பட்ட நவீன serif</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">வெப்பமும் பண்பும் கொண்ட வெளிப்பாடான மென்மையான serif</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">தொழில்நுட்ப நுனியுடன் retro-futurist monospace எழுத்துரு</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">அதிகபட்ச மாறுபாட்டிற்கான அடர்த்தியான கனமான காட்சி எழுத்துரு</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">உயிரோட்டமான, தனிப்பட்ட உணர்வுள்ள ஓடும் கையெழுத்து script</string>
+    <string name="setting_wear_artist_text_mode">கலைஞர் உரை நடத்தை</string>
+    <string name="setting_wear_album_art_source">ஆல்பம் கலைப்பட மூலம்</string>
+    <string name="setting_user_font">என் சொந்த எழுத்துரு</string>
+    <string name="wear_font_user_import">என் சொந்த எழுத்துரு…</string>
+    <string name="setting_user_font_empty">இந்த தொலைபேசியிலிருந்து .ttf அல்லது .otf கோப்பை இறக்குமதி செய்</string>
+    <string name="setting_user_font_loaded">%1$s · மாற்ற அல்லது அகற்ற தட்டவும்</string>
+    <string name="user_font_pick">எழுத்துரு கோப்பைத் தேர்ந்தெடு</string>
+    <string name="user_font_replace">மாற்று</string>
+    <string name="user_font_remove">அகற்று</string>
+    <string name="user_font_imported">“%1$s” இறக்குமதி செய்யப்பட்டது. எந்த எழுத்துரு பட்டியலிலும் அதைத் தேர்ந்தெடுக்கவும்; அது உங்கள் கடிகாரத்திற்கு அனுப்பப்படுகிறது.</string>
+    <string name="user_font_removed">நீங்கள் இறக்குமதி செய்த எழுத்துரு அகற்றப்பட்டது.</string>
+    <string name="user_font_error_too_large">அந்த கோப்பு %1$s. கடிகாரத்திற்கு விரைவாக அனுப்ப எழுத்துரு %2$s-க்கு கீழ் இருக்க வேண்டும்.</string>
+    <string name="user_font_error_not_a_font">இந்த தொலைபேசி படிக்கக்கூடிய எழுத்துரு அந்த கோப்பு அல்ல. TrueType மற்றும் OpenType (.ttf, .otf) வேலை செய்யும்; web fonts (.woff, .woff2) வேலை செய்யாது.</string>
+    <string name="user_font_error_unreadable">அந்த கோப்பைப் படிக்க முடியவில்லை. மீண்டும் தேர்ந்தெடுக்க முயற்சிக்கவும் அல்லது முதலில் இந்த தொலைபேசிக்கு நகலெடுக்கவும்.</string>
+    <string name="user_font_not_shareable">உங்கள் சொந்த எழுத்துருவைப் பயன்படுத்தும் தீம்கள் இந்த தொலைபேசியில் மட்டுமே இருக்கும்</string>
+    <string name="setting_custom_album_art_image">பயன்படுத்த வேண்டிய படம்</string>
+    <string name="setting_custom_album_art_folder">வரைய வேண்டிய கோப்புறை</string>
+    <string name="setting_custom_album_art_none">இன்னும் தேர்ந்தெடுக்கவில்லை — தேர்ந்தெடுக்க தட்டவும்</string>
+    <string name="setting_custom_album_art_chosen">%1$s · மாற்ற தட்டவும்</string>
+    <string name="custom_album_art_image_set">அந்தப் படம் இப்போது பிளேயரின் பின்னால் இருக்கும்.</string>
+    <string name="custom_album_art_folder_set">அந்த கோப்புறையிலிருந்து ஒவ்வொரு பாடலுக்கும் ஒரு படம் வரையப்படும்.</string>
+    <string name="custom_album_art_error">அதைத் திறக்க முடியவில்லை. மீண்டும் தேர்ந்தெடுக்கவும் அல்லது இந்த தொலைபேசியின் சொந்த சேமிப்பிலுள்ள ஒன்றைத் தேர்ந்தெடுக்கவும்.</string>
+    <string name="custom_album_art_not_shareable">உங்கள் சொந்த படங்களைப் பயன்படுத்தும் தீம்கள் இந்த தொலைபேசியில் மட்டுமே இருக்கும்</string>
+    <string name="setting_wear_text_block_align">உரை சீரமைப்பு</string>
+    <string name="setting_wear_text_block_align_description">பாடல் உரை எந்த விளிம்புடன் சீரமைவது. Follow face ஒவ்வொரு ஃபேஸுக்காக வடிவமைக்கப்பட்ட சீரமைப்பை அப்படியே வைத்திருக்கும்.</string>
+    <string name="setting_wear_text_block_position">உரை நிலை</string>
+    <string name="setting_wear_text_block_position_description">பாடல் உரை திரையில் எங்கு இருக்கும். Follow face ஒவ்வொரு ஃபேஸும் வடிவமைக்கப்பட்ட இடத்தை அப்படியே வைத்திருக்கும்.</string>
+    <string name="setting_online_artwork">ஆன்லைன் கலைப்படம்</string>
+    <string name="setting_online_artwork_description">வாட்ச் ஃபேஸ் ஆன்லைனில் தேடப்பட்ட படத்தை காட்ட அனுமதிக்கவும் \u2014 இசையைக் கலைஞரின் படம், அல்லது எந்தக் கலைப்படமும் வழங்காத பிளேயருக்கான ஆல்பம் அட்டை. உங்கள் தொலைபேசி Deezer-ன் பொது பட்டியலில் தேடி முடிவை cache செய்கிறது; பாடல் மற்றும் கலைஞர் பெயர்கள் மட்டுமே அனுப்பப்படும், மேலும் ஒரு ஃபேஸ் அந்த மூலங்களில் ஒன்றாக அமைக்கப்படாத வரை எதுவும் தேடப்படாது. அணைத்தால், பிளேயரின் சொந்த கலைப்படம் பயன்படுத்தப்படும்.</string>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+    <string name="setting_no_wearable_api_banner">இந்தச் சாதனத்தில் Wear OS ஆதரிக்கப்படவில்லை</string>
+    <string name="setting_no_wearable_api_banner_description">இந்தச் சாதனத்தில் Google Play Services இன் Wear OS கூறு இல்லை; கடிகாரத்துடன் தொடர்பு கொள்ள Svartifoss க்கு அது தேவை. இணைத்தாலும் உதவாது — இங்கு தொலைபேசி பயன்பாட்டால் கடிகாரத்தை அணுக முடியாது. கீழே உள்ள அனைத்தும் இருந்தபடியே சேமிக்கப்படும்; Wear OS கூறை ஆதரிக்கும் சாதனத்தில் Svartifoss ஐ நிறுவினால் அவை செயல்படும்.</string>
+    <string name="setting_no_watch_banner">எந்தக் கடிகாரமும் இணைக்கப்படவில்லை</string>
+    <string name="setting_no_watch_banner_description">இந்த அமைப்புகள் உங்கள் Wear OS கடிகாரத்துடன் ஒத்திசைக்கப்படும்; எனவே ஒன்று இணைக்கப்பட்டு தொடர்பில் வரும் வரை மாற்றங்கள் கண்கூடாகத் தோன்றாது - ஆனால் கீழே உள்ள அனைத்தையும் இப்போதே அமைக்கலாம்.</string>
+    <string name="category_appearance">தோற்றம்</string>
+    <string name="setting_theme">தீம்</string>
+    <string name="theme_light">தெளிந்த வெள்ளை</string>
+    <string name="theme_dark">முழுக் கருப்பு</string>
+    <string name="theme_system">கணினி அமைப்பைப் பின்பற்று</string>
+    <string name="setting_language">மொழி</string>
+    <string name="language_system">கணினி அமைப்பைப் பின்பற்று</string>
+    <string name="language_change_watch_notice">ஒத்திசைந்ததும் கடிகாரமும் இதே மொழியைப் பயன்படுத்தும்.</string>
+    <string name="category_developer">டெவலப்பர்</string>
+    <string name="dev_mode_unlocked">டெவலப்பர் முறை இயக்கப்பட்டது ✦</string>
+    <string name="dev_mode_clicks_remaining">டெவலப்பர் முறையைத் திறக்க இன்னும் %1$d தட்டல்கள்</string>
+    <string name="dev_disable_mode">டெவலப்பர் முறையை முடக்கு</string>
+    <string name="dev_disable_mode_description">இந்தப் பகுதியை மீண்டும் மறைக்கவும் - திரும்பக் காட்ட \"நிறுவப்பட்ட பதிப்பு\" என்பதை ஏழு முறை தட்டவும்</string>
+    <string name="dev_mode_disabled">டெவலப்பர் முறை முடக்கப்பட்டது</string>
+    <string name="dev_build_info">பில்ட் தகவல்</string>
+    <string name="dev_sync_watch">கடிகார அமைப்புகளை கட்டாயமாக ஒத்திசை</string>
+    <string name="dev_sync_watch_description">தற்போதைய எல்லா அமைப்புகளையும் இணைக்கப்பட்ட கடிகாரத்திற்கு உடனே அனுப்பு</string>
+    <string name="dev_sync_watch_done">அமைப்புகள் கடிகாரத்துடன் ஒத்திசைக்கப்பட்டன</string>
+    <string name="dev_copy_debug_info">டிபக் தகவலை நகலெடு</string>
+    <string name="dev_copy_debug_info_description">பில்ட் மற்றும் சாதன விவரங்களை கிளிப்போர்டுக்கு நகலெடு</string>
+    <string name="dev_export_defaults">ஆப் இயல்புநிலைகளாக ஏற்றுமதி செய்</string>
+    <string name="dev_export_defaults_description">இந்த அமைப்பை default_config.json ஆகச் சேமிக்கும் — புதிய நிறுவல் தொடங்கும் நிலை இதுவே. வரலாறு, ஒப்புதல் தேர்வுகள் மற்றும் இந்தத் தொலைபேசியின் சொந்த நிலை சேர்க்கப்படாது.</string>
+    <string name="dev_export_defaults_done">இயல்புநிலைகள் ஏற்றுமதி செய்யப்பட்டன (%1$s)</string>
+    <string name="dev_show_archived">காப்பகப்படுத்திய விருப்பங்களைக் காட்டு</string>
+    <string name="dev_show_archived_description">அறியப்பட்ட சிக்கல்களால் காப்பகப்படுத்தப்பட்ட கடிகார தளவமைப்புகள் மற்றும் அமைப்புகளை வெளிப்படுத்து</string>
+    <string name="dev_copy_debug_info_done">டிபக் தகவல் நகலெடுக்கப்பட்டது</string>
+    <string name="dev_open_update_screen">புதுப்பிப்பு திரையைத் திற</string>
+    <string name="dev_open_update_screen_description">உண்மையான வெளியீட்டுக்காக காத்திருக்காமல் Updates திரையை (கவர் பேனர், வெளியீட்டு குறிப்புகள் தளவமைப்பு) முன்னோட்டமிடு</string>
+    <string name="dev_watch_layout_bounds">கடிகார தளவமைப்பு எல்லைகளைக் காட்டு</string>
+    <string name="dev_watch_layout_bounds_description">கடிகாரத்தில் தெரியும் பிளேயர் கூறுகள் மற்றும் தொடு பகுதிகளின் எல்லைகளை வரைந்து காட்டு. கண்டறிதலுக்கான மேலடுக்கு மட்டும்.</string>
+    <string name="dev_watch_player_info">கடிகார பிளேயர் தகவலைக் காட்டு</string>
+    <string name="dev_watch_player_info_description">செயலில் உள்ள முகப்பு, இயக்க நிலை, முன்னேற்றம் மற்றும் ரெண்டர் தகவலை கடிகாரத்தில் மேலடுக்காகக் காட்டு.</string>
+    <string name="pref_reset_default">இயல்புநிலைக்கு மீட்டமை</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">மறைந்திருந்த அருவியை நீங்கள் கண்டுபிடித்துவிட்டீர்கள்.\n\nSvartifoss — கருப்பு பசால்ட் தூண்கள்\nஐஸ்லாந்தின் அருவியைச் சுற்றி நிற்கின்றன,\nகல்லின் வழியே நீர் ஓடுவது போல\nஇசையும் ஓடுகிறது என்பதை நினைவூட்டுகின்றன.\n\n♪ அக்கறையுடன் உருவாக்கப்பட்டது. ♪</string>
+    <string name="easter_egg_ok">மூடு</string>
+    <string name="nav_watch_face">கடிகாரம்</string>
+    <string name="watch_face_header">கடிகார தோற்றம்</string>
+    <string name="nav_controls">கட்டுப்பாடுகள்</string>
+    <string name="nav_actions">செயல்கள்</string>
+    <string name="nav_settings">அமைப்புகள்</string>
+    <string name="controls_header">கட்டுப்பாடுகள்</string>
+    <string name="controls_state_playing">இசை இயங்குகிறது</string>
+    <string name="controls_state_stopped">இயக்கம் இல்லை</string>
+    <string name="controls_playing_description">இசை இயங்கும்போது ஒவ்வொரு உள்ளீடும் என்ன செய்ய வேண்டும் என்பதைத் தேர்வு செய்யுங்கள். இந்த அமைப்பு இயக்கமற்ற நிலைக்கு தனித்துவமானது.</string>
+    <string name="controls_stopped_description">இயக்கம் தொடங்குவதற்கு முன் அல்லது நின்றபின் ஒவ்வொரு உள்ளீடும் என்ன செய்ய வேண்டும் என்பதைத் தேர்வு செய்யுங்கள். இந்த அமைப்பு இயங்கும் நிலையிலிருந்து தனித்துவமானது.</string>
+    <string name="watch_live_preview">முன்னோட்டக் கடிகாரம்</string>
+    <string name="watch_preview_description">தேர்ந்தெடுக்கப்பட்ட கடிகார மேற்பரப்பின் நேரடி முன்னோட்டம். மாற்றங்கள் கடிகாரத்தில் முயற்சிக்கும் முன்பே இங்கே தெரியும்.</string>
+    <string name="watch_preview_expand">மிகப்பெரிய முன்னோட்டத்தைத் திற</string>
+    <string name="watch_preview_fullscreen_dismiss">மூட எங்கே வேண்டுமானாலும் தட்டவும்</string>
+    <string name="watch_section_style">பிளேயர்</string>
+    <string name="watch_section_style_description">பிளேயர் தளவமைப்பையும் அதன் தலைப்பு, நேரம் மற்றும் முன்னேற்றம் எப்படி நடக்க வேண்டும் என்பதையும் தேர்வு செய்யுங்கள்.</string>
+    <string name="watch_section_background">பின்னணி</string>
+    <string name="watch_section_background_description">பிளேயரின் பின்னால் ஆல்பம் கலை, மங்கல், மங்கிச்செல்லுதல் மற்றும் வாசிப்புத்தன்மையை கட்டுப்படுத்துங்கள்.</string>
+    <string name="watch_section_colors">நிறங்கள்</string>
+    <string name="watch_section_colors_description">அடிப்படை, முன்னேற்றம் மற்றும் ஆல்பம் உச்சநிறங்களை அமைத்து, பின்னர் தலைப்பு, கலைஞர், கடிகாரம், ஒலி மற்றும் பேனல் நிறங்களைச் சரிசெய்யுங்கள்.</string>
+    <string name="watch_section_typography">உரை</string>
+    <string name="watch_section_typography_description">எழுத்துருக்களைத் தேர்ந்தெடுத்து தலைப்பு, கலைஞர், கடிகாரம், பயன்பாட்டு ஐகான், துணைத் திரைகள் மற்றும் Flex உரையைச் சரிசெய்யுங்கள்.</string>
+    <string name="watch_section_aod">எப்போதும் இயக்கத்தில்</string>
+    <string name="watch_section_aod_description">குறைந்த மின்சாரத் திரையை அமைத்து அதன் ambient தோற்றத்தை முன்னோட்டத்தில் பாருங்கள்.</string>
+    <string name="watch_section_panels">பேனல்கள்</string>
+    <string name="watch_section_panels_description">ஒலி, seek, விரைவு பேனல் மற்றும் வரிசையின் தோற்றத்தை அமைக்கவும்; ஒரு வரியை கவனத்தில் கொண்டால் அந்த மேற்பரப்பு முன்னோட்டத்தில் திறக்கும்.</string>
+    <string name="watch_section_mini_buttons">மினி பொத்தான்கள்</string>
+    <string name="watch_section_mini_buttons_description">விருப்ப குறுக்குவழி வரிசையின் தோற்றத்தை அமைக்கவும். அதன் செயல்களை Controls இல் ஒதுக்க கீழே “மினி பொத்தான்கள்” என்பதைத் தட்டவும்.</string>
+    <string name="watch_overview_description">நீங்கள் என்ன தனிப்பயனாக்க விரும்புகிறீர்கள் என்பதைத் தேர்வு செய்யுங்கள். முன்னோட்டமும் சேமிக்கப்பட்ட தீமும் ஒவ்வொரு பகுதியிலும் செயலில் இருக்கும்.</string>
+    <string name="watch_back_to_overview">கடிகாரப் பகுதிகளுக்குத் திரும்பு</string>
+    <string name="settings_section_general">பொது</string>
+    <string name="settings_section_general_description">ஆப் தீம், உச்சநிறம் மற்றும் புதுப்பிப்பு விருப்பங்கள்.</string>
+    <string name="settings_section_watch">நடத்தை</string>
+    <string name="settings_section_watch_description">உங்கள் கடிகாரத்தில் crown, தொடுதல், haptics மற்றும் action-menu நடத்தை.</string>
+    <string name="settings_section_automation">தானியக்கம்</string>
+    <string name="settings_section_automation_description">Svartifoss எப்போது தானாகத் திறந்து மூட வேண்டும் என்பதைத் தேர்வு செய்யுங்கள்.</string>
+    <string name="settings_section_apps">பயன்பாடுகள்</string>
+    <string name="settings_section_apps_description">பாடல்வரிகள் மற்றும் metadata-வை கண்டறியவும், streaming குறுக்குவழிகள், queue artwork மற்றும் Android அணுகல்.</string>
+    <string name="settings_section_data">தரவு &amp; ஆதரவு</string>
+    <string name="settings_section_data_description">உங்கள் அமைப்பை காப்புப்பிரதி எடுக்கவும், பதிப்பைச் சரிபார்க்கவும், கண்டறிதல் செய்யவும் அல்லது உதவி பெறவும்.</string>
+    <string name="settings_overview_description">ஒரு பகுதியைத் தேர்வு செய்யுங்கள். தொடர்புடைய விருப்பங்கள் ஒன்றாக இருக்கும்; தேடல் இன்னும் உங்களை எந்த அமைப்பிற்கும் நேராக அழைத்துச் செல்லும்.</string>
+    <string name="settings_back_to_overview">அமைப்புப் பகுதிகளுக்குத் திரும்பு</string>
+    <string name="tutorial_header">Svartifoss-ஐ பயன்படுத்துவது எப்படி</string>
+    <string name="tutorial_intro">Svartifoss உங்கள் கடிகாரத்தை, தொலைபேசியில் இயங்கும் இசைக்கான தொலைக் கட்டுப்பாட்டாக மாற்றுகிறது. உங்கள் மணிக்கட்டிலிருந்தே செய்யக்கூடிய அனைத்தும் இங்கே உள்ளன.</string>
+    <string name="tutorial_taps_title">திரைப் பகுதிகளைத் தட்டவும்</string>
+    <string name="tutorial_taps_desc">கடிகாரத் திரை நான்கு பகுதிகளாகப் பிரிக்கப்பட்டுள்ளது — மேல், கீழ், இடது மற்றும் வலம். ஒரு பகுதியைத் தட்டினால் அதற்கு நீங்கள் ஒதுக்கிய செயல் இயங்கும். இயல்பாக, இடது பகுதி play/pause செய்யும், வலது பகுதி அடுத்த பாடலுக்குச் செல்லும், மேல் மற்றும் கீழ் பகுதிகள் ஒலியளவை மாற்றும்.</string>
+    <string name="tutorial_quick_panel_title">பிரைவு செயல்கள் பேனல்</string>
+    <string name="tutorial_quick_panel_desc">இப்போது இயங்கும் திரையின் நடுப்பகுதியை இருமுறை தட்டினால் நான்கு இடங்களைக் கொண்ட பேனல் திறக்கும் — மூன்று வட்ட பொத்தான்களும் அவற்றின் கீழ் ஒரு அகல வரியும். மாற்றாமல் விட்டால், இயங்கும் ஆப் தனது அறிவிப்பில் காட்டும் பொத்தான்களை இவை பிரதிபலிக்கும்; அதனால் அதன் உண்மையான like, shuffle மற்றும் repeat கட்டுப்பாடுகள் கிடைக்கும். தொலைபேசியின் Actions பகுதியில் எந்தச் செயலையும் ஒரு இடத்திற்கு ஒதுக்கலாம் அல்லது அதை மறைக்க \"எதுவும் இல்லை\" என அமைக்கலாம்.</string>
+    <string name="tutorial_gestures_title">ஒற்றை, இரட்டை &amp; நீண்ட அழுத்தம்</string>
+    <string name="tutorial_gestures_desc">நான்கு விளிம்பு பகுதிகளும் தனித்தனி ஒற்றை, இரட்டை மற்றும் நீண்ட அழுத்த செயல்களை ஆதரிக்கின்றன. நடுப்பகுதியின் ஒற்றை தட்டலும் அமைக்கலாம்; இரட்டைத் தட்டல் எப்போதும் Quick actions-ஐத் திறக்கும், நீண்ட அழுத்தம் Settings → Behavior அமைப்பின்படி முகப்புத் தேர்வு, queue அல்லது எதுவுமில்லாமையைத் திறக்கும்.</string>
+    <string name="tutorial_buttons_title">பொதுப் பொத்தான்கள்</string>
+    <string name="tutorial_buttons_desc">உங்கள் கடிகாரத்தில் பக்கப் பொத்தான்கள் இருந்தால், அவற்றுக்கும் ஒற்றை, இரட்டை மற்றும் நீண்ட அழுத்த செயல்களை ஒதுக்கலாம். திரை அணைந்திருந்தாலும் அவை தொடர்ந்து செயல்படும்.</string>
+    <string name="tutorial_rotary_title">குறுமுனை சுழற்சி</string>
+    <string name="tutorial_rotary_desc">Settings → Behavior → Rotary crown / bezel இல், சுழலும் crown அல்லது bezel ஒலியளவை மாற்ற வேண்டுமா, பாடலுக்குள் seek செய்ய வேண்டுமா அல்லது எதுவும் செய்ய வேண்டாமா என்பதைத் தேர்வு செய்யுங்கள். Crown சுழற்சிகளை பொத்தான்களாக வழங்கும் கடிகாரங்களில் அவற்றை Controls இல் ஒதுக்கவும்.</string>
+    <string name="tutorial_swipe_up_title">மேல், கீழ், இடது &amp; வலம் ஸ்வைப் செய்</string>
+    <string name="tutorial_swipe_up_desc">இப்போது இயங்கும் திரையில் மேல், கீழ் அல்லது இடது ஸ்வைப் ஒவ்வொன்றையும் ஏதாவது ஒன்றைத் திறக்க அமைக்கலாம் — செயல்கள் மெனு, playback queue, பாடல் தாவல், உங்கள் playlists மற்றும் பல. Controls இல் Music playing அல்லது No playback என்பதைத் தேர்ந்தெடுத்து ஒவ்வொரு திசையையும் அமைக்கவும். இயல்பாக மேலே ஸ்வைப் செய்தால் செயல்கள் மெனு திறக்கும்; மற்றவை நீங்கள் ஒதுக்கும் வரை எதுவும் செய்யாது. வலப்புற ஸ்வைப் மாற்றப்படவில்லை — பயன்பாட்டிலிருந்து வெளியேறுவதற்கான பொதுவான Wear OS gesture அது.</string>
+    <string name="tutorial_shortcuts_title">Streaming குறுக்குவழிகள்</string>
+    <string name="tutorial_shortcuts_desc">Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music அல்லது SoundCloud இலிருந்து ஒரு பாடல், ஆல்பம், mix அல்லது playlist இணைப்பைச் சேமித்து, அதை எந்தப் பொத்தான், gesture அல்லது panel slot-க்கும் ஒதுக்கலாம். மிக வேகமான வழி streaming app-இலிருந்து இணைப்பை நேராக Svartifoss-க்கு பகிர்வது; நகலெடுத்த இணைப்பை ஒட்டவோ அல்லது தட்டச்சு செய்யவோ முடியும். கணக்கு அல்லது login தேவையில்லை — கடிகாரம் தொலைபேசியில் playback தொடங்கச் சொல்வதால் shortcut பயன்பாட்டை மட்டும் திறக்காமல் நேரடியாக இசைக்கும்.</string>
+    <string name="tutorial_yt_music_title">YouTube Music குறுக்குவழிகள்</string>
+    <string name="tutorial_yt_music_desc">\"பிடித்த பாடல்களை இயக்கு\", \"பிடித்த பாடல்களை சீரற்ற முறையில் இயக்கு\" அல்லது \"என் playlists\" என்பதை எந்தப் பொத்தான், gesture அல்லது swipe-க்கும் ஒதுக்கி தொலைபேசியைத் தொடாமல் உங்கள் இசைக்குச் செல்லுங்கள். \"தேடல் வரலாறு\" கடிகாரத்தில் செய்த சமீபத்திய தேடல்களை நினைவில் வைத்திருக்கும் — ஒன்றை நீக்க நீண்ட நேரம் அழுத்தவும்.</string>
+    <string name="tutorial_exit_title">வெளியேற ஸ்வைப் செய்</string>
+    <string name="tutorial_exit_desc">பிளேயரிலிருந்து வெளியேற இடது விளிம்பிலிருந்து ஸ்வைப் செய்யுங்கள். வெளியேறும் போது playback தானாக pause ஆகலாம் — அதை Settings இல் இயக்குங்கள்.</string>
+    <string name="tutorial_tile_title">விரைவு-கட்டுப்பாட்டு Tile</string>
+    <string name="tutorial_tile_desc">பயன்பாட்டைத் திறக்காமல் உடனடி play, pause மற்றும் skip கட்டுப்பாட்டுக்கு கடிகார முகப்பை பக்கமாக ஸ்வைப் செய்து Svartifoss Tile-ஐத் திறக்கவும்.</string>
+    <string name="tutorial_complication_title">கடிகார முகப்பு complication</string>
+    <string name="tutorial_complication_desc">தற்போதைய அட்டைப்படத்தை ஒரு பார்வையில் காண Svartifoss ஆல்பம் கலை complication-ஐ உங்கள் கடிகார முகப்பில் சேர்க்கவும். பிளேயரைத் திறக்க அதைத் தட்டவும்.</string>
+    <string name="tutorial_system_title">கணினி ஊடகக் கட்டுப்பாடுகள்</string>
+    <string name="tutorial_system_desc">தற்போதைய பாடல் உங்கள் கடிகாரத்தின் சொந்த ஊடகக் கட்டுப்பாடுகளிலும் சமீபத்திய பயன்பாடுகளிலும் தோன்றும்; எனவே அங்கிருந்தும் playback-ஐ கட்டுப்படுத்தலாம்.</string>
+    <string name="tutorial_tip">குறிப்பு: Controls இல் இரு நிலைகளையும் அமைத்து, பின்னர் Actions இல் மெனுவை ஒழுங்குபடுத்துங்கள்.</string>
+    <string name="navigation_drawer_open">வழிசெலுத்தல் drawer-ஐத் திற</string>
+    <string name="navigation_drawer_close">வழிசெலுத்தல் drawer-ஐ மூடு</string>
+    <string name="action_settings">அமைப்புகள்</string>
+    <string name="action_pause">இடைநிறுத்து</string>
+    <string name="action_play">இயக்கு</string>
+    <string name="action_skip_prev">முந்தைய பாடல்</string>
+    <string name="action_skip_next">அடுத்த பாடல்</string>
+    <string name="action_play_pause">இயக்கு / இடைநிறுத்து</string>
+    <string name="action_stop">நிறுத்து</string>
+    <string name="action_restart">பாடலை மீண்டும் தொடங்கு</string>
+    <string name="action_mute">ஒலியடக்கு / ஒலியை மீட்டு</string>
+    <string name="action_skip_seconds">%1$d விநாடிகள் முன்னேறு</string>
+    <string name="action_reverse_seconds">%1$d விநாடிகள் பின்னேறு</string>
+    <string name="action_like">விருப்பம்</string>
+    <string name="action_shuffle">கலக்கு</string>
+    <string name="action_repeat">மீண்டும் இயக்கு</string>
+    <string name="action_repeat_one">ஒன்றை மீண்டும் இயக்கு</string>
+    <string name="action_search">இசையைத் தேடு</string>
+    <string name="action_open_lyrics">பாடல்வரிகள்</string>
+    <string name="group_playback_controls">இயக்கக் கட்டுப்பாடுகள்</string>
+    <string name="group_streaming_shortcuts">பாடல்கள், ஆல்பங்கள் &amp; playlists</string>
+    <string name="pick_action">செயலைத் தேர்ந்தெடு</string>
+    <string name="action_search_hint">அனைத்து செயல்களையும் தேடு</string>
+    <string name="action_search_empty">இந்தத் தேடலுக்கு பொருந்தும் செயல்கள் இல்லை.</string>
+    <string name="action_opens_more">பல விருப்பங்கள்</string>
+    <string name="action_volume_up">ஒலியளவை அதிகரி</string>
+    <string name="volume_down">ஒலியளவை குறை</string>
+    <string name="group_volume_controls">ஒலியளவு கட்டுப்பாடுகள்</string>
+    <string name="no_watch_detected">கடிகாரம் கண்டறியப்படவில்லை</string>
+    <string name="connection_instructions">இணைப்பைத் தொடங்க கடிகாரத்தில் Svartifoss-ஐத் திறக்கவும்</string>
+    <string name="playing_controls">இயங்கும் போது கட்டுப்பாடுகள்</string>
+    <string name="stopped_controls">இயக்கம் இல்லாதபோது கட்டுப்பாடுகள்</string>
+    <string name="actions_menu">செயல்கள் மெனு</string>
+    <string name="actions_intro">உங்கள் கடிகாரத்தின் இரு செயல் மேற்பரப்புகளையும் playback கட்டுப்பாடுகள், apps அல்லது சேமித்த பாடல்கள், ஆல்பங்கள் மற்றும் playlists கொண்டு அமைக்கவும். விரைவு பேனல் சுருக்கமாக இருக்கும்; கீழுள்ள மெனுவில் நீண்ட வரிசைப்படுத்தப்பட்ட பட்டியலை வைத்திருக்கலாம்.</string>
+    <string name="actions_quick_panel_section">விரைவு பேனல்</string>
+    <string name="actions_watch_menu_section">கடிகார மெனு</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d செயல் · திருத்த தட்டவும் · வரிசை மாற்ற நீண்ட அழுத்தி இழுக்கவும்</item>
+        <item quantity="other">%1$d செயல்கள் · திருத்த தட்டவும் · வரிசை மாற்ற நீண்ட அழுத்தி இழுக்கவும்</item>
+    </plurals>
+    <string name="actions_reorder_description">வரிசைப்படுத்தப்பட்ட செயல்கள் மெனு. இழுக்கத் தொட்டு பிடிக்கவும், accessibility செயல்களில் Move up அல்லது Move down பயன்படுத்தவும், அல்லது விசைப்பலகையில் Ctrl+Up/Down அழுத்தவும்.</string>
+    <string name="actions_move_up">மேலே நகர்த்து</string>
+    <string name="actions_move_down">கீழே நகர்த்து</string>
+    <string name="actions_moved_to_position">%1$s, %3$d இல் %2$d இடத்துக்கு நகர்த்தப்பட்டது.</string>
+    <string name="actions_empty">இன்னும் செயல்கள் இல்லை. முதல் செயலை உருவாக்க சேர்க்கும் பொத்தானைப் பயன்படுத்தவும்.</string>
+    <string name="actions_add">செயலைச் சேர்</string>
+    <string name="on_screen_buttons">தொடு பகுதிகள்</string>
+    <string name="physical_buttons">பொதுப் பொத்தான்கள்</string>
+    <string name="physical_buttons_disconnected">பொதுப் பொத்தான்களை அமைக்க உங்கள் கடிகாரத்தில் Svartifoss-ஐ இணைத்து திறக்கவும். தொடு பகுதிகள், swipes மற்றும் மினி பொத்தான்கள் இப்போது கிடைக்கின்றன.</string>
+    <string name="physical_buttons_unavailable">இந்தக் கடிகாரம் அமைக்கக்கூடிய எந்தப் பொதுப் பொத்தான்களையும் அறிவிக்கவில்லை.</string>
+    <string name="control_assignment_tap">தட்டு: %1$s</string>
+    <string name="control_assignment_hold">நீண்ட அழுத்தம்: %1$s</string>
+    <string name="control_assignment_both">தட்டு: %1$s · நீண்ட அழுத்தம்: %2$s</string>
+    <string name="tap_a_zone_to_configure">ஒரு செயலை ஒதுக்க கடிகாரத்தில் ஒரு பகுதியைத் தட்டவும்</string>
+    <string name="touch_zone_top">மேல் பகுதி</string>
+    <string name="touch_zone_bottom">கீழ் பகுதி</string>
+    <string name="touch_zone_left">இடது பகுதி</string>
+    <string name="touch_zone_right">வலது பகுதி</string>
+    <string name="touch_zone_center">நடுவில் தட்டு</string>
+    <string name="touch_zone_action">%1$s: %2$s. அமைக்கத் தட்டவும்.</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+    <string name="swipe_gestures">ஸ்வைப் சைகைகள்</string>
+    <string name="tap_a_swipe_to_configure">எதைத் திறக்க வேண்டும் என்பதைத் தேர்வு செய்ய ஒரு திசையைத் தட்டவும்</string>
+    <string name="swipe_gesture_up">மேலே ஸ்வைப்</string>
+    <string name="swipe_gesture_down">கீழே ஸ்வைப்</string>
+    <string name="swipe_gesture_left">இடப்புறம் ஸ்வைப்</string>
+    <string name="swipe_gesture_label_up">மேல்</string>
+    <string name="swipe_gesture_label_down">கீழ்</string>
+    <string name="swipe_gesture_label_left">இடது</string>
+    <string name="screen_buttons">மினி பொத்தான்கள்</string>
+    <string name="tap_a_screen_button_to_configure">கடிகாரத் திரையின் கீழ்ப்பகுதி அருகே அதிகபட்சம் மூன்று தெரியும் பொத்தான்கள் — ஒரு செயலை ஒதுக்க இடத்தைத் தட்டவும்</string>
+    <string name="screen_button_1">மினி பொத்தான் 1 (இடது)</string>
+    <string name="screen_button_2">மினி பொத்தான் 2 (நடு)</string>
+    <string name="screen_button_3">மினி பொத்தான் 3 (வலம்)</string>
+    <string name="screen_button_label_1">பொத்தான் 1</string>
+    <string name="screen_button_label_2">பொத்தான் 2</string>
+    <string name="screen_button_label_3">பொத்தான் 3</string>
+    <string name="no_action">செயல் இல்லை</string>
+    <string name="gesture_single_press">ஒருமுறை அழுத்து</string>
+    <string name="gesture_double_press">இருமுறை அழுத்து</string>
+    <string name="gesture_long_press">நீண்ட அழுத்தம்</string>
+    <string name="gesture_swipe_action">செயல்</string>
+    <string name="center_button_quick_panel_note">நடுப்பகுதியை இருமுறை தட்டினால் எப்போதும் Quick actions திறக்கும். நீண்ட அழுத்தம் Settings → Behavior இல் உள்ள தேர்வை இயக்கும். இங்கே நடு தட்டலை ஒதுக்கினாலும் இந்த இரு சைகைகளும் மாறாது.</string>
+    <string name="start_playback">இயக்கத்தைத் தொடங்கு</string>
+    <string name="uninstalled_app">நீக்கப்பட்ட பயன்பாடு</string>
+    <string name="play_app">%1$s ஐ இயக்கு</string>
+    <string name="tasker_task">Tasker Task</string>
+    <string name="icon_selection_title">ஐகான் தேர்வு</string>
+    <string name="icon_selection_gallery">கேலரியிலிருந்து</string>
+    <string name="icon_selection_no_icon_pack">இந்த வசதி உங்கள் செயலுக்கான தனிப்பயன் ஐகானை
+            நிறுவப்பட்ட icon pack-இலிருந்து தேர்வு செய்ய அனுமதிக்கிறது.\n\nதுரதிர்ஷ்டவசமாக, உங்களிடம் எந்த icon pack-மும் நிறுவப்பட்டதாகத் தெரியவில்லை.</string>
+    <string name="icon_selection_no_storage_permission">இந்த வசதி உங்கள் செயலுக்கான தனிப்பயன் ஐகானை
+            நிறுவப்பட்ட icon pack-இலிருந்து தேர்வு செய்ய அனுமதிக்கிறது.\n\nசில icon pack-கள் பயன்பாடுகளுக்கு storage permission தேவைப்படலாம். இந்த வசதியைப் பயன்படுத்த அதை அனுமதிக்க வேண்டும்.</string>
+    <string name="delete">நீக்கு</string>
+    <string name="action_text">செயல் உரை</string>
+    <string name="swap_action">செயலை மாற்றி அமை</string>
+    <string name="open_actions_menu">செயல்கள் மெனுவைத் திற</string>
+    <string name="open_playlist_menu">தற்போதைய playlist-ஐ காட்டு</string>
+    <string name="misc_settings">இதர அமைப்புகள்</string>
+    <string name="category_backup">காப்புப்பிரதி</string>
+    <string name="export_config">காப்புப்பிரதியை ஏற்றுமதி செய்</string>
+    <string name="export_config_description">எதைச் சேர்க்க வேண்டும் என்பதைத் தேர்வு செய்யுங்கள் — பொத்தான்கள், குறுக்குவழிகள், ஐகான்கள், நிறங்கள், தீம்கள் மற்றும் பிற app தரவு</string>
+    <string name="import_config">காப்புப்பிரதியை இறக்குமதி செய்</string>
+    <string name="import_config_description">காப்புப்பிரதி கோப்பில் உள்ள பகுதிகளை மீட்டமைக்கவும்; மற்ற தரவு மாறாது</string>
+    <string name="export_config_done">காப்புப்பிரதி ஏற்றுமதி செய்யப்பட்டது</string>
+    <string name="export_config_failed">காப்புப்பிரதியை ஏற்றுமதி செய்ய முடியவில்லை</string>
+    <string name="import_config_done_title">இறக்குமதி வெற்றிகரமாக முடிந்தது</string>
+    <string name="import_config_done_message">இறக்குமதி செய்யப்பட்ட காப்புப்பிரதியைப் பயன்படுத்த Svartifoss மறுதொடக்கம் செய்ய வேண்டும்.</string>
+    <string name="import_config_failed">காப்புப்பிரதியை இறக்குமதி செய்ய முடியவில்லை — கோப்பு செல்லாததாகவோ பொருந்தாத பதிப்பிலிருந்தோ இருக்கலாம்</string>
+    <string name="action_restart_now">இப்போது மறுதொடக்கம் செய்</string>
+    <string name="category_about">பற்றி</string>
+    <string name="category_music_screen">இசைத் திரை</string>
+    <string name="category_watch_screen">கடிகாரத் திரை</string>
+    <string name="category_mini_buttons">மினி பொத்தான்கள்</string>
+    <string name="category_screen_face">பிளேயர் தோற்றம்</string>
+    <string name="category_wf_screen_behavior">திரை நடத்தை</string>
+    <string name="category_wf_player_progress">முன்னேற்றம், seek &amp; நேரம்</string>
+    <string name="category_album_background">ஆல்பம் பின்னணி</string>
+    <string name="category_music_colors">இசையிலிருந்து நிறங்கள்</string>
+    <string name="category_wf_typography_font">எழுத்துரு முகம்</string>
+    <string name="category_wf_typography_title">தலைப்பு</string>
+    <string name="category_wf_typography_artist">கலைஞர்</string>
+    <string name="category_wf_typography_icon">பயன்பாட்டு ஐகான்</string>
+    <string name="category_wf_typography_flex">Google Sans Flex அச்சுகள்</string>
+    <string name="category_wf_metadata">Metadata முகப்பு உள்ளடக்கம்</string>
+    <string name="category_wf_typography_secondary">மற்ற திரைகளிலுள்ள உரை</string>
+    <string name="category_wf_colors_title">தலைப்பு நிறங்கள்</string>
+    <string name="category_wf_colors_artist">கலைஞர் நிறங்கள்</string>
+    <string name="category_wf_colors_clock">கடிகார நிறங்கள்</string>
+    <string name="setting_wear_font_flex_hint_title">இந்தக் கட்டுப்பாடுகள் பற்றி</string>
+    <string name="setting_wear_flex_axes_hint">இந்தக் கட்டுப்பாடுகள் குறிப்பாக Google Sans Flex-ஐ நுணுக்கமாகச் சரிசெய்கின்றன — அவற்றைப் பயன்படுத்த மேலே அந்த எழுத்துருவைத் தேர்ந்தெடுக்கவும். மேலுள்ள title மற்றும் artist weight/italic ஏற்கனவே இந்த எழுத்துருவின் weight (wght) மற்றும் slant (slnt) அச்சுகளை அமைக்கின்றன; கீழே உள்ள நான்கு கட்டுப்பாடுகள் முழு முகப்புக்கும் பொருந்தும்.</string>
+    <string name="setting_wear_font_flex_width">அகலம்</string>
+    <string name="setting_wear_font_flex_width_description">கிடைமட்ட நீட்டிப்பு, சுருக்கமானதிலிருந்து விரிவானது வரை (25–151). 100 என்பது எழுத்துருவின் இயல்பான அகலம்.</string>
+    <string name="setting_wear_font_flex_optical_size">அளவியல் அளவு</string>
+    <string name="setting_wear_font_flex_optical_size_description">உரையின் செயல்பாட்டு அளவுக்கு ஏற்ப stroke விவரத்தைச் சரிசெய்கிறது (6–144). குறைந்த மதிப்புகள் சிறிய உரைக்கு; அதிக மதிப்புகள் பெரிய display உரைக்கு ஏற்றவை.</string>
+    <string name="setting_wear_font_flex_grade">தரம்</string>
+    <string name="setting_wear_font_flex_grade_description">தளவமைப்பை மாற்றாமல் எடையைச் சிறிது மாற்றுகிறது (0–100) — இருண்ட திரையில் contrast-ஐ மெதுவாக உயர்த்தும் நுணுக்கமான வழி.</string>
+    <string name="setting_wear_font_flex_roundness">வட்டத்தன்மை</string>
+    <string name="setting_wear_font_flex_roundness_description">நட்பான தோற்றத்திற்காக stroke முடிவுகளை கூர்மையான (0) நிலையிலிருந்து முழுமையாக வட்டமான (100) நிலைக்கு கலக்கிறது.</string>
+    <string name="preview_sample_title">தலைப்பு</string>
+    <string name="preview_sample_artist">கலைஞர் பெயர்</string>
+    <string name="preview_sample_lyric_previous">முந்தைய வரி</string>
+    <string name="preview_sample_lyric_current">இப்போது இயங்கும் வரி</string>
+    <string name="preview_sample_lyric_next">அடுத்த வரி</string>
+    <string name="preview_sample_next_title">அடுத்த பாடல்</string>
+    <string name="preview_playback_stopped">நிறுத்தப்பட்டது</string>
+    <string name="preview_verse_previous">முந்தைய வரி</string>
+    <string name="preview_verse_current">இப்போது இயங்கும் வரி</string>
+    <string name="preview_verse_next">அதற்குப் பிறகான வரி</string>
+    <string name="preview_chat_today">இன்று</string>
+    <string name="category_gestures">சைகைகள் &amp; உள்ளீடு</string>
+    <string name="category_watch_navigation">வழிசெலுத்தல் &amp; குறுக்குவழிகள்</string>
+    <string name="category_rotary_input">சுழற்சி உள்ளீடு &amp; நுணுக்க அமைப்பு</string>
+    <string name="category_watch_feedback">பின்னூட்டம் &amp; வெளியேறும் நடத்தை</string>
+    <string name="category_watch_display">கடிகாரத் திரை</string>
+    <string name="setting_wear_keep_screen_on">திரையை இயக்கத்தில் வைத்திரு</string>
+    <string name="setting_wear_keep_screen_on_description">Svartifoss திரை திறந்திருக்கும் போது செயலற்ற timeout காரணமாக கடிகாரத் திரை அணையாமல் தடுக்கிறது. மணிக்கட்டைத் தாழ்த்தினால் கடிகாரம் இன்னும் மங்கும் \u2014 அந்தச் சைகை system-இன் கட்டுப்பாட்டில் உள்ளது. அதிக battery பயன்படுத்தும். இந்த அமைப்பைப் பொருட்படுத்தாமல் lyrics திரை எப்போதும் இயக்கத்தில் இருக்கும்.</string>
+    <string name="setting_lyrics_enabled">பாடல்வரிகளை இணையத்தில் தேடு</string>
+    <string name="setting_lyrics_enabled_description">கடிகாரத்தில் lyrics திரையைத் திறக்கும் போது LRCLIB இலிருந்து ஒத்திசைந்த பாடல்வரிகளை தொலைபேசி பெற அனுமதிக்கவும். பாடல் பெயர், கலைஞர் மற்றும் நீளம் மட்டுமே அனுப்பப்படும்; வேறு எதுவும் இல்லை, disk-இலும் எதுவும் சேமிக்கப்படாது. இதை முடக்கியால் தேடல் நிறுத்தப்பட்டதாக lyrics திரை தெரிவிக்கும்.</string>
+    <string name="setting_overlay_blur_radius">மேலடுக்கு மங்கல்</string>
+    <string name="setting_overlay_blur_radius_description">ஒலி/seek வளையங்கள் மற்றும் விரைவு செயல்கள் பேனலின் பின்னுள்ள frosted பின்னணியின் blur வலிமை (px) — album art பின்னணி blur-இலிருந்து தனித்தது</string>
+    <string name="category_action_list">செயல் பட்டியல்</string>
+    <string name="category_automation">தானியக்கம்</string>
+    <string name="category_idle">எதுவும் இயங்காதபோது</string>
+    <string name="installed_version">நிறுவப்பட்ட பதிப்பு</string>
+    <string name="get_support">ஆதரவு பெற</string>
+    <string name="get_support_description">ஆதரவுக்காக application logs-ஐ developer-க்கு அனுப்பவும்</string>
+    <string name="contact_developer">டெவலப்பரைத் தொடர்புகொள்</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — தொடர்பு</string>
+    <string name="contact_developer_chooser">மின்னஞ்சல் அனுப்பு</string>
+    <string name="contact_developer_no_client">மின்னஞ்சல் பயன்பாடு நிறுவப்படவில்லை. முகவரி clipboard-க்கு நகலெடுக்கப்பட்டது.</string>
+    <string name="about_developer_title">டெவலப்பர் பற்றி</string>
+    <string name="about_developer_dialog_message">Svartifoss ஒரு தனிப்பட்ட திட்டமாகத் தொடங்கியது — இன்று சாத்தியமானவற்றுக்கு ஏற்ப Music Center for Wear-ஐ புதுப்பித்து, அதை நான் தினமும் பயன்படுத்த வேண்டும் என்பதே நோக்கம். அது நன்றாக வந்ததால் அனைவருடனும் பகிர முடிவு செய்தேன். இது எனது முதல் பயன்பாடு; நீங்கள் உருவாக்கிய ஒன்று மற்றவர்களுக்கும் பயனுள்ளதாக இருப்பதைப் பார்ப்பது போல ஒரு உணர்வு வேறு இல்லை.</string>
+    <string name="licenses">திறந்த மூல உரிமங்கள்</string>
+    <string name="setting_always_show_time">நேரத்தை எப்போதும் காட்டு</string>
+    <string name="setting_always_show_time_off_description">தற்போதைய நேரம் ambient mode-இல் மட்டும் காட்டப்படும்</string>
+    <string name="setting_always_show_time_on_description">தற்போதைய நேரம் எப்போதும் காட்டப்படும். மேல் செயல் ஐகான் தெரியாது (அதற்குப் பதில் கடிகாரம் வரும்), ஆனால் செயல் வழக்கம்போல வேலை செய்யும்.</string>
+    <string name="tap_to_force_stop">கட்டுப்பாடுகளை நிறுத்த தட்டவும்</string>
+    <string name="notification_action_stop">நிறுத்து</string>
+    <string name="notification_action_force_stop">கட்டாயமாக நிறுத்து</string>
+    <string name="error_notification_access">அறிவிப்பு அணுகல் இல்லை. தொலைபேசியைப் பாருங்கள்.</string>
+    <string name="error_notifications">பிழை அறிவிப்புகள்</string>
+    <string name="notification_access_notification_title">Svartifoss-க்கு அறிவிப்பு அணுகல் தேவை</string>
+    <string name="notification_access_notification_title_description">சிக்கலைச் சரிசெய்ய இந்த அறிவிப்பைத் தட்டி Svartifoss-ஐச் சரிபார்க்கவும்</string>
+    <string name="error_service_not_enabled">அறிவிப்பு அணுகல் தேவை</string>
+    <string name="error_service_not_enabled_description">கடிகாரத்திலிருந்து இசையைக் கட்டுப்படுத்த Svartifoss-க்கு notification access தேவை — எந்த app இயங்குகிறது என்பதை Android இதன் மூலம் காண அனுமதித்து, play, pause மற்றும் skip கட்டளைகளை அனுப்புகிறது.\n\nSvartifoss உங்கள் அறிவிப்புகளின் உள்ளடக்கத்தை ஒருபோதும் படிக்காது. செயலில் உள்ள media session-ஐ கண்டறிய மட்டுமே இந்த அனுமதியைப் பயன்படுத்துகிறது.\n\n\"அமைப்புகளைத் திற\" என்பதைத் தட்டி, notification access கீழ் Svartifoss-ஐ இயக்கவும்.</string>
+    <string name="action_open_settings">அமைப்புகளைத் திற</string>
+    <string name="settings_search_title">அமைப்புகளைத் தேடு</string>
+    <string name="settings_search_hint">அமைப்புகளைத் தேடு</string>
+    <string name="settings_search_clear">தேடலை அழி</string>
+    <string name="settings_search_prompt">Settings மற்றும் Watch appearance முழுவதிலுமுள்ள ஒவ்வொரு அமைப்பையும் பெயரால் தேடுங்கள்.</string>
+    <string name="settings_search_no_results">அதற்கு பொருந்தும் அமைப்பு இல்லை.</string>
+    <string name="settings_search_prerequisite">இந்த விருப்பம் மற்றொரு தேர்வைச் சார்ந்தது. இதை வெளிப்படுத்த இங்கே காட்டப்பட்ட அமைப்பை மாற்றவும்.</string>
+    <string name="setting_numeric_range_error">%1$d முதல் %2$d வரை ஒரு மதிப்பை உள்ளிடவும்.</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">அனுமதி வழங்க தட்டவும் — அதுவரை playback கட்டுப்பாடு செயலற்றதாக இருக்கும்</string>
+    <string name="no_watch_app_title">உங்கள் கடிகாரத்தில் Svartifoss-ஐ நிறுவவும்</string>
+    <string name="no_watch_app_description">இணைக்கப்பட்ட Wear OS கடிகாரத்தில் Svartifoss தனது watch app-ஐக் கண்டுபிடிக்கவில்லை. தொலைபேசி மற்றும் கடிகார apps ஒன்றாக வேலை செய்கின்றன — watch app இல்லாமல் மணிக்கட்டிலிருந்து playback கட்டுப்பாடு இயங்காது.\n\nSvartifoss Play Store-இல் இல்லை — watch app தனியாக sideload செய்யப்படுகிறது (எ.கா. Wear Installer மூலம்). GitHub releases பக்கத்தைத் திறந்து watch APK பெற \"வெளியீடுகளைப் பார்\" என்பதைத் தட்டவும். இப்போது தான் நிறுவியிருந்தால் sync முடிய ஒரு நிமிடம் கொடுக்கவும்.</string>
+    <string name="no_watch_app_button">வெளியீடுகளைப் பார்</string>
+    <string name="required_permission">தேவையான அனுமதி</string>
+    <string name="setting_pause_on_swipe_exit">ஸ்வைப் செய்து வெளியேறும் போது playback-ஐ pause செய்</string>
+    <string name="setting_pause_on_swipe_exit_description">கடிகாரத்தில் இடப்புற ஸ்வைப் மூலம் Svartifoss-இலிருந்து வெளியேறும் போது எந்த playback-ஐயும் தானாக pause செய்யவும்.\n\nPower button மூலம் வெளியேறுவது பாதிக்கப்படாது; அப்போது auto-pause எப்போதும் நடக்காது.</string>
+    <string name="setting_rotating_crown_off_period">திறை இயக்க ரோட்டரி உள்ளீட்டு தாமதம்</string>
+    <string name="setting_rotating_crown_off_period_description">சில சாதனங்களில் சுழலும் input (எ.கா. rotating crown) மிக உணர்வானதாக இருக்கலாம். தவறான volume மாற்றங்களைத் தடுக்க, திரையை இயக்கிய பின் &lt;b>%1$s milliseconds&lt;/b> வரை rotary input முடக்கப்படும்.</string>
+    <string name="setting_rotary_seek">சுழலும் crown மூலம் seek செய்</string>
+    <string name="setting_rotary_seek_description">இயக்கப்பட்டால் crown-ஐச் சுழற்றுவது volume மாற்றுவதற்குப் பதிலாக தற்போதைய பாடலுக்குள் scrub செய்கிறது. Volume-ஐ திரை அல்லது பொதுப் பொத்தான்களால் இன்னும் மாற்றலாம்.</string>
+    <string name="setting_wear_rotary_action">சுழலும் crown / bezel</string>
+    <string name="wear_rotary_action_volume">ஒலியளவை மாற்று</string>
+    <string name="wear_rotary_action_seek">பாடலுக்குள் seek செய்</string>
+    <string name="wear_rotary_action_off">எதுவும் செய்யாதே</string>
+    <string name="setting_rotating_sensitivity">சுழற்சி உள்ளீட்டு உணர்திறன்</string>
+    <string name="setting_rotating_sensitivity_description">Rotary input உணர்திறன். அதிக எண் என்றால் crown-ஐ அதே அளவு சுழற்றும் போது volume அதிகமாக உயரும். தற்போது &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_disable_ambient_physical_double_click">Ambient நிலையில் பொதுப் பொத்தானின் double click-ஐ முடக்கு</string>
+    <string name="setting_disable_ambient_physical_double_click_description">சில கடிகாரங்களில் button bug காரணமாக ambient mode-இல் பொதுப் பொத்தானை ஒருமுறை அழுத்துவது சில நேரங்களில் double click ஆக பதிவு செய்யப்படுகிறது.\n\nஇது நடந்தால் இந்த விருப்பத்தை இயக்கி ambient mode-இல் double click-ஐ முழுமையாக முடக்கலாம் (எ.கா. இருமுறை அழுத்தினாலும் single click செயல் மட்டும் இயங்கும்). கடிகாரம் செயலில் இருக்கும் போது இருமுறை அழுத்துவது பாதிக்கப்படாது.</string>
+    <string name="setting_haptic_feedback">பதட்ட பின்னூட்டம்</string>
+    <string name="setting_haptic_feedback_description">பொத்தான்களை அழுத்தும் போது கடிகாரத்தை அதிரச் செய்.</string>
+    <string name="setting_auto_start">Svartifoss-ஐ தானாகத் திற</string>
+    <string name="setting_auto_start_description">தொலைபேசியில் இசை playback தொடங்கும் போது கடிகாரத்தில் Svartifoss-ஐ தானாகத் திறக்கவும்.</string>
+    <string name="setting_auto_start_apps_blacklist">தானாகத் தொடங்கும் பயன்பாடுகள்</string>
+    <string name="setting_auto_start_apps_blacklist_description">Svartifoss-ஐ தானாகத் தொடங்கக்கூடிய media apps பட்டியல்</string>
+    <string name="setting_dim_album_art">பிளேயர் நிழலாக்கம்</string>
+    <string name="setting_dim_album_art_description">Artwork மற்றும் player கட்டுப்பாடுகளுக்கு இடையில் பயனர் தேர்ந்தெடுத்த shadow treatment-ஐச் சேர்க்கவும்.</string>
+    <string name="setting_album_art_style">ஆல்பம் கலை பாணி</string>
+    <string name="setting_album_art_style_description">இப்போது இயங்கும் பின்னணி கடிகாரத்தில் எப்படி தோன்ற வேண்டும் என்பதைத் தேர்வு செய்யுங்கள்.</string>
+    <string name="setting_album_art_blur_radius">மங்கல் தீவிரம்</string>
+    <string name="setting_album_art_blur_radius_description">தேர்ந்தெடுத்த பின்னணி blur பயன்படுத்தும் போது முழுத்திரை blur வலிமை. தற்போது &lt;b>%1$s px&lt;/b>.</string>
+    <string name="setting_album_art_dim_strength">மங்கலாக்க வலிமை</string>
+    <string name="setting_album_art_dim_strength_description">உரை வாசிக்க ஏதுவாக album art எவ்வளவு இருண்டதாக வேண்டும். தற்போது &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_player_shading_style">நிழலாக்க பாணி</string>
+    <string name="setting_player_shading_intensity">நிழலாக்க தீவிரம்</string>
+    <string name="setting_player_shading_intensity_description">Shading பின்னணியை எவ்வளவு இருண்டதாக்கும். 100%% முழு வலிமை; அதிக contrast-க்கு 150%% வரை உயர்த்தலாம். தற்போது &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="category_wf_layout_actions">தளவமைப்பு</string>
+    <string name="setting_reset_appearance">இந்த தளவமைப்பை மீட்டமை</string>
+    <string name="setting_reset_appearance_description">இந்த முகப்பின் தோற்றத்தை அதன் அசல் இயல்புநிலைக்கு மீட்டமைக்கவும்</string>
+    <string name="reset_appearance_confirm_title">இந்த தளவமைப்பை மீட்டமைக்கவா?</string>
+    <string name="reset_appearance_confirm_message">இந்த முகப்பின் தோற்ற அமைப்புகள் இயல்புநிலைக்கு திரும்பும். உங்கள் நடத்தை அமைப்புகளும் மற்ற முகப்புகளும் பாதிக்கப்படாது.</string>
+    <string name="reset_appearance_confirm_button">மீட்டமை</string>
+    <string name="reset_appearance_done">தளவமைப்பு இயல்புநிலைக்கு மீட்டமைக்கப்பட்டது</string>
+    <string name="setting_reset_all_faces">அனைத்து முகப்புகளையும் இயல்புநிலைக்கு மீட்டமை</string>
+    <string name="setting_reset_all_faces_description">ஒவ்வொரு உள்ளமைந்த முகப்பின் தோற்றத்தையும் அதன் அசல் இயல்புநிலைக்கு மீட்டமைக்கவும்</string>
+    <string name="reset_all_faces_confirm_title">அனைத்து முகப்புகளையும் மீட்டமைக்கவா?</string>
+    <string name="reset_all_faces_confirm_message">ஒவ்வொரு உள்ளமைந்த முகப்பின் தோற்றமும் அசல் இயல்புநிலைக்கு திரும்பும்; செயலில் உள்ள custom theme முடக்கப்படும். சேமித்த custom themes, நடத்தை அமைப்புகள் மற்றும் தேர்ந்தெடுத்த முகப்பு அப்படியே இருக்கும்.</string>
+    <string name="reset_all_faces_confirm_button">அனைத்தையும் மீட்டமை</string>
+    <string name="reset_all_faces_done">அனைத்து முகப்புகளும் இயல்புநிலைக்கு மீட்டமைக்கப்பட்டன</string>
+    <string name="face_reset_migration_title">உங்கள் கடிகார தோற்றத்தைப் புதுப்பிக்கவும்</string>
+    <string name="face_reset_migration_message">நீங்கள் பழைய பதிப்பிலிருந்து புதுப்பித்துள்ளீர்கள்; அதில் எல்லா watch faces-மும் ஒரே தோற்ற அமைப்புகளைப் பகிர்ந்தன. இப்போது ஒவ்வொரு face-மும் தனித்த அமைப்புகளை நினைவில் வைத்திருக்கும்; எனவே நீங்கள் நேரடியாக customize செய்யாத faces-இல் பழைய அமைப்புகள் பொருந்தாமல் தோன்றலாம். எல்லா faces-ஐ அவற்றின் புதிய defaults-க்கு reset செய்யவோ, முழுமையாக புதிய தொடக்கத்திற்கு app data-வை அழிக்கவோ பரிந்துரைக்கிறோம்.</string>
+    <string name="face_reset_migration_reset_button">அனைத்து முகப்புகளையும் மீட்டமை</string>
+    <string name="face_reset_migration_clear_data_button">பயன்பாட்டு தரவை அழி</string>
+    <string name="setting_player_shading_color">நிழலாக்க நிறம்</string>
+    <string name="setting_wear_shading_custom_color">தனிப்பயன் நிழலாக்க நிறம்</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>கருப்பு</item>
+        <item>ஆல்பம் உச்சநிறம்</item>
+        <item>நிறச்சத்து குறைந்த ஆல்பம்</item>
+        <item>தனிப்பயன் நிறம்</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>பிளேயர் தீமைப் பின்பற்று</item>
+        <item>விளிம்பு vignette</item>
+        <item>விளிம்பு vignette (வலுவானது)</item>
+        <item>விளிம்பு vignette (கனமானது)</item>
+        <item>கீழ் மூலை</item>
+        <item>கீழ் fade</item>
+        <item>தரை மற்றும் கூரை</item>
+        <item>முழுத்திரை வடிகட்டி</item>
+        <item>ஆல்பம் நிற wash</item>
+        <item>இரு-நிற ஆல்பம் gradient</item>
+        <item>பக்கத் திரைகள்</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Ambient ஆல்பம் கலை ஒளியறைப்பு</string>
+    <string name="setting_ambient_album_art_opacity_description">Ambient mode-இல் album art எவ்வளவு தென்படும். தற்போது &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_volume_overlay_timeout">ஒலி/seek மேலடுக்கு timeout</string>
+    <string name="setting_volume_overlay_timeout_description">சரிசெய்த பின் volume மற்றும் seek overlays திரையில் எவ்வளவு நேரம் இருக்கும். தற்போது &lt;b>%1$s ms&lt;/b>.</string>
+    <string name="setting_rotary_deadzone">சுழற்சி dead zone</string>
+    <string name="setting_rotary_deadzone_description">Volume அல்லது seek மாற்றங்கள் செயல்படுவதற்கு முன் தேவையான குறைந்தபட்ச crown இயக்கம். தவறான மாற்றங்களைத் தடுக்க உதவும். தற்போது &lt;b>%1$s&lt;/b>.</string>
+    <string name="category_wear_experience">Wear அனுபவம்</string>
+    <string name="setting_swipe_gestures_hint">ஸ்வைப் சைகைகள்</string>
+    <string name="setting_swipe_gestures_hint_description">மேல்/கீழ்/இடது swipe ஒவ்வொன்றும் எந்தச் செயலையும் திறக்கலாம். Music playing அல்லது No playback க்கு அமைக்க இங்கே தட்டவும். வலது swipe பயன்பாட்டிலிருந்து வெளியேற ஒதுக்கப்பட்டே இருக்கும்.</string>
+    <string name="setting_screen_buttons_hint">மினி பொத்தான்கள்</string>
+    <string name="setting_screen_buttons_hint_description">அதிகபட்சம் மூன்று தெரியும் பொத்தான்கள்; ஒவ்வொன்றுக்கும் tap மற்றும் long-press செயல்கள். Music playing அல்லது No playback க்கு அமைக்க இங்கே தட்டவும்.</string>
+    <string name="dev_screen_buttons_offset">மினி பொத்தான்கள் நிலை</string>
+    <string name="dev_screen_buttons_offset_description">கடிகாரத் திரையின் அடியிலிருந்து மினி பொத்தான்களுக்கான விரும்பிய தூரம் dp-இல் (இயல்பு 42). நீண்ட தலைப்புகளிலிருந்து விலக row இன்னும் தானாகச் சரிசெய்கிறது.</string>
+    <string name="setting_screen_buttons_tilt">சொத்தான் சாய்வு</string>
+    <string name="setting_screen_buttons_tilt_description">பக்கப் பொத்தான்கள் திரையின் வளைவை எவ்வளவு பின்பற்றும். 0 = நேரான வரி; 100 = சாய்ந்த ஐகான்களுடன் முழு வளைவு உயர்வு.</string>
+    <string name="setting_screen_buttons_bg">மினி பொத்தான்கள் பின்னணி</string>
+    <string name="setting_screen_buttons_opacity">மினி பொத்தான்கள் ஒளியறைப்பு</string>
+    <string name="setting_screen_buttons_opacity_description">முழு mini-button குழுவின் opacity (0–100%%). தற்போது &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="quick_panel_row_title">பிரைவு செயல்கள் பேனல்</string>
+    <string name="quick_panel_link_summary">அதைத் திறக்க கடிகாரத் திரையின் நடுப்பகுதியை இருமுறை தட்டவும். Actions இல் அதன் நான்கு slot-களை அமைக்க இங்கே தட்டவும்.</string>
+    <string name="quick_panel_config_hint">இவை கடிகாரத் திரையின் நடுப்பகுதியை இருமுறை தட்டும்போது திறக்கும் panel-இன் பொத்தான்கள். ஒரு row-ஐத் தட்டி அதன் செயலைத் தேர்வு செய்யுங்கள் (\"எதுவும் இல்லை\" அதை மறைக்கும்); இயல்புநிலையை மீட்டெடுக்க நீண்ட நேரம் அழுத்தவும்.</string>
+    <string name="quick_panel_slot_1">பொத்தான் 1</string>
+    <string name="quick_panel_slot_2">பொத்தான் 2</string>
+    <string name="quick_panel_slot_3">பொத்தான் 3</string>
+    <string name="quick_panel_slot_long">பெரிய பொத்தான்</string>
+    <string name="quick_panel_slot_default">%1$s (இயல்பு)</string>
+    <string name="quick_panel_slot_hidden">மறைக்கப்பட்டது</string>
+    <string name="quick_panel_default_like">விருப்பம்</string>
+    <string name="quick_panel_default_shuffle">கலக்கு</string>
+    <string name="quick_panel_default_repeat">மீண்டும் இயக்கு</string>
+    <string name="quick_panel_default_up_next">அடுத்தது</string>
+    <string name="setting_wear_center_long_press_queue">Queue-க்கு நடுவில் நீண்ட அழுத்தம்</string>
+    <string name="setting_wear_center_long_press_queue_description">Playback queue-ஐத் திறக்க இப்போது இயங்கும் திரையின் நடுவில் நீண்ட நேரம் அழுத்தவும்.</string>
+    <string name="setting_wear_center_long_press">நடுவில் நீண்ட அழுத்தம்</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>கடிகார முகப்பை மாற்று</item>
+        <item>Queue-ஐத் திற</item>
+        <item>எதுவும் இல்லை</item>
+    </string-array>
+    <string name="setting_wear_screen_face">அடிப்படை தளவமைப்பு</string>
+    <string name="setting_wear_screen_face_description">இந்த தீம் பயன்படுத்தும் கட்டமைப்பைத் தேர்வு செய்யுங்கள். சேமித்த themes இந்த layout-ஐ தங்களின் font, colors, blur, shading, AOD மற்றும் panels உடன் இணைக்கலாம்.</string>
+    <string name="setting_wear_show_track_title">பாடல் தலைப்பைக் காட்டு</string>
+    <string name="setting_wear_show_track_title_description">பிளேயரில் தற்போதைய பாடல் பெயரை காட்டு</string>
+    <string name="setting_wear_show_track_artist">கலைஞர் பெயரைக் காட்டு</string>
+    <string name="setting_wear_show_track_artist_description">பிளேயரில் தற்போதைய கலைஞரை காட்டு</string>
+    <string name="setting_wear_show_source_icon">இயங்கும் பயன்பாட்டின் ஐகானைக் காட்டு</string>
+    <string name="setting_wear_show_source_icon_description">தற்போது இயங்கும் app-இன் ஐகானை கலைஞருக்கு அருகில் காட்டு. அதன் media notification ஐகான் பயன்படுத்தப்படும். முடக்கப்பட்டால் ஐகான் கடிகாரத்திற்கு ஒருபோதும் அனுப்பப்படாது.</string>
+    <string name="setting_wear_player_controls_visible">கிளேயர் கட்டுப்பாடுகளைக் காட்டு</string>
+    <string name="setting_wear_player_controls_visible_description">Classic, Poster, Studio மற்றும் பிற அமைக்கக்கூடிய layouts-இல் உள்ள built-in பொத்தான்களை அவற்றின் touch targets-ஐ முடக்காமல் காட்டு அல்லது மறை</string>
+    <string name="setting_wear_quadrant_tap_flash">தட்டும் போது ஐகானை ஒளிரச்செய்</string>
+    <string name="setting_wear_quadrant_tap_flash_description">ஒரு மூலைப் பகுதியின் செயல் இயங்கும் போது அதன் ஐகானை சற்றுநேரம் முழு பிரகாசத்தில் ஒளிரச்செய் - குறிப்பாக Hidden திரை தீமில் பயனுள்ளது; அங்கு ஐகான் தெரியாது, எந்த செயல் நடந்தது என்பதற்கான உறுதிப்பாடும் கிடையாது.</string>
+    <string name="setting_wear_internal_progress_visible">தளவமைப்பு முன்னேற்றக் குறியீடு</string>
+    <string name="setting_wear_internal_progress_visible_description">இந்த layout-இல் வடிவமைக்கப்பட்ட கூடுதல் முன்னேற்றக் குறியீட்டை காட்டு. Expressive மற்றும் Material play-button rings அவற்றின் controls-இன் பகுதி; அவை தொடர்ந்து கிடைக்கும்.</string>
+    <string name="setting_wear_edge_progress_visible">விளிம்பு முன்னேற்ற வளைவை காட்டு</string>
+    <string name="setting_wear_edge_progress_visible_description">திரையைச் சுற்றியுள்ள காட்சிப் வளைவை மட்டும் மறை. விளிம்பிலிருந்து seek செய்வது தனி விருப்பமாக இருக்கும்.</string>
+    <string name="setting_wear_edge_seek_enabled">திரை விளிம்பிலிருந்து seek செய்</string>
+    <string name="setting_wear_edge_seek_enabled_description">வளைவு மறைக்கப்பட்டிருந்தாலும் சரியான இடத்துக்குச் செல்ல திரை விளிம்பில் தட்டு அல்லது இழு</string>
+    <string name="setting_wear_screen_theme">கட்டுப்பாட்டு பாணி</string>
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">சமநிலை</string>
+    <string name="wear_screen_theme_default_description">நிலையான வரிசைமைப்பு மற்றும் கட்டுப்பாட்டு அளவுகள்.</string>
+    <string name="wear_screen_theme_minimal">குறைந்தபட்சம்</string>
+    <string name="wear_screen_theme_minimal_description">ஒவ்வொரு செயலையும் தெரியும் மற்றும் பயன்படுத்தக்கூடியதாக வைத்துக் கொண்டு சிறிய, அமைதியான கட்டுப்பாடுகளைப் பயன்படுத்தும்.</string>
+    <string name="wear_screen_theme_compact">சுருக்கமான</string>
+    <string name="wear_screen_theme_compact_description">உங்கள் செயல்களை மாற்றாமல் இன்னும் இறுக்கமான கட்டுப்பாட்டு வடிவத்தைப் பயன்படுத்தும்.</string>
+    <string name="wear_screen_theme_cinema">சினிமா</string>
+    <string name="wear_screen_theme_cinema_description">Artwork-ஐ மாற்றாமல் controls-ஐ மென்மையாக்கும்.</string>
+    <string name="wear_screen_theme_vivid">தெளிவான</string>
+    <string name="wear_screen_theme_vivid_description">பெரிய, மேலும் வெளிப்படையான controls-ஐ பயன்படுத்தும்.</string>
+    <string name="wear_screen_theme_contrast">உயர் மாறுபாடு</string>
+    <string name="wear_screen_theme_contrast_description">எளிதில் வாசிக்க பெரிய controls-ஐ பயன்படுத்தும்.</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">சுருக்கமான, சற்றே மங்கிய controls-ஐ பயன்படுத்தும். இது பின்னணியைத் தானாக இருண்டதாக்காது — அதற்கு background settings-ஐ பயன்படுத்தவும்.</string>
+    <string name="wear_screen_theme_hidden">மறைக்கப்பட்டது</string>
+    <string name="wear_screen_theme_hidden_description">கட்டுப்பாட்டு ஐகான்களை முழுமையாக மறைக்கும். Touch targets செயலில் மற்றும் முழுமையாகப் பயன்படும்.</string>
+    <string name="setting_wear_font">எழுத்துரு முகம்</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">பயன்பாட்டின் இயல்புநிலை எழுத்துரு முகம்.</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">சரிசெய்யக்கூடிய அகலம், optical size, grade மற்றும் roundness கொண்ட Google Sans-இன் variable பதிப்பு — கீழுள்ள axis controls-ஐத் திறக்கும்.</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Android-இன் பாரம்பரிய system typeface.</string>
+    <string name="wear_font_rounded">வட்டமான</string>
+    <string name="wear_font_rounded_description">மென்மையாக வட்டமடைந்த முனைகளுடன் நட்பான நவீன எழுத்துருக்கள்.</string>
+    <string name="wear_font_sans_light">நவீன லேசான</string>
+    <string name="wear_font_sans_light_description">இலகுவான காட்சி எடையுடன் சுத்தமான, காற்றோட்டமான sans-serif.</string>
+    <string name="wear_font_sans_thin">மிக மெல்லிய</string>
+    <string name="wear_font_sans_thin_description">குறைந்தபட்ச player-க்கு மிக இலகுவான display பாணி.</string>
+    <string name="wear_font_sans_medium">நவீன மத்தியம்</string>
+    <string name="wear_font_sans_medium_description">வலுவான, சுருக்கமான strokes கொண்ட தெளிவான sans-serif.</string>
+    <string name="wear_font_sans_black">கனமான</string>
+    <string name="wear_font_sans_black_description">அதிகபட்ச காட்சித் தாக்கம் கொண்ட தடித்த display family.</string>
+    <string name="wear_font_small_caps">சிறு தலைஎழுத்துகள்</string>
+    <string name="wear_font_small_caps_description">தொகுப்பாசிரியர் தோற்றம் கொண்ட சுருக்கமான capital வடிவங்கள்.</string>
+    <string name="wear_font_casual">சாதாரண</string>
+    <string name="wear_font_casual_description">விளையாட்டுத்தனமான கைஎழுத்து system family.</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">வட்டமான geometric sans; Circular பாணியில் ஒரு இலவச (OFL) மாற்று.</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">சுத்தமான geometric sans; Proxima Nova பாணியில் ஒரு இலவச (OFL) மாற்று.</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">அழகிய humanist roman; Optima பாணியில் ஒரு இலவச (OFL) மாற்று.</string>
+    <string name="wear_font_love_letter">Special Elite</string>
+    <string name="wear_font_love_letter_description">பழுதடைந்த analog தோற்றம் கொண்ட distressed typewriter பாணி.</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">பாரம்பரிய serif எழுத்துரு முகம்.</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">தனித்துவமான editorial/terminal தோற்றம் கொண்ட fixed-width serif எழுத்துகள்.</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">நிலையான அகலம், தொழில்நுட்ப தோற்றம்.</string>
+    <string name="wear_font_condensed">Condensed</string>
+    <string name="wear_font_condensed_description">மேலும் உரை பொருந்த குறுகிய எழுத்துருக்கள்.</string>
+    <string name="wear_font_condensed_light">Condensed Light</string>
+    <string name="wear_font_condensed_light_description">நீண்ட தலைப்புகளுக்கான குறுகிய, இலகுவான family.</string>
+    <string name="wear_font_condensed_medium">Condensed Medium</string>
+    <string name="wear_font_condensed_medium_description">வலுவான strokes மற்றும் சிறந்த வாசிப்புத்தன்மை கொண்ட குறுகிய family.</string>
+    <string name="wear_font_cursive">Cursive</string>
+    <string name="wear_font_cursive_description">அலங்கார script எழுத்துரு முகம்.</string>
+    <string name="setting_wear_dynamic_accent">கடிகாரத்தில் dynamic accent</string>
+    <string name="setting_wear_dynamic_accent_description">Album அடிப்படையிலான கடிகார நிறங்களை தற்போதைய cover art-க்கு ஏற்ப மாற்றும். முடக்கப்பட்டால் Album color தேர்வுகள் static theme accent-ஐப் பயன்படுத்தும்.</string>
+    <string name="setting_wear_album_art_fade">மால்பம் கலை fade மாற்றம்</string>
+    <string name="setting_wear_album_art_fade_description">பாடல் மாறும் போது album art-ஐ மென்மையாக fade செய்.</string>
+    <string name="setting_wear_title_text_mode">தலைப்பு உரை நடத்தை</string>
+    <string name="setting_wear_title_text_mode_description">இப்போது இயங்கும் தலைப்பு பொருந்தாதபோது எப்படி நடக்க வேண்டும்: Automatic shrink, wrap மற்றும் scroll-ஐ கலக்கிறது; மற்ற விருப்பங்கள் ஒரு நடத்தையை மட்டும் பயன்படுத்தும்.</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>தானாக (சுருக்கு, பின்னர் wrap, பின்னர் scroll)</item>
+        <item>Scroll (marquee)</item>
+        <item>இரண்டு வரிகளாக wrap செய்</item>
+        <item>மூன்று வரிகளாக wrap செய்</item>
+        <item>ஐந்து வரிகளாக wrap செய்</item>
+        <item>நிலையானது (ஒரு வரி, scroll அல்லது shrink இல்லை)</item>
+        <item>பொருந்துமாறு சுருக்கு</item>
+    </string-array>
+    <string name="setting_wear_artist_color">கலைஞர் உரை நிறம்</string>
+    <string name="setting_wear_artist_custom_color">கலைஞர் தனிப்பயன் நிறம்</string>
+    <string name="setting_wear_artist_custom_color_description">Normal treatment உடன் பயன்படுத்தும் கலைஞர் நிறத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="setting_wear_artist_desaturated">நிறச்சத்து குறைந்த கலைஞர் நிறம்</string>
+    <string name="setting_wear_artist_desaturated_description">Album அடிப்படையிலான கலைஞர் உரை நிறத்தை மென்மையாக்கும் — \"Artist text color\" Album color ஆக இருக்கும் போது மட்டும் பொருந்தும்</string>
+    <string name="setting_wear_progress_color">முன்னேற்ற பட்டை நிறம்</string>
+    <string name="setting_wear_progress_custom_color">முன்னேற்ற பட்டை தனிப்பயன் நிறம்</string>
+    <string name="setting_wear_progress_custom_color_description">Normal treatment உடன் பயன்படுத்தும் progress மற்றும் seek நிறத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="setting_wear_progress_desaturated">நிறச்சத்து குறைந்த முன்னேற்ற பட்டை நிறம்</string>
+    <string name="setting_wear_progress_desaturated_description">Album அடிப்படையிலான progress bar நிறத்தை மென்மையாக்கும் — \"Progress bar color\" Album color ஆக இருக்கும் போது மட்டும் பொருந்தும்</string>
+    <string name="setting_wear_volume_color">ஒலியளவு பட்டை நிறம்</string>
+    <string name="setting_wear_volume_custom_color">தனிப்பயன் ஒலியளவு நிறம்</string>
+    <string name="setting_wear_volume_custom_color_description">Normal treatment உடன் பயன்படுத்தும் volume நிறத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="setting_wear_quick_panel_color">Quick Actions நிறம்</string>
+    <string name="setting_wear_quick_panel_custom_color">Quick Actions தனிப்பயன் நிறம்</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Normal treatment உடன் பயன்படுத்தும் Quick Actions நிறத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="setting_wear_lyrics_color">பாடல்வரிகள் நிறம்</string>
+    <string name="setting_wear_lyrics_custom_color">பாடல்வரிகள் தனிப்பயன் நிறம்</string>
+    <string name="setting_wear_lyrics_custom_color_description">Normal treatment உடன் பயன்படுத்தும் பாடல்வரிகள் நிறத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="setting_wear_queue_color">Queue நிறம்</string>
+    <string name="setting_wear_queue_custom_color">Queue தனிப்பயன் நிறம்</string>
+    <string name="setting_wear_queue_custom_color_description">Normal treatment உடன் பயன்படுத்தும் queue நிறத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="setting_wear_shading_custom_color_description">Shading gradient-க்கு tint தரும் நிறத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string-array name="wear_accent_color_entries">
+        <item>நடுநிலை (நிலையான தீம் நிறம்)</item>
+        <item>ஆல்பம் நிறம்</item>
+        <item>தனிப்பயன் நிறம்</item>
+    </string-array>
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Immersive</item>
+        <item>Depth</item>
+        <item>Carousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Verse</item>
+        <item>Metadata</item>
+        <item>கலைஞர்</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
+        <item>MatejDro</item>
+    </string-array>
+    <string name="setting_wear_expressive_seek_mode">Expressive seek</string>
+    <string name="setting_wear_expressive_seek_mode_description">Expressive face-இல் touch மூலம் track-ஐ எப்படிச் scrub செய்வது. Central ring, play button சுற்றிய ring-ஐ drag செய்யக்கூடியதாக மாற்றும்; Edge ring Classic bezel ring-ஐயும் காட்டும்; None-இல் seek rotary crown மூலம் மட்டும் நடக்கும்.</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>வத்திய வளையம்</item>
+        <item>விளிம்பு வளையம்</item>
+        <item>எதுவும் இல்லை</item>
+    </string-array>
+    <string name="category_wear_aod">எப்போதும் இயக்கத்தில் இருக்கும் திரை</string>
+    <string name="setting_wear_aod_style">எப்போதும் இயக்க பாணி</string>
+    <string name="setting_wear_aod_style_description">கடிகாரம் ambient mode-இல் இருக்கும் போது now-playing திரை எப்படி தெரியும். Follow face தேர்ந்தெடுத்த face-ஐப் பொருந்தும்; Minimal அதிக battery ஆயுளுக்கு தூய கருப்பு பின்னணியில் மங்கிய உரை மட்டும் காட்டும்.</string>
+    <string-array name="wear_aod_style_entries">
+        <item>முகப்பைப் பின்பற்று</item>
+        <item>Classic</item>
+        <item>Expressive (வெளிக்கோடு)</item>
+        <item>Material (வெளிக்கோடு)</item>
+        <item>AMOLED கட்டுப்பாடுகள்</item>
+        <item>Chrono (பெரிய கடிகாரம்)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Carousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Verse</item>
+        <item>கலைஞர்</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
+    </string-array>
+    <string name="setting_wear_aod_color">எப்போதும் இயக்க நிறம்</string>
+    <string-array name="wear_aod_color_entries">
+        <item>வெள்ளை</item>
+        <item>ஆல்பம் நிறம்</item>
+        <item>தனிப்பயன் நிறம்</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>வெள்ளை</item>
+        <item>Dynamic (கடிகாரத்தின் கீழுள்ள பகுதியைப் பொறுத்து)</item>
+        <item>ஆல்பம் நிறம்</item>
+        <item>தனிப்பயன் நிறம்</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>பேனல் பாணியைப் பின்பற்று</item>
+        <item>வெளிப்படையானது (பின்னணி இல்லை)</item>
+        <item>ஆல்பம் உச்சநிறம்</item>
+        <item>அரை வெளிப்படையானது</item>
+        <item>வெள்ளை</item>
+        <item>உறைந்த வெள்ளை</item>
+        <item>கருப்பு</item>
+        <item>Dynamic (ஆல்பம் tone)</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Up Next pill பின்னணி</string>
+    <string name="setting_wear_show_up_next_pill">பிளேயரில் Up Next pill</string>
+    <string name="setting_wear_show_up_next_pill_description">now-playing திரையின் கீழே Up Next pill-ஐ காட்டு. அது mini-buttons row எடுக்கும் இடத்தை நிரப்பும்; எனவே அந்த row தெரியாதபோது மட்டுமே தோன்றும்.</string>
+    <string name="category_wf_clock">கடிகாரம்</string>
+    <string name="setting_wear_clock_color">கடிகார நிறம்</string>
+    <string name="setting_wear_clock_custom_color">கடிகார தனிப்பயன் நிறம்</string>
+    <string name="setting_wear_clock_custom_color_description">Clock color Custom color ஆக இருக்கும் போது பயன்படுத்தும் கடிகார நிறத்தைத் தேர்ந்தெடுக்க தட்டவும்</string>
+    <string name="setting_wear_clock_opacity">கடிகார ஒளியறைப்பு</string>
+    <string name="setting_wear_clock_opacity_description">எப்போதும் காட்டப்படும் கடிகாரத்தின் opacity (10–100%%). தற்போது &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_wear_aod_custom_color">எப்போதும் இயக்க தனிப்பயன் நிறம்</string>
+    <string name="setting_wear_aod_custom_color_description">\"Always-on color\" Custom color ஆக இருக்கும் போது எப்போதும் இயக்க உரை, controls மற்றும் கடிகாரத்திற்கு பயன்படுத்தும் நிறத்தைத் தேர்ந்தெடுக்க தட்டவும்</string>
+    <string name="setting_wear_aod_intensity">எப்போதும் இயக்க பிரகாசம்</string>
+    <string name="setting_wear_aod_intensity_description">எப்போதும் இயக்க திரை எவ்வளவு பிரகாசமாக render ஆகும் (20–100%%). குறைவானது மங்கியதாகவும் குறைந்த battery பயன்படுத்துவதாகவும் இருக்கும். தற்போது &lt;b>%1$s%%&lt;/b>.</string>
+    <string name="setting_wear_aod_show_transport">எப்போதும் இயக்க திரையில் transport பொத்தான்கள்</string>
+    <string name="setting_wear_aod_show_transport_description">ஆதரிக்கப்படும் visual always-on பாணிகளில் outline செய்யப்பட்ட previous/play/next பொத்தான்களை காட்டு. திரை மங்கியிருக்கும்போது அவற்றைத் தட்ட முடியாது; ஆனால் ஒரு தட்டு, பொத்தான் ஏற்கனவே விரலுக்குக் கீழே இருக்கும் நிலையில் கடிகாரத்தை எழுப்பும்.</string>
+    <string name="setting_wear_aod_show_progress">எப்போதும் இயக்க திரையில் முன்னேற்ற வளையம்</string>
+    <string name="setting_wear_aod_show_progress_description">ambient mode-இல் play button சுற்றிய முன்னேற்ற வளையத்தை காட்டு — அதன் நிலை சுமார் ஒரு நிமிடத்திற்கு ஒருமுறை மட்டுமே புதுப்பிக்கும்</string>
+    <string name="setting_wear_aod_show_pills">எப்போதும் இயக்க திரையில் Up Next</string>
+    <string name="setting_wear_aod_show_pills_description">visual always-on பாணிகளின் கீழே நிலையான outline செய்யப்பட்ட Up Next pill-ஐ காட்டு</string>
+    <string name="category_wf_gestures">திரை சைகைகள்</string>
+    <string name="setting_wear_mini_buttons_mode">மினி பொத்தான்களைக் காட்டு</string>
+    <string name="setting_wear_gestures_mode">திரை சைகைகள்</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>எப்போதும்</item>
+        <item>இயங்கும் போது மட்டும்</item>
+        <item>இடைநிறுத்தப்பட்ட போது மட்டும்</item>
+        <item>ஒருபோதும் இல்லை</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">எப்போதும் இயக்க திரையில் ஆல்பம் கலை</string>
+    <string name="setting_wear_aod_show_art_description">ambient mode-இல் மங்கிய album art-ஐத் தொடர்ந்து காட்டும். முடக்கினால் தூய கருப்பு பின்னணி காட்டப்படும்; AMOLED திரைகளில் இது குறிப்பிடத்தக்க battery சேமிக்கும்.</string>
+    <string name="setting_wear_aod_art_treatment">எப்போதும் இயக்க ஆல்பம் கலை பாணி</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>மென்மையான மங்கல்</item>
+        <item>தெளிவான அட்டை</item>
+        <item>ஒற்றைநிற மங்கல்</item>
+        <item>பிளேயர் artwork treatment-ஐப் பின்பற்று</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">எப்போதும் இயக்க திரையில் கடிகாரம்</string>
+    <string name="setting_wear_aod_show_clock_description">கடிகாரம் ambient mode-இல் இருக்கும் போது நேரக் கடிகாரத்தை காட்டு</string>
+    <string name="setting_wear_aod_show_track_info">எப்போதும் இயக்க திரையில் பாடல் தகவல்</string>
+    <string name="setting_wear_aod_show_track_info_description">ambient mode-இல் பாடல் தலைப்பு மற்றும் கலைஞரை காட்டு</string>
+    <string name="category_overlays_queue">மேலடுக்குகள் &amp; queue</string>
+    <string name="category_wf_panel_shared">பகிரப்பட்ட பேனல் தோற்றம்</string>
+    <string name="category_wf_panel_volume">ஒலியளவு பேனல்</string>
+    <string name="category_wf_panel_seek">முன்னேற்றம் &amp; seek பேனல்</string>
+    <string name="category_wf_panel_quick">பிரைவு செயல்கள் பேனல்</string>
+    <string name="category_wf_panel_queue">Queue &amp; பட்டியல்கள்</string>
+    <string name="category_wf_panel_lyrics">பாடல்வரிகள்</string>
+    <string name="category_wf_panel_effects">பேனல் விளைவுகள்</string>
+    <string name="setting_wear_overlay_backdrop_style">பேனல் பின்னணி</string>
+    <string name="wear_backdrop_shared">பகிரப்பட்ட பேனல் தோற்றத்தைப் பின்பற்று</string>
+    <string name="setting_wear_volume_backdrop_style">ஒலியளவு பின்னணி</string>
+    <string name="setting_wear_progress_backdrop_style">முன்னேற்ற பின்னணி</string>
+    <string name="setting_wear_quick_panel_backdrop_style">விரைவு செயல்கள் பின்னணி</string>
+    <string name="setting_wear_queue_backdrop_style">Queue பின்னணி</string>
+    <string name="setting_wear_lyrics_backdrop_style">பாடல்வரிகள் பின்னணி</string>
+    <string name="setting_wear_volume_style">ஒலியளவு பாணி</string>
+    <string name="setting_wear_volume_layout">ஒலியளவு தளவமைப்பு</string>
+    <string name="setting_wear_quick_panel_style">விரைவு பேனல் பாணி</string>
+    <string name="setting_wear_quick_panel_layout">விரைவு பேனல் தளவமைப்பு</string>
+    <string name="setting_wear_quick_panel_source">விரைவு செயல்கள்</string>
+    <string name="setting_wear_quick_panel_source_description">நீங்கள் அமைத்த பொத்தான்களையோ தற்போது இயங்கும் app வழங்கும் செயல்களையோ தேர்வு செய்யுங்கள்.</string>
+    <string name="quick_panel_open_note_title">பேனலைத் திறத்தல்</string>
+    <string name="quick_panel_open_note_description">கடிகாரத்தில் விரைவு செயல்கள் பேனலைத் திறக்க now-playing திரையின் நடுப்பகுதியை இருமுறை தட்டவும்.</string>
+    <string name="preview_current_app_action">தற்போதைய app செயல்</string>
+    <string name="preview_notification_controls">media notification-இலிருந்து ஐகான்</string>
+    <string name="setting_wear_queue_style">Queue பாணி</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">குறுக்குவழி அட்டைகளை பின்னணியாகப் பயன்படுத்து</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Queue style ஒரு Cover வகையாக இருக்கும் போது, பெறப்பட்ட shortcut cover (track, playlist, artist…) கொண்ட quick-panel action row அதன் pill-ஐயும் அந்த art-ஆல் நிரப்பும், Up Next போல. பெறப்பட்ட cover இல்லாத shortcuts (சாதாரண app icon மட்டும்) பாதிக்கப்படாது.</string>
+    <string name="setting_wear_list_row_size">பட்டியல் pill அளவு</string>
+    <string name="setting_wear_list_row_size_description">Queue-இல் முழு அகல rows-இன் உயரம்.</string>
+    <string name="setting_wear_progress_gradient">Palette-ஐ வளையத்தில் கலக்கவும்</string>
+    <string name="setting_wear_progress_gradient_description">பலநிற color treatment (Complementary, Triadic, Analogous, Duotone) பயன்படுத்தும் போது solid ring மூன்று நிறங்களிலும் fade ஆகும். மற்ற இடங்களில் album palette-ஐ வைத்துக்கொண்டு single-color ring வேண்டுமெனில் இதை முடக்கவும்.</string>
+    <string name="setting_wear_progress_style">முன்னேற்ற வளைய பாணி</string>
+    <string name="setting_wear_seek_style">Seek &amp; ஒலியளவு readout பாணி</string>
+    <string name="setting_wear_seek_layout">Seek பேனல் தளவமைப்பு</string>
+    <string name="setting_wear_color_treatment">கடிகார நிற சிகிச்சை</string>
+    <string name="setting_wear_normal_color">சாதாரண நிறம்</string>
+    <string name="setting_wear_normal_color_description">Normal mode-இல் title accents, progress, volume, panels மற்றும் mini-button chrome-க்கு பயன்படுத்தும் ஒரே நிறத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="setting_wear_normal_color_multi">ஒரு நிற palette-ஐப் பயன்படுத்து</string>
+    <string name="setting_wear_normal_color_multi_description">இயக்கப்பட்டால் திரை ஒரு முக்கிய நிறத்துடன் இரண்டு துணை tones பயன்படுத்தும். முடக்கப்பட்டால் எல்லா இடங்களிலும் ஒரே நிறம் பயன்படுத்தப்படும் — album-இன் சொந்த நிறம் அல்லது நீங்கள் தேர்ந்தெடுத்தது.</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>சாதாரண (தேர்ந்தெடுத்த நிறம்)</item>
+        <item>நிறச்சத்து குறைந்தது (மென்மையான album நிறம்)</item>
+        <item>Expressive (முழு album palette)</item>
+        <item>Complementary (album + எதிர் நிறம்)</item>
+        <item>Triadic (மூன்று album சாயல்கள்)</item>
+        <item>Analogous (அண்டை நிறச்சாயல்கள்)</item>
+        <item>Monochrome (ஒரு hue, மூன்று tones)</item>
+        <item>Duotone (இரண்டு album நிறங்கள்)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>கடிகார treatment-ஐப் பின்பற்று</item>
+        <item>சாதாரண (தேர்ந்தெடுத்த நிறம்)</item>
+        <item>நிறச்சத்து குறைந்தது (மென்மையான album நிறம்)</item>
+        <item>Expressive (முழு album palette)</item>
+        <item>Complementary (album + எதிர் நிறம்)</item>
+        <item>Triadic (மூன்று album சாயல்கள்)</item>
+        <item>Analogous (அண்டை நிறச்சாயல்கள்)</item>
+        <item>Monochrome (ஒரு hue, மூன்று tones)</item>
+        <item>Duotone (இரண்டு album நிறங்கள்)</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">தலைப்பு எடை</string>
+    <string name="setting_wear_title_font_italic">சாய்வு தலைப்பு</string>
+    <string name="setting_wear_title_font_scale">தலைப்பு அளவு</string>
+    <string name="setting_wear_title_font_opacity">தலைப்பு opacity</string>
+    <string name="setting_wear_title_font_tracking">தலைப்பு எழுத்து இடைவெளி</string>
+    <string name="setting_wear_title_color">தலைப்பு உரை நிறம்</string>
+    <string name="setting_wear_title_custom_color">தலைப்பு தனிப்பயன் நிறம்</string>
+    <string name="wear_title_color_face_default">Face இயல்பு (வடிவமைக்கப்பட்டபடி)</string>
+    <string name="setting_wear_title_adaptive_contrast">Contrast-க்கு தலைப்பு நிறத்தை மாற்று</string>
+    <string name="setting_wear_title_adaptive_contrast_description">தலைப்பு நிறம் பின்னுள்ள artwork-க்கு மிக அருகிலிருந்தால் அதன் hue-ஐ வைத்துக் கொண்டு பிரகாசமாகவோ இருண்டதாகவோ மாற்றும். தலைப்பு face default-ஐ வைத்திருக்கும் போது இது செயல்படாது.</string>
+    <string name="setting_wear_artist_adaptive_contrast">Contrast-க்கு கலைஞர் நிறத்தை மாற்று</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Album நிறம் பின்னுள்ள artwork-க்கு மிக அருகில் இருந்தால் அதன் hue-ஐ வைத்துக்கொண்டு கலைஞர் வரியை பிரகாசமாகவோ இருண்டதாகவோ மாற்றும். முழு cover அல்ல, அந்த வரி இருக்கும் strip மட்டும் அளவிடப்படும்.</string>
+    <string name="setting_wear_artist_font_weight">கலைஞர் எடை</string>
+    <string name="setting_wear_artist_font_italic">சாய்வு கலைஞர்</string>
+    <string name="setting_wear_artist_font_scale">கலைஞர் அளவு</string>
+    <string name="setting_wear_artist_font_opacity">கலைஞர் opacity</string>
+    <string name="setting_wear_artist_font_tracking">கலைஞர் எழுத்து இடைவெளி</string>
+    <string name="setting_wear_source_icon_scale">பயன்பாட்டு ஐகான் அளவு</string>
+    <string name="setting_wear_source_icon_opacity">பயன்பாட்டு ஐகான் opacity</string>
+    <string name="setting_wear_typography_weight_description">1–1000. 400 என்பது face-இன் இயல்பான எடை; அதிகமானது bold. Google Sans Flex-க்கு இது அந்த font-இன் weight axis ஆகும்</string>
+    <string name="setting_wear_typography_scale_description">Face-இன் சொந்த அளவின் சதவீதம் (1–300). 100 ஒவ்வொரு layout-இன் வடிவமைக்கப்பட்ட அளவை வைத்திருக்கும்</string>
+    <string name="setting_wear_typography_opacity_description">சதவீதம் (20–100). 100 face-இன் சொந்த opacity-ஐ வைத்திருக்கும்</string>
+    <string name="setting_wear_typography_tracking_description">எழுத்துகளுக்கிடையிலான கூடுதல் இடம், em-இன் நூறில் பங்கு (−5 முதல் 20). 0 font-இன் சொந்த spacing-ஐ வைத்திருக்கும்</string>
+    <string name="setting_wear_color_modifier">தொனி</string>
+    <string name="setting_wear_title_color_modifier">தலைப்பு தொனி</string>
+    <string name="setting_wear_artist_color_modifier">கலைஞர் தொனி</string>
+    <string name="setting_wear_clock_color_modifier">கடிகார தொனி</string>
+    <string name="wear_color_modifier_follow">கடிகார தொனியைப் பின்பற்று</string>
+    <string name="setting_wear_color_modifier_description">Palette எவ்வாறு உருவாகிறது என்பதை மாற்றாமல் முழு palette-ஐ சரிசெய்கிறது — எல்லா color treatment-களுடனும் வேலை செய்கிறது</string>
+    <string name="setting_wear_color_hue_shift">நிற மாற்றம்</string>
+    <string name="setting_wear_color_hue_shift_description">Album palette-ஐ color wheel சுற்றி degree-களில் (0–359) சுழற்றும். ஒவ்வொரு treatment-மும் அதன் முக்கிய நிறத்தை album-இன் சொந்த hue-இல் வைத்திருப்பதால் இதுவே அதை மாற்றும். 0 album நிறத்தை அப்படியே பயன்படுத்தும்; fixed Normal color ஒருபோதும் shift ஆகாது.</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>எதுவும் இல்லை</item>
+        <item>துடிப்பான</item>
+        <item>பாஸ்டல்</item>
+        <item>சூடான</item>
+        <item>குளிர்ந்த</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>விளிம்பு வளைவு (இடது)</item>
+        <item>விளிம்பு வளைவு (உயரம்)</item>
+        <item>விளிம்பு வளைவு (வலம்)</item>
+        <item>விளிம்பு வளைவு (மேல்)</item>
+        <item>விளிம்பு வளைவு (கீழ்)</item>
+        <item>முழு வளையம்</item>
+        <item>மைய halo</item>
+        <item>கிடைமட்ட meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>விளிம்பு வளையம்</item>
+        <item>விளிம்பு வளையம் (மெல்லிய)</item>
+        <item>விளிம்பு வளையம் (தடித்த)</item>
+        <item>காலவரிசை</item>
+        <item>பிரிக்கப்பட்ட காலவரிசை</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Metadata முதலில்</item>
+        <item>வளைவு</item>
+        <item>Hero</item>
+        <item>கட்டம்</item>
+        <item>பெயரிடப்பட்ட வரிகள்</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>திடமான</item>
+        <item>கோடிட்ட</item>
+        <item>புள்ளிகள்</item>
+        <item>மிக மெல்லிய கோடு</item>
+        <item>வால்நட்சத்திரம்</item>
+        <item>60 கடிகார புள்ளிகள்</item>
+        <item>60 கடிகார குறிகள்</item>
+        <item>12-மணி பிரிவுகள்</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>எளியது</item>
+        <item>கண்ணாடி pill</item>
+        <item>Expressive pill</item>
+        <item>Material pill</item>
+        <item>வெள்ளை pill</item>
+        <item>மாபெரும்</item>
+        <item>நிலை / மொத்தம்</item>
+        <item>வெள்ளை கண்ணாடி</item>
+        <item>அரை வெளிப்படையான album</item>
+        <item>ஒளிரும் album</item>
+        <item>வெளிக்கோடு</item>
+        <item>திட theme</item>
+        <item>திட album</item>
+        <item>மைக்ரோ</item>
+        <item>நிழல் (chrome இல்லை)</item>
+        <item>அடிக்கோடு</item>
+        <item>மெல்லிய outline</item>
+        <item>மாபெரும் album நிறம்</item>
+        <item>Mono</item>
+        <item>Tonal dark</item>
+        <item>Terminal</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>அமைக்கப்பட்ட பொத்தான்கள்</item>
+        <item>தற்போதைய media app-இலிருந்து</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>பேனல் பாணியைப் பின்பற்று</item>
+        <item>Album blur (acrylic)</item>
+        <item>திட கருப்பு</item>
+        <item>திட album நிறம்</item>
+        <item>கண்ணாடி</item>
+        <item>Album gradient</item>
+        <item>Album duotone</item>
+        <item>Prism</item>
+        <item>Liquid glass</item>
+        <item>Expressive blur</item>
+        <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>கண்ணாடி</item>
+        <item>குறைந்தபட்சம் (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Light</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>வெளிக்கோடு</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>உயர் மாறுபாடு</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Segments</item>
+        <item>Aurora</item>
+        <item>Ink</item>
+        <item>Groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>சுருக்கமான</item>
+        <item>சாதாரண</item>
+        <item>உயரமான</item>
+        <item>மிக உயரமான</item>
+    </string-array>
+    <string-array name="wear_overlay_style_entries">
+        <item>கண்ணாடி</item>
+        <item>குறைந்தபட்சம் (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Light</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>வெளிக்கோடு</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>உயர் மாறுபாடு</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Cover</item>
+        <item>Cover Blur</item>
+        <item>Cover Tonal</item>
+        <item>Cover Square</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_entries">
+        <item>கண்ணாடி</item>
+        <item>Glass White</item>
+        <item>Glass Tonal</item>
+        <item>குறைந்தபட்சம் (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Light</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>வெளிக்கோடு</item>
+        <item>Outline Glass White</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>உயர் மாறுபாடு</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Ghost (chrome இல்லை)</item>
+        <item>Mist</item>
+        <item>Ink</item>
+        <item>Dot</item>
+        <item>Slab</item>
+    </string-array>
+    <string name="setting_wear_paused_hold">Pause செய்த பின் app-ஐ செயலில் வைத்திரு</string>
+    <string name="setting_wear_paused_hold_description">Pause செய்த பின் watch face-இலிருந்து app எவ்வளவு நேரம் அணுகக்கூடியதாக இருக்க வேண்டும்; மீண்டும் திறப்பதற்குப் பதில் மணிக்கட்டை உயர்த்தி resume செய்யலாம். நீண்ட நேர அமைப்புகள் background service-ஐ ஓடவைக்கும்.</string>
+    <string name="wear_paused_hold_off">வைத்திருக்க வேண்டாம்</string>
+    <string name="wear_paused_hold_5">5 நிமிடங்கள்</string>
+    <string name="wear_paused_hold_15">15 நிமிடங்கள்</string>
+    <string name="wear_paused_hold_30">30 நிமிடங்கள்</string>
+    <string name="wear_paused_hold_60">1 மணி நேரம்</string>
+    <string name="wear_paused_hold_always">Playback முடியும் வரை</string>
+    <string name="setting_wear_idle_button_action">எதுவும் இயங்காதபோது பொத்தான்</string>
+    <string name="setting_wear_idle_auto_open">எதுவும் இயங்காதபோது திற</string>
+    <string name="setting_wear_idle_auto_open_description">இசை இயங்காதபோது watch app-ஐத் திறந்தால் நேராக இந்தத் திரைக்கு செல்கிறது.</string>
+    <string name="wear_idle_action_resume">கடைசி app-ஐ மீண்டும் தொடங்கு</string>
+    <string name="wear_idle_action_shortcuts">Playlist குறுக்குவழிகள்</string>
+    <string name="wear_idle_action_menu">செயல் மெனு</string>
+    <string name="wear_idle_action_search">தேடல்</string>
+    <string name="wear_idle_action_queue">சமீபத்தில் இயங்கியது</string>
+    <string name="wear_idle_action_none">பொத்தான் இல்லை</string>
+    <string name="wear_idle_auto_open_none">பிளேயரிலேயே இரு</string>
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+        <item>@string/wear_font_inter</item>
+        <item>@string/wear_font_atkinson_hyperlegible</item>
+        <item>@string/wear_font_rubik</item>
+        <item>@string/wear_font_barlow_condensed</item>
+        <item>@string/wear_font_oswald</item>
+        <item>@string/wear_font_lora</item>
+        <item>@string/wear_font_fraunces</item>
+        <item>@string/wear_font_space_mono</item>
+        <item>@string/wear_font_archivo_black</item>
+        <item>@string/wear_font_dancing_script</item>
+        <item>@string/wear_font_abeezee</item>
+        <item>@string/wear_font_abril_fatface</item>
+        <item>@string/wear_font_acme</item>
+        <item>@string/wear_font_alata</item>
+        <item>@string/wear_font_aleo</item>
+        <item>@string/wear_font_alfa_slab_one</item>
+        <item>@string/wear_font_amatic_sc</item>
+        <item>@string/wear_font_anton</item>
+        <item>@string/wear_font_arvo</item>
+        <item>@string/wear_font_bangers</item>
+        <item>@string/wear_font_black_ops_one</item>
+        <item>@string/wear_font_bree_serif</item>
+        <item>@string/wear_font_cabin</item>
+        <item>@string/wear_font_chivo</item>
+        <item>@string/wear_font_courier_prime</item>
+        <item>@string/wear_font_crete_round</item>
+        <item>@string/wear_font_crimson_pro</item>
+        <item>@string/wear_font_dm_sans</item>
+        <item>@string/wear_font_domine</item>
+        <item>@string/wear_font_exo_2</item>
+        <item>@string/wear_font_fira_code</item>
+        <item>@string/wear_font_inconsolata</item>
+        <item>@string/wear_font_indie_flower</item>
+        <item>@string/wear_font_josefin_sans</item>
+        <item>@string/wear_font_jost</item>
+        <item>@string/wear_font_kanit</item>
+        <item>@string/wear_font_lexend</item>
+        <item>@string/wear_font_lobster</item>
+        <item>@string/wear_font_manrope</item>
+        <item>@string/wear_font_mulish</item>
+        <item>@string/wear_font_nunito</item>
+        <item>@string/wear_font_outfit</item>
+        <item>@string/wear_font_oxanium</item>
+        <item>@string/wear_font_play</item>
+        <item>@string/wear_font_plus_jakarta_sans</item>
+        <item>@string/wear_font_press_start_2p</item>
+        <item>@string/wear_font_quicksand</item>
+        <item>@string/wear_font_rajdhani</item>
+        <item>@string/wear_font_righteous</item>
+        <item>@string/wear_font_roboto_mono</item>
+        <item>@string/wear_font_rowdies</item>
+        <item>@string/wear_font_russo_one</item>
+        <item>@string/wear_font_shrikhand</item>
+        <item>@string/wear_font_silkscreen</item>
+        <item>@string/wear_font_source_code_pro</item>
+        <item>@string/wear_font_staatliches</item>
+        <item>@string/wear_font_teko</item>
+        <item>@string/wear_font_titillium_web</item>
+        <item>@string/wear_font_varela_round</item>
+        <item>@string/wear_font_yanone_kaffeesatz</item>
+        <item>@string/wear_font_zilla_slab</item>
+        <item>@string/wear_font_lato</item>
+        <item>@string/wear_font_merriweather_sans</item>
+        <item>@string/wear_font_source_sans_3</item>
+        <item>@string/wear_font_source_serif_4</item>
+        <item>@string/wear_font_libre_baskerville</item>
+        <item>@string/wear_font_libre_franklin</item>
+        <item>@string/wear_font_ibm_plex_sans</item>
+        <item>@string/wear_font_ibm_plex_mono</item>
+        <item>@string/wear_font_ibm_plex_serif</item>
+        <item>@string/wear_font_work_sans</item>
+        <item>@string/wear_font_karla</item>
+        <item>@string/wear_font_sora</item>
+        <item>@string/wear_font_urbanist</item>
+        <item>@string/wear_font_be_vietnam_pro</item>
+        <item>@string/wear_font_red_hat_display</item>
+        <item>@string/wear_font_red_hat_text</item>
+        <item>@string/wear_font_red_hat_mono</item>
+        <item>@string/wear_font_syne</item>
+        <item>@string/wear_font_instrument_sans</item>
+        <item>@string/wear_font_figtree</item>
+        <item>@string/wear_font_gabarito</item>
+        <item>@string/wear_font_bricolage_grotesque</item>
+        <item>@string/wear_font_dm_serif_display</item>
+        <item>@string/wear_font_cormorant_garamond</item>
+        <item>@string/wear_font_cormorant</item>
+        <item>@string/wear_font_bitter</item>
+        <item>@string/wear_font_spectral</item>
+        <item>@string/wear_font_vollkorn</item>
+        <item>@string/wear_font_raleway</item>
+        <item>@string/wear_font_league_spartan</item>
+        <item>@string/wear_font_saira</item>
+        <item>@string/wear_font_signika</item>
+        <item>@string/wear_font_sofia_sans</item>
+        <item>@string/wear_font_overpass</item>
+        <item>@string/wear_font_public_sans</item>
+        <item>@string/wear_font_questrial</item>
+        <item>@string/wear_font_dosis</item>
+        <item>@string/wear_font_prompt</item>
+        <item>@string/wear_font_unbounded</item>
+        <item>@string/wear_font_recursive</item>
+        <item>@string/wear_font_trispace</item>
+        <item>@string/wear_font_noto_sans</item>
+        <item>@string/wear_font_noto_serif</item>
+        <item>@string/wear_font_noto_sans_mono</item>
+        <item>@string/wear_font_heebo</item>
+        <item>@string/wear_font_hind</item>
+        <item>@string/wear_font_hind_madurai</item>
+        <item>@string/wear_font_kumbh_sans</item>
+        <item>@string/wear_font_alegreya</item>
+        <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+        <item>@string/wear_font_inter_description</item>
+        <item>@string/wear_font_atkinson_hyperlegible_description</item>
+        <item>@string/wear_font_rubik_description</item>
+        <item>@string/wear_font_barlow_condensed_description</item>
+        <item>@string/wear_font_oswald_description</item>
+        <item>@string/wear_font_lora_description</item>
+        <item>@string/wear_font_fraunces_description</item>
+        <item>@string/wear_font_space_mono_description</item>
+        <item>@string/wear_font_archivo_black_description</item>
+        <item>@string/wear_font_dancing_script_description</item>
+        <item>@string/wear_font_abeezee_description</item>
+        <item>@string/wear_font_abril_fatface_description</item>
+        <item>@string/wear_font_acme_description</item>
+        <item>@string/wear_font_alata_description</item>
+        <item>@string/wear_font_aleo_description</item>
+        <item>@string/wear_font_alfa_slab_one_description</item>
+        <item>@string/wear_font_amatic_sc_description</item>
+        <item>@string/wear_font_anton_description</item>
+        <item>@string/wear_font_arvo_description</item>
+        <item>@string/wear_font_bangers_description</item>
+        <item>@string/wear_font_black_ops_one_description</item>
+        <item>@string/wear_font_bree_serif_description</item>
+        <item>@string/wear_font_cabin_description</item>
+        <item>@string/wear_font_chivo_description</item>
+        <item>@string/wear_font_courier_prime_description</item>
+        <item>@string/wear_font_crete_round_description</item>
+        <item>@string/wear_font_crimson_pro_description</item>
+        <item>@string/wear_font_dm_sans_description</item>
+        <item>@string/wear_font_domine_description</item>
+        <item>@string/wear_font_exo_2_description</item>
+        <item>@string/wear_font_fira_code_description</item>
+        <item>@string/wear_font_inconsolata_description</item>
+        <item>@string/wear_font_indie_flower_description</item>
+        <item>@string/wear_font_josefin_sans_description</item>
+        <item>@string/wear_font_jost_description</item>
+        <item>@string/wear_font_kanit_description</item>
+        <item>@string/wear_font_lexend_description</item>
+        <item>@string/wear_font_lobster_description</item>
+        <item>@string/wear_font_manrope_description</item>
+        <item>@string/wear_font_mulish_description</item>
+        <item>@string/wear_font_nunito_description</item>
+        <item>@string/wear_font_outfit_description</item>
+        <item>@string/wear_font_oxanium_description</item>
+        <item>@string/wear_font_play_description</item>
+        <item>@string/wear_font_plus_jakarta_sans_description</item>
+        <item>@string/wear_font_press_start_2p_description</item>
+        <item>@string/wear_font_quicksand_description</item>
+        <item>@string/wear_font_rajdhani_description</item>
+        <item>@string/wear_font_righteous_description</item>
+        <item>@string/wear_font_roboto_mono_description</item>
+        <item>@string/wear_font_rowdies_description</item>
+        <item>@string/wear_font_russo_one_description</item>
+        <item>@string/wear_font_shrikhand_description</item>
+        <item>@string/wear_font_silkscreen_description</item>
+        <item>@string/wear_font_source_code_pro_description</item>
+        <item>@string/wear_font_staatliches_description</item>
+        <item>@string/wear_font_teko_description</item>
+        <item>@string/wear_font_titillium_web_description</item>
+        <item>@string/wear_font_varela_round_description</item>
+        <item>@string/wear_font_yanone_kaffeesatz_description</item>
+        <item>@string/wear_font_zilla_slab_description</item>
+        <item>@string/wear_font_lato_description</item>
+        <item>@string/wear_font_merriweather_sans_description</item>
+        <item>@string/wear_font_source_sans_3_description</item>
+        <item>@string/wear_font_source_serif_4_description</item>
+        <item>@string/wear_font_libre_baskerville_description</item>
+        <item>@string/wear_font_libre_franklin_description</item>
+        <item>@string/wear_font_ibm_plex_sans_description</item>
+        <item>@string/wear_font_ibm_plex_mono_description</item>
+        <item>@string/wear_font_ibm_plex_serif_description</item>
+        <item>@string/wear_font_work_sans_description</item>
+        <item>@string/wear_font_karla_description</item>
+        <item>@string/wear_font_sora_description</item>
+        <item>@string/wear_font_urbanist_description</item>
+        <item>@string/wear_font_be_vietnam_pro_description</item>
+        <item>@string/wear_font_red_hat_display_description</item>
+        <item>@string/wear_font_red_hat_text_description</item>
+        <item>@string/wear_font_red_hat_mono_description</item>
+        <item>@string/wear_font_syne_description</item>
+        <item>@string/wear_font_instrument_sans_description</item>
+        <item>@string/wear_font_figtree_description</item>
+        <item>@string/wear_font_gabarito_description</item>
+        <item>@string/wear_font_bricolage_grotesque_description</item>
+        <item>@string/wear_font_dm_serif_display_description</item>
+        <item>@string/wear_font_cormorant_garamond_description</item>
+        <item>@string/wear_font_cormorant_description</item>
+        <item>@string/wear_font_bitter_description</item>
+        <item>@string/wear_font_spectral_description</item>
+        <item>@string/wear_font_vollkorn_description</item>
+        <item>@string/wear_font_raleway_description</item>
+        <item>@string/wear_font_league_spartan_description</item>
+        <item>@string/wear_font_saira_description</item>
+        <item>@string/wear_font_signika_description</item>
+        <item>@string/wear_font_sofia_sans_description</item>
+        <item>@string/wear_font_overpass_description</item>
+        <item>@string/wear_font_public_sans_description</item>
+        <item>@string/wear_font_questrial_description</item>
+        <item>@string/wear_font_dosis_description</item>
+        <item>@string/wear_font_prompt_description</item>
+        <item>@string/wear_font_unbounded_description</item>
+        <item>@string/wear_font_recursive_description</item>
+        <item>@string/wear_font_trispace_description</item>
+        <item>@string/wear_font_noto_sans_description</item>
+        <item>@string/wear_font_noto_serif_description</item>
+        <item>@string/wear_font_noto_sans_mono_description</item>
+        <item>@string/wear_font_heebo_description</item>
+        <item>@string/wear_font_hind_description</item>
+        <item>@string/wear_font_hind_madurai_description</item>
+        <item>@string/wear_font_kumbh_sans_description</item>
+        <item>@string/wear_font_alegreya_description</item>
+        <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
+    </string-array>
+    <string name="action_open_library">நூலகத்தை உலாவு</string>
+    <string name="library_up">பின்</string>
+    <string name="error_library_unavailable">இந்த app-இல் உலாவக்கூடிய நூலகம் இல்லை</string>
+    <string name="error_library_empty">இங்கே எதுவும் இல்லை</string>
+    <string name="error_library_no_player">முதலில் ஏதாவது இயக்கவும்</string>
+    <string name="setting_wear_carousel_card_shape">Carousel அட்டையின் வடிவம்</string>
+    <string name="setting_wear_note_cover_shape">Note அட்டைப்பட வடிவம்</string>
+    <string name="setting_wear_title_centered">தலைப்பை மையப்படுத்து</string>
+    <string name="setting_wear_title_centered_description">முழு உரைத் தொகுதியை விட திரையின் நடுப்பகுதியில் தலைப்பை நிலைநிறுத்து</string>
+    <string name="player_element_title_centered">மையப்படுத்திய தலைப்பு</string>
+    <string-array name="wear_cover_shape_entries">
+        <item>வட்டமான</item>
+        <item>சதுரம்</item>
+        <item>Squircle</item>
+        <item>வட்டம்</item>
+        <item>Samsung பாணி</item>
+    </string-array>
+    <string name="setting_wear_font_all_screens">எங்கும் எழுத்துருவைப் பயன்படுத்து</string>
+    <string name="setting_wear_font_all_screens_description">தேர்ந்தெடுத்த எழுத்துரு player மட்டும் அல்லாமல் menu, queue மற்றும் Quick actions-க்கும் பயன்படுத்தப்படும். Display மற்றும் கையெழுத்து எழுத்துருக்கள் பட்டியல்களில் படிக்க சிரமமாக இருக்கலாம்.</string>
+    <string name="setting_wear_clock_font">கடிகார எழுத்துரு</string>
+    <string name="wear_clock_font_follow">பாடல் எழுத்துருவைப் பின்பற்று</string>
+    <string name="setting_wear_lyrics_font">பாடல்வரிகள் எழுத்துரு</string>
+    <string name="setting_wear_lyrics_font_description">பாடல் சொற்களுக்கு Lyrics திரை மற்றும் Verse face-இல் பயன்படுத்தப்படும் எழுத்துரு. இங்கே வேறொன்றைத் தேர்ந்தெடுக்காவிட்டால் track எழுத்துருவைப் பின்பற்றும்.</string>
+    <string name="wear_lyrics_font_follow">பாடல் எழுத்துருவைப் பின்பற்று</string>
+    <string name="setting_wear_clock_font_weight">கடிகார எழுத்துரு தடிமன்</string>
+    <string name="setting_wear_clock_font_italic">சாய்வு கடிகாரம்</string>
+    <string name="setting_wear_clock_font_scale">கடிகார அளவு</string>
+    <string name="setting_wear_clock_font_tracking">கடிகார எழுத்து இடைவெளி</string>
+    <string name="setting_wear_clock_adaptive_contrast">மாறுபாட்டிற்காக கடிகார நிறத்தை மாற்று</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Album நிறம் பின்னுள்ள artwork-க்கு மிகவும் அருகில் இருந்தால், அதன் hue-ஐ வைத்துக்கொண்டு கடிகாரத்தை பிரகாசமாகவோ இருண்டதாகவோ மாற்றும். கடிகார நிறம் Album color ஆக இருக்கும் போது மட்டுமே இது செயல்படும்.</string>
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">சுருக்கமான முழுப் பெரிய எழுத்து display — poster போல, நீளமான தலைப்புகளுக்கு பொருந்தும்</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">உயர் மாறுபாடு கொண்ட editorial serif — இதழ் போன்ற உணர்வு</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">விசித்திரமான விவரங்களுடன் தொழில்நுட்ப geometric sans</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">சதுரத் தன்மை கொண்ட sci-fi display — துணிச்சலான மற்றும் எதிர்கால பாணி</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">கையெழுத்து script — சாதாரணமும் தனிப்பட்டதும்</string>
+    <string name="setting_wear_title_shadow_style">தலைப்பு நிழல்</string>
+    <string name="setting_wear_title_shadow_color">தலைப்பு நிழல் நிறம்</string>
+    <string name="setting_wear_title_shadow_custom_color">தனிப்பயன் தலைப்பு நிழல் நிறம்</string>
+    <string name="setting_wear_title_shadow_strength">தலைப்பு நிழல் தீவிரம்</string>
+    <string name="setting_wear_artist_shadow_style">கலைஞர் நிழல்</string>
+    <string name="setting_wear_artist_shadow_color">கலைஞர் நிழல் நிறம்</string>
+    <string name="setting_wear_artist_shadow_custom_color">தனிப்பயன் கலைஞர் நிழல் நிறம்</string>
+    <string name="setting_wear_artist_shadow_strength">கலைஞர் நிழல் தீவிரம்</string>
+    <string name="setting_wear_text_shadow_strength_description">தேர்ந்தெடுத்த நிழலின் சொந்த அளவு மற்றும் ஆழத்தின் சதவீதம்.</string>
+    <string-array name="wear_text_shadow_style_entries">
+        <item>எதுவும் இல்லை</item>
+        <item>மென்மையான</item>
+        <item>கடினமான</item>
+        <item>ஒளிர்வு</item>
+        <item>உயர்த்தல்</item>
+        <item>மென்மையான</item>
+    </string-array>
+    <string-array name="wear_text_shadow_color_entries">
+        <item>கருப்பு</item>
+        <item>ஆல்பம் நிறம்</item>
+        <item>வெள்ளை</item>
+        <item>தனிப்பயன்</item>
+    </string-array>
+    <string name="setting_wear_title_outline_style">தலைப்பு வெளிக்கோடு</string>
+    <string name="setting_wear_title_outline_color">தலைப்பு வெளிக்கோடு நிறம்</string>
+    <string name="setting_wear_title_outline_custom_color">தனிப்பயன் தலைப்பு வெளிக்கோடு நிறம்</string>
+    <string name="setting_wear_artist_outline_style">கலைஞர் வெளிக்கோடு</string>
+    <string name="setting_wear_artist_outline_color">கலைஞர் வெளிக்கோடு நிறம்</string>
+    <string name="setting_wear_artist_outline_custom_color">தனிப்பயன் கலைஞர் வெளிக்கோடு நிறம்</string>
+    <string-array name="wear_text_outline_style_entries">
+        <item>எதுவும் இல்லை</item>
+        <item>மிக மெல்லிய கோடு</item>
+        <item>மெல்லிய</item>
+        <item>நடுத்தரம்</item>
+        <item>தடித்த</item>
+    </string-array>
+    <string name="setting_wear_title_text_bg_style">தலைப்பு பின்னணி</string>
+    <string name="setting_wear_title_text_bg_color">தலைப்பு பின்னணி நிறம்</string>
+    <string name="setting_wear_title_text_bg_custom_color">தனிப்பயன் தலைப்பு பின்னணி நிறம்</string>
+    <string name="setting_wear_title_text_bg_opacity">தலைப்பு பின்னணி ஒளிபுகாமை</string>
+    <string name="setting_wear_artist_text_bg_style">கலைஞர் பின்னணி</string>
+    <string name="setting_wear_artist_text_bg_color">கலைஞர் பின்னணி நிறம்</string>
+    <string name="setting_wear_artist_text_bg_custom_color">தனிப்பயன் கலைஞர் பின்னணி நிறம்</string>
+    <string name="setting_wear_artist_text_bg_opacity">கலைஞர் பின்னணி ஒளிபுகாமை</string>
+    <string name="setting_wear_text_bg_opacity_description">தேர்ந்தெடுத்த பின்னணியின் சொந்த ஒளிபுகாமையின் சதவீதம்.</string>
+    <string-array name="wear_text_backdrop_style_entries">
+        <item>எதுவும் இல்லை</item>
+        <item>Highlight</item>
+        <item>மென்மையான</item>
+        <item>Block</item>
+    </string-array>
+    <string name="setting_wear_seek_marker">நிலை குறி</string>
+    <string name="setting_wear_seek_marker_description">பாடல் எந்த இடத்தில் உள்ளது என்பதைக் குறிக்கும் progress ring-இன் குறுகிய கோடு திரையில் எப்போது இருக்கும்.</string>
+    <string-array name="wear_seek_marker_entries">
+        <item>எப்போதும்</item>
+        <item>Seek செய்யும்போது மட்டும்</item>
+        <item>Seek செய்யும் போதும் pause-இலும்</item>
+        <item>இடைநிறுத்தப்பட்ட போது மட்டும்</item>
+    </string-array>
+    <string name="setting_wear_track_time_mode">பாடல் நேரக் காட்சி</string>
+    <string name="setting_wear_track_time_mode_description">Now-playing திரையில் பாடலின் நிலை (எ.கா. 1:23 / 3:45) எப்போது காட்டப்பட வேண்டும்.</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>எப்போதும்</item>
+        <item>இயங்கும் போது மட்டும்</item>
+        <item>இடைநிறுத்தப்பட்ட போது மட்டும்</item>
+        <item>ஒருபோதும் இல்லை</item>
+    </string-array>
+    <string name="setting_screen_buttons_curve">சிறு பொத்தான்களின் வளைவு</string>
+    <string name="setting_screen_buttons_curve_description">சிறு பொத்தான்களுக்கான வளைவு பாணியைத் தேர்ந்தெடுக்கவும்: தட்டையான, வளைவு, மென்மையான, வளைந்த.</string>
+    <string name="setting_screen_buttons_shape">சிறு பொத்தான்களின் வடிவம்</string>
+    <string name="setting_screen_buttons_shape_description">சிறு பொத்தான்களின் வடிவம் மற்றும் layout வடிவத்தைத் தேர்ந்தெடுக்கவும்.</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Pill (இயல்புநிலை)</item>
+        <item>வட்டம்</item>
+        <item>சதுரம்</item>
+        <item>வட்டமான சதுரம் (மென்மையான)</item>
+        <item>வட்டமான சதுரம் (நடுத்தரம்)</item>
+        <item>Squircle</item>
+        <item>இலை</item>
+        <item>துளி</item>
+        <item>Pill (அகல சிறியது)</item>
+        <item>Pill (அகல நடுத்தரம்)</item>
+        <item>Pill (அகல பெரியது)</item>
+        <item>Pill (அகல மிகப்பெரியது)</item>
+        <item>வட்டமான செவ்வகம் (சிறியது)</item>
+        <item>வட்டமான செவ்வகம் (நடுத்தரம்)</item>
+        <item>வட்டமான செவ்வகம் (பெரியது)</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>தட்டையான</item>
+        <item>வளைவு</item>
+        <item>மெதுவான வளைவு</item>
+        <item>மென்மையான வளைவு</item>
+        <item>நடுத்தர வளைவு</item>
+        <item>வளைந்த</item>
+        <item>மிகுந்த வளைவு</item>
+        <item>விளிம்புகளுக்கு விரிவு</item>
+        <item>இடது விளிம்பு</item>
+        <item>வலது விளிம்பு</item>
+        <item>இரு விளிம்புகளும்</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>இயல்புநிலை பின்னணி</item>
+        <item>கண்ணாடி (ஒரேமாதிரி)</item>
+        <item>கண்ணாடி (இலகு)</item>
+        <item>ஒளிபுகும் Album</item>
+        <item>ஒளிபுகும் Album Exp</item>
+        <item>Album ஒளிர்வு</item>
+        <item>Glow Exp</item>
+        <item>திட Theme</item>
+        <item>திட Album</item>
+        <item>திட Exp Album</item>
+        <item>வெளிக்கோடு</item>
+        <item>Outline Exp Album</item>
+        <item>Icon மட்டும் (வெளிப்படையான)</item>
+        <item>Icon Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_color_entries">
+        <item>நடுநிலை</item>
+        <item>ஆல்பம் நிறம்</item>
+        <item>தனிப்பயன் நிறம்</item>
+    </string-array>
+    <string-array name="album_art_style_entries">
+        <item>முழு cover</item>
+        <item>மங்கலான பின்னணி</item>
+        <item>உறைந்த விளிம்புகள்</item>
+        <item>சதுரம் (கூர்மையான மூலைகள்)</item>
+        <item>சதுரம் (மென்மையான மூலைகள்)</item>
+        <item>சதுரம் (வட்டமான மூலைகள்)</item>
+        <item>கருப்பு &amp; வெள்ளை</item>
+        <item>மங்கலான கருப்பு &amp; வெள்ளை</item>
+        <item>Expressive blur</item>
+        <item>Expressive</item>
+        <item>Material tonal gradient</item>
+        <item>Poster cover</item>
+        <item>Studio gradient</item>
+        <item>Vinyl radial glow</item>
+        <item>Halo glow</item>
+        <item>Aurora ribbons</item>
+        <item>Spectrum gradient</item>
+        <item>Corona sweep</item>
+        <item>Dusk fade</item>
+        <item>Bloom</item>
+        <item>Horizon fade</item>
+        <item>Ember glow</item>
+        <item>Eclipse AMOLED கருப்பு</item>
+        <item>மறைக்கப்பட்டது (திட கருப்பு)</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+    <string-array name="auto_start_modes_descriptions">
+        <item>முடக்கப்பட்டது</item>
+        <item>இசை watchface icon-ஐக் காட்டு (Wear 3.0 மட்டும்)</item>
+        <item>Svartifoss-ஐத் திற</item>
+    </string-array>
+    <string name="setting_close_timeout">மூடும் நேரவரம்பு</string>
+    <string name="setting_close_timeout_description">இசை இயங்காதபோது &lt;b>%1$s seconds&lt;/b> கழித்து Svartifoss தானாக மூடப்படும். நேரவரம்பு 0 விநாடியாக இருந்தால் இந்த அம்சம் முடக்கப்படும். பேட்டரியைச் சேமிக்க இந்த நேரம் எப்போதும் துல்லியமாக இருக்காது; மூடுவதில் ஒரு நிமிடம் வரை தாமதம் இருக்கலாம்.</string>
+    <string name="setting_wear_close_on_idle">\"Nothing playing\" இல் மூடு</string>
+    <string name="setting_wear_close_on_idle_description">கடிகார app செயலற்ற \"Nothing playing\" திரையை அடைந்த சுமார் ஒரு நிமிடத்திற்குப் பிறகு தானாக மூடப்படும், அதனால் அது அங்கே நீடிக்காது. மேலுள்ள close timeout-இல் இருந்து இது தனித்தது; அது pause செய்யப்பட்ட பாடலைக் கையாளும்.</string>
+    <string name="category_notifications">அறிவிப்பு popup</string>
+    <string name="setting_enable_notifications">அறிவிப்பு popup-ஐக் காட்டு</string>
+    <string name="setting_enable_notifications_description">இந்த அம்சத்திற்கு அறிவிப்புகளை நிர்வகிக்க மற்றொரு app (Vibration Center for Wear) தேவை.\n\nVibration Center கடிகாரத்தை அதிரச் செய்யும் போதெல்லாம் Svartifoss அறிவிப்பு உரையை popup ஆகக் காட்டும்; Svartifoss-ஐ விட்டு வெளியேறாமல் அதை விரைவாகப் பார்க்கலாம்.</string>
+    <string name="setting_notification_timeout">அறிவிப்பு popup நேரவரம்பு</string>
+    <string name="setting_notification_timeout_description">அறிவிப்பு popup &lt;b>%1$s seconds&lt;/b> கழித்து தானாக மூடப்படும். தானாக மூடுவதை முடக்க 0 உள்ளிடவும்.</string>
+    <string name="app_required">App தேவை</string>
+    <string name="vibration_center_required_description">இந்த அம்சத்தைப் பயன்படுத்த மற்றொரு (இலவச) app-ஐ நிறுவ வேண்டும்: Vibration Center for Wear.</string>
+    <string name="open_play_store">Play Store-ஐத் திற</string>
+    <string name="error_no_notification_service_support">மன்னிக்கவும், உங்கள் சாதனம் அறிவிப்பு சேவைகளை ஆதரிக்கவில்லை என்று தெரிகிறது</string>
+    <string name="setting_always_select_center_action">எப்போதும் மையச் செயலைத் தேர்ந்தெடு</string>
+    <string name="setting_always_select_center_action_description">இதை இயக்கினால் action list-இல் எங்கு தட்டினாலும், நீங்கள் தட்டியதைப் பொருட்படுத்தாமல் மைய (highlight செய்யப்பட்ட) விருப்பமே தேர்ந்தெடுக்கப்படும்.</string>
+    <string name="change_icon">Icon-ஐ மாற்று</string>
+    <string name="please_wait">தயவுசெய்து காத்திருக்கவும்</string>
+    <string name="error_playlist_not_supported">இந்த media app ஆதரிக்கவில்லை</string>
+    <string name="error_search_no_results">முடிவுகள் எதுவும் இல்லை</string>
+    <string name="seconds_to_skip">முன்னே தாவ வேண்டிய விநாடிகள்:</string>
+    <string name="seconds_to_reverse">பின்செல்ல வேண்டிய விநாடிகள்:</string>
+    <string name="setting_dynamic_accent_color">Dynamic accent நிறம்</string>
+    <string name="setting_dynamic_accent_color_description">இதை இயக்கினால் accent நிறம் (SeekBar, செயலில் உள்ள queue item) தற்போதைய album artwork-இன் ஆதிக்க நிறத்துக்கு தானாக ஏற்படும்.</string>
+    <string name="setting_desaturated_color">நிறச்செறிவு குறைந்த நிறம்</string>
+    <string name="setting_desaturated_color_description">செயலில் உள்ள theme-க்கு ஏற்ப அதிக வாசிப்புத்திறன் மற்றும் மாறுபாட்டை உறுதிப்படுத்த எடுக்கப்பட்ட நிறத்தின் saturation மற்றும் brightness-ஐச் சரிசெய்கிறது.</string>
+    <string name="queue_header">வரிசை இயக்கம்</string>
+    <string name="queue_unavailable">Queue கிடைக்கவில்லை</string>
+    <string name="setting_custom_accent_color">Accent நிறம்</string>
+    <string name="setting_custom_accent_color_description">App interface-க்கு தனிப்பயன் accent நிறத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="setting_mini_player">Mini player</string>
+    <string name="setting_mini_player_description">Media செயலில் இருக்கும் போது கீழ் navigation-க்கு மேல் நிரந்தர now-playing பட்டியை காட்டும். இயல்பாக இயக்கப்பட்டுள்ளது; அந்த இடத்தை மீட்க முடக்கவும்.</string>
+    <string name="color_picker_title">Accent நிறத்தைத் தேர்ந்தெடு</string>
+    <string name="color_picker_reset">மீட்டமை</string>
+    <string name="color_picker_apply">பயன்படுத்து</string>
+    <string name="color_picker_recent">சமீபத்தில் பயன்படுத்தியது</string>
+    <string name="color_picker_copied">நிறக் குறியீடு நகலெடுக்கப்பட்டது</string>
+    <string name="color_picker_default">இயல்புநிலை</string>
+    <string name="color_picker_invalid">தவறான நிறக் குறியீடு</string>
+    <string name="color_picker_current">தற்போதையது: %s</string>
+    <string name="drawer_version_format">பதிப்பு %1$s</string>
+    <string name="drawer_tagline">Wear OS-க்கான Companion App</string>
+    <string name="drawer_about_heading">பற்றி</string>
+    <string name="drawer_about_summary">உங்கள் Wear OS கடிகாரத்திலிருந்து தொலைபேசியில் உள்ள இசையை கட்டுப்படுத்த Svartifoss உதவுகிறது — உங்கள் சாதனத்துக்கேற்ப முழுமையாக தனிப்பயனாக்கக்கூடிய remote உடன்.</string>
+    <string name="drawer_name_heading">பெயர்</string>
+    <string name="drawer_name_meaning">Icelandic மொழியில் Svartifoss என்பது “Black Falls” என்று பொருள் — Vatnajökull National Park-இல் கருமையான basalt தூண்கள் குறுகிய அருவியைச் சுற்றி நிற்கும் அந்த நீர்வீழ்ச்சியின் பெயர். கல்லின் மேல் ஓடும் நீரைப் போல இசை app வழியாக ஓடுகிறது.</string>
+    <string name="drawer_sync_heading">ஒத்திசைவு</string>
+    <string name="drawer_sync_summary">கடிகார settings இங்கே தொலைபேசியில் அமைக்கப்பட்டு இணைக்கப்பட்ட கடிகாரத்துடன் தானாக sync செய்யப்படும்.</string>
+    <string name="drawer_support_heading">ஆதரவு</string>
+    <string name="drawer_support_summary">Svartifoss இலவசமும் open source-உம் ஆகும் - உங்களுக்கு பயனுள்ளதாக இருந்தால் எனக்கு ஒரு coffee வாங்கித் தாருங்கள் :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Cover art-ஐப் பதிவிறக்கு</string>
+    <string name="album_art_saved">Cover art gallery-இல் சேமிக்கப்பட்டது</string>
+    <string name="album_art_save_error">Cover art-ஐச் சேமிக்க முடியவில்லை</string>
+    <string name="action_play_liked_songs">விரும்பிய பாடல்களை இயக்கு (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">விரும்பிய பாடல்களை இயக்கு (Spotify)</string>
+    <string name="action_play_soundcloud_likes">விரும்பிய track-களை இயக்கு (SoundCloud)</string>
+    <string name="action_my_playlists">Streaming குறுக்குவழிகள்</string>
+    <string name="action_play_specific_playlist">Streaming shortcut-ஐத் திற</string>
+    <string name="action_choose_or_add_streaming_shortcut">Streaming shortcut-ஐத் தேர்ந்தெடுக்கவும் அல்லது சேர்க்கவும்</string>
+    <string name="action_show_streaming_library">சேமித்த அனைத்து shortcut-களையும் காட்டு</string>
+    <string name="playlist_shortcut_pick_title">Shortcut-ஐத் தேர்ந்தெடு</string>
+    <string name="playlist_shortcut_pick_empty">இன்னும் streaming shortcut எதுவும் சேமிக்கப்படவில்லை — கீழே ஒன்றைச் சேர்த்து, அதைத் தேர்ந்தெடுக்க தட்டவும்</string>
+    <string name="playlist_shortcuts_empty">இன்னும் streaming shortcut இல்லை — phone app settings-இல் சேர்க்கவும்</string>
+    <string name="setting_playlist_shortcuts">Streaming குறுக்குவழிகள்</string>
+    <string name="setting_playlist_shortcuts_description">கடிகாரத்திலிருந்து share link-களை YouTube Music, Spotify மற்றும் பிற streaming apps-இல் திறக்கவும்</string>
+    <string name="setting_shortcut_artwork">Shortcut artwork-ஐ online-இல் பெறு</string>
+    <string name="setting_shortcut_artwork_description">சேவை public preview artwork வழங்கினால் thumbnail-ஐப் பதிவிறக்கும்; அது phone list, watch menu மற்றும் ஒதுக்கப்பட்ட button-களில் காட்டப்படும். கிடைக்கும் ஒவ்வொரு thumbnail-மும் ஒருமுறை மட்டுமே பெறப்படும்; public share link மட்டும் அனுப்பப்படும். இயல்பாக முடக்கப்பட்டுள்ளது.</string>
+    <string name="setting_queue_local_artwork">Queue cover-கள் உங்கள் library-இலிருந்து</string>
+    <string name="setting_queue_local_artwork_description">Local music player-கள் queue cover-களை library reference-களாக வெளியிடுகின்றன. அவை watch queue-இல் காட்ட media access வழங்கவும். இணைய அணுகல் பயன்படுத்தப்படாது.</string>
+    <string name="setting_queue_local_artwork_granted">Media access வழங்கப்பட்டது — local queue cover-கள் காட்டப்படும்</string>
+    <string name="setting_queue_local_artwork_denied">Media access மறுக்கப்பட்டது. Local queue cover-களை காட்ட Android settings-இல் அதை இயக்கவும்.</string>
+    <string name="setting_queue_remote_artwork">Queue cover-களை online-இல் பெறு</string>
+    <string name="setting_queue_remote_artwork_short_description">Streaming apps (YouTube Music clients, Echo Music…) queue cover-களை image-களாக அல்ல link-களாக வெளியிடுகின்றன; இதனால் அவை download செய்து cache செய்யப்படுகின்றன. Queue-ஐ முழுமையாக offline வைத்திருக்க இதை முடக்கவும் — அப்போது அந்த row-களில் cover காட்டப்படாது.</string>
+    <string name="setting_queue_remote_artwork_description">Streaming player-கள் queue cover-களை image-களாக அல்ல link-களாக வெளியிடுகின்றன. ஒவ்வொன்றையும் ஒருமுறை download செய்து இந்த phone-இல் cache செய்து watch queue-இல் காட்டவும். Player ஏற்கனவே வெளியிட்ட cover URL மட்டும் கோரப்படும் — account அல்லது personal data எதுவும் இல்லை. இயல்பாக இயக்கப்பட்டுள்ளது; queue-ஐ முழுமையாக offline வைக்க முடக்கவும்.</string>
+    <string name="watch_streaming_shortcuts_empty">Quick Actions மற்றும் watch menu-க்காக track, album அல்லது playlist-ஐச் சேர்க்கவும்</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d சேமித்த shortcut · Quick Actions மற்றும் watch menu-இல் கிடைக்கும்</item>
+        <item quantity="other">%1$d சேமித்த shortcut-கள் · Quick Actions மற்றும் watch menu-இல் கிடைக்கும்</item>
+    </plurals>
+    <string name="category_music_apps">இசை apps &amp; சேவைகள்</string>
+    <string name="category_apps_content">பாடல்வரிகள் &amp; metadata</string>
+    <string name="category_streaming_services">Streaming குறுக்குவழிகள்</string>
+    <string name="category_queue_artwork">Queue artwork</string>
+    <string name="category_system_access">Android அணுகல் &amp; அறிவிப்புகள்</string>
+    <string name="setting_apps_integrations">ஆதரிக்கப்படும் இசை சேவைகள்</string>
+    <string name="setting_apps_integrations_description">Link-கள் YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music மற்றும் SoundCloud உடன் செயல்படும். Account access தேவையில்லை.</string>
+    <string name="setting_apps_integrations_none">ஆதரிக்கப்படும் app எதுவும் கண்டறியப்படவில்லை. Shortcut-கள் இன்னும் browser அல்லது வேறு compatible app-இல் திறக்கலாம்.</string>
+    <string name="setting_apps_integrations_installed">%2$d இல் %1$d கண்டறியப்பட்டது: %3$s</string>
+    <string name="setting_streaming_open_mode">Streaming link-களை இதன் மூலம் திற</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>கண்டறியப்பட்ட streaming app</item>
+        <item>Android இயல்புநிலை</item>
+        <item>ஒவ்வொரு முறையும் கேள்</item>
+    </string-array>
+    <string name="setting_persistent_notification">\"Svartifoss active\" அறிவிப்பை நிர்வகி</string>
+    <string name="setting_persistent_notification_description">இந்த notification-இன் Android settings-ஐத் திறக்கும் — mute செய்யலாம், lock screen-இல் மறைக்கலாம் அல்லது வேறு மாற்றங்களைச் செய்யலாம். முழுமையாக முடக்க முடியாது: watch-உடன் பேசும் background service இயங்கும் போது Android ongoing notification ஒன்றைத் தேவைப்படுத்துகிறது.</string>
+    <string name="setting_notification_access">Media notification அணுகல்</string>
+    <string name="setting_notification_access_enabled">அனுமதிக்கப்பட்டது · Android settings-ஐப் பார்க்க தட்டவும்</string>
+    <string name="setting_notification_access_disabled">அனுமதி இல்லை · Notification media actions மற்றும் automatic launch filters-க்கு தேவை</string>
+    <string name="setting_notification_access_unavailable">இந்த சாதனத்தில் notification access settings கிடைக்கவில்லை</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d சேமித்த shortcut · link-களை நிர்வகிக்க அல்லது import செய்ய தட்டவும்</item>
+        <item quantity="other">%1$d சேமித்த shortcut-கள் · link-களை நிர்வகிக்க அல்லது import செய்ய தட்டவும்</item>
+    </plurals>
+    <string name="category_privacy">தனியுரிமை</string>
+    <string name="setting_privacy_policy">தனியுரிமைக் கொள்கை</string>
+    <string name="setting_privacy_policy_description">Svartifoss எந்த data-ஐப் பயன்படுத்துகிறது மற்றும் எந்த online services விருப்பமானவை என்பதைப் பார்க்கவும்.</string>
+    <string name="setting_crash_reporting">Crash report-களை அனுப்பு</string>
+    <string name="setting_crash_reporting_description">பிழைகளைச் சரிசெய்ய உதவ Firebase Crashlytics diagnostics-ஐ அனுப்பவும். இயல்பாக இயக்கப்பட்டுள்ளது; எப்போது வேண்டுமானாலும் முடக்கலாம்.</string>
+    <string name="setting_announcements">அறிவிப்பு செய்திகள்</string>
+    <string name="setting_announcements_description">Developer-இலிருந்து அவ்வப்போது notifications — புதிய releases, முக்கிய அறிவிப்புகள். Firebase Cloud Messaging வழியாக அனுப்பப்படும்; account அல்லது user list எதுவும் இல்லை. இயல்பாக இயக்கப்பட்டுள்ளது; எப்போது வேண்டுமானாலும் முடக்கலாம்.</string>
+    <string name="announcement_notification_channel">அறிவிப்புகள்</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Playlist, album அல்லது track-ஐ நேரடியாக Svartifoss-க்கு share செய்யவும், copy செய்த link-ஐ paste செய்யவும் அல்லது கைமுறையாகச் சேர்க்கவும். Watch அதைத் திறக்க phone-ஐக் கேட்கும்; service login தேவையில்லை.</string>
+    <string name="back">பின்</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">உங்கள் இசை, ஒரு தட்டலில்</string>
+    <string name="playlist_shortcuts_yours">உங்கள் shortcut-கள்</string>
+    <string name="playlist_shortcuts_empty_hint">Share செய்த track, album அல்லது playlist link-ஐ சேர்த்து watch-இல் கிடைக்கச் செய்யுங்கள்.</string>
+    <string name="playlist_shortcuts_add">Shortcut-ஐச் சேர்</string>
+    <string name="playlist_shortcuts_paste">Link-ஐ paste செய்</string>
+    <string name="playlist_shortcuts_reload_covers">Cover-களை மீண்டும் ஏற்று</string>
+    <string name="playlist_shortcuts_reloading_covers">Cover-கள் மீண்டும் ஏற்றப்படுகின்றன…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Cover-கள் மீண்டும் ஏற்றப்பட்டன</string>
+    <string name="playlist_shortcuts_edit">Shortcut-ஐத் திருத்து</string>
+    <string name="playlist_shortcut_save">Shortcut-ஐச் சேமி</string>
+    <string name="playlist_shortcut_editor_hint">ஒரு link-ஐ paste செய்யவும். Svartifoss அதன் app மற்றும் content type-ஐ தானாக கண்டறியும்.</string>
+    <string name="playlist_shortcut_detection_waiting">Streaming link-க்காக காத்திருக்கிறது</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify, YouTube Music, Apple Music, TIDAL, Deezer மற்றும் பல ஆதரிக்கப்படுகின்றன.</string>
+    <string name="playlist_shortcut_detected_format">கண்டறியப்பட்டது: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">பெயர்</string>
+    <string name="playlist_shortcut_link_hint">Share link அல்லது app URI</string>
+    <string name="playlist_shortcut_shuffle">Shuffle செய்து இயக்கு (YouTube Music மட்டும்)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Link</string>
+    <string name="playlist_type_track">Track</string>
+    <string name="playlist_type_playlist">Playlist</string>
+    <string name="playlist_type_album">Album</string>
+    <string name="playlist_type_artist">கலைஞர்</string>
+    <string name="playlist_type_show">Show</string>
+    <string name="playlist_type_episode">Episode</string>
+    <string name="playlist_type_mix">Mix</string>
+    <string name="playlist_badge_shuffle">கலக்கு</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">இன்னும் streaming shortcut எதுவும் சேர்க்கப்படவில்லை</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d சேமிக்கப்பட்டது</item>
+        <item quantity="other">%1$d சேமிக்கப்பட்டது</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">வரிசைப்படுத்தப்பட்ட streaming shortcut-கள். Drag செய்ய தொட்டு பிடிக்கவும், Move up அல்லது Move down accessibility actions-ஐப் பயன்படுத்தவும், அல்லது keyboard-இல் Ctrl+Up/Down அழுத்தவும்.</string>
+    <string name="playlist_shortcut_more_options">%1$s-க்கு கூடுதல் விருப்பங்கள்</string>
+    <string name="playlist_shortcut_menu_edit">திருத்து</string>
+    <string name="playlist_shortcut_menu_open">இப்போது திற</string>
+    <string name="playlist_shortcut_menu_copy">Link-ஐ நகலெடு</string>
+    <string name="playlist_shortcut_menu_duplicate">நகல் உருவாக்கு</string>
+    <string name="playlist_shortcut_menu_share">பகிர்</string>
+    <string name="playlist_shortcut_menu_delete">நீக்கு</string>
+    <string name="playlist_shortcut_open_failed">இந்த link-ஐ எந்த app-மும் திறக்க முடியாது</string>
+    <string name="streaming_shortcut_choose_app">Streaming link-ஐ இதன் மூலம் திற</string>
+    <string name="playlist_shortcut_link_copied">Link நகலெடுக்கப்பட்டது</string>
+    <string name="playlist_shortcut_import_invalid">பகிரப்பட்ட உரையில் செல்லுபடியாகும் streaming link இல்லை</string>
+    <string name="playlist_shortcut_clipboard_invalid">Clipboard-இல் செல்லுபடியாகும் streaming link இல்லை</string>
+    <string name="playlist_shortcut_name_required">Shortcut பெயரை உள்ளிடவும்</string>
+    <string name="playlist_shortcut_link_invalid">செல்லுபடியாகும் web link அல்லது app URI-ஐ உள்ளிடவும்</string>
+    <string name="playlist_shortcut_service_invalid">சேவையை கண்டறிய செல்லுபடியாகும் link-ஐ paste செய்யவும்</string>
+    <string name="playlist_shortcut_service_generic">இணக்கமான link · Android app-ஐத் தேர்ந்தெடுக்கும்</string>
+    <string name="playlist_shortcut_service_installed">%1$s நிறுவப்பட்டுள்ளது · அதன் app-இல் திறக்க தயாராக உள்ளது</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s நிறுவப்படவில்லை · browser அல்லது compatible app பயன்படுத்தலாம்</string>
+    <string name="playlist_shortcut_copy_name">%1$s நகல்</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s நகல் %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s உருவாக்கப்பட்டது</string>
+    <string name="playlist_shortcut_share_title">Streaming shortcut-ஐப் பகிர்</string>
+    <string name="playlist_shortcut_share_failed">இந்த shortcut-ஐ பகிர எந்த app-மும் இல்லை</string>
+    <string name="playlist_shortcut_deleted">%1$s நீக்கப்பட்டது</string>
+    <string name="playlist_shortcut_undo">செயல்தவிர்</string>
+    <string name="action_play_liked_songs_shuffled">விரும்பிய பாடல்களை shuffle செய்து இயக்கு (YT Music)</string>
+    <string name="action_search_history">தேடல் வரலாறு</string>
+    <string name="search_history_empty">இன்னும் சமீபத்திய தேடல்கள் இல்லை</string>
+    <string name="category_updates">புதுப்பிப்புகள்</string>
+    <string name="setting_update_check">புதிய பதிப்புகள் பற்றி அறிவி</string>
+    <string name="setting_update_check_description">புதிய releases-க்கு தினமும் சுமார் ஒருமுறை GitHub-ஐச் சரிபார்த்து notification காட்டும்</string>
+    <string name="setting_update_prereleases">Pre-release-களையும் சேர்க்கவும்</string>
+    <string name="setting_update_prereleases_description">Beta பதிப்புகள் பற்றியும் அறிவிப்பைப் பெறு</string>
+    <string name="setting_update_check_now">இப்போது updates-ஐச் சரிபார்</string>
+    <string name="setting_update_check_now_description">சமீபத்திய பதிப்பைக் காட்டி Bluetooth வழியாக watch-ஐ update செய்ய அனுமதிக்கும்</string>
+    <string name="update_screen_title">புதுப்பிப்புகள்</string>
+    <string name="update_cover_content_description">Svartifoss, app பெயரிடப்பட்ட நீர்வீழ்ச்சி</string>
+    <string name="update_notification_channel">App updates</string>
+    <string name="update_available_title">Svartifoss %1$s கிடைக்கிறது</string>
+    <string name="update_notification_text">Update செய்ய தட்டவும்</string>
+    <string name="update_available_action">Update கிடைக்கிறது</string>
+    <string name="update_installed_phone">தொலைபேசி: %1$s</string>
+    <string name="update_installed_versions">தொலைபேசி: %1$s \u00b7 கடிகாரம்: %2$s</string>
+    <string name="update_watch_version_unknown">தெரியவில்லை</string>
+    <string name="update_checking">Updates சரிபார்க்கப்படுகின்றன\u2026</string>
+    <string name="update_check_failed">Updates-ஐச் சரிபார்க்க முடியவில்லை. இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="update_available_line">புதிய பதிப்பு: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(pre-release)</string>
+    <string name="update_up_to_date">நீங்கள் சமீபத்திய பதிப்பில் உள்ளீர்கள் (%1$s)</string>
+    <string name="update_no_wear_asset">இந்த release-இல் அனுப்ப watch APK இல்லை.</string>
+    <string name="update_watch_hint">\u201cWatch-ஐ update செய்\u201d புதிய watch app-ஐ download செய்து Bluetooth வழியாக அனுப்பும் \u2014 நிறுவலை watch-இலேயே நீங்கள் உறுதிப்படுத்த வேண்டும்; cable அல்லது Wear Installer தேவையில்லை.</string>
+    <string name="update_downloading">பதிவிறக்கப்படுகிறது\u2026 %1$d%%</string>
+    <string name="update_connecting_watch">கடிகாரத்துடன் இணைக்கப்படுகிறது\u2026</string>
+    <string name="update_transferring">கடிகாரத்துக்கு அனுப்பப்படுகிறது\u2026 %1$d%%</string>
+    <string name="update_confirm_on_watch">அனுப்பப்பட்டது! Watch-இல் notification தோன்றியது \u2014 நிறுவ அங்கே தட்டவும்.</string>
+    <string name="update_no_watch">எந்த கடிகாரமும் இணைக்கப்படவில்லை.</string>
+    <string name="update_push_failed">Update-ஐ watch-க்கு அனுப்ப முடியவில்லை. மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="update_watch_button">கடிகாரத்தை update செய்</string>
+    <string name="update_open_release_button">Release பக்கத்தைத் திற</string>
+    <string name="update_watch_behind">உங்கள் watch இன்னும் %1$s-இல் உள்ளது \u2014 கீழுள்ள update-ஐ அதற்கு அனுப்பவும்.</string>
+    <string name="update_subtitle">Phone மற்றும் watch apps-ஐ sync-ஆக வைத்திரு</string>
+    <string name="update_state_checking">Updates சரிபார்க்கப்படுகின்றன\u2026</string>
+    <string name="update_state_current">நீங்கள் புதுப்பித்த நிலையில் உள்ளீர்கள்</string>
+    <string name="update_state_current_sub">சமீபத்திய release, %1$s இயங்குகிறது</string>
+    <string name="update_state_available">Update கிடைக்கிறது</string>
+    <string name="update_state_available_sub">%1$s \u00b7 %2$s</string>
+    <string name="update_state_failed">Updates-ஐச் சரிபார்க்க முடியவில்லை</string>
+    <string name="update_state_failed_sub">உங்கள் இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்</string>
+    <string name="update_device_phone">தொலைபேசி</string>
+    <string name="update_device_watch">கடிகாரம்</string>
+    <string name="update_versions_header">நிறுவப்பட்டது</string>
+    <string name="update_whats_new">புதிதாக என்ன</string>
+    <string name="update_phone_button">தொலைபேசியை update செய்</string>
+    <string name="update_installing">Installer திறக்கப்படுகிறது\u2026</string>
+    <string name="update_install_permission_needed">Svartifoss-இலிருந்து apps நிறுவ அனுமதித்து, பின்னர் Update phone-ஐ மீண்டும் தட்டவும்.</string>
+    <string name="update_phone_failed">Phone update-ஐ download செய்ய முடியவில்லை. மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="update_install_notification_title">Svartifoss update</string>
+    <string name="update_install_notification_tap">புதிய பதிப்பை நிறுவ தட்டவும்</string>
+    <string name="update_install_notification_failed">நிறுவல் தோல்வியடைந்தது. Settings-இல் Svartifoss-இலிருந்து installs-ஐ அனுமதித்து மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="setting_wear_album_accent_source">Album accent மூலம்</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>சமநிலை</item>
+        <item>மிகத் துடிப்பான</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>முடக்கு</item>
+        <item>மென்மையான</item>
+        <item>நிலையான</item>
+        <item>தடித்த</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Accent குறைந்தபட்சம்</string>
+    <string name="preview_metadata_album">Album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Track</string>
+    <string name="preview_metadata_composer">இசையமைப்பாளர்</string>
+    <string name="preview_metadata_genre">வகை</string>
+    <string name="preview_metadata_genre_value">மாற்று</string>
+    <string name="preview_metadata_year">ஆண்டு</string>
+    <string name="preview_metadata_format">வடிவம்</string>
+    <string name="preview_metadata_bitrate">Bitrate</string>
+    <string name="preview_metadata_position">நிலை</string>
+    <string name="preview_metadata_output">வெளியீடு</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Album விவரங்கள்</string>
+    <string name="setting_wear_metadata_core_description">Album, album artist, பதிவில் உள்ள இடம் மற்றும் நீளம்.</string>
+    <string name="setting_wear_metadata_release">Release விவரங்கள்</string>
+    <string name="setting_wear_metadata_release_description">வகை, ஆண்டு, release தேதி மற்றும் label.</string>
+    <string name="setting_wear_metadata_credits">Credits</string>
+    <string name="setting_wear_metadata_credits_description">Player வெளியிட்டால் composer, writer மற்றும் author.</string>
+    <string name="setting_wear_metadata_technical">கோப்பு விவரங்கள்</string>
+    <string name="setting_wear_metadata_technical_description">Format, bitrate, sample rate, channels மற்றும் அளவு. Local track-களுக்கு மட்டும்.</string>
+    <string name="setting_split_panel">பிரிக்கப்பட்ட பேனல்</string>
+    <string name="setting_split_panel_description">Split face-இன் கீழ்பாதியை எது நிரப்ப வேண்டும். Blurred artwork உரையின் பின்னால் அதே cover-ஐ தொடர்கிறது; solid colour notification-card போன்ற தோற்றம் தரும்.</string>
+    <string-array name="wear_split_panel_entries">
+        <item>மங்கலான artwork</item>
+        <item>திட நிறம்</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Playback விவரங்கள்</string>
+    <string name="setting_wear_metadata_playback_description">மில்லிவிநாடி வரை position, speed, audio output, மேலும் ஒலி எங்கிருந்து stream அல்லது play ஆகிறது — track address உட்பட. விவரிக்க file இல்லாதபோது streaming track நிரப்பக்கூடிய ஒரே block இது.</string>
+    <string name="setting_wear_metadata_identifiers">அடையாளங்கள்</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC மற்றும் catalogue ids. இயல்பாக முடக்கப்பட்டது — தேவைப்படும் போது பயனுள்ளது, இல்லையெனில் தேவையற்ற தகவல்.</string>
+    <string name="setting_metadata_lookup">Track விவரங்களை online-இல் தேடு</string>
+    <string name="setting_metadata_lookup_description">Playing app வெளியிடாத தகவல்களை — ISRC, label, release date — இலவச public database ஆன MusicBrainz-இலிருந்து நிரப்பும். இயல்பாக முடக்கப்பட்டுள்ளது. Metadata watch face இதில்லாமலும் செயல்படும்; இது கூடுதல் row-களை மட்டும் சேர்க்கும். இதை இயக்கி அந்த face-ஐத் தேர்ந்தெடுக்காவிட்டால் எதுவும் அனுப்பப்படாது; track name மற்றும் artist மட்டும் அனுப்பப்படும்.</string>
+    <string-array name="wear_text_block_align_entries">
+        <item>முகப்பைப் பின்பற்று</item>
+        <item>தொடக்கம்</item>
+        <item>மையப்படுத்தப்பட்டது</item>
+        <item>முடிவு</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>முகப்பைப் பின்பற்று</item>
+        <item>மேல்</item>
+        <item>நடு</item>
+        <item>கீழ்</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_entries">
+        <item>நிலையானது (ஒரு வரி, scroll அல்லது shrink இல்லை)</item>
+        <item>Scroll (marquee)</item>
+        <item>பொருந்துமாறு சுருக்கு</item>
+    </string-array>
+    <string-array name="wear_album_art_source_entries">
+        <item>இசை app-இலிருந்து</item>
+        <item>Online-இல் கண்டுபிடிக்கப்பட்டது</item>
+        <item>கலைஞர் படம்</item>
+        <item>என் gallery-இலிருந்து படம்</item>
+        <item>Folder-இலிருந்து சீரற்றது</item>
+    </string-array>
+</resources>

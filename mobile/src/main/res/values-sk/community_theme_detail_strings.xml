@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Podrobnosti motívu</string>
+    <string name="community_theme_detail_preview_screen">Obrazovka ukážky</string>
+    <string name="community_theme_detail_surface_player">Prehrávač</string>
+    <string name="community_theme_detail_surface_aod">Vždy zapnuté</string>
+    <string name="community_theme_detail_surface_volume">Hlasitosť</string>
+    <string name="community_theme_detail_surface_progress">Priebeh</string>
+    <string name="community_theme_detail_surface_quick_panel">Rýchly panel</string>
+    <string name="community_theme_detail_surface_queue">Poradie</string>
+    <string name="community_theme_detail_preview_label">Ukážka %1$s</string>
+    <string name="community_theme_detail_preview_description">Ukážka %1$s na obrazovke %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Aktuálny obal albumu sa môže zobraziť iba v tejto ukážke v telefóne. Nikdy sa neodosiela; naďalej sa používa ukážkový text a časovanie.</string>
+    <string name="community_theme_detail_information">Informácie o motíve</string>
+    <string name="community_theme_detail_byline">Od %1$s</string>
+    <string name="community_theme_detail_layout">Základné rozloženie</string>
+    <string name="community_theme_detail_revision">Revízia</string>
+    <string name="community_theme_detail_minimum_version">Minimálna verzia Svartifoss</string>
+    <string name="community_theme_detail_published">Zverejnené</string>
+    <string name="community_theme_detail_visual_settings">Vizuálne nastavenia</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s vizuálne nastavenie</item>
+        <item quantity="other">%1$s vizuálnych nastavení</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Nie je k dispozícii</string>
+    <string name="community_theme_detail_add_apply">Pridať a použiť</string>
+    <string name="community_theme_detail_remove">Odstrániť motív</string>
+    <string name="community_theme_detail_remove_title">Odstrániť „%1$s“ z Mojich motívov?</string>
+    <string name="community_theme_detail_remove_message">Táto uložená kópia a všetky vaše úpravy budú natrvalo odstránené. Ak sa práve používa, hodinky sa vrátia k vstavanému základnému rozloženiu.</string>
+    <string name="community_theme_detail_removed">Motív odstránený z Mojich motívov</string>
+    <string name="community_theme_detail_remove_error">Tento motív sa nepodarilo odstrániť</string>
+    <string name="community_theme_detail_like">Páči sa mi</string>
+    <string name="community_theme_detail_unlike">Zrušiť Páči sa mi</string>
+    <string name="community_theme_detail_like_loading">Kontroluje sa…</string>
+    <string name="community_theme_detail_like_description">Označiť %1$s ako Páči sa mi. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Zrušiť Páči sa mi pre %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Prihlásenie cez Google bolo zrušené. Vaše hodnotenie nebolo uložené.</string>
+    <string name="community_theme_detail_like_error">Vaše označenie Páči sa mi sa nepodarilo uložiť. Skontrolujte pripojenie a skúste to znova.</string>
+    <string name="community_theme_detail_like_not_ready">Hodnotenia Páči sa mi pre tento motív ešte nie sú pripravené. Po ďalšom zverejnení obnovte Komunitné motívy.</string>
+    <string name="community_theme_detail_like_saved">Vaše hodnotenie Páči sa mi bolo uložené. Verejné počty sa aktualizujú pri ďalšom zverejnení katalógu.</string>
+    <string name="community_theme_detail_unlike_saved">Vaše hodnotenie Páči sa mi bolo odstránené. Verejné počty sa aktualizujú pri ďalšom zverejnení katalógu.</string>
+    <string name="community_theme_detail_apply_existing">Tento motív už je v časti Moje motívy a bol použitý na vašich hodinkách</string>
+    <string name="community_theme_detail_requires_app_version">Tento motív vyžaduje Svartifoss %1$s, kým ho bude možné pridať.</string>
+    <string name="community_theme_detail_load_error">Podrobnosti tohto motívu sa nepodarilo načítať. Vráťte sa do Komunitných motívov a skúste to znova.</string>
+    <string name="community_theme_detail_profile_mismatch">Stiahnutý profil nezodpovedá verejným údajom tohto motívu. Vráťte sa do Komunitných motívov a skúste to znova.</string>
+    <string name="community_theme_detail_screenshot_description">Fotografia tohto motívu na hodinkách autora</string>
+    <string name="community_theme_detail_source_author">Hodinky autora</string>
+    <string name="community_theme_detail_source_rendered">Vygenerovaná ukážka</string>
+    <string name="community_theme_detail_show_rendered">Zobraziť vygenerovanú ukážku</string>
+    <string name="community_theme_detail_show_author">Zobraziť fotografiu autora</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Hav</item>
+        <item>Solnedgang</item>
+        <item>Midtspot</item>
+        <item>Glasslør</item>
+        <item>Fløyel</item>
+        <item>Noir-spot</item>
+        <item>Isvask</item>
+        <item>Roseblomst</item>
+        <item>Prisme</item>
+        <item>Halvmånekant</item>
+        <item>Tidevannsbånd</item>
+        <item>Papirhylse</item>
+        <item>Stigende lykt</item>
+        <item>Delt luftspeiling</item>
+        <item>Rolig rutenett</item>
+        <item>Nocturne</item>
+        <item>Skystudie</item>
+        <item>Flytende dammer</item>
+        <item>Fargemonolitt</item>
+        <item>Delt tone</item>
+        <item>Gradient</item>
+        <item>Duotone</item>
+        <item>Bånd</item>
+        <item>Vignett</item>
+        <item>Grafitt</item>
+        <item>Kino</item>
+        <item>Akryl</item>
+        <item>Nett</item>
+        <item>Nebula</item>
+        <item>Bioluminescens</item>
+        <item>Iriserende</item>
+        <item>Bane</item>
+        <item>Blekkvask</item>
+        <item>Blomstring</item>
+        <item>Fjord</item>
+        <item>Prikkmatrise</item>
+        <item>Skannelinjer</item>
+        <item>Radar</item>
+        <item>Kontur</item>
+        <item>Fasettert</item>
+        <item>Albumfyll</item>
+        <item>Sekundær fyll</item>
+        <item>Tertiær fyll</item>
+        <item>Glass</item>
+        <item>Midnatt</item>
+        <item>Røyk</item>
+        <item>Tidevannslinje</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Mose</item>
+        <item>Lavendeldis</item>
+        <item>Kirsebær</item>
+        <item>Dyphav</item>
+        <item>Støv</item>
+        <item>Bleket</item>
+        <item>Måneskinn</item>
+        <item>Drøm</item>
+        <item>Infrarød</item>
+        <item>Skog</item>
+        <item>Sølv</item>
+        <item>Godteri</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Øvre toning</item>
+        <item>Midtspot</item>
+        <item>Diagonal skygge</item>
+        <item>Venstre gardin</item>
+        <item>Høyre gardin</item>
+        <item>Midtbånd</item>
+        <item>Kryssfade</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Omvendt blad</item>
+        <item>Omvendt dråpe</item>
+        <item>Småstein</item>
+        <item>Bue</item>
+        <item>Skjold</item>
+        <item>Omvendt bue</item>
+        <item>Omvendt skjold</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Hvisking</item>
+        <item>Strålende</item>
+        <item>Flom</item>
+        <item>Skimmer</item>
+        <item>Dyp glød</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Albumomriss</item>
+        <item>Albumgradient</item>
+        <item>Sekundær albumfarge</item>
+        <item>Albumglass</item>
+        <item>Tertiær albumfarge</item>
+        <item>Neonomriss</item>
+    </string-array>
+</resources>

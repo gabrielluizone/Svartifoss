@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Прогресс сақинасының орналасуы</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Толық мөлдір</item>
+        <item>Қосымша түс</item>
+        <item>Үшінші түс</item>
+        <item>Түсті тор</item>
+        <item>Аврора</item>
+        <item>Прожектор</item>
+        <item>Виньетка</item>
+        <item>Бөлінген реңк</item>
+        <item>Түсті жолақтар</item>
+        <item>Түн ортасы</item>
+        <item>Ореол</item>
+        <item>Түтінді бұлдырату</item>
+        <item>Күн батуы</item>
+        <item>Мұхит</item>
+        <item>Тұмандық</item>
+        <item>Шоқ</item>
+        <item>Толқын сызығы</item>
+        <item>Биолюминесценция</item>
+        <item>Құбылмалы реңкті</item>
+        <item>Графит</item>
+        <item>Кино</item>
+        <item>Орбита</item>
+        <item>Көкжиек</item>
+        <item>Сиялы бояу</item>
+        <item>Гүлдену</item>
+        <item>Фьорд</item>
+        <item>Нүктелер торы</item>
+        <item>Сканерлеу сызығы</item>
+        <item>Радар</item>
+        <item>Контур сызықтары</item>
+        <item>Қырлы</item>
+        <item>Іңір</item>
+        <item>Мұз</item>
+        <item>Раушан</item>
+        <item>Қағаз</item>
+        <item>Монолит</item>
+        <item>Шам</item>
+        <item>Нуар</item>
+        <item>Барқыт</item>
+        <item>Сағым</item>
+        <item>Жарықтың жайылуы</item>
+        <item>Бұлт</item>
+        <item>Ноктюрн</item>
+        <item>Сұйық</item>
+        <item>Толқынды</item>
+        <item>Винил</item>
+        <item>Корона</item>
+        <item>Жарты ай</item>
+        <item>Тор</item>
+        <item>Әйнек перде</item>
+        <item>Material</item>
+        <item>Постер</item>
+        <item>Студия</item>
+        <item>Спектр</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Моншақтар</item>
+        <item>Қос рельс</item>
+        <item>Пульс</item>
+        <item>Хром</item>
+        <item>Спектр</item>
+        <item>Қадамдар</item>
+        <item>Кәмпит</item>
+        <item>Елес</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Қос жиек</item>
+        <item>Тік индикатор (сол жақ)</item>
+        <item>Тік индикатор (оң жақ)</item>
+        <item>Жоғарғы индикатор</item>
+        <item>Төменгі индикатор</item>
+        <item>Ортаңғы циферблат</item>
+        <item>Жоғарғы ореол</item>
+        <item>Төменгі ореол</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Қос сақина</item>
+        <item>Моншақтар</item>
+        <item>Сызықша және нүкте</item>
+        <item>24 сағаттық белгілер</item>
+        <item>Тек орындалу</item>
+        <item>Жарқыл</item>
+        <item>Қос реңк</item>
+        <item>Ине</item>
+        <item>Кезектесіп</item>
+        <item>Ұшқын</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Безель жиегі</item>
+        <item>Ойық сақина</item>
+        <item>Ішкі сақина</item>
+        <item>Қалың сақина</item>
+        <item>Төменнен ашық</item>
+        <item>Жоғарыдан ашық</item>
+        <item>Сол жақ доға</item>
+        <item>Оң жақ доға</item>
+        <item>Қос жол</item>
+        <item>Сол жақтан ашық</item>
+        <item>Оң жақтан ашық</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Ықшам капсула</item>
+        <item>Шаршы альбом</item>
+        <item>Қабатталған капсула</item>
+        <item>Белгіше</item>
+        <item>Әйнек жолақ</item>
+        <item>LCD</item>
+        <item>Шаршы контур</item>
+        <item>Таспа</item>
+        <item>Уақыт көпіршігі</item>
+        <item>Бөлінген реңк</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Уақыт шкаласы (жоғарғы)</item>
+        <item>Уақыт шкаласы (төменгі)</item>
+        <item>Сегменттер (жоғарғы)</item>
+        <item>Тік уақыт шкаласы (сол жақ)</item>
+        <item>Тік уақыт шкаласы (оң жақ)</item>
+        <item>Ортаңғы циферблат</item>
+        <item>Қос уақыт шкаласы</item>
+        <item>Сегменттер (төменгі)</item>
+        <item>Ортаңғы стек</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Жұмсақ</item>
+        <item>Хром</item>
+        <item>Голографиялық</item>
+        <item>Көпіршік</item>
+        <item>Рельс</item>
+        <item>Күн батуы</item>
+        <item>Альбом контуры</item>
+        <item>Қара әйнек</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Желпуіш</item>
+        <item>Орбита</item>
+        <item>Төменгі док</item>
+        <item>Баған</item>
+        <item>Бөлінген панель</item>
+        <item>Алмас</item>
+        <item>Карусель</item>
+        <item>Үшбұрыш</item>
+        <item>Баспалдақша</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Жұмсақ</item>
+        <item>Плиталы</item>
+        <item>Сия</item>
+        <item>Рельс</item>
+        <item>Күн батуы</item>
+        <item>Көпіршік</item>
+        <item>Хром</item>
+        <item>Голографиялық</item>
+    </string-array>
+</resources>

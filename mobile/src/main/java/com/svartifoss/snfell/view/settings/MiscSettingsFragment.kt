@@ -34,7 +34,7 @@ import com.svartifoss.snfell.common.model.AutoStartMode
 import com.svartifoss.snfell.config.ConfigBackup
 import com.svartifoss.snfell.config.ConfigBackupSection
 import com.svartifoss.snfell.config.DefaultConfigExport
-import com.svartifoss.snfell.update.UpdateActivity
+import com.svartifoss.snfell.update.UpdateGateway
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
 import com.svartifoss.snfell.music.MusicService
@@ -219,6 +219,12 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
 
         SettingsCatalog.SETTINGS_CATEGORIES.forEach { key ->
             findPreference<PreferenceCategory>(key)?.isVisible = key in visibleCategories
+        }
+        if (!UpdateGateway.SUPPORTS_SELF_UPDATE) {
+            // The Play build has no in-app self-updater - Play delivers updates itself - so the
+            // whole Updates category is dead weight there (its search rows are dropped too, see
+            // SettingsSearchIndex).
+            findPreference<PreferenceCategory>("cat_updates")?.isVisible = false
         }
         updateDevModeVisibility()
     }
@@ -673,7 +679,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
     private fun initAboutSection() {
         findPreference<Preference>("update_check_now")?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                startActivity(Intent(requireContext(), UpdateActivity::class.java))
+                UpdateGateway.openUpdateScreen(requireContext())
                 true
             }
 
@@ -796,11 +802,14 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                 true
             }
 
-        findPreference<Preference>("dev_open_update_screen")?.onPreferenceClickListener =
-            Preference.OnPreferenceClickListener {
-                startActivity(Intent(requireContext(), UpdateActivity::class.java))
+        findPreference<Preference>("dev_open_update_screen")?.let { row ->
+            // No in-app update screen on the Play build.
+            row.isVisible = UpdateGateway.SUPPORTS_SELF_UPDATE
+            row.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                UpdateGateway.openUpdateScreen(requireContext())
                 true
             }
+        }
 
         findPreference<Preference>("dev_export_defaults")?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {

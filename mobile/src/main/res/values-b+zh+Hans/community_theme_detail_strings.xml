@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">主题详情</string>
+    <string name="community_theme_detail_preview_screen">预览屏幕</string>
+    <string name="community_theme_detail_surface_player">播放器</string>
+    <string name="community_theme_detail_surface_aod">常亮</string>
+    <string name="community_theme_detail_surface_volume">音量</string>
+    <string name="community_theme_detail_surface_progress">进度</string>
+    <string name="community_theme_detail_surface_quick_panel">快捷面板</string>
+    <string name="community_theme_detail_surface_queue">队列</string>
+    <string name="community_theme_detail_preview_label">%1$s 预览</string>
+    <string name="community_theme_detail_preview_description">%2$s 屏幕上的 %1$s 预览</string>
+    <string name="community_theme_detail_preview_privacy">你当前的专辑封面可能只会出现在手机上的此预览中。它绝不会上传；仍会使用示例文字和时间。</string>
+    <string name="community_theme_detail_information">主题信息</string>
+    <string name="community_theme_detail_byline">由 %1$s 创作</string>
+    <string name="community_theme_detail_layout">基础布局</string>
+    <string name="community_theme_detail_revision">修订版</string>
+    <string name="community_theme_detail_minimum_version">最低 Svartifoss 版本</string>
+    <string name="community_theme_detail_published">已发布</string>
+    <string name="community_theme_detail_visual_settings">视觉设置</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s 项视觉设置</item>
+        <item quantity="other">%1$s 项视觉设置</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">不可用</string>
+    <string name="community_theme_detail_add_apply">添加并应用</string>
+    <string name="community_theme_detail_remove">移除主题</string>
+    <string name="community_theme_detail_remove_title">从“我的主题”中移除“%1$s”？</string>
+    <string name="community_theme_detail_remove_message">此已保存副本以及你对它所做的任何编辑都将被永久删除。如果它当前已应用，你的手表将恢复到内置基础布局。</string>
+    <string name="community_theme_detail_removed">主题已从“我的主题”中移除</string>
+    <string name="community_theme_detail_remove_error">无法移除此主题</string>
+    <string name="community_theme_detail_like">喜欢</string>
+    <string name="community_theme_detail_unlike">取消喜欢</string>
+    <string name="community_theme_detail_like_loading">正在检查…</string>
+    <string name="community_theme_detail_like_description">喜欢 %1$s。%2$s</string>
+    <string name="community_theme_detail_unlike_description">取消喜欢 %1$s。%2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google 登录已取消。你的喜欢未保存。</string>
+    <string name="community_theme_detail_like_error">无法保存你的喜欢。请检查网络连接后重试。</string>
+    <string name="community_theme_detail_like_not_ready">此主题的喜欢功能尚未就绪。请在下一次发布后刷新“社区主题”。</string>
+    <string name="community_theme_detail_like_saved">你的喜欢已保存。公开数量将在下一次目录发布时更新。</string>
+    <string name="community_theme_detail_unlike_saved">你的喜欢已移除。公开数量将在下一次目录发布时更新。</string>
+    <string name="community_theme_detail_apply_existing">此主题已在“我的主题”中，并已应用到你的手表</string>
+    <string name="community_theme_detail_requires_app_version">必须先安装 Svartifoss %1$s，才能添加此主题。</string>
+    <string name="community_theme_detail_load_error">无法加载此主题的详情。请返回“社区主题”后重试。</string>
+    <string name="community_theme_detail_profile_mismatch">下载的配置与此主题的公开详情不符。请返回“社区主题”后重试。</string>
+    <string name="community_theme_detail_screenshot_description">此主题在作者手表上的照片</string>
+    <string name="community_theme_detail_source_author">作者的手表</string>
+    <string name="community_theme_detail_source_rendered">生成的预览</string>
+    <string name="community_theme_detail_show_rendered">显示生成的预览</string>
+    <string name="community_theme_detail_show_author">显示作者照片</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Raspored prstena napretka</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Potpuno prozirno</item>
+        <item>Sekundarna boja</item>
+        <item>Tercijarna boja</item>
+        <item>Mreža boja</item>
+        <item>Aurora</item>
+        <item>Reflektor</item>
+        <item>Vinjeta</item>
+        <item>Podijeljeni ton</item>
+        <item>Trake boja</item>
+        <item>Ponoć</item>
+        <item>Aureola</item>
+        <item>Zamućenje dima</item>
+        <item>Zalazak sunca</item>
+        <item>Ocean</item>
+        <item>Maglica</item>
+        <item>Žar</item>
+        <item>Linija plime</item>
+        <item>Bioluminiscencija</item>
+        <item>Prelijevajuće</item>
+        <item>Grafit</item>
+        <item>Kino</item>
+        <item>Orbita</item>
+        <item>Horizont</item>
+        <item>Ispiranje tintom</item>
+        <item>Cvat</item>
+        <item>Fjord</item>
+        <item>Mreža točaka</item>
+        <item>Linija skeniranja</item>
+        <item>Radar</item>
+        <item>Konturne linije</item>
+        <item>Fasetirano</item>
+        <item>Sumrak</item>
+        <item>Led</item>
+        <item>Ruža</item>
+        <item>Papir</item>
+        <item>Monolit</item>
+        <item>Fenjer</item>
+        <item>Noir</item>
+        <item>Baršun</item>
+        <item>Fatamorgana</item>
+        <item>Sjaj</item>
+        <item>Oblak</item>
+        <item>Nokturno</item>
+        <item>Tekuće</item>
+        <item>Plimno</item>
+        <item>Vinil</item>
+        <item>Korona</item>
+        <item>Polumjesec</item>
+        <item>Mreža</item>
+        <item>Stakleni veo</item>
+        <item>Material</item>
+        <item>Plakat</item>
+        <item>Studio</item>
+        <item>Spektar</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Perle</item>
+        <item>Dvostruka vodilica</item>
+        <item>Puls</item>
+        <item>Krom</item>
+        <item>Spektar</item>
+        <item>Stepenice</item>
+        <item>Slatkiš</item>
+        <item>Duh</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Dvostruki rub</item>
+        <item>Okomiti mjerač (lijevo)</item>
+        <item>Okomiti mjerač (desno)</item>
+        <item>Gornji mjerač</item>
+        <item>Donji mjerač</item>
+        <item>Središnji brojčanik</item>
+        <item>Gornja aureola</item>
+        <item>Donja aureola</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Dvostruki prsten</item>
+        <item>Perle</item>
+        <item>Crtica i točka</item>
+        <item>24-satne oznake</item>
+        <item>Samo napredak</item>
+        <item>Sjaj</item>
+        <item>Dvotonski</item>
+        <item>Igla</item>
+        <item>Naizmjenično</item>
+        <item>Iskra</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Rub okvira</item>
+        <item>Uvučeni prsten</item>
+        <item>Unutarnji prsten</item>
+        <item>Debeli prsten</item>
+        <item>Otvoreno pri dnu</item>
+        <item>Otvoreno pri vrhu</item>
+        <item>Lijevi luk</item>
+        <item>Desni luk</item>
+        <item>Dvostruka staza</item>
+        <item>Otvoreno s lijeve strane</item>
+        <item>Otvoreno s desne strane</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Kompaktna kapsula</item>
+        <item>Kvadratni album</item>
+        <item>Složena kapsula</item>
+        <item>Značka</item>
+        <item>Staklena traka</item>
+        <item>LCD</item>
+        <item>Kvadratni obris</item>
+        <item>Vrpca</item>
+        <item>Mjehurić vremena</item>
+        <item>Podijeljeni ton</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Vremenska crta (vrh)</item>
+        <item>Vremenska crta (dno)</item>
+        <item>Segmenti (vrh)</item>
+        <item>Okomita vremenska crta (lijevo)</item>
+        <item>Okomita vremenska crta (desno)</item>
+        <item>Središnji brojčanik</item>
+        <item>Dvostruka vremenska crta</item>
+        <item>Segmenti (dno)</item>
+        <item>Središnji stog</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Meko</item>
+        <item>Krom</item>
+        <item>Holografski</item>
+        <item>Mjehurić</item>
+        <item>Vodilica</item>
+        <item>Zalazak sunca</item>
+        <item>Obris albuma</item>
+        <item>Tamno staklo</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Lepeza</item>
+        <item>Orbita</item>
+        <item>Donje sidrište</item>
+        <item>Stupac</item>
+        <item>Podijeljena ploča</item>
+        <item>Dijamant</item>
+        <item>Vrtuljak</item>
+        <item>Trokut</item>
+        <item>Stuba</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Meko</item>
+        <item>Plošni</item>
+        <item>Tinta</item>
+        <item>Vodilica</item>
+        <item>Zalazak sunca</item>
+        <item>Mjehurić</item>
+        <item>Krom</item>
+        <item>Holografski</item>
+    </string-array>
+</resources>

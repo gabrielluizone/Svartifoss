@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">وردەکارییەکانی ڕووکار</string>
+    <string name="community_theme_detail_preview_screen">شاشەی پێشبینین</string>
+    <string name="community_theme_detail_surface_player">پڵەیەر</string>
+    <string name="community_theme_detail_surface_aod">هەمیشە چالاک</string>
+    <string name="community_theme_detail_surface_volume">دەنگ</string>
+    <string name="community_theme_detail_surface_progress">پێشکەوتن</string>
+    <string name="community_theme_detail_surface_quick_panel">پانێڵی خێرا</string>
+    <string name="community_theme_detail_surface_queue">ڕیز</string>
+    <string name="community_theme_detail_preview_label">پێشبینینی %1$s</string>
+    <string name="community_theme_detail_preview_description">پێشبینینی %1$s لە شاشەی %2$s</string>
+    <string name="community_theme_detail_preview_privacy">ڕەنگە بەرگی ئالبومی ئێستات تەنها لەم پێشبینینەی ناو مۆبایلەکەتدا دیار بێت. هەرگیز بارناکرێت؛ دەقی نموونە و کات‌بەندییەکان بەکاردێن.</string>
+    <string name="community_theme_detail_information">زانیاری ڕووکار</string>
+    <string name="community_theme_detail_byline">لە لایەن %1$s</string>
+    <string name="community_theme_detail_layout">نەخشەی بنەڕەتی</string>
+    <string name="community_theme_detail_revision">پێداچوونەوە</string>
+    <string name="community_theme_detail_minimum_version">کەمترین وەشانی Svartifoss</string>
+    <string name="community_theme_detail_published">بڵاوکراوەتەوە</string>
+    <string name="community_theme_detail_visual_settings">ڕێکخستنە بینراوەکان</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s ڕێکخستنی بینراو</item>
+        <item quantity="other">%1$s ڕێکخستنی بینراو</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">بەردەست نییە</string>
+    <string name="community_theme_detail_add_apply">زیادکردن و جێبەجێکردن</string>
+    <string name="community_theme_detail_remove">ڕووکار بسڕەوە</string>
+    <string name="community_theme_detail_remove_title">“%1$s” لە ڕووکارەکانم بسڕدرێتەوە؟</string>
+    <string name="community_theme_detail_remove_message">ئەم کۆپییە پاشەکەوتکراوە و هەموو دەستکارییەکانت بە هەمیشەیی دەسڕدرێنەوە. ئەگەر ئێستا جێبەجێ کرابێت، کاتژمێرەکەت دەگەڕێتەوە بۆ نەخشەی بنەڕەتی ناوخۆیی.</string>
+    <string name="community_theme_detail_removed">ڕووکار لە ڕووکارەکانم سڕایەوە</string>
+    <string name="community_theme_detail_remove_error">نەتوانرا ئەم ڕووکارە بسڕدرێتەوە</string>
+    <string name="community_theme_detail_like">حەزکردن</string>
+    <string name="community_theme_detail_unlike">حەزکردن لابەرە</string>
+    <string name="community_theme_detail_like_loading">پشکنین…</string>
+    <string name="community_theme_detail_like_description">حەز لە %1$s بکە. %2$s</string>
+    <string name="community_theme_detail_unlike_description">حەزکردن لە %1$s لابەرە. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">چوونەژوورەوەی Google هەڵوەشێندرایەوە. حەزکردنەکەت پاشەکەوت نەکرا.</string>
+    <string name="community_theme_detail_like_error">نەتوانرا حەزکردنەکەت پاشەکەوت بکرێت. پەیوەندییەکەت بپشکنە و دووبارە هەوڵ بدە.</string>
+    <string name="community_theme_detail_like_not_ready">حەزکردنەکانی ئەم ڕووکارە هێشتا ئامادە نین. دوای بڵاوکردنەوەی داهاتوو Community themes نوێ بکەرەوە.</string>
+    <string name="community_theme_detail_like_saved">حەزکردنەکەت پاشەکەوت کرا. ژمارە گشتییەکان لەگەڵ بڵاوکردنەوەی داهاتووی کاتەلۆگ نوێ دەبنەوە.</string>
+    <string name="community_theme_detail_unlike_saved">حەزکردنەکەت لابرا. ژمارە گشتییەکان لەگەڵ بڵاوکردنەوەی داهاتووی کاتەلۆگ نوێ دەبنەوە.</string>
+    <string name="community_theme_detail_apply_existing">ئەم ڕووکارە پێشتر لە ڕووکارەکانم هەیە و لەسەر کاتژمێرەکەت جێبەجێ کراوە</string>
+    <string name="community_theme_detail_requires_app_version">ئەم ڕووکارە پێویستی بە Svartifoss %1$s هەیە پێش ئەوەی زیاد بکرێت.</string>
+    <string name="community_theme_detail_load_error">نەتوانرا وردەکارییەکانی ئەم ڕووکارە باربکرێن. بگەڕێوە بۆ Community themes و دووبارە هەوڵ بدە.</string>
+    <string name="community_theme_detail_profile_mismatch">پرۆفایلی داگیراو لەگەڵ وردەکارییە گشتییەکانی ئەم ڕووکارە ناگونجێت. بگەڕێوە بۆ Community themes و دووبارە هەوڵ بدە.</string>
+    <string name="community_theme_detail_screenshot_description">وێنەی ئەم ڕووکارە لەسەر کاتژمێری دانەر</string>
+    <string name="community_theme_detail_source_author">کاتژمێری دانەر</string>
+    <string name="community_theme_detail_source_rendered">پێشبینینی دروستکراو</string>
+    <string name="community_theme_detail_show_rendered">پێشبینینی دروستکراو پیشان بدە</string>
+    <string name="community_theme_detail_show_author">وێنەی دانەر پیشان بدە</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

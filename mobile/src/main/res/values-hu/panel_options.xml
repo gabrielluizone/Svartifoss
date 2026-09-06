@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Folyamatgyűrű elrendezése</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Teljesen átlátszó</item>
+        <item>Másodlagos szín</item>
+        <item>Harmadlagos szín</item>
+        <item>Színháló</item>
+        <item>Sarki fény</item>
+        <item>Reflektor</item>
+        <item>Vignetta</item>
+        <item>Osztott tónus</item>
+        <item>Színsávok</item>
+        <item>Éjfél</item>
+        <item>Fényudvar</item>
+        <item>Füstös elmosás</item>
+        <item>Naplemente</item>
+        <item>Óceán</item>
+        <item>Köd</item>
+        <item>Parázs</item>
+        <item>Árapályvonal</item>
+        <item>Biolumineszcencia</item>
+        <item>Irizáló</item>
+        <item>Grafit</item>
+        <item>Mozi</item>
+        <item>Pálya</item>
+        <item>Horizont</item>
+        <item>Tusmosás</item>
+        <item>Virágzás</item>
+        <item>Fjord</item>
+        <item>Pontrács</item>
+        <item>Pásztázóvonal</item>
+        <item>Radar</item>
+        <item>Szintvonalak</item>
+        <item>Fazettált</item>
+        <item>Alkonyat</item>
+        <item>Jég</item>
+        <item>Rózsa</item>
+        <item>Papír</item>
+        <item>Monolit</item>
+        <item>Lámpás</item>
+        <item>Noir</item>
+        <item>Bársony</item>
+        <item>Délibáb</item>
+        <item>Szórt ragyogás</item>
+        <item>Felhő</item>
+        <item>Nocturne</item>
+        <item>Folyékony</item>
+        <item>Árapály</item>
+        <item>Vinil</item>
+        <item>Korona</item>
+        <item>Félhold</item>
+        <item>Rács</item>
+        <item>Üvegfátyol</item>
+        <item>Anyag</item>
+        <item>Poszter</item>
+        <item>Stúdió</item>
+        <item>Spektrum</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Gyöngyök</item>
+        <item>Dupla sín</item>
+        <item>Pulzus</item>
+        <item>Króm</item>
+        <item>Spektrum</item>
+        <item>Lépcsőfokok</item>
+        <item>Cukorka</item>
+        <item>Szellem</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Dupla szél</item>
+        <item>Függőleges mérő (bal)</item>
+        <item>Függőleges mérő (jobb)</item>
+        <item>Felső mérő</item>
+        <item>Alsó mérő</item>
+        <item>Középső tárcsa</item>
+        <item>Felső fényudvar</item>
+        <item>Alsó fényudvar</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Dupla gyűrű</item>
+        <item>Gyöngyök</item>
+        <item>Vonal és pont</item>
+        <item>24 órás jelölések</item>
+        <item>Csak folyamat</item>
+        <item>Ragyogás</item>
+        <item>Kéttónusú</item>
+        <item>Tű</item>
+        <item>Váltakozó</item>
+        <item>Szikra</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Lünetta széle</item>
+        <item>Belsőre húzott gyűrű</item>
+        <item>Belső gyűrű</item>
+        <item>Vastag gyűrű</item>
+        <item>Alul nyitott</item>
+        <item>Felül nyitott</item>
+        <item>Bal ív</item>
+        <item>Jobb ív</item>
+        <item>Dupla sáv</item>
+        <item>Bal oldalon nyitott</item>
+        <item>Jobb oldalon nyitott</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Kompakt kapszula</item>
+        <item>Négyzetes album</item>
+        <item>Halmozott kapszula</item>
+        <item>Jelvény</item>
+        <item>Üvegsáv</item>
+        <item>LCD</item>
+        <item>Körvonalas négyzet</item>
+        <item>Szalag</item>
+        <item>Időbuborék</item>
+        <item>Osztott tónus</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Idővonal (felül)</item>
+        <item>Idővonal (alul)</item>
+        <item>Szegmensek (felül)</item>
+        <item>Függőleges idővonal (bal)</item>
+        <item>Függőleges idővonal (jobb)</item>
+        <item>Középső tárcsa</item>
+        <item>Dupla idővonal</item>
+        <item>Szegmensek (alul)</item>
+        <item>Középső verem</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Lágy</item>
+        <item>Króm</item>
+        <item>Holografikus</item>
+        <item>Buborék</item>
+        <item>Sín</item>
+        <item>Naplemente</item>
+        <item>Albumkörvonal</item>
+        <item>Sötét üveg</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Legyező</item>
+        <item>Pálya</item>
+        <item>Alsó dokk</item>
+        <item>Oszlop</item>
+        <item>Osztott panel</item>
+        <item>Gyémánt</item>
+        <item>Körhinta</item>
+        <item>Háromszög</item>
+        <item>Lépcső</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Lágy</item>
+        <item>Lap</item>
+        <item>Tinta</item>
+        <item>Sín</item>
+        <item>Naplemente</item>
+        <item>Buborék</item>
+        <item>Króm</item>
+        <item>Holografikus</item>
+    </string-array>
+</resources>

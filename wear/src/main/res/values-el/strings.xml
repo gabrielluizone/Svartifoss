@@ -185,4 +185,21 @@
 
     <string name="metadata_about">Σχετικά</string>
     <string name="metadata_source">Αναπαράγεται σε</string>
+    <string name="action_name_open_quick_actions_panel">Άνοιγμα πάνελ γρήγορων ενεργειών</string>
+    <string name="action_name_fast_forward">Γρήγορη προώθηση</string>
+    <string name="action_name_rewind">Επαναφορά</string>
+    <string name="action_name_set_speed">Ορισμός ταχύτητας αναπαραγωγής</string>
+    <string name="action_name_seek_position">Μετάβαση σε θέση κομματιού</string>
+    <string name="action_name_set_volume">Ορισμός έντασης</string>
+    <string name="action_name_set_shuffle">Ορισμός τυχαίας σειράς</string>
+    <string name="action_name_set_repeat">Ορισμός επανάληψης</string>
+    <string name="action_name_open_volume_screen">Άνοιγμα οθόνης έντασης</string>
+    <string name="action_name_open_progress_screen">Άνοιγμα οθόνης προόδου</string>
+    <string name="action_name_open_face_picker">Άνοιγμα επιλογέα πρόσοψης</string>
+    <string name="action_name_close_watch_app">Κλείσιμο εφαρμογής ρολογιού</string>
+    <string name="volume_screen_title">Ένταση</string>
+    <string name="progress_screen_title">Πρόοδος</string>
+    <string name="progress_screen_cancel_seek">Ακύρωση μετακίνησης</string>
+    <string name="progress_screen_skip_back">Μετάβαση πίσω %1$d δευτερόλεπτα</string>
+    <string name="progress_screen_skip_forward">Μετάβαση μπροστά %1$d δευτερόλεπτα</string>
 </resources>

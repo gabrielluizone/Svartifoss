@@ -2076,6 +2076,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -2119,6 +2124,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
@@ -2345,4 +2355,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">کپی</string>
+    <string name="dev_report_copied">گزارش کپی شد</string>
+    <string name="dev_watch_snapshot_inspector">تصویر لحظه‌ای تنظیمات ساعت</string>
+    <string name="dev_watch_snapshot_inspector_description">آنچه همین حالا واقعاً به ساعت ارسال می‌شود: محدوده ظاهر فعال، اندازه برآوردشده، و کش‌های محدوده صفحه غیرفعالی که برای جا شدن در محدودیت حجم کنار گذاشته شده‌اند</string>
+    <string name="dev_data_layer_inspector">بازرس Data Layer</string>
+    <string name="dev_data_layer_inspector_description">گره‌های Wearable متصل و آخرین WatchInfo که برنامه ساعت پاسخ داده است - وضعیت خام پشت «هیچ ساعتی متصل نیست»</string>
+    <string name="dev_media_sessions_inspector">کاوشگر MediaSession</string>
+    <string name="dev_media_sessions_inspector_description">همه MediaSessionهای فعال فعلی، نه فقط موردی که دنبال می‌شود: کنش‌های اعلام‌شده، صف و مسیر پخش</string>
+    <string name="dev_view_phone_log">مشاهده گزارش تلفن</string>
+    <string name="dev_view_phone_log_description">انتهای گزارش Timber روی دیسک، به‌علاوه گزارش ساعت اگر «ارسال گزارش‌ها» قبلاً آن را دریافت کرده باشد</string>
+    <string name="dev_theme_submission_preflight">بررسی پیش از ارسال پوسته</string>
+    <string name="dev_theme_submission_preflight_description">هر پوسته ساعت ذخیره‌شده را از بررسی ارسال به جامعه عبور می‌دهد و اگر تنظیمی مانع باشد دقیقاً نام آن را نشان می‌دهد</string>
+    <string name="dev_appearance_resolution_inspector">بازرس حل تنظیمات ظاهر</string>
+    <string name="dev_appearance_resolution_inspector_description">برای هر کلید ظاهر در محدوده، نشان می‌دهد کدام‌یک از چهار مرحله حل واقعاً برنده شده است - مقدار صریح صفحه، پیش‌فرض هر صفحه، مقدار سراسری قدیمی یا پیش‌فرض تعریف - و مقداری که هرکدام برمی‌گرداند</string>
+    <string name="action_fast_forward">جلو بردن سریع</string>
+    <string name="action_rewind">عقب بردن</string>
+    <string name="action_set_playback_speed">تنظیم سرعت روی %1$s×</string>
+    <string name="action_seek_to_percent">پرش به %1$d%%</string>
+    <string name="action_set_volume_percent">تنظیم صدا روی %1$d%%</string>
+    <string name="action_set_shuffle_on">روشن کردن پخش تصادفی</string>
+    <string name="action_set_shuffle_off">خاموش کردن پخش تصادفی</string>
+    <string name="action_set_repeat_off">خاموش کردن تکرار</string>
+    <string name="action_set_repeat_all">تکرار همه</string>
+    <string name="action_set_repeat_one">تکرار یکی</string>
+    <string name="group_playback_speed">سرعت پخش</string>
+    <string name="group_track_position">موقعیت قطعه</string>
+    <string name="group_shuffle_mode">حالت پخش تصادفی</string>
+    <string name="group_repeat_mode">حالت تکرار</string>
+    <string name="group_volume_levels">سطح‌های صدا</string>
+    <string name="group_watch_screens">صفحه‌های ساعت</string>
+    <string name="group_find_music">پیدا کردن و پخش</string>
+    <string name="action_open_face_picker">باز کردن انتخاب‌گر واچ‌فیس</string>
+    <string name="action_close_watch_app">بستن برنامهٔ ساعت</string>
+    <string name="hand_gestures">ژست‌های دست</string>
+    <string name="hand_gestures_hint">هنگامی که Svartifoss باز است روی ساعت‌های سازگار در دسترس است.</string>
+    <string name="hand_gestures_hint_disconnected">ساعت را متصل کنید و Svartifoss را روی آن باز کنید تا ببینید از ژست‌های دست پشتیبانی می‌کند یا نه.</string>
+    <string name="hand_gestures_hint_outdated">برنامه ساعت را به‌روزرسانی کنید تا ببینید این ساعت از ژست‌های دست پشتیبانی می‌کند یا نه.</string>
+    <string name="hand_gestures_hint_unsupported">این ساعت از ژست‌های دست پشتیبانی نمی‌کند، بنابراین کنشی که اینجا تعیین شود هرگز اجرا نخواهد شد.</string>
+    <string name="hand_gestures_hint_disabled">ژست‌های دست روی این ساعت خاموش هستند. آن‌ها را روی خود ساعت از تنظیمات \u2192 ژست‌ها روشن کنید.</string>
+    <string name="hand_gestures_hint_ready">آماده روی این ساعت: وقتی پخش‌کننده Svartifoss باز است دو بار نیشگون بگیرید.</string>
+    <string name="hand_gesture_how_it_works">در حالی که مچ دستتان بالا است، شست و انگشت اشاره را دو بار سریع به هم نزدیک کنید. Wear OS این را کنش اصلی می‌نامد، بنابراین ساعت سازنده‌ای دیگر ممکن است ژست دست معادل خودش را داشته باشد.\n\nاین ژست فقط زمانی اجرا می‌شود که پخش‌کننده Svartifoss روی ساعت باز باشد و صفحه روشن باشد \u2014 نه از صفحه ساعت، نه روی صف یا منو، و نه روی نمایشگر همیشه‌روشن. کنشی که اجرا می‌شود همان کنشی است که برای وضعیت فعلی پخش تنظیم شده، پس آن را در هر دو صفحه کنترل‌ها تنظیم کنید تا در هر دو حالت کار کند.\n\nژست باید در تنظیمات \u2192 ژست‌ها روی خود ساعت نیز روشن باشد.</string>
+    <string name="double_pinch">نیشگون دوگانه</string>
+    <string name="icon_selection_search_hint">جست‌وجوی نمادها</string>
+    <string name="icon_selection_search_empty">هیچ نمادی با جست‌وجوی شما مطابقت ندارد</string>
+    <string name="open_quick_actions_panel">باز کردن پنل کنش‌های سریع</string>
+    <string name="open_volume_screen">باز کردن صفحهٔ صدا</string>
+    <string name="open_progress_screen">باز کردن صفحهٔ پیشرفت</string>
+    <string name="export_config_failed_detail">برون‌بری پشتیبان ممکن نشد: %1$s</string>
+    <string name="backup_selection_title">انتخاب محتوای پشتیبان</string>
+    <string name="backup_selection_description">بخش‌هایی از Svartifoss را که می‌خواهید ذخیره شوند انتخاب کنید. به‌طور پیش‌فرض همه‌چیز انتخاب است؛ هنگام وارد کردن این پشتیبان، بخش‌های انتخاب‌نشده بدون تغییر می‌مانند.</string>
+    <string name="backup_selection_select_all">انتخاب همه</string>
+    <string name="backup_selection_clear_all">پاک کردن همه</string>
+    <string name="backup_selection_export">برون‌بری پشتیبان</string>
+    <string name="backup_selection_empty">حداقل یک مورد را انتخاب کنید</string>
+    <string name="backup_section_buttons">پیکربندی دکمه‌ها</string>
+    <string name="backup_section_buttons_description">کنش‌های دکمه، تاج و حرکت‌های لمسی هنگام پخش یا توقف موسیقی.</string>
+    <string name="backup_section_actions">فهرست کنش‌ها</string>
+    <string name="backup_section_actions_description">فهرست مرتب کنش‌هایی که در منوی کنش ساعت نشان داده می‌شود.</string>
+    <string name="backup_section_app_settings">تنظیمات برنامه</string>
+    <string name="backup_section_app_settings_description">تنظیمات تلفن، رفتار ساعت، زبان، پخش و یکپارچه‌سازی‌ها.</string>
+    <string name="backup_section_watch_appearance">ظاهر ساعت و تم‌ها</string>
+    <string name="backup_section_watch_appearance_description">چیدمان‌ها، رنگ‌ها، تایپوگرافی، پنل‌ها، AOD و تم‌های سفارشی ذخیره‌شدهٔ ساعت.</string>
+    <string name="backup_section_playlist_shortcuts">میان‌برهای فهرست پخش</string>
+    <string name="backup_section_playlist_shortcuts_description">پیوندهای ذخیره‌شدهٔ موسیقی، آلبوم، هنرمند، فهرست پخش و سایر سرویس‌های پخش.</string>
+    <string name="backup_section_history">تاریخچهٔ جست‌وجو و پخش</string>
+    <string name="backup_section_history_description">جست‌وجوهای اخیر و قطعه‌های اخیراً پخش‌شده.</string>
+    <string name="backup_section_icons">نمادها و تصاویر هنری بارگیری‌شده</string>
+    <string name="backup_section_icons_description">نمادهای سفارشی کنش، جلد میان‌برها و نمادهای برنامهٔ ذخیره‌شده در حافظهٔ نهان.</string>
+    <string name="backup_section_privacy">حریم خصوصی و اعلان‌ها</string>
+    <string name="backup_section_privacy_description">گزارش‌های خرابی، اعلان‌های اطلاع‌رسانی و دیگر انتخاب‌های رضایت که برنامه ذخیره کرده است.</string>
+    <string name="backup_section_local_app_state">وضعیت محلی برنامه</string>
+    <string name="backup_section_local_app_state_description">رنگ تأکیدی فعلی، آخرین جایگاه منو، پیام‌های تکمیل‌شده و وضعیت به‌روزرسانی.</string>
+    <string name="backup_section_auxiliary_data">سایر داده‌های برنامه</string>
+    <string name="backup_section_auxiliary_data_description">تنظیمات و فایل‌های داخلی اضافه که متعلق به برنامه‌اند، از جمله محل‌های ذخیرهٔ دادهٔ آینده.</string>
+    <string name="pref_numeric_range">بین %1$d و %2$d.</string>
+    <string name="background_editor_artwork">تصویر هنری</string>
+    <string name="background_editor_layers">لایه‌ها</string>
+    <string name="background_editor_layers_count">%1$d از %2$d</string>
+    <string name="background_editor_add_layer">افزودن لایه</string>
+    <string name="background_editor_reset_layers">بازنشانی</string>
+    <string name="background_editor_empty">لایه‌ای وجود ندارد. تصویر هنری به‌تنهایی نمایش داده می‌شود.</string>
+    <string name="background_editor_note">لایهٔ بالای این فهرست روی همه‌چیز رسم می‌شود؛ لایهٔ پایین از همه به تصویر هنری نزدیک‌تر است.</string>
+    <string name="background_editor_full">می‌توانید تا %1$d لایه را روی هم قرار دهید.</string>
+    <string name="background_layer_kind_wash">پس‌زمینه</string>
+    <string name="background_layer_kind_shade">سایه‌پردازی</string>
+    <string name="background_layer_kind_floor">کف رنگ تأکیدی</string>
+    <string name="background_layer_move_up">انتقال این لایه به بالا</string>
+    <string name="background_layer_move_down">انتقال این لایه به پایین</string>
+    <string name="background_layer_more">گزینه‌های بیشتر برای این لایه</string>
+    <string name="background_layer_add_title">افزودن یک لایه</string>
+    <string name="background_layer_style_title">لایهٔ %1$s</string>
+    <string name="background_layer_opacity">شدت</string>
+    <string name="background_layer_color">رنگ</string>
+    <string name="background_layer_custom_color">انتخاب رنگ</string>
+    <string name="background_layer_duplicate">تکثیر</string>
+    <string name="background_layer_remove">حذف</string>
+    <string name="background_layer_color_default">پیش‌فرض</string>
+    <string name="background_layer_color_album">رنگ آلبوم</string>
+    <string name="background_layer_color_secondary">رنگ دوم آلبوم</string>
+    <string name="background_layer_color_tertiary">رنگ سوم آلبوم</string>
+    <string name="background_layer_color_desaturated">رنگ کم‌رنگ آلبوم</string>
+    <string name="background_layer_color_black">مشکی</string>
+    <string name="background_layer_color_custom">رنگ سفارشی</string>
+    <string name="background_layer_reset_title">لایه‌ها بازنشانی شوند؟</string>
+    <string name="background_layer_reset_message">پشته به سایه‌پردازی و کف رنگ تأکیدی که در ردیف‌های خودشان تنظیم شده‌اند برمی‌گردد؛ ساعتی با بیلد قدیمی‌تر هم همین را نمایش می‌دهد.</string>
+    <string name="watch_element_progress">پیشرفت</string>
+    <string name="watch_element_volume">صدا</string>
+    <string name="watch_element_quick_panel">کنش‌های سریع</string>
+    <string name="watch_element_queue">صف</string>
+    <string name="watch_element_lyrics">متن ترانه</string>
+    <string name="player_section_on_screen">روی صفحه</string>
+    <string name="player_element_app_icon">نماد برنامه</string>
+    <string name="player_element_controls">کنترل‌های پخش‌کننده</string>
+    <string name="player_element_tap_flash">چشمک لمس</string>
+    <string name="player_element_inner_progress">پیشرفت داخلی</string>
+    <string name="player_element_edge_arc">قوس لبه</string>
+    <string name="player_element_edge_seek">جابه‌جایی از لبه</string>
+    <string name="player_element_clock">ساعت</string>
+    <string name="player_element_cover_art">جلد آلبوم</string>
+    <string name="setting_album_art_filter">فیلتر تصویر آلبوم</string>
+    <string name="setting_album_art_filter_description">یک پردازش رنگی مستقل را روی هر سبک تصویر آلبوم اعمال کنید.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto با خط بسیار سبک برای ظاهری ظریف در نمایش.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto با خطی سبک و باز و نسبت‌های آشنای خانواده فونت.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto با خط متوسط قوی‌تر برای برچسب‌های فشرده و خوانا.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto با سنگین‌ترین وزن سیستم برای متن نمایشی پررنگ.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto به‌صورت افقی فشرده شده تا عنوان‌های بلندتر در فضای کمتری جا شوند.</string>
+    <string name="setting_wear_title_font">قلم عنوان</string>
+    <string name="setting_wear_title_text_case">حالت حروف عنوان</string>
+    <string name="setting_wear_artist_font">قلم هنرمند</string>
+    <string name="setting_wear_artist_text_case">حالت حروف هنرمند</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">یک sans گرد و دوستانه برای خواندن اولیه</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">یک قلم نمایشی Didone با کنتراست زیاد و حال‌وهوای ویرایشی</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">یک sans محکم برای پوستر با لبه‌ای کمیک و دست‌نوشته</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">یک sans هندسی آرام با فاصله‌گذاری سخاوتمندانه و یکنواخت</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">یک slab serif معاصر با پایانه‌های نرم و گرد</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">یک slab serif عظیم برای تأثیرگذاری زیاد در تیترها</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">یک قلم باریک دست‌کشیده با حروف کوچکِ بزرگ‌نما</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">یک sans فشرده و متراکم برای تیترهای پرقدرت</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">یک slab serif هندسی که در اندازه‌های کوچک هم محکم می‌ماند</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">یک قلم نمایشی کمیک‌بوکی با انرژی فریادگونه</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">یک قلم نمایشی نظامی شابلونی</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">یک serif ایستاده با منحنی‌های گرم و غیررسمی</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">یک sans انسان‌گرا با گوشه‌های کمی گرد</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">یک sans grotesque با فرم‌های قوی و بی‌پیرایه</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">یک monospace پالایش‌شده به سبک ماشین‌تحریر برای متن‌های نمایشی</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">یک slab serif گرد با لحن نرم و کتابی</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">یک serif کتابی قدیمی که برای متن‌های بلند تنظیم شده است</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">یک sans هندسی با کنتراست کم و پرداخت مدرن</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">یک serif مقاوم که در اندازه‌های متن بدنه هم خوب می‌ماند</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">یک sans فنی معاصر با اتصال‌های زاویه‌دار</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">یک monospace برنامه‌نویسی با نویسه‌های روشن و متمایز</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">یک monospace انسان‌گرا برای کد روی صفحه</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">یک قلم دست‌نویس بازیگوش با ضربه‌های گرد</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">یک sans هندسی با شخصیت وینتیج دههٔ ۱۹۲۰</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">یک sans هندسی در سنت Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">یک sans تایلندی و لاتین بدون حلقه با کمی شیب</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">یک sans طراحی‌شده برای کاهش فشار بصری هنگام خواندن</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">یک دست‌خط پیوسته و پررنگ با حال‌وهوای تابلوهای قدیمی</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">یک sans نیمه‌هندسی که گرما و دقت را متعادل می‌کند</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">یک sans مینیمال برای متن تمیز رابط کاربری</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">یک sans کاملاً گرد با پایانه‌های نرم</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">یک sans هندسی با ریتمی یکنواخت و معاصر</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">یک قلم تکنوی مربعی با حس بازی</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">یک sans فنی جمع‌وجور که روی شبکه طراحی شده است</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">یک grotesque مدرن با منحنی‌های باز و متمایز</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">یک قلم پیکسلی، درست مثل چیزی که از دستگاه آرکید بیرون آمده باشد</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">یک sans هندسی گرد با حس ملایم و سبک</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">یک sans فشرده و چهارگوش با زاویه‌های فنی</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">یک قلم نمایشی Art Deco با ریشه در نقاشی تابلوهای قدیمی</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">همراه تک‌فاصلهٔ Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">یک قلم نمایشی درشت با ضربه‌های بازیگوش و صریح</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">یک قلم صنعتی پهن با فرم‌های سنگین و مربعی</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">یک قلم نمایشی مایل و زنده با ریشه‌های گجراتی</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">یک قلم bitmap کوچک که یادآور نمایشگرهای نخستین رایانه‌هاست</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">یک monospace برای خواندن راحت کد</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">یک قلم فشردهٔ تمام‌حروف‌بزرگ با حضور پوسترگونه</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">یک قلم بلند و فشرده برای تیترهای دِواناگری و لاتین</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">یک sans انسان‌گرای چهارگوش با حال‌وهوای فنی</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">یک sans کاملاً گرد با لحنی صمیمی</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">یک قلم فشرده که تابلوهای قهوه‌خانه‌های دههٔ ۱۹۲۰ را تداعی می‌کند</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">یک slab serif با پایانه‌های مدرن و نرم‌برش‌خورده</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">یک sans انسان‌گرای دوستانه با فرم‌های باز و خوانا</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">یک sans گرم با فرم‌های محکم برای خواندن راحت</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">یک sans انسان‌گرای چندمنظوره برای رابط‌های واضح</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">یک serif متنی پالوده با لحن ویرایشی</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">یک serif کلاسیک کتابی که برای خواندن روی صفحه تنظیم شده است</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">یک sans grotesk کاربردی با ریتمی پهن و محکم</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">یک sans انسان‌گرای فنی با تناسب‌های دقیق</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">یک monospace فنی با بافتی صیقلی و خوانا</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">یک serif معاصر با شخصیت مهندسی‌شده</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">یک sans کاری تمیز با فرم‌های جمع‌وجور و کاربردی</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">یک grotesk نامتعارف با تناسب‌های دوستانه</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">یک sans هندسی با حس آینده‌گرا و جادار</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">یک sans هندسی مدرن با خطوط شهری شیک</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">یک sans معاصر و متعادل برای صفحه‌های کوچک</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">یک sans نمایشی مطمئن با تناسب‌های بیانگر</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">یک sans همراه و خوانا برای اطلاعات طولانی‌تر قطعه</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">یک monospace شفاف با لحن فنی مدرن</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">یک sans نامتعارف با فرم‌های بازیگوش و هدایت هنری</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">یک sans معاصر و انعطاف‌پذیر با دقتی آرام</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">یک sans تمیز و صمیمی برای خوانایی آسان</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">یک sans نمایشی گرد با شخصیت شاد</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">یک grotesk پرجنب‌وجوش که ساختار را با جزئیات عجیب ترکیب می‌کند</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">یک serif نمایشی با کنتراست زیاد برای عنوان‌های نمایشی</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">یک serif ادبی شیک با کنتراست زیاد</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">یک serif نمایشی ظریف با جزئیات خوشنویسانه</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">یک slab serif مقاوم که در اندازه‌های کوچک واضح می‌ماند</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">یک serif چندمنظوره برای خواندن متراکم و بیانگر</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">یک serif گرم قدیمی با صدایی کتابی</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">یک sans شیک با شکل حروف متمایز و پالوده</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">یک sans هندسی پررنگ برای تیترهای قدرتمند</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">یک sans مناسب فشرده‌سازی با انرژی ورزشی و پویا</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">یک sans نرم با فضای داخلی باز و حال‌وهوای دوستانهٔ تابلوها</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">یک sans چندمنظوره که گرمای انسان‌گرا و وضوح را متعادل می‌کند</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">یک sans واضح با الهام از تابلوهای حمل‌ونقل و ریتمی مطمئن</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">یک sans خنثی و دسترس‌پذیر برای رابط‌های روزمره</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">یک sans هندسی سبک با منحنی‌های نرم و مدرن</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">یک sans باریک و گرد با حس آینده‌گرای نرم</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">یک sans هندسی تمیز با شخصیت ظریفِ الهام‌گرفته از تایلندی</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">یک قلم نمایشی آینده‌گرای پهن برای بیشترین حضور</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">یک خانوادهٔ متغیر از sans تا monospace با صدای فنی و بازیگوش</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">یک monospace با عرض متغیر و بافت دیجیتال متمایز</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">یک sans گسترده و بسیار خوانا با پشتیبانی وسیع از خط‌ها</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">یک serif قابل‌اعتماد با پشتیبانی وسیع از خط‌ها</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">یک monospace چندزبانه برای ریتمی یکدست</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">یک sans مدرن و جمع‌وجور با ریتم واضح و تأثیرگرفته از عبری</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">یک sans انسان‌گرای محکم که برای خواندن واضح بهینه شده است</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">یک sans دوستانه برای نمایشگر با بافتی باز و گرد</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">یک sans هندسی جمع‌وجور با تناسب‌های متمایز</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">یک serif خوشنویسانه و پرجنب‌وجوش با شخصیت ادبی</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">یک sans انسان‌گرا و تمیز با خوانایی عالی برای رابط کاربری</string>
+    <string name="setting_wear_note_show_cover">جلد آلبوم</string>
+    <string name="aod_element_artwork">اثر هنری</string>
+    <string name="aod_element_clock">ساعت</string>
+    <string name="aod_element_track_info">اطلاعات قطعه</string>
+    <string name="aod_element_transport">کنترل پخش</string>
+    <string name="aod_element_progress">پیشرفت</string>
+    <string name="aod_element_up_next">بعدی</string>
+    <string name="aod_section_artwork">اثر هنری</string>
+    <string name="aod_control_tint">ته‌رنگ</string>
+    <string name="aod_control_brightness">روشنایی</string>
+    <string name="aod_control_art_treatment">پردازش</string>
+    <string name="aod_control_art_opacity">کدری</string>
+    <string name="mini_button_control_visibility">نمایش</string>
+    <string name="mini_button_control_arrangement">چیدمان</string>
+    <string name="mini_button_control_shape">شکل</string>
+    <string name="mini_button_control_background">پس‌زمینه</string>
+    <string name="mini_button_control_opacity">کدری</string>
+    <string name="mini_button_assign_action">تخصیص کنش‌ها</string>
+    <string name="mini_button_gestures_note">روی پخش‌کننده به بالا، پایین و چپ بکشید. کشیدن به راست همیشه ژست سیستم برای بستن است و هرگز رهگیری نمی‌شود.</string>
+    <string name="setting_wear_chat_cover_shape">شکل آواتار گفت‌وگو</string>
+    <string name="setting_wear_chat_show_cover">جلد آلبوم</string>
+    <string name="setting_wear_metadata_cover_shape">شکل جلد فراداده</string>
+    <string name="setting_wear_metadata_show_cover">جلد آلبوم</string>
+    <string-array name="wear_text_case_entries">
+        <item>عادی</item>
+        <item>حروف بزرگ</item>
+        <item>حروف کوچک</item>
+        <item>حالت عنوان</item>
+    </string-array>
+    <string name="wear_text_font_follow">پیروی از قلم سراسری</string>
+    <string name="category_wf_typography_track_time">زمان قطعه</string>
+    <string name="setting_wear_track_time_font">قلم زمان قطعه</string>
+    <string name="wear_track_time_font_follow">پیروی از طراحی</string>
+    <string name="setting_wear_track_time_font_weight">وزن زمان قطعه</string>
+    <string name="setting_wear_track_time_font_italic">زمان قطعهٔ ایتالیک</string>
+    <string name="setting_wear_track_time_font_scale">اندازهٔ زمان قطعه</string>
+    <string name="setting_wear_track_time_font_opacity">شفافیت زمان قطعه</string>
+    <string name="setting_wear_track_time_font_tracking">فاصلهٔ حروف زمان قطعه</string>
+    <string-array name="album_art_filter_entries">
+        <item>هیچ‌کدام</item>
+        <item>تک‌رنگ</item>
+        <item>گرم</item>
+        <item>سرد</item>
+        <item>ساعت طلایی</item>
+        <item>رزé</item>
+        <item>فیلم قدیمی</item>
+        <item>فیلم رنگ‌پریده</item>
+        <item>مات</item>
+        <item>زنده</item>
+        <item>پانچ</item>
+        <item>پاستلی</item>
+        <item>سپیا</item>
+        <item>سیانوتایپ</item>
+        <item>سبزآبی و نارنجی</item>
+        <item>کنتراست بالا</item>
+        <item>نور نرم</item>
+        <item>شب</item>
+    </string-array>
+    <string name="queue_item_now_playing">در حال پخش</string>
+    <string name="queue_item_unknown_title">قطعهٔ ناشناخته</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">صف پخش · %1$d قطعه</item>
+        <item quantity="other">صف پخش · %1$d قطعه</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">رنگ کف تأکیدی</string>
+    <string name="setting_wear_accent_floor_custom_color">رنگ سفارشی کف</string>
+    <string name="setting_wear_accent_floor_custom_color_description">وقتی «رنگ کف تأکیدی» روی «رنگ سفارشی» است، رنگ مورد استفاده را انتخاب کنید</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>تأکید آلبوم</item>
+        <item>رنگ دوم آلبوم</item>
+        <item>رنگ سوم آلبوم</item>
+        <item>رنگ سفارشی</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">یک sans رابط کاربری خنثی و بسیار خوانا برای مطالعهٔ روزمره</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">شکل حروفی با اولویت دسترس‌پذیری و فرم‌های متمایز که در اندازه‌های کوچک واضح می‌مانند</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">یک sans هندسی با گردی نرم — مطمئن و دوستانه</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">یک sans انسان‌گرای جمع‌وجور که به عنوان‌های بلند فضای بیشتری می‌دهد</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">یک قلم نمایشی بلند و فشرده با انرژی پوسترگونه</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">یک serif معاصر برای مطالعهٔ راحت متن‌های بلند</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">یک serif نرم و بیانگر با گرما و شخصیت</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">یک monospace آینده‌گرای رترو با لبه‌ای فنی</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">یک قلم نمایشی متراکم و فوق‌سنگین برای بیشترین کنتراست</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">یک دست‌خط روان با حس شخصی و زنده</string>
+    <string name="setting_wear_artist_text_mode">رفتار متن هنرمند</string>
+    <string name="setting_wear_album_art_source">منبع تصویر آلبوم</string>
+    <string name="setting_user_font">فونت خودم</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">وارد کردن فایل .ttf یا .otf از این تلفن</string>
+    <string name="setting_user_font_loaded">%1$s · برای جایگزینی یا حذف ضربه بزنید</string>
+    <string name="user_font_pick">انتخاب فایل فونت</string>
+    <string name="user_font_replace">جایگزینی</string>
+    <string name="user_font_remove">حذف</string>
+    <string name="user_font_imported">«%1$s» وارد شد. آن را از هر فهرست فونتی انتخاب کنید؛ در حال ارسال به ساعت شما است.</string>
+    <string name="user_font_removed">فونت واردشده شما حذف شد.</string>
+    <string name="user_font_error_too_large">اندازه آن فایل %1$s است. فونت باید کوچک‌تر از %2$s باشد تا سریع به ساعت برسد.</string>
+    <string name="user_font_error_not_a_font">آن فایل فونتی نیست که این تلفن بتواند بخواند. TrueType و OpenType (.ttf، .otf) کار می‌کنند؛ فونت‌های وب (.woff، .woff2) کار نمی‌کنند.</string>
+    <string name="user_font_error_unreadable">آن فایل خوانده نشد. دوباره انتخابش کنید یا ابتدا آن را روی این تلفن کپی کنید.</string>
+    <string name="user_font_not_shareable">پوسته‌هایی که از فونت خودتان استفاده می‌کنند روی این تلفن می‌مانند</string>
+    <string name="setting_custom_album_art_image">تصویر مورد استفاده</string>
+    <string name="setting_custom_album_art_folder">پوشه منبع تصویر</string>
+    <string name="setting_custom_album_art_none">هنوز انتخاب نشده — برای انتخاب ضربه بزنید</string>
+    <string name="setting_custom_album_art_chosen">%1$s · برای تغییر ضربه بزنید</string>
+    <string name="custom_album_art_image_set">آن تصویر اکنون پشت پخش‌کننده قرار می‌گیرد.</string>
+    <string name="custom_album_art_folder_set">برای هر قطعه یک تصویر از آن پوشه رسم می‌شود.</string>
+    <string name="custom_album_art_error">آن مورد باز نشد. دوباره انتخابش کنید یا چیزی از حافظه خود این تلفن انتخاب کنید.</string>
+    <string name="custom_album_art_not_shareable">پوسته‌هایی که از تصاویر خودتان استفاده می‌کنند روی این تلفن می‌مانند</string>
+    <string name="setting_wear_text_block_align">تراز متن</string>
+    <string name="setting_wear_text_block_align_description">لبه‌ای که متن قطعه با آن تراز می‌شود. «دنبال کردن صفحه» ترازی را که هر صفحه برای آن طراحی شده حفظ می‌کند.</string>
+    <string name="setting_wear_text_block_position">موقعیت متن</string>
+    <string name="setting_wear_text_block_position_description">جای متن قطعه روی صفحه. «دنبال کردن صفحه» موقعیتی را که هر صفحه برای آن طراحی شده حفظ می‌کند.</string>
+    <string name="setting_online_artwork">اثر هنری آنلاین</string>
+    <string name="setting_online_artwork_description">اجازه دهید صفحه ساعت تصویری را که آنلاین پیدا می‌شود نمایش دهد \u2014 هنرمند در حال اجرا، یا جلد آلبوم برای پخش‌کننده‌ای که تصویری منتشر نمی‌کند. تلفن شما جست‌وجو را در فهرست عمومی Deezer انجام می‌دهد و نتیجه را کش می‌کند؛ فقط نام قطعه و هنرمند ارسال می‌شوند و تا وقتی صفحه‌ای روی یکی از این منابع تنظیم نشده باشد چیزی جست‌وجو نمی‌شود. در حالت خاموش، اثر هنری خود پخش‌کننده استفاده می‌شود.</string>
 </resources>

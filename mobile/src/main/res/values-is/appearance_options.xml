@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Haf</item>
+        <item>Sólsetur</item>
+        <item>Miðkastljós</item>
+        <item>Glerslæða</item>
+        <item>Flauel</item>
+        <item>Noir-kastljós</item>
+        <item>Ísþvottur</item>
+        <item>Rósablóm</item>
+        <item>Prisma</item>
+        <item>Hálfmánabrún</item>
+        <item>Flóðbönd</item>
+        <item>Pappírshulstur</item>
+        <item>Rísandi lukt</item>
+        <item>Skiptar hillingar</item>
+        <item>Rólegt net</item>
+        <item>Næturljóð</item>
+        <item>Skýjarannsókn</item>
+        <item>Vökvapollar</item>
+        <item>Litamonólít</item>
+        <item>Skiptur tónn</item>
+        <item>Stigull</item>
+        <item>Tvílitur</item>
+        <item>Bönd</item>
+        <item>Vinjetta</item>
+        <item>Grafít</item>
+        <item>Kvikmynd</item>
+        <item>Akrýl</item>
+        <item>Möskvi</item>
+        <item>Geimþoka</item>
+        <item>Lífljómun</item>
+        <item>Regnbogaljómi</item>
+        <item>Sporbraut</item>
+        <item>Blekþvottur</item>
+        <item>Blómgun</item>
+        <item>Fjörður</item>
+        <item>Punktafylki</item>
+        <item>Skönnunarlínur</item>
+        <item>Ratsjá</item>
+        <item>Útlína</item>
+        <item>Flötótt</item>
+        <item>Plötufylling</item>
+        <item>Aukafylling</item>
+        <item>Þriðja fylling</item>
+        <item>Gler</item>
+        <item>Miðnætti</item>
+        <item>Reykur</item>
+        <item>Flóðlína</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Mosi</item>
+        <item>Lavenderþoka</item>
+        <item>Kirsuber</item>
+        <item>Djúpsævi</item>
+        <item>Ryk</item>
+        <item>Aflitað</item>
+        <item>Tunglsljós</item>
+        <item>Draumur</item>
+        <item>Innrautt</item>
+        <item>Skógur</item>
+        <item>Silfur</item>
+        <item>Nammi</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Efri dofnun</item>
+        <item>Miðkastljós</item>
+        <item>Skáhallur skuggi</item>
+        <item>Vinstra fortjald</item>
+        <item>Hægra fortjald</item>
+        <item>Miðband</item>
+        <item>Krossblöndun</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Öfugt lauf</item>
+        <item>Öfugur dropi</item>
+        <item>Smásteinn</item>
+        <item>Bogi</item>
+        <item>Skjöldur</item>
+        <item>Öfugur bogi</item>
+        <item>Öfugur skjöldur</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Hvísl</item>
+        <item>Geislandi</item>
+        <item>Flóð</item>
+        <item>Glit</item>
+        <item>Djúpur ljómi</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Útlína plötu</item>
+        <item>Plötustigull</item>
+        <item>Aukalitur plötu</item>
+        <item>Plötugler</item>
+        <item>Þriðji litur plötu</item>
+        <item>Neonútlína</item>
+    </string-array>
+</resources>

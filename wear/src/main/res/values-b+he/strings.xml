@@ -185,4 +185,21 @@
 
     <string name="metadata_about">אודות</string>
     <string name="metadata_source">מתנגן ב-</string>
+    <string name="action_name_open_quick_actions_panel">פתיחת חלונית פעולות מהירות</string>
+    <string name="action_name_fast_forward">הרצה קדימה</string>
+    <string name="action_name_rewind">הרצה אחורה</string>
+    <string name="action_name_set_speed">הגדרת מהירות השמעה</string>
+    <string name="action_name_seek_position">מעבר למיקום ברצועה</string>
+    <string name="action_name_set_volume">הגדרת עוצמת הקול</string>
+    <string name="action_name_set_shuffle">הגדרת ערבוב</string>
+    <string name="action_name_set_repeat">הגדרת חזרה</string>
+    <string name="action_name_open_volume_screen">פתיחת מסך עוצמת הקול</string>
+    <string name="action_name_open_progress_screen">פתיחת מסך התקדמות</string>
+    <string name="action_name_open_face_picker">פתיחת בורר פני השעון</string>
+    <string name="action_name_close_watch_app">סגירת אפליקציית השעון</string>
+    <string name="volume_screen_title">עוצמת קול</string>
+    <string name="progress_screen_title">התקדמות</string>
+    <string name="progress_screen_cancel_seek">ביטול דילוג למיקום</string>
+    <string name="progress_screen_skip_back">דילוג %1$d שניות אחורה</string>
+    <string name="progress_screen_skip_forward">דילוג %1$d שניות קדימה</string>
 </resources>

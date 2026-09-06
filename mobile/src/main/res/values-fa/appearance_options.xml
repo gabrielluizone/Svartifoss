@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>اقیانوس</item>
+        <item>غروب</item>
+        <item>نورافکن میانی</item>
+        <item>پرده شیشه‌ای</item>
+        <item>مخمل</item>
+        <item>نورافکن نوآر</item>
+        <item>شست‌وشوی یخی</item>
+        <item>شکوفه رز</item>
+        <item>منشور</item>
+        <item>لبه هلال</item>
+        <item>نوارهای جزر و مد</item>
+        <item>غلاف کاغذی</item>
+        <item>بالاآمدن فانوس</item>
+        <item>سراب دوپاره</item>
+        <item>شبکه آرام</item>
+        <item>نوکتورن</item>
+        <item>مطالعه ابر</item>
+        <item>حوضچه‌های مایع</item>
+        <item>یکپارچه رنگی</item>
+        <item>تون دوپاره</item>
+        <item>گرادیان</item>
+        <item>دو رنگ</item>
+        <item>نوارها</item>
+        <item>وینیت</item>
+        <item>گرافیت</item>
+        <item>سینما</item>
+        <item>اکریلیک</item>
+        <item>مش</item>
+        <item>سحابی</item>
+        <item>زیست‌تابی</item>
+        <item>رنگین‌تاب</item>
+        <item>مدار</item>
+        <item>شست‌وشوی جوهری</item>
+        <item>شکوفه</item>
+        <item>فیورد</item>
+        <item>ماتریس نقطه‌ای</item>
+        <item>خطوط اسکن</item>
+        <item>رادار</item>
+        <item>کانتور</item>
+        <item>چندوجهی</item>
+        <item>پرکردن آلبوم</item>
+        <item>پرکردن دوم</item>
+        <item>پرکردن سوم</item>
+        <item>شیشه</item>
+        <item>نیمه‌شب</item>
+        <item>دود</item>
+        <item>خط جزر و مد</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>خزه</item>
+        <item>مه اسطوخودوس</item>
+        <item>گیلاس</item>
+        <item>دریای عمیق</item>
+        <item>غبار</item>
+        <item>سفیدشده</item>
+        <item>مهتاب</item>
+        <item>رویا</item>
+        <item>فروسرخ</item>
+        <item>جنگل</item>
+        <item>نقره‌ای</item>
+        <item>آبنبات</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>محو بالایی</item>
+        <item>نورافکن میانی</item>
+        <item>سایه مورب</item>
+        <item>پرده چپ</item>
+        <item>پرده راست</item>
+        <item>نوار میانی</item>
+        <item>محو متقاطع</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>برگ وارونه</item>
+        <item>قطره وارونه</item>
+        <item>سنگ‌ریزه</item>
+        <item>قوس</item>
+        <item>سپر</item>
+        <item>قوس وارونه</item>
+        <item>سپر وارونه</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>نجوا</item>
+        <item>تابان</item>
+        <item>سیلاب</item>
+        <item>سوسو</item>
+        <item>درخشش عمیق</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>خط دور آلبوم</item>
+        <item>گرادیان آلبوم</item>
+        <item>رنگ دوم آلبوم</item>
+        <item>شیشه آلبوم</item>
+        <item>رنگ سوم آلبوم</item>
+        <item>خط دور نئون</item>
+    </string-array>
+</resources>

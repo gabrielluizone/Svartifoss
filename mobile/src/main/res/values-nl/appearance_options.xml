@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Oceaan</item>
+        <item>Zonsondergang</item>
+        <item>Middenspot</item>
+        <item>Glazen sluier</item>
+        <item>Fluweel</item>
+        <item>Noir-spot</item>
+        <item>IJswassing</item>
+        <item>Rozenbloei</item>
+        <item>Prisma</item>
+        <item>Halvemaanrand</item>
+        <item>Getijbanden</item>
+        <item>Papieren hoes</item>
+        <item>Opkomende lantaarn</item>
+        <item>Gesplitste luchtspiegeling</item>
+        <item>Rustig raster</item>
+        <item>Nocturne</item>
+        <item>Wolkenstudie</item>
+        <item>Vloeibare poelen</item>
+        <item>Kleurmonoliet</item>
+        <item>Gesplitste toon</item>
+        <item>Verloop</item>
+        <item>Duotoon</item>
+        <item>Banden</item>
+        <item>Vignet</item>
+        <item>Grafiet</item>
+        <item>Cinema</item>
+        <item>Acryl</item>
+        <item>Mesh</item>
+        <item>Nevel</item>
+        <item>Bioluminescentie</item>
+        <item>Iriserend</item>
+        <item>Baan</item>
+        <item>Inktwassing</item>
+        <item>Bloei</item>
+        <item>Fjord</item>
+        <item>Puntenmatrix</item>
+        <item>Scanlijnen</item>
+        <item>Radar</item>
+        <item>Contour</item>
+        <item>Gefacetteerd</item>
+        <item>Albumvulling</item>
+        <item>Secundaire vulling</item>
+        <item>Tertiaire vulling</item>
+        <item>Glas</item>
+        <item>Middernacht</item>
+        <item>Rook</item>
+        <item>Getijlijn</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Mos</item>
+        <item>Lavendelnevel</item>
+        <item>Kers</item>
+        <item>Diepzee</item>
+        <item>Stof</item>
+        <item>Gebleekt</item>
+        <item>Maanlicht</item>
+        <item>Droom</item>
+        <item>Infrarood</item>
+        <item>Bos</item>
+        <item>Zilver</item>
+        <item>Snoep</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Bovenste vervaging</item>
+        <item>Middenspot</item>
+        <item>Diagonale schaduw</item>
+        <item>Linkergordijn</item>
+        <item>Rechtergordijn</item>
+        <item>Middenband</item>
+        <item>Overvloeiing</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Omgekeerd blad</item>
+        <item>Omgekeerde druppel</item>
+        <item>Kiezel</item>
+        <item>Boog</item>
+        <item>Schild</item>
+        <item>Omgekeerde boog</item>
+        <item>Omgekeerd schild</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Fluistering</item>
+        <item>Stralend</item>
+        <item>Overstroming</item>
+        <item>Glimmer</item>
+        <item>Diepe gloed</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Albumomtrek</item>
+        <item>Albumverloop</item>
+        <item>Secundaire albumkleur</item>
+        <item>Albumglas</item>
+        <item>Tertiaire albumkleur</item>
+        <item>Neoncontour</item>
+    </string-array>
+</resources>

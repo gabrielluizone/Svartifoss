@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Mga detalye ng theme</string>
+    <string name="community_theme_detail_preview_screen">Preview screen</string>
+    <string name="community_theme_detail_surface_player">Player</string>
+    <string name="community_theme_detail_surface_aod">Always-on</string>
+    <string name="community_theme_detail_surface_volume">Volume</string>
+    <string name="community_theme_detail_surface_progress">Progress</string>
+    <string name="community_theme_detail_surface_quick_panel">Quick panel</string>
+    <string name="community_theme_detail_surface_queue">Queue</string>
+    <string name="community_theme_detail_preview_label">Preview ng %1$s</string>
+    <string name="community_theme_detail_preview_description">Preview ng %1$s sa %2$s screen</string>
+    <string name="community_theme_detail_preview_privacy">Maaaring lumabas ang kasalukuyang album cover mo sa preview na ito sa phone mo lamang. Hindi ito kailanman ina-upload; sample text at timing pa rin ang ginagamit.</string>
+    <string name="community_theme_detail_information">Impormasyon ng theme</string>
+    <string name="community_theme_detail_byline">Ni %1$s</string>
+    <string name="community_theme_detail_layout">Base layout</string>
+    <string name="community_theme_detail_revision">Revision</string>
+    <string name="community_theme_detail_minimum_version">Pinakamababang bersyon ng Svartifoss</string>
+    <string name="community_theme_detail_published">Na-publish</string>
+    <string name="community_theme_detail_visual_settings">Mga visual setting</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s visual na setting</item>
+        <item quantity="other">%1$s visual na setting</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Hindi available</string>
+    <string name="community_theme_detail_add_apply">Idagdag at i-apply</string>
+    <string name="community_theme_detail_remove">Alisin ang theme</string>
+    <string name="community_theme_detail_remove_title">Alisin ang “%1$s” sa Mga theme ko?</string>
+    <string name="community_theme_detail_remove_message">Permanenteng aalisin ang naka-save na kopyang ito at anumang edit na ginawa mo rito. Kung kasalukuyan itong naka-apply, babalik ang relo mo sa built-in na base layout nito.</string>
+    <string name="community_theme_detail_removed">Inalis ang theme sa Mga theme ko</string>
+    <string name="community_theme_detail_remove_error">Hindi maalis ang theme na ito</string>
+    <string name="community_theme_detail_like">I-like</string>
+    <string name="community_theme_detail_unlike">Alisin ang like</string>
+    <string name="community_theme_detail_like_loading">Sinusuri…</string>
+    <string name="community_theme_detail_like_description">I-like ang %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Alisin ang like sa %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Kinansela ang pag-sign in sa Google. Hindi na-save ang like mo.</string>
+    <string name="community_theme_detail_like_error">Hindi ma-save ang like mo. Suriin ang koneksyon at subukang muli.</string>
+    <string name="community_theme_detail_like_not_ready">Hindi pa handa ang mga like para sa theme na ito. I-refresh ang mga theme ng komunidad pagkatapos ng susunod na publication.</string>
+    <string name="community_theme_detail_like_saved">Na-save ang like mo. Maa-update ang public counts sa susunod na publication ng catalog.</string>
+    <string name="community_theme_detail_unlike_saved">Inalis ang like mo. Maa-update ang public counts sa susunod na publication ng catalog.</string>
+    <string name="community_theme_detail_apply_existing">Nasa Mga theme ko na ang theme na ito at na-apply na sa relo mo</string>
+    <string name="community_theme_detail_requires_app_version">Kailangan ng theme na ito ang Svartifoss %1$s bago ito maidagdag.</string>
+    <string name="community_theme_detail_load_error">Hindi ma-load ang mga detalye ng theme na ito. Bumalik sa mga theme ng komunidad at subukang muli.</string>
+    <string name="community_theme_detail_profile_mismatch">Hindi tumutugma ang na-download na profile sa public details ng theme na ito. Bumalik sa mga theme ng komunidad at subukang muli.</string>
+    <string name="community_theme_detail_screenshot_description">Larawan ng theme na ito sa relo ng may-akda</string>
+    <string name="community_theme_detail_source_author">Relo ng may-akda</string>
+    <string name="community_theme_detail_source_rendered">Generated preview</string>
+    <string name="community_theme_detail_show_rendered">Ipakita ang generated preview</string>
+    <string name="community_theme_detail_show_author">Ipakita ang larawan ng may-akda</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

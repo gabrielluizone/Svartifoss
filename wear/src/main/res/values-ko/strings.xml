@@ -185,4 +185,21 @@
 
     <string name="metadata_about">정보</string>
     <string name="metadata_source">재생 위치</string>
+    <string name="action_name_open_quick_actions_panel">빠른 동작 패널 열기</string>
+    <string name="action_name_fast_forward">빨리 감기</string>
+    <string name="action_name_rewind">되감기</string>
+    <string name="action_name_set_speed">재생 속도 설정</string>
+    <string name="action_name_seek_position">트랙 위치로 이동</string>
+    <string name="action_name_set_volume">볼륨 설정</string>
+    <string name="action_name_set_shuffle">셔플 설정</string>
+    <string name="action_name_set_repeat">반복 설정</string>
+    <string name="action_name_open_volume_screen">볼륨 화면 열기</string>
+    <string name="action_name_open_progress_screen">진행률 화면 열기</string>
+    <string name="action_name_open_face_picker">페이스 선택기 열기</string>
+    <string name="action_name_close_watch_app">시계 앱 닫기</string>
+    <string name="volume_screen_title">볼륨</string>
+    <string name="progress_screen_title">진행률</string>
+    <string name="progress_screen_cancel_seek">탐색 취소</string>
+    <string name="progress_screen_skip_back">%1$d초 뒤로 건너뛰기</string>
+    <string name="progress_screen_skip_forward">%1$d초 앞으로 건너뛰기</string>
 </resources>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">تخطيط حلقة التقدم</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>شفاف بالكامل</item>
+        <item>اللون الثانوي</item>
+        <item>اللون الثالث</item>
+        <item>شبكة لونية</item>
+        <item>الشفق القطبي</item>
+        <item>ضوء موضعي</item>
+        <item>تظليل الحواف</item>
+        <item>نغمة منقسمة</item>
+        <item>أشرطة لونية</item>
+        <item>منتصف الليل</item>
+        <item>هالة</item>
+        <item>تمويه دخاني</item>
+        <item>غروب</item>
+        <item>محيط</item>
+        <item>سديم</item>
+        <item>جمرة</item>
+        <item>خط المد</item>
+        <item>تلألؤ حيوي</item>
+        <item>قزحي</item>
+        <item>غرافيت</item>
+        <item>سينما</item>
+        <item>مدار</item>
+        <item>أفق</item>
+        <item>غسل بالحبر</item>
+        <item>إزهار</item>
+        <item>فيورد</item>
+        <item>شبكة نقطية</item>
+        <item>خط مسح</item>
+        <item>رادار</item>
+        <item>خطوط الكنتور</item>
+        <item>متعدد الأوجه</item>
+        <item>غسق</item>
+        <item>جليد</item>
+        <item>وردة</item>
+        <item>ورق</item>
+        <item>كتلة</item>
+        <item>فانوس</item>
+        <item>نوار</item>
+        <item>مخمل</item>
+        <item>سراب</item>
+        <item>توهج مزهر</item>
+        <item>سحابة</item>
+        <item>نوكتورن</item>
+        <item>سائل</item>
+        <item>مد وجزر</item>
+        <item>فينيل</item>
+        <item>هالة شمسية</item>
+        <item>هلال</item>
+        <item>شبكة</item>
+        <item>ستار زجاجي</item>
+        <item>Material</item>
+        <item>ملصق</item>
+        <item>استوديو</item>
+        <item>طيف</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>خرز</item>
+        <item>سكة مزدوجة</item>
+        <item>نبض</item>
+        <item>كروم</item>
+        <item>طيف</item>
+        <item>درجات</item>
+        <item>حلوى</item>
+        <item>شبح</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>حافة مزدوجة</item>
+        <item>مقياس عمودي (يسار)</item>
+        <item>مقياس عمودي (يمين)</item>
+        <item>مقياس علوي</item>
+        <item>مقياس سفلي</item>
+        <item>قرص وسطي</item>
+        <item>هالة علوية</item>
+        <item>هالة سفلية</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>حلقة مزدوجة</item>
+        <item>خرز</item>
+        <item>شرطة ونقطة</item>
+        <item>علامات 24 ساعة</item>
+        <item>التقدم فقط</item>
+        <item>توهج</item>
+        <item>ثنائي اللون</item>
+        <item>إبرة</item>
+        <item>متناوب</item>
+        <item>شرارة</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>حافة الإطار</item>
+        <item>حلقة غائرة</item>
+        <item>حلقة داخلية</item>
+        <item>حلقة عريضة</item>
+        <item>فتح من الأسفل</item>
+        <item>فتح من الأعلى</item>
+        <item>قوس أيسر</item>
+        <item>قوس أيمن</item>
+        <item>مسار مزدوج</item>
+        <item>فتح من اليسار</item>
+        <item>فتح من اليمين</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>كبسولة مضغوطة</item>
+        <item>ألبوم مربع</item>
+        <item>كبسولة مكدسة</item>
+        <item>شارة</item>
+        <item>شريط زجاجي</item>
+        <item>LCD</item>
+        <item>مربع بإطار</item>
+        <item>شريط</item>
+        <item>فقاعة الوقت</item>
+        <item>نغمة منقسمة</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>خط زمني (أعلى)</item>
+        <item>خط زمني (أسفل)</item>
+        <item>مقاطع (أعلى)</item>
+        <item>خط زمني عمودي (يسار)</item>
+        <item>خط زمني عمودي (يمين)</item>
+        <item>قرص وسطي</item>
+        <item>خط زمني مزدوج</item>
+        <item>مقاطع (أسفل)</item>
+        <item>تكديس وسطي</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>ناعم</item>
+        <item>كروم</item>
+        <item>هولوغرافي</item>
+        <item>فقاعة</item>
+        <item>سكة</item>
+        <item>غروب</item>
+        <item>حدود الألبوم</item>
+        <item>زجاج داكن</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>مروحة</item>
+        <item>مدار</item>
+        <item>رصيف سفلي</item>
+        <item>عمود</item>
+        <item>لوحة منقسمة</item>
+        <item>ماسة</item>
+        <item>دوّار</item>
+        <item>مثلث</item>
+        <item>درج</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>ناعم</item>
+        <item>لوح</item>
+        <item>حبر</item>
+        <item>سكة</item>
+        <item>غروب</item>
+        <item>فقاعة</item>
+        <item>كروم</item>
+        <item>هولوغرافي</item>
+    </string-array>
+</resources>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>มหาสมุทร</item>
+        <item>พระอาทิตย์ตก</item>
+        <item>สปอตไลต์ตรงกลาง</item>
+        <item>ม่านกระจก</item>
+        <item>กำมะหยี่</item>
+        <item>สปอตไลต์นัวร์</item>
+        <item>ล้างด้วยน้ำแข็ง</item>
+        <item>กุหลาบบาน</item>
+        <item>ปริซึม</item>
+        <item>ขอบเสี้ยวพระจันทร์</item>
+        <item>แถบน้ำขึ้นน้ำลง</item>
+        <item>ปลอกกระดาษ</item>
+        <item>โคมไฟลอยขึ้น</item>
+        <item>ภาพลวงตาแบบแบ่ง</item>
+        <item>ตารางเงียบ</item>
+        <item>น็อกเทิร์น</item>
+        <item>การศึกษาเมฆ</item>
+        <item>แอ่งของเหลว</item>
+        <item>โมโนลิธสี</item>
+        <item>โทนแบบแบ่ง</item>
+        <item>ไล่สี</item>
+        <item>ดูโอโทน</item>
+        <item>แถบ</item>
+        <item>วิกเน็ต</item>
+        <item>กราไฟต์</item>
+        <item>ภาพยนตร์</item>
+        <item>อะคริลิก</item>
+        <item>ตาข่าย</item>
+        <item>เนบิวลา</item>
+        <item>การเรืองแสงทางชีวภาพ</item>
+        <item>เหลือบรุ้ง</item>
+        <item>วงโคจร</item>
+        <item>ล้างหมึก</item>
+        <item>ดอกไม้บาน</item>
+        <item>ฟยอร์ด</item>
+        <item>ดอตเมทริกซ์</item>
+        <item>เส้นสแกน</item>
+        <item>เรดาร์</item>
+        <item>เส้นขอบ</item>
+        <item>เหลี่ยมมุม</item>
+        <item>สีเติมอัลบั้ม</item>
+        <item>สีเติมรอง</item>
+        <item>สีเติมลำดับสาม</item>
+        <item>กระจก</item>
+        <item>เที่ยงคืน</item>
+        <item>ควัน</item>
+        <item>เส้นน้ำขึ้นน้ำลง</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>มอส</item>
+        <item>หมอกลาเวนเดอร์</item>
+        <item>เชอร์รี</item>
+        <item>ทะเลลึก</item>
+        <item>ฝุ่น</item>
+        <item>ฟอกสี</item>
+        <item>แสงจันทร์</item>
+        <item>ความฝัน</item>
+        <item>อินฟราเรด</item>
+        <item>ป่า</item>
+        <item>เงิน</item>
+        <item>ลูกกวาด</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>จางด้านบน</item>
+        <item>สปอตไลต์ตรงกลาง</item>
+        <item>เงาทแยง</item>
+        <item>ม่านซ้าย</item>
+        <item>ม่านขวา</item>
+        <item>แถบตรงกลาง</item>
+        <item>ครอสเฟด</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>ใบไม้กลับด้าน</item>
+        <item>หยดกลับด้าน</item>
+        <item>ก้อนกรวด</item>
+        <item>ส่วนโค้ง</item>
+        <item>โล่</item>
+        <item>ส่วนโค้งกลับด้าน</item>
+        <item>โล่กลับด้าน</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>กระซิบ</item>
+        <item>เปล่งประกาย</item>
+        <item>ท่วม</item>
+        <item>ประกายระยิบ</item>
+        <item>เรืองแสงลึก</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>เส้นขอบอัลบั้ม</item>
+        <item>ไล่สีอัลบั้ม</item>
+        <item>สีรองของอัลบั้ม</item>
+        <item>กระจกอัลบั้ม</item>
+        <item>สีลำดับสามของอัลบั้ม</item>
+        <item>เส้นขอบนีออน</item>
+    </string-array>
+</resources>

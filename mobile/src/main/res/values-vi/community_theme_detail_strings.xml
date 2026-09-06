@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Chi tiết chủ đề</string>
+    <string name="community_theme_detail_preview_screen">Màn hình xem trước</string>
+    <string name="community_theme_detail_surface_player">Trình phát</string>
+    <string name="community_theme_detail_surface_aod">Luôn bật</string>
+    <string name="community_theme_detail_surface_volume">Âm lượng</string>
+    <string name="community_theme_detail_surface_progress">Tiến trình</string>
+    <string name="community_theme_detail_surface_quick_panel">Bảng nhanh</string>
+    <string name="community_theme_detail_surface_queue">Hàng đợi</string>
+    <string name="community_theme_detail_preview_label">Bản xem trước %1$s</string>
+    <string name="community_theme_detail_preview_description">Bản xem trước %1$s trên màn hình %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Ảnh bìa album hiện tại của bạn chỉ có thể xuất hiện trong bản xem trước này trên điện thoại. Ảnh không bao giờ được tải lên; văn bản mẫu và thời gian vẫn được sử dụng.</string>
+    <string name="community_theme_detail_information">Thông tin chủ đề</string>
+    <string name="community_theme_detail_byline">Bởi %1$s</string>
+    <string name="community_theme_detail_layout">Bố cục cơ sở</string>
+    <string name="community_theme_detail_revision">Bản sửa đổi</string>
+    <string name="community_theme_detail_minimum_version">Phiên bản Svartifoss tối thiểu</string>
+    <string name="community_theme_detail_published">Đã xuất bản</string>
+    <string name="community_theme_detail_visual_settings">Cài đặt hình ảnh</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s cài đặt hình ảnh</item>
+        <item quantity="other">%1$s cài đặt hình ảnh</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Không khả dụng</string>
+    <string name="community_theme_detail_add_apply">Thêm và áp dụng</string>
+    <string name="community_theme_detail_remove">Xóa chủ đề</string>
+    <string name="community_theme_detail_remove_title">Xóa “%1$s” khỏi Chủ đề của tôi?</string>
+    <string name="community_theme_detail_remove_message">Bản sao đã lưu này và mọi chỉnh sửa bạn thực hiện sẽ bị xóa vĩnh viễn. Nếu đang được áp dụng, đồng hồ sẽ trở về bố cục cơ sở tích hợp.</string>
+    <string name="community_theme_detail_removed">Đã xóa chủ đề khỏi Chủ đề của tôi</string>
+    <string name="community_theme_detail_remove_error">Không thể xóa chủ đề này</string>
+    <string name="community_theme_detail_like">Thích</string>
+    <string name="community_theme_detail_unlike">Bỏ thích</string>
+    <string name="community_theme_detail_like_loading">Đang kiểm tra…</string>
+    <string name="community_theme_detail_like_description">Thích %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Bỏ thích %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Đã hủy đăng nhập Google. Lượt thích của bạn chưa được lưu.</string>
+    <string name="community_theme_detail_like_error">Không thể lưu lượt thích của bạn. Hãy kiểm tra kết nối rồi thử lại.</string>
+    <string name="community_theme_detail_like_not_ready">Lượt thích cho chủ đề này chưa sẵn sàng. Hãy làm mới Chủ đề cộng đồng sau lần xuất bản tiếp theo.</string>
+    <string name="community_theme_detail_like_saved">Đã lưu lượt thích của bạn. Số lượt công khai sẽ được cập nhật ở lần xuất bản danh mục tiếp theo.</string>
+    <string name="community_theme_detail_unlike_saved">Đã xóa lượt thích của bạn. Số lượt công khai sẽ được cập nhật ở lần xuất bản danh mục tiếp theo.</string>
+    <string name="community_theme_detail_apply_existing">Chủ đề này đã có trong Chủ đề của tôi và đã được áp dụng cho đồng hồ của bạn</string>
+    <string name="community_theme_detail_requires_app_version">Chủ đề này cần Svartifoss %1$s trước khi có thể được thêm.</string>
+    <string name="community_theme_detail_load_error">Không thể tải chi tiết chủ đề này. Hãy quay lại Chủ đề cộng đồng rồi thử lại.</string>
+    <string name="community_theme_detail_profile_mismatch">Hồ sơ đã tải xuống không khớp với chi tiết công khai của chủ đề này. Hãy quay lại Chủ đề cộng đồng rồi thử lại.</string>
+    <string name="community_theme_detail_screenshot_description">Ảnh chủ đề này trên đồng hồ của tác giả</string>
+    <string name="community_theme_detail_source_author">Đồng hồ của tác giả</string>
+    <string name="community_theme_detail_source_rendered">Bản xem trước đã tạo</string>
+    <string name="community_theme_detail_show_rendered">Hiện bản xem trước đã tạo</string>
+    <string name="community_theme_detail_show_author">Hiện ảnh của tác giả</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

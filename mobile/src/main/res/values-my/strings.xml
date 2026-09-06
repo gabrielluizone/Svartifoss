@@ -1,0 +1,2215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="dev_report_copy">ကူးယူမည်</string>
+    <string name="dev_report_copied">Report ကို ကူးယူပြီး</string>
+    <string name="dev_watch_snapshot_inspector">နာရီရွေးချယ်မှု snapshot</string>
+    <string name="dev_watch_snapshot_inspector_description">ယခု နာရီသို့ တကယ်ပို့မည့်အရာများ: active appearance scope၊ ခန့်မှန်းအရွယ်အစားနှင့် budget အတွင်း ဝင်စေရန် ဖယ်ထားသော inactive face-scope cache များ</string>
+    <string name="dev_data_layer_inspector">Data Layer စစ်ဆေးကိရိယာ</string>
+    <string name="dev_data_layer_inspector_description">ချိတ်ဆက်ထားသော Wearable nodes နှင့် နာရီအက်ပ်က နောက်ဆုံးဖြေထားသော WatchInfo — \"No watch connected\" နောက်က ကုန်ကြမ်းအခြေအနေ</string>
+    <string name="dev_media_sessions_inspector">MediaSession explorer</string>
+    <string name="dev_media_sessions_inspector_description">Track လုပ်ထားသောတစ်ခုသာမက လက်ရှိ active ဖြစ်နေသော MediaSession တိုင်း: ကြေညာထားသောလုပ်ဆောင်ချက်များ၊ queue၊ playback route</string>
+    <string name="dev_view_phone_log">ဖုန်း log ကို ကြည့်မည်</string>
+    <string name="dev_view_phone_log_description">Disk ပေါ်ရှိ Timber log ၏ နောက်ဆုံးပိုင်း၊ ထို့အပြင် \"Send logs\" ဖြင့် ယခင်က ရယူထားပါက နာရီ log လည်း ပါဝင်သည်</string>
+    <string name="dev_theme_submission_preflight">သီမ်တင်သွင်းမှု ကြိုတင်စစ်ဆေးခြင်း</string>
+    <string name="dev_theme_submission_preflight_description">သိမ်းထားသော နာရီသီမ်တိုင်းကို community submission စစ်ဆေးမှုမှ ဖြတ်သန်းစေပြီး တားဆီးနေသော ဆက်တင်ရှိပါက အတိအကျ အမည်ဖော်ပြသည်</string>
+    <string name="dev_appearance_resolution_inspector">ပုံပန်းသဏ္ဌာန် resolution စစ်ဆေးကိရိယာ</string>
+    <string name="dev_appearance_resolution_inspector_description">Scoped appearance key တစ်ခုစီအတွက် resolution အဆင့်လေးခုထဲမှ ဘယ်ဟာ အနိုင်ရခဲ့သလဲ — explicit face value, per-face default, legacy global သို့မဟုတ် definition default — နှင့် တစ်ခုစီက ပြန်ပေးသည့် တန်ဖိုး</string>
+    <string name="action_fast_forward">အမြန် ရှေ့သို့</string>
+    <string name="action_rewind">နောက်သို့ ပြန်ရစ်မည်</string>
+    <string name="action_set_playback_speed">အမြန်နှုန်းကို %1$s× သတ်မှတ်မည်</string>
+    <string name="action_seek_to_percent">%1$d%% သို့ သွားမည်</string>
+    <string name="action_set_volume_percent">အသံအတိုးအကျယ်ကို %1$d%% သတ်မှတ်မည်</string>
+    <string name="action_set_shuffle_on">ရှပ်ဖယ် ဖွင့်မည်</string>
+    <string name="action_set_shuffle_off">ရှပ်ဖယ် ပိတ်မည်</string>
+    <string name="action_set_repeat_off">ပြန်ဖွင့်မှု ပိတ်မည်</string>
+    <string name="action_set_repeat_all">အားလုံး ပြန်ဖွင့်မည်</string>
+    <string name="action_set_repeat_one">တစ်ပုဒ် ပြန်ဖွင့်မည်</string>
+    <string name="group_playback_speed">ဖွင့်နှုန်း</string>
+    <string name="group_track_position">သီချင်းနေရာ</string>
+    <string name="group_shuffle_mode">ရှပ်ဖယ်မုဒ်</string>
+    <string name="group_repeat_mode">ပြန်ဖွင့်မုဒ်</string>
+    <string name="group_volume_levels">အသံအတိုးအကျယ် အဆင့်များ</string>
+    <string name="group_watch_screens">နာရီ မျက်နှာပြင်များ</string>
+    <string name="group_find_music">ရှာပြီး ဖွင့်မည်</string>
+    <string name="action_open_face_picker">နာရီမျက်နှာ ရွေးချယ်ကိရိယာကို ဖွင့်မည်</string>
+    <string name="action_close_watch_app">နာရီအက်ပ်ကို ပိတ်မည်</string>
+    <string name="hand_gestures">လက်ဟန်များ</string>
+    <string name="hand_gestures_hint">Svartifoss ဖွင့်ထားစဉ် ကိုက်ညီသော နာရီများတွင် အသုံးပြုနိုင်သည်။</string>
+    <string name="hand_gestures_hint_disconnected">သင့်နာရီက လက်ဟန်များကို ထောက်ပံ့သလား သိရန် နာရီတွင် Svartifoss ကို ချိတ်ဆက်ပြီး ဖွင့်ပါ။</string>
+    <string name="hand_gestures_hint_outdated">ဤနာရီက လက်ဟန်များကို ထောက်ပံ့သလား သိရန် နာရီအက်ပ်ကို update လုပ်ပါ။</string>
+    <string name="hand_gestures_hint_unsupported">ဤနာရီက လက်ဟန်များကို မထောက်ပံ့သောကြောင့် ဤနေရာတွင် သတ်မှတ်ထားသော လုပ်ဆောင်ချက်သည် မည်သည့်အခါမျှ မလုပ်ပါ။</string>
+    <string name="hand_gestures_hint_disabled">ဤနာရီတွင် လက်ဟန်များ ပိတ်ထားသည်။ နာရီပေါ်ရှိ Settings \u2192 Gestures တွင် ဖွင့်ပါ။</string>
+    <string name="hand_gestures_hint_ready">ဤနာရီတွင် အသင့်ဖြစ်သည်: Svartifoss ပလေယာဖွင့်ထားစဉ် နှစ်ကြိမ် pinch လုပ်ပါ။</string>
+    <string name="hand_gesture_how_it_works">လက်ကောက်ဝတ်ကို မြှောက်ထားပြီး လက်မနှင့် လက်ညှိုးကို မြန်မြန် နှစ်ကြိမ် အတူ pinch လုပ်ပါ။ Wear OS က ဤအရာကို primary action ဟု ခေါ်သောကြောင့် အခြားထုတ်လုပ်သူ၏ နာရီတွင် ၎င်းနှင့်တူညီသော အခြားလက်ဟန်ကို သုံးနိုင်သည်။\n\nနာရီပေါ်တွင် Svartifoss ပလေယာ ဖွင့်ထားပြီး မျက်နှာပြင်လည်း ဖွင့်ထားသည့်အချိန်တွင်သာ အလုပ်လုပ်သည် \u2014 နာရီမျက်နှာမှ မဟုတ်၊ queue သို့မဟုတ် menu ပေါ်တွင် မဟုတ်၊ always-on display ပေါ်တွင်လည်း မဟုတ်ပါ။ လက်ရှိ playback အခြေအနေအတွက် သတ်မှတ်ထားသော လုပ်ဆောင်ချက်ကို အလုပ်လုပ်မည်ဖြစ်သောကြောင့် အခြေအနေနှစ်မျိုးစလုံးတွင် အလုပ်လုပ်စေရန် Controls စာမျက်နှာနှစ်ခုလုံးတွင် သတ်မှတ်ပါ။\n\nနာရီ၏ ကိုယ်ပိုင် Settings \u2192 Gestures တွင်လည်း ဤလက်ဟန်ကို ဖွင့်ထားရမည်။</string>
+    <string name="double_pinch">နှစ်ကြိမ် pinch</string>
+    <string name="icon_selection_search_hint">အိုင်ကွန် ရှာမည်</string>
+    <string name="icon_selection_search_empty">သင့်ရှာဖွေမှုနှင့် ကိုက်ညီသော အိုင်ကွန် မရှိပါ</string>
+    <string name="open_quick_actions_panel">အမြန်လုပ်ဆောင်ချက် ပန်နယ်ကို ဖွင့်မည်</string>
+    <string name="open_volume_screen">အသံအတိုးအကျယ် မျက်နှာပြင်ကို ဖွင့်မည်</string>
+    <string name="open_progress_screen">တိုးတက်မှု မျက်နှာပြင်ကို ဖွင့်မည်</string>
+    <string name="export_config_failed_detail">Backup ကို ထုတ်ယူ၍ မရပါ: %1$s</string>
+    <string name="backup_selection_title">Backup အကြောင်းအရာကို ရွေးမည်</string>
+    <string name="backup_selection_description">သင်သိမ်းလိုသော Svartifoss အပိုင်းများကို ရွေးပါ။ မူလအားဖြင့် အားလုံးရွေးထားသည်။ ဤ backup ကို တင်သွင်းသည့်အခါ မရွေးထားသော အပိုင်းများကို မပြောင်းလဲပါ။</string>
+    <string name="backup_selection_select_all">အားလုံး ရွေးမည်</string>
+    <string name="backup_selection_clear_all">အားလုံး ရှင်းမည်</string>
+    <string name="backup_selection_export">Backup ကို ထုတ်ယူမည်</string>
+    <string name="backup_selection_empty">အနည်းဆုံး တစ်ခု ရွေးပါ</string>
+    <string name="backup_section_buttons">ခလုတ် ဖွဲ့စည်းမှုများ</string>
+    <string name="backup_section_buttons_description">တေးဂီတ ဖွင့်နေချိန်နှင့် ရပ်နေချိန်အတွက် ခလုတ်၊ crown နှင့် လက်ဟန်လုပ်ဆောင်ချက်များ။</string>
+    <string name="backup_section_actions">လုပ်ဆောင်ချက်စာရင်း</string>
+    <string name="backup_section_actions_description">နာရီ၏ လုပ်ဆောင်ချက်မီနူးတွင် ပြသမည့် အစီအစဉ်ချထားသော လုပ်ဆောင်ချက်စာရင်း။</string>
+    <string name="backup_section_app_settings">အက်ပ် ဆက်တင်များ</string>
+    <string name="backup_section_app_settings_description">ဖုန်းဆက်တင်များ၊ နာရီအပြုအမူ၊ ဘာသာစကား၊ ဖွင့်ခြင်းနှင့် ပေါင်းစည်းမှုများ။</string>
+    <string name="backup_section_watch_appearance">နာရီပုံပန်းသဏ္ဌာန်နှင့်သီမ်များ</string>
+    <string name="backup_section_watch_appearance_description">နာရီ အပြင်အဆင်များ၊ အရောင်များ၊ စာလုံးပုံစံ၊ ပန်နယ်များ၊ AOD နှင့် သိမ်းထားသော စိတ်ကြိုက်သီမ်များ။</string>
+    <string name="backup_section_playlist_shortcuts">Playlist shortcut များ</string>
+    <string name="backup_section_playlist_shortcuts_description">သင်သိမ်းထားသော တေးဂီတ၊ အယ်လ်ဘမ်၊ အနုပညာရှင်၊ playlist နှင့် အခြား streaming link များ။</string>
+    <string name="backup_section_history">ရှာဖွေမှုနှင့် ဖွင့်ထားမှုမှတ်တမ်း</string>
+    <string name="backup_section_history_description">မကြာသေးမီ ရှာဖွေမှုများနှင့် မကြာသေးမီ ဖွင့်ခဲ့သည့် သီချင်းများ။</string>
+    <string name="backup_section_icons">တင်ထားသော အိုင်ကွန်များနှင့် အနုပညာပုံများ</string>
+    <string name="backup_section_icons_description">စိတ်ကြိုက် လုပ်ဆောင်ချက်အိုင်ကွန်များ၊ shortcut အဖုံးများနှင့် cache လုပ်ထားသော အက်ပ်အိုင်ကွန်များ။</string>
+    <string name="backup_section_privacy">ကိုယ်ရေးလုံခြုံမှုနှင့် အသိပေးချက်များ</string>
+    <string name="backup_section_privacy_description">Crash report များ၊ ကြေညာချက်အသိပေးချက်များနှင့် အက်ပ်က သိမ်းထားသော အခြားသဘောတူညီမှု ရွေးချယ်မှုများ။</string>
+    <string name="backup_section_local_app_state">ဒေသတွင်း အက်ပ်အခြေအနေ</string>
+    <string name="backup_section_local_app_state_description">လက်ရှိ Accent၊ နောက်ဆုံး မီနူးနေရာ၊ ပြီးဆုံးထားသော prompt များနှင့် update အခြေအနေ။</string>
+    <string name="backup_section_auxiliary_data">အခြား အက်ပ်ဒေတာ</string>
+    <string name="backup_section_auxiliary_data_description">အနာဂတ်ဒေတာသိုလှောင်ရာများအပါအဝင် အက်ပ်ပိုင် အပိုရွေးချယ်မှုများနှင့် အတွင်းဖိုင်များ။</string>
+    <string name="pref_numeric_range">%1$d နှင့် %2$d ကြား။</string>
+    <string name="background_editor_artwork">အနုပညာပုံ</string>
+    <string name="background_editor_layers">အလွှာများ</string>
+    <string name="background_editor_layers_count">%2$d ခုအနက် %1$d</string>
+    <string name="background_editor_add_layer">အလွှာ ထည့်မည်</string>
+    <string name="background_editor_reset_layers">ပြန်သတ်မှတ်မည်</string>
+    <string name="background_editor_empty">အလွှာ မရှိပါ။ အနုပညာပုံကို တစ်ခုတည်း ပြသပါမည်။</string>
+    <string name="background_editor_note">ဤစာရင်း၏ အပေါ်ဆုံးအလွှာကို အခြားအရာအားလုံးအပေါ်တွင် ရေးဆွဲမည်။ အောက်ဆုံးအလွှာသည် အနုပညာပုံနှင့် အနီးဆုံးဖြစ်သည်။</string>
+    <string name="background_editor_full">အများဆုံး %1$d အလွှာအထိ ထပ်တင်နိုင်သည်။</string>
+    <string name="background_layer_kind_wash">နောက်ခံ</string>
+    <string name="background_layer_kind_shade">အရိပ်ထည့်ခြင်း</string>
+    <string name="background_layer_kind_floor">Accent အောက်ခံ</string>
+    <string name="background_layer_move_up">ဤအလွှာကို အပေါ်သို့ ရွှေ့မည်</string>
+    <string name="background_layer_move_down">ဤအလွှာကို အောက်သို့ ရွှေ့မည်</string>
+    <string name="background_layer_more">ဤအလွှာအတွက် နောက်ထပ်ရွေးချယ်စရာများ</string>
+    <string name="background_layer_add_title">အလွှာတစ်ခု ထည့်မည်</string>
+    <string name="background_layer_style_title">%1$s အလွှာ</string>
+    <string name="background_layer_opacity">အားကောင်းမှု</string>
+    <string name="background_layer_color">အရောင်</string>
+    <string name="background_layer_custom_color">အရောင်တစ်ခု ရွေးမည်</string>
+    <string name="background_layer_duplicate">မိတ္တူပွားမည်</string>
+    <string name="background_layer_remove">ဖယ်ရှားမည်</string>
+    <string name="background_layer_color_default">မူလ</string>
+    <string name="background_layer_color_album">အယ်လ်ဘမ်အရောင်</string>
+    <string name="background_layer_color_secondary">ဒုတိယ အယ်လ်ဘမ်အရောင်</string>
+    <string name="background_layer_color_tertiary">တတိယ အယ်လ်ဘမ်အရောင်</string>
+    <string name="background_layer_color_desaturated">မှိန်ထားသော အယ်လ်ဘမ်အရောင်</string>
+    <string name="background_layer_color_black">အနက်ရောင်</string>
+    <string name="background_layer_color_custom">စိတ်ကြိုက်အရောင်</string>
+    <string name="background_layer_reset_title">အလွှာများကို ပြန်သတ်မှတ်မလား။</string>
+    <string name="background_layer_reset_message">အလွှာစုပုံမှုသည် သီးခြားအတန်းများတွင် သတ်မှတ်ထားသော အရိပ်နှင့် Accent အောက်ခံသို့ ပြန်သွားမည်။ အဟောင်း build ဖြင့် လည်ပတ်နေသော နာရီလည်း ထိုပုံစံအတိုင်း render လုပ်သည်။</string>
+    <string name="watch_element_progress">တိုးတက်မှု</string>
+    <string name="watch_element_volume">အသံအတိုးအကျယ်</string>
+    <string name="watch_element_quick_panel">အမြန်လုပ်ဆောင်ချက်များ</string>
+    <string name="watch_element_queue">တန်းစီစာရင်း</string>
+    <string name="watch_element_lyrics">သီချင်းစာသား</string>
+    <string name="player_section_on_screen">မျက်နှာပြင်ပေါ်တွင်</string>
+    <string name="player_element_app_icon">အက်ပ်အိုင်ကွန်</string>
+    <string name="player_element_controls">ပလေယာ ထိန်းချုပ်မှုများ</string>
+    <string name="player_element_tap_flash">ထိချက်လင်းခြင်း</string>
+    <string name="player_element_inner_progress">အတွင်းတိုးတက်မှု</string>
+    <string name="player_element_edge_arc">အစွန်း ကွေး</string>
+    <string name="player_element_edge_seek">အစွန်း seek</string>
+    <string name="player_element_clock">နာရီ</string>
+    <string name="player_element_cover_art">အဖုံးအနုပညာ</string>
+    <string name="setting_album_art_filter">အယ်လ်ဘမ်အနုပညာ filter</string>
+    <string name="setting_album_art_filter_description">မည်သည့် အယ်လ်ဘမ်အနုပညာပုံစံပေါ်မဆို သီးခြားအရောင် treatment တစ်ခု အသုံးပြုမည်။</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">နူးညံ့သော display ပုံစံအတွက် extra-light stroke ပါသည့် Roboto။</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">မိသားစု၏ သာမန်အချိုးအစားများနှင့် ပေါ့ပါးလေဝင်လေထွက် stroke ပါသည့် Roboto။</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">ကျစ်လစ်ပြီး ဖတ်ရလွယ်သော label များအတွက် ပိုခိုင်မာသည့် medium stroke ပါသော Roboto။</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">ထူထဲသော display စာသားအတွက် system weight အလေးဆုံးပါသော Roboto။</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">နေရာနည်းနည်းထဲတွင် ခေါင်းစဉ်ရှည်များ ဝင်စေရန် Roboto ကို အလျားလိုက် ကျဉ်းထားသည်။</string>
+    <string name="setting_wear_title_font">ခေါင်းစဉ် စာလုံးပုံစံ</string>
+    <string name="setting_wear_title_text_case">ခေါင်းစဉ် စာလုံးအကြီးအသေး</string>
+    <string name="setting_wear_artist_font">အနုပညာရှင် စာလုံးပုံစံ</string>
+    <string name="setting_wear_artist_text_case">အနုပညာရှင် စာလုံးအကြီးအသေး</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">အစောပိုင်းဖတ်ရှုမှုအတွက် ရေးဆွဲထားသော ဖော်ရွေပြီး ဝိုင်းသော sans</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">အယ်ဒီတာဆန်သော အလေးချိန်ရှိသည့် ကွန်ထရပ်မြင့် Didone display စာလုံးပုံစံ</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">လက်ရေးကာတွန်းအရသာပါသော ခိုင်မာသည့် poster sans</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">ကျယ်ဝန်း၍ညီမျှသော အကွာအဝေးရှိသည့် တည်ငြိမ်သော geometric sans</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">ပျော့ပျောင်းဝိုင်းသော အဆုံးများပါသည့် ခေတ်မီ slab serif</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">ခေါင်းစီးအတွက် ထင်ရှားစေရန် ဖန်တီးထားသော အလွန်ကြီးမားသည့် slab serif</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">small capitals ဖြင့် ဆွဲထားသော ကျဉ်းမြောင်းသော လက်ရေးစာလုံးပုံစံ</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">အသံကျယ်သော ခေါင်းစီးများအတွက် သိပ်သည်းသည့် condensed sans</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">အရွယ်သေးသော်လည်း ခိုင်မာနေသည့် geometric slab serif</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">အော်ဟစ်သလို စွမ်းအင်ရှိသော comic-book display စာလုံးပုံစံ</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Stencil ပုံစံ စစ်ရေး display စာလုံးပုံစံ</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">နွေးထွေး၍ ပေါ့ပေါ့ပါးပါး ကွေးများပါသည့် တည့်မတ် serif</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">အနည်းငယ်ဝိုင်းသော ထောင့်များပါသည့် humanist sans</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">ခိုင်မာ၍ ရိုးရှင်းသော ပုံသဏ္ဌာန်များပါသည့် grotesque sans</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">script များအတွက် ဖန်တီးထားသော သပ်ရပ်သည့် typewriter monospace</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">နူးညံ့၍ စာအုပ်ဆန်သည့် အသံရှိသော ဝိုင်းဝိုင်း slab serif</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">စာပိုဒ်ရှည်များအတွက် ချိန်ညှိထားသော ရှေးပုံစံ စာအုပ် serif</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">ခေတ်မီ အပြီးသတ်ရှိသော ကွန်ထရပ်နည်း geometric sans</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Body size များတွင်လည်း ရှင်းလင်းနေစေရန် ဆွဲထားသော ခိုင်မာသည့် serif</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">ထောင့်ကျ အဆက်များပါသည့် ခေတ်မီ နည်းပညာ sans</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">ရှင်းလင်းကွဲပြားသော glyph များပါသည့် programming monospace</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">မျက်နှာပြင်ပေါ် code အတွက် ဖန်တီးထားသော humanist monospace</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">ဝိုင်းသော stroke များပါသည့် ဖောင်းဖောင်း လက်ရေးစာလုံးပုံစံ</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">1920 ခုနှစ်များ၏ vintage စရိုက်ရှိသည့် geometric sans</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Futura ရိုးရာထဲက geometric sans</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">အနည်းငယ်စောင်းထားသော loop မပါသည့် Thai နှင့် Latin sans</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">ဖတ်ရှုစဉ် မျက်စိပင်ပန်းမှုလျော့စေရန် ပုံဖော်ထားသော sans</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Retro signage အရသာရှိသော bold ချိတ်ဆက် script</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">နွေးထွေးမှုနှင့် တိကျမှုကို ဟန်ချက်ညီစေသော semi-geometric sans</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">သန့်ရှင်းသော interface စာသားအတွက် ဆွဲထားသော minimalist sans</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">ပျော့ပျောင်းသော အဆုံးများပါသည့် ဝိုင်းဝိုင်း sans</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">ညီညာပြီး ခေတ်မီ စည်းချက်ရှိသည့် geometric sans</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Gaming ခံစားချက်ရှိသည့် စတုရန်း techno စာလုံးပုံစံ</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Grid ပေါ်တွင် ဆွဲထားသော compact နည်းပညာ sans</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">ထူးခြားသော ပွင့်လင်းကွေးများပါသည့် ခေတ်မီ grotesque</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Arcade စက်ထဲမှ တိုက်ရိုက်လာသလို pixel စာလုံးပုံစံ</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">နူးညံ့ပေါ့ပါး ခံစားချက်ရှိသည့် ဝိုင်းသော geometric sans</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">နည်းပညာဆန်သည့် ထောင့်များပါသော စတုရန်း condensed sans</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Retro sign-painting မူလရှိသော art-deco display စာလုံးပုံစံ</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Roboto ၏ monospace အဖော်</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">ကစားဆန်ပြီး ထူထဲသော stroke များပါသည့် chunky display စာလုံးပုံစံ</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">လေးလံသော စတုရန်းပုံများပါသည့် ကျယ်ပြန့် industrial စာလုံးပုံစံ</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Gujarati မူလရှိသည့် ထင်ရှားစောင်းသော display စာလုံးပုံစံ</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">အစောပိုင်း ကွန်ပျူတာမျက်နှာပြင်များကို သတိရစေသည့် သေးငယ် bitmap စာလုံးပုံစံ</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Code ကို သက်တောင့်သက်သာ ဖတ်ရန် ဖန်တီးထားသော monospace</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Poster အရှိန်ရှိသည့် condensed all-caps စာလုံးပုံစံ</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Devanagari နှင့် Latin ခေါင်းစီးများအတွက် ရှည်လျား condensed စာလုံးပုံစံ</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">နည်းပညာအရသာရှိသည့် စတုရန်း humanist sans</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">ဖော်ရွေစွာခံစားရသည့် အပြည့်ဝိုင်း sans</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">1920 ခုနှစ်များ coffee-shop signage ကို သတိရစေသည့် condensed စာလုံးပုံစံ</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">နူးညံ့စွာ ဖြတ်ထားသော ခေတ်မီအဆုံးများပါသည့် slab serif</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">ပွင့်လင်း၍ ဖတ်ရလွယ်သော ပုံသဏ္ဌာန်များပါသည့် ဖော်ရွေသော humanist sans</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">သက်တောင့်သက်သာဖတ်ရန် ခိုင်မာသည့် ပုံသဏ္ဌာန်များပါသည့် နွေးထွေးသော sans</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">ရှင်းလင်းသော interface များအတွက် ဖန်တီးထားသော ဘက်စုံသုံး humanist sans</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">အယ်ဒီတာဆန်သည့် အသံရှိသော သပ်ရပ်သော text serif</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">မျက်နှာပြင်ဖတ်ရှုမှုအတွက် ချိန်ညှိထားသော classic စာအုပ် serif</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">ကျယ်ပြန့်၍ ခိုင်မာသော စည်းချက်ရှိသည့် လက်တွေ့အသုံးချ grotesk sans</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">တိကျသော အချိုးအစားရှိသည့် နည်းပညာ humanist sans</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">သပ်ရပ်ပြီး ဖတ်ရလွယ်သော texture ရှိသည့် နည်းပညာ monospace</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">အင်ဂျင်နီယာဆန်သော စရိုက်ရှိသည့် ခေတ်မီ serif</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Compact၊ လက်တွေ့ပုံများပါသည့် သန့်ရှင်း workhorse sans</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">ဖော်ရွေသော အချိုးအစားရှိသည့် ထူးခြားသော grotesk</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">အနာဂတ်ဆန်ပြီး နေရာကျယ်ခံစားချက်ရှိသော geometric sans</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">လှပသော မြို့ပြလိုင်းများပါသည့် ခေတ်မီ geometric sans</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">မျက်နှာပြင်သေးများအတွက် ဖန်တီးထားသည့် ဟန်ချက်ညီခေတ်မီ sans</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">ဖော်ပြနိုင်စွမ်းရှိသော အချိုးအစားများပါသည့် ယုံကြည်မှုရှိသော display sans</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">ရှည်သော သီချင်းအချက်အလက်အတွက် ဖတ်ရလွယ်သည့် အဖော် sans</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">ခေတ်မီ နည်းပညာအသံရှိသည့် ပြတ်သားသော monospace</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">အနုပညာဆန်စွာ စီမံထားသော ကစားဆန်ပုံများပါသည့် သာမန်မဟုတ်သော sans</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">ငြိမ်သက်တိကျမှုရှိသော ပြောင်းလွယ်ပြင်လွယ် ခေတ်မီ sans</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">ဖတ်ရလွယ်ကူစေရန် သန့်ရှင်း၍ ဖော်ရွေသည့် sans</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">ပျော်ရွှင်သော စရိုက်ရှိသည့် ဝိုင်းသော display sans</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">ဖွဲ့စည်းပုံနှင့် ထူးခြားသည့် အသေးစိတ်များကို ရောစပ်ထားသော လှုပ်ရှားသက်ဝင် grotesk</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">ထင်ရှားသည့် ခေါင်းစဉ်များအတွက် ကွန်ထရပ်မြင့် display serif</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">သပ်ရပ်ပြီး ကွန်ထရပ်မြင့် စာပေဆန်သော serif</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">လက်ရေးလှ အသေးစိတ်များပါသည့် နူးညံ့လှပသော display serif</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">အရွယ်သေးသော်လည်း ရှင်းလင်းနေသည့် ခိုင်မာသော slab serif</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">သိပ်သည်းပြီး ဖော်ပြနိုင်သည့် ဖတ်ရှုမှုအတွက် ဘက်စုံသုံး serif</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">စာအုပ်ဆန်သည့် အသံရှိသော နွေးထွေး ရှေးပုံစံ serif</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">ထူးခြား၍ သပ်ရပ်သော စာလုံးပုံစံများပါသည့် လှပသော sans</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">ခိုင်မာသော ခေါင်းစီးများအတွက် ဖန်တီးထားသော bold geometric sans</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">အားကစားဆန်ပြီး လှုပ်ရှားမှုရှိသော စွမ်းအင်ပါသည့် condensed-friendly sans</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">ပွင့်လင်းသော counters နှင့် ဖော်ရွေသည့် signage စွမ်းအင်ပါသည့် ပျော့ sans</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">humanist နွေးထွေးမှုနှင့် ရှင်းလင်းမှုကို ဟန်ချက်ညီစေသော ဘက်စုံသုံး sans</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">ယုံကြည်မှုရှိသော စည်းချက်ဖြင့် သယ်ယူပို့ဆောင်ရေးအမှတ်အသားမှ အားယူထားသည့် ရှင်းလင်းသော sans</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">နေ့စဉ် interface များအတွက် ဖန်တီးထားသော အလယ်အလတ်၊ အသုံးပြုရလွယ်သည့် sans</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">ချောမွေ့ခေတ်မီ ကွေးများပါသည့် ပေါ့ပါး geometric sans</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">နူးညံ့သော အနာဂတ်ဆန်သည့် ခံစားချက်ရှိသော ဝိုင်းပြီးကျဉ်းသည့် sans</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">နူးညံ့သော Thai အရသာပါသည့် သန့်ရှင်း geometric sans</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">အမြင့်ဆုံးသက်ရောက်မှုအတွက် ကျယ်ပြန့် အနာဂတ်ဆန် display စာလုံးပုံစံ</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">ကစားဆန်သော နည်းပညာအသံရှိသည့် variable sans-to-mono family</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">ထူးခြားသည့် digital texture ရှိသည့် variable-width monospace</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Script မျိုးစုံကို ကျယ်ကျယ်ပြန့်ပြန့် ထောက်ပံ့ပြီး အလွန်ဖတ်ရလွယ်သော ကျယ်ပြန့် sans</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Script မျိုးစုံကို ကျယ်ကျယ်ပြန့်ပြန့် ထောက်ပံ့သော ယုံကြည်ရသည့် serif</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">တသမတ်တည်း စည်းချက်အတွက် ဖန်တီးထားသော ဘာသာစုံ monospace</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Hebrew သြဇာပါသည့် ရှင်းလင်းသော စည်းချက်ရှိသည့် compact ခေတ်မီ sans</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">ရှင်းလင်းစွာဖတ်ရန် အကောင်းဆုံးလုပ်ထားသော ခိုင်မာသည့် humanist sans</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">ဝိုင်းပြီး ပွင့်လင်းသော texture ရှိသည့် ဖော်ရွေသော screen sans</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">ထူးခြားသော အချိုးအစားရှိသည့် compact geometric sans</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">စာပေဆန်သော စရိုက်ရှိသည့် လှုပ်ရှားသက်ဝင်သော calligraphic serif</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Interface တွင် ဖတ်ရလွယ်ကူမှုကောင်းမွန်သည့် သန့်ရှင်းသော humanist sans</string>
+    <string name="setting_wear_note_show_cover">အဖုံးအနုပညာ</string>
+    <string name="aod_element_artwork">အနုပညာပုံ</string>
+    <string name="aod_element_clock">နာရီ</string>
+    <string name="aod_element_track_info">သီချင်းအချက်အလက်</string>
+    <string name="aod_element_transport">Transport</string>
+    <string name="aod_element_progress">တိုးတက်မှု</string>
+    <string name="aod_element_up_next">နောက်တစ်ပုဒ်</string>
+    <string name="aod_section_artwork">အနုပညာပုံ</string>
+    <string name="aod_control_tint">Tint</string>
+    <string name="aod_control_brightness">အလင်းတောက်ပမှု</string>
+    <string name="aod_control_art_treatment">Treatment</string>
+    <string name="aod_control_art_opacity">မထင်ရှားမှု</string>
+    <string name="mini_button_control_visibility">ပြမည်</string>
+    <string name="mini_button_control_arrangement">စီစဉ်ပုံ</string>
+    <string name="mini_button_control_shape">ပုံသဏ္ဌာန်</string>
+    <string name="mini_button_control_background">နောက်ခံ</string>
+    <string name="mini_button_control_opacity">မထင်ရှားမှု</string>
+    <string name="mini_button_assign_action">လုပ်ဆောင်ချက်များ သတ်မှတ်မည်</string>
+    <string name="mini_button_gestures_note">ပလေယာပေါ်တွင် အပေါ်၊ အောက်နှင့် ဘယ်ဘက်သို့ swipe လုပ်ပါ။ ညာဘက် swipe သည် အမြဲ system dismiss gesture ဖြစ်ပြီး မည်သည့်အခါမျှ တားဆီးမည် မဟုတ်ပါ။</string>
+    <string name="setting_wear_chat_cover_shape">Chat avatar ပုံသဏ္ဌာန်</string>
+    <string name="setting_wear_chat_show_cover">အဖုံးအနုပညာ</string>
+    <string name="setting_wear_metadata_cover_shape">Metadata အဖုံးပုံသဏ္ဌာန်</string>
+    <string name="setting_wear_metadata_show_cover">အဖုံးအနုပညာ</string>
+    <string-array name="wear_text_case_entries">
+        <item>ပုံမှန်</item>
+        <item>UPPERCASE</item>
+        <item>lowercase</item>
+        <item>Title Case</item>
+    </string-array>
+    <string name="wear_text_font_follow">ကမ္ဘာလုံးဆိုင်ရာ စာလုံးပုံစံကို လိုက်မည်</string>
+    <string name="category_wf_typography_track_time">သီချင်းအချိန်</string>
+    <string name="setting_wear_track_time_font">သီချင်းအချိန် စာလုံးပုံစံ</string>
+    <string name="wear_track_time_font_follow">ဒီဇိုင်းအတိုင်း လိုက်မည်</string>
+    <string name="setting_wear_track_time_font_weight">သီချင်းအချိန် စာလုံးအထူ</string>
+    <string name="setting_wear_track_time_font_italic">စာလုံးစောင်း သီချင်းအချိန်</string>
+    <string name="setting_wear_track_time_font_scale">သီချင်းအချိန် အရွယ်အစား</string>
+    <string name="setting_wear_track_time_font_opacity">သီချင်းအချိန် မထင်ရှားမှု</string>
+    <string name="setting_wear_track_time_font_tracking">သီချင်းအချိန် စာလုံးအကွာအဝေး</string>
+    <string-array name="album_art_filter_entries">
+        <item>မရှိ</item>
+        <item>အဖြူအမည်း</item>
+        <item>နွေး</item>
+        <item>အေးမြ</item>
+        <item>ရွှေရောင်အချိန်</item>
+        <item>Rosé</item>
+        <item>Vintage film</item>
+        <item>မှိန်ဖျော့ film</item>
+        <item>Matte</item>
+        <item>တောက်ပ</item>
+        <item>Punch</item>
+        <item>Pastel</item>
+        <item>Sepia</item>
+        <item>Cyanotype</item>
+        <item>စိမ်းပြာ &amp; လိမ္မော်</item>
+        <item>ကွန်ထရပ်မြင့်</item>
+        <item>ပျော့အလင်း</item>
+        <item>ည</item>
+    </string-array>
+    <string name="queue_item_now_playing">ယခု ဖွင့်နေသည်</string>
+    <string name="queue_item_unknown_title">မသိသော သီချင်း</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">ဖွင့်မည့် queue · သီချင်း %1$d ပုဒ်</item>
+        <item quantity="other">ဖွင့်မည့် queue · သီချင်း %1$d ပုဒ်</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Accent အောက်ခံအရောင်</string>
+    <string name="setting_wear_accent_floor_custom_color">စိတ်ကြိုက် အောက်ခံအရောင်</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Accent အောက်ခံအရောင်ကို စိတ်ကြိုက်အရောင်အဖြစ် သတ်မှတ်ထားသောအခါ အသုံးပြုမည့်အရောင်ကို ရွေးပါ</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>အယ်လ်ဘမ် Accent</item>
+        <item>အယ်လ်ဘမ် ဒုတိယအရောင်</item>
+        <item>အယ်လ်ဘမ် တတိယအရောင်</item>
+        <item>စိတ်ကြိုက်အရောင်</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">နေ့စဉ်ဖတ်ရှုမှုအတွက် ဖန်တီးထားသော အလယ်အလတ်၊ အလွန်ဖတ်ရလွယ်သည့် interface sans</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">အရွယ်သေးသော်လည်း ရှင်းလင်းနေသော ကွဲပြားပုံသဏ္ဌာန်များဖြင့် accessibility ကို ဦးစားပေးထားသည့် စာလုံးပုံစံများ</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">နူးညံ့စွာဝိုင်းထားသော geometric sans — ယုံကြည်မှုရှိပြီး ဖော်ရွေသည်</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">ရှည်လျားသော ခေါင်းစဉ်များအတွက် ပိုမိုအသက်ရှူခွင့်ပေးသည့် compact humanist sans</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Poster စွမ်းအင်ပြင်းသည့် ရှည်ပြီး condensed display စာလုံးပုံစံ</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">ရှည်လျားစွာ သက်တောင့်သက်သာ ဖတ်နိုင်ရန် ဖန်တီးထားသော ခေတ်မီ serif</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">နွေးထွေးမှုနှင့် စရိုက်ရှိသည့် ဖော်ပြနိုင်စွမ်းကောင်းသော ပျော့ serif</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">နည်းပညာအရသာပါသည့် retro-futurist monospace စာလုံးပုံစံ</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">အမြင့်ဆုံးကွန်ထရပ်အတွက် သိပ်သည်းပြီး အလွန်ထူသော display စာလုံးပုံစံ</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">သက်ဝင်ပြီး ကိုယ်ပိုင်ခံစားချက်ရှိသော စီးဆင်းသည့် လက်ရေး script</string>
+    <string name="setting_wear_artist_text_mode">အနုပညာရှင်စာသား အပြုအမူ</string>
+    <string name="setting_wear_album_art_source">အယ်လ်ဘမ်အနုပညာ အရင်းအမြစ်</string>
+    <string name="setting_user_font">ကျွန်ုပ်၏ကိုယ်ပိုင် font</string>
+    <string name="wear_font_user_import">ကျွန်ုပ်၏ကိုယ်ပိုင် font…</string>
+    <string name="setting_user_font_empty">ဤဖုန်းမှ .ttf သို့မဟုတ် .otf ဖိုင်ကို တင်သွင်းမည်</string>
+    <string name="setting_user_font_loaded">%1$s · အစားထိုးရန် သို့မဟုတ် ဖယ်ရှားရန် ထိပါ</string>
+    <string name="user_font_pick">Font ဖိုင် ရွေးမည်</string>
+    <string name="user_font_replace">အစားထိုးမည်</string>
+    <string name="user_font_remove">ဖယ်ရှားမည်</string>
+    <string name="user_font_imported">“%1$s” ကို တင်သွင်းပြီးပါပြီ။ မည်သည့် font စာရင်းတွင်မဆို ရွေးနိုင်သည်။ သင့်နာရီသို့ ပို့နေပါသည်။</string>
+    <string name="user_font_removed">သင်တင်သွင်းထားသော font ကို ဖယ်ရှားပြီးပါပြီ။</string>
+    <string name="user_font_error_too_large">ထိုဖိုင်သည် %1$s ဖြစ်သည်။ နာရီသို့ မြန်မြန်ပို့နိုင်ရန် font သည် %2$s ထက် သေးရမည်။</string>
+    <string name="user_font_error_not_a_font">ထိုဖိုင်သည် ဤဖုန်းက ဖတ်နိုင်သော font မဟုတ်ပါ။ TrueType နှင့် OpenType (.ttf, .otf) သုံးနိုင်သော်လည်း web fonts (.woff, .woff2) မသုံးနိုင်ပါ။</string>
+    <string name="user_font_error_unreadable">ထိုဖိုင်ကို ဖတ်၍ မရပါ။ ထပ်ရွေးကြည့်ပါ သို့မဟုတ် ဦးစွာ ဤဖုန်းသို့ ကူးယူပါ။</string>
+    <string name="user_font_not_shareable">သင့်ကိုယ်ပိုင် font သုံးသောသီမ်များသည် ဤဖုန်းပေါ်တွင်သာ ရှိမည်</string>
+    <string name="setting_custom_album_art_image">အသုံးပြုမည့်ပုံ</string>
+    <string name="setting_custom_album_art_folder">ပုံယူမည့် Folder</string>
+    <string name="setting_custom_album_art_none">မရွေးရသေးပါ — ရွေးရန် ထိပါ</string>
+    <string name="setting_custom_album_art_chosen">%1$s · ပြောင်းရန် ထိပါ</string>
+    <string name="custom_album_art_image_set">ထိုပုံသည် ယခု ပလေယာနောက်ခံတွင် ရှိမည်။</string>
+    <string name="custom_album_art_folder_set">ထို folder ထဲမှ ပုံတစ်ပုံကို သီချင်းတိုင်းအတွက် ရေးဆွဲမည်။</string>
+    <string name="custom_album_art_error">၎င်းကို ဖွင့်၍ မရပါ။ ထပ်ရွေးပါ သို့မဟုတ် ဤဖုန်း၏ ကိုယ်ပိုင်သိုလှောင်ရာမှ တစ်ခုခု ရွေးပါ။</string>
+    <string name="custom_album_art_not_shareable">သင့်ကိုယ်ပိုင် ပုံများသုံးသောသီမ်များသည် ဤဖုန်းပေါ်တွင်သာ ရှိမည်</string>
+    <string name="setting_wear_text_block_align">စာသား ချိန်ညှိမှု</string>
+    <string name="setting_wear_text_block_align_description">သီချင်းစာသားသည် မည်သည့်အစွန်းနှင့် ချိန်ညှိမည်။ Follow face က မျက်နှာတစ်ခုစီအတွက် ဒီဇိုင်းလုပ်ထားသော ချိန်ညှိမှုကို ဆက်ထိန်းထားမည်။</string>
+    <string name="setting_wear_text_block_position">စာသား နေရာ</string>
+    <string name="setting_wear_text_block_position_description">သီချင်းစာသား မျက်နှာပြင်ပေါ်တွင် မည်သည့်နေရာ၌ ရှိမည်။ Follow face က မျက်နှာတစ်ခုစီအတွက် ဒီဇိုင်းလုပ်ထားသော နေရာကို ဆက်ထိန်းထားမည်။</string>
+    <string name="setting_online_artwork">အွန်လိုင်း အနုပညာပုံ</string>
+    <string name="setting_online_artwork_description">နာရီမျက်နှာပေါ်တွင် အွန်လိုင်းမှ ရှာထားသောပုံကို ပြနိုင်စေပါ \u2014 ဖျော်ဖြေနေသော အနုပညာရှင်၏ပုံ၊ သို့မဟုတ် အနုပညာပုံမပေးသော ပလေယာအတွက် အယ်လ်ဘမ်အဖုံး။ သင့်ဖုန်းသည် Deezer ၏ အများပြည်သူကတ်တလောက်တွင် ရှာပြီး ရလဒ်ကို cache လုပ်သည်။ သီချင်းနှင့် အနုပညာရှင်အမည်များကိုသာ ပို့ပြီး၊ နာရီမျက်နှာကို ထိုအရင်းအမြစ်များထဲမှ တစ်ခုအဖြစ် မသတ်မှတ်ထားလျှင် မည်သည့်ရှာဖွေမှုမျှ မလုပ်ပါ။ ပိတ်ထားပါက ပလေယာ၏ ကိုယ်ပိုင်အနုပညာပုံကို သုံးမည်။</string>
+    <string name="app_name">Svartifoss</string>
+    <string name="app_name_short">Svartifoss</string>
+    <string name="setting_no_wearable_api_banner">ဤစက်တွင် Wear OS ကို မပံ့ပိုးပါ</string>
+    <string name="setting_no_wearable_api_banner_description">ဤစက်တွင် Google Play Services ၏ Wear OS အစိတ်အပိုင်း မပါရှိပါ။ နာရီနှင့် ဆက်သွယ်ရန် Svartifoss က ထိုအစိတ်အပိုင်းကို လိုအပ်သည်။ Pair လုပ်ခြင်းက မကူညီပါ — ဤနေရာတွင် ဖုန်းအက်ပ်က နာရီသို့ မရောက်နိုင်ပါ။ အောက်ပါဆက်တင်အားလုံးကို သို့သော် သိမ်းထားမည်ဖြစ်ပြီး ၎င်းကို ပံ့ပိုးသည့် စက်တွင် Svartifoss ကို ထည့်သွင်းပါက အသုံးချမည်ဖြစ်သည်။</string>
+    <string name="setting_no_watch_banner">နာရီ ချိတ်ဆက်ထားခြင်း မရှိပါ</string>
+    <string name="setting_no_watch_banner_description">ဤဆက်တင်များကို သင့် Wear OS နာရီနှင့် စင့်ခ်လုပ်သည်။ ထို့ကြောင့် နာရီကို pair လုပ်ပြီး ချိတ်ဆက်မချင်း ပြောင်းလဲမှုများ မမြင်ရသေးပါ - သို့သော် အောက်ပါအရာအားလုံးကို ယခုပင် သင်ပြင်ဆင်နိုင်ပါသည်။</string>
+    <string name="category_appearance">အသွင်အပြင်</string>
+    <string name="setting_theme">အပြင်အဆင်</string>
+    <string name="theme_light">ဖြူစင်</string>
+    <string name="theme_dark">အနက်သက်သက်</string>
+    <string name="theme_system">စနစ်အတိုင်း လိုက်နာရန်</string>
+    <string name="setting_language">ဘာသာစကား</string>
+    <string name="language_system">စနစ်အတိုင်း လိုက်နာရန်</string>
+    <string name="language_change_watch_notice">စင့်ခ်ပြီးသည့်အခါ နာရီသည်လည်း ဤဘာသာစကားကို အသုံးပြုမည်။</string>
+    <string name="category_developer">ဖန်တီးသူ</string>
+    <string name="dev_mode_unlocked">Developer mode ဖွင့်ပြီးပါပြီ ✦</string>
+    <string name="dev_mode_clicks_remaining">Developer mode ဖွင့်ရန် နောက်ထပ် %1$d ကြိမ် နှိပ်ပါ</string>
+    <string name="dev_disable_mode">Developer mode ပိတ်ရန်</string>
+    <string name="dev_disable_mode_description">ဤအပိုင်းကို ပြန်ဖျောက်ပါ - ပြန်ပေါ်လာစေရန် \"ထည့်သွင်းထားသောဗားရှင်း\" ကို ခုနစ်ကြိမ် နှိပ်ပါ</string>
+    <string name="dev_mode_disabled">Developer mode ပိတ်ပြီးပါပြီ</string>
+    <string name="dev_build_info">Build အချက်အလက်</string>
+    <string name="dev_sync_watch">နာရီဆက်တင်များကို အတင်းစင့်ခ်လုပ်ရန်</string>
+    <string name="dev_sync_watch_description">လက်ရှိဆက်တင်အားလုံးကို pair လုပ်ထားသော နာရီသို့ ချက်ချင်းပို့ပါ</string>
+    <string name="dev_sync_watch_done">ဆက်တင်များကို နာရီနှင့် စင့်ခ်လုပ်ပြီးပါပြီ</string>
+    <string name="dev_copy_debug_info">Debug အချက်အလက်ကို ကူးယူရန်</string>
+    <string name="dev_copy_debug_info_description">Build နှင့် စက်အသေးစိတ်အချက်အလက်များကို clipboard သို့ ကူးယူပါ</string>
+    <string name="dev_export_defaults">အက်ပ် မူလဆက်တင်အဖြစ် ထုတ်ရန်</string>
+    <string name="dev_export_defaults_description">ဤပြင်ဆင်မှုကို default_config.json အဖြစ် သိမ်းသည် — အသစ်ထည့်သွင်းသည့်အခါ စတင်မည့် အခြေအနေဖြစ်သည်။ မှတ်တမ်း၊ သဘောတူညီမှုရွေးချယ်မှုများနှင့် ဤဖုန်း၏ ကိုယ်ပိုင်အခြေအနေကို မထည့်ပါ။</string>
+    <string name="dev_export_defaults_done">မူလဆက်တင်များ ထုတ်ပြီးပါပြီ (%1$s)</string>
+    <string name="dev_show_archived">သိမ်းဆည်းထားသော ရွေးချယ်မှုများကို ပြရန်</string>
+    <string name="dev_show_archived_description">သိရှိပြီးသော ပြဿနာများကြောင့် သိမ်းဆည်းထားသော နာရီ layout နှင့် ဆက်တင်များကို ဖော်ပြရန်</string>
+    <string name="dev_copy_debug_info_done">Debug အချက်အလက် ကူးယူပြီးပါပြီ</string>
+    <string name="dev_open_update_screen">Update မျက်နှာပြင်ကို ဖွင့်ရန်</string>
+    <string name="dev_open_update_screen_description">တကယ့် release ကို မစောင့်ဘဲ Updates မျက်နှာပြင် (cover banner၊ release notes layout) ကို အစမ်းကြည့်ပါ</string>
+    <string name="dev_watch_layout_bounds">နာရီ layout နယ်နိမိတ်များကို ပြရန်</string>
+    <string name="dev_watch_layout_bounds_description">နာရီပေါ်ရှိ မြင်ရသော player အစိတ်အပိုင်းများနှင့် ထိတွေ့ဧရိယာများ၏ နယ်နိမိတ်ကို ဖော်ပြပါ။ ရောဂါရှာဖွေရေး overlay သာ ဖြစ်သည်။</string>
+    <string name="dev_watch_player_info">နာရီ player အချက်အလက်ကို ပြရန်</string>
+    <string name="dev_watch_player_info_description">လက်ရှိ face၊ playback အခြေအနေ၊ တိုးတက်မှုနှင့် render အချက်အလက်ကို နာရီပေါ်တွင် overlay အဖြစ် ပြပါ။</string>
+    <string name="pref_reset_default">မူလအတိုင်း ပြန်ချိန်ရန်</string>
+    <string name="easter_egg_title">✦ Svartifoss ✦</string>
+    <string name="easter_egg_message">ဝှက်ထားသော ရေတံခွန်ကို သင်တွေ့ရှိခဲ့ပါပြီ။\n\nSvartifoss — အနက်ရောင် basalt တိုင်များက\nIceland ရှိ ရေတံခွန်ကို ဝန်းရံထားပြီး၊\nကျောက်ကြားမှ ရေစီးဆင်းသလို\nဂီတလည်း စီးဆင်းသည်ကို သတိပေးသည်။\n\n♪ ဂရုတစိုက် ဖန်တီးထားသည်။ ♪</string>
+    <string name="easter_egg_ok">ပိတ်ရန်</string>
+    <string name="nav_watch_face">နာရီ</string>
+    <string name="watch_face_header">နာရီအသွင်အပြင်</string>
+    <string name="nav_controls">ထိန်းချုပ်မှုများ</string>
+    <string name="nav_actions">လုပ်ဆောင်ချက်များ</string>
+    <string name="nav_settings">ဆက်တင်များ</string>
+    <string name="controls_header">ထိန်းချုပ်မှုများ</string>
+    <string name="controls_state_playing">တေးဂီတ ဖွင့်နေသည်</string>
+    <string name="controls_state_stopped">ဖွင့်ထားခြင်း မရှိပါ</string>
+    <string name="controls_playing_description">တေးဂီတဖွင့်နေချိန်တွင် input တစ်ခုစီ ဘာလုပ်မည်ကို ရွေးပါ။ ဤပြင်ဆင်မှုသည် playback မရှိသည့်အခြေအနေနှင့် သီးခြားဖြစ်သည်။</string>
+    <string name="controls_stopped_description">Playback မစတင်မီ သို့မဟုတ် ရပ်ပြီးနောက် input တစ်ခုစီ ဘာလုပ်မည်ကို ရွေးပါ။ ဤပြင်ဆင်မှုသည် playback ဖြစ်နေသည့်အခြေအနေနှင့် သီးခြားဖြစ်သည်။</string>
+    <string name="watch_live_preview">နာရီ တိုက်ရိုက်အစမ်းကြည့်မှု</string>
+    <string name="watch_preview_description">ရွေးထားသော နာရီမျက်နှာပြင်၏ တိုက်ရိုက်အစမ်းကြည့်မှု။ ပြောင်းလဲမှုများကို နာရီတွင် မစမ်းမီ ဤနေရာတွင် မြင်ရမည်။</string>
+    <string name="watch_preview_expand">ပိုကြီးသော အစမ်းကြည့်မှုကို ဖွင့်ရန်</string>
+    <string name="watch_preview_fullscreen_dismiss">ပိတ်ရန် နေရာမရွေး နှိပ်ပါ</string>
+    <string name="watch_section_style">Player</string>
+    <string name="watch_section_style_description">Player layout နှင့် ၎င်း၏ ခေါင်းစဉ်၊ အချိန်၊ တိုးတက်မှုတို့၏ အပြုအမူကို ရွေးပါ။</string>
+    <string name="watch_section_background">နောက်ခံ</string>
+    <string name="watch_section_background_description">Player နောက်ဘက်ရှိ album art၊ blur၊ မှိန်သွားမှုနှင့် ဖတ်ရှုနိုင်မှုကို ထိန်းချုပ်ပါ။</string>
+    <string name="watch_section_colors">အရောင်များ</string>
+    <string name="watch_section_colors_description">အခြေခံ၊ တိုးတက်မှုနှင့် album accent အရောင်များကို သတ်မှတ်ပြီး ခေါင်းစဉ်၊ အနုပညာရှင်၊ နာရီ၊ အသံနှင့် panel အရောင်များကို ချိန်ညှိပါ။</string>
+    <string name="watch_section_typography">စာသား</string>
+    <string name="watch_section_typography_description">Font များကို ရွေးပြီး ခေါင်းစဉ်၊ အနုပညာရှင်၊ နာရီ၊ app icon၊ ဒုတိယမျက်နှာပြင်များနှင့် Flex စာသားကို ချိန်ညှိပါ။</string>
+    <string name="watch_section_aod">အမြဲဖွင့်</string>
+    <string name="watch_section_aod_description">စွမ်းအင်နည်း မျက်နှာပြင်ကို ပြင်ဆင်ပြီး အစမ်းကြည့်မှုတွင် ambient အသွင်ကို ကြည့်ပါ။</string>
+    <string name="watch_section_panels">Panel များ</string>
+    <string name="watch_section_panels_description">အသံ၊ seek၊ quick panel နှင့် queue ကို ပုံစံသတ်မှတ်ပါ။ Row တစ်ခုကို focus လုပ်ပါက ထိုမျက်နှာပြင်ကို အစမ်းကြည့်မှုတွင် ဖွင့်ပြမည်။</string>
+    <string name="watch_section_mini_buttons">Mini ခလုတ်များ</string>
+    <string name="watch_section_mini_buttons_description">ရွေးချယ်နိုင်သော shortcut row ကို ပုံစံသတ်မှတ်ပါ။ ၎င်း၏ လုပ်ဆောင်ချက်များကို Controls တွင် သတ်မှတ်ရန် အောက်ရှိ “Mini ခလုတ်များ” ကို နှိပ်ပါ။</string>
+    <string name="watch_overview_description">သင် စိတ်ကြိုက်ပြင်လိုသည့်အရာကို ရွေးပါ။ အစမ်းကြည့်မှုနှင့် သိမ်းထားသော theme သည် နေရာတိုင်းတွင် ဆက်လက်အသုံးပြုနေမည်။</string>
+    <string name="watch_back_to_overview">နာရီအပိုင်းများသို့ ပြန်သွားရန်</string>
+    <string name="settings_section_general">အထွေထွေ</string>
+    <string name="settings_section_general_description">App theme၊ accent အရောင်နှင့် update နှစ်သက်မှုများ။</string>
+    <string name="settings_section_watch">အပြုအမူ</string>
+    <string name="settings_section_watch_description">သင့်နာရီရှိ crown၊ touch၊ haptics နှင့် action-menu အပြုအမူ။</string>
+    <string name="settings_section_automation">အလိုအလျောက်လုပ်ဆောင်မှု</string>
+    <string name="settings_section_automation_description">Svartifoss ကို မည်သည့်အချိန်တွင် အလိုအလျောက် ဖွင့်၊ ပိတ်မည်ကို ရွေးပါ။</string>
+    <string name="settings_section_apps">အက်ပ်များ</string>
+    <string name="settings_section_apps_description">သီချင်းစာသားနှင့် metadata ကို ရှာပါ၊ streaming shortcut များ၊ queue artwork နှင့် Android ဝင်ရောက်ခွင့်ကို စီမံပါ။</string>
+    <string name="settings_section_data">ဒေတာ &amp; အကူအညီ</string>
+    <string name="settings_section_data_description">သင့်ပြင်ဆင်မှုကို backup လုပ်ပါ၊ ဗားရှင်းကို စစ်ဆေးပါ၊ diagnostic လုပ်ပါ သို့မဟုတ် အကူအညီ ရယူပါ။</string>
+    <string name="settings_overview_description">အပိုင်းတစ်ခုကို ရွေးပါ။ သက်ဆိုင်ရာရွေးချယ်မှုများကို အတူတကွထားမည်ဖြစ်ပြီး search က မည်သည့်ဆက်တင်သို့မဆို တိုက်ရိုက်ပို့နိုင်သေးသည်။</string>
+    <string name="settings_back_to_overview">ဆက်တင်အပိုင်းများသို့ ပြန်သွားရန်</string>
+    <string name="tutorial_header">Svartifoss အသုံးပြုပုံ</string>
+    <string name="tutorial_intro">Svartifoss သည် သင့်နာရီကို ဖုန်းပေါ်တွင် ဖွင့်နေသော သီချင်းအတွက် remote control အဖြစ် ပြောင်းပေးသည်။ သင့်လက်ကောက်ဝတ်မှ လုပ်နိုင်သမျှအားလုံးကို ဤနေရာတွင် ကြည့်နိုင်သည်။</string>
+    <string name="tutorial_taps_title">မျက်နှာပြင်ဧရိယာများကို နှိပ်ပါ</string>
+    <string name="tutorial_taps_desc">နာရီမျက်နှာပြင်ကို အပေါ်၊ အောက်၊ ဘယ်၊ ညာ ဆိုသော ဧရိယာလေးခု ခွဲထားသည်။ ဧရိယာတစ်ခုကို နှိပ်လျှင် သင်သတ်မှတ်ထားသော လုပ်ဆောင်ချက်ကို လုပ်မည်။ မူလအတိုင်း ဘယ်ဘက်သည် play/pause လုပ်ပြီး ညာဘက်သည် နောက်သီချင်းသို့ ကျော်သွားကာ အပေါ်နှင့်အောက်သည် အသံကို ပြောင်းလဲသည်။</string>
+    <string name="tutorial_quick_panel_title">အမြန်လုပ်ဆောင်ချက် panel</string>
+    <string name="tutorial_quick_panel_desc">လက်ရှိဖွင့်နေသော မျက်နှာပြင်အလယ်ကို နှစ်ချက်နှိပ်ပါက slot လေးခုပါ panel တစ်ခု ဖွင့်မည် — စက်ဝိုင်းခလုတ်သုံးခုနှင့် အောက်ဘက်ရှိ အလျားလိုက် row တစ်ခု။ မပြင်ဘဲထားပါက slot များသည် ဖွင့်နေသော app က notification တွင် ထည့်ထားသော ခလုတ်များကို အတိုင်းယူမည်ဖြစ်ပြီး ၎င်း၏ like၊ shuffle နှင့် repeat ထိန်းချုပ်မှုများကို အမှန်တကယ် အသုံးပြုနိုင်မည်။ ဖုန်းရှိ Actions တွင် slot တစ်ခုစီအတွက် လုပ်ဆောင်ချက်တစ်ခု သတ်မှတ်နိုင်သလို ဖျောက်ရန် \"မရှိ\" ဟု သတ်မှတ်နိုင်သည်။</string>
+    <string name="tutorial_gestures_title">တစ်ချက်၊ နှစ်ချက်နှင့် ကြာကြာနှိပ်ခြင်း</string>
+    <string name="tutorial_gestures_desc">အစွန်းဧရိယာလေးခုစလုံးတွင် တစ်ချက်၊ နှစ်ချက်နှင့် ကြာကြာနှိပ်သည့် လုပ်ဆောင်ချက်များကို သီးခြားသတ်မှတ်နိုင်သည်။ အလယ်တစ်ချက်နှိပ်မှုကိုလည်း ပြင်ဆင်နိုင်သည်။ နှစ်ချက်နှိပ်ခြင်းက Quick actions ကို အမြဲဖွင့်ပြီး ကြာကြာနှိပ်ခြင်းက Settings → Behavior အတိုင်း face picker၊ queue သို့မဟုတ် ဘာမှမလုပ်ခြင်းကို လုပ်ဆောင်သည်။</string>
+    <string name="tutorial_buttons_title">ရုပ်ပိုင်းဆိုင်ရာ ခလုတ်များ</string>
+    <string name="tutorial_buttons_desc">သင့်နာရီတွင် ဘေးခလုတ်များရှိပါက တစ်ချက်၊ နှစ်ချက်နှင့် ကြာကြာနှိပ် လုပ်ဆောင်ချက်များကိုလည်း သတ်မှတ်နိုင်သည်။ မျက်နှာပြင်ပိတ်နေသော်လည်း ၎င်းတို့ ဆက်လက်အလုပ်လုပ်မည်။</string>
+    <string name="tutorial_rotary_title">လှည့်နိုင်သော crown</string>
+    <string name="tutorial_rotary_desc">Settings → Behavior → Rotary crown / bezel တွင် လှည့်နိုင်သော crown သို့မဟုတ် bezel က အသံပြောင်းမလား၊ သီချင်းထဲတွင် seek လုပ်မလား၊ ဘာမှမလုပ်ဘူးလား ရွေးပါ။ Crown လှည့်မှုကို ခလုတ်အဖြစ် ဖော်ပြသည့် နာရီများတွင် Controls ထဲမှာ သတ်မှတ်ပါ။</string>
+    <string name="tutorial_swipe_up_title">အပေါ်၊ အောက်၊ ဘယ် &amp; ညာသို့ ပွတ်ဆွဲပါ</string>
+    <string name="tutorial_swipe_up_desc">လက်ရှိဖွင့်နေသော မျက်နှာပြင်တွင် အပေါ်၊ အောက် သို့မဟုတ် ဘယ်ဘက်သို့ ပွတ်ဆွဲမှုတစ်ခုစီကို အရာတစ်ခုခုဖွင့်ရန် သီးခြားပြင်ဆင်နိုင်သည် — actions menu၊ playback queue၊ သီချင်းကျော်ခြင်း၊ သင့် playlists နှင့် အခြားအရာများ။ Controls တွင် Music playing သို့မဟုတ် No playback ကို ရွေးပြီး ဦးတည်ချက်တစ်ခုစီ ပြင်ဆင်ပါ။ မူလအတိုင်း အပေါ်သို့ ပွတ်ဆွဲခြင်းက actions menu ကို ဖွင့်ပြီး အခြားဦးတည်ချက်များသည် သင်သတ်မှတ်မချင်း ဘာမှမလုပ်ပါ။ ညာဘက်သို့ ပွတ်ဆွဲမှုကို မပြောင်းထားပါ — app မှ ထွက်ရန် Wear OS ၏ အများသုံး gesture ဖြစ်သည်။</string>
+    <string name="tutorial_shortcuts_title">Streaming shortcut များ</string>
+    <string name="tutorial_shortcuts_desc">Spotify၊ YouTube Music၊ Apple Music၊ TIDAL၊ Deezer၊ Amazon Music သို့မဟုတ် SoundCloud မှ track၊ album၊ mix သို့မဟုတ် playlist link ကို သိမ်းပြီး မည်သည့်ခလုတ်၊ gesture သို့မဟုတ် panel slot တွင်မဆို သတ်မှတ်နိုင်သည်။ အမြန်ဆုံးနည်းမှာ streaming app မှ link ကို Svartifoss သို့ တိုက်ရိုက် share လုပ်ခြင်းဖြစ်ပြီး copy လုပ်ထားသော link ကို paste လုပ်နိုင်သလို ကိုယ်တိုင်ရိုက်ထည့်နိုင်သည်။ Account သို့မဟုတ် login မလိုပါ — နာရီက ဖုန်းကို playback စတင်ရန် တောင်းဆိုသောကြောင့် shortcut သည် app ကိုဖွင့်ရုံမဟုတ်ဘဲ တိုက်ရိုက်ဖွင့်ပေးသည်။</string>
+    <string name="tutorial_yt_music_title">YouTube Music shortcut များ</string>
+    <string name="tutorial_yt_music_desc">\"ကြိုက်နှစ်သက်သီချင်းများ ဖွင့်ရန်\"၊ \"ကြိုက်နှစ်သက်သီချင်းများကို ရောနှောဖွင့်ရန်\" သို့မဟုတ် \"ကျွန်ုပ်၏ playlists\" ကို မည်သည့်ခလုတ်၊ gesture သို့မဟုတ် swipe တွင်မဆို သတ်မှတ်ပြီး ဖုန်းကိုမထိဘဲ သင့်ဂီတသို့ တိုက်ရိုက်သွားပါ။ \"ရှာဖွေမှုမှတ်တမ်း\" သည် နာရီပေါ်ရှိ မကြာသေးမီရှာဖွေမှုများကို မှတ်ထားသည် — တစ်ခုကို ဖျက်ရန် ဖိထားပါ။</string>
+    <string name="tutorial_exit_title">ထွက်ရန် ပွတ်ဆွဲပါ</string>
+    <string name="tutorial_exit_desc">Player မှ ထွက်ရန် ဘယ်ဘက်အစွန်းမှ ပွတ်ဆွဲပါ။ ထွက်ချိန်တွင် playback ကို အလိုအလျောက် pause လုပ်နိုင်သည် — Settings တွင် ဖွင့်ပါ။</string>
+    <string name="tutorial_tile_title">အမြန်ထိန်းချုပ်မှု Tile</string>
+    <string name="tutorial_tile_desc">App ကို မဖွင့်ဘဲ play၊ pause နှင့် skip ချက်ချင်းလုပ်ရန် နာရီမျက်နှာမှ ဘေးသို့ ပွတ်ဆွဲပြီး Svartifoss Tile ကို ဖွင့်ပါ။</string>
+    <string name="tutorial_complication_title">နာရီမျက်နှာ complication</string>
+    <string name="tutorial_complication_desc">လက်ရှိ cover ကို တစ်ချက်ကြည့်ရုံဖြင့် မြင်ရန် Svartifoss album art complication ကို သင့်နာရီမျက်နှာတွင် ထည့်ပါ။ Player ဖွင့်ရန် ၎င်းကို နှိပ်ပါ။</string>
+    <string name="tutorial_system_title">စနစ် media ထိန်းချုပ်မှုများ</string>
+    <string name="tutorial_system_desc">လက်ရှိ track သည် သင့်နာရီ၏ ကိုယ်ပိုင် media controls နှင့် recent apps တွင်လည်း ပေါ်လာသောကြောင့် ထိုနေရာမှလည်း playback ကို ထိန်းချုပ်နိုင်သည်။</string>
+    <string name="tutorial_tip">အကြံပြုချက် - Controls တွင် အခြေအနေနှစ်ခုလုံးကို ပြင်ဆင်ပြီးနောက် Actions တွင် menu ကို စီစဉ်ပါ။</string>
+    <string name="navigation_drawer_open">Navigation drawer ကို ဖွင့်ရန်</string>
+    <string name="navigation_drawer_close">Navigation drawer ကို ပိတ်ရန်</string>
+    <string name="action_settings">ဆက်တင်များ</string>
+    <string name="action_pause">ခေတ္တရပ်ရန်</string>
+    <string name="action_play">ဖွင့်ရန်</string>
+    <string name="action_skip_prev">ယခင် track</string>
+    <string name="action_skip_next">နောက် track</string>
+    <string name="action_play_pause">ဖွင့် / ခေတ္တရပ်</string>
+    <string name="action_stop">ရပ်ရန်</string>
+    <string name="action_restart">Track ကို ပြန်စရန်</string>
+    <string name="action_mute">အသံပိတ် / အသံဖွင့်</string>
+    <string name="action_skip_seconds">%1$d စက္ကန့် ရှေ့သို့ ကျော်ရန်</string>
+    <string name="action_reverse_seconds">%1$d စက္ကန့် နောက်သို့ ပြန်ရန်</string>
+    <string name="action_like">ကြိုက်နှစ်သက်ရန်</string>
+    <string name="action_shuffle">ရောနှောရန်</string>
+    <string name="action_repeat">ထပ်ဖွင့်ရန်</string>
+    <string name="action_repeat_one">တစ်ပုဒ်တည်း ထပ်ဖွင့်ရန်</string>
+    <string name="action_search">တေးဂီတ ရှာရန်</string>
+    <string name="action_open_lyrics">သီချင်းစာသား</string>
+    <string name="group_playback_controls">Playback ထိန်းချုပ်မှုများ</string>
+    <string name="group_streaming_shortcuts">Track၊ album &amp; playlist များ</string>
+    <string name="pick_action">လုပ်ဆောင်ချက် ရွေးရန်</string>
+    <string name="action_search_hint">လုပ်ဆောင်ချက်အားလုံး ရှာရန်</string>
+    <string name="action_search_empty">ဤရှာဖွေမှုနှင့် ကိုက်ညီသော လုပ်ဆောင်ချက် မရှိပါ။</string>
+    <string name="action_opens_more">ရွေးချယ်မှုများ</string>
+    <string name="action_volume_up">အသံတိုးရန်</string>
+    <string name="volume_down">အသံလျှော့ရန်</string>
+    <string name="group_volume_controls">အသံ ထိန်းချုပ်မှုများ</string>
+    <string name="no_watch_detected">နာရီ မတွေ့ပါ</string>
+    <string name="connection_instructions">ချိတ်ဆက်မှုစရန် နာရီပေါ်တွင် Svartifoss ကို ဖွင့်ပါ</string>
+    <string name="playing_controls">ဖွင့်နေစဉ် ထိန်းချုပ်မှုများ</string>
+    <string name="stopped_controls">Playback မရှိချိန် ထိန်းချုပ်မှုများ</string>
+    <string name="actions_menu">လုပ်ဆောင်ချက် menu</string>
+    <string name="actions_intro">သင့်နာရီရှိ လုပ်ဆောင်ချက်မျက်နှာပြင်နှစ်ခုလုံးကို playback controls၊ apps သို့မဟုတ် သိမ်းထားသော track၊ album နှင့် playlists များဖြင့် ပြင်ဆင်ပါ။ Quick panel သည် သေးငယ်နေမည်ဖြစ်ပြီး အောက်ပါ menu တွင် ပိုရှည်သော အစဉ်လိုက်စာရင်းကို ထည့်နိုင်သည်။</string>
+    <string name="actions_quick_panel_section">Quick panel</string>
+    <string name="actions_watch_menu_section">နာရီပေါ် menu</string>
+    <plurals name="actions_list_summary">
+        <item quantity="one">%1$d လုပ်ဆောင်ချက် · ပြင်ရန် နှိပ်ပါ · အစီအစဉ်ပြောင်းရန် ဖိဆွဲပါ</item>
+        <item quantity="other">%1$d လုပ်ဆောင်ချက်များ · ပြင်ရန် နှိပ်ပါ · အစီအစဉ်ပြောင်းရန် ဖိဆွဲပါ</item>
+    </plurals>
+    <string name="actions_reorder_description">အစီအစဉ်တကျ လုပ်ဆောင်ချက် menu။ ဆွဲရန် ထိဖိထားပါ၊ accessibility actions မှ Move up သို့မဟုတ် Move down ကို သုံးပါ၊ သို့မဟုတ် keyboard တွင် Ctrl+Up/Down နှိပ်ပါ။</string>
+    <string name="actions_move_up">အပေါ်သို့ ရွှေ့ရန်</string>
+    <string name="actions_move_down">အောက်သို့ ရွှေ့ရန်</string>
+    <string name="actions_moved_to_position">%1$s ကို %3$d ခုအနက် အမှတ် %2$d နေရာသို့ ရွှေ့ပြီးပါပြီ။</string>
+    <string name="actions_empty">လုပ်ဆောင်ချက် မရှိသေးပါ။ ပထမတစ်ခု ဖန်တီးရန် add ခလုတ်ကို သုံးပါ။</string>
+    <string name="actions_add">လုပ်ဆောင်ချက် ထည့်ရန်</string>
+    <string name="on_screen_buttons">ထိတွေ့ဧရိယာများ</string>
+    <string name="physical_buttons">ရုပ်ပိုင်းဆိုင်ရာ ခလုတ်များ</string>
+    <string name="physical_buttons_disconnected">ရုပ်ပိုင်းဆိုင်ရာခလုတ်များကို ပြင်ဆင်ရန် နာရီပေါ်တွင် Svartifoss ကို ချိတ်ဆက်ပြီး ဖွင့်ပါ။ Touch zones၊ swipes နှင့် mini ခလုတ်များကို ယခုအသုံးပြုနိုင်သည်။</string>
+    <string name="physical_buttons_unavailable">ဤနာရီက ပြင်ဆင်နိုင်သော ရုပ်ပိုင်းဆိုင်ရာ ခလုတ်များ မည်သည့်အရာကိုမျှ မဖော်ပြပါ။</string>
+    <string name="control_assignment_tap">နှိပ်: %1$s</string>
+    <string name="control_assignment_hold">ဖိထား: %1$s</string>
+    <string name="control_assignment_both">နှိပ်: %1$s · ဖိထား: %2$s</string>
+    <string name="tap_a_zone_to_configure">လုပ်ဆောင်ချက် သတ်မှတ်ရန် နာရီပေါ်ရှိ ဧရိယာတစ်ခုကို နှိပ်ပါ</string>
+    <string name="touch_zone_top">အပေါ်ဧရိယာ</string>
+    <string name="touch_zone_bottom">အောက်ဧရိယာ</string>
+    <string name="touch_zone_left">ဘယ်ဧရိယာ</string>
+    <string name="touch_zone_right">ညာဧရိယာ</string>
+    <string name="touch_zone_center">အလယ်နှိပ်</string>
+    <string name="touch_zone_action">%1$s: %2$s။ ပြင်ဆင်ရန် နှိပ်ပါ။</string>
+    <string name="control_assignment_label">%1$s\n%2$s</string>
+    <string name="swipe_gestures">Swipe gesture များ</string>
+    <string name="tap_a_swipe_to_configure">ဘာဖွင့်မည်ကို ရွေးရန် ဦးတည်ချက်တစ်ခု နှိပ်ပါ</string>
+    <string name="swipe_gesture_up">အပေါ်သို့ ပွတ်ဆွဲ</string>
+    <string name="swipe_gesture_down">အောက်သို့ ပွတ်ဆွဲ</string>
+    <string name="swipe_gesture_left">ဘယ်ဘက်သို့ ပွတ်ဆွဲ</string>
+    <string name="swipe_gesture_label_up">အပေါ်</string>
+    <string name="swipe_gesture_label_down">အောက်</string>
+    <string name="swipe_gesture_label_left">ဘယ်</string>
+    <string name="screen_buttons">Mini ခလုတ်များ</string>
+    <string name="tap_a_screen_button_to_configure">နာရီမျက်နှာပြင်အောက်ခြေနားတွင် မြင်ရသော ခလုတ် အများဆုံး သုံးခု — လုပ်ဆောင်ချက် သတ်မှတ်ရန် slot တစ်ခု နှိပ်ပါ</string>
+    <string name="screen_button_1">Mini ခလုတ် 1 (ဘယ်)</string>
+    <string name="screen_button_2">Mini ခလုတ် 2 (အလယ်)</string>
+    <string name="screen_button_3">Mini ခလုတ် 3 (ညာ)</string>
+    <string name="screen_button_label_1">ခလုတ် 1</string>
+    <string name="screen_button_label_2">ခလုတ် 2</string>
+    <string name="screen_button_label_3">ခလုတ် 3</string>
+    <string name="no_action">လုပ်ဆောင်ချက် မရှိ</string>
+    <string name="gesture_single_press">တစ်ချက်နှိပ်</string>
+    <string name="gesture_double_press">နှစ်ချက်နှိပ်</string>
+    <string name="gesture_long_press">ကြာကြာနှိပ်</string>
+    <string name="gesture_swipe_action">လုပ်ဆောင်ချက်</string>
+    <string name="center_button_quick_panel_note">အလယ်ကို နှစ်ချက်နှိပ်ခြင်းက Quick actions ကို အမြဲဖွင့်သည်။ ကြာကြာနှိပ်ခြင်းက Settings → Behavior ထဲက ရွေးချယ်မှုကို လုပ်ဆောင်သည်။ ဤနေရာတွင် center tap ကို သတ်မှတ်သော်လည်း ထို gesture နှစ်ခု မပြောင်းပါ။</string>
+    <string name="start_playback">Playback စရန်</string>
+    <string name="uninstalled_app">ဖယ်ရှားထားသော app</string>
+    <string name="play_app">%1$s ဖွင့်ရန်</string>
+    <string name="tasker_task">Tasker Task</string>
+    <string name="icon_selection_title">Icon ရွေးချယ်မှု</string>
+    <string name="icon_selection_gallery">Gallery မှ</string>
+    <string name="icon_selection_no_icon_pack">ဤလုပ်ဆောင်ချက်သည် သင့် action အတွက် စိတ်ကြိုက် icon ကို
+            ထည့်သွင်းထားသော icon pack မှ ရွေးချယ်ခွင့်ပေးသည်။\n\nကံမကောင်းစွာဖြင့် icon pack တစ်ခုမျှ ထည့်သွင်းထားပုံ မရပါ။</string>
+    <string name="icon_selection_no_storage_permission">ဤလုပ်ဆောင်ချက်သည် သင့် action အတွက် စိတ်ကြိုက် icon ကို
+            ထည့်သွင်းထားသော icon pack မှ ရွေးချယ်ခွင့်ပေးသည်။\n\nIcon pack အချို့သည် apps များတွင် storage permission ရှိရန် လိုအပ်သည်။ ဤလုပ်ဆောင်ချက်ကို အသုံးပြုရန် ထိုခွင့်ပြုချက်ကို ပေးရမည်။</string>
+    <string name="delete">ဖျက်ရန်</string>
+    <string name="action_text">လုပ်ဆောင်ချက် စာသား</string>
+    <string name="swap_action">လုပ်ဆောင်ချက် အစားထိုးရန်</string>
+    <string name="open_actions_menu">လုပ်ဆောင်ချက် menu ကို ဖွင့်ရန်</string>
+    <string name="open_playlist_menu">လက်ရှိ playlist ကို ပြရန်</string>
+    <string name="misc_settings">အခြားဆက်တင်များ</string>
+    <string name="category_backup">Backup</string>
+    <string name="export_config">Backup ထုတ်ရန်</string>
+    <string name="export_config_description">ထည့်သွင်းမည့်အရာများကို ရွေးပါ — ခလုတ်များ၊ shortcuts၊ icons၊ အရောင်များ၊ themes နှင့် အခြား app data</string>
+    <string name="import_config">Backup သွင်းရန်</string>
+    <string name="import_config_description">Backup ဖိုင်ထဲရှိ အပိုင်းများကို ပြန်ယူပါ။ အခြား data မပြောင်းပါ</string>
+    <string name="export_config_done">Backup ထုတ်ပြီးပါပြီ</string>
+    <string name="export_config_failed">Backup ကို မထုတ်နိုင်ပါ</string>
+    <string name="import_config_done_title">သွင်းယူမှု အောင်မြင်ပါသည်</string>
+    <string name="import_config_done_message">သွင်းထားသော backup ကို အသုံးချရန် Svartifoss ကို ပြန်စရမည်။</string>
+    <string name="import_config_failed">Backup ကို မသွင်းနိုင်ပါ — ဖိုင်မမှန်ကန်နိုင်သလို မကိုက်ညီသောဗားရှင်းမှ ဖြစ်နိုင်သည်</string>
+    <string name="action_restart_now">ယခုပြန်စရန်</string>
+    <string name="category_about">အကြောင်း</string>
+    <string name="category_music_screen">တေးဂီတမျက်နှာပြင်</string>
+    <string name="category_watch_screen">နာရီမျက်နှာပြင်</string>
+    <string name="category_mini_buttons">Mini ခလုတ်များ</string>
+    <string name="category_screen_face">Player အသွင်အပြင်</string>
+    <string name="category_wf_screen_behavior">မျက်နှာပြင် အပြုအမူ</string>
+    <string name="category_wf_player_progress">တိုးတက်မှု၊ seek &amp; အချိန်</string>
+    <string name="category_album_background">Album နောက်ခံ</string>
+    <string name="category_music_colors">တေးဂီတမှ အရောင်များ</string>
+    <string name="category_wf_typography_font">Typeface</string>
+    <string name="category_wf_typography_title">ခေါင်းစဉ်</string>
+    <string name="category_wf_typography_artist">အနုပညာရှင်</string>
+    <string name="category_wf_typography_icon">App icon</string>
+    <string name="category_wf_typography_flex">Google Sans Flex ဝင်ရိုးများ</string>
+    <string name="category_wf_metadata">Metadata face အကြောင်းအရာ</string>
+    <string name="category_wf_typography_secondary">အခြားမျက်နှာပြင်များရှိ စာသား</string>
+    <string name="category_wf_colors_title">ခေါင်းစဉ်အရောင်များ</string>
+    <string name="category_wf_colors_artist">အနုပညာရှင်အရောင်များ</string>
+    <string name="category_wf_colors_clock">နာရီအရောင်များ</string>
+    <string name="setting_wear_font_flex_hint_title">ဤထိန်းချုပ်မှုများအကြောင်း</string>
+    <string name="setting_wear_flex_axes_hint">ဤထိန်းချုပ်မှုများသည် Google Sans Flex ကို အထူးတိကျစွာ ချိန်ညှိပေးသည် — အသုံးပြုရန် အပေါ်တွင် ထို font ကို ရွေးပါ။ အပေါ်ရှိ Title နှင့် artist weight/italic က ဤ font ၏ weight (wght) နှင့် slant (slnt) axes ကို သတ်မှတ်ပြီးသားဖြစ်သည်။ အောက်ပါထိန်းချုပ်မှုလေးခုသည် face တစ်ခုလုံးကို သက်ရောက်သည်။</string>
+    <string name="setting_wear_font_flex_width">အကျယ်</string>
+    <string name="setting_wear_font_flex_width_description">အလျားလိုက်ဆန့်မှု၊ ကျဉ်းမှ ကျယ်အထိ (25–151)။ 100 သည် font ၏ ပုံမှန်အကျယ်ဖြစ်သည်။</string>
+    <string name="setting_wear_font_flex_optical_size">Optical အရွယ်အစား</string>
+    <string name="setting_wear_font_flex_optical_size_description">စာသား၏ ထိရောက်သောအရွယ်အစားအတွက် stroke အသေးစိတ်ကို ချိန်ညှိသည် (6–144)။ တန်ဖိုးနည်းသည် စာသေးအတွက်၊ တန်ဖိုးမြင့်သည် display စာကြီးအတွက် သင့်တော်သည်။</string>
+    <string name="setting_wear_font_flex_grade">Grade</string>
+    <string name="setting_wear_font_flex_grade_description">Layout မပြောင်းဘဲ weight ကို အနည်းငယ် ပြောင်းသည် (0–100) — အမှောင်မျက်နှာပြင်တွင် contrast ကို သိမ်မွေ့စွာ မြှင့်နိုင်သည်။</string>
+    <string name="setting_wear_font_flex_roundness">ဝိုင်းမှု</string>
+    <string name="setting_wear_font_flex_roundness_description">ပိုဖော်ရွေသောအသွင်အတွက် stroke အဆုံးများကို ထက်မြက် (0) မှ အပြည့်ဝိုင်း (100) အထိ ပေါင်းစပ်သည်။</string>
+    <string name="preview_sample_title">သီချင်းခေါင်းစဉ်</string>
+    <string name="preview_sample_artist">အနုပညာရှင်အမည်</string>
+    <string name="preview_sample_lyric_previous">ရှေ့စာကြောင်း</string>
+    <string name="preview_sample_lyric_current">ယခုဖွင့်နေသော စာကြောင်း</string>
+    <string name="preview_sample_lyric_next">နောက်စာကြောင်း</string>
+    <string name="preview_sample_next_title">နောက်သီချင်း</string>
+    <string name="preview_playback_stopped">ရပ်ထားသည်</string>
+    <string name="preview_verse_previous">ရှေ့စာကြောင်း</string>
+    <string name="preview_verse_current">ယခုဖွင့်နေသော စာကြောင်း</string>
+    <string name="preview_verse_next">ပြီးတော့ နောက်တစ်ကြောင်း</string>
+    <string name="preview_chat_today">ယနေ့</string>
+    <string name="category_gestures">Gestures &amp; input</string>
+    <string name="category_watch_navigation">Navigation &amp; shortcuts</string>
+    <string name="category_rotary_input">Rotary input &amp; ချိန်ညှိမှု</string>
+    <string name="category_watch_feedback">Feedback &amp; ထွက်ပုံအပြုအမူ</string>
+    <string name="category_watch_display">နာရီမျက်နှာပြင်</string>
+    <string name="setting_wear_keep_screen_on">မျက်နှာပြင်ကို ဖွင့်ထားရန်</string>
+    <string name="setting_wear_keep_screen_on_description">Svartifoss မျက်နှာပြင်ဖွင့်ထားစဉ် inactivity timeout ကြောင့် နာရီမျက်နှာပြင် မပိတ်စေရန် တားသည်။ လက်ကောက်ဝတ်ကို အောက်ချလျှင် နာရီသည် မှိန်နေဆဲဖြစ်သည် \u2014 ထို gesture သည် system ၏ လုပ်ဆောင်ချက်ဖြစ်သည်။ Battery ပိုသုံးသည်။ ဤဆက်တင်မည်သို့ဖြစ်စေ lyrics မျက်နှာပြင်သည် အမြဲဖွင့်နေသည်။</string>
+    <string name="setting_lyrics_enabled">သီချင်းစာသားကို online ရှာရန်</string>
+    <string name="setting_lyrics_enabled_description">နာရီတွင် lyrics မျက်နှာပြင်ဖွင့်သောအခါ ဖုန်းအား LRCLIB မှ synchronized lyrics ရယူခွင့်ပေးပါ။ Track အမည်၊ artist နှင့် ကြာချိန်ကိုသာ ပို့သည်။ အခြားအရာမပို့ဘဲ disk တွင်လည်း မသိမ်းပါ။ ပိတ်ထားပါက lyrics မျက်နှာပြင်တွင် lookup ပိတ်ထားကြောင်း ပြမည်။</string>
+    <string name="setting_overlay_blur_radius">Overlay blur</string>
+    <string name="setting_overlay_blur_radius_description">Volume/seek rings နှင့် quick actions panel နောက်ရှိ frosted နောက်ခံ blur အား (px) — album art နောက်ခံ blur နှင့် သီးခြား</string>
+    <string name="category_action_list">လုပ်ဆောင်ချက်စာရင်း</string>
+    <string name="category_automation">အလိုအလျောက်လုပ်ဆောင်မှု</string>
+    <string name="category_idle">ဘာမှမဖွင့်နေချိန်</string>
+    <string name="installed_version">ထည့်သွင်းထားသောဗားရှင်း</string>
+    <string name="get_support">အကူအညီ ရယူရန်</string>
+    <string name="get_support_description">အကူအညီအတွက် application logs ကို developer ထံ ပို့ပါ</string>
+    <string name="contact_developer">Developer ကို ဆက်သွယ်ရန်</string>
+    <string name="contact_developer_subject">Svartifoss %1$s — ဆက်သွယ်ရန်</string>
+    <string name="contact_developer_chooser">Email ပို့ရန်</string>
+    <string name="contact_developer_no_client">Email app မထည့်သွင်းထားပါ။ လိပ်စာကို clipboard သို့ ကူးယူပြီးပါပြီ။</string>
+    <string name="about_developer_title">Developer အကြောင်း</string>
+    <string name="about_developer_dialog_message">Svartifoss သည် ကိုယ်ပိုင် project တစ်ခုအဖြစ် စတင်ခဲ့သည် — Music Center for Wear ကို ယနေ့ဖြစ်နိုင်သည့်အရာများနှင့် ကိုက်ညီအောင် ခေတ်မီစေပြီး ကိုယ်တိုင်နေ့စဉ်သုံးနိုင်ရန် ဖြစ်သည်။ အဆင်ပြေလွန်းသဖြင့် လူတိုင်းနှင့် မျှဝေရန် ဆုံးဖြတ်ခဲ့သည်။ ဤသည်မှာ ကျွန်ုပ်၏ ပထမဆုံး app ဖြစ်ပြီး ကိုယ်တိုင်ဖန်တီးထားသည့်အရာက အခြားသူများအတွက်ပါ အသုံးဝင်လာသည်ကို မြင်ရခြင်းနှင့် တူသည့် ခံစားချက် မရှိသလောက်ပါ။</string>
+    <string name="licenses">Open source လိုင်စင်များ</string>
+    <string name="setting_always_show_time">အချိန်ကို အမြဲပြရန်</string>
+    <string name="setting_always_show_time_off_description">လက်ရှိအချိန်ကို ambient mode တွင်သာ ပြမည်</string>
+    <string name="setting_always_show_time_on_description">လက်ရှိအချိန်ကို အမြဲပြမည်။ အပေါ် action icon ကို မမြင်ရဘဲ (နာရီဖြင့် အစားထိုးမည်) လုပ်ဆောင်ချက်က ပုံမှန်အတိုင်း အလုပ်လုပ်မည်။</string>
+    <string name="tap_to_force_stop">ထိန်းချုပ်မှုများ ရပ်ရန် နှိပ်ပါ</string>
+    <string name="notification_action_stop">ရပ်ရန်</string>
+    <string name="notification_action_force_stop">အတင်းရပ်ရန်</string>
+    <string name="error_notification_access">Notification access မရှိပါ။ ဖုန်းကို စစ်ပါ။</string>
+    <string name="error_notifications">အမှား notification များ</string>
+    <string name="notification_access_notification_title">Svartifoss သည် notification access လိုအပ်သည်</string>
+    <string name="notification_access_notification_title_description">ပြဿနာဖြေရှင်းရန် ဤ notification ကို နှိပ်ပြီး Svartifoss ကို စစ်ပါ</string>
+    <string name="error_service_not_enabled">Notification access လိုအပ်သည်</string>
+    <string name="error_service_not_enabled_description">နာရီမှ တေးဂီတကို ထိန်းချုပ်ရန် Svartifoss သည် notification access လိုအပ်သည် — Android က မည်သည့် app ဖွင့်နေသည်ကို သိနိုင်ရန်နှင့် play၊ pause၊ skip command များ ပို့နိုင်ရန် ဤခွင့်ပြုချက်ကို အသုံးပြုသည်။\n\nSvartifoss သည် သင့် notifications အကြောင်းအရာကို လုံးဝမဖတ်ပါ။ Active media session ကို ရှာဖွေရန်သာ ဤ permission ကို သုံးသည်။\n\n\"Settings ဖွင့်ရန်\" ကို နှိပ်ပြီး notification access အောက်တွင် Svartifoss ကို ဖွင့်ပါ။</string>
+    <string name="action_open_settings">Settings ဖွင့်ရန်</string>
+    <string name="settings_search_title">ဆက်တင်များ ရှာရန်</string>
+    <string name="settings_search_hint">ဆက်တင်များ ရှာရန်</string>
+    <string name="settings_search_clear">ရှာဖွေမှု ရှင်းရန်</string>
+    <string name="settings_search_prompt">Settings နှင့် Watch appearance တစ်လျှောက်ရှိ ဆက်တင်တိုင်းကို အမည်ဖြင့် ရှာပါ။</string>
+    <string name="settings_search_no_results">ကိုက်ညီသော ဆက်တင် မရှိပါ။</string>
+    <string name="settings_search_prerequisite">ဤရွေးချယ်မှုသည် အခြားရွေးချယ်မှုတစ်ခုအပေါ် မူတည်သည်။ ၎င်းပေါ်လာရန် ဤနေရာတွင် ပြထားသော ဆက်တင်ကို ချိန်ညှိပါ။</string>
+    <string name="setting_numeric_range_error">%1$d မှ %2$d အတွင်း တန်ဖိုးတစ်ခု ထည့်ပါ။</string>
+    <string name="settings_search_breadcrumb">%1$s › %2$s</string>
+    <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
+    <string name="notification_access_banner_summary">ခွင့်ပြုရန် နှိပ်ပါ — မလုပ်မချင်း playback control သည် မလှုပ်ရှားပါ</string>
+    <string name="no_watch_app_title">သင့်နာရီတွင် Svartifoss ကို ထည့်သွင်းပါ</string>
+    <string name="no_watch_app_description">Pair လုပ်ထားသော Wear OS နာရီတွင် Svartifoss ၏ watch app ကို မတွေ့ပါ။ ဖုန်းနှင့် နာရီ apps များ အတူအလုပ်လုပ်သည် — watch app မရှိပါက လက်ကောက်ဝတ်မှ playback ကို ထိန်းချုပ်၍ မရပါ။\n\nSvartifoss သည် Play Store တွင် မရှိပါ — watch app ကို သီးခြား sideload လုပ်ရသည် (ဥပမာ Wear Installer ဖြင့်)။ GitHub releases စာမျက်နှာဖွင့်ပြီး watch APK ရယူရန် \"Releases ကြည့်ရန်\" ကို နှိပ်ပါ။ ယခုတင်ထည့်ထားပါက sync ပြီးရန် တစ်မိနစ်ပေးပါ။</string>
+    <string name="no_watch_app_button">Releases ကြည့်ရန်</string>
+    <string name="required_permission">လိုအပ်သော permission</string>
+    <string name="setting_pause_on_swipe_exit">ပွတ်ဆွဲထွက်ချိန် playback ကို pause လုပ်ရန်</string>
+    <string name="setting_pause_on_swipe_exit_description">နာရီတွင် ဘယ်ဘက်သို့ ပွတ်ဆွဲပြီး Svartifoss မှ ထွက်သည့်အခါ playback ကို အလိုအလျောက် pause လုပ်ပါ။\n\nPower button ဖြင့် ထွက်ခြင်းကို မသက်ရောက်ဘဲ ထိုအခါ auto-pause လုံးဝ မဖြစ်ပါ။</string>
+    <string name="setting_rotating_crown_off_period">Rotary input မျက်နှာပြင်ဖွင့် နှောင့်နှေးချိန်</string>
+    <string name="setting_rotating_crown_off_period_description">စက်အချို့တွင် rotating input (ဥပမာ rotating crown) သည် အလွန်အာရုံခံနိုင်သည်။ မတော်တဆ အသံပြောင်းမှု မဖြစ်စေရန် မျက်နှာပြင်ဖွင့်ပြီးနောက် &lt;b>%1$s milliseconds&lt;/b> အထိ rotary input ကို ပိတ်ထားမည်။</string>
+    <string name="setting_rotary_seek">Rotary crown ဖြင့် seek လုပ်ရန်</string>
+    <string name="setting_rotary_seek_description">ဖွင့်ထားပါက crown လှည့်ခြင်းသည် အသံပြောင်းမည့်အစား လက်ရှိ track ထဲတွင် scrub လုပ်သည်။ အသံကို on-screen သို့မဟုတ် ရုပ်ပိုင်းဆိုင်ရာခလုတ်များဖြင့် ပြောင်းနိုင်သေးသည်။</string>
+    <string name="setting_wear_rotary_action">Rotary crown / bezel</string>
+    <string name="wear_rotary_action_volume">အသံပြောင်းရန်</string>
+    <string name="wear_rotary_action_seek">Track ထဲတွင် seek လုပ်ရန်</string>
+    <string name="wear_rotary_action_off">ဘာမှမလုပ်ရန်</string>
+    <string name="setting_rotating_sensitivity">Rotary input အာရုံခံမှု</string>
+    <string name="setting_rotating_sensitivity_description">Rotary input အာရုံခံမှု။ နံပါတ်ပိုမြင့်လေလေ crown ကို တူညီစွာလှည့်သည့်အခါ အသံ ပိုတိုးမည်။ လက်ရှိ &lt;b>%1$s%%&lt;/b> သတ်မှတ်ထားသည်။</string>
+    <string name="setting_disable_ambient_physical_double_click">Ambient တွင် ရုပ်ပိုင်းဆိုင်ရာခလုတ် double click ပိတ်ရန်</string>
+    <string name="setting_disable_ambient_physical_double_click_description">နာရီအချို့တွင် button bug ကြောင့် ambient mode တွင် ရုပ်ပိုင်းဆိုင်ရာခလုတ် တစ်ချက်နှိပ်ခြင်းကို တစ်ခါတလေ double click အဖြစ် မှတ်ယူနိုင်သည်။\n\nဤအခြေအနေဖြစ်ပါက ambient mode တွင် double click ကို လုံးဝပိတ်ရန် ဤရွေးချယ်မှုကို ဖွင့်နိုင်သည် (ဥပမာ နှစ်ချက်နှိပ်လျှင် single click action သာ လုပ်မည်)။ နာရီ active ဖြစ်ချိန်တွင် နှစ်ချက်နှိပ်ခြင်းကို မသက်ရောက်ပါ။</string>
+    <string name="setting_haptic_feedback">Haptic feedback</string>
+    <string name="setting_haptic_feedback_description">ခလုတ်နှိပ်ချိန် နာရီကို တုန်စေရန်။</string>
+    <string name="setting_auto_start">Svartifoss ကို အလိုအလျောက်ဖွင့်ရန်</string>
+    <string name="setting_auto_start_description">ဖုန်းတွင် တေးဂီတ playback စသောအခါ နာရီပေါ်တွင် Svartifoss ကို အလိုအလျောက်ဖွင့်ပါ။</string>
+    <string name="setting_auto_start_apps_blacklist">Auto-start apps</string>
+    <string name="setting_auto_start_apps_blacklist_description">Svartifoss ကို auto-start လုပ်နိုင်သော media apps စာရင်း</string>
+    <string name="setting_dim_album_art">Player shading</string>
+    <string name="setting_dim_album_art_description">Artwork နှင့် player controls ကြားတွင် အသုံးပြုသူရွေးထားသော shadow treatment ထည့်ပါ။</string>
+    <string name="setting_album_art_style">Album art ပုံစံ</string>
+    <string name="setting_album_art_style_description">လက်ရှိဖွင့်နေသော နောက်ခံကို နာရီတွင် မည်သို့မြင်ရမည်ကို ရွေးပါ။</string>
+    <string name="setting_album_art_blur_radius">Blur အား</string>
+    <string name="setting_album_art_blur_radius_description">ရွေးထားသော နောက်ခံက blur သုံးသောအခါ full-screen blur အား။ လက်ရှိ &lt;b>%1$s px&lt;/b>။</string>
+    <string name="setting_album_art_dim_strength">မှိန်အား</string>
+    <string name="setting_album_art_dim_strength_description">စာသားဖတ်လွယ်ရန် album art ကို မည်မျှမှောင်မည်။ လက်ရှိ &lt;b>%1$s%%&lt;/b>။</string>
+    <string name="setting_player_shading_style">Shading ပုံစံ</string>
+    <string name="setting_player_shading_intensity">Shading အား</string>
+    <string name="setting_player_shading_intensity_description">Shading က နောက်ခံကို မည်မျှမှောင်စေသည်။ 100%% သည် အားအပြည့်ဖြစ်ပြီး contrast ပိုလိုပါက 150%% အထိ မြှင့်နိုင်သည်။ လက်ရှိ &lt;b>%1$s%%&lt;/b>။</string>
+    <string name="category_wf_layout_actions">Layout</string>
+    <string name="setting_reset_appearance">ဤ layout ကို reset လုပ်ရန်</string>
+    <string name="setting_reset_appearance_description">ဤ face ၏ အသွင်အပြင်ကို မူလ default သို့ ပြန်ထားရန်</string>
+    <string name="reset_appearance_confirm_title">ဤ layout ကို reset လုပ်မလား။</string>
+    <string name="reset_appearance_confirm_message">ဤ face ၏ အသွင်အပြင်ဆက်တင်များ မူလအတိုင်း ပြန်သွားမည်။ သင့် behavior ဆက်တင်များနှင့် အခြား faces မထိခိုက်ပါ။</string>
+    <string name="reset_appearance_confirm_button">Reset လုပ်ရန်</string>
+    <string name="reset_appearance_done">Layout ကို default သို့ reset လုပ်ပြီးပါပြီ</string>
+    <string name="setting_reset_all_faces">Faces အားလုံးကို default သို့ reset လုပ်ရန်</string>
+    <string name="setting_reset_all_faces_description">Built-in face တိုင်း၏ အသွင်အပြင်ကို မူလ default သို့ ပြန်ထားရန်</string>
+    <string name="reset_all_faces_confirm_title">Faces အားလုံးကို reset လုပ်မလား။</string>
+    <string name="reset_all_faces_confirm_message">Built-in face တိုင်း၏ အသွင်အပြင် မူလ default သို့ ပြန်သွားပြီး active custom theme ကို ပိတ်မည်။ သိမ်းထားသော custom themes၊ behavior ဆက်တင်များနှင့် ရွေးထားသော face ကို ထိန်းထားမည်။</string>
+    <string name="reset_all_faces_confirm_button">အားလုံး reset လုပ်ရန်</string>
+    <string name="reset_all_faces_done">Faces အားလုံးကို default သို့ reset လုပ်ပြီးပါပြီ</string>
+    <string name="face_reset_migration_title">သင့်နာရီအသွင်အပြင်ကို update လုပ်ပါ</string>
+    <string name="face_reset_migration_message">သင်သည် watch faces အားလုံးက အသွင်အပြင်ဆက်တင်တစ်စုံတည်းကို မျှဝေသည့် ဗားရှင်းဟောင်းမှ update လုပ်ထားသည်။ ယခု face တစ်ခုစီသည် ကိုယ်ပိုင်ဆက်တင်ကို မှတ်ထားသောကြောင့် သင်တိုက်ရိုက် customize မလုပ်ခဲ့သော faces တွင် ဆက်တင်ဟောင်းများ မကိုက်ညီသလို မြင်ရနိုင်သည်။ Faces အားလုံးကို default အသစ်များသို့ reset လုပ်ရန် သို့မဟုတ် လုံးဝအသစ်စရန် app data ကို ရှင်းရန် အကြံပြုပါသည်။</string>
+    <string name="face_reset_migration_reset_button">Faces အားလုံး reset လုပ်ရန်</string>
+    <string name="face_reset_migration_clear_data_button">App data ရှင်းရန်</string>
+    <string name="setting_player_shading_color">Shading အရောင်</string>
+    <string name="setting_wear_shading_custom_color">စိတ်ကြိုက် shading အရောင်</string>
+    <string-array name="wear_shading_color_mode_entries">
+        <item>အနက်</item>
+        <item>Album accent</item>
+        <item>အရောင်လျှော့ထားသော album</item>
+        <item>စိတ်ကြိုက်အရောင်</item>
+    </string-array>
+    <string-array name="player_shading_style_entries">
+        <item>Player theme အတိုင်း လိုက်နာရန်</item>
+        <item>အစွန်း vignette</item>
+        <item>အစွန်း vignette (ပြင်း)</item>
+        <item>အစွန်း vignette (အလွန်ပြင်း)</item>
+        <item>အောက်ထောင့်</item>
+        <item>အောက်ခြေ fade</item>
+        <item>အောက်နှင့် အပေါ်</item>
+        <item>Full-screen filter</item>
+        <item>Album color wash</item>
+        <item>နှစ်ရောင် album gradient</item>
+        <item>ဘေးဘက် curtain များ</item>
+    </string-array>
+    <string name="setting_ambient_album_art_opacity">Ambient မုဒ် အယ်လ်ဘမ်ပုံ အလင်းပိတ်မှု</string>
+    <string name="setting_ambient_album_art_opacity_description">Ambient mode တွင် album art မည်မျှမြင်ရမည်။ လက်ရှိ &lt;b>%1$s%%&lt;/b>။</string>
+    <string name="setting_volume_overlay_timeout">အသံအတိုးအကျယ်/ရှာဖွေမှု အပေါ်ယံပြကွက် အချိန်ကုန်ဆုံးချိန်</string>
+    <string name="setting_volume_overlay_timeout_description">ချိန်ညှိပြီးနောက် volume နှင့် seek overlays သည် မျက်နှာပြင်ပေါ်တွင် မည်မျှကြာနေမည်။ လက်ရှိ &lt;b>%1$s ms&lt;/b>။</string>
+    <string name="setting_rotary_deadzone">Rotary dead zone</string>
+    <string name="setting_rotary_deadzone_description">Volume သို့မဟုတ် seek ပြောင်းလဲမှု မသက်ရောက်မီ လိုအပ်သော အနည်းဆုံး crown လှုပ်ရှားမှု။ မတော်တဆချိန်ညှိမှုကို တားရာတွင် ကူညီသည်။ လက်ရှိ &lt;b>%1$s&lt;/b>။</string>
+    <string name="category_wear_experience">Wear အတွေ့အကြုံ</string>
+    <string name="setting_swipe_gestures_hint">Swipe gesture များ</string>
+    <string name="setting_swipe_gestures_hint_description">အပေါ်/အောက်/ဘယ် swipe တစ်ခုစီသည် မည်သည့်လုပ်ဆောင်ချက်ကိုမဆို ဖွင့်နိုင်သည်။ Music playing သို့မဟုတ် No playback အတွက် ပြင်ဆင်ရန် ဤနေရာကို နှိပ်ပါ။ ညာ swipe ကို app မှ ထွက်ရန် သီးသန့်ထားသည်။</string>
+    <string name="setting_screen_buttons_hint">Mini ခလုတ်များ</string>
+    <string name="setting_screen_buttons_hint_description">မြင်ရသော ခလုတ် အများဆုံးသုံးခု၊ တစ်ခုစီတွင် tap နှင့် long-press actions ရှိသည်။ Music playing သို့မဟုတ် No playback အတွက် ပြင်ဆင်ရန် ဤနေရာကို နှိပ်ပါ။</string>
+    <string name="dev_screen_buttons_offset">Mini ခလုတ်နေရာ</string>
+    <string name="dev_screen_buttons_offset_description">နာရီမျက်နှာပြင်အောက်ခြေမှ mini ခလုတ်များအထိ နှစ်သက်သောအကွာအဝေး dp ဖြင့် (default 42)။ ခေါင်းစဉ်ရှည်များမှ ဝေးရန် row သည် ကိုယ်တိုင်ညှိနေဆဲဖြစ်သည်။</string>
+    <string name="setting_screen_buttons_tilt">ခလုတ်စောင်းမှု</string>
+    <string name="setting_screen_buttons_tilt_description">ဘေးခလုတ်များက မျက်နှာပြင်၏ ကွေးမှုကို မည်မျှလိုက်မည်။ 0 = တန်းဖြောင့် row; 100 = စောင်းထားသော icons များပါ အပြည့် arc အမြင့်။</string>
+    <string name="setting_screen_buttons_bg">Mini ခလုတ်နောက်ခံ</string>
+    <string name="setting_screen_buttons_opacity">Mini ခလုတ် opacity</string>
+    <string name="setting_screen_buttons_opacity_description">Mini-button group တစ်ခုလုံး၏ opacity (0–100%%)။ လက်ရှိ &lt;b>%1$s%%&lt;/b>။</string>
+    <string name="quick_panel_row_title">အမြန်လုပ်ဆောင်ချက် panel</string>
+    <string name="quick_panel_link_summary">ဖွင့်ရန် နာရီမျက်နှာပြင်အလယ်ကို နှစ်ချက်နှိပ်ပါ။ Actions တွင် ၎င်း၏ slot လေးခုကို သတ်မှတ်ရန် ဤနေရာကို နှိပ်ပါ။</string>
+    <string name="quick_panel_config_hint">ဤခလုတ်များသည် နာရီမျက်နှာပြင်အလယ်ကို နှစ်ချက်နှိပ်သောအခါ ဖွင့်သည့် panel ထဲက ခလုတ်များဖြစ်သည်။ Row တစ်ခုကို နှိပ်ပြီး လုပ်ဆောင်ချက်ကို ရွေးပါ (\"မရှိ\" သတ်မှတ်လျှင် ဖျောက်မည်)။ Default ပြန်ယူရန် ကြာကြာနှိပ်ပါ။</string>
+    <string name="quick_panel_slot_1">ခလုတ် 1</string>
+    <string name="quick_panel_slot_2">ခလုတ် 2</string>
+    <string name="quick_panel_slot_3">ခလုတ် 3</string>
+    <string name="quick_panel_slot_long">ခလုတ်ရှည်</string>
+    <string name="quick_panel_slot_default">%1$s (default)</string>
+    <string name="quick_panel_slot_hidden">ဖျောက်ထားသည်</string>
+    <string name="quick_panel_default_like">ကြိုက်နှစ်သက်ရန်</string>
+    <string name="quick_panel_default_shuffle">ရောနှောရန်</string>
+    <string name="quick_panel_default_repeat">ထပ်ဖွင့်ရန်</string>
+    <string name="quick_panel_default_up_next">နောက်တစ်ခု</string>
+    <string name="setting_wear_center_long_press_queue">Queue အတွက် အလယ်ကို ကြာကြာနှိပ်ရန်</string>
+    <string name="setting_wear_center_long_press_queue_description">Playback queue ဖွင့်ရန် လက်ရှိဖွင့်နေသော မျက်နှာပြင်အလယ်ကို ကြာကြာနှိပ်ပါ။</string>
+    <string name="setting_wear_center_long_press">အလယ်ကို ကြာကြာနှိပ်</string>
+    <string-array name="wear_center_long_press_entries">
+        <item>နာရီ face ပြောင်းရန်</item>
+        <item>Queue ဖွင့်ရန်</item>
+        <item>ဘာမှမရှိ</item>
+    </string-array>
+    <string name="setting_wear_screen_face">Base layout</string>
+    <string name="setting_wear_screen_face_description">ဤ theme အသုံးပြုမည့် ဖွဲ့စည်းပုံကို ရွေးပါ။ သိမ်းထားသော themes များသည် ဤ layout ကို ကိုယ်ပိုင် font၊ colors၊ blur၊ shading၊ AOD နှင့် panels တို့နှင့် ပေါင်းစပ်နိုင်သည်။</string>
+    <string name="setting_wear_show_track_title">သီချင်းခေါင်းစဉ် ပြရန်</string>
+    <string name="setting_wear_show_track_title_description">Player ပေါ်တွင် လက်ရှိသီချင်းအမည် ပြရန်</string>
+    <string name="setting_wear_show_track_artist">အနုပညာရှင်အမည် ပြရန်</string>
+    <string name="setting_wear_show_track_artist_description">Player ပေါ်တွင် လက်ရှိအနုပညာရှင် ပြရန်</string>
+    <string name="setting_wear_show_source_icon">ဖွင့်နေသော app icon ကို ပြရန်</string>
+    <string name="setting_wear_show_source_icon_description">လက်ရှိဖွင့်နေသော app icon ကို artist ဘေးတွင် ပြပါ။ ၎င်း၏ media notification icon ကို သုံးသည်။ ပိတ်ထားပါက icon ကို နာရီသို့ ဘယ်တော့မှ မပို့ပါ။</string>
+    <string name="setting_wear_player_controls_visible">Player controls ပြရန်</string>
+    <string name="setting_wear_player_controls_visible_description">Classic၊ Poster၊ Studio နှင့် အခြားပြင်ဆင်နိုင်သော layouts များရှိ built-in ခလုတ်များကို touch targets မပိတ်ဘဲ ပြရန် သို့မဟုတ် ဖျောက်ရန်</string>
+    <string name="setting_wear_quadrant_tap_flash">နှိပ်ချိန် icon လင်းပြရန်</string>
+    <string name="setting_wear_quadrant_tap_flash_description">ထောင့်ဧရိယာတစ်ခု၏ action လုပ်ဆောင်သည့်အခါ icon ကို ခဏတာ အလင်းအပြည့်ဖြင့် လင်းပြပါ - အထူးသဖြင့် Hidden screen theme တွင် အသုံးဝင်သည်၊ အဲဒီမှာ icon မမြင်ရသဖြင့် မည်သည့် action လုပ်သွားသည်ကို အတည်ပြုချက်မရှိပါ။</string>
+    <string name="setting_wear_internal_progress_visible">Layout progress indicator</string>
+    <string name="setting_wear_internal_progress_visible_description">ဤ layout တွင် ထည့်သွင်းဒီဇိုင်းထားသော အပို progress indicator ကို ပြပါ။ Expressive နှင့် Material play-button rings များသည် controls ၏ အစိတ်အပိုင်းဖြစ်ပြီး ဆက်လက်ရရှိနိုင်သည်။</string>
+    <string name="setting_wear_edge_progress_visible">အစွန်း progress arc ပြရန်</string>
+    <string name="setting_wear_edge_progress_visible_description">မျက်နှာပြင်ပတ်လည်ရှိ မြင်ရသော arc ကိုသာ ဖျောက်ပါ။ Edge seeking သည် သီးခြားရွေးချယ်မှုအဖြစ် ဆက်ရှိသည်။</string>
+    <string name="setting_wear_edge_seek_enabled">မျက်နှာပြင်အစွန်းမှ seek လုပ်ရန်</string>
+    <string name="setting_wear_edge_seek_enabled_description">Arc ဖျောက်ထားသော်လည်း အတိအကျနေရာသို့ သွားရန် မျက်နှာပြင်အစွန်းတစ်လျှောက် နှိပ် သို့မဟုတ် ဆွဲပါ</string>
+    <string name="setting_wear_screen_theme">Control ပုံစံ</string>
+    <string name="described_list_selected_summary">%1$s · %2$s</string>
+    <string name="wear_screen_theme_default">မျှတ</string>
+    <string name="wear_screen_theme_default_description">ပုံမှန် အဆင့်ဆင့်ဖွဲ့စည်းမှုနှင့် control အရွယ်အစားများ။</string>
+    <string name="wear_screen_theme_minimal">အနည်းဆုံး</string>
+    <string name="wear_screen_theme_minimal_description">Action တိုင်းကို မြင်ရပြီး သုံးနိုင်အောင်ထားကာ ပိုသေးပြီး သက်သာသော controls ကို သုံးသည်။</string>
+    <string name="wear_screen_theme_compact">Compact</string>
+    <string name="wear_screen_theme_compact_description">Actions မပြောင်းဘဲ ပိုကျစ်လစ်သော control ပုံစံကို သုံးသည်။</string>
+    <string name="wear_screen_theme_cinema">Cinema</string>
+    <string name="wear_screen_theme_cinema_description">Artwork မပြောင်းဘဲ controls ကို ပိုနူးညံ့စေသည်။</string>
+    <string name="wear_screen_theme_vivid">တောက်ပ</string>
+    <string name="wear_screen_theme_vivid_description">ပိုကြီးပြီး ထင်ရှားသော controls ကို သုံးသည်။</string>
+    <string name="wear_screen_theme_contrast">အလင်းအမှောင်ကွာခြားမှုမြင့်</string>
+    <string name="wear_screen_theme_contrast_description">ဖတ်လွယ်ရန် ပိုကြီးသော controls ကို သုံးသည်။</string>
+    <string name="wear_screen_theme_amoled">AMOLED</string>
+    <string name="wear_screen_theme_amoled_description">ကျစ်လစ်ပြီး အနည်းငယ်မှိန်သော controls ကို သုံးသည်။ နောက်ခံကို သူ့အလိုလို မမှောင်စေပါ — အဲဒီအတွက် background settings ကို သုံးပါ။</string>
+    <string name="wear_screen_theme_hidden">ဖျောက်ထားသည်</string>
+    <string name="wear_screen_theme_hidden_description">Control icons များကို လုံးဝဖျောက်သည်။ Touch targets များသည် active ဖြစ်ပြီး အပြည့်အဝအလုပ်လုပ်နေဆဲဖြစ်သည်။</string>
+    <string name="setting_wear_font">Typeface</string>
+    <string name="wear_font_google_sans">Google Sans</string>
+    <string name="wear_font_google_sans_description">App ၏ default typeface။</string>
+    <string name="wear_font_google_sans_flex">Google Sans Flex</string>
+    <string name="wear_font_google_sans_flex_description">ချိန်ညှိနိုင်သော width၊ optical size၊ grade နှင့် roundness ပါသော Google Sans ၏ variable version — အောက်ရှိ axis controls ကို ဖွင့်ပေးသည်။</string>
+    <string name="wear_font_roboto">Roboto</string>
+    <string name="wear_font_roboto_description">Android ၏ မူရင်း system typeface။</string>
+    <string name="wear_font_rounded">ဝိုင်းသော</string>
+    <string name="wear_font_rounded_description">နူးညံ့ဝိုင်းသော အဆုံးများပါသည့် ဖော်ရွေသော ခေတ်မီစာလုံးပုံစံများ။</string>
+    <string name="wear_font_sans_light">ခေတ်မီ ပေါ့ပါး</string>
+    <string name="wear_font_sans_light_description">မြင်ကွင်းအလေးချိန် ပေါ့သော သန့်ရှင်းပြီး လွတ်လပ်သည့် sans-serif။</string>
+    <string name="wear_font_sans_thin">အလွန်ပါး</string>
+    <string name="wear_font_sans_thin_description">Minimal player အတွက် အလွန်ပေါ့သော display ပုံစံ။</string>
+    <string name="wear_font_sans_medium">ခေတ်မီ အလယ်အလတ်</string>
+    <string name="wear_font_sans_medium_description">ပိုထူပြီး ကျစ်လစ်သော strokes ပါသည့် ပြတ်သားသော sans-serif။</string>
+    <string name="wear_font_sans_black">ထူထဲ</string>
+    <string name="wear_font_sans_black_description">မြင်ကွင်းထိရောက်မှု အများဆုံးရှိသော bold display family။</string>
+    <string name="wear_font_small_caps">Small Caps</string>
+    <string name="wear_font_small_caps_description">Editorial ခံစားချက်ရှိသော ကျစ်လစ်သည့် စာလုံးကြီးပုံစံများ။</string>
+    <string name="wear_font_casual">ပေါ့ပေါ့ပါးပါး</string>
+    <string name="wear_font_casual_description">ပျော်ရွှင်ဖွယ် လက်ရေး system family။</string>
+    <string name="wear_font_poppins">Poppins</string>
+    <string name="wear_font_poppins_description">ဝိုင်းသော geometric sans၊ Circular ပုံစံနှင့် ဆင်တူသည့် အခမဲ့ (OFL) ရွေးချယ်စရာ။</string>
+    <string name="wear_font_montserrat">Montserrat</string>
+    <string name="wear_font_montserrat_description">သန့်ရှင်းသော geometric sans၊ Proxima Nova ပုံစံနှင့် ဆင်တူသည့် အခမဲ့ (OFL) ရွေးချယ်စရာ။</string>
+    <string name="wear_font_marcellus">Marcellus</string>
+    <string name="wear_font_marcellus_description">လှပသော humanist roman၊ Optima ပုံစံနှင့် ဆင်တူသည့် အခမဲ့ (OFL) ရွေးချယ်စရာ။</string>
+    <string name="wear_font_love_letter">Special Elite</string>
+    <string name="wear_font_love_letter_description">ပွန်းပဲ့ analog အသွင်ရှိသော distressed typewriter ပုံစံ။</string>
+    <string name="wear_font_serif">Serif</string>
+    <string name="wear_font_serif_description">ရိုးရာ serif typeface။</string>
+    <string name="wear_font_serif_monospace">Serif Mono</string>
+    <string name="wear_font_serif_monospace_description">ထူးခြားသော editorial/terminal အသွင်ရှိသည့် fixed-width serif စာလုံးများ။</string>
+    <string name="wear_font_monospace">Monospace</string>
+    <string name="wear_font_monospace_description">အကျယ်တူ၊ နည်းပညာဆန်သောအသွင်။</string>
+    <string name="wear_font_condensed">Condensed</string>
+    <string name="wear_font_condensed_description">စာသားပိုဆံ့ရန် ကျဉ်းသော စာလုံးပုံစံများ။</string>
+    <string name="wear_font_condensed_light">Condensed Light</string>
+    <string name="wear_font_condensed_light_description">ခေါင်းစဉ်ရှည်များအတွက် ကျဉ်းပြီး ပေါ့သော family။</string>
+    <string name="wear_font_condensed_medium">Condensed Medium</string>
+    <string name="wear_font_condensed_medium_description">ပိုထူသော strokes နှင့် ဖတ်ရှုနိုင်မှုကောင်းသော ကျဉ်းသည့် family။</string>
+    <string name="wear_font_cursive">Cursive</string>
+    <string name="wear_font_cursive_description">အလှဆင် script typeface။</string>
+    <string name="setting_wear_dynamic_accent">နာရီပေါ် dynamic accent</string>
+    <string name="setting_wear_dynamic_accent_description">Album အခြေခံ နာရီအရောင်များကို လက်ရှိ cover art နှင့် ကိုက်ညီအောင် ပြောင်းပါ။ ပိတ်ထားပါက Album color ရွေးချယ်မှုများသည် static theme accent ကို သုံးသည်။</string>
+    <string name="setting_wear_album_art_fade">အယ်လ်ဘမ်ပုံ ဖျော့ပြောင်း အကူးအပြောင်း</string>
+    <string name="setting_wear_album_art_fade_description">Track ပြောင်းချိန် album art ကို ချောမွေ့စွာ fade လုပ်ပါ။</string>
+    <string name="setting_wear_title_text_mode">ခေါင်းစဉ်စာသား အပြုအမူ</string>
+    <string name="setting_wear_title_text_mode_description">လက်ရှိခေါင်းစဉ် မဆံ့သည့်အခါ မည်သို့ပြုမူမည် - Automatic သည် shrink၊ wrap နှင့် scroll ကို ပေါင်းစပ်သုံးပြီး အခြားရွေးချယ်မှုများက တစ်မျိုးတည်းကို သုံးသည်။</string>
+    <string-array name="wear_title_text_mode_entries">
+        <item>အလိုအလျောက် (shrink၊ ထို့နောက် wrap၊ ထို့နောက် scroll)</item>
+        <item>Scroll (marquee)</item>
+        <item>နှစ်ကြောင်း wrap လုပ်ရန်</item>
+        <item>သုံးကြောင်း wrap လုပ်ရန်</item>
+        <item>ငါးကြောင်း wrap လုပ်ရန်</item>
+        <item>Static (တစ်ကြောင်း၊ scroll သို့မဟုတ် shrink မရှိ)</item>
+        <item>ဆံ့အောင် shrink လုပ်ရန်</item>
+    </string-array>
+    <string name="setting_wear_artist_color">Artist စာသားအရောင်</string>
+    <string name="setting_wear_artist_custom_color">Artist စိတ်ကြိုက်အရောင်</string>
+    <string name="setting_wear_artist_custom_color_description">Normal treatment နှင့် သုံးမည့် artist အရောင်ကို ရွေးပါ</string>
+    <string name="setting_wear_artist_desaturated">Artist အရောင်လျှော့</string>
+    <string name="setting_wear_artist_desaturated_description">Album အခြေခံ artist စာသားအရောင်ကို ပိုနူးညံ့စေသည် — \"Artist text color\" ကို Album color အဖြစ် သတ်မှတ်ထားမှသာ သက်ရောက်သည်</string>
+    <string name="setting_wear_progress_color">Progress bar အရောင်</string>
+    <string name="setting_wear_progress_custom_color">Progress bar စိတ်ကြိုက်အရောင်</string>
+    <string name="setting_wear_progress_custom_color_description">Normal treatment နှင့် သုံးမည့် progress နှင့် seek အရောင်ကို ရွေးပါ</string>
+    <string name="setting_wear_progress_desaturated">Progress bar အရောင်လျှော့</string>
+    <string name="setting_wear_progress_desaturated_description">Album အခြေခံ progress bar အရောင်ကို ပိုနူးညံ့စေသည် — \"Progress bar color\" ကို Album color အဖြစ် သတ်မှတ်ထားမှသာ သက်ရောက်သည်</string>
+    <string name="setting_wear_volume_color">Volume bar အရောင်</string>
+    <string name="setting_wear_volume_custom_color">Volume စိတ်ကြိုက်အရောင်</string>
+    <string name="setting_wear_volume_custom_color_description">Normal treatment နှင့် သုံးမည့် volume အရောင်ကို ရွေးပါ</string>
+    <string name="setting_wear_quick_panel_color">Quick Actions အရောင်</string>
+    <string name="setting_wear_quick_panel_custom_color">Quick Actions စိတ်ကြိုက်အရောင်</string>
+    <string name="setting_wear_quick_panel_custom_color_description">Normal treatment နှင့် သုံးမည့် Quick Actions အရောင်ကို ရွေးပါ</string>
+    <string name="setting_wear_lyrics_color">Lyrics အရောင်</string>
+    <string name="setting_wear_lyrics_custom_color">Lyrics စိတ်ကြိုက်အရောင်</string>
+    <string name="setting_wear_lyrics_custom_color_description">Normal treatment နှင့် သုံးမည့် lyrics အရောင်ကို ရွေးပါ</string>
+    <string name="setting_wear_queue_color">Queue အရောင်</string>
+    <string name="setting_wear_queue_custom_color">Queue စိတ်ကြိုက်အရောင်</string>
+    <string name="setting_wear_queue_custom_color_description">Normal treatment နှင့် သုံးမည့် queue အရောင်ကို ရွေးပါ</string>
+    <string name="setting_wear_shading_custom_color_description">Shading gradient ကို tint ပေးမည့် အရောင်ကို ရွေးပါ</string>
+    <string-array name="wear_accent_color_entries">
+        <item>အလယ်အလတ် (တည်ငြိမ်သော theme အရောင်)</item>
+        <item>Album အရောင်</item>
+        <item>စိတ်ကြိုက်အရောင်</item>
+    </string-array>
+    <string-array name="wear_screen_face_entries">
+        <item>Classic</item>
+        <item>Expressive</item>
+        <item>Vinyl</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Halo</item>
+        <item>Aurora</item>
+        <item>Eclipse AMOLED</item>
+        <item>Spectrum</item>
+        <item>Material</item>
+        <item>Immersive</item>
+        <item>Depth</item>
+        <item>Carousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Verse</item>
+        <item>Metadata</item>
+        <item>အနုပညာရှင်</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
+        <item>MatejDro</item>
+    </string-array>
+    <string name="setting_wear_expressive_seek_mode">Expressive seek</string>
+    <string name="setting_wear_expressive_seek_mode_description">Expressive face တွင် touch ဖြင့် track ကို မည်သို့ scrub လုပ်မည်။ Central ring သည် play button ပတ်လည် ring ကို ဆွဲနိုင်စေသည်။ Edge ring က Classic bezel ring ကိုလည်း ပြသည်။ None တွင် seek ကို rotary crown ဖြင့်သာ လုပ်နိုင်သည်။</string>
+    <string-array name="wear_expressive_seek_mode_entries">
+        <item>အလယ် ring</item>
+        <item>အစွန်း ring</item>
+        <item>ဘာမှမရှိ</item>
+    </string-array>
+    <string name="category_wear_aod">Always-on display</string>
+    <string name="setting_wear_aod_style">Always-on ပုံစံ</string>
+    <string name="setting_wear_aod_style_description">နာရီ ambient mode တွင်ရှိချိန် now-playing မျက်နှာပြင် မည်သို့မြင်ရမည်။ Follow face သည် ရွေးထားသော face နှင့် ကိုက်ညီပြီး Minimal က battery အသက်ရှည်ဆုံးဖြစ်ရန် အနက်သက်သက်နောက်ခံပေါ်တွင် မှိန်သောစာသားသာ ပြသည်။</string>
+    <string-array name="wear_aod_style_entries">
+        <item>Face အတိုင်း လိုက်နာရန်</item>
+        <item>Classic</item>
+        <item>Expressive (outline)</item>
+        <item>Material (outline)</item>
+        <item>AMOLED controls</item>
+        <item>Chrono (နာရီကြီး)</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Immersive</item>
+        <item>Carousel</item>
+        <item>Chat</item>
+        <item>Split</item>
+        <item>Note</item>
+        <item>Verse</item>
+        <item>အနုပညာရှင်</item>
+        <item>Ribbon</item>
+        <item>Frame</item>
+    </string-array>
+    <string name="setting_wear_aod_color">Always-on အရောင်</string>
+    <string-array name="wear_aod_color_entries">
+        <item>အဖြူ</item>
+        <item>Album အရောင်</item>
+        <item>စိတ်ကြိုက်အရောင်</item>
+    </string-array>
+    <string-array name="wear_clock_color_entries">
+        <item>အဖြူ</item>
+        <item>Dynamic (နာရီအောက်ရှိဧရိယာအလိုက်)</item>
+        <item>Album အရောင်</item>
+        <item>စိတ်ကြိုက်အရောင်</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_entries">
+        <item>Panel ပုံစံအတိုင်း လိုက်နာရန်</item>
+        <item>ကြည်လင် (နောက်ခံမရှိ)</item>
+        <item>Album accent</item>
+        <item>တစ်ဝက်ကြည်လင်</item>
+        <item>အဖြူ</item>
+        <item>Frosted အဖြူ</item>
+        <item>အနက်</item>
+        <item>Dynamic (album tone)</item>
+    </string-array>
+    <string name="setting_wear_up_next_pill">Up Next pill နောက်ခံ</string>
+    <string name="setting_wear_show_up_next_pill">Player ပေါ် Up Next pill</string>
+    <string name="setting_wear_show_up_next_pill_description">now-playing မျက်နှာပြင်အောက်တွင် Up Next pill ကို ပြပါ။ ၎င်းသည် mini-buttons row နေရာကို ဖြည့်သဖြင့် row မပေါ်ချိန်တွင်သာ ပြမည်။</string>
+    <string name="category_wf_clock">နာရီ</string>
+    <string name="setting_wear_clock_color">နာရီအရောင်</string>
+    <string name="setting_wear_clock_custom_color">နာရီ စိတ်ကြိုက်အရောင်</string>
+    <string name="setting_wear_clock_custom_color_description">Clock color ကို Custom color အဖြစ် သတ်မှတ်ထားချိန် သုံးမည့် နာရီအရောင်ကို ရွေးရန် နှိပ်ပါ</string>
+    <string name="setting_wear_clock_opacity">နာရီ opacity</string>
+    <string name="setting_wear_clock_opacity_description">အမြဲပြသော နာရီ၏ opacity (10–100%%)။ လက်ရှိ &lt;b>%1$s%%&lt;/b>။</string>
+    <string name="setting_wear_aod_custom_color">Always-on စိတ်ကြိုက်အရောင်</string>
+    <string name="setting_wear_aod_custom_color_description">\"Always-on color\" ကို Custom color အဖြစ် သတ်မှတ်ထားချိန် always-on စာသား၊ controls နှင့် နာရီအတွက် သုံးမည့် အရောင်ကို ရွေးရန် နှိပ်ပါ</string>
+    <string name="setting_wear_aod_intensity">Always-on အလင်း</string>
+    <string name="setting_wear_aod_intensity_description">Always-on display မည်မျှတောက်ပစွာ render မည် (20–100%%)။ နည်းလေ ပိုမှိန်ပြီး battery ပိုသက်သာလေဖြစ်သည်။ လက်ရှိ &lt;b>%1$s%%&lt;/b>။</string>
+    <string name="setting_wear_aod_show_transport">Always-on display ပေါ် transport ခလုတ်များ</string>
+    <string name="setting_wear_aod_show_transport_description">ပံ့ပိုးထားသော visual always-on ပုံစံများတွင် outline previous/play/next ခလုတ်များကို ပြပါ။ မျက်နှာပြင်မှိန်နေချိန် နှိပ်၍မရသော်လည်း နှိပ်လိုက်ခြင်းက နာရီကို နိုးစေပြီး ခလုတ်က လက်ချောင်းအောက်တွင် ရှိနေပြီးသားဖြစ်သည်။</string>
+    <string name="setting_wear_aod_show_progress">Always-on display ပေါ် progress ring</string>
+    <string name="setting_wear_aod_show_progress_description">ambient mode တွင် play button ပတ်လည် progress ring ကို ပြပါ — ထိုနေရာတွင် position သည် တစ်မိနစ်ခန့်တစ်ကြိမ်သာ update ဖြစ်သည်</string>
+    <string name="setting_wear_aod_show_pills">Always-on display ပေါ် Up Next</string>
+    <string name="setting_wear_aod_show_pills_description">visual always-on ပုံစံများအောက်တွင် static outline Up Next pill ကို ပြပါ</string>
+    <string name="category_wf_gestures">မျက်နှာပြင် gestures</string>
+    <string name="setting_wear_mini_buttons_mode">Mini ခလုတ်များ ပြရန်</string>
+    <string name="setting_wear_gestures_mode">မျက်နှာပြင် gestures</string>
+    <string-array name="wear_activity_visibility_entries">
+        <item>အမြဲ</item>
+        <item>ဖွင့်နေချိန်သာ</item>
+        <item>Pause ဖြစ်နေချိန်သာ</item>
+        <item>ဘယ်တော့မှမဟုတ်</item>
+    </string-array>
+    <string name="setting_wear_aod_show_art">Always-on display ပေါ် album art</string>
+    <string name="setting_wear_aod_show_art_description">ambient mode တွင် မှိန်ထားသော album art ကို မြင်ရအောင် ထားသည်။ ပိတ်လိုက်ပါက အနက်သက်သက် နောက်ခံပြပြီး AMOLED မျက်နှာပြင်တွင် battery ကို သိသိသာသာ သက်သာစေသည်။</string>
+    <string name="setting_wear_aod_art_treatment">Always-on album art ပုံစံ</string>
+    <string-array name="wear_aod_art_treatment_entries">
+        <item>နူးညံ့သော blur</item>
+        <item>ရှင်းလင်းသော cover</item>
+        <item>Monochrome blur</item>
+        <item>Player artwork treatment အတိုင်း လိုက်နာရန်</item>
+    </string-array>
+    <string name="setting_wear_aod_show_clock">Always-on display ပေါ် နာရီ</string>
+    <string name="setting_wear_aod_show_clock_description">နာရီ ambient mode တွင်ရှိချိန် နာရီကို ပြပါ</string>
+    <string name="setting_wear_aod_show_track_info">Always-on display ပေါ် track အချက်အလက်</string>
+    <string name="setting_wear_aod_show_track_info_description">ambient mode တွင် track ခေါင်းစဉ်နှင့် artist ကို ပြပါ</string>
+    <string name="category_overlays_queue">Overlays &amp; queue</string>
+    <string name="category_wf_panel_shared">Shared panel အသွင်အပြင်</string>
+    <string name="category_wf_panel_volume">Volume panel</string>
+    <string name="category_wf_panel_seek">Progress &amp; seek panel</string>
+    <string name="category_wf_panel_quick">အမြန်လုပ်ဆောင်ချက် panel</string>
+    <string name="category_wf_panel_queue">Queue &amp; စာရင်းများ</string>
+    <string name="category_wf_panel_lyrics">သီချင်းစာသား</string>
+    <string name="category_wf_panel_effects">Panel effects</string>
+    <string name="setting_wear_overlay_backdrop_style">Panel နောက်ခံ</string>
+    <string name="wear_backdrop_shared">Shared panel appearance အတိုင်း လိုက်နာရန်</string>
+    <string name="setting_wear_volume_backdrop_style">Volume နောက်ခံ</string>
+    <string name="setting_wear_progress_backdrop_style">Progress နောက်ခံ</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Quick actions နောက်ခံ</string>
+    <string name="setting_wear_queue_backdrop_style">Queue နောက်ခံ</string>
+    <string name="setting_wear_lyrics_backdrop_style">Lyrics နောက်ခံ</string>
+    <string name="setting_wear_volume_style">အသံပုံစံ</string>
+    <string name="setting_wear_volume_layout">အသံ layout</string>
+    <string name="setting_wear_quick_panel_style">Quick panel ပုံစံ</string>
+    <string name="setting_wear_quick_panel_layout">Quick panel layout</string>
+    <string name="setting_wear_quick_panel_source">အမြန်လုပ်ဆောင်ချက်များ</string>
+    <string name="setting_wear_quick_panel_source_description">သင်ပြင်ဆင်ထားသော ခလုတ်များ သို့မဟုတ် လက်ရှိဖွင့်နေသော app က ပေးသည့် actions ကို ရွေးပါ။</string>
+    <string name="quick_panel_open_note_title">Panel ဖွင့်ခြင်း</string>
+    <string name="quick_panel_open_note_description">နာရီပေါ် quick actions panel ဖွင့်ရန် now-playing မျက်နှာပြင်အလယ်ကို နှစ်ချက်နှိပ်ပါ။</string>
+    <string name="preview_current_app_action">လက်ရှိ app action</string>
+    <string name="preview_notification_controls">media notification မှ icon</string>
+    <string name="setting_wear_queue_style">Queue ပုံစံ</string>
+    <string name="setting_wear_quick_panel_shortcut_cover">Shortcut covers ကို နောက်ခံအဖြစ် သုံးရန်</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Queue style က Cover variant တစ်မျိုးဖြစ်ချိန် fetched shortcut cover (track, playlist, artist…) ပါသော quick-panel action row သည် Up Next လိုပဲ pill ကို ထို art ဖြင့် ဖြည့်မည်။ Fetched cover မရှိသော shortcuts (ရိုးရိုး app icon) မပြောင်းပါ။</string>
+    <string name="setting_wear_list_row_size">List pill အရွယ်</string>
+    <string name="setting_wear_list_row_size_description">Queue ထဲရှိ full-width rows ၏ အမြင့်။</string>
+    <string name="setting_wear_progress_gradient">Palette ကို ring ထဲ ပေါင်းရန်</string>
+    <string name="setting_wear_progress_gradient_description">အရောင်စုံ color treatment (Complementary, Triadic, Analogous, Duotone) တွင် solid ring သည် အရောင်သုံးရောင်လုံးတစ်လျှောက် fade ဖြစ်သည်။ အခြားနေရာများတွင် album palette ကို ထားပြီး single-color ring လိုပါက ပိတ်ပါ။</string>
+    <string name="setting_wear_progress_style">Progress ring ပုံစံ</string>
+    <string name="setting_wear_seek_style">Seek &amp; volume readout ပုံစံ</string>
+    <string name="setting_wear_seek_layout">Seek panel layout</string>
+    <string name="setting_wear_color_treatment">နာရီအရောင် treatment</string>
+    <string name="setting_wear_normal_color">ပုံမှန်အရောင်</string>
+    <string name="setting_wear_normal_color_description">Normal mode တွင် title accents၊ progress၊ volume၊ panels နှင့် mini-button chrome အတွက် သုံးမည့် အရောင်တစ်ရောင်ကို ရွေးပါ</string>
+    <string name="setting_wear_normal_color_multi">အရောင် palette သုံးရန်</string>
+    <string name="setting_wear_normal_color_multi_description">ဖွင့်ထားပါက မျက်နှာပြင်သည် အဓိကအရောင်တစ်ရောင်နှင့် အထောက်အကူ tone နှစ်ရောင် သုံးသည်။ ပိတ်ထားပါက နေရာတိုင်းတွင် အရောင်တစ်ရောင်တည်း — album ၏ ကိုယ်ပိုင်အရောင် သို့မဟုတ် သင်ရွေးထားသောအရောင် — ကို သုံးသည်။</string>
+    <string-array name="wear_color_treatment_entries">
+        <item>ပုံမှန် (ရွေးထားသောအရောင်)</item>
+        <item>အရောင်လျှော့ (နူးညံ့သော album အရောင်)</item>
+        <item>Expressive (album palette အပြည့်)</item>
+        <item>Complementary (album + ဆန့်ကျင်)</item>
+        <item>Triadic (album hue သုံးရောင်)</item>
+        <item>Analogous (အနီးစပ် hue များ)</item>
+        <item>Monochrome (hue တစ်ရောင်၊ tone သုံးမျိုး)</item>
+        <item>Duotone (album အရောင်နှစ်ရောင်)</item>
+    </string-array>
+    <string-array name="wear_component_color_treatment_entries">
+        <item>နာရီ treatment အတိုင်း လိုက်နာရန်</item>
+        <item>ပုံမှန် (ရွေးထားသောအရောင်)</item>
+        <item>အရောင်လျှော့ (နူးညံ့သော album အရောင်)</item>
+        <item>Expressive (album palette အပြည့်)</item>
+        <item>Complementary (album + ဆန့်ကျင်)</item>
+        <item>Triadic (album hue သုံးရောင်)</item>
+        <item>Analogous (အနီးစပ် hue များ)</item>
+        <item>Monochrome (hue တစ်ရောင်၊ tone သုံးမျိုး)</item>
+        <item>Duotone (album အရောင်နှစ်ရောင်)</item>
+    </string-array>
+    <string name="setting_wear_title_font_weight">ခေါင်းစဉ် weight</string>
+    <string name="setting_wear_title_font_italic">ခေါင်းစဉ် italic</string>
+    <string name="setting_wear_title_font_scale">ခေါင်းစဉ်အရွယ်</string>
+    <string name="setting_wear_title_font_opacity">ခေါင်းစဉ် opacity</string>
+    <string name="setting_wear_title_font_tracking">ခေါင်းစဉ်စာလုံးအကွာအဝေး</string>
+    <string name="setting_wear_title_color">ခေါင်းစဉ်စာသားအရောင်</string>
+    <string name="setting_wear_title_custom_color">ခေါင်းစဉ် စိတ်ကြိုက်အရောင်</string>
+    <string name="wear_title_color_face_default">Face default (ဒီဇိုင်းအတိုင်း)</string>
+    <string name="setting_wear_title_adaptive_contrast">Contrast အတွက် ခေါင်းစဉ်အရောင် ချိန်ညှိရန်</string>
+    <string name="setting_wear_title_adaptive_contrast_description">ခေါင်းစဉ်အရောင်က နောက်ရှိ artwork နှင့် အလွန်နီးလျှင် hue ကို ထိန်းထားပြီး ပိုလင်း သို့မဟုတ် ပိုမှောင်စေသည်။ ခေါင်းစဉ်က face default ကို ထားချိန် သက်ရောက်မှုမရှိပါ။</string>
+    <string name="setting_wear_artist_adaptive_contrast">Contrast အတွက် artist အရောင် ချိန်ညှိရန်</string>
+    <string name="setting_wear_artist_adaptive_contrast_description">Album အရောင်က နောက်ရှိ artwork နှင့် အလွန်နီးလျှင် hue ကို ထိန်းထားပြီး artist line ကို ပိုလင်း သို့မဟုတ် ပိုမှောင်စေသည်။ Cover တစ်ခုလုံးမဟုတ်ဘဲ line ရှိသော strip ကိုသာ တိုင်းသည်။</string>
+    <string name="setting_wear_artist_font_weight">Artist weight</string>
+    <string name="setting_wear_artist_font_italic">Artist italic</string>
+    <string name="setting_wear_artist_font_scale">Artist အရွယ်</string>
+    <string name="setting_wear_artist_font_opacity">Artist opacity</string>
+    <string name="setting_wear_artist_font_tracking">Artist စာလုံးအကွာအဝေး</string>
+    <string name="setting_wear_source_icon_scale">App icon အရွယ်</string>
+    <string name="setting_wear_source_icon_opacity">App icon opacity</string>
+    <string name="setting_wear_typography_weight_description">1–1000။ 400 သည် face ၏ ပုံမှန် weight ဖြစ်ပြီး ပိုမြင့်လေ bold ပိုဖြစ်လေ။ Google Sans Flex အတွက် ဤသည် font ၏ ကိုယ်ပိုင် weight axis ဖြစ်သည်</string>
+    <string name="setting_wear_typography_scale_description">Face ၏ ကိုယ်ပိုင်အရွယ် ရာခိုင်နှုန်း (1–300)။ 100 သည် layout တစ်ခုစီ၏ ဒီဇိုင်းအရွယ်ကို ထားသည်</string>
+    <string name="setting_wear_typography_opacity_description">ရာခိုင်နှုန်း (20–100)။ 100 သည် face ၏ ကိုယ်ပိုင် opacity ကို ထားသည်</string>
+    <string name="setting_wear_typography_tracking_description">စာလုံးများကြား အပိုနေရာ၊ em ၏ ရာပုံတစ်ပုံဖြင့် (−5 မှ 20)။ 0 သည် font ၏ ကိုယ်ပိုင် spacing ကို ထားသည်</string>
+    <string name="setting_wear_color_modifier">Tone</string>
+    <string name="setting_wear_title_color_modifier">ခေါင်းစဉ် tone</string>
+    <string name="setting_wear_artist_color_modifier">Artist tone</string>
+    <string name="setting_wear_clock_color_modifier">နာရီ tone</string>
+    <string name="wear_color_modifier_follow">နာရီ tone အတိုင်း လိုက်နာရန်</string>
+    <string name="setting_wear_color_modifier_description">Palette မည်သို့ရယူသည်ကို မပြောင်းဘဲ palette တစ်ခုလုံးကို ချိန်ညှိသည် — color treatment တိုင်းနှင့် အလုပ်လုပ်သည်</string>
+    <string name="setting_wear_color_hue_shift">အရောင် shift</string>
+    <string name="setting_wear_color_hue_shift_description">Album palette ကို color wheel ပတ်လည် ဒီဂရီဖြင့် (0–359) လှည့်သည်။ Treatment တစ်ခုစီက အဓိကအရောင်ကို album ၏ မူလ hue တွင် ထားသောကြောင့် ဤအရာကသာ ကွဲပြားစေသည်။ 0 သည် album အရောင်ကို မပြောင်းဘဲ သုံးပြီး fixed Normal color ကို ဘယ်တော့မှ shift မလုပ်ပါ။</string>
+    <string-array name="wear_color_modifier_entries">
+        <item>ဘာမှမရှိ</item>
+        <item>တောက်ပပြင်း</item>
+        <item>Pastel</item>
+        <item>နွေး</item>
+        <item>အေး</item>
+    </string-array>
+    <string-array name="wear_volume_layout_entries">
+        <item>Edge arc (ဘယ်)</item>
+        <item>Edge arc (အမြင့်)</item>
+        <item>Edge arc (ညာ)</item>
+        <item>Edge arc (အပေါ်)</item>
+        <item>Edge arc (အောက်)</item>
+        <item>Full ring</item>
+        <item>အလယ် halo</item>
+        <item>အလျားလိုက် meter</item>
+    </string-array>
+    <string-array name="wear_seek_layout_entries">
+        <item>အစွန်း ring</item>
+        <item>Edge ring (ပါး)</item>
+        <item>Edge ring (ထူ)</item>
+        <item>Timeline</item>
+        <item>Segmented timeline</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_entries">
+        <item>Metadata အရင်</item>
+        <item>Arc</item>
+        <item>Hero</item>
+        <item>Grid</item>
+        <item>Label ပါသော rows</item>
+    </string-array>
+    <string-array name="wear_progress_style_entries">
+        <item>Solid</item>
+        <item>Dashed</item>
+        <item>Dots</item>
+        <item>Hairline</item>
+        <item>Comet</item>
+        <item>နာရီ dot 60 ခု</item>
+        <item>နာရီ tick 60 ခု</item>
+        <item>12-hour segments</item>
+    </string-array>
+    <string-array name="wear_seek_style_entries">
+        <item>Plain</item>
+        <item>Glass pill</item>
+        <item>Expressive pill</item>
+        <item>Material pill</item>
+        <item>အဖြူ pill</item>
+        <item>အကြီး</item>
+        <item>Position / total</item>
+        <item>Glass white</item>
+        <item>Translucent album</item>
+        <item>Glow album</item>
+        <item>Outline</item>
+        <item>Solid theme</item>
+        <item>Solid album</item>
+        <item>Micro</item>
+        <item>Shadow (chrome မရှိ)</item>
+        <item>Underline</item>
+        <item>Hairline outline</item>
+        <item>Giant album color</item>
+        <item>Mono</item>
+        <item>Tonal dark</item>
+        <item>Terminal</item>
+    </string-array>
+    <string-array name="wear_quick_panel_source_entries">
+        <item>ပြင်ဆင်ထားသော ခလုတ်များ</item>
+        <item>လက်ရှိ media app မှ</item>
+    </string-array>
+    <string-array name="wear_overlay_backdrop_entries">
+        <item>Panel ပုံစံအတိုင်း လိုက်နာရန်</item>
+        <item>Album blur (acrylic)</item>
+        <item>Solid အနက်</item>
+        <item>Solid album color</item>
+        <item>Glass</item>
+        <item>Album gradient</item>
+        <item>Album duotone</item>
+        <item>Prism</item>
+        <item>Liquid glass</item>
+        <item>Expressive blur</item>
+        <item>Expressive</item>
+    </string-array>
+    <string-array name="wear_volume_style_entries">
+        <item>Glass</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Light</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Outline</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>High Contrast</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Segments</item>
+        <item>Aurora</item>
+        <item>Ink</item>
+        <item>Groove</item>
+    </string-array>
+    <string-array name="wear_list_row_size_entries">
+        <item>Compact</item>
+        <item>ပုံမှန်</item>
+        <item>အမြင့်</item>
+        <item>အလွန်မြင့်</item>
+    </string-array>
+    <string-array name="wear_overlay_style_entries">
+        <item>Glass</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Light</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Outline</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>High Contrast</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Cover</item>
+        <item>Cover Blur</item>
+        <item>Cover Tonal</item>
+        <item>Cover Square</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_entries">
+        <item>Glass</item>
+        <item>Glass White</item>
+        <item>Glass Tonal</item>
+        <item>Minimal (AMOLED)</item>
+        <item>Material</item>
+        <item>Tonal</item>
+        <item>Neon</item>
+        <item>Light</item>
+        <item>Gradient</item>
+        <item>Mono</item>
+        <item>Outline</item>
+        <item>Outline Glass White</item>
+        <item>Duotone</item>
+        <item>Prism</item>
+        <item>High Contrast</item>
+        <item>Terminal</item>
+        <item>Frost</item>
+        <item>Ghost (chrome မရှိ)</item>
+        <item>Mist</item>
+        <item>Ink</item>
+        <item>Dot</item>
+        <item>Slab</item>
+    </string-array>
+    <string name="setting_wear_paused_hold">Pause လုပ်ပြီးနောက် app ကို active ထားရန်</string>
+    <string name="setting_wear_paused_hold_description">Pause လုပ်ပြီးနောက် watch face မှ app ကို မည်မျှကြာ ရရှိနိုင်မည်၊ ပြန်ဖွင့်မည့်အစား လက်ကောက်ဝတ်မြှောက်ပြီး resume လုပ်နိုင်ရန်။ အချိန်ရှည် settings များသည် background service ကို လည်ပတ်နေစေသည်။</string>
+    <string name="wear_paused_hold_off">မထားရန်</string>
+    <string name="wear_paused_hold_5">5 မိနစ်</string>
+    <string name="wear_paused_hold_15">15 မိနစ်</string>
+    <string name="wear_paused_hold_30">30 မိနစ်</string>
+    <string name="wear_paused_hold_60">1 နာရီ</string>
+    <string name="wear_paused_hold_always">Playback ပြီးသည့်အထိ</string>
+    <string name="setting_wear_idle_button_action">ဘာမှမဖွင့်နေချိန် ခလုတ်</string>
+    <string name="setting_wear_idle_auto_open">ဘာမှမဖွင့်နေချိန် ဖွင့်ရန်</string>
+    <string name="setting_wear_idle_auto_open_description">တေးဂီတမဖွင့်နေချိန် watch app ကို ဖွင့်လျှင် ဤမျက်နှာပြင်သို့ တန်းသွားသည်။</string>
+    <string name="wear_idle_action_resume">နောက်ဆုံး app ကို resume လုပ်ရန်</string>
+    <string name="wear_idle_action_shortcuts">Playlist shortcuts</string>
+    <string name="wear_idle_action_menu">လုပ်ဆောင်ချက် menu</string>
+    <string name="wear_idle_action_search">ရှာဖွေမှု</string>
+    <string name="wear_idle_action_queue">မကြာသေးမီက ဖွင့်ထားသည်များ</string>
+    <string name="wear_idle_action_none">ခလုတ်မရှိ</string>
+    <string name="wear_idle_auto_open_none">Player ပေါ်တွင်နေရန်</string>
+    <string-array name="wear_paused_hold_entries">
+        <item>@string/wear_paused_hold_off</item>
+        <item>@string/wear_paused_hold_5</item>
+        <item>@string/wear_paused_hold_15</item>
+        <item>@string/wear_paused_hold_30</item>
+        <item>@string/wear_paused_hold_60</item>
+        <item>@string/wear_paused_hold_always</item>
+    </string-array>
+    <string-array name="wear_idle_button_action_entries">
+        <item>@string/wear_idle_action_resume</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+        <item>@string/wear_idle_action_none</item>
+    </string-array>
+    <string-array name="wear_idle_auto_open_entries">
+        <item>@string/wear_idle_auto_open_none</item>
+        <item>@string/wear_idle_action_shortcuts</item>
+        <item>@string/wear_idle_action_menu</item>
+        <item>@string/wear_idle_action_search</item>
+        <item>@string/wear_idle_action_queue</item>
+    </string-array>
+    <string-array name="wear_rotary_action_entries">
+        <item>@string/wear_rotary_action_volume</item>
+        <item>@string/wear_rotary_action_seek</item>
+        <item>@string/wear_rotary_action_off</item>
+    </string-array>
+    <string-array name="wear_screen_theme_entries">
+        <item>@string/wear_screen_theme_default</item>
+        <item>@string/wear_screen_theme_minimal</item>
+        <item>@string/wear_screen_theme_compact</item>
+        <item>@string/wear_screen_theme_contrast</item>
+    </string-array>
+    <string-array name="wear_screen_theme_descriptions">
+        <item>@string/wear_screen_theme_default_description</item>
+        <item>@string/wear_screen_theme_minimal_description</item>
+        <item>@string/wear_screen_theme_compact_description</item>
+        <item>@string/wear_screen_theme_contrast_description</item>
+    </string-array>
+    <string-array name="wear_font_entries">
+        <item>@string/wear_font_google_sans</item>
+        <item>@string/wear_font_google_sans_flex</item>
+        <item>@string/wear_font_roboto</item>
+        <item>@string/wear_font_rounded</item>
+        <item>@string/wear_font_sans_light</item>
+        <item>@string/wear_font_sans_thin</item>
+        <item>@string/wear_font_sans_medium</item>
+        <item>@string/wear_font_sans_black</item>
+        <item>@string/wear_font_small_caps</item>
+        <item>@string/wear_font_casual</item>
+        <item>@string/wear_font_love_letter</item>
+        <item>@string/wear_font_serif</item>
+        <item>@string/wear_font_serif_monospace</item>
+        <item>@string/wear_font_monospace</item>
+        <item>@string/wear_font_condensed</item>
+        <item>@string/wear_font_condensed_light</item>
+        <item>@string/wear_font_condensed_medium</item>
+        <item>@string/wear_font_cursive</item>
+        <item>@string/wear_font_poppins</item>
+        <item>@string/wear_font_montserrat</item>
+        <item>@string/wear_font_marcellus</item>
+        <item>@string/wear_font_bebas_neue</item>
+        <item>@string/wear_font_playfair</item>
+        <item>@string/wear_font_space_grotesk</item>
+        <item>@string/wear_font_orbitron</item>
+        <item>@string/wear_font_caveat</item>
+        <item>@string/wear_font_inter</item>
+        <item>@string/wear_font_atkinson_hyperlegible</item>
+        <item>@string/wear_font_rubik</item>
+        <item>@string/wear_font_barlow_condensed</item>
+        <item>@string/wear_font_oswald</item>
+        <item>@string/wear_font_lora</item>
+        <item>@string/wear_font_fraunces</item>
+        <item>@string/wear_font_space_mono</item>
+        <item>@string/wear_font_archivo_black</item>
+        <item>@string/wear_font_dancing_script</item>
+        <item>@string/wear_font_abeezee</item>
+        <item>@string/wear_font_abril_fatface</item>
+        <item>@string/wear_font_acme</item>
+        <item>@string/wear_font_alata</item>
+        <item>@string/wear_font_aleo</item>
+        <item>@string/wear_font_alfa_slab_one</item>
+        <item>@string/wear_font_amatic_sc</item>
+        <item>@string/wear_font_anton</item>
+        <item>@string/wear_font_arvo</item>
+        <item>@string/wear_font_bangers</item>
+        <item>@string/wear_font_black_ops_one</item>
+        <item>@string/wear_font_bree_serif</item>
+        <item>@string/wear_font_cabin</item>
+        <item>@string/wear_font_chivo</item>
+        <item>@string/wear_font_courier_prime</item>
+        <item>@string/wear_font_crete_round</item>
+        <item>@string/wear_font_crimson_pro</item>
+        <item>@string/wear_font_dm_sans</item>
+        <item>@string/wear_font_domine</item>
+        <item>@string/wear_font_exo_2</item>
+        <item>@string/wear_font_fira_code</item>
+        <item>@string/wear_font_inconsolata</item>
+        <item>@string/wear_font_indie_flower</item>
+        <item>@string/wear_font_josefin_sans</item>
+        <item>@string/wear_font_jost</item>
+        <item>@string/wear_font_kanit</item>
+        <item>@string/wear_font_lexend</item>
+        <item>@string/wear_font_lobster</item>
+        <item>@string/wear_font_manrope</item>
+        <item>@string/wear_font_mulish</item>
+        <item>@string/wear_font_nunito</item>
+        <item>@string/wear_font_outfit</item>
+        <item>@string/wear_font_oxanium</item>
+        <item>@string/wear_font_play</item>
+        <item>@string/wear_font_plus_jakarta_sans</item>
+        <item>@string/wear_font_press_start_2p</item>
+        <item>@string/wear_font_quicksand</item>
+        <item>@string/wear_font_rajdhani</item>
+        <item>@string/wear_font_righteous</item>
+        <item>@string/wear_font_roboto_mono</item>
+        <item>@string/wear_font_rowdies</item>
+        <item>@string/wear_font_russo_one</item>
+        <item>@string/wear_font_shrikhand</item>
+        <item>@string/wear_font_silkscreen</item>
+        <item>@string/wear_font_source_code_pro</item>
+        <item>@string/wear_font_staatliches</item>
+        <item>@string/wear_font_teko</item>
+        <item>@string/wear_font_titillium_web</item>
+        <item>@string/wear_font_varela_round</item>
+        <item>@string/wear_font_yanone_kaffeesatz</item>
+        <item>@string/wear_font_zilla_slab</item>
+        <item>@string/wear_font_lato</item>
+        <item>@string/wear_font_merriweather_sans</item>
+        <item>@string/wear_font_source_sans_3</item>
+        <item>@string/wear_font_source_serif_4</item>
+        <item>@string/wear_font_libre_baskerville</item>
+        <item>@string/wear_font_libre_franklin</item>
+        <item>@string/wear_font_ibm_plex_sans</item>
+        <item>@string/wear_font_ibm_plex_mono</item>
+        <item>@string/wear_font_ibm_plex_serif</item>
+        <item>@string/wear_font_work_sans</item>
+        <item>@string/wear_font_karla</item>
+        <item>@string/wear_font_sora</item>
+        <item>@string/wear_font_urbanist</item>
+        <item>@string/wear_font_be_vietnam_pro</item>
+        <item>@string/wear_font_red_hat_display</item>
+        <item>@string/wear_font_red_hat_text</item>
+        <item>@string/wear_font_red_hat_mono</item>
+        <item>@string/wear_font_syne</item>
+        <item>@string/wear_font_instrument_sans</item>
+        <item>@string/wear_font_figtree</item>
+        <item>@string/wear_font_gabarito</item>
+        <item>@string/wear_font_bricolage_grotesque</item>
+        <item>@string/wear_font_dm_serif_display</item>
+        <item>@string/wear_font_cormorant_garamond</item>
+        <item>@string/wear_font_cormorant</item>
+        <item>@string/wear_font_bitter</item>
+        <item>@string/wear_font_spectral</item>
+        <item>@string/wear_font_vollkorn</item>
+        <item>@string/wear_font_raleway</item>
+        <item>@string/wear_font_league_spartan</item>
+        <item>@string/wear_font_saira</item>
+        <item>@string/wear_font_signika</item>
+        <item>@string/wear_font_sofia_sans</item>
+        <item>@string/wear_font_overpass</item>
+        <item>@string/wear_font_public_sans</item>
+        <item>@string/wear_font_questrial</item>
+        <item>@string/wear_font_dosis</item>
+        <item>@string/wear_font_prompt</item>
+        <item>@string/wear_font_unbounded</item>
+        <item>@string/wear_font_recursive</item>
+        <item>@string/wear_font_trispace</item>
+        <item>@string/wear_font_noto_sans</item>
+        <item>@string/wear_font_noto_serif</item>
+        <item>@string/wear_font_noto_sans_mono</item>
+        <item>@string/wear_font_heebo</item>
+        <item>@string/wear_font_hind</item>
+        <item>@string/wear_font_hind_madurai</item>
+        <item>@string/wear_font_kumbh_sans</item>
+        <item>@string/wear_font_alegreya</item>
+        <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
+    </string-array>
+    <string-array name="wear_font_descriptions">
+        <item>@string/wear_font_google_sans_description</item>
+        <item>@string/wear_font_google_sans_flex_description</item>
+        <item>@string/wear_font_roboto_description</item>
+        <item>@string/wear_font_rounded_description</item>
+        <item>@string/wear_font_sans_light_description</item>
+        <item>@string/wear_font_sans_thin_description</item>
+        <item>@string/wear_font_sans_medium_description</item>
+        <item>@string/wear_font_sans_black_description</item>
+        <item>@string/wear_font_small_caps_description</item>
+        <item>@string/wear_font_casual_description</item>
+        <item>@string/wear_font_love_letter_description</item>
+        <item>@string/wear_font_serif_description</item>
+        <item>@string/wear_font_serif_monospace_description</item>
+        <item>@string/wear_font_monospace_description</item>
+        <item>@string/wear_font_condensed_description</item>
+        <item>@string/wear_font_condensed_light_description</item>
+        <item>@string/wear_font_condensed_medium_description</item>
+        <item>@string/wear_font_cursive_description</item>
+        <item>@string/wear_font_poppins_description</item>
+        <item>@string/wear_font_montserrat_description</item>
+        <item>@string/wear_font_marcellus_description</item>
+        <item>@string/wear_font_bebas_neue_description</item>
+        <item>@string/wear_font_playfair_description</item>
+        <item>@string/wear_font_space_grotesk_description</item>
+        <item>@string/wear_font_orbitron_description</item>
+        <item>@string/wear_font_caveat_description</item>
+        <item>@string/wear_font_inter_description</item>
+        <item>@string/wear_font_atkinson_hyperlegible_description</item>
+        <item>@string/wear_font_rubik_description</item>
+        <item>@string/wear_font_barlow_condensed_description</item>
+        <item>@string/wear_font_oswald_description</item>
+        <item>@string/wear_font_lora_description</item>
+        <item>@string/wear_font_fraunces_description</item>
+        <item>@string/wear_font_space_mono_description</item>
+        <item>@string/wear_font_archivo_black_description</item>
+        <item>@string/wear_font_dancing_script_description</item>
+        <item>@string/wear_font_abeezee_description</item>
+        <item>@string/wear_font_abril_fatface_description</item>
+        <item>@string/wear_font_acme_description</item>
+        <item>@string/wear_font_alata_description</item>
+        <item>@string/wear_font_aleo_description</item>
+        <item>@string/wear_font_alfa_slab_one_description</item>
+        <item>@string/wear_font_amatic_sc_description</item>
+        <item>@string/wear_font_anton_description</item>
+        <item>@string/wear_font_arvo_description</item>
+        <item>@string/wear_font_bangers_description</item>
+        <item>@string/wear_font_black_ops_one_description</item>
+        <item>@string/wear_font_bree_serif_description</item>
+        <item>@string/wear_font_cabin_description</item>
+        <item>@string/wear_font_chivo_description</item>
+        <item>@string/wear_font_courier_prime_description</item>
+        <item>@string/wear_font_crete_round_description</item>
+        <item>@string/wear_font_crimson_pro_description</item>
+        <item>@string/wear_font_dm_sans_description</item>
+        <item>@string/wear_font_domine_description</item>
+        <item>@string/wear_font_exo_2_description</item>
+        <item>@string/wear_font_fira_code_description</item>
+        <item>@string/wear_font_inconsolata_description</item>
+        <item>@string/wear_font_indie_flower_description</item>
+        <item>@string/wear_font_josefin_sans_description</item>
+        <item>@string/wear_font_jost_description</item>
+        <item>@string/wear_font_kanit_description</item>
+        <item>@string/wear_font_lexend_description</item>
+        <item>@string/wear_font_lobster_description</item>
+        <item>@string/wear_font_manrope_description</item>
+        <item>@string/wear_font_mulish_description</item>
+        <item>@string/wear_font_nunito_description</item>
+        <item>@string/wear_font_outfit_description</item>
+        <item>@string/wear_font_oxanium_description</item>
+        <item>@string/wear_font_play_description</item>
+        <item>@string/wear_font_plus_jakarta_sans_description</item>
+        <item>@string/wear_font_press_start_2p_description</item>
+        <item>@string/wear_font_quicksand_description</item>
+        <item>@string/wear_font_rajdhani_description</item>
+        <item>@string/wear_font_righteous_description</item>
+        <item>@string/wear_font_roboto_mono_description</item>
+        <item>@string/wear_font_rowdies_description</item>
+        <item>@string/wear_font_russo_one_description</item>
+        <item>@string/wear_font_shrikhand_description</item>
+        <item>@string/wear_font_silkscreen_description</item>
+        <item>@string/wear_font_source_code_pro_description</item>
+        <item>@string/wear_font_staatliches_description</item>
+        <item>@string/wear_font_teko_description</item>
+        <item>@string/wear_font_titillium_web_description</item>
+        <item>@string/wear_font_varela_round_description</item>
+        <item>@string/wear_font_yanone_kaffeesatz_description</item>
+        <item>@string/wear_font_zilla_slab_description</item>
+        <item>@string/wear_font_lato_description</item>
+        <item>@string/wear_font_merriweather_sans_description</item>
+        <item>@string/wear_font_source_sans_3_description</item>
+        <item>@string/wear_font_source_serif_4_description</item>
+        <item>@string/wear_font_libre_baskerville_description</item>
+        <item>@string/wear_font_libre_franklin_description</item>
+        <item>@string/wear_font_ibm_plex_sans_description</item>
+        <item>@string/wear_font_ibm_plex_mono_description</item>
+        <item>@string/wear_font_ibm_plex_serif_description</item>
+        <item>@string/wear_font_work_sans_description</item>
+        <item>@string/wear_font_karla_description</item>
+        <item>@string/wear_font_sora_description</item>
+        <item>@string/wear_font_urbanist_description</item>
+        <item>@string/wear_font_be_vietnam_pro_description</item>
+        <item>@string/wear_font_red_hat_display_description</item>
+        <item>@string/wear_font_red_hat_text_description</item>
+        <item>@string/wear_font_red_hat_mono_description</item>
+        <item>@string/wear_font_syne_description</item>
+        <item>@string/wear_font_instrument_sans_description</item>
+        <item>@string/wear_font_figtree_description</item>
+        <item>@string/wear_font_gabarito_description</item>
+        <item>@string/wear_font_bricolage_grotesque_description</item>
+        <item>@string/wear_font_dm_serif_display_description</item>
+        <item>@string/wear_font_cormorant_garamond_description</item>
+        <item>@string/wear_font_cormorant_description</item>
+        <item>@string/wear_font_bitter_description</item>
+        <item>@string/wear_font_spectral_description</item>
+        <item>@string/wear_font_vollkorn_description</item>
+        <item>@string/wear_font_raleway_description</item>
+        <item>@string/wear_font_league_spartan_description</item>
+        <item>@string/wear_font_saira_description</item>
+        <item>@string/wear_font_signika_description</item>
+        <item>@string/wear_font_sofia_sans_description</item>
+        <item>@string/wear_font_overpass_description</item>
+        <item>@string/wear_font_public_sans_description</item>
+        <item>@string/wear_font_questrial_description</item>
+        <item>@string/wear_font_dosis_description</item>
+        <item>@string/wear_font_prompt_description</item>
+        <item>@string/wear_font_unbounded_description</item>
+        <item>@string/wear_font_recursive_description</item>
+        <item>@string/wear_font_trispace_description</item>
+        <item>@string/wear_font_noto_sans_description</item>
+        <item>@string/wear_font_noto_serif_description</item>
+        <item>@string/wear_font_noto_sans_mono_description</item>
+        <item>@string/wear_font_heebo_description</item>
+        <item>@string/wear_font_hind_description</item>
+        <item>@string/wear_font_hind_madurai_description</item>
+        <item>@string/wear_font_kumbh_sans_description</item>
+        <item>@string/wear_font_alegreya_description</item>
+        <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
+    </string-array>
+    <string name="action_open_library">Library ကို ကြည့်ရှုပါ</string>
+    <string name="library_up">နောက်သို့</string>
+    <string name="error_library_unavailable">ဤ app တွင် ကြည့်ရှုနိုင်သော library မရှိပါ</string>
+    <string name="error_library_empty">ဒီမှာ ဘာမှမရှိပါ</string>
+    <string name="error_library_no_player">အရင် တစ်ခုခု ဖွင့်ပါ</string>
+    <string name="setting_wear_carousel_card_shape">Carousel card ပုံသဏ္ဍာန်</string>
+    <string name="setting_wear_note_cover_shape">Note cover ပုံသဏ္ဍာန်</string>
+    <string name="setting_wear_title_centered">ခေါင်းစဉ်ကို အလယ်ထားပါ</string>
+    <string name="setting_wear_title_centered_description">စာသား block တစ်ခုလုံးအစား ခေါင်းစဉ်ကို မျက်နှာပြင်အလယ်တွင် တည်နေရာချပါ</string>
+    <string name="player_element_title_centered">အလယ်ထားသော ခေါင်းစဉ်</string>
+    <string-array name="wear_cover_shape_entries">
+        <item>ဝိုင်းသော</item>
+        <item>စတုရန်း</item>
+        <item>Squircle</item>
+        <item>စက်ဝိုင်း</item>
+        <item>Samsung ပုံစံ</item>
+    </string-array>
+    <string name="setting_wear_font_all_screens">Font ကို နေရာတိုင်းတွင် သုံးပါ</string>
+    <string name="setting_wear_font_all_screens_description">ရွေးထားသော font ကို player အပြင် menus, queue နှင့် Quick actions တွင်လည်း သုံးသည်။ Display နှင့် လက်ရေး font များသည် စာရင်းများတွင် ဖတ်ရခက်နိုင်သည်။</string>
+    <string name="setting_wear_clock_font">နာရီ typeface</string>
+    <string name="wear_clock_font_follow">Track font အတိုင်းသုံးပါ</string>
+    <string name="setting_wear_lyrics_font">Lyrics typeface</string>
+    <string name="setting_wear_lyrics_font_description">သီချင်းစာသားများအတွက် Lyrics screen နှင့် Verse face တွင်သုံးမည့် typeface။ ဤနေရာတွင် တစ်ခုရွေးမထားလျှင် track typeface အတိုင်းသုံးသည်။</string>
+    <string name="wear_lyrics_font_follow">Track typeface အတိုင်းသုံးပါ</string>
+    <string name="setting_wear_clock_font_weight">နာရီ font အထူ</string>
+    <string name="setting_wear_clock_font_italic">နာရီစာလုံးစောင်း</string>
+    <string name="setting_wear_clock_font_scale">နာရီ အရွယ်အစား</string>
+    <string name="setting_wear_clock_font_tracking">နာရီ စာလုံးအကွာအဝေး</string>
+    <string name="setting_wear_clock_adaptive_contrast">Contrast အတွက် နာရီအရောင်ကို ချိန်ညှိပါ</string>
+    <string name="setting_wear_clock_adaptive_contrast_description">Album အရောင်သည် နောက်ခံ artwork နှင့် အလွန်ဆင်တူပါက hue ကိုထိန်းထားပြီး နာရီကို ပိုတောက် သို့မဟုတ် ပိုမှောင်စေသည်။ နာရီအရောင်ကို Album color ထားချိန်တွင်သာ အကျိုးသက်ရောက်သည်။</string>
+    <string name="wear_font_bebas_neue">Bebas Neue</string>
+    <string name="wear_font_bebas_neue_description">အကျဉ်းချုံ့ all-caps display — poster ပုံစံ၊ ခေါင်းစဉ်ရှည်များနှင့် ကိုက်ညီ</string>
+    <string name="wear_font_playfair">Playfair Display</string>
+    <string name="wear_font_playfair_description">Contrast မြင့် editorial serif — မဂ္ဂဇင်းပုံစံခံစားမှု</string>
+    <string name="wear_font_space_grotesk">Space Grotesk</string>
+    <string name="wear_font_space_grotesk_description">ထူးခြားသောအသေးစိတ်များပါသည့် နည်းပညာဆန်သော geometric sans</string>
+    <string name="wear_font_orbitron">Orbitron</string>
+    <string name="wear_font_orbitron_description">စတုရန်းဆန် sci-fi display — ထင်ရှားပြီး အနာဂတ်ဆန်</string>
+    <string name="wear_font_caveat">Caveat</string>
+    <string name="wear_font_caveat_description">လက်ရေး script — ပေါ့ပေါ့ပါးပါးနှင့် ကိုယ်ပိုင်ဆန်</string>
+    <string name="setting_wear_title_shadow_style">ခေါင်းစဉ် အရိပ်</string>
+    <string name="setting_wear_title_shadow_color">ခေါင်းစဉ် အရိပ်အရောင်</string>
+    <string name="setting_wear_title_shadow_custom_color">စိတ်ကြိုက် ခေါင်းစဉ်အရိပ်အရောင်</string>
+    <string name="setting_wear_title_shadow_strength">ခေါင်းစဉ် အရိပ်ပြင်းအား</string>
+    <string name="setting_wear_artist_shadow_style">အနုပညာရှင် အရိပ်</string>
+    <string name="setting_wear_artist_shadow_color">အနုပညာရှင် အရိပ်အရောင်</string>
+    <string name="setting_wear_artist_shadow_custom_color">စိတ်ကြိုက် အနုပညာရှင်အရိပ်အရောင်</string>
+    <string name="setting_wear_artist_shadow_strength">အနုပညာရှင် အရိပ်ပြင်းအား</string>
+    <string name="setting_wear_text_shadow_strength_description">ရွေးထားသော အရိပ်၏ ကိုယ်ပိုင်အရွယ်နှင့် အနက် ရာခိုင်နှုန်း။</string>
+    <string-array name="wear_text_shadow_style_entries">
+        <item>ဘာမှမရှိ</item>
+        <item>နူးညံ့</item>
+        <item>ပြတ်သား</item>
+        <item>တောက်ပမှု</item>
+        <item>မြှင့်ထားသော</item>
+        <item>သိမ်မွေ့</item>
+    </string-array>
+    <string-array name="wear_text_shadow_color_entries">
+        <item>အနက်</item>
+        <item>Album အရောင်</item>
+        <item>အဖြူ</item>
+        <item>စိတ်ကြိုက်</item>
+    </string-array>
+    <string name="setting_wear_title_outline_style">ခေါင်းစဉ် outline</string>
+    <string name="setting_wear_title_outline_color">ခေါင်းစဉ် outline အရောင်</string>
+    <string name="setting_wear_title_outline_custom_color">စိတ်ကြိုက် ခေါင်းစဉ် outline အရောင်</string>
+    <string name="setting_wear_artist_outline_style">အနုပညာရှင် outline</string>
+    <string name="setting_wear_artist_outline_color">အနုပညာရှင် outline အရောင်</string>
+    <string name="setting_wear_artist_outline_custom_color">စိတ်ကြိုက် အနုပညာရှင် outline အရောင်</string>
+    <string-array name="wear_text_outline_style_entries">
+        <item>ဘာမှမရှိ</item>
+        <item>Hairline</item>
+        <item>ပါး</item>
+        <item>အလယ်အလတ်</item>
+        <item>ထူ</item>
+    </string-array>
+    <string name="setting_wear_title_text_bg_style">ခေါင်းစဉ် နောက်ခံ</string>
+    <string name="setting_wear_title_text_bg_color">ခေါင်းစဉ် နောက်ခံအရောင်</string>
+    <string name="setting_wear_title_text_bg_custom_color">စိတ်ကြိုက် ခေါင်းစဉ်နောက်ခံအရောင်</string>
+    <string name="setting_wear_title_text_bg_opacity">ခေါင်းစဉ် နောက်ခံ မမြင်ဖောက်နိုင်မှု</string>
+    <string name="setting_wear_artist_text_bg_style">အနုပညာရှင် နောက်ခံ</string>
+    <string name="setting_wear_artist_text_bg_color">အနုပညာရှင် နောက်ခံအရောင်</string>
+    <string name="setting_wear_artist_text_bg_custom_color">စိတ်ကြိုက် အနုပညာရှင်နောက်ခံအရောင်</string>
+    <string name="setting_wear_artist_text_bg_opacity">အနုပညာရှင် နောက်ခံ မမြင်ဖောက်နိုင်မှု</string>
+    <string name="setting_wear_text_bg_opacity_description">ရွေးထားသော နောက်ခံ၏ ကိုယ်ပိုင် မမြင်ဖောက်နိုင်မှု ရာခိုင်နှုန်း။</string>
+    <string-array name="wear_text_backdrop_style_entries">
+        <item>ဘာမှမရှိ</item>
+        <item>Highlight</item>
+        <item>နူးညံ့</item>
+        <item>Block</item>
+    </string-array>
+    <string name="setting_wear_seek_marker">နေရာမှတ်</string>
+    <string name="setting_wear_seek_marker_description">Track နေရာကိုပြသသည့် progress ring ပေါ်ရှိ မျဉ်းတိုသည် screen ပေါ်တွင် ဘယ်အချိန်ရှိမည်ကို သတ်မှတ်သည်။</string>
+    <string-array name="wear_seek_marker_entries">
+        <item>အမြဲ</item>
+        <item>Seek လုပ်နေချိန်သာ</item>
+        <item>Seek လုပ်နေချိန်နှင့် pause ဖြစ်နေချိန်</item>
+        <item>Pause ဖြစ်နေချိန်သာ</item>
+    </string-array>
+    <string name="setting_wear_track_time_mode">Track အချိန်ပြသမှု</string>
+    <string name="setting_wear_track_time_mode_description">Now-playing screen တွင် track နေရာ (ဥပမာ 1:23 / 3:45) ကို ဘယ်အချိန်ပြမည်ကို သတ်မှတ်သည်။</string>
+    <string-array name="wear_track_time_mode_entries">
+        <item>အမြဲ</item>
+        <item>ဖွင့်နေချိန်သာ</item>
+        <item>Pause ဖြစ်နေချိန်သာ</item>
+        <item>ဘယ်တော့မှမဟုတ်</item>
+    </string-array>
+    <string name="setting_screen_buttons_curve">Mini button များ၏ အကွေး</string>
+    <string name="setting_screen_buttons_curve_description">Mini button များအတွက် အကွေးပုံစံကို ရွေးပါ: flat, arc, soft, curved။</string>
+    <string name="setting_screen_buttons_shape">Mini button ပုံသဏ္ဍာန်</string>
+    <string name="setting_screen_buttons_shape_description">Mini button များ၏ ပုံသဏ္ဍာန်နှင့် layout format ကို ရွေးပါ။</string>
+    <string-array name="screen_buttons_shape_entries">
+        <item>Pill (ပုံသေ)</item>
+        <item>စက်ဝိုင်း</item>
+        <item>စတုရန်း</item>
+        <item>ထောင့်ဝိုင်း စတုရန်း (Soft)</item>
+        <item>ထောင့်ဝိုင်း စတုရန်း (အလယ်အလတ်)</item>
+        <item>Squircle</item>
+        <item>အရွက်</item>
+        <item>ရေစက်</item>
+        <item>Pill (အကျယ် အသေး)</item>
+        <item>Pill (အကျယ် အလယ်အလတ်)</item>
+        <item>Pill (အကျယ် အကြီး)</item>
+        <item>Pill (အကျယ် အလွန်ကြီး)</item>
+        <item>ထောင့်ဝိုင်း စတုဂံ (အသေး)</item>
+        <item>ထောင့်ဝိုင်း စတုဂံ (အလယ်အလတ်)</item>
+        <item>ထောင့်ဝိုင်း စတုဂံ (အကြီး)</item>
+    </string-array>
+    <string-array name="screen_buttons_curve_entries">
+        <item>ပြား</item>
+        <item>Arc</item>
+        <item>အနည်းငယ်ကွေး</item>
+        <item>နူးညံ့သော အကွေး</item>
+        <item>အလယ်အလတ် အကွေး</item>
+        <item>ကွေး</item>
+        <item>အလွန်ကွေး</item>
+        <item>အစွန်းများအထိ ဖြန့်ပါ</item>
+        <item>ဘယ်အစွန်း</item>
+        <item>ညာအစွန်း</item>
+        <item>အစွန်းနှစ်ဖက်</item>
+    </string-array>
+    <string-array name="screen_buttons_bg_entries">
+        <item>ပုံသေ နောက်ခံ</item>
+        <item>Glass (ညီညာ)</item>
+        <item>Glass (ပေါ့)</item>
+        <item>Translucent Album</item>
+        <item>Translucent Album Exp</item>
+        <item>Album Glow</item>
+        <item>Glow Exp</item>
+        <item>Solid Theme</item>
+        <item>Solid Album</item>
+        <item>Solid Exp Album</item>
+        <item>Outline</item>
+        <item>Outline Exp Album</item>
+        <item>Icon သာ (အကြည်)</item>
+        <item>Icon Exp</item>
+    </string-array>
+    <string-array name="screen_buttons_color_entries">
+        <item>အလယ်အလတ်</item>
+        <item>Album အရောင်</item>
+        <item>စိတ်ကြိုက်အရောင်</item>
+    </string-array>
+    <string-array name="album_art_style_entries">
+        <item>Cover အပြည့်</item>
+        <item>Blurred နောက်ခံ</item>
+        <item>Frosted အစွန်းများ</item>
+        <item>စတုရန်း (ထောင့်ချွန်)</item>
+        <item>စတုရန်း (ထောင့်ပျော့)</item>
+        <item>စတုရန်း (ထောင့်ဝိုင်း)</item>
+        <item>အဖြူအမည်း</item>
+        <item>Blurred အဖြူအမည်း</item>
+        <item>Expressive blur</item>
+        <item>Expressive</item>
+        <item>Material tonal gradient</item>
+        <item>Poster cover</item>
+        <item>Studio gradient</item>
+        <item>Vinyl radial glow</item>
+        <item>Halo glow</item>
+        <item>Aurora ribbons</item>
+        <item>Spectrum gradient</item>
+        <item>Corona sweep</item>
+        <item>Dusk fade</item>
+        <item>Bloom</item>
+        <item>Horizon fade</item>
+        <item>Ember glow</item>
+        <item>Eclipse AMOLED အနက်</item>
+        <item>ဖျောက်ထားသည် (အနက်စစ်)</item>
+    </string-array>
+    <string-array name="theme_entries">
+        <item>@string/theme_light</item>
+        <item>@string/theme_dark</item>
+        <item>@string/theme_system</item>
+    </string-array>
+    <string-array name="auto_start_modes_keys">
+        <item>OFF</item>
+        <item>SHOW_ICON</item>
+        <item>OPEN_APP</item>
+    </string-array>
+    <string-array name="auto_start_modes_descriptions">
+        <item>ပိတ်ထားသည်</item>
+        <item>Music watchface icon ပြပါ (Wear 3.0 အတွက်သာ)</item>
+        <item>Svartifoss ကိုဖွင့်ပါ</item>
+    </string-array>
+    <string name="setting_close_timeout">ပိတ်ချိန် သတ်မှတ်ချက်</string>
+    <string name="setting_close_timeout_description">သီချင်းမဖွင့်နေပါက &lt;b>%1$s seconds&lt;/b> ကြာပြီးနောက် Svartifoss သည် အလိုအလျောက်ပိတ်မည်။ timeout ကို 0 seconds ထားပါက ဤ feature ကိုပိတ်ထားမည်။ Battery ချွေတာရန် အချိန်သည် တစ်ခါတစ်ရံ အတိအကျမဖြစ်နိုင်ပြီး ပိတ်ရန် တစ်မိနစ်အထိ နောက်ကျနိုင်သည်။</string>
+    <string name="setting_wear_close_on_idle">\"Nothing playing\" တွင်ပိတ်ပါ</string>
+    <string name="setting_wear_close_on_idle_description">Watch app သည် idle \"Nothing playing\" screen သို့ရောက်ပြီး တစ်မိနစ်ခန့်အကြာ အလိုအလျောက်ပိတ်သွားမည်၊ ထိုနေရာတွင် မကျန်စေရန်ဖြစ်သည်။ အပေါ်က close timeout နှင့် သီးခြားဖြစ်ပြီး၊ ထိုတစ်ခုသည် pause လုပ်ထားသော track အတွက်ဖြစ်သည်။</string>
+    <string name="category_notifications">Notification popup</string>
+    <string name="setting_enable_notifications">Notification popup ပြပါ</string>
+    <string name="setting_enable_notifications_description">ဤ feature သည် notifications များကို စီမံရန် အခြား app တစ်ခု (Vibration Center for Wear) လိုအပ်သည်။\n\nVibration Center က နာရီကို vibration ပေးသည့်အခါတိုင်း Svartifoss သည် notification text ကို popup အဖြစ်ပြမည်၊ Svartifoss မှမထွက်ဘဲ အမြန်ကြည့်နိုင်သည်။</string>
+    <string name="setting_notification_timeout">Notification popup timeout</string>
+    <string name="setting_notification_timeout_description">Notification popup သည် &lt;b>%1$s seconds&lt;/b> ကြာပြီးနောက် အလိုအလျောက်ပိတ်မည်။ auto-close ပိတ်ရန် 0 ထည့်ပါ။</string>
+    <string name="app_required">App လိုအပ်သည်</string>
+    <string name="vibration_center_required_description">ဤ feature ကိုသုံးရန် အခြား (အခမဲ့) app တစ်ခုဖြစ်သော Vibration Center for Wear ကို install လုပ်ရန်လိုသည်။</string>
+    <string name="open_play_store">Play Store ကိုဖွင့်ပါ</string>
+    <string name="error_no_notification_service_support">တောင်းပန်ပါတယ်၊ သင့် device သည် notification services ကို support မလုပ်သလို ဖြစ်နေသည်</string>
+    <string name="setting_always_select_center_action">အလယ် action ကိုအမြဲရွေးပါ</string>
+    <string name="setting_always_select_center_action_description">ဖွင့်ထားပါက action list ပေါ် ဘယ်နေရာကိုနှိပ်နှိပ်၊ နှိပ်ထားသည့် option မဟုတ်ဘဲ အလယ် (highlight) option ကို အမြဲရွေးမည်။</string>
+    <string name="change_icon">Icon ပြောင်းပါ</string>
+    <string name="please_wait">ကျေးဇူးပြု၍ စောင့်ပါ</string>
+    <string name="error_playlist_not_supported">ဤ media app မှ support မလုပ်ပါ</string>
+    <string name="error_search_no_results">ရလဒ်မတွေ့ပါ</string>
+    <string name="seconds_to_skip">ကျော်ရန် seconds:</string>
+    <string name="seconds_to_reverse">နောက်ပြန်ရန် seconds:</string>
+    <string name="setting_dynamic_accent_color">Dynamic accent အရောင်</string>
+    <string name="setting_dynamic_accent_color_description">ဖွင့်ထားပါက accent အရောင် (SeekBar, active queue item) သည် လက်ရှိ album artwork ၏ အဓိကအရောင်နှင့် အလိုအလျောက် ကိုက်ညီမည်။</string>
+    <string name="setting_desaturated_color">Saturation လျှော့ထားသောအရောင်</string>
+    <string name="setting_desaturated_color_description">အသုံးပြုနေသော theme အလိုက် ဖတ်ရှုရလွယ်ကူမှုနှင့် contrast ကောင်းစေရန် ထုတ်ယူထားသောအရောင်၏ saturation နှင့် brightness ကို ချိန်ညှိသည်။</string>
+    <string name="queue_header">Playback queue</string>
+    <string name="queue_unavailable">Queue မရနိုင်ပါ</string>
+    <string name="setting_custom_accent_color">Accent အရောင်</string>
+    <string name="setting_custom_accent_color_description">App interface အတွက် စိတ်ကြိုက် accent အရောင်ရွေးပါ</string>
+    <string name="setting_mini_player">Mini player</string>
+    <string name="setting_mini_player_description">Media active ဖြစ်နေချိန် bottom navigation အပေါ်တွင် now-playing bar ကို အမြဲပြသည်။ ပုံသေဖွင့်ထားပြီး၊ နေရာပြန်ယူလိုပါက ပိတ်ပါ။</string>
+    <string name="color_picker_title">Accent အရောင်ရွေးပါ</string>
+    <string name="color_picker_reset">Reset လုပ်ရန်</string>
+    <string name="color_picker_apply">အသုံးချပါ</string>
+    <string name="color_picker_recent">မကြာသေးမီက သုံးထားသည်</string>
+    <string name="color_picker_copied">အရောင် code ကို copy လုပ်ပြီးပါပြီ</string>
+    <string name="color_picker_default">ပုံသေ</string>
+    <string name="color_picker_invalid">အရောင် code မမှန်ပါ</string>
+    <string name="color_picker_current">လက်ရှိ: %s</string>
+    <string name="drawer_version_format">Version %1$s</string>
+    <string name="drawer_tagline">Wear OS အတွက် Companion App</string>
+    <string name="drawer_about_heading">အကြောင်း</string>
+    <string name="drawer_about_summary">Svartifoss က Wear OS နာရီမှ ဖုန်းပေါ်ရှိ သီချင်းကို ထိန်းချုပ်နိုင်စေသည် — သင့် device အတွက် အပြည့်အဝ စိတ်ကြိုက်ပြင်နိုင်သော remote နှင့်အတူ။</string>
+    <string name="drawer_name_heading">အမည်</string>
+    <string name="drawer_name_meaning">Icelandic ဘာသာတွင် Svartifoss သည် “Black Falls” ဟု အဓိပ္ပာယ်ရသည် — Vatnajökull National Park ရှိ အနက်ရောင် basalt တိုင်များက ကျဉ်းမြောင်းသော ရေတံခွန်ကို ဝန်းရံထားသည့် ရေတံခွန်အမည်မှ ယူထားသည်။ ကျောက်ပေါ်စီးသော ရေကဲ့သို့ သီချင်းသည် app မှတစ်ဆင့် စီးဆင်းသည်။</string>
+    <string name="drawer_sync_heading">Sync</string>
+    <string name="drawer_sync_summary">Watch settings များကို ဤနေရာ ဖုန်းပေါ်တွင် ပြင်ဆင်ပြီး ချိတ်ထားသော နာရီသို့ အလိုအလျောက် sync လုပ်သည်။</string>
+    <string name="drawer_support_heading">ပံ့ပိုးမှု</string>
+    <string name="drawer_support_summary">Svartifoss သည် အခမဲ့နှင့် open source ဖြစ်သည် - အသုံးဝင်ပါက coffee တစ်ခွက် ဝယ်ပေးပါ :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="download_album_art">Cover art ကို download လုပ်ပါ</string>
+    <string name="album_art_saved">Cover art ကို gallery တွင် သိမ်းပြီးပါပြီ</string>
+    <string name="album_art_save_error">Cover art သိမ်းမရပါ</string>
+    <string name="action_play_liked_songs">Like လုပ်ထားသော သီချင်းများကို ဖွင့်ပါ (YT Music)</string>
+    <string name="action_play_spotify_liked_songs">Like လုပ်ထားသော သီချင်းများကို ဖွင့်ပါ (Spotify)</string>
+    <string name="action_play_soundcloud_likes">Like လုပ်ထားသော track များကို ဖွင့်ပါ (SoundCloud)</string>
+    <string name="action_my_playlists">Streaming shortcut များ</string>
+    <string name="action_play_specific_playlist">Streaming shortcut ကိုဖွင့်ပါ</string>
+    <string name="action_choose_or_add_streaming_shortcut">Streaming shortcut ရွေးပါ သို့မဟုတ် ထည့်ပါ</string>
+    <string name="action_show_streaming_library">သိမ်းထားသော shortcut အားလုံးပြပါ</string>
+    <string name="playlist_shortcut_pick_title">Shortcut ရွေးပါ</string>
+    <string name="playlist_shortcut_pick_empty">Streaming shortcut မသိမ်းရသေးပါ — အောက်တွင် တစ်ခုထည့်ပြီး ရွေးရန် နှိပ်ပါ</string>
+    <string name="playlist_shortcuts_empty">Streaming shortcut မရှိသေးပါ — phone app settings တွင် ထည့်ပါ</string>
+    <string name="setting_playlist_shortcuts">Streaming shortcut များ</string>
+    <string name="setting_playlist_shortcuts_description">နာရီမှ share link များကို YouTube Music, Spotify နှင့် အခြား streaming apps တွင် ဖွင့်ပါ</string>
+    <string name="setting_shortcut_artwork">Shortcut artwork ကို online မှရယူပါ</string>
+    <string name="setting_shortcut_artwork_description">Service က public preview artwork ပေးလျှင် thumbnail ကို download လုပ်ပြီး phone list, watch menu နှင့် သတ်မှတ်ထားသော buttons တွင် ပြမည်။ ရနိုင်သော thumbnail တစ်ခုစီကို တစ်ကြိမ်သာ ရယူပြီး public share link သာ ပို့သည်။ ပုံသေပိတ်ထားသည်။</string>
+    <string name="setting_queue_local_artwork">Library မှ queue covers</string>
+    <string name="setting_queue_local_artwork_description">Local music players များက queue covers ကို library references အဖြစ် ထုတ်ပေးသည်။ watch queue တွင် ပြရန် media access ခွင့်ပြုပါ။ Internet access မသုံးပါ။</string>
+    <string name="setting_queue_local_artwork_granted">Media access ခွင့်ပြုပြီး — local queue covers ပြမည်</string>
+    <string name="setting_queue_local_artwork_denied">Media access ငြင်းပယ်ထားသည်။ local queue covers ပြရန် Android settings တွင် ဖွင့်ပါ။</string>
+    <string name="setting_queue_remote_artwork">Queue covers ကို online မှရယူပါ</string>
+    <string name="setting_queue_remote_artwork_short_description">Streaming apps (YouTube Music clients, Echo Music…) များသည် queue covers ကို image မဟုတ်ဘဲ links အဖြစ် ထုတ်ပေးသဖြင့် download လုပ်ပြီး cache သိမ်းသည်။ Queue ကို အပြည့် offline ထားရန် ပိတ်ပါ — ထို rows များတွင် cover လုံးဝမပြတော့ပါ။</string>
+    <string name="setting_queue_remote_artwork_description">Streaming players များက queue covers ကို image မဟုတ်ဘဲ links အဖြစ် ထုတ်ပေးသည်။ တစ်ခုစီကို တစ်ကြိမ် download လုပ်ပြီး ဒီဖုန်းတွင် cache သိမ်းကာ watch queue တွင် ပြသည်။ Player က ထုတ်ပေးထားပြီးသား cover URL ကိုသာ တောင်းသည် — account သို့မဟုတ် personal data မပါ။ ပုံသေဖွင့်ထားပြီး queue ကို အပြည့် offline ထားလိုပါက ပိတ်ပါ။</string>
+    <string name="watch_streaming_shortcuts_empty">Quick Actions နှင့် watch menu အတွက် tracks, albums သို့မဟုတ် playlists ထည့်ပါ</string>
+    <plurals name="watch_streaming_shortcuts_summary">
+        <item quantity="one">%1$d သိမ်းထားသော shortcut · Quick Actions နှင့် watch menu တွင် ရနိုင်သည်</item>
+        <item quantity="other">%1$d သိမ်းထားသော shortcuts · Quick Actions နှင့် watch menu တွင် ရနိုင်သည်</item>
+    </plurals>
+    <string name="category_music_apps">Music apps &amp; services</string>
+    <string name="category_apps_content">Lyrics &amp; metadata</string>
+    <string name="category_streaming_services">Streaming shortcut များ</string>
+    <string name="category_queue_artwork">Queue artwork</string>
+    <string name="category_system_access">Android access &amp; notifications</string>
+    <string name="setting_apps_integrations">Support လုပ်သော music services</string>
+    <string name="setting_apps_integrations_description">Links များသည် YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music နှင့် SoundCloud တို့နှင့် အလုပ်လုပ်သည်။ Account access မလိုပါ။</string>
+    <string name="setting_apps_integrations_none">Support လုပ်သော app မတွေ့ပါ။ Shortcuts များကို browser သို့မဟုတ် အခြား compatible app တွင် ဖွင့်နိုင်သေးသည်။</string>
+    <string name="setting_apps_integrations_installed">%2$d ခုထဲမှ %1$d ခုတွေ့သည်: %3$s</string>
+    <string name="setting_streaming_open_mode">Streaming links ကို ဤအရာဖြင့်ဖွင့်ပါ</string>
+    <string-array name="streaming_open_mode_entries">
+        <item>တွေ့ရှိသော streaming app</item>
+        <item>Android ပုံသေ</item>
+        <item>အကြိမ်တိုင်းမေးပါ</item>
+    </string-array>
+    <string name="setting_persistent_notification">\"Svartifoss active\" notification ကို စီမံပါ</string>
+    <string name="setting_persistent_notification_description">ဤ notification ၏ Android settings ကိုဖွင့်သည် — mute လုပ်ပါ၊ lock screen မှဖျောက်ပါ သို့မဟုတ် အခြားပြင်ဆင်မှုများလုပ်ပါ။ လုံးဝပိတ်မရပါ: နာရီနှင့် ဆက်သွယ်သော background service လည်ပတ်နေချိန် Android သည် ongoing notification လိုအပ်သည်။</string>
+    <string name="setting_notification_access">Media notification access</string>
+    <string name="setting_notification_access_enabled">ခွင့်ပြုပြီး · Android settings ပြန်စစ်ရန် နှိပ်ပါ</string>
+    <string name="setting_notification_access_disabled">ခွင့်မပြု · notification media actions နှင့် automatic launch filters အတွက် လိုအပ်သည်</string>
+    <string name="setting_notification_access_unavailable">ဤ device တွင် notification access settings မရနိုင်ပါ</string>
+    <plurals name="setting_playlist_shortcuts_count">
+        <item quantity="one">%1$d သိမ်းထားသော shortcut · links များကို စီမံရန် သို့မဟုတ် import လုပ်ရန် နှိပ်ပါ</item>
+        <item quantity="other">%1$d သိမ်းထားသော shortcuts · links များကို စီမံရန် သို့မဟုတ် import လုပ်ရန် နှိပ်ပါ</item>
+    </plurals>
+    <string name="category_privacy">ကိုယ်ရေးအချက်အလက်</string>
+    <string name="setting_privacy_policy">Privacy policy</string>
+    <string name="setting_privacy_policy_description">Svartifoss က ဘယ် data ကိုသုံးပြီး ဘယ် online services တွေက optional ဖြစ်သည်ကို ကြည့်ပါ။</string>
+    <string name="setting_crash_reporting">Crash reports ပို့ပါ</string>
+    <string name="setting_crash_reporting_description">ပြဿနာများကို ပြင်ဆင်ရာတွင် ကူညီရန် Firebase Crashlytics diagnostics ပို့ပါ။ ပုံသေဖွင့်ထားပြီး အချိန်မရွေးပိတ်နိုင်သည်။</string>
+    <string name="setting_announcements">Announcement notifications</string>
+    <string name="setting_announcements_description">Developer ထံမှ အခါအားလျော်စွာ notifications — releases အသစ်များ၊ အရေးကြီးသောအသိပေးချက်များ။ Firebase Cloud Messaging ဖြင့်ပို့ပြီး account သို့မဟုတ် user list မရှိပါ။ ပုံသေဖွင့်ထားပြီး အချိန်မရွေးပိတ်နိုင်သည်။</string>
+    <string name="announcement_notification_channel">Announcements</string>
+    <string name="announcement_notification_fallback_title">Svartifoss</string>
+    <string name="playlist_shortcuts_help">Playlist, album သို့မဟုတ် track ကို Svartifoss သို့ တိုက်ရိုက် share လုပ်ပါ၊ copy လုပ်ထားသော link ကို paste လုပ်ပါ သို့မဟုတ် ကိုယ်တိုင်ထည့်ပါ။ Watch က ဖုန်းကိုဖွင့်ရန် တောင်းမည်၊ service login မလိုပါ။</string>
+    <string name="back">နောက်သို့</string>
+    <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <string name="playlist_shortcuts_intro_title">သင့်သီချင်း၊ တစ်ချက်နှိပ်ရုံ</string>
+    <string name="playlist_shortcuts_yours">သင့် shortcuts</string>
+    <string name="playlist_shortcuts_empty_hint">Share လုပ်ထားသော track, album သို့မဟုတ် playlist link ကိုထည့်ပြီး နာရီပေါ်တွင် ရရှိစေပါ။</string>
+    <string name="playlist_shortcuts_add">Shortcut ထည့်ပါ</string>
+    <string name="playlist_shortcuts_paste">Link ကို paste လုပ်ပါ</string>
+    <string name="playlist_shortcuts_reload_covers">Covers ပြန်တင်ပါ</string>
+    <string name="playlist_shortcuts_reloading_covers">Covers ပြန်တင်နေသည်…</string>
+    <string name="playlist_shortcuts_covers_reloaded">Covers ပြန်တင်ပြီးပါပြီ</string>
+    <string name="playlist_shortcuts_edit">Shortcut ပြင်ပါ</string>
+    <string name="playlist_shortcut_save">Shortcut သိမ်းပါ</string>
+    <string name="playlist_shortcut_editor_hint">Link တစ်ခု paste လုပ်ပါ။ Svartifoss က ၎င်း၏ app နှင့် content type ကို အလိုအလျောက် ခွဲခြားမည်။</string>
+    <string name="playlist_shortcut_detection_waiting">Streaming link ကို စောင့်နေသည်</string>
+    <string name="playlist_shortcut_detection_waiting_hint">Spotify, YouTube Music, Apple Music, TIDAL, Deezer နှင့် အခြားများကို support လုပ်သည်။</string>
+    <string name="playlist_shortcut_detected_format">တွေ့ရှိသည်: %1$s • %2$s</string>
+    <string name="playlist_shortcut_name_hint">အမည်</string>
+    <string name="playlist_shortcut_link_hint">Share link သို့မဟုတ် app URI</string>
+    <string name="playlist_shortcut_shuffle">Shuffle ဖြင့်ဖွင့်ပါ (YouTube Music အတွက်သာ)</string>
+    <string name="playlist_source_yt_music">YouTube Music</string>
+    <string name="playlist_source_spotify">Spotify</string>
+    <string name="playlist_source_deezer">Deezer</string>
+    <string name="playlist_source_tidal">TIDAL</string>
+    <string name="playlist_source_apple_music">Apple Music</string>
+    <string name="playlist_source_amazon_music">Amazon Music</string>
+    <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_link">Link</string>
+    <string name="playlist_type_track">Track</string>
+    <string name="playlist_type_playlist">Playlist</string>
+    <string name="playlist_type_album">Album</string>
+    <string name="playlist_type_artist">အနုပညာရှင်</string>
+    <string name="playlist_type_show">Show</string>
+    <string name="playlist_type_episode">Episode</string>
+    <string name="playlist_type_mix">Mix</string>
+    <string name="playlist_badge_shuffle">ရောနှောရန်</string>
+    <string name="playlist_subtitle_format">%1$s • %2$s</string>
+    <string name="playlist_shortcuts_none">Streaming shortcut မထည့်ရသေးပါ</string>
+    <plurals name="playlist_shortcuts_summary">
+        <item quantity="one">%1$d သိမ်းထားသည်</item>
+        <item quantity="other">%1$d သိမ်းထားသည်</item>
+    </plurals>
+    <string name="playlist_shortcuts_reorder_description">အစဉ်လိုက် streaming shortcuts။ Drag လုပ်ရန် ဖိထားပါ၊ Move up သို့မဟုတ် Move down accessibility actions ကိုသုံးပါ၊ သို့မဟုတ် keyboard တွင် Ctrl+Up/Down နှိပ်ပါ။</string>
+    <string name="playlist_shortcut_more_options">%1$s အတွက် နောက်ထပ် options</string>
+    <string name="playlist_shortcut_menu_edit">ပြင်ဆင်ပါ</string>
+    <string name="playlist_shortcut_menu_open">ယခုဖွင့်ပါ</string>
+    <string name="playlist_shortcut_menu_copy">Link ကို copy လုပ်ပါ</string>
+    <string name="playlist_shortcut_menu_duplicate">မိတ္တူလုပ်ပါ</string>
+    <string name="playlist_shortcut_menu_share">Share လုပ်ပါ</string>
+    <string name="playlist_shortcut_menu_delete">ဖျက်ရန်</string>
+    <string name="playlist_shortcut_open_failed">ဤ link ကိုဖွင့်နိုင်သော app မရှိပါ</string>
+    <string name="streaming_shortcut_choose_app">Streaming link ကို ဤအရာဖြင့်ဖွင့်ပါ</string>
+    <string name="playlist_shortcut_link_copied">Link ကို copy လုပ်ပြီးပါပြီ</string>
+    <string name="playlist_shortcut_import_invalid">Share လုပ်ထားသောစာတွင် မှန်ကန်သော streaming link မပါပါ</string>
+    <string name="playlist_shortcut_clipboard_invalid">Clipboard တွင် မှန်ကန်သော streaming link မရှိပါ</string>
+    <string name="playlist_shortcut_name_required">Shortcut အမည်ထည့်ပါ</string>
+    <string name="playlist_shortcut_link_invalid">မှန်ကန်သော web link သို့မဟုတ် app URI ထည့်ပါ</string>
+    <string name="playlist_shortcut_service_invalid">Service ကိုသိရှိရန် မှန်ကန်သော link ကို paste လုပ်ပါ</string>
+    <string name="playlist_shortcut_service_generic">Compatible link · Android က app ရွေးမည်</string>
+    <string name="playlist_shortcut_service_installed">%1$s install လုပ်ထားသည် · ၎င်း၏ app တွင်ဖွင့်ရန်အသင့်</string>
+    <string name="playlist_shortcut_service_not_installed">%1$s install မလုပ်ထားပါ · browser သို့မဟုတ် compatible app သုံးနိုင်သည်</string>
+    <string name="playlist_shortcut_copy_name">%1$s copy</string>
+    <string name="playlist_shortcut_copy_name_numbered">%1$s copy %2$d</string>
+    <string name="playlist_shortcut_duplicated">%1$s ဖန်တီးပြီးပါပြီ</string>
+    <string name="playlist_shortcut_share_title">Streaming shortcut ကို share လုပ်ပါ</string>
+    <string name="playlist_shortcut_share_failed">ဤ shortcut ကို share လုပ်ရန် app မရှိပါ</string>
+    <string name="playlist_shortcut_deleted">%1$s ဖျက်ပြီးပါပြီ</string>
+    <string name="playlist_shortcut_undo">ပြန်ယူပါ</string>
+    <string name="action_play_liked_songs_shuffled">Like လုပ်ထားသော သီချင်းများကို shuffle ဖြင့်ဖွင့်ပါ (YT Music)</string>
+    <string name="action_search_history">ရှာဖွေမှုမှတ်တမ်း</string>
+    <string name="search_history_empty">မကြာသေးမီ ရှာဖွေမှုမရှိသေးပါ</string>
+    <string name="category_updates">Updates</string>
+    <string name="setting_update_check">Version အသစ်များအကြောင်း အသိပေးပါ</string>
+    <string name="setting_update_check_description">Release အသစ်များအတွက် တစ်နေ့တစ်ကြိမ်ခန့် GitHub ကိုစစ်ပြီး notification ပြမည်</string>
+    <string name="setting_update_prereleases">Pre-releases ထည့်ပါ</string>
+    <string name="setting_update_prereleases_description">Beta versions အကြောင်းလည်း notification ရယူပါ</string>
+    <string name="setting_update_check_now">Updates ကို ယခုစစ်ပါ</string>
+    <string name="setting_update_check_now_description">နောက်ဆုံး version ကိုပြပြီး Bluetooth ဖြင့် နာရီကို update လုပ်နိုင်စေသည်</string>
+    <string name="update_screen_title">Updates</string>
+    <string name="update_cover_content_description">Svartifoss၊ app အမည်ယူထားသော ရေတံခွန်</string>
+    <string name="update_notification_channel">App updates</string>
+    <string name="update_available_title">Svartifoss %1$s ရနိုင်ပါပြီ</string>
+    <string name="update_notification_text">Update လုပ်ရန် နှိပ်ပါ</string>
+    <string name="update_available_action">Update ရနိုင်သည်</string>
+    <string name="update_installed_phone">ဖုန်း: %1$s</string>
+    <string name="update_installed_versions">ဖုန်း: %1$s \u00b7 နာရီ: %2$s</string>
+    <string name="update_watch_version_unknown">မသိ</string>
+    <string name="update_checking">Updates စစ်နေသည်\u2026</string>
+    <string name="update_check_failed">Updates စစ်မရပါ။ Connection စစ်ပြီး ထပ်ကြိုးစားပါ။</string>
+    <string name="update_available_line">Version အသစ်: %1$s (%2$s)</string>
+    <string name="update_prerelease_marker">(pre-release)</string>
+    <string name="update_up_to_date">သင်သည် နောက်ဆုံး version (%1$s) ကိုသုံးနေသည်</string>
+    <string name="update_no_wear_asset">ဤ release တွင် ပို့ရန် watch APK မရှိပါ။</string>
+    <string name="update_watch_hint">\u201cနာရီကို update လုပ်ပါ\u201d က watch app အသစ်ကို download လုပ်ပြီး Bluetooth ဖြင့်ပို့သည် \u2014 install ကို နာရီပေါ်မှာပဲ အတည်ပြုရမည်၊ cable သို့မဟုတ် Wear Installer မလိုပါ။</string>
+    <string name="update_downloading">Download လုပ်နေသည်\u2026 %1$d%%</string>
+    <string name="update_connecting_watch">နာရီနှင့် ချိတ်ဆက်နေသည်\u2026</string>
+    <string name="update_transferring">နာရီသို့ ပို့နေသည်\u2026 %1$d%%</string>
+    <string name="update_confirm_on_watch">ပို့ပြီးပါပြီ! နာရီပေါ် notification ပေါ်လာသည် \u2014 install လုပ်ရန် ထိုနေရာကိုနှိပ်ပါ။</string>
+    <string name="update_no_watch">နာရီမချိတ်ထားပါ။</string>
+    <string name="update_push_failed">Update ကို နာရီသို့ပို့မရပါ။ ထပ်ကြိုးစားပါ။</string>
+    <string name="update_watch_button">နာရီကို update လုပ်ပါ</string>
+    <string name="update_open_release_button">Release page ကိုဖွင့်ပါ</string>
+    <string name="update_watch_behind">သင့်နာရီသည် %1$s တွင်ရှိနေသေးသည် \u2014 အောက်က update ကိုပို့ပါ။</string>
+    <string name="update_subtitle">Phone နှင့် watch apps ကို sync ထားပါ</string>
+    <string name="update_state_checking">Updates စစ်နေသည်\u2026</string>
+    <string name="update_state_current">သင် အပ်ဒိတ်ဖြစ်နေပါပြီ</string>
+    <string name="update_state_current_sub">နောက်ဆုံး release %1$s ကိုသုံးနေသည်</string>
+    <string name="update_state_available">Update ရနိုင်သည်</string>
+    <string name="update_state_available_sub">%1$s \u00b7 %2$s</string>
+    <string name="update_state_failed">Updates စစ်မရပါ</string>
+    <string name="update_state_failed_sub">Connection စစ်ပြီး ထပ်ကြိုးစားပါ</string>
+    <string name="update_device_phone">ဖုန်း</string>
+    <string name="update_device_watch">နာရီ</string>
+    <string name="update_versions_header">Install လုပ်ထားသည်</string>
+    <string name="update_whats_new">ဘာတွေ အသစ်လဲ</string>
+    <string name="update_phone_button">ဖုန်းကို update လုပ်ပါ</string>
+    <string name="update_installing">Installer ဖွင့်နေသည်\u2026</string>
+    <string name="update_install_permission_needed">Svartifoss မှ apps install လုပ်ခွင့်ပြုပြီးနောက် Update phone ကို ထပ်နှိပ်ပါ။</string>
+    <string name="update_phone_failed">Phone update ကို download မလုပ်နိုင်ပါ။ ထပ်ကြိုးစားပါ။</string>
+    <string name="update_install_notification_title">Svartifoss update</string>
+    <string name="update_install_notification_tap">Version အသစ် install လုပ်ရန် နှိပ်ပါ</string>
+    <string name="update_install_notification_failed">Install မအောင်မြင်ပါ။ Settings တွင် Svartifoss မှ installs ခွင့်ပြုပြီး ထပ်ကြိုးစားပါ။</string>
+    <string name="setting_wear_album_accent_source">Album accent source</string>
+    <string-array name="wear_album_accent_source_entries">
+        <item>မျှတ</item>
+        <item>အတောက်ပဆုံး</item>
+    </string-array>
+    <string-array name="wear_accent_floor_entries">
+        <item>ပိတ်</item>
+        <item>နူးညံ့</item>
+        <item>စံ</item>
+        <item>ထူ</item>
+    </string-array>
+    <string name="setting_wear_accent_floor">Accent အနည်းဆုံးအဆင့်</string>
+    <string name="preview_metadata_album">Album</string>
+    <string name="preview_metadata_album_value">Slow Rivers</string>
+    <string name="preview_metadata_track">Track</string>
+    <string name="preview_metadata_composer">တေးရေးဆရာ</string>
+    <string name="preview_metadata_genre">အမျိုးအစား</string>
+    <string name="preview_metadata_genre_value">Alternative</string>
+    <string name="preview_metadata_year">နှစ်</string>
+    <string name="preview_metadata_format">Format</string>
+    <string name="preview_metadata_bitrate">Bitrate</string>
+    <string name="preview_metadata_position">နေရာ</string>
+    <string name="preview_metadata_output">Output</string>
+    <string name="preview_metadata_output_value">Bluetooth</string>
+    <string name="setting_wear_metadata_core">Album details</string>
+    <string name="setting_wear_metadata_core_description">Album၊ album artist၊ record ပေါ် နေရာနှင့် ကြာချိန်။</string>
+    <string name="setting_wear_metadata_release">Release details</string>
+    <string name="setting_wear_metadata_release_description">Genre၊ year၊ release date နှင့် label။</string>
+    <string name="setting_wear_metadata_credits">Credits</string>
+    <string name="setting_wear_metadata_credits_description">Player က ထုတ်ပေးပါက composer၊ writer နှင့် author။</string>
+    <string name="setting_wear_metadata_technical">File details</string>
+    <string name="setting_wear_metadata_technical_description">Format၊ bitrate၊ sample rate၊ channels နှင့် size။ Local tracks အတွက်သာ။</string>
+    <string name="setting_split_panel">Split panel</string>
+    <string name="setting_split_panel_description">Split face ၏ အောက်တစ်ဝက်တွင် ဘာပြမည်ကိုရွေးပါ။ Blurred artwork က စာသားနောက်တွင် cover တူညီစွာ ဆက်ပြပြီး solid colour က notification-card ပုံစံဖြစ်သည်။</string>
+    <string-array name="wear_split_panel_entries">
+        <item>Blurred artwork</item>
+        <item>Solid colour</item>
+    </string-array>
+    <string name="setting_wear_metadata_playback">Playback details</string>
+    <string name="setting_wear_metadata_playback_description">Millisecond အထိ position၊ speed၊ audio output နှင့် အသံကို ဘယ်နေရာမှ stream သို့မဟုတ် play လုပ်နေသည်ကို — track address အပါအဝင် — ပြသည်။ ဖော်ပြရန် file မရှိသော streaming track ဖြည့်နိုင်သည့် တစ်ခုတည်းသော block ဖြစ်သည်။</string>
+    <string name="setting_wear_metadata_identifiers">Identifiers</string>
+    <string name="setting_wear_metadata_identifiers_description">ISRC နှင့် catalogue ids။ ပုံသေပိတ်ထားသည် — လိုအပ်ချိန်တွင် အသုံးဝင်ပြီး မလိုချိန်တွင် အပိုအချက်အလက်ဖြစ်သည်။</string>
+    <string name="setting_metadata_lookup">Track details ကို online တွင်ရှာပါ</string>
+    <string name="setting_metadata_lookup_description">Playing app မထုတ်ပေးသော အချက်များ — ISRC၊ label၊ release date — ကို အခမဲ့ public database ဖြစ်သော MusicBrainz မှ ဖြည့်ပေးသည်။ ပုံသေပိတ်ထားသည်။ Metadata watch face သည် မပါလည်း အလုပ်လုပ်ပြီး၊ ဤအရာက rows ထပ်ဖြည့်ပေးရုံသာ။ ဖွင့်ပြီး အဲဒီ face ကိုရွေးမှသာ data ပို့ပြီး track name နှင့် artist သာ ပို့သည်။</string>
+    <string-array name="wear_text_block_align_entries">
+        <item>Face အတိုင်း လိုက်နာရန်</item>
+        <item>အစ</item>
+        <item>အလယ်</item>
+        <item>အဆုံး</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Face အတိုင်း လိုက်နာရန်</item>
+        <item>အပေါ်</item>
+        <item>အလယ်</item>
+        <item>အောက်</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Static (တစ်ကြောင်း၊ scroll သို့မဟုတ် shrink မရှိ)</item>
+        <item>Scroll (marquee)</item>
+        <item>ဆံ့အောင် shrink လုပ်ရန်</item>
+    </string-array>
+    <string-array name="wear_album_art_source_entries">
+        <item>Music app မှ</item>
+        <item>Online မှရှာထားသည်</item>
+        <item>အနုပညာရှင်ပုံ</item>
+        <item>ကျွန်ုပ်၏ gallery မှပုံ</item>
+        <item>Folder မှ ကျပန်း</item>
+    </string-array>
+</resources>

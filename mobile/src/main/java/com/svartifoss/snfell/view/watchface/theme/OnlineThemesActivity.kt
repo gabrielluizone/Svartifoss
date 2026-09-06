@@ -46,7 +46,7 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.ArchivedFaces
 import com.svartifoss.snfell.common.R as commonR
 import com.svartifoss.snfell.common.ThemeAppearance
-import com.svartifoss.snfell.update.UpdateChecker
+import com.svartifoss.snfell.update.AppVersionComparison
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.MusicLoadingBarsView
 import com.svartifoss.snfell.view.applyLyraDialogStyling
@@ -1346,7 +1346,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         summary.schemaVersion != WatchThemeRepository.LIBRARY_SCHEMA ||
                 summary.baseFace !in ThemeAppearance.ALLOWED_BASE_FACES ||
                 summary.baseFace in ArchivedFaces.KEYS -> OnlineThemeCompatibility.UNSUPPORTED
-        UpdateChecker.isNewer(summary.minimumAppVersion, BuildConfig.VERSION_NAME) ->
+        AppVersionComparison.isNewer(summary.minimumAppVersion, BuildConfig.VERSION_NAME) ->
             OnlineThemeCompatibility.REQUIRES_NEWER_APP
         else -> OnlineThemeCompatibility.SUPPORTED
     }

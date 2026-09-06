@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Layout des Fortschrittsrings</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Vollständig transparent</item>
+        <item>Sekundärfarbe</item>
+        <item>Tertiärfarbe</item>
+        <item>Farbnetz</item>
+        <item>Aurora</item>
+        <item>Lichtkegel</item>
+        <item>Vignette</item>
+        <item>Geteilter Ton</item>
+        <item>Farbbänder</item>
+        <item>Mitternacht</item>
+        <item>Halo</item>
+        <item>Rauchunschärfe</item>
+        <item>Sonnenuntergang</item>
+        <item>Ozean</item>
+        <item>Nebel</item>
+        <item>Glut</item>
+        <item>Gezeitenlinie</item>
+        <item>Biolumineszenz</item>
+        <item>Irisierend</item>
+        <item>Graphit</item>
+        <item>Kino</item>
+        <item>Umlaufbahn</item>
+        <item>Horizont</item>
+        <item>Tuschewaschung</item>
+        <item>Blüte</item>
+        <item>Fjord</item>
+        <item>Punktraster</item>
+        <item>Abtastlinie</item>
+        <item>Radar</item>
+        <item>Konturlinien</item>
+        <item>Facettiert</item>
+        <item>Dämmerung</item>
+        <item>Eis</item>
+        <item>Rose</item>
+        <item>Papier</item>
+        <item>Monolith</item>
+        <item>Laterne</item>
+        <item>Noir</item>
+        <item>Samt</item>
+        <item>Fata Morgana</item>
+        <item>Leuchteffekt</item>
+        <item>Wolke</item>
+        <item>Nocturne</item>
+        <item>Flüssig</item>
+        <item>Gezeiten</item>
+        <item>Vinyl</item>
+        <item>Korona</item>
+        <item>Sichel</item>
+        <item>Raster</item>
+        <item>Glasschleier</item>
+        <item>Material</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Spektrum</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Perlen</item>
+        <item>Doppelschiene</item>
+        <item>Puls</item>
+        <item>Chrom</item>
+        <item>Spektrum</item>
+        <item>Stufen</item>
+        <item>Bonbon</item>
+        <item>Geist</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Doppelkante</item>
+        <item>Vertikale Anzeige (links)</item>
+        <item>Vertikale Anzeige (rechts)</item>
+        <item>Obere Anzeige</item>
+        <item>Untere Anzeige</item>
+        <item>Mittleres Zifferblatt</item>
+        <item>Oberer Halo</item>
+        <item>Unterer Halo</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Doppelring</item>
+        <item>Perlen</item>
+        <item>Strich und Punkt</item>
+        <item>24-Stunden-Markierungen</item>
+        <item>Nur Fortschritt</item>
+        <item>Leuchten</item>
+        <item>Duoton</item>
+        <item>Nadel</item>
+        <item>Abwechselnd</item>
+        <item>Funke</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Lünettenrand</item>
+        <item>Eingerückter Ring</item>
+        <item>Innerer Ring</item>
+        <item>Dicker Ring</item>
+        <item>Unten offen</item>
+        <item>Oben offen</item>
+        <item>Linker Bogen</item>
+        <item>Rechter Bogen</item>
+        <item>Doppelspur</item>
+        <item>Links offen</item>
+        <item>Rechts offen</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Kompakte Kapsel</item>
+        <item>Quadratisches Album</item>
+        <item>Gestapelte Kapsel</item>
+        <item>Abzeichen</item>
+        <item>Glasleiste</item>
+        <item>LCD</item>
+        <item>Konturiertes Quadrat</item>
+        <item>Band</item>
+        <item>Zeitblase</item>
+        <item>Geteilter Ton</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Zeitleiste (oben)</item>
+        <item>Zeitleiste (unten)</item>
+        <item>Segmente (oben)</item>
+        <item>Vertikale Zeitleiste (links)</item>
+        <item>Vertikale Zeitleiste (rechts)</item>
+        <item>Mittleres Zifferblatt</item>
+        <item>Doppelte Zeitleiste</item>
+        <item>Segmente (unten)</item>
+        <item>Mittlerer Stapel</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Weich</item>
+        <item>Chrom</item>
+        <item>Holografisch</item>
+        <item>Blase</item>
+        <item>Schiene</item>
+        <item>Sonnenuntergang</item>
+        <item>Albumkontur</item>
+        <item>Dunkles Glas</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Fächer</item>
+        <item>Umlaufbahn</item>
+        <item>Unteres Dock</item>
+        <item>Spalte</item>
+        <item>Geteiltes Deck</item>
+        <item>Raute</item>
+        <item>Karussell</item>
+        <item>Dreieck</item>
+        <item>Treppe</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Weich</item>
+        <item>Platte</item>
+        <item>Tinte</item>
+        <item>Schiene</item>
+        <item>Sonnenuntergang</item>
+        <item>Blase</item>
+        <item>Chrom</item>
+        <item>Holografisch</item>
+    </string-array>
+</resources>

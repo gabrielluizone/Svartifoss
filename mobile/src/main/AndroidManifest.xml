@@ -20,9 +20,8 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <!-- Lets the sideloaded app install its own downloaded update APK (still gated on the user's
-         one-time "install unknown apps" grant). -->
-    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- REQUEST_INSTALL_PACKAGES (for the in-app self-updater) is declared only by the `github`
+         flavor - see src/github/AndroidManifest.xml. The Play build must not carry it. -->
 
     <uses-sdk
         tools:overrideLibrary="androidx.wear" />
@@ -226,10 +225,8 @@
             android:label="@string/backup_selection_title"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity
-            android:name=".update.UpdateActivity"
-            android:exported="false"
-            android:label="@string/update_screen_title" />
+        <!-- .update.UpdateActivity is registered by the `github` flavor only
+             (src/github/AndroidManifest.xml). -->
 
         <activity
             android:name=".view.mainactivity.HelpActivity"
@@ -250,15 +247,8 @@
 
         </provider>
 
-        <receiver
-            android:name=".update.PhoneInstallResultReceiver"
-            android:exported="false">
-            <intent-filter>
-                <!-- Fires in the NEW app version right after a successful self-update - the
-                     reliable place to clean the cached APK and dismiss the install notice. -->
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
-            </intent-filter>
-        </receiver>
+        <!-- .update.PhoneInstallResultReceiver is registered by the `github` flavor only
+             (src/github/AndroidManifest.xml). -->
 
     </application>
 

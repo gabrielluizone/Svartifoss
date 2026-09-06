@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Temadetaljer</string>
+    <string name="community_theme_detail_preview_screen">Forhåndsvisningsskærm</string>
+    <string name="community_theme_detail_surface_player">Afspiller</string>
+    <string name="community_theme_detail_surface_aod">Altid aktiv</string>
+    <string name="community_theme_detail_surface_volume">Lydstyrke</string>
+    <string name="community_theme_detail_surface_progress">Fremskridt</string>
+    <string name="community_theme_detail_surface_quick_panel">Hurtigpanel</string>
+    <string name="community_theme_detail_surface_queue">Kø</string>
+    <string name="community_theme_detail_preview_label">Forhåndsvisning af %1$s</string>
+    <string name="community_theme_detail_preview_description">Forhåndsvisning af %1$s på skærmen %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Dit aktuelle albumcover kan kun vises i denne forhåndsvisning på din telefon. Det uploades aldrig; eksempeltekst og tidsoplysninger bruges fortsat.</string>
+    <string name="community_theme_detail_information">Temaoplysninger</string>
+    <string name="community_theme_detail_byline">Af %1$s</string>
+    <string name="community_theme_detail_layout">Grundlayout</string>
+    <string name="community_theme_detail_revision">Revision</string>
+    <string name="community_theme_detail_minimum_version">Mindste Svartifoss-version</string>
+    <string name="community_theme_detail_published">Udgivet</string>
+    <string name="community_theme_detail_visual_settings">Visuelle indstillinger</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s visuel indstilling</item>
+        <item quantity="other">%1$s visuelle indstillinger</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Ikke tilgængelig</string>
+    <string name="community_theme_detail_add_apply">Tilføj og anvend</string>
+    <string name="community_theme_detail_remove">Fjern tema</string>
+    <string name="community_theme_detail_remove_title">Fjern “%1$s” fra Mine temaer?</string>
+    <string name="community_theme_detail_remove_message">Denne gemte kopi og alle ændringer, du har lavet i den, fjernes permanent. Hvis den bruges nu, vender dit ur tilbage til det indbyggede grundlayout.</string>
+    <string name="community_theme_detail_removed">Tema fjernet fra Mine temaer</string>
+    <string name="community_theme_detail_remove_error">Kunne ikke fjerne dette tema</string>
+    <string name="community_theme_detail_like">Synes godt om</string>
+    <string name="community_theme_detail_unlike">Fjern Synes godt om</string>
+    <string name="community_theme_detail_like_loading">Kontrollerer…</string>
+    <string name="community_theme_detail_like_description">Synes godt om %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Fjern Synes godt om fra %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google-login blev annulleret. Din Synes godt om-markering blev ikke gemt.</string>
+    <string name="community_theme_detail_like_error">Kunne ikke gemme din Synes godt om-markering. Kontrollér forbindelsen, og prøv igen.</string>
+    <string name="community_theme_detail_like_not_ready">Synes godt om-markeringer for dette tema er ikke klar endnu. Opdater Community-temaer efter næste udgivelse.</string>
+    <string name="community_theme_detail_like_saved">Din Synes godt om-markering blev gemt. Offentlige antal opdateres ved næste katalogudgivelse.</string>
+    <string name="community_theme_detail_unlike_saved">Din Synes godt om-markering blev fjernet. Offentlige antal opdateres ved næste katalogudgivelse.</string>
+    <string name="community_theme_detail_apply_existing">Dette tema findes allerede i Mine temaer og er blevet anvendt på dit ur</string>
+    <string name="community_theme_detail_requires_app_version">Dette tema kræver Svartifoss %1$s, før det kan tilføjes.</string>
+    <string name="community_theme_detail_load_error">Kunne ikke indlæse temaets detaljer. Gå tilbage til Community-temaer, og prøv igen.</string>
+    <string name="community_theme_detail_profile_mismatch">Den downloadede profil svarer ikke til temaets offentlige detaljer. Gå tilbage til Community-temaer, og prøv igen.</string>
+    <string name="community_theme_detail_screenshot_description">Foto af dette tema på forfatterens ur</string>
+    <string name="community_theme_detail_source_author">Forfatterens ur</string>
+    <string name="community_theme_detail_source_rendered">Genereret forhåndsvisning</string>
+    <string name="community_theme_detail_show_rendered">Vis genereret forhåndsvisning</string>
+    <string name="community_theme_detail_show_author">Vis forfatterens foto</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

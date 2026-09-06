@@ -191,4 +191,21 @@ I-customize ang lahat sa Controls at Watch sa phone mo</string>
 
     <string name="metadata_about">Tungkol dito</string>
     <string name="metadata_source">Tumutugtog sa</string>
+    <string name="action_name_open_quick_actions_panel">Buksan ang quick actions panel</string>
+    <string name="action_name_fast_forward">Fast forward</string>
+    <string name="action_name_rewind">Rewind</string>
+    <string name="action_name_set_speed">Itakda ang playback speed</string>
+    <string name="action_name_seek_position">Tumalon sa posisyon ng track</string>
+    <string name="action_name_set_volume">Itakda ang volume</string>
+    <string name="action_name_set_shuffle">Itakda ang shuffle</string>
+    <string name="action_name_set_repeat">Itakda ang repeat</string>
+    <string name="action_name_open_volume_screen">Buksan ang volume screen</string>
+    <string name="action_name_open_progress_screen">Buksan ang progress screen</string>
+    <string name="action_name_open_face_picker">Buksan ang face picker</string>
+    <string name="action_name_close_watch_app">Isara ang watch app</string>
+    <string name="volume_screen_title">Volume</string>
+    <string name="progress_screen_title">Progress</string>
+    <string name="progress_screen_cancel_seek">Kanselahin ang pag-seek</string>
+    <string name="progress_screen_skip_back">Lumaktaw pabalik ng %1$d segundo</string>
+    <string name="progress_screen_skip_forward">Lumaktaw pasulong ng %1$d segundo</string>
 </resources>

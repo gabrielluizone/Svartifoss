@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  `github` (sideload) flavor only. The phone streams a newer wear APK over the Data Layer and
+  ApkReceiverService hands it to the system package installer (the user still confirms on-watch).
+  Google Play delivers watch updates itself, so none of this is present in the `play` flavor.
+  See docs/play-store-migration-plan.md.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Requires the "install unknown apps" grant for this app in the watch settings. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <application>
+
+        <!-- Watch self-update: receives the wear APK streamed by the phone (see the phone's
+             WatchApkPusher) and fires the system package installer. Path must match
+             CommPaths.CHANNEL_WEAR_APK. -->
+        <service
+            android:name=".watch.update.ApkReceiverService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.CHANNEL_EVENT" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/Channel/WearApk"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".watch.update.InstallResultReceiver"
+            android:exported="false">
+            <intent-filter>
+                <!-- Fires in the NEW app version right after a successful self-update - the
+                     reliable place to clean the cached APK and dismiss the install notice. -->
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">진행률 링 레이아웃</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>완전 투명</item>
+        <item>보조 색상</item>
+        <item>3차 색상</item>
+        <item>색상 메시</item>
+        <item>오로라</item>
+        <item>스포트라이트</item>
+        <item>비네트</item>
+        <item>스플릿 톤</item>
+        <item>색상 밴드</item>
+        <item>자정</item>
+        <item>헤일로</item>
+        <item>연기 블러</item>
+        <item>일몰</item>
+        <item>바다</item>
+        <item>성운</item>
+        <item>불씨</item>
+        <item>타이드라인</item>
+        <item>생물 발광</item>
+        <item>무지갯빛</item>
+        <item>그래파이트</item>
+        <item>시네마</item>
+        <item>오비트</item>
+        <item>수평선</item>
+        <item>잉크 워시</item>
+        <item>블로섬</item>
+        <item>피오르</item>
+        <item>점 그리드</item>
+        <item>스캔라인</item>
+        <item>레이더</item>
+        <item>등고선</item>
+        <item>패싯</item>
+        <item>황혼</item>
+        <item>얼음</item>
+        <item>장미</item>
+        <item>종이</item>
+        <item>모놀리스</item>
+        <item>랜턴</item>
+        <item>누아르</item>
+        <item>벨벳</item>
+        <item>미라지</item>
+        <item>블룸</item>
+        <item>구름</item>
+        <item>녹턴</item>
+        <item>리퀴드</item>
+        <item>타이달</item>
+        <item>바이닐</item>
+        <item>코로나</item>
+        <item>초승달</item>
+        <item>그리드</item>
+        <item>글래스 베일</item>
+        <item>Material</item>
+        <item>포스터</item>
+        <item>스튜디오</item>
+        <item>스펙트럼</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>구슬</item>
+        <item>듀얼 레일</item>
+        <item>펄스</item>
+        <item>크롬</item>
+        <item>스펙트럼</item>
+        <item>단계</item>
+        <item>캔디</item>
+        <item>고스트</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>이중 가장자리</item>
+        <item>세로 미터(왼쪽)</item>
+        <item>세로 미터(오른쪽)</item>
+        <item>상단 미터</item>
+        <item>하단 미터</item>
+        <item>중앙 다이얼</item>
+        <item>상단 헤일로</item>
+        <item>하단 헤일로</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>이중 링</item>
+        <item>구슬</item>
+        <item>대시와 점</item>
+        <item>24시간 눈금</item>
+        <item>진행률만</item>
+        <item>글로우</item>
+        <item>듀오톤</item>
+        <item>바늘</item>
+        <item>교차</item>
+        <item>스파크</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>베젤 가장자리</item>
+        <item>인셋 링</item>
+        <item>안쪽 링</item>
+        <item>굵은 링</item>
+        <item>아래에서 열기</item>
+        <item>위에서 열기</item>
+        <item>왼쪽 아크</item>
+        <item>오른쪽 아크</item>
+        <item>이중 트랙</item>
+        <item>왼쪽에서 열기</item>
+        <item>오른쪽에서 열기</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>컴팩트 필</item>
+        <item>정사각형 앨범</item>
+        <item>스택 필</item>
+        <item>배지</item>
+        <item>글래스 바</item>
+        <item>LCD</item>
+        <item>윤곽선 사각형</item>
+        <item>리본</item>
+        <item>시간 버블</item>
+        <item>스플릿 톤</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>타임라인(상단)</item>
+        <item>타임라인(하단)</item>
+        <item>세그먼트(상단)</item>
+        <item>세로 타임라인(왼쪽)</item>
+        <item>세로 타임라인(오른쪽)</item>
+        <item>중앙 다이얼</item>
+        <item>트윈 타임라인</item>
+        <item>세그먼트(하단)</item>
+        <item>중앙 스택</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>부드러움</item>
+        <item>크롬</item>
+        <item>홀로그램</item>
+        <item>버블</item>
+        <item>레일</item>
+        <item>일몰</item>
+        <item>앨범 윤곽선</item>
+        <item>다크 글래스</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>팬</item>
+        <item>오비트</item>
+        <item>하단 도크</item>
+        <item>열</item>
+        <item>스플릿 데크</item>
+        <item>다이아몬드</item>
+        <item>캐러셀</item>
+        <item>삼각형</item>
+        <item>계단</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>부드러움</item>
+        <item>슬래브</item>
+        <item>잉크</item>
+        <item>레일</item>
+        <item>일몰</item>
+        <item>버블</item>
+        <item>크롬</item>
+        <item>홀로그램</item>
+    </string-array>
+</resources>

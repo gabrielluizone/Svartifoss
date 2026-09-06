@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Okyanus</item>
+        <item>Gün batımı</item>
+        <item>Orta spot ışığı</item>
+        <item>Cam tül</item>
+        <item>Kadife</item>
+        <item>Noir spot ışığı</item>
+        <item>Buz yıkama</item>
+        <item>Gül çiçeği</item>
+        <item>Prizma</item>
+        <item>Hilal kenarı</item>
+        <item>Gelgit bantları</item>
+        <item>Kağıt kılıf</item>
+        <item>Yükselen fener</item>
+        <item>Bölünmüş serap</item>
+        <item>Sakin ızgara</item>
+        <item>Noktürn</item>
+        <item>Bulut çalışması</item>
+        <item>Sıvı havuzlar</item>
+        <item>Renk monoliti</item>
+        <item>Bölünmüş ton</item>
+        <item>Gradyan</item>
+        <item>Çift ton</item>
+        <item>Bantlar</item>
+        <item>Vinyet</item>
+        <item>Grafit</item>
+        <item>Sinema</item>
+        <item>Akrilik</item>
+        <item>Ağ</item>
+        <item>Bulutsu</item>
+        <item>Biyolüminesans</item>
+        <item>Yanardöner</item>
+        <item>Yörünge</item>
+        <item>Mürekkep yıkama</item>
+        <item>Çiçeklenme</item>
+        <item>Fiyort</item>
+        <item>Nokta matrisi</item>
+        <item>Tarama çizgileri</item>
+        <item>Radar</item>
+        <item>Kontur</item>
+        <item>Fasetli</item>
+        <item>Albüm dolgusu</item>
+        <item>İkincil dolgu</item>
+        <item>Üçüncül dolgu</item>
+        <item>Cam</item>
+        <item>Gece yarısı</item>
+        <item>Duman</item>
+        <item>Gelgit çizgisi</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Yosun</item>
+        <item>Lavanta sisi</item>
+        <item>Kiraz</item>
+        <item>Derin deniz</item>
+        <item>Toz</item>
+        <item>Ağartılmış</item>
+        <item>Ay ışığı</item>
+        <item>Rüya</item>
+        <item>Kızılötesi</item>
+        <item>Orman</item>
+        <item>Gümüş</item>
+        <item>Şeker</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Üst solma</item>
+        <item>Orta spot ışığı</item>
+        <item>Çapraz gölge</item>
+        <item>Sol perde</item>
+        <item>Sağ perde</item>
+        <item>Orta bant</item>
+        <item>Çapraz geçiş</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Ters yaprak</item>
+        <item>Ters damla</item>
+        <item>Çakıl taşı</item>
+        <item>Yay</item>
+        <item>Kalkan</item>
+        <item>Ters yay</item>
+        <item>Ters kalkan</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Fısıltı</item>
+        <item>Işıltılı</item>
+        <item>Taşkın</item>
+        <item>Işıltı</item>
+        <item>Derin parıltı</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Albüm ana hattı</item>
+        <item>Albüm gradyanı</item>
+        <item>Albüm ikincil rengi</item>
+        <item>Albüm camı</item>
+        <item>Albüm üçüncül rengi</item>
+        <item>Neon ana hat</item>
+    </string-array>
+</resources>

@@ -185,4 +185,21 @@
 
     <string name="metadata_about">О апликацији</string>
     <string name="metadata_source">Репродукује се у</string>
+    <string name="action_name_open_quick_actions_panel">Отвори панел брзих радњи</string>
+    <string name="action_name_fast_forward">Премотај унапред</string>
+    <string name="action_name_rewind">Премотај уназад</string>
+    <string name="action_name_set_speed">Подеси брзину репродукције</string>
+    <string name="action_name_seek_position">Пређи на позицију песме</string>
+    <string name="action_name_set_volume">Подеси јачину звука</string>
+    <string name="action_name_set_shuffle">Подеси насумичну репродукцију</string>
+    <string name="action_name_set_repeat">Подеси понављање</string>
+    <string name="action_name_open_volume_screen">Отвори екран јачине звука</string>
+    <string name="action_name_open_progress_screen">Отвори екран напретка</string>
+    <string name="action_name_open_face_picker">Отвори бирач лица</string>
+    <string name="action_name_close_watch_app">Затвори апликацију на сату</string>
+    <string name="volume_screen_title">Јачина звука</string>
+    <string name="progress_screen_title">Напредак</string>
+    <string name="progress_screen_cancel_seek">Откажи премотавање</string>
+    <string name="progress_screen_skip_back">Прескочи уназад %1$d секунди</string>
+    <string name="progress_screen_skip_forward">Прескочи унапред %1$d секунди</string>
 </resources>

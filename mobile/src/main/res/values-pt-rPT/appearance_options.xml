@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Oceano</item>
+        <item>Pôr do sol</item>
+        <item>Foco central</item>
+        <item>Véu de vidro</item>
+        <item>Veludo</item>
+        <item>Foco noir</item>
+        <item>Lavagem gelada</item>
+        <item>Flor de rosa</item>
+        <item>Prisma</item>
+        <item>Aro crescente</item>
+        <item>Faixas de maré</item>
+        <item>Capa de papel</item>
+        <item>Subida da lanterna</item>
+        <item>Miragem dividida</item>
+        <item>Grelha discreta</item>
+        <item>Noturno</item>
+        <item>Estudo de nuvens</item>
+        <item>Poças líquidas</item>
+        <item>Monólito de cor</item>
+        <item>Tom dividido</item>
+        <item>Gradiente</item>
+        <item>Dois tons</item>
+        <item>Faixas</item>
+        <item>Vinheta</item>
+        <item>Grafite</item>
+        <item>Cinema</item>
+        <item>Acrílico</item>
+        <item>Malha</item>
+        <item>Nebulosa</item>
+        <item>Bioluminescência</item>
+        <item>Iridescente</item>
+        <item>Órbita</item>
+        <item>Lavagem de tinta</item>
+        <item>Flor</item>
+        <item>Fiorde</item>
+        <item>Matriz de pontos</item>
+        <item>Linhas de varrimento</item>
+        <item>Radar</item>
+        <item>Contorno</item>
+        <item>Facetado</item>
+        <item>Preenchimento do álbum</item>
+        <item>Preenchimento secundário</item>
+        <item>Preenchimento terciário</item>
+        <item>Vidro</item>
+        <item>Meia-noite</item>
+        <item>Fumo</item>
+        <item>Linha da maré</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Musgo</item>
+        <item>Névoa de lavanda</item>
+        <item>Cereja</item>
+        <item>Mar profundo</item>
+        <item>Poeira</item>
+        <item>Branqueado</item>
+        <item>Luar</item>
+        <item>Sonho</item>
+        <item>Infravermelho</item>
+        <item>Floresta</item>
+        <item>Prata</item>
+        <item>Doce</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Desvanecimento superior</item>
+        <item>Foco central</item>
+        <item>Sombra diagonal</item>
+        <item>Cortina esquerda</item>
+        <item>Cortina direita</item>
+        <item>Faixa central</item>
+        <item>Transição cruzada</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Folha invertida</item>
+        <item>Gota invertida</item>
+        <item>Seixo</item>
+        <item>Arco</item>
+        <item>Escudo</item>
+        <item>Arco invertido</item>
+        <item>Escudo invertido</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Sussurro</item>
+        <item>Radiante</item>
+        <item>Inundação</item>
+        <item>Cintilação</item>
+        <item>Brilho profundo</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Contorno do álbum</item>
+        <item>Gradiente do álbum</item>
+        <item>Cor secundária do álbum</item>
+        <item>Vidro do álbum</item>
+        <item>Cor terciária do álbum</item>
+        <item>Contorno néon</item>
+    </string-array>
+</resources>

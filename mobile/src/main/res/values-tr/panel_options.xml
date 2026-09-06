@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">İlerleme halkası düzeni</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Tamamen şeffaf</item>
+        <item>İkincil renk</item>
+        <item>Üçüncül renk</item>
+        <item>Renk ağı</item>
+        <item>Aurora</item>
+        <item>Spot ışığı</item>
+        <item>Vinyet</item>
+        <item>Bölünmüş ton</item>
+        <item>Renk bantları</item>
+        <item>Gece yarısı</item>
+        <item>Hale</item>
+        <item>Duman bulanıklığı</item>
+        <item>Gün batımı</item>
+        <item>Okyanus</item>
+        <item>Bulutsu</item>
+        <item>Kor</item>
+        <item>Gelgit çizgisi</item>
+        <item>Biyolüminesans</item>
+        <item>Yanardöner</item>
+        <item>Grafit</item>
+        <item>Sinema</item>
+        <item>Yörünge</item>
+        <item>Ufuk</item>
+        <item>Mürekkep yıkama</item>
+        <item>Çiçeklenme</item>
+        <item>Fiyort</item>
+        <item>Nokta ızgarası</item>
+        <item>Tarama çizgisi</item>
+        <item>Radar</item>
+        <item>Kontur çizgileri</item>
+        <item>Fasetli</item>
+        <item>Alacakaranlık</item>
+        <item>Buz</item>
+        <item>Gül</item>
+        <item>Kağıt</item>
+        <item>Monolit</item>
+        <item>Fener</item>
+        <item>Noir</item>
+        <item>Kadife</item>
+        <item>Serap</item>
+        <item>Dağınık parıltı</item>
+        <item>Bulut</item>
+        <item>Noktürn</item>
+        <item>Sıvı</item>
+        <item>Gelgit</item>
+        <item>Vinil</item>
+        <item>Korona</item>
+        <item>Hilal</item>
+        <item>Izgara</item>
+        <item>Cam tül</item>
+        <item>Malzeme</item>
+        <item>Poster</item>
+        <item>Stüdyo</item>
+        <item>Spektrum</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Boncuklar</item>
+        <item>Çift ray</item>
+        <item>Nabız</item>
+        <item>Krom</item>
+        <item>Spektrum</item>
+        <item>Basamaklar</item>
+        <item>Şeker</item>
+        <item>Hayalet</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Çift kenar</item>
+        <item>Dikey gösterge (sol)</item>
+        <item>Dikey gösterge (sağ)</item>
+        <item>Üst gösterge</item>
+        <item>Alt gösterge</item>
+        <item>Orta kadran</item>
+        <item>Üst hale</item>
+        <item>Alt hale</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Çift halka</item>
+        <item>Boncuklar</item>
+        <item>Çizgi ve nokta</item>
+        <item>24 saat işaretleri</item>
+        <item>Yalnızca ilerleme</item>
+        <item>Parıltı</item>
+        <item>Çift ton</item>
+        <item>İbre</item>
+        <item>Dönüşümlü</item>
+        <item>Kıvılcım</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Çerçeve kenarı</item>
+        <item>İçe gömülü halka</item>
+        <item>İç halka</item>
+        <item>Kalın halka</item>
+        <item>Alttan açık</item>
+        <item>Üstten açık</item>
+        <item>Sol yay</item>
+        <item>Sağ yay</item>
+        <item>Çift iz</item>
+        <item>Soldan açık</item>
+        <item>Sağdan açık</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Kompakt kapsül</item>
+        <item>Kare albüm</item>
+        <item>Yığılmış kapsül</item>
+        <item>Rozet</item>
+        <item>Cam çubuk</item>
+        <item>LCD</item>
+        <item>Ana hatlı kare</item>
+        <item>Şerit</item>
+        <item>Zaman balonu</item>
+        <item>Bölünmüş ton</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Zaman çizelgesi (üst)</item>
+        <item>Zaman çizelgesi (alt)</item>
+        <item>Bölümler (üst)</item>
+        <item>Dikey zaman çizelgesi (sol)</item>
+        <item>Dikey zaman çizelgesi (sağ)</item>
+        <item>Orta kadran</item>
+        <item>Çift zaman çizelgesi</item>
+        <item>Bölümler (alt)</item>
+        <item>Orta yığın</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Yumuşak</item>
+        <item>Krom</item>
+        <item>Holografik</item>
+        <item>Baloncuk</item>
+        <item>Ray</item>
+        <item>Gün batımı</item>
+        <item>Albüm ana hattı</item>
+        <item>Koyu cam</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Yelpaze</item>
+        <item>Yörünge</item>
+        <item>Alt yuva</item>
+        <item>Sütun</item>
+        <item>Bölünmüş panel</item>
+        <item>Elmas</item>
+        <item>Atlıkarınca</item>
+        <item>Üçgen</item>
+        <item>Merdiven</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Yumuşak</item>
+        <item>Levha</item>
+        <item>Mürekkep</item>
+        <item>Ray</item>
+        <item>Gün batımı</item>
+        <item>Baloncuk</item>
+        <item>Krom</item>
+        <item>Holografik</item>
+    </string-array>
+</resources>

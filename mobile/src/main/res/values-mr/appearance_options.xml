@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>महासागर</item>
+        <item>सूर्यास्त</item>
+        <item>मध्य स्पॉटलाइट</item>
+        <item>काच पडदा</item>
+        <item>व्हेल्वेट</item>
+        <item>नॉयर स्पॉटलाइट</item>
+        <item>आइस वॉश</item>
+        <item>गुलाब फुलणे</item>
+        <item>प्रिझम</item>
+        <item>अर्धचंद्र कडा</item>
+        <item>टायडल पट्टे</item>
+        <item>कागदी कव्हर</item>
+        <item>कंदील उगवणे</item>
+        <item>विभाजित मृगजळ</item>
+        <item>शांत ग्रिड</item>
+        <item>नॉक्टर्न</item>
+        <item>क्लाउड स्टडी</item>
+        <item>द्रव तलाव</item>
+        <item>रंग मोनोलिथ</item>
+        <item>विभाजित टोन</item>
+        <item>ग्रेडियंट</item>
+        <item>द्विरंगी</item>
+        <item>पट्टे</item>
+        <item>विन्येट</item>
+        <item>ग्रॅफाइट</item>
+        <item>सिनेमा</item>
+        <item>अॅक्रिलिक</item>
+        <item>जाळी</item>
+        <item>नेब्युला</item>
+        <item>जैवदीप्ती</item>
+        <item>इंद्रधनुषी</item>
+        <item>कक्षा</item>
+        <item>इंक वॉश</item>
+        <item>फुलणे</item>
+        <item>फ्योर्ड</item>
+        <item>डॉट मॅट्रिक्स</item>
+        <item>स्कॅनलाइन्स</item>
+        <item>रडार</item>
+        <item>कॉन्टूर</item>
+        <item>फॅसेटेड</item>
+        <item>अल्बम फिल</item>
+        <item>दुय्यम भराव</item>
+        <item>तृतीय भराव</item>
+        <item>काच</item>
+        <item>मध्यरात्र</item>
+        <item>धूर</item>
+        <item>भरतीरेषा</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>शेवाळ</item>
+        <item>लॅव्हेंडर धुके</item>
+        <item>चेरी</item>
+        <item>खोल समुद्र</item>
+        <item>धूळ</item>
+        <item>ब्लीच</item>
+        <item>चांदणे</item>
+        <item>स्वप्न</item>
+        <item>इन्फ्रारेड</item>
+        <item>जंगल</item>
+        <item>चांदी</item>
+        <item>कँडी</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>वरचा फेड</item>
+        <item>मध्य स्पॉटलाइट</item>
+        <item>तिरपी सावली</item>
+        <item>डावा पडदा</item>
+        <item>उजवा पडदा</item>
+        <item>मध्य पट्टा</item>
+        <item>क्रॉसफेड</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>उलटे पान</item>
+        <item>उलटा थेंब</item>
+        <item>गारगोटी</item>
+        <item>कमान</item>
+        <item>ढाल</item>
+        <item>उलटी कमान</item>
+        <item>उलटी ढाल</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>कुजबुज</item>
+        <item>तेजस्वी</item>
+        <item>फ्लड</item>
+        <item>झगमग</item>
+        <item>गडद चमक</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>अल्बम बाह्यरेषा</item>
+        <item>अल्बम ग्रेडियंट</item>
+        <item>दुय्यम अल्बम रंग</item>
+        <item>अल्बम ग्लास</item>
+        <item>तृतीय अल्बम रंग</item>
+        <item>निऑन बाह्यरेषा</item>
+    </string-array>
+</resources>

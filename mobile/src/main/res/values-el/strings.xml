@@ -2076,6 +2076,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -2119,6 +2124,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
@@ -2345,4 +2355,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Αντιγραφή</string>
+    <string name="dev_report_copied">Η αναφορά αντιγράφηκε</string>
+    <string name="dev_watch_snapshot_inspector">Στιγμιότυπο προτιμήσεων ρολογιού</string>
+    <string name="dev_watch_snapshot_inspector_description">Τι θα στελνόταν πραγματικά στο ρολόι αυτή τη στιγμή: ενεργό πεδίο εμφάνισης, εκτιμώμενο μέγεθος και ποιες ανενεργές κρυφές μνήμες ανά πρόσοψη απορρίφθηκαν για να χωρέσουν στο όριο</string>
+    <string name="dev_data_layer_inspector">Επιθεωρητής Data Layer</string>
+    <string name="dev_data_layer_inspector_description">Συνδεδεμένοι κόμβοι Wearable και το τελευταίο WatchInfo στο οποίο απάντησε η εφαρμογή ρολογιού — η ακατέργαστη κατάσταση πίσω από το «Δεν υπάρχει συνδεδεμένο ρολόι»</string>
+    <string name="dev_media_sessions_inspector">Εξερευνητής MediaSession</string>
+    <string name="dev_media_sessions_inspector_description">Κάθε MediaSession που είναι ενεργό αυτή τη στιγμή, όχι μόνο αυτό που παρακολουθείται: δηλωμένες ενέργειες, ουρά και διαδρομή αναπαραγωγής</string>
+    <string name="dev_view_phone_log">Προβολή αρχείου καταγραφής τηλεφώνου</string>
+    <string name="dev_view_phone_log_description">Το τέλος του αρχείου καταγραφής Timber στον δίσκο, μαζί με το αρχείο καταγραφής του ρολογιού αν η «Αποστολή αρχείων καταγραφής» το είχε ανακτήσει προηγουμένως</string>
+    <string name="dev_theme_submission_preflight">Προέλεγχος υποβολής θέματος</string>
+    <string name="dev_theme_submission_preflight_description">Περνά κάθε αποθηκευμένο θέμα ρολογιού από τον έλεγχο υποβολής στην κοινότητα και αναφέρει την ακριβή ρύθμιση που το εμποδίζει, αν υπάρχει</string>
+    <string name="dev_appearance_resolution_inspector">Επιθεωρητής επίλυσης εμφάνισης</string>
+    <string name="dev_appearance_resolution_inspector_description">Για κάθε κλειδί εμφάνισης με πεδίο εφαρμογής, δείχνει ποιο από τα τέσσερα βήματα επίλυσης επικράτησε πραγματικά — ρητή τιμή πρόσοψης, προεπιλογή ανά πρόσοψη, παλαιά καθολική τιμή ή προεπιλογή ορισμού — και την τιμή που επιστρέφει το καθένα</string>
+    <string name="action_fast_forward">Γρήγορη προώθηση</string>
+    <string name="action_rewind">Επαναφορά προς τα πίσω</string>
+    <string name="action_set_playback_speed">Ορισμός ταχύτητας σε %1$s×</string>
+    <string name="action_seek_to_percent">Μετάβαση στο %1$d%%</string>
+    <string name="action_set_volume_percent">Ορισμός έντασης σε %1$d%%</string>
+    <string name="action_set_shuffle_on">Ενεργοποίηση τυχαίας σειράς</string>
+    <string name="action_set_shuffle_off">Απενεργοποίηση τυχαίας σειράς</string>
+    <string name="action_set_repeat_off">Απενεργοποίηση επανάληψης</string>
+    <string name="action_set_repeat_all">Επανάληψη όλων</string>
+    <string name="action_set_repeat_one">Επανάληψη ενός</string>
+    <string name="group_playback_speed">Ταχύτητα αναπαραγωγής</string>
+    <string name="group_track_position">Θέση κομματιού</string>
+    <string name="group_shuffle_mode">Λειτουργία τυχαίας σειράς</string>
+    <string name="group_repeat_mode">Λειτουργία επανάληψης</string>
+    <string name="group_volume_levels">Επίπεδα έντασης</string>
+    <string name="group_watch_screens">Οθόνες ρολογιού</string>
+    <string name="group_find_music">Εύρεση και αναπαραγωγή</string>
+    <string name="action_open_face_picker">Άνοιγμα επιλογής όψης</string>
+    <string name="action_close_watch_app">Κλείσιμο εφαρμογής στο ρολόι</string>
+    <string name="hand_gestures">ΧΕΙΡΟΝΟΜΙΕΣ ΧΕΡΙΟΥ</string>
+    <string name="hand_gestures_hint">Διαθέσιμο σε συμβατά ρολόγια όσο το Svartifoss είναι ανοικτό.</string>
+    <string name="hand_gestures_hint_disconnected">Συνδέστε και ανοίξτε το Svartifoss στο ρολόι σας για να δείτε αν υποστηρίζει χειρονομίες χεριού.</string>
+    <string name="hand_gestures_hint_outdated">Ενημερώστε την εφαρμογή ρολογιού για να δείτε αν αυτό το ρολόι υποστηρίζει χειρονομίες χεριού.</string>
+    <string name="hand_gestures_hint_unsupported">Αυτό το ρολόι δεν υποστηρίζει χειρονομίες χεριού, επομένως μια ενέργεια που ανατίθεται εδώ δεν θα εκτελεστεί ποτέ.</string>
+    <string name="hand_gestures_hint_disabled">Οι χειρονομίες χεριού είναι απενεργοποιημένες σε αυτό το ρολόι. Ενεργοποιήστε τις στο ίδιο το ρολόι από Ρυθμίσεις \u2192 Χειρονομίες.</string>
+    <string name="hand_gestures_hint_ready">Έτοιμο σε αυτό το ρολόι: κάντε διπλό τσίμπημα ενώ ο player Svartifoss είναι ανοικτός.</string>
+    <string name="hand_gesture_how_it_works">Ενώ ο καρπός σας είναι σηκωμένος, ενώστε γρήγορα τον αντίχειρα και τον δείκτη δύο φορές. Το Wear OS το αποκαλεί κύρια ενέργεια, οπότε ένα ρολόι άλλου κατασκευαστή μπορεί να χρησιμοποιεί τη δική του αντίστοιχη χειρονομία χεριού.\n\nΛειτουργεί μόνο όσο ο player Svartifoss είναι ανοικτός στο ρολόι και η οθόνη είναι ενεργή \u2014 όχι από την πρόσοψη, όχι πάνω από την ουρά ή το μενού και όχι στην οθόνη πάντα ενεργή. Η ενέργεια που εκτελείται είναι αυτή που έχει οριστεί για την τρέχουσα κατάσταση αναπαραγωγής, γι’ αυτό ορίστε την και στις δύο σελίδες Στοιχείων ελέγχου ώστε να λειτουργεί και στις δύο περιπτώσεις.\n\nΗ χειρονομία πρέπει επίσης να είναι ενεργοποιημένη στις Ρυθμίσεις \u2192 Χειρονομίες του ίδιου του ρολογιού.</string>
+    <string name="double_pinch">Διπλό τσίμπημα</string>
+    <string name="icon_selection_search_hint">Αναζήτηση εικονιδίων</string>
+    <string name="icon_selection_search_empty">Κανένα εικονίδιο δεν ταιριάζει στην αναζήτησή σας</string>
+    <string name="open_quick_actions_panel">Άνοιγμα πλαισίου γρήγορων ενεργειών</string>
+    <string name="open_volume_screen">Άνοιγμα οθόνης έντασης</string>
+    <string name="open_progress_screen">Άνοιγμα οθόνης προόδου</string>
+    <string name="export_config_failed_detail">Δεν ήταν δυνατή η εξαγωγή αντιγράφου ασφαλείας: %1$s</string>
+    <string name="backup_selection_title">Επιλέξτε περιεχόμενα αντιγράφου ασφαλείας</string>
+    <string name="backup_selection_description">Επιλέξτε τα μέρη του Svartifoss που θέλετε να αποθηκεύσετε. Όλα είναι επιλεγμένα από προεπιλογή· τα μη επιλεγμένα μέρη παραμένουν αμετάβλητα όταν εισάγεται αυτό το αντίγραφο ασφαλείας.</string>
+    <string name="backup_selection_select_all">Επιλογή όλων</string>
+    <string name="backup_selection_clear_all">Εκκαθάριση όλων</string>
+    <string name="backup_selection_export">Εξαγωγή αντιγράφου ασφαλείας</string>
+    <string name="backup_selection_empty">Επιλέξτε τουλάχιστον ένα στοιχείο</string>
+    <string name="backup_section_buttons">Διαμορφώσεις κουμπιών</string>
+    <string name="backup_section_buttons_description">Ενέργειες κουμπιών, κορόνας και χειρονομιών για αναπαραγωγή και διακοπή μουσικής.</string>
+    <string name="backup_section_actions">Λίστα ενεργειών</string>
+    <string name="backup_section_actions_description">Η ταξινομημένη λίστα ενεργειών που εμφανίζεται στο μενού ενεργειών του ρολογιού.</string>
+    <string name="backup_section_app_settings">Ρυθμίσεις εφαρμογής</string>
+    <string name="backup_section_app_settings_description">Ρυθμίσεις τηλεφώνου, συμπεριφορά ρολογιού, γλώσσα, αναπαραγωγή και ενσωματώσεις.</string>
+    <string name="backup_section_watch_appearance">Εμφάνιση και θέματα ρολογιού</string>
+    <string name="backup_section_watch_appearance_description">Διατάξεις ρολογιού, χρώματα, τυπογραφία, πλαίσια, AOD και αποθηκευμένα προσαρμοσμένα θέματα.</string>
+    <string name="backup_section_playlist_shortcuts">Συντομεύσεις λιστών αναπαραγωγής</string>
+    <string name="backup_section_playlist_shortcuts_description">Οι αποθηκευμένοι σύνδεσμοί σας για μουσική, άλμπουμ, καλλιτέχνες, λίστες αναπαραγωγής και άλλες υπηρεσίες ροής.</string>
+    <string name="backup_section_history">Ιστορικό αναζήτησης και αναπαραγωγής</string>
+    <string name="backup_section_history_description">Πρόσφατες αναζητήσεις και κομμάτια που αναπαράχθηκαν πρόσφατα.</string>
+    <string name="backup_section_icons">Φορτωμένα εικονίδια και εικόνες</string>
+    <string name="backup_section_icons_description">Προσαρμοσμένα εικονίδια ενεργειών, εξώφυλλα συντομεύσεων και αποθηκευμένα εικονίδια εφαρμογών.</string>
+    <string name="backup_section_privacy">Απόρρητο και ειδοποιήσεις</string>
+    <string name="backup_section_privacy_description">Αναφορές σφαλμάτων, ειδοποιήσεις ανακοινώσεων και άλλες επιλογές συγκατάθεσης που αποθηκεύονται από την εφαρμογή.</string>
+    <string name="backup_section_local_app_state">Τοπική κατάσταση εφαρμογής</string>
+    <string name="backup_section_local_app_state_description">Τρέχουσα έμφαση, τελευταία θέση μενού, ολοκληρωμένες προτροπές και κατάσταση ενημέρωσης.</string>
+    <string name="backup_section_auxiliary_data">Άλλα δεδομένα εφαρμογής</string>
+    <string name="backup_section_auxiliary_data_description">Πρόσθετες προτιμήσεις και εσωτερικά αρχεία της εφαρμογής, συμπεριλαμβανομένων μελλοντικών χώρων αποθήκευσης δεδομένων.</string>
+    <string name="pref_numeric_range">Μεταξύ %1$d και %2$d.</string>
+    <string name="background_editor_artwork">Εικόνα εξωφύλλου</string>
+    <string name="background_editor_layers">Επίπεδα</string>
+    <string name="background_editor_layers_count">%1$d από %2$d</string>
+    <string name="background_editor_add_layer">Προσθήκη επιπέδου</string>
+    <string name="background_editor_reset_layers">Επαναφορά</string>
+    <string name="background_editor_empty">Δεν υπάρχουν επίπεδα. Η εικόνα εμφανίζεται μόνη της.</string>
+    <string name="background_editor_note">Το επίπεδο στην κορυφή αυτής της λίστας σχεδιάζεται πάνω από όλα τα άλλα· το κάτω επίπεδο βρίσκεται πιο κοντά στην εικόνα εξωφύλλου.</string>
+    <string name="background_editor_full">Μπορείτε να στοιβάξετε έως %1$d επίπεδα.</string>
+    <string name="background_layer_kind_wash">Φόντο</string>
+    <string name="background_layer_kind_shade">Σκίαση</string>
+    <string name="background_layer_kind_floor">Βάση έμφασης</string>
+    <string name="background_layer_move_up">Μετακίνηση αυτού του επιπέδου προς τα πάνω</string>
+    <string name="background_layer_move_down">Μετακίνηση αυτού του επιπέδου προς τα κάτω</string>
+    <string name="background_layer_more">Περισσότερες επιλογές για αυτό το επίπεδο</string>
+    <string name="background_layer_add_title">Προσθήκη επιπέδου</string>
+    <string name="background_layer_style_title">Επίπεδο %1$s</string>
+    <string name="background_layer_opacity">Ένταση</string>
+    <string name="background_layer_color">Χρώμα</string>
+    <string name="background_layer_custom_color">Επιλογή χρώματος</string>
+    <string name="background_layer_duplicate">Δημιουργία αντιγράφου</string>
+    <string name="background_layer_remove">Κατάργηση</string>
+    <string name="background_layer_color_default">Προεπιλογή</string>
+    <string name="background_layer_color_album">Χρώμα άλμπουμ</string>
+    <string name="background_layer_color_secondary">Δεύτερο χρώμα άλμπουμ</string>
+    <string name="background_layer_color_tertiary">Τρίτο χρώμα άλμπουμ</string>
+    <string name="background_layer_color_desaturated">Απαλό χρώμα άλμπουμ</string>
+    <string name="background_layer_color_black">Μαύρο</string>
+    <string name="background_layer_color_custom">Προσαρμοσμένο χρώμα</string>
+    <string name="background_layer_reset_title">Επαναφορά των επιπέδων;</string>
+    <string name="background_layer_reset_message">Η στοίβα επιστρέφει στη σκίαση και στη βάση έμφασης που ορίζονται στις δικές τους γραμμές, δηλαδή σε αυτό που ούτως ή άλλως αποδίδει ένα ρολόι με παλαιότερη έκδοση.</string>
+    <string name="watch_element_progress">Πρόοδος</string>
+    <string name="watch_element_volume">Ένταση</string>
+    <string name="watch_element_quick_panel">Γρήγορες ενέργειες</string>
+    <string name="watch_element_queue">Ουρά</string>
+    <string name="watch_element_lyrics">Στίχοι</string>
+    <string name="player_section_on_screen">Στην οθόνη</string>
+    <string name="player_element_app_icon">Εικονίδιο εφαρμογής</string>
+    <string name="player_element_controls">Στοιχεία ελέγχου αναπαραγωγής</string>
+    <string name="player_element_tap_flash">Αναλαμπή αγγίγματος</string>
+    <string name="player_element_inner_progress">Εσωτερική πρόοδος</string>
+    <string name="player_element_edge_arc">Τόξο άκρου</string>
+    <string name="player_element_edge_seek">Αναζήτηση από το άκρο</string>
+    <string name="player_element_clock">Ρολόι</string>
+    <string name="player_element_cover_art">Εξώφυλλο</string>
+    <string name="setting_album_art_filter">Φίλτρο εξωφύλλου άλμπουμ</string>
+    <string name="setting_album_art_filter_description">Εφαρμόστε ανεξάρτητη χρωματική επεξεργασία πάνω σε οποιοδήποτε στυλ εξωφύλλου άλμπουμ.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto με εξαιρετικά ελαφριά γραμμή για διακριτική εμφάνιση οθόνης.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto με ελαφριά, αέρινη γραμμή και τις γνώριμες αναλογίες της οικογένειας.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto με πιο έντονο μεσαίο βάρος για συμπαγείς, ευανάγνωστες ετικέτες.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto με το βαρύτερο βάρος συστήματος για έντονο κείμενο προβολής.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto συμπιεσμένο οριζόντια ώστε οι μεγαλύτεροι τίτλοι να χωρούν σε λιγότερο χώρο.</string>
+    <string name="setting_wear_title_font">Γραμματοσειρά τίτλου</string>
+    <string name="setting_wear_title_text_case">Πεζά/κεφαλαία τίτλου</string>
+    <string name="setting_wear_artist_font">Γραμματοσειρά καλλιτέχνη</string>
+    <string name="setting_wear_artist_text_case">Πεζά/κεφαλαία καλλιτέχνη</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Φιλική στρογγυλεμένη sans γραμματοσειρά σχεδιασμένη για τα πρώτα στάδια ανάγνωσης</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Didone γραμματοσειρά προβολής υψηλής αντίθεσης με εκδοτικό βάρος</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Στιβαρή poster sans με χειρόγραφη, κόμικ αίσθηση</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Ήρεμη γεωμετρική sans με άνετη και ομοιόμορφη απόσταση</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Σύγχρονη slab serif με απαλά στρογγυλεμένες απολήξεις</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Ογκώδης slab serif σχεδιασμένη για έντονο αντίκτυπο στους τίτλους</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Στενή χειρόγραφη γραμματοσειρά σε μικρά κεφαλαία</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Πυκνή condensed sans για δυνατούς τίτλους</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Γεωμετρική slab serif που παραμένει στιβαρή σε μικρά μεγέθη</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Γραμματοσειρά προβολής τύπου κόμικ με εκρηκτική ενέργεια</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Στρατιωτική stencil γραμματοσειρά προβολής</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Όρθια serif με ζεστές, ανεπίσημες καμπύλες</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Ανθρωπιστική sans με διακριτικά στρογγυλεμένες γωνίες</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Grotesque sans με δυνατές, απλές φόρμες</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Εκλεπτυσμένη μονοχώρη γραμματοσειρά γραφομηχανής σχεδιασμένη για σενάρια</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Στρογγυλεμένη slab serif με απαλή, βιβλιοφιλική αίσθηση</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Serif παλαιού στυλ σχεδιασμένη για μεγάλα αποσπάσματα κειμένου</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Γεωμετρική sans χαμηλής αντίθεσης με μοντέρνο φινίρισμα</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Στιβαρή serif σχεδιασμένη να παραμένει καθαρή σε μεγέθη κυρίως κειμένου</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Σύγχρονη τεχνική sans με γωνιώδεις ενώσεις</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Μονοχώρη γραμματοσειρά προγραμματισμού με καθαρά και διακριτά γλυφά</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Ανθρωπιστική μονοχώρη γραμματοσειρά σχεδιασμένη για κώδικα στην οθόνη</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Χαρούμενη χειρόγραφη γραμματοσειρά με στρογγυλεμένες πινελιές</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Γεωμετρική sans με vintage χαρακτήρα της δεκαετίας του 1920</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Γεωμετρική sans στην παράδοση της Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Sans χωρίς βρόχους για Thai και Latin με ελαφριά κλίση</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Sans διαμορφωμένη για να μειώνει την οπτική καταπόνηση κατά την ανάγνωση</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Έντονη συνδεδεμένη script με ρετρό αίσθηση επιγραφών</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Ημιγεωμετρική sans που ισορροπεί ζεστασιά και ακρίβεια</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Μινιμαλιστική sans σχεδιασμένη για καθαρό κείμενο διεπαφής</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Καλοστρογγυλεμένη sans με απαλά τελειώματα</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Γεωμετρική sans με ομοιόμορφο, σύγχρονο ρυθμό</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Τετραγωνισμένη techno γραμματοσειρά με gaming αίσθηση</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Συμπαγής τεχνική sans σχεδιασμένη πάνω σε πλέγμα</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Μοντέρνα grotesque με χαρακτηριστικές ανοιχτές καμπύλες</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Pixel γραμματοσειρά σαν να βγήκε από arcade μηχάνημα</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Στρογγυλεμένη γεωμετρική sans με απαλή, ανάλαφρη αίσθηση</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Τετραγωνισμένη condensed sans με τεχνικές γωνίες</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Art-deco γραμματοσειρά προβολής με ρίζες στη ρετρό ζωγραφική επιγραφών</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Η μονοχώρη συνοδευτική γραμματοσειρά της Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Ογκώδης display γραμματοσειρά με παιχνιδιάρικες, αμβλείες πινελιές</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Φαρδιά βιομηχανική γραμματοσειρά με βαριές τετραγωνισμένες φόρμες</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Ζωντανή λοξή γραμματοσειρά προβολής με ρίζες στο Gujarati</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Μικρή bitmap γραμματοσειρά που θυμίζει πρώιμες οθόνες υπολογιστών</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Μονοχώρη γραμματοσειρά σχεδιασμένη για άνετη ανάγνωση κώδικα</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Condensed γραμματοσειρά μόνο με κεφαλαία και έντονη poster παρουσία</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Ψηλή condensed γραμματοσειρά για τίτλους σε Devanagari και Latin</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Τετραγωνισμένη ανθρωπιστική sans με τεχνικό αέρα</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Πλήρως στρογγυλεμένη sans με προσιτό τόνο</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Condensed γραμματοσειρά που θυμίζει επιγραφές καφέ της δεκαετίας του 1920</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Slab serif με απαλά κομμένες, μοντέρνες απολήξεις</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Φιλική ανθρωπιστική sans με ανοιχτές, ευανάγνωστες φόρμες</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Ζεστή sans με στιβαρές φόρμες για άνετη ανάγνωση</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Ευέλικτη ανθρωπιστική sans σχεδιασμένη για καθαρές διεπαφές</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Εκλεπτυσμένη text serif με εκδοτική φωνή</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Κλασική book serif προσαρμοσμένη για ανάγνωση στην οθόνη</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Πρακτική grotesk sans με πλατύ, στιβαρό ρυθμό</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Τεχνική ανθρωπιστική sans με ακριβείς αναλογίες</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Τεχνική μονοχώρη γραμματοσειρά με καλοδουλεμένη, ευανάγνωστη υφή</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Σύγχρονη serif με μηχανικό χαρακτήρα</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Καθαρή πολυχρηστική sans με συμπαγείς, πρακτικές φόρμες</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Ιδιόρρυθμη grotesk με φιλικές αναλογίες</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Γεωμετρική sans με φουτουριστική, ευρύχωρη αίσθηση</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Μοντέρνα γεωμετρική sans με κομψές, αστικές γραμμές</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Ισορροπημένη σύγχρονη sans σχεδιασμένη για μικρές οθόνες</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Σίγουρη display sans με εκφραστικές αναλογίες</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Ευανάγνωστη συνοδευτική sans για μεγαλύτερες πληροφορίες κομματιού</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Καθαρή μονοχώρη γραμματοσειρά με μοντέρνο τεχνικό τόνο</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Ασυνήθιστη sans με καλλιτεχνικά κατευθυνόμενα, παιχνιδιάρικα σχήματα</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Ευέλικτη σύγχρονη sans με διακριτική ακρίβεια</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Καθαρή, προσιτή sans για άνετη αναγνωσιμότητα</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Στρογγυλεμένη display sans με χαρούμενη προσωπικότητα</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Ζωντανή grotesk που συνδυάζει δομή με παράξενες λεπτομέρειες</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Serif προβολής υψηλής αντίθεσης για δραματικούς τίτλους</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Κομψή λογοτεχνική serif υψηλής αντίθεσης</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Χαριτωμένη serif προβολής με καλλιγραφικές λεπτομέρειες</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Ανθεκτική slab serif που παραμένει καθαρή σε μικρά μεγέθη</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Ευέλικτη serif σχεδιασμένη για πυκνή, εκφραστική ανάγνωση</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Ζεστή serif παλαιού στυλ με βιβλιοφιλική φωνή</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Κομψή sans με χαρακτηριστικές, εκλεπτυσμένες μορφές γραμμάτων</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Έντονη γεωμετρική sans σχεδιασμένη για ισχυρούς τίτλους</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Sans κατάλληλη για συμπύκνωση με αθλητική, δυναμική ενέργεια</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Απαλή sans με ανοιχτούς εσωτερικούς χώρους και φιλική ενέργεια επιγραφών</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Ευέλικτη sans που ισορροπεί ανθρωπιστική ζεστασιά και καθαρότητα</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Καθαρή sans εμπνευσμένη από τη σήμανση μεταφορών με σίγουρο ρυθμό</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Ουδέτερη, προσβάσιμη sans για καθημερινές διεπαφές</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Ελαφριά γεωμετρική sans με ομαλές, σύγχρονες καμπύλες</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Στρογγυλεμένη στενή sans με απαλή φουτουριστική αίσθηση</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Καθαρή γεωμετρική sans με διακριτικό χαρακτήρα εμπνευσμένο από τα Thai</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Φαρδιά φουτουριστική display γραμματοσειρά για μέγιστη παρουσία</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Μεταβλητή οικογένεια από sans έως mono με παιχνιδιάρικη τεχνική φωνή</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Μονοχώρη γραμματοσειρά μεταβλητού πλάτους με χαρακτηριστική ψηφιακή υφή</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Ευρεία, ιδιαίτερα ευανάγνωστη sans με εκτεταμένη υποστήριξη γραφών</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Αξιόπιστη serif με εκτεταμένη υποστήριξη γραφών</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Πολυγλωσσική μονοχώρη γραμματοσειρά σχεδιασμένη για σταθερό ρυθμό</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Συμπαγής σύγχρονη sans με καθαρό ρυθμό επηρεασμένο από τα εβραϊκά</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Στιβαρή ανθρωπιστική sans βελτιστοποιημένη για καθαρή ανάγνωση</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Φιλική screen sans με στρογγυλεμένη, ανοιχτή υφή</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Συμπαγής γεωμετρική sans με χαρακτηριστικές αναλογίες</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Ζωντανή καλλιγραφική serif με λογοτεχνικό χαρακτήρα</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Καθαρή ανθρωπιστική sans με εξαιρετική αναγνωσιμότητα διεπαφής</string>
+    <string name="setting_wear_note_show_cover">Εξώφυλλο</string>
+    <string name="aod_element_artwork">Εξώφυλλο</string>
+    <string name="aod_element_clock">Ρολόι</string>
+    <string name="aod_element_track_info">Πληροφορίες κομματιού</string>
+    <string name="aod_element_transport">Στοιχεία ελέγχου αναπαραγωγής</string>
+    <string name="aod_element_progress">Πρόοδος</string>
+    <string name="aod_element_up_next">Επόμενο</string>
+    <string name="aod_section_artwork">Εξώφυλλο</string>
+    <string name="aod_control_tint">Απόχρωση</string>
+    <string name="aod_control_brightness">Φωτεινότητα</string>
+    <string name="aod_control_art_treatment">Επεξεργασία</string>
+    <string name="aod_control_art_opacity">Αδιαφάνεια</string>
+    <string name="mini_button_control_visibility">Εμφάνιση</string>
+    <string name="mini_button_control_arrangement">Διάταξη</string>
+    <string name="mini_button_control_shape">Σχήμα</string>
+    <string name="mini_button_control_background">Φόντο</string>
+    <string name="mini_button_control_opacity">Αδιαφάνεια</string>
+    <string name="mini_button_assign_action">Ανάθεση ενεργειών</string>
+    <string name="mini_button_gestures_note">Σύρετε πάνω, κάτω και αριστερά στον player. Η σάρωση προς τα δεξιά είναι πάντα η χειρονομία απόρριψης του συστήματος και δεν αναχαιτίζεται ποτέ.</string>
+    <string name="setting_wear_chat_cover_shape">Σχήμα avatar συνομιλίας</string>
+    <string name="setting_wear_chat_show_cover">Εξώφυλλο</string>
+    <string name="setting_wear_metadata_cover_shape">Σχήμα εξωφύλλου μεταδεδομένων</string>
+    <string name="setting_wear_metadata_show_cover">Εξώφυλλο</string>
+    <string-array name="wear_text_case_entries">
+        <item>Κανονικό</item>
+        <item>ΚΕΦΑΛΑΙΑ</item>
+        <item>πεζά</item>
+        <item>Κεφαλαία Τίτλου</item>
+    </string-array>
+    <string name="wear_text_font_follow">Ακολούθηση καθολικής γραμματοσειράς</string>
+    <string name="category_wf_typography_track_time">Χρόνος κομματιού</string>
+    <string name="setting_wear_track_time_font">Γραμματοσειρά χρόνου κομματιού</string>
+    <string name="wear_track_time_font_follow">Ακολούθηση σχεδίασης</string>
+    <string name="setting_wear_track_time_font_weight">Βάρος χρόνου κομματιού</string>
+    <string name="setting_wear_track_time_font_italic">Πλάγιος χρόνος κομματιού</string>
+    <string name="setting_wear_track_time_font_scale">Μέγεθος χρόνου κομματιού</string>
+    <string name="setting_wear_track_time_font_opacity">Αδιαφάνεια χρόνου κομματιού</string>
+    <string name="setting_wear_track_time_font_tracking">Απόσταση γραμμάτων χρόνου κομματιού</string>
+    <string-array name="album_art_filter_entries">
+        <item>Κανένα</item>
+        <item>Μονόχρωμο</item>
+        <item>Θερμό</item>
+        <item>Ψυχρό</item>
+        <item>Χρυσή ώρα</item>
+        <item>Ροζέ</item>
+        <item>Vintage φιλμ</item>
+        <item>Ξεθωριασμένο φιλμ</item>
+        <item>Ματ</item>
+        <item>Ζωντανό</item>
+        <item>Ένταση</item>
+        <item>Παστέλ</item>
+        <item>Σέπια</item>
+        <item>Κυανοτυπία</item>
+        <item>Πετρόλ και πορτοκαλί</item>
+        <item>Υψηλή αντίθεση</item>
+        <item>Απαλό φως</item>
+        <item>Νύχτα</item>
+    </string-array>
+    <string name="queue_item_now_playing">Αναπαράγεται τώρα</string>
+    <string name="queue_item_unknown_title">Άγνωστο κομμάτι</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Ουρά αναπαραγωγής · %1$d κομμάτι</item>
+        <item quantity="other">Ουρά αναπαραγωγής · %1$d κομμάτια</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Χρώμα βάσης έμφασης</string>
+    <string name="setting_wear_accent_floor_custom_color">Προσαρμοσμένο χρώμα βάσης</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Επιλέξτε το χρώμα που χρησιμοποιείται όταν το Χρώμα βάσης έμφασης έχει οριστεί σε Προσαρμοσμένο χρώμα</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Τονισμός άλμπουμ</item>
+        <item>Δευτερεύον χρώμα άλμπουμ</item>
+        <item>Τριτεύον χρώμα άλμπουμ</item>
+        <item>Προσαρμοσμένο χρώμα</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Ουδέτερη, εξαιρετικά ευανάγνωστη interface sans για καθημερινή ανάγνωση</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Γράμματα σχεδιασμένα με προτεραιότητα στην προσβασιμότητα, με διακριτά σχήματα που μένουν καθαρά σε μικρά μεγέθη</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Απαλά στρογγυλεμένη γεωμετρική sans — σίγουρη και φιλική</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Συμπαγής ανθρωπιστική sans που δίνει περισσότερο χώρο στους μεγάλους τίτλους</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Ψηλή condensed γραμματοσειρά προβολής με δυνατή poster ενέργεια</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Σύγχρονη serif σχεδιασμένη για άνετη ανάγνωση μεγάλων κειμένων</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Εκφραστική απαλή serif με ζεστασιά και χαρακτήρα</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Ρετρό-φουτουριστική μονοχώρη γραμματοσειρά με τεχνική αιχμή</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Πυκνή βαριά γραμματοσειρά προβολής για μέγιστη αντίθεση</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Ρευστή χειρόγραφη γραμματοσειρά με ζωντανή, προσωπική αίσθηση</string>
+    <string name="setting_wear_artist_text_mode">Συμπεριφορά κειμένου καλλιτέχνη</string>
+    <string name="setting_wear_album_art_source">Πηγή εξωφύλλου άλμπουμ</string>
+    <string name="setting_user_font">Η δική μου γραμματοσειρά</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Εισαγωγή αρχείου .ttf ή .otf από αυτό το τηλέφωνο</string>
+    <string name="setting_user_font_loaded">%1$s · πατήστε για αντικατάσταση ή αφαίρεση</string>
+    <string name="user_font_pick">Επιλογή αρχείου γραμματοσειράς</string>
+    <string name="user_font_replace">Αντικατάσταση</string>
+    <string name="user_font_remove">Αφαίρεση</string>
+    <string name="user_font_imported">Η γραμματοσειρά «%1$s» εισήχθη. Επιλέξτε την από οποιαδήποτε λίστα γραμματοσειρών· αποστέλλεται στο ρολόι σας.</string>
+    <string name="user_font_removed">Η εισαγόμενη γραμματοσειρά σας αφαιρέθηκε.</string>
+    <string name="user_font_error_too_large">Αυτό το αρχείο είναι %1$s. Μια γραμματοσειρά πρέπει να είναι μικρότερη από %2$s για να φτάσει γρήγορα στο ρολόι.</string>
+    <string name="user_font_error_not_a_font">Αυτό το αρχείο δεν είναι γραμματοσειρά που μπορεί να διαβάσει αυτό το τηλέφωνο. Τα TrueType και OpenType (.ttf, .otf) λειτουργούν· οι γραμματοσειρές web (.woff, .woff2) όχι.</string>
+    <string name="user_font_error_unreadable">Δεν ήταν δυνατή η ανάγνωση αυτού του αρχείου. Δοκιμάστε να το επιλέξετε ξανά ή αντιγράψτε το πρώτα σε αυτό το τηλέφωνο.</string>
+    <string name="user_font_not_shareable">Τα θέματα που χρησιμοποιούν τη δική σας γραμματοσειρά παραμένουν σε αυτό το τηλέφωνο</string>
+    <string name="setting_custom_album_art_image">Εικόνα προς χρήση</string>
+    <string name="setting_custom_album_art_folder">Φάκελος προέλευσης</string>
+    <string name="setting_custom_album_art_none">Δεν έχει επιλεγεί ακόμη — πατήστε για επιλογή</string>
+    <string name="setting_custom_album_art_chosen">%1$s · πατήστε για αλλαγή</string>
+    <string name="custom_album_art_image_set">Αυτή η εικόνα θα εμφανίζεται πλέον πίσω από τον player.</string>
+    <string name="custom_album_art_folder_set">Για κάθε κομμάτι θα επιλέγεται μια εικόνα από αυτόν τον φάκελο.</string>
+    <string name="custom_album_art_error">Δεν ήταν δυνατό να ανοίξει. Επιλέξτε το ξανά ή διαλέξτε κάτι από τον εσωτερικό χώρο αποθήκευσης αυτού του τηλεφώνου.</string>
+    <string name="custom_album_art_not_shareable">Τα θέματα που χρησιμοποιούν τις δικές σας εικόνες παραμένουν σε αυτό το τηλέφωνο</string>
+    <string name="setting_wear_text_block_align">Στοίχιση κειμένου</string>
+    <string name="setting_wear_text_block_align_description">Σε ποια άκρη στοιχίζεται το κείμενο κομματιού. Η επιλογή «Ακολούθηση πρόσοψης» διατηρεί τη στοίχιση για την οποία σχεδιάστηκε κάθε πρόσοψη.</string>
+    <string name="setting_wear_text_block_position">Θέση κειμένου</string>
+    <string name="setting_wear_text_block_position_description">Πού βρίσκεται το κείμενο κομματιού στην οθόνη. Η επιλογή «Ακολούθηση πρόσοψης» διατηρεί τη θέση για την οποία σχεδιάστηκε κάθε πρόσοψη.</string>
+    <string name="setting_online_artwork">Online εξώφυλλο</string>
+    <string name="setting_online_artwork_description">Επιτρέψτε στην πρόσοψη να εμφανίζει μια εικόνα που αναζητείται online \u2014 τον καλλιτέχνη που παίζει ή ένα εξώφυλλο άλμπουμ όταν ο player δεν παρέχει κανένα. Το τηλέφωνό σας κάνει την αναζήτηση στον δημόσιο κατάλογο του Deezer και αποθηκεύει το αποτέλεσμα στην κρυφή μνήμη· αποστέλλονται μόνο τα ονόματα του κομματιού και του καλλιτέχνη και δεν γίνεται καμία αναζήτηση εκτός αν μια πρόσοψη έχει οριστεί σε μία από αυτές τις πηγές. Όταν είναι απενεργοποιημένο, χρησιμοποιείται το εξώφυλλο του ίδιου του player.</string>
 </resources>

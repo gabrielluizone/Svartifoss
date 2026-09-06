@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Susun atur cincin kemajuan</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Sepenuhnya transparan</item>
+        <item>Warna sekunder</item>
+        <item>Warna tersier</item>
+        <item>Jejaring warna</item>
+        <item>Aurora</item>
+        <item>Sorotan</item>
+        <item>Vinyet</item>
+        <item>Nada terbelah</item>
+        <item>Pita warna</item>
+        <item>Tengah malam</item>
+        <item>Halo</item>
+        <item>Kabur asap</item>
+        <item>Senja</item>
+        <item>Laut</item>
+        <item>Nebula</item>
+        <item>Bara</item>
+        <item>Garis pasang</item>
+        <item>Bioluminesensi</item>
+        <item>Iridesen</item>
+        <item>Grafit</item>
+        <item>Sinema</item>
+        <item>Orbit</item>
+        <item>Horizon</item>
+        <item>Sapuan tinta</item>
+        <item>Bunga</item>
+        <item>Fjord</item>
+        <item>Grid titik</item>
+        <item>Garis pindai</item>
+        <item>Radar</item>
+        <item>Garis kontur</item>
+        <item>Berfaset</item>
+        <item>Senja</item>
+        <item>Es</item>
+        <item>Mawar</item>
+        <item>Kertas</item>
+        <item>Monolit</item>
+        <item>Lentera</item>
+        <item>Noir</item>
+        <item>Beludru</item>
+        <item>Fatamorgana</item>
+        <item>Mekar</item>
+        <item>Awan</item>
+        <item>Nokturnal</item>
+        <item>Cair</item>
+        <item>Pasang surut</item>
+        <item>Vinil</item>
+        <item>Korona</item>
+        <item>Bulan sabit</item>
+        <item>Grid</item>
+        <item>Tirai kaca</item>
+        <item>Material</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Spektrum</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Manik-manik</item>
+        <item>Rel ganda</item>
+        <item>Denyut</item>
+        <item>Krom</item>
+        <item>Spektrum</item>
+        <item>Anak tangga</item>
+        <item>Permen</item>
+        <item>Hantu</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Tepi ganda</item>
+        <item>Meter vertikal (kiri)</item>
+        <item>Meter vertikal (kanan)</item>
+        <item>Meter atas</item>
+        <item>Meter bawah</item>
+        <item>Dial tengah</item>
+        <item>Halo atas</item>
+        <item>Halo bawah</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Gelang ganda</item>
+        <item>Manik-manik</item>
+        <item>Garis dan titik</item>
+        <item>Tanda 24 jam</item>
+        <item>Hanya kemajuan</item>
+        <item>Cahaya</item>
+        <item>Duotone</item>
+        <item>Jarum</item>
+        <item>Berselang-seling</item>
+        <item>Percikan</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Tepi bezel</item>
+        <item>Gelang inset</item>
+        <item>Gelang dalam</item>
+        <item>Gelang tebal</item>
+        <item>Buka di bawah</item>
+        <item>Buka di atas</item>
+        <item>Busur kiri</item>
+        <item>Busur kanan</item>
+        <item>Jalur ganda</item>
+        <item>Buka di kiri</item>
+        <item>Buka di kanan</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Pil ringkas</item>
+        <item>Album persegi</item>
+        <item>Pil bertumpuk</item>
+        <item>Lencana</item>
+        <item>Batang kaca</item>
+        <item>LCD</item>
+        <item>Persegi bergaris tepi</item>
+        <item>Pita</item>
+        <item>Gelembung waktu</item>
+        <item>Nada terbelah</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Garis masa (atas)</item>
+        <item>Garis masa (bawah)</item>
+        <item>Segmen (atas)</item>
+        <item>Garis masa vertikal (kiri)</item>
+        <item>Garis masa vertikal (kanan)</item>
+        <item>Dial tengah</item>
+        <item>Garis masa kembar</item>
+        <item>Segmen (bawah)</item>
+        <item>Tumpukan tengah</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Lembut</item>
+        <item>Krom</item>
+        <item>Holografik</item>
+        <item>Gelembung</item>
+        <item>Rel</item>
+        <item>Senja</item>
+        <item>Garis tepi album</item>
+        <item>Kaca gelap</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Kipas</item>
+        <item>Orbit</item>
+        <item>Dok bawah</item>
+        <item>Kolom</item>
+        <item>Dek terbelah</item>
+        <item>Berlian</item>
+        <item>Karosel</item>
+        <item>Segitiga</item>
+        <item>Tangga</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Lembut</item>
+        <item>Lempeng</item>
+        <item>Tinta</item>
+        <item>Rel</item>
+        <item>Senja</item>
+        <item>Gelembung</item>
+        <item>Krom</item>
+        <item>Holografik</item>
+    </string-array>
+</resources>

@@ -1875,6 +1875,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1918,6 +1923,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2362,4 +2372,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Kopioi</string>
+    <string name="dev_report_copied">Raportti kopioitu</string>
+    <string name="dev_watch_snapshot_inspector">Kellon asetusten tilannekuva</string>
+    <string name="dev_watch_snapshot_inspector_description">Se, mitä kelloon todella lähetettäisiin juuri nyt: aktiivinen ulkoasualue, arvioitu koko ja mitkä käyttämättömät kellotaulukohtaiset välimuistit poistettiin kokorajan saavuttamiseksi</string>
+    <string name="dev_data_layer_inspector">Data Layer -tarkastin</string>
+    <string name="dev_data_layer_inspector_description">Yhdistetyt Wearable-solmut ja viimeisin WatchInfo, johon kellosovellus vastasi — raakatila viestin ”Kelloa ei ole yhdistetty” takana</string>
+    <string name="dev_media_sessions_inspector">MediaSession-selain</string>
+    <string name="dev_media_sessions_inspector_description">Kaikki tällä hetkellä aktiiviset MediaSession-istunnot, ei vain seurattu: ilmoitetut toiminnot, jono ja toistoreitti</string>
+    <string name="dev_view_phone_log">Näytä puhelimen loki</string>
+    <string name="dev_view_phone_log_description">Levylle tallennetun Timber-lokin loppu sekä kellon loki, jos ”Lähetä lokit” on hakenut sen aiemmin</string>
+    <string name="dev_theme_submission_preflight">Teeman lähetyksen esitarkistus</string>
+    <string name="dev_theme_submission_preflight_description">Tarkistaa jokaisen tallennetun kelloteeman yhteisöön lähettämistä varten ja nimeää tarkan asetuksen, joka estää lähetyksen, jos sellainen on</string>
+    <string name="dev_appearance_resolution_inspector">Ulkoasun ratkaisutarkastin</string>
+    <string name="dev_appearance_resolution_inspector_description">Näyttää jokaiselle rajatulle ulkoasuavaimelle, mikä neljästä ratkaisuvaiheesta todella voitti — nimenomainen kellotauluarvo, kellotaulukohtainen oletus, vanha globaali arvo tai määrityksen oletus — sekä kunkin palauttaman arvon</string>
+    <string name="action_fast_forward">Kelaa eteenpäin</string>
+    <string name="action_rewind">Kelaa taaksepäin</string>
+    <string name="action_set_playback_speed">Aseta nopeudeksi %1$s×</string>
+    <string name="action_seek_to_percent">Siirry kohtaan %1$d%%</string>
+    <string name="action_set_volume_percent">Aseta äänenvoimakkuudeksi %1$d%%</string>
+    <string name="action_set_shuffle_on">Ota satunnaistoisto käyttöön</string>
+    <string name="action_set_shuffle_off">Poista satunnaistoisto käytöstä</string>
+    <string name="action_set_repeat_off">Poista toisto käytöstä</string>
+    <string name="action_set_repeat_all">Toista kaikki</string>
+    <string name="action_set_repeat_one">Toista yksi</string>
+    <string name="group_playback_speed">Toistonopeus</string>
+    <string name="group_track_position">Kappaleen sijainti</string>
+    <string name="group_shuffle_mode">Satunnaistoistotila</string>
+    <string name="group_repeat_mode">Toistotila</string>
+    <string name="group_volume_levels">Äänenvoimakkuustasot</string>
+    <string name="group_watch_screens">Kellon näytöt</string>
+    <string name="group_find_music">Etsi ja toista</string>
+    <string name="action_open_face_picker">Avaa kellotaulun valitsin</string>
+    <string name="action_close_watch_app">Sulje kellosovellus</string>
+    <string name="hand_gestures">KÄSIELEET</string>
+    <string name="hand_gestures_hint">Käytettävissä yhteensopivissa kelloissa, kun Svartifoss on avoinna.</string>
+    <string name="hand_gestures_hint_disconnected">Yhdistä kello ja avaa Svartifoss siinä nähdäksesi, tukeeko se käsieleitä.</string>
+    <string name="hand_gestures_hint_outdated">Päivitä kellosovellus nähdäksesi, tukeeko tämä kello käsieleitä.</string>
+    <string name="hand_gestures_hint_unsupported">Tämä kello ei tue käsieleitä, joten tähän määritettyä toimintoa ei koskaan suoriteta.</string>
+    <string name="hand_gestures_hint_disabled">Käsieleet on poistettu käytöstä tässä kellossa. Ota ne käyttöön itse kellossa kohdassa Asetukset \u2192 Eleet.</string>
+    <string name="hand_gestures_hint_ready">Valmis tässä kellossa: nipistä kahdesti, kun Svartifoss-soitin on avoinna.</string>
+    <string name="hand_gesture_how_it_works">Purista peukalo ja etusormi nopeasti yhteen kahdesti ranne nostettuna. Wear OS kutsuu tätä ensisijaiseksi toiminnoksi, joten toisen valmistajan kello voi käyttää omaa vastaavaa käsielettään.\n\nSe toimii vain, kun Svartifoss-soitin on avoinna kellossa ja näyttö on päällä \u2014 ei kellotaulusta, ei jonon tai valikon päällä eikä aina päällä olevassa näytössä. Suoritettava toiminto määräytyy sen mukaan, missä tilassa toisto juuri sillä hetkellä on, joten määritä se molemmilla Ohjaimet-sivuilla, jotta se toimii kummassakin tilassa.\n\nEle on myös otettava käyttöön itse kellon kohdassa Asetukset \u2192 Eleet.</string>
+    <string name="double_pinch">Kaksoisnipistys</string>
+    <string name="icon_selection_search_hint">Hae kuvakkeita</string>
+    <string name="icon_selection_search_empty">Mikään kuvake ei vastaa hakuasi</string>
+    <string name="open_quick_actions_panel">Avaa pikatoimintopaneeli</string>
+    <string name="open_volume_screen">Avaa äänenvoimakkuusnäyttö</string>
+    <string name="open_progress_screen">Avaa edistymisnäyttö</string>
+    <string name="export_config_failed_detail">Varmuuskopiota ei voitu viedä: %1$s</string>
+    <string name="backup_selection_title">Valitse varmuuskopion sisältö</string>
+    <string name="backup_selection_description">Valitse Svartifossin osat, jotka haluat tallentaa. Kaikki on valittu oletuksena; valitsemattomat osat jätetään ennalleen, kun tämä varmuuskopio tuodaan.</string>
+    <string name="backup_selection_select_all">Valitse kaikki</string>
+    <string name="backup_selection_clear_all">Tyhjennä kaikki</string>
+    <string name="backup_selection_export">Vie varmuuskopio</string>
+    <string name="backup_selection_empty">Valitse vähintään yksi kohde</string>
+    <string name="backup_section_buttons">Painikemääritykset</string>
+    <string name="backup_section_buttons_description">Painikkeen, kruunun ja eleiden toiminnot musiikin soidessa ja ollessa pysäytettynä.</string>
+    <string name="backup_section_actions">Toimintoluettelo</string>
+    <string name="backup_section_actions_description">Järjestetty luettelo kellon toimintovalikossa näytettävistä toiminnoista.</string>
+    <string name="backup_section_app_settings">Sovelluksen asetukset</string>
+    <string name="backup_section_app_settings_description">Puhelimen asetukset, kellon toiminta, kieli, toisto ja integraatiot.</string>
+    <string name="backup_section_watch_appearance">Kellon ulkoasu ja teemat</string>
+    <string name="backup_section_watch_appearance_description">Kellon asettelut, värit, typografia, paneelit, AOD ja tallennetut mukautetut teemat.</string>
+    <string name="backup_section_playlist_shortcuts">Soittolistapikakuvakkeet</string>
+    <string name="backup_section_playlist_shortcuts_description">Tallennettu musiikkisi sekä albumi-, esittäjä-, soittolista- ja muut suoratoistolinkit.</string>
+    <string name="backup_section_history">Haku- ja toistohistoria</string>
+    <string name="backup_section_history_description">Viimeisimmät haut ja äskettäin toistetut kappaleet.</string>
+    <string name="backup_section_icons">Ladatut kuvakkeet ja kuvat</string>
+    <string name="backup_section_icons_description">Mukautetut toimintokuvakkeet, pikakuvakkeiden kansikuvat ja välimuistissa olevat sovelluskuvakkeet.</string>
+    <string name="backup_section_privacy">Tietosuoja ja ilmoitukset</string>
+    <string name="backup_section_privacy_description">Kaatumisraportit, tiedoteilmoitukset ja muut sovelluksen tallentamat suostumusvalinnat.</string>
+    <string name="backup_section_local_app_state">Paikallinen sovelluksen tila</string>
+    <string name="backup_section_local_app_state_description">Nykyinen korostusväri, viimeisin valikkosijainti, suoritetut kehotteet ja päivitystila.</string>
+    <string name="backup_section_auxiliary_data">Muut sovellustiedot</string>
+    <string name="backup_section_auxiliary_data_description">Sovelluksen muut asetukset ja sisäiset tiedostot, mukaan lukien tulevat tietovarastot.</string>
+    <string name="pref_numeric_range">Välillä %1$d–%2$d.</string>
+    <string name="background_editor_artwork">Kansikuva</string>
+    <string name="background_editor_layers">Tasot</string>
+    <string name="background_editor_layers_count">%1$d/%2$d</string>
+    <string name="background_editor_add_layer">Lisää taso</string>
+    <string name="background_editor_reset_layers">Palauta</string>
+    <string name="background_editor_empty">Ei tasoja. Kansikuva näytetään sellaisenaan.</string>
+    <string name="background_editor_note">Luettelon ylin taso piirretään kaiken muun päälle; alin taso on lähimpänä kansikuvaa.</string>
+    <string name="background_editor_full">Voit pinota enintään %1$d tasoa.</string>
+    <string name="background_layer_kind_wash">Tausta</string>
+    <string name="background_layer_kind_shade">Varjostus</string>
+    <string name="background_layer_kind_floor">Korostuspohja</string>
+    <string name="background_layer_move_up">Siirrä tätä tasoa ylös</string>
+    <string name="background_layer_move_down">Siirrä tätä tasoa alas</string>
+    <string name="background_layer_more">Lisää tämän tason asetuksia</string>
+    <string name="background_layer_add_title">Lisää taso</string>
+    <string name="background_layer_style_title">%1$s-taso</string>
+    <string name="background_layer_opacity">Voimakkuus</string>
+    <string name="background_layer_color">Väri</string>
+    <string name="background_layer_custom_color">Valitse väri</string>
+    <string name="background_layer_duplicate">Kopioi</string>
+    <string name="background_layer_remove">Poista</string>
+    <string name="background_layer_color_default">Oletus</string>
+    <string name="background_layer_color_album">Albumin väri</string>
+    <string name="background_layer_color_secondary">Toinen albumin väri</string>
+    <string name="background_layer_color_tertiary">Kolmas albumin väri</string>
+    <string name="background_layer_color_desaturated">Hillitty albumin väri</string>
+    <string name="background_layer_color_black">Musta</string>
+    <string name="background_layer_color_custom">Mukautettu väri</string>
+    <string name="background_layer_reset_title">Palautetaanko tasot?</string>
+    <string name="background_layer_reset_message">Tasopino palautuu omilla riveillään asetettuihin varjostukseen ja korostuspohjaan, jotka myös vanhempaa koontiversiota käyttävä kello näyttää.</string>
+    <string name="watch_element_progress">Edistyminen</string>
+    <string name="watch_element_volume">Äänenvoimakkuus</string>
+    <string name="watch_element_quick_panel">Pikatoiminnot</string>
+    <string name="watch_element_queue">Jono</string>
+    <string name="watch_element_lyrics">Sanoitukset</string>
+    <string name="player_section_on_screen">Näytöllä</string>
+    <string name="player_element_app_icon">Sovelluskuvake</string>
+    <string name="player_element_controls">Soittimen säätimet</string>
+    <string name="player_element_tap_flash">Napautusvälähdys</string>
+    <string name="player_element_inner_progress">Sisempi edistyminen</string>
+    <string name="player_element_edge_arc">Reunakaari</string>
+    <string name="player_element_edge_seek">Reunahaku</string>
+    <string name="player_element_clock">Kello</string>
+    <string name="player_element_cover_art">Kansikuva</string>
+    <string name="setting_album_art_filter">Albumikuvan suodatin</string>
+    <string name="setting_album_art_filter_description">Käytä albumikuvan tyylin päällä erillistä värikäsittelyä.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto erityisen kevyellä vedolla hienovaraista näyttöilmettä varten.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto kevyellä ja ilmavalla vedolla sekä tutulla kirjainperheen mittasuhteella.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto vahvemmalla keskipaksulla vedolla kompakteja ja luettavia tunnisteita varten.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto järjestelmän raskaimmalla leikkauksella rohkeaa näyttötekstiä varten.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto on tiivistetty vaakasuunnassa, jotta pidemmät otsikot mahtuvat pienempään tilaan.</string>
+    <string name="setting_wear_title_font">Otsikon kirjasintyyppi</string>
+    <string name="setting_wear_title_text_case">Otsikon kirjainkoko</string>
+    <string name="setting_wear_artist_font">Esittäjän kirjasintyyppi</string>
+    <string name="setting_wear_artist_text_case">Esittäjän kirjainkoko</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Ystävällinen pyöristetty groteski varhaiseen lukemiseen</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Suurikontrastinen Didone-näyttökirjasin toimituksellisella painolla</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Tukeva julistegroteski käsinkirjoitetulla sarjakuvamaisella sävyllä</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Rauhallinen geometrinen groteski runsaalla ja tasaisella välistyksellä</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Nykyaikainen laattapäätteinen antiikva pehmeästi pyöristetyillä päätteillä</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Massiivinen laattapäätteinen antiikva voimakkaisiin otsikoihin</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Kapea käsin piirretty kirjasin pienaakkosin</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Tiukasti tiivistetty groteski näyttäviin otsikoihin</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Geometrinen laattapäätteinen antiikva, joka säilyy selkeänä pienessä koossa</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Sarjakuvamainen näyttökirjasin täynnä energiaa</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Sapluunamainen sotilaallinen näyttökirjasin</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Pystysuora antiikva lämpimillä, epämuodollisilla kaarilla</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Humanistinen groteski hienovaraisesti pyöristetyillä kulmilla</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Groteski vahvoilla ja suoraviivaisilla muodoilla</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Viimeistelty kirjoituskonemonospace käsikirjoituksiin</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Pyöristetty laattapäätteinen antiikva pehmeällä, kirjallisella sävyllä</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Vanhan tyylin kirja-antiikva pitkille tekstijaksoille</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Matalakontrastinen geometrinen groteski modernilla viimeistelyllä</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Tukeva antiikva, joka toimii hyvin leipätekstikoossa</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Nykyaikainen tekninen groteski kulmikkailla liitoksilla</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Ohjelmointimonospace selkeillä, erottuvilla merkeillä</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Humanistinen monospace näytöllä luettavalle koodille</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Kupliva käsinkirjoitustyyli pyöristetyillä vedoilla</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Geometrinen groteski 1920-luvun vintage-luonteella</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Geometrinen groteski Futura-perinteessä</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Silmukaton thai- ja latinalainen groteski kevyellä kallistuksella</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Groteski, jonka muodot vähentävät visuaalista rasitusta lukemisessa</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Lihavoitu yhdistetty kaunokirjoitus retro-kylttityylillä</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Puoligeometrinen groteski, jossa lämpö ja tarkkuus ovat tasapainossa</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Minimalistinen groteski puhtaaseen käyttöliittymätekstiin</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Hyvin pyöristetty groteski pehmeillä päätteillä</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Geometrinen groteski tasaisella nykyajan rytmillä</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Kulmikas teknokirjasin pelimäisellä ilmeellä</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Kompakti tekninen groteski ruudukolle piirrettynä</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Nykyaikainen groteski erottuvilla avoimilla kaarilla</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Pikselikirjasin suoraan pelihallikoneesta</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Pyöristetty geometrinen groteski lempeällä kevyellä ilmeellä</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Kulmikas tiivistetty groteski teknisillä kulmilla</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Art deco -näyttökirjasin retro-kylttimaalauksen juurilla</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Roboton tasalevyinen kumppani</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Paksu näyttökirjasin leikkisillä tylpillä vedoilla</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Leveä teollinen kirjasin raskailla neliömäisillä muodoilla</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Eloisa kallistettu näyttökirjasin gujaratilaisilla juurilla</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Pieni bittikarttakirjasin, joka muistuttaa varhaisia tietokonenäyttöjä</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Monospace mukavaan koodin lukemiseen</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Tiivistetty suuraakkoskirjasin vahvalla julisteläsnäololla</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Korkea tiivistetty kirjasin devanagari- ja latinalaisiin otsikoihin</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Kulmikas humanistinen groteski teknisellä ilmeellä</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Täysin pyöristetty groteski helposti lähestyttävällä sävyllä</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Tiivistetty kirjasin, joka muistuttaa 1920-luvun kahvilakylttejä</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Laattapäätteinen antiikva pehmeästi leikatuilla moderneilla päätteillä</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Ystävällinen humanistinen groteski avoimilla luettavilla muodoilla</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Lämmin groteski tukevilla muodoilla mukavaan lukemiseen</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Monipuolinen humanistinen groteski selkeisiin käyttöliittymiin</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Hienostunut tekstiantiikva toimituksellisella äänellä</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Klassinen kirja-antiikva näytöllä lukemiseen</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Käytännöllinen groteski leveällä ja vakaalla rytmillä</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Tekninen humanistinen groteski täsmällisillä mittasuhteilla</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Tekninen monospace viimeistellyllä luettavalla tekstuurilla</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Nykyaikainen antiikva insinöörimäisellä luonteella</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Puhdas yleiskäyttöinen groteski kompakteilla käytännöllisillä muodoilla</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Omaperäinen groteski ystävällisillä mittasuhteilla</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Geometrinen groteski futuristisella avaralla ilmeellä</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Nykyaikainen geometrinen groteski eleganteilla kaupunkimaisilla linjoilla</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Tasapainoinen nykyaikainen groteski pienille näytöille</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Itsevarma näyttögroteski ilmeikkäillä mittasuhteilla</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Luettava kumppanigroteski pidempiin kappaletietoihin</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Terävä monospace modernilla teknisellä sävyllä</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Epätavanomainen groteski taiteellisesti ohjatuilla leikkisillä muodoilla</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Joustava nykyaikainen groteski hillityllä tarkkuudella</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Puhdas ja helposti lähestyttävä groteski vaivattomaan lukemiseen</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Pyöristetty näyttögroteski iloisella persoonallisuudella</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Eloisa groteski, jossa rakenne yhdistyy omalaatuisiin yksityiskohtiin</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Suurikontrastinen näyttöantiikva dramaattisiin otsikoihin</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Tyylikäs suurikontrastinen kirjallinen antiikva</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Siro näyttöantiikva kalligrafisilla yksityiskohdilla</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Tukeva laattapäätteinen antiikva, joka pysyy selkeänä pienessä koossa</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Monipuolinen antiikva tiheään ja ilmeikkääseen lukemiseen</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Lämmin vanhan tyylin antiikva kirjallisella äänellä</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Tyylikäs groteski erottuvilla hienostuneilla kirjainmuodoilla</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Lihavoitu geometrinen groteski vahvoihin otsikoihin</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Tiivistykseen sopiva groteski urheilullisella dynaamisella energialla</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Pehmeä groteski avoimilla sisämuodoilla ja ystävällisellä kylttimäisellä energialla</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Monipuolinen groteski, jossa humanistinen lämpö ja selkeys ovat tasapainossa</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Selkeä liikenneopasteista inspiroitunut groteski varmalla rytmillä</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Neutraali esteetön groteski jokapäiväisiin käyttöliittymiin</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Kevyt geometrinen groteski sulavilla moderneilla kaarilla</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Pyöristetty kapea groteski pehmeän futuristisella ilmeellä</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Puhdas geometrinen groteski hienovaraisella thai-vaikutteella</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Leveä futuristinen näyttökirjasin maksimaaliseen läsnäoloon</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Muuttuva sans-to-mono-perhe leikkisän teknisellä äänellä</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Muuttuvan levyinen monospace erottuvalla digitaalisella tekstuurilla</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Laaja ja erittäin luettava groteski kattavalla kirjoitusjärjestelmätuella</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Luotettava antiikva kattavalla kirjoitusjärjestelmätuella</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Monikielinen monospace tasaiseen rytmiin</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Kompakti moderni groteski terävällä heprealaisvaikutteisella rytmillä</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Tukeva humanistinen groteski selkeään lukemiseen</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Ystävällinen näyttögroteski pyöristetyllä avoimella tekstuurilla</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Kompakti geometrinen groteski erottuvilla mittasuhteilla</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Eloisa kalligrafinen antiikva kirjallisella luonteella</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Puhdas humanistinen groteski erinomaisella käyttöliittymäluettavuudella</string>
+    <string name="setting_wear_note_show_cover">Kansikuva</string>
+    <string name="aod_element_artwork">Kansikuva</string>
+    <string name="aod_element_clock">Kello</string>
+    <string name="aod_element_track_info">Kappaleen tiedot</string>
+    <string name="aod_element_transport">Toisto-ohjaimet</string>
+    <string name="aod_element_progress">Edistyminen</string>
+    <string name="aod_element_up_next">Seuraavaksi</string>
+    <string name="aod_section_artwork">Kansikuva</string>
+    <string name="aod_control_tint">Sävy</string>
+    <string name="aod_control_brightness">Kirkkaus</string>
+    <string name="aod_control_art_treatment">Käsittely</string>
+    <string name="aod_control_art_opacity">Peittävyys</string>
+    <string name="mini_button_control_visibility">Näytä</string>
+    <string name="mini_button_control_arrangement">Asettelu</string>
+    <string name="mini_button_control_shape">Muoto</string>
+    <string name="mini_button_control_background">Tausta</string>
+    <string name="mini_button_control_opacity">Peittävyys</string>
+    <string name="mini_button_assign_action">Määritä toiminnot</string>
+    <string name="mini_button_gestures_note">Pyyhkäise soittimessa ylös, alas ja vasemmalle. Oikealle pyyhkäisy on aina järjestelmän sulkemisele eikä sitä koskaan kaapata.</string>
+    <string name="setting_wear_chat_cover_shape">Keskusteluavatarin muoto</string>
+    <string name="setting_wear_chat_show_cover">Kansikuva</string>
+    <string name="setting_wear_metadata_cover_shape">Metatietokannen muoto</string>
+    <string name="setting_wear_metadata_show_cover">Kansikuva</string>
+    <string-array name="wear_text_case_entries">
+        <item>Normaali</item>
+        <item>ISOT KIRJAIMET</item>
+        <item>pienet kirjaimet</item>
+        <item>Otsikkotyyli</item>
+    </string-array>
+    <string name="wear_text_font_follow">Noudata yleistä kirjasintyyppiä</string>
+    <string name="category_wf_typography_track_time">Kappaleen aika</string>
+    <string name="setting_wear_track_time_font">Kappaleajan kirjasintyyppi</string>
+    <string name="wear_track_time_font_follow">Noudata ulkoasua</string>
+    <string name="setting_wear_track_time_font_weight">Kappaleajan paksuus</string>
+    <string name="setting_wear_track_time_font_italic">Kursivoitu kappaleaika</string>
+    <string name="setting_wear_track_time_font_scale">Kappaleajan koko</string>
+    <string name="setting_wear_track_time_font_opacity">Kappaleajan peittävyys</string>
+    <string name="setting_wear_track_time_font_tracking">Kappaleajan merkkiväli</string>
+    <string-array name="album_art_filter_entries">
+        <item>Ei mitään</item>
+        <item>Yksivärinen</item>
+        <item>Lämmin</item>
+        <item>Viileä</item>
+        <item>Kultainen tunti</item>
+        <item>Rosé</item>
+        <item>Vintage-filmi</item>
+        <item>Haalistunut filmi</item>
+        <item>Matta</item>
+        <item>Eloisa</item>
+        <item>Isku</item>
+        <item>Pastelli</item>
+        <item>Seepia</item>
+        <item>Syanotypia</item>
+        <item>Sinivihreä ja oranssi</item>
+        <item>Suuri kontrasti</item>
+        <item>Pehmeä valo</item>
+        <item>Yö</item>
+    </string-array>
+    <string name="queue_item_now_playing">Toistetaan nyt</string>
+    <string name="queue_item_unknown_title">Tuntematon kappale</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Toistojono · %1$d kappale</item>
+        <item quantity="other">Toistojono · %1$d kappaletta</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Korostuspohjan väri</string>
+    <string name="setting_wear_accent_floor_custom_color">Mukautettu pohjaväri</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Valitse väri, jota käytetään, kun Korostuspohjan väri -asetuksena on Mukautettu väri</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Albumin korostus</item>
+        <item>Albumin toissijainen väri</item>
+        <item>Albumin kolmas väri</item>
+        <item>Mukautettu väri</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Neutraali ja erittäin luettava käyttöliittymägroteski jokapäiväiseen lukemiseen</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Esteettömyyttä painottavat, toisistaan selvästi erottuvat kirjainmuodot, jotka pysyvät selkeinä pienessä koossa</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Pehmeästi pyöristetty geometrinen groteski — itsevarma ja ystävällinen</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Kompakti humanistinen groteski, joka antaa pitkille otsikoille enemmän tilaa</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Korkea tiivistetty näyttökirjasin iskevällä juliste-energialla</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Nykyaikainen antiikva mukavaan pitkäkestoiseen lukemiseen</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Ilmeikäs pehmeä antiikva lämmöllä ja luonteella</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Retrofuturistinen monospace teknisellä särmällä</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Tiheä raskas näyttökirjasin maksimaaliseen kontrastiin</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Virtaava käsinkirjoitustyyli eloisan henkilökohtaisella tunnelmalla</string>
+    <string name="setting_wear_artist_text_mode">Esittäjätekstin toiminta</string>
+    <string name="setting_wear_album_art_source">Albumikuvan lähde</string>
+    <string name="setting_user_font">Oma fonttini</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Tuo .ttf- tai .otf-tiedosto tästä puhelimesta</string>
+    <string name="setting_user_font_loaded">%1$s · napauta korvataksesi tai poistaaksesi</string>
+    <string name="user_font_pick">Valitse fonttitiedosto</string>
+    <string name="user_font_replace">Korvaa</string>
+    <string name="user_font_remove">Poista</string>
+    <string name="user_font_imported">”%1$s” tuotu. Valitse se mistä tahansa fonttiluettelosta; sitä lähetetään kellollesi.</string>
+    <string name="user_font_removed">Tuotu fonttisi poistettiin.</string>
+    <string name="user_font_error_too_large">Tiedoston koko on %1$s. Fontin on oltava alle %2$s, jotta se voidaan siirtää nopeasti kelloon.</string>
+    <string name="user_font_error_not_a_font">Tiedosto ei ole fontti, jota tämä puhelin osaa lukea. TrueType ja OpenType (.ttf, .otf) toimivat; verkkofontit (.woff, .woff2) eivät.</string>
+    <string name="user_font_error_unreadable">Tiedostoa ei voitu lukea. Yritä valita se uudelleen tai kopioi se ensin tähän puhelimeen.</string>
+    <string name="user_font_not_shareable">Omaa fonttiasi käyttävät teemat pysyvät tässä puhelimessa</string>
+    <string name="setting_custom_album_art_image">Käytettävä kuva</string>
+    <string name="setting_custom_album_art_folder">Lähdekansio</string>
+    <string name="setting_custom_album_art_none">Ei vielä valittu — valitse napauttamalla</string>
+    <string name="setting_custom_album_art_chosen">%1$s · napauta vaihtaaksesi</string>
+    <string name="custom_album_art_image_set">Tämä kuva näkyy nyt soittimen taustalla.</string>
+    <string name="custom_album_art_folder_set">Jokaiselle kappaleelle valitaan kuva kyseisestä kansiosta.</string>
+    <string name="custom_album_art_error">Sitä ei voitu avata. Valitse se uudelleen tai valitse jotakin tämän puhelimen omasta tallennustilasta.</string>
+    <string name="custom_album_art_not_shareable">Omia kuviasi käyttävät teemat pysyvät tässä puhelimessa</string>
+    <string name="setting_wear_text_block_align">Tekstin tasaus</string>
+    <string name="setting_wear_text_block_align_description">Mihin reunaan kappaleen teksti tasataan. Seuraa kellotaulua säilyttää tasauksen, jota varten kukin kellotaulu on suunniteltu.</string>
+    <string name="setting_wear_text_block_position">Tekstin sijainti</string>
+    <string name="setting_wear_text_block_position_description">Missä kappaleen teksti sijaitsee näytöllä. Seuraa kellotaulua säilyttää sijainnin, jota varten kukin kellotaulu on suunniteltu.</string>
+    <string name="setting_online_artwork">Verkkokansikuva</string>
+    <string name="setting_online_artwork_description">Anna kellotaulun näyttää verkosta haettu kuva \u2014 soivan esittäjän kuva tai albumikansi silloin, kun soitin ei tarjoa sellaista. Puhelin tekee haun Deezerin julkisesta luettelosta ja tallentaa tuloksen välimuistiin; vain kappaleen ja esittäjän nimet lähetetään, eikä mitään haeta, ellei kellotaulua ole asetettu käyttämään jotakin näistä lähteistä. Kun asetus on pois päältä, käytetään soittimen omaa kansikuvaa.</string>
 </resources>

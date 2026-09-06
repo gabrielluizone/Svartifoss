@@ -164,4 +164,21 @@
     <string name="face_name_metadata" translatable="false">Metadata</string>
     <string name="face_name_ribbon" translatable="false">Ribbon</string>
     <string name="face_name_frame" translatable="false">Frame</string>
+    <string name="action_name_open_quick_actions_panel">Paneel met snelle acties openen</string>
+    <string name="action_name_fast_forward">Snel vooruit</string>
+    <string name="action_name_rewind">Terugspoelen</string>
+    <string name="action_name_set_speed">Afspeelsnelheid instellen</string>
+    <string name="action_name_seek_position">Naar positie in nummer springen</string>
+    <string name="action_name_set_volume">Volume instellen</string>
+    <string name="action_name_set_shuffle">Shuffle instellen</string>
+    <string name="action_name_set_repeat">Herhalen instellen</string>
+    <string name="action_name_open_volume_screen">Volumescherm openen</string>
+    <string name="action_name_open_progress_screen">Voortgangsscherm openen</string>
+    <string name="action_name_open_face_picker">Wijzerplaatkiezer openen</string>
+    <string name="action_name_close_watch_app">Horloge-app sluiten</string>
+    <string name="volume_screen_title">Volume</string>
+    <string name="progress_screen_title">Voortgang</string>
+    <string name="progress_screen_cancel_seek">Zoeken annuleren</string>
+    <string name="progress_screen_skip_back">%1$d seconden terug springen</string>
+    <string name="progress_screen_skip_forward">%1$d seconden vooruit springen</string>
 </resources>

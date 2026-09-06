@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Podrobnosti motivu</string>
+    <string name="community_theme_detail_preview_screen">Obrazovka náhledu</string>
+    <string name="community_theme_detail_surface_player">Přehrávač</string>
+    <string name="community_theme_detail_surface_aod">Vždy zapnuto</string>
+    <string name="community_theme_detail_surface_volume">Hlasitost</string>
+    <string name="community_theme_detail_surface_progress">Průběh</string>
+    <string name="community_theme_detail_surface_quick_panel">Rychlý panel</string>
+    <string name="community_theme_detail_surface_queue">Fronta</string>
+    <string name="community_theme_detail_preview_label">Náhled %1$s</string>
+    <string name="community_theme_detail_preview_description">Náhled %1$s na obrazovce %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Aktuální obal alba se může zobrazit pouze v tomto náhledu v telefonu. Nikdy se neodesílá; nadále se používá ukázkový text a časování.</string>
+    <string name="community_theme_detail_information">Informace o motivu</string>
+    <string name="community_theme_detail_byline">Od %1$s</string>
+    <string name="community_theme_detail_layout">Základní rozložení</string>
+    <string name="community_theme_detail_revision">Revize</string>
+    <string name="community_theme_detail_minimum_version">Minimální verze Svartifoss</string>
+    <string name="community_theme_detail_published">Publikováno</string>
+    <string name="community_theme_detail_visual_settings">Vizuální nastavení</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s vizuální nastavení</item>
+        <item quantity="other">%1$s vizuálních nastavení</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Není k dispozici</string>
+    <string name="community_theme_detail_add_apply">Přidat a použít</string>
+    <string name="community_theme_detail_remove">Odstranit motiv</string>
+    <string name="community_theme_detail_remove_title">Odstranit „%1$s“ z Mých motivů?</string>
+    <string name="community_theme_detail_remove_message">Tato uložená kopie a všechny vaše úpravy budou trvale odstraněny. Pokud je právě použita, hodinky se vrátí k vestavěnému základnímu rozložení.</string>
+    <string name="community_theme_detail_removed">Motiv odstraněn z Mých motivů</string>
+    <string name="community_theme_detail_remove_error">Tento motiv se nepodařilo odstranit</string>
+    <string name="community_theme_detail_like">To se mi líbí</string>
+    <string name="community_theme_detail_unlike">Zrušit To se mi líbí</string>
+    <string name="community_theme_detail_like_loading">Kontrola…</string>
+    <string name="community_theme_detail_like_description">Označit %1$s jako To se mi líbí. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Zrušit To se mi líbí u %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Přihlášení přes Google bylo zrušeno. Vaše hodnocení nebylo uloženo.</string>
+    <string name="community_theme_detail_like_error">Vaše označení To se mi líbí se nepodařilo uložit. Zkontrolujte připojení a zkuste to znovu.</string>
+    <string name="community_theme_detail_like_not_ready">Hodnocení To se mi líbí pro tento motiv ještě nejsou připravena. Po další publikaci obnovte Komunitní motivy.</string>
+    <string name="community_theme_detail_like_saved">Vaše hodnocení To se mi líbí bylo uloženo. Veřejné počty se aktualizují při další publikaci katalogu.</string>
+    <string name="community_theme_detail_unlike_saved">Vaše hodnocení To se mi líbí bylo odebráno. Veřejné počty se aktualizují při další publikaci katalogu.</string>
+    <string name="community_theme_detail_apply_existing">Tento motiv už je v části Moje motivy a byl použit na vašich hodinkách</string>
+    <string name="community_theme_detail_requires_app_version">Tento motiv vyžaduje Svartifoss %1$s, než ho bude možné přidat.</string>
+    <string name="community_theme_detail_load_error">Podrobnosti tohoto motivu se nepodařilo načíst. Vraťte se do Komunitních motivů a zkuste to znovu.</string>
+    <string name="community_theme_detail_profile_mismatch">Stažený profil neodpovídá veřejným údajům tohoto motivu. Vraťte se do Komunitních motivů a zkuste to znovu.</string>
+    <string name="community_theme_detail_screenshot_description">Fotografie tohoto motivu na hodinkách autora</string>
+    <string name="community_theme_detail_source_author">Hodinky autora</string>
+    <string name="community_theme_detail_source_rendered">Vygenerovaný náhled</string>
+    <string name="community_theme_detail_show_rendered">Zobrazit vygenerovaný náhled</string>
+    <string name="community_theme_detail_show_author">Zobrazit fotografii autora</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

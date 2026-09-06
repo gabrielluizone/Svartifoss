@@ -185,4 +185,21 @@
 
     <string name="metadata_about">Hakkında</string>
     <string name="metadata_source">Şurada çalıyor</string>
+    <string name="action_name_open_quick_actions_panel">Hızlı eylemler panelini aç</string>
+    <string name="action_name_fast_forward">Hızlı ileri sar</string>
+    <string name="action_name_rewind">Geri sar</string>
+    <string name="action_name_set_speed">Oynatma hızını ayarla</string>
+    <string name="action_name_seek_position">Parça konumuna atla</string>
+    <string name="action_name_set_volume">Ses düzeyini ayarla</string>
+    <string name="action_name_set_shuffle">Karıştırmayı ayarla</string>
+    <string name="action_name_set_repeat">Tekrarı ayarla</string>
+    <string name="action_name_open_volume_screen">Ses düzeyi ekranını aç</string>
+    <string name="action_name_open_progress_screen">İlerleme ekranını aç</string>
+    <string name="action_name_open_face_picker">Saat yüzü seçiciyi aç</string>
+    <string name="action_name_close_watch_app">Saat uygulamasını kapat</string>
+    <string name="volume_screen_title">Ses düzeyi</string>
+    <string name="progress_screen_title">İlerleme</string>
+    <string name="progress_screen_cancel_seek">Aramayı iptal et</string>
+    <string name="progress_screen_skip_back">%1$d saniye geri atla</string>
+    <string name="progress_screen_skip_forward">%1$d saniye ileri atla</string>
 </resources>

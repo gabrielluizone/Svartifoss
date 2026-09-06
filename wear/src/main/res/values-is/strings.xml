@@ -165,4 +165,21 @@
     <string name="metadata_url">Vefslóð</string>
     <string name="metadata_about">Um</string>
     <string name="metadata_source">Er spilað í</string>
+    <string name="action_name_open_quick_actions_panel">Opna flýtiaðgerðaspjald</string>
+    <string name="action_name_fast_forward">Spóla hratt áfram</string>
+    <string name="action_name_rewind">Spóla til baka</string>
+    <string name="action_name_set_speed">Stilla spilunarhraða</string>
+    <string name="action_name_seek_position">Hoppa á stað í lagi</string>
+    <string name="action_name_set_volume">Stilla hljóðstyrk</string>
+    <string name="action_name_set_shuffle">Stilla slembispilun</string>
+    <string name="action_name_set_repeat">Stilla endurtekningu</string>
+    <string name="action_name_open_volume_screen">Opna hljóðstyrksskjá</string>
+    <string name="action_name_open_progress_screen">Opna framvinduskjá</string>
+    <string name="action_name_open_face_picker">Opna úrskífuval</string>
+    <string name="action_name_close_watch_app">Loka úraforriti</string>
+    <string name="volume_screen_title">Hljóðstyrkur</string>
+    <string name="progress_screen_title">Framvinda</string>
+    <string name="progress_screen_cancel_seek">Hætta við leit</string>
+    <string name="progress_screen_skip_back">Hoppa %1$d sekúndur til baka</string>
+    <string name="progress_screen_skip_forward">Hoppa %1$d sekúndur áfram</string>
 </resources>

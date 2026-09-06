@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Detalii temă</string>
+    <string name="community_theme_detail_preview_screen">Ecran de previzualizare</string>
+    <string name="community_theme_detail_surface_player">Player</string>
+    <string name="community_theme_detail_surface_aod">Mereu activ</string>
+    <string name="community_theme_detail_surface_volume">Volum</string>
+    <string name="community_theme_detail_surface_progress">Progres</string>
+    <string name="community_theme_detail_surface_quick_panel">Panou rapid</string>
+    <string name="community_theme_detail_surface_queue">Coadă</string>
+    <string name="community_theme_detail_preview_label">Previzualizare %1$s</string>
+    <string name="community_theme_detail_preview_description">Previzualizare pentru %1$s pe ecranul %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Coperta albumului curent poate apărea doar în această previzualizare pe telefon. Nu este încărcată niciodată; textul și timpii de exemplu rămân în uz.</string>
+    <string name="community_theme_detail_information">Informații despre temă</string>
+    <string name="community_theme_detail_byline">De %1$s</string>
+    <string name="community_theme_detail_layout">Aspect de bază</string>
+    <string name="community_theme_detail_revision">Revizie</string>
+    <string name="community_theme_detail_minimum_version">Versiunea minimă Svartifoss</string>
+    <string name="community_theme_detail_published">Publicat</string>
+    <string name="community_theme_detail_visual_settings">Setări vizuale</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s setare vizuală</item>
+        <item quantity="other">%1$s setări vizuale</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Indisponibil</string>
+    <string name="community_theme_detail_add_apply">Adaugă și aplică</string>
+    <string name="community_theme_detail_remove">Elimină tema</string>
+    <string name="community_theme_detail_remove_title">Elimini „%1$s” din Temele mele?</string>
+    <string name="community_theme_detail_remove_message">Această copie salvată și toate modificările făcute asupra ei vor fi eliminate definitiv. Dacă este aplicată în prezent, ceasul va reveni la aspectul de bază încorporat.</string>
+    <string name="community_theme_detail_removed">Tema a fost eliminată din Temele mele</string>
+    <string name="community_theme_detail_remove_error">Această temă nu a putut fi eliminată</string>
+    <string name="community_theme_detail_like">Apreciază</string>
+    <string name="community_theme_detail_unlike">Nu mai aprecia</string>
+    <string name="community_theme_detail_like_loading">Se verifică…</string>
+    <string name="community_theme_detail_like_description">Apreciază %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Elimină aprecierea pentru %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Conectarea cu Google a fost anulată. Aprecierea ta nu a fost salvată.</string>
+    <string name="community_theme_detail_like_error">Aprecierea ta nu a putut fi salvată. Verifică conexiunea și încearcă din nou.</string>
+    <string name="community_theme_detail_like_not_ready">Aprecierile pentru această temă nu sunt încă disponibile. Reîmprospătează Temele comunității după următoarea publicare.</string>
+    <string name="community_theme_detail_like_saved">Aprecierea ta a fost salvată. Numărătorile publice se actualizează la următoarea publicare a catalogului.</string>
+    <string name="community_theme_detail_unlike_saved">Aprecierea ta a fost eliminată. Numărătorile publice se actualizează la următoarea publicare a catalogului.</string>
+    <string name="community_theme_detail_apply_existing">Această temă este deja în Temele mele și a fost aplicată pe ceasul tău</string>
+    <string name="community_theme_detail_requires_app_version">Această temă necesită Svartifoss %1$s înainte de a putea fi adăugată.</string>
+    <string name="community_theme_detail_load_error">Detaliile acestei teme nu au putut fi încărcate. Revino la Temele comunității și încearcă din nou.</string>
+    <string name="community_theme_detail_profile_mismatch">Profilul descărcat nu corespunde detaliilor publice ale acestei teme. Revino la Temele comunității și încearcă din nou.</string>
+    <string name="community_theme_detail_screenshot_description">Fotografie cu această temă pe ceasul autorului</string>
+    <string name="community_theme_detail_source_author">Ceasul autorului</string>
+    <string name="community_theme_detail_source_rendered">Previzualizare generată</string>
+    <string name="community_theme_detail_show_rendered">Arată previzualizarea generată</string>
+    <string name="community_theme_detail_show_author">Arată fotografia autorului</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

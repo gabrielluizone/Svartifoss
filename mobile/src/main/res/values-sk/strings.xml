@@ -1877,6 +1877,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1920,6 +1925,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2370,4 +2380,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Kopírovať</string>
+    <string name="dev_report_copied">Správa skopírovanýa</string>
+    <string name="dev_watch_snapshot_inspector">Snímka predvolieb hodiniek</string>
+    <string name="dev_watch_snapshot_inspector_description">Čo by sa práve teraz skutočne odoslalo do hodiniek: aktívny rozsah vzhľadu, odhadovaná veľkosť a ktoré vyrovnávacie pamäte neaktívnych rozsahov ciferníkov boli zahodené, aby sa všetko zmestilo do limitu</string>
+    <string name="dev_data_layer_inspector">Inšpektor Data Layer</string>
+    <string name="dev_data_layer_inspector_description">Pripojené uzly Wearable a posledný WatchInfo, na ktorý aplikácia v hodinkách odpovedala - nespracovaný stav za hlásením „Nie sú pripojené žiadne hodinky“</string>
+    <string name="dev_media_sessions_inspector">Prieskumník MediaSession</string>
+    <string name="dev_media_sessions_inspector_description">Všetky aktuálne aktívne MediaSession, nielen sledovaná: inzerované akcie, rad a trasa prehrávania</string>
+    <string name="dev_view_phone_log">Zobraziť protokol telefónu</string>
+    <string name="dev_view_phone_log_description">Koniec protokolu Timber na disku a navyše protokol hodiniek, ak ho predtým načítala voľba „Odoslať protokoly“</string>
+    <string name="dev_theme_submission_preflight">Predbežná kontrola odoslania motívu</string>
+    <string name="dev_theme_submission_preflight_description">Prevedie každý uložený motív hodiniek kontrolou odoslania do komunity a prípadne presne pomenuje nastavenie, ktoré ho blokuje</string>
+    <string name="dev_appearance_resolution_inspector">Inšpektor vyhodnotenia vzhľadu</string>
+    <string name="dev_appearance_resolution_inspector_description">Pri každom kľúči vzhľadu v rozsahu ukazuje, ktorý zo štyroch krokov vyhodnotenia skutočne zvíťazil - explicitná hodnota ciferníka, predvolená hodnota pre daný ciferník, staršia globálna hodnota alebo predvolená hodnota definície - a hodnotu, ktorú každý krok vracia</string>
+    <string name="action_fast_forward">Pretočiť dopredu</string>
+    <string name="action_rewind">Pretočiť dozadu</string>
+    <string name="action_set_playback_speed">Nastaviť rýchlosť na %1$s×</string>
+    <string name="action_seek_to_percent">Prejsť na %1$d%%</string>
+    <string name="action_set_volume_percent">Nastaviť hlasitosť na %1$d%%</string>
+    <string name="action_set_shuffle_on">Zapnúť náhodné prehrávanie</string>
+    <string name="action_set_shuffle_off">Vypnúť náhodné prehrávanie</string>
+    <string name="action_set_repeat_off">Vypnúť opakovanie</string>
+    <string name="action_set_repeat_all">Opakovať všetko</string>
+    <string name="action_set_repeat_one">Opakovať jednu</string>
+    <string name="group_playback_speed">Rýchlosť prehrávania</string>
+    <string name="group_track_position">Pozícia skladby</string>
+    <string name="group_shuffle_mode">Režim náhodného prehrávania</string>
+    <string name="group_repeat_mode">Režim opakovania</string>
+    <string name="group_volume_levels">Úrovne hlasitosti</string>
+    <string name="group_watch_screens">Obrazovky hodiniek</string>
+    <string name="group_find_music">Nájsť a prehrať</string>
+    <string name="action_open_face_picker">Otvoriť výber ciferníka</string>
+    <string name="action_close_watch_app">Zavrieť aplikáciu v hodinkách</string>
+    <string name="hand_gestures">GESTÁ RÚK</string>
+    <string name="hand_gestures_hint">Dostupné na kompatibilných hodinkách, keď je Svartifoss otvorený.</string>
+    <string name="hand_gestures_hint_disconnected">Pripojte hodinky a otvorte na nich Svartifoss, aby ste zistili, či podporujú gestá rúk.</string>
+    <string name="hand_gestures_hint_outdated">Aktualizujte aplikáciu v hodinkách, aby ste zistili, či tieto hodinky podporujú gestá rúk.</string>
+    <string name="hand_gestures_hint_unsupported">Tieto hodinky nepodporujú gestá rúk, takže akcia priradená tu sa nikdy nespustí.</string>
+    <string name="hand_gestures_hint_disabled">Gestá rúk sú na týchto hodinkách vypnuté. Zapnite ich priamo v hodinkách v Nastaveniach \u2192 Gestá.</string>
+    <string name="hand_gestures_hint_ready">Pripravené na týchto hodinkách: pri otvorenom prehrávači Svartifoss dvakrát spojte prsty.</string>
+    <string name="hand_gesture_how_it_works">So zdvihnutým zápästím dvakrát rýchlo spojte palec a ukazovák. Wear OS tomu hovorí primárna akcia, takže hodinky iného výrobcu môžu používať vlastné ekvivalentné gesto ruky.\n\nFunguje iba vtedy, keď je na hodinkách otvorený prehrávač Svartifoss a displej je zapnutý \u2014 nie z ciferníka, nie nad radom alebo ponukou a nie na stále zapnutom displeji. Spustí sa akcia nastavená pre aktuálny stav prehrávania, takže ju nastavte na oboch stránkach Ovládanie, aby fungovala v oboch stavoch.\n\nGesto musí byť zapnuté aj priamo v hodinkách v Nastaveniach \u2192 Gestá.</string>
+    <string name="double_pinch">Dvojité sevření</string>
+    <string name="icon_selection_search_hint">Hľadať ikony</string>
+    <string name="icon_selection_search_empty">Vášmu vyhľadávaniu nezodpovedajú žiadne ikony</string>
+    <string name="open_quick_actions_panel">Otvoriť panel rýchlych akcií</string>
+    <string name="open_volume_screen">Otvoriť obrazovku hlasitosti</string>
+    <string name="open_progress_screen">Otvoriť obrazovku priebehu</string>
+    <string name="export_config_failed_detail">Zálohu sa nepodarilo exportovať: %1$s</string>
+    <string name="backup_selection_title">Vybrať obsah zálohy</string>
+    <string name="backup_selection_description">Vyberte časti Svartifoss, ktoré chcete uložiť. Predvolene je vybrané všetko; nevybrané časti sa pri importe tejto zálohy nezmenia.</string>
+    <string name="backup_selection_select_all">Vybrať všetko</string>
+    <string name="backup_selection_clear_all">Vymazať všetko</string>
+    <string name="backup_selection_export">Exportovať zálohu</string>
+    <string name="backup_selection_empty">Vyberte aspoň jednu položku</string>
+    <string name="backup_section_buttons">Konfigurácie tlačidiel</string>
+    <string name="backup_section_buttons_description">Akcie tlačidla, korunky a gest pri prehrávaní a zastavení hudby.</string>
+    <string name="backup_section_actions">Zoznam akcií</string>
+    <string name="backup_section_actions_description">Usporiadaný zoznam akcií zobrazených v ponuke akcií hodiniek.</string>
+    <string name="backup_section_app_settings">Nastavenia aplikácie</string>
+    <string name="backup_section_app_settings_description">Nastavenia telefónu, správanie hodiniek, jazyk, prehrávanie a integrácie.</string>
+    <string name="backup_section_watch_appearance">Vzhľad hodiniek a motívy</string>
+    <string name="backup_section_watch_appearance_description">Rozloženia hodiniek, farby, typografia, panely, AOD a uložené vlastné motívy.</string>
+    <string name="backup_section_playlist_shortcuts">Skratky playlistov</string>
+    <string name="backup_section_playlist_shortcuts_description">Vaša uložená hudba a odkazy na albumy, interpretov, playlisty a ďalší streamovaný obsah.</string>
+    <string name="backup_section_history">História vyhľadávania a prehrávania</string>
+    <string name="backup_section_history_description">Nedávne vyhľadávania a nedávno prehrávané skladby.</string>
+    <string name="backup_section_icons">Načítané ikony a obrázky</string>
+    <string name="backup_section_icons_description">Vlastné ikony akcií, obaly skratiek a ikony aplikácií vo vyrovnávacej pamäti.</string>
+    <string name="backup_section_privacy">Súkromie a oznámenia</string>
+    <string name="backup_section_privacy_description">Hlásenia pádov, oznámenia noviniek a ďalšie voľby súhlasu uložené aplikáciou.</string>
+    <string name="backup_section_local_app_state">Miestny stav aplikácie</string>
+    <string name="backup_section_local_app_state_description">Aktuálny akcent, posledná pozícia ponuky, dokončené výzvy a stav aktualizácie.</string>
+    <string name="backup_section_auxiliary_data">Ďalšie údaje aplikácie</string>
+    <string name="backup_section_auxiliary_data_description">Ďalšie nastavenia a interné súbory patriace aplikácii vrátane budúcich úložísk údajov.</string>
+    <string name="pref_numeric_range">Medzi %1$d a %2$d.</string>
+    <string name="background_editor_artwork">Obal</string>
+    <string name="background_editor_layers">Vrstvy</string>
+    <string name="background_editor_layers_count">%1$d z %2$d</string>
+    <string name="background_editor_add_layer">Pridať vrstvu</string>
+    <string name="background_editor_reset_layers">Obnoviť</string>
+    <string name="background_editor_empty">Žiadne vrstvy. Obal sa zobrazuje samostatne.</string>
+    <string name="background_editor_note">Vrstva navrchu tohto zoznamu sa vykresľuje nad všetkým ostatným; spodná vrstva leží najbližšie k obalu.</string>
+    <string name="background_editor_full">Môžete navrstviť až %1$d vrstiev.</string>
+    <string name="background_layer_kind_wash">Pozadie</string>
+    <string name="background_layer_kind_shade">Tieňovanie</string>
+    <string name="background_layer_kind_floor">Základ akcentu</string>
+    <string name="background_layer_move_up">Posunúť vrstvu nahor</string>
+    <string name="background_layer_move_down">Posunúť vrstvu nadol</string>
+    <string name="background_layer_more">Ďalšie možnosti tejto vrstvy</string>
+    <string name="background_layer_add_title">Pridať vrstvu</string>
+    <string name="background_layer_style_title">Vrstva %1$s</string>
+    <string name="background_layer_opacity">Intenzita</string>
+    <string name="background_layer_color">Farba</string>
+    <string name="background_layer_custom_color">Vybrať farbu</string>
+    <string name="background_layer_duplicate">Duplikovať</string>
+    <string name="background_layer_remove">Odstrániť</string>
+    <string name="background_layer_color_default">Predvolené</string>
+    <string name="background_layer_color_album">Farba albumu</string>
+    <string name="background_layer_color_secondary">Druhá farba albumu</string>
+    <string name="background_layer_color_tertiary">Tretia farba albumu</string>
+    <string name="background_layer_color_desaturated">Tlmená farba albumu</string>
+    <string name="background_layer_color_black">Čierna</string>
+    <string name="background_layer_color_custom">Vlastná farba</string>
+    <string name="background_layer_reset_title">Obnoviť vrstvy?</string>
+    <string name="background_layer_reset_message">Zásobník vrstiev sa vráti k tieňovaniu a základu akcentu nastaveným na ich vlastných riadkoch, čo je aj spôsob, akým ich vykreslia hodinky so staršou verziou.</string>
+    <string name="watch_element_progress">Priebeh</string>
+    <string name="watch_element_volume">Hlasitosť</string>
+    <string name="watch_element_quick_panel">Rýchle akcie</string>
+    <string name="watch_element_queue">Poradie</string>
+    <string name="watch_element_lyrics">Text piesne</string>
+    <string name="player_section_on_screen">Na obrazovke</string>
+    <string name="player_element_app_icon">Ikona aplikácie</string>
+    <string name="player_element_controls">Ovládacie prvky prehrávača</string>
+    <string name="player_element_tap_flash">Záblesk pri ťuknutí</string>
+    <string name="player_element_inner_progress">Vnútorný priebeh</string>
+    <string name="player_element_edge_arc">Oblúk okraja</string>
+    <string name="player_element_edge_seek">Posúvanie na okraji</string>
+    <string name="player_element_clock">Hodiny</string>
+    <string name="player_element_cover_art">Obal albumu</string>
+    <string name="setting_album_art_filter">Filter obalu albumu</string>
+    <string name="setting_album_art_filter_description">Použiť nezávislú farebnú úpravu cez ľubovoľný štýl obalu albumu.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto s extra ľahkým ťahom pre jemný vzhľad displeja.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto s ľahkým, vzdušným ťahom a známymi proporciami rodiny.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto so silnejším stredným ťahom pre kompaktné a čitateľné popisy.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto s najťažšou systémovou váhou pre výrazný text displeja.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto je vodorovne zúžené, aby sa dlhšie názvy zmestili do menšieho priestoru.</string>
+    <string name="setting_wear_title_font">Písmo názvu</string>
+    <string name="setting_wear_title_text_case">Veľkosť písmen názvu</string>
+    <string name="setting_wear_artist_font">Písmo interpreta</string>
+    <string name="setting_wear_artist_text_case">Veľkosť písmen interpreta</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Priateľské zaoblené bezpätkové písmo navrhnuté pre začínajúcich čitateľov</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Didone zobrazovacie písmo s vysokým kontrastom a redakčnou váhou</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Robustné plagátové bezpätkové písmo s ručne písaným komiksovým nádychom</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Pokojné geometrické bezpätkové písmo s veľkorysými rovnomernými rozostupmi</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Súčasné slab serif písmo s jemne zaoblenými zakončeniami</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Masívne slab serif písmo vytvorené pre výrazné nadpisy</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Úzke ručne kreslené písmo v kapitálkach</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Husto kondenzované bezpätkové písmo pre výrazné nadpisy</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Geometrické slab serif písmo, ktoré zostáva jasné aj v malých veľkostiach</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Komiksové zobrazovacie písmo plné energie</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Vojenské šablónové zobrazovacie písmo</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Vzpriamené pätkové písmo s teplými neformálnymi krivkami</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Humanistické bezpätkové písmo s jemne zaoblenými rohmi</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Groteskné bezpätkové písmo so silnými priamočiarymi tvarmi</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Rafinované strojopisné monospace písmo vytvorené pre scenáre</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Zaoblené slab serif písmo s mäkkým knižným tónom</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Starostylové knižné pätkové písmo vyladené pre dlhé pasáže</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Nízkokontrastné geometrické bezpätkové písmo s moderným zakončením</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Robustné pätkové písmo navrhnuté pre veľkosti bežného textu</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Súčasné technické bezpätkové písmo s hranatými spojmi</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Programátorské monospace písmo s jasnými odlíšiteľnými znakmi</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Humanistické monospace písmo navrhnuté pre kód na obrazovke</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Bublinkové ručne písané písmo so zaoblenými ťahmi</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Geometrické bezpätkové písmo s vintage charakterom 20. rokov</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Geometrické bezpätkové písmo v tradícii Futura</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Bezslučkové thajské a latinkové bezpätkové písmo s miernym sklonom</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Bezpätkové písmo tvarované tak, aby znižovalo zrakovú záťaž pri čítaní</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Tučné spojené skriptové písmo s nádychom retro nápisov</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Pologeometrické bezpätkové písmo vyvažujúce teplo a presnosť</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Minimalistické bezpätkové písmo navrhnuté pre čistý text rozhrania</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Dobre zaoblené bezpätkové písmo s mäkkými zakončeniami</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Geometrické bezpätkové písmo s rovnomerným súčasným rytmom</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Hranaté techno písmo s herným dojmom</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Kompaktné technické bezpätkové písmo kreslené na mriežke</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Moderné groteskné písmo s výraznými otvorenými krivkami</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Pixelové písmo priamo z arkádového automatu</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Zaoblené geometrické bezpätkové písmo s jemným ľahkým dojmom</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Hranaté kondenzované bezpätkové písmo s technickými uhlami</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Art deco zobrazovacie písmo s koreňmi v retro maľovaných nápisoch</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Monospace doplnok písma Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Mohutné zobrazovacie písmo s hravými tupými ťahmi</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Široké industriálne písmo s ťažkými hranatými tvarmi</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Výrazné naklonené zobrazovacie písmo s gudžarátskymi koreňmi</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Drobné bitmapové písmo pripomínajúce skoré počítačové obrazovky</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Monospace písmo navrhnuté pre pohodlné čítanie kódu</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Kondenzované verzálkové písmo so silnou plagátovou prítomnosťou</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Vysoké kondenzované písmo pre nadpisy v dévanágarí a latinke</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Hranaté humanistické bezpätkové písmo s technickým nádychom</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Plne zaoblené bezpätkové písmo s prístupným tónom</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Kondenzované písmo pripomínajúce kaviarenské nápisy z 20. rokov</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Slab serif písmo s jemne zrezanými modernými zakončeniami</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Priateľské humanistické bezpätkové písmo s otvorenými čitateľnými tvarmi</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Teplé bezpätkové písmo s robustnými tvarmi pre pohodlné čítanie</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Všestranné humanistické bezpätkové písmo navrhnuté pre jasné rozhrania</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Rafinované textové pätkové písmo s redakčným hlasom</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Klasické knižné pätkové písmo vyladené pre čítanie na obrazovke</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Praktické groteskné bezpätkové písmo so širokým pevným rytmom</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Technické humanistické bezpätkové písmo s presnými proporciami</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Technické monospace písmo s uhladenou čitateľnou textúrou</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Súčasné pätkové písmo s technickým charakterom</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Čisté univerzálne bezpätkové písmo s kompaktnými praktickými tvarmi</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Svojrázne groteskné písmo s priateľskými proporciami</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Geometrické bezpätkové písmo s futuristickým priestranným dojmom</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Moderné geometrické bezpätkové písmo s elegantnými mestskými líniami</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Vyvážené súčasné bezpätkové písmo vytvorené pre malé obrazovky</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Sebavedomé zobrazovacie bezpätkové písmo s výraznými proporciami</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Čitateľné sprievodné bezpätkové písmo pre dlhšie informácie o skladbe</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Ostré monospace písmo s moderným technickým tónom</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Nekonvenčné bezpätkové písmo s umelecky vedenými hravými tvarmi</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Flexibilné súčasné bezpätkové písmo s pokojnou presnosťou</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Čisté prístupné bezpätkové písmo pre ľahké čítanie</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Zaoblené zobrazovacie bezpätkové písmo s veselou osobnosťou</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Živé groteskné písmo kombinujúce štruktúru s nezvyčajnými detailmi</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Vysoko kontrastné zobrazovacie pätkové písmo pre dramatické názvy</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Elegantné vysoko kontrastné literárne pätkové písmo</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Pôvabné zobrazovacie pätkové písmo s kaligrafickými detailmi</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Robustné slab serif písmo, ktoré zostáva jasné v malých veľkostiach</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Všestranné pätkové písmo pre hutné výrazné čítanie</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Teplé starostylové pätkové písmo s knižným hlasom</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Elegantné bezpätkové písmo s výraznými vycibrenými tvarmi písmen</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Tučné geometrické bezpätkové písmo pre silné nadpisy</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Bezpätkové písmo vhodné na kondenzáciu s atletickou dynamickou energiou</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Mäkké bezpätkové písmo s otvorenými vnútornými priestormi a priateľskou energiou značenia</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Všestranné bezpätkové písmo vyvažujúce humanistické teplo a jasnosť</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Jasné bezpätkové písmo inšpirované dopravným značením so sebaistým rytmom</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Neutrálne prístupné bezpätkové písmo vytvorené pre každodenné rozhrania</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Ľahké geometrické bezpätkové písmo s hladkými modernými krivkami</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Zaoblené úzke bezpätkové písmo s mäkkým futuristickým dojmom</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Čisté geometrické bezpätkové písmo s jemným thajským charakterom</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Široké futuristické zobrazovacie písmo pre maximálnu prítomnosť</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Variabilná rodina od sans po mono s hravým technickým hlasom</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Monospace písmo s premenlivou šírkou a výraznou digitálnou textúrou</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Široké veľmi čitateľné bezpätkové písmo s rozsiahlym podporovaním písiem</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Spoľahlivé pätkové písmo s rozsiahlym podporovaním písiem</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Viacjazyčné monospace písmo navrhnuté pre konzistentný rytmus</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Kompaktné moderné bezpätkové písmo s ostrým rytmom inšpirovaným hebrejčinou</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Robustné humanistické bezpätkové písmo optimalizované pre jasné čítanie</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Priateľské obrazovkové bezpätkové písmo so zaoblenou otvorenou textúrou</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Kompaktné geometrické bezpätkové písmo s výraznými proporciami</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Živé kaligrafické pätkové písmo s literárnym charakterom</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Čisté humanistické bezpätkové písmo s výbornou čitateľnosťou rozhrania</string>
+    <string name="setting_wear_note_show_cover">Obal albumu</string>
+    <string name="aod_element_artwork">Grafika</string>
+    <string name="aod_element_clock">Hodiny</string>
+    <string name="aod_element_track_info">Informácie o skladbe</string>
+    <string name="aod_element_transport">Ovládání prehrávania</string>
+    <string name="aod_element_progress">Priebeh</string>
+    <string name="aod_element_up_next">Nasleduje</string>
+    <string name="aod_section_artwork">Grafika</string>
+    <string name="aod_control_tint">Odstín</string>
+    <string name="aod_control_brightness">Jas</string>
+    <string name="aod_control_art_treatment">Úprava</string>
+    <string name="aod_control_art_opacity">Krytí</string>
+    <string name="mini_button_control_visibility">Zobraziť</string>
+    <string name="mini_button_control_arrangement">Rozloženie</string>
+    <string name="mini_button_control_shape">Tvar</string>
+    <string name="mini_button_control_background">Pozadí</string>
+    <string name="mini_button_control_opacity">Krytí</string>
+    <string name="mini_button_assign_action">Priradiť akcie</string>
+    <string name="mini_button_gestures_note">Na prehrávači potiahnite nahor, nadol a doľava. Potiahnutie doprava je vždy systémové gesto na zatvorenie a nikdy sa nezachytáva.</string>
+    <string name="setting_wear_chat_cover_shape">Tvar avatara chatu</string>
+    <string name="setting_wear_chat_show_cover">Obal albumu</string>
+    <string name="setting_wear_metadata_cover_shape">Tvar obalu metadát</string>
+    <string name="setting_wear_metadata_show_cover">Obal albumu</string>
+    <string-array name="wear_text_case_entries">
+        <item>Normální</item>
+        <item>VEĽKÉ PÍSMENÁ</item>
+        <item>malé písmená</item>
+        <item>Velká počáteční písmená</item>
+    </string-array>
+    <string name="wear_text_font_follow">Použiť globálne písmo</string>
+    <string name="category_wf_typography_track_time">Čas skladby</string>
+    <string name="setting_wear_track_time_font">Písmo času skladby</string>
+    <string name="wear_track_time_font_follow">Použiť podľa návrhu</string>
+    <string name="setting_wear_track_time_font_weight">Hrúbka času skladby</string>
+    <string name="setting_wear_track_time_font_italic">Kurzíva času skladby</string>
+    <string name="setting_wear_track_time_font_scale">Veľkosť času skladby</string>
+    <string name="setting_wear_track_time_font_opacity">Krytie času skladby</string>
+    <string name="setting_wear_track_time_font_tracking">Rozostupy písmen času skladby</string>
+    <string-array name="album_art_filter_entries">
+        <item>Žiadny</item>
+        <item>Černobílý</item>
+        <item>Teplý</item>
+        <item>Studený</item>
+        <item>Zlatá hodina</item>
+        <item>Rosé</item>
+        <item>Vintage film</item>
+        <item>Vybledlý film</item>
+        <item>Matný</item>
+        <item>Živý</item>
+        <item>Úder</item>
+        <item>Pastel</item>
+        <item>Sépie</item>
+        <item>Kyanotypie</item>
+        <item>Tyrkysová a oranžová</item>
+        <item>Vysoký kontrast</item>
+        <item>Mäkké světlo</item>
+        <item>Noc</item>
+    </string-array>
+    <string name="queue_item_now_playing">Práve sa prehráva</string>
+    <string name="queue_item_unknown_title">Neznáma skladba</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Rad prehrávania · %1$d skladba</item>
+        <item quantity="other">Rad prehrávania · %1$d skladieb</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Farba základu akcentu</string>
+    <string name="setting_wear_accent_floor_custom_color">Vlastná farba základu</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Vyberte farbu použitú, keď je Farba základu akcentu nastavená na Vlastnú farbu</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Akcent alba</item>
+        <item>Sekundárna farba alba</item>
+        <item>Terciárna farba alba</item>
+        <item>Vlastní farba</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Neutrálne veľmi čitateľné bezpätkové písmo rozhrania pre každodenné čítanie</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Tvary písmen zamerané na prístupnosť s výraznými rozdielmi, ktoré zostávajú jasné v malých veľkostiach</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Jemne zaoblené geometrické bezpätkové písmo — sebavedomé a priateľské</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Kompaktné humanistické bezpätkové písmo, ktoré dáva dlhým názvom viac priestoru</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Vysoké kondenzované zobrazovacie písmo s výraznou plagátovou energiou</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Súčasné pätkové písmo navrhnuté pre pohodlné dlhé čítanie</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Výrazné mäkké pätkové písmo s teplom a charakterom</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Retrofuturistické monospace písmo s technickým ostrím</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Hutné ťažké zobrazovacie písmo pre maximálny kontrast</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Plynulé ručne písané písmo so živým osobným dojmom</string>
+    <string name="setting_wear_artist_text_mode">Správanie textu interpreta</string>
+    <string name="setting_wear_album_art_source">Zdroj obrázku alba</string>
+    <string name="setting_user_font">Môj vlastný font</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Importovať z tohto telefónu súbor .ttf alebo .otf</string>
+    <string name="setting_user_font_loaded">%1$s · ťuknutím nahradit nebo odstrániť</string>
+    <string name="user_font_pick">Vybrať súbor fontu</string>
+    <string name="user_font_replace">Nahradiť</string>
+    <string name="user_font_remove">Odstrániť</string>
+    <string name="user_font_imported">„%1$s“ bol importovaný. Vyberte ho v ľubovoľnom zozname fontov; práve sa odosiela do hodiniek.</string>
+    <string name="user_font_removed">Importovaný font bol odstránený.</string>
+    <string name="user_font_error_too_large">Veľkosť súboru je %1$s. Font musí mať menej než %2$s, aby sa mohol rýchlo dostať do hodiniek.</string>
+    <string name="user_font_error_not_a_font">Tento súbor nie je font, ktorý by telefón dokázal prečítať. TrueType a OpenType (.ttf, .otf) fungujú; webové fonty (.woff, .woff2) nie.</string>
+    <string name="user_font_error_unreadable">Tento súbor sa nepodarilo prečítať. Skúste ho vybrať znova alebo ho najprv skopírujte do tohto telefónu.</string>
+    <string name="user_font_not_shareable">Motívy používajúce váš vlastný font zostávajú v tomto telefóne</string>
+    <string name="setting_custom_album_art_image">Obrázok k použitie</string>
+    <string name="setting_custom_album_art_folder">Priečinok, z ktorého sa berú obrázky</string>
+    <string name="setting_custom_album_art_none">Zatiaľ nevybrané — ťuknutím vybrať</string>
+    <string name="setting_custom_album_art_chosen">%1$s · ťuknutím změnit</string>
+    <string name="custom_album_art_image_set">Tento obrázok sa teraz zobrazí za prehrávačom.</string>
+    <string name="custom_album_art_folder_set">Pre každú skladbu sa vykreslí obrázok z tohto priečinka.</string>
+    <string name="custom_album_art_error">To sa nepodarilo otvoriť. Vyberte to znova alebo zvoľte niečo z vlastného úložiska tohto telefónu.</string>
+    <string name="custom_album_art_not_shareable">Motívy používajúce vaše vlastné obrázky zostávajú v tomto telefóne</string>
+    <string name="setting_wear_text_block_align">Zarovnanie textu</string>
+    <string name="setting_wear_text_block_align_description">Ku ktorému okraju sa text skladby zarovnáva. Voľba Podľa ciferníka zachová zarovnanie, pre ktoré bol každý ciferník navrhnutý.</string>
+    <string name="setting_wear_text_block_position">Poloha textu</string>
+    <string name="setting_wear_text_block_position_description">Kde sa na obrazovke nachádza text skladby. Voľba Podľa ciferníka zachová polohu, pre ktorú bol každý ciferník navrhnutý.</string>
+    <string name="setting_online_artwork">Online grafika</string>
+    <string name="setting_online_artwork_description">Umožniť ciferníku zobraziť obrázok vyhľadaný online \u2014 interpreta, ktorý práve hrá, alebo obal albumu pre prehrávač, ktorý žiadny obrázok nezverejňuje. Telefón vyhľadáva vo verejnom katalógu Deezer a výsledok ukladá do vyrovnávacej pamäte; odosiela sa iba názov skladby a interpreta a nič sa nevyhľadáva, kým nie je ciferník nastavený na jeden z týchto zdrojov. Pri vypnutí sa použije grafika poskytovaná prehrávačom.</string>
 </resources>

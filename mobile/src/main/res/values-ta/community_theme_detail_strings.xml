@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">தீம் விவரங்கள்</string>
+    <string name="community_theme_detail_preview_screen">முன்னோட்டத் திரை</string>
+    <string name="community_theme_detail_surface_player">பிளேயர்</string>
+    <string name="community_theme_detail_surface_aod">எப்போதும் இயங்கும்</string>
+    <string name="community_theme_detail_surface_volume">ஒலியளவு</string>
+    <string name="community_theme_detail_surface_progress">முன்னேற்றம்</string>
+    <string name="community_theme_detail_surface_quick_panel">விரைவு பலகம்</string>
+    <string name="community_theme_detail_surface_queue">வரிசை</string>
+    <string name="community_theme_detail_preview_label">%1$s முன்னோட்டம்</string>
+    <string name="community_theme_detail_preview_description">%2$s திரையில் %1$s முன்னோட்டம்</string>
+    <string name="community_theme_detail_preview_privacy">உங்கள் தற்போதைய ஆல்பம் அட்டை உங்கள் தொலைபேசியில் உள்ள இந்த முன்னோட்டத்தில் மட்டும் தோன்றலாம். அது ஒருபோதும் பதிவேற்றப்படாது; மாதிரி உரையும் நேரமும் தொடர்ந்து பயன்படுத்தப்படும்.</string>
+    <string name="community_theme_detail_information">தீம் தகவல்</string>
+    <string name="community_theme_detail_byline">%1$s மூலம்</string>
+    <string name="community_theme_detail_layout">அடிப்படை அமைப்பு</string>
+    <string name="community_theme_detail_revision">திருத்தம்</string>
+    <string name="community_theme_detail_minimum_version">குறைந்தபட்ச Svartifoss பதிப்பு</string>
+    <string name="community_theme_detail_published">வெளியிடப்பட்டது</string>
+    <string name="community_theme_detail_visual_settings">காட்சியமைப்பு அமைப்புகள்</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s காட்சி அமைப்பு</item>
+        <item quantity="other">%1$s காட்சி அமைப்புகள்</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">கிடைக்கவில்லை</string>
+    <string name="community_theme_detail_add_apply">சேர்த்து பயன்படுத்து</string>
+    <string name="community_theme_detail_remove">தீமை அகற்று</string>
+    <string name="community_theme_detail_remove_title">எனது தீம்களிலிருந்து “%1$s” ஐ அகற்றவா?</string>
+    <string name="community_theme_detail_remove_message">சேமிக்கப்பட்ட இந்த நகலும் நீங்கள் செய்த மாற்றங்களும் நிரந்தரமாக அகற்றப்படும். இது தற்போது பயன்படுத்தப்பட்டிருந்தால், உங்கள் கடிகாரம் அதன் உள்ளமைந்த அடிப்படை அமைப்புக்கு திரும்பும்.</string>
+    <string name="community_theme_detail_removed">எனது தீம்களிலிருந்து தீம் அகற்றப்பட்டது</string>
+    <string name="community_theme_detail_remove_error">இந்த தீமை அகற்ற முடியவில்லை</string>
+    <string name="community_theme_detail_like">விருப்பம்</string>
+    <string name="community_theme_detail_unlike">விருப்பத்தை நீக்கு</string>
+    <string name="community_theme_detail_like_loading">சரிபார்க்கிறது…</string>
+    <string name="community_theme_detail_like_description">%1$s-ஐ விரும்பு. %2$s</string>
+    <string name="community_theme_detail_unlike_description">%1$s மீதான விருப்பத்தை நீக்கு. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google உள்நுழைவு ரத்து செய்யப்பட்டது. உங்கள் விருப்பம் சேமிக்கப்படவில்லை.</string>
+    <string name="community_theme_detail_like_error">உங்கள் விருப்பத்தைச் சேமிக்க முடியவில்லை. இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="community_theme_detail_like_not_ready">இந்த தீமுக்கான விருப்பங்கள் இன்னும் தயாராகவில்லை. அடுத்த வெளியீட்டுக்குப் பிறகு Community themes-ஐ புதுப்பிக்கவும்.</string>
+    <string name="community_theme_detail_like_saved">உங்கள் விருப்பம் சேமிக்கப்பட்டது. பொது எண்ணிக்கைகள் அடுத்த பட்டியல் வெளியீட்டில் புதுப்பிக்கப்படும்.</string>
+    <string name="community_theme_detail_unlike_saved">உங்கள் விருப்பம் அகற்றப்பட்டது. பொது எண்ணிக்கைகள் அடுத்த பட்டியல் வெளியீட்டில் புதுப்பிக்கப்படும்.</string>
+    <string name="community_theme_detail_apply_existing">இந்த தீம் ஏற்கனவே எனது தீம்களில் உள்ளது மற்றும் உங்கள் கடிகாரத்தில் பயன்படுத்தப்பட்டது</string>
+    <string name="community_theme_detail_requires_app_version">இந்த தீமைச் சேர்க்க முன் Svartifoss %1$s தேவை.</string>
+    <string name="community_theme_detail_load_error">இந்த தீமின் விவரங்களை ஏற்ற முடியவில்லை. Community themes-க்கு திரும்பி மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="community_theme_detail_profile_mismatch">பதிவிறக்கப்பட்ட சுயவிவரம் இந்த தீமின் பொது விவரங்களுடன் பொருந்தவில்லை. Community themes-க்கு திரும்பி மீண்டும் முயற்சிக்கவும்.</string>
+    <string name="community_theme_detail_screenshot_description">ஆசிரியரின் கடிகாரத்தில் இந்த தீமின் படம்</string>
+    <string name="community_theme_detail_source_author">ஆசிரியரின் கடிகாரம்</string>
+    <string name="community_theme_detail_source_rendered">உருவாக்கப்பட்ட முன்னோட்டம்</string>
+    <string name="community_theme_detail_show_rendered">உருவாக்கப்பட்ட முன்னோட்டத்தை காட்டு</string>
+    <string name="community_theme_detail_show_author">ஆசிரியரின் படத்தை காட்டு</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

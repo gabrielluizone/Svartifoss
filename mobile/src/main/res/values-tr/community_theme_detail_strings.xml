@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Tema ayrıntıları</string>
+    <string name="community_theme_detail_preview_screen">Önizleme ekranı</string>
+    <string name="community_theme_detail_surface_player">Oynatıcı</string>
+    <string name="community_theme_detail_surface_aod">Her zaman açık</string>
+    <string name="community_theme_detail_surface_volume">Ses</string>
+    <string name="community_theme_detail_surface_progress">İlerleme</string>
+    <string name="community_theme_detail_surface_quick_panel">Hızlı panel</string>
+    <string name="community_theme_detail_surface_queue">Kuyruk</string>
+    <string name="community_theme_detail_preview_label">%1$s önizlemesi</string>
+    <string name="community_theme_detail_preview_description">%2$s ekranında %1$s önizlemesi</string>
+    <string name="community_theme_detail_preview_privacy">Geçerli albüm kapağınız yalnızca telefonunuzdaki bu önizlemede görünebilir. Hiçbir zaman yüklenmez; örnek metin ve zamanlama kullanılmaya devam eder.</string>
+    <string name="community_theme_detail_information">Tema bilgileri</string>
+    <string name="community_theme_detail_byline">%1$s tarafından</string>
+    <string name="community_theme_detail_layout">Temel düzen</string>
+    <string name="community_theme_detail_revision">Revizyon</string>
+    <string name="community_theme_detail_minimum_version">Minimum Svartifoss sürümü</string>
+    <string name="community_theme_detail_published">Yayınlandı</string>
+    <string name="community_theme_detail_visual_settings">Görsel ayarlar</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s görsel ayar</item>
+        <item quantity="other">%1$s görsel ayar</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Kullanılamıyor</string>
+    <string name="community_theme_detail_add_apply">Ekle ve uygula</string>
+    <string name="community_theme_detail_remove">Temayı kaldır</string>
+    <string name="community_theme_detail_remove_title">“%1$s” Temalarımdan kaldırılsın mı?</string>
+    <string name="community_theme_detail_remove_message">Kaydedilmiş bu kopya ve üzerinde yaptığınız tüm düzenlemeler kalıcı olarak silinecek. Şu anda uygulanıyorsa saatiniz yerleşik temel düzenine döner.</string>
+    <string name="community_theme_detail_removed">Tema Temalarımdan kaldırıldı</string>
+    <string name="community_theme_detail_remove_error">Bu tema kaldırılamadı</string>
+    <string name="community_theme_detail_like">Beğen</string>
+    <string name="community_theme_detail_unlike">Beğeniyi kaldır</string>
+    <string name="community_theme_detail_like_loading">Kontrol ediliyor…</string>
+    <string name="community_theme_detail_like_description">%1$s temasını beğen. %2$s</string>
+    <string name="community_theme_detail_unlike_description">%1$s beğenisini kaldır. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Google oturum açma iptal edildi. Beğeniniz kaydedilmedi.</string>
+    <string name="community_theme_detail_like_error">Beğeniniz kaydedilemedi. Bağlantınızı kontrol edin ve tekrar deneyin.</string>
+    <string name="community_theme_detail_like_not_ready">Bu temanın beğenileri henüz hazır değil. Bir sonraki yayından sonra Topluluk temalarını yenileyin.</string>
+    <string name="community_theme_detail_like_saved">Beğeniniz kaydedildi. Herkese açık sayılar bir sonraki katalog yayınıyla güncellenir.</string>
+    <string name="community_theme_detail_unlike_saved">Beğeniniz kaldırıldı. Herkese açık sayılar bir sonraki katalog yayınıyla güncellenir.</string>
+    <string name="community_theme_detail_apply_existing">Bu tema zaten Temalarımda ve saatinize uygulandı</string>
+    <string name="community_theme_detail_requires_app_version">Bu temanın eklenebilmesi için Svartifoss %1$s gerekir.</string>
+    <string name="community_theme_detail_load_error">Bu temanın ayrıntıları yüklenemedi. Topluluk temalarına dönün ve tekrar deneyin.</string>
+    <string name="community_theme_detail_profile_mismatch">İndirilen profil bu temanın herkese açık ayrıntılarıyla eşleşmiyor. Topluluk temalarına dönün ve tekrar deneyin.</string>
+    <string name="community_theme_detail_screenshot_description">Bu temanın yazarının saatindeki fotoğrafı</string>
+    <string name="community_theme_detail_source_author">Yazarın saati</string>
+    <string name="community_theme_detail_source_rendered">Oluşturulan önizleme</string>
+    <string name="community_theme_detail_show_rendered">Oluşturulan önizlemeyi göster</string>
+    <string name="community_theme_detail_show_author">Yazarın fotoğrafını göster</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 05-09-2026**
+**Last updated: 06-09-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -592,9 +592,16 @@ information from children.
 
 ## Open source
 
-Svartifoss is free/open-source software (GPLv3). Anyone can inspect the full
-source code — including everything described in this policy — at:
-[https://github.com/gabrielluizone/Svartifoss](https://github.com/gabrielluizone/Svartifoss)
+Svartifoss is free/libre and open-source software, licensed under the GPLv3.
+"Free" here means freedom, not price: anyone can inspect, build, run and
+redistribute the full source code — including everything described in this
+policy — at no cost, at
+[https://github.com/gabrielluizone/Svartifoss](https://github.com/gabrielluizone/Svartifoss).
+Any price on a store listing pays only for the convenience of a pre-built,
+automatically updated binary; it does not restrict the rights the GPLv3 grants.
+The libraries the app links that are not themselves open source, and the
+licensing that covers them, are described in
+[LICENSING.md](https://github.com/gabrielluizone/Svartifoss/blob/master/LICENSING.md).
 
 ## Changes to this policy
 

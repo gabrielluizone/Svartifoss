@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  `github` (sideload) flavor only. The in-app self-updater downloads the newer APK from GitHub
+  Releases and hands it to the system package installer; Google Play forbids this, so none of it
+  is present in the `play` flavor. See docs/play-store-migration-plan.md.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Lets the sideloaded app install its own downloaded update APK (still gated on the user's
+         one-time "install unknown apps" grant). -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <application>
+
+        <activity
+            android:name=".update.UpdateActivity"
+            android:exported="false"
+            android:label="@string/update_screen_title" />
+
+        <receiver
+            android:name=".update.PhoneInstallResultReceiver"
+            android:exported="false">
+            <intent-filter>
+                <!-- Fires in the NEW app version right after a successful self-update - the
+                     reliable place to clean the cached APK and dismiss the install notice. -->
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>

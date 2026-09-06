@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>אוקיינוס</item>
+        <item>שקיעה</item>
+        <item>זרקור מרכזי</item>
+        <item>וילון זכוכית</item>
+        <item>קטיפה</item>
+        <item>זרקור נואר</item>
+        <item>שטיפת קרח</item>
+        <item>פריחת ורד</item>
+        <item>מנסרה</item>
+        <item>שפת סהר</item>
+        <item>רצועות גאות ושפל</item>
+        <item>שרוול נייר</item>
+        <item>עליית פנס</item>
+        <item>מיראז׳ מפוצל</item>
+        <item>רשת שקטה</item>
+        <item>נוקטורן</item>
+        <item>מחקר עננים</item>
+        <item>בריכות נוזליות</item>
+        <item>מונולית צבע</item>
+        <item>גוון מפוצל</item>
+        <item>מעבר צבע</item>
+        <item>דו־גוני</item>
+        <item>רצועות</item>
+        <item>וינייטה</item>
+        <item>גרפיט</item>
+        <item>קולנוע</item>
+        <item>אקרילי</item>
+        <item>רשת</item>
+        <item>ערפילית</item>
+        <item>ביולומינסנציה</item>
+        <item>ססגוני</item>
+        <item>מסלול</item>
+        <item>שטיפת דיו</item>
+        <item>פריחה</item>
+        <item>פיורד</item>
+        <item>מטריצת נקודות</item>
+        <item>קווי סריקה</item>
+        <item>רדאר</item>
+        <item>מתאר</item>
+        <item>רב־פאות</item>
+        <item>מילוי אלבום</item>
+        <item>מילוי משני</item>
+        <item>מילוי שלישוני</item>
+        <item>זכוכית</item>
+        <item>חצות</item>
+        <item>עשן</item>
+        <item>קו גאות</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>טחב</item>
+        <item>ערפל לבנדר</item>
+        <item>דובדבן</item>
+        <item>ים עמוק</item>
+        <item>אבק</item>
+        <item>הלבנה</item>
+        <item>אור ירח</item>
+        <item>חלום</item>
+        <item>אינפרה־אדום</item>
+        <item>יער</item>
+        <item>כסף</item>
+        <item>ממתק</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>עמעום עליון</item>
+        <item>זרקור מרכזי</item>
+        <item>צל אלכסוני</item>
+        <item>וילון שמאלי</item>
+        <item>וילון ימני</item>
+        <item>רצועה מרכזית</item>
+        <item>עמעום צולב</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>עלה הפוך</item>
+        <item>טיפה הפוכה</item>
+        <item>חלוק אבן</item>
+        <item>קשת</item>
+        <item>מגן</item>
+        <item>קשת הפוכה</item>
+        <item>מגן הפוך</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>לחישה</item>
+        <item>קורן</item>
+        <item>הצפה</item>
+        <item>נצנוץ</item>
+        <item>זוהר עמוק</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>קו מתאר לאלבום</item>
+        <item>מעבר צבע באלבום</item>
+        <item>צבע אלבום משני</item>
+        <item>זכוכית אלבום</item>
+        <item>צבע אלבום שלישוני</item>
+        <item>קו מתאר ניאון</item>
+    </string-array>
+</resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Theme-Details</string>
+    <string name="community_theme_detail_preview_screen">Vorschaubildschirm</string>
+    <string name="community_theme_detail_surface_player">Player</string>
+    <string name="community_theme_detail_surface_aod">Always-on</string>
+    <string name="community_theme_detail_surface_volume">Lautstärke</string>
+    <string name="community_theme_detail_surface_progress">Fortschritt</string>
+    <string name="community_theme_detail_surface_quick_panel">Schnellaktionspanel</string>
+    <string name="community_theme_detail_surface_queue">Warteschlange</string>
+    <string name="community_theme_detail_preview_label">Vorschau von %1$s</string>
+    <string name="community_theme_detail_preview_description">Vorschau von %1$s auf dem Bildschirm %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Dein aktuelles Albumcover kann nur in dieser Vorschau auf deinem Smartphone erscheinen. Es wird niemals hochgeladen; Beispieltext und Zeitangaben bleiben in Verwendung.</string>
+    <string name="community_theme_detail_information">Theme-Informationen</string>
+    <string name="community_theme_detail_byline">Von %1$s</string>
+    <string name="community_theme_detail_layout">Basislayout</string>
+    <string name="community_theme_detail_revision">Revision</string>
+    <string name="community_theme_detail_minimum_version">Mindestens erforderliche Svartifoss-Version</string>
+    <string name="community_theme_detail_published">Veröffentlicht</string>
+    <string name="community_theme_detail_visual_settings">Visuelle Einstellungen</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s visuelle Einstellung</item>
+        <item quantity="other">%1$s visuelle Einstellungen</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Nicht verfügbar</string>
+    <string name="community_theme_detail_add_apply">Hinzufügen und anwenden</string>
+    <string name="community_theme_detail_remove">Theme entfernen</string>
+    <string name="community_theme_detail_remove_title">„%1$s“ aus Meine Themes entfernen?</string>
+    <string name="community_theme_detail_remove_message">Diese gespeicherte Kopie und alle daran vorgenommenen Änderungen werden dauerhaft entfernt. Falls sie derzeit angewendet ist, kehrt deine Uhr zu ihrem integrierten Basislayout zurück.</string>
+    <string name="community_theme_detail_removed">Theme aus Meine Themes entfernt</string>
+    <string name="community_theme_detail_remove_error">Dieses Theme konnte nicht entfernt werden</string>
+    <string name="community_theme_detail_like">Gefällt mir</string>
+    <string name="community_theme_detail_unlike">Gefällt mir nicht mehr</string>
+    <string name="community_theme_detail_like_loading">Wird geprüft…</string>
+    <string name="community_theme_detail_like_description">%1$s gefällt mir. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Gefällt mir für %1$s entfernen. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Die Google-Anmeldung wurde abgebrochen. Dein Gefällt mir wurde nicht gespeichert.</string>
+    <string name="community_theme_detail_like_error">Dein Gefällt mir konnte nicht gespeichert werden. Prüfe deine Verbindung und versuche es erneut.</string>
+    <string name="community_theme_detail_like_not_ready">Gefällt-mir-Angaben für dieses Theme sind noch nicht verfügbar. Aktualisiere die Community-Themes nach der nächsten Veröffentlichung.</string>
+    <string name="community_theme_detail_like_saved">Dein Gefällt mir wurde gespeichert. Die öffentlichen Zähler werden mit der nächsten Katalogveröffentlichung aktualisiert.</string>
+    <string name="community_theme_detail_unlike_saved">Dein Gefällt mir wurde entfernt. Die öffentlichen Zähler werden mit der nächsten Katalogveröffentlichung aktualisiert.</string>
+    <string name="community_theme_detail_apply_existing">Dieses Theme befindet sich bereits unter Meine Themes und wurde auf deine Uhr angewendet</string>
+    <string name="community_theme_detail_requires_app_version">Für dieses Theme ist Svartifoss %1$s erforderlich, bevor es hinzugefügt werden kann.</string>
+    <string name="community_theme_detail_load_error">Die Details dieses Themes konnten nicht geladen werden. Kehre zu den Community-Themes zurück und versuche es erneut.</string>
+    <string name="community_theme_detail_profile_mismatch">Das heruntergeladene Profil stimmt nicht mit den öffentlichen Details dieses Themes überein. Kehre zu den Community-Themes zurück und versuche es erneut.</string>
+    <string name="community_theme_detail_screenshot_description">Foto dieses Themes auf der Uhr des Autors</string>
+    <string name="community_theme_detail_source_author">Uhr des Autors</string>
+    <string name="community_theme_detail_source_rendered">Generierte Vorschau</string>
+    <string name="community_theme_detail_show_rendered">Generierte Vorschau anzeigen</string>
+    <string name="community_theme_detail_show_author">Foto des Autors anzeigen</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

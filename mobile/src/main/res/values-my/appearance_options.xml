@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>သမုဒ္ဒရာ</item>
+        <item>နေဝင်ချိန်</item>
+        <item>အလယ် Spotlight</item>
+        <item>ဖန် veil</item>
+        <item>Velvet</item>
+        <item>Noir spotlight</item>
+        <item>Ice wash</item>
+        <item>နှင်းဆီပွင့်</item>
+        <item>Prism</item>
+        <item>လခြမ်း အနား</item>
+        <item>Tidal တန်းများ</item>
+        <item>စက္ကူအဖုံး</item>
+        <item>မီးအိမ်တက်ခြင်း</item>
+        <item>ခွဲထားသော Mirage</item>
+        <item>ငြိမ်သက် grid</item>
+        <item>Nocturne</item>
+        <item>Cloud study</item>
+        <item>အရည်ကန်များ</item>
+        <item>အရောင် monolith</item>
+        <item>Split tone</item>
+        <item>Gradient</item>
+        <item>နှစ်ရောင်</item>
+        <item>အရောင်တန်းများ</item>
+        <item>Vignette</item>
+        <item>Graphite</item>
+        <item>Cinema</item>
+        <item>Acrylic</item>
+        <item>Mesh</item>
+        <item>Nebula</item>
+        <item>ဇီဝအလင်းရောင်</item>
+        <item>ရောင်စုံတောက်ပ</item>
+        <item>ပတ်လမ်း</item>
+        <item>Ink wash</item>
+        <item>ပန်းပွင့်ခြင်း</item>
+        <item>Fjord</item>
+        <item>Dot matrix</item>
+        <item>Scanlines</item>
+        <item>Radar</item>
+        <item>Contour</item>
+        <item>မျက်နှာပြင်ခွဲ</item>
+        <item>အယ်လ်ဘမ် ဖြည့်ခြင်း</item>
+        <item>ဒုတိယ ဖြည့်ခြင်း</item>
+        <item>တတိယ ဖြည့်ခြင်း</item>
+        <item>ဖန်</item>
+        <item>သန်းခေါင်</item>
+        <item>မီးခိုး</item>
+        <item>ဒီရေမျဉ်း</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>မှိုက်</item>
+        <item>Lavender မြူ</item>
+        <item>Cherry</item>
+        <item>ပင်လယ်နက်</item>
+        <item>ဖုန်မှုန့်</item>
+        <item>Bleach</item>
+        <item>လရောင်</item>
+        <item>အိပ်မက်</item>
+        <item>Infrared</item>
+        <item>တော</item>
+        <item>ငွေရောင်</item>
+        <item>Candy</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>အပေါ် fade</item>
+        <item>အလယ် Spotlight</item>
+        <item>ထောင့်ဖြတ်အရိပ်</item>
+        <item>ဘယ်ဘက် ကန့်လန့်ကာ</item>
+        <item>ညာဘက် ကန့်လန့်ကာ</item>
+        <item>အလယ် တန်း</item>
+        <item>Crossfade</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>ပြောင်းပြန်ရွက်</item>
+        <item>ပြောင်းပြန်အစက်</item>
+        <item>ကျောက်စရစ်</item>
+        <item>ကွေး</item>
+        <item>ဒိုင်း</item>
+        <item>ပြောင်းပြန်ကွေး</item>
+        <item>ပြောင်းပြန်ဒိုင်း</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>တိုးတိုး</item>
+        <item>Radiant</item>
+        <item>ပြည့်လျှံ</item>
+        <item>တဖျတ်ဖျတ်</item>
+        <item>နက်ရှိုင်းတောက်ပမှု</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>အယ်လ်ဘမ် အနားသတ်</item>
+        <item>အယ်လ်ဘမ် gradient</item>
+        <item>ဒုတိယ အယ်လ်ဘမ်အရောင်</item>
+        <item>အယ်လ်ဘမ် ဖန်</item>
+        <item>တတိယ အယ်လ်ဘမ်အရောင်</item>
+        <item>Neon အနားသတ်</item>
+    </string-array>
+</resources>

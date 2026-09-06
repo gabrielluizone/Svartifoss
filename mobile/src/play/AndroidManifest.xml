@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  `play` flavor. Belt-and-suspenders: if any transitive dependency declares
+  REQUEST_INSTALL_PACKAGES, strip it, so the Play Store artifact never requests the ability to
+  install packages. The self-updater code and components are simply absent from this flavor
+  (they live in src/github/). See docs/play-store-migration-plan.md.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission
+        android:name="android.permission.REQUEST_INSTALL_PACKAGES"
+        tools:node="remove" />
+
+</manifest>

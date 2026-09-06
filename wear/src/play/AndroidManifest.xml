@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  `play` flavor. Belt-and-suspenders: strip REQUEST_INSTALL_PACKAGES if any transitive dependency
+  declares it. The watch self-update components are simply absent from this flavor (src/github/).
+  See docs/play-store-migration-plan.md.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission
+        android:name="android.permission.REQUEST_INSTALL_PACKAGES"
+        tools:node="remove" />
+
+</manifest>

@@ -185,4 +185,21 @@
 
     <string name="metadata_about">সম্পর্কে</string>
     <string name="metadata_source">চলছে এখানে</string>
+    <string name="action_name_open_quick_actions_panel">কুইক অ্যাকশন প্যানেল খুলুন</string>
+    <string name="action_name_fast_forward">ফাস্ট ফরওয়ার্ড</string>
+    <string name="action_name_rewind">রিওয়াইন্ড</string>
+    <string name="action_name_set_speed">প্লেব্যাক স্পিড সেট করুন</string>
+    <string name="action_name_seek_position">ট্র্যাকের অবস্থানে যান</string>
+    <string name="action_name_set_volume">ভলিউম সেট করুন</string>
+    <string name="action_name_set_shuffle">শাফল সেট করুন</string>
+    <string name="action_name_set_repeat">রিপিট সেট করুন</string>
+    <string name="action_name_open_volume_screen">ভলিউম স্ক্রিন খুলুন</string>
+    <string name="action_name_open_progress_screen">প্রগ্রেস স্ক্রিন খুলুন</string>
+    <string name="action_name_open_face_picker">ফেস পিকার খুলুন</string>
+    <string name="action_name_close_watch_app">ঘড়ির অ্যাপ বন্ধ করুন</string>
+    <string name="volume_screen_title">ভলিউম</string>
+    <string name="progress_screen_title">অগ্রগতি</string>
+    <string name="progress_screen_cancel_seek">সিক বাতিল করুন</string>
+    <string name="progress_screen_skip_back">%1$d সেকেন্ড পিছিয়ে যান</string>
+    <string name="progress_screen_skip_forward">%1$d সেকেন্ড এগিয়ে যান</string>
 </resources>

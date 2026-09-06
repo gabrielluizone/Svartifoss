@@ -185,4 +185,21 @@
 
     <string name="metadata_about">O aplikácii</string>
     <string name="metadata_source">Prehráva sa v</string>
+    <string name="action_name_open_quick_actions_panel">Otvoriť panel rýchlych akcií</string>
+    <string name="action_name_fast_forward">Rychle vpřed</string>
+    <string name="action_name_rewind">Pretočiť zpět</string>
+    <string name="action_name_set_speed">Nastaviť rýchlosť prehrávania</string>
+    <string name="action_name_seek_position">Prejsť na polohu skladby</string>
+    <string name="action_name_set_volume">Nastaviť hlasitosť</string>
+    <string name="action_name_set_shuffle">Nastaviť náhodné prehrávanie</string>
+    <string name="action_name_set_repeat">Nastaviť opakovanie</string>
+    <string name="action_name_open_volume_screen">Otvoriť obrazovku hlasitosti</string>
+    <string name="action_name_open_progress_screen">Otvoriť obrazovku priebehu</string>
+    <string name="action_name_open_face_picker">Otvoriť výber ciferníka</string>
+    <string name="action_name_close_watch_app">Zavrieť aplikáciu v hodinkách</string>
+    <string name="volume_screen_title">Hlasitosť</string>
+    <string name="progress_screen_title">Priebeh</string>
+    <string name="progress_screen_cancel_seek">Zrušiť posun</string>
+    <string name="progress_screen_skip_back">Preskočiť o %1$d sekúnd späť</string>
+    <string name="progress_screen_skip_forward">Preskočiť o %1$d sekúnd dopredu</string>
 </resources>

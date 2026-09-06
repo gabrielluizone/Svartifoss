@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Oceán</item>
+        <item>Západ slunce</item>
+        <item>Středový reflektor</item>
+        <item>Skleněný závoj</item>
+        <item>Samet</item>
+        <item>Noirový reflektor</item>
+        <item>Ledový nádech</item>
+        <item>Rozkvět růže</item>
+        <item>Hranol</item>
+        <item>Okraj srpku</item>
+        <item>Přílivové pásy</item>
+        <item>Papírový obal</item>
+        <item>Vzestup lucerny</item>
+        <item>Rozdělený přelud</item>
+        <item>Klidná mřížka</item>
+        <item>Nokturno</item>
+        <item>Studie mraků</item>
+        <item>Tekuté tůně</item>
+        <item>Barevný monolit</item>
+        <item>Rozdělený tón</item>
+        <item>Přechod</item>
+        <item>Dvojtón</item>
+        <item>Pásy</item>
+        <item>Viněta</item>
+        <item>Grafit</item>
+        <item>Kino</item>
+        <item>Akryl</item>
+        <item>Síť</item>
+        <item>Mlhovina</item>
+        <item>Bioluminiscence</item>
+        <item>Duhový</item>
+        <item>Oběžná dráha</item>
+        <item>Inkoustový nádech</item>
+        <item>Květ</item>
+        <item>Fjord</item>
+        <item>Bodová matice</item>
+        <item>Skenovací čáry</item>
+        <item>Radar</item>
+        <item>Kontura</item>
+        <item>Fasetovaný</item>
+        <item>Výplň alba</item>
+        <item>Sekundární výplň</item>
+        <item>Terciární výplň</item>
+        <item>Sklo</item>
+        <item>Půlnoc</item>
+        <item>Kouř</item>
+        <item>Linie přílivu</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Mech</item>
+        <item>Levandulový opar</item>
+        <item>Třešeň</item>
+        <item>Hluboké moře</item>
+        <item>Prach</item>
+        <item>Bělení</item>
+        <item>Měsíční svit</item>
+        <item>Sen</item>
+        <item>Infračervený</item>
+        <item>Les</item>
+        <item>Stříbrný</item>
+        <item>Bonbón</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Horní prolnutí</item>
+        <item>Středový reflektor</item>
+        <item>Diagonální stín</item>
+        <item>Levá opona</item>
+        <item>Pravá opona</item>
+        <item>Středový pás</item>
+        <item>Prolínání</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Obrácený list</item>
+        <item>Obrácená kapka</item>
+        <item>Oblázek</item>
+        <item>Oblouk</item>
+        <item>Štít</item>
+        <item>Obrácený oblouk</item>
+        <item>Obrácený štít</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Šepot</item>
+        <item>Zářivý</item>
+        <item>Záplava</item>
+        <item>Záblesk</item>
+        <item>Hluboká záře</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Obrys alba</item>
+        <item>Přechod alba</item>
+        <item>Sekundární barva alba</item>
+        <item>Sklo alba</item>
+        <item>Terciární barva alba</item>
+        <item>Neonový obrys</item>
+    </string-array>
+</resources>

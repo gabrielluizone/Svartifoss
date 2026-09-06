@@ -1834,6 +1834,11 @@
         <item>Hrvatski</item>
         <item>Bahasa Melayu</item>
         <item>বাংলা</item>
+        <item>မြန်မာ</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>کوردیی ناوەندی</item>
     </string-array>
     <string-array name="app_language_values">
         <item>system</item>
@@ -1877,6 +1882,11 @@
         <item>hr</item>
         <item>ms</item>
         <item>bn</item>
+        <item>my</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>ckb</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2356,4 +2366,463 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <string name="dev_report_copy">Afrita</string>
+    <string name="dev_report_copied">Skýrsla afrituð</string>
+    <string name="dev_watch_snapshot_inspector">Skyndimynd af úrstillingum</string>
+    <string name="dev_watch_snapshot_inspector_description">Það sem raunverulega yrði sent í úrið núna: virkt útlitssvið, áætluð stærð og hvaða óvirku skyndiminni einstakra úrskífa voru fjarlægð til að passa innan marka</string>
+    <string name="dev_data_layer_inspector">Data Layer-skoðari</string>
+    <string name="dev_data_layer_inspector_description">Tengdir Wearable-hnútar og síðasta WatchInfo sem úraforritið svaraði með — hráa ástandið á bak við „Ekkert úr tengt“</string>
+    <string name="dev_media_sessions_inspector">MediaSession-könnuður</string>
+    <string name="dev_media_sessions_inspector_description">Allar MediaSession-lotur sem eru virkar núna, ekki aðeins sú sem er rakin: auglýstar aðgerðir, biðröð og spilunarleið</string>
+    <string name="dev_view_phone_log">Skoða símannál</string>
+    <string name="dev_view_phone_log_description">Endi Timber-annálsins á diski ásamt annál úrins ef „Senda annála“ hefur sótt hann áður</string>
+    <string name="dev_theme_submission_preflight">Forskoðun þemasendingar</string>
+    <string name="dev_theme_submission_preflight_description">Keyrir hvert vistað úrþema í gegnum athugun fyrir samfélagssendingu og nefnir nákvæmu stillinguna sem hindrar það, ef einhverja</string>
+    <string name="dev_appearance_resolution_inspector">Skoðari fyrir útlitsúrlausn</string>
+    <string name="dev_appearance_resolution_inspector_description">Fyrir hvern útlitslykil með gildissvið sýnir þetta hvert fjögurra úrlausnarskrefa vann í raun — skýrt gildi úrskífu, sjálfgefið gildi fyrir hverja úrskífu, eldra altækt gildi eða sjálfgefið gildi skilgreiningar — og gildið sem hvert skilar</string>
+    <string name="action_fast_forward">Spóla áfram</string>
+    <string name="action_rewind">Spóla til baka</string>
+    <string name="action_set_playback_speed">Stilla hraða á %1$s×</string>
+    <string name="action_seek_to_percent">Hoppa í %1$d%%</string>
+    <string name="action_set_volume_percent">Stilla hljóðstyrk á %1$d%%</string>
+    <string name="action_set_shuffle_on">Kveikja á stokkun</string>
+    <string name="action_set_shuffle_off">Slökkva á stokkun</string>
+    <string name="action_set_repeat_off">Slökkva á endurtekningu</string>
+    <string name="action_set_repeat_all">Endurtaka allt</string>
+    <string name="action_set_repeat_one">Endurtaka eitt</string>
+    <string name="group_playback_speed">Spilunarhraði</string>
+    <string name="group_track_position">Staðsetning lags</string>
+    <string name="group_shuffle_mode">Stokkunarhamur</string>
+    <string name="group_repeat_mode">Endurtekningarhamur</string>
+    <string name="group_volume_levels">Hljóðstyrksstig</string>
+    <string name="group_watch_screens">Úrskjáir</string>
+    <string name="group_find_music">Finna og spila</string>
+    <string name="action_open_face_picker">Opna val á úrskífu</string>
+    <string name="action_close_watch_app">Loka úraforriti</string>
+    <string name="hand_gestures">HANDBENDINGAR</string>
+    <string name="hand_gestures_hint">Í boði á samhæfum úrum meðan Svartifoss er opið.</string>
+    <string name="hand_gestures_hint_disconnected">Tengdu úrið og opnaðu Svartifoss á því til að sjá hvort það styður handbendingar.</string>
+    <string name="hand_gestures_hint_outdated">Uppfærðu úraforritið til að sjá hvort þetta úr styður handbendingar.</string>
+    <string name="hand_gestures_hint_unsupported">Þetta úr styður ekki handbendingar, þannig að aðgerð sem er úthlutað hér mun aldrei keyra.</string>
+    <string name="hand_gestures_hint_disabled">Slökkt er á handbendingum á þessu úri. Kveiktu á þeim á úrinu sjálfu í Stillingar \u2192 Bendingar.</string>
+    <string name="hand_gestures_hint_ready">Tilbúið á þessu úri: klíptu tvisvar meðan Svartifoss-spilarinn er opinn.</string>
+    <string name="hand_gesture_how_it_works">Klíptu þumli og vísifingri hratt saman tvisvar með úlnliðinn uppi. Wear OS kallar þetta aðalaðgerðina, þannig að úr frá öðrum framleiðanda gæti notað sína eigin sambærilegu handbendingu.\n\nHún virkar aðeins meðan Svartifoss-spilarinn er opinn á úrinu og skjárinn er kveiktur \u2014 ekki af úrskífunni, ekki yfir biðröðinni eða valmyndinni og ekki á sívakandi skjá. Aðgerðin sem keyrir er sú sem er stillt fyrir það ástand sem spilunin er í þá stundina, svo stilltu hana á báðum Stýringar-síðunum til að hún virki í báðum tilvikum.\n\nBendingin þarf einnig að vera virk í Stillingar \u2192 Bendingar á úrinu sjálfu.</string>
+    <string name="double_pinch">Tvöfalt klíp</string>
+    <string name="icon_selection_search_hint">Leita að táknum</string>
+    <string name="icon_selection_search_empty">Engin tákn passa við leitina þína</string>
+    <string name="open_quick_actions_panel">Opna flýtiaðgerðaspjald</string>
+    <string name="open_volume_screen">Opna hljóðstyrksskjá</string>
+    <string name="open_progress_screen">Opna framvinduskjá</string>
+    <string name="export_config_failed_detail">Ekki tókst að flytja út öryggisafrit: %1$s</string>
+    <string name="backup_selection_title">Velja innihald öryggisafrits</string>
+    <string name="backup_selection_description">Veldu þá hluta Svartifoss sem þú vilt vista. Allt er valið sjálfgefið; óvaldir hlutar haldast óbreyttir þegar öryggisafritið er flutt inn.</string>
+    <string name="backup_selection_select_all">Velja allt</string>
+    <string name="backup_selection_clear_all">Hreinsa allt</string>
+    <string name="backup_selection_export">Flytja út öryggisafrit</string>
+    <string name="backup_selection_empty">Veldu að minnsta kosti eitt atriði</string>
+    <string name="backup_section_buttons">Hnappastillingar</string>
+    <string name="backup_section_buttons_description">Aðgerðir hnappa, krónu og hreyfinga þegar tónlist er í spilun eða stöðvuð.</string>
+    <string name="backup_section_actions">Aðgerðalisti</string>
+    <string name="backup_section_actions_description">Raðaður listi yfir aðgerðir sem birtast í aðgerðavalmynd úrsins.</string>
+    <string name="backup_section_app_settings">Forritsstillingar</string>
+    <string name="backup_section_app_settings_description">Símastillingar, hegðun úrs, tungumál, spilun og samþættingar.</string>
+    <string name="backup_section_watch_appearance">Útlit úrs og þemu</string>
+    <string name="backup_section_watch_appearance_description">Úraútlit, litir, leturfræði, spjöld, AOD og vistuð sérsniðin þemu.</string>
+    <string name="backup_section_playlist_shortcuts">Flýtileiðir lagalista</string>
+    <string name="backup_section_playlist_shortcuts_description">Vistuð tónlist þín og tenglar á plötur, flytjendur, lagalista og aðrar streymisveitur.</string>
+    <string name="backup_section_history">Leitar- og spilunarferill</string>
+    <string name="backup_section_history_description">Nýlegar leitir og nýlega spiluð lög.</string>
+    <string name="backup_section_icons">Hlaðin tákn og myndir</string>
+    <string name="backup_section_icons_description">Sérsniðin aðgerðatákn, forsíður flýtileiða og forritatákn í skyndiminni.</string>
+    <string name="backup_section_privacy">Persónuvernd og tilkynningar</string>
+    <string name="backup_section_privacy_description">Hrunskýrslur, tilkynningar um tilkynningar og önnur samþykkisval sem forritið hefur vistað.</string>
+    <string name="backup_section_local_app_state">Staðbundið ástand forrits</string>
+    <string name="backup_section_local_app_state_description">Núverandi hreimlitur, síðasta staða valmyndar, loknar ábendingar og uppfærslustaða.</string>
+    <string name="backup_section_auxiliary_data">Önnur forritsgögn</string>
+    <string name="backup_section_auxiliary_data_description">Viðbótarstillingar og innri skrár sem forritið á, þar á meðal framtíðargagnageymslur.</string>
+    <string name="pref_numeric_range">Milli %1$d og %2$d.</string>
+    <string name="background_editor_artwork">Umslag</string>
+    <string name="background_editor_layers">Lög</string>
+    <string name="background_editor_layers_count">%1$d af %2$d</string>
+    <string name="background_editor_add_layer">Bæta við lagi</string>
+    <string name="background_editor_reset_layers">Endurstilla</string>
+    <string name="background_editor_empty">Engin lög. Umslagið er sýnt eitt og sér.</string>
+    <string name="background_editor_note">Lagið efst á þessum lista er teiknað yfir allt annað; lagið neðst liggur næst umslaginu.</string>
+    <string name="background_editor_full">Þú getur staflað allt að %1$d lögum.</string>
+    <string name="background_layer_kind_wash">Bakgrunnur</string>
+    <string name="background_layer_kind_shade">Skygging</string>
+    <string name="background_layer_kind_floor">Hreimgrunnur</string>
+    <string name="background_layer_move_up">Færa þetta lag upp</string>
+    <string name="background_layer_move_down">Færa þetta lag niður</string>
+    <string name="background_layer_more">Fleiri valkostir fyrir þetta lag</string>
+    <string name="background_layer_add_title">Bæta við lagi</string>
+    <string name="background_layer_style_title">%1$s-lag</string>
+    <string name="background_layer_opacity">Styrkur</string>
+    <string name="background_layer_color">Litur</string>
+    <string name="background_layer_custom_color">Velja lit</string>
+    <string name="background_layer_duplicate">Afrita</string>
+    <string name="background_layer_remove">Fjarlægja</string>
+    <string name="background_layer_color_default">Sjálfgefið</string>
+    <string name="background_layer_color_album">Plötulitur</string>
+    <string name="background_layer_color_secondary">Annar plötulitur</string>
+    <string name="background_layer_color_tertiary">Þriðji plötulitur</string>
+    <string name="background_layer_color_desaturated">Daufur plötulitur</string>
+    <string name="background_layer_color_black">Svartur</string>
+    <string name="background_layer_color_custom">Sérsniðinn litur</string>
+    <string name="background_layer_reset_title">Endurstilla lögin?</string>
+    <string name="background_layer_reset_message">Lagastaflinn fer aftur í skygginguna og hreimgrunninn sem stillt er á sínum eigin línum, sem er einnig það sem úr með eldri byggingu birtir.</string>
+    <string name="watch_element_progress">Framvinda</string>
+    <string name="watch_element_volume">Hljóðstyrkur</string>
+    <string name="watch_element_quick_panel">Flýtiaðgerðir</string>
+    <string name="watch_element_queue">Biðröð</string>
+    <string name="watch_element_lyrics">Textar</string>
+    <string name="player_section_on_screen">Á skjá</string>
+    <string name="player_element_app_icon">Forritatákn</string>
+    <string name="player_element_controls">Spilunarstýringar</string>
+    <string name="player_element_tap_flash">Snertibliki</string>
+    <string name="player_element_inner_progress">Innri framvinda</string>
+    <string name="player_element_edge_arc">Jaðarbogi</string>
+    <string name="player_element_edge_seek">Leit við jaðar</string>
+    <string name="player_element_clock">Klukka</string>
+    <string name="player_element_cover_art">Umslagsmynd</string>
+    <string name="setting_album_art_filter">Sía fyrir plötuumslag</string>
+    <string name="setting_album_art_filter_description">Nota sjálfstæða litameðferð ofan á hvaða plötuumslagsstíl sem er.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto með sérlega léttri línu fyrir fíngert skjáútlit.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto með léttri, loftkenndri línu og kunnuglegum hlutföllum leturfjölskyldunnar.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto með sterkari miðlungsþykkt fyrir þéttar og læsilegar merkingar.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto með þyngstu kerfisþykktinni fyrir áberandi skjátexta.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto þjappað lárétt til að lengri titlar komist fyrir á minna svæði.</string>
+    <string name="setting_wear_title_font">Leturgerð titils</string>
+    <string name="setting_wear_title_text_case">Stafstaða titils</string>
+    <string name="setting_wear_artist_font">Leturgerð flytjanda</string>
+    <string name="setting_wear_artist_text_case">Stafstaða flytjanda</string>
+    <string name="wear_font_abeezee">ABeeZee</string>
+    <string name="wear_font_abeezee_description">Vinalegt ávalt sans-letur hannað fyrir fyrstu lestrarnám</string>
+    <string name="wear_font_abril_fatface">Abril Fatface</string>
+    <string name="wear_font_abril_fatface_description">Didone-skjáletur með mikilli andstæðu og ritstjórnarlegum þunga</string>
+    <string name="wear_font_acme">Acme</string>
+    <string name="wear_font_acme_description">Traust plakatsans með handskrifuðum teiknimyndabrag</string>
+    <string name="wear_font_alata">Alata</string>
+    <string name="wear_font_alata_description">Rólegt rúmfræðilegt sans með rúmu og jöfnu bili</string>
+    <string name="wear_font_aleo">Aleo</string>
+    <string name="wear_font_aleo_description">Nútímalegt slab-serif með mjúklega ávölum endum</string>
+    <string name="wear_font_alfa_slab_one">Alfa Slab One</string>
+    <string name="wear_font_alfa_slab_one_description">Gríðarlegt slab-serif byggt fyrir áhrifamiklar fyrirsagnir</string>
+    <string name="wear_font_amatic_sc">Amatic SC</string>
+    <string name="wear_font_amatic_sc_description">Mjótt handteiknað letur í litlum hástöfum</string>
+    <string name="wear_font_anton">Anton</string>
+    <string name="wear_font_anton_description">Þétt þjappað sans fyrir háværar fyrirsagnir</string>
+    <string name="wear_font_arvo">Arvo</string>
+    <string name="wear_font_arvo_description">Rúmfræðilegt slab-serif sem helst skýrt í smáum stærðum</string>
+    <string name="wear_font_bangers">Bangers</string>
+    <string name="wear_font_bangers_description">Teiknimyndasögulegt skjáletur með mikilli orku</string>
+    <string name="wear_font_black_ops_one">Black Ops One</string>
+    <string name="wear_font_black_ops_one_description">Stencil-hernaðarlegt skjáletur</string>
+    <string name="wear_font_bree_serif">Bree Serif</string>
+    <string name="wear_font_bree_serif_description">Upprétt serif með hlýjum, óformlegum bogum</string>
+    <string name="wear_font_cabin">Cabin</string>
+    <string name="wear_font_cabin_description">Húmanískt sans með örlítið ávölum hornum</string>
+    <string name="wear_font_chivo">Chivo</string>
+    <string name="wear_font_chivo_description">Grotesk sans með sterkum, beinum formum</string>
+    <string name="wear_font_courier_prime">Courier Prime</string>
+    <string name="wear_font_courier_prime_description">Fágað ritvélarmonospace gert fyrir handrit</string>
+    <string name="wear_font_crete_round">Crete Round</string>
+    <string name="wear_font_crete_round_description">Ávalt slab-serif með mjúkum, bóklegum tón</string>
+    <string name="wear_font_crimson_pro">Crimson Pro</string>
+    <string name="wear_font_crimson_pro_description">Gamaldags bókaserif stillt fyrir langan texta</string>
+    <string name="wear_font_dm_sans">DM Sans</string>
+    <string name="wear_font_dm_sans_description">Rúmfræðilegt sans með lítilli andstæðu og nútímalegum frágangi</string>
+    <string name="wear_font_domine">Domine</string>
+    <string name="wear_font_domine_description">Traust serif teiknað til að standast megintextastærðir</string>
+    <string name="wear_font_exo_2">Exo 2</string>
+    <string name="wear_font_exo_2_description">Nútímalegt tæknilegt sans með hornóttum samskeytum</string>
+    <string name="wear_font_fira_code">Fira Code</string>
+    <string name="wear_font_fira_code_description">Forritunarmonospace með skýrum, aðgreinanlegum táknum</string>
+    <string name="wear_font_inconsolata">Inconsolata</string>
+    <string name="wear_font_inconsolata_description">Húmanískt monospace hannað fyrir kóða á skjá</string>
+    <string name="wear_font_indie_flower">Indie Flower</string>
+    <string name="wear_font_indie_flower_description">Kúlulaga handskrift með ávölum strokum</string>
+    <string name="wear_font_josefin_sans">Josefin Sans</string>
+    <string name="wear_font_josefin_sans_description">Rúmfræðilegt sans með 1920-áratugs vintage-karakter</string>
+    <string name="wear_font_jost">Jost</string>
+    <string name="wear_font_jost_description">Rúmfræðilegt sans í Futura-hefð</string>
+    <string name="wear_font_kanit">Kanit</string>
+    <string name="wear_font_kanit_description">Lykkjulaust taílenskt og latneskt sans með örlitlum halla</string>
+    <string name="wear_font_lexend">Lexend</string>
+    <string name="wear_font_lexend_description">Sans mótað til að draga úr sjónrænu álagi við lestur</string>
+    <string name="wear_font_lobster">Lobster</string>
+    <string name="wear_font_lobster_description">Feitletrað samtengt skriftletur með retro-skiltabrag</string>
+    <string name="wear_font_manrope">Manrope</string>
+    <string name="wear_font_manrope_description">Hálfrúmfræðilegt sans sem vegur saman hlýju og nákvæmni</string>
+    <string name="wear_font_mulish">Mulish</string>
+    <string name="wear_font_mulish_description">Minimalískt sans teiknað fyrir hreinan viðmótstexta</string>
+    <string name="wear_font_nunito">Nunito</string>
+    <string name="wear_font_nunito_description">Vel ávalt sans með mjúkum endum</string>
+    <string name="wear_font_outfit">Outfit</string>
+    <string name="wear_font_outfit_description">Rúmfræðilegt sans með jöfnum, nútímalegum takti</string>
+    <string name="wear_font_oxanium">Oxanium</string>
+    <string name="wear_font_oxanium_description">Ferhyrnt techno-letur með leikjatilfinningu</string>
+    <string name="wear_font_play">Play</string>
+    <string name="wear_font_play_description">Þétt tæknilegt sans teiknað á grind</string>
+    <string name="wear_font_plus_jakarta_sans">Plus Jakarta Sans</string>
+    <string name="wear_font_plus_jakarta_sans_description">Nútímalegt grotesk með greinilegum opnum bogum</string>
+    <string name="wear_font_press_start_2p">Press Start 2P</string>
+    <string name="wear_font_press_start_2p_description">Píxla-letur beint úr spilakassa</string>
+    <string name="wear_font_quicksand">Quicksand</string>
+    <string name="wear_font_quicksand_description">Ávalt rúmfræðilegt sans með mildri, léttri tilfinningu</string>
+    <string name="wear_font_rajdhani">Rajdhani</string>
+    <string name="wear_font_rajdhani_description">Ferhyrnt þjappað sans með tæknilegum hornum</string>
+    <string name="wear_font_righteous">Righteous</string>
+    <string name="wear_font_righteous_description">Art-deco skjáletur með rætur í retro skiltamálun</string>
+    <string name="wear_font_roboto_mono">Roboto Mono</string>
+    <string name="wear_font_roboto_mono_description">Monospace-fylgifontur Roboto</string>
+    <string name="wear_font_rowdies">Rowdies</string>
+    <string name="wear_font_rowdies_description">Klossað skjáletur með leikandi, bitlausum strokum</string>
+    <string name="wear_font_russo_one">Russo One</string>
+    <string name="wear_font_russo_one_description">Breitt iðnaðarletur með þungum ferhyrndum formum</string>
+    <string name="wear_font_shrikhand">Shrikhand</string>
+    <string name="wear_font_shrikhand_description">Líflegt skásett skjáletur með rætur í Gujarati</string>
+    <string name="wear_font_silkscreen">Silkscreen</string>
+    <string name="wear_font_silkscreen_description">Örlítið bitmap-letur sem minnir á fyrstu tölvuskjái</string>
+    <string name="wear_font_source_code_pro">Source Code Pro</string>
+    <string name="wear_font_source_code_pro_description">Monospace hannað fyrir þægilegan kóðalestur</string>
+    <string name="wear_font_staatliches">Staatliches</string>
+    <string name="wear_font_staatliches_description">Þjappað letur í hástöfum með sterkri plakatnærveru</string>
+    <string name="wear_font_teko">Teko</string>
+    <string name="wear_font_teko_description">Hátt þjappað letur fyrir Devanagari- og latneskar fyrirsagnir</string>
+    <string name="wear_font_titillium_web">Titillium Web</string>
+    <string name="wear_font_titillium_web_description">Ferhyrnt húmanískt sans með tæknilegu yfirbragði</string>
+    <string name="wear_font_varela_round">Varela Round</string>
+    <string name="wear_font_varela_round_description">Alveg ávalt sans með aðgengilegum tón</string>
+    <string name="wear_font_yanone_kaffeesatz">Yanone Kaffeesatz</string>
+    <string name="wear_font_yanone_kaffeesatz_description">Þjappað letur sem minnir á kaffihúsaskilti frá 1920</string>
+    <string name="wear_font_zilla_slab">Zilla Slab</string>
+    <string name="wear_font_zilla_slab_description">Slab-serif með mjúklega skornum, nútímalegum endum</string>
+    <string name="wear_font_lato">Lato</string>
+    <string name="wear_font_lato_description">Vinalegt húmanískt sans með opnum, læsilegum formum</string>
+    <string name="wear_font_merriweather_sans">Merriweather Sans</string>
+    <string name="wear_font_merriweather_sans_description">Hlýtt sans með traustum formum fyrir þægilegan lestur</string>
+    <string name="wear_font_source_sans_3">Source Sans 3</string>
+    <string name="wear_font_source_sans_3_description">Fjölhæft húmanískt sans hannað fyrir skýr viðmót</string>
+    <string name="wear_font_source_serif_4">Source Serif 4</string>
+    <string name="wear_font_source_serif_4_description">Fágað textaserif með ritstjórnarlegri rödd</string>
+    <string name="wear_font_libre_baskerville">Libre Baskerville</string>
+    <string name="wear_font_libre_baskerville_description">Klassískt bókaserif fínstillt fyrir skjálestur</string>
+    <string name="wear_font_libre_franklin">Libre Franklin</string>
+    <string name="wear_font_libre_franklin_description">Hagnýtt grotesk sans með breiðum, traustum takti</string>
+    <string name="wear_font_ibm_plex_sans">IBM Plex Sans</string>
+    <string name="wear_font_ibm_plex_sans_description">Tæknilegt húmanískt sans með nákvæmum hlutföllum</string>
+    <string name="wear_font_ibm_plex_mono">IBM Plex Mono</string>
+    <string name="wear_font_ibm_plex_mono_description">Tæknilegt monospace með fágaðri, læsilegri áferð</string>
+    <string name="wear_font_ibm_plex_serif">IBM Plex Serif</string>
+    <string name="wear_font_ibm_plex_serif_description">Nútímalegt serif með verkfræðilegum karakter</string>
+    <string name="wear_font_work_sans">Work Sans</string>
+    <string name="wear_font_work_sans_description">Hreint vinnusans með þéttum, hagnýtum formum</string>
+    <string name="wear_font_karla">Karla</string>
+    <string name="wear_font_karla_description">Sérkennilegt grotesk með vinalegum hlutföllum</string>
+    <string name="wear_font_sora">Sora</string>
+    <string name="wear_font_sora_description">Rúmfræðilegt sans með framtíðarkenndri, rúmgóðri tilfinningu</string>
+    <string name="wear_font_urbanist">Urbanist</string>
+    <string name="wear_font_urbanist_description">Nútímalegt rúmfræðilegt sans með glæsilegum borgarlínum</string>
+    <string name="wear_font_be_vietnam_pro">Be Vietnam Pro</string>
+    <string name="wear_font_be_vietnam_pro_description">Jafnvægið nútímalegt sans byggt fyrir litla skjái</string>
+    <string name="wear_font_red_hat_display">Red Hat Display</string>
+    <string name="wear_font_red_hat_display_description">Sjálfsöruggt skjásans með tjáningarfullum hlutföllum</string>
+    <string name="wear_font_red_hat_text">Red Hat Text</string>
+    <string name="wear_font_red_hat_text_description">Læsilegt fylgisans fyrir lengri lagaupplýsingar</string>
+    <string name="wear_font_red_hat_mono">Red Hat Mono</string>
+    <string name="wear_font_red_hat_mono_description">Skörpt monospace með nútímalegum tæknitón</string>
+    <string name="wear_font_syne">Syne</string>
+    <string name="wear_font_syne_description">Óhefðbundið sans með liststýrðum, leikandi formum</string>
+    <string name="wear_font_instrument_sans">Instrument Sans</string>
+    <string name="wear_font_instrument_sans_description">Sveigjanlegt nútímalegt sans með hljóðlátri nákvæmni</string>
+    <string name="wear_font_figtree">Figtree</string>
+    <string name="wear_font_figtree_description">Hreint, aðgengilegt sans fyrir áreynslulausan lestur</string>
+    <string name="wear_font_gabarito">Gabarito</string>
+    <string name="wear_font_gabarito_description">Ávalt skjásans með glaðlegum persónuleika</string>
+    <string name="wear_font_bricolage_grotesque">Bricolage Grotesque</string>
+    <string name="wear_font_bricolage_grotesque_description">Líflegt grotesk sem blandar byggingu við sérkennileg smáatriði</string>
+    <string name="wear_font_dm_serif_display">DM Serif Display</string>
+    <string name="wear_font_dm_serif_display_description">Skjá-serif með mikilli andstæðu fyrir dramatíska titla</string>
+    <string name="wear_font_cormorant_garamond">Cormorant Garamond</string>
+    <string name="wear_font_cormorant_garamond_description">Glæsilegt bókmenntalegt serif með mikilli andstæðu</string>
+    <string name="wear_font_cormorant">Cormorant</string>
+    <string name="wear_font_cormorant_description">Tignarlegt skjá-serif með skrautskriftarlegum smáatriðum</string>
+    <string name="wear_font_bitter">Bitter</string>
+    <string name="wear_font_bitter_description">Traust slab-serif sem helst skýrt í smáum stærðum</string>
+    <string name="wear_font_spectral">Spectral</string>
+    <string name="wear_font_spectral_description">Fjölhæft serif gert fyrir þéttan, tjáningarfullan lestur</string>
+    <string name="wear_font_vollkorn">Vollkorn</string>
+    <string name="wear_font_vollkorn_description">Hlýtt gamaldags serif með bóklegri rödd</string>
+    <string name="wear_font_raleway">Raleway</string>
+    <string name="wear_font_raleway_description">Glæsilegt sans með greinilegum, fáguðum stafamótum</string>
+    <string name="wear_font_league_spartan">League Spartan</string>
+    <string name="wear_font_league_spartan_description">Feitletrað rúmfræðilegt sans gert fyrir sterkar fyrirsagnir</string>
+    <string name="wear_font_saira">Saira</string>
+    <string name="wear_font_saira_description">Sans sem þolir þjöppun með íþróttalegri, kraftmikilli orku</string>
+    <string name="wear_font_signika">Signika</string>
+    <string name="wear_font_signika_description">Mjúkt sans með opnum innrýmum og vinalegri skiltatilfinningu</string>
+    <string name="wear_font_sofia_sans">Sofia Sans</string>
+    <string name="wear_font_sofia_sans_description">Fjölhæft sans sem vegur saman húmanískan hlýhug og skýrleika</string>
+    <string name="wear_font_overpass">Overpass</string>
+    <string name="wear_font_overpass_description">Skýrt samgönguinblásið sans með öruggum takti</string>
+    <string name="wear_font_public_sans">Public Sans</string>
+    <string name="wear_font_public_sans_description">Hlutlaust, aðgengilegt sans byggt fyrir dagleg viðmót</string>
+    <string name="wear_font_questrial">Questrial</string>
+    <string name="wear_font_questrial_description">Létt rúmfræðilegt sans með sléttum, nútímalegum bogum</string>
+    <string name="wear_font_dosis">Dosis</string>
+    <string name="wear_font_dosis_description">Ávalt mjótt sans með mjúkri framtíðartilfinningu</string>
+    <string name="wear_font_prompt">Prompt</string>
+    <string name="wear_font_prompt_description">Hreint rúmfræðilegt sans með fíngerðum taílenskum karakter</string>
+    <string name="wear_font_unbounded">Unbounded</string>
+    <string name="wear_font_unbounded_description">Breitt framtíðarskjáletur fyrir hámarksnærveru</string>
+    <string name="wear_font_recursive">Recursive</string>
+    <string name="wear_font_recursive_description">Breytileg sans-í-mono fjölskylda með leikandi tæknirödd</string>
+    <string name="wear_font_trispace">Trispace</string>
+    <string name="wear_font_trispace_description">Monospace með breytilegri breidd og greinilegri stafrænni áferð</string>
+    <string name="wear_font_noto_sans">Noto Sans</string>
+    <string name="wear_font_noto_sans_description">Víðtækt, mjög læsilegt sans með stuðningi við mörg ritkerfi</string>
+    <string name="wear_font_noto_serif">Noto Serif</string>
+    <string name="wear_font_noto_serif_description">Áreiðanlegt serif með stuðningi við mörg ritkerfi</string>
+    <string name="wear_font_noto_sans_mono">Noto Sans Mono</string>
+    <string name="wear_font_noto_sans_mono_description">Fjöltyngt monospace hannað fyrir samræmdan takt</string>
+    <string name="wear_font_heebo">Heebo</string>
+    <string name="wear_font_heebo_description">Þétt nútímalegt sans með skörpum hebreskum innblásnum takti</string>
+    <string name="wear_font_hind">Hind</string>
+    <string name="wear_font_hind_description">Traust húmanískt sans fínstillt fyrir skýran lestur</string>
+    <string name="wear_font_hind_madurai">Hind Madurai</string>
+    <string name="wear_font_hind_madurai_description">Vinalegt skjásans með ávalri, opinni áferð</string>
+    <string name="wear_font_kumbh_sans">Kumbh Sans</string>
+    <string name="wear_font_kumbh_sans_description">Þétt rúmfræðilegt sans með greinilegum hlutföllum</string>
+    <string name="wear_font_alegreya">Alegreya</string>
+    <string name="wear_font_alegreya_description">Líflegt skrautskriftar-serif með bókmenntalegum karakter</string>
+    <string name="wear_font_assistant">Assistant</string>
+    <string name="wear_font_assistant_description">Hreint húmanískt sans með framúrskarandi læsileika í viðmóti</string>
+    <string name="setting_wear_note_show_cover">Umslagsmynd</string>
+    <string name="aod_element_artwork">Myndefni</string>
+    <string name="aod_element_clock">Klukka</string>
+    <string name="aod_element_track_info">Lagaupplýsingar</string>
+    <string name="aod_element_transport">Spilunarstýringar</string>
+    <string name="aod_element_progress">Framvinda</string>
+    <string name="aod_element_up_next">Næst</string>
+    <string name="aod_section_artwork">Myndefni</string>
+    <string name="aod_control_tint">Litblær</string>
+    <string name="aod_control_brightness">Birtustig</string>
+    <string name="aod_control_art_treatment">Meðhöndlun</string>
+    <string name="aod_control_art_opacity">Ógegnsæi</string>
+    <string name="mini_button_control_visibility">Sýna</string>
+    <string name="mini_button_control_arrangement">Uppröðun</string>
+    <string name="mini_button_control_shape">Lögun</string>
+    <string name="mini_button_control_background">Bakgrunnur</string>
+    <string name="mini_button_control_opacity">Ógegnsæi</string>
+    <string name="mini_button_assign_action">Úthluta aðgerðum</string>
+    <string name="mini_button_gestures_note">Strjúktu upp, niður og til vinstri á spilaranum. Strjúka til hægri er alltaf kerfisbendingin til að loka og er aldrei gripið inn í.</string>
+    <string name="setting_wear_chat_cover_shape">Lögun spjallmyndar</string>
+    <string name="setting_wear_chat_show_cover">Umslagsmynd</string>
+    <string name="setting_wear_metadata_cover_shape">Lögun lýsigagnaumslags</string>
+    <string name="setting_wear_metadata_show_cover">Umslagsmynd</string>
+    <string-array name="wear_text_case_entries">
+        <item>Venjulegt</item>
+        <item>HÁSTAFIR</item>
+        <item>lágstafir</item>
+        <item>Titilstíll</item>
+    </string-array>
+    <string name="wear_text_font_follow">Fylgja alþjóðlegri leturgerð</string>
+    <string name="category_wf_typography_track_time">Lagatími</string>
+    <string name="setting_wear_track_time_font">Leturgerð lagatíma</string>
+    <string name="wear_track_time_font_follow">Fylgja hönnuninni</string>
+    <string name="setting_wear_track_time_font_weight">Þykkt lagatíma</string>
+    <string name="setting_wear_track_time_font_italic">Skáletraður lagatími</string>
+    <string name="setting_wear_track_time_font_scale">Stærð lagatíma</string>
+    <string name="setting_wear_track_time_font_opacity">Gagnsæi lagatíma</string>
+    <string name="setting_wear_track_time_font_tracking">Stafabil lagatíma</string>
+    <string-array name="album_art_filter_entries">
+        <item>Ekkert</item>
+        <item>Einlitt</item>
+        <item>Hlýtt</item>
+        <item>Kalt</item>
+        <item>Gullna stundin</item>
+        <item>Rósavín</item>
+        <item>Gamaldags filma</item>
+        <item>Fölnað filma</item>
+        <item>Matt</item>
+        <item>Líflegt</item>
+        <item>Kraftur</item>
+        <item>Pastell</item>
+        <item>Sepía</item>
+        <item>Bláprent</item>
+        <item>Blágrænt og appelsínugult</item>
+        <item>Mikil birtuskil</item>
+        <item>Mjúkt ljós</item>
+        <item>Nótt</item>
+    </string-array>
+    <string name="queue_item_now_playing">Í spilun</string>
+    <string name="queue_item_unknown_title">Óþekkt lag</string>
+    <plurals name="queue_header_count">
+        <item quantity="one">Spilunarbiðröð · %1$d lag</item>
+        <item quantity="other">Spilunarbiðröð · %1$d lög</item>
+    </plurals>
+    <string name="setting_wear_accent_floor_color">Litur hreimgrunns</string>
+    <string name="setting_wear_accent_floor_custom_color">Sérsniðinn grunnlitur</string>
+    <string name="setting_wear_accent_floor_custom_color_description">Veldu litinn sem er notaður þegar Litur hreimgrunns er stilltur á Sérsniðinn lit</string>
+    <string-array name="wear_accent_floor_color_entries">
+        <item>Áherslulitur plötu</item>
+        <item>Aukalitur plötu</item>
+        <item>Þriðji litur plötu</item>
+        <item>Sérsniðinn litur</item>
+    </string-array>
+    <string name="wear_font_inter">Inter</string>
+    <string name="wear_font_inter_description">Hlutlaust, mjög læsilegt viðmótssans fyrir daglegan lestur</string>
+    <string name="wear_font_atkinson_hyperlegible">Atkinson Hyperlegible</string>
+    <string name="wear_font_atkinson_hyperlegible_description">Aðgengismiðuð stafamót með greinilegum formum sem haldast skýr í smáum stærðum</string>
+    <string name="wear_font_rubik">Rubik</string>
+    <string name="wear_font_rubik_description">Mjúklega ávalt rúmfræðilegt sans — sjálfsöruggt og vinalegt</string>
+    <string name="wear_font_barlow_condensed">Barlow Condensed</string>
+    <string name="wear_font_barlow_condensed_description">Þjappað húmanískt sans sem gefur löngum titlum meira rými</string>
+    <string name="wear_font_oswald">Oswald</string>
+    <string name="wear_font_oswald_description">Hátt, þjappað skjáletur með kraftmikilli plakatorku</string>
+    <string name="wear_font_lora">Lora</string>
+    <string name="wear_font_lora_description">Nútímalegt serif hannað fyrir þægilegan langlestur</string>
+    <string name="wear_font_fraunces">Fraunces</string>
+    <string name="wear_font_fraunces_description">Tjáningarfullt mjúkt serif með hlýju og karakter</string>
+    <string name="wear_font_space_mono">Space Mono</string>
+    <string name="wear_font_space_mono_description">Retroframtíðarlegt monospace með tæknilegri brún</string>
+    <string name="wear_font_archivo_black">Archivo Black</string>
+    <string name="wear_font_archivo_black_description">Þétt þungt skjáletur fyrir hámarksandstæðu</string>
+    <string name="wear_font_dancing_script">Dancing Script</string>
+    <string name="wear_font_dancing_script_description">Flæðandi handskrift með líflegri, persónulegri tilfinningu</string>
+    <string name="setting_wear_artist_text_mode">Hegðun flytjandatexta</string>
+    <string name="setting_wear_album_art_source">Uppruni plötuumslags</string>
+    <string name="setting_user_font">Mitt eigið letur</string>
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Flytja inn .ttf- eða .otf-skrá úr þessum síma</string>
+    <string name="setting_user_font_loaded">%1$s · pikkaðu til að skipta út eða fjarlægja</string>
+    <string name="user_font_pick">Veldu leturskrá</string>
+    <string name="user_font_replace">Skipta út</string>
+    <string name="user_font_remove">Fjarlægja</string>
+    <string name="user_font_imported">„%1$s“ flutt inn. Veldu það í hvaða leturlista sem er; verið er að senda það í úrið þitt.</string>
+    <string name="user_font_removed">Innflutta letrið þitt var fjarlægt.</string>
+    <string name="user_font_error_too_large">Skráin er %1$s. Letur þarf að vera undir %2$s svo það komist hratt í úrið.</string>
+    <string name="user_font_error_not_a_font">Skráin er ekki letur sem þessi sími getur lesið. TrueType og OpenType (.ttf, .otf) virka; vefletur (.woff, .woff2) virka ekki.</string>
+    <string name="user_font_error_unreadable">Ekki tókst að lesa skrána. Reyndu að velja hana aftur eða afritaðu hana fyrst í þennan síma.</string>
+    <string name="user_font_not_shareable">Þemu sem nota þitt eigið letur verða áfram í þessum síma</string>
+    <string name="setting_custom_album_art_image">Mynd sem á að nota</string>
+    <string name="setting_custom_album_art_folder">Upprunamappa</string>
+    <string name="setting_custom_album_art_none">Ekki valið enn — pikkaðu til að velja</string>
+    <string name="setting_custom_album_art_chosen">%1$s · pikkaðu til að breyta</string>
+    <string name="custom_album_art_image_set">Þessi mynd mun nú birtast á bak við spilarann.</string>
+    <string name="custom_album_art_folder_set">Mynd úr þeirri möppu verður valin fyrir hvert lag.</string>
+    <string name="custom_album_art_error">Ekki tókst að opna þetta. Veldu það aftur eða veldu eitthvað úr eigin geymslu símans.</string>
+    <string name="custom_album_art_not_shareable">Þemu sem nota þínar eigin myndir verða áfram í þessum síma</string>
+    <string name="setting_wear_text_block_align">Textajöfnun</string>
+    <string name="setting_wear_text_block_align_description">Við hvaða brún lagatextinn jafnast. Fylgja úrskífu heldur þeirri jöfnun sem hver úrskífa var hönnuð fyrir.</string>
+    <string name="setting_wear_text_block_position">Textastaðsetning</string>
+    <string name="setting_wear_text_block_position_description">Hvar lagatextinn situr á skjánum. Fylgja úrskífu heldur þeirri staðsetningu sem hver úrskífa var hönnuð fyrir.</string>
+    <string name="setting_online_artwork">Myndefni af netinu</string>
+    <string name="setting_online_artwork_description">Leyfðu úrskífunni að sýna mynd sem er fundin á netinu \u2014 flytjandann sem er að spila eða plötuumslag þegar spilarinn birtir ekkert. Síminn leitar í opinberri Deezer-skrá og vistar niðurstöðuna í skyndiminni; aðeins heiti lags og flytjanda eru send og ekkert er leitað upp nema úrskífa sé stillt á eina af þessum uppsprettum. Þegar slökkt er á þessu er eigið myndefni spilarans notað.</string>
 </resources>

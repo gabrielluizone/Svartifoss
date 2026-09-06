@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">Λεπτομέρειες θέματος</string>
+    <string name="community_theme_detail_preview_screen">Οθόνη προεπισκόπησης</string>
+    <string name="community_theme_detail_surface_player">Αναπαραγωγή</string>
+    <string name="community_theme_detail_surface_aod">Πάντα ενεργή οθόνη</string>
+    <string name="community_theme_detail_surface_volume">Ένταση</string>
+    <string name="community_theme_detail_surface_progress">Πρόοδος</string>
+    <string name="community_theme_detail_surface_quick_panel">Γρήγορο πλαίσιο</string>
+    <string name="community_theme_detail_surface_queue">Ουρά</string>
+    <string name="community_theme_detail_preview_label">Προεπισκόπηση %1$s</string>
+    <string name="community_theme_detail_preview_description">Προεπισκόπηση του %1$s στην οθόνη %2$s</string>
+    <string name="community_theme_detail_preview_privacy">Το τρέχον εξώφυλλο άλμπουμ μπορεί να εμφανίζεται μόνο σε αυτή την προεπισκόπηση στο τηλέφωνό σας. Δεν μεταφορτώνεται ποτέ· εξακολουθούν να χρησιμοποιούνται δείγμα κειμένου και χρονισμός.</string>
+    <string name="community_theme_detail_information">Πληροφορίες θέματος</string>
+    <string name="community_theme_detail_byline">Από %1$s</string>
+    <string name="community_theme_detail_layout">Βασική διάταξη</string>
+    <string name="community_theme_detail_revision">Αναθεώρηση</string>
+    <string name="community_theme_detail_minimum_version">Ελάχιστη έκδοση Svartifoss</string>
+    <string name="community_theme_detail_published">Δημοσιεύτηκε</string>
+    <string name="community_theme_detail_visual_settings">Οπτικές ρυθμίσεις</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">%1$s οπτική ρύθμιση</item>
+        <item quantity="other">%1$s οπτικές ρυθμίσεις</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">Μη διαθέσιμο</string>
+    <string name="community_theme_detail_add_apply">Προσθήκη και εφαρμογή</string>
+    <string name="community_theme_detail_remove">Κατάργηση θέματος</string>
+    <string name="community_theme_detail_remove_title">Κατάργηση του «%1$s» από τα Θέματά μου;</string>
+    <string name="community_theme_detail_remove_message">Αυτό το αποθηκευμένο αντίγραφο και όλες οι αλλαγές που κάνατε σε αυτό θα καταργηθούν οριστικά. Αν εφαρμόζεται τώρα, το ρολόι σας θα επιστρέψει στην ενσωματωμένη βασική διάταξη.</string>
+    <string name="community_theme_detail_removed">Το θέμα καταργήθηκε από τα Θέματά μου</string>
+    <string name="community_theme_detail_remove_error">Δεν ήταν δυνατή η κατάργηση αυτού του θέματος</string>
+    <string name="community_theme_detail_like">Μου αρέσει</string>
+    <string name="community_theme_detail_unlike">Δεν μου αρέσει πλέον</string>
+    <string name="community_theme_detail_like_loading">Έλεγχος…</string>
+    <string name="community_theme_detail_like_description">Μου αρέσει το %1$s. %2$s</string>
+    <string name="community_theme_detail_unlike_description">Αφαίρεση προτίμησης από το %1$s. %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">Η σύνδεση με Google ακυρώθηκε. Η προτίμησή σας δεν αποθηκεύτηκε.</string>
+    <string name="community_theme_detail_like_error">Δεν ήταν δυνατή η αποθήκευση της προτίμησής σας. Ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.</string>
+    <string name="community_theme_detail_like_not_ready">Οι προτιμήσεις για αυτό το θέμα δεν είναι ακόμη έτοιμες. Ανανεώστε τα θέματα κοινότητας μετά την επόμενη δημοσίευση.</string>
+    <string name="community_theme_detail_like_saved">Η προτίμησή σας αποθηκεύτηκε. Οι δημόσιες μετρήσεις ενημερώνονται με την επόμενη δημοσίευση του καταλόγου.</string>
+    <string name="community_theme_detail_unlike_saved">Η προτίμησή σας αφαιρέθηκε. Οι δημόσιες μετρήσεις ενημερώνονται με την επόμενη δημοσίευση του καταλόγου.</string>
+    <string name="community_theme_detail_apply_existing">Αυτό το θέμα βρίσκεται ήδη στα Θέματά μου και εφαρμόστηκε στο ρολόι σας</string>
+    <string name="community_theme_detail_requires_app_version">Αυτό το θέμα απαιτεί Svartifoss %1$s για να προστεθεί.</string>
+    <string name="community_theme_detail_load_error">Δεν ήταν δυνατή η φόρτωση των λεπτομερειών αυτού του θέματος. Επιστρέψτε στα θέματα κοινότητας και δοκιμάστε ξανά.</string>
+    <string name="community_theme_detail_profile_mismatch">Το ληφθέν προφίλ δεν αντιστοιχεί στις δημόσιες λεπτομέρειες αυτού του θέματος. Επιστρέψτε στα θέματα κοινότητας και δοκιμάστε ξανά.</string>
+    <string name="community_theme_detail_screenshot_description">Φωτογραφία αυτού του θέματος στο ρολόι του δημιουργού</string>
+    <string name="community_theme_detail_source_author">Ρολόι δημιουργού</string>
+    <string name="community_theme_detail_source_rendered">Δημιουργημένη προεπισκόπηση</string>
+    <string name="community_theme_detail_show_rendered">Εμφάνιση δημιουργημένης προεπισκόπησης</string>
+    <string name="community_theme_detail_show_author">Εμφάνιση φωτογραφίας δημιουργού</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

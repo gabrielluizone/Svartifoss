@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>海洋</item>
+        <item>日落</item>
+        <item>中央聚光</item>
+        <item>玻璃幕</item>
+        <item>天鹅绒</item>
+        <item>黑色电影聚光</item>
+        <item>冰洗</item>
+        <item>玫瑰绽放</item>
+        <item>棱镜</item>
+        <item>新月边缘</item>
+        <item>潮汐色带</item>
+        <item>纸套</item>
+        <item>灯笼升起</item>
+        <item>分割海市蜃楼</item>
+        <item>静谧网格</item>
+        <item>夜曲</item>
+        <item>云层研究</item>
+        <item>液态池</item>
+        <item>彩色巨石</item>
+        <item>分割色调</item>
+        <item>渐变</item>
+        <item>双色调</item>
+        <item>色带</item>
+        <item>暗角</item>
+        <item>石墨</item>
+        <item>影院</item>
+        <item>亚克力</item>
+        <item>网格</item>
+        <item>星云</item>
+        <item>生物发光</item>
+        <item>虹彩</item>
+        <item>轨道</item>
+        <item>水墨</item>
+        <item>花开</item>
+        <item>峡湾</item>
+        <item>点阵矩阵</item>
+        <item>扫描线</item>
+        <item>雷达</item>
+        <item>轮廓</item>
+        <item>切面</item>
+        <item>专辑填充</item>
+        <item>次要填充</item>
+        <item>第三填充</item>
+        <item>玻璃</item>
+        <item>午夜</item>
+        <item>烟雾</item>
+        <item>潮线</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>苔藓</item>
+        <item>薰衣草薄雾</item>
+        <item>樱桃</item>
+        <item>深海</item>
+        <item>尘埃</item>
+        <item>漂白</item>
+        <item>月光</item>
+        <item>梦境</item>
+        <item>红外</item>
+        <item>森林</item>
+        <item>银色</item>
+        <item>糖果</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>顶部淡化</item>
+        <item>中央聚光</item>
+        <item>对角阴影</item>
+        <item>左侧幕帘</item>
+        <item>右侧幕帘</item>
+        <item>中央色带</item>
+        <item>交叉淡化</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>反向叶片</item>
+        <item>反向水滴</item>
+        <item>鹅卵石</item>
+        <item>拱形</item>
+        <item>盾牌</item>
+        <item>反向拱形</item>
+        <item>反向盾牌</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>低语</item>
+        <item>放射</item>
+        <item>漫灌</item>
+        <item>微光</item>
+        <item>深层辉光</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>专辑轮廓</item>
+        <item>专辑渐变</item>
+        <item>专辑次要颜色</item>
+        <item>专辑玻璃</item>
+        <item>专辑第三颜色</item>
+        <item>霓虹轮廓</item>
+    </string-array>
+</resources>

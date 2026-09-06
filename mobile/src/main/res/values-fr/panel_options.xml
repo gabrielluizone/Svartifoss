@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Disposition de l’anneau de progression</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Entièrement transparent</item>
+        <item>Couleur secondaire</item>
+        <item>Couleur tertiaire</item>
+        <item>Maillage de couleurs</item>
+        <item>Aurore</item>
+        <item>Projecteur</item>
+        <item>Vignette</item>
+        <item>Ton scindé</item>
+        <item>Bandes de couleur</item>
+        <item>Minuit</item>
+        <item>Halo</item>
+        <item>Flou de fumée</item>
+        <item>Coucher de soleil</item>
+        <item>Océan</item>
+        <item>Nébuleuse</item>
+        <item>Braise</item>
+        <item>Ligne de marée</item>
+        <item>Bioluminescence</item>
+        <item>Iridescent</item>
+        <item>Graphite</item>
+        <item>Cinéma</item>
+        <item>Orbite</item>
+        <item>Horizon</item>
+        <item>Lavis d’encre</item>
+        <item>Floraison</item>
+        <item>Fjord</item>
+        <item>Grille de points</item>
+        <item>Ligne de balayage</item>
+        <item>Radar</item>
+        <item>Lignes de contour</item>
+        <item>Facetté</item>
+        <item>Crépuscule</item>
+        <item>Glace</item>
+        <item>Rose</item>
+        <item>Papier</item>
+        <item>Monolithe</item>
+        <item>Lanterne</item>
+        <item>Noir</item>
+        <item>Velours</item>
+        <item>Mirage</item>
+        <item>Halo diffus</item>
+        <item>Nuage</item>
+        <item>Nocturne</item>
+        <item>Liquide</item>
+        <item>Marée</item>
+        <item>Vinyle</item>
+        <item>Couronne</item>
+        <item>Croissant</item>
+        <item>Grille</item>
+        <item>Voile de verre</item>
+        <item>Matériau</item>
+        <item>Affiche</item>
+        <item>Studio</item>
+        <item>Spectre</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Perles</item>
+        <item>Double rail</item>
+        <item>Impulsion</item>
+        <item>Chrome</item>
+        <item>Spectre</item>
+        <item>Marches</item>
+        <item>Bonbon</item>
+        <item>Fantôme</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Double bord</item>
+        <item>Jauge verticale (gauche)</item>
+        <item>Jauge verticale (droite)</item>
+        <item>Jauge supérieure</item>
+        <item>Jauge inférieure</item>
+        <item>Cadran central</item>
+        <item>Halo supérieur</item>
+        <item>Halo inférieur</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Double anneau</item>
+        <item>Perles</item>
+        <item>Tiret et point</item>
+        <item>Repères sur 24 heures</item>
+        <item>Progression uniquement</item>
+        <item>Lueur</item>
+        <item>Bichromie</item>
+        <item>Aiguille</item>
+        <item>Alterné</item>
+        <item>Étincelle</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Bord de lunette</item>
+        <item>Anneau encastré</item>
+        <item>Anneau intérieur</item>
+        <item>Anneau épais</item>
+        <item>Ouvert en bas</item>
+        <item>Ouvert en haut</item>
+        <item>Arc gauche</item>
+        <item>Arc droit</item>
+        <item>Double piste</item>
+        <item>Ouvert à gauche</item>
+        <item>Ouvert à droite</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Pastille compacte</item>
+        <item>Album carré</item>
+        <item>Pastille empilée</item>
+        <item>Badge</item>
+        <item>Barre de verre</item>
+        <item>LCD</item>
+        <item>Carré contour</item>
+        <item>Ruban</item>
+        <item>Bulle temporelle</item>
+        <item>Ton scindé</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Chronologie (haut)</item>
+        <item>Chronologie (bas)</item>
+        <item>Segments (haut)</item>
+        <item>Chronologie verticale (gauche)</item>
+        <item>Chronologie verticale (droite)</item>
+        <item>Cadran central</item>
+        <item>Double chronologie</item>
+        <item>Segments (bas)</item>
+        <item>Pile centrale</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Doux</item>
+        <item>Chrome</item>
+        <item>Holographique</item>
+        <item>Bulle</item>
+        <item>Rail</item>
+        <item>Coucher de soleil</item>
+        <item>Contour de l’album</item>
+        <item>Verre sombre</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Éventail</item>
+        <item>Orbite</item>
+        <item>Dock inférieur</item>
+        <item>Colonne</item>
+        <item>Plateau scindé</item>
+        <item>Losange</item>
+        <item>Carrousel</item>
+        <item>Triangle</item>
+        <item>Escalier</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Doux</item>
+        <item>Dalle</item>
+        <item>Encre</item>
+        <item>Rail</item>
+        <item>Coucher de soleil</item>
+        <item>Bulle</item>
+        <item>Chrome</item>
+        <item>Holographique</item>
+    </string-array>
+</resources>

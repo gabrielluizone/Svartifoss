@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">เค้าโครงวงแหวนความคืบหน้า</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>โปร่งใสทั้งหมด</item>
+        <item>สีรอง</item>
+        <item>สีลำดับสาม</item>
+        <item>ตาข่ายสี</item>
+        <item>ออโรรา</item>
+        <item>สปอตไลต์</item>
+        <item>วิกเน็ต</item>
+        <item>โทนแบบแบ่ง</item>
+        <item>แถบสี</item>
+        <item>เที่ยงคืน</item>
+        <item>ฮาโล</item>
+        <item>เบลอควัน</item>
+        <item>พระอาทิตย์ตก</item>
+        <item>มหาสมุทร</item>
+        <item>เนบิวลา</item>
+        <item>ถ่านคุ</item>
+        <item>เส้นน้ำขึ้นน้ำลง</item>
+        <item>การเรืองแสงทางชีวภาพ</item>
+        <item>เหลือบรุ้ง</item>
+        <item>กราไฟต์</item>
+        <item>ภาพยนตร์</item>
+        <item>วงโคจร</item>
+        <item>ขอบฟ้า</item>
+        <item>ล้างหมึก</item>
+        <item>ดอกไม้บาน</item>
+        <item>ฟยอร์ด</item>
+        <item>ตารางจุด</item>
+        <item>เส้นสแกน</item>
+        <item>เรดาร์</item>
+        <item>เส้นชั้นความสูง</item>
+        <item>เหลี่ยมมุม</item>
+        <item>พลบค่ำ</item>
+        <item>น้ำแข็ง</item>
+        <item>กุหลาบ</item>
+        <item>กระดาษ</item>
+        <item>โมโนลิธ</item>
+        <item>โคมไฟ</item>
+        <item>นัวร์</item>
+        <item>กำมะหยี่</item>
+        <item>ภาพลวงตา</item>
+        <item>บลูม</item>
+        <item>เมฆ</item>
+        <item>น็อกเทิร์น</item>
+        <item>ของเหลว</item>
+        <item>น้ำขึ้นน้ำลง</item>
+        <item>ไวนิล</item>
+        <item>โคโรนา</item>
+        <item>เสี้ยวพระจันทร์</item>
+        <item>ตาราง</item>
+        <item>ม่านกระจก</item>
+        <item>Material</item>
+        <item>โปสเตอร์</item>
+        <item>สตูดิโอ</item>
+        <item>สเปกตรัม</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>ลูกปัด</item>
+        <item>รางคู่</item>
+        <item>พัลส์</item>
+        <item>โครม</item>
+        <item>สเปกตรัม</item>
+        <item>ขั้น</item>
+        <item>ลูกกวาด</item>
+        <item>ผี</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>ขอบคู่</item>
+        <item>มิเตอร์แนวตั้ง (ซ้าย)</item>
+        <item>มิเตอร์แนวตั้ง (ขวา)</item>
+        <item>มิเตอร์ด้านบน</item>
+        <item>มิเตอร์ด้านล่าง</item>
+        <item>หน้าปัดตรงกลาง</item>
+        <item>ฮาโลด้านบน</item>
+        <item>ฮาโลด้านล่าง</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>วงแหวนคู่</item>
+        <item>ลูกปัด</item>
+        <item>ขีดและจุด</item>
+        <item>ขีดบอกเวลา 24 ชั่วโมง</item>
+        <item>เฉพาะความคืบหน้า</item>
+        <item>เรืองแสง</item>
+        <item>ดูโอโทน</item>
+        <item>เข็ม</item>
+        <item>สลับ</item>
+        <item>ประกายไฟ</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>ขอบหน้าปัด</item>
+        <item>วงแหวนฝัง</item>
+        <item>วงแหวนด้านใน</item>
+        <item>วงแหวนหนา</item>
+        <item>เปิดจากด้านล่าง</item>
+        <item>เปิดจากด้านบน</item>
+        <item>ส่วนโค้งซ้าย</item>
+        <item>ส่วนโค้งขวา</item>
+        <item>แทร็กคู่</item>
+        <item>เปิดจากซ้าย</item>
+        <item>เปิดจากขวา</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>แคปซูลกะทัดรัด</item>
+        <item>อัลบั้มสี่เหลี่ยม</item>
+        <item>แคปซูลซ้อน</item>
+        <item>ป้าย</item>
+        <item>แถบกระจก</item>
+        <item>LCD</item>
+        <item>สี่เหลี่ยมมีเส้นขอบ</item>
+        <item>ริบบิ้น</item>
+        <item>ฟองเวลา</item>
+        <item>โทนแบบแบ่ง</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>ไทม์ไลน์ (บน)</item>
+        <item>ไทม์ไลน์ (ล่าง)</item>
+        <item>ส่วน (บน)</item>
+        <item>ไทม์ไลน์แนวตั้ง (ซ้าย)</item>
+        <item>ไทม์ไลน์แนวตั้ง (ขวา)</item>
+        <item>หน้าปัดตรงกลาง</item>
+        <item>ไทม์ไลน์คู่</item>
+        <item>ส่วน (ล่าง)</item>
+        <item>กองตรงกลาง</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>นุ่ม</item>
+        <item>โครม</item>
+        <item>โฮโลกราฟิก</item>
+        <item>ฟอง</item>
+        <item>ราง</item>
+        <item>พระอาทิตย์ตก</item>
+        <item>เส้นขอบอัลบั้ม</item>
+        <item>กระจกมืด</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>พัด</item>
+        <item>วงโคจร</item>
+        <item>แท่นด้านล่าง</item>
+        <item>คอลัมน์</item>
+        <item>เด็คแบบแบ่ง</item>
+        <item>เพชร</item>
+        <item>ภาพหมุน</item>
+        <item>สามเหลี่ยม</item>
+        <item>บันได</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>นุ่ม</item>
+        <item>แผ่น</item>
+        <item>หมึก</item>
+        <item>ราง</item>
+        <item>พระอาทิตย์ตก</item>
+        <item>ฟอง</item>
+        <item>โครม</item>
+        <item>โฮโลกราฟิก</item>
+    </string-array>
+</resources>

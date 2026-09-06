@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="album_art_style_extra_entries">
+        <item>Đại dương</item>
+        <item>Hoàng hôn</item>
+        <item>Điểm sáng giữa</item>
+        <item>Màn kính</item>
+        <item>Nhung</item>
+        <item>Điểm sáng noir</item>
+        <item>Lớp phủ băng</item>
+        <item>Hoa hồng nở</item>
+        <item>Lăng kính</item>
+        <item>Viền trăng lưỡi liềm</item>
+        <item>Các dải thủy triều</item>
+        <item>Bìa giấy</item>
+        <item>Đèn lồng dâng</item>
+        <item>Ảo ảnh chia đôi</item>
+        <item>Lưới tĩnh</item>
+        <item>Dạ khúc</item>
+        <item>Nghiên cứu mây</item>
+        <item>Hồ chất lỏng</item>
+        <item>Khối màu</item>
+        <item>Tông chia đôi</item>
+        <item>Chuyển màu</item>
+        <item>Hai tông màu</item>
+        <item>Dải</item>
+        <item>Làm tối viền</item>
+        <item>Than chì</item>
+        <item>Điện ảnh</item>
+        <item>Acrylic</item>
+        <item>Lưới</item>
+        <item>Tinh vân</item>
+        <item>Phát quang sinh học</item>
+        <item>Óng ánh</item>
+        <item>Quỹ đạo</item>
+        <item>Loang mực</item>
+        <item>Hoa nở</item>
+        <item>Vịnh hẹp</item>
+        <item>Ma trận chấm</item>
+        <item>Các đường quét</item>
+        <item>Radar</item>
+        <item>Đường viền</item>
+        <item>Đa diện</item>
+        <item>Màu nền album</item>
+        <item>Màu nền phụ</item>
+        <item>Màu nền bậc ba</item>
+        <item>Kính</item>
+        <item>Nửa đêm</item>
+        <item>Khói</item>
+        <item>Đường thủy triều</item>
+    </string-array>
+    <string-array name="album_art_filter_extra_entries">
+        <item>Rêu</item>
+        <item>Sương oải hương</item>
+        <item>Anh đào</item>
+        <item>Biển sâu</item>
+        <item>Bụi</item>
+        <item>Tẩy màu</item>
+        <item>Ánh trăng</item>
+        <item>Giấc mơ</item>
+        <item>Hồng ngoại</item>
+        <item>Rừng</item>
+        <item>Bạc</item>
+        <item>Kẹo</item>
+    </string-array>
+    <string-array name="player_shading_style_extra_entries">
+        <item>Mờ dần phía trên</item>
+        <item>Điểm sáng giữa</item>
+        <item>Bóng chéo</item>
+        <item>Rèm trái</item>
+        <item>Rèm phải</item>
+        <item>Dải giữa</item>
+        <item>Chuyển mờ</item>
+    </string-array>
+    <string-array name="screen_buttons_shape_extra_entries">
+        <item>Lá ngược</item>
+        <item>Giọt ngược</item>
+        <item>Sỏi</item>
+        <item>Vòm</item>
+        <item>Khiên</item>
+        <item>Vòm ngược</item>
+        <item>Khiên ngược</item>
+    </string-array>
+    <string-array name="wear_accent_floor_extra_entries">
+        <item>Thì thầm</item>
+        <item>Rực sáng</item>
+        <item>Tràn màu</item>
+        <item>Lấp lánh</item>
+        <item>Ánh sáng sâu</item>
+    </string-array>
+    <string-array name="wear_up_next_pill_extra_entries">
+        <item>Viền album</item>
+        <item>Chuyển màu album</item>
+        <item>Màu album phụ</item>
+        <item>Kính album</item>
+        <item>Màu album bậc ba</item>
+        <item>Viền neon</item>
+    </string-array>
+</resources>

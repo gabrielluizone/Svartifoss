@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_progress_layout">Layout ng progress ring</string>
+    <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Ganap na transparent</item>
+        <item>Secondary na kulay</item>
+        <item>Tertiary na kulay</item>
+        <item>Color mesh</item>
+        <item>Aurora</item>
+        <item>Spotlight</item>
+        <item>Vignette</item>
+        <item>Split tone</item>
+        <item>Mga banda ng kulay</item>
+        <item>Hatinggabi</item>
+        <item>Halo</item>
+        <item>Smoke blur</item>
+        <item>Paglubog ng araw</item>
+        <item>Karagatan</item>
+        <item>Nebula</item>
+        <item>Baga</item>
+        <item>Tideline</item>
+        <item>Bioluminescence</item>
+        <item>Iridescent</item>
+        <item>Graphite</item>
+        <item>Cinema</item>
+        <item>Orbit</item>
+        <item>Horizon</item>
+        <item>Ink wash</item>
+        <item>Bulaklak</item>
+        <item>Fjord</item>
+        <item>Dot grid</item>
+        <item>Scanline</item>
+        <item>Radar</item>
+        <item>Mga contour line</item>
+        <item>Faceted</item>
+        <item>Takipsilim</item>
+        <item>Yelo</item>
+        <item>Rosas</item>
+        <item>Papel</item>
+        <item>Monolith</item>
+        <item>Lantern</item>
+        <item>Noir</item>
+        <item>Velvet</item>
+        <item>Mirage</item>
+        <item>Bloom</item>
+        <item>Ulap</item>
+        <item>Nocturne</item>
+        <item>Liquid</item>
+        <item>Tidal</item>
+        <item>Vinyl</item>
+        <item>Corona</item>
+        <item>Crescent</item>
+        <item>Grid</item>
+        <item>Glass veil</item>
+        <item>Material</item>
+        <item>Poster</item>
+        <item>Studio</item>
+        <item>Spectrum</item>
+    </string-array>
+    <string-array name="wear_volume_style_extra_entries">
+        <item>Mga butil</item>
+        <item>Dual rail</item>
+        <item>Pulse</item>
+        <item>Chrome</item>
+        <item>Spectrum</item>
+        <item>Mga hakbang</item>
+        <item>Kendi</item>
+        <item>Multo</item>
+    </string-array>
+    <string-array name="wear_volume_layout_extra_entries">
+        <item>Dobleng gilid</item>
+        <item>Vertical meter (kaliwa)</item>
+        <item>Vertical meter (kanan)</item>
+        <item>Top meter</item>
+        <item>Meter sa ibaba</item>
+        <item>Dial sa gitna</item>
+        <item>Top halo</item>
+        <item>Halo sa ibaba</item>
+    </string-array>
+    <string-array name="wear_progress_style_extra_entries">
+        <item>Dobleng singsing</item>
+        <item>Mga butil</item>
+        <item>Dash at dot</item>
+        <item>24-oras na mga marka</item>
+        <item>Progress lang</item>
+        <item>Glow</item>
+        <item>Duotone</item>
+        <item>Karayom</item>
+        <item>Salit-salitan</item>
+        <item>Spark</item>
+    </string-array>
+    <string-array name="wear_progress_layout_entries">
+        <item>Gilid ng bezel</item>
+        <item>Inset ring</item>
+        <item>Inner ring</item>
+        <item>Makapal na singsing</item>
+        <item>Buksan sa ibaba</item>
+        <item>Buksan sa itaas</item>
+        <item>Kaliwang arko</item>
+        <item>Kanang arko</item>
+        <item>Dobleng track</item>
+        <item>Buksan sa kaliwa</item>
+        <item>Buksan sa kanan</item>
+    </string-array>
+    <string-array name="wear_seek_style_extra_entries">
+        <item>Compact pill</item>
+        <item>Square album</item>
+        <item>Stacked pill</item>
+        <item>Badge</item>
+        <item>Glass bar</item>
+        <item>LCD</item>
+        <item>Outline square</item>
+        <item>Ribbon</item>
+        <item>Time bubble</item>
+        <item>Split tone</item>
+    </string-array>
+    <string-array name="wear_seek_layout_extra_entries">
+        <item>Timeline (itaas)</item>
+        <item>Timeline (ibaba)</item>
+        <item>Mga segment (itaas)</item>
+        <item>Vertical timeline (kaliwa)</item>
+        <item>Vertical timeline (kanan)</item>
+        <item>Dial sa gitna</item>
+        <item>Twin timeline</item>
+        <item>Mga segment (ibaba)</item>
+        <item>Stack sa gitna</item>
+    </string-array>
+    <string-array name="wear_quick_panel_style_extra_entries">
+        <item>Malambot</item>
+        <item>Chrome</item>
+        <item>Holographic</item>
+        <item>Bula</item>
+        <item>Rail</item>
+        <item>Paglubog ng araw</item>
+        <item>Outline ng album</item>
+        <item>Madilim na glass</item>
+    </string-array>
+    <string-array name="wear_quick_panel_layout_extra_entries">
+        <item>Fan</item>
+        <item>Orbit</item>
+        <item>Dock sa ibaba</item>
+        <item>Column</item>
+        <item>Split deck</item>
+        <item>Diamond</item>
+        <item>Carousel</item>
+        <item>Triangle</item>
+        <item>Hagdan</item>
+    </string-array>
+    <string-array name="wear_queue_style_extra_entries">
+        <item>Malambot</item>
+        <item>Slab</item>
+        <item>Tinta</item>
+        <item>Rail</item>
+        <item>Paglubog ng araw</item>
+        <item>Bula</item>
+        <item>Chrome</item>
+        <item>Holographic</item>
+    </string-array>
+</resources>

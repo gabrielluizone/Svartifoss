@@ -167,4 +167,21 @@
     <string name="face_picker_section_builtin">Esferas integradas</string>
     <string name="face_picker_section_custom">Mis temas</string>
     <string name="face_picker_custom_base">Basado en %1$s</string>
+    <string name="action_name_open_quick_actions_panel">Abrir panel de acciones rápidas</string>
+    <string name="action_name_fast_forward">Avance rápido</string>
+    <string name="action_name_rewind">Rebobinar</string>
+    <string name="action_name_set_speed">Establecer velocidad de reproducción</string>
+    <string name="action_name_seek_position">Saltar a una posición de la pista</string>
+    <string name="action_name_set_volume">Establecer volumen</string>
+    <string name="action_name_set_shuffle">Establecer reproducción aleatoria</string>
+    <string name="action_name_set_repeat">Establecer repetición</string>
+    <string name="action_name_open_volume_screen">Abrir pantalla de volumen</string>
+    <string name="action_name_open_progress_screen">Abrir pantalla de progreso</string>
+    <string name="action_name_open_face_picker">Abrir selector de esfera</string>
+    <string name="action_name_close_watch_app">Cerrar la app del reloj</string>
+    <string name="volume_screen_title">Volumen</string>
+    <string name="progress_screen_title">Progreso</string>
+    <string name="progress_screen_cancel_seek">Cancelar desplazamiento</string>
+    <string name="progress_screen_skip_back">Retroceder %1$d segundos</string>
+    <string name="progress_screen_skip_forward">Avanzar %1$d segundos</string>
 </resources>

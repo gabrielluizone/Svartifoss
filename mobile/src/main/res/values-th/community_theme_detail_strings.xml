@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="community_theme_detail_title">รายละเอียดธีม</string>
+    <string name="community_theme_detail_preview_screen">หน้าจอตัวอย่าง</string>
+    <string name="community_theme_detail_surface_player">เครื่องเล่น</string>
+    <string name="community_theme_detail_surface_aod">เปิดตลอดเวลา</string>
+    <string name="community_theme_detail_surface_volume">ระดับเสียง</string>
+    <string name="community_theme_detail_surface_progress">ความคืบหน้า</string>
+    <string name="community_theme_detail_surface_quick_panel">แผงด่วน</string>
+    <string name="community_theme_detail_surface_queue">คิว</string>
+    <string name="community_theme_detail_preview_label">ตัวอย่าง %1$s</string>
+    <string name="community_theme_detail_preview_description">ตัวอย่าง %1$s บนหน้าจอ %2$s</string>
+    <string name="community_theme_detail_preview_privacy">ปกอัลบั้มปัจจุบันของคุณอาจปรากฏเฉพาะในตัวอย่างนี้บนโทรศัพท์เท่านั้น ระบบจะไม่อัปโหลดปกดังกล่าว และยังคงใช้ข้อความกับเวลาตัวอย่าง</string>
+    <string name="community_theme_detail_information">ข้อมูลธีม</string>
+    <string name="community_theme_detail_byline">โดย %1$s</string>
+    <string name="community_theme_detail_layout">เค้าโครงพื้นฐาน</string>
+    <string name="community_theme_detail_revision">รุ่นแก้ไข</string>
+    <string name="community_theme_detail_minimum_version">เวอร์ชัน Svartifoss ขั้นต่ำ</string>
+    <string name="community_theme_detail_published">เผยแพร่แล้ว</string>
+    <string name="community_theme_detail_visual_settings">การตั้งค่าภาพ</string>
+    <plurals name="community_theme_detail_settings_count">
+        <item quantity="one">การตั้งค่าภาพ %1$s รายการ</item>
+        <item quantity="other">การตั้งค่าภาพ %1$s รายการ</item>
+    </plurals>
+    <string name="community_theme_detail_not_available">ไม่พร้อมใช้งาน</string>
+    <string name="community_theme_detail_add_apply">เพิ่มและใช้</string>
+    <string name="community_theme_detail_remove">นำธีมออก</string>
+    <string name="community_theme_detail_remove_title">นำ “%1$s” ออกจากธีมของฉันหรือไม่</string>
+    <string name="community_theme_detail_remove_message">สำเนาที่บันทึกไว้นี้และการแก้ไขทั้งหมดที่คุณทำจะถูกนำออกอย่างถาวร หากกำลังใช้อยู่ นาฬิกาจะกลับไปใช้เค้าโครงพื้นฐานที่มีมาให้</string>
+    <string name="community_theme_detail_removed">นำธีมออกจากธีมของฉันแล้ว</string>
+    <string name="community_theme_detail_remove_error">นำธีมนี้ออกไม่ได้</string>
+    <string name="community_theme_detail_like">ถูกใจ</string>
+    <string name="community_theme_detail_unlike">เลิกถูกใจ</string>
+    <string name="community_theme_detail_like_loading">กำลังตรวจสอบ…</string>
+    <string name="community_theme_detail_like_description">ถูกใจ %1$s %2$s</string>
+    <string name="community_theme_detail_unlike_description">เลิกถูกใจ %1$s %2$s</string>
+    <string name="community_theme_detail_like_sign_in_cancelled">ยกเลิกการลงชื่อเข้าใช้ Google แล้ว การถูกใจของคุณไม่ได้รับการบันทึก</string>
+    <string name="community_theme_detail_like_error">บันทึกการถูกใจไม่ได้ ตรวจสอบการเชื่อมต่อแล้วลองอีกครั้ง</string>
+    <string name="community_theme_detail_like_not_ready">การถูกใจสำหรับธีมนี้ยังไม่พร้อม รีเฟรชธีมจากชุมชนหลังการเผยแพร่ครั้งถัดไป</string>
+    <string name="community_theme_detail_like_saved">บันทึกการถูกใจแล้ว จำนวนสาธารณะจะอัปเดตพร้อมการเผยแพร่แคตตาล็อกครั้งถัดไป</string>
+    <string name="community_theme_detail_unlike_saved">นำการถูกใจออกแล้ว จำนวนสาธารณะจะอัปเดตพร้อมการเผยแพร่แคตตาล็อกครั้งถัดไป</string>
+    <string name="community_theme_detail_apply_existing">ธีมนี้อยู่ในธีมของฉันแล้วและถูกนำไปใช้กับนาฬิกาของคุณ</string>
+    <string name="community_theme_detail_requires_app_version">ธีมนี้ต้องใช้ Svartifoss %1$s ก่อนจึงจะเพิ่มได้</string>
+    <string name="community_theme_detail_load_error">โหลดรายละเอียดของธีมนี้ไม่ได้ กลับไปที่ธีมจากชุมชนแล้วลองอีกครั้ง</string>
+    <string name="community_theme_detail_profile_mismatch">โปรไฟล์ที่ดาวน์โหลดไม่ตรงกับรายละเอียดสาธารณะของธีมนี้ กลับไปที่ธีมจากชุมชนแล้วลองอีกครั้ง</string>
+    <string name="community_theme_detail_screenshot_description">รูปธีมนี้บนนาฬิกาของผู้สร้าง</string>
+    <string name="community_theme_detail_source_author">นาฬิกาของผู้สร้าง</string>
+    <string name="community_theme_detail_source_rendered">ตัวอย่างที่สร้างขึ้น</string>
+    <string name="community_theme_detail_show_rendered">แสดงตัวอย่างที่สร้างขึ้น</string>
+    <string name="community_theme_detail_show_author">แสดงรูปของผู้สร้าง</string>
+    <string name="community_theme_detail_preview_source">%1$s \u00b7 %2$s</string>
+</resources>

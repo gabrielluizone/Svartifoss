@@ -132,10 +132,13 @@ the fork.
   Music, Spotify and SoundCloud library shortcuts. An optional,
   off-by-default toggle fetches a shortcut's real cover art once when its
   service exposes public preview data.
-- **14 languages**: English, Brazilian Portuguese, European Portuguese,
-  German, Spanish, Italian, Dutch, Russian, Greek, Romanian, Indonesian,
-  Persian, Simplified Chinese, and Icelandic — covering both apps and their
-  shared strings.
+- **45 languages**: English, Brazilian and European Portuguese, German,
+  Spanish, Italian, Dutch, Russian, Greek, Romanian, Indonesian, Persian,
+  Simplified and Traditional Chinese, Icelandic, French, Turkish, Vietnamese,
+  Czech, Swedish, Norwegian, Hungarian, Arabic, Hindi, Filipino, Kazakh,
+  Japanese, Korean, Polish, Ukrainian, Thai, Hebrew, Danish, Finnish, Slovak,
+  Bulgarian, Serbian, Croatian, Malay, Bengali, Burmese, Tamil, Telugu,
+  Marathi and Central Kurdish — covering both apps and their shared strings.
 - A short in-app guide covering how to use Svartifoss on the watch.
 - **Built-in updates**: a notification when a new release is out (with an
   optional pre-release channel), and one-tap watch updates — the phone
@@ -211,10 +214,20 @@ command line via the Gradle wrapper.
 
 ## Support
 
-Svartifoss is free and open source, and stays that way either way — nothing
-in the app is gated behind this. If it's useful to you and you'd like to help
-out, you can do so on [Buy Me a Coffee](https://buymeacoffee.com/gabrielsvafoss)
-or [Ko-fi](https://ko-fi.com/gabrielsvafoss).
+Svartifoss is free/libre and open source (GPLv3), and stays that way — the
+source is here for anyone to build and run at no cost, and no feature is gated
+behind a payment. If it's useful to you and you'd like to help out, you can do
+so on [Buy Me a Coffee](https://buymeacoffee.com/gabrielsvafoss) or
+[Ko-fi](https://ko-fi.com/gabrielsvafoss).
+
+## License
+
+Svartifoss is licensed under the [GNU General Public License v3](COPYING).
+"Free" means freedom, not price: a price on a store listing pays only for a
+pre-built, auto-updating binary and restricts none of the rights the GPLv3
+grants. The app links some proprietary Google libraries (the Wearable Data
+Layer API, Firebase); how that is handled under the GPLv3 is set out in
+[LICENSING.md](LICENSING.md).
 
 ## Credits
 
