@@ -1,7 +1,33 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-05T08:24:46.931Z",
+  "generatedAt": "2026-09-06T06:46:37.724Z",
   "themes": [
+    {
+      "id": "634ec24e-c4f6-4a00-a582-a268ddf56f9b",
+      "name": "Haibane",
+      "author": "Gabriel L Svafoss",
+      "baseFace": "studio",
+      "revision": 1,
+      "schemaVersion": 1,
+      "minimumAppVersion": "3.3",
+      "publishedAt": "2026-09-06T06:46:37.724Z",
+      "likes": 0,
+      "settingsDigest": "sha256:ce0d62f3c5d0331dfcbe3773d13c98aabb077a1f0c84714e2b47d994159eb47e",
+      "installs": 0
+    },
+    {
+      "id": "c29a564a-ccdd-4e03-bbea-54625c5c4214",
+      "name": "MatejDro",
+      "author": "Gabriel L Svafoss",
+      "baseFace": "matejdro",
+      "revision": 1,
+      "schemaVersion": 1,
+      "minimumAppVersion": "3.3",
+      "publishedAt": "2026-09-06T06:46:37.724Z",
+      "likes": 0,
+      "settingsDigest": "sha256:ffc07318b79ab526717c383c33eced47a7dfd746e9ca11581ffd73d3b03787cc",
+      "installs": 0
+    },
     {
       "id": "3cd19361-3b3b-4e65-b558-f77f75d18a46",
       "name": "Serial Experiments",
@@ -12,7 +38,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-09-01T17:25:50.970Z",
       "likes": 1,
-      "settingsDigest": "sha256:8465c42ac82e4a9cc37019dd62d57ef4f1bc17a92642a651305fa0e88742ee51",
+      "settingsDigest": "sha256:d9d7fea8b99ad9f385f5888c856ee925781dd6c3200c6f165e8310d410dee3ba",
       "installs": 1
     },
     {
@@ -25,7 +51,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-28T03:12:39.323Z",
       "likes": 2,
-      "settingsDigest": "sha256:87fdd1dfce87756ca37a011b970015bfa07bd33c52485eb7a519940ce1a1eef1",
+      "settingsDigest": "sha256:9dfff77201a8e086afed7e25950f33f12c94b6933173bf4d786c13466c6e26b6",
       "installs": 1
     },
     {
@@ -38,7 +64,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 1,
-      "settingsDigest": "sha256:e6251069d0e19a4c9b0d01f2317b0958c7ab4f25cec906570a7afdc493403884",
+      "settingsDigest": "sha256:062b4bf886513ee6dcbe0fcae379bfdf01a2856636c4cde8458e74c0fc3d6e38",
       "installs": 0
     },
     {
@@ -51,7 +77,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 2,
-      "settingsDigest": "sha256:6238e030390f138d4a1dae0976267042f520dba03033dc0ba707ad4aa6d87d6f",
+      "settingsDigest": "sha256:9edf6a587cbe2f877f3d91fb9f6719059f73ddc6eb1884fbfc8814531a1b06c1",
       "installs": 0
     },
     {
@@ -64,7 +90,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 0,
-      "settingsDigest": "sha256:9da7f71df314d0e956ecbffbaae6214ccd2a50f65a782242ce569209e39e013f",
+      "settingsDigest": "sha256:080c06cfdbb47a181debd325016d84c35772892a5928f54199d5d34d22fd147c",
       "installs": 0
     },
     {
@@ -77,7 +103,7 @@
       "minimumAppVersion": "3.3",
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 0,
-      "settingsDigest": "sha256:ff4b0a82b24cebe3d7a7babdb6cfd0013683e4b85fbc9abefffff2912d3c3bf0",
+      "settingsDigest": "sha256:72e81b4e5a30a460a34ede06f9e3a642c8f8db7bb59b12b01f47b47faaed2045",
       "installs": 0
     }
   ]
