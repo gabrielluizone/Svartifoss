@@ -1,4 +1,4 @@
-# Comandos operacionais
+export JAVA_HOME=/home/gabrielskaftell/jdks/jdk-21.0.11+10 && export PATH=$JAVA_HOME/bin:$PATH &&# Comandos operacionais
 
 Comandos para executar manualmente a partir da raiz do repositório.
 
@@ -113,13 +113,13 @@ Envie os bundles para a mesma aplicação do Play Console. Telefone e Wear OS us
 Executar todos os testes JVM, incluindo os flavors:
 
 ```sh
-./gradlew test
+export JAVA_HOME=/home/gabrielskaftell/jdks/jdk-21.0.11+10 && export PATH=$JAVA_HOME/bin:$PATH && ./gradlew test
 ```
 
 Executar apenas os testes do módulo mobile:
 
 ```sh
-./gradlew :mobile:testGithubDebugUnitTest :mobile:testPlayDebugUnitTest
+export JAVA_HOME=/home/gabrielskaftell/jdks/jdk-21.0.11+10 && export PATH=$JAVA_HOME/bin:$PATH && ./gradlew :mobile:testGithubDebugUnitTest :mobile:testPlayDebugUnitTest
 ```
 
 Executar os testes do publisher de temas:
