@@ -15,12 +15,24 @@ export const MAX_PUBLIC_TEXT_LENGTH = 48;
 export const MAX_SETTING_TEXT_LENGTH = 128;
 export const MAX_PROFILE_JSON_BYTES = 24 * 1024;
 
-/** These are ThemeAppearance.ALLOWED_BASE_FACES minus ArchivedFaces.KEYS. */
+/**
+ * These are ThemeAppearance.ALLOWED_BASE_FACES minus ArchivedFaces.COMMUNITY_GALLERY_EXCLUDED.
+ *
+ * Most archived faces (see ArchivedFaces.KEYS) may still be submitted and installed like any
+ * current one - archival only ever hides a face from the on-device pickers. "depth" is the one
+ * exception: its own rendering is known to be problematic, so it is left out here on top of being
+ * archived.
+ */
 export const ALLOWED_BASE_FACES = Object.freeze([
     "classic",
     "expressive",
+    "vinyl",
     "poster",
     "studio",
+    "halo",
+    "aurora",
+    "eclipse",
+    "spectrum",
     "material",
     "immersive",
     "carousel",
@@ -32,6 +44,7 @@ export const ALLOWED_BASE_FACES = Object.freeze([
     "artist",
     "ribbon",
     "frame",
+    "matejdro",
 ]);
 
 const STRING_SETTINGS = [
@@ -867,15 +880,22 @@ const DEFAULT_VALUES = Object.freeze({
     wear_volume_style: "glass",
 });
 
-// Mirrors FaceScopedPreferences: the faces whose overlay surfaces default to the album-accent
-// styles. Ribbon and Frame reach the same defaults through their own per-face maps on the Android
-// side, so they are listed here with them rather than in this set.
-const ALBUM_ACCENT_FACES = new Set(["expressive", "poster", "studio", "material"]);
+// Mirrors FaceScopedPreferences.ALBUM_ACCENT_FACES: the faces whose overlay surfaces default to
+// the album-accent styles. Ribbon and Frame reach the same defaults through their own per-face
+// maps on the Android side, so they are listed here with them rather than in this set.
+const ALBUM_ACCENT_FACES = new Set([
+    "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material",
+]);
 const ALBUM_ART_DEFAULTS = Object.freeze({
     classic: "cover",
     expressive: "expressive",
+    vinyl: "vinyl",
     poster: "poster",
     studio: "studio",
+    halo: "halo",
+    aurora: "aurora",
+    eclipse: "eclipse",
+    spectrum: "spectrum",
     material: "material",
     immersive: "cover",
     carousel: "expressive",
@@ -887,6 +907,7 @@ const ALBUM_ART_DEFAULTS = Object.freeze({
     artist: "cover",
     ribbon: "hidden",
     frame: "hidden",
+    matejdro: "cover",
 });
 
 /** FaceScopedPreferences.SELF_COMPOSED_FACES: no shared mini-button row, no edge progress arc. */
@@ -934,5 +955,21 @@ export function defaultSettingsForFace(baseFace) {
     if (baseFace === "split") settings.wear_show_source_icon.value = true;
     if (baseFace === "ribbon") settings.always_show_time.value = true;
     if (baseFace === "note" || baseFace === "chat") settings.wear_edge_progress_visible.value = false;
+    // FaceScopedPreferences.MATEJDRO_DEFAULTS: the 2017 original's own settings, restored as
+    // defaults so the tribute face arrives looking like the app it honours.
+    if (baseFace === "matejdro") {
+        // "normal", not the historical "custom" alias - see FaceScopedPreferences.MATEJDRO_DEFAULTS.
+        settings.wear_artist_color_mode.value = "normal";
+        settings.wear_artist_custom_color.value = "#FFFFFF";
+        settings.wear_artist_text_mode.value = "smart";
+        settings.wear_font.value = "roboto";
+        settings.wear_edge_progress_visible.value = false;
+        settings.wear_internal_progress_visible.value = false;
+        settings.wear_mini_buttons_mode.value = "never";
+        settings.wear_show_source_icon.value = false;
+        settings.wear_track_time_mode.value = "never";
+        settings.wear_player_shading_style.value = "full_filter";
+        settings.album_art_dim_strength.value = 121;
+    }
     return settings;
 }

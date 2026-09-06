@@ -33,9 +33,10 @@ class MatejdroFaceTest {
      * registry or it stops resolving for anyone already wearing it - retiring a face must never
      * silently change what is on a wrist. And it has to stay in [ArchivedFaces.KEYS] because it is
      * a period piece: it reproduces one 2017 screen, so it belongs behind **Show archived options**
-     * rather than in the picker everybody scrolls. That second half is also what keeps it out of
-     * the community gallery's base-face registries, which are "allowed minus archived" - so a face
-     * moving between those two states is never a one-line change.
+     * rather than in the picker everybody scrolls. Archival is a picker decision only, though: this
+     * face is not in [ArchivedFaces.COMMUNITY_GALLERY_EXCLUDED], so it may still be submitted to
+     * and installed from the community gallery like any current face - "depth" is the one archived
+     * face that stays out of the gallery, over a rendering problem of its own.
      */
     @Test
     fun `the face is a registered renderer, kept behind the archived switch`() {
@@ -52,10 +53,15 @@ class MatejdroFaceTest {
      * The original drew both lines in `@color/white`. Following the album here would reproduce
      * *this* app's look rather than the one being honoured - and unlike the fixed lilac that had
      * to be taken back off Ribbon, white is achromatic, so it competes with no cover.
+     *
+     * The mode is "normal", not the historical "custom" spelling: [SurfaceColorTreatment.fromPreference]
+     * still accepts "custom" for old backups, but resolves it to the identical [NORMAL][SurfaceColorTreatment.NORMAL]
+     * treatment and fixed colour - "normal" is just the current name for it, and the only one the
+     * community-gallery vocabulary recognises.
      */
     @Test
     fun `the artist line defaults to the original's white`() {
-        assertEquals("custom", default(MiscPreferences.WEAR_ARTIST_COLOR_MODE))
+        assertEquals("normal", default(MiscPreferences.WEAR_ARTIST_COLOR_MODE))
         assertEquals("#FFFFFF", default(MiscPreferences.WEAR_ARTIST_CUSTOM_COLOR))
     }
 

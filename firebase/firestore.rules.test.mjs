@@ -416,6 +416,24 @@ test("an unknown base face is still refused", async () => {
   await assertFails(batch.commit());
 });
 
+// "depth" is a real, registered face (ThemeAppearance.ALLOWED_BASE_FACES) that the app can
+// otherwise build and render - unlike "not-a-face" above, it is deliberately absent from
+// publicBaseFaces() because its own rendering is known to be problematic. Pinned separately so a
+// future change that widens the rules' baseFace list back to every registered face (instead of
+// mirroring the constraints asset) does not silently make it submittable again.
+test("the depth face stays refused even though it is a registered renderer", async () => {
+  const authorDb = authenticatedDb(AUTHOR);
+  const batch = writeBatch(authorDb);
+  batch.set(doc(authorDb, "communityThemeAccounts", AUTHOR), authorAccount(AUTHOR));
+  batch.set(doc(authorDb, "communityThemeAuthorNames", authorKey("Theme maker")),
+    authorNameClaim(AUTHOR, "Theme maker"));
+  batch.set(doc(authorDb, "themeIntake", FIRST_ID),
+    intake(AUTHOR, FIRST_ID, { baseFace: "depth" }));
+  batch.set(doc(authorDb, "communityThemeSubmissionQuota", AUTHOR),
+    nextQuota(AUTHOR, FIRST_ID, null));
+  await assertFails(batch.commit());
+});
+
 test("an author account and its globally unique name reservation are one atomic pair", async () => {
   const authorDb = authenticatedDb(AUTHOR);
   const accountDocument = doc(authorDb, "communityThemeAccounts", AUTHOR);

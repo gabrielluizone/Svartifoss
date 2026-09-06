@@ -232,7 +232,7 @@ internal object CommunityThemeSubmissionDraftFactory {
         }
         if (!isCanonicalUuid(source.id)) return CommunityThemeSubmissionDraftResult.InvalidProfile
         if (source.baseFace !in ThemeAppearance.ALLOWED_BASE_FACES ||
-                source.baseFace in ArchivedFaces.KEYS) {
+                source.baseFace in ArchivedFaces.COMMUNITY_GALLERY_EXCLUDED) {
             return CommunityThemeSubmissionDraftResult.InvalidProfile
         }
         val normalizedName = normalizePublicName(publicName)
@@ -460,9 +460,9 @@ class WatchThemeRepository(context: Context) {
         val strictSettings = parsePublishedSettings(
                 json.optJSONObject("settings"),
                 allowLegacyReadOnly) ?: return null
-        // Backups retain archived faces for existing users, but the public gallery must never
-        // publish a theme that current pickers deliberately hide.
-        if (parsed.baseFace in ArchivedFaces.KEYS) return null
+        // Backups retain every archived face for existing users, and most of them may travel
+        // through the public gallery too - only the ones in COMMUNITY_GALLERY_EXCLUDED cannot.
+        if (parsed.baseFace in ArchivedFaces.COMMUNITY_GALLERY_EXCLUDED) return null
         val source = PublishedThemeSource(parsed.id, parsed.revision)
         return normalizePublishedProfile(parsed.copy(
                 settings = strictSettings,
@@ -890,7 +890,7 @@ class WatchThemeRepository(context: Context) {
         val id = normalizeUuid(profile.id) ?: return null
         val base = profile.baseFace.takeIf { it in ThemeAppearance.ALLOWED_BASE_FACES }
                 ?: return null
-        if (base in ArchivedFaces.KEYS) return null
+        if (base in ArchivedFaces.COMMUNITY_GALLERY_EXCLUDED) return null
         val definitions = FaceScopedPreferences.SCOPED_DEFINITIONS
         if (profile.settings.keys.any { it !in FaceScopedPreferences.SCOPED_DEFINITIONS_BY_KEY }) {
             return null

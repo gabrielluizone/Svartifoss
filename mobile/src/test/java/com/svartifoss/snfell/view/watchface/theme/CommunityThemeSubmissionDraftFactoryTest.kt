@@ -81,7 +81,7 @@ class CommunityThemeSubmissionDraftFactoryTest {
         assertSame(
                 CommunityThemeSubmissionDraftResult.InvalidProfile,
                 CommunityThemeSubmissionDraftFactory.build(
-                        source.copy(baseFace = "vinyl"), "Valid name", publicId, 123L))
+                        source.copy(baseFace = "depth"), "Valid name", publicId, 123L))
         assertSame(
                 CommunityThemeSubmissionDraftResult.InvalidProfile,
                 CommunityThemeSubmissionDraftFactory.build(
@@ -144,6 +144,25 @@ class CommunityThemeSubmissionDraftFactoryTest {
         assertTrue(result is CommunityThemeSubmissionDraftResult.Ready)
     }
 
+    /**
+     * Archival only ever hides a face from the on-device pickers - it never made a face
+     * unsubmittable on its own. Every archived face may reach the community gallery except
+     * "depth" (see [ArchivedFaces.COMMUNITY_GALLERY_EXCLUDED]), which stays refused for a
+     * rendering problem of its own, pinned separately above.
+     */
+    @Test
+    fun `an archived face other than depth can still be submitted`() {
+        listOf("vinyl", "halo", "aurora", "eclipse", "spectrum", "matejdro").forEach { face ->
+            val result = CommunityThemeSubmissionDraftFactory.build(
+                    profile(face = face),
+                    "Valid name",
+                    "22222222-2222-4222-8222-222222222222",
+                    123L,
+                    constraints)
+            assertTrue("$face should be submittable", result is CommunityThemeSubmissionDraftResult.Ready)
+        }
+    }
+
     private val constraints: CommunityThemeConstraints by lazy {
         val file = listOf(
                 File("../common/src/main/assets/community-theme-constraints.json"),
@@ -153,16 +172,17 @@ class CommunityThemeSubmissionDraftFactoryTest {
     }
 
     private fun profile(
-            id: String = "11111111-1111-4111-8111-111111111111"
+            id: String = "11111111-1111-4111-8111-111111111111",
+            face: String = "poster"
     ): WatchThemeProfile = WatchThemeProfile(
             id = id,
             name = "Local-only name",
-            baseFace = "poster",
+            baseFace = face,
             createdAt = 1L,
             updatedAt = 1L,
             revision = 7,
             settings = FaceScopedPreferences.SCOPED_DEFINITIONS.associate { definition ->
-                definition.key to defaultValueFor("poster", definition.key, definition.defaultValue)
+                definition.key to defaultValueFor(face, definition.key, definition.defaultValue)
             })
 
     private fun defaultValueFor(face: String, key: String, default: Any): WatchThemeValue {

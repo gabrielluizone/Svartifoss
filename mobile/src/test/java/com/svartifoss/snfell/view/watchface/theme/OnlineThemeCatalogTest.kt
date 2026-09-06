@@ -36,7 +36,9 @@ class OnlineThemeCatalogTest {
 
             val baseFace = summary.getString("baseFace")
             assertTrue("$id uses an unknown base face", baseFace in ThemeAppearance.ALLOWED_BASE_FACES)
-            assertFalse("$id must not republish an archived face", baseFace in ArchivedFaces.KEYS)
+            assertFalse(
+                    "$id must not republish a gallery-excluded face",
+                    baseFace in ArchivedFaces.COMMUNITY_GALLERY_EXCLUDED)
             assertFalse(
                     "$id requires a newer app than this catalogue release",
                     AppVersionComparison.isNewer(summary.getString("minimumAppVersion"), BuildConfig.VERSION_NAME))

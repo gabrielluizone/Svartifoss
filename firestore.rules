@@ -632,17 +632,24 @@ service cloud.firestore {
           && validShortText(data.author, 48)
           && validCommunityThemeAuthorForSubmission(data.author)
           && data.baseFace is string
-          // Mirrors ThemeAppearance.ALLOWED_BASE_FACES minus ArchivedFaces.KEYS. Rules cannot read
-          // Kotlin, so this is a fifth hand-maintained copy of the face registry alongside the
-          // constraints asset, schema.mjs and docs/admin/admin.js -- a new face must be added here
-          // or every submission using it is denied by the rules while passing every local gate,
-          // which the app can only report as a generic network failure. Pinned by the emulator
-          // suite's per-face sweep.
+          // Mirrors ThemeAppearance.ALLOWED_BASE_FACES minus ArchivedFaces.COMMUNITY_GALLERY_
+          // EXCLUDED. Rules cannot read Kotlin, so this is a fifth hand-maintained copy of the
+          // face registry alongside the constraints asset, schema.mjs and docs/admin/admin.js --
+          // a new face must be added here or every submission using it is denied by the rules
+          // while passing every local gate, which the app can only report as a generic network
+          // failure. Pinned by the emulator suite's per-face sweep. "depth" is the one archived
+          // face deliberately left out: its own rendering is known to be problematic, so it stays
+          // unsubmittable on top of being archived.
           && data.baseFace in [
             "classic",
             "expressive",
+            "vinyl",
             "poster",
             "studio",
+            "halo",
+            "aurora",
+            "eclipse",
+            "spectrum",
             "material",
             "immersive",
             "carousel",
@@ -653,7 +660,8 @@ service cloud.firestore {
             "metadata",
             "artist",
             "ribbon",
-            "frame"
+            "frame",
+            "matejdro"
           ]
           && data.profileSchemaVersion is int
           && data.profileSchemaVersion == 1

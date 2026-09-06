@@ -11,8 +11,13 @@
 export const ALLOWED_BASE_FACES = Object.freeze([
   "classic",
   "expressive",
+  "vinyl",
   "poster",
   "studio",
+  "halo",
+  "aurora",
+  "eclipse",
+  "spectrum",
   "material",
   "immersive",
   "carousel",
@@ -24,6 +29,7 @@ export const ALLOWED_BASE_FACES = Object.freeze([
   "artist",
   "ribbon",
   "frame",
+  "matejdro",
 ]);
 
 const STRING_SETTINGS = [

@@ -16,7 +16,7 @@ class CommunityThemeDefaultsParityTest {
 
     @Test
     fun `shared fixture matches every exportable scoped preference default`() {
-        val expectedFaces = ThemeAppearance.ALLOWED_BASE_FACES - ArchivedFaces.KEYS
+        val expectedFaces = ThemeAppearance.ALLOWED_BASE_FACES - ArchivedFaces.COMMUNITY_GALLERY_EXCLUDED
         assertEquals(expectedFaces, fixture.faces.toSet())
 
         val fromExportRegistry = MiscPreferences.EXPORTABLE

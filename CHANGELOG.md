@@ -257,6 +257,18 @@
 
 ### Changed
 
+- **Six more built-in faces can now be submitted to and installed from the community gallery.**
+  Vinyl, Halo, Aurora, Eclipse, Spectrum and the Matejdro tribute face were unsubmittable for the
+  same reason they are archived — hidden from the on-device face picker — even though archiving a
+  face was always meant to be a picker decision, not a gallery one. They now travel like any
+  current face. **Depth stays out of the gallery**, the one archived face held back on purpose
+  because its own rendering is still a known problem. Making Matejdro submittable also surfaced two
+  latent gaps in the public vocabulary its own defaults had never been checked against: the tribute
+  face's artist-colour default was quietly written under a historical value name ("custom" instead
+  of the equivalent, current "normal") that the gallery never recognised, and its artist band's
+  "smart" auto-size mode had never been added to the artist text-mode vocabulary at all. Both are
+  fixed; neither changes how the face looks.
+
 - **"Free" in the privacy policy now says which "free" it means.** The Open source section read
   "free/open-source software (GPLv3)", which a paid store listing would make sound like a
   contradiction. It now spells out that "free" is freedom, not price — the source stays available

@@ -42,6 +42,18 @@ object ArchivedFaces {
             // behind the same switch as the other faces kept for the people already on them
             // rather than in the picker everyone scrolls.
             "matejdro")
+
+    /**
+     * Archived faces additionally excluded from the community gallery - unsubmittable, and never
+     * installable from someone else's submission.
+     *
+     * Archival on its own is only ever a *picker* decision (see [KEYS]'s own doc): a face here
+     * still resolves normally for anyone using it, so nothing stops the rest of [KEYS] from being
+     * shared like any current face. "depth" is the deliberate exception - its own rendering is
+     * known to be problematic, so it stays out of the public catalogue on top of being archived,
+     * until that is fixed.
+     */
+    val COMMUNITY_GALLERY_EXCLUDED: Set<String> = setOf("depth")
 }
 
 object ThemeAppearance {

@@ -106,7 +106,7 @@ internal object CommunityThemeSubmissionPreflightEvaluator {
     ): CommunityThemeSubmissionPreflight {
         constraints ?: return CommunityThemeSubmissionPreflight.InvalidDraft
         if (draft.baseFace !in ThemeAppearance.ALLOWED_BASE_FACES ||
-                draft.baseFace in ArchivedFaces.KEYS) {
+                draft.baseFace in ArchivedFaces.COMMUNITY_GALLERY_EXCLUDED) {
             return CommunityThemeSubmissionPreflight.InvalidDraft
         }
         val defaults = FaceScopedPreferences.SCOPED_DEFINITIONS.associate { definition ->

@@ -446,7 +446,12 @@ object FaceScopedPreferences {
      * look, not the one being honoured. The album-derived modes remain one tap away.
      */
     private val MATEJDRO_DEFAULTS = mapOf(
-            MiscPreferences.WEAR_ARTIST_COLOR_MODE.key to "custom",
+            // "normal", not the historical "custom" alias SurfaceColorTreatment.fromPreference
+            // still accepts for old backups - the two resolve to the exact same treatment and
+            // fixed colour, but "custom" is a legacy spelling the settings UI only ever migrates
+            // *away* from, and the community-gallery vocabulary (correctly) only recognises the
+            // current one.
+            MiscPreferences.WEAR_ARTIST_COLOR_MODE.key to "normal",
             MiscPreferences.WEAR_ARTIST_CUSTOM_COLOR.key to "#FFFFFF",
             // The original declared uniform auto-size for both bands. Inheriting the global
             // artist default (static) would keep this upper band at its maximum size and clip a

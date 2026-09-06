@@ -340,13 +340,14 @@ class OnlineThemesRepository(context: Context) {
                 summary.installs < 0) {
             throw IOException("Invalid online theme metadata")
         }
-        // The activity labels unknown schemas and retired faces unavailable rather than requesting
-        // their profile. Keep that same boundary here so a future caller cannot turn such an
-        // entry into an install candidate.
+        // The activity labels unknown schemas and gallery-excluded faces unavailable rather than
+        // requesting their profile. Keep that same boundary here so a future caller cannot turn
+        // such an entry into an install candidate.
         if (summary.schemaVersion != WatchThemeRepository.LIBRARY_SCHEMA) {
             throw IOException("Unsupported online theme profile schema ${summary.schemaVersion}")
         }
-        if (baseFace !in ThemeAppearance.ALLOWED_BASE_FACES || baseFace in ArchivedFaces.KEYS) {
+        if (baseFace !in ThemeAppearance.ALLOWED_BASE_FACES ||
+                baseFace in ArchivedFaces.COMMUNITY_GALLERY_EXCLUDED) {
             throw IOException("Unsupported online theme base face")
         }
         return summary.copy(

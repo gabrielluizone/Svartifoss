@@ -460,7 +460,7 @@ internal class CommunityThemeConstraints private constructor(
                 "settings")
 
         private val PUBLIC_BASE_FACES: Set<String> =
-                ThemeAppearance.ALLOWED_BASE_FACES - ArchivedFaces.KEYS
+                ThemeAppearance.ALLOWED_BASE_FACES - ArchivedFaces.COMMUNITY_GALLERY_EXCLUDED
 
         private data class OriginalityApplicability(
                 val defaultFaces: Set<String>,

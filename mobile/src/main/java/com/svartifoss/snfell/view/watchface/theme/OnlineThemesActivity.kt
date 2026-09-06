@@ -1337,15 +1337,16 @@ class OnlineThemesActivity : AppCompatActivity() {
     }
 
     /**
-     * An index can outlive an installed app by years. A profile using an unknown schema or retired
-     * face cannot be parsed safely, so it stays visible but is not tappable. A known profile that
-     * merely needs a newer app can still open its detail page and explain why installation is
-     * disabled there.
+     * An index can outlive an installed app by years. A profile using an unknown schema or a
+     * gallery-excluded face cannot be parsed safely, so it stays visible but is not tappable. A
+     * known profile that merely needs a newer app can still open its detail page and explain why
+     * installation is disabled there.
      */
     private fun compatibility(summary: OnlineThemeSummary): OnlineThemeCompatibility = when {
         summary.schemaVersion != WatchThemeRepository.LIBRARY_SCHEMA ||
                 summary.baseFace !in ThemeAppearance.ALLOWED_BASE_FACES ||
-                summary.baseFace in ArchivedFaces.KEYS -> OnlineThemeCompatibility.UNSUPPORTED
+                summary.baseFace in ArchivedFaces.COMMUNITY_GALLERY_EXCLUDED ->
+            OnlineThemeCompatibility.UNSUPPORTED
         AppVersionComparison.isNewer(summary.minimumAppVersion, BuildConfig.VERSION_NAME) ->
             OnlineThemeCompatibility.REQUIRES_NEWER_APP
         else -> OnlineThemeCompatibility.SUPPORTED
