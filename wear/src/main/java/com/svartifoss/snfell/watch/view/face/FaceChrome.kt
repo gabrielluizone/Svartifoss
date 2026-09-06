@@ -1914,16 +1914,20 @@ internal fun NowPlayingFaceState.blockSafeSideInset(
  * `extra` rather than one padding per element, because the container is what an alignment acts in:
  * padding only the children would leave a `fillMaxWidth` column measuring the full screen and the
  * outermost line would still be placed on the bezel.
+ * [fitToScreen] also fits the authored placement; pass measured heights and zero for hidden rows.
+ * [isRound] lets rectangular screens retain only the designed margin.
  */
 internal fun NowPlayingFaceState.blockLineInsets(
         screen: Dp,
         designedAnchor: BlockAnchor,
         designedEdgeFraction: Float,
         elementHeights: List<Dp>,
-        floor: Dp = 0.dp
+        floor: Dp = 0.dp,
+        fitToScreen: Boolean = false,
+        isRound: Boolean = true
 ): BlockLineInsets {
     val floorFraction = if (screen > 0.dp) floor / screen else 0f
-    if (!blockPlacementOverridden || elementHeights.isEmpty()) {
+    if (!isRound || (!blockPlacementOverridden && !fitToScreen) || elementHeights.isEmpty()) {
         return BlockLineInsets(floor, List(elementHeights.size) { 0.dp })
     }
     val fractions = elementHeights.map { if (screen > 0.dp) it / screen else 0f }
@@ -1960,22 +1964,24 @@ internal enum class BlockAnchor { TOP, CENTER, BOTTOM }
 internal data class BlockLineInsets(val outer: Dp, private val extras: List<Dp>) {
     /** Additional padding for the element at [index], on top of [outer]. Zero past the end. */
     fun extra(index: Int): Dp = extras.getOrElse(index) { 0.dp }
+
+    /** Keep the designed column as a width ceiling, including for each line's extra inset. */
+    fun limitToWidth(screen: Dp, designedWidth: Dp): BlockLineInsets {
+        val limitedOuter = (screen - textColumnWidth(screen, designedWidth, outer)) / 2
+        return BlockLineInsets(limitedOuter,
+                extras.map { maxOf(outer + it, limitedOuter) - limitedOuter })
+    }
 }
+
+/** The chord limits the whole screen, not the already narrowed column. */
+internal fun textColumnWidth(screen: Dp, designedWidth: Dp, sideInset: Dp): Dp =
+        RoundScreenText.constrainedWidth(screen.value, designedWidth.value, sideInset.value).dp
 
 /** True once the user has moved this block on either axis, which is when the circle starts to bind. */
 internal val NowPlayingFaceState.blockPlacementOverridden: Boolean
     get() = textBlockAlign != TextBlockAlign.FOLLOW || textBlockPosition != TextBlockPosition.FOLLOW
 
-/**
- * The narrowest a fixed-width text column is allowed to become once the chord has taken its cut.
- *
- * A face that composes its metadata at a fixed fraction of the screen has to subtract the inset
- * from that width rather than pad around it - padding leaves the column exactly as wide as it was
- * and simply hangs the surplus off the far edge. Subtracting can in principle reach zero on a very
- * low band, so it stops here instead: a clipped line is legible and says the block is too low,
- * where a one-character column says nothing at all. The same argument
- * [RoundScreenText]'s own `MAX_INSET` makes.
- */
+/** Minimum retained by Depth's legacy ambient layout. Other columns use [textColumnWidth]. */
 internal val MIN_TEXT_COLUMN: Dp = 48.dp
 
 /** Chrono's clock-plus-two-lines block, centred by design - the band its chord is measured in. */

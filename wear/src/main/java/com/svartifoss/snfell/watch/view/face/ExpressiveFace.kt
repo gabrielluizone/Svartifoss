@@ -163,13 +163,7 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                             .padding(vertical = state.blockSafeVerticalInset(screen))
                             .padding(
                                     top = state.blockDesignedTopPadding(
-                                            screen * EXPRESSIVE_TEXT_TOP_FRACTION),
-                                    // The face's own margin is the floor inside `insets`, so it is
-                                    // applied there rather than a second time here.
-                                    start = if (state.blockPlacementOverridden) 0.dp
-                                            else titleHorizontalPadding,
-                                    end = if (state.blockPlacementOverridden) 0.dp
-                                            else titleHorizontalPadding)
+                                            screen * EXPRESSIVE_TEXT_TOP_FRACTION))
                             // Bound the title block to the top section (17% top margin down to the
                             // ring top) and clip. Without this, a two-line "wrap" title plus artist
                             // spills past the ring top and paints over the transport row; clipping a
@@ -347,16 +341,14 @@ private fun ExpressiveAmbientFace(state: NowPlayingFaceState) {
                     modifier = Modifier
                             .align(state.blockPlacement(Alignment.TopCenter))
                             // The interactive band, which this variant deliberately matches.
-                            .padding(horizontal = state.blockSafeSideInset(
+                            .padding(horizontal = maxOf(26.dp, state.blockSafeSideInset(
                                     screen,
                                     designedTop = EXPRESSIVE_TEXT_TOP_FRACTION,
-                                    designedHeight = EXPRESSIVE_AMBIENT_HEIGHT_FRACTION))
+                                    designedHeight = EXPRESSIVE_AMBIENT_HEIGHT_FRACTION)))
                             .padding(vertical = state.blockSafeVerticalInset(screen))
                             .padding(
                                     top = state.blockDesignedTopPadding(
-                                            screen * EXPRESSIVE_TEXT_TOP_FRACTION),
-                                    start = 26.dp,
-                                    end = 26.dp),
+                                            screen * EXPRESSIVE_TEXT_TOP_FRACTION)),
                     horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
             ) {
                 if (state.showTitle) {

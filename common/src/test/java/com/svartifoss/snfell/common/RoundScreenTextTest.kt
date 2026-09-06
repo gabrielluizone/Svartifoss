@@ -7,6 +7,37 @@ import org.junit.Test
 class RoundScreenTextTest {
 
     @Test
+    fun `a designed column already inside the chord keeps all its width`() {
+        // Vinyl at its authored top: selecting Center must not shrink its 62% column.
+        val inset = RoundScreenText.sideInsetFor(.14f, .20f)
+        assertEquals(.62f, RoundScreenText.constrainedWidth(1f, .62f, inset), .0001f)
+    }
+
+    @Test
+    fun `a moved column loses only the part outside the chord`() {
+        val inset = RoundScreenText.sideInsetFor(.80f, .88f)
+        val available = 1f - inset * 2f
+        assertTrue(available < .72f)
+        assertEquals(available, RoundScreenText.constrainedWidth(1f, .72f, inset), .0001f)
+    }
+
+    @Test
+    fun `width constraint scales with the display and never enlarges the design`() {
+        for (screen in listOf(192f, 225f, 330f, 450f)) {
+            assertEquals(screen * .66f,
+                    RoundScreenText.constrainedWidth(screen, screen * .66f, screen * .10f), .001f)
+            assertEquals(screen * .5f,
+                    RoundScreenText.constrainedWidth(screen, screen * .66f, screen * .25f), .001f)
+        }
+    }
+
+    @Test
+    fun `a rectangular display does not lose width to a nonexistent curve`() {
+        assertEquals(150f, RoundScreenText.constrainedWidth(192f, 150f, 0f), .001f)
+        assertEquals(0f, RoundScreenText.constrainedWidth(0f, 150f, 0f), .001f)
+    }
+
+    @Test
     fun `chord is widest at the centre and empty at the edges`() {
         assertEquals(0.5f, RoundScreenText.halfChordAt(0.5f), 0.0001f)
         assertEquals(0f, RoundScreenText.halfChordAt(0f), 0.0001f)

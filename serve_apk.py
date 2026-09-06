@@ -182,24 +182,51 @@ def build_index() -> bytes:
         is_aab = name.endswith(".aab")
         is_play = "-play-" in name or is_aab
 
+        # Three independent icons - device, distribution channel, build stage -
+        # rather than one icon trying to encode two things at once. Github vs.
+        # Play used to share a single glyph (bug_report/android) and differ
+        # only in an HTML `title` attribute, which is invisible on the touch
+        # browsers (phone, watch) this page is actually opened from - there is
+        # no hover to reveal it. Every dimension now also gets a plain-text
+        # label in `.channel` so nothing here depends on memorizing an icon.
         device_icon = "watch" if is_wear else "phone_android"
-
-        if is_aab:
-            build_icon = "publish"
-        elif is_release:
-            build_icon = "android"
-        else:
-            build_icon = "bug_report"
-
-        kind = "AAB" if is_aab else "APK"
         device_title = "Wear OS" if is_wear else "Phone"
 
+        flavor_icon = "storefront" if is_play else "terminal"
+        flavor_title = "Play Store" if is_play else "GitHub"
+
         if is_aab:
-            build_title = "Play Store Bundle"
+            stage_icon = "publish"
+            stage_title = "Store bundle"
         elif is_release:
-            build_title = "Release (Play)" if is_play else "Release (GitHub)"
+            stage_icon = "verified"
+            stage_title = "Release"
         else:
-            build_title = "Debug (Play build)" if is_play else "Debug"
+            stage_icon = "bug_report"
+            stage_title = "Debug"
+
+        kind = "AAB" if is_aab else "APK"
+        channel_label = f"{device_title} · {flavor_title} · {stage_title}"
+
+        icons_html = f"""
+                            <span
+                                class="material-symbols-outlined"
+                                title="{device_title}"
+                                aria-label="{device_title}"
+                            >{device_icon}</span>
+
+                            <span
+                                class="material-symbols-outlined"
+                                title="{flavor_title}"
+                                aria-label="{flavor_title}"
+                            >{flavor_icon}</span>
+
+                            <span
+                                class="material-symbols-outlined"
+                                title="{stage_title}"
+                                aria-label="{stage_title}"
+                            >{stage_icon}</span>
+        """
 
         if path.is_file():
             stat = path.stat()
@@ -210,24 +237,14 @@ def build_index() -> bytes:
                 f"""
                 <div class="card">
                     <div class="card-header">
-                        <div class="icons">
-                            <span
-                                class="material-symbols-outlined"
-                                title="{device_title}"
-                                aria-label="{device_title}"
-                            >{device_icon}</span>
-
-                            <span
-                                class="material-symbols-outlined"
-                                title="{build_title}"
-                                aria-label="{build_title}"
-                            >{build_icon}</span>
+                        <div class="icons">{icons_html}
                         </div>
 
                         <span class="available">Available</span>
                     </div>
 
                     <div class="details">
+                        <span class="channel">{channel_label}</span>
                         {size:.1f} MB · {modified}
                     </div>
 
@@ -249,24 +266,14 @@ def build_index() -> bytes:
                 f"""
                 <div class="card missing-card">
                     <div class="card-header">
-                        <div class="icons">
-                            <span
-                                class="material-symbols-outlined"
-                                title="{device_title}"
-                                aria-label="{device_title}"
-                            >{device_icon}</span>
-
-                            <span
-                                class="material-symbols-outlined"
-                                title="{build_title}"
-                                aria-label="{build_title}"
-                            >{build_icon}</span>
+                        <div class="icons">{icons_html}
                         </div>
 
                         <span class="missing">Unavailable</span>
                     </div>
 
                     <div class="details">
+                        <span class="channel">{channel_label}</span>
                         Build not found · ./gradlew {task}
                     </div>
                 </div>
@@ -289,7 +296,7 @@ def build_index() -> bytes:
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 
 <link
-    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Material+Symbols+Outlined&icon_names=android,bug_report,download,phone_android,publish,refresh,watch&display=block"
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&family=Material+Symbols+Outlined&icon_names=bug_report,download,phone_android,publish,refresh,storefront,terminal,verified,watch&display=block"
     rel="stylesheet"
 >
 
@@ -463,7 +470,7 @@ h1 {{
 .icons {{
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     flex: 0 0 auto;
     color: #d0d0d0;
 }}
@@ -471,10 +478,10 @@ h1 {{
 .icons .material-symbols-outlined {{
     display: grid;
     place-items: center;
-    flex: 0 0 32px;
-    width: 32px;
-    height: 32px;
-    font-size: 21px;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    font-size: 19px;
     cursor: default;
 }}
 
@@ -497,6 +504,14 @@ h1 {{
     color: var(--secondary);
     font-size: 11px;
     font-weight: 400;
+}}
+
+.channel {{
+    display: block;
+    margin-bottom: 3px;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 600;
 }}
 
 .download-button {{

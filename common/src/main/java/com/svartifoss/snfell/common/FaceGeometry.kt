@@ -194,6 +194,16 @@ object FaceGeometry {
      * element bind the chord identically (see `RoundScreenText.lineSideInsets`).
      */
     object CuratedText {
+        const val VINYL_WIDTH_FRACTION = .62f
+        const val POSTER_WIDTH_FRACTION = .72f
+        const val STUDIO_WIDTH_FRACTION = .72f
+        const val HALO_WIDTH_FRACTION = .66f
+        const val ECLIPSE_WIDTH_FRACTION = .64f
+        const val SPECTRUM_WIDTH_FRACTION = .68f
+        const val AURORA_CARD_WIDTH_FRACTION = .70f
+        const val AMBIENT_CENTRED_WIDTH_FRACTION = .72f
+        const val AMBIENT_TOP_WIDTH_FRACTION = .62f
+
         /** Artist row above the title, hung from the top of the screen. */
         const val VINYL_TOP_FRACTION = .14f
         const val VINYL_ARTIST_ROW_DP = 11f
@@ -337,12 +347,10 @@ object FaceGeometry {
          * it, which is what .13 produced. It sits close to the clock's own inset at the top so the
          * two read as a matched pair of margins rather than as text that stopped early.
          *
-         * The floor is the round glass, not the rectangle: the block is [SIDE_PADDING_FRACTION]
-         * from each side, so 80% of the diameter wide, and the chord only holds that down to about
-         * 80% depth. Measured at the glyph band rather than the line box, the artist - the widest
-         * line that can reach the full width - still lands inside it here. The track time below it
-         * sits deeper than the chord would hold, as it already did, because it is a dozen
-         * characters centred in a box it never fills.
+         * SIDE_PADDING_FRACTION is a minimum margin, not a guaranteed text width at this depth.
+         * The watch measures each visible row (including the source icon) and fits its full band
+         * to the circle. Hiding track time lowers the artist to this bottom edge, where a fixed
+         * 80%-wide row would put the streaming icon outside the glass.
          */
         const val BOTTOM_PADDING_FRACTION = .085f
 

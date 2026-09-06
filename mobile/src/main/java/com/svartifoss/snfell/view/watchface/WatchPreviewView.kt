@@ -830,10 +830,11 @@ class WatchPreviewView @JvmOverloads constructor(
             designedX: Float,
             availWidth: Float,
             top: Float,
-            bottom: Float
+            bottom: Float,
+            fitToScreen: Boolean = false
     ): BlockLine {
         val geometry = frameGeometry
-        if (textBlockAlign == TextBlockAlign.FOLLOW &&
+        if (!fitToScreen && textBlockAlign == TextBlockAlign.FOLLOW &&
                 textBlockPosition == TextBlockPosition.FOLLOW ||
                 geometry == null ||
                 geometry.bounds.height() <= 0f) {
@@ -933,6 +934,16 @@ class WatchPreviewView @JvmOverloads constructor(
             glyphGapFraction: Float = .33f
     ) {
         val text = artistTypographySpec.case.apply(text)
+        textPaint.typeface = artistTypeface(bold = bold)
+        textPaint.textSize = artistTypographySpec.scaled(designedSize)
+        val glyph = if (sourceGlyph && showSourceIcon) this.sourceGlyph else null
+        val diameter = if (glyph != null) glyphSize * sourceIconTypographySpec.scale else 0f
+        val gap = diameter * glyphGapFraction
+        val glyphCenterY = baselineY - textPaint.textSize * .34f
+        val rowTop = minOf(baselineY + textPaint.fontMetrics.ascent,
+                if (glyph != null) glyphCenterY - diameter / 2f else baselineY)
+        val rowBottom = maxOf(baselineY + textPaint.fontMetrics.descent,
+                if (glyph != null) glyphCenterY + diameter / 2f else baselineY)
         // The user's block placement, resolved against this line's own depth. It used to be
         // applied only where the face designed a *centred* line, so a face that anchors its
         // artist to an edge (Split's panel, the Artist face's own block) opted out of the
@@ -943,8 +954,10 @@ class WatchPreviewView @JvmOverloads constructor(
                 align,
                 x,
                 availWidth,
-                top = baselineY - artistTypographySpec.scaled(designedSize),
-                bottom = baselineY)
+                top = if (face == "immersive") rowTop
+                        else baselineY - artistTypographySpec.scaled(designedSize),
+                bottom = if (face == "immersive") rowBottom else baselineY,
+                fitToScreen = face == "immersive")
         @Suppress("NAME_SHADOWING") val align = line.align
         @Suppress("NAME_SHADOWING") val x = line.x
         @Suppress("NAME_SHADOWING") val availWidth = line.width
@@ -962,20 +975,21 @@ class WatchPreviewView @JvmOverloads constructor(
         // miniature cannot show, so it draws the line unellipsized and lets the caller's clip cut
         // it - the honest stand-in, since an ellipsis would claim text is being dropped when on
         // the watch it scrolls past.
+        val textAvailWidth = (availWidth - diameter - gap).coerceAtLeast(1f)
+        val fittingWidth = if (face == "immersive") textAvailWidth else availWidth
         val artistFits = { size: Float ->
             textPaint.textSize = size
-            textPaint.measureText(text) <= availWidth
+            textPaint.measureText(text) <= fittingWidth
         }
         if (artistTextMode == "shrink" && !artistFits(textPaint.textSize)) {
             val designed = artistTypographySpec.scaled(designedSize)
-            val fitted = findFittingTextSize(text, availWidth, designed, designed * 0.62f)
+            val fitted = findFittingTextSize(text, fittingWidth, designed, designed * 0.62f)
             textPaint.textSize = fitted ?: (designed * 0.62f)
         } else {
             textPaint.textSize = artistTypographySpec.scaled(designedSize)
         }
         val ellipsizeArtist = artistTextMode != "marquee"
 
-        val glyph = if (sourceGlyph && showSourceIcon) this.sourceGlyph else null
         if (glyph == null) {
             val label = if (ellipsizeArtist) ellipsize(text, availWidth) else text
             drawTrackTextBackdrop(canvas, artistBackdropSpec, label, x, baselineY)
@@ -988,10 +1002,8 @@ class WatchPreviewView @JvmOverloads constructor(
         // Glyph and line are one centred unit, the way the watch's Row lays them out - the glyph
         // emits its own trailing spacer there, so the gap keeps its proportion to the mark rather
         // than being a fixed inset that reads as misaligned once the mark is resized.
-        val diameter = glyphSize * sourceIconTypographySpec.scale
-        val gap = diameter * glyphGapFraction
         val label = if (ellipsizeArtist) {
-            ellipsize(text, (availWidth - diameter - gap).coerceAtLeast(1f))
+            ellipsize(text, textAvailWidth)
         } else text
         val textWidth = textPaint.measureText(label)
         val unit = diameter + gap + textWidth
@@ -2595,7 +2607,8 @@ class WatchPreviewView @JvmOverloads constructor(
                 availWidth,
                 top = if (bottomAnchored) baselineY - planLineHeight * plan.lines.size
                         else baselineY - plan.size,
-                bottom = if (bottomAnchored) baselineY else runBottom)
+                bottom = if (bottomAnchored) baselineY else runBottom,
+                fitToScreen = face == "immersive")
         @Suppress("NAME_SHADOWING") val align = line.align
         @Suppress("NAME_SHADOWING") val x = line.x
         @Suppress("NAME_SHADOWING") val availWidth = line.width
@@ -4943,7 +4956,9 @@ class WatchPreviewView @JvmOverloads constructor(
             // 15sp everywhere else); the preview used to draw every face at Poster's size.
             textPaint.textSize = dp(if (style == "poster") 17f else 15f)
             textPaint.color = ambientColor(tint, .82f)
-            val titleWidth = radius * 1.25f
+            val titleWidth = if (style == "depth") radius * 1.25f else geometry.bounds.width() *
+                    if (centeredMetadata) FaceGeometry.CuratedText.AMBIENT_CENTRED_WIDTH_FRACTION
+                    else FaceGeometry.CuratedText.AMBIENT_TOP_WIDTH_FRACTION
             var titleBaseline = if (centeredMetadata) cy - dp(3f) else cy - radius + dp(54f)
             var artistBaseline = if (centeredMetadata) cy + dp(14f) else cy - radius + dp(68f)
             // CuratedAmbientFace allows the centred layouts two lines and the top-anchored ones
@@ -4963,18 +4978,30 @@ class WatchPreviewView @JvmOverloads constructor(
             }
             titleLines.forEachIndexed { index, line ->
                 val fm = textPaint.fontMetrics
-                canvas.drawText(
-                        ellipsize(line, titleWidth), cx,
-                        titleBaseline + index * (fm.descent - fm.ascent), textPaint)
+                val baseline = titleBaseline + index * (fm.descent - fm.ascent)
+                val placement = if (style == "depth") BlockLine(Paint.Align.CENTER, cx, titleWidth)
+                        else blockLine(Paint.Align.CENTER, cx, titleWidth,
+                                baseline + fm.ascent, baseline + fm.descent)
+                textPaint.textAlign = placement.align
+                canvas.drawText(ellipsize(line, placement.width), placement.x, baseline, textPaint)
             }
             textPaint.typeface = artistTypeface(bold = false)
             textPaint.textSize = dp(10f)
             textPaint.color = ambientColor(tint, .48f)
+            val artistPlacement = if (style == "depth") {
+                BlockLine(Paint.Align.CENTER, cx, radius * 1.20f)
+            } else {
+                blockLine(Paint.Align.CENTER, cx, titleWidth,
+                        artistBaseline + textPaint.fontMetrics.ascent,
+                        artistBaseline + textPaint.fontMetrics.descent)
+            }
+            textPaint.textAlign = artistPlacement.align
             canvas.drawText(ellipsize(
                     if (isPlayingShown()) displayArtist()
                     else context.getString(R.string.preview_playback_stopped),
-                    radius * 1.20f
-            ), cx, artistBaseline, textPaint)
+                    artistPlacement.width
+            ), artistPlacement.x, artistBaseline, textPaint)
+            textPaint.textAlign = Paint.Align.CENTER
         }
 
         if (style == "material") {
@@ -12929,7 +12956,12 @@ class WatchPreviewView @JvmOverloads constructor(
             if (titleVisible) {
                 val rawTitle = displayTitle()
                 val title = if (kind == "vinyl" || kind == "eclipse") rawTitle.uppercase() else rawTitle
-                val titleWidth = radius * 1.38f
+                val titleWidth = screenDiameter * when (kind) {
+                    "vinyl" -> FaceGeometry.CuratedText.VINYL_WIDTH_FRACTION
+                    "halo" -> FaceGeometry.CuratedText.HALO_WIDTH_FRACTION
+                    "eclipse" -> FaceGeometry.CuratedText.ECLIPSE_WIDTH_FRACTION
+                    else -> .69f
+                }
                 // Every curated header goes through AdaptiveTitleText on the watch, so the whole
                 // shrink/wrap/scroll cascade applies here too - this used to be a fixed
                 // fits-or-scrolls pair that made the Title text behaviour setting inert on ten
@@ -13224,7 +13256,7 @@ class WatchPreviewView @JvmOverloads constructor(
                     // wrapping to at most two lines - a short one-line title still takes just
                     // one line, so the artist sits right beneath it rather than floating a whole
                     // empty line below (the "big gap" the preview used to show).
-                    val posterTitleWidth = radius * 1.40f
+                    val posterTitleWidth = screenDiameter * FaceGeometry.CuratedText.POSTER_WIDTH_FRACTION
                     val posterFloorSize = posterTitleSize * 0.62f
                     val posterPlan = planTitle(
                             posterTitleWidth, posterTitleSize, posterFloorSize)
@@ -13302,7 +13334,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
                     // Studio's title now follows the user's Title text behaviour, same as Poster
                     // above.
-                    val studioTitleWidth = radius * 1.38f
+                    val studioTitleWidth = screenDiameter * FaceGeometry.CuratedText.STUDIO_WIDTH_FRACTION
                     val studioFloorSize = studioTitleSize * 0.62f
                     val studioPlan = planTitle(
                             studioTitleWidth, studioTitleSize, studioFloorSize)
@@ -13460,7 +13492,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 canvas.drawRoundRect(cardRect, cardCorner, cardCorner, strokePaint)
 
                 if (hasMetadata) {
-                    val columnWidth = cardW * .70f
+                    val columnWidth = cardW * FaceGeometry.CuratedText.AURORA_CARD_WIDTH_FRACTION
                     val columnLeft = cx - cardW * .06f - columnWidth / 2f
                     textPaint.textAlign = Paint.Align.LEFT
                     val singleLineAdjustment =
@@ -13479,8 +13511,13 @@ class WatchPreviewView @JvmOverloads constructor(
                         textPaint.typeface = Typeface.create(titleTypeface(bold = true), Typeface.ITALIC)
                         textPaint.textSize = dp(21f)
                         textPaint.color = Color.WHITE
-                        canvas.drawText(ellipsize(displayTitle(), columnWidth), columnLeft,
-                                lineY + dp(14f), textPaint)
+                        val baseline = lineY + dp(14f)
+                        val line = blockLine(Paint.Align.LEFT, columnLeft, columnWidth,
+                                baseline + textPaint.fontMetrics.ascent,
+                                baseline + textPaint.fontMetrics.descent)
+                        textPaint.textAlign = line.align
+                        canvas.drawText(ellipsize(displayTitle(), line.width), line.x,
+                                baseline, textPaint)
                     }
                     textPaint.textAlign = Paint.Align.CENTER
                 }
@@ -13561,7 +13598,7 @@ class WatchPreviewView @JvmOverloads constructor(
                     if (titleVisible) {
                         // SpectrumFace's title is an AdaptiveTitleText designed at .92 alpha; it
                         // was the one curated face still truncating instead of following the mode.
-                        val titleWidth = radius * 1.36f
+                        val titleWidth = screenDiameter * FaceGeometry.CuratedText.SPECTRUM_WIDTH_FRACTION
                         val plan = planTitle(
                                 titleWidth, dp(12f), dp(12f) * .62f, displayTitle().uppercase())
                         val blockHeight = drawTitlePlan(

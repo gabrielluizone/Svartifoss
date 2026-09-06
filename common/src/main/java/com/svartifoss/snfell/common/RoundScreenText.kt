@@ -56,6 +56,17 @@ object RoundScreenText {
     }
 
     /**
+     * Constrain a designed text width to the space left by the screen's side inset.
+     *
+     * All arguments use the same unit (pixels, dp, or screen fractions). The inset is measured
+     * from the screen edge, so it must be subtracted from [screenWidth], not [designedWidth]:
+     * a column that is already narrower than the chord needs no further reduction.
+     */
+    fun constrainedWidth(screenWidth: Float, designedWidth: Float, sideInset: Float): Float =
+            minOf(designedWidth.coerceAtLeast(0f),
+                    (screenWidth - 2f * sideInset.coerceAtLeast(0f)).coerceAtLeast(0f))
+
+    /**
      * Convenience for the common case: a block whose top edge is known and which grows downwards by
      * [lineHeight] per line for [lines] lines. Returns the inset for that many lines, so a caller
      * that measures its real line count gets a wide column while the text fits on one line and a
