@@ -75,6 +75,9 @@ object OverlayBackdropDrawables {
             screenWidthPx: Int,
             isScreenRound: Boolean
     ): Drawable = when (backdrop) {
+        // A real absence of a panel surface. The parent remains present to own gestures, while
+        // this child contributes no pixels and lets the configured player backdrop show through.
+        OverlayBackdrop.TRANSPARENT -> ColorDrawable(Color.TRANSPARENT)
         // The album-tinted backdrops use the faces' wider saturation band (.30-.90) instead of
         // the chrome default (.25-.60) so an overlay opened over a face shares its palette
         // instead of showing a desaturated, mismatched tint.

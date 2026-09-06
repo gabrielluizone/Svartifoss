@@ -73,6 +73,8 @@ import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.SwipeToDismissBox
+import com.svartifoss.snfell.watch.view.panel.PanelBackdropLayer
+import com.svartifoss.snfell.watch.view.panel.ScreenBackdrop
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.BitmapBlur
@@ -819,7 +821,15 @@ fun QueueScreen(
         canLoadMore: Boolean = false,
         loadingMore: Boolean = false,
         isHistoryFallback: Boolean = false,
-        onLoadMore: () -> Unit = {}
+        onLoadMore: () -> Unit = {},
+        /**
+         * The configured ground behind the rows, or null to keep the flat black field.
+         *
+         * Null is what every preview and test passes; the app always supplies one - see
+         * [com.svartifoss.snfell.watch.view.panel.ScreenBackdrop] for why this screen stopped
+         * being one of the two that ignored the theme.
+         */
+        screenBackdrop: ScreenBackdrop? = null
 ) {
     // A legacy cover_compact / cover_tall selection still names its own size; the standalone
     // preference owns it for every other value.
@@ -834,6 +844,8 @@ fun QueueScreen(
         // window is black, so swiping back slides the list away over black - one clean close).
         if (!isBackground) {
             Box(Modifier.fillMaxSize().background(Color.Black)) {
+                // Under the rows and above the black ground, exactly where the panels put it.
+                screenBackdrop?.let { PanelBackdropLayer(it) }
                 QueueList(
                         items,
                         accentColor,

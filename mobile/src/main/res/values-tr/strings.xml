@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">Ayarlar saatle eşitlendi</string>
     <string name="dev_copy_debug_info">Hata ayıklama bilgilerini kopyala</string>
     <string name="dev_copy_debug_info_description">Derleme ve cihaz ayrıntılarını panoya kopyala</string>
+    <string name="dev_export_defaults">Uygulama varsayılanı olarak dışa aktar</string>
+    <string name="dev_export_defaults_description">Bu kurulumu, yeni bir kurulumun başladığı durum olan default_config.json olarak kaydeder. Geçmişi, izin seçimlerini ve bu telefona özgü durumu dışarıda bırakır.</string>
+    <string name="dev_export_defaults_done">Varsayılanlar dışa aktarıldı (%1$s)</string>
     <string name="dev_show_archived">Arşivlenmiş seçenekleri göster</string>
     <string name="dev_show_archived_description">Bilinen sorunlar nedeniyle arşivlenmiş saat düzenlerini ve ayarlarını göster</string>
     <string name="dev_copy_debug_info_done">Hata ayıklama bilgileri kopyalandı</string>
@@ -286,6 +289,9 @@ Bazı simge paketleri uygulamaların depolama iznine sahip olmasını gerektirir
     <string name="setting_wear_font_flex_roundness_description">Daha sıcak bir görünüm için çizgi uçlarını keskin (0) ile tamamen yuvarlak (100) arasında harmanlar.</string>
     <string name="preview_sample_title">Şarkı başlığı</string>
     <string name="preview_sample_artist">Sanatçı adı</string>
+    <string name="preview_sample_lyric_previous">Önceki satır</string>
+    <string name="preview_sample_lyric_current">Şu an çalan satır</string>
+    <string name="preview_sample_lyric_next">Sonraki satır</string>
     <string name="preview_sample_next_title">Sonraki şarkı</string>
     <string name="preview_playback_stopped">Durduruldu</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -558,8 +564,6 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
     <string name="wear_font_small_caps_description">Editoryal bir his veren kompakt büyük harf biçimleri.</string>
     <string name="wear_font_casual">Rahat</string>
     <string name="wear_font_casual_description">Eğlenceli, el yazısı tarzında bir sistem ailesi.</string>
-    <string name="wear_font_typewriter">Daktilo (Arşivlendi)</string>
-    <string name="wear_font_typewriter_description">Retro daktilo görünümü (Mom’s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Circular ruhunda ücretsiz (OFL) bir alternatif olan yuvarlak geometrik sans.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -625,6 +629,12 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
     <string name="setting_wear_quick_panel_color">Hızlı Eylemler rengi</string>
     <string name="setting_wear_quick_panel_custom_color">Özel Hızlı Eylemler rengi</string>
     <string name="setting_wear_quick_panel_custom_color_description">Normal işlemeyle kullanılan Hızlı Eylemler rengini seçin</string>
+    <string name="setting_wear_lyrics_color">Şarkı sözleri rengi</string>
+    <string name="setting_wear_lyrics_custom_color">Özel şarkı sözleri rengi</string>
+    <string name="setting_wear_lyrics_custom_color_description">Normal işlemeyle kullanılan şarkı sözleri rengini seçin</string>
+    <string name="setting_wear_queue_color">Kuyruk rengi</string>
+    <string name="setting_wear_queue_custom_color">Özel kuyruk rengi</string>
+    <string name="setting_wear_queue_custom_color_description">Normal işlemeyle kullanılan kuyruk rengini seçin</string>
     <string name="setting_wear_shading_custom_color_description">Gölgelendirme gradyanını renklendiren rengi seçin</string>
 
     <string-array name="wear_accent_color_entries">
@@ -657,8 +667,10 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>Not</item>
         <item>Dize</item>
         <item>Meta veriler</item>
+        <item>Sanatçı</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -679,8 +691,10 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Etkileyici arama</string>
@@ -714,6 +728,7 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>Bölünmüş</item>
         <item>Not</item>
         <item>Dize</item>
+        <item>Sanatçı</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -732,6 +747,7 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -838,8 +854,15 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
     <string name="category_wf_panel_seek">İlerleme ve arama paneli</string>
     <string name="category_wf_panel_quick">Hızlı eylemler paneli</string>
     <string name="category_wf_panel_queue">Kuyruk ve listeler</string>
+    <string name="category_wf_panel_lyrics">Şarkı sözleri</string>
     <string name="category_wf_panel_effects">Panel efektleri</string>
     <string name="setting_wear_overlay_backdrop_style">Panel arka planı</string>
+    <string name="wear_backdrop_shared">Ortak panel arka planını izle</string>
+    <string name="setting_wear_volume_backdrop_style">Ses arka planı</string>
+    <string name="setting_wear_progress_backdrop_style">İlerleme arka planı</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Hızlı eylemler arka planı</string>
+    <string name="setting_wear_queue_backdrop_style">Kuyruk arka planı</string>
+    <string name="setting_wear_lyrics_backdrop_style">Şarkı sözleri arka planı</string>
     <string name="setting_wear_volume_style">Ses stili</string>
     <string name="setting_wear_volume_layout">Ses düzeni</string>
     <string name="setting_wear_quick_panel_style">Hızlı panel stili</string>
@@ -927,10 +950,14 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
     <string name="setting_wear_source_icon_scale">Uygulama simgesi boyutu</string>
     <string name="setting_wear_source_icon_opacity">Uygulama simgesi opaklığı</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 yüzün normal ağırlığıdır; daha yüksek değer daha kalındır. Google Sans Flex için bu, yazı tipinin kendi ağırlık eksenidir</string>
-    <string name="setting_wear_typography_scale_description">Yüzün kendi boyutunun yüzdesi (70–140). 100 her düzenin tasarlanmış boyutunu korur</string>
+    <string name="setting_wear_typography_scale_description">Yüzün kendi boyutunun yüzdesi (1–300). 100 her düzenin tasarlanmış boyutunu korur</string>
     <string name="setting_wear_typography_opacity_description">Yüzde (20–100). 100 yüzün kendi opaklığını korur</string>
     <string name="setting_wear_typography_tracking_description">Harfler arasındaki ek boşluk, em’in yüzde biri cinsinden (−5 ila 20). 0 yazı tipinin kendi aralığını korur</string>
     <string name="setting_wear_color_modifier">Ton</string>
+    <string name="setting_wear_title_color_modifier">Başlık tonu</string>
+    <string name="setting_wear_artist_color_modifier">Sanatçı tonu</string>
+    <string name="setting_wear_clock_color_modifier">Saat tonu</string>
+    <string name="wear_color_modifier_follow">Saatin tonunu izle</string>
     <string name="setting_wear_color_modifier_description">Nasıl türetildiğini değiştirmeden tüm paleti ayarlar — her renk işlemesiyle çalışır</string>
     <string name="setting_wear_color_hue_shift">Renk kaydırma</string>
     <string name="setting_wear_color_hue_shift_description">Albüm paletini renk çemberinde derece cinsinden döndürür (0–359). Her işleme ana rengini albümün kendi tonunda tuttuğundan, onu değiştiren ayar budur. 0 albüm rengini olduğu gibi kullanır; sabit Normal renk hiçbir zaman kaydırılmaz.</string>
@@ -1323,7 +1350,6 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1442,7 +1468,14 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1463,7 +1496,6 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1582,7 +1614,14 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">Kitaplığa göz at</string>
@@ -2292,5 +2331,56 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
         <item>Vurgu</item>
         <item>Hafif</item>
         <item>Blok</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Yüzü izle</item>
+        <item>Başlangıç</item>
+        <item>Ortada</item>
+        <item>Son</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Yüzü izle</item>
+        <item>Üst</item>
+        <item>Orta</item>
+        <item>Alt</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Sabit (tek satır, kaydırma veya küçültme yok)</item>
+        <item>Kaydır (marquee)</item>
+        <item>Sığacak kadar küçült</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>Müzik uygulamasından</item>
+        <item>Çevrimiçi arandı</item>
+        <item>Sanatçı fotoğrafı</item>
+        <item>Galerimden bir görsel</item>
+        <item>Bir klasörden rastgele</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

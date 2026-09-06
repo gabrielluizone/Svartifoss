@@ -16,6 +16,7 @@ import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.config.CustomIconStorage
 import com.svartifoss.snfell.databinding.PopupActionEditorBinding
 import com.svartifoss.snfell.view.LyraAccent
+import com.svartifoss.snfell.view.applyLyraDialogStyling
 import com.svartifoss.snfell.view.actionconfigs.ActionConfigFragment
 import com.svartifoss.snfell.view.buttonconfig.ActionPickerActivity
 import com.matejdro.wearutils.miscutils.BitmapUtils
@@ -177,6 +178,7 @@ class ActionEditorActivity : AppCompatActivity() {
                     .setMessage(R.string.icon_selection_no_icon_pack)
                     .setPositiveButton(android.R.string.ok, null)
                     .show()
+                    .applyLyraDialogStyling()
         }
     }
 
@@ -192,6 +194,7 @@ class ActionEditorActivity : AppCompatActivity() {
                             REQUEST_CODE_PICK_ACTION)
                 }
                 .show()
+                .applyLyraDialogStyling()
 
     }
 

@@ -61,6 +61,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import com.svartifoss.snfell.common.RoundScreenText
+import com.svartifoss.snfell.common.TextBlockAlign
+import com.svartifoss.snfell.common.TextBlockPosition
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -1301,10 +1304,12 @@ internal fun ChronoAmbientFace(state: NowPlayingFaceState) {
         val screen = maxWidth
         Column(
                 modifier = Modifier
-                        .align(Alignment.Center)
+                        .align(state.blockPlacement(Alignment.Center))
+                                .padding(horizontal = state.blockSafeSideInset(screen))
+                                .padding(vertical = state.blockSafeVerticalInset(screen))
                         .fillMaxWidth()
                         .padding(horizontal = screen * .08f),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
         ) {
             Text(
                     text = state.clockText,
@@ -1330,7 +1335,7 @@ internal fun ChronoAmbientFace(state: NowPlayingFaceState) {
             if (state.ambientShowTrackInfo && state.showArtist && state.artist.isNotBlank()) {
                 Row(
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center,
+                        horizontalArrangement = state.blockArrangement(Arrangement.Center),
                         modifier = Modifier.padding(top = 2.dp)
                 ) {
                     AmbientSourceIconGlyph(state, 11.dp, tint.copy(alpha = .55f * intensity))
@@ -1522,6 +1527,11 @@ internal fun AdaptiveTitleText(
         // intermediate measurement, or the caller would chase sizes that are about to change.
         onLineCount: ((Int) -> Unit)? = null
 ) {
+    // Resolved once, here, rather than at each of the four rendering branches below - two of which
+    // are private composables that never receive the state. Every title path in the app delegates
+    // into this overload, so this is the single point at which the user's alignment override can
+    // reach all of them, and a face cannot opt out of it by passing its own value.
+    @Suppress("NAME_SHADOWING") val textAlign = state.blockTextAlign(textAlign)
     if (backdrop != null) {
         CompositionLocalProvider(
                 LocalTextStyle provides LocalTextStyle.current.copy(background = backdrop)) {
@@ -1743,6 +1753,242 @@ internal fun titleTextColor(state: NowPlayingFaceState, designed: Color): Color 
 }
 
 /**
+ * Where this face's block of track text should line up, given what the face itself composed.
+ *
+ * The three [blockAlignment]/[blockTextAlign]/[blockPlacement] helpers are the whole of the
+ * placement contract, and the shape of them is deliberate: a face passes what it *designed*, and
+ * gets back either that value or the user's override. `follow` - the default for both keys - is
+ * what makes it safe to offer these controls on every face rather than on a hand-kept allow-list,
+ * because until somebody chooses a side, every one of these returns the face's own answer and the
+ * composition is untouched.
+ *
+ * The alternative shape, a face reading [NowPlayingFaceState.textBlockAlign] and switching on it,
+ * is the one this exists to prevent: it puts the `follow` fallback at every call site, which is the
+ * arrangement that has already gone wrong twice here (the title effects that defaulted to null and
+ * were never opted into, and the artist lines that styled a bare Text). Here the fallback is in one
+ * function and a call site cannot silently opt out of it - it can only fail to call it at all,
+ * which is what `TextBlockPlacementTest` sweeps for.
+ */
+internal fun NowPlayingFaceState.blockAlignment(
+        designed: Alignment.Horizontal
+): Alignment.Horizontal = when (textBlockAlign) {
+    TextBlockAlign.FOLLOW -> designed
+    TextBlockAlign.START -> Alignment.Start
+    TextBlockAlign.CENTER -> Alignment.CenterHorizontally
+    TextBlockAlign.END -> Alignment.End
+}
+
+/**
+ * The text alignment inside the block - see [blockAlignment].
+ *
+ * Applied inside [AdaptiveTitleText], [ArtistLineText], [TitleLineText] and [TrackTimeText] at the
+ * point each finally hands an alignment to a `Text`, rather than at their call sites. That is what
+ * makes the control reach *every* face without twenty-one edits and without any of them being able
+ * to opt out by accident - a face passes the alignment it designed, exactly as before, and the
+ * override is resolved on top of it. It is idempotent, so a nested helper re-applying it is
+ * harmless.
+ *
+ * What it cannot do on its own is move a wrap-content line: a `Text` that does not fill its parent
+ * has no spare width for an alignment to act in, so a face whose text is centred by its *container*
+ * also needs [blockAlignment] on that container. Both are called from one place per face for that
+ * reason.
+ */
+internal fun NowPlayingFaceState.blockTextAlign(designed: TextAlign): TextAlign =
+        when (textBlockAlign) {
+            TextBlockAlign.FOLLOW -> designed
+            TextBlockAlign.START -> TextAlign.Start
+            TextBlockAlign.CENTER -> TextAlign.Center
+            TextBlockAlign.END -> TextAlign.End
+        }
+
+/**
+ * [blockTextAlign] for a helper whose alignment parameter is optional.
+ *
+ * Null means "leave it to Compose", which is [TitleLineText]'s default, and stays null while the
+ * user has chosen `follow` - an override has to be able to act on a line that had no explicit
+ * alignment, or the control would silently miss exactly the faces that never named one.
+ */
+internal fun NowPlayingFaceState.blockTextAlignOrNull(designed: TextAlign?): TextAlign? =
+        when (textBlockAlign) {
+            TextBlockAlign.FOLLOW -> designed
+            else -> blockTextAlign(designed ?: TextAlign.Center)
+        }
+
+/** The one text mode that needs no cascade: a single ellipsized line at the designed size. */
+private const val STATIC_TEXT_MODE = "static"
+
+/** Row-level arrangement for a block whose line is a Row (an icon beside the text). */
+internal fun NowPlayingFaceState.blockArrangement(
+        designed: Arrangement.Horizontal
+): Arrangement.Horizontal = when (textBlockAlign) {
+    TextBlockAlign.FOLLOW -> designed
+    TextBlockAlign.START -> Arrangement.Start
+    TextBlockAlign.CENTER -> Arrangement.Center
+    TextBlockAlign.END -> Arrangement.End
+}
+
+/**
+ * Extra side inset a text block needs once the user has moved it into a narrow band of the circle.
+ *
+ * The screen is round, so the usable chord collapses towards the top and bottom. Every face's own
+ * side padding was tuned for the depth that face composes its text at - which is exactly the
+ * assumption [blockPlacement] breaks, since it lets the block be moved somewhere its author never
+ * placed it. Without this, choosing Top or Bottom on a face designed around a centred block runs
+ * the text into the bezel.
+ *
+ * Zero for `follow` (the face keeps the padding it was tuned with). The middle still receives a
+ * small chord-derived inset: the container is rectangular even there, while the painted screen is
+ * not. The estimate is deliberately conservative and shared
+ * rather than per-face: it assumes a block of [ASSUMED_BLOCK_FRACTION] of the screen's height
+ * against the edge, which over-insets a short block slightly rather than under-insetting a tall
+ * one. A face that knows its own height exactly - as the Artist face does, since it measures its
+ * own line count - computes the chord itself through [RoundScreenText] instead and does not need
+ * this.
+ */
+internal fun NowPlayingFaceState.blockSafeSideInset(screen: Dp): Dp {
+    val fraction = when (textBlockPosition) {
+        TextBlockPosition.FOLLOW -> return 0.dp
+        // A centred block can still be tall enough to reach outside the wide middle chord. Keep
+        // a small real-circle inset instead of treating the rectangular parent as usable glass.
+        TextBlockPosition.MIDDLE -> RoundScreenText.sideInsetFor(
+                top = .40f,
+                bottom = .60f)
+        TextBlockPosition.TOP -> RoundScreenText.sideInsetFor(
+                top = blockTopClearanceFraction(),
+                bottom = blockTopClearanceFraction() + ASSUMED_BLOCK_FRACTION)
+        TextBlockPosition.BOTTOM -> RoundScreenText.sideInsetFor(
+                top = 1f - EDGE_MARGIN_FRACTION - ASSUMED_BLOCK_FRACTION,
+                bottom = 1f - EDGE_MARGIN_FRACTION)
+    }
+    return screen * fraction
+}
+
+/**
+ * The vertical keep-out required by a block explicitly moved to an edge.
+ *
+ * `Alignment.Top` and `Alignment.Bottom` otherwise mean the rectangular Compose parent, not the
+ * round display. In particular Top placed text under FaceClock, which occupies the first 5dp plus
+ * its measured glyph height. The clock's typography is user-scalable, so reserve a conservative
+ * fraction instead of hard-coding its default 15sp metrics. Faces add these insets to the metadata
+ * container only when the user has actually overridden its designed placement.
+ */
+internal fun NowPlayingFaceState.blockSafeVerticalInset(screen: Dp): Dp = when (textBlockPosition) {
+    TextBlockPosition.TOP -> screen * blockTopClearanceFraction()
+    TextBlockPosition.BOTTOM -> screen * blockBottomClearanceFraction()
+    TextBlockPosition.FOLLOW, TextBlockPosition.MIDDLE -> 0.dp
+}
+
+/** Keep a face's authored offset only while its placement still follows that face. */
+internal fun NowPlayingFaceState.blockDesignedTopPadding(designed: Dp): Dp =
+        if (textBlockPosition == TextBlockPosition.FOLLOW) designed else 0.dp
+
+/** Keep a face's authored bottom offset only while its placement still follows that face. */
+internal fun NowPlayingFaceState.blockDesignedBottomPadding(designed: Dp): Dp =
+        if (textBlockPosition == TextBlockPosition.FOLLOW) designed else 0.dp
+
+/** Vertical arrangement for a full-height metadata container. */
+internal fun NowPlayingFaceState.blockVerticalArrangement(
+        designed: Arrangement.Vertical
+): Arrangement.Vertical = when (textBlockPosition) {
+    TextBlockPosition.FOLLOW -> designed
+    TextBlockPosition.TOP -> Arrangement.Top
+    TextBlockPosition.MIDDLE -> Arrangement.Center
+    TextBlockPosition.BOTTOM -> Arrangement.Bottom
+}
+
+private fun NowPlayingFaceState.blockTopClearanceFraction(): Float =
+        if (showClock) CLOCK_CLEARANCE_FRACTION else EDGE_MARGIN_FRACTION
+
+/** The shared mini-button row or Up Next pill occupies the bottom band when its top is below 1. */
+private fun NowPlayingFaceState.blockBottomClearanceFraction(): Float = maxOf(
+        EDGE_MARGIN_FRACTION,
+        (1f - miniButtonsTopFraction).coerceAtLeast(0f))
+
+/** Roughly two lines of track text plus its breathing room - the block most faces compose. */
+private const val ASSUMED_BLOCK_FRACTION = 0.20f
+
+/** How close to the glass a moved block is allowed to sit before the chord is measured. */
+private const val EDGE_MARGIN_FRACTION = 0.08f
+
+/** Clock top padding + its maximum configurable glyph height + a visible gap, in screen fractions. */
+private const val CLOCK_CLEARANCE_FRACTION = 0.22f
+
+/**
+ * Where the block sits in the face's own Box, on both axes at once.
+ *
+ * Both halves come from [designed] when the user has not overridden them, so a face that grounds
+ * its text ([Alignment.BottomCenter], as Immersive does) keeps doing exactly that. The two axes are
+ * resolved independently: choosing only a side must not also re-anchor the block vertically.
+ */
+internal fun NowPlayingFaceState.blockPlacement(designed: Alignment): Alignment {
+    val horizontal = when (textBlockAlign) {
+        TextBlockAlign.FOLLOW -> null
+        TextBlockAlign.START -> Alignment.Start
+        TextBlockAlign.CENTER -> Alignment.CenterHorizontally
+        TextBlockAlign.END -> Alignment.End
+    }
+    val vertical = when (textBlockPosition) {
+        TextBlockPosition.FOLLOW -> null
+        TextBlockPosition.TOP -> Alignment.Top
+        TextBlockPosition.MIDDLE -> Alignment.CenterVertically
+        TextBlockPosition.BOTTOM -> Alignment.Bottom
+    }
+    if (horizontal == null && vertical == null) return designed
+    val resolvedHorizontal = horizontal ?: designedHorizontal(designed)
+    val resolvedVertical = vertical ?: designedVertical(designed)
+    return combine(resolvedHorizontal, resolvedVertical)
+}
+
+/**
+ * The two-axis [Alignment] for a horizontal and a vertical half.
+ *
+ * Compose offers no combinator for this, so the nine named values are listed. Deliberately not a
+ * hand-built `BiasAlignment`: the named values are what every face already passes, and matching
+ * them keeps `blockPlacement` returning the identical object a face would have used itself
+ * whenever the user has overridden neither axis.
+ */
+private fun combine(
+        horizontal: Alignment.Horizontal,
+        vertical: Alignment.Vertical
+): Alignment = when (vertical) {
+    Alignment.Top -> when (horizontal) {
+        Alignment.Start -> Alignment.TopStart
+        Alignment.End -> Alignment.TopEnd
+        else -> Alignment.TopCenter
+    }
+    Alignment.Bottom -> when (horizontal) {
+        Alignment.Start -> Alignment.BottomStart
+        Alignment.End -> Alignment.BottomEnd
+        else -> Alignment.BottomCenter
+    }
+    else -> when (horizontal) {
+        Alignment.Start -> Alignment.CenterStart
+        Alignment.End -> Alignment.CenterEnd
+        else -> Alignment.Center
+    }
+}
+
+/**
+ * Splits a two-axis [Alignment] back into the axis a caller did not override.
+ *
+ * Compose exposes no accessor for either half, so this compares against the nine standard values -
+ * which is every value a face here actually passes. An unrecognised custom [Alignment] (a
+ * `BiasAlignment` with an odd bias) falls back to centre on that axis rather than throwing; a face
+ * would have to construct one deliberately, and none does.
+ */
+private fun designedHorizontal(alignment: Alignment): Alignment.Horizontal = when (alignment) {
+    Alignment.TopStart, Alignment.CenterStart, Alignment.BottomStart -> Alignment.Start
+    Alignment.TopEnd, Alignment.CenterEnd, Alignment.BottomEnd -> Alignment.End
+    else -> Alignment.CenterHorizontally
+}
+
+private fun designedVertical(alignment: Alignment): Alignment.Vertical = when (alignment) {
+    Alignment.TopStart, Alignment.TopCenter, Alignment.TopEnd -> Alignment.Top
+    Alignment.BottomStart, Alignment.BottomCenter, Alignment.BottomEnd -> Alignment.Bottom
+    else -> Alignment.CenterVertically
+}
+
+/**
  * The playing app's source icon, drawn immediately before an artist line (see
  * [NowPlayingFaceState.sourceIcon] and MiscPreferences.WEAR_SHOW_SOURCE_ICON).
  *
@@ -1781,11 +2027,20 @@ internal fun SourceIconGlyph(state: NowPlayingFaceState, size: Dp, tint: Color) 
 }
 
 /**
- * A track artist line honouring the user's per-element typography ([NowPlayingFaceState.artistTypography]).
+ * A track artist line honouring the user's per-element typography ([NowPlayingFaceState.artistTypography])
+ * and, since [MiscPreferences.WEAR_ARTIST_TEXT_MODE][com.svartifoss.snfell.common.MiscPreferences.WEAR_ARTIST_TEXT_MODE],
+ * their chosen behaviour for a line that does not fit.
  *
- * The artist line is a plain single line on every face, so it needs none of [AdaptiveTitleText]'s
- * overflow strategies - but it does need the same "a default value means keep what the face
- * designed" merge, which is why faces call this instead of styling a bare [Text] themselves.
+ * It used to be a plain single ellipsized line on every face, on the reasoning that only titles are
+ * long enough to need [AdaptiveTitleText]'s strategies. That was never true of the artist - a long
+ * credit was simply cut everywhere, with no marquee, no shrink-to-fit, and no way to stop a face
+ * that wrapped it - so the two lines now share one vocabulary and one implementation of each mode.
+ *
+ * `static` keeps the old fast path deliberately, and it is the default: a single ellipsized line at
+ * the fixed size *is* what every face drew before this control existed, so adding it changes
+ * nothing anywhere until a behaviour is picked. It is also genuinely cheaper - no measure/settle
+ * cascade and no sibling composables - which matters on a line most faces draw at every state
+ * change.
  */
 @Composable
 internal fun ArtistLineText(
@@ -1797,8 +2052,37 @@ internal fun ArtistLineText(
         fontWeight: FontWeight? = null,
         lineHeight: TextUnit = TextUnit.Unspecified,
         letterSpacing: TextUnit = TextUnit.Unspecified,
-        textAlign: TextAlign = TextAlign.Center
+        textAlign: TextAlign = TextAlign.Center,
+        /** Defaulted off the state inside the helper, never at the call site: fifteen faces call
+         *  this, and a parameter they each had to opt into is how the title effects ended up
+         *  resolved, published and read by nothing. */
+        mode: String = state.artistTextMode
 ) {
+    if (mode != STATIC_TEXT_MODE) {
+        // Every other mode is a measure-and-settle cascade that already exists once, for the
+        // title. Reusing it is what keeps "marquee" meaning the same thing on both lines rather
+        // than becoming two implementations that drift; the artist's own typography, colour,
+        // family and effects are all passed through, so it is still the artist line in every
+        // respect but the overflow strategy.
+        AdaptiveTitleText(
+                text = text,
+                mode = mode,
+                state = state,
+                fontSize = fontSize,
+                color = color,
+                modifier = modifier,
+                fontWeight = fontWeight,
+                fontStyle = state.artistFontStyle,
+                fontFamily = state.artistFont,
+                letterSpacing = letterSpacing,
+                lineHeight = lineHeight,
+                textAlign = textAlign,
+                typography = state.artistTypography,
+                shadow = state.artistShadow,
+                outline = state.artistOutline,
+                backdrop = state.artistBackdrop)
+        return
+    }
     val spec = state.artistTypography
     state.artistOutline?.let { outline ->
         val strokeWidth = with(LocalDensity.current) {
@@ -1864,7 +2148,7 @@ private fun ArtistLineTextPass(
             fontFamily = state.artistFont,
             lineHeight = lineHeight,
             letterSpacing = if (spec.trackingEm == 0f) letterSpacing else spec.trackingEm.em,
-            textAlign = textAlign,
+            textAlign = state.blockTextAlign(textAlign),
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = modifier
@@ -1958,7 +2242,7 @@ private fun TitleLineTextPass(
             fontFamily = fontFamily,
             lineHeight = lineHeight,
             letterSpacing = if (spec.trackingEm == 0f) letterSpacing else spec.trackingEm.em,
-            textAlign = textAlign,
+            textAlign = state.blockTextAlignOrNull(textAlign),
             maxLines = maxLines,
             overflow = TextOverflow.Ellipsis,
             modifier = modifier
@@ -2001,7 +2285,7 @@ internal fun TrackTimeText(
                 state.trackTimeTextSize(lineHeight)
             },
             letterSpacing = state.trackTimeLetterSpacing(letterSpacing),
-            textAlign = textAlign,
+            textAlign = state.blockTextAlign(textAlign),
             maxLines = maxLines,
             overflow = overflow,
             modifier = modifier

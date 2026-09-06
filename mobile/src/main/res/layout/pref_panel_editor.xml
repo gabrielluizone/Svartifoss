@@ -143,6 +143,14 @@
                 android:minWidth="82dp"
                 android:text="@string/watch_element_queue" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_editor_target_lyrics"
+                style="@style/LyraCommunityDetailSurfaceButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:minWidth="82dp"
+                android:text="@string/watch_element_lyrics" />
+
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
     </HorizontalScrollView>
@@ -203,6 +211,18 @@
                 android:textSize="14sp"
                 android:visibility="gone"
                 tools:text="Blend the palette"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_editor_surface_backdrop_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:visibility="gone"
+                app:icon="@drawable/ic_backdrop_style"
+                tools:text="Queue background · Follow shared panel appearance"
                 tools:visibility="visible" />
 
             <com.google.android.material.button.MaterialButton

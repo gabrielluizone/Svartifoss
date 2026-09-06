@@ -41,6 +41,11 @@
         <package android:name="com.apple.android.music" />
         <package android:name="com.amazon.mp3" />
         <package android:name="com.soundcloud.android" />
+        <package android:name="com.qobuz.music" />
+        <package android:name="com.bandcamp.android" />
+        <package android:name="com.audiomack" />
+        <package android:name="com.mixcloud.player" />
+        <package android:name="com.pandora.android" />
 
         <intent>
             <action android:name="android.intent.action.MEDIA_BUTTON" />

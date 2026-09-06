@@ -14,12 +14,17 @@ import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.LyricLine
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.SurfaceColorTreatment
 import com.svartifoss.snfell.common.SwatchInfo
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.selectPrimaryAccent
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.watch.communication.PhoneConnection
 import com.svartifoss.snfell.watch.theme.WatchTheme
+import com.svartifoss.snfell.watch.theme.selectAlbumCompanionColors
+import com.svartifoss.snfell.watch.view.panel.AlbumPaletteCache
+import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
+import com.svartifoss.snfell.watch.view.panel.PanelTriad
 import com.matejdro.wearutils.lifecycle.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -82,13 +87,37 @@ class LyricsViewModel @Inject constructor(
     private val _accentColor = MutableLiveData(WatchTheme.ACCENT_DEFAULT)
     val accentColor: LiveData<Int> = _accentColor
 
-    private val albumAccentSource: AlbumAccentSource = run {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        AlbumAccentSource.fromPreference(FaceScopedPreferences.getString(
-                prefs,
-                MiscPreferences.WEAR_ALBUM_ACCENT_SOURCE,
-                ThemeAppearance.resolve(prefs)))
-    }
+    /**
+     * The same colour before the black-backdrop lift, with its companions.
+     *
+     * The ground behind the words is tinted from this rather than from [accentColor]: that one has
+     * been pushed lighter to read *on* black, which is the wrong input for the surface underneath.
+     */
+    private val _accentTriad = MutableLiveData<PanelTriad>()
+    val accentTriad: LiveData<PanelTriad> = _accentTriad
+
+    /** The cover the ground is painted from - see ScreenBackdrop. */
+    val albumArt = phoneConnection.albumArt
+
+    private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+    /**
+     * Read once, like the accent source below: preferences are phone-owned and this screen lives
+     * for one visit, so re-reading them per frame would buy nothing.
+     */
+    private val appearanceContext = ThemeAppearance.resolve(prefs)
+
+    private val albumAccentSource: AlbumAccentSource = AlbumAccentSource.fromPreference(
+            FaceScopedPreferences.getString(
+                    prefs,
+                    MiscPreferences.WEAR_ALBUM_ACCENT_SOURCE,
+                    appearanceContext))
+
+    /** Stands in for a cover that carries no colour, or none at all. */
+    private val fallbackTriad = PanelTriad(
+            WatchTheme.ACCENT_DEFAULT,
+            PanelAppearanceResolver.albumToneFallback(WatchTheme.ACCENT_DEFAULT, .42f),
+            PanelAppearanceResolver.albumToneFallback(WatchTheme.ACCENT_DEFAULT, .68f))
 
     private var latestState: MusicState? = null
     private var ambient = false
@@ -107,7 +136,13 @@ class LyricsViewModel @Inject constructor(
     }
 
     private val artObserver = Observer<Bitmap?> { bitmap ->
-        if (bitmap != null) deriveAccent(bitmap)
+        if (bitmap != null) {
+            deriveAccent(bitmap)
+        } else {
+            // Still through the resolver: a chosen lyrics colour is a choice about this screen,
+            // not about the cover, so it has to survive a track with no artwork.
+            publishAccent(fallbackTriad)
+        }
     }
 
     init {
@@ -179,6 +214,13 @@ class LyricsViewModel @Inject constructor(
     }
 
     private fun deriveAccent(bitmap: Bitmap) {
+        // The player has almost always extracted this very Bitmap already. Reusing its answer is
+        // not only cheaper, it is what puts the right colour on the *first* frame - see
+        // AlbumPaletteCache, which exists for the same flash on the Volume and Progress screens.
+        AlbumPaletteCache.get(bitmap, albumAccentSource)?.let { cached ->
+            publishAccent(cached)
+            return
+        }
         viewModelScope.launch(Dispatchers.Default) {
             val palette = Palette.from(bitmap).generate()
             val swatches = palette.swatches.map { SwatchInfo(it.rgb, it.population) }
@@ -189,8 +231,60 @@ class LyricsViewModel @Inject constructor(
                     swatches,
                     albumAccentSource)
             // null means the cover carried no colour information; keep whatever is showing.
-            if (primary != null) _accentColor.postValue(legibleOnBlack(primary))
+            if (primary == null) return@launch
+            // Named tonal swatches first, population-ranked raw swatches only as a fallback -
+            // the ordering MainActivity and the queue both use.
+            val ranked = listOfNotNull(
+                    palette.vibrantSwatch,
+                    palette.mutedSwatch,
+                    palette.lightVibrantSwatch,
+                    palette.darkVibrantSwatch,
+                    palette.lightMutedSwatch,
+                    palette.darkMutedSwatch,
+                    palette.dominantSwatch
+            ).map { it.rgb } +
+                    swatches.sortedByDescending { it.population }.map { it.rgb }
+            val companions = selectAlbumCompanionColors(primary, ranked)
+            val raw = PanelTriad(
+                    primary,
+                    companions.secondary
+                            ?: PanelAppearanceResolver.albumToneFallback(primary, .42f),
+                    companions.tertiary
+                            ?: PanelAppearanceResolver.albumToneFallback(primary, .68f))
+            AlbumPaletteCache.put(bitmap, albumAccentSource, raw)
+            postAccent(raw)
         }
+    }
+
+    /**
+     * The album's colour after this screen's own settings, then lifted for the black backdrop.
+     *
+     * Routed through the shared component resolver rather than used raw, which is what this screen
+     * used to do: the global treatment, modifier, hue shift and Normal colour reached every other
+     * surface in the app and stopped here, and there was no per-screen override to reach for
+     * either. [MiscPreferences.WEAR_LYRICS_COLOR_MODE] is that override.
+     */
+    private fun resolveLyricsAccent(raw: PanelTriad): PanelTriad =
+            PanelAppearanceResolver.componentTriad(
+                    prefs,
+                    appearanceContext,
+                    MiscPreferences.WEAR_LYRICS_COLOR_MODE,
+                    MiscPreferences.WEAR_LYRICS_CUSTOM_COLOR,
+                    raw,
+                    WatchTheme.ACCENT_DEFAULT)
+
+    /** Publishes both products of one resolution, from the main thread. */
+    private fun publishAccent(raw: PanelTriad) {
+        val resolved = resolveLyricsAccent(raw)
+        _accentTriad.value = resolved
+        _accentColor.value = legibleOnBlack(resolved.primary)
+    }
+
+    /** The same, from the extraction coroutine - [deriveAccent] runs off the main thread. */
+    private fun postAccent(raw: PanelTriad) {
+        val resolved = resolveLyricsAccent(raw)
+        _accentTriad.postValue(resolved)
+        _accentColor.postValue(legibleOnBlack(resolved.primary))
     }
 
     /**
@@ -236,8 +330,20 @@ class LyricsViewModel @Inject constructor(
 
     /** Seeds the accent from the player so the first frame matches instead of flashing the default. */
     fun seedAccent(color: Int) {
-        if (color != 0) _accentColor.value = legibleOnBlack(color)
+        if (color == 0) return
+        // Only while this screen follows the global palette. The seed *is* the player's resolved
+        // accent, so it is exactly right then and exactly wrong once the screen has a colour of
+        // its own - seeding regardless would paint the player's colour for a frame and then snap
+        // to the chosen one, which is the flash this seed exists to prevent.
+        if (!followsGlobalPalette()) return
+        _accentColor.value = legibleOnBlack(color)
     }
+
+    private fun followsGlobalPalette(): Boolean =
+            SurfaceColorTreatment.fromPreference(FaceScopedPreferences.getString(
+                    prefs,
+                    MiscPreferences.WEAR_LYRICS_COLOR_MODE,
+                    appearanceContext)) == SurfaceColorTreatment.FOLLOW
 
     /**
      * The accent, lifted until it is readable on this screen's black backdrop.

@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.watch.view.queue
 
+import android.content.Context
 import android.graphics.Bitmap
 import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.MediatorLiveData
@@ -7,13 +8,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
+import androidx.preference.PreferenceManager
+import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.CustomLists
+import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.QueuePaging
+import com.svartifoss.snfell.common.SwatchInfo
+import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.common.selectPrimaryAccent
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.PhoneConnection
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.theme.selectAlbumCompanionColors
+import com.svartifoss.snfell.watch.view.panel.AlbumPaletteCache
+import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
+import com.svartifoss.snfell.watch.view.panel.PanelTriad
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -37,8 +49,29 @@ data class NowPlaying(val title: String, val artist: String)
  */
 @HiltViewModel
 class QueueViewModel @Inject constructor(
+        @ApplicationContext context: Context,
         private val phoneConnection: PhoneConnection
 ) : ViewModel() {
+
+    private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+
+    /** Read once: preferences are phone-owned and this screen lives for a single visit. */
+    private val appearanceContext = ThemeAppearance.resolve(prefs)
+
+    /** The cover the ground is painted from - see ScreenBackdrop. */
+    val albumArt = phoneConnection.albumArt
+
+    /** The album triad stands in for a cover that carries no colour, or none at all. */
+    private val fallbackTriad = PanelTriad(
+            DEFAULT_QUEUE_ACCENT,
+            PanelAppearanceResolver.albumToneFallback(DEFAULT_QUEUE_ACCENT, .42f),
+            PanelAppearanceResolver.albumToneFallback(DEFAULT_QUEUE_ACCENT, .68f))
+
+    private val albumAccentSource: AlbumAccentSource = AlbumAccentSource.fromPreference(
+            FaceScopedPreferences.getString(
+                    prefs,
+                    MiscPreferences.WEAR_ALBUM_ACCENT_SOURCE,
+                    appearanceContext))
 
     private var latestList: CustomListWithBitmaps? = null
 
@@ -92,9 +125,10 @@ class QueueViewModel @Inject constructor(
         value = DEFAULT_QUEUE_ACCENT
         addSource(phoneConnection.albumArt) { bitmap ->
             if (bitmap == null) {
-                value = DEFAULT_QUEUE_ACCENT
-                secondaryAccentColor.value = DEFAULT_QUEUE_ACCENT
-                tertiaryAccentColor.value = DEFAULT_QUEUE_ACCENT
+                // Still through the resolver: a chosen queue colour is a choice about the queue,
+                // not about the cover, so it has to survive a track with no artwork - publishing
+                // the bare fallback here is what made a custom colour vanish on those tracks.
+                publishAccent(fallbackTriad)
             } else {
                 deriveAccent(bitmap)
             }
@@ -102,6 +136,8 @@ class QueueViewModel @Inject constructor(
     }
 
     private fun deriveAccent(bitmap: Bitmap) {
+        // The player has almost always extracted this very Bitmap already - see AlbumPaletteCache.
+        AlbumPaletteCache.get(bitmap, albumAccentSource)?.let { publishAccent(it); return }
         viewModelScope.launch(Dispatchers.Default) {
             val palette = Palette.from(bitmap).generate()
             val preferredColors = listOfNotNull(
@@ -113,19 +149,48 @@ class QueueViewModel @Inject constructor(
                     palette.darkMutedSwatch,
                     palette.dominantSwatch
             ).map { it.rgb }.distinct()
-            val primary = preferredColors.firstOrNull() ?: DEFAULT_QUEUE_ACCENT
+            // The shared selector, honouring the user's album-accent choice. This screen used to
+            // take the first named swatch outright, which is a fourth opinion about a question
+            // AlbumAccentSelection exists to answer once: on a cover whose vibrant swatch is a
+            // lens flare, the queue went red while the player stayed blue.
+            val primary = selectPrimaryAccent(
+                    palette.vibrantSwatch?.let { SwatchInfo(it.rgb, it.population) },
+                    palette.swatches.map { SwatchInfo(it.rgb, it.population) },
+                    albumAccentSource) ?: DEFAULT_QUEUE_ACCENT
             val rankedAlbumColors = palette.swatches
                     .sortedByDescending { it.population }
                     .map { it.rgb }
             // Named tonal swatches first, population-ranked raw swatches only as a fallback - see
             // MainActivity.kt's palette extraction for why.
             val companions = selectAlbumCompanionColors(primary, preferredColors + rankedAlbumColors)
-            val secondary = companions.secondary ?: sameHueTone(primary, .42f)
-            val tertiary = companions.tertiary ?: sameHueTone(primary, .68f)
-            accentColor.postValue(primary)
-            secondaryAccentColor.postValue(secondary)
-            tertiaryAccentColor.postValue(tertiary)
+            val raw = PanelTriad(
+                    primary,
+                    companions.secondary ?: sameHueTone(primary, .42f),
+                    companions.tertiary ?: sameHueTone(primary, .68f))
+            AlbumPaletteCache.put(bitmap, albumAccentSource, raw)
+            publishAccent(raw)
         }
+    }
+
+    /**
+     * Applies this screen's own colour settings to a raw album triad and publishes the result.
+     *
+     * Routed through the shared component resolver rather than published raw, which is what this
+     * screen used to do: the global treatment, modifier, hue shift and Normal colour reached every
+     * other surface in the app and stopped at the queue, and there was no per-screen override to
+     * reach for either. [MiscPreferences.WEAR_QUEUE_COLOR_MODE] is that override.
+     */
+    private fun publishAccent(raw: PanelTriad) {
+        val resolved = PanelAppearanceResolver.componentTriad(
+                prefs,
+                appearanceContext,
+                MiscPreferences.WEAR_QUEUE_COLOR_MODE,
+                MiscPreferences.WEAR_QUEUE_CUSTOM_COLOR,
+                raw,
+                DEFAULT_QUEUE_ACCENT)
+        accentColor.postValue(resolved.primary)
+        secondaryAccentColor.postValue(resolved.secondary)
+        tertiaryAccentColor.postValue(resolved.tertiary)
     }
 
     /** Monochromatic covers still get two readable tones without fabricating another hue. */

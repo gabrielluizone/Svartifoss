@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,6 +39,7 @@ import com.svartifoss.snfell.common.AdaptiveTextContrast
 import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.RoundScreenText
 import com.svartifoss.snfell.common.SplitPanelStyle
+import com.svartifoss.snfell.common.TextBlockPosition
 import com.svartifoss.snfell.watch.view.compose.FaceClock
 
 /**
@@ -244,7 +246,7 @@ private fun CoverBand(state: NowPlayingFaceState, height: Dp, panel: Color) {
  * *who*, and the larger one is the content, which maps onto artist and track.
  */
 @Composable
-private fun TrackText(
+private fun BoxScope.TrackText(
         state: NowPlayingFaceState,
         primary: Color,
         secondary: Color,
@@ -258,10 +260,16 @@ private fun TrackText(
             bottom = SEAM_FRACTION + .28f)
     Column(
             modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = seam + screen * .04f)
-                    .padding(horizontal = screen * inset),
-            horizontalAlignment = Alignment.Start,
+                    .align(state.blockPlacement(Alignment.TopStart))
+                    .fillMaxWidth()
+                    .padding(horizontal = maxOf(screen * inset, state.blockSafeSideInset(screen)))
+                    .padding(vertical = state.blockSafeVerticalInset(screen))
+                    .padding(top = if (state.textBlockPosition == TextBlockPosition.FOLLOW) {
+                        seam + screen * .04f
+                    } else {
+                        0.dp
+                    }),
+            horizontalAlignment = state.blockAlignment(Alignment.Start),
             verticalArrangement = Arrangement.Top
     ) {
         if (state.showArtist && state.artist.isNotEmpty()) {

@@ -81,6 +81,8 @@
     <string name="watch_theme_face_metadata">메타데이터</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <!-- Proper noun: the author of WearMusicCenter, the app this one is a fork of. -->
+    <string name="watch_theme_face_matejdro">MatejDro</string>
     <string name="online_theme_filter_not_installed">새로운 테마</string>
     <string name="online_theme_filter_not_installed_selected">이미 추가한 테마를 숨기는 중</string>
     <string name="online_theme_filter_not_installed_off">이미 추가한 테마를 표시하는 중</string>

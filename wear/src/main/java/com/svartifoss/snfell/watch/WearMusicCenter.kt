@@ -2,7 +2,9 @@ package com.svartifoss.snfell.watch
 
 import android.content.pm.ApplicationInfo
 import android.preference.PreferenceManager
+import com.svartifoss.snfell.common.MatejdroArtistAutosizeMigration
 import com.svartifoss.snfell.watch.config.PreferencesBus
+import com.svartifoss.snfell.watch.theme.UserFont
 import com.matejdro.wearutils.logging.FileLogger
 import com.matejdro.wearutils.logging.TimberExceptionWear
 import dagger.hilt.android.HiltAndroidApp
@@ -29,6 +31,15 @@ class WearMusicCenter : android.app.Application() {
         fileLogger.activate()
         Timber.plant(fileLogger)
 
-        PreferencesBus.value = PreferenceManager.getDefaultSharedPreferences(this)
+        // Seeded before anything resolves a face: watchFontFamily takes no Context, so the
+        // imported typeface is unreachable until this holder has one. A face composed before this
+        // ran would silently fall back to the default family.
+        UserFont.initialize(this)
+
+        val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        // The watch may be installed independently while developing, so repair its local copy as
+        // well as the phone's source copy before any screen resolves the active face.
+        MatejdroArtistAutosizeMigration.repair(preferences)
+        PreferencesBus.value = preferences
     }
 }

@@ -40,6 +40,7 @@ class TitleTextEffectsTest {
          * borrows the title's family for text that is not the title.
          */
         val ALLOWED_BARE_TITLE_FONT = mapOf(
+                "ArtistAmbient" to "AOD variant",
                 "CarouselAmbient" to "AOD variant",
                 "ChatAmbient" to "AOD variant",
                 "ChronoAmbientFace" to "AOD variant",
@@ -57,6 +58,11 @@ class TitleTextEffectsTest {
                 // Note's sentence is one AnnotatedString whose title span is built here and then
                 // handed to AdaptiveTitleText's AnnotatedString overload.
                 "NoteLine" to "builds the span AdaptiveTitleText then renders",
+
+                // The Artist face hands its authored family to TrackTimeText, whose own font key
+                // falls back to it while set to `follow` - the same shape as the other track-time
+                // sites, and not a title being drawn.
+                "ArtistTextBlock" to "the face's authored family for TrackTimeText",
 
                 // The helpers themselves.
                 "TitleLineTextPass" to "TitleLineText's own drawing pass")
@@ -108,14 +114,22 @@ class TitleTextEffectsTest {
         }
     }
 
-    /** A stale exemption would let a real regression back in unnoticed. */
+    /**
+     * A stale exemption would let a real regression back in unnoticed.
+     *
+     * Matched on the simple name with or without a receiver, as [ArtistLineTypographyTest] does: a
+     * Compose extension function carries its receiver in the declaration
+     * (`BoxScope.ArtistTextBlock`), and requiring the bare spelling would report a live exemption
+     * as stale the moment the composable gained one - which is a failure that says the opposite of
+     * what is true.
+     */
     @Test
     fun everyExemptedComposableStillExists() {
         val allSource = faceSources().joinToString("\n") { it.readText() }
         ALLOWED_BARE_TITLE_FONT.forEach { (name, reason) ->
             assertTrue(
                     "$name is exempted (\"$reason\") but no longer exists - remove the entry",
-                    allSource.contains("fun $name("))
+                    allSource.contains("fun $name(") || allSource.contains(".$name("))
         }
     }
 

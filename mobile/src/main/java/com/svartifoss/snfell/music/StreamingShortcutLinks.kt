@@ -13,6 +13,11 @@ enum class StreamingService(val packageName: String?) {
     APPLE_MUSIC("com.apple.android.music"),
     AMAZON_MUSIC("com.amazon.mp3"),
     SOUNDCLOUD("com.soundcloud.android"),
+    QOBUZ("com.qobuz.music"),
+    BANDCAMP("com.bandcamp.android"),
+    AUDIOMACK("com.audiomack"),
+    MIXCLOUD("com.mixcloud.player"),
+    PANDORA("com.pandora.android"),
     GENERIC(null)
 }
 
@@ -84,6 +89,12 @@ object StreamingShortcutLinks {
                 StreamingService.AMAZON_MUSIC
             scheme == "soundcloud" || hostMatches(host, "soundcloud.com") ->
                 StreamingService.SOUNDCLOUD
+            hostMatches(host, "qobuz.com") -> StreamingService.QOBUZ
+            hostMatches(host, "bandcamp.com") -> StreamingService.BANDCAMP
+            hostMatches(host, "audiomack.com") -> StreamingService.AUDIOMACK
+            hostMatches(host, "mixcloud.com") -> StreamingService.MIXCLOUD
+            hostMatches(host, "pandora.com") || hostMatches(host, "pandora.app.link") ->
+                StreamingService.PANDORA
             hostMatches(host, "youtube.com") || hostMatches(host, "youtu.be") ->
                 StreamingService.YOUTUBE_MUSIC
             else -> StreamingService.GENERIC
@@ -142,6 +153,17 @@ object StreamingShortcutLinks {
         } else {
             uri.schemeSpecificPart.isNotBlank()
         }
+    }
+
+    /** Extracts the URI from the `targetPackage|uri` launch form sent to the watch. A normal URI
+     * containing a pipe is left alone: only a syntactically valid Android package prefix is
+     * treated as the transport envelope. */
+    fun unwrapRemoteTarget(rawTarget: String): String {
+        val separator = rawTarget.indexOf('|')
+        if (separator <= 0 || separator == rawTarget.lastIndex) return rawTarget
+        val packageName = rawTarget.substring(0, separator)
+        val link = rawTarget.substring(separator + 1)
+        return if (ANDROID_PACKAGE_NAME.matches(packageName) && isSafeLink(link)) link else rawTarget
     }
 
     /** Suggested title for a shared payload: prefer its subject, otherwise keep the prose before
@@ -327,7 +349,15 @@ object StreamingShortcutLinks {
                 else -> StreamingContentType.UNKNOWN
             }
             StreamingService.DEEZER,
-            StreamingService.TIDAL -> entityFrom(entityParts)
+            StreamingService.TIDAL,
+            StreamingService.QOBUZ,
+            StreamingService.BANDCAMP,
+            StreamingService.PANDORA -> entityFrom(entityParts)
+            StreamingService.AUDIOMACK -> when {
+                pathParts.size >= 3 -> contentTypeForEntity(pathParts[1])
+                pathParts.size == 1 -> StreamingContentType.ARTIST
+                else -> entityFrom(pathParts)
+            }
             StreamingService.APPLE_MUSIC -> when {
                 "playlist" in entityParts -> StreamingContentType.PLAYLIST
                 "artist" in entityParts -> StreamingContentType.ARTIST
@@ -360,6 +390,17 @@ object StreamingShortcutLinks {
                 pathParts.size == 1 -> StreamingContentType.ARTIST
                 else -> StreamingContentType.UNKNOWN
             }
+            StreamingService.MIXCLOUD -> when {
+                "playlists" in pathParts || "playlist" in pathParts ->
+                    StreamingContentType.PLAYLIST
+                pathParts.firstOrNull() == "live" && pathParts.size >= 2 ->
+                    StreamingContentType.SHOW
+                // A normal Mixcloud show/track URL is /<creator>/<upload-slug>/ and contains no
+                // explicit entity word. Profiles contain only the creator segment.
+                pathParts.size >= 2 -> StreamingContentType.SHOW
+                pathParts.size == 1 -> StreamingContentType.ARTIST
+                else -> StreamingContentType.UNKNOWN
+            }
             StreamingService.GENERIC -> entityFrom(entityParts)
         }
     }
@@ -378,7 +419,8 @@ object StreamingShortcutLinks {
         "artist", "artists" -> StreamingContentType.ARTIST
         "show", "shows", "podcast", "podcasts" -> StreamingContentType.SHOW
         "episode", "episodes" -> StreamingContentType.EPISODE
-        "mix", "mixes", "radio" -> StreamingContentType.MIX
+        "mix", "mixes", "radio", "station", "stations", "flow" ->
+            StreamingContentType.MIX
         else -> StreamingContentType.UNKNOWN
     }
 
@@ -418,6 +460,10 @@ object StreamingShortcutLinks {
         "playlist", "playlists", "collection",
         "album", "albums", "artist", "artists",
         "show", "shows", "podcast", "podcasts",
-        "episode", "episodes", "mix", "mixes", "radio"
+        "episode", "episodes", "mix", "mixes", "radio",
+        "station", "stations", "flow"
     )
+
+    private val ANDROID_PACKAGE_NAME =
+            Regex("^[A-Za-z_][A-Za-z0-9_]*(?:\\.[A-Za-z_][A-Za-z0-9_]*)+$")
 }

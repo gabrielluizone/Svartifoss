@@ -28,6 +28,7 @@ class StreamingShortcutActionList : PickerActionGroup {
             PlayLikedSongsAction(context),
             PlayLikedSongsShuffledAction(context),
             PlaySpotifyLikedSongsAction(context),
+            PlayDeezerFlowAction(context),
             PlaySoundCloudLikesAction(context)
         ))
 
@@ -74,6 +75,6 @@ class StreamingShortcutActionList : PickerActionGroup {
         )!!
 
     private companion object {
-        const val BUILT_IN_SHORTCUT_COUNT = 4
+        const val BUILT_IN_SHORTCUT_COUNT = 5
     }
 }

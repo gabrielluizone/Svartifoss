@@ -9,16 +9,28 @@
     android:paddingEnd="20dp"
     android:paddingBottom="4dp">
 
-    <TextView
-        android:id="@+id/typography_slider_value"
-        android:layout_width="match_parent"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/typography_slider_value_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="176dp"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/google_sans"
-        android:gravity="center"
-        android:includeFontPadding="false"
-        android:textColor="@color/lyra_on_surface"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_gravity="center_horizontal">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/typography_slider_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/google_sans"
+            android:gravity="center"
+            android:imeOptions="actionDone"
+            android:includeFontPadding="false"
+            android:inputType="numberSigned"
+            android:selectAllOnFocus="true"
+            android:textColor="@color/lyra_on_surface"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.slider.Slider
         android:id="@+id/typography_slider"

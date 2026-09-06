@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Svartifoss — control your music from your wrist</title>
-<meta name="description" content="Svartifoss is a free, open-source Wear OS app that puts full control of your phone's music on your wrist — physical buttons, gestures, the digital crown, a Tile, and a complication.">
+<meta name="description" content="Svartifoss is a free, open-source Wear OS companion that puts playback, search, queue, lyrics, metadata and deeply customizable media controls on your wrist.">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Svartifoss — control your music from your wrist">
-<meta property="og:description" content="Free, open-source, sideload-only. Physical buttons, screen gestures, the digital crown, a quick-actions panel, a Tile, and a watch-face complication — all wired to whatever's playing on your phone.">
+<meta property="og:description" content="Free, open-source, sideload-only. Control playback, search your library, read lyrics, browse queues and customize every watch surface around whatever's playing on your phone.">
 <meta property="og:image" content="https://gabrielluizone.github.io/Svartifoss/images/banner.png">
 <meta name="twitter:card" content="summary_large_image">
 
@@ -161,8 +161,8 @@
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 28px;
-    font-size: 14px;
+    gap: 18px;
+    font-size: 13px;
     font-weight: 500;
   }
   .nav-links a { color: var(--ash); text-decoration: none; }
@@ -175,8 +175,26 @@
     font-weight: 700;
   }
   .nav-links a.cta:hover { background: var(--sage-dark); }
+  .language-picker { position: relative; display: inline-flex; align-items: center; }
+  .language-picker select {
+    appearance: none;
+    min-width: 70px;
+    padding: 8px 25px 8px 10px;
+    border: 1px solid var(--carbon-soft);
+    border-radius: var(--r-sm);
+    background: var(--shadow) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%239a9a9a' d='m2 3 3 3 3-3 .8.8-3.8 3.8L1.2 3.8z'/%3E%3C/svg%3E") no-repeat right 9px center;
+    color: var(--ash);
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .language-picker select:hover, .language-picker select:focus { border-color: var(--sage); color: var(--snow); outline: none; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
   @media (max-width: 640px) {
     .nav-links a:not(.cta) { display: none; }
+    .nav-links { gap: 8px; }
   }
 
   /* ================= HERO ================= */
@@ -499,6 +517,552 @@
     .feature-grid { grid-template-columns: 1fr; }
   }
 
+  /* ================= DETAIL GRIDS (written feature sections) ================= */
+  .detail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .detail-card {
+    border: 1px solid var(--carbon);
+    background: var(--shadow);
+    border-radius: var(--r-md);
+    padding: 26px 26px 24px;
+  }
+  .detail-card .kicker {
+    color: var(--sage);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .detail-card h3 { font-size: 18px; margin-bottom: 9px; }
+  .detail-card p { color: var(--ash); font-size: 14.5px; margin: 0; }
+  .detail-card p + p { margin-top: 10px; }
+  .detail-card strong { color: var(--snow); font-weight: 500; }
+  @media (max-width: 760px) {
+    .detail-grid { grid-template-columns: 1fr; }
+  }
+
+  .service-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 18px;
+  }
+  .service-chip {
+    border: 1px solid var(--carbon-soft);
+    border-radius: 999px;
+    color: var(--ash);
+    font-size: 12px;
+    padding: 5px 10px;
+    background: rgba(39, 39, 39, 0.42);
+  }
+
+  .compat-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--carbon);
+    border-radius: var(--r-md);
+    overflow: hidden;
+    background: var(--carbon);
+    gap: 1px;
+  }
+  .compat-row { display: grid; grid-template-columns: minmax(125px, 0.7fr) 1.3fr; gap: 18px; background: var(--shadow); padding: 19px 20px; }
+  .compat-row strong { color: var(--snow); font-size: 14px; }
+  .compat-row span { color: var(--ash); font-size: 13.5px; }
+  .note-strip {
+    border-left: 2px solid var(--sage);
+    background: var(--sage-wash);
+    color: var(--ash);
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
+    padding: 18px 20px;
+    margin-top: 24px;
+    font-size: 14px;
+  }
+  .note-strip strong { color: var(--snow); }
+  @media (max-width: 820px) {
+    .compat-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 520px) {
+    .compat-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  /* ================= CONTROL STUDIO ================= */
+  #control {
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 14% 52%, rgba(135, 168, 159, 0.14), transparent 33%),
+      linear-gradient(135deg, #0c1010 0%, var(--void) 58%, #0d1110 100%);
+  }
+  .control-stage {
+    display: grid;
+    grid-template-columns: minmax(360px, 0.88fr) minmax(0, 1.12fr);
+    gap: 26px;
+    align-items: stretch;
+  }
+  .control-map {
+    position: relative;
+    min-height: 520px;
+    overflow: hidden;
+    isolation: isolate;
+    border: 1px solid rgba(135, 168, 159, 0.28);
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 50% 48%, rgba(135, 168, 159, 0.17), transparent 33%),
+      linear-gradient(145deg, #1b2221, #0e1111 66%);
+  }
+  .control-map::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    background-image: linear-gradient(rgba(135, 168, 159, 0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(135, 168, 159, 0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0.7), transparent 85%);
+    pointer-events: none;
+  }
+  .control-map-head {
+    position: absolute;
+    top: 22px;
+    left: 24px;
+    right: 24px;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .control-map-label {
+    color: var(--ash);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .control-state-tabs {
+    display: inline-flex;
+    padding: 3px;
+    gap: 2px;
+    border: 1px solid rgba(240, 240, 240, 0.1);
+    border-radius: 999px;
+    background: rgba(10, 10, 10, 0.56);
+  }
+  .control-state-tab {
+    appearance: none;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ash-dim);
+    cursor: pointer;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 6px 9px;
+    transition: background 0.18s ease, color 0.18s ease;
+  }
+  .control-state-tab.is-active { background: var(--sage); color: var(--void); }
+  .control-state-tab:focus-visible { outline-offset: 1px; }
+  .control-watch {
+    position: absolute;
+    left: 50%;
+    top: 55%;
+    width: min(66%, 300px);
+    aspect-ratio: 1 / 1;
+    transform: translate(-50%, -50%);
+    border: 13px solid #242b2a;
+    border-radius: 39%;
+    background: #0a0c0c;
+    box-shadow: 0 28px 50px rgba(0, 0, 0, 0.48), inset 0 0 0 1px rgba(255,255,255,0.06);
+    z-index: 1;
+  }
+  .control-watch::before {
+    content: "";
+    position: absolute;
+    right: -26px;
+    top: 37%;
+    width: 13px;
+    height: 48px;
+    border-radius: 0 10px 10px 0;
+    background: linear-gradient(90deg, #161b1b, #4c5754 48%, #151919);
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.05);
+  }
+  .control-screen {
+    position: absolute;
+    inset: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+    padding: 20px 18px 17px;
+    border-radius: 36%;
+    background:
+      radial-gradient(circle at 50% 25%, rgba(170, 206, 194, 0.32), transparent 34%),
+      linear-gradient(160deg, #2a3a36, #0b0f0e 62%);
+  }
+  .control-screen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.42;
+    background: linear-gradient(145deg, transparent 30%, rgba(255,255,255,0.08) 50%, transparent 64%);
+    transform: translateX(-46%);
+  }
+  .watch-status, .watch-track, .watch-transport { position: relative; z-index: 1; }
+  .watch-status { color: rgba(240,240,240,0.65); font-size: 8px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .watch-status span { color: #b8ddd3; }
+  .watch-track { margin-top: auto; text-align: center; }
+  .watch-track strong { display: block; color: var(--snow); font-size: clamp(14px, 1.7vw, 19px); line-height: 1.12; }
+  .watch-track span { display: block; color: rgba(240,240,240,0.64); font-size: 10px; margin-top: 5px; }
+  .watch-progress { width: 65%; height: 3px; border-radius: 99px; margin: 12px auto 0; background: rgba(240,240,240,0.22); overflow: hidden; }
+  .watch-progress::after { content: ""; display: block; width: 48%; height: 100%; border-radius: inherit; background: #b8ddd3; }
+  .watch-transport { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 16px; }
+  .watch-transport span { color: rgba(240,240,240,0.72); font-size: 13px; }
+  .watch-transport .watch-play { display: grid; place-items: center; width: 37px; height: 37px; color: #10201c; background: #b8ddd3; border-radius: 50%; font-size: 15px; }
+  .control-pin {
+    position: absolute;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--snow);
+    background: rgba(15, 19, 18, 0.78);
+    border: 1px solid rgba(135, 168, 159, 0.28);
+    border-radius: 999px;
+    padding: 7px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.16);
+  }
+  .control-pin::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--sage); box-shadow: 0 0 12px var(--sage); }
+  .pin-top { top: 116px; left: 10%; }
+  .pin-right { top: 44%; right: 5%; }
+  .pin-bottom { bottom: 42px; left: 13%; }
+  .pin-left { top: 60%; left: 4%; }
+  .control-stage[data-control-state="idle"] .control-screen {
+    background: radial-gradient(circle at 50% 29%, rgba(135, 168, 159, 0.18), transparent 38%), linear-gradient(160deg, #1b2221, #0b0d0d 65%);
+  }
+  .control-stage[data-control-state="idle"] .watch-track strong { font-size: 15px; }
+  .control-stage[data-control-state="idle"] .watch-track strong::after { content: "Nothing playing"; font-size: 15px; }
+  .control-stage[data-control-state="idle"] .watch-track strong { font-size: 0; }
+  .control-stage[data-control-state="idle"] .watch-track span { font-size: 0; }
+  .control-stage[data-control-state="idle"] .watch-track span::after { content: "Choose what happens next"; font-size: 10px; }
+  .control-stage[data-control-state="idle"] .watch-progress::after { width: 0; }
+  .control-rail { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .control-item {
+    position: relative;
+    min-height: 174px;
+    padding: 22px 20px 20px;
+    overflow: hidden;
+    border: 1px solid var(--carbon);
+    border-radius: var(--r-md);
+    background: rgba(20,20,20,0.74);
+    transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  }
+  .control-item::after { content: attr(data-mark); position: absolute; right: 14px; bottom: -26px; color: rgba(135, 168, 159, 0.11); font-size: 82px; font-weight: 700; line-height: 1; letter-spacing: -0.1em; }
+  .control-item:hover { transform: translateY(-4px); border-color: rgba(135, 168, 159, 0.55); background: #181b1b; }
+  .control-item .kicker { color: var(--sage); font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .control-item h3 { position: relative; z-index: 1; margin: 9px 0 8px; font-size: 17px; }
+  .control-item p { position: relative; z-index: 1; margin: 0; color: var(--ash); font-size: 13.5px; line-height: 1.52; }
+  @media (max-width: 900px) {
+    .control-stage { grid-template-columns: 1fr; }
+    .control-map { min-height: 460px; }
+  }
+  @media (max-width: 520px) {
+    .control-map { min-height: 430px; border-radius: 20px; }
+    .control-map-head { top: 16px; left: 16px; right: 16px; }
+    .control-map-label { display: none; }
+    .control-watch { width: 250px; max-width: 64%; }
+    .control-pin { font-size: 9.5px; padding: 6px 8px; }
+    .pin-top { top: 88px; left: 4%; }
+    .pin-right { right: 2%; }
+    .pin-left { left: 2%; }
+    .pin-bottom { bottom: 18px; left: 8%; }
+    .control-rail { grid-template-columns: 1fr; }
+  }
+
+  /* ================= CONTENT MOSAIC ================= */
+  #content { background: linear-gradient(180deg, #0d1010, var(--void) 78%); }
+  .content-mosaic { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
+  .content-panel {
+    position: relative;
+    min-height: 332px;
+    overflow: hidden;
+    padding: 28px;
+    border: 1px solid var(--carbon);
+    border-radius: 22px;
+    background: #141616;
+  }
+  .content-panel::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(120deg, rgba(255,255,255,0.035), transparent 34%); }
+  .content-copy { position: relative; z-index: 2; max-width: 50%; }
+  .content-copy .kicker { color: var(--sage); font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .content-copy h3 { font-size: 22px; margin: 10px 0 9px; }
+  .content-copy p { margin: 0; color: var(--ash); font-size: 13.8px; line-height: 1.55; }
+  .queue-panel { grid-column: span 7; background: radial-gradient(circle at 88% 24%, rgba(135,168,159,0.17), transparent 34%), #141716; }
+  .lyrics-panel { grid-column: span 5; background: radial-gradient(circle at 75% 80%, rgba(119,148,181,0.2), transparent 42%), #111417; }
+  .metadata-panel { grid-column: span 5; background: radial-gradient(circle at 80% 22%, rgba(192,160,103,0.16), transparent 36%), #171512; }
+  .shortcuts-panel { grid-column: span 7; background: radial-gradient(circle at 90% 82%, rgba(161,130,183,0.18), transparent 36%), #151217; }
+  .queue-preview, .lyrics-preview, .metadata-preview, .shortcut-route { position: absolute; z-index: 1; }
+  .queue-preview { right: -18px; bottom: -10px; width: 49%; transform: rotate(-4deg); }
+  .queue-preview-row { display: grid; grid-template-columns: 34px 1fr auto; align-items: center; gap: 10px; min-height: 48px; margin-bottom: 8px; padding: 7px 13px 7px 7px; border: 1px solid rgba(255,255,255,0.08); border-radius: 13px; background: rgba(14,17,17,0.78); box-shadow: 0 12px 24px rgba(0,0,0,0.2); }
+  .queue-cover { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, #a4c6bc, #40565b 58%, #1a2527); }
+  .queue-cover.two { background: linear-gradient(135deg, #bd9f61, #56362d 58%, #1e1916); }
+  .queue-cover.three { background: linear-gradient(135deg, #ad92c2, #3f304f 58%, #17141c); }
+  .queue-lines { display: grid; gap: 5px; }
+  .queue-lines span { display: block; height: 5px; border-radius: 9px; background: rgba(240,240,240,0.52); }
+  .queue-lines span:last-child { width: 58%; background: rgba(240,240,240,0.2); }
+  .queue-preview-row em { color: var(--sage); font-style: normal; font-size: 11px; }
+  .lyrics-preview { right: 22px; bottom: 28px; width: 48%; display: grid; gap: 10px; transform: rotate(3deg); }
+  .lyrics-preview span { color: rgba(240,240,240,0.32); font-size: 14px; line-height: 1.25; }
+  .lyrics-preview span.is-current { color: #c5e1da; font-size: 18px; font-weight: 700; text-shadow: 0 0 22px rgba(135,168,159,0.42); }
+  .metadata-preview { right: 18px; bottom: 18px; width: 48%; padding: 15px; border: 1px solid rgba(215,186,126,0.22); border-radius: 15px; background: rgba(21,19,15,0.75); transform: rotate(2deg); }
+  .metadata-preview div { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.07); color: rgba(240,240,240,0.42); font-size: 10px; }
+  .metadata-preview div:last-child { border: 0; }
+  .metadata-preview b { color: #e7d3a8; font-weight: 500; }
+  .shortcuts-panel .content-copy { max-width: 47%; }
+  .shortcut-route { right: 24px; bottom: 31px; display: flex; align-items: center; gap: 10px; width: 43%; }
+  .route-node { position: relative; display: grid; place-items: center; width: 45px; height: 45px; flex: none; border: 1px solid rgba(255,255,255,0.13); border-radius: 15px; background: #211c24; color: #d8c6e6; font-size: 10px; font-weight: 700; }
+  .route-node.is-active { color: #1b1320; background: #d8c6e6; }
+  .route-line { height: 1px; flex: 1; background: linear-gradient(90deg, rgba(216,198,230,0.8), rgba(216,198,230,0.18)); }
+  .shortcuts-panel .service-chips { position: relative; z-index: 3; max-width: 48%; }
+  .shortcuts-panel .service-chip { border-color: rgba(216,198,230,0.2); }
+  @media (max-width: 900px) {
+    .queue-panel, .lyrics-panel, .metadata-panel, .shortcuts-panel { grid-column: span 12; }
+    .content-panel { min-height: 350px; }
+  }
+  @media (max-width: 600px) {
+    .content-panel { min-height: 410px; padding: 23px; }
+    .content-copy, .shortcuts-panel .content-copy { max-width: 100%; }
+    .queue-preview, .lyrics-preview, .metadata-preview, .shortcut-route { opacity: 0.72; transform: none; }
+    .queue-preview { width: 72%; right: -8px; bottom: 14px; }
+    .lyrics-preview { width: 65%; right: 19px; bottom: 28px; }
+    .metadata-preview { width: 61%; }
+    .shortcut-route { width: 58%; }
+    .shortcuts-panel .service-chips { max-width: 100%; margin-top: 18px; }
+  }
+
+  /* These two sections deliberately use real Svartifoss captures, not invented watch UI. */
+  .control-real-layout {
+    display: grid;
+    grid-template-columns: minmax(360px, 0.94fr) minmax(0, 1.06fr);
+    gap: 32px;
+    align-items: stretch;
+  }
+  .control-real-showcase {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 0.7fr);
+    grid-template-rows: auto 1fr;
+    gap: 16px;
+    min-height: 520px;
+    padding: 22px;
+    overflow: hidden;
+    border: 1px solid rgba(135, 168, 159, 0.26);
+    border-radius: 28px;
+    background:
+      radial-gradient(circle at 38% 42%, rgba(135, 168, 159, 0.17), transparent 38%),
+      linear-gradient(145deg, #18201f, #0c1010 70%);
+  }
+  .control-real-head {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    color: var(--ash-dim);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+  .control-shot { margin: 0; }
+  .control-shot-main {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 420px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 21px;
+    background: rgba(7, 10, 10, 0.54);
+  }
+  .control-shot-main::before {
+    content: "";
+    position: absolute;
+    width: 74%;
+    aspect-ratio: 1;
+    border: 1px solid rgba(135, 168, 159, 0.17);
+    border-radius: 50%;
+    box-shadow: 0 0 0 31px rgba(135, 168, 159, 0.035), 0 0 0 62px rgba(135, 168, 159, 0.018);
+  }
+  .control-shot-main img { position: relative; z-index: 1; width: min(91%, 360px); filter: drop-shadow(0 22px 30px rgba(0,0,0,0.38)); }
+  .control-shot figcaption { color: var(--ash); font-size: 11px; line-height: 1.35; }
+  .control-shot figcaption strong, .control-shot figcaption span { display: block; }
+  .control-shot figcaption strong { color: var(--snow); font-size: 12px; margin-bottom: 2px; }
+  .control-shot-main figcaption { position: absolute; z-index: 2; left: 17px; bottom: 15px; padding: 9px 11px; border: 1px solid rgba(255,255,255,0.11); border-radius: 12px; background: rgba(10, 12, 12, 0.72); }
+  .control-shot-rail { display: grid; grid-template-rows: 1fr 1fr; gap: 16px; }
+  .control-shot-rail .control-shot {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: 0;
+    padding: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 20px;
+    background: rgba(7, 10, 10, 0.54);
+  }
+  .control-shot-rail img { align-self: center; justify-self: center; width: min(100%, 180px); max-height: 165px; object-fit: contain; }
+  .control-shot-rail figcaption { padding: 8px 3px 1px; }
+  .control-story-list { display: grid; align-content: center; gap: 0; }
+  .control-story {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 18px;
+    padding: 23px 0;
+    border-bottom: 1px solid var(--carbon);
+  }
+  .control-story:first-child { border-top: 1px solid var(--carbon); }
+  .control-story-index {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(135, 168, 159, 0.36);
+    border-radius: 50%;
+    color: var(--sage);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .control-story .kicker, .content-real-card .kicker { color: var(--sage); font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .control-story h3 { margin: 7px 0 7px; font-size: 19px; }
+  .control-story p { margin: 0; color: var(--ash); font-size: 13.6px; line-height: 1.55; }
+  .content-real-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+  .content-real-card {
+    position: relative;
+    overflow: hidden;
+    padding: 27px;
+    border: 1px solid var(--carbon);
+    border-radius: 22px;
+    background: #141616;
+  }
+  .content-real-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(122deg, rgba(255,255,255,0.035), transparent 37%); }
+  .content-real-copy, .content-real-card > .kicker, .content-real-card > h3, .content-real-card > p, .content-fact-list, .content-real-shortcuts .service-chips { position: relative; z-index: 1; }
+  .content-real-copy h3, .content-real-card > h3 { margin: 10px 0 8px; font-size: 22px; }
+  .content-real-copy p, .content-real-card > p { margin: 0; color: var(--ash); font-size: 13.8px; line-height: 1.57; }
+  .content-real-queue { grid-column: span 7; display: grid; grid-template-columns: minmax(0, 1fr) minmax(175px, 0.57fr); gap: 15px; align-items: center; min-height: 320px; background: radial-gradient(circle at 85% 25%, rgba(225,161,169,0.14), transparent 37%), #161415; }
+  .content-real-lists { grid-column: span 5; display: grid; grid-template-columns: minmax(0, 1fr) minmax(140px, 0.5fr); gap: 8px; align-items: center; min-height: 320px; background: radial-gradient(circle at 79% 76%, rgba(135,168,159,0.14), transparent 36%), #121616; }
+  .content-shot {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-self: stretch;
+    justify-self: end;
+    margin: 0;
+    text-align: center;
+  }
+  .content-shot img {
+    width: min(100%, 255px);
+    max-height: 250px;
+    align-self: center;
+    justify-self: center;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 25px rgba(0,0,0,0.38));
+  }
+  .content-shot figcaption { margin-top: 4px; color: var(--ash-dim); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .content-real-details { grid-column: span 5; min-height: 280px; background: radial-gradient(circle at 83% 23%, rgba(192,160,103,0.18), transparent 40%), #171512; }
+  .content-real-shortcuts { grid-column: span 7; min-height: 280px; background: radial-gradient(circle at 84% 78%, rgba(161,130,183,0.18), transparent 39%), #151217; }
+  .content-fact-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .content-fact-list span { padding: 7px 10px; border: 1px solid rgba(215,186,126,0.22); border-radius: 999px; color: #dbc79f; font-size: 11px; background: rgba(21,19,15,0.46); }
+  .content-real-shortcuts .service-chips { max-width: 76%; }
+  .content-real-shortcuts .service-chip { border-color: rgba(216,198,230,0.22); }
+  @media (max-width: 900px) {
+    .control-real-layout { grid-template-columns: 1fr; }
+    .content-real-queue, .content-real-lists, .content-real-details, .content-real-shortcuts { grid-column: span 12; }
+    .content-real-shortcuts .service-chips { max-width: 100%; }
+  }
+  @media (max-width: 560px) {
+    .control-real-showcase { grid-template-columns: 1fr; min-height: 0; padding: 16px; }
+    .control-shot-main { min-height: 340px; }
+    .control-shot-rail { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
+    .control-shot-rail .control-shot { min-height: 210px; }
+    .control-shot-rail img { max-height: 135px; }
+    .control-story { grid-template-columns: 39px minmax(0, 1fr); gap: 13px; padding: 19px 0; }
+    .content-real-card { padding: 22px; }
+    .content-real-queue, .content-real-lists { grid-template-columns: 1fr; min-height: 0; }
+    .content-shot { justify-self: center; margin-top: 18px; }
+    .content-shot img { max-height: 235px; }
+  }
+
+  /* ================= COMMUNITY STORY ================= */
+  #community { background: radial-gradient(circle at 78% 24%, rgba(135,168,159,0.12), transparent 34%), var(--shadow); }
+  .community-layout { display: grid; grid-template-columns: minmax(320px, 0.88fr) minmax(0, 1.12fr); gap: 26px; align-items: stretch; }
+  .community-showcase { position: relative; min-height: 480px; overflow: hidden; border: 1px solid rgba(135,168,159,0.24); border-radius: 28px; background: linear-gradient(150deg, #19201e, #0e1010 70%); }
+  .community-showcase::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 23% 28%, rgba(204,232,220,0.2), transparent 22%), radial-gradient(circle at 77% 70%, rgba(145,116,168,0.2), transparent 29%); }
+  .gallery-label { position: absolute; top: 24px; left: 24px; z-index: 2; color: var(--ash); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .gallery-count { position: absolute; top: 20px; right: 20px; z-index: 2; padding: 7px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 999px; background: rgba(10,10,10,0.47); color: #c8ded8; font-size: 11px; }
+  .theme-stack { position: absolute; inset: 78px 28px 30px; }
+  .theme-card-preview { position: absolute; width: 61%; aspect-ratio: 0.82; padding: 15px; border: 1px solid rgba(255,255,255,0.16); border-radius: 22px; box-shadow: 0 24px 48px rgba(0,0,0,0.3); }
+  .theme-card-preview::before { content: ""; display: block; width: 64px; height: 64px; border-radius: 50%; margin-bottom: auto; }
+  .theme-card-preview .preview-caption { position: absolute; left: 15px; bottom: 15px; }
+  .preview-caption strong, .preview-caption span { display: block; }
+  .preview-caption strong { color: var(--snow); font-size: 15px; }
+  .preview-caption span { color: rgba(240,240,240,0.62); font-size: 10px; margin-top: 3px; }
+  .theme-card-preview.first { top: 12px; left: 0; transform: rotate(-8deg); background: linear-gradient(150deg, #a99d83, #32352b 63%, #111410); }
+  .theme-card-preview.first::before { background: radial-gradient(circle at 38% 34%, #f0dfc1, #72735d 50%, #24261e); }
+  .theme-card-preview.second { top: 62px; right: 0; transform: rotate(8deg); background: linear-gradient(150deg, #2c5270, #192533 64%, #101315); }
+  .theme-card-preview.second::before { background: radial-gradient(circle at 36% 36%, #a6d7e7, #4d597f 50%, #151a2a); }
+  .theme-card-preview.third { z-index: 2; bottom: 0; left: 18%; transform: rotate(-1deg); background: linear-gradient(150deg, #823d6f, #2a1830 67%, #130f16); }
+  .theme-card-preview.third::before { background: radial-gradient(circle at 36% 36%, #f5bdd9, #994f81 50%, #291429); }
+  .community-steps { display: grid; gap: 12px; }
+  .community-step { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 20px; border: 1px solid var(--carbon); border-radius: var(--r-md); background: rgba(20,20,20,0.7); transition: transform 0.2s ease, border-color 0.2s ease; }
+  .community-step:hover { transform: translateX(4px); border-color: rgba(135,168,159,0.5); }
+  .community-step-index { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 12px; background: var(--sage-wash); color: var(--sage); font-size: 12px; font-weight: 700; }
+  .community-step h3 { font-size: 17px; margin: 1px 0 6px; }
+  .community-step p { margin: 0; color: var(--ash); font-size: 13.5px; line-height: 1.52; }
+  @media (max-width: 900px) { .community-layout { grid-template-columns: 1fr; } .community-showcase { min-height: 420px; } }
+  @media (max-width: 460px) { .community-showcase { min-height: 360px; } .theme-stack { inset: 70px 20px 20px; } .community-step { grid-template-columns: 36px 1fr; gap: 12px; padding: 17px; } }
+
+  /* ================= LOCAL-FIRST COMPATIBILITY ================= */
+  .compatibility-layout { display: grid; grid-template-columns: minmax(300px, 0.74fr) minmax(0, 1.26fr); gap: 26px; align-items: stretch; }
+  .local-first {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 375px;
+    overflow: hidden;
+    padding: 25px;
+    border: 1px solid rgba(135,168,159,0.25);
+    border-radius: 24px;
+    background: linear-gradient(155deg, #18211f, #0d1110 70%);
+  }
+  .local-first::after { content: ""; position: absolute; width: 300px; height: 300px; top: -130px; right: -145px; border: 1px solid rgba(135,168,159,0.16); border-radius: 50%; box-shadow: 0 0 0 34px rgba(135,168,159,0.035), 0 0 0 68px rgba(135,168,159,0.018); }
+  .local-first-copy { position: relative; z-index: 1; }
+  .local-first-copy .kicker { color: var(--sage); font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+  .local-first h3 { font-size: 23px; margin: 10px 0 9px; }
+  .local-first p { margin: 0; max-width: 31ch; color: var(--ash); font-size: 13.8px; }
+  .local-link { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; margin-top: 30px; }
+  .local-device { min-height: 105px; padding: 14px; border: 1px solid rgba(255,255,255,0.1); border-radius: 18px; background: rgba(7,10,9,0.55); }
+  .local-device span, .local-device strong { display: block; }
+  .local-device span { color: var(--ash-dim); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .local-device strong { color: var(--snow); font-size: 15px; margin-top: 21px; }
+  .local-wire { width: 36px; height: 2px; background: linear-gradient(90deg, var(--sage), rgba(135,168,159,0.12)); position: relative; }
+  .local-wire::after { content: ""; position: absolute; top: 50%; left: 44%; width: 6px; height: 6px; transform: translateY(-50%); border-radius: 50%; background: #c9e5dd; box-shadow: 0 0 14px #c9e5dd; }
+  @media (max-width: 900px) { .compatibility-layout { grid-template-columns: 1fr; } }
+
+  /* ================= IMAGE LIGHTBOX ================= */
+  .zoom-surface { position: relative; cursor: zoom-in; }
+  .zoom-surface::after { content: "Expand"; position: absolute; right: 10px; bottom: 10px; z-index: 3; padding: 5px 8px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; background: rgba(10,10,10,0.72); color: var(--snow); font-size: 10px; font-weight: 700; letter-spacing: 0.04em; opacity: 0; transform: translateY(4px); transition: opacity 0.18s ease, transform 0.18s ease; pointer-events: none; }
+  .zoom-surface:hover::after, .zoom-surface:focus-visible::after { opacity: 1; transform: translateY(0); }
+  .zoom-surface:focus-visible { outline: 2px solid var(--sage); outline-offset: 4px; }
+  .zoom-surface img { transition: transform 0.24s ease, filter 0.24s ease; }
+  .zoom-surface:hover img { transform: scale(1.025); filter: brightness(1.06); }
+  .image-lightbox { width: min(1000px, calc(100vw - 32px)); max-width: none; max-height: calc(100vh - 32px); margin: auto; padding: 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.16); border-radius: 18px; background: #121414; color: var(--snow); box-shadow: 0 30px 90px rgba(0,0,0,0.65); }
+  .image-lightbox::backdrop { background: rgba(0,0,0,0.82); backdrop-filter: blur(7px); }
+  .lightbox-shell { position: relative; display: grid; max-height: calc(100vh - 32px); }
+  .lightbox-shell img { max-width: 100%; max-height: calc(100vh - 102px); object-fit: contain; margin: auto; background: #090a0a; }
+  .lightbox-caption { margin: 0; padding: 14px 58px 14px 17px; color: var(--ash); font-size: 13px; }
+  .lightbox-close { position: absolute; top: 12px; right: 12px; z-index: 2; display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.17); border-radius: 50%; background: rgba(10,10,10,0.72); color: var(--snow); cursor: pointer; font: inherit; font-size: 23px; line-height: 1; }
+  .lightbox-close:hover { border-color: var(--sage); color: var(--sage); }
+
   /* ================= GALLERY (filmstrip) ================= */
   .filmstrip-wrap {
     position: relative;
@@ -694,11 +1258,22 @@
     </a>
     <div class="nav-links">
       <a href="#features">Features</a>
+      <a href="#control">Control</a>
+      <a href="#content">Content</a>
       <a href="#look">Look &amp; feel</a>
       <a href="#possibilities">Possibilities</a>
       <a href="#customize">Customize</a>
+      <a href="#compatibility">Compatibility</a>
       <a href="#install">Install</a>
       <a href="https://github.com/gabrielluizone/Svartifoss">GitHub</a>
+      <label class="language-picker">
+        <span class="sr-only">Language</span>
+        <select id="language-select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="pt-BR">PT-BR</option>
+          <option value="es">ES</option>
+        </select>
+      </label>
       <a class="cta" href="#install">Download</a>
     </div>
   </div>
@@ -721,10 +1296,10 @@
   </div>
   <div class="wrap">
     <div class="hero-copy">
-      <div class="eyebrow"><span class="dot">●</span> Free &amp; open source · sideload-only</div>
+      <div class="eyebrow" data-i18n-html="hero.badge"><span class="dot">●</span> Free &amp; open source · sideload-only</div>
       <h1>Svartifoss</h1>
       <p class="hero-tagline">The most customizable media controls on Wear OS</p>
-      <p class="hero-sub">Svartifoss reads whatever's playing on your phone — any app with a media session — and puts full control on your watch: physical buttons, screen gestures, the digital crown, a quick-actions panel, a Tile, and a watch-face complication. Twenty watch faces, each one tunable down to its colors and shapes.</p>
+      <p class="hero-sub">Svartifoss reads whatever's playing on your phone — music, podcasts, audiobooks or any other media app — and puts playback, search, queues, lyrics and metadata on your wrist. Every button, gesture, screen and visual layer can be shaped around the way you use your watch.</p>
       <div class="hero-ctas">
         <a class="btn btn-primary" href="#install">Download Svartifoss</a>
         <a class="btn btn-ghost" href="https://github.com/gabrielluizone/Svartifoss">View source on GitHub</a>
@@ -733,7 +1308,7 @@
         <div class="stat"><div class="num" data-stat="downloads">—</div><div class="label">Downloads</div></div>
         <div class="stat"><div class="num" data-stat="version">—</div><div class="label">Latest version</div></div>
         <div class="stat"><div class="num" data-stat="stars">—</div><div class="label">GitHub stars</div></div>
-        <div class="stat"><div class="num">20</div><div class="label">Watch faces</div></div>
+        <div class="stat"><div class="num">21</div><div class="label">Watch faces</div></div>
       </div>
     </div>
     <div class="hero-art">
@@ -747,7 +1322,7 @@
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow muted">How it works</div>
-      <h2>Set it up on your phone.<br>It's on your watch instantly.</h2>
+      <h2 data-i18n-html="sync.title">Set it up on your phone.<br>It's on your watch instantly.</h2>
       <p>Every button, gesture, and screen is yours to assign from the phone app. The watch mirrors it over the local Wearable Data Layer — no account or Svartifoss server. Beyond your two devices, the app talks to GitHub for the optional update check and only when you explicitly open the Community themes gallery, to Firebase for diagnostics and occasional developer announcement notifications, and — only if you opt in — to the streaming service itself to fetch a saved shortcut's cover art. Crashlytics reports, announcement notifications, and shortcut artwork can all be switched off under Data &amp; support → Privacy or Apps.</p>
     </div>
     <div class="sync-pair">
@@ -792,32 +1367,32 @@
       <div class="feature">
         <div class="icon-badge"><svg class="icon"><use href="#i-album"/></svg></div>
         <h3>Now-playing screen</h3>
-        <p>Album art, a drag-to-seek ring, and an optional rotary-crown scrub. Choose the classic edge-ring layout or the new Expressive face with Material&nbsp;3 Expressive-styled controls.</p>
+        <p>Album art, live position, transport controls and a draggable seek surface. Choose from twenty-two in-app faces, including Classic, the original-tribute MatejDro, Expressive, Poster, Studio, Verse, Metadata and the performer-forward Artist — each one rebuilt around the cover that's playing.</p>
       </div>
       <div class="feature">
         <div class="icon-badge"><svg class="icon"><use href="#i-watch-vibration"/></svg></div>
         <h3>Configurable input</h3>
-        <p>Physical buttons, screen quadrants, swipe gestures, and up to three on-screen mini buttons — assign play/pause, skip, volume, shuffle, repeat, like, search, playlist shortcuts, Tasker tasks, or launching another app.</p>
+        <p>Physical buttons, screen quadrants, swipes, the center tap, digital crown, bezel, mini buttons and supported double-pinch gestures can all run different actions while music is playing or stopped.</p>
       </div>
       <div class="feature">
         <div class="icon-badge"><svg class="icon"><use href="#i-bolt"/></svg></div>
         <h3>Quick-actions panel</h3>
-        <p>Double-tap to open a secondary panel with round buttons for like, shuffle, repeat, and a shortcut straight into the queue.</p>
+        <p>Double-tap to open a configurable panel with three round slots and one wide row. Pick an action for every slot, or mirror the real actions and icons published by the current player's notification.</p>
       </div>
       <div class="feature">
         <div class="icon-badge"><svg class="icon"><use href="#i-queue-music"/></svg></div>
         <h3>Queue &amp; history</h3>
-        <p>Browse the app's real playback queue when it exposes one, or fall back to a locally tracked play-history list when it doesn't.</p>
+        <p>Browse a live queue with paging and artwork when the player exposes one, jump to an exact item, or fall back honestly to locally tracked listening history when it doesn't.</p>
       </div>
       <div class="feature">
         <div class="icon-badge"><svg class="icon"><use href="#i-watch-screentime"/></svg></div>
         <h3>Glanceable surfaces</h3>
-        <p>A Tile with track info, previous/play-pause/next and ±10-second seek controls, plus a watch-face complication showing the current album art.</p>
+        <p>A media Tile with transport and ±10-second seek, a second Tile for saved streaming shortcuts, and an album-art/title complication for the watch face you're already using.</p>
       </div>
       <div class="feature">
         <div class="icon-badge"><svg class="icon"><use href="#i-playlist-play"/></svg></div>
         <h3>Search &amp; playlists</h3>
-        <p>Voice or keyboard search against the playing app's library with a replayable history, plus named playlist shortcuts reachable straight from the watch.</p>
+        <p>Search by voice or keyboard, browse the player's library, replay or remove search history, and open saved links to tracks, albums, playlists, artists, shows and mixes.</p>
       </div>
       <div class="feature">
         <div class="icon-badge"><svg class="icon"><use href="#i-category"/></svg></div>
@@ -827,8 +1402,71 @@
       <div class="feature">
         <div class="icon-badge"><svg class="icon"><use href="#i-headphones"/></svg></div>
         <h3>Works with any player</h3>
-        <p>Anything exposing a standard Android media session works out of the box. Extras like like/shuffle/repeat/search depend on what that app publishes.</p>
+        <p>Any app exposing a standard Android media session can provide basic control. Queues, libraries, search, likes and other extras appear when that player publishes the relevant Android capability.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="control">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow muted">Control</div>
+      <h2>Every action, on your terms.</h2>
+      <p>Svartifoss is not a fixed three-button remote. It gives the watch a complete action catalogue, then lets you decide which input should run which command.</p>
+    </div>
+    <div class="control-real-layout">
+      <div class="control-real-showcase">
+        <div class="control-real-head"><span>Real player surfaces</span><span>Tap any image to enlarge</span></div>
+        <figure class="control-shot control-shot-main">
+          <img src="images/watch-minibuttons.png" alt="Svartifoss player on a round Wear OS watch with three mini buttons" loading="lazy">
+          <figcaption><strong>Mini buttons</strong><span>Real player surface</span></figcaption>
+        </figure>
+        <div class="control-shot-rail">
+          <figure class="control-shot">
+            <img src="images/watch-seekring.png" alt="Svartifoss round player showing an edge seek ring" loading="lazy">
+            <figcaption><strong>Edge seek</strong><span>Drag around the bezel</span></figcaption>
+          </figure>
+          <figure class="control-shot">
+            <img src="images/watch-quickpanel.png" alt="Svartifoss quick-actions panel on a round Wear OS watch" loading="lazy">
+            <figcaption><strong>Quick actions</strong><span>Double-tap from the player</span></figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="control-story-list">
+        <article class="control-story"><span class="control-story-index">01</span><div><div class="kicker">Playback</div><h3>More than play and pause.</h3><p>Skip, restart, stop, seek by percentage, jump forward or back, change playback speed, choose shuffle and repeat modes, or run a player-specific like action.</p></div></article>
+        <article class="control-story"><span class="control-story-index">02</span><div><div class="kicker">Inputs</div><h3>Use the controls your watch actually has.</h3><p>Physical buttons, single/double/long presses, touch zones, swipes, center actions, mini buttons and — on compatible watches — crown, bezel or double-pinch input.</p></div></article>
+        <article class="control-story"><span class="control-story-index">03</span><div><div class="kicker">States</div><h3>One setup while playing. Another when idle.</h3><p>Music playing and No playback are separate configurations. The same input can skip a track now and open a saved playlist when playback has stopped.</p></div></article>
+        <article class="control-story"><span class="control-story-index">04</span><div><div class="kicker">Action menu</div><h3>Keep the rest one tap away.</h3><p>Open queue, lyrics, volume, progress or face picker; browse a library; launch an app; run Tasker; or start a streaming shortcut without reserving a physical button.</p></div></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="content">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow muted">Content on your wrist</div>
+      <h2>More than a now-playing screen.</h2>
+      <p>Svartifoss stays honest about what the active player makes available: a live queue when there is one, history when there is not, and optional search, lyrics and details only where the phone can retrieve them.</p>
+    </div>
+    <div class="content-real-grid">
+      <article class="content-real-card content-real-queue">
+        <div class="content-real-copy"><div class="kicker">Queue &amp; history</div><h3>Use the player's queue when it exists.</h3><p>Browse the current playback queue, request more items and jump to a track. If the active player does not publish a queue, Svartifoss shows its locally tracked listening history instead.</p></div>
+        <figure class="content-shot"><img src="images/watch-queue.png" alt="Svartifoss playback queue on the watch" loading="lazy"><figcaption>Actual queue screen</figcaption></figure>
+      </article>
+      <article class="content-real-card content-real-lists">
+        <div class="content-real-copy"><div class="kicker">Search, library &amp; lists</div><h3>Ask the player for what it knows.</h3><p>Search by voice or keyboard, replay recent searches, browse a MediaBrowser library when the app offers one, and keep saved playlist shortcuts reachable from the watch.</p></div>
+        <figure class="content-shot"><img src="images/watch-menu.png" alt="Svartifoss list screen on the watch" loading="lazy"><figcaption>Actual list surface</figcaption></figure>
+      </article>
+      <article class="content-real-card content-real-details">
+        <div class="kicker">Lyrics &amp; Metadata</div><h3>Optional, on-demand detail.</h3><p>Lyrics are requested only when a lyrics surface or Verse needs them. Metadata is built from player tags, local-file details where permitted, and optional MusicBrainz enrichment — it never invents information the source does not provide.</p>
+        <div class="content-fact-list"><span>Synced lyrics</span><span>Track tags</span><span>File details</span><span>Output route</span><span>Optional lookup</span></div>
+      </article>
+      <article class="content-real-card content-real-shortcuts">
+        <div class="kicker">Streaming shortcuts</div><h3>Save a link. Let the phone do the rest.</h3><p>Share or paste a track, album, artist, playlist, show, episode or mix. Svartifoss first attempts the contracts the target app supports and opens the link visibly only when direct playback is unavailable.</p>
+        <div class="service-chips" aria-label="Recognized streaming services"><span class="service-chip">YouTube Music</span><span class="service-chip">Spotify</span><span class="service-chip">Deezer</span><span class="service-chip">TIDAL</span><span class="service-chip">Apple Music</span><span class="service-chip">Amazon Music</span><span class="service-chip">SoundCloud</span><span class="service-chip">Qobuz</span><span class="service-chip">Bandcamp</span><span class="service-chip">Audiomack</span><span class="service-chip">Mixcloud</span><span class="service-chip">Pandora</span></div>
+      </article>
     </div>
   </div>
 </section>
@@ -837,8 +1475,8 @@
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow muted">Faces</div>
-      <h2>Twenty faces. Every one drawn from the art.</h2>
-      <p>Immersive, Poster, Studio, Expressive, Classic and more — each face rebuilds its palette, gradients and progress from the cover that's playing, so the same watch looks like a different device track to track. Pick one per playing state and preview it live from the phone.</p>
+      <h2>Twenty-two faces. Every one drawn from the art.</h2>
+      <p>These are in-app now-playing layouts, not separate Wear OS watch-face packages. Immersive, Poster, Studio, Expressive, Classic and more rebuild their palette, gradients and progress from the cover that's playing. Pick one per playback state and preview it live from the phone.</p>
     </div>
     <div class="faces-wall">
       <div class="face-tile"><div class="disc"><img src="images/face-poster-abaddream.jpg" alt="Immersive face, A Bad Dream by Keane" loading="lazy"></div><div class="style">Immersive</div><div class="track">A Bad Dream</div></div>
@@ -921,7 +1559,7 @@
     <div class="section-head">
       <div class="eyebrow muted">Depth</div>
       <h2>Not a coat of paint — every surface, really tunable.</h2>
-      <p>Save a look as a named theme and switch between them in one tap, or browse a public Community themes gallery and make an installed copy your own. Every gallery miniature is rendered on your phone from the theme data against a built-in sample track. Seek and volume readouts alone ship over a dozen styles; queue, mini buttons, and color treatment each get their own catalog, not a single toggle pretending to be one.</p>
+      <p>Save a look as a named theme and switch between them in one tap. Each profile can combine a base face, typography, colors, artwork, background layers, progress, overlays, panels, mini buttons and the always-on display. Every gallery miniature is rendered on your phone from the theme data against a built-in sample track.</p>
     </div>
     <div class="spec-grid">
       <div class="spec-card">
@@ -945,6 +1583,88 @@
         <div class="cap">Pill, circle, squircle, leaf, drop&hellip;</div>
       </div>
     </div>
+    <div class="detail-grid" style="margin-top: 24px;">
+      <div class="detail-card">
+        <div class="kicker">Per-face editing</div>
+        <h3>One watch, different moods.</h3>
+        <p>Store appearance independently for each face instead of forcing one global look. Change title, artist, clock, lyrics and track-time typography; choose album treatments, color harmony, progress style, panel layout and custom button shapes.</p>
+      </div>
+      <div class="detail-card">
+        <div class="kicker">Always-on display</div>
+        <h3>Designed for the low-power screen too.</h3>
+        <p>Choose an always-on presentation, artwork treatment, dim level, visibility and typography separately from the interactive player. The phone preview lets you check the ambient result before it reaches the watch.</p>
+      </div>
+      <div class="detail-card">
+        <div class="kicker">Readable by design</div>
+        <h3>Make text hold its ground.</h3>
+        <p>Use album-aware or custom colors, adjustable opacity, shadow, outline and backdrop treatments for the title and artist. The same visual system also covers volume, seek, panels and queue rows.</p>
+      </div>
+      <div class="detail-card">
+        <div class="kicker">On the phone</div>
+        <h3>Preview before you send.</h3>
+        <p>The Watch tab mirrors the current track or a built-in sample and updates as you edit. Apply, duplicate, rename or delete profiles without changing the others.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="community">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow muted">Community themes</div>
+      <h2>Borrow a look. Make it yours.</h2>
+      <p>Browse a public catalogue of appearance profiles from the phone, inspect the full set of local previews and install only what you choose. A community theme is a starting point, not a locked preset.</p>
+    </div>
+    <div class="community-layout">
+      <div class="community-showcase" aria-label="Illustration of community theme cards">
+        <span class="gallery-label">Community catalogue</span>
+        <span class="gallery-count">Made on a phone</span>
+        <div class="theme-stack" aria-hidden="true">
+          <div class="theme-card-preview first"><div class="preview-caption"><strong>Basalt light</strong><span>by Nori</span></div></div>
+          <div class="theme-card-preview second"><div class="preview-caption"><strong>Blue hour</strong><span>by Mae</span></div></div>
+          <div class="theme-card-preview third"><div class="preview-caption"><strong>Velvet pulse</strong><span>by Anonymous</span></div></div>
+        </div>
+      </div>
+      <div class="community-steps">
+        <article class="community-step"><span class="community-step-index">01</span><div><h3>Discover a starting point.</h3><p>Search by theme or author, filter by base face, sort by newest, likes or installs, and inspect the full local previews before adding anything to your library.</p></div></article>
+        <article class="community-step"><span class="community-step-index">02</span><div><h3>Install, then make it yours.</h3><p>Preview Player, always-on, Volume, Progress, Quick panel and Queue. Installing creates a local copy you can apply, edit, duplicate or remove independently.</p></div></article>
+        <article class="community-step"><span class="community-step-index">03</span><div><h3>Share your own work.</h3><p>Submit a user-owned theme for review with a public name and pseudonym or Anonymous label. Authors can optionally attach one real watch photo.</p></div></article>
+        <article class="community-step"><span class="community-step-index">04</span><div><h3>Keep public publishing accountable.</h3><p>Browsing and installing need no account. Likes, installs and reports are private, while approved profiles reach the static catalogue through moderation.</p></div></article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="compatibility">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow muted">Compatibility &amp; privacy</div>
+      <h2>Built around Android's media standards.</h2>
+      <p>Svartifoss does not replace your music app, stream audio or ask for a Svartifoss cloud account. It connects the phone and watch locally, then uses the media contracts each installed player makes available.</p>
+    </div>
+    <div class="compatibility-layout">
+      <aside class="local-first">
+        <div class="local-first-copy">
+          <div class="kicker">Local first</div>
+          <h3>Your controls do not pass through a Svartifoss server.</h3>
+          <p>The phone and watch talk over the local Wearable Data Layer. Ordinary control works without creating an account or giving a third party your listening activity.</p>
+        </div>
+        <div class="local-link" aria-label="Phone and watch connected locally">
+          <div class="local-device"><span>Phone</span><strong>Media session</strong></div>
+          <span class="local-wire" aria-hidden="true"></span>
+          <div class="local-device"><span>Wear OS watch</span><strong>Your inputs</strong></div>
+        </div>
+      </aside>
+      <div class="compat-grid">
+        <div class="compat-row"><strong>Basic playback</strong><span>A usable Android MediaSession provides play, pause, skip, position and other transport commands.</span></div>
+        <div class="compat-row"><strong>Queue</strong><span>The player must publish a queue. Otherwise Svartifoss falls back to recent track history.</span></div>
+        <div class="compat-row"><strong>Library &amp; search</strong><span>Browsing and in-app search depend on a discoverable MediaBrowserService or compatible search command.</span></div>
+        <div class="compat-row"><strong>Like, shuffle &amp; repeat</strong><span>Extra actions appear when the notification or media session publishes them.</span></div>
+        <div class="compat-row"><strong>Rich metadata</strong><span>Tags come from the player; local file details need media access; optional MusicBrainz lookup is off by default.</span></div>
+        <div class="compat-row"><strong>Streaming shortcuts</strong><span>Direct playback depends on the target service. If it declines, Svartifoss opens the link in that service or a browser.</span></div>
+      </div>
+    </div>
+    <div class="note-strip" data-i18n-html="compat.note"><strong>What stays local:</strong> phone-to-watch control uses the Wearable Data Layer and needs no Svartifoss account. Network features are opt-in or explicit: updates, the Community themes catalogue, optional diagnostics, announcements, lyrics, metadata enrichment and shortcut artwork can be controlled in the app's settings.</div>
   </div>
 </section>
 
@@ -960,7 +1680,7 @@
   <div class="wrap story-inner">
     <div class="eyebrow">The name</div>
     <h2>Black Falls</h2>
-    <p><strong>Svartifoss</strong> means "Black Falls" in Icelandic — named after the waterfall in Vatnajökull National Park, where dark basalt columns frame a narrow cascade. Like water over stone, music flows through the app.</p>
+    <p data-i18n-html="story.description"><strong>Svartifoss</strong> means "Black Falls" in Icelandic — named after the waterfall in Vatnajökull National Park, where dark basalt columns frame a narrow cascade. Like water over stone, music flows through the app.</p>
   </div>
 </section>
 
@@ -969,7 +1689,7 @@
     <div class="section-head">
       <div class="eyebrow muted">Install</div>
       <h2>Sideload it. Takes a minute.</h2>
-      <p>Svartifoss isn't on the Play Store — install the APKs directly from GitHub Releases onto your phone and watch. And you only do it by hand once: from 2.2 on, the phone app notifies you about new releases (pre-releases opt-in) and can send the watch its update over Bluetooth — no more cables or Wear Installer.</p>
+      <p>Svartifoss isn't on the Play Store — install the two APKs directly from GitHub Releases onto your phone and watch. The phone needs Android notification access to discover the active media session; the watch app is installed separately. After the first setup, the phone can notify you about releases and send watch updates over Bluetooth.</p>
     </div>
     <div class="steps">
       <div class="step">
@@ -980,7 +1700,7 @@
       <div class="step">
         <div class="num"></div>
         <h3>Install on your watch</h3>
-        <p>Download the watch APK and sideload it to your Wear OS watch — easiest with <a href="https://www.xda-developers.com/wear-installer-sideload-wear-os-apps/">Wear Installer <svg class="icon"><use href="#i-open-new"/></svg></a>.</p>
+        <p data-i18n-html="install.watch.step">Download the watch APK and sideload it to your Wear OS watch — easiest with <a href="https://www.xda-developers.com/wear-installer-sideload-wear-os-apps/">Wear Installer <svg class="icon"><use href="#i-open-new"/></svg></a>.</p>
       </div>
       <div class="step">
         <div class="num"></div>
@@ -991,14 +1711,14 @@
     <div class="downloads">
       <div class="dl-group">
         <span>Phone · Android 6.0+</span>
-        <a class="btn btn-primary" data-dl="mobile" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-send-mobile"/></svg> Download phone APK</a>
+        <a class="btn btn-primary" data-i18n-html="download.phone" data-dl="mobile" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-send-mobile"/></svg> Download phone APK</a>
       </div>
       <div class="dl-group">
         <span>Watch · Wear OS 2 or newer (3, 4, 5…)</span>
-        <a class="btn btn-ghost" data-dl="wear" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-watch-down"/></svg> Download watch APK</a>
+        <a class="btn btn-ghost" data-i18n-html="download.watch" data-dl="wear" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-watch-down"/></svg> Download watch APK</a>
       </div>
       <div class="spacer"></div>
-      <div class="req">Building from source? See the <a href="https://github.com/gabrielluizone/Svartifoss#building">README</a>.</div>
+      <div class="req" data-i18n-html="install.source">Building from source? See the <a href="https://github.com/gabrielluizone/Svartifoss#building">README</a>.</div>
     </div>
   </div>
 </section>
@@ -1012,20 +1732,29 @@
       </a>
       <div class="footer-links">
         <a href="https://github.com/gabrielluizone/Svartifoss">GitHub <svg class="icon"><use href="#i-open-new"/></svg></a>
-        <a href="https://github.com/gabrielluizone/Svartifoss/releases">Releases <svg class="icon"><use href="#i-open-new"/></svg></a>
-        <a href="https://buymeacoffee.com/gabrielsvafoss">Buy Me a Coffee <svg class="icon"><use href="#i-open-new"/></svg></a>
+        <a data-i18n-html="footer.releases" href="https://github.com/gabrielluizone/Svartifoss/releases">Releases <svg class="icon"><use href="#i-open-new"/></svg></a>
+        <a data-i18n-html="footer.coffee" href="https://buymeacoffee.com/gabrielsvafoss">Buy Me a Coffee <svg class="icon"><use href="#i-open-new"/></svg></a>
         <a href="https://ko-fi.com/gabrielsvafoss">Ko-fi <svg class="icon"><use href="#i-open-new"/></svg></a>
-        <a href="https://github.com/gabrielluizone/Svartifoss/blob/master/COPYING">License</a>
-        <a href="privacy-policy.html">Privacy Policy</a>
+        <a data-i18n="License" href="https://github.com/gabrielluizone/Svartifoss/blob/master/COPYING">License</a>
+        <a data-i18n="Privacy Policy" href="privacy-policy.html">Privacy Policy</a>
       </div>
     </div>
     <div class="footer-meta">
       <span>com.svartifoss.snfell · GPL-3.0</span>
-      <span>A continuation of <a href="https://github.com/matejdro/WearMusicCenter">Music Center for Wear</a> by matejdro</span>
+      <span data-i18n-html="footer.continuation">A continuation of <a href="https://github.com/matejdro/WearMusicCenter">Music Center for Wear</a> by matejdro</span>
     </div>
   </div>
 </footer>
 
+<dialog class="image-lightbox" id="image-lightbox" aria-labelledby="lightbox-caption">
+  <div class="lightbox-shell">
+    <button class="lightbox-close" type="button" aria-label="Close enlarged image">&times;</button>
+    <img id="lightbox-image" src="" alt="">
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
+</dialog>
+
+<script src="languages.js"></script>
 <script>
 (function () {
   // Cross-fading slideshows in the "How it works" pair. Honours reduced-motion by
@@ -1045,6 +1774,62 @@
   }
   initSlideshow(document.querySelector('[data-slideshow="watch"]'), 2500);
   initSlideshow(document.querySelector('[data-slideshow="phone"]'), 3200);
+
+  // Screenshots and artwork samples open in a keyboard-accessible lightbox.
+  var lightbox = document.getElementById('image-lightbox');
+  var lightboxImage = document.getElementById('lightbox-image');
+  var lightboxCaption = document.getElementById('lightbox-caption');
+  var lightboxClose = lightbox && lightbox.querySelector('.lightbox-close');
+  var lightboxOpener = null;
+
+  function imageForSurface(surface) {
+    return surface.querySelector('.is-active') || surface.querySelector('img');
+  }
+  function labelForSurface(surface, image) {
+    return image.getAttribute('alt') || surface.getAttribute('aria-label') || 'Svartifoss preview';
+  }
+  function openLightbox(surface) {
+    if (!lightbox || !lightboxImage) return;
+    var image = imageForSurface(surface);
+    if (!image) return;
+    lightboxOpener = surface;
+    var label = labelForSurface(surface, image);
+    lightboxImage.src = image.currentSrc || image.src;
+    lightboxImage.alt = label;
+    lightboxCaption.textContent = label;
+    if (typeof lightbox.showModal === 'function') lightbox.showModal();
+    else lightbox.setAttribute('open', '');
+    lightboxClose.focus();
+  }
+  document.querySelectorAll('.hero-art, .slideshow, .face-tile, .mural-cell, .spec-card, .film-card, .control-shot, .content-shot').forEach(function (surface) {
+    if (!imageForSurface(surface)) return;
+    surface.classList.add('zoom-surface');
+    surface.setAttribute('tabindex', '0');
+    surface.setAttribute('role', 'button');
+    surface.setAttribute('aria-label', 'Open enlarged image: ' + labelForSurface(surface, imageForSurface(surface)));
+    surface.addEventListener('click', function () { openLightbox(surface); });
+    surface.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openLightbox(surface);
+      }
+    });
+  });
+  if (lightbox) {
+    lightbox.addEventListener('click', function (event) {
+      if (event.target === lightbox && typeof lightbox.close === 'function') lightbox.close();
+    });
+    lightbox.addEventListener('close', function () {
+      lightboxImage.removeAttribute('src');
+      if (lightboxOpener) lightboxOpener.focus();
+    });
+  }
+  if (lightboxClose) {
+    lightboxClose.addEventListener('click', function () {
+      if (typeof lightbox.close === 'function') lightbox.close();
+      else lightbox.removeAttribute('open');
+    });
+  }
 
   var strip = document.querySelector('.filmstrip');
   var prevBtn = document.querySelector('[data-film-prev]');

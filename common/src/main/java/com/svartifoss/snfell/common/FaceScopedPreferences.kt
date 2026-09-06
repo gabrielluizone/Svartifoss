@@ -19,7 +19,8 @@ import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
  *  3. [perFaceDefault] where one exists — drives consistent backgrounds/surfaces per layout.
  *  4. `"<baseKey>"` legacy global value — old installs keep their look for every other key.
  *  5. the definition's own default value.
- * Boolean/integer keys have no per-face override and keep scoped → legacy → definition order.
+ * Boolean and integer keys walk the same four steps minus the album-art carve-out (explicit,
+ * [perFaceDefault], legacy global, definition default) — see [getBoolean] and [getInt].
  * Custom themes are stricter: they read only the fixed custom snapshot, then face/default values.
  */
 object FaceScopedPreferences {
@@ -206,6 +207,10 @@ object FaceScopedPreferences {
             "wear_note_cover_shape",
             "wear_note_show_cover",
             "wear_title_centered",
+            "wear_artist_text_mode",
+            "wear_album_art_source",
+            "wear_text_block_align",
+            "wear_text_block_position",
             "wear_chat_cover_shape",
             "wear_chat_show_cover",
             "wear_metadata_cover_shape",
@@ -231,6 +236,25 @@ object FaceScopedPreferences {
             "wear_up_next_pill_style",
             "wear_show_up_next_pill",
             "wear_quick_panel_color_mode",
+            // The lyrics and queue screens each resolve one accent of their own. Scoped like
+            // every other surface colour, so a saved theme carries them: a theme built for
+            // reading along wants a different line colour than one built around the cover.
+            "wear_lyrics_color_mode",
+            "wear_lyrics_custom_color",
+            "wear_queue_color_mode",
+            "wear_queue_custom_color",
+            // Per-element Tone. Scoped like every other appearance key, and like the global
+            // tone it defaults to, so a saved theme carries the tone each element was built with.
+            "wear_title_color_modifier",
+            "wear_artist_color_modifier",
+            "wear_clock_color_modifier",
+            // Per-surface backgrounds. Scoped like the shared one they default to, so a saved
+            // theme carries whichever surfaces were given a background of their own.
+            "wear_volume_backdrop_style",
+            "wear_progress_backdrop_style",
+            "wear_quick_panel_backdrop_style",
+            "wear_queue_backdrop_style",
+            "wear_lyrics_backdrop_style",
             "wear_quick_panel_custom_color",
             "wear_screen_theme",
             "wear_quadrant_tap_flash",
@@ -406,15 +430,84 @@ object FaceScopedPreferences {
             MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key to "false"
     )
 
+    /**
+     * The 2017 original's own settings - see [FaceGeometry.Matejdro] for why this is a View face.
+     *
+     * Everything here is something matejdro's WearMusicCenter actually did, restored as a *default*
+     * so the face arrives looking like the app it honours while staying as editable as any other.
+     * The face itself carries none of it: it owns the two proportional text bands and nothing else,
+     * which is the line every face in this app is held to.
+     *
+     * The artist colour is the one entry worth justifying, because [RIBBON_DEFAULTS] records the
+     * opposite lesson - a face must not pin the artist line to a colour taken from one album's
+     * sketch, because it then stays that colour for every record after it. White is not that. It is
+     * achromatic, so it competes with no cover, and it is what the original literally drew
+     * (`@color/white` on both lines); following the album here would be reproducing this app's
+     * look, not the one being honoured. The album-derived modes remain one tap away.
+     */
+    private val MATEJDRO_DEFAULTS = mapOf(
+            MiscPreferences.WEAR_ARTIST_COLOR_MODE.key to "custom",
+            MiscPreferences.WEAR_ARTIST_CUSTOM_COLOR.key to "#FFFFFF",
+            // The original declared uniform auto-size for both bands. Inheriting the global
+            // artist default (static) would keep this upper band at its maximum size and clip a
+            // long credit instead of letting OutlineTextView fit it to the band's width and
+            // height. This is a face default, so other faces retain their historical static line.
+            MiscPreferences.WEAR_ARTIST_TEXT_MODE.key to TitleTextMode.SMART,
+            // No bundled font, and no `fontFamily` anywhere in the original's resources: it drew
+            // both lines in the Wear OS system face. "roboto" is this catalogue's key for exactly
+            // that (Typeface.DEFAULT / FontFamily.Default), so the homage needs nothing shipped.
+            MiscPreferences.WEAR_FONT.key to "roboto",
+            // The original showed no progress of any kind - neither a bezel arc nor an inline one.
+            MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key to "false",
+            MiscPreferences.WEAR_INTERNAL_PROGRESS_VISIBLE.key to "false",
+            // Nor a mini-button row: the four quadrants were the whole control surface, and a row
+            // across the bottom band would sit on top of the title this face gives two thirds to.
+            MiscPreferences.WEAR_MINI_BUTTONS_MODE.key to ActivityVisibility.NEVER,
+            // The source-app mark beside the artist is this app's addition; the original had none.
+            MiscPreferences.WEAR_SHOW_SOURCE_ICON.key to "false",
+            // Nor an elapsed/total readout. It matters more here than on a face that merely omits
+            // it: this one's two lines are *weighted* bands, so a third, fixed-height row would
+            // take its space off both of them before the weights are shared out.
+            MiscPreferences.WEAR_TRACK_TIME_MODE.key to ActivityVisibility.NEVER,
+            // An even filter across the whole cover, which is what `android:alpha` on a full-screen
+            // ImageView is. See FaceGeometry.Matejdro.DIM_STRENGTH_PERCENT for the conversion.
+            MiscPreferences.WEAR_PLAYER_SHADING_STYLE.key to
+                    PlayerShadingStyle.FULL_FILTER.preferenceValue,
+            MiscPreferences.ALBUM_ART_DIM_STRENGTH.key to
+                    FaceGeometry.Matejdro.DIM_STRENGTH_PERCENT.toString()
+    )
+
+    /**
+     * The Artist face's own composition, expressed as defaults rather than as fixtures.
+     *
+     * The face exists to put the performer's name first, against their own picture, so it arrives
+     * with the text block pinned to the leading edge and grounded at the foot of the screen - the
+     * arrangement it was drawn for. Both are ordinary [TextBlockAlign]/[TextBlockPosition] values,
+     * not a special case at the draw site, which is what lets someone centre it or lift it to the
+     * top without the face fighting them. The same is true of the picture: the face ships on the
+     * [AlbumArtSource.ARTIST] *source* and on the plain full-bleed treatment
+     * [PlayerBackgroundStyle.defaultForFace] gives any unlisted face, so both halves of "a
+     * photograph of the performer, untreated" are ordinary values a user can change independently.
+     */
+    private val ARTIST_DEFAULTS = ALBUM_ACCENT_SURFACE_DEFAULTS + mapOf(
+            MiscPreferences.WEAR_ALBUM_ART_SOURCE.key to AlbumArtSource.ARTIST.preferenceValue,
+            MiscPreferences.WEAR_TEXT_BLOCK_ALIGN.key to TextBlockAlign.START.preferenceValue,
+            MiscPreferences.WEAR_TEXT_BLOCK_POSITION.key to TextBlockPosition.BOTTOM.preferenceValue,
+            MiscPreferences.WEAR_SHOW_SOURCE_ICON.key to "true",
+            MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key to "false"
+    )
+
     fun perFaceDefault(face: String, baseKey: String): String? = when {
         baseKey == MiscPreferences.ALBUM_ART_STYLE.key ->
             PlayerBackgroundStyle.defaultForFace(face).preferenceValue
+        face == "artist" -> ARTIST_DEFAULTS[baseKey]
         face == "chat" -> CHAT_DEFAULTS[baseKey]
         face == "split" -> SPLIT_DEFAULTS[baseKey]
         face == "note" -> NOTE_DEFAULTS[baseKey]
         face == "verse" -> VERSE_DEFAULTS[baseKey]
         face == "ribbon" -> RIBBON_DEFAULTS[baseKey]
         face == "frame" -> FRAME_DEFAULTS[baseKey]
+        face == "matejdro" -> MATEJDRO_DEFAULTS[baseKey]
         face in SELF_COMPOSED_FACES -> SELF_COMPOSED_DEFAULTS[baseKey]
         face in ALBUM_ACCENT_FACES -> ALBUM_ACCENT_SURFACE_DEFAULTS[baseKey]
         else -> null
@@ -513,15 +606,26 @@ object FaceScopedPreferences {
         }
     }
 
-    /** Ints are persisted as strings (see wearutils `Preferences.putInt`). */
+    /**
+     * Ints are persisted as strings (see wearutils `Preferences.putInt`), and this must walk the
+     * same four steps as [getString]/[getBoolean]: explicit per-face value, then [perFaceDefault],
+     * then the legacy global, then the definition default.
+     *
+     * The [perFaceDefault] step was missing here for as long as no `Int` key had a per-face
+     * default - the exact way [getBoolean] lost the same step, twice, before any boolean had one
+     * either. `album_art_dim_strength` is the one that eventually did (Matejdro's tribute dim,
+     * see [MATEJDRO_DEFAULTS]), which meant the built-in Matejdro face never actually drew at its
+     * intended dim level - only a saved custom theme built from it did, since the Custom-context
+     * overload below already had this step.
+     */
     fun getInt(prefs: SharedPreferences, def: PreferenceDefinition<Int>, face: String): Int {
         val scoped = scopedKey(def.key, face)
-        val raw = when {
-            prefs.contains(scoped) -> prefs.getStringSafe(scoped)
-            prefs.contains(def.key) -> prefs.getStringSafe(def.key)
-            else -> null
+        return when {
+            prefs.contains(scoped) -> prefs.getStringSafe(scoped)?.toIntOrNull() ?: def.defaultValue
+            else -> perFaceDefault(face, def.key)?.toIntOrNull()
+                    ?: (if (prefs.contains(def.key)) prefs.getStringSafe(def.key)?.toIntOrNull() else null)
+                    ?: def.defaultValue
         }
-        return raw?.toIntOrNull() ?: def.defaultValue
     }
 
     fun getInt(

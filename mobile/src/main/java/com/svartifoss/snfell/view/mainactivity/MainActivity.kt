@@ -31,6 +31,7 @@ import com.svartifoss.snfell.view.ActivityResultReceiver
 import com.svartifoss.snfell.view.FabFragment
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.TitledActivity
+import com.svartifoss.snfell.view.applyLyraDialogStyling
 import com.svartifoss.snfell.view.actionlist.ActionListFragment
 import com.svartifoss.snfell.view.buttonconfig.ControlsFragment
 import com.svartifoss.snfell.view.settings.SettingsHomeFragment
@@ -1359,6 +1360,7 @@ class MainActivity : WearCompanionPhoneActivity(),
                     openNotificationListener()
                 }
                 .show()
+                .applyLyraDialogStyling(accent = currentAccentColor())
     }
 
     private fun openNotificationListener() {
@@ -1370,6 +1372,7 @@ class MainActivity : WearCompanionPhoneActivity(),
                     .setMessage(getString(R.string.error_no_notification_service_support))
                     .setPositiveButton(android.R.string.ok, null)
                     .show()
+                    .applyLyraDialogStyling(accent = currentAccentColor())
         }
     }
 

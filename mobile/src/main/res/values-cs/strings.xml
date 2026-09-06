@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">Nastavení synchronizována s hodinkami</string>
     <string name="dev_copy_debug_info">Kopírovat ladicí informace</string>
     <string name="dev_copy_debug_info_description">Zkopírovat údaje o sestavení a zařízení do schránky</string>
+    <string name="dev_export_defaults">Exportovat jako výchozí nastavení</string>
+    <string name="dev_export_defaults_description">Uloží toto nastavení jako default_config.json, tedy stav, ze kterého začíná nová instalace. Vynechá historii, volby souhlasu a vlastní stav tohoto telefonu.</string>
+    <string name="dev_export_defaults_done">Výchozí nastavení exportováno (%1$s)</string>
     <string name="dev_show_archived">Zobrazit archivované možnosti</string>
     <string name="dev_show_archived_description">Odhalit rozložení a nastavení hodinek archivovaná kvůli známým problémům</string>
     <string name="dev_copy_debug_info_done">Ladicí informace zkopírovány</string>
@@ -289,6 +292,9 @@ Některé balíčky ikon vyžadují oprávnění aplikace k úložišti. Abyste 
     <string name="setting_wear_font_flex_roundness_description">Mění zakončení tahů od ostrých (0) po zcela zaoblená (100) pro přívětivější dojem.</string>
     <string name="preview_sample_title">Název skladby</string>
     <string name="preview_sample_artist">Jméno interpreta</string>
+    <string name="preview_sample_lyric_previous">Předchozí řádek</string>
+    <string name="preview_sample_lyric_current">Řádek, který zní teď</string>
+    <string name="preview_sample_lyric_next">Další řádek</string>
     <string name="preview_sample_next_title">Další skladba</string>
     <string name="preview_playback_stopped">Zastaveno</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -561,8 +567,6 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
     <string name="wear_font_small_caps_description">Kompaktní tvary připomínající verzálky s redakčním dojmem.</string>
     <string name="wear_font_casual">Neformální</string>
     <string name="wear_font_casual_description">Hravá ručně psaná systémová rodina.</string>
-    <string name="wear_font_typewriter">Psací stroj (archivováno)</string>
-    <string name="wear_font_typewriter_description">Retro vzhled psacího stroje (Mom’s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Zaoblené geometrické bezpatkové písmo, bezplatná alternativa (OFL) v duchu Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -628,6 +632,12 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
     <string name="setting_wear_quick_panel_color">Barva Rychlých akcí</string>
     <string name="setting_wear_quick_panel_custom_color">Vlastní barva Rychlých akcí</string>
     <string name="setting_wear_quick_panel_custom_color_description">Zvolte barvu Rychlých akcí použitou při úpravě Normální</string>
+    <string name="setting_wear_lyrics_color">Barva textu písně</string>
+    <string name="setting_wear_lyrics_custom_color">Vlastní barva textu písně</string>
+    <string name="setting_wear_lyrics_custom_color_description">Zvolte barvu textu písně použitou při úpravě Normální</string>
+    <string name="setting_wear_queue_color">Barva fronty</string>
+    <string name="setting_wear_queue_custom_color">Vlastní barva fronty</string>
+    <string name="setting_wear_queue_custom_color_description">Zvolte barvu fronty použitou při úpravě Normální</string>
     <string name="setting_wear_shading_custom_color_description">Zvolte barvu tónování přechodu stínování</string>
 
     <string-array name="wear_accent_color_entries">
@@ -660,8 +670,10 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>Poznámka</item>
         <item>Verš</item>
         <item>Metadata</item>
+        <item>Interpret</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -682,8 +694,10 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Posouvání Expressive</string>
@@ -717,6 +731,7 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>Rozdělený</item>
         <item>Poznámka</item>
         <item>Verš</item>
+        <item>Interpret</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -735,6 +750,7 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -841,8 +857,15 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
     <string name="category_wf_panel_seek">Panel průběhu &amp; posuvu</string>
     <string name="category_wf_panel_quick">Panel rychlých akcí</string>
     <string name="category_wf_panel_queue">Fronta &amp; seznamy</string>
+    <string name="category_wf_panel_lyrics">Text písně</string>
     <string name="category_wf_panel_effects">Efekty panelu</string>
     <string name="setting_wear_overlay_backdrop_style">Pozadí panelu</string>
+    <string name="wear_backdrop_shared">Podle společného pozadí panelů</string>
+    <string name="setting_wear_volume_backdrop_style">Pozadí hlasitosti</string>
+    <string name="setting_wear_progress_backdrop_style">Pozadí průběhu</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Pozadí rychlých akcí</string>
+    <string name="setting_wear_queue_backdrop_style">Pozadí fronty</string>
+    <string name="setting_wear_lyrics_backdrop_style">Pozadí textu písně</string>
     <string name="setting_wear_volume_style">Styl hlasitosti</string>
     <string name="setting_wear_volume_layout">Rozložení hlasitosti</string>
     <string name="setting_wear_quick_panel_style">Styl rychlého panelu</string>
@@ -930,10 +953,14 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
     <string name="setting_wear_source_icon_scale">Velikost ikony aplikace</string>
     <string name="setting_wear_source_icon_opacity">Krytí ikony aplikace</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 je běžná tloušťka ciferníku; vyšší hodnota znamená tučnější písmo. U Google Sans Flex jde o vlastní osu tloušťky tohoto písma</string>
-    <string name="setting_wear_typography_scale_description">Procento vlastní velikosti ciferníku (70–140). 100 zachová navrženou velikost každého rozložení</string>
+    <string name="setting_wear_typography_scale_description">Procento vlastní velikosti ciferníku (1–300). 100 zachová navrženou velikost každého rozložení</string>
     <string name="setting_wear_typography_opacity_description">Procento (20–100). 100 zachová vlastní krytí ciferníku</string>
     <string name="setting_wear_typography_tracking_description">Dodatečná mezera mezi písmeny, ve setinách em (−5 až 20). 0 zachová vlastní rozestupy písma</string>
     <string name="setting_wear_color_modifier">Tón</string>
+    <string name="setting_wear_title_color_modifier">Tón názvu</string>
+    <string name="setting_wear_artist_color_modifier">Tón interpreta</string>
+    <string name="setting_wear_clock_color_modifier">Tón hodin</string>
+    <string name="wear_color_modifier_follow">Podle tónu hodinek</string>
     <string name="setting_wear_color_modifier_description">Upravit celou paletu bez změny způsobu jejího odvození — funguje se všemi barevnými úpravami</string>
     <string name="setting_wear_color_hue_shift">Posun barvy</string>
     <string name="setting_wear_color_hue_shift_description">Otáčí paletu alba kolem barevného kruhu ve stupních (0–359). Každá úprava ponechává svou hlavní barvu na vlastním odstínu alba, takže právě tímto nastavením ji můžete obměnit. 0 použije barvu alba beze změny; pevná Normální barva se nikdy neposouvá.</string>
@@ -1326,7 +1353,6 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1445,7 +1471,14 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1466,7 +1499,6 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1585,7 +1617,14 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">Procházet knihovnu</string>
@@ -2304,5 +2343,56 @@ Kdykoli Vibration Center zavibruje hodinkami, Svartifoss zobrazí vyskakovací o
         <item>Zvýrazňovač</item>
         <item>Jemný</item>
         <item>Blok</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Podle ciferníku</item>
+        <item>Začátek</item>
+        <item>Na střed</item>
+        <item>Konec</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Podle ciferníku</item>
+        <item>Nahoře</item>
+        <item>Uprostřed</item>
+        <item>Dole</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Staticky (jeden řádek, bez posouvání a zmenšování)</item>
+        <item>Posouvat (marquee)</item>
+        <item>Zmenšit, aby se vešlo</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>Z hudební aplikace</item>
+        <item>Vyhledat online</item>
+        <item>Fotka interpreta</item>
+        <item>Obrázek z mé galerie</item>
+        <item>Náhodně ze složky</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

@@ -79,6 +79,16 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     val albumArt = ListenableLiveData<Bitmap?>()
     /** Icon of the app currently playing (or null when unavailable / the element is off). */
     val sourceIcon = ListenableLiveData<Bitmap?>()
+    /**
+     * The picture the face asked for in place of the sleeve - the performing artist, or a cover
+     * looked up online (see `AlbumArtSource`).
+     *
+     * Null whenever the source is the player's own artwork, and null whenever the lookup found
+     * nothing: the face falls back to [albumArt] in both cases, deliberately without
+     * distinguishing them, because "there is no picture for this" and "nobody asked for one" look
+     * identical on screen and should.
+     */
+    val backdropArt = ListenableLiveData<Bitmap?>()
     val customList = ListenableLiveData<CustomListWithBitmaps>()
     /** Persistent cache used only by Streaming shortcuts. Queue/search data cannot overwrite it. */
     val streamingShortcuts = ListenableLiveData<CustomListWithBitmaps>()
@@ -195,6 +205,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     // unchanged cover riding along on every state put be skipped without decoding it again.
     private var lastAlbumArtAssetId: String? = null
     private var lastSourceIconAssetId: String? = null
+    private var lastBackdropArtAssetId: String? = null
 
     private var sendingVolume = false
     private var nextVolume = -1f
@@ -208,6 +219,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         lifecycleObserver.addLiveData(musicState)
         lifecycleObserver.addLiveData(albumArt)
         lifecycleObserver.addLiveData(sourceIcon)
+        lifecycleObserver.addLiveData(backdropArt)
         lifecycleObserver.addLiveData(streamingShortcuts)
     }
 
@@ -513,6 +525,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
                             deliverAlbumArt(dataItem, receivedMusicState)
                             deliverSourceIcon(dataItem, receivedMusicState)
+                            deliverBackdropArt(dataItem, receivedMusicState)
                         }
                     }
                     CommPaths.DATA_NOTIFICATION -> {
@@ -756,6 +769,38 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         sourceIcon.postValue(bitmap)
     }
 
+    /**
+     * Decodes the optional backdrop picture.
+     *
+     * Three states, not two, which is why it consults `backdropArtPending` as well as the asset.
+     * The picture is resolved on the phone by a *network* lookup that completes after the state
+     * announcing the track, so an absent asset routinely means "still being looked up" rather than
+     * "there is none" - clearing on the first of those is what would make every track change blink
+     * the backdrop back to the album cover and then away again. `hasBackdropArt` distinguishes the
+     * settled absence, at which point the face should genuinely fall back.
+     */
+    private suspend fun deliverBackdropArt(dataItem: DataItem, state: MusicState) {
+        val asset = dataItem.assets[CommPaths.ASSET_BACKDROP_ART]
+        if (asset == null) {
+            // Same guard deliverSourceIcon documents: the interim put a track change ships first
+            // carries no assets at all, so only a settled state means anything by their absence.
+            if (state.albumArtPending || state.backdropArtPending) return
+            lastBackdropArtAssetId = null
+            backdropArt.postValue(null)
+            return
+        }
+        if (asset.id == lastBackdropArtAssetId && backdropArt.value != null) return
+        val bytes = dataClient.getByteArrayAsset(asset)
+        val bitmap = bytes?.let { withContext(Dispatchers.Default) { BitmapUtils.deserialize(it) } }
+        if (bitmap != null) {
+            lastBackdropArtAssetId = asset.id
+            backdropArt.postValue(bitmap)
+        } else if (!state.backdropArtPending) {
+            lastBackdropArtAssetId = null
+            backdropArt.postValue(null)
+        }
+    }
+
     private suspend fun loadCurrentMusicState() {
         val dataItems = dataClient.getDataItems(
                 Uri.parse("wear://*${CommPaths.DATA_MUSIC_STATE}"),
@@ -782,6 +827,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
         applyMusicState(storedState)
         deliverAlbumArt(dataItem, storedState)
+        deliverBackdropArt(dataItem, storedState)
     }
 
     /** Parses just the transport seq off a music-state DataItem for the in-buffer collapse; a

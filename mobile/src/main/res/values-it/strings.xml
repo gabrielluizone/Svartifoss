@@ -29,6 +29,9 @@
     <string name="dev_sync_watch_done">Impostazioni sincronizzate con l\'orologio</string>
     <string name="dev_copy_debug_info">Copia info di debug</string>
     <string name="dev_copy_debug_info_description">Copia i dettagli della build e del dispositivo negli appunti</string>
+    <string name="dev_export_defaults">Esporta come impostazioni predefinite</string>
+    <string name="dev_export_defaults_description">Salva questa configurazione come default_config.json, lo stato da cui parte una nuova installazione. Esclude cronologia, scelte di consenso e lo stato proprio di questo telefono.</string>
+    <string name="dev_export_defaults_done">Impostazioni predefinite esportate (%1$s)</string>
     <string name="dev_show_archived">Mostra opzioni archiviate</string>
     <string name="dev_show_archived_description">Rivela layout e impostazioni dell\'orologio archiviati per problemi noti</string>
     <string name="dev_copy_debug_info_done">Info di debug copiate</string>
@@ -237,6 +240,9 @@
     <string name="category_music_colors">Colori dalla musica</string>
     <string name="preview_sample_title">Titolo canzone</string>
     <string name="preview_sample_artist">Nome artista</string>
+    <string name="preview_sample_lyric_previous">La riga precedente</string>
+    <string name="preview_sample_lyric_current">La riga in riproduzione</string>
+    <string name="preview_sample_lyric_next">La riga successiva</string>
     <string name="preview_sample_next_title">Prossima canzone</string>
     <string name="preview_playback_stopped">Interrotta</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -453,8 +459,6 @@
     <string name="wear_font_small_caps_description">Forme compatte a forma di maiuscola con un tocco editoriale.</string>
     <string name="wear_font_casual">Casual</string>
     <string name="wear_font_casual_description">Una famiglia di sistema manoscritta e giocosa.</string>
-    <string name="wear_font_typewriter">Macchina da scrivere (Archiviato)</string>
-    <string name="wear_font_typewriter_description">Un look retrò da macchina da scrivere (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Un sans geometrico arrotondato, un\'alternativa libera (OFL) nello spirito di Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -520,6 +524,12 @@
     <string name="setting_wear_quick_panel_color">Colore Azioni Rapide</string>
     <string name="setting_wear_quick_panel_custom_color">Colore personalizzato Azioni Rapide</string>
     <string name="setting_wear_quick_panel_custom_color_description">Scegli il colore delle Azioni Rapide usato con il trattamento Normale</string>
+    <string name="setting_wear_lyrics_color">Colore dei testi</string>
+    <string name="setting_wear_lyrics_custom_color">Colore testi personalizzato</string>
+    <string name="setting_wear_lyrics_custom_color_description">Scegli il colore dei testi usato con il trattamento Normale</string>
+    <string name="setting_wear_queue_color">Colore della coda</string>
+    <string name="setting_wear_queue_custom_color">Colore coda personalizzato</string>
+    <string name="setting_wear_queue_custom_color_description">Scegli il colore della coda usato con il trattamento Normale</string>
     <string name="setting_wear_shading_custom_color_description">Scegli il colore che tinge il gradiente di ombreggiatura</string>
 
     <string-array name="wear_accent_color_entries">
@@ -552,8 +562,10 @@
         <item>Nota</item>
         <item>Verso</item>
         <item>Metadata</item>
+        <item>Artista</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -574,8 +586,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Ricerca Expressive</string>
@@ -609,6 +623,7 @@
         <item>Diviso</item>
         <item>Nota</item>
         <item>Verso</item>
+        <item>Artista</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -627,6 +642,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -729,6 +745,12 @@
 
     <string name="category_overlays_queue">Overlay e coda</string>
     <string name="setting_wear_overlay_backdrop_style">Sfondo pannello</string>
+    <string name="wear_backdrop_shared">Segui lo sfondo condiviso</string>
+    <string name="setting_wear_volume_backdrop_style">Sfondo del volume</string>
+    <string name="setting_wear_progress_backdrop_style">Sfondo dell’avanzamento</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Sfondo delle azioni rapide</string>
+    <string name="setting_wear_queue_backdrop_style">Sfondo della coda</string>
+    <string name="setting_wear_lyrics_backdrop_style">Sfondo dei testi</string>
     <string name="setting_wear_volume_style">Stile volume</string>
     <string name="setting_wear_volume_layout">Layout volume</string>
     <string name="setting_wear_quick_panel_style">Stile pannello rapido</string>
@@ -1567,10 +1589,14 @@
     <string name="setting_wear_source_icon_scale">Dimensione icona app</string>
     <string name="setting_wear_source_icon_opacity">Opacità icona app</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 è il peso normale della schermata; valori più alti sono più marcati. Per Google Sans Flex questo è l\'asse peso proprio di quel carattere</string>
-    <string name="setting_wear_typography_scale_description">Percentuale della dimensione propria della schermata (70–140). 100 mantiene la dimensione progettata di ogni layout</string>
+    <string name="setting_wear_typography_scale_description">Percentuale della dimensione propria della schermata (1–300). 100 mantiene la dimensione progettata di ogni layout</string>
     <string name="setting_wear_typography_opacity_description">Percentuale (20–100). 100 mantiene l\'opacità propria della schermata</string>
     <string name="setting_wear_typography_tracking_description">Spazio extra tra le lettere, in centesimi di em (da −5 a 20). 0 mantiene la spaziatura propria del carattere</string>
     <string name="setting_wear_color_modifier">Tonalità</string>
+    <string name="setting_wear_title_color_modifier">Tonalità del titolo</string>
+    <string name="setting_wear_artist_color_modifier">Tonalità dell’artista</string>
+    <string name="setting_wear_clock_color_modifier">Tonalità dell’orologio</string>
+    <string name="wear_color_modifier_follow">Segui la tonalità dell’orologio</string>
     <string name="setting_wear_color_modifier_description">Regola l\'intera palette senza cambiare come viene derivata — funziona con ogni trattamento colore</string>
     <string name="setting_wear_color_hue_shift">Rotazione colore</string>
     <string name="setting_wear_color_hue_shift_description">Ruota la palette dell\'album sulla ruota dei colori, in gradi (0–359). Ogni trattamento mantiene il suo colore principale sulla tonalità propria dell\'album, quindi è questo che varia. 0 usa il colore dell\'album così com\'è; un colore Normale fisso non viene mai ruotato.</string>
@@ -1718,7 +1744,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1837,7 +1862,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1858,7 +1890,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1977,7 +2008,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
     <string-array name="wear_cover_shape_entries">
         <item>Arrotondato</item>
@@ -2176,6 +2214,7 @@
     <string name="category_wf_panel_seek">Pannello avanzamento e ricerca</string>
     <string name="category_wf_panel_quick">Pannello Azioni rapide</string>
     <string name="category_wf_panel_queue">Coda ed elenchi</string>
+    <string name="category_wf_panel_lyrics">Testi</string>
     <string name="category_wf_panel_effects">Effetti dei pannelli</string>
     <string name="category_apps_content">Testi e metadati</string>
     <string name="category_streaming_services">Scorciatoie di streaming</string>
@@ -2254,5 +2293,56 @@
         <item>Evidenziatore</item>
         <item>Leggero</item>
         <item>Blocco</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Segui faccia</item>
+        <item>Inizio</item>
+        <item>Al centro</item>
+        <item>Fine</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Segui faccia</item>
+        <item>In alto</item>
+        <item>Al centro</item>
+        <item>In basso</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Statico (una riga, senza scorrimento o restringimento)</item>
+        <item>Scorrimento (marquee)</item>
+        <item>Restringi per adattare</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>Dall\'app musicale</item>
+        <item>Cercata online</item>
+        <item>Foto dell\'artista</item>
+        <item>Immagine dalla mia galleria</item>
+        <item>Casuale da una cartella</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

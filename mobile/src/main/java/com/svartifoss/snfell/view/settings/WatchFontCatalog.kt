@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Typeface
 import androidx.core.content.res.ResourcesCompat
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.DeviceLocalAppearance
 import com.svartifoss.snfell.common.WatchTypography
 import java.io.File
 
@@ -143,8 +144,15 @@ object WatchFontCatalog {
                     ?.let { ResourcesCompat.getFont(context, it) }
                     ?: when (key) {
                         "roboto" -> Typeface.DEFAULT
-                        "typewriter" -> ResourcesCompat.getFont(context, R.font.moms_typewriter)
-                        // Keep the legacy key so saved preferences and imported themes continue to work.
+                        // The typeface imported from this phone's storage. Resolving it here is
+                        // what makes the preview honest: the watch reads the same key out of the
+                        // same file, so a face previewed in an imported font renders in it.
+                        DeviceLocalAppearance.USER_FONT_KEY -> UserFontStore.typeface(context)
+                        // Keep both legacy keys so saved preferences and imported themes continue
+                        // to work. "typewriter" used to select Mom's Typewriter; that font carried
+                        // no redistribution license this project ever held, so the file was
+                        // removed and the key now aliases to Special Elite, mirroring "love_letter".
+                        "typewriter" -> ResourcesCompat.getFont(context, R.font.special_elite_regular)
                         "love_letter" -> ResourcesCompat.getFont(context, R.font.special_elite_regular)
                         "poppins" -> ResourcesCompat.getFont(context, R.font.poppins_regular)
                         "montserrat" -> ResourcesCompat.getFont(context, R.font.montserrat_regular)
@@ -169,6 +177,11 @@ object WatchFontCatalog {
                         "sans_thin" -> Typeface.create("sans-serif-thin", Typeface.NORMAL)
                         "sans_medium" -> Typeface.create("sans-serif-medium", Typeface.NORMAL)
                         "sans_black" -> Typeface.create("sans-serif-black", Typeface.NORMAL)
+                        "roboto_thin" -> Typeface.create("sans-serif-thin", Typeface.NORMAL)
+                        "roboto_light" -> Typeface.create("sans-serif-light", Typeface.NORMAL)
+                        "roboto_medium" -> Typeface.create("sans-serif-medium", Typeface.NORMAL)
+                        "roboto_black" -> Typeface.create("sans-serif-black", Typeface.NORMAL)
+                        "roboto_condensed" -> Typeface.create("sans-serif-condensed", Typeface.NORMAL)
                         "small_caps" -> Typeface.create("sans-serif-smallcaps", Typeface.NORMAL)
                         "casual" -> Typeface.create("casual", Typeface.NORMAL)
                         "serif" -> Typeface.SERIF

@@ -144,6 +144,9 @@ import com.svartifoss.snfell.common.SwipeGesture
 import com.svartifoss.snfell.common.TrackMetadataFields
 import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.SpecialEliteKeywordPolicy
+import com.svartifoss.snfell.common.AlbumArtSource
+import com.svartifoss.snfell.common.TextBlockAlign
+import com.svartifoss.snfell.common.TextBlockPosition
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.TitleTextMode
 import com.svartifoss.snfell.common.resolveAodArtwork
@@ -185,6 +188,7 @@ import com.svartifoss.snfell.common.AppLocales
 import com.svartifoss.snfell.watch.util.StandardActionTitles
 import com.svartifoss.snfell.watch.util.applyKeepScreenOnPreference
 import com.svartifoss.snfell.watch.util.WatchLanguage
+import com.svartifoss.snfell.watch.view.face.ArtistFace
 import com.svartifoss.snfell.watch.view.face.AuroraFace
 import com.svartifoss.snfell.watch.view.face.EclipseFace
 import com.svartifoss.snfell.watch.view.face.ExpressiveFace
@@ -273,6 +277,17 @@ class MainActivity : WearCompanionWatchActivity(),
         /** The one face that renders the track's full metadata; see applyScreenFaceNow. */
         private const val FACE_METADATA = "metadata"
 
+        /**
+         * The homage to matejdro's WearMusicCenter, which this app is a fork of.
+         *
+         * The second *View* face, and deliberately so - see [FaceGeometry.Matejdro]. It shares
+         * Classic's whole presentation (which is the original's, grown up) and differs only in
+         * [applyClassicBandGeometry]: two proportional text bands filling the screen instead of a
+         * centred wrap-content block. Everything else the original looked like ships as this
+         * face's per-face defaults, not as code here.
+         */
+        private const val FACE_MATEJDRO = "matejdro"
+
         private const val KEY_SEARCH_QUERY = "search_query"
 
         /** Leading size for a full-colour app-launcher icon in a quick-panel row. Kept in step
@@ -290,6 +305,13 @@ class MainActivity : WearCompanionWatchActivity(),
         private const val CLASSIC_TITLE_MIN_SP = FaceGeometry.Classic.TITLE_MIN_SP
         private const val CLASSIC_ARTIST_MAX_SP = FaceGeometry.Classic.ARTIST_MAX_SP
         private const val CLASSIC_ARTIST_MIN_SP = FaceGeometry.Classic.ARTIST_MIN_SP
+
+        /** Matejdro's bands are far taller than Classic's wrap-content lines, so the sizing
+         *  cascade is given the original's own ceiling to grow into. Its floor stays the platform
+         *  autosize minimum the original inherited by declaring neither bound. */
+        private const val MATEJDRO_TEXT_MAX_SP = FaceGeometry.Matejdro.AUTOSIZE_MAX_SP
+        private const val MATEJDRO_TEXT_MIN_SP = FaceGeometry.Matejdro.AUTOSIZE_MIN_SP
+        private const val MATEJDRO_TITLE_MAX_LINES = FaceGeometry.Matejdro.TITLE_MAX_LINES
 
         /** The awake clock's designed size - must match activity_main.xml's ambient_clock
          *  textSize, which the clock size percentage scales from. */
@@ -392,6 +414,10 @@ class MainActivity : WearCompanionWatchActivity(),
     private var backgroundLayerSpecs: List<BackgroundLayer> = emptyList()
     private var backgroundLayersExplicit = false
     private var titleCentered = false
+    /** Held as fields as well as published on the face state: the View faces are anchored from
+     *  here (see applyClassicTextPlacement) and cannot read that state. */
+    private var textBlockAlign = TextBlockAlign.DEFAULT
+    private var textBlockPosition = TextBlockPosition.DEFAULT
     private var accentFloorColorMode: String = "album"
     private var accentFloorCustomColor: String = ""
     private var blurAlbumArtBackground: Boolean = false
@@ -412,6 +438,10 @@ class MainActivity : WearCompanionWatchActivity(),
     private var cachedAmbientSource: Bitmap? = null
     private var cachedAmbientStyle: AlbumArtFilter = AlbumArtFilter.NONE
     private var overlayBackdropStyle: String = "follow"
+    /** Per-surface backgrounds; "shared" defers to [overlayBackdropStyle]. */
+    private var volumeBackdropStyle: String = OverlayBackdropResolver.SHARED
+    private var progressBackdropStyle: String = OverlayBackdropResolver.SHARED
+    private var quickPanelBackdropStyle: String = OverlayBackdropResolver.SHARED
     private var playerShadingStyle: PlayerShadingStyle = PlayerShadingStyle.FOLLOW
     private var playerShadingIntensity: Float = PlayerShadingIntensity.BALANCED.multiplier
     private var shadingColorMode: String = "black"
@@ -569,7 +599,7 @@ class MainActivity : WearCompanionWatchActivity(),
     private val composeFaces = setOf(
             "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum",
             "material", "immersive", "depth", "carousel", "chat", "split", "note", "verse",
-            "metadata", "ribbon", "frame"
+            "metadata", "ribbon", "frame", "artist"
     )
 
     /** Mirrors [FourWayTouchLayout]'s own tap-feedback pulse at a higher z-order, drawn into
@@ -631,6 +661,10 @@ class MainActivity : WearCompanionWatchActivity(),
     private var albumAccentSource = AlbumAccentSource.BALANCED
     private var titleColorMode = MiscPreferences.TITLE_COLOR_FACE_DEFAULT
     private var titleCustomColor = ""
+    /** Per-element Tone, resolved against [colorModifier] - see ColorModifier.resolveElement. */
+    private var titleColorModifier = ColorModifier.NONE
+    private var artistColorModifier = ColorModifier.NONE
+    private var clockColorModifier = ColorModifier.NONE
     private var titleAdaptiveContrast = false
     /** Resolved title colour, or 0 while the title keeps the face's own. */
     private var titleAccentColor = 0
@@ -652,6 +686,14 @@ class MainActivity : WearCompanionWatchActivity(),
     private var quickPanelCustomColor = ""
 
     private var artistAccentColor = 0
+    /**
+     * The album colour the clock's "Album color" mode paints in.
+     *
+     * Separate from [currentAccentColor] because the clock has a Tone of its own: reusing the
+     * face-wide accent would have carried the *global* tone, and applying the clock's on top of it
+     * would compose two filters rather than substituting one.
+     */
+    private var clockAlbumAccentColor = 0
     private var progressAccentColor = 0
     private var progressSecondaryAccentColor = 0
     private var progressTertiaryAccentColor = 0
@@ -951,6 +993,7 @@ class MainActivity : WearCompanionWatchActivity(),
                         showCover = metadataShowCover.value)
                 "ribbon" -> RibbonFace(state = faceState.value, listener = expressiveFaceListener)
                 "frame" -> FrameFace(state = faceState.value, listener = expressiveFaceListener)
+                "artist" -> ArtistFace(state = faceState.value, listener = expressiveFaceListener)
                 "carousel" -> CarouselFace(
                         state = faceState.value,
                         listener = expressiveFaceListener,
@@ -1147,6 +1190,7 @@ class MainActivity : WearCompanionWatchActivity(),
         stemButtonsManager = StemButtonsManager(WatchInfoSender.getAvailableButtonsOnWatch(this), stemButtonListener, lifecycleScope)
 
         viewModel.albumArt.observe(this, albumArtObserver)
+        viewModel.backdropArt.observe(this, backdropArtObserver)
         viewModel.sourceIcon.observe(this, sourceIconObserver)
         viewModel.currentButtonConfig.observe(this, buttonConfigObserver)
         // Preference delivery must remain active while the activity is in ambient/paused state.
@@ -1411,6 +1455,21 @@ class MainActivity : WearCompanionWatchActivity(),
                     append("  overlay=").append(activeOverlayKind?.name?.lowercase() ?: "none")
                     append('\n').append("colors=").append(colorTreatment)
                     append("  actions=").append(sessionQuickActions.size)
+
+                    // PlaybackClock's sync-correction bookkeeping - see PlaybackSyncDiagnostics.
+                    val diag = viewModel.playbackSyncDiagnostics()
+                    append('\n').append("sync=").append(diag.currentIntervalMs / 1000).append('s')
+                    diag.lastRoundTripMs?.let { append(" rt=").append(it).append("ms") }
+                    diag.lastDriftMs?.let { append(" drift=").append(it).append("ms") }
+                    append('\n').append("corr snap/frac/ok/unans=")
+                            .append(diag.repliesSnapped).append('/')
+                            .append(diag.repliesCorrectedFractionally).append('/')
+                            .append(diag.repliesWithinTolerance).append('/')
+                            .append(diag.unansweredChecks)
+                    if (diag.repliesRefused > 0) {
+                        append('\n').append("refused=").append(diag.repliesRefused)
+                                .append(" (").append(diag.lastRefusalReason).append(')')
+                    }
                 }
             }
         }
@@ -1595,18 +1654,24 @@ class MainActivity : WearCompanionWatchActivity(),
                     artistFlexAxes
                 } else {
                     flexAxes
-                })
+                },
+                // Matejdro's artist line is the one place in the View face that is *not* designed
+                // bold - the original set textStyle only on its title. See
+                // FaceGeometry.Matejdro.ARTIST_DESIGNED_BOLD.
+                designedBold = screenFace != FACE_MATEJDRO ||
+                        FaceGeometry.Matejdro.ARTIST_DESIGNED_BOLD)
         applyQuickPanelFont()
     }
 
     private fun classicTrackTextTypeface(
             key: String,
             typography: WatchTypography.TextSpec,
-            axes: WatchTypography.FlexAxes
+            axes: WatchTypography.FlexAxes,
+            designedBold: Boolean = true
     ): Typeface = if (WatchTypography.isFlexFont(key)) {
         flexTypeface(this, typography, axes)
     } else {
-        styledClassicTypeface(watchFontTypeface(this, key), typography)
+        styledClassicTypeface(watchFontTypeface(this, key), typography, designedBold)
     }
 
     /**
@@ -1646,13 +1711,25 @@ class MainActivity : WearCompanionWatchActivity(),
      * deliberate choice and uses the real numeric-weight API where the platform has it (API 28+),
      * falling back to the coarse bold/normal flags on older watches, which is the most those can
      * express.
+     *
+     * [designedBold] is what "identity" resolves *to*, because that is a property of the face and
+     * not of this function: Matejdro designed a regular artist line against a bold title, the way
+     * the original did, and hardcoding bold here would have silently overruled it. Every other
+     * caller keeps the default, so Classic is untouched.
      */
     private fun styledClassicTypeface(
             base: Typeface,
-            spec: WatchTypography.TextSpec
+            spec: WatchTypography.TextSpec,
+            designedBold: Boolean = true
     ): Typeface {
         if (spec.weight == 400) {
-            return Typeface.create(base, if (spec.italic) Typeface.BOLD_ITALIC else Typeface.BOLD)
+            val style = when {
+                designedBold && spec.italic -> Typeface.BOLD_ITALIC
+                designedBold -> Typeface.BOLD
+                spec.italic -> Typeface.ITALIC
+                else -> Typeface.NORMAL
+            }
+            return Typeface.create(base, style)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             return Typeface.create(base, spec.weight, spec.italic)
@@ -1731,12 +1808,21 @@ class MainActivity : WearCompanionWatchActivity(),
      * ([resolvedArtistTextColor]), so baking alpha into it would be overwritten on the next track.
      */
     private fun applyClassicTypography() {
+        // Matejdro hands the same cascade a much wider range because its bands are the screen
+        // rather than a line of text - see applyClassicBandGeometry. The *mode* is untouched: how
+        // a title that will not fit behaves stays the user's setting on this face as on every
+        // other, and only the size range the composition allows differs.
+        val bandFace = screenFace == FACE_MATEJDRO
+        val titleMax = if (bandFace) MATEJDRO_TEXT_MAX_SP else CLASSIC_TITLE_MAX_SP
+        val titleMin = if (bandFace) MATEJDRO_TEXT_MIN_SP else CLASSIC_TITLE_MIN_SP
+        val artistMax = if (bandFace) MATEJDRO_TEXT_MAX_SP else CLASSIC_ARTIST_MAX_SP
+        val artistMin = if (bandFace) MATEJDRO_TEXT_MIN_SP else CLASSIC_ARTIST_MIN_SP
         binding.textTitle.enableSmartWordSizing(
-                maxSizeSp = titleTypography.scaled(CLASSIC_TITLE_MAX_SP),
-                minSizeSp = titleTypography.scaled(CLASSIC_TITLE_MIN_SP))
+                maxSizeSp = titleTypography.scaled(titleMax),
+                minSizeSp = titleTypography.scaled(titleMin))
         binding.textArtist.enableSmartWordSizing(
-                maxSizeSp = artistTypography.scaled(CLASSIC_ARTIST_MAX_SP),
-                minSizeSp = artistTypography.scaled(CLASSIC_ARTIST_MIN_SP))
+                maxSizeSp = artistTypography.scaled(artistMax),
+                minSizeSp = artistTypography.scaled(artistMin))
         binding.textTitle.letterSpacing = titleTypography.trackingEm
         binding.textArtist.letterSpacing = artistTypography.trackingEm
         binding.textTitle.alpha = titleTypography.alpha
@@ -1921,7 +2007,68 @@ class MainActivity : WearCompanionWatchActivity(),
         iconView.visibility = View.VISIBLE
     }
 
+    /**
+     * The two pictures the phone sends, before either becomes the backdrop.
+     *
+     * Kept apart from [latestAlbumArt], which holds whichever of them is actually *on screen*:
+     * every consumer downstream of it - the artwork View, the blur, the palette, the ambient
+     * treatment, the clock's dynamic sampling - is asking about the picture behind the content, and
+     * on the Artist face that is the performer, not the sleeve. Substituting once, here, is what
+     * lets all of them keep reading one field and stay right.
+     */
+    /** Which of the two the face has asked for - see [AlbumArtSource]. */
+    private var albumArtSource = AlbumArtSource.DEFAULT
+
+    private var phoneAlbumArt: Bitmap? = null
+    private var phoneBackdropArt: Bitmap? = null
+
+    /**
+     * Which picture belongs behind the current face.
+     *
+     * Driven by [MiscPreferences.WEAR_ALBUM_ART_SOURCE], not by the face: the source is an
+     * ordinary face-scoped setting, so any face can wear the performer's picture and the Artist
+     * face can be put back on the sleeve - and whichever is chosen, the treatment still applies.
+     *
+     * It falls back to the cover whenever the phone found no picture, deliberately without
+     * distinguishing "no picture for this artist" from "the lookup is switched off" from "the
+     * folder you picked is empty": all of them mean the same thing to the screen and none is worth
+     * reporting on a watch.
+     *
+     * The test is [AlbumArtSource.usesBackdropAsset] and **not** `needsLookup`. The two agreed
+     * while every non-local source was a network lookup, which made the wrong one look correct;
+     * a source that resolves a file on the phone still sends its picture through the very same
+     * asset, and asking about lookups discarded it on arrival.
+     */
+    private fun resolveBackdropArtwork(): Bitmap? =
+            if (albumArtSource.usesBackdropAsset) phoneBackdropArt ?: phoneAlbumArt else phoneAlbumArt
+
     private val albumArtObserver = Observer<Bitmap?> { bitmap ->
+        phoneAlbumArt = bitmap
+        applyBackdropArtwork(resolveBackdropArtwork())
+    }
+
+    /** The looked-up picture resolves later than the state that announced the track (it is a
+     *  network lookup on the phone), so it arrives as its own update rather than with the cover. */
+    private val backdropArtObserver = Observer<Bitmap?> { bitmap ->
+        phoneBackdropArt = bitmap
+        applyBackdropArtwork(resolveBackdropArtwork())
+    }
+
+    /**
+     * Puts [bitmap] behind the player, as the interactive screen or as the always-on one.
+     *
+     * [ambient] is a parameter rather than a read of [AmbientLifecycleObserver.isAmbient] because
+     * that flag **can still report true inside `onExitAmbient`** - the same trap
+     * [applyScreenFaceNow] exists to sidestep, documented on it. This function is called from there,
+     * so taking the flag at face value made a wake-up re-apply the *ambient* artwork treatment on
+     * top of the interactive one that had just been restored: the AOD art treatment defaults to
+     * blur, so the cover came back from the always-on screen blurred and stayed that way until
+     * something else re-rendered it.
+     */
+    private fun applyBackdropArtwork(
+            bitmap: Bitmap?,
+            ambient: Boolean = ambientObserver.isAmbient
+    ) {
         val previous = latestAlbumArt
         latestAlbumArt = bitmap
         // Play/pause re-syncs re-deliver the same art as a fresh Bitmap instance - compare
@@ -1929,7 +2076,7 @@ class MainActivity : WearCompanionWatchActivity(),
         // pause even though nothing visually changed).
         val samePixels = previous != null && bitmap != null &&
                 (previous === bitmap || previous.sameAs(bitmap))
-        if (!ambientObserver.isAmbient) {
+        if (!ambient) {
             if (albumArtFadeEnabled && previous != null && bitmap != null && !samePixels) {
                 fadeToAlbumArt(bitmap)
             } else {
@@ -2057,7 +2204,9 @@ class MainActivity : WearCompanionWatchActivity(),
             legacyDesaturated: Boolean,
             rawPrimary: Int,
             rawSecondary: Int,
-            rawTertiary: Int
+            rawTertiary: Int,
+            /** The element's own Tone; the watch-wide one unless it has been overridden. */
+            modifier: ColorModifier = colorModifier
     ): SurfacePalette {
         val selected = SurfaceColorTreatment.fromPreference(mode, legacyDesaturated)
         val treatment = selected.resolveAgainst(resolvedGlobalColorTreatment())
@@ -2066,7 +2215,7 @@ class MainActivity : WearCompanionWatchActivity(),
                 ?: parseHexColorOrNull(normalColor)
                 ?: defaultSeekBarColor
         val triad = SurfacePaletteResolver.derive(
-                treatment, colorModifier, rawPrimary, rawSecondary, rawTertiary, fixed,
+                treatment, modifier, rawPrimary, rawSecondary, rawTertiary, fixed,
                 colorHueShift, normalColorMulti)
         return SurfacePalette(
                 triad.primary,
@@ -2146,11 +2295,20 @@ class MainActivity : WearCompanionWatchActivity(),
         } else {
             resolveSurfacePalette(
                     titleColorMode, titleCustomColor, legacyDesaturated = false,
-                    color, sourceSecondary, sourceTertiary)
+                    color, sourceSecondary, sourceTertiary, titleColorModifier)
         }
         val artistPalette = resolveSurfacePalette(
                 artistColorMode, artistCustomColor, artistLegacyDesaturated,
-                color, sourceSecondary, sourceTertiary)
+                color, sourceSecondary, sourceTertiary, artistColorModifier)
+        // The clock follows the watch-wide *treatment* but may carry a Tone of its own, so it is
+        // resolved here rather than reading currentAccentColor - see clockAlbumAccentColor.
+        clockAlbumAccentColor = if (clockColorModifier == colorModifier) {
+            globalTriad.primary
+        } else {
+            resolveSurfacePalette(
+                    "follow", "", legacyDesaturated = false,
+                    color, sourceSecondary, sourceTertiary, clockColorModifier).primary
+        }
         val progressPalette = resolveSurfacePalette(
                 progressColorMode, progressCustomColor, progressLegacyDesaturated,
                 color, sourceSecondary, sourceTertiary)
@@ -2351,6 +2509,7 @@ class MainActivity : WearCompanionWatchActivity(),
             val transition = TransitionDrawable(arrayOf(oldDrawable, newDrawable))
             binding.albumArt.setImageDrawable(transition)
             transition.startTransition(ALBUM_ART_CROSSFADE_MS)
+            scheduleAlbumArtSettle(transition, newDrawable)
             return
         }
 
@@ -2367,16 +2526,38 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.albumArt.setImageDrawable(transition)
         transition.startTransition(ALBUM_ART_CROSSFADE_MS)
 
-        // Back to the real drawable once the fade is over, so the view returns to its own
-        // centerCrop of the true cover rather than staying on a baked, view-resolution frame.
-        //
-        // Guarded on the transition still being what is on screen: several paths re-render the
-        // artwork outside a track change (a preference edit, an ambient exit, a face swap), and one
-        // landing inside the fade's 300 ms would otherwise be reverted here to a drawable composed
-        // before it.
+        // Settles to the *real* drawable, not the baked frame that is fading in: that is the
+        // cosmetic half of what this does, and it is the whole reason the composed branch
+        // exists at all.
+        scheduleAlbumArtSettle(transition, newDrawable)
+    }
+
+    /**
+     * Replaces the cross-fade with its finished frame once the fade is over.
+     *
+     * Two jobs, and the second is why *both* branches of [fadeToAlbumArt] must call this. The
+     * original one is cosmetic: the view returns to its own centerCrop of the true cover rather
+     * than staying on a baked, view-resolution frame.
+     *
+     * The load-bearing one is that a [TransitionDrawable] animates **only while it is being
+     * drawn**. Stop drawing it half way - the wrist drops, the watch enters ambient, the activity
+     * is stopped - and it freezes at whatever alpha it had reached, which is two covers blended on
+     * top of each other. It never recovers on its own, because the transition has no clock of its
+     * own to catch up from. This settle is that clock, and it was previously scheduled on the
+     * composed-frame branch alone; the direct branch left the drawable in place forever. That went
+     * unnoticed while the two covers were usually album art of differing shapes, which takes the
+     * other branch - and became visible on every track once a source that returns uniformly square
+     * pictures (the artist lookup) made the direct branch the normal path.
+     *
+     * Guarded on the transition still being what is on screen: several paths re-render the artwork
+     * outside a track change (a preference edit, an ambient exit, a face swap), and one landing
+     * inside the fade would otherwise be reverted here to a drawable composed before it.
+     */
+    private fun scheduleAlbumArtSettle(transition: TransitionDrawable, settled: Drawable) {
+        albumArtSettleRunnable?.let { binding.albumArt.removeCallbacks(it) }
         val settle = Runnable {
             if (binding.albumArt.drawable === transition) {
-                binding.albumArt.setImageDrawable(newDrawable)
+                binding.albumArt.setImageDrawable(settled)
             }
             albumArtSettleRunnable = null
         }
@@ -4541,8 +4722,20 @@ class MainActivity : WearCompanionWatchActivity(),
         noteShowCover.value = faceBool(MiscPreferences.WEAR_NOTE_SHOW_COVER)
         titleCentered = faceBool(MiscPreferences.WEAR_TITLE_CENTERED)
         updateFaceState { it.copy(titleCentered = titleCentered) }
+        // Read here, resolved in FaceChrome's blockAlignment/blockTextAlign/blockPlacement. Both
+        // default to `follow`, so publishing them changes no face until the user picks a side.
+        textBlockAlign = TextBlockAlign.fromPref(faceString(MiscPreferences.WEAR_TEXT_BLOCK_ALIGN))
+        textBlockPosition =
+                TextBlockPosition.fromPref(faceString(MiscPreferences.WEAR_TEXT_BLOCK_POSITION))
+        updateFaceState {
+            it.copy(
+                    textBlockAlign = textBlockAlign,
+                    textBlockPosition = textBlockPosition
+            )
+        }
         // Classic composes in Views, so it cannot read that state: it is anchored here instead.
         applyClassicTitleAnchor()
+        applyClassicTextPlacement()
         chatCoverShape.value = CoverShape.fromPreference(
                 faceString(MiscPreferences.WEAR_CHAT_COVER_SHAPE), CoverShape.CIRCLE)
         chatShowCover.value = faceBool(MiscPreferences.WEAR_CHAT_SHOW_COVER)
@@ -4550,9 +4743,18 @@ class MainActivity : WearCompanionWatchActivity(),
                 faceString(MiscPreferences.WEAR_METADATA_COVER_SHAPE), CoverShape.ROUNDED)
         metadataShowCover.value = faceBool(MiscPreferences.WEAR_METADATA_SHOW_COVER)
         playerBackgroundStyle = PlayerBackgroundStyle.fromPreference(albumArtStyle)
+        albumArtSource = AlbumArtSource.fromPref(
+                faceString(MiscPreferences.WEAR_ALBUM_ART_SOURCE))
         blurAlbumArtBackground = playerBackgroundStyle.blurredArtwork
         albumArtGrayscale = resolveAlbumArtFilter(
                 albumArtFilter, playerBackgroundStyle) == AlbumArtFilter.MONOCHROME
+        // After the style flags above, not before: this re-renders the backdrop, and running it
+        // first applied the *previous* style's blur and filter to the new picture.
+        //
+        // Needed at all because the source decides which of the two bitmaps the pipeline receives,
+        // and neither LiveData fires when only the preference changes - they already delivered
+        // whatever they held.
+        applyBackdropArtwork(resolveBackdropArtwork())
         albumArtHidden = playerBackgroundStyle.hidesArtwork
         blurRadiusPx = faceInt(MiscPreferences.ALBUM_ART_BLUR_RADIUS)
                 .coerceIn(5, 120).toFloat()
@@ -4659,6 +4861,9 @@ class MainActivity : WearCompanionWatchActivity(),
                 .coerceIn(5, 120).toFloat()
         applyBlurredAlbumArt(latestAlbumArt)
         overlayBackdropStyle = faceString(MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE)
+        volumeBackdropStyle = faceString(MiscPreferences.WEAR_VOLUME_BACKDROP_STYLE)
+        progressBackdropStyle = faceString(MiscPreferences.WEAR_PROGRESS_BACKDROP_STYLE)
+        quickPanelBackdropStyle = faceString(MiscPreferences.WEAR_QUICK_PANEL_BACKDROP_STYLE)
 
         binding.volumeBar.barStyle = VolumeStyle.fromPref(
                 faceString(MiscPreferences.WEAR_VOLUME_STYLE))
@@ -4714,6 +4919,12 @@ class MainActivity : WearCompanionWatchActivity(),
         // for while the key was unscoped and faceBool could not see it.
         normalColorMulti = faceBool(MiscPreferences.WEAR_NORMAL_COLOR_MULTI)
         colorModifier = ColorModifier.fromPreference(faceString(MiscPreferences.WEAR_COLOR_MODIFIER))
+        titleColorModifier = ColorModifier.resolveElement(
+                faceString(MiscPreferences.WEAR_TITLE_COLOR_MODIFIER), colorModifier)
+        artistColorModifier = ColorModifier.resolveElement(
+                faceString(MiscPreferences.WEAR_ARTIST_COLOR_MODIFIER), colorModifier)
+        clockColorModifier = ColorModifier.resolveElement(
+                faceString(MiscPreferences.WEAR_CLOCK_COLOR_MODIFIER), colorModifier)
         colorHueShift = faceInt(MiscPreferences.WEAR_COLOR_HUE_SHIFT).toFloat()
         albumAccentSource = AlbumAccentSource.fromPreference(
                 faceString(MiscPreferences.WEAR_ALBUM_ACCENT_SOURCE))
@@ -4814,10 +5025,36 @@ class MainActivity : WearCompanionWatchActivity(),
             TitleTextMode.isShrink(titleTextModePref) -> TextSizingMode.SHRINK
             else -> TextSizingMode.SMART
         }
-        binding.textTitle.setSizingMode(titleTextMode, titleWrapLines)
+        // Classic's XML declares two lines because that was its historical smart-title ceiling.
+        // Matejdro's title is a weighted band with a real height, so two must not be the second
+        // ceiling: let the band accept as many lines as its autosize floor can fit. Explicit
+        // choices (static/wrap/wrap3/wrap5) keep their requested cap, and marquee remains one
+        // scrolling line; only the automatic modes need this larger fallback.
+        val effectiveTitleWrapLines = if (
+                screenFace == FACE_MATEJDRO && titleWrapLines == null
+        ) {
+            MATEJDRO_TITLE_MAX_LINES
+        } else {
+            titleWrapLines
+        }
+        binding.textTitle.setSizingMode(titleTextMode, effectiveTitleWrapLines)
         // Every Compose face reads the same raw preference value through AdaptiveTitleText now,
         // instead of each hardcoding one fixed overflow strategy the way they used to.
         updateFaceState { it.copy(titleTextMode = titleTextModePref ?: "smart") }
+
+        // The artist line gained the identical control; Classic composes in Views, so its own
+        // OutlineTextView is driven here exactly as the title's is above. Its default is "static",
+        // which is the single ellipsized line this view already drew.
+        val artistTextModePref = faceString(MiscPreferences.WEAR_ARTIST_TEXT_MODE)
+        val artistWrapLines = TitleTextMode.wrapLines(artistTextModePref)
+        val artistTextMode = when {
+            artistWrapLines != null -> TextSizingMode.WRAP
+            TitleTextMode.isMarquee(artistTextModePref) -> TextSizingMode.MARQUEE
+            TitleTextMode.isShrink(artistTextModePref) -> TextSizingMode.SHRINK
+            else -> TextSizingMode.SMART
+        }
+        binding.textArtist.setSizingMode(artistTextMode, artistWrapLines)
+        updateFaceState { it.copy(artistTextMode = artistTextModePref ?: "static") }
 
         titleTypography = WatchTypography.titleSpec(preferences, appearanceContext)
         artistTypography = WatchTypography.artistSpec(preferences, appearanceContext)
@@ -5075,11 +5312,19 @@ class MainActivity : WearCompanionWatchActivity(),
             viewModel.customList.value?.let(::updateUpNextPreview)
             viewModel.refreshPlaybackQueueSilently()
         }
+        // Changing the face - or the artwork source with it - changes *which* picture is the
+        // backdrop, and nothing else would notice: both LiveData already delivered whatever they
+        // held. Explicitly interactive: this function is the unguarded variant onExitAmbient calls
+        // precisely because isAmbient can still be true there, and passing that flag through would
+        // re-apply the blurred always-on treatment over the wake-up.
+        applyBackdropArtwork(resolveBackdropArtwork(), ambient = false)
         binding.expressiveFace.visibility = if (composeFace) View.VISIBLE else View.GONE
         // Kept up on the idle screen for its shading pass - see setIdleStateVisible.
         binding.playerBackground.visibility = if (composeFace) View.GONE else View.VISIBLE
         applyPlayerBackground()
         binding.classicTextBlock.visibility = if (composeFace) View.GONE else View.VISIBLE
+        // Both View faces share that block, so which of the two is showing decides its geometry.
+        if (!composeFace) applyClassicBandGeometry()
         // Keep the bezel View/hit target present when only the arc is hidden. onTouchEvent passes
         // non-bezel touches through, so this does not steal the layouts' central controls.
         binding.seekBar.drawProgress = edgeProgressVisible
@@ -5546,7 +5791,9 @@ class MainActivity : WearCompanionWatchActivity(),
             // "dynamic" already resolves legibility its own way (black or white by the artwork
             // beneath), and correcting "custom"/"white" would override an explicit decision.
             "album" -> adaptedClockAlbumColor(
-                    currentAccentColor.takeIf { it != 0 } ?: defaultSeekBarColor)
+                    clockAlbumAccentColor.takeIf { it != 0 }
+                            ?: currentAccentColor.takeIf { it != 0 }
+                            ?: defaultSeekBarColor)
             "custom" -> parseHexColorOrNull(clockCustomColor) ?: Color.WHITE
             "dynamic" -> if (clockAreaIsLight()) Color.BLACK else Color.WHITE
             else -> Color.WHITE
@@ -5749,10 +5996,114 @@ class MainActivity : WearCompanionWatchActivity(),
      * With no title on screen there is nothing to anchor, and shifting by half the block would
      * push a lone artist line off the centre for no reason - so that case resets to zero.
      */
+    /**
+     * Retargets the Classic text block's two lines between the two View faces.
+     *
+     * This is the whole of what the Matejdro face *is*, and the one thing about the original that
+     * no preference could express. Classic centres a wrap-content block: the artist row and the
+     * title take exactly the height their text needs, and the group sits in the middle. The
+     * original filled the screen instead - artist and title as two proportional bands, one third
+     * and two thirds, each line sized to fill its own band. Everything else that made the original
+     * look the way it did is a setting, and lives in FaceScopedPreferences.MATEJDRO_DEFAULTS.
+     *
+     * Written as a restore-or-apply pair rather than a one-way switch because the face can change
+     * under a running screen (the phone pushes a new choice, or the on-watch picker applies one),
+     * and a View whose layout params were rewritten does not go back on its own.
+     */
+    private fun applyClassicBandGeometry() {
+        val bands = screenFace == FACE_MATEJDRO
+        val artistRow = binding.classicArtistRow
+        val title = binding.textTitle
+        fun retarget(view: View, weight: Float) {
+            val params = view.layoutParams as? LinearLayout.LayoutParams ?: return
+            val height = if (bands) 0 else LinearLayout.LayoutParams.WRAP_CONTENT
+            val resolvedWeight = if (bands) weight else 0f
+            if (params.height == height && params.weight == resolvedWeight) return
+            params.height = height
+            params.weight = resolvedWeight
+            view.layoutParams = params
+        }
+        retarget(artistRow, FaceGeometry.Matejdro.ARTIST_BAND_WEIGHT)
+        retarget(title, FaceGeometry.Matejdro.TITLE_BAND_WEIGHT)
+        // The row is not the line. Giving the *row* the weight left `text_artist` inside it at
+        // wrap_content on both axes, and both halves of the sizing cascade then had nothing real
+        // to work against: its height was a consequence of the current text size rather than the
+        // band, and its width was whatever the text already measured - so the artist could never
+        // grow into the space the band had just been given, which is exactly how it shipped
+        // stuck at a small fixed size. The original had no row at all; `text_artist` *was* the
+        // weighted child. Width goes to 0+weight rather than match_parent so the source mark,
+        // if the user turns it back on, still takes its own space out of the row first.
+        (binding.textArtist.layoutParams as? LinearLayout.LayoutParams)?.let { params ->
+            val width = if (bands) 0 else LinearLayout.LayoutParams.WRAP_CONTENT
+            val height = if (bands) {
+                LinearLayout.LayoutParams.MATCH_PARENT
+            } else {
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            }
+            val weight = if (bands) 1f else 0f
+            if (params.width != width || params.height != height || params.weight != weight) {
+                params.width = width
+                params.height = height
+                params.weight = weight
+                binding.textArtist.layoutParams = params
+            }
+        }
+        // Only meaningful once the lines *have* a fixed height to fill - see the property's own
+        // note. Set together with the bands that create that height.
+        binding.textArtist.fitsWithinViewHeight = bands
+        title.fitsWithinViewHeight = bands
+        // A band is a box to fill, so the line centres inside it; Classic's lines are stacked
+        // tight against each other and take their spacing from the block's own gravity.
+        binding.textArtist.gravity = Gravity.CENTER
+        title.gravity = Gravity.CENTER
+        // No margin of its own: the block is Classic's block, and the original's own
+        // `music_screen_text_margin` is 0dp on a round display. See FaceGeometry.Matejdro.
+        applyClassicTypography()
+    }
+
+    /**
+     * The two placement controls, applied to the View-based Classic and Matejdro faces.
+     *
+     * The Compose faces get this from `FaceChrome`'s three helpers; these two compose in Views, so
+     * they are anchored here for the same reason [applyClassicTitleAnchor] anchors the title here.
+     * Only the gravity moves - never the order of the rows or the geometry of the bands - so a
+     * face that already sets its own band proportions keeps them.
+     *
+     * `follow` leaves every view exactly as the layout declares it, which is what makes offering
+     * the controls on every face safe: Classic looks identical until a side is chosen.
+     */
+    private fun applyClassicTextPlacement() {
+        val horizontal = when (textBlockAlign) {
+            TextBlockAlign.FOLLOW -> null
+            TextBlockAlign.START -> Gravity.START
+            TextBlockAlign.CENTER -> Gravity.CENTER_HORIZONTAL
+            TextBlockAlign.END -> Gravity.END
+        }
+        val vertical = when (textBlockPosition) {
+            TextBlockPosition.FOLLOW -> null
+            TextBlockPosition.TOP -> Gravity.TOP
+            TextBlockPosition.MIDDLE -> Gravity.CENTER_VERTICAL
+            TextBlockPosition.BOTTOM -> Gravity.BOTTOM
+        }
+        binding.classicMetadataBlock.gravity =
+                (horizontal ?: Gravity.CENTER_HORIZONTAL) or (vertical ?: Gravity.CENTER_VERTICAL)
+        // The artist row holds the source glyph beside the name, so it is the row's gravity that
+        // moves the pair - setting it on the text view alone would leave the glyph behind.
+        binding.classicArtistRow.gravity =
+                (horizontal ?: Gravity.CENTER_HORIZONTAL) or Gravity.CENTER_VERTICAL
+        val textGravity = (horizontal ?: Gravity.CENTER_HORIZONTAL) or Gravity.CENTER_VERTICAL
+        binding.textTitle.gravity = textGravity
+        binding.textPlaybackTime.gravity = textGravity
+    }
+
     private fun applyClassicTitleAnchor() {
         val block = binding.classicMetadataBlock
         val title = binding.textTitle
         block.translationY = if (!titleCentered ||
+                // Matejdro's block already *is* the screen: its two bands fill the whole text
+                // area, so there is no slack to slide into and the shift would only push the
+                // artist band off the top edge. Nothing to anchor, so nothing to move.
+                screenFace == FACE_MATEJDRO ||
                 title.visibility != View.VISIBLE ||
                 block.height == 0) {
             0f
@@ -6314,6 +6665,13 @@ class MainActivity : WearCompanionWatchActivity(),
     private var activeOverlayKind: OverlayKind? = null
     private var activeOverlayUsesBlur = false
 
+    /** The surface's own background preference; "shared" defers to the page-wide choice. */
+    private fun surfaceBackdropStyle(kind: OverlayKind): String = when (kind) {
+        OverlayKind.VOLUME -> volumeBackdropStyle
+        OverlayKind.QUICK_ACTIONS -> quickPanelBackdropStyle
+        OverlayKind.SEEK -> progressBackdropStyle
+    }
+
     /** Applies the independently selected full-screen background. The content style is consulted
      * only when the compatibility "follow" option is selected. */
     private fun applyOverlayBackdrop(kind: OverlayKind): Boolean {
@@ -6322,7 +6680,8 @@ class MainActivity : WearCompanionWatchActivity(),
             OverlayKind.QUICK_ACTIONS -> quickPanelStyle
             OverlayKind.SEEK -> OverlayBackdropResolver.seekContentStyle(seekOverlayStyle)
         }
-        val backdrop = OverlayBackdropResolver.resolve(overlayBackdropStyle, contentStyle)
+        val backdrop = OverlayBackdropResolver.resolveSurface(
+                surfaceBackdropStyle(kind), overlayBackdropStyle, contentStyle)
         val density = resources.displayMetrics.density
         val (accent, secondary, tertiary) = when (kind) {
             OverlayKind.VOLUME -> Triple(
@@ -7254,7 +7613,8 @@ class MainActivity : WearCompanionWatchActivity(),
      *  with the backdrop instead of following the capsule chrome tint. */
     private fun quickPanelBackdropColor(): Int {
         val accent = resolvedQuickPanelAccent()
-        return when (OverlayBackdropResolver.resolve(overlayBackdropStyle, quickPanelStyle)) {
+        return when (OverlayBackdropResolver.resolveSurface(
+                quickPanelBackdropStyle, overlayBackdropStyle, quickPanelStyle)) {
             OverlayBackdrop.ACRYLIC, OverlayBackdrop.SOLID_ALBUM ->
                 PaletteTransforms.tonalSurface(
                         accent, .22f, PaletteTransforms.FACE_MIN_SAT, PaletteTransforms.FACE_MAX_SAT)
@@ -7329,7 +7689,8 @@ class MainActivity : WearCompanionWatchActivity(),
             // Black, like the other translucent panes: this is the colour blended *behind* the
             // backdrop, and tinting it would double up with the pane's own album tint.
             OverlayBackdrop.LIQUID_GLASS,
-            OverlayBackdrop.GLASS, OverlayBackdrop.SOLID_BLACK, OverlayBackdrop.FOLLOW_STYLE ->
+            OverlayBackdrop.TRANSPARENT, OverlayBackdrop.GLASS,
+            OverlayBackdrop.SOLID_BLACK, OverlayBackdrop.FOLLOW_STYLE ->
                 Color.BLACK
             // Dark bases with only thin lines/dots over them, like Graphite/Cinema above.
             OverlayBackdrop.DOT_MATRIX, OverlayBackdrop.SCANLINES,

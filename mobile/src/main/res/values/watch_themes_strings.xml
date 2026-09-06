@@ -120,6 +120,8 @@
     <string name="community_theme_submit_invalid">This saved theme cannot be submitted. Return to My themes and try again.</string>
     <string name="community_theme_submit_unsupported_setting_value">The gallery can’t accept “%2$s” for %1$s. Change that setting on this theme and submit it again.</string>
     <string name="community_theme_submit_unsupported_setting">The gallery can’t accept this theme’s %1$s setting. Change it and submit the theme again.</string>
+    <string name="community_theme_submit_device_local">%1$s uses a file from your phone, so this theme can only be used here — the gallery carries settings, not your own fonts or pictures.</string>
+    <string name="community_theme_submit_device_local_generic">This theme uses a font or picture from your phone, so it can only be used here — the gallery carries settings, not your own files.</string>
     <string name="community_theme_submit_duplicate">A theme with exactly these settings is already published on this layout. Change something visible before submitting it.</string>
     <string name="community_theme_submit_sign_in_cancelled">Google sign-in was cancelled. Your theme was not submitted.</string>
     <string name="community_theme_submit_limit_reached">You have already sent 10 themes in this 24-hour period. Try again once it ends.</string>
@@ -226,8 +228,11 @@
     <string name="watch_theme_face_note">Note</string>
     <string name="watch_theme_face_verse">Verse</string>
     <string name="watch_theme_face_metadata">Metadata</string>
+    <string name="watch_theme_face_artist">Artist</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <!-- Proper noun: the author of WearMusicCenter, the app this one is a fork of. -->
+    <string name="watch_theme_face_matejdro">MatejDro</string>
     <plurals name="community_theme_submissions_likes">
         <item quantity="one">%1$d like</item>
         <item quantity="other">%1$d likes</item>

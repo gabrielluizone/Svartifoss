@@ -6,7 +6,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 /**
- * Fifty-seven bundled fonts carry corrected vertical metrics, and must keep carrying them.
+ * Fifty-six bundled fonts carry corrected vertical metrics, and must keep carrying them.
  *
  * Every renderer centres a line of text by its line box - Compose measures ascent..descent, a
  * `TextView` sized `wrap_content` is that box, and the phone preview's Canvas sites all place a
@@ -116,7 +116,6 @@ class BundledFontMetricsTest {
             "quicksand_regular.ttf" to (975 to -275),
             "sora_regular.ttf" to (995 to -265),
             "league_spartan_regular.ttf" to (1800 to -480),
-            "moms_typewriter.ttf" to (1053 to -254),
             "libre_baskerville_regular.ttf" to (1050 to -280),
             "questrial_regular.ttf" to (888 to -226),
             "domine_regular.ttf" to (950 to -230))
@@ -132,7 +131,7 @@ class BundledFontMetricsTest {
      */
     private val GROWN_BOX_FONTS = setOf(
             "oxanium_regular.ttf", "yanone_kaffeesatz_regular.ttf", "league_spartan_regular.ttf",
-            "moms_typewriter.ttf", "libre_baskerville_regular.ttf", "questrial_regular.ttf",
+            "libre_baskerville_regular.ttf", "questrial_regular.ttf",
             "domine_regular.ttf")
 
     /**
@@ -144,7 +143,7 @@ class BundledFontMetricsTest {
      * missing upstream license text is a separate task from font metrics.
      */
     private val FONTS_MISSING_A_LICENSE_FILE = setOf(
-            "league_spartan_regular.ttf", "hind_madurai_regular.ttf", "moms_typewriter.ttf",
+            "league_spartan_regular.ttf", "hind_madurai_regular.ttf",
             "libre_baskerville_regular.ttf", "noto_sans_mono_regular.ttf", "noto_sans_regular.ttf",
             "noto_serif_regular.ttf", "sofia_sans_regular.ttf", "ibm_plex_mono_regular.ttf",
             "ibm_plex_sans_regular.ttf", "ibm_plex_serif_regular.ttf")
@@ -233,7 +232,6 @@ class BundledFontMetricsTest {
                 "quicksand_regular.ttf" to 1250,
                 "sora_regular.ttf" to 1260,
                 "league_spartan_regular.ttf" to 1840,
-                "moms_typewriter.ttf" to 1193,
                 "libre_baskerville_regular.ttf" to 1240,
                 "questrial_regular.ttf" to 1030,
                 "domine_regular.ttf" to 1140)
@@ -243,7 +241,6 @@ class BundledFontMetricsTest {
                 "oxanium_regular.ttf" to 1144,
                 "yanone_kaffeesatz_regular.ttf" to 1136,
                 "league_spartan_regular.ttf" to 2280,
-                "moms_typewriter.ttf" to 1307,
                 "libre_baskerville_regular.ttf" to 1330,
                 "questrial_regular.ttf" to 1114,
                 "domine_regular.ttf" to 1180)

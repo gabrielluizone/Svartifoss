@@ -35,7 +35,13 @@ sealed class AppearanceContext {
  * has no way to read it and simply always hides them.
  */
 object ArchivedFaces {
-    val KEYS: Set<String> = setOf("vinyl", "halo", "aurora", "eclipse", "spectrum", "depth")
+    val KEYS: Set<String> = setOf(
+            "vinyl", "halo", "aurora", "eclipse", "spectrum", "depth",
+            // The tribute to the original WearMusicCenter. Archived not because anything is wrong
+            // with it but because it is a period piece: it reproduces a 2017 screen, so it belongs
+            // behind the same switch as the other faces kept for the people already on them
+            // rather than in the picker everyone scrolls.
+            "matejdro")
 }
 
 object ThemeAppearance {
@@ -63,8 +69,10 @@ object ThemeAppearance {
             "note",
             "verse",
             "metadata",
+            "artist",
             "ribbon",
-            "frame"
+            "frame",
+            "matejdro"
     )
 
     /**
@@ -78,6 +86,19 @@ object ThemeAppearance {
      * why.
      */
     val QUEUE_ART_FACES: Set<String> = setOf("carousel", "ribbon")
+
+    /**
+     * Faces that draw a picture of the *performer* rather than the record sleeve.
+     *
+     * The one registry the artist-artwork lookup is gated on, and the reason that lookup is
+     * acceptable: it is the app's only network call made on behalf of a purely visual choice, so
+     * nothing may run for the great majority of users who have never selected such a face. The
+     * phone reads it to decide whether to look one up at all (`MusicService.artistFaceSelected`),
+     * and the phone's preview reads it to decide whether to draw a stand-in picture; a face added
+     * to the enum and not to this set simply never receives an artist picture, with nothing on
+     * either device to say why.
+     */
+    val ARTIST_ART_FACES: Set<String> = setOf("artist")
 
     fun normalizeBaseFace(face: String?): String =
             face?.takeIf { it in ALLOWED_BASE_FACES } ?: DEFAULT_FACE

@@ -369,12 +369,17 @@ class WatchThemesActivity : AppCompatActivity() {
     }
 
     private fun confirmDelete(profile: WatchThemeProfile) {
-        AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(this)
                 .setTitle(getString(R.string.watch_theme_delete_title, profile.name))
                 .setMessage(R.string.watch_theme_delete_message)
                 .setNegativeButton(android.R.string.cancel, null)
                 .setPositiveButton(R.string.watch_theme_delete) { _, _ -> delete(profile) }
-                .show()
+                .create()
+        dialog.setOnShowListener {
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(accentColor)
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(accentColor)
+        }
+        dialog.show()
     }
 
     private fun delete(profile: WatchThemeProfile) {

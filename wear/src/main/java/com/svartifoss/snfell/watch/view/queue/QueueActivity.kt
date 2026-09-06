@@ -12,11 +12,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
 import androidx.preference.PreferenceManager
+import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import com.svartifoss.snfell.watch.theme.watchUiFontFamily
+import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
+import com.svartifoss.snfell.watch.view.panel.PanelTriad
+import com.svartifoss.snfell.watch.view.panel.rememberScreenBackdrop
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchMusicService
 import com.svartifoss.snfell.watch.util.WatchLanguage
@@ -76,11 +80,14 @@ class QueueActivity : ComponentActivity() {
         // Read once on open: the style is a synced phone preference that rarely changes, and this
         // activity is recreated each time the queue opens (noHistory).
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        val queueStyle = QueueStyle.fromPref(FaceScopedPreferences.getString(
-                prefs,
-                MiscPreferences.WEAR_QUEUE_STYLE,
-                ThemeAppearance.resolve(prefs)
-        ))
+        val appearanceContext = ThemeAppearance.resolve(prefs)
+        // Kept as the raw preference value as well: it is the "content style" the *Shared panel
+        // appearance* Follow option follows, in the vocabulary OverlayBackdropResolver knows.
+        val queueStylePreference = FaceScopedPreferences.getString(
+                prefs, MiscPreferences.WEAR_QUEUE_STYLE, appearanceContext)
+        val queueStyle = QueueStyle.fromPref(queueStylePreference)
+        val accentSource = PanelAppearanceResolver.accentSource(prefs, appearanceContext)
+        val themeAccent = getColor(R.color.theme_accent)
         val rowSize = QueueRowSize.fromPref(FaceScopedPreferences.getString(
                 prefs,
                 MiscPreferences.WEAR_LIST_ROW_SIZE,
@@ -98,6 +105,19 @@ class QueueActivity : ComponentActivity() {
             val canLoadMore by viewModel.canLoadMore.observeAsState(false)
             val loadingMore by viewModel.loadingMore.observeAsState(false)
             val isHistoryFallback by viewModel.isHistoryFallback.observeAsState(false)
+            val albumArt by viewModel.albumArt.observeAsState()
+
+            // The configured ground, tinted by the queue's own accent rather than the face-wide
+            // one - see ScreenBackdrop.
+            val screenBackdrop = rememberScreenBackdrop(
+                    prefs = prefs,
+                    appearanceContext = appearanceContext,
+                    albumArt = albumArt,
+                    accentSource = accentSource,
+                    themeAccent = themeAccent,
+                    triad = PanelTriad(accent, secondaryAccent, tertiaryAccent),
+                    contentStyle = queueStylePreference,
+                    backdropStyle = MiscPreferences.WEAR_QUEUE_BACKDROP_STYLE)
 
             CompositionLocalProvider(
                     LocalWatchUiFontFamily provides watchUiFontFamily(
@@ -119,7 +139,8 @@ class QueueActivity : ComponentActivity() {
                     canLoadMore = canLoadMore,
                     loadingMore = loadingMore,
                     isHistoryFallback = isHistoryFallback,
-                    onLoadMore = { viewModel.loadMore() }
+                    onLoadMore = { viewModel.loadMore() },
+                    screenBackdrop = screenBackdrop
             )
             }
         }

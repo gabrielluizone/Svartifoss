@@ -776,6 +776,7 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
     private fun unsupportedSettingMessage(
             result: CommunityThemeSubmissionDraftResult
     ): String? {
+        deviceLocalSettingMessage(result)?.let { return it }
         if (result !is CommunityThemeSubmissionDraftResult.UnsupportedSetting) return null
         val setting = CommunityThemeSettingNames.settingTitle(this, result.key) ?: return null
         val value = CommunityThemeSettingNames.valueLabel(this, result.key, result.value)
@@ -784,6 +785,24 @@ class SubmitCommunityThemeActivity : AppCompatActivity() {
         } else {
             getString(R.string.community_theme_submit_unsupported_setting, setting)
         }
+    }
+
+    /**
+     * The refusal for a theme built on a file that lives on this phone.
+     *
+     * Deliberately not phrased as something to fix. A font imported from storage and a picture out
+     * of the gallery are the two settings whose *content* cannot travel - the profile carries
+     * enumerated values, not megabytes - so the honest thing to say is that the theme stays here,
+     * and to name which choice makes it so. Telling this person to change the setting would be
+     * telling them to remove the reason they built the theme.
+     */
+    private fun deviceLocalSettingMessage(
+            result: CommunityThemeSubmissionDraftResult
+    ): String? {
+        if (result !is CommunityThemeSubmissionDraftResult.DeviceLocalSetting) return null
+        val setting = CommunityThemeSettingNames.settingTitle(this, result.key)
+                ?: return getString(R.string.community_theme_submit_device_local_generic)
+        return getString(R.string.community_theme_submit_device_local, setting)
     }
 
     companion object {

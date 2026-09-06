@@ -135,13 +135,14 @@ fun ChatFace(
                         // Wide side padding: bubbles are rectangles on a round screen, so their
                         // corners are the first thing the bezel eats.
                         .padding(horizontal = screen * SIDE_PADDING_FRACTION)
+                        .padding(vertical = state.blockSafeVerticalInset(screen))
                         .padding(
                                 top = screen * FaceGeometry.Chat.TOP_PADDING_FRACTION,
                                 bottom = screen * FaceGeometry.Chat.BOTTOM_PADDING_FRACTION),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally),
                 // Bottom-anchored, so the newest message is always the one at a fixed place and
                 // older ones drift up and out - a thread, not a list that grows downward off-screen.
-                verticalArrangement = Arrangement.Bottom
+                verticalArrangement = state.blockVerticalArrangement(Arrangement.Bottom)
         ) {
             // Just the day chip, the current track and its voice note. The thread used to draw
             // past tracks above these, but on a 192dp screen every past bubble came straight out
@@ -733,7 +734,7 @@ private fun ChatAmbient(state: NowPlayingFaceState) {
                 modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = screen * geo.SIDE_PADDING_FRACTION),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally),
                 verticalArrangement = Arrangement.Center
         ) {
             if (state.ambientShowTrackInfo && state.title.isNotEmpty()) {

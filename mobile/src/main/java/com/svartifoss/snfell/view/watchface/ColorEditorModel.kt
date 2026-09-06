@@ -10,7 +10,9 @@ internal enum class ColorTarget {
     CLOCK,
     PROGRESS,
     VOLUME,
-    QUICK_PANEL
+    QUICK_PANEL,
+    LYRICS,
+    QUEUE
 }
 
 /**
@@ -30,6 +32,11 @@ internal enum class ColorControl {
     PALETTE,
     MODE,
     CUSTOM_COLOR,
+    /**
+     * The element's own Tone. Distinct from [MODIFIER], which is the watch-wide one on the global
+     * card: this overrides that for a single element, and search has to pulse the right control.
+     */
+    TONE,
     OPACITY,
     ADAPTIVE_CONTRAST
 }
@@ -118,6 +125,10 @@ internal object ColorEditorModel {
                     MiscPreferences.WEAR_TITLE_CUSTOM_COLOR,
                     ColorTarget.TITLE,
                     ColorControl.CUSTOM_COLOR),
+            choice(
+                    MiscPreferences.WEAR_TITLE_COLOR_MODIFIER,
+                    ColorTarget.TITLE,
+                    ColorControl.TONE),
             toggle(
                     MiscPreferences.WEAR_TITLE_ADAPTIVE_CONTRAST,
                     ColorTarget.TITLE,
@@ -131,6 +142,10 @@ internal object ColorEditorModel {
                     MiscPreferences.WEAR_ARTIST_CUSTOM_COLOR,
                     ColorTarget.ARTIST,
                     ColorControl.CUSTOM_COLOR),
+            choice(
+                    MiscPreferences.WEAR_ARTIST_COLOR_MODIFIER,
+                    ColorTarget.ARTIST,
+                    ColorControl.TONE),
             toggle(
                     MiscPreferences.WEAR_ARTIST_ADAPTIVE_CONTRAST,
                     ColorTarget.ARTIST,
@@ -149,6 +164,10 @@ internal object ColorEditorModel {
                     ColorTarget.CLOCK,
                     ColorControl.OPACITY,
                     CLOCK_OPACITY_RANGE),
+            choice(
+                    MiscPreferences.WEAR_CLOCK_COLOR_MODIFIER,
+                    ColorTarget.CLOCK,
+                    ColorControl.TONE),
             toggle(
                     MiscPreferences.WEAR_CLOCK_ADAPTIVE_CONTRAST,
                     ColorTarget.CLOCK,
@@ -179,6 +198,24 @@ internal object ColorEditorModel {
             hex(
                     MiscPreferences.WEAR_QUICK_PANEL_CUSTOM_COLOR,
                     ColorTarget.QUICK_PANEL,
+                    ColorControl.CUSTOM_COLOR),
+
+            choice(
+                    MiscPreferences.WEAR_LYRICS_COLOR_MODE,
+                    ColorTarget.LYRICS,
+                    ColorControl.MODE),
+            hex(
+                    MiscPreferences.WEAR_LYRICS_CUSTOM_COLOR,
+                    ColorTarget.LYRICS,
+                    ColorControl.CUSTOM_COLOR),
+
+            choice(
+                    MiscPreferences.WEAR_QUEUE_COLOR_MODE,
+                    ColorTarget.QUEUE,
+                    ColorControl.MODE),
+            hex(
+                    MiscPreferences.WEAR_QUEUE_CUSTOM_COLOR,
+                    ColorTarget.QUEUE,
                     ColorControl.CUSTOM_COLOR))
 
     private val specsByKey: Map<String, ColorSettingSpec> =

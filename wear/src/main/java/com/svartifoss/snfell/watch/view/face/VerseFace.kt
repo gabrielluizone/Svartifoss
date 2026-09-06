@@ -49,27 +49,23 @@ private val INSTRUMENTAL_MARKER = MusicGlyphs.INSTRUMENTAL_MARKER
 /**
  * Vertical band the three lyric lines occupy, as fractions of screen height.
  *
- * Two jobs, and they pull against each other. It sets how wide the text may be without running
- * into the bezel (a round screen's usable chord collapses fast towards the bottom - see
- * [RoundScreenText]), and it sets where the block sits.
+ * It sets how wide the text may be without running into the bezel (a round screen's usable chord
+ * collapses fast towards the bottom - see [RoundScreenText]). The block itself stays centred on
+ * the display.
  *
- * The band used to stop at 0.72 and the block was centred on the *screen*, which left a wide strip
- * of nothing between the last lyric line and the elapsed time and forced the line being sung to
- * ellipsize after two rows. The band now reaches into that strip. The cost is real and worth
+ * The band reaches into the former empty strip above the elapsed time. The cost is real and worth
  * stating: a deeper band means a narrower chord, so each line holds fewer characters than it did.
  * Three narrower lines still carry appreciably more of a lyric than two wide ones, which is the
  * trade this is making.
  */
 private const val VERSE_BAND_TOP = FaceGeometry.Verse.BAND_TOP
 private const val VERSE_BAND_BOTTOM = FaceGeometry.Verse.BAND_BOTTOM
+private const val VERSE_HEADER_TOP = FaceGeometry.Verse.HEADER_TOP
 
 /**
- * Where the block's centre sits, as a fraction of screen height.
- *
- * Derived from the band rather than written down, so retuning the band moves the block with it.
- * Centring on the screen instead is what pushed a third line up into the running head: the block
- * grows symmetrically about its centre, so a centre at 0.5 spends half of every new line on the
- * end that has no room.
+ * Where the block's centre sits, as a fraction of screen height. This is deliberately independent
+ * of the asymmetric safe-width band: users perceive the title card and current lyric against the
+ * centre of the dial, not the centre of that calculation.
  */
 private const val VERSE_BAND_CENTER = FaceGeometry.Verse.BAND_CENTER
 
@@ -171,9 +167,16 @@ private fun androidx.compose.foundation.layout.BoxWithConstraintsScope.Header(
     Column(
             modifier = Modifier
                     .fillMaxWidth()
-                    .align(Alignment.TopCenter)
-                    .padding(top = screen * 0.15f, start = screen * inset, end = screen * inset),
-            horizontalAlignment = Alignment.CenterHorizontally
+                    .align(state.blockPlacement(Alignment.TopCenter))
+                            .padding(horizontal = state.blockSafeSideInset(screen))
+                            .padding(vertical = state.blockSafeVerticalInset(screen))
+                    // Leave a small extra gap above a three-line current lyric without moving the
+                    // lyrics themselves away from the centre of the dial.
+                    .padding(
+                            top = state.blockDesignedTopPadding(screen * VERSE_HEADER_TOP),
+                            start = screen * inset,
+                            end = screen * inset),
+            horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
         // Both through the shared helpers, so the artist/title colour treatments, the per-element
         // typography (weight, italic, scale, opacity, tracking) and the title's wrap/marquee/shrink
@@ -217,9 +220,8 @@ private fun androidx.compose.foundation.layout.BoxWithConstraintsScope.VerseBand
             modifier = Modifier
                     .fillMaxSize()
                     .padding(start = screen * inset, end = screen * inset)
-                    // Down into the space the composition was already leaving empty - see
-                    // VERSE_BAND_CENTER. The clock and running head are above, the elapsed time
-                    // below, and neither moves.
+                    // Keep the fallback title card and the lyric reel at the same central anchor.
+                    // The asymmetric band above only narrows their safe text width.
                     .offset(y = screen * (VERSE_BAND_CENTER - 0.5f)),
             contentAlignment = Alignment.Center
     ) {
@@ -239,7 +241,7 @@ private fun androidx.compose.foundation.layout.BoxWithConstraintsScope.VerseBand
 
         Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
         ) {
             NeighbourLine(previous, state.lyricFont)
             Box(Modifier.height(screen * 0.035f))
@@ -253,7 +255,8 @@ private fun androidx.compose.foundation.layout.BoxWithConstraintsScope.VerseBand
                     progressColor = Color(state.progressColor),
                     showProgress = state.showInternalProgress,
                     fontFamily = state.lyricFont,
-                    screen = screen)
+                    screen = screen,
+                    align = state.blockAlignment(Alignment.CenterHorizontally))
             Box(Modifier.height(screen * 0.035f))
             NeighbourLine(next, state.lyricFont)
         }
@@ -297,6 +300,9 @@ private fun CurrentLine(
         showProgress: Boolean,
         fontFamily: FontFamily,
         screen: Dp,
+        /** Resolved by the caller, which is the one place that holds the face state. The lyric is
+         *  part of this face's text block, so it follows the block's alignment like the rest. */
+        align: Alignment.Horizontal,
 ) {
     val color by animateColorAsState(
             targetValue = if (line == null) Color.White.copy(alpha = NEIGHBOUR_ALPHA) else accent,
@@ -306,7 +312,7 @@ private fun CurrentLine(
     val fraction by animateFloatAsState(
             targetValue = rawFraction, animationSpec = tween(240), label = "verseLineProgress")
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = align) {
         Text(
                 text = rememberLyricText(
                         line?.let { it.text.ifBlank { INSTRUMENTAL_MARKER } } ?: INSTRUMENTAL_MARKER),
@@ -368,7 +374,7 @@ private fun TitleCard(state: NowPlayingFaceState, accent: Color, pending: Boolea
             titleIsStatus = state.titleIsStatus,
             artistIsStatus = state.artistIsStatus)
 
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)) {
         if (visibility.title) {
             Text(
                     text = state.title,
@@ -416,7 +422,9 @@ private fun androidx.compose.foundation.layout.BoxWithConstraintsScope.ElapsedTi
             letterSpacing = 0.10.em,
             modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = screen * 0.09f))
+                    // Closer to the floor than the 0.09 it shipped with: the strip it was
+                    // floating above was the emptiest part of the composition.
+                    .padding(bottom = screen * 0.065f))
 }
 
 /**
@@ -446,7 +454,7 @@ private fun VerseAmbient(state: NowPlayingFaceState) {
 
         Column(
                 modifier = Modifier.padding(horizontal = screen * inset),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
         ) {
             if (state.ambientShowTrackInfo && state.title.isNotEmpty()) {
                 Text(

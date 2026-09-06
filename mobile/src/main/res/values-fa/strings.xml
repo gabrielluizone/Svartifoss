@@ -29,6 +29,9 @@
     <string name="dev_sync_watch_done">تنظیمات با ساعت همگام‌سازی شد</string>
     <string name="dev_copy_debug_info">کپی اطلاعات اشکال‌زدایی</string>
     <string name="dev_copy_debug_info_description">جزئیات ساخت و دستگاه را در کلیپ‌بورد کپی کنید</string>
+    <string name="dev_export_defaults">خروجی گرفتن به‌عنوان پیش‌فرض برنامه</string>
+    <string name="dev_export_defaults_description">این پیکربندی را به‌صورت default_config.json ذخیره می‌کند؛ همان وضعیتی که نصب تازه از آن آغاز می‌شود. تاریخچه، انتخاب‌های رضایت و وضعیت خودِ این گوشی را شامل نمی‌شود.</string>
+    <string name="dev_export_defaults_done">پیش‌فرض‌ها خروجی گرفته شد (%1$s)</string>
     <string name="dev_show_archived">نمایش گزینه‌های بایگانی‌شده</string>
     <string name="dev_show_archived_description">نمایش چیدمان‌ها و تنظیمات ساعتی که به دلیل مشکلات شناخته‌شده بایگانی شده‌اند</string>
     <string name="dev_copy_debug_info_done">اطلاعات اشکال‌زدایی کپی شد</string>
@@ -237,6 +240,9 @@
     <string name="category_music_colors">رنگ‌ها از موسیقی</string>
     <string name="preview_sample_title">عنوان آهنگ</string>
     <string name="preview_sample_artist">نام خواننده</string>
+    <string name="preview_sample_lyric_previous">سطر قبلی</string>
+    <string name="preview_sample_lyric_current">سطری که اکنون پخش می‌شود</string>
+    <string name="preview_sample_lyric_next">سطر بعدی</string>
     <string name="preview_sample_next_title">آهنگ بعدی</string>
     <string name="preview_playback_stopped">متوقف</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -453,8 +459,6 @@
     <string name="wear_font_small_caps_description">شکل‌های فشرده با فرم حروف بزرگ با حس تحریریه.</string>
     <string name="wear_font_casual">غیررسمی</string>
     <string name="wear_font_casual_description">یک خانواده سیستمی دست‌نویس و بازیگوش.</string>
-    <string name="wear_font_typewriter">ماشین تحریر (بایگانی‌شده)</string>
-    <string name="wear_font_typewriter_description">یک نمای ماشین تحریر قدیمی (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">یک هندسی گرد بدون‌سریف، جایگزینی رایگان (OFL) در روح Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -520,6 +524,12 @@
     <string name="setting_wear_quick_panel_color">رنگ اقدامات سریع</string>
     <string name="setting_wear_quick_panel_custom_color">رنگ سفارشی اقدامات سریع</string>
     <string name="setting_wear_quick_panel_custom_color_description">رنگ اقدامات سریع استفاده‌شده با پردازش عادی را انتخاب کنید</string>
+    <string name="setting_wear_lyrics_color">رنگ متن ترانه</string>
+    <string name="setting_wear_lyrics_custom_color">رنگ سفارشی متن ترانه</string>
+    <string name="setting_wear_lyrics_custom_color_description">رنگ متن ترانه استفاده‌شده با پردازش عادی را انتخاب کنید</string>
+    <string name="setting_wear_queue_color">رنگ صف</string>
+    <string name="setting_wear_queue_custom_color">رنگ سفارشی صف</string>
+    <string name="setting_wear_queue_custom_color_description">رنگ صف استفاده‌شده با پردازش عادی را انتخاب کنید</string>
     <string name="setting_wear_shading_custom_color_description">رنگی که گرادیان سایه‌زنی را رنگ می‌کند انتخاب کنید</string>
 
     <string-array name="wear_accent_color_entries">
@@ -552,8 +562,10 @@
         <item>یادداشت</item>
         <item>بند</item>
         <item>فراداده</item>
+        <item>هنرمند</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -574,8 +586,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">جست‌وجوی Expressive</string>
@@ -609,6 +623,7 @@
         <item>تقسیم</item>
         <item>یادداشت</item>
         <item>بند</item>
+        <item>هنرمند</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -627,6 +642,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -729,6 +745,12 @@
 
     <string name="category_overlays_queue">پوشش‌ها و صف</string>
     <string name="setting_wear_overlay_backdrop_style">پس‌زمینه پنل</string>
+    <string name="wear_backdrop_shared">پیروی از پس‌زمینه مشترک پنل</string>
+    <string name="setting_wear_volume_backdrop_style">پس‌زمینه صدا</string>
+    <string name="setting_wear_progress_backdrop_style">پس‌زمینه پیشرفت</string>
+    <string name="setting_wear_quick_panel_backdrop_style">پس‌زمینه کنش‌های سریع</string>
+    <string name="setting_wear_queue_backdrop_style">پس‌زمینه صف</string>
+    <string name="setting_wear_lyrics_backdrop_style">پس‌زمینه متن ترانه</string>
     <string name="setting_wear_volume_style">سبک صدا</string>
     <string name="setting_wear_volume_layout">چیدمان صدا</string>
     <string name="setting_wear_quick_panel_style">سبک پنل سریع</string>
@@ -1567,10 +1589,14 @@
     <string name="setting_wear_source_icon_scale">اندازهٔ نماد برنامه</string>
     <string name="setting_wear_source_icon_opacity">شفافیت نماد برنامه</string>
     <string name="setting_wear_typography_weight_description">۱ تا ۱۰۰۰. ۴۰۰ ضخامت معمولی صفحه است؛ مقادیر بالاتر ضخیم‌تر است. برای Google Sans Flex این همان محور ضخامت خود این قلم است</string>
-    <string name="setting_wear_typography_scale_description">درصدی از اندازهٔ خودِ صفحه (۷۰ تا ۱۴۰). ۱۰۰ اندازهٔ طراحی‌شدهٔ هر چیدمان را حفظ می‌کند</string>
+    <string name="setting_wear_typography_scale_description">درصدی از اندازهٔ خودِ صفحه (۷۰ تا ۳۰۰). ۱۰۰ اندازهٔ طراحی‌شدهٔ هر چیدمان را حفظ می‌کند</string>
     <string name="setting_wear_typography_opacity_description">درصد (۲۰ تا ۱۰۰). ۱۰۰ شفافیت خودِ صفحه را حفظ می‌کند</string>
     <string name="setting_wear_typography_tracking_description">فاصلهٔ اضافی بین حروف، برحسب صدم em (−۵ تا ۲۰). ۰ فاصله‌گذاری خودِ قلم را حفظ می‌کند</string>
     <string name="setting_wear_color_modifier">تن رنگ</string>
+    <string name="setting_wear_title_color_modifier">تن رنگ عنوان</string>
+    <string name="setting_wear_artist_color_modifier">تن رنگ هنرمند</string>
+    <string name="setting_wear_clock_color_modifier">تن رنگ ساعت</string>
+    <string name="wear_color_modifier_follow">پیروی از تن رنگ ساعت</string>
     <string name="setting_wear_color_modifier_description">کل پالت را بدون تغییر روش استخراج آن تنظیم می‌کند — با هر روش رنگی کار می‌کند</string>
     <string name="setting_wear_color_hue_shift">چرخش رنگ</string>
     <string name="setting_wear_color_hue_shift_description">پالت آلبوم را روی چرخهٔ رنگ، برحسب درجه (۰ تا ۳۵۹) می‌چرخاند. هر روش رنگی رنگ اصلی‌اش را روی رنگ‌مایهٔ خودِ آلبوم نگه می‌دارد، پس این همان چیزی است که تغییر می‌کند. ۰ از رنگ آلبوم همان‌طور که هست استفاده می‌کند؛ یک رنگ عادی ثابت هرگز چرخانده نمی‌شود.</string>
@@ -1718,7 +1744,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1837,7 +1862,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1858,7 +1890,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1977,7 +2008,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
     <string-array name="wear_cover_shape_entries">
         <item>گرد</item>
@@ -2176,6 +2214,7 @@
     <string name="category_wf_panel_seek">پنل پیشرفت و جابه‌جایی</string>
     <string name="category_wf_panel_quick">پنل کنش‌های سریع</string>
     <string name="category_wf_panel_queue">صف و فهرست‌ها</string>
+    <string name="category_wf_panel_lyrics">متن ترانه</string>
     <string name="category_wf_panel_effects">جلوه‌های پنل</string>
     <string name="category_apps_content">متن ترانه و فراداده</string>
     <string name="category_streaming_services">میان‌برهای پخش آنلاین</string>
@@ -2254,5 +2293,56 @@
         <item>هایلایت</item>
         <item>ملایم</item>
         <item>توپر</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>پیروی از رویه</item>
+        <item>آغاز</item>
+        <item>وسط</item>
+        <item>پایان</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>پیروی از رویه</item>
+        <item>بالا</item>
+        <item>میانه</item>
+        <item>پایین</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>ثابت (یک خط، بدون پیمایش یا کوچک شدن)</item>
+        <item>پیمایش (نوار متحرک)</item>
+        <item>کوچک شدن برای جا شدن</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>از برنامه موسیقی</item>
+        <item>جستجوی آنلاین</item>
+        <item>عکس هنرمند</item>
+        <item>تصویری از گالری من</item>
+        <item>تصادفی از یک پوشه</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

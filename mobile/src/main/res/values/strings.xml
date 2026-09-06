@@ -30,6 +30,23 @@
     <string name="dev_sync_watch_done">Settings synced to watch</string>
     <string name="dev_copy_debug_info">Copy debug info</string>
     <string name="dev_copy_debug_info_description">Copy build and device details to the clipboard</string>
+    <string name="dev_export_defaults">Export as app defaults</string>
+    <string name="dev_export_defaults_description">Saves this setup as default_config.json, the state a new install starts from. Leaves out history, consent choices and this phone\'s own state.</string>
+    <string name="dev_export_defaults_done">Defaults exported (%1$s)</string>
+    <string name="dev_report_copy">Copy</string>
+    <string name="dev_report_copied">Report copied</string>
+    <string name="dev_watch_snapshot_inspector">Watch preference snapshot</string>
+    <string name="dev_watch_snapshot_inspector_description">What would actually be sent to the watch right now: active appearance scope, estimated size, and which inactive face-scope caches were dropped to fit the budget</string>
+    <string name="dev_data_layer_inspector">Data Layer inspector</string>
+    <string name="dev_data_layer_inspector_description">Connected Wearable nodes and the last WatchInfo the watch app answered with - the raw state behind "No watch connected"</string>
+    <string name="dev_media_sessions_inspector">MediaSession explorer</string>
+    <string name="dev_media_sessions_inspector_description">Every currently active MediaSession, not only the tracked one: advertised actions, queue, playback route</string>
+    <string name="dev_view_phone_log">View phone log</string>
+    <string name="dev_view_phone_log_description">Tail of the on-disk Timber log, plus the watch\'s log if "Send logs" has fetched it before</string>
+    <string name="dev_theme_submission_preflight">Theme submission preflight</string>
+    <string name="dev_theme_submission_preflight_description">Runs every saved watch theme through the community submission check and names the exact setting that blocks it, if any</string>
+    <string name="dev_appearance_resolution_inspector">Appearance resolution inspector</string>
+    <string name="dev_appearance_resolution_inspector_description">For every scoped appearance key, which of the four resolution steps actually won - explicit face value, per-face default, legacy global, or definition default - and the value each returns</string>
     <string name="dev_show_archived">Show archived options</string>
     <string name="dev_show_archived_description">Reveal watch layouts and settings archived because of known issues</string>
     <string name="dev_copy_debug_info_done">Debug info copied</string>
@@ -364,6 +381,7 @@
     <string name="watch_element_volume">Volume</string>
     <string name="watch_element_quick_panel">Quick actions</string>
     <string name="watch_element_queue">Queue</string>
+    <string name="watch_element_lyrics">Lyrics</string>
 
     <!-- Chip labels for the Player editor. A chip that is on already says "shown", so it
          carries the element's name rather than the row's sentence; the full preference
@@ -394,6 +412,9 @@
     <string name="setting_wear_font_flex_roundness_description">Blends stroke terminals from sharp (0) to fully rounded (100) for a friendlier feel.</string>
     <string name="preview_sample_title">Song title</string>
     <string name="preview_sample_artist">Artist name</string>
+    <string name="preview_sample_lyric_previous">The line before</string>
+    <string name="preview_sample_lyric_current">The line playing now</string>
+    <string name="preview_sample_lyric_next">The line after</string>
     <string name="preview_sample_next_title">Next song</string>
     <string name="preview_playback_stopped">Stopped</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -644,6 +665,16 @@
     <string name="wear_font_google_sans_flex_description">A variable version of Google Sans with adjustable width, optical size, grade and roundness — unlocks the axis controls below.</string>
     <string name="wear_font_roboto">Roboto</string>
     <string name="wear_font_roboto_description">Android\'s classic system typeface.</string>
+    <string name="wear_font_roboto_thin">Roboto Thin</string>
+    <string name="wear_font_roboto_thin_description">Roboto with an extra-light stroke for a delicate display look.</string>
+    <string name="wear_font_roboto_light">Roboto Light</string>
+    <string name="wear_font_roboto_light_description">Roboto with a light, airy stroke and the family\'s familiar proportions.</string>
+    <string name="wear_font_roboto_medium">Roboto Medium</string>
+    <string name="wear_font_roboto_medium_description">Roboto with a stronger medium stroke for compact, readable labels.</string>
+    <string name="wear_font_roboto_black">Roboto Black</string>
+    <string name="wear_font_roboto_black_description">Roboto with its heaviest system weight for bold display text.</string>
+    <string name="wear_font_roboto_condensed">Roboto Condensed</string>
+    <string name="wear_font_roboto_condensed_description">Roboto condensed horizontally to fit longer titles in less space.</string>
     <string name="wear_font_rounded">Rounded</string>
     <string name="wear_font_rounded_description">Friendly modern letterforms with softly rounded terminals.</string>
     <string name="wear_font_sans_light">Modern Light</string>
@@ -658,8 +689,6 @@
     <string name="wear_font_small_caps_description">Compact capital-shaped forms with an editorial feel.</string>
     <string name="wear_font_casual">Casual</string>
     <string name="wear_font_casual_description">A playful handwritten system family.</string>
-    <string name="wear_font_typewriter">Typewriter (Archived)</string>
-    <string name="wear_font_typewriter_description">A retro typewriter look (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">A rounded geometric sans, a free (OFL) alternative in the spirit of Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -725,6 +754,12 @@
     <string name="setting_wear_quick_panel_color">Quick Actions color</string>
     <string name="setting_wear_quick_panel_custom_color">Quick Actions custom color</string>
     <string name="setting_wear_quick_panel_custom_color_description">Choose the Quick Actions color used with Normal treatment</string>
+    <string name="setting_wear_lyrics_color">Lyrics color</string>
+    <string name="setting_wear_lyrics_custom_color">Lyrics custom color</string>
+    <string name="setting_wear_lyrics_custom_color_description">Choose the lyrics color used with Normal treatment</string>
+    <string name="setting_wear_queue_color">Queue color</string>
+    <string name="setting_wear_queue_custom_color">Queue custom color</string>
+    <string name="setting_wear_queue_custom_color_description">Choose the queue color used with Normal treatment</string>
     <string name="setting_wear_shading_custom_color_description">Choose the color that tints the shading gradient</string>
 
     <string-array name="wear_accent_color_entries">
@@ -757,8 +792,10 @@
         <item>Note</item>
         <item>Verse</item>
         <item>Metadata</item>
+        <item>Artist</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -779,8 +816,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive seek</string>
@@ -814,6 +853,7 @@
         <item>Split</item>
         <item>Note</item>
         <item>Verse</item>
+        <item>Artist</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -832,6 +872,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -938,8 +979,15 @@
     <string name="category_wf_panel_seek">Progress &amp; seek panel</string>
     <string name="category_wf_panel_quick">Quick actions panel</string>
     <string name="category_wf_panel_queue">Queue &amp; lists</string>
+    <string name="category_wf_panel_lyrics">Lyrics</string>
     <string name="category_wf_panel_effects">Panel effects</string>
     <string name="setting_wear_overlay_backdrop_style">Panel background</string>
+    <string name="wear_backdrop_shared">Follow shared panel appearance</string>
+    <string name="setting_wear_volume_backdrop_style">Volume background</string>
+    <string name="setting_wear_progress_backdrop_style">Progress background</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Quick actions background</string>
+    <string name="setting_wear_queue_backdrop_style">Queue background</string>
+    <string name="setting_wear_lyrics_backdrop_style">Lyrics background</string>
     <string name="setting_wear_volume_style">Volume style</string>
     <string name="setting_wear_volume_layout">Volume layout</string>
     <string name="setting_wear_quick_panel_style">Quick panel style</string>
@@ -1031,10 +1079,14 @@
     <string name="setting_wear_source_icon_scale">App icon size</string>
     <string name="setting_wear_source_icon_opacity">App icon opacity</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 is the face\'s normal weight; higher is bolder. For Google Sans Flex this is that font\'s own weight axis</string>
-    <string name="setting_wear_typography_scale_description">Percentage of the face\'s own size (70–140). 100 keeps each layout\'s designed size</string>
+    <string name="setting_wear_typography_scale_description">Percentage of the face\'s own size (1–300). 100 keeps each layout\'s designed size</string>
     <string name="setting_wear_typography_opacity_description">Percentage (20–100). 100 keeps the face\'s own opacity</string>
     <string name="setting_wear_typography_tracking_description">Extra space between letters, in hundredths of an em (−5 to 20). 0 keeps the font\'s own spacing</string>
     <string name="setting_wear_color_modifier">Tone</string>
+    <string name="setting_wear_title_color_modifier">Title tone</string>
+    <string name="setting_wear_artist_color_modifier">Artist tone</string>
+    <string name="setting_wear_clock_color_modifier">Clock tone</string>
+    <string name="wear_color_modifier_follow">Follow watch tone</string>
     <string name="setting_wear_color_modifier_description">Adjust the whole palette without changing how it is derived — works with every color treatment</string>
     <string name="setting_wear_color_hue_shift">Color shift</string>
     <string name="setting_wear_color_hue_shift_description">Rotates the album palette around the color wheel, in degrees (0–359). Every treatment keeps its main color on the album\'s own hue, so this is what varies it. 0 uses the album color as-is; a fixed Normal color is never shifted.</string>
@@ -1631,7 +1683,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1751,6 +1802,11 @@
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1771,7 +1827,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1891,6 +1946,11 @@
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">Browse library</string>
@@ -1905,6 +1965,32 @@
     <string name="setting_wear_title_centered">Center the title</string>
     <string name="setting_wear_title_centered_description">Anchor the title to the middle of the screen instead of the whole text block</string>
     <string name="player_element_title_centered">Centered title</string>
+
+    <!-- Short element names for the Always-on editor. Every ambient row is titled
+         "... on always-on display", which is the right sentence for a settings list and six
+         repetitions of the same words down a page already called Always-on display. The full
+         preference title still reaches screen readers through the control's content description. -->
+    <string name="aod_element_artwork">Artwork</string>
+    <string name="aod_element_clock">Clock</string>
+    <string name="aod_element_track_info">Track info</string>
+    <string name="aod_element_transport">Transport</string>
+    <string name="aod_element_progress">Progress</string>
+    <string name="aod_element_up_next">Up Next</string>
+    <string name="aod_section_artwork">Artwork</string>
+    <string name="aod_control_tint">Tint</string>
+    <string name="aod_control_brightness">Brightness</string>
+    <string name="aod_control_art_treatment">Treatment</string>
+    <string name="aod_control_art_opacity">Opacity</string>
+
+    <!-- Short names for the Mini buttons editor rows, for the same reason: four of their titles
+         begin "Mini buttons" on a page already called Mini buttons. -->
+    <string name="mini_button_control_visibility">Show</string>
+    <string name="mini_button_control_arrangement">Arrangement</string>
+    <string name="mini_button_control_shape">Shape</string>
+    <string name="mini_button_control_background">Background</string>
+    <string name="mini_button_control_opacity">Opacity</string>
+    <string name="mini_button_assign_action">Assign actions</string>
+    <string name="mini_button_gestures_note">Swipe up, down and left on the player. Swipe right is always the system\'s dismiss gesture and is never intercepted.</string>
     <string name="setting_wear_chat_cover_shape">Chat avatar shape</string>
     <string name="setting_wear_chat_show_cover">Cover art</string>
     <string name="setting_wear_metadata_cover_shape">Metadata cover shape</string>
@@ -2450,6 +2536,7 @@
     <string name="action_play_liked_songs">Play liked songs (YT Music)</string>
     <string name="action_play_spotify_liked_songs">Play liked songs (Spotify)</string>
     <string name="action_play_soundcloud_likes">Play liked tracks (SoundCloud)</string>
+    <string name="action_play_deezer_flow" translatable="false">Deezer Flow</string>
     <string name="action_my_playlists">Streaming shortcuts</string>
     <string name="action_play_specific_playlist">Open streaming shortcut</string>
     <string name="action_choose_or_add_streaming_shortcut">Choose or add a streaming shortcut</string>
@@ -2460,7 +2547,7 @@
     <string name="setting_playlist_shortcuts">Streaming shortcuts</string>
     <string name="setting_playlist_shortcuts_description">Open share links from the watch in YouTube Music, Spotify and other streaming apps</string>
     <string name="setting_shortcut_artwork">Fetch shortcut artwork online</string>
-    <string name="setting_shortcut_artwork_description">Download a thumbnail for each saved shortcut from the service, shown on the phone list, the watch menu and assigned buttons. Each thumbnail is fetched once; only the public share link is sent. Off by default.</string>
+    <string name="setting_shortcut_artwork_description">Download a thumbnail when the service exposes public preview artwork, shown on the phone list, the watch menu and assigned buttons. Each available thumbnail is fetched once; only the public share link is sent. Off by default.</string>
     <string name="setting_queue_local_artwork">Queue covers from your library</string>
     <string name="setting_queue_local_artwork_description">Local music players publish queue covers as library references. Grant media access so they can be shown on the watch queue. No internet access is involved.</string>
     <string name="setting_queue_local_artwork_granted">Media access granted — local queue covers will be shown</string>
@@ -2534,6 +2621,11 @@
     <string name="playlist_source_apple_music">Apple Music</string>
     <string name="playlist_source_amazon_music">Amazon Music</string>
     <string name="playlist_source_soundcloud">SoundCloud</string>
+    <string name="playlist_source_qobuz" translatable="false">Qobuz</string>
+    <string name="playlist_source_bandcamp" translatable="false">Bandcamp</string>
+    <string name="playlist_source_audiomack" translatable="false">Audiomack</string>
+    <string name="playlist_source_mixcloud" translatable="false">Mixcloud</string>
+    <string name="playlist_source_pandora" translatable="false">Pandora</string>
     <string name="playlist_source_link">Link</string>
     <string name="playlist_type_track">Track</string>
     <string name="playlist_type_playlist">Playlist</string>
@@ -2730,4 +2822,92 @@
     <string name="wear_font_archivo_black_description">A dense heavyweight display face for maximum contrast</string>
     <string name="wear_font_dancing_script">Dancing Script</string>
     <string name="wear_font_dancing_script_description">A flowing handwritten script with a lively, personal feel</string>
+
+    <string name="setting_wear_artist_text_mode">Artist text behavior</string>
+    <string name="setting_wear_album_art_source">Album art source</string>
+
+    <!-- Imported font -->
+    <string name="setting_user_font">My own font</string>
+    <!-- The row every font picker carries when nothing has been imported yet: selecting it opens
+         the file picker instead of persisting a value. Once a font is loaded the picker shows its
+         own file name here instead. -->
+    <string name="wear_font_user_import">My own font…</string>
+    <string name="setting_user_font_empty">Import a .ttf or .otf file from this phone</string>
+    <string name="setting_user_font_loaded">%1$s · tap to replace or remove</string>
+    <string name="user_font_pick">Choose a font file</string>
+    <string name="user_font_replace">Replace</string>
+    <string name="user_font_remove">Remove</string>
+    <string name="user_font_imported">“%1$s” imported. Pick it in any font list; it is being sent to your watch.</string>
+    <string name="user_font_removed">Your imported font was removed.</string>
+    <string name="user_font_error_too_large">That file is %1$s. A font has to be under %2$s so it can reach the watch quickly.</string>
+    <string name="user_font_error_not_a_font">That file isn’t a font this phone can read. TrueType and OpenType (.ttf, .otf) work; web fonts (.woff, .woff2) do not.</string>
+    <string name="user_font_error_unreadable">That file couldn’t be read. Try choosing it again, or copy it to this phone first.</string>
+    <string name="user_font_not_shareable">Themes using your own font stay on this phone</string>
+
+    <!-- Album art from the user's own storage -->
+    <string name="setting_custom_album_art_image">Picture to use</string>
+    <string name="setting_custom_album_art_folder">Folder to draw from</string>
+    <string name="setting_custom_album_art_none">Not chosen yet — tap to pick</string>
+    <string name="setting_custom_album_art_chosen">%1$s · tap to change</string>
+    <string name="custom_album_art_image_set">That picture will now sit behind the player.</string>
+    <string name="custom_album_art_folder_set">A picture from that folder will be drawn for each track.</string>
+    <string name="custom_album_art_error">That couldn’t be opened. Pick it again, or choose something in this phone’s own storage.</string>
+    <string name="custom_album_art_not_shareable">Themes using your own pictures stay on this phone</string>
+    <string name="setting_wear_text_block_align">Text alignment</string>
+    <string name="setting_wear_text_block_align_description">Which edge the track text lines up on. Follow face keeps the alignment each face was designed with.</string>
+    <string name="setting_wear_text_block_position">Text position</string>
+    <string name="setting_wear_text_block_position_description">Where the track text sits on the screen. Follow face keeps the position each face was designed with.</string>
+    <string name="setting_online_artwork">Online artwork</string>
+    <string name="setting_online_artwork_description">Let the watch face show a picture looked up online \u2014 the performing artist, or an album cover for a player that publishes none. Your phone does the lookup in Deezer\'s public catalogue and caches the result; only the track and artist names are sent, and nothing is looked up unless a face is set to one of those sources. Off, the player\'s own artwork is used.</string>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Follow face</item>
+        <item>Start</item>
+        <item>Centered</item>
+        <item>End</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Follow face</item>
+        <item>Top</item>
+        <item>Middle</item>
+        <item>Bottom</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Static (one line, no scroll or shrink)</item>
+        <item>Scroll (marquee)</item>
+        <item>Shrink to fit</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>From the music app</item>
+        <item>Looked up online</item>
+        <item>Artist picture</item>
+        <item>Picture from my gallery</item>
+        <item>Random from a folder</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
+    </string-array>
 </resources>

@@ -24,10 +24,14 @@ import androidx.wear.ambient.AmbientLifecycleObserver
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchAppShutdown
 import com.svartifoss.snfell.watch.communication.WatchMusicService
+import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.WatchTypography
+import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
+import com.svartifoss.snfell.watch.view.panel.PanelTriad
+import com.svartifoss.snfell.watch.view.panel.rememberScreenBackdrop
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import com.svartifoss.snfell.watch.theme.flexFontFamily
 import com.svartifoss.snfell.watch.theme.watchFontFamily
@@ -189,6 +193,9 @@ class LyricsActivity : ComponentActivity() {
             else -> watchFontFamily(lyricsFontKey)
         }
 
+        val accentSource = PanelAppearanceResolver.accentSource(preferences, appearance)
+        val themeAccent = getColor(R.color.theme_accent)
+
         setContent {
             val state by viewModel.state.observeAsState(LyricsUiState.Loading)
             val position by viewModel.positionMs.observeAsState(0L)
@@ -196,6 +203,21 @@ class LyricsActivity : ComponentActivity() {
             // Only the last line needs it: its span runs to the end of the track rather than to a
             // next line that does not exist.
             val track by viewModel.track.observeAsState()
+            val albumArt by viewModel.albumArt.observeAsState()
+            val accentTriad by viewModel.accentTriad.observeAsState()
+
+            // The configured ground. No content style of its own, so "Follow style" resolves to
+            // solid black - the ground this screen was designed on, kept unless a backdrop is
+            // named. Dropped entirely in ambient: an always-on panel must not light artwork.
+            val screenBackdrop = rememberScreenBackdrop(
+                    prefs = preferences,
+                    appearanceContext = appearance,
+                    albumArt = albumArt,
+                    accentSource = accentSource,
+                    themeAccent = themeAccent,
+                    triad = accentTriad ?: PanelTriad(accent, accent, accent),
+                    contentStyle = null,
+                    backdropStyle = MiscPreferences.WEAR_LYRICS_BACKDROP_STYLE)
 
             val (dx, dy) = JIGGLE_STEPS[jiggleStep]
 
@@ -206,6 +228,7 @@ class LyricsActivity : ComponentActivity() {
                         durationMs = track?.durationMs ?: 0L,
                         accentColor = Color(accent),
                         ambient = ambient,
+                        screenBackdrop = if (ambient) null else screenBackdrop,
                         // Burn-in protection. Only ever a couple of pixels, and zero while awake,
                         // so it costs nothing visually and keeps a static wall of text from
                         // etching itself into the panel over a long album.

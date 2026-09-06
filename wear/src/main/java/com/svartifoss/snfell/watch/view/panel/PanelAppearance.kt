@@ -161,6 +161,16 @@ object PanelAppearanceResolver {
             def: PreferenceDefinition<String>
     ): String = FaceScopedPreferences.getString(prefs, def, context)
 
+    /** The per-surface background preference for [surface], unresolved. */
+    fun surfaceBackdropPreference(
+            prefs: SharedPreferences,
+            context: AppearanceContext,
+            surface: PanelSurface
+    ): String = faceString(prefs, context, when (surface) {
+        PanelSurface.VOLUME -> MiscPreferences.WEAR_VOLUME_BACKDROP_STYLE
+        PanelSurface.SEEK -> MiscPreferences.WEAR_PROGRESS_BACKDROP_STYLE
+    })
+
     /** Runtime migration for a watch paired to an older phone or a config restored before the
      * rewritten Colors page has been opened - the same rule `MainActivity` applies. */
     fun colorTreatmentPreference(prefs: SharedPreferences, context: AppearanceContext): String {
@@ -256,23 +266,46 @@ object PanelAppearanceResolver {
             surface: PanelSurface,
             triad: PanelTriad,
             fallbackAccent: Int
-    ): PanelTriad {
-        val mode: String
-        val customColor: String
-        val legacyDesaturated: Boolean
-        when (surface) {
-            PanelSurface.VOLUME -> {
-                mode = faceString(prefs, context, MiscPreferences.WEAR_VOLUME_COLOR_MODE)
-                customColor = faceString(prefs, context, MiscPreferences.WEAR_VOLUME_CUSTOM_COLOR)
-                legacyDesaturated = false
-            }
-            PanelSurface.SEEK -> {
-                mode = faceString(prefs, context, MiscPreferences.WEAR_PROGRESS_COLOR_MODE)
-                customColor = faceString(prefs, context, MiscPreferences.WEAR_PROGRESS_CUSTOM_COLOR)
+    ): PanelTriad = when (surface) {
+        PanelSurface.VOLUME -> componentTriad(
+                prefs,
+                context,
+                MiscPreferences.WEAR_VOLUME_COLOR_MODE,
+                MiscPreferences.WEAR_VOLUME_CUSTOM_COLOR,
+                triad,
+                fallbackAccent)
+        PanelSurface.SEEK -> componentTriad(
+                prefs,
+                context,
+                MiscPreferences.WEAR_PROGRESS_COLOR_MODE,
+                MiscPreferences.WEAR_PROGRESS_CUSTOM_COLOR,
+                triad,
+                fallbackAccent,
                 legacyDesaturated = FaceScopedPreferences.getBoolean(
-                        prefs, MiscPreferences.WEAR_PROGRESS_DESATURATED, context)
-            }
-        }
+                        prefs, MiscPreferences.WEAR_PROGRESS_DESATURATED, context))
+    }
+
+    /**
+     * The colour one component paints itself in, resolved from its own mode/custom pair.
+     *
+     * Split out of [surfaceTriad] so a component that is *not* a panel can reuse the identical
+     * resolution: the lyrics screen and the queue each own an accent and each used to derive it
+     * straight from `Palette`, which meant the global treatment, modifier, hue shift and Normal
+     * colour reached every other surface in the app and stopped at those two. Taking the two
+     * preference definitions rather than a [PanelSurface] is what lets them in without pretending
+     * a wall of text is a panel with a volume style.
+     */
+    fun componentTriad(
+            prefs: SharedPreferences,
+            context: AppearanceContext,
+            modeDefinition: PreferenceDefinition<String>,
+            customColorDefinition: PreferenceDefinition<String>,
+            triad: PanelTriad,
+            fallbackAccent: Int,
+            legacyDesaturated: Boolean = false
+    ): PanelTriad {
+        val mode = faceString(prefs, context, modeDefinition)
+        val customColor = faceString(prefs, context, customColorDefinition)
         val normalColor = normalColorPreference(prefs, context)
         val selected = SurfaceColorTreatment.fromPreference(mode, legacyDesaturated)
         val globalTreatment = SurfaceColorTreatment.fromPreference(
@@ -469,7 +502,10 @@ object PanelAppearanceResolver {
             PanelSurface.SEEK -> OverlayBackdropResolver.seekContentStyle(readoutStyle)
         }
         return PanelAppearance(
-                backdrop = OverlayBackdropResolver.resolve(
+                backdrop = OverlayBackdropResolver.resolveSurface(
+                        // The surface's own background when it has one, the shared choice when it
+                        // defers - see OverlayBackdropResolver.resolveSurface.
+                        surfaceBackdropPreference(prefs, context, surface),
                         faceString(prefs, context, MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE),
                         contentStyle),
                 triad = triad,

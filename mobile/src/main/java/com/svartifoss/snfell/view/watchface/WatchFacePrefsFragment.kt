@@ -7,6 +7,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.provider.DocumentsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +17,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
+import androidx.core.widget.doAfterTextChanged
 import androidx.preference.EditTextPreference
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -32,7 +36,15 @@ import com.google.android.material.chip.ChipDrawable
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.slider.Slider
 import com.google.android.material.switchmaterial.SwitchMaterial
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.svartifoss.snfell.R
+import timber.log.Timber
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import com.svartifoss.snfell.common.AlbumArtSource
+import com.svartifoss.snfell.common.DeviceLocalAppearance
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiniButtonPlacement
 import com.svartifoss.snfell.common.ColorModifier
@@ -54,6 +66,8 @@ import com.svartifoss.snfell.common.SurfaceColorTreatment
 import com.svartifoss.snfell.common.SurfacePaletteResolver
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.TrackMetadataFields
+import com.svartifoss.snfell.common.UserFontContract
+import com.svartifoss.snfell.view.settings.UserFontStore
 import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
 import androidx.core.content.ContextCompat
@@ -108,6 +122,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         private const val PLAYER_EDITOR_KEY = "player_editor_surface"
         private const val BACKGROUND_EDITOR_CATEGORY = "cat_wf_background_editor"
         private const val BACKGROUND_EDITOR_KEY = "background_editor_surface"
+        private const val AOD_EDITOR_CATEGORY = "cat_wf_aod_editor"
+        private const val AOD_EDITOR_KEY = "aod_editor_surface"
+        private const val MINI_BUTTON_EDITOR_CATEGORY = "cat_wf_mini_buttons_editor"
+        private const val MINI_BUTTON_EDITOR_KEY = "mini_button_editor_surface"
         private val BACKGROUND_LAYERS_KEY = MiscPreferences.WEAR_BACKGROUND_LAYERS.key
         /** Stands in wherever a value names no fixed colour, matching HexColorDotPreference. */
         private const val UNSET_SWATCH_COLOR = 0x40808080
@@ -165,6 +183,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private var panelEditor: PanelEditorPreference? = null
     private var playerEditor: PlayerEditorPreference? = null
     private var backgroundEditor: BackgroundEditorPreference? = null
+    private var aodEditor: AodEditorPreference? = null
+    private var miniButtonEditor: MiniButtonEditorPreference? = null
 
     /** Re-reads scoped values after a face change and refreshes archived lists when their
      *  developer switch changes, even if this fragment remained alive beside Settings. */
@@ -184,6 +204,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 refreshPanelEditor()
                 refreshPlayerEditor()
                 refreshBackgroundEditor()
+                // The ambient style resolves through the awake face when it is set to "follow",
+                // and the mini-button arrangement rows depend on whether the face hosts the row.
+                refreshAodEditor()
+                refreshMiniButtonEditor()
             }
             "dev_show_archived" -> {
                 applyArchivedOptionFilters()
@@ -194,6 +218,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 refreshPlayerEditor()
                 // Every layer's style label comes from a picker that filters archived values.
                 refreshBackgroundEditor()
+                // The mini-button background and shape lists each hide an archived value.
+                refreshMiniButtonEditor()
             }
             in TypographyEditorModel.keys,
             MiscPreferences.WEAR_SHOW_SOURCE_ICON.key -> {
@@ -226,12 +252,22 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 rebindScopedValues()
                 refreshBackgroundEditor()
             }
+            in AodEditorModel.keys -> {
+                rebindScopedValues()
+                refreshAodEditor()
+            }
+            in MiniButtonEditorModel.keys -> {
+                rebindScopedValues()
+                refreshMiniButtonEditor()
+            }
             else -> if (LyraAccent.affectsResolvedColor(baseKey)) {
                 refreshTypographyEditor()
                 refreshColorEditor()
                 refreshPanelEditor()
                 refreshPlayerEditor()
                 refreshBackgroundEditor()
+                refreshAodEditor()
+                refreshMiniButtonEditor()
             }
         }
     }
@@ -240,12 +276,63 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      *  developer-mode "Show archived options" switch is on. A value currently selected always
      *  stays listed so an existing configuration can be understood and changed without migration. */
     private val archivedFaces = com.svartifoss.snfell.view.watchface.theme.ArchivedFaces.KEYS
+    /** "typewriter" (Mom's Typewriter) is retired rather than merely archived: the bundled font
+     *  carried no redistribution license this project ever held, so the file itself was removed
+     *  and the key can never come back even with "Show archived options" on - it no longer has an
+     *  entry in `wear_font_values` at all. The set stays non-empty (required by
+     *  CommunityThemeVocabularyParityTest, which looks up `archivedFonts` by name) and keeps
+     *  "typewriter" out of the public vocabulary permanently; WatchFontCatalog/watchFontFamily
+     *  still alias the key to Special Elite so an old saved config or downloaded theme renders
+     *  something instead of silently falling back to Google Sans. */
     private val archivedFonts = setOf("typewriter")
     /** "liquid_glass" shipped and did not work in practice - archived rather than removed. */
     private val archivedOverlayBackdrops = setOf("liquid_glass")
+    /**
+     * The two device-local album-art sources, archived rather than removed.
+     *
+     * They shipped and did not work in practice - the same disposition `liquid_glass` got. Removing
+     * the values instead would leave anyone who had selected one with a picker showing a raw string
+     * and nothing checked, and would break the face silently; archiving keeps the whole path alive
+     * and simply stops offering it. The file-picker rows they depend on follow the *source*, not
+     * this set, so an install that already selected one can still change its picture.
+     */
+    private val archivedAlbumArtSources = setOf("custom_image", "custom_folder")
+
     private val archivedMiniButtonBackgrounds = setOf("solid_theme")
     private val archivedMiniButtonShapes = setOf(
             "pill_wide_large", "pill_wide_xlarge", "rounded_rect_medium", "rounded_rect_large")
+
+    /**
+     * Picks a font file to import - see [UserFontStore].
+     *
+     * `OpenDocument` rather than `GetContent`: the latter can hand back a URI from a provider that
+     * only guarantees it for the duration of the result, and this reads the whole file. The MIME
+     * filter is advisory, since providers disagree about font types and plenty report a perfectly
+     * good TTF as `application/octet-stream` - the bytes are validated on import instead.
+     */
+    private val importFontLauncher = registerForActivityResult(
+            ActivityResultContracts.OpenDocument()
+    ) { uri ->
+        // A cancelled picker has to release the pending target too. Left set, the *next* import -
+        // possibly started from the row rather than from a picker - would apply the font to
+        // whichever control happened to ask last time.
+        if (uri == null) pendingUserFontTarget = null else importUserFont(uri)
+    }
+
+    /** Picks the single picture behind the player for `AlbumArtSource.CUSTOM_IMAGE`. */
+    private val pickArtworkImageLauncher = registerForActivityResult(
+            ActivityResultContracts.OpenDocument()
+    ) { uri -> uri?.let { persistCustomArtwork(it, MiscPreferences.CUSTOM_ALBUM_ART_IMAGE.key) } }
+
+    /**
+     * Picks the folder `AlbumArtSource.CUSTOM_FOLDER` draws from.
+     *
+     * A document *tree*, not a multi-file selection: a tree keeps working as the user adds pictures
+     * to the folder, which is the whole reason to choose a folder rather than one picture.
+     */
+    private val pickArtworkFolderLauncher = registerForActivityResult(
+            ActivityResultContracts.OpenDocumentTree()
+    ) { uri -> uri?.let { persistCustomArtwork(it, MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key) } }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         section = arguments?.getString(ARG_SECTION) ?: SECTION_STYLE
@@ -317,6 +404,18 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 desaturatedKey = null,
                 customColorDescription = R.string.setting_wear_quick_panel_custom_color_description
         )
+        initAccentColorTarget(
+                modeKey = "wear_lyrics_color_mode",
+                customColorKey = "wear_lyrics_custom_color",
+                desaturatedKey = null,
+                customColorDescription = R.string.setting_wear_lyrics_custom_color_description
+        )
+        initAccentColorTarget(
+                modeKey = "wear_queue_color_mode",
+                customColorKey = "wear_queue_custom_color",
+                desaturatedKey = null,
+                customColorDescription = R.string.setting_wear_queue_custom_color_description
+        )
         // Shading color modes are black/album/desaturated/custom; only "custom" reveals the color
         // row, which the shared dependency logic already produces since there is no "normal" here.
         initAccentColorTarget(
@@ -332,6 +431,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 customColorDescription = R.string.setting_wear_accent_floor_custom_color_description
         )
         initAppearanceResetActions()
+        initUserFontRow()
+        initCustomArtworkRows()
         initAccentColorTarget(
                 modeKey = "wear_aod_color_mode",
                 customColorKey = "wear_aod_custom_color",
@@ -373,6 +474,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         initPanelEditor()
         initPlayerEditor()
         initBackgroundEditor()
+        initAodEditor()
+        initMiniButtonEditor()
         applySectionVisibility()
         wirePreviewInteractions()
     }
@@ -1042,11 +1145,15 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val content = LayoutInflater.from(requireContext())
                 .inflate(R.layout.dialog_typography_slider, null)
         val slider = content.findViewById<Slider>(R.id.typography_slider)
-        val valueLabel = content.findViewById<TextView>(R.id.typography_slider_value)
+        val valueLayout = content.findViewById<TextInputLayout>(
+                R.id.typography_slider_value_layout)
+        val valueInput = content.findViewById<TextInputEditText>(R.id.typography_slider_value)
         val minLabel = content.findViewById<TextView>(R.id.typography_slider_min)
         val maxLabel = content.findViewById<TextView>(R.id.typography_slider_max)
         val initial = store.getInt(key, defaultValue).coerceIn(range)
         var selected = initial
+        var syncingManualValue = false
+        lateinit var dialog: AlertDialog
 
         slider.valueFrom = range.first.toFloat()
         slider.valueTo = range.last.toFloat()
@@ -1054,18 +1161,47 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         slider.value = selected.toFloat()
         minLabel.text = format(range.first)
         maxLabel.text = format(range.last)
-        fun renderValue(value: Int) {
+        valueLayout.hint = preference.title
+        fun renderValue(value: Int, updateInput: Boolean = true) {
             selected = value.coerceIn(range)
-            valueLabel.text = format(selected)
-            valueLabel.contentDescription = buildPreferenceDescription(key, valueLabel.text)
+            if (updateInput) {
+                val rawValue = selected.toString()
+                if (valueInput.text?.toString() != rawValue) {
+                    syncingManualValue = true
+                    valueInput.setText(rawValue)
+                    valueInput.setSelection(rawValue.length)
+                    syncingManualValue = false
+                }
+            }
+            valueLayout.error = null
+            valueInput.contentDescription =
+                    buildPreferenceDescription(key, format(selected))
         }
         renderValue(selected)
+        valueInput.doAfterTextChanged { editable ->
+            if (syncingManualValue) return@doAfterTextChanged
+            val typed = editable?.toString()?.trim().orEmpty()
+            val manualValue = typed.toIntOrNull()
+            val valid = manualValue != null && manualValue in range
+            valueLayout.error = if (valid) {
+                null
+            } else {
+                getString(R.string.setting_numeric_range_error, range.first, range.last)
+            }
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = valid
+            if (!valid) return@doAfterTextChanged
+
+            selected = manualValue
+            if (slider.value != selected.toFloat()) slider.value = selected.toFloat()
+            renderValue(selected, updateInput = false)
+            notifyPreviewInteraction(key, selected.toString())
+        }
         slider.addOnChangeListener { _, value, fromUser ->
             if (!fromUser) return@addOnChangeListener
             renderValue(value.toInt())
             notifyPreviewInteraction(key, selected.toString())
         }
-        val dialog = AlertDialog.Builder(requireContext())
+        dialog = AlertDialog.Builder(requireContext())
                 .setTitle(preference.title)
                 .setView(content)
                 .setNeutralButton(R.string.pref_reset_default, null)
@@ -1080,15 +1216,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             notifyPreviewInteraction(key, initial.toString())
         }
         dialog.setOnShowListener {
-            val accent = lyraRuntimeAccent()
-            val surface = ContextCompat.getColor(requireContext(), R.color.lyra_surface)
-            val controlAccent = LyraAccent.contrastSafe(accent, surface, 3.0)
-            val textAccent = LyraAccent.contrastSafe(accent, surface, 4.5)
-            slider.thumbTintList = ColorStateList.valueOf(controlAccent)
-            slider.trackActiveTintList = ColorStateList.valueOf(controlAccent)
-            slider.haloTintList = ColorStateList.valueOf(
-                    ColorUtils.setAlphaComponent(controlAccent, 0x33))
-            dialog.applyLyraDialogStyling(accent = controlAccent, positiveColor = textAccent)
+            tintNumericSliderDialog(dialog, slider, valueLayout, valueInput)
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setOnClickListener {
                 slider.value = defaultValue.toFloat()
                 renderValue(defaultValue)
@@ -1405,6 +1533,9 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                     ColorEditorModel.keyFor(colorTarget, ColorControl.CUSTOM_COLOR)
                             ?.let(::openColorPicker)
                 }
+        root.findViewById<MaterialButton>(R.id.color_editor_tone_button).setOnClickListener {
+            ColorEditorModel.keyFor(colorTarget, ColorControl.TONE)?.let(::openPreferenceDialog)
+        }
         root.findViewById<MaterialButton>(R.id.color_editor_opacity_button).setOnClickListener {
             ColorEditorModel.keyFor(colorTarget, ColorControl.OPACITY)?.let(::showColorSlider)
         }
@@ -1495,6 +1626,18 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         if (customButton.isVisible && customKey != null) {
             bindColorSwatchButton(
                     customButton, customKey, findPreference<Preference>(customKey)?.title)
+        }
+
+        // Only Title, Artist and Clock own a Tone. The panels take the watch-wide one, which is
+        // on the global card above, so a per-element row there would be a second control for a
+        // value they do not have.
+        val toneKey = ColorEditorModel.keyFor(colorTarget, ColorControl.TONE)
+        val toneButton = root.findViewById<MaterialButton>(R.id.color_editor_tone_button)
+        toneButton.isVisible = toneKey != null
+        toneKey?.let { key ->
+            val label = choiceLabel(key, readStringPreference(key, colorChoiceDefault(key)))
+            toneButton.text = "${findPreference<Preference>(key)?.title ?: key} · $label"
+            toneButton.contentDescription = buildPreferenceDescription(key, label)
         }
 
         val opacityKey = ColorEditorModel.keyFor(colorTarget, ColorControl.OPACITY)
@@ -1709,19 +1852,15 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 intArrayOf(Color.TRANSPARENT, accent, Color.TRANSPARENT))
         val foregrounds = ColorStateList(checkedStates, intArrayOf(secondary, onAccent, onSurface))
         val strokes = ColorStateList(checkedStates, intArrayOf(divider, accent, divider))
-        listOf(
-                R.id.color_editor_target_title,
-                R.id.color_editor_target_artist,
-                R.id.color_editor_target_clock,
-                R.id.color_editor_target_progress,
-                R.id.color_editor_target_volume,
-                R.id.color_editor_target_quick_panel
-        ).forEach { id ->
-            root.findViewById<MaterialButton>(id)?.apply {
-                backgroundTintList = fills
-                setTextColor(foregrounds)
-                strokeColor = strokes
-            }
+        // Every button in the rail, read off the group rather than from a list of ids.
+        // The list version went stale the moment the rail grew: Lyrics and Queue were added and
+        // not named here, so those two alone kept the static button style - no accent fill when
+        // selected, a different label colour and a different stroke, in the same strip as six
+        // buttons that followed the accent. Asking the group is what makes that impossible.
+        targetButtons(root).forEach { button ->
+            button.backgroundTintList = fills
+            button.setTextColor(foregrounds)
+            button.strokeColor = strokes
         }
 
         val neutralStates = arrayOf(
@@ -1777,6 +1916,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 ?.let { notifyPreviewInteraction(it, null) }
     }
 
+    /** The rail's buttons in declaration order - see the styling loop for why this is not a list. */
+    private fun targetButtons(root: View): List<MaterialButton> {
+        val group = root.findViewById<MaterialButtonToggleGroup>(R.id.color_editor_target_group)
+                ?: return emptyList()
+        return (0 until group.childCount).mapNotNull { group.getChildAt(it) as? MaterialButton }
+    }
+
     private fun colorButtonIdFor(target: ColorTarget): Int = when (target) {
         ColorTarget.TITLE -> R.id.color_editor_target_title
         ColorTarget.ARTIST -> R.id.color_editor_target_artist
@@ -1784,6 +1930,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         ColorTarget.PROGRESS -> R.id.color_editor_target_progress
         ColorTarget.VOLUME -> R.id.color_editor_target_volume
         ColorTarget.QUICK_PANEL -> R.id.color_editor_target_quick_panel
+        ColorTarget.LYRICS -> R.id.color_editor_target_lyrics
+        ColorTarget.QUEUE -> R.id.color_editor_target_queue
     }
 
     private fun colorTargetForButtonId(id: Int): ColorTarget? = when (id) {
@@ -1793,6 +1941,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         R.id.color_editor_target_progress -> ColorTarget.PROGRESS
         R.id.color_editor_target_volume -> ColorTarget.VOLUME
         R.id.color_editor_target_quick_panel -> ColorTarget.QUICK_PANEL
+        R.id.color_editor_target_lyrics -> ColorTarget.LYRICS
+        R.id.color_editor_target_queue -> ColorTarget.QUEUE
         else -> null
     }
 
@@ -1805,6 +1955,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         ColorControl.PALETTE -> R.id.color_editor_palette_switch
         ColorControl.MODE -> R.id.color_editor_mode_button
         ColorControl.CUSTOM_COLOR -> R.id.color_editor_custom_color_button
+        ColorControl.TONE -> R.id.color_editor_tone_button
         ColorControl.OPACITY -> R.id.color_editor_opacity_button
         ColorControl.ADAPTIVE_CONTRAST -> R.id.color_editor_contrast_switch
     }
@@ -1844,6 +1995,11 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         root.findViewById<MaterialButton>(R.id.panel_editor_blur_button).setOnClickListener {
             openPreferenceDialog(MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS.key)
         }
+        root.findViewById<MaterialButton>(R.id.panel_editor_surface_backdrop_button)
+                .setOnClickListener {
+                    PanelEditorModel.keyFor(panelTarget, PanelControl.SURFACE_BACKDROP)
+                            ?.let(::openPreferenceDialog)
+                }
 
         // Every per-surface control opens the real Preference's own dialog, so the editor adds no
         // second copy of a picker, its validation or its archived-option filtering.
@@ -1877,6 +2033,22 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         bindPanelChoiceButton(
                 root.findViewById(R.id.panel_editor_backdrop_button),
                 MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE.key)
+
+        // The tab's own background. Every target has one, so it is always present - what changes
+        // is which key it edits, exactly as the style and layout buttons below do.
+        val surfaceBackdropKey =
+                PanelEditorModel.keyFor(panelTarget, PanelControl.SURFACE_BACKDROP)
+        val surfaceBackdropButton = root.findViewById<MaterialButton>(
+                R.id.panel_editor_surface_backdrop_button)
+        surfaceBackdropButton.isVisible = surfaceBackdropKey != null
+        surfaceBackdropKey?.let { key ->
+            val default = (PanelEditorModel.specFor(key)?.value as? PanelValueSpec.Choice)
+                    ?.defaultValue ?: OverlayBackdropResolver.SHARED
+            val label = choiceLabel(key, readStringPreference(key, default))
+            surfaceBackdropButton.text =
+                    "${findPreference<Preference>(key)?.title ?: key} · $label"
+            surfaceBackdropButton.contentDescription = buildPreferenceDescription(key, label)
+        }
 
         val blurKey = MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS.key
         val blurButton = root.findViewById<MaterialButton>(R.id.panel_editor_blur_button)
@@ -2047,7 +2219,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 R.id.panel_editor_target_volume,
                 R.id.panel_editor_target_seek,
                 R.id.panel_editor_target_quick,
-                R.id.panel_editor_target_queue
+                R.id.panel_editor_target_queue,
+                R.id.panel_editor_target_lyrics
         ).forEach { id ->
             root.findViewById<MaterialButton>(id)?.apply {
                 backgroundTintList = fills
@@ -2103,7 +2276,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
     /** Points the contextual preview at the surface this tab actually styles. */
     private fun focusPanelTarget(target: PanelTarget) {
-        PanelEditorModel.keyFor(target, PanelControl.STYLE)
+        // Lyrics owns no style row - its only control is its background - so the style key is
+        // not a safe stand-in for "what this tab is about" any more.
+        (PanelEditorModel.keyFor(target, PanelControl.STYLE)
+                ?: PanelEditorModel.keyFor(target, PanelControl.SURFACE_BACKDROP))
                 ?.let { notifyPreviewInteraction(it, null) }
     }
 
@@ -2112,6 +2288,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         PanelTarget.SEEK -> R.id.panel_editor_target_seek
         PanelTarget.QUICK_PANEL -> R.id.panel_editor_target_quick
         PanelTarget.QUEUE -> R.id.panel_editor_target_queue
+        PanelTarget.LYRICS -> R.id.panel_editor_target_lyrics
     }
 
     private fun panelTargetForButtonId(id: Int): PanelTarget? = when (id) {
@@ -2119,11 +2296,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         R.id.panel_editor_target_seek -> PanelTarget.SEEK
         R.id.panel_editor_target_quick -> PanelTarget.QUICK_PANEL
         R.id.panel_editor_target_queue -> PanelTarget.QUEUE
+        R.id.panel_editor_target_lyrics -> PanelTarget.LYRICS
         else -> null
     }
 
     private fun panelControlIdFor(target: PanelSearchTarget): Int = when (target.control) {
         PanelControl.BACKDROP -> R.id.panel_editor_backdrop_button
+        PanelControl.SURFACE_BACKDROP -> R.id.panel_editor_surface_backdrop_button
         PanelControl.BLUR -> R.id.panel_editor_blur_button
         PanelControl.RING_STYLE -> R.id.panel_editor_ring_style_button
         PanelControl.RING_LAYOUT -> R.id.panel_editor_ring_layout_button
@@ -2258,23 +2437,15 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         specs.forEach { spec ->
             val toggle = spec.value as? PlayerValueSpec.Toggle ?: return@forEach
             val title = findPreference<Preference>(spec.key)?.title
-            val chip = Chip(requireContext()).apply {
-                setChipDrawable(
-                        ChipDrawable.createFromAttributes(
-                                requireContext(), null, 0, R.style.LyraCommunityGalleryChip))
-                // The short noun where one exists; the sentence otherwise. See PlayerSettingSpec.
-                text = spec.chipLabelRes?.let(::getString) ?: title
-                isCheckable = true
-                isChecked = store.getBoolean(spec.key, toggle.defaultValue)
-                // The chip shows a noun, so the full row title is what a screen reader needs; the
-                // checked state is announced by the widget itself.
-                contentDescription = title
-                tag = spec.key
-                setOnClickListener {
-                    commitPlayerBoolean(spec.key, isChecked)
-                }
-            }
-            group.addView(chip)
+            group.addView(
+                    newEditorChip(
+                            key = spec.key,
+                            // The short noun where one exists; the sentence otherwise. See
+                            // PlayerSettingSpec.
+                            label = spec.chipLabelRes?.let(::getString) ?: title,
+                            description = title,
+                            checked = store.getBoolean(spec.key, toggle.defaultValue),
+                            onToggle = { checked -> commitPlayerBoolean(spec.key, checked) }))
         }
     }
 
@@ -2283,41 +2454,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         container.removeAllViews()
         container.isVisible = specs.isNotEmpty()
         specs.forEach { spec ->
-            // The attribute belongs to the Material library's R, not the app's - the app's R.attr
-            // has no such entry and resolving it against the wrong one is a compile error, not a
-            // silently unstyled button.
-            val button = MaterialButton(
-                    requireContext(),
-                    null,
-                    com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        resources.getDimensionPixelSize(R.dimen.editor_row_height)
-                ).apply { topMargin = resources.getDimensionPixelSize(R.dimen.editor_row_gap) }
-                isAllCaps = false
-                maxLines = 1
-                ellipsize = android.text.TextUtils.TruncateAt.END
-                typeface = ResourcesCompat.getFont(requireContext(), R.font.google_sans)
-                // The same google_sans metric fix LyraGestureButton carries, and for the same
-                // reason: this font's ascent leaves the label riding a few dp high in a
-                // fixed-height row, so a picker row built here sat visibly higher in its box than
-                // the identical-looking rows inflated from that style. These are the only rows in
-                // the editor constructed in code rather than from it, which is exactly why they
-                // were the ones missing it.
-                includeFontPadding = false
-                // 12sp, and the insets zeroed to match LyraGestureButton. A MaterialButton keeps
-                // 6dp of inset top and bottom by default, which leaves a 48dp row only 36dp of
-                // content box; a 13sp line plus its font padding overran that, and an overrun is
-                // exactly what makes a button report a scroll range and paint a thumb down its own
-                // edge - the same cause the editor's icon buttons hit. Nothing here scrolls.
-                textSize = 12f
-                insetTop = 0
-                insetBottom = 0
-                isVerticalScrollBarEnabled = false
-                isHorizontalScrollBarEnabled = false
-                tag = spec.key
-                setOnClickListener { openPreferenceDialog(spec.key) }
-            }
+            val button = newEditorChoiceRow(spec.key) { openPreferenceDialog(spec.key) }
             bindPlayerChoiceRow(button, spec.key)
             container.addView(button)
         }
@@ -2517,6 +2654,26 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                     return@post
                 }
             }
+            if (section == SECTION_AOD && key in AodEditorModel.keys) {
+                // No tabs to select: the whole page is one surface, so the result only has to be
+                // scrolled to the top and the control holding this key pulsed. A control the
+                // current ambient style cannot draw is genuinely absent, and pulse() does nothing
+                // rather than inventing a highlight for it.
+                refreshAodEditor()
+                listView?.scrollToPosition(0)
+                listView?.post {
+                    aodEditor?.pulse(key, findPreference<Preference>(key)?.title)
+                }
+                return@post
+            }
+            if (section == SECTION_MINI_BUTTONS && key in MiniButtonEditorModel.keys) {
+                refreshMiniButtonEditor()
+                listView?.scrollToPosition(0)
+                listView?.post {
+                    miniButtonEditor?.pulse(key, findPreference<Preference>(key)?.title)
+                }
+                return@post
+            }
             if (section == SECTION_COLORS) {
                 ColorEditorModel.searchTargetFor(key)?.let { target ->
                     colorTarget = target.target
@@ -2558,13 +2715,17 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val compactPanels = section == SECTION_PANELS
         val compactPlayer = section == SECTION_STYLE
         val compactBackground = section == SECTION_BACKGROUND
+        val compactAod = section == SECTION_AOD
+        val compactMiniButtons = section == SECTION_MINI_BUTTONS
         SettingsCatalog.WATCH_CATEGORIES.forEach { key ->
             val visible = key in visibleCategories &&
                     (!compactTypography || key == TYPOGRAPHY_EDITOR_CATEGORY) &&
                     (!compactColors || key == COLOR_EDITOR_CATEGORY) &&
                     (!compactPanels || key == PANEL_EDITOR_CATEGORY) &&
                     (!compactPlayer || key == PLAYER_EDITOR_CATEGORY) &&
-                    (!compactBackground || key == BACKGROUND_EDITOR_CATEGORY)
+                    (!compactBackground || key == BACKGROUND_EDITOR_CATEGORY) &&
+                    (!compactAod || key == AOD_EDITOR_CATEGORY) &&
+                    (!compactMiniButtons || key == MINI_BUTTON_EDITOR_CATEGORY)
             findPreference<Preference>(key)?.isVisible = visible
         }
         // Visible only on the Text page, and only once Google Sans Flex is actually chosen -
@@ -2576,6 +2737,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // control that the selected renderer ignores.
         updatePlayerCapabilityVisibility()
         updateBackgroundCapabilityVisibility()
+        updateCustomArtworkVisibility()
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
@@ -2624,6 +2786,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         refreshPanelEditor()
         refreshPlayerEditor()
         refreshBackgroundEditor()
+        refreshAodEditor()
+        refreshMiniButtonEditor()
     }
 
     override fun onPause() {
@@ -2637,6 +2801,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         panelEditor?.releaseBoundView()
         playerEditor?.releaseBoundView()
         backgroundEditor?.releaseBoundView()
+        aodEditor?.releaseBoundView()
+        miniButtonEditor?.releaseBoundView()
         super.onDestroyView()
     }
 
@@ -2689,11 +2855,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private fun applyArchivedOptionFilters() {
         val showArchived = rawPrefs.getBoolean("dev_show_archived", false)
         val face = ThemeAppearance.resolve(rawPrefs).baseFace
-        if (!showArchived && readStringPreference(MiscPreferences.WEAR_FONT.key, "google_sans") ==
-                "typewriter") {
-            // A hidden current value would make the row claim another font while the watch kept
-            // rendering Typewriter. Normalize it; enabling archived options makes it selectable
-            // again without keeping a secret, mismatched active state.
+        if (readStringPreference(MiscPreferences.WEAR_FONT.key, "google_sans") == "typewriter") {
+            // Unlike the other archived pickers, "typewriter" can never come back - the bundled
+            // font was removed outright (see archivedFonts's doc), so there is no row left to
+            // select it from even with "Show archived options" on. Normalize unconditionally
+            // rather than only while archived options are hidden, or a dev-mode install would keep
+            // a value the picker can no longer display.
             store.putString(MiscPreferences.WEAR_FONT.key, "google_sans")
         }
         if (readStringPreference(MiscPreferences.WEAR_SCREEN_THEME.key, "default") == "hidden") {
@@ -2713,8 +2880,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 archived = archivedFaces,
                 defaultValue = "classic",
                 showArchived = showArchived)
-        // Typewriter is intentionally absent from the normal catalog and is only offered when
-        // archived options are on.
+        // "typewriter" has no row in wear_font_values at all any more (see archivedFonts's doc),
+        // so it is never offered here regardless of showArchived.
         applyGlobalFontEntries(showArchived)
         filterArchivedListPreference(
                 key = "screen_buttons_bg_style",
@@ -2737,14 +2904,32 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 archived = archivedMiniButtonShapes,
                 defaultValue = "pill",
                 showArchived = showArchived)
+        // The imported font's row is archived too, and its visibility is not a picker filter, so
+        // it is refreshed here - the one function every "Show archived options" change runs.
+        refreshUserFontRow()
+        filterArchivedListPreference(
+                key = "wear_album_art_source",
+                entriesRes = R.array.wear_album_art_source_entries,
+                valuesRes = R.array.wear_album_art_source_values,
+                archived = archivedAlbumArtSources,
+                defaultValue = AlbumArtSource.DEFAULT.preferenceValue,
+                showArchived = showArchived)
         applyTitleFontEntries(showArchived)
         applyArtistFontEntries(showArchived)
         applyClockFontEntries(showArchived)
         applyTrackTimeFontEntries(showArchived)
         applyLyricsFontEntries(showArchived)
         applyTitleColorEntries()
+        applyElementToneEntries()
         PanelOptionCatalog.apply(resources) { key -> findPreference(key) }
+        // After the additive catalog: it appends the extra backdrops to the shared picker, and
+        // the per-surface pickers are built from whatever that picker ends up offering.
+        applySurfaceBackdropEntries()
         AppearanceOptionCatalog.apply(resources) { key -> findPreference(key) }
+
+        // The per-surface pickers are copies of the shared one, so they have to be rebuilt
+        // whenever its option list changes - archived values are removed from it right here.
+        applySurfaceBackdropEntries()
     }
 
     /**
@@ -2769,6 +2954,68 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 .toTypedArray()
     }
 
+    /**
+     * Builds the three per-element Tone pickers from the shared tone arrays with "follow the
+     * watch tone" on top.
+     *
+     * Derived rather than declared, for the reason [applyTitleColorEntries] documents: a second
+     * copy of the five tone names would need re-translating into every locale each time a tone is
+     * added, and the moment it fell behind, the picker would offer the wrong tone for a value.
+     */
+    private fun applyElementToneEntries() {
+        val entries = resources.getStringArray(R.array.wear_color_modifier_entries)
+        val values = resources.getStringArray(R.array.wear_color_modifier_values)
+        val withFollow = (listOf(getString(R.string.wear_color_modifier_follow)) +
+                entries.toList()).toTypedArray()
+        val withFollowValues = (listOf(ColorModifier.FOLLOW) + values.toList()).toTypedArray()
+        listOf(
+                MiscPreferences.WEAR_TITLE_COLOR_MODIFIER,
+                MiscPreferences.WEAR_ARTIST_COLOR_MODIFIER,
+                MiscPreferences.WEAR_CLOCK_COLOR_MODIFIER
+        ).forEach { definition ->
+            findPreference<ListPreference>(definition.key)?.let { pref ->
+                pref.entries = withFollow
+                pref.entryValues = withFollowValues
+            }
+        }
+    }
+
+    /**
+     * Builds the five per-surface background pickers from the shared backdrop arrays with "follow
+     * the shared choice" on top.
+     *
+     * Derived rather than declared, for the reason [applyTitleColorEntries] documents: this
+     * vocabulary is the longest picker in the app, and a second copy of it would need
+     * re-translating into every locale each time a background is added.
+     */
+    private fun applySurfaceBackdropEntries() {
+        // Read off the shared picker, not the raw arrays. That picker is assembled from the base
+        // arrays *plus* PanelOptionCatalog's additive ones, and then has archived values removed -
+        // so building from the arrays alone offered a shorter list than the shared row it defers
+        // to, which is exactly the drift a derived picker exists to prevent.
+        val shared = findPreference<ListPreference>(
+                MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE.key) ?: return
+        val entries = shared.entries ?: return
+        val values = shared.entryValues ?: return
+        val withShared = (listOf<CharSequence>(getString(R.string.wear_backdrop_shared)) +
+                entries.toList()).toTypedArray()
+        val withSharedValues =
+                (listOf<CharSequence>(OverlayBackdropResolver.SHARED) +
+                        values.toList()).toTypedArray()
+        listOf(
+                MiscPreferences.WEAR_VOLUME_BACKDROP_STYLE,
+                MiscPreferences.WEAR_PROGRESS_BACKDROP_STYLE,
+                MiscPreferences.WEAR_QUICK_PANEL_BACKDROP_STYLE,
+                MiscPreferences.WEAR_QUEUE_BACKDROP_STYLE,
+                MiscPreferences.WEAR_LYRICS_BACKDROP_STYLE
+        ).forEach { definition ->
+            findPreference<ListPreference>(definition.key)?.let { pref ->
+                pref.entries = withShared
+                pref.entryValues = withSharedValues
+            }
+        }
+    }
+
     /** Returns the localized font names paired with their stable preference keys in display order. */
     private fun sortedFontChoices(): List<Pair<String, String>> {
         val entries = resources.getStringArray(R.array.wear_font_entries)
@@ -2780,8 +3027,97 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             showArchived: Boolean,
             current: String,
             keepCurrentArchived: Boolean = true
-    ): List<Pair<String, String>> = sortedFontChoices().filter { (_, value) ->
-        showArchived || value !in archivedFonts || (keepCurrentArchived && value == current)
+    ): List<Pair<String, String>> {
+        val catalog = sortedFontChoices().filter { (_, value) ->
+            showArchived || value !in archivedFonts || (keepCurrentArchived && value == current)
+        }
+        // The imported font is injected at runtime rather than declared in `wear_font_entries`,
+        // because whether it exists is a property of this phone: an XML row would offer a font that
+        // is not there on every install that has not imported one, and would also have to be
+        // translated into forty locales to say a name the user chose themselves. It leads the list
+        // - it is the one entry the person put there, and an alphabetical position among 143
+        // families would bury it.
+        val userFont = importedFontChoice(showArchived, current) ?: return catalog
+        return listOf(userFont) + catalog
+    }
+
+    /**
+     * The imported font's picker row, or null when it should not be offered.
+     *
+     * **Archived**, like [archivedAlbumArtSources] and for the same reason: it shipped and did not
+     * work in practice, so it is hidden rather than removed and comes back with the developer
+     * "Show archived options" switch. It has no entry in an `archived*` set because it has no entry
+     * in `wear_font_values` either - the row is injected here at runtime, since whether an imported
+     * font exists is a property of this phone rather than of the catalogue.
+     *
+     * Two states keep it listed with the switch off, both following the rule the archived pickers
+     * already follow - a value that is *currently in use* stays selectable, because a picker with
+     * nothing checked cannot be understood and the only way out of it would be to guess. A face
+     * still set to `user_font`, and a phone that still holds an imported file, are each that state:
+     * the second matters because removing the font is only reachable from the row this list backs.
+     */
+    private fun importedFontChoice(showArchived: Boolean, current: String): Pair<String, String>? {
+        val context = context ?: return null
+        val name = UserFontStore.displayName(context)
+        if (!showArchived && name == null && current != DeviceLocalAppearance.USER_FONT_KEY) {
+            return null
+        }
+        return (name ?: getString(R.string.wear_font_user_import)) to
+                DeviceLocalAppearance.USER_FONT_KEY
+    }
+
+    /**
+     * The font key whose picker asked for an import, so the chosen file can be applied to it.
+     *
+     * Without it, importing from inside the Artist picker would leave the font imported and the
+     * artist still on its previous family - the person did not open a file browser for its own
+     * sake, they were choosing a typeface for one element.
+     */
+    private var pendingUserFontTarget: String? = null
+
+    /**
+     * Lets every font picker offer "My own font" whether or not one has been imported yet.
+     *
+     * The row is always listed, because a control that only appears once you have already found
+     * some other screen is a control nobody discovers. Choosing it with nothing imported must not
+     * persist `user_font` - that value would resolve through the catalogue's unknown-key fallback
+     * and quietly select the default typeface - so the change is **rejected** and the importer
+     * opened instead; the value is written afterwards, from [importUserFont], only if a real font
+     * arrived.
+     *
+     * Each listener chains to whatever was already installed ([initTypographyDependencies] owns
+     * `wear_font`'s), so this cannot silently drop an existing dependency callback.
+     */
+    private fun installUserFontPickerInterceptors() {
+        DeviceLocalAppearance.FONT_KEYS.forEach { key ->
+            val preference = findPreference<ListPreference>(key) ?: return@forEach
+            val existing = preference.onPreferenceChangeListener
+            preference.onPreferenceChangeListener =
+                    Preference.OnPreferenceChangeListener { changed, candidate ->
+                        if (candidate == DeviceLocalAppearance.USER_FONT_KEY &&
+                                context?.let(UserFontStore::hasFont) != true) {
+                            pendingUserFontTarget = key
+                            launchFontPicker()
+                            false
+                        } else {
+                            existing?.onPreferenceChange(changed, candidate) ?: true
+                        }
+                    }
+        }
+    }
+
+    /**
+     * Selects the freshly imported font for the picker that asked for it.
+     *
+     * Written through the `ListPreference` rather than into preferences directly, so the
+     * face-scoped data store, the row's summary and the contextual editor all learn about it -
+     * and after [refreshFontPickers], so the entry it is being set to already exists in the list.
+     */
+    private fun applyImportedFontTo(key: String) {
+        val preference = findPreference<ListPreference>(key) ?: return
+        preference.value = DeviceLocalAppearance.USER_FONT_KEY
+        refreshTypographyEditor()
+        notifyPreviewInteraction(key, DeviceLocalAppearance.USER_FONT_KEY)
     }
 
     private fun applyGlobalFontEntries(showArchived: Boolean) {
@@ -3129,6 +3465,538 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     }
 
 
+    // ------------------------------------------------------------- Always-on editor
+
+    /**
+     * Replaces the eleven ambient rows with one contextual editor, on the same terms as
+     * [initPlayerEditor]: the real Preference objects stay inflated and hidden, still owning
+     * storage, validation, dialogs and search metadata.
+     */
+    private fun initAodEditor() {
+        val editor = findPreference<AodEditorPreference>(AOD_EDITOR_KEY) ?: return
+        aodEditor = editor
+        editor.bindEditor = ::bindAodEditor
+        editor.refresh()
+    }
+
+    private fun refreshAodEditor() {
+        aodEditor?.refresh()
+    }
+
+    private fun bindAodEditor(root: View) {
+        root.setTag(R.id.tag_handles_accent_locally, true)
+        root.disableScrollbarsInSubtree()
+
+        // Every picker opens the real Preference's own dialog, so the editor adds no second copy
+        // of a list, its validation or its archived-option filtering.
+        listOf(
+                R.id.aod_editor_style_button to AodControl.STYLE,
+                R.id.aod_editor_color_button to AodControl.COLOR_MODE,
+                R.id.aod_editor_art_treatment_button to AodControl.ART_TREATMENT
+        ).forEach { (id, control) ->
+            root.findViewById<MaterialButton>(id).setOnClickListener {
+                AodEditorModel.keyFor(control)?.let(::openPreferenceDialog)
+            }
+        }
+        // The mode picker is what makes a picked colour meaningful, so the swatch beside it opens
+        // the colour row's own listener rather than a second picker - see openColorPicker.
+        root.findViewById<MaterialButton>(R.id.aod_editor_custom_color_button).setOnClickListener {
+            AodEditorModel.keyFor(AodControl.CUSTOM_COLOR)?.let(::openColorPicker)
+        }
+        listOf(
+                R.id.aod_editor_intensity_button to AodControl.INTENSITY,
+                R.id.aod_editor_art_opacity_button to AodControl.ART_OPACITY
+        ).forEach { (id, control) ->
+            root.findViewById<MaterialButton>(id).setOnClickListener {
+                AodEditorModel.keyFor(control)?.let(::showAodSlider)
+            }
+        }
+
+        renderAodEditor(root)
+    }
+
+    private fun renderAodEditor(root: View) {
+        val face = readStringPreference(
+                MiscPreferences.WEAR_SCREEN_FACE.key,
+                MiscPreferences.WEAR_SCREEN_FACE.defaultValue)
+        val style = AodEditorModel.effectiveStyle(
+                readStringPreference(
+                        MiscPreferences.WEAR_AOD_STYLE.key,
+                        MiscPreferences.WEAR_AOD_STYLE.defaultValue),
+                face)
+
+        bindAodValueButton(
+                root.findViewById(R.id.aod_editor_style_button),
+                MiscPreferences.WEAR_AOD_STYLE.key,
+                withLabel = false)
+        bindAodValueButton(
+                root.findViewById(R.id.aod_editor_color_button),
+                MiscPreferences.WEAR_AOD_COLOR_MODE.key)
+
+        // The swatch is revealed by the Custom tint alone, exactly as the Colors page pairs a mode
+        // with its colour: any other mode names a colour this hex could never describe.
+        val customColorKey = AodEditorModel.keyFor(AodControl.CUSTOM_COLOR)
+        val customColorButton = root.findViewById<MaterialButton>(
+                R.id.aod_editor_custom_color_button)
+        customColorButton.isVisible = customColorKey != null &&
+                readStringPreference(
+                        MiscPreferences.WEAR_AOD_COLOR_MODE.key,
+                        MiscPreferences.WEAR_AOD_COLOR_MODE.defaultValue) == "custom"
+        if (customColorButton.isVisible && customColorKey != null) {
+            bindColorSwatchButton(
+                    customColorButton,
+                    customColorKey,
+                    findPreference<Preference>(customColorKey)?.title)
+            customColorButton.tag = customColorKey
+        }
+
+        bindAodNumberButton(
+                root.findViewById(R.id.aod_editor_intensity_button),
+                MiscPreferences.WEAR_AOD_INTENSITY.key)
+
+        // The transport's own progress ring is the one element gated by a preference rather than
+        // by the ambient style, so it is filtered here where a value can be read - the same split
+        // the Player page makes for the seek marker, and what keeps appliesToStyle pure.
+        val transportShown = store.getBoolean(
+                MiscPreferences.WEAR_AOD_SHOW_TRANSPORT.key,
+                MiscPreferences.WEAR_AOD_SHOW_TRANSPORT.defaultValue)
+        renderAodChips(
+                root.findViewById(R.id.aod_editor_element_chips),
+                AodEditorModel.visibleIn(AodSlot.ELEMENT, style).filter { spec ->
+                    spec.control != AodControl.SHOW_PROGRESS || transportShown
+                })
+
+        // Gone entirely when the style draws no artwork, or when the chip above has turned it off:
+        // both rows would then describe a picture nobody sees.
+        val artworkShown = AodEditorModel.appliesToStyle(AodControl.SHOW_ART, style) &&
+                store.getBoolean(
+                        MiscPreferences.WEAR_AOD_SHOW_ART.key,
+                        MiscPreferences.WEAR_AOD_SHOW_ART.defaultValue)
+        root.findViewById<View>(R.id.aod_editor_artwork_card).isVisible = artworkShown
+        if (artworkShown) {
+            bindAodValueButton(
+                    root.findViewById(R.id.aod_editor_art_treatment_button),
+                    MiscPreferences.WEAR_AOD_ART_TREATMENT.key)
+            bindAodNumberButton(
+                    root.findViewById(R.id.aod_editor_art_opacity_button),
+                    MiscPreferences.AMBIENT_ALBUM_ART_OPACITY.key)
+        }
+
+        tintAodEditor(root)
+        // Must run after the chips are built, not only in bindAodEditor: those views are created
+        // here on every refresh, so a sweep done before this point never reaches them.
+        root.disableScrollbarsInSubtree()
+    }
+
+    /** A picker row reads "<what it is> · <what it is set to>", unless its heading already says. */
+    @SuppressLint("SetTextI18n") // "Label · value" is the editor's own notation, not prose.
+    private fun bindAodValueButton(
+            button: MaterialButton,
+            key: String,
+            withLabel: Boolean = true
+    ) {
+        val default = (AodEditorModel.specFor(key)?.value as? AodValueSpec.Choice)
+                ?.defaultValue ?: ""
+        val label = choiceLabel(key, readStringPreference(key, default))
+        val prefix = AodEditorModel.specFor(key)?.labelRes?.takeIf { withLabel }?.let(::getString)
+        button.text = if (prefix != null) "$prefix · $label" else label
+        button.contentDescription = buildPreferenceDescription(key, label)
+        button.tag = key
+    }
+
+    @SuppressLint("SetTextI18n") // Percentages are locale-independent editor notation.
+    private fun bindAodNumberButton(button: MaterialButton, key: String) {
+        val number = AodEditorModel.specFor(key)?.value as? AodValueSpec.Number ?: return
+        val value = store.getInt(key, number.defaultValue).coerceIn(number.range)
+        val prefix = AodEditorModel.specFor(key)?.labelRes?.let(::getString)
+                ?: findPreference<Preference>(key)?.title
+        button.text = "$prefix · $value%"
+        button.contentDescription = buildPreferenceDescription(key, "$value%")
+        button.tag = key
+    }
+
+    private fun renderAodChips(group: ChipGroup, specs: List<AodSettingSpec>) {
+        group.removeAllViews()
+        group.isVisible = specs.isNotEmpty()
+        specs.forEach { spec ->
+            val toggle = spec.value as? AodValueSpec.Toggle ?: return@forEach
+            val title = findPreference<Preference>(spec.key)?.title
+            group.addView(
+                    newEditorChip(
+                            key = spec.key,
+                            // The short noun where one exists; the sentence otherwise.
+                            label = spec.labelRes?.let(::getString) ?: title,
+                            description = title,
+                            checked = store.getBoolean(spec.key, toggle.defaultValue),
+                            onToggle = { checked -> commitAodBoolean(spec.key, checked) }))
+        }
+    }
+
+    private fun commitAodBoolean(key: String, value: Boolean) {
+        val preference = findPreference<TwoStatePreference>(key)
+        if (preference != null && preference.callChangeListener(value)) {
+            preference.isChecked = value
+        }
+        // Refresh either way: a rejected change has to snap the control back to the stored value
+        // rather than leave it showing one the watch will never receive.
+        refreshAodEditor()
+    }
+
+    private fun showAodSlider(key: String) {
+        val number = AodEditorModel.specFor(key)?.value as? AodValueSpec.Number ?: return
+        showNumericSlider(
+                key,
+                number.range,
+                number.defaultValue,
+                format = { "$it%" },
+                onCommit = { value -> commitAodNumber(key, value) })
+    }
+
+    private fun commitAodNumber(key: String, value: Int) {
+        val number = AodEditorModel.specFor(key)?.value as? AodValueSpec.Number ?: return
+        val candidate = value.coerceIn(number.range).toString()
+        val preference = findPreference<EditTextPreference>(key) ?: return
+        if (preference.callChangeListener(candidate)) {
+            preference.text = candidate
+            refreshAodEditor()
+        }
+    }
+
+    private fun tintAodEditor(root: View) {
+        val palette = editorPalette()
+
+        listOf(
+                R.id.aod_editor_style_heading,
+                R.id.aod_editor_elements_heading,
+                R.id.aod_editor_artwork_heading
+        ).forEach { root.findViewById<TextView>(it)?.setTextColor(palette.textAccent) }
+
+        tintEditorChipGroup(root.findViewById(R.id.aod_editor_element_chips), palette)
+
+        listOf(
+                R.id.aod_editor_style_button,
+                R.id.aod_editor_color_button,
+                R.id.aod_editor_intensity_button,
+                R.id.aod_editor_art_treatment_button,
+                R.id.aod_editor_art_opacity_button
+        ).forEach { tintEditorRow(root.findViewById(it), palette) }
+        // Not in the loop above: its icon is the picked colour itself, which
+        // bindColorSwatchButton has already tinted - re-tinting would repaint the swatch grey.
+        tintEditorRow(
+                root.findViewById(R.id.aod_editor_custom_color_button),
+                palette,
+                tintIcon = false)
+    }
+
+    // ------------------------------------------------------------ Mini buttons editor
+
+    /**
+     * Replaces the Mini buttons page's row list with one contextual editor, on the same terms as
+     * [initPlayerEditor].
+     */
+    private fun initMiniButtonEditor() {
+        val editor = findPreference<MiniButtonEditorPreference>(MINI_BUTTON_EDITOR_KEY) ?: return
+        miniButtonEditor = editor
+        editor.bindEditor = ::bindMiniButtonEditor
+        editor.refresh()
+    }
+
+    private fun refreshMiniButtonEditor() {
+        miniButtonEditor?.refresh()
+    }
+
+    private fun bindMiniButtonEditor(root: View) {
+        root.setTag(R.id.tag_handles_accent_locally, true)
+        root.disableScrollbarsInSubtree()
+
+        // What a mini button *does* is assigned on the Controls tab; this row runs the hint
+        // preference's own listener rather than carrying a second route there.
+        root.findViewById<MaterialButton>(R.id.mini_button_editor_assign_button)
+                .setOnClickListener {
+                    val key = MiniButtonEditorModel.keyFor(MiniButtonControl.ASSIGN)
+                            ?: return@setOnClickListener
+                    findPreference<Preference>(key)?.let { preference ->
+                        preference.onPreferenceClickListener?.onPreferenceClick(preference)
+                    }
+                }
+        root.findViewById<MaterialButton>(R.id.mini_button_editor_gestures_button)
+                .setOnClickListener {
+                    MiniButtonEditorModel.keyFor(MiniButtonControl.GESTURES_MODE)
+                            ?.let(::openPreferenceDialog)
+                }
+
+        renderMiniButtonEditor(root)
+    }
+
+    private fun renderMiniButtonEditor(root: View) {
+        val face = readStringPreference(
+                MiscPreferences.WEAR_SCREEN_FACE.key,
+                MiscPreferences.WEAR_SCREEN_FACE.defaultValue)
+
+        MiniButtonEditorModel.keyFor(MiniButtonControl.ASSIGN)?.let { key ->
+            val preference = findPreference<Preference>(key)
+            val button = root.findViewById<MaterialButton>(R.id.mini_button_editor_assign_button)
+            button.text = getString(R.string.mini_button_assign_action)
+            button.contentDescription = "${preference?.title}. ${preference?.summary}"
+            button.tag = key
+            root.findViewById<TextView>(R.id.mini_button_editor_assign_note).text =
+                    preference?.summary
+        }
+
+        renderMiniButtonRows(
+                root.findViewById(R.id.mini_button_editor_row_controls),
+                MiniButtonEditorModel.visibleIn(MiniButtonSlot.ROW, face))
+
+        bindMiniButtonRow(
+                root.findViewById(R.id.mini_button_editor_gestures_button),
+                MiscPreferences.WEAR_GESTURES_MODE.key,
+                withLabel = false)
+
+        tintMiniButtonEditor(root)
+        // Must run after the rows are built - they are created here on every refresh.
+        root.disableScrollbarsInSubtree()
+    }
+
+    /** Rebuilds the style rows. Cleared first, for the reason [renderPlayerChips] gives. */
+    private fun renderMiniButtonRows(
+            container: LinearLayout,
+            specs: List<MiniButtonSettingSpec>
+    ) {
+        container.removeAllViews()
+        container.isVisible = specs.isNotEmpty()
+        specs.forEach { spec ->
+            val row = newEditorChoiceRow(spec.key) {
+                when (spec.value) {
+                    is MiniButtonValueSpec.Number -> showMiniButtonSlider(spec.key)
+                    else -> openPreferenceDialog(spec.key)
+                }
+            }
+            bindMiniButtonRow(row, spec.key)
+            container.addView(row)
+        }
+    }
+
+    @SuppressLint("SetTextI18n") // "Label · value" is the editor's own notation, not prose.
+    private fun bindMiniButtonRow(
+            button: MaterialButton,
+            key: String,
+            withLabel: Boolean = true
+    ) {
+        val spec = MiniButtonEditorModel.specFor(key) ?: return
+        val label = when (val value = spec.value) {
+            is MiniButtonValueSpec.Number ->
+                "${store.getInt(key, value.defaultValue).coerceIn(value.range)}%"
+            is MiniButtonValueSpec.Choice -> choiceLabel(key, readStringPreference(key, value.defaultValue))
+            MiniButtonValueSpec.Action -> return
+        }
+        val prefix = spec.labelRes?.takeIf { withLabel }?.let(::getString)
+                ?: findPreference<Preference>(key)?.title?.takeIf { withLabel }
+        button.text = if (prefix != null) "$prefix · $label" else label
+        button.contentDescription = buildPreferenceDescription(key, label)
+        button.tag = key
+    }
+
+    private fun showMiniButtonSlider(key: String) {
+        val number = MiniButtonEditorModel.specFor(key)?.value as? MiniButtonValueSpec.Number
+                ?: return
+        showNumericSlider(
+                key,
+                number.range,
+                number.defaultValue,
+                format = { "$it%" },
+                onCommit = { value -> commitMiniButtonNumber(key, value) })
+    }
+
+    private fun commitMiniButtonNumber(key: String, value: Int) {
+        val number = MiniButtonEditorModel.specFor(key)?.value as? MiniButtonValueSpec.Number
+                ?: return
+        val candidate = value.coerceIn(number.range).toString()
+        val preference = findPreference<EditTextPreference>(key) ?: return
+        if (preference.callChangeListener(candidate)) {
+            preference.text = candidate
+            refreshMiniButtonEditor()
+        }
+    }
+
+    private fun tintMiniButtonEditor(root: View) {
+        val palette = editorPalette()
+
+        listOf(
+                R.id.mini_button_editor_row_heading,
+                R.id.mini_button_editor_gestures_heading
+        ).forEach { root.findViewById<TextView>(it)?.setTextColor(palette.textAccent) }
+
+        tintEditorRow(root.findViewById(R.id.mini_button_editor_assign_button), palette)
+        tintEditorRow(root.findViewById(R.id.mini_button_editor_gestures_button), palette)
+        val rows = root.findViewById<LinearLayout>(R.id.mini_button_editor_row_controls)
+        (0 until rows.childCount)
+                .mapNotNull { rows.getChildAt(it) as? MaterialButton }
+                .forEach { tintEditorRow(it, palette) }
+    }
+
+    // ------------------------------------------------------- shared editor building blocks
+
+    /**
+     * The colours every contextual editor tints itself from.
+     *
+     * Resolved once per render rather than per control: [lyraRuntimeAccent] follows the album art,
+     * so a control tinted from its own lookup could land a frame behind its neighbours.
+     */
+    private data class EditorPalette(
+            val surface: Int,
+            val accent: Int,
+            val textAccent: Int,
+            val onSurface: Int,
+            val secondary: Int,
+            val divider: Int)
+
+    private fun editorPalette(): EditorPalette {
+        val surface = ContextCompat.getColor(requireContext(), R.color.lyra_surface)
+        val rawAccent = lyraRuntimeAccent()
+        return EditorPalette(
+                surface = surface,
+                accent = LyraAccent.contrastSafe(rawAccent, surface, minimumContrast = 3.0),
+                textAccent = LyraAccent.contrastSafe(rawAccent, surface, minimumContrast = 4.5),
+                onSurface = ContextCompat.getColor(requireContext(), R.color.lyra_on_surface),
+                secondary = ContextCompat.getColor(requireContext(), R.color.lyra_text_secondary),
+                divider = ContextCompat.getColor(requireContext(), R.color.lyra_divider))
+    }
+
+    /**
+     * Tints every accent-bearing part of the shared numeric dialog.
+     *
+     * The slider thumb and active track were already recoloured, but Material's tick/inactive
+     * states and, most visibly, TextInputLayout's focused outline still came from the theme's
+     * static green `colorControlActivated`. Styling the EditText cursor alone cannot reach its
+     * parent box, so all of them are handled together here for every consumer of the dialog.
+     */
+    private fun tintNumericSliderDialog(
+            dialog: AlertDialog,
+            slider: Slider,
+            valueLayout: TextInputLayout,
+            valueInput: TextInputEditText
+    ) {
+        val palette = editorPalette()
+        val accent = ColorStateList.valueOf(palette.accent)
+        val divider = ColorStateList.valueOf(palette.divider)
+
+        slider.thumbTintList = accent
+        slider.trackActiveTintList = accent
+        slider.trackInactiveTintList = divider
+        slider.tickActiveTintList = accent
+        slider.tickInactiveTintList = divider
+        slider.haloTintList = ColorStateList.valueOf(
+                ColorUtils.setAlphaComponent(palette.accent, 0x33))
+
+        valueLayout.boxStrokeColor = palette.accent
+        valueLayout.hintTextColor = ColorStateList.valueOf(palette.textAccent)
+        valueLayout.defaultHintTextColor = ColorStateList.valueOf(palette.secondary)
+        LyraAccent.applyToEditText(valueInput, palette.accent)
+        dialog.applyLyraDialogStyling(
+                accent = palette.accent,
+                positiveColor = palette.textAccent)
+    }
+
+    /** An outlined picker row: transparent, hairline stroke, greyed when disabled. */
+    private fun tintEditorRow(
+            button: MaterialButton?,
+            palette: EditorPalette,
+            tintIcon: Boolean = true
+    ) {
+        button ?: return
+        val states = arrayOf(intArrayOf(-android.R.attr.state_enabled), intArrayOf())
+        val foregrounds = ColorStateList(states, intArrayOf(palette.secondary, palette.onSurface))
+        button.backgroundTintList = ColorStateList(
+                states, intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT))
+        button.setTextColor(foregrounds)
+        if (tintIcon) button.iconTint = foregrounds
+        button.strokeColor = ColorStateList(states, intArrayOf(palette.divider, palette.divider))
+    }
+
+    /**
+     * A checked chip is filled with a blend rather than the raw accent, and its content is
+     * contrast-corrected against that blend - the treatment the Community gallery's filters
+     * already use, so a selected chip means the same thing everywhere in the app.
+     */
+    private fun tintEditorChipGroup(group: ChipGroup?, palette: EditorPalette) {
+        group ?: return
+        val selectedContainer = ColorUtils.blendARGB(palette.surface, palette.accent, 0.16f)
+        val selectedContent = LyraAccent.contrastSafe(
+                palette.accent, selectedContainer, minimumContrast = 4.5)
+        for (index in 0 until group.childCount) {
+            val chip = group.getChildAt(index) as? Chip ?: continue
+            val selected = chip.isChecked
+            chip.chipBackgroundColor = ColorStateList.valueOf(
+                    if (selected) selectedContainer else palette.surface)
+            chip.chipStrokeColor = ColorStateList.valueOf(
+                    if (selected) selectedContent else palette.divider)
+            chip.setTextColor(if (selected) selectedContent else palette.onSurface)
+            chip.rippleColor = ColorStateList.valueOf(
+                    ContextCompat.getColor(requireContext(), R.color.lyra_ripple))
+        }
+    }
+
+    /** One checkable chip, carrying its preference key as the tag the search pulse looks for. */
+    private fun newEditorChip(
+            key: String,
+            label: CharSequence?,
+            description: CharSequence?,
+            checked: Boolean,
+            onToggle: (Boolean) -> Unit
+    ): Chip = Chip(requireContext()).apply {
+        setChipDrawable(
+                ChipDrawable.createFromAttributes(
+                        requireContext(), null, 0, R.style.LyraCommunityGalleryChip))
+        text = label
+        isCheckable = true
+        isChecked = checked
+        // The chip shows a noun, so the full row title is what a screen reader needs; the checked
+        // state is announced by the widget itself.
+        contentDescription = description
+        tag = key
+        setOnClickListener { onToggle(isChecked) }
+    }
+
+    /**
+     * One generated picker row, matching the rows inflated from `LyraGestureButton`.
+     *
+     * The attribute belongs to the Material library's R, not the app's - the app's R.attr has no
+     * such entry and resolving it against the wrong one is a compile error, not a silently
+     * unstyled button.
+     */
+    private fun newEditorChoiceRow(key: String, onClick: () -> Unit): MaterialButton =
+            MaterialButton(
+                    requireContext(),
+                    null,
+                    com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        resources.getDimensionPixelSize(R.dimen.editor_row_height)
+                ).apply { topMargin = resources.getDimensionPixelSize(R.dimen.editor_row_gap) }
+                isAllCaps = false
+                maxLines = 1
+                ellipsize = android.text.TextUtils.TruncateAt.END
+                typeface = ResourcesCompat.getFont(requireContext(), R.font.google_sans)
+                // The same google_sans metric fix LyraGestureButton carries, and for the same
+                // reason: this font's ascent leaves the label riding a few dp high in a
+                // fixed-height row, so a picker row built here sat visibly higher in its box than
+                // the identical-looking rows inflated from that style.
+                includeFontPadding = false
+                // 12sp, and the insets zeroed to match LyraGestureButton. A MaterialButton keeps
+                // 6dp of inset top and bottom by default, which leaves a 48dp row only 36dp of
+                // content box; a 13sp line plus its font padding overran that, and an overrun is
+                // exactly what makes a button report a scroll range and paint a thumb down its own
+                // edge. Nothing here scrolls.
+                textSize = 12f
+                insetTop = 0
+                insetBottom = 0
+                isVerticalScrollBarEnabled = false
+                isHorizontalScrollBarEnabled = false
+                tag = key
+                setOnClickListener { onClick() }
+            }
+
+
     /**
      * Replaces the eleven Background rows with the artwork underneath and the stack over it, on
      * the same terms as [initTypographyEditor] and its three siblings.
@@ -3148,6 +4016,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         root.setTag(R.id.tag_handles_accent_locally, true)
         root.disableScrollbarsInSubtree()
 
+        root.findViewById<MaterialButton>(R.id.background_editor_source_button)
+                .setOnClickListener {
+                    openPreferenceDialog(MiscPreferences.WEAR_ALBUM_ART_SOURCE.key)
+                }
         root.findViewById<MaterialButton>(R.id.background_editor_artwork_button)
                 .setOnClickListener { openPreferenceDialog(MiscPreferences.ALBUM_ART_STYLE.key) }
         root.findViewById<MaterialButton>(R.id.background_editor_filter_button)
@@ -3166,6 +4038,47 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
     @SuppressLint("SetTextI18n") // "Title · value" is the editor's own notation, not prose.
     private fun renderBackgroundEditor(root: View) {
+        val sourceKey = MiscPreferences.WEAR_ALBUM_ART_SOURCE.key
+        val sourceButton = root.findViewById<MaterialButton>(R.id.background_editor_source_button)
+        val sourceValue = readStringPreference(
+                sourceKey, MiscPreferences.WEAR_ALBUM_ART_SOURCE.defaultValue)
+        sourceButton.text = choiceLabel(sourceKey, sourceValue)
+        sourceButton.contentDescription = buildPreferenceDescription(sourceKey, sourceButton.text)
+
+        // Shown only for a source that needs a file named. It has to be here rather than as a
+        // preference row, because the rows on this page are hidden behind this very editor - a
+        // picker declared in XML alone would be searchable and invisible, which is the exact state
+        // this page's own test exists to catch.
+        val pictureButton =
+                root.findViewById<MaterialButton>(R.id.background_editor_picture_button)
+        val pictureKey = when (AlbumArtSource.fromPref(sourceValue)) {
+            AlbumArtSource.CUSTOM_IMAGE -> MiscPreferences.CUSTOM_ALBUM_ART_IMAGE.key
+            AlbumArtSource.CUSTOM_FOLDER -> MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key
+            else -> null
+        }
+        pictureButton.isVisible = pictureKey != null
+        if (pictureKey != null) {
+            val isTree = pictureKey == MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key
+            val chosen = storedCustomArtworkName(pictureKey, isTree)
+            val label = findPreference<Preference>(pictureKey)?.title
+            pictureButton.text = if (chosen == null) {
+                getString(R.string.setting_custom_album_art_none)
+            } else {
+                "$label · $chosen"
+            }
+            // Both are Material Symbols vectors that tint at usage. ic_menu_gallery, which this
+            // used first, is a legacy asset with a hardcoded black fill and no `android:tint`, so
+            // it ignored the editor's icon tint and drew solid black against the Lyra surface.
+            pictureButton.setIconResource(
+                    if (isTree) R.drawable.ic_folder_open else R.drawable.ic_imagesearch_roller)
+            pictureButton.contentDescription =
+                    buildPreferenceDescription(pictureKey, pictureButton.text)
+            pictureButton.setOnClickListener {
+                if (isTree) pickArtworkFolderLauncher.launch(null)
+                else pickArtworkImageLauncher.launch(arrayOf("image/*"))
+            }
+        }
+
         val artworkKey = MiscPreferences.ALBUM_ART_STYLE.key
         val artworkButton = root.findViewById<MaterialButton>(R.id.background_editor_artwork_button)
         val artworkValue = readStringPreference(
@@ -3459,25 +4372,56 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val content = LayoutInflater.from(requireContext())
                 .inflate(R.layout.dialog_typography_slider, null)
         val slider = content.findViewById<Slider>(R.id.typography_slider)
-        val valueLabel = content.findViewById<TextView>(R.id.typography_slider_value)
+        val valueLayout = content.findViewById<TextInputLayout>(
+                R.id.typography_slider_value_layout)
+        val valueInput = content.findViewById<TextInputEditText>(R.id.typography_slider_value)
         content.findViewById<TextView>(R.id.typography_slider_min).text = "${range.first}%"
         content.findViewById<TextView>(R.id.typography_slider_max).text = "${range.last}%"
         var selected = initial.coerceIn(range)
+        var syncingManualValue = false
+        lateinit var dialog: AlertDialog
 
         slider.valueFrom = range.first.toFloat()
         slider.valueTo = range.last.toFloat()
         slider.stepSize = 1f
         slider.value = selected.toFloat()
-        fun renderValue(value: Int) {
+        valueLayout.hint = title
+        fun renderValue(value: Int, updateInput: Boolean = true) {
             selected = value.coerceIn(range)
-            valueLabel.text = "$selected%"
-            valueLabel.contentDescription = "$title. $selected%"
+            if (updateInput) {
+                val rawValue = selected.toString()
+                if (valueInput.text?.toString() != rawValue) {
+                    syncingManualValue = true
+                    valueInput.setText(rawValue)
+                    valueInput.setSelection(rawValue.length)
+                    syncingManualValue = false
+                }
+            }
+            valueLayout.error = null
+            valueInput.contentDescription = "$title. $selected%"
         }
         renderValue(selected)
+        valueInput.doAfterTextChanged { editable ->
+            if (syncingManualValue) return@doAfterTextChanged
+            val typed = editable?.toString()?.trim().orEmpty()
+            val manualValue = typed.toIntOrNull()
+            val valid = manualValue != null && manualValue in range
+            valueLayout.error = if (valid) {
+                null
+            } else {
+                getString(R.string.setting_numeric_range_error, range.first, range.last)
+            }
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.isEnabled = valid
+            if (!valid) return@doAfterTextChanged
+
+            selected = manualValue
+            if (slider.value != selected.toFloat()) slider.value = selected.toFloat()
+            renderValue(selected, updateInput = false)
+        }
         slider.addOnChangeListener { _, value, fromUser ->
             if (fromUser) renderValue(value.toInt())
         }
-        val dialog = AlertDialog.Builder(requireContext())
+        dialog = AlertDialog.Builder(requireContext())
                 .setTitle(title)
                 .setView(content)
                 .setNeutralButton(R.string.pref_reset_default, null)
@@ -3485,15 +4429,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 .setPositiveButton(android.R.string.ok) { _, _ -> onCommit(selected) }
                 .create()
         dialog.setOnShowListener {
-            val accent = lyraRuntimeAccent()
-            val surface = ContextCompat.getColor(requireContext(), R.color.lyra_surface)
-            val controlAccent = LyraAccent.contrastSafe(accent, surface, 3.0)
-            val textAccent = LyraAccent.contrastSafe(accent, surface, 4.5)
-            slider.thumbTintList = ColorStateList.valueOf(controlAccent)
-            slider.trackActiveTintList = ColorStateList.valueOf(controlAccent)
-            slider.haloTintList = ColorStateList.valueOf(
-                    ColorUtils.setAlphaComponent(controlAccent, 0x33))
-            dialog.applyLyraDialogStyling(accent = controlAccent, positiveColor = textAccent)
+            tintNumericSliderDialog(dialog, slider, valueLayout, valueInput)
             dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setOnClickListener {
                 slider.value = defaultValue.toFloat()
                 renderValue(defaultValue)
@@ -3532,6 +4468,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     }
 
     private fun backgroundControlIdFor(control: BackgroundControl): Int = when (control) {
+        BackgroundControl.SOURCE -> R.id.background_editor_source_button
+        BackgroundControl.PICTURE -> R.id.background_editor_picture_button
         BackgroundControl.ARTWORK -> R.id.background_editor_artwork_button
         BackgroundControl.FILTER -> R.id.background_editor_filter_button
         BackgroundControl.BLUR -> R.id.background_editor_blur_button
@@ -3595,6 +4533,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val accented = ColorStateList(states, intArrayOf(secondary, textAccent))
 
         listOf(
+                R.id.background_editor_source_button,
+                R.id.background_editor_picture_button,
                 R.id.background_editor_artwork_button,
                 R.id.background_editor_filter_button,
                 R.id.background_editor_blur_button
@@ -3648,6 +4588,273 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                             ColorUtils.setAlphaComponent(accent, 0x66),
                             ColorUtils.setAlphaComponent(divider, 0x99)))
         }
+    }
+
+    // ------------------------------------------------------ imported font / own pictures
+
+    /**
+     * Wires the "My own font" row: import when empty, replace-or-remove when loaded.
+     *
+     * A dialog rather than two rows, because "remove" is only meaningful once something is loaded
+     * and a permanently-present remove button on an empty slot reads as broken. The summary carries
+     * the loaded name so the row answers "which font" without being opened.
+     */
+    private fun initUserFontRow() {
+        val preference = findPreference<Preference>("user_font_import") ?: return
+        preference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val context = requireContext()
+            if (UserFontStore.hasFont(context)) {
+                AlertDialog.Builder(context)
+                        .setTitle(R.string.setting_user_font)
+                        .setMessage(UserFontStore.displayName(context))
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setNeutralButton(R.string.user_font_remove) { _, _ -> removeUserFont() }
+                        .setPositiveButton(R.string.user_font_replace) { _, _ -> launchFontPicker() }
+                        .show()
+                        .tintLyraButtons()
+            } else {
+                launchFontPicker()
+            }
+            true
+        }
+        refreshUserFontRow()
+        // After initTypographyDependencies, so chaining picks up the listener it installed.
+        installUserFontPickerInterceptors()
+    }
+
+    private fun launchFontPicker() {
+        try {
+            importFontLauncher.launch(UserFontContract.PICKER_MIME_TYPES)
+        } catch (e: android.content.ActivityNotFoundException) {
+            // A watch-paired phone without any documents provider is unusual but not impossible,
+            // and an unhandled crash here would take down the settings screen.
+            Timber.w(e, "No document picker is available for the font import")
+            Toast.makeText(requireContext(), R.string.user_font_error_unreadable,
+                    Toast.LENGTH_LONG).show()
+        }
+    }
+
+    /**
+     * Copies the picked file in, then refreshes every picker that can now offer it.
+     *
+     * The import reads and validates up to two megabytes, so it runs off the main thread; the
+     * result is applied back on it because it rebuilds preference rows.
+     */
+    private fun importUserFont(uri: android.net.Uri) {
+        val context = requireContext().applicationContext
+        lifecycleScope.launch {
+            val result = withContext(Dispatchers.IO) { UserFontStore.import(context, uri) }
+            if (!isAdded) {
+                pendingUserFontTarget = null
+                return@launch
+            }
+            when (result) {
+                is UserFontStore.ImportResult.Imported -> {
+                    Toast.makeText(context,
+                            getString(R.string.user_font_imported, result.displayName),
+                            Toast.LENGTH_LONG).show()
+                    // Rebuild the lists first: applyImportedFontTo selects an entry, and it has to
+                    // be one the picker already carries.
+                    refreshFontPickers()
+                    pendingUserFontTarget?.let(::applyImportedFontTo)
+                }
+                is UserFontStore.ImportResult.TooLarge -> Toast.makeText(context,
+                        getString(R.string.user_font_error_too_large,
+                                android.text.format.Formatter.formatShortFileSize(
+                                        context, result.byteCount),
+                                android.text.format.Formatter.formatShortFileSize(
+                                        context, UserFontContract.MAX_FONT_BYTES.toLong())),
+                        Toast.LENGTH_LONG).show()
+                UserFontStore.ImportResult.NotAFont -> Toast.makeText(context,
+                        R.string.user_font_error_not_a_font, Toast.LENGTH_LONG).show()
+                UserFontStore.ImportResult.Unreadable -> Toast.makeText(context,
+                        R.string.user_font_error_unreadable, Toast.LENGTH_LONG).show()
+            }
+            // Cleared on every path, success included: a target left behind would apply the next
+            // import to a picker the person had since moved on from.
+            pendingUserFontTarget = null
+        }
+    }
+
+    private fun removeUserFont() {
+        val context = requireContext().applicationContext
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) { UserFontStore.clear(context) }
+            if (!isAdded) return@launch
+            Toast.makeText(context, R.string.user_font_removed, Toast.LENGTH_SHORT).show()
+            refreshFontPickers()
+        }
+    }
+
+    /**
+     * Re-derives every picker that can offer the imported font, and the row that manages it.
+     *
+     * All six font controls, not only the global one: each is built from the same catalog, so an
+     * import that refreshed one would leave the other five unable to select the font that is now
+     * on the phone.
+     */
+    private fun refreshFontPickers() {
+        // The one function that rebuilds every font picker from the catalog, so an import cannot
+        // reach some of the six and not others.
+        applyArchivedOptionFilters()
+        refreshUserFontRow()
+        refreshTypographyEditor()
+        notifyPreviewInteraction(MiscPreferences.WEAR_FONT.key, null)
+    }
+
+    private fun refreshUserFontRow() {
+        val preference = findPreference<Preference>("user_font_import") ?: return
+        val name = context?.let(UserFontStore::displayName)
+        // Archived along with the picker row it feeds, and visible on the same two terms: with the
+        // developer switch on, or while this phone still holds a font - because removing one is
+        // only reachable from here, and hiding the row unconditionally would strand it.
+        preference.isVisible = archivedOptionsVisible() || name != null
+        preference.summary = if (name == null) {
+            getString(R.string.setting_user_font_empty)
+        } else {
+            getString(R.string.setting_user_font_loaded, name)
+        }
+    }
+
+    /** The developer "Show archived options" switch, read the same way
+     *  [applyArchivedOptionFilters] reads it. */
+    private fun archivedOptionsVisible(): Boolean = rawPrefs.getBoolean("dev_show_archived", false)
+
+    /** Opens the picker for each device-local artwork source, and keeps both summaries current. */
+    private fun initCustomArtworkRows() {
+        findPreference<Preference>(MiscPreferences.CUSTOM_ALBUM_ART_IMAGE.key)
+                ?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            pickArtworkImageLauncher.launch(arrayOf("image/*"))
+            true
+        }
+        findPreference<Preference>(MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key)
+                ?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            pickArtworkFolderLauncher.launch(null)
+            true
+        }
+        refreshCustomArtworkRows()
+    }
+
+    /**
+     * Takes a lasting read grant on the picked URI and stores it.
+     *
+     * The grant is the whole point of taking it: without `takePersistableUriPermission` the URI
+     * works until this process ends and then silently stops resolving, which would present as a
+     * background that disappears the next time the phone reboots. A provider that refuses to make
+     * one persistable throws, and that is reported rather than stored - a URI that cannot outlive
+     * the picker is not a setting.
+     *
+     * Written straight to the default preferences rather than through this screen's preference
+     * data store: these two keys are global, and going through a face-scoped store would be relying
+     * on its pass-through for something that is not an appearance value at all.
+     */
+    private fun persistCustomArtwork(uri: android.net.Uri, key: String) {
+        val context = requireContext()
+        try {
+            context.contentResolver.takePersistableUriPermission(
+                    uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        } catch (e: SecurityException) {
+            Timber.w(e, "Could not take a lasting grant on the picked artwork")
+            Toast.makeText(context, R.string.custom_album_art_error, Toast.LENGTH_LONG).show()
+            return
+        }
+        PreferenceManager.getDefaultSharedPreferences(context.applicationContext).edit()
+                .putString(key, uri.toString())
+                .apply()
+        Toast.makeText(
+                context,
+                if (key == MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key) {
+                    R.string.custom_album_art_folder_set
+                } else {
+                    R.string.custom_album_art_image_set
+                },
+                Toast.LENGTH_SHORT).show()
+        refreshCustomArtworkRows()
+        notifyPreviewInteraction(MiscPreferences.WEAR_ALBUM_ART_SOURCE.key, null)
+    }
+
+    /** Each row is shown only while the source that reads it is the selected one - a picker for a
+     *  file nothing is going to draw reads as broken, the same rule the face-specific rows follow. */
+    private fun updateCustomArtworkVisibility() {
+        val source = AlbumArtSource.fromPref(
+                readStringPreference(MiscPreferences.WEAR_ALBUM_ART_SOURCE.key,
+                        AlbumArtSource.DEFAULT.preferenceValue))
+        findPreference<Preference>(MiscPreferences.CUSTOM_ALBUM_ART_IMAGE.key)?.isVisible =
+                source == AlbumArtSource.CUSTOM_IMAGE
+        findPreference<Preference>(MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key)?.isVisible =
+                source == AlbumArtSource.CUSTOM_FOLDER
+        refreshCustomArtworkRows()
+    }
+
+    /**
+     * Puts the chosen file or folder's own name in each row's summary.
+     *
+     * Read through `DocumentFile` rather than from the URI's last path segment, which for a tree is
+     * an opaque document id and for a MediaStore image is a row number - the same reason
+     * `TrackMetadataReader` queries `DISPLAY_NAME` instead of parsing the URI. A name that cannot
+     * be read at all is reported as "not chosen": the grant is gone, so from here the picture is
+     * exactly as absent as if it had never been picked.
+     */
+    private fun refreshCustomArtworkRows() {
+        val context = context ?: return
+        listOf(
+                MiscPreferences.CUSTOM_ALBUM_ART_IMAGE.key,
+                MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key
+        ).forEach { key ->
+            val preference = findPreference<Preference>(key) ?: return@forEach
+            val name = storedCustomArtworkName(
+                    key, isTree = key == MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key)
+            preference.summary = if (name.isNullOrBlank()) {
+                getString(R.string.setting_custom_album_art_none)
+            } else {
+                getString(R.string.setting_custom_album_art_chosen, name)
+            }
+        }
+    }
+
+    /**
+     * The name a picked document or folder shows in its own provider.
+     *
+     * Queried rather than parsed out of the URI: a tree URI's last segment is an opaque document
+     * id and a MediaStore image's is a row number, so both would put a number where the row
+     * promises a name. A tree has to be resolved to its own document first - the tree URI itself
+     * is not queryable for a display name.
+     *
+     * Null on any failure, including the one that matters: a grant that has been revoked or a file
+     * that has been deleted. The caller reports that as "not chosen", which is what it now is.
+     */
+    /** The stored pick's own name for [key], or null when nothing is chosen or it can no longer
+     *  be read. Shared by the hidden row's summary and the Background editor's button so the two
+     *  cannot report different things about one choice. */
+    private fun storedCustomArtworkName(key: String, isTree: Boolean): String? {
+        val context = context ?: return null
+        val stored = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
+                .getString(key, "")
+                ?.takeIf { it.isNotBlank() }
+                ?: return null
+        return documentDisplayName(context, android.net.Uri.parse(stored), isTree)
+    }
+
+    private fun documentDisplayName(
+            context: android.content.Context,
+            uri: android.net.Uri,
+            isTree: Boolean
+    ): String? = try {
+        val target = if (isTree) {
+            DocumentsContract.buildDocumentUriUsingTree(
+                    uri, DocumentsContract.getTreeDocumentId(uri))
+        } else {
+            uri
+        }
+        context.contentResolver.query(
+                target,
+                arrayOf(DocumentsContract.Document.COLUMN_DISPLAY_NAME),
+                null, null, null)?.use { cursor ->
+            if (cursor.moveToFirst()) cursor.getString(0)?.takeIf { it.isNotBlank() } else null
+        }
+    } catch (e: Exception) {
+        Timber.d(e, "Could not read the picked artwork's name")
+        null
     }
 
     private fun initAppearanceResetActions() {
@@ -3826,21 +5033,20 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     ) {
         val face = overrideFace ?: readStringPreference("wear_screen_face", "classic")
         val selectedStyle = overrideStyle ?: readStringPreference("wear_aod_style", "follow")
-        val effectiveStyle = if (selectedStyle == "follow") face else selectedStyle
-        val visualStyle = effectiveStyle in setOf(
-            "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
-            "spectrum", "material", "immersive", "depth", "carousel", "chat", "split", "note",
-            "verse",
-            "metadata", "ribbon", "frame"
-        )
-        findPreference<Preference>("wear_aod_show_transport")?.isVisible = visualStyle
-        findPreference<Preference>("wear_aod_show_progress")?.isVisible = visualStyle
-        // The Up Next pill is offered on every visual AOD face now (not just Expressive/Material).
-        findPreference<Preference>("wear_aod_show_pills")?.isVisible = visualStyle
-        val artworkSupported = effectiveStyle !in setOf("chrono", "eclipse")
-        findPreference<Preference>("wear_aod_show_art")?.isVisible = artworkSupported
-        findPreference<Preference>("wear_aod_art_treatment")?.isVisible = artworkSupported
-        findPreference<Preference>("ambient_album_art_opacity")?.isVisible = artworkSupported
+        // One list, owned by the Always-on editor's model rather than repeated here - see
+        // AodEditorModel.VISUAL_STYLES. It was written twice, here and in
+        // WatchSearchTargetResolver, which is how a second copy of a decision list goes stale
+        // silently when a face is added.
+        val effectiveStyle = AodEditorModel.effectiveStyle(selectedStyle, face)
+        // Only the rows a style actually gates. The rest are owned elsewhere - notably the custom
+        // tint row, whose visibility belongs to initAccentColorTarget ("custom" alone) and which a
+        // blanket sweep would claim back on every face change.
+        AodEditorModel.specs
+                .filter { it.control in AodEditorModel.STYLE_GATED_CONTROLS }
+                .forEach { spec ->
+                    findPreference<Preference>(spec.key)?.isVisible =
+                            AodEditorModel.appliesToStyle(spec.control, effectiveStyle)
+                }
     }
 
     private fun initBlurRadiusDependency() {

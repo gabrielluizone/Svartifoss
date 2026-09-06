@@ -27,6 +27,9 @@
     <string name="dev_sync_watch_done">Ajustes sincronizados con el reloj</string>
     <string name="dev_copy_debug_info">Copiar información de depuración</string>
     <string name="dev_copy_debug_info_description">Copiar detalles de la compilación y el dispositivo al portapapeles</string>
+    <string name="dev_export_defaults">Exportar como valores predeterminados</string>
+    <string name="dev_export_defaults_description">Guarda esta configuración como default_config.json, el estado con el que arranca una instalación nueva. Deja fuera el historial, las decisiones de consentimiento y el estado propio de este teléfono.</string>
+    <string name="dev_export_defaults_done">Valores predeterminados exportados (%1$s)</string>
     <string name="dev_show_archived">Mostrar opciones archivadas</string>
     <string name="dev_show_archived_description">Revelar diseños y ajustes del reloj archivados por problemas conocidos</string>
     <string name="dev_copy_debug_info_done">Información de depuración copiada</string>
@@ -235,6 +238,9 @@
     <string name="category_music_colors">Colores de la música</string>
     <string name="preview_sample_title">Título de la canción</string>
     <string name="preview_sample_artist">Nombre del artista</string>
+    <string name="preview_sample_lyric_previous">La línea anterior</string>
+    <string name="preview_sample_lyric_current">La línea que suena ahora</string>
+    <string name="preview_sample_lyric_next">La línea siguiente</string>
     <string name="preview_sample_next_title">Siguiente canción</string>
     <string name="preview_playback_stopped">Detenido</string>
     <string name="category_gestures">Gestos y entrada</string>
@@ -445,8 +451,6 @@
     <string name="wear_font_small_caps_description">Formas compactas en mayúsculas con un toque editorial.</string>
     <string name="wear_font_casual">Casual</string>
     <string name="wear_font_casual_description">Una familia de sistema manuscrita y desenfadada.</string>
-    <string name="wear_font_typewriter">Máquina de escribir (Archivada)</string>
-    <string name="wear_font_typewriter_description">Un look retro de máquina de escribir (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Una sans geométrica redondeada, una alternativa libre (OFL) en el espíritu de Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -512,6 +516,12 @@
     <string name="setting_wear_quick_panel_color">Color de Acciones Rápidas</string>
     <string name="setting_wear_quick_panel_custom_color">Color personalizado de Acciones Rápidas</string>
     <string name="setting_wear_quick_panel_custom_color_description">Elige el color de Acciones Rápidas usado con el tratamiento Normal</string>
+    <string name="setting_wear_lyrics_color">Color de las letras</string>
+    <string name="setting_wear_lyrics_custom_color">Color personalizado de las letras</string>
+    <string name="setting_wear_lyrics_custom_color_description">Elige el color de las letras usado con el tratamiento Normal</string>
+    <string name="setting_wear_queue_color">Color de la cola</string>
+    <string name="setting_wear_queue_custom_color">Color personalizado de la cola</string>
+    <string name="setting_wear_queue_custom_color_description">Elige el color de la cola usado con el tratamiento Normal</string>
     <string name="setting_wear_shading_custom_color_description">Elige el color que tiñe el degradado de sombreado</string>
 
     <string-array name="wear_accent_color_entries">
@@ -544,8 +554,10 @@
         <item>Nota</item>
         <item>Verso</item>
         <item>Metadata</item>
+        <item>Artista</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -566,8 +578,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Búsqueda Expressive</string>
@@ -601,6 +615,7 @@
         <item>Dividido</item>
         <item>Nota</item>
         <item>Verso</item>
+        <item>Artista</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -619,6 +634,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -721,6 +737,12 @@
 
     <string name="category_overlays_queue">Superposiciones y cola</string>
     <string name="setting_wear_overlay_backdrop_style">Fondo del panel</string>
+    <string name="wear_backdrop_shared">Seguir el fondo compartido</string>
+    <string name="setting_wear_volume_backdrop_style">Fondo del volumen</string>
+    <string name="setting_wear_progress_backdrop_style">Fondo del progreso</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Fondo de acciones rápidas</string>
+    <string name="setting_wear_queue_backdrop_style">Fondo de la cola</string>
+    <string name="setting_wear_lyrics_backdrop_style">Fondo de las letras</string>
     <string name="setting_wear_volume_style">Estilo de volumen</string>
     <string name="setting_wear_volume_layout">Diseño de volumen</string>
     <string name="setting_wear_quick_panel_style">Estilo de panel rápido</string>
@@ -1577,10 +1599,14 @@
     <string name="setting_wear_source_icon_scale">Tamaño del icono de la app</string>
     <string name="setting_wear_source_icon_opacity">Opacidad del icono de la app</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 es el peso normal de la cara; más alto es más negrita. En Google Sans Flex, esto es el eje de peso propio de esa tipografía</string>
-    <string name="setting_wear_typography_scale_description">Porcentaje del tamaño propio de la cara (70–140). 100 mantiene el tamaño diseñado de cada diseño</string>
+    <string name="setting_wear_typography_scale_description">Porcentaje del tamaño propio de la cara (1–300). 100 mantiene el tamaño diseñado de cada diseño</string>
     <string name="setting_wear_typography_opacity_description">Porcentaje (20–100). 100 mantiene la opacidad propia de la cara</string>
     <string name="setting_wear_typography_tracking_description">Espacio extra entre letras, en centésimas de em (−5 a 20). 0 mantiene el espaciado propio de la tipografía</string>
     <string name="setting_wear_color_modifier">Tono</string>
+    <string name="setting_wear_title_color_modifier">Tono del título</string>
+    <string name="setting_wear_artist_color_modifier">Tono del artista</string>
+    <string name="setting_wear_clock_color_modifier">Tono del reloj</string>
+    <string name="wear_color_modifier_follow">Seguir el tono del reloj</string>
     <string name="setting_wear_color_modifier_description">Ajusta toda la paleta sin cambiar cómo se deriva — funciona con cualquier tratamiento de color</string>
     <string name="setting_wear_color_hue_shift">Desplazamiento de color</string>
     <string name="setting_wear_color_hue_shift_description">Rota la paleta del álbum alrededor de la rueda de color, en grados (0–359). Cada tratamiento mantiene su color principal en el propio tono del álbum, así que esto es lo que lo varía. 0 usa el color del álbum tal cual; un color Normal fijo nunca se desplaza.</string>
@@ -1675,7 +1701,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1794,7 +1819,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1815,7 +1847,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1934,7 +1965,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
     <string name="action_open_library">Explorar biblioteca</string>
     <string name="library_up">Atrás</string>
@@ -2175,6 +2213,7 @@
     <string name="category_wf_panel_seek">Panel de progreso y búsqueda</string>
     <string name="category_wf_panel_quick">Panel de Acciones rápidas</string>
     <string name="category_wf_panel_queue">Cola y listas</string>
+    <string name="category_wf_panel_lyrics">Letras</string>
     <string name="category_wf_panel_effects">Efectos de los paneles</string>
     <string name="category_apps_content">Letras y metadatos</string>
     <string name="category_streaming_services">Accesos directos de streaming</string>
@@ -2253,5 +2292,56 @@
         <item>Resaltado</item>
         <item>Suave</item>
         <item>Bloque</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Seguir cara</item>
+        <item>Inicio</item>
+        <item>Centrado</item>
+        <item>Final</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Seguir cara</item>
+        <item>Arriba</item>
+        <item>Centro</item>
+        <item>Abajo</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Estático (una línea, sin desplazamiento ni reducción)</item>
+        <item>Desplazar (marquesina)</item>
+        <item>Reducir para ajustar</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>De la app de música</item>
+        <item>Buscada en línea</item>
+        <item>Foto del artista</item>
+        <item>Imagen de mi galería</item>
+        <item>Aleatoria de una carpeta</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

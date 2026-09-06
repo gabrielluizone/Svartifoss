@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">Настройките са синхронизирани с часовника</string>
     <string name="dev_copy_debug_info">Копиране на информацията за отстраняване на грешки</string>
     <string name="dev_copy_debug_info_description">Копиране на данни за компилацията и устройството в клипборда</string>
+    <string name="dev_export_defaults">Експортиране като настройки по подразбиране</string>
+    <string name="dev_export_defaults_description">Записва тази конфигурация като default_config.json — състоянието, с което започва нова инсталация. Изключва историята, изборите за съгласие и състоянието на самия телефон.</string>
+    <string name="dev_export_defaults_done">Настройките по подразбиране са експортирани (%1$s)</string>
     <string name="dev_show_archived">Показване на архивираните опции</string>
     <string name="dev_show_archived_description">Показване на оформления и настройки на часовника, архивирани заради известни проблеми</string>
     <string name="dev_copy_debug_info_done">Информацията за отстраняване на грешки е копирана</string>
@@ -274,6 +277,9 @@
     <string name="setting_wear_font_flex_roundness_description">Смесва краищата на щрихите от остри (0) до напълно заоблени (100) за по-приятелско усещане.</string>
     <string name="preview_sample_title">Заглавие на песента</string>
     <string name="preview_sample_artist">Име на изпълнителя</string>
+    <string name="preview_sample_lyric_previous">Предишният ред</string>
+    <string name="preview_sample_lyric_current">Редът, който звучи сега</string>
+    <string name="preview_sample_lyric_next">Следващият ред</string>
     <string name="preview_sample_next_title">Следваща песен</string>
     <string name="preview_playback_stopped">Спряно</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -536,8 +542,6 @@
     <string name="wear_font_small_caps_description">Компактни форми като главни букви с редакционно усещане.</string>
     <string name="wear_font_casual">Неформален</string>
     <string name="wear_font_casual_description">Закачливо ръкописно системно семейство шрифтове.</string>
-    <string name="wear_font_typewriter">Пишеща машина (архивирано)</string>
-    <string name="wear_font_typewriter_description">Ретро вид на пишеща машина (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Заоблен геометричен безсерифен шрифт, безплатна (OFL) алтернатива в духа на Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -603,6 +607,12 @@
     <string name="setting_wear_quick_panel_color">Цвят на бързите действия</string>
     <string name="setting_wear_quick_panel_custom_color">Персонализиран цвят на бързите действия</string>
     <string name="setting_wear_quick_panel_custom_color_description">Изберете цвета на бързите действия, използван при Нормална обработка</string>
+    <string name="setting_wear_lyrics_color">Цвят на текста на песента</string>
+    <string name="setting_wear_lyrics_custom_color">Персонализиран цвят на текста на песента</string>
+    <string name="setting_wear_lyrics_custom_color_description">Изберете цвета на текста на песента, използван при Нормална обработка</string>
+    <string name="setting_wear_queue_color">Цвят на опашката</string>
+    <string name="setting_wear_queue_custom_color">Персонализиран цвят на опашката</string>
+    <string name="setting_wear_queue_custom_color_description">Изберете цвета на опашката, използван при Нормална обработка</string>
     <string name="setting_wear_shading_custom_color_description">Изберете цвета, който тонира градиента на засенчването</string>
 
     <string-array name="wear_accent_color_entries">
@@ -635,8 +645,10 @@
         <item>Нота</item>
         <item>Куплет</item>
         <item>Метаданни</item>
+        <item>Изпълнител</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -657,8 +669,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Експресивно превъртане</string>
@@ -692,6 +706,7 @@
         <item>Разделено</item>
         <item>Нота</item>
         <item>Куплет</item>
+        <item>Изпълнител</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -710,6 +725,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -816,8 +832,15 @@
     <string name="category_wf_panel_seek">Панел за напредък и превъртане</string>
     <string name="category_wf_panel_quick">Панел за бързи действия</string>
     <string name="category_wf_panel_queue">Опашка и списъци</string>
+    <string name="category_wf_panel_lyrics">Текст на песента</string>
     <string name="category_wf_panel_effects">Ефекти на панела</string>
     <string name="setting_wear_overlay_backdrop_style">Фон на панела</string>
+    <string name="wear_backdrop_shared">Като общия фон на панелите</string>
+    <string name="setting_wear_volume_backdrop_style">Фон на силата на звука</string>
+    <string name="setting_wear_progress_backdrop_style">Фон на напредъка</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Фон на бързите действия</string>
+    <string name="setting_wear_queue_backdrop_style">Фон на опашката</string>
+    <string name="setting_wear_lyrics_backdrop_style">Фон на текста на песента</string>
     <string name="setting_wear_volume_style">Стил на силата на звука</string>
     <string name="setting_wear_volume_layout">Оформление на силата на звука</string>
     <string name="setting_wear_quick_panel_style">Стил на бързия панел</string>
@@ -905,10 +928,14 @@
     <string name="setting_wear_source_icon_scale">Размер на иконата на приложението</string>
     <string name="setting_wear_source_icon_opacity">Непрозрачност на иконата на приложението</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 е нормалното тегло на циферблата; по-висока стойност е по-удебелена. При Google Sans Flex това е собствената ос за тегло на шрифта</string>
-    <string name="setting_wear_typography_scale_description">Процент от собствения размер на циферблата (70–140). 100 запазва проектирания размер на всяко оформление</string>
+    <string name="setting_wear_typography_scale_description">Процент от собствения размер на циферблата (1–300). 100 запазва проектирания размер на всяко оформление</string>
     <string name="setting_wear_typography_opacity_description">Процент (20–100). 100 запазва собствената непрозрачност на циферблата</string>
     <string name="setting_wear_typography_tracking_description">Допълнително разстояние между буквите, в стотни от em (−5 до 20). 0 запазва собствената разредка на шрифта</string>
     <string name="setting_wear_color_modifier">Тон</string>
+    <string name="setting_wear_title_color_modifier">Тон на заглавието</string>
+    <string name="setting_wear_artist_color_modifier">Тон на изпълнителя</string>
+    <string name="setting_wear_clock_color_modifier">Тон на часовника</string>
+    <string name="wear_color_modifier_follow">Следване на тона на часовника</string>
     <string name="setting_wear_color_modifier_description">Настройва цялата палитра, без да променя начина на извеждането ѝ — работи с всяка цветова обработка</string>
     <string name="setting_wear_color_hue_shift">Изместване на цвета</string>
     <string name="setting_wear_color_hue_shift_description">Завърта палитрата на албума по цветния кръг в градуси (0–359). Всяка обработка държи основния цвят върху собствения оттенък на албума, затова тази настройка го променя. 0 използва цвета на албума без промяна; фиксиран Нормален цвят никога не се измества.</string>
@@ -1301,7 +1328,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1420,7 +1446,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1441,7 +1474,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1560,7 +1592,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">Преглед на библиотеката</string>
@@ -2271,5 +2310,56 @@
         <item>Маркер</item>
         <item>Лек</item>
         <item>Блок</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Следвай циферблата</item>
+        <item>Начало</item>
+        <item>Центрирано</item>
+        <item>Край</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Следвай циферблата</item>
+        <item>Горе</item>
+        <item>Среда</item>
+        <item>Долу</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Статично (един ред, без превъртане или свиване)</item>
+        <item>Превъртане (marquee)</item>
+        <item>Свиване до побиране</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>От музикалното приложение</item>
+        <item>Търсене онлайн</item>
+        <item>Снимка на изпълнителя</item>
+        <item>Снимка от галерията ми</item>
+        <item>Случайна от папка</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

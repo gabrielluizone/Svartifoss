@@ -242,6 +242,46 @@ interface CommPaths {
          *  source app is unchanged). */
         const val ASSET_SOURCE_ICON = "SourceAppIcon"
 
+        /**
+         * The picture the player draws behind it, when that is not the sleeve in [ASSET_ALBUM_ART].
+         *
+         * Carries whichever non-local source the face asked for - the performing artist's picture,
+         * or an album cover looked up online (see `AlbumArtSource` and `OnlineArtworkFetcher`). One
+         * asset rather than one per source, because the watch's question is only ever "is there a
+         * backdrop other than the cover"; which source produced it is the phone's business and is
+         * already settled by the time the bytes are attached.
+         *
+         * Only attached while such a source is selected, since it is the only asset here the phone
+         * has to leave the device to obtain. The Data Layer addresses assets by content hash, so an
+         * artist whose album keeps playing costs one transfer and not one per track.
+         */
+        const val ASSET_BACKDROP_ART = "BackdropArt"
+
+        /**
+         * The typeface the user imported from their own storage, when they have imported one.
+         *
+         * Its own DataItem rather than a field in the preference snapshot, because it is the one
+         * user-supplied *file* the watch has to render with: `UserFontContract.MAX_FONT_BYTES` is
+         * twenty times the whole `/Settings` payload, which would blow the transport budget the
+         * scope selector exists to protect. It is also the one appearance input with the opposite
+         * update rhythm - preferences change constantly, a font is imported once and then never
+         * again - so putting it on its own item means the Data Layer's content addressing skips it
+         * entirely on every ordinary settings change.
+         *
+         * Published whenever the font changes and once per phone process start, for the reason
+         * `WatchThemeRepository.publishAvailableThemes` is: a font imported before this key existed
+         * would otherwise never reach a watch that had already synced.
+         *
+         * Handled by a manifest-registered listener on the watch, not only by `PhoneConnection` -
+         * a font imported while the watch app is closed must be on the wrist by the time it opens,
+         * which is the same gap `ConfigListenerService` closes for button configs.
+         */
+        const val DATA_USER_FONT = "/UserFont"
+
+        /** The imported typeface's bytes, attached to [DATA_USER_FONT]. Absent on that item means
+         *  the user cleared their font, which is distinct from the item never having existed. */
+        const val ASSET_USER_FONT = "UserFont"
+
         const val DATA_ACTION_CONFIG_PREFIX = "/Actions"
         const val DATA_LIST_ITEMS = "/ActionList"
 

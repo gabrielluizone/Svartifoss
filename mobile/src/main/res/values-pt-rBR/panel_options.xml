@@ -3,6 +3,7 @@
     <string name="setting_wear_progress_layout">Layout do anel de progresso</string>
 
     <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Totalmente transparente</item>
         <item>Cor secundária</item>
         <item>Cor terciária</item>
         <item>Malha de cores</item>

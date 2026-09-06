@@ -41,6 +41,7 @@ class WatchPreviewParityTest {
          * from every check below.
          */
         val AMBIENT_RENDERER_PAIRS = mapOf(
+                "ArtistAmbient" to "drawArtistAod",
                 "CarouselAmbient" to "drawCarouselAod",
                 "ChatAmbient" to "drawChatAod",
                 "ChronoAmbientFace" to "drawChronoAod",
@@ -80,7 +81,21 @@ class WatchPreviewParityTest {
                                 "loaded artwork either way, so it can honestly show neither state.",
                 "wear_quadrant_tap_flash" to
                         "Touch feedback shown while a quadrant is being pressed. A still " +
-                                "miniature has no press to render."
+                                "miniature has no press to render.",
+                "custom_album_art_image" to
+                        "A content:// URI, not a drawable value. readPreferenceSnapshot runs " +
+                                "synchronously on every preference change and cannot decode a " +
+                                "gallery photograph there. The picture is previewed: " +
+                                "WatchFaceFragment.refreshCustomBackdrop loads it off the main " +
+                                "thread and substitutes it in setNowPlaying, the same slot the " +
+                                "phone's live album cover already fills - which is also how the " +
+                                "watch does it, since MusicService resolves one backdrop and the " +
+                                "faces draw it through the ordinary artwork pipeline.",
+                "custom_album_art_folder" to
+                        "The same, for the folder source - previewed as the folder's first " +
+                                "picture rather than a random draw, since the miniature is a " +
+                                "still and re-rolling it on every slider move would read as a " +
+                                "glitch."
         )
 
         /**
@@ -106,7 +121,10 @@ class WatchPreviewParityTest {
                 "color_editor_surface",
                 "panel_editor_surface",
                 "background_editor_surface",
-                "player_editor_surface"
+                "player_editor_surface",
+                "aod_editor_surface",
+                "mini_button_editor_surface",
+                "user_font_import"
         )
 
     }

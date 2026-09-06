@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">設定已同步至手錶</string>
     <string name="dev_copy_debug_info">複製偵錯資訊</string>
     <string name="dev_copy_debug_info_description">將版本與裝置詳細資訊複製到剪貼簿</string>
+    <string name="dev_export_defaults">匯出為應用程式預設值</string>
+    <string name="dev_export_defaults_description">將目前設定儲存為 default_config.json，即全新安裝的初始狀態。不包含歷史記錄、同意選項與本機自身狀態。</string>
+    <string name="dev_export_defaults_done">已匯出預設值（%1$s）</string>
     <string name="dev_show_archived">顯示已封存選項</string>
     <string name="dev_show_archived_description">顯示因已知問題而封存的手錶版面配置與設定</string>
     <string name="dev_copy_debug_info_done">已複製偵錯資訊</string>
@@ -273,6 +276,9 @@
     <string name="setting_wear_font_flex_roundness_description">將筆畫端點從銳利（0）調至完全圓潤（100），營造更親切的感覺。</string>
     <string name="preview_sample_title">歌曲標題</string>
     <string name="preview_sample_artist">演出者名稱</string>
+    <string name="preview_sample_lyric_previous">上一句</string>
+    <string name="preview_sample_lyric_current">正在播放的這一句</string>
+    <string name="preview_sample_lyric_next">下一句</string>
     <string name="preview_sample_next_title">下一首歌</string>
     <string name="preview_playback_stopped">已停止</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -535,8 +541,6 @@
     <string name="wear_font_small_caps_description">緊湊的大寫字母造型，帶有編輯排版風格。</string>
     <string name="wear_font_casual">休閒</string>
     <string name="wear_font_casual_description">活潑俏皮的手寫系統字族。</string>
-    <string name="wear_font_typewriter">打字機（封存）</string>
-    <string name="wear_font_typewriter_description">復古打字機風格（Mom\'s Typewriter）。</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">圓潤的幾何無襯線字體，是具有 Circular 風格的免費（OFL）替代方案。</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -602,6 +606,12 @@
     <string name="setting_wear_quick_panel_color">快速動作顏色</string>
     <string name="setting_wear_quick_panel_custom_color">快速動作自訂顏色</string>
     <string name="setting_wear_quick_panel_custom_color_description">選擇「一般」處理時使用的快速動作顏色</string>
+    <string name="setting_wear_lyrics_color">歌詞顏色</string>
+    <string name="setting_wear_lyrics_custom_color">歌詞自訂顏色</string>
+    <string name="setting_wear_lyrics_custom_color_description">選擇「一般」處理時使用的歌詞顏色</string>
+    <string name="setting_wear_queue_color">佇列顏色</string>
+    <string name="setting_wear_queue_custom_color">佇列自訂顏色</string>
+    <string name="setting_wear_queue_custom_color_description">選擇「一般」處理時使用的佇列顏色</string>
     <string name="setting_wear_shading_custom_color_description">選擇為陰影漸層著色的顏色</string>
 
     <string-array name="wear_accent_color_entries">
@@ -634,8 +644,10 @@
         <item>音符</item>
         <item>歌詞</item>
         <item>中繼資料</item>
+        <item>歌手</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -656,8 +668,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">表現式搜尋</string>
@@ -691,6 +705,7 @@
         <item>分割</item>
         <item>音符</item>
         <item>歌詞</item>
+        <item>歌手</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -709,6 +724,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -815,8 +831,15 @@
     <string name="category_wf_panel_seek">進度與搜尋面板</string>
     <string name="category_wf_panel_quick">快速動作面板</string>
     <string name="category_wf_panel_queue">佇列與清單</string>
+    <string name="category_wf_panel_lyrics">歌詞</string>
     <string name="category_wf_panel_effects">面板效果</string>
     <string name="setting_wear_overlay_backdrop_style">面板背景</string>
+    <string name="wear_backdrop_shared">跟隨共用面板背景</string>
+    <string name="setting_wear_volume_backdrop_style">音量背景</string>
+    <string name="setting_wear_progress_backdrop_style">進度背景</string>
+    <string name="setting_wear_quick_panel_backdrop_style">快速動作背景</string>
+    <string name="setting_wear_queue_backdrop_style">佇列背景</string>
+    <string name="setting_wear_lyrics_backdrop_style">歌詞背景</string>
     <string name="setting_wear_volume_style">音量樣式</string>
     <string name="setting_wear_volume_layout">音量版面</string>
     <string name="setting_wear_quick_panel_style">快速面板樣式</string>
@@ -904,10 +927,14 @@
     <string name="setting_wear_source_icon_scale">應用程式圖示大小</string>
     <string name="setting_wear_source_icon_opacity">應用程式圖示不透明度</string>
     <string name="setting_wear_typography_weight_description">1–1000。400 是錶面的正常字重；數值越高越粗。對 Google Sans Flex 而言，這就是該字型自身的字重軸</string>
-    <string name="setting_wear_typography_scale_description">相對於錶面原始大小的百分比（70–140）。100 會保留各版面的設計大小</string>
+    <string name="setting_wear_typography_scale_description">相對於錶面原始大小的百分比（1–300）。100 會保留各版面的設計大小</string>
     <string name="setting_wear_typography_opacity_description">百分比（20–100）。100 會保留錶面原始不透明度</string>
     <string name="setting_wear_typography_tracking_description">字母間額外空間，以 em 的百分之一為單位（−5 到 20）。0 保留字型原始字距</string>
     <string name="setting_wear_color_modifier">色調</string>
+    <string name="setting_wear_title_color_modifier">標題色調</string>
+    <string name="setting_wear_artist_color_modifier">演出者色調</string>
+    <string name="setting_wear_clock_color_modifier">時鐘色調</string>
+    <string name="wear_color_modifier_follow">跟隨手錶色調</string>
     <string name="setting_wear_color_modifier_description">在不改變調色盤生成方式的情況下調整整體 — 適用於所有色彩處理</string>
     <string name="setting_wear_color_hue_shift">色彩偏移</string>
     <string name="setting_wear_color_hue_shift_description">以角度（0–359）在色環上旋轉專輯調色盤。每種處理都會讓主色保持在專輯本身的色相，因此可用此設定改變它。0 直接使用專輯色；固定的「一般」顏色不會偏移。</string>
@@ -1300,7 +1327,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1419,7 +1445,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1440,7 +1473,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1559,7 +1591,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">瀏覽媒體庫</string>
@@ -2267,5 +2306,56 @@
         <item>螢光筆</item>
         <item>輕微</item>
         <item>實底</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>跟隨錶面</item>
+        <item>起始</item>
+        <item>置中</item>
+        <item>末端</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>跟隨錶面</item>
+        <item>頂部</item>
+        <item>中間</item>
+        <item>底部</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>靜態（單行，不捲動也不縮小）</item>
+        <item>捲動（跑馬燈）</item>
+        <item>縮小以適合</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>來自音樂應用程式</item>
+        <item>線上取得</item>
+        <item>歌手照片</item>
+        <item>我圖庫中的圖片</item>
+        <item>從資料夾隨機選取</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

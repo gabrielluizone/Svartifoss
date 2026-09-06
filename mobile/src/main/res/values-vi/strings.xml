@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">Đã đồng bộ cài đặt với đồng hồ</string>
     <string name="dev_copy_debug_info">Sao chép thông tin gỡ lỗi</string>
     <string name="dev_copy_debug_info_description">Sao chép thông tin bản dựng và thiết bị vào bảng nhớ tạm</string>
+    <string name="dev_export_defaults">Xuất làm mặc định của ứng dụng</string>
+    <string name="dev_export_defaults_description">Lưu thiết lập này thành default_config.json, trạng thái mà một bản cài mới bắt đầu. Không gồm lịch sử, lựa chọn đồng ý và trạng thái riêng của điện thoại này.</string>
+    <string name="dev_export_defaults_done">Đã xuất mặc định (%1$s)</string>
     <string name="dev_show_archived">Hiển thị tùy chọn đã lưu trữ</string>
     <string name="dev_show_archived_description">Hiển thị các bố cục và cài đặt đồng hồ đã lưu trữ do có lỗi đã biết</string>
     <string name="dev_copy_debug_info_done">Đã sao chép thông tin gỡ lỗi</string>
@@ -286,6 +289,9 @@ Một số gói biểu tượng yêu cầu ứng dụng có quyền truy cập b
     <string name="setting_wear_font_flex_roundness_description">Chuyển đầu nét từ sắc (0) tới bo tròn hoàn toàn (100) để có cảm giác thân thiện hơn.</string>
     <string name="preview_sample_title">Tên bài hát</string>
     <string name="preview_sample_artist">Tên nghệ sĩ</string>
+    <string name="preview_sample_lyric_previous">Dòng trước</string>
+    <string name="preview_sample_lyric_current">Dòng đang phát</string>
+    <string name="preview_sample_lyric_next">Dòng tiếp theo</string>
     <string name="preview_sample_next_title">Bài tiếp theo</string>
     <string name="preview_playback_stopped">Đã dừng</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -558,8 +564,6 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
     <string name="wear_font_small_caps_description">Dáng chữ giống chữ hoa gọn với cảm giác biên tập.</string>
     <string name="wear_font_casual">Thoải mái</string>
     <string name="wear_font_casual_description">Họ chữ hệ thống viết tay vui nhộn.</string>
-    <string name="wear_font_typewriter">Máy đánh chữ (Đã lưu trữ)</string>
-    <string name="wear_font_typewriter_description">Giao diện máy đánh chữ cổ điển (Mom’s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Sans hình học bo tròn, lựa chọn miễn phí (OFL) theo tinh thần Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -625,6 +629,12 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
     <string name="setting_wear_quick_panel_color">Màu Hành động nhanh</string>
     <string name="setting_wear_quick_panel_custom_color">Màu Hành động nhanh tùy chỉnh</string>
     <string name="setting_wear_quick_panel_custom_color_description">Chọn màu Hành động nhanh dùng với xử lý Bình thường</string>
+    <string name="setting_wear_lyrics_color">Màu lời bài hát</string>
+    <string name="setting_wear_lyrics_custom_color">Màu lời bài hát tùy chỉnh</string>
+    <string name="setting_wear_lyrics_custom_color_description">Chọn màu lời bài hát dùng với xử lý Bình thường</string>
+    <string name="setting_wear_queue_color">Màu hàng đợi</string>
+    <string name="setting_wear_queue_custom_color">Màu hàng đợi tùy chỉnh</string>
+    <string name="setting_wear_queue_custom_color_description">Chọn màu hàng đợi dùng với xử lý Bình thường</string>
     <string name="setting_wear_shading_custom_color_description">Chọn màu nhuộm dải chuyển đổ bóng</string>
 
     <string-array name="wear_accent_color_entries">
@@ -657,8 +667,10 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>Ghi chú</item>
         <item>Lời thơ</item>
         <item>Siêu dữ liệu</item>
+        <item>Nghệ sĩ</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -679,8 +691,10 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Tua Biểu cảm</string>
@@ -714,6 +728,7 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>Chia đôi</item>
         <item>Ghi chú</item>
         <item>Lời thơ</item>
+        <item>Nghệ sĩ</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -732,6 +747,7 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -838,8 +854,15 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
     <string name="category_wf_panel_seek">Bảng tiến trình &amp; tua</string>
     <string name="category_wf_panel_quick">Bảng hành động nhanh</string>
     <string name="category_wf_panel_queue">Hàng đợi &amp; danh sách</string>
+    <string name="category_wf_panel_lyrics">Lời bài hát</string>
     <string name="category_wf_panel_effects">Hiệu ứng bảng</string>
     <string name="setting_wear_overlay_backdrop_style">Nền bảng</string>
+    <string name="wear_backdrop_shared">Theo nền bảng dùng chung</string>
+    <string name="setting_wear_volume_backdrop_style">Nền âm lượng</string>
+    <string name="setting_wear_progress_backdrop_style">Nền tiến trình</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Nền hành động nhanh</string>
+    <string name="setting_wear_queue_backdrop_style">Nền hàng đợi</string>
+    <string name="setting_wear_lyrics_backdrop_style">Nền lời bài hát</string>
     <string name="setting_wear_volume_style">Kiểu âm lượng</string>
     <string name="setting_wear_volume_layout">Bố cục âm lượng</string>
     <string name="setting_wear_quick_panel_style">Kiểu bảng nhanh</string>
@@ -927,10 +950,14 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
     <string name="setting_wear_source_icon_scale">Kích thước biểu tượng ứng dụng</string>
     <string name="setting_wear_source_icon_opacity">Độ mờ biểu tượng ứng dụng</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 là độ đậm bình thường của mặt; số cao hơn đậm hơn. Với Google Sans Flex, đây là trục độ đậm riêng của phông</string>
-    <string name="setting_wear_typography_scale_description">Phần trăm kích thước riêng của mặt (70–140). 100 giữ kích thước được thiết kế cho từng bố cục</string>
+    <string name="setting_wear_typography_scale_description">Phần trăm kích thước riêng của mặt (1–300). 100 giữ kích thước được thiết kế cho từng bố cục</string>
     <string name="setting_wear_typography_opacity_description">Phần trăm (20–100). 100 giữ độ mờ riêng của mặt</string>
     <string name="setting_wear_typography_tracking_description">Khoảng cách bổ sung giữa các chữ, tính bằng phần trăm của em (−5 đến 20). 0 giữ khoảng cách riêng của phông</string>
     <string name="setting_wear_color_modifier">Tông</string>
+    <string name="setting_wear_title_color_modifier">Tông của tiêu đề</string>
+    <string name="setting_wear_artist_color_modifier">Tông của nghệ sĩ</string>
+    <string name="setting_wear_clock_color_modifier">Tông của đồng hồ</string>
+    <string name="wear_color_modifier_follow">Theo tông của đồng hồ</string>
     <string name="setting_wear_color_modifier_description">Điều chỉnh toàn bộ bảng màu mà không đổi cách tạo ra nó — hoạt động với mọi xử lý màu</string>
     <string name="setting_wear_color_hue_shift">Dịch màu</string>
     <string name="setting_wear_color_hue_shift_description">Xoay bảng màu album quanh bánh xe màu theo độ (0–359). Mỗi xử lý giữ màu chính ở sắc màu riêng của album, nên đây là cách thay đổi nó. 0 dùng màu album nguyên bản; màu Bình thường cố định không bao giờ bị dịch.</string>
@@ -1323,7 +1350,6 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1442,7 +1468,14 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1463,7 +1496,6 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1582,7 +1614,14 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">Duyệt thư viện</string>
@@ -2292,5 +2331,56 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
         <item>Bút dạ quang</item>
         <item>Nhẹ</item>
         <item>Khối</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Theo mặt</item>
+        <item>Đầu dòng</item>
+        <item>Giữa</item>
+        <item>Cuối dòng</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Theo mặt</item>
+        <item>Trên</item>
+        <item>Giữa</item>
+        <item>Dưới</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Tĩnh (một dòng, không cuộn hoặc thu nhỏ)</item>
+        <item>Cuộn (marquee)</item>
+        <item>Thu nhỏ cho vừa</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>Từ ứng dụng nhạc</item>
+        <item>Tra cứu trực tuyến</item>
+        <item>Ảnh nghệ sĩ</item>
+        <item>Ảnh trong thư viện của tôi</item>
+        <item>Ngẫu nhiên từ một thư mục</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

@@ -4,6 +4,183 @@
 
 ### Added
 
+- **Title, Artist and Clock each have a Tone of their own.** The tone filter — *None, Vibrant,
+  Pastel, Warm, Cool* — existed only as one watch-wide control on the **Colors from the music**
+  card. All three elements now carry their own, right under their colour mode, so a pastel clock
+  over a vibrant title stopped being unreachable despite the two colours already being
+  independently configurable.
+
+  All three ship as **Follow watch tone**, which is what makes the addition safe: no face, saved
+  theme, backup or published theme changes appearance until somebody picks a tone. An empty or
+  unrecognised value — from an imported backup, a gallery theme, or a newer build — resolves the
+  same way, because quietly stripping the watch-wide tone off one element is the more surprising
+  of the two answers.
+
+  The clock resolves its tone against the raw album colour rather than the face-wide accent, so
+  choosing a tone here substitutes for the global one instead of stacking two filters on top of
+  each other. The Watch tab preview follows all three.
+
+- **Every panel surface can have a background of its own.** *Panel background* was one watch-wide
+  choice, so the five surfaces that paint one could only ever agree. Volume, Progress, Quick
+  actions, Queue and Lyrics each get their own picker on the Panels page: keep following the
+  shared choice, or name a background for that window alone.
+
+  All five ship as **Follow shared panel appearance**, so nothing changes until one is given a
+  background of its own — and an unrecognised value, from an imported backup or a newer build,
+  defers the same way rather than being read as some other background.
+
+  The Panels page gained a **Lyrics** tab for it, which it never had: the lyrics screen is a full
+  screen like the queue, and until now there was nothing on that page to give it.
+
+- **The Queue and the Lyrics screen draw your background, like every other screen.** Those two
+  were the only surfaces in the app painting a flat black field. The player draws the whole
+  background stack; the volume, progress and quick-action panels draw that stack with the *Shared
+  panel appearance* background over it — so one theme produced three kinds of screen, and the two
+  odd ones out were the two you spend the longest looking at.
+
+  It is also what the queue's own default row style has always promised and never delivered:
+  "glass" is *frosted panels over the blur backdrop*, and frosted glass over black is just dark
+  grey.
+
+  **This changes how the queue looks by default.** With *Shared panel appearance* left on Follow
+  style, the queue now follows its row style the same way the panels follow theirs — so a default
+  install goes from black to the blurred cover. Setting the queue's style to Minimal, or naming
+  Black under Shared panel appearance, restores the flat field. The lyrics screen has no row style
+  of its own, so Follow resolves to solid black there: it keeps exactly the ground it was designed
+  on unless you name a backdrop, and always-on display keeps it regardless, since an AOD panel
+  must not light artwork.
+
+- **The Lyrics screen and the Queue can be coloured, like every other surface.** The Colors page
+  offered Title, Artist, Clock, Progress, Volume and Quick actions; the two full screens that were
+  missing from that list now sit beside them, each with its own treatment and its own custom
+  colour.
+
+  Adding the two controls also closed a gap underneath them. Both screens derived their accent
+  straight from the cover, which meant the global palette — the colour treatment, the modifier,
+  the hue shift and the picked Normal colour — reached every other surface in the app and stopped
+  at those two: a hue-shifted, monochrome or hand-picked theme left the lyrics and the queue
+  showing the raw album colour and there was nothing anywhere to say why. Both now resolve through
+  the same shared resolver the volume and progress panels use, so they follow the palette by
+  default and depart from it only where you ask.
+
+  The queue also picked its colour by a rule of its own — the first named swatch it found —
+  instead of the **Album accent source** setting, so a cover whose brightest patch is a lens flare
+  could send the queue red while the player stayed blue. It now asks the same question everything
+  else does.
+
+  The Watch tab previews both: the queue miniature is coloured by the new setting, and the Lyrics
+  screen gets a miniature it never had, showing the line before, the line playing and the line
+  after with the accent where the watch puts it.
+
+- **Your own font, and your own pictures behind the player — both archived.** Two features were
+  built and did not work well enough in practice, so they are hidden behind the developer
+  **Show archived options** switch rather than removed: importing a `.ttf`/`.otf` of your own for
+  the track typefaces, and setting Album art source to a picture or a folder from your gallery.
+  Nothing is offered on an ordinary install. Turn the switch on and both come back — the font as
+  **My own font** in every typeface list, the two sources beside *Artist picture* and *Looked up
+  online*.
+
+  Archived rather than deleted so nothing already configured breaks: the stored values still
+  resolve, a face still set to one keeps rendering it, saved themes keep working, and the rows that
+  manage them stay reachable while they are in use, so an imported font can always be removed.
+
+  Themes built on either can never be published — both name a file only your phone has, and a
+  published theme carries settings rather than megabytes, so a gallery copy would install cleanly
+  and then render in a typeface, or over a photograph, the recipient has never had. Submitting one
+  is refused up front, before any sign-in, with a message naming the setting responsible and saying
+  the limit is deliberate rather than something to go and change.
+
+- **A face built around the artist, not the album: Artist.** The twenty-second face puts a
+  picture of the performer behind the track and leads with their name — the playing app's mark,
+  then the artist at title size, then the track a step below it. Every other face here is built
+  around the record sleeve and treats the credit line as a caption; this one inverts that.
+
+  Android carries no artist pictures anywhere — MediaStore has never stored them, the playing app
+  publishes no field for one, and a player that shows them keeps them in private storage no other
+  app can read — so the phone looks the name up in Deezer's public catalogue, the same free,
+  keyless source music players use for this. Nothing is looked up unless you select this face,
+  each artist costs one request, and an artist Deezer does not list is remembered as such for a
+  week. Where there is no picture the album cover arrives instead and the face is simply a
+  different treatment of the same screen. **Artist pictures** (Settings → Apps) switches the
+  lookup off; the privacy policy describes exactly what is sent.
+
+  The picture is not painted by the face — it replaces the cover in the one artwork pipeline —
+  so the background styles, the artwork filters, the shading stack and the accent floor all
+  apply to it, and every colour on the face, the clock included, is drawn from the picture
+  actually on screen rather than from a sleeve nobody can see, and every Album art style, filter
+  and shading layer applies to it exactly as it would to a cover.
+
+- **The cross-fade between two covers can no longer freeze half way.** Swapping the artwork
+  animates a `TransitionDrawable`, which only advances while it is being drawn — so if drawing
+  stopped mid-fade (the wrist dropping, the watch going always-on) it stayed frozen at whatever
+  opacity it had reached, leaving two covers blended on top of each other until something else
+  re-rendered. The callback that puts the finished frame in place was only ever scheduled on one
+  of the two fade paths; it is now on both. This was reachable before, but only when consecutive
+  covers happened to share a shape — which artist pictures, being uniformly square, always do.
+
+- **Album art source: choose which picture goes behind the player.** A new row on the Watch tab,
+  beside Album art style, and the two are deliberately different questions: the source decides
+  *which* picture, the style decides *how* it is treated. **From the music app** is the default
+  and is what the app has always done. **Artist picture** puts the performer there instead — on
+  any face, not only the Artist one. **Looked up online** fetches an album cover for the players
+  that publish none.
+
+  The two lookups share one keyless request to Deezer's public catalogue, which returns the cover
+  and the artist picture together, and the phone makes it — a watch on Bluetooth has no internet
+  of its own. Each artist (or track, for a cover) is fetched once and cached, a record Deezer does
+  not list is remembered as such for a week, and **Online artwork** (Settings → Apps) refuses the
+  lookup outright. It is saved per face and travels in a theme like any other appearance setting.
+  The privacy policy describes exactly what is sent.
+
+- **The artist line gained a Text behavior of its own.** The title has had one since it shipped;
+  the artist never did, so a long credit was simply cut on every layout with no way to ask for
+  anything else. Text → Artist now offers the three single-line answers — keep it, scroll it, or
+  shrink it to fit — on all twenty-two faces. The wrap tiers are deliberately not offered: every
+  face reserves exactly one line for this credit, so wrapping it would push it into whatever the
+  layout puts below. It defaults to **Static**, which is the single ellipsized line every face
+  already drew, so nothing changes until you pick something.
+
+- **Text alignment and text position, on every face.** Two new rows on the Watch tab's Player
+  page move a face's block of track text: to the leading edge, the centre or the trailing edge,
+  and to the top, middle or bottom of the screen. Both default to **Follow face**, which keeps
+  the arrangement each face was designed with — so nothing you have saved changes appearance,
+  and every face is adjustable rather than only the ones somebody thought to add a switch for.
+  Both are saved per face and travel in custom and community themes like any other appearance
+  setting.
+
+- **Export as app defaults (developer mode).** Svartifoss ships with the author's own setup as its
+  starting point rather than a generic first run — a fresh install reads a bundled
+  `default_config.json` — but until now there was no way to *produce* that file from a phone, so
+  keeping it current meant hand-editing a backup. Settings → Developer now writes it directly.
+  It is deliberately not the same document the ordinary backup makes: this one is compiled into
+  the app and applied to strangers, so it carries the buttons, actions, settings, the whole watch
+  appearance and theme library, the saved playlist shortcuts and their icons — and leaves out the
+  search and listening history, the crash-reporting and announcement choices (yours to make, not
+  to inherit), everything recording what this phone has already done, and the app language, which
+  would otherwise open the app in one person's language on everybody's device. The saved file
+  reports its own size, since those icons travel inside the release.
+
+- **A tribute face: MatejDro, the original app's screen.** Svartifoss is a fork of
+  [WearMusicCenter](https://github.com/matejdro/WearMusicCenter), and this face is that app's own
+  now-playing screen brought back as it was in 2017 — the artist over a big bold title, the two
+  filling the whole display in proportional bands rather than sitting as a centred block, over an
+  evenly darkened cover, with the four quadrant hint icons and nothing else: no progress ring, no
+  mini-button row, no source badge. It is set in the watch's own system typeface, which is what
+  the original used; nothing extra is bundled and no new licence applies. Everything about it
+  beyond the two text bands is an ordinary setting, so it can be recoloured, re-fonted or given
+  its progress ring back. It is a period piece rather than a face for every day, so it lives with
+  the other archived layouts: turn on **Show archived options** in Settings → Developer to find it
+  in the face picker. Being archived, it is also not a base others can publish a community theme
+  on.
+
+- **Streaming shortcuts now recognize five more services.** Qobuz, Bandcamp, Audiomack,
+  Mixcloud and Pandora share links get their own service label and can be sent directly to the
+  official Android app when it is installed, bringing the recognized set from seven to twelve.
+  The action picker also gains Deezer Flow, the one stable account-wide Deezer destination that
+  does not depend on discovering a user-specific playlist ID. As with every streaming shortcut,
+  Svartifoss tries background playback first and visibly opens the link when the target app does
+  not accept that contract.
+
 - **A double pinch can now run a different action while music is playing or paused.** Controls
   gains a Hand gestures section in both **Music playing** and **No playback** — archived, so it
   appears only with **Show archived options** switched on in Settings, since barely any watch can
@@ -63,7 +240,55 @@
 
 - **The title can now be what sits in the middle of the screen.** On Classic, Poster and Studio the point that lands on the centre of the display has always been the middle of the whole text block, so it drifted the moment a title wrapped to a second line or an artist name appeared — the title itself was never quite where you expected it. Player → **On screen** gains **Center the title**: with it on, the block slides until the title's own centre is the fixed point and everything else hangs off it. It is a shift, never a reshuffle — Classic keeps the artist above the title where it has always drawn it, and Poster and Studio keep theirs below. Off by default, saved per layout and per theme like every other appearance choice, and shown live in the phone's preview. The three other layouts are not offered it: they anchor their title to an edge of their own composition, so it would move nothing there.
 
+- **Text can now be set up to 300% of a layout's designed size, instead of 140%.** Title, artist, playback time, clock and the playing-app icon all share one size ceiling, and it was set low on the reasoning that the layouts reserve fixed vertical space for the title block — so a bigger multiplier would push the artist line into the controls rather than look bigger. That describes what happens at the top of the range, not a reason to withhold it: a title set very large is a real look on a layout built around one line of text, every title already obeys your **Title text behaviour** choice for what to do when a line does not fit, and the phone's preview shows the collision before the watch does. Where a size overruns the composition is now yours to pick and to see. The floor stays at 70%.
+
+- **Always-on and Mini buttons are now contextual editors, like the rest of the Watch tab.** The two pages that were still a plain list of rows now match Player, Text, Colors, Panel and Background. **Always-on** leads with the ambient style, its tint and its brightness, then answers "what is on this screen?" once as a field of chips — Artwork, Clock, Track info, Transport, Progress, Up Next — instead of six sentences each ending in "on always-on display", and gives the artwork its own card that appears only when the style draws one and you have it switched on. **Mini buttons** puts the way to *assign* what the buttons do first, since that happens on the Controls tab and nothing on the page used to say so, then the row's visibility, arrangement, shape, background and opacity, with the screen-gesture setting in a card of its own. Both pages hide the controls the current layout cannot use, both carry the live value on every row, and Settings search still lands on the exact control it pointed at. Nothing about what is stored, synced, backed up or saved into a theme changes: the pages are a new view over the same preferences.
+
+- **Six new developer-section diagnostics (developer mode).** Settings → Developer can now show, on demand: the watch preference snapshot that would actually be pushed right now (active appearance scope, its estimated size, and which inactive face-scope caches were dropped to fit the budget); the raw Data Layer state behind "No watch connected" (connected nodes plus the last WatchInfo the watch answered with); every currently active MediaSession rather than only the tracked one (advertised actions, queue, playback route, MediaBrowserService); the on-disk phone log without leaving the app; a preflight that runs every saved watch theme through the community submission check and names the exact setting that would block it; and, for every scoped appearance key, which of the four resolution steps actually won (explicit face value, per-face default, legacy global, or definition default) and the value each returns. Each opens as a scrollable report with a one-tap copy.
+
+- **The on-watch developer overlay (Show watch player info) now includes the playback-sync clock's own bookkeeping**: the current backoff interval, the last measured round trip and drift, and running counts of snapped/fractional/tolerated corrections and unanswered checks - the numbers behind `PlaybackClock`'s corrections, which previously only ever reached a `Timber.d` line.
+
+- **The streaming-shortcut playback ladder now narrates its own three steps to the phone log** (playFromUri, MediaBrowserService, the visible open) instead of only logging the cases it already had a reason to - so "View phone log" in Developer settings shows which step a shortcut actually took the next time one runs.
+
+### Changed
+
+- **About the developer now has a face on it.** The row in Settings → Data & support carries the
+  developer's own photo instead of a generic person glyph, and the dialog it opens leads with the
+  same picture beside the name. The image is bundled with the app - nothing is fetched from GitHub,
+  so it is there offline and costs no request.
+
+- **The Licenses screen (Settings → Data & support) now credits every bundled font, not just
+  half of them.** Roughly seventy typefaces - Poppins, Montserrat, Inter, Roboto Mono, Orbitron
+  and the rest of the original catalog - had their upstream license text sitting in this
+  repository's `licenses/` folder but never quoted in the dialog itself, so the app was
+  redistributing them without crediting them anywhere a person would actually see. Google Sans and
+  Google Sans Flex, the app's default typeface, had the same gap. All of it is credited now, and a
+  new test fails the build if a future bundled font is ever added without reaching this dialog.
+
+### Removed
+
+- **The "Typewriter" font choice is gone, and Special Elite now stands in for it.** The bundled
+  file behind it, Mom's Typewriter, was never covered by a license this project could point to -
+  unlike every other bundled typeface, which ships under the SIL Open Font License or Apache 2.0
+  with its text kept in `licenses/`. It has been removed rather than fixed, since there was never a
+  right to redistribute it in the first place. The picker no longer offers it at all, not even with
+  developer archived options on; a saved config or a downloaded theme still holding the old value
+  now renders in Special Elite - the collection's other distressed-typewriter face - instead of
+  silently falling back to Google Sans.
+
 ### Fixed
+
+- **The Matejdro face's cover was never dimmed to its tribute level.** `FaceScopedPreferences.getInt`'s built-in-face branch never consulted a per-face default at all - only the custom-theme branch did - so `album_art_dim_strength` (the only `Int`-typed key with one) silently fell back to the ordinary global dim instead of the level `MATEJDRO_DEFAULTS` set for it. The exact gap [getBoolean] had already closed twice, just never noticed for `Int` because no other numeric setting had a per-face default yet. Anyone on the plain built-in face now sees the intended dim; a saved custom theme built from it already did.
+
+- **Poster and Studio drew the track title against the left edge.** Both centre their metadata column, and both were centring the *block* while leaving the title itself wherever its own width happened to put it — which, for any title shorter than the column, was hard against the left. Any title long enough to fill the column looked correct, which is why it read as an intermittent glitch rather than a fixed one. Centred now, on the watch and in the phone's preview.
+
+- **Verse sat too high, leaving an empty strip along the bottom of the screen.** The running head, the lyric reel and the elapsed time have all moved down, and the time now sits closer to the floor than the band of nothing it was floating above. The reel keeps its three lines; because a round screen narrows as it deepens, each line carries a little less text than before.
+
+- **Streaming shortcuts picked from the watch menu and Shortcuts Tile reach the playback ladder
+  again.** Their cached row deliberately includes the target package for the watch's visible-open
+  fallback, but the phone was passing that whole `package|link` envelope to the URI validator as
+  though it were the link. It now unwraps a syntactically valid package prefix before playback,
+  while still leaving ordinary and unsafe input subject to the existing validation.
 
 - **Two rows on the Player page sat slightly high in their own box.** “Track time display” and “Position mark” are built in code rather than from the shared button style, and they were the only rows in the editor missing the font-metric correction that style carries — so their labels rode a few pixels above the middle of the row while every row around them was centred. They are centred now.
 

@@ -288,7 +288,7 @@
             android:key="apps_integrations_info"
             android:icon="@drawable/ic_apps"
             android:title="@string/setting_apps_integrations"
-            android:summary="@string/setting_apps_integrations_description"
+            android:summary="@string/setting_playlist_shortcuts_description"
             android:selectable="false"
             android:layout="@layout/pref_item" />
 
@@ -366,6 +366,19 @@
             android:icon="@drawable/ic_album"
             android:title="@string/setting_queue_remote_artwork"
             android:summary="@string/setting_queue_remote_artwork_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <!-- The artwork lookup behind the non-local Album art sources. Beside the queue-cover
+             switch because it is the same kind of thing: an optional network call the phone makes
+             on the watch's behalf. Nothing here runs unless a face is set to one of those sources,
+             which is why it is on by default - choosing the source is the consent, and off simply
+             falls back to the artwork the player published. -->
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="online_artwork_enabled"
+            android:icon="@drawable/ic_person"
+            android:title="@string/setting_online_artwork"
+            android:summary="@string/setting_online_artwork_description"
             android:layout="@layout/pref_switch_item" />
 
     </PreferenceCategory>
@@ -557,9 +570,11 @@
             android:summary="@string/contact_developer_email"
             android:layout="@layout/pref_item" />
 
-        <Preference
+        <!-- The developer's own photo instead of a person glyph - the row introduces a person,
+             and the icon slot is the one place it can say which one. The class supplies it
+             (circular, untinted); see DeveloperAvatarPreference. -->
+        <com.svartifoss.snfell.view.settings.DeveloperAvatarPreference
             android:key="aboutDeveloper"
-            android:icon="@drawable/ic_person"
             android:title="@string/about_developer_title"
             android:summary="@string/about_developer_summary"
             android:layout="@layout/pref_item" />
@@ -612,6 +627,55 @@
             android:icon="@drawable/ic_autorenew"
             android:title="@string/dev_open_update_screen"
             android:summary="@string/dev_open_update_screen_description"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="dev_export_defaults"
+            android:icon="@drawable/ic_save_as"
+            android:title="@string/dev_export_defaults"
+            android:summary="@string/dev_export_defaults_description"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="dev_watch_snapshot_inspector"
+            android:icon="@drawable/ic_deployed_code"
+            android:title="@string/dev_watch_snapshot_inspector"
+            android:summary="@string/dev_watch_snapshot_inspector_description"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="dev_data_layer_inspector"
+            android:icon="@drawable/ic_hub"
+            android:title="@string/dev_data_layer_inspector"
+            android:summary="@string/dev_data_layer_inspector_description"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="dev_media_sessions_inspector"
+            android:icon="@drawable/ic_queue_music"
+            android:title="@string/dev_media_sessions_inspector"
+            android:summary="@string/dev_media_sessions_inspector_description"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="dev_view_phone_log"
+            android:icon="@drawable/ic_history"
+            android:title="@string/dev_view_phone_log"
+            android:summary="@string/dev_view_phone_log_description"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="dev_theme_submission_preflight"
+            android:icon="@drawable/ic_playlist_add_check"
+            android:title="@string/dev_theme_submission_preflight"
+            android:summary="@string/dev_theme_submission_preflight_description"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="dev_appearance_resolution_inspector"
+            android:icon="@drawable/ic_tune"
+            android:title="@string/dev_appearance_resolution_inspector"
+            android:summary="@string/dev_appearance_resolution_inspector_description"
             android:layout="@layout/pref_item" />
 
         <SwitchPreferenceCompat

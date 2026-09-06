@@ -81,6 +81,8 @@
     <string name="watch_theme_face_metadata">Metadane</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <!-- Proper noun: the author of WearMusicCenter, the app this one is a fork of. -->
+    <string name="watch_theme_face_matejdro">MatejDro</string>
     <string name="online_theme_filter_not_installed">Nowe dla mnie</string>
     <string name="online_theme_filter_not_installed_selected">Motywy, które już dodano, są ukryte</string>
     <string name="online_theme_filter_not_installed_off">Motywy, które już dodano, są widoczne</string>

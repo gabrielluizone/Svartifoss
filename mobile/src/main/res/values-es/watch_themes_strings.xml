@@ -80,6 +80,8 @@
     <string name="watch_theme_face_metadata">Metadata</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <!-- Proper noun: the author of WearMusicCenter, the app this one is a fork of. -->
+    <string name="watch_theme_face_matejdro">MatejDro</string>
     <string name="online_theme_filter_not_installed">Nuevos para mí</string>
     <string name="online_theme_filter_not_installed_selected">Se ocultan los temas que ya has añadido</string>
     <string name="online_theme_filter_not_installed_off">Se muestran los temas que ya has añadido</string>

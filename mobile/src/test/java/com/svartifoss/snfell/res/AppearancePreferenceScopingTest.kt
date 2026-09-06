@@ -30,7 +30,15 @@ class AppearancePreferenceScopingTest {
                 // which has no per-face notion.
                 "wear_quick_panel_source",
                 // A network toggle, and the one row deliberately declared on two screens.
-                "queue_remote_artwork"
+                "queue_remote_artwork",
+                // The file and folder behind the two device-local album-art sources. What they
+                // hold is a `content://` URI on this phone, not an appearance value: the *source*
+                // is per-face and scoped, while which picture this install has been pointed at is
+                // one answer for the whole device. Scoping them would mean re-picking the same
+                // photograph for each of twenty-two faces, and would put a storage reference
+                // inside every saved theme.
+                "custom_album_art_image",
+                "custom_album_art_folder"
         )
 
         /** Rows that are buttons, links or explanatory text rather than stored settings. */
@@ -47,7 +55,12 @@ class AppearancePreferenceScopingTest {
                 "color_editor_surface",
                 "panel_editor_surface",
                 "player_editor_surface",
-                "background_editor_surface"
+                "background_editor_surface",
+                "aod_editor_surface",
+                "mini_button_editor_surface",
+                // Imports a font file. What it stores is the file plus a display name in
+                // `user_font_name`; the row itself persists nothing.
+                "user_font_import"
         )
     }
 

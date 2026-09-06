@@ -101,6 +101,23 @@ class OutlineTextView : AppCompatTextView {
     private var smartMinSizePx = 0f
     private var sizingMode = TextSizingMode.SMART
 
+    /**
+     * Whether the view's own height is a real ceiling on the chosen text size.
+     *
+     * Off by default, and [fitsWithinLineLimit] explains why: on a `wrap_content` line the height
+     * is a *consequence* of the size chosen on a previous pass, so treating it as a constraint
+     * rejects sizes that in fact fit. The Matejdro face is the case that reasoning does not cover -
+     * its two lines are weighted bands of the block, so each has a fixed height decided before any
+     * text is measured, and that height genuinely is independent. Without this the cascade would
+     * happily pick its 112sp ceiling for a short title and let the band clip it.
+     */
+    var fitsWithinViewHeight = false
+        set(value) {
+            if (field == value) return
+            field = value
+            requestSmartResize()
+        }
+
     // The cap wrapping respects before giving up and switching to a scrolling single line. Follows
     // the chosen text mode, so "Wrap to 3 lines" really wraps to three.
     private var wrapMaxLines = 1
@@ -267,11 +284,14 @@ class OutlineTextView : AppCompatTextView {
 
     /**
      * Whether [words] fit at [paint]'s current text size without needing more than [wrapMaxLines]
-     * lines or breaking a word mid-way. Deliberately NOT also checking the view's own height: for
-     * a `wrap_content` height view, that height is itself a *consequence* of the current
-     * text/size (computed on a previous layout pass, often before this resize even runs), not a
-     * real independent constraint - using it as a ceiling caused titles that comfortably fit in
-     * (say) 2 lines to be wrongly rejected and fall back to marquee instead.
+     * lines or breaking a word mid-way. Deliberately NOT also checking the view's own height by
+     * default: for a `wrap_content` height view, that height is itself a *consequence* of the
+     * current text/size (computed on a previous layout pass, often before this resize even runs),
+     * not a real independent constraint - using it as a ceiling caused titles that comfortably fit
+     * in (say) 2 lines to be wrongly rejected and fall back to marquee instead.
+     *
+     * [fitsWithinViewHeight] opts a caller back in, and only a caller for whom that reasoning does
+     * not hold: a line laid out as a fixed band knows its height before any text is measured.
      */
     private fun fitsWithinLineLimit(words: List<String>, paint: Paint, maxWidth: Float): Boolean {
         val widestWord = words.maxOf { paint.measureText(it) }
@@ -279,7 +299,22 @@ class OutlineTextView : AppCompatTextView {
             return false
         }
 
-        return estimateWrappedLineCount(words, paint, maxWidth) <= wrapMaxLines
+        val lines = estimateWrappedLineCount(words, paint, maxWidth)
+        if (lines > wrapMaxLines) {
+            return false
+        }
+        if (!fitsWithinViewHeight) {
+            return true
+        }
+        val availableHeight = height - paddingTop - paddingBottom
+        // Before the first layout there is no band to measure against yet. Accepting the size
+        // keeps this from reporting "nothing fits" and collapsing to the floor; onSizeChanged
+        // re-runs the cascade as soon as the real height is known.
+        if (availableHeight <= 0) {
+            return true
+        }
+        val metrics = paint.fontMetrics
+        return lines * (metrics.descent - metrics.ascent) <= availableHeight
     }
 
     private fun enableMarquee(sizePx: Float) {

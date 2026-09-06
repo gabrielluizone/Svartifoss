@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">設定をウォッチに同期しました</string>
     <string name="dev_copy_debug_info">デバッグ情報をコピー</string>
     <string name="dev_copy_debug_info_description">ビルドとデバイスの詳細をクリップボードにコピーします</string>
+    <string name="dev_export_defaults">アプリの初期設定として書き出す</string>
+    <string name="dev_export_defaults_description">現在の設定を default_config.json として保存します。新規インストール時の初期状態です。履歴、同意の選択、この端末固有の状態は含みません。</string>
+    <string name="dev_export_defaults_done">初期設定を書き出しました（%1$s）</string>
     <string name="dev_show_archived">アーカイブ済みオプションを表示</string>
     <string name="dev_show_archived_description">既知の問題によりアーカイブされたウォッチレイアウトと設定を表示します</string>
     <string name="dev_copy_debug_info_done">デバッグ情報をコピーしました</string>
@@ -273,6 +276,9 @@
     <string name="setting_wear_font_flex_roundness_description">ストローク終端をシャープ（0）から完全な丸（100）までブレンドし、より親しみやすい印象にします。</string>
     <string name="preview_sample_title">曲名</string>
     <string name="preview_sample_artist">アーティスト名</string>
+    <string name="preview_sample_lyric_previous">前の行</string>
+    <string name="preview_sample_lyric_current">再生中の行</string>
+    <string name="preview_sample_lyric_next">次の行</string>
     <string name="preview_sample_next_title">次の曲</string>
     <string name="preview_playback_stopped">停止中</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -535,8 +541,6 @@
     <string name="wear_font_small_caps_description">編集的な雰囲気を持つ、コンパクトな大文字風の字形です。</string>
     <string name="wear_font_casual">カジュアル</string>
     <string name="wear_font_casual_description">遊び心のある手書き風システムフォントファミリーです。</string>
-    <string name="wear_font_typewriter">タイプライター（アーカイブ）</string>
-    <string name="wear_font_typewriter_description">レトロなタイプライター風（Mom\'s Typewriter）。</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">丸みのある幾何学的サンセリフで、Circular の雰囲気を持つ無料（OFL）の代替書体です。</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -602,6 +606,12 @@
     <string name="setting_wear_quick_panel_color">クイックアクションの色</string>
     <string name="setting_wear_quick_panel_custom_color">クイックアクションのカスタム色</string>
     <string name="setting_wear_quick_panel_custom_color_description">「通常」処理で使用するクイックアクション色を選択します</string>
+    <string name="setting_wear_lyrics_color">歌詞の色</string>
+    <string name="setting_wear_lyrics_custom_color">歌詞のカスタム色</string>
+    <string name="setting_wear_lyrics_custom_color_description">「通常」処理で使用する歌詞の色を選択します</string>
+    <string name="setting_wear_queue_color">キューの色</string>
+    <string name="setting_wear_queue_custom_color">キューのカスタム色</string>
+    <string name="setting_wear_queue_custom_color_description">「通常」処理で使用するキューの色を選択します</string>
     <string name="setting_wear_shading_custom_color_description">シェーディンググラデーションに色味を付ける色を選択します</string>
 
     <string-array name="wear_accent_color_entries">
@@ -634,8 +644,10 @@
         <item>ノート</item>
         <item>歌詞</item>
         <item>メタデータ</item>
+        <item>アーティスト</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -656,8 +668,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">表現豊かなシーク</string>
@@ -691,6 +705,7 @@
         <item>分割</item>
         <item>ノート</item>
         <item>歌詞</item>
+        <item>アーティスト</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -709,6 +724,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -815,8 +831,15 @@
     <string name="category_wf_panel_seek">進捗とシークパネル</string>
     <string name="category_wf_panel_quick">クイックアクションパネル</string>
     <string name="category_wf_panel_queue">キューとリスト</string>
+    <string name="category_wf_panel_lyrics">歌詞</string>
     <string name="category_wf_panel_effects">パネル効果</string>
     <string name="setting_wear_overlay_backdrop_style">パネル背景</string>
+    <string name="wear_backdrop_shared">共有パネル背景に従う</string>
+    <string name="setting_wear_volume_backdrop_style">音量の背景</string>
+    <string name="setting_wear_progress_backdrop_style">進捗の背景</string>
+    <string name="setting_wear_quick_panel_backdrop_style">クイックアクションの背景</string>
+    <string name="setting_wear_queue_backdrop_style">キューの背景</string>
+    <string name="setting_wear_lyrics_backdrop_style">歌詞の背景</string>
     <string name="setting_wear_volume_style">音量スタイル</string>
     <string name="setting_wear_volume_layout">音量レイアウト</string>
     <string name="setting_wear_quick_panel_style">クイックパネルのスタイル</string>
@@ -904,10 +927,14 @@
     <string name="setting_wear_source_icon_scale">アプリアイコンのサイズ</string>
     <string name="setting_wear_source_icon_opacity">アプリアイコンの不透明度</string>
     <string name="setting_wear_typography_weight_description">1～1000。400 がフェイスの標準の太さで、数値が高いほど太くなります。Google Sans Flex では、この値がフォント固有のウェイト軸になります</string>
-    <string name="setting_wear_typography_scale_description">フェイス固有サイズに対する割合（70～140）。100 で各レイアウトの設計サイズを維持します</string>
+    <string name="setting_wear_typography_scale_description">フェイス固有サイズに対する割合（1～300）。100 で各レイアウトの設計サイズを維持します</string>
     <string name="setting_wear_typography_opacity_description">割合（20～100）。100 でフェイス固有の不透明度を維持します</string>
     <string name="setting_wear_typography_tracking_description">文字間に追加するスペース（em の100分の1、−5～20）。0 でフォント固有の字間を維持します</string>
     <string name="setting_wear_color_modifier">トーン</string>
+    <string name="setting_wear_title_color_modifier">タイトルのトーン</string>
+    <string name="setting_wear_artist_color_modifier">アーティストのトーン</string>
+    <string name="setting_wear_clock_color_modifier">時計のトーン</string>
+    <string name="wear_color_modifier_follow">ウォッチのトーンに従う</string>
     <string name="setting_wear_color_modifier_description">パレットの生成方法は変えずに全体を調整します。すべてのカラートリートメントで機能します</string>
     <string name="setting_wear_color_hue_shift">色相シフト</string>
     <string name="setting_wear_color_hue_shift_description">アルバムパレットを色相環上で回転させます（0～359度）。どのトリートメントでも主色はアルバム固有の色相に固定されるため、これで変化を付けます。0 ではアルバム色をそのまま使用し、固定の「通常」色はシフトされません。</string>
@@ -1300,7 +1327,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1419,7 +1445,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1440,7 +1473,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1559,7 +1591,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">ライブラリを閲覧</string>
@@ -2267,5 +2306,56 @@
         <item>マーカー</item>
         <item>淡く</item>
         <item>ベタ</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>フェイスに従う</item>
+        <item>始端</item>
+        <item>中央</item>
+        <item>終端</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>フェイスに従う</item>
+        <item>上</item>
+        <item>中央</item>
+        <item>下</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>固定（1行、スクロール・縮小なし）</item>
+        <item>スクロール（マーキー）</item>
+        <item>収まるように縮小</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>音楽アプリから</item>
+        <item>オンラインで取得</item>
+        <item>アーティストの写真</item>
+        <item>端末内の画像</item>
+        <item>フォルダーからランダム</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

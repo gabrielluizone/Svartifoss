@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">تمت مزامنة الإعدادات مع الساعة</string>
     <string name="dev_copy_debug_info">نسخ معلومات تصحيح الأخطاء</string>
     <string name="dev_copy_debug_info_description">نسخ تفاصيل البناء والجهاز إلى الحافظة</string>
+    <string name="dev_export_defaults">تصدير كإعدادات افتراضية للتطبيق</string>
+    <string name="dev_export_defaults_description">يحفظ هذا الإعداد باسم default_config.json، وهي الحالة التي يبدأ منها أي تثبيت جديد. يستثني السجل وخيارات الموافقة وحالة هذا الهاتف نفسه.</string>
+    <string name="dev_export_defaults_done">تم تصدير الإعدادات الافتراضية (%1$s)</string>
     <string name="dev_show_archived">إظهار الخيارات المؤرشفة</string>
     <string name="dev_show_archived_description">إظهار تخطيطات الساعة والإعدادات التي أُرشفت بسبب مشكلات معروفة</string>
     <string name="dev_copy_debug_info_done">تم نسخ معلومات تصحيح الأخطاء</string>
@@ -291,6 +294,9 @@ Svartifoss — أعمدة بازلت سوداء
     <string name="setting_wear_font_flex_roundness_description">يمزج نهايات الخطوط من حادة (0) إلى مستديرة بالكامل (100) لمظهر أكثر ودًّا.</string>
     <string name="preview_sample_title">عنوان الأغنية</string>
     <string name="preview_sample_artist">اسم الفنان</string>
+    <string name="preview_sample_lyric_previous">السطر السابق</string>
+    <string name="preview_sample_lyric_current">السطر الجاري الآن</string>
+    <string name="preview_sample_lyric_next">السطر التالي</string>
     <string name="preview_sample_next_title">الأغنية التالية</string>
     <string name="preview_playback_stopped">متوقف</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -563,8 +569,6 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
     <string name="wear_font_small_caps_description">أشكال مدمجة تشبه الحروف الكبيرة بطابع تحريري.</string>
     <string name="wear_font_casual">عفوي</string>
     <string name="wear_font_casual_description">عائلة نظام مرحة تشبه الكتابة اليدوية.</string>
-    <string name="wear_font_typewriter">آلة كاتبة (مؤرشف)</string>
-    <string name="wear_font_typewriter_description">مظهر آلة كاتبة قديم (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">خط sans هندسي مستدير، بديل مجاني (OFL) بروح Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -630,6 +634,12 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
     <string name="setting_wear_quick_panel_color">لون الإجراءات السريعة</string>
     <string name="setting_wear_quick_panel_custom_color">لون مخصّص للإجراءات السريعة</string>
     <string name="setting_wear_quick_panel_custom_color_description">اختر لون الإجراءات السريعة المستخدم مع المعالجة العادية</string>
+    <string name="setting_wear_lyrics_color">لون الكلمات</string>
+    <string name="setting_wear_lyrics_custom_color">لون مخصّص للكلمات</string>
+    <string name="setting_wear_lyrics_custom_color_description">اختر لون الكلمات المستخدم مع المعالجة العادية</string>
+    <string name="setting_wear_queue_color">لون قائمة الانتظار</string>
+    <string name="setting_wear_queue_custom_color">لون مخصّص لقائمة الانتظار</string>
+    <string name="setting_wear_queue_custom_color_description">اختر لون قائمة الانتظار المستخدم مع المعالجة العادية</string>
     <string name="setting_wear_shading_custom_color_description">اختر اللون الذي يلوّن تدرج التظليل</string>
 
     <string-array name="wear_accent_color_entries">
@@ -662,8 +672,10 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>ملاحظة</item>
         <item>بيت شعري</item>
         <item>بيانات وصفية</item>
+        <item>الفنان</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -684,8 +696,10 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">تنقل Expressive</string>
@@ -719,6 +733,7 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>منقسم</item>
         <item>ملاحظة</item>
         <item>بيت شعري</item>
+        <item>الفنان</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -737,6 +752,7 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -843,8 +859,15 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
     <string name="category_wf_panel_seek">لوحة التقدم والتنقل</string>
     <string name="category_wf_panel_quick">لوحة الإجراءات السريعة</string>
     <string name="category_wf_panel_queue">قائمة الانتظار والقوائم</string>
+    <string name="category_wf_panel_lyrics">الكلمات</string>
     <string name="category_wf_panel_effects">تأثيرات اللوحة</string>
     <string name="setting_wear_overlay_backdrop_style">خلفية اللوحة</string>
+    <string name="wear_backdrop_shared">اتباع خلفية اللوحة المشتركة</string>
+    <string name="setting_wear_volume_backdrop_style">خلفية مستوى الصوت</string>
+    <string name="setting_wear_progress_backdrop_style">خلفية التقدم</string>
+    <string name="setting_wear_quick_panel_backdrop_style">خلفية الإجراءات السريعة</string>
+    <string name="setting_wear_queue_backdrop_style">خلفية قائمة الانتظار</string>
+    <string name="setting_wear_lyrics_backdrop_style">خلفية الكلمات</string>
     <string name="setting_wear_volume_style">نمط مستوى الصوت</string>
     <string name="setting_wear_volume_layout">تخطيط مستوى الصوت</string>
     <string name="setting_wear_quick_panel_style">نمط اللوحة السريعة</string>
@@ -932,10 +955,14 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
     <string name="setting_wear_source_icon_scale">حجم أيقونة التطبيق</string>
     <string name="setting_wear_source_icon_opacity">شفافية أيقونة التطبيق</string>
     <string name="setting_wear_typography_weight_description">1–1000. القيمة 400 هي الوزن الطبيعي للواجهة؛ الأعلى أكثر سماكة. في Google Sans Flex هذا هو محور الوزن الخاص بالخط</string>
-    <string name="setting_wear_typography_scale_description">نسبة من حجم الواجهة نفسه (70–140). القيمة 100 تحافظ على الحجم المصمم لكل تخطيط</string>
+    <string name="setting_wear_typography_scale_description">نسبة من حجم الواجهة نفسه (1–300). القيمة 100 تحافظ على الحجم المصمم لكل تخطيط</string>
     <string name="setting_wear_typography_opacity_description">نسبة مئوية (20–100). القيمة 100 تحافظ على شفافية الواجهة نفسها</string>
     <string name="setting_wear_typography_tracking_description">مسافة إضافية بين الحروف، بأجزاء من مئة من em (−5 إلى 20). القيمة 0 تحافظ على تباعد الخط نفسه</string>
     <string name="setting_wear_color_modifier">الدرجة اللونية</string>
+    <string name="setting_wear_title_color_modifier">الدرجة اللونية للعنوان</string>
+    <string name="setting_wear_artist_color_modifier">الدرجة اللونية للفنان</string>
+    <string name="setting_wear_clock_color_modifier">الدرجة اللونية للساعة</string>
+    <string name="wear_color_modifier_follow">اتباع درجة الساعة</string>
     <string name="setting_wear_color_modifier_description">اضبط لوحة الألوان كاملة من دون تغيير طريقة اشتقاقها — يعمل مع كل معالجات الألوان</string>
     <string name="setting_wear_color_hue_shift">إزاحة اللون</string>
     <string name="setting_wear_color_hue_shift_description">يدير لوحة ألوان الألبوم حول عجلة الألوان بالدرجات (0–359). تحتفظ كل معالجة بلونها الرئيسي على درجة لون الألبوم نفسه، لذا فهذا ما يغيّرها. القيمة 0 تستخدم لون الألبوم كما هو؛ ولا تتم إزاحة لون عادي ثابت أبدًا.</string>
@@ -1328,7 +1355,6 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1447,7 +1473,14 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1468,7 +1501,6 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1587,7 +1619,14 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">تصفح المكتبة</string>
@@ -2312,5 +2351,56 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
         <item>تظليل</item>
         <item>خفيفة</item>
         <item>كتلة</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>اتباع الواجهة</item>
+        <item>بداية</item>
+        <item>توسيط</item>
+        <item>نهاية</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>اتباع الواجهة</item>
+        <item>أعلى</item>
+        <item>وسط</item>
+        <item>أسفل</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>ثابت (سطر واحد، بلا تمرير أو تصغير)</item>
+        <item>تمرير (شريط متحرك)</item>
+        <item>تصغير ليلائم</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>من تطبيق الموسيقى</item>
+        <item>بحث عبر الإنترنت</item>
+        <item>صورة الفنان</item>
+        <item>صورة من معرضي</item>
+        <item>عشوائية من مجلد</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

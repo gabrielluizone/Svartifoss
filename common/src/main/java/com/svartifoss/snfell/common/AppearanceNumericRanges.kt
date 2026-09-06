@@ -46,7 +46,8 @@ object AppearanceNumericRanges {
             "wear_artist_font_flex_roundness" to 0..100,
             "wear_artist_font_flex_width" to 25..151,
             "wear_artist_font_opacity" to 20..100,
-            "wear_artist_font_scale" to 70..140,
+            "wear_artist_font_scale" to
+                    MiscPreferences.TYPOGRAPHY_MIN_SCALE..MiscPreferences.TYPOGRAPHY_MAX_SCALE,
             "wear_artist_font_tracking" to -5..20,
             "wear_artist_font_weight" to 1..1000,
             "wear_artist_text_bg_opacity" to
@@ -57,7 +58,8 @@ object AppearanceNumericRanges {
             "wear_clock_font_flex_optical_size" to 6..144,
             "wear_clock_font_flex_roundness" to 0..100,
             "wear_clock_font_flex_width" to 25..151,
-            "wear_clock_font_scale" to 70..140,
+            "wear_clock_font_scale" to
+                    MiscPreferences.TYPOGRAPHY_MIN_SCALE..MiscPreferences.TYPOGRAPHY_MAX_SCALE,
             "wear_clock_font_tracking" to -5..20,
             "wear_clock_font_weight" to 1..1000,
             "wear_clock_opacity" to 10..100,
@@ -71,13 +73,15 @@ object AppearanceNumericRanges {
             "wear_lyrics_font_flex_roundness" to 0..100,
             "wear_lyrics_font_flex_width" to 25..151,
             "wear_source_icon_opacity" to 20..100,
-            "wear_source_icon_scale" to 70..140,
+            "wear_source_icon_scale" to
+                    MiscPreferences.TYPOGRAPHY_MIN_SCALE..MiscPreferences.TYPOGRAPHY_MAX_SCALE,
             "wear_title_font_flex_grade" to 0..100,
             "wear_title_font_flex_optical_size" to 6..144,
             "wear_title_font_flex_roundness" to 0..100,
             "wear_title_font_flex_width" to 25..151,
             "wear_title_font_opacity" to 20..100,
-            "wear_title_font_scale" to 70..140,
+            "wear_title_font_scale" to
+                    MiscPreferences.TYPOGRAPHY_MIN_SCALE..MiscPreferences.TYPOGRAPHY_MAX_SCALE,
             "wear_title_font_tracking" to -5..20,
             "wear_title_font_weight" to 1..1000,
             "wear_title_text_bg_opacity" to
@@ -89,7 +93,8 @@ object AppearanceNumericRanges {
             "wear_track_time_font_flex_roundness" to 0..100,
             "wear_track_time_font_flex_width" to 25..151,
             "wear_track_time_font_opacity" to 20..100,
-            "wear_track_time_font_scale" to 70..140,
+            "wear_track_time_font_scale" to
+                    MiscPreferences.TYPOGRAPHY_MIN_SCALE..MiscPreferences.TYPOGRAPHY_MAX_SCALE,
             "wear_track_time_font_tracking" to -5..20,
             "wear_track_time_font_weight" to 1..1000,    )
 

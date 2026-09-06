@@ -11,7 +11,9 @@ class WatchFontTest {
     @Test
     fun everyPickerValueMapsToADistinctFamily() {
         assertEquals(GoogleSansFamily, watchFontFamily("google_sans"))
-        assertEquals(MomsTypewriterFamily, watchFontFamily("typewriter"))
+        // "typewriter" lost its bundled font (Mom's Typewriter, no redistribution license this
+        // project ever held) and is now a retired alias to the same family "love_letter" uses.
+        assertEquals(SpecialEliteFamily, watchFontFamily("typewriter"))
         assertEquals(SpecialEliteFamily, watchFontFamily("love_letter"))
         assertEquals(InterFamily, watchFontFamily("inter"))
         assertEquals(AtkinsonHyperlegibleFamily, watchFontFamily("atkinson_hyperlegible"))
@@ -35,6 +37,7 @@ class WatchFontTest {
         assertNotEquals(GoogleSansFamily, watchFontFamily("monospace"))
         assertNotEquals(GoogleSansFamily, watchFontFamily("cursive"))
         assertNotEquals(watchFontFamily("serif"), watchFontFamily("monospace"))
+
     }
 
     @Test

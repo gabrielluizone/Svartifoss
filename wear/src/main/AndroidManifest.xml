@@ -144,6 +144,23 @@
             </intent-filter>
         </service>
 
+        <!-- The typeface the user imported on their phone. Its own listener rather than another
+             path on ConfigListenerService: that one posts frozen DataItems straight into
+             PhoneConnection's LiveData on the callback thread, while this has to open an asset
+             channel and read up to two megabytes, which must not run there. -->
+        <service
+            android:name=".watch.communication.UserFontListenerService"
+            android:exported="true"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+                <data
+                    android:host="*"
+                    android:pathPrefix="/UserFont"
+                    android:scheme="wear" />
+            </intent-filter>
+        </service>
+
         <!-- Keeps the complication/Tile fresh independently of WatchMusicService's lifecycle -
              see the class kdoc. Path must match CommPaths.DATA_MUSIC_STATE. -->
         <service

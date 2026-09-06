@@ -16,6 +16,8 @@ import com.svartifoss.snfell.common.LyricLine
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.TrackMetadataFields
 import com.svartifoss.snfell.common.SpecialEliteKeywordPolicy
+import com.svartifoss.snfell.common.TextBlockAlign
+import com.svartifoss.snfell.common.TextBlockPosition
 import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
@@ -273,6 +275,17 @@ data class NowPlayingFaceState(
          * `PlayerEditorModel.TITLE_CENTERED_FACES`; everywhere else it is inert by construction.
          */
         val titleCentered: Boolean = false,
+        /**
+         * Which edge this face's block of track text lines up on, and where it sits vertically.
+         *
+         * Both default to `follow`, meaning *keep the composition this face authored* - which is
+         * what lets the controls be offered on every face at once without changing how any of them
+         * currently look. A face never switches on these directly: it passes what it designed to
+         * `blockAlignment`/`blockTextAlign`/`blockPlacement` in `FaceChrome` and draws what comes
+         * back, so the fallback lives in one place rather than at every call site.
+         */
+        val textBlockAlign: TextBlockAlign = TextBlockAlign.FOLLOW,
+        val textBlockPosition: TextBlockPosition = TextBlockPosition.FOLLOW,
         val backgroundLayers: List<ResolvedBackgroundLayer> = emptyList(),
         /**
          * True while an explicit stack is in charge, which suppresses the three legacy slots.
@@ -427,6 +440,14 @@ data class NowPlayingFaceState(
          *  read by every face's title/artist text through AdaptiveTitleText - previously only the
          *  classic face's OutlineTextView consulted this. */
         val titleTextMode: String = "smart",
+        /**
+         * The same vocabulary for the artist line - see
+         * [MiscPreferences.WEAR_ARTIST_TEXT_MODE][com.svartifoss.snfell.common.MiscPreferences.WEAR_ARTIST_TEXT_MODE].
+         *
+         * `static` rather than `smart`, because that is what every face already drew: one
+         * ellipsized line. A face never reads this directly - [ArtistLineText] defaults off it.
+         */
+        val artistTextMode: String = "static",
         /** Background/artwork treatment selected independently from this face's structural
          * layout. This lets, for example, Material controls use the Expressive blur or Poster
          * artwork treatment without swapping the controls themselves. */

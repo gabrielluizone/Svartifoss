@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">설정이 시계와 동기화됨</string>
     <string name="dev_copy_debug_info">디버그 정보 복사</string>
     <string name="dev_copy_debug_info_description">빌드 및 기기 세부정보를 클립보드에 복사합니다</string>
+    <string name="dev_export_defaults">앱 기본값으로 내보내기</string>
+    <string name="dev_export_defaults_description">현재 설정을 default_config.json으로 저장합니다. 새로 설치했을 때의 시작 상태입니다. 기록, 동의 선택, 이 휴대전화 고유의 상태는 제외됩니다.</string>
+    <string name="dev_export_defaults_done">기본값을 내보냈습니다 (%1$s)</string>
     <string name="dev_show_archived">보관된 옵션 표시</string>
     <string name="dev_show_archived_description">알려진 문제로 보관된 시계 레이아웃과 설정을 표시합니다</string>
     <string name="dev_copy_debug_info_done">디버그 정보가 복사됨</string>
@@ -273,6 +276,9 @@
     <string name="setting_wear_font_flex_roundness_description">획 끝을 날카롭게(0)에서 완전히 둥글게(100)까지 혼합하여 더 친근한 느낌을 줍니다.</string>
     <string name="preview_sample_title">곡 제목</string>
     <string name="preview_sample_artist">아티스트 이름</string>
+    <string name="preview_sample_lyric_previous">이전 줄</string>
+    <string name="preview_sample_lyric_current">지금 재생 중인 줄</string>
+    <string name="preview_sample_lyric_next">다음 줄</string>
     <string name="preview_sample_next_title">다음 곡</string>
     <string name="preview_playback_stopped">중지됨</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -535,8 +541,6 @@
     <string name="wear_font_small_caps_description">편집 디자인 느낌의 조밀한 대문자 형태입니다.</string>
     <string name="wear_font_casual">캐주얼</string>
     <string name="wear_font_casual_description">장난스러운 손글씨 스타일의 시스템 글꼴 계열입니다.</string>
-    <string name="wear_font_typewriter">타자기 (보관됨)</string>
-    <string name="wear_font_typewriter_description">레트로 타자기 느낌(Mom\'s Typewriter)입니다.</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">둥근 기하학적 산세리프로, Circular의 느낌을 살린 무료(OFL) 대체 글꼴입니다.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -602,6 +606,12 @@
     <string name="setting_wear_quick_panel_color">빠른 동작 색상</string>
     <string name="setting_wear_quick_panel_custom_color">빠른 동작 사용자 지정 색상</string>
     <string name="setting_wear_quick_panel_custom_color_description">일반 처리에 사용할 빠른 동작 색상을 선택합니다</string>
+    <string name="setting_wear_lyrics_color">가사 색상</string>
+    <string name="setting_wear_lyrics_custom_color">가사 사용자 지정 색상</string>
+    <string name="setting_wear_lyrics_custom_color_description">일반 처리에 사용할 가사 색상을 선택합니다</string>
+    <string name="setting_wear_queue_color">대기열 색상</string>
+    <string name="setting_wear_queue_custom_color">대기열 사용자 지정 색상</string>
+    <string name="setting_wear_queue_custom_color_description">일반 처리에 사용할 대기열 색상을 선택합니다</string>
     <string name="setting_wear_shading_custom_color_description">셰이딩 그라데이션에 색조를 입힐 색상을 선택합니다</string>
 
     <string-array name="wear_accent_color_entries">
@@ -634,8 +644,10 @@
         <item>노트</item>
         <item>가사</item>
         <item>메타데이터</item>
+        <item>아티스트</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -656,8 +668,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">표현형 탐색</string>
@@ -691,6 +705,7 @@
         <item>분할</item>
         <item>노트</item>
         <item>가사</item>
+        <item>아티스트</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -709,6 +724,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -815,8 +831,15 @@
     <string name="category_wf_panel_seek">진행률 및 탐색 패널</string>
     <string name="category_wf_panel_quick">빠른 동작 패널</string>
     <string name="category_wf_panel_queue">대기열 및 목록</string>
+    <string name="category_wf_panel_lyrics">가사</string>
     <string name="category_wf_panel_effects">패널 효과</string>
     <string name="setting_wear_overlay_backdrop_style">패널 배경</string>
+    <string name="wear_backdrop_shared">공유 패널 배경 따르기</string>
+    <string name="setting_wear_volume_backdrop_style">볼륨 배경</string>
+    <string name="setting_wear_progress_backdrop_style">진행률 배경</string>
+    <string name="setting_wear_quick_panel_backdrop_style">빠른 동작 배경</string>
+    <string name="setting_wear_queue_backdrop_style">대기열 배경</string>
+    <string name="setting_wear_lyrics_backdrop_style">가사 배경</string>
     <string name="setting_wear_volume_style">볼륨 스타일</string>
     <string name="setting_wear_volume_layout">볼륨 레이아웃</string>
     <string name="setting_wear_quick_panel_style">빠른 패널 스타일</string>
@@ -904,10 +927,14 @@
     <string name="setting_wear_source_icon_scale">앱 아이콘 크기</string>
     <string name="setting_wear_source_icon_opacity">앱 아이콘 불투명도</string>
     <string name="setting_wear_typography_weight_description">1~1000. 400은 페이스의 기본 굵기이며, 값이 높을수록 더 굵습니다. Google Sans Flex에서는 이 값이 해당 글꼴의 고유 굵기 축입니다</string>
-    <string name="setting_wear_typography_scale_description">페이스 고유 크기의 백분율(70~140). 100은 각 레이아웃의 설계된 크기를 유지합니다</string>
+    <string name="setting_wear_typography_scale_description">페이스 고유 크기의 백분율(1~300). 100은 각 레이아웃의 설계된 크기를 유지합니다</string>
     <string name="setting_wear_typography_opacity_description">백분율(20~100). 100은 페이스 고유 불투명도를 유지합니다</string>
     <string name="setting_wear_typography_tracking_description">글자 사이의 추가 공간(em의 1/100, -5~20). 0은 글꼴 고유 간격을 유지합니다</string>
     <string name="setting_wear_color_modifier">톤</string>
+    <string name="setting_wear_title_color_modifier">제목 톤</string>
+    <string name="setting_wear_artist_color_modifier">아티스트 톤</string>
+    <string name="setting_wear_clock_color_modifier">시계 톤</string>
+    <string name="wear_color_modifier_follow">워치 톤 따르기</string>
     <string name="setting_wear_color_modifier_description">팔레트 생성 방식을 바꾸지 않고 전체 팔레트를 조정합니다. 모든 색상 처리에서 작동합니다</string>
     <string name="setting_wear_color_hue_shift">색상 이동</string>
     <string name="setting_wear_color_hue_shift_description">앨범 팔레트를 색상환에서 도 단위(0~359)로 회전합니다. 모든 처리 방식은 기본 색상을 앨범 고유 색조에 유지하므로 이 설정으로 변화를 줍니다. 0은 앨범 색상을 그대로 사용하며, 고정된 일반 색상은 이동하지 않습니다.</string>
@@ -1300,7 +1327,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1419,7 +1445,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1440,7 +1473,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1559,7 +1591,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">라이브러리 탐색</string>
@@ -2267,5 +2306,56 @@
         <item>형광펜</item>
         <item>은은하게</item>
         <item>블록</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>페이스 따르기</item>
+        <item>시작</item>
+        <item>가운데</item>
+        <item>끝</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>페이스 따르기</item>
+        <item>위</item>
+        <item>가운데</item>
+        <item>아래</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>고정(한 줄, 스크롤 또는 축소 없음)</item>
+        <item>스크롤(마키)</item>
+        <item>맞도록 축소</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>음악 앱에서</item>
+        <item>온라인에서 검색</item>
+        <item>아티스트 사진</item>
+        <item>내 갤러리의 사진</item>
+        <item>폴더에서 무작위로</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

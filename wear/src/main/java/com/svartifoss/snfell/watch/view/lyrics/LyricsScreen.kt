@@ -45,6 +45,8 @@ import androidx.wear.compose.foundation.requestFocusOnHierarchyActive
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.foundation.rotary.rotaryScrollable
 import androidx.wear.compose.material3.SwipeToDismissBox
+import com.svartifoss.snfell.watch.view.panel.PanelBackdropLayer
+import com.svartifoss.snfell.watch.view.panel.ScreenBackdrop
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.AccentFloorStyle
@@ -143,6 +145,12 @@ fun LyricsScreen(
          * as a rendering mistake.
          */
         lyricsFontFamily: FontFamily? = null,
+        /**
+         * The configured ground behind the words, or null to keep the flat black field.
+         *
+         * Ambient passes null deliberately: an always-on panel must not light artwork.
+         */
+        screenBackdrop: ScreenBackdrop? = null,
 ) {
     SwipeToDismissBox(onDismissed = onDismiss) { isBackground ->
         if (isBackground) {
@@ -150,10 +158,14 @@ fun LyricsScreen(
             return@SwipeToDismissBox
         }
 
+        // Beneath the accent floor and the words: the floor is this screen's own decoration and
+        // has to sit over the ground, not under it.
+        screenBackdrop?.let { PanelBackdropLayer(it) }
         Box(
                 modifier = modifier
                         .fillMaxSize()
-                        .background(Color.Black)
+                        .background(
+                                if (screenBackdrop == null) Color.Black else Color.Transparent)
                         // Shared with the Verse face - see accentFloorGlow. Ambient drops
                         // it: it is decoration, and decoration is what an always-on panel must
                         // not burn in.

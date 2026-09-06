@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">Inställningarna har synkroniserats till klockan</string>
     <string name="dev_copy_debug_info">Kopiera felsökningsinformation</string>
     <string name="dev_copy_debug_info_description">Kopiera bygg- och enhetsdetaljer till urklipp</string>
+    <string name="dev_export_defaults">Exportera som appens standardvärden</string>
+    <string name="dev_export_defaults_description">Sparar den här konfigurationen som default_config.json, tillståndet som en ny installation utgår från. Utelämnar historik, samtyckesval och telefonens eget tillstånd.</string>
+    <string name="dev_export_defaults_done">Standardvärden exporterade (%1$s)</string>
     <string name="dev_show_archived">Visa arkiverade alternativ</string>
     <string name="dev_show_archived_description">Visa klocklayouter och inställningar som arkiverats på grund av kända problem</string>
     <string name="dev_copy_debug_info_done">Felsökningsinformationen har kopierats</string>
@@ -287,6 +290,9 @@ Vissa ikonpaket kräver att appar har lagringsbehörighet. Du måste tillåta de
     <string name="setting_wear_font_flex_roundness_description">Blandar linjeändar från skarpa (0) till helt rundade (100) för ett vänligare uttryck.</string>
     <string name="preview_sample_title">Låttitel</string>
     <string name="preview_sample_artist">Artistnamn</string>
+    <string name="preview_sample_lyric_previous">Den föregående raden</string>
+    <string name="preview_sample_lyric_current">Raden som spelas nu</string>
+    <string name="preview_sample_lyric_next">Den nästa raden</string>
     <string name="preview_sample_next_title">Nästa låt</string>
     <string name="preview_playback_stopped">Stoppad</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -559,8 +565,6 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
     <string name="wear_font_small_caps_description">Kompakta former som liknar versaler med redaktionell känsla.</string>
     <string name="wear_font_casual">Ledig</string>
     <string name="wear_font_casual_description">En lekfull handskriven systemfamilj.</string>
-    <string name="wear_font_typewriter">Skrivmaskin (arkiverad)</string>
-    <string name="wear_font_typewriter_description">Ett retroinspirerat skrivmaskinsutseende (Mom’s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Ett rundat geometriskt sans-serif, ett kostnadsfritt alternativ (OFL) i Circulars anda.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -626,6 +630,12 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
     <string name="setting_wear_quick_panel_color">Färg för Snabbåtgärder</string>
     <string name="setting_wear_quick_panel_custom_color">Anpassad färg för Snabbåtgärder</string>
     <string name="setting_wear_quick_panel_custom_color_description">Välj färgen för Snabbåtgärder som används med behandlingen Normal</string>
+    <string name="setting_wear_lyrics_color">Låttextens färg</string>
+    <string name="setting_wear_lyrics_custom_color">Anpassad låttextfärg</string>
+    <string name="setting_wear_lyrics_custom_color_description">Välj låttextfärgen som används med behandlingen Normal</string>
+    <string name="setting_wear_queue_color">Köns färg</string>
+    <string name="setting_wear_queue_custom_color">Anpassad köfärg</string>
+    <string name="setting_wear_queue_custom_color_description">Välj köfärgen som används med behandlingen Normal</string>
     <string name="setting_wear_shading_custom_color_description">Välj färgen som tonar skuggningsgradienten</string>
 
     <string-array name="wear_accent_color_entries">
@@ -658,8 +668,10 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>Anteckning</item>
         <item>Vers</item>
         <item>Metadata</item>
+        <item>Artist</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -680,8 +692,10 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive-sökning</string>
@@ -715,6 +729,7 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>Delad</item>
         <item>Anteckning</item>
         <item>Vers</item>
+        <item>Artist</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -733,6 +748,7 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -839,8 +855,15 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
     <string name="category_wf_panel_seek">Förlopp &amp; sökpanel</string>
     <string name="category_wf_panel_quick">Panelen Snabbåtgärder</string>
     <string name="category_wf_panel_queue">Kö &amp; listor</string>
+    <string name="category_wf_panel_lyrics">Låttext</string>
     <string name="category_wf_panel_effects">Paneleffekter</string>
     <string name="setting_wear_overlay_backdrop_style">Panelbakgrund</string>
+    <string name="wear_backdrop_shared">Följ delad panelbakgrund</string>
+    <string name="setting_wear_volume_backdrop_style">Volymbakgrund</string>
+    <string name="setting_wear_progress_backdrop_style">Förloppsbakgrund</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Bakgrund för snabbåtgärder</string>
+    <string name="setting_wear_queue_backdrop_style">Köbakgrund</string>
+    <string name="setting_wear_lyrics_backdrop_style">Låttextbakgrund</string>
     <string name="setting_wear_volume_style">Volymstil</string>
     <string name="setting_wear_volume_layout">Volymlayout</string>
     <string name="setting_wear_quick_panel_style">Snabbpanelens stil</string>
@@ -928,10 +951,14 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
     <string name="setting_wear_source_icon_scale">Appikonens storlek</string>
     <string name="setting_wear_source_icon_opacity">Appikonens opacitet</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 är urtavlans normala vikt; högre är fetare. För Google Sans Flex är detta typsnittets egen viktaxel</string>
-    <string name="setting_wear_typography_scale_description">Procent av urtavlans egen storlek (70–140). 100 behåller varje layouts designade storlek</string>
+    <string name="setting_wear_typography_scale_description">Procent av urtavlans egen storlek (1–300). 100 behåller varje layouts designade storlek</string>
     <string name="setting_wear_typography_opacity_description">Procent (20–100). 100 behåller urtavlans egen opacitet</string>
     <string name="setting_wear_typography_tracking_description">Extra utrymme mellan bokstäver, i hundradelar av en em (−5 till 20). 0 behåller typsnittets eget avstånd</string>
     <string name="setting_wear_color_modifier">Ton</string>
+    <string name="setting_wear_title_color_modifier">Titelns ton</string>
+    <string name="setting_wear_artist_color_modifier">Artistens ton</string>
+    <string name="setting_wear_clock_color_modifier">Klockans ton</string>
+    <string name="wear_color_modifier_follow">Följ klockans ton</string>
     <string name="setting_wear_color_modifier_description">Justera hela paletten utan att ändra hur den härleds — fungerar med alla färgbehandlingar</string>
     <string name="setting_wear_color_hue_shift">Färgförskjutning</string>
     <string name="setting_wear_color_hue_shift_description">Roterar albumpaletten runt färghjulet i grader (0–359). Varje behandling behåller sin huvudfärg på albumets egen färgton, så det är detta som varierar den. 0 använder albumfärgen som den är; en fast Normalfärg förskjuts aldrig.</string>
@@ -1324,7 +1351,6 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1443,7 +1469,14 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1464,7 +1497,6 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1583,7 +1615,14 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">Bläddra i biblioteket</string>
@@ -2296,5 +2335,56 @@ När Vibration Center får klockan att vibrera visar Svartifoss en popup med avi
         <item>Överstrykning</item>
         <item>Mjuk</item>
         <item>Block</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Följ urtavla</item>
+        <item>Början</item>
+        <item>Centrerat</item>
+        <item>Slutet</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Följ urtavla</item>
+        <item>Överst</item>
+        <item>Mitten</item>
+        <item>Nederst</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Statisk (en rad, ingen rullning eller förminskning)</item>
+        <item>Rulla (marquee)</item>
+        <item>Förminska för att passa</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>Från musikappen</item>
+        <item>Hämtad online</item>
+        <item>Artistbild</item>
+        <item>Bild från mitt galleri</item>
+        <item>Slumpmässigt från en mapp</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

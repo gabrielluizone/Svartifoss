@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">Na-sync ang mga setting sa relo</string>
     <string name="dev_copy_debug_info">Kopyahin ang debug info</string>
     <string name="dev_copy_debug_info_description">Kopyahin ang build at mga detalye ng device sa clipboard</string>
+    <string name="dev_export_defaults">I-export bilang default ng app</string>
+    <string name="dev_export_defaults_description">Sine-save ang setup na ito bilang default_config.json, ang estadong pinagsisimulan ng bagong install. Hindi kasama ang history, mga pagpiling pahintulot at ang sariling estado ng teleponong ito.</string>
+    <string name="dev_export_defaults_done">Na-export ang mga default (%1$s)</string>
     <string name="dev_show_archived">Ipakita ang mga naka-archive na opsyon</string>
     <string name="dev_show_archived_description">Ipakita ang mga watch layout at setting na in-archive dahil sa mga kilalang isyu</string>
     <string name="dev_copy_debug_info_done">Nakopya ang debug info</string>
@@ -287,6 +290,9 @@ Kinakailangan ng ilang icon pack na may storage permission ang mga app. Kailanga
     <string name="setting_wear_font_flex_roundness_description">Pinaghahalo ang stroke terminals mula matulis (0) hanggang ganap na bilog (100) para sa mas palakaibigang hitsura.</string>
     <string name="preview_sample_title">Pamagat ng kanta</string>
     <string name="preview_sample_artist">Pangalan ng artist</string>
+    <string name="preview_sample_lyric_previous">Ang nakaraang linya</string>
+    <string name="preview_sample_lyric_current">Ang linyang tumutugtog ngayon</string>
+    <string name="preview_sample_lyric_next">Ang susunod na linya</string>
     <string name="preview_sample_next_title">Susunod na kanta</string>
     <string name="preview_playback_stopped">Huminto</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -559,8 +565,6 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
     <string name="wear_font_small_caps_description">Compact na hugis-capital na forms na may editorial na dating.</string>
     <string name="wear_font_casual">Casual</string>
     <string name="wear_font_casual_description">Masayang handwritten system family.</string>
-    <string name="wear_font_typewriter">Typewriter (Archived)</string>
-    <string name="wear_font_typewriter_description">Retro na typewriter look (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Rounded geometric sans, libreng (OFL) alternatibo na may diwa ng Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -626,6 +630,12 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
     <string name="setting_wear_quick_panel_color">Kulay ng Quick Actions</string>
     <string name="setting_wear_quick_panel_custom_color">Custom na kulay ng Quick Actions</string>
     <string name="setting_wear_quick_panel_custom_color_description">Piliin ang kulay ng Quick Actions na ginagamit sa Normal treatment</string>
+    <string name="setting_wear_lyrics_color">Kulay ng lyrics</string>
+    <string name="setting_wear_lyrics_custom_color">Custom na kulay ng lyrics</string>
+    <string name="setting_wear_lyrics_custom_color_description">Piliin ang kulay ng lyrics na ginagamit sa Normal treatment</string>
+    <string name="setting_wear_queue_color">Kulay ng queue</string>
+    <string name="setting_wear_queue_custom_color">Custom na kulay ng queue</string>
+    <string name="setting_wear_queue_custom_color_description">Piliin ang kulay ng queue na ginagamit sa Normal treatment</string>
     <string name="setting_wear_shading_custom_color_description">Piliin ang kulay na nagti-tint sa shading gradient</string>
 
     <string-array name="wear_accent_color_entries">
@@ -658,8 +668,10 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>Note</item>
         <item>Verse</item>
         <item>Metadata</item>
+        <item>Artista</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -680,8 +692,10 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive na seek</string>
@@ -715,6 +729,7 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>Split</item>
         <item>Note</item>
         <item>Verse</item>
+        <item>Artista</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -733,6 +748,7 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -839,8 +855,15 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
     <string name="category_wf_panel_seek">Progress at seek panel</string>
     <string name="category_wf_panel_quick">Panel ng mabilisang action</string>
     <string name="category_wf_panel_queue">Queue at mga listahan</string>
+    <string name="category_wf_panel_lyrics">Lyrics</string>
     <string name="category_wf_panel_effects">Mga effect ng panel</string>
     <string name="setting_wear_overlay_backdrop_style">Background ng panel</string>
+    <string name="wear_backdrop_shared">Sundan ang shared panel background</string>
+    <string name="setting_wear_volume_backdrop_style">Background ng volume</string>
+    <string name="setting_wear_progress_backdrop_style">Background ng progress</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Background ng mabilisang action</string>
+    <string name="setting_wear_queue_backdrop_style">Background ng queue</string>
+    <string name="setting_wear_lyrics_backdrop_style">Background ng lyrics</string>
     <string name="setting_wear_volume_style">Style ng volume</string>
     <string name="setting_wear_volume_layout">Layout ng volume</string>
     <string name="setting_wear_quick_panel_style">Style ng quick panel</string>
@@ -928,10 +951,14 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
     <string name="setting_wear_source_icon_scale">Laki ng app icon</string>
     <string name="setting_wear_source_icon_opacity">Opacity ng app icon</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 ang normal na weight ng face; mas bold ang mas mataas. Para sa Google Sans Flex, ito ang sariling weight axis ng font</string>
-    <string name="setting_wear_typography_scale_description">Porsyento ng sariling laki ng face (70–140). Pinapanatili ng 100 ang dinisenyong laki ng bawat layout</string>
+    <string name="setting_wear_typography_scale_description">Porsyento ng sariling laki ng face (1–300). Pinapanatili ng 100 ang dinisenyong laki ng bawat layout</string>
     <string name="setting_wear_typography_opacity_description">Porsyento (20–100). Pinapanatili ng 100 ang sariling opacity ng face</string>
     <string name="setting_wear_typography_tracking_description">Dagdag na espasyo sa pagitan ng mga letra, sa hundredths ng isang em (−5 hanggang 20). Pinapanatili ng 0 ang sariling spacing ng font</string>
     <string name="setting_wear_color_modifier">Tono</string>
+    <string name="setting_wear_title_color_modifier">Tono ng pamagat</string>
+    <string name="setting_wear_artist_color_modifier">Tono ng artist</string>
+    <string name="setting_wear_clock_color_modifier">Tono ng orasan</string>
+    <string name="wear_color_modifier_follow">Sundan ang tono ng relo</string>
     <string name="setting_wear_color_modifier_description">I-adjust ang buong palette nang hindi binabago kung paano ito hinango — gumagana sa bawat color treatment</string>
     <string name="setting_wear_color_hue_shift">Paglipat ng kulay</string>
     <string name="setting_wear_color_hue_shift_description">Iniikot ang album palette sa color wheel, sa degrees (0–359). Pinapanatili ng bawat treatment ang main color nito sa sariling hue ng album, kaya ito ang nagpapabago rito. Ginagamit ng 0 ang album color nang ganoon mismo; hindi kailanman sini-shift ang fixed Normal color.</string>
@@ -1324,7 +1351,6 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1443,7 +1469,14 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1464,7 +1497,6 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1583,7 +1615,14 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">I-browse ang library</string>
@@ -2296,5 +2335,56 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
         <item>Highlight</item>
         <item>Banayad</item>
         <item>Solido</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Sundin ang face</item>
+        <item>Simula</item>
+        <item>Gitna</item>
+        <item>Dulo</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Sundin ang face</item>
+        <item>Itaas</item>
+        <item>Gitna</item>
+        <item>Ibaba</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Static (isang linya, walang scroll o pagliit)</item>
+        <item>Mag-scroll (marquee)</item>
+        <item>Paliitin para magkasya</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>Mula sa music app</item>
+        <item>Hanapin online</item>
+        <item>Larawan ng artist</item>
+        <item>Larawan mula sa gallery ko</item>
+        <item>Random mula sa isang folder</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

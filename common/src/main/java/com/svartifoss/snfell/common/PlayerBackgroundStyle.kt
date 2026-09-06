@@ -29,6 +29,7 @@ enum class PlayerBackgroundStyle(
         val flatAlbumFill: AlbumFillSlot? = null
 ) {
     COVER("cover"),
+
     BLUR("blur", blurredArtwork = true),
     /**
      * Sharp in the middle, frosted glass towards the rim - see [FrostedEdges].
@@ -245,6 +246,7 @@ enum class PlayerBackgroundStyle(
 
         /** Preserves each built-in layout's shipped visual identity until the user chooses a
          * different treatment for that layout. */
+
         fun defaultForFace(face: String): PlayerBackgroundStyle = when (face) {
             "expressive" -> EXPRESSIVE
             "material" -> MATERIAL

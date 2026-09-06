@@ -80,6 +80,9 @@ import com.svartifoss.snfell.common.resolveLayers
 import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.common.AdaptiveTextContrast
 import com.svartifoss.snfell.common.CoverShape
+import com.svartifoss.snfell.common.AlbumArtSource
+import com.svartifoss.snfell.common.TextBlockAlign
+import com.svartifoss.snfell.common.TextBlockPosition
 import com.svartifoss.snfell.common.TextCase
 import com.svartifoss.snfell.common.RoundScreenText
 import com.svartifoss.snfell.common.WatchTypography
@@ -131,6 +134,7 @@ class WatchPreviewView @JvmOverloads constructor(
         SEEK,
         QUICK_PANEL,
         QUEUE,
+        LYRICS,
         MINI_BUTTONS
     }
 
@@ -145,6 +149,9 @@ class WatchPreviewView @JvmOverloads constructor(
         const val SAMPLE_ALBUM_TERTIARY = 0xFF241B2F.toInt()
 
         const val WATCH_DP = 192f
+
+        /** LyricsScreen.LINE_SPACING_DP - the gap between lyric lines on the watch. */
+        const val LYRIC_LINE_SPACING_DP = 11f
         const val SAMPLE_PROGRESS = 0.35f
         const val SAMPLE_VOLUME = 0.65f
         /** A deliberately non-personal time for the Firestore moderation thumbnail. */
@@ -190,6 +197,23 @@ class WatchPreviewView @JvmOverloads constructor(
                 FaceGeometry.Classic.ROUND_BOX_INSET_FRACTION
         private val CLASSIC_SQUARE_TEXT_MARGIN_DP = FaceGeometry.Classic.SQUARE_TEXT_MARGIN_DP
 
+        /** The Matejdro face's two proportional text bands - see [FaceGeometry.Matejdro]. */
+        private val MATEJDRO_TEXT_MAX_SP = FaceGeometry.Matejdro.AUTOSIZE_MAX_SP
+        private val MATEJDRO_TEXT_MIN_SP = FaceGeometry.Matejdro.AUTOSIZE_MIN_SP
+        private val MATEJDRO_ARTIST_BAND_FRACTION = FaceGeometry.Matejdro.ARTIST_BAND_FRACTION
+
+        /**
+         * How many times the band fit may re-plan before it settles for the floor.
+         *
+         * The watch steps its size down 1sp at a time until the text fits both the width and the
+         * band (OutlineTextView.fitsWithinLineLimit with `fitsWithinViewHeight`). Doing that here
+         * would re-run the whole wrap plan up to a hundred times inside onDraw, so this instead
+         * corrects the ceiling proportionally - line height scales linearly with text size - and
+         * converges in two or three passes. The cap is what stops a pathological string from
+         * looping; it falls through to the floor, which is where the watch would end up too.
+         */
+        private const val MATEJDRO_BAND_FIT_STEPS = 6
+
         private val IMMERSIVE_BOTTOM_PADDING_FRACTION =
                 FaceGeometry.Immersive.BOTTOM_PADDING_FRACTION
         private val IMMERSIVE_SIDE_PADDING_FRACTION =
@@ -209,6 +233,20 @@ class WatchPreviewView @JvmOverloads constructor(
         private val IMMERSIVE_TRACK_TIME_SP = FaceGeometry.Immersive.TRACK_TIME_SP
         private val IMMERSIVE_TRACK_TIME_LINE_HEIGHT_SP =
                 FaceGeometry.Immersive.TRACK_TIME_LINE_HEIGHT_SP
+
+        private val ARTIST_SIDE_PADDING_FRACTION = FaceGeometry.Artist.SIDE_PADDING_FRACTION
+        private val ARTIST_EDGE_PADDING_FRACTION = FaceGeometry.Artist.EDGE_PADDING_FRACTION
+        private val ARTIST_NAME_SP = FaceGeometry.Artist.NAME_SP
+        private val ARTIST_NAME_LINE_HEIGHT_SP = FaceGeometry.Artist.NAME_LINE_HEIGHT_SP
+        private val ARTIST_SOURCE_ICON_SIZE_DP = FaceGeometry.Artist.SOURCE_ICON_SIZE_DP
+        private val ARTIST_TRACK_TOP_PADDING_DP = FaceGeometry.Artist.TRACK_TOP_PADDING_DP
+        private val ARTIST_TRACK_SP = FaceGeometry.Artist.TRACK_SP
+        private val ARTIST_TRACK_LINE_HEIGHT_SP = FaceGeometry.Artist.TRACK_LINE_HEIGHT_SP
+        private val ARTIST_TRACK_TIME_TOP_PADDING_DP =
+                FaceGeometry.Artist.TRACK_TIME_TOP_PADDING_DP
+        private val ARTIST_TRACK_TIME_SP = FaceGeometry.Artist.TRACK_TIME_SP
+        private val ARTIST_TRACK_TIME_LINE_HEIGHT_SP =
+                FaceGeometry.Artist.TRACK_TIME_LINE_HEIGHT_SP
 
         private val CHAT_INCOMING_LIGHTNESS = FaceGeometry.Chat.INCOMING_LIGHTNESS
         private val CHAT_OUTGOING_LIGHTNESS = FaceGeometry.Chat.OUTGOING_LIGHTNESS
@@ -272,6 +310,7 @@ class WatchPreviewView @JvmOverloads constructor(
         private val VERSE_BAND_TOP = FaceGeometry.Verse.BAND_TOP
         private val VERSE_BAND_BOTTOM = FaceGeometry.Verse.BAND_BOTTOM
         private val VERSE_BAND_CENTER = FaceGeometry.Verse.BAND_CENTER
+        private val VERSE_HEADER_ARTIST_BASELINE = FaceGeometry.Verse.HEADER_ARTIST_BASELINE
         const val VERSE_PREVIEW_LINE_PROGRESS = 0.55f
 
         /**
@@ -282,7 +321,7 @@ class WatchPreviewView @JvmOverloads constructor(
          * the screen on the wrist, so the miniature must not draw one.
          */
         private val AOD_STYLES_OVER_BLACK =
-                setOf("ribbon", "frame", "carousel", "chat", "split", "note")
+                setOf("ribbon", "frame", "carousel", "chat", "split", "note", "artist")
 
         private val METADATA_TABLE_HEIGHT_FRACTION = FaceGeometry.Metadata.TABLE_HEIGHT_FRACTION
         private val METADATA_ROW_HEIGHT_DP = FaceGeometry.Metadata.ROW_HEIGHT_DP
@@ -306,7 +345,6 @@ class WatchPreviewView @JvmOverloads constructor(
 
     private val fontRegular: Typeface? = ResourcesCompat.getFont(context, R.font.google_sans_regular)
     private val fontBold: Typeface? = ResourcesCompat.getFont(context, R.font.google_sans_bold)
-    private val fontMomsTypewriter: Typeface? = ResourcesCompat.getFont(context, R.font.moms_typewriter)
     private val fontPoppins: Typeface? = ResourcesCompat.getFont(context, R.font.poppins_regular)
     private val fontMontserrat: Typeface? = ResourcesCompat.getFont(context, R.font.montserrat_regular)
     private val fontMarcellus: Typeface? = ResourcesCompat.getFont(context, R.font.marcellus_regular)
@@ -467,6 +505,9 @@ class WatchPreviewView @JvmOverloads constructor(
     private var noteCoverShape = "circle"
     private var noteShowCover = true
     private var titleCentered = false
+    /** The user's block placement, resolved through the same common enums the watch reads. */
+    private var textBlockAlign = TextBlockAlign.DEFAULT
+    private var textBlockPosition = TextBlockPosition.DEFAULT
     private var chatCoverShape = "circle"
     private var chatShowCover = true
     private var metadataCoverShape = "rounded"
@@ -479,6 +520,14 @@ class WatchPreviewView @JvmOverloads constructor(
     private var volumeCustomColor = ""
     private var quickPanelColorMode = "follow"
     private var quickPanelCustomColor = ""
+    private var lyricsColorMode = "follow"
+    private var lyricsCustomColor = ""
+    private var queueColorMode = "follow"
+    private var queueCustomColor = ""
+    /** Per-element Tone, already resolved against the global one - ColorModifier.resolveElement. */
+    private var titleColorModifier = ColorModifier.NONE
+    private var artistColorModifier = ColorModifier.NONE
+    private var clockColorModifier = ColorModifier.NONE
     private var progressStyle = "solid"
     private var progressLayout = "edge"
     private var trackTimeMode = "always"
@@ -491,6 +540,19 @@ class WatchPreviewView @JvmOverloads constructor(
     private val EDGE_MARKER_WIDTH_DP = 2.5f
     private val EDGE_MARKER_LENGTH_SCALE = 2.4f
     private var titleTextMode = "smart"
+    /** The artist line's own overflow behaviour. Only the three single-line modes, so unlike the
+     *  title this never changes how many lines the block occupies. */
+    private var artistTextMode = "static"
+    /**
+     * Which picture the watch will put behind the player.
+     *
+     * The miniature cannot show it: the looked-up sources resolve on the phone *for the watch*, and
+     * there is no picture on hand here for a preview. What it can do is not lie about the treatment
+     * - every style, filter and shading layer applies to whichever picture arrives - so the
+     * miniature keeps drawing the local cover under all three, which is also exactly what the wrist
+     * shows whenever a lookup finds nothing.
+     */
+    private var albumArtSource = AlbumArtSource.DEFAULT
     private var alwaysShowTime = false
     private var clockColorMode = "white"
     private var clockCustomColor = ""
@@ -498,6 +560,12 @@ class WatchPreviewView @JvmOverloads constructor(
     private var albumBlurRadius = 35
     private var overlayBlurRadius = 35
     private var overlayBackdropStyle = "follow"
+    /** Per-surface backgrounds; "shared" defers to [overlayBackdropStyle]. */
+    private var volumeBackdropStyle = OverlayBackdropResolver.SHARED
+    private var progressBackdropStyle = OverlayBackdropResolver.SHARED
+    private var quickPanelBackdropStyle = OverlayBackdropResolver.SHARED
+    private var queueBackdropStyle = OverlayBackdropResolver.SHARED
+    private var lyricsBackdropStyle = OverlayBackdropResolver.SHARED
     private var albumArtFade = true
 
     private var aodStyle = "follow"
@@ -720,6 +788,64 @@ class WatchPreviewView @JvmOverloads constructor(
      * [artistTypeface]; opacity is folded in here through [artistAlpha], so callers pass the colour
      * the face designed rather than an already-dimmed one.
      */
+    /**
+     * The horizontal alignment for a block of track text, honouring the user's override.
+     *
+     * The mirror of `FaceChrome.blockTextAlign` on the watch: a caller passes the alignment its
+     * face designed and gets back either that or the override. Kept to the same shape so the two
+     * cannot drift into disagreeing about what `follow` means.
+     */
+    private fun blockAlign(designed: Paint.Align): Paint.Align = when (textBlockAlign) {
+        TextBlockAlign.FOLLOW -> designed
+        TextBlockAlign.START -> Paint.Align.LEFT
+        TextBlockAlign.CENTER -> Paint.Align.CENTER
+        TextBlockAlign.END -> Paint.Align.RIGHT
+    }
+
+    /**
+     * Where the text anchor sits once [blockAlign] has moved it off centre.
+     *
+     * Compose gets this for free - a `Text` filling its parent aligns inside the width it already
+     * has - but a `Canvas` draws from a point, so the point has to move with the alignment or a
+     * left-aligned line would start at the centre and run off the right edge. [availWidth] is the
+     * band the caller laid out for the text, which every text helper here already receives.
+     */
+    /**
+     * [blockAnchorX] for a caller that has already resolved its alignment.
+     *
+     * Returns [designedX] untouched whenever the resolved alignment is still centre, so a face the
+     * user has not moved draws from exactly the point it always did.
+     */
+    private fun blockAnchorXFor(align: Paint.Align, designedX: Float, availWidth: Float): Float =
+            when (align) {
+                Paint.Align.LEFT -> if (textBlockAlign == TextBlockAlign.FOLLOW) designedX
+                        else designedX - availWidth / 2f
+                Paint.Align.RIGHT -> if (textBlockAlign == TextBlockAlign.FOLLOW) designedX
+                        else designedX + availWidth / 2f
+                else -> designedX
+            }
+
+    private fun blockAnchorX(centerX: Float, availWidth: Float): Float = when (blockAlign(Paint.Align.CENTER)) {
+        Paint.Align.LEFT -> centerX - availWidth / 2f
+        Paint.Align.RIGHT -> centerX + availWidth / 2f
+        else -> centerX
+    }
+
+    /**
+     * The vertical anchor for a block the user has moved, or null while they have not.
+     *
+     * Null rather than a computed centre so a caller keeps its own composition untouched under
+     * `follow` - returning a value would make every face's block jump to a shared position the
+     * moment this existed.
+     */
+    private fun blockAnchorY(geometry: PreviewGeometry, blockHeight: Float, inset: Float): Float? =
+            when (textBlockPosition) {
+                TextBlockPosition.FOLLOW -> null
+                TextBlockPosition.TOP -> geometry.bounds.top + inset + blockHeight
+                TextBlockPosition.MIDDLE -> geometry.cy + blockHeight / 2f
+                TextBlockPosition.BOTTOM -> geometry.bounds.bottom - inset
+            }
+
     private fun drawArtistLine(
             canvas: Canvas,
             text: String,
@@ -743,6 +869,15 @@ class WatchPreviewView @JvmOverloads constructor(
             glyphGapFraction: Float = .33f
     ) {
         val text = artistTypographySpec.case.apply(text)
+        // The user's block alignment, applied only where the face designed a *centred* line. A
+        // face that already aligns to an edge passes its own anchor (Chat's bubbles, Note's
+        // sentence, the Artist face's own block), and shifting that by half the band would put
+        // the text somewhere neither the face nor the user asked for. Compose gets this for free
+        // because a filled Text aligns inside the width it already has; a Canvas draws from a
+        // point, so the point has to move with the alignment.
+        @Suppress("NAME_SHADOWING") val align =
+                if (align == Paint.Align.CENTER) blockAlign(align) else align
+        @Suppress("NAME_SHADOWING") val x = blockAnchorXFor(align, x, availWidth)
         textPaint.typeface = artistTypeface(bold = bold)
         textPaint.textSize = artistTypographySpec.scaled(designedSize)
         textPaint.color = artistAlpha(color)
@@ -751,9 +886,28 @@ class WatchPreviewView @JvmOverloads constructor(
                 if (artistTypographySpec.trackingEm == 0f) designedTracking
                 else artistTypographySpec.trackingEm
 
+        // The three modes are all single-line, so unlike the title this needs no wrap plan - only
+        // a decision about the size and whether to ellipsize. "shrink" reduces the size until the
+        // line fits and ellipsizes at the floor; "marquee" scrolls on the wrist, which a still
+        // miniature cannot show, so it draws the line unellipsized and lets the caller's clip cut
+        // it - the honest stand-in, since an ellipsis would claim text is being dropped when on
+        // the watch it scrolls past.
+        val artistFits = { size: Float ->
+            textPaint.textSize = size
+            textPaint.measureText(text) <= availWidth
+        }
+        if (artistTextMode == "shrink" && !artistFits(textPaint.textSize)) {
+            val designed = artistTypographySpec.scaled(designedSize)
+            val fitted = findFittingTextSize(text, availWidth, designed, designed * 0.62f)
+            textPaint.textSize = fitted ?: (designed * 0.62f)
+        } else {
+            textPaint.textSize = artistTypographySpec.scaled(designedSize)
+        }
+        val ellipsizeArtist = artistTextMode != "marquee"
+
         val glyph = if (sourceGlyph && showSourceIcon) this.sourceGlyph else null
         if (glyph == null) {
-            val label = ellipsize(text, availWidth)
+            val label = if (ellipsizeArtist) ellipsize(text, availWidth) else text
             drawTrackTextBackdrop(canvas, artistBackdropSpec, label, x, baselineY)
             withTrackTextOutline(artistOutlineSpec) {
                 canvas.drawText(label, x, baselineY, textPaint)
@@ -766,7 +920,9 @@ class WatchPreviewView @JvmOverloads constructor(
         // than being a fixed inset that reads as misaligned once the mark is resized.
         val diameter = glyphSize * sourceIconTypographySpec.scale
         val gap = diameter * glyphGapFraction
-        val label = ellipsize(text, (availWidth - diameter - gap).coerceAtLeast(1f))
+        val label = if (ellipsizeArtist) {
+            ellipsize(text, (availWidth - diameter - gap).coerceAtLeast(1f))
+        } else text
         val textWidth = textPaint.measureText(label)
         val unit = diameter + gap + textWidth
         val left = when (align) {
@@ -1070,9 +1226,18 @@ class WatchPreviewView @JvmOverloads constructor(
         // the Watch tab it sits in the queue category beside the two rows above - editing it there
         // previewed the player, which is the one surface it has nothing to do with.
         key == "wear_queue_style" || key == "wear_list_row_size" ||
-                key == "queue_remote_artwork" -> PreviewSurface.QUEUE
+                key == "queue_remote_artwork" || key == "wear_queue_color_mode" ||
+                key == "wear_queue_custom_color" -> PreviewSurface.QUEUE
+        key == "wear_lyrics_color_mode" || key == "wear_lyrics_custom_color" ->
+            PreviewSurface.LYRICS
         key == "wear_font_all_screens" -> PreviewSurface.QUEUE
         key == "wear_overlay_backdrop_style" -> PreviewSurface.VOLUME
+        // Each surface's own background previews on that surface, not on the shared one.
+        key == "wear_volume_backdrop_style" -> PreviewSurface.VOLUME
+        key == "wear_progress_backdrop_style" -> PreviewSurface.SEEK
+        key == "wear_quick_panel_backdrop_style" -> PreviewSurface.QUICK_PANEL
+        key == "wear_queue_backdrop_style" -> PreviewSurface.QUEUE
+        key == "wear_lyrics_backdrop_style" -> PreviewSurface.LYRICS
         key == "overlay_blur_radius" -> PreviewSurface.VOLUME
         key.startsWith("screen_buttons_") || key == "wear_mini_buttons_mode" ->
             PreviewSurface.MINI_BUTTONS
@@ -1171,6 +1336,16 @@ class WatchPreviewView @JvmOverloads constructor(
         albumArtFade = readBoolean("wear_album_art_fade", true)
         overlayBlurRadius = readInt("overlay_blur_radius", 35).coerceIn(5, 120)
         overlayBackdropStyle = readString("wear_overlay_backdrop_style", "follow")
+        volumeBackdropStyle = readString(
+                "wear_volume_backdrop_style", OverlayBackdropResolver.SHARED)
+        progressBackdropStyle = readString(
+                "wear_progress_backdrop_style", OverlayBackdropResolver.SHARED)
+        quickPanelBackdropStyle = readString(
+                "wear_quick_panel_backdrop_style", OverlayBackdropResolver.SHARED)
+        queueBackdropStyle = readString(
+                "wear_queue_backdrop_style", OverlayBackdropResolver.SHARED)
+        lyricsBackdropStyle = readString(
+                "wear_lyrics_backdrop_style", OverlayBackdropResolver.SHARED)
         colorTreatment = readColorTreatment()
         normalColor = readString("wear_normal_color", "")
         normalColorMulti = readBoolean("wear_normal_color_multi", true)
@@ -1244,6 +1419,9 @@ class WatchPreviewView @JvmOverloads constructor(
         noteCoverShape = readString("wear_note_cover_shape", "circle")
         noteShowCover = readBoolean("wear_note_show_cover", true)
         titleCentered = readBoolean("wear_title_centered", false)
+        textBlockAlign = TextBlockAlign.fromPref(readString("wear_text_block_align", "follow"))
+        textBlockPosition =
+                TextBlockPosition.fromPref(readString("wear_text_block_position", "follow"))
         chatCoverShape = readString("wear_chat_cover_shape", "circle")
         chatShowCover = readBoolean("wear_chat_show_cover", true)
         metadataCoverShape = readString("wear_metadata_cover_shape", "rounded")
@@ -1256,6 +1434,17 @@ class WatchPreviewView @JvmOverloads constructor(
         volumeCustomColor = readString("wear_volume_custom_color", "")
         quickPanelColorMode = readString("wear_quick_panel_color_mode", "follow")
         quickPanelCustomColor = readString("wear_quick_panel_custom_color", "")
+        lyricsColorMode = readString("wear_lyrics_color_mode", "follow")
+        lyricsCustomColor = readString("wear_lyrics_custom_color", "")
+        queueColorMode = readString("wear_queue_color_mode", "follow")
+        queueCustomColor = readString("wear_queue_custom_color", "")
+        val globalTone = ColorModifier.fromPreference(colorModifier)
+        titleColorModifier = ColorModifier.resolveElement(
+                readString("wear_title_color_modifier", ColorModifier.FOLLOW), globalTone)
+        artistColorModifier = ColorModifier.resolveElement(
+                readString("wear_artist_color_modifier", ColorModifier.FOLLOW), globalTone)
+        clockColorModifier = ColorModifier.resolveElement(
+                readString("wear_clock_color_modifier", ColorModifier.FOLLOW), globalTone)
         progressStyle = readString("wear_progress_style", "solid")
         progressLayout = readString("wear_progress_layout", "edge")
         trackTimeMode = readString("wear_track_time_mode", "always")
@@ -1301,6 +1490,8 @@ class WatchPreviewView @JvmOverloads constructor(
                 customColor = readString("wear_artist_text_bg_custom_color", ""),
                 opacityPercent = readInt("wear_artist_text_bg_opacity", 100))
         titleTextMode = readString("wear_title_text_mode", "smart")
+        artistTextMode = readString("wear_artist_text_mode", "static")
+        albumArtSource = AlbumArtSource.fromPref(readString("wear_album_art_source", "local"))
         alwaysShowTime = readBoolean("always_show_time", false)
         clockColorMode = readString("wear_clock_color_mode", "white")
         clockCustomColor = readString("wear_clock_custom_color", "")
@@ -1857,6 +2048,20 @@ class WatchPreviewView @JvmOverloads constructor(
 
     private fun albumAccent(): Int = globalTriad().primary
 
+    /**
+     * The album colour the clock's "Album color" mode paints in.
+     *
+     * Separate from [albumAccent] because the clock has a Tone of its own: reusing the face-wide
+     * accent would carry the *global* tone, and applying the clock's on top of it would compose
+     * two filters rather than substituting one. Mirrors MainActivity.clockAlbumAccentColor.
+     */
+    private fun clockAlbumAccent(): Int =
+            if (clockColorModifier == ColorModifier.fromPreference(colorModifier)) {
+                albumAccent()
+            } else {
+                resolveTint("follow", "", legacyDesaturated = false, clockColorModifier)
+            }
+
     /** Real secondary/tertiary cover swatches, run through the face-wide treatment. A monochromatic
      * live cover falls back to a same-hue tone (see [rawSecondaryAccent]); the generated sample uses
      * colours actually present in [buildSampleArt]. */
@@ -2066,10 +2271,18 @@ class WatchPreviewView @JvmOverloads constructor(
             text: String,
             totalWidth: Float,
             hasSourceGlyph: Boolean,
-            dp: (Float) -> Float
+            dp: (Float) -> Float,
+            /** Matejdro's band is far taller than Classic's line, so it grows into the original's
+             *  own range instead of Classic's 16/9sp pair. Null keeps Classic's. */
+            maxSizeOverride: Float? = null,
+            minSizeOverride: Float? = null,
+            /** The band's height, when the face has one. Mirrors OutlineTextView's
+             *  `fitsWithinViewHeight`: a fixed band is a real ceiling on the size, where a
+             *  wrap-content line's height is only a consequence of it. */
+            maxHeight: Float? = null
     ): ClassicArtistPlan {
-        val maxSize = artistTypographySpec.scaled(dp(CLASSIC_ARTIST_MAX_SP))
-        val minSize = artistTypographySpec.scaled(dp(CLASSIC_ARTIST_MIN_SP))
+        val maxSize = artistTypographySpec.scaled(maxSizeOverride ?: dp(CLASSIC_ARTIST_MAX_SP))
+        val minSize = artistTypographySpec.scaled(minSizeOverride ?: dp(CLASSIC_ARTIST_MIN_SP))
         val sourceScale = sourceIconTypographySpec.scale
 
         textPaint.typeface = artistTypeface(bold = true)
@@ -2101,7 +2314,12 @@ class WatchPreviewView @JvmOverloads constructor(
                 }
             }
             if (line.isNotEmpty()) lines += line
-            return lines.takeIf { it.size <= CLASSIC_ARTIST_MAX_LINES }
+            val fitted = lines.takeIf { it.size <= CLASSIC_ARTIST_MAX_LINES } ?: return null
+            if (maxHeight != null) {
+                val metrics = textPaint.fontMetrics
+                if (fitted.size * (metrics.descent - metrics.ascent) > maxHeight) return null
+            }
+            return fitted
         }
 
         val step = dp(1f).coerceAtLeast(.01f)
@@ -2182,18 +2400,36 @@ class WatchPreviewView @JvmOverloads constructor(
             titleTextMode == "marquee" -> TitlePlan(maxSize, listOf(text), marquee = true)
             wrapLines != null -> linesPlan(maxSize, capped(wrapLines))
             titleTextMode == "shrink" -> {
-                val fitted = findFittingTextSize(text, availWidth, maxSize, floorSize) ?: floorSize
-                textPaint.textSize = fitted
-                TitlePlan(fitted, listOf(ellipsize(text, availWidth)), false)
+                // OutlineTextView's shrink mode accepts a word-safe wrapped block before it
+                // reaches the floor; it is not a single-line-only mode. Keep the miniature in
+                // step with that renderer, including Matejdro's larger band ceiling.
+                val fittedSingle = findFittingTextSize(text, availWidth, maxSize, floorSize)
+                if (fittedSingle != null) {
+                    textPaint.textSize = fittedSingle
+                    TitlePlan(fittedSingle, listOf(ellipsize(text, availWidth)), false)
+                } else {
+                    val shrinkWrapLines = capped(maxLines ?: 2)
+                    val fittedWrap = findFittingWrapSize(
+                            text, availWidth, maxSize, floorSize, shrinkWrapLines)
+                    val size = fittedWrap ?: floorSize
+                    linesPlan(size, shrinkWrapLines)
+                }
             }
             smartFallsBackToMarquee -> {
                 // Classic: the largest size that wraps cleanly within the line limit, else scroll.
                 val fitted = findFittingTextSize(text, availWidth, maxSize, floorSize)
                 when {
                     fitted != null -> TitlePlan(fitted, listOf(text), false)
-                    else -> findFittingWrapSize(text, availWidth, maxSize, floorSize, capped(2))
-                            ?.let { linesPlan(it, capped(2)) }
-                            ?: TitlePlan(maxSize, listOf(text), marquee = true)
+                    else -> {
+                        // Most View/Compose faces intentionally keep smart mode's historical
+                        // two-line escalation. A face may pass a larger composition ceiling (the
+                        // Matejdro weighted band does) so long titles can continue to wrap until
+                        // that band's height, rather than being truncated at two lines.
+                        val smartWrapLines = capped(maxLines ?: 2)
+                        findFittingWrapSize(text, availWidth, maxSize, floorSize, smartWrapLines)
+                                ?.let { linesPlan(it, smartWrapLines) }
+                                ?: TitlePlan(maxSize, listOf(text), marquee = true)
+                    }
                 }
             }
             else -> {
@@ -2269,6 +2505,11 @@ class WatchPreviewView @JvmOverloads constructor(
             align: Paint.Align = Paint.Align.CENTER,
             bottomAnchored: Boolean = false
     ): Float {
+        // Same rule drawArtistLine documents: the block alignment reaches a line the face centred,
+        // and leaves a line the face deliberately anchored to an edge exactly where it put it.
+        @Suppress("NAME_SHADOWING") val align =
+                if (align == Paint.Align.CENTER) blockAlign(align) else align
+        @Suppress("NAME_SHADOWING") val x = blockAnchorXFor(align, x, availWidth)
         textPaint.typeface = titleTypeface(bold = bold)
         textPaint.textSize = plan.size
         textPaint.color = color
@@ -2330,7 +2571,9 @@ class WatchPreviewView @JvmOverloads constructor(
     private fun surfaceTriad(
             mode: String,
             custom: String,
-            legacyDesaturated: Boolean
+            legacyDesaturated: Boolean,
+            /** The element's own Tone; the watch-wide one unless it has been overridden. */
+            modifier: ColorModifier = ColorModifier.fromPreference(colorModifier)
     ): ColorHarmony.Triad {
         val selected = SurfaceColorTreatment.fromPreference(mode, legacyDesaturated)
         val fixed = (if (selected == SurfaceColorTreatment.FOLLOW) null else parseHexOrNull(custom))
@@ -2338,7 +2581,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 ?: ACCENT_NEUTRAL
         return SurfacePaletteResolver.derive(
                 resolvedTreatment(mode, legacyDesaturated),
-                ColorModifier.fromPreference(colorModifier),
+                modifier,
                 rawAlbumAccent(),
                 rawSecondaryAccent(),
                 rawTertiaryAccent(),
@@ -2347,8 +2590,12 @@ class WatchPreviewView @JvmOverloads constructor(
                 normalColorMulti)
     }
 
-    private fun resolveTint(mode: String, custom: String, legacyDesaturated: Boolean): Int =
-            surfaceTriad(mode, custom, legacyDesaturated).primary
+    private fun resolveTint(
+            mode: String,
+            custom: String,
+            legacyDesaturated: Boolean,
+            modifier: ColorModifier = ColorModifier.fromPreference(colorModifier)
+    ): Int = surfaceTriad(mode, custom, legacyDesaturated, modifier).primary
 
     private fun volumeAccent(): Int =
             resolveTint(volumeColorMode, volumeCustomColor, legacyDesaturated = false)
@@ -2409,7 +2656,8 @@ class WatchPreviewView @JvmOverloads constructor(
      * tint and the queue accent also use - only the artist line has a measured background band.
      */
     private fun artistTextColor(): Int {
-        val base = accentForText(resolveTint(artistMode, artistCustom, artistDesaturated))
+        val base = accentForText(
+                resolveTint(artistMode, artistCustom, artistDesaturated, artistColorModifier))
         if (!artistAdaptiveContrast) return base
         val background = artistBandLuminance() ?: return base
         return AdaptiveTextContrast.adapt(base, background)
@@ -2424,7 +2672,8 @@ class WatchPreviewView @JvmOverloads constructor(
      */
     private fun resolvedTitleColor(): Int? {
         if (titleColorMode == MiscPreferences.TITLE_COLOR_FACE_DEFAULT) return null
-        val base = accentForText(resolveTint(titleColorMode, titleCustomColor, false))
+        val base = accentForText(
+                resolveTint(titleColorMode, titleCustomColor, false, titleColorModifier))
         if (!titleAdaptiveContrast) return base
         val background = titleBandLuminance() ?: return base
         return AdaptiveTextContrast.adapt(base, background)
@@ -2565,6 +2814,7 @@ class WatchPreviewView @JvmOverloads constructor(
             PreviewSurface.SEEK -> drawSeekSurface(canvas, geometry, dp)
             PreviewSurface.QUICK_PANEL -> drawQuickPanelSurface(canvas, geometry, dp)
             PreviewSurface.QUEUE -> drawQueueSurface(canvas, geometry, dp)
+            PreviewSurface.LYRICS -> drawLyricsSurface(canvas, geometry, dp)
         }
 
         canvas.restore()
@@ -2657,6 +2907,8 @@ class WatchPreviewView @JvmOverloads constructor(
             "metadata" -> drawMetadataPlayer(canvas, geometry, dp)
             "ribbon" -> drawRibbonPlayer(canvas, geometry, dp)
             "frame" -> drawFramePlayer(canvas, geometry, dp)
+            "matejdro" -> drawMatejdroPlayer(canvas, geometry, dp)
+            "artist" -> drawArtistPlayer(canvas, geometry, dp)
             "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth" ->
                 drawCuratedPlayer(canvas, geometry, dp, demonstratedFace)
             else -> drawClassic(canvas, geometry, dp)
@@ -3978,6 +4230,7 @@ class WatchPreviewView @JvmOverloads constructor(
             "note" -> drawNoteAod(canvas, geometry, dp)
             "verse" -> drawVerseAod(canvas, geometry, dp)
             "metadata" -> drawMetadataAod(canvas, geometry, dp)
+            "artist" -> drawArtistAod(canvas, geometry, dp)
             "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "depth" ->
                 drawCuratedAod(canvas, geometry, dp)
             "chrono" -> drawChronoAod(canvas, geometry, dp)
@@ -5193,9 +5446,23 @@ class WatchPreviewView @JvmOverloads constructor(
             contentStyle: String,
             accent: Int = albumAccent(),
             secondary: Int = albumSecondaryAccent(),
-            tertiary: Int = albumTertiaryAccent()
+            tertiary: Int = albumTertiaryAccent(),
+            /** The surface's own background; "shared" defers to the page-wide choice. */
+            surfaceStyle: String = OverlayBackdropResolver.SHARED
     ) {
-        val backdrop = OverlayBackdropResolver.resolve(overlayBackdropStyle, contentStyle)
+        val backdrop = OverlayBackdropResolver.resolveSurface(
+                surfaceStyle, overlayBackdropStyle, contentStyle)
+
+        // Transparent means the panel owns no background pixels. Rebuild the same player
+        // backdrop that the dedicated Wear panel screens keep beneath their transparent layer so
+        // the miniature demonstrates what will actually show through instead of falling back to
+        // the black initialization used by ordinary panel surfaces.
+        if (backdrop == OverlayBackdrop.TRANSPARENT) {
+            drawPlayerBackdrop(canvas, geometry) { value -> value * geometry.dpScale }
+            drawBackgroundLayers(canvas, geometry)
+            return
+        }
+
         fillPaint.shader = null
         fillPaint.color = Color.BLACK
         canvas.drawRect(geometry.bounds, fillPaint)
@@ -5216,6 +5483,9 @@ class WatchPreviewView @JvmOverloads constructor(
 
         fillPaint.shader = null
         when (backdrop) {
+            // Handled above because transparency must reveal the configured player composition,
+            // not merely draw a zero-alpha rectangle over this function's black fallback.
+            OverlayBackdrop.TRANSPARENT -> Unit
             // Mirror the watch: album-tinted backdrops use the faces' saturation band (.30-.90)
             // so the preview shows the same overlay tint the watch renders over a face.
             OverlayBackdrop.ACRYLIC -> fillPaint.shader = LinearGradient(
@@ -6157,7 +6427,8 @@ class WatchPreviewView @JvmOverloads constructor(
         // composition here so the phone preview is faithful.
         drawConfiguredOverlayBackdrop(
                 canvas, geometry, volumeStyle,
-                volumeAccent(), volumeSecondaryAccent(), volumeTertiaryAccent())
+                volumeAccent(), volumeSecondaryAccent(), volumeTertiaryAccent(),
+                volumeBackdropStyle)
         drawVolumeArc(canvas, geometry, dp)
         val chromeColor = when (volumeStyle) {
             "light" -> 0xFF111111.toInt()
@@ -6244,7 +6515,8 @@ class WatchPreviewView @JvmOverloads constructor(
         drawConfiguredOverlayBackdrop(
                 canvas, geometry, seekBackdropStyle(),
                 progressAccent, sameHueTone(progressAccent, .42f),
-                sameHueTone(progressAccent, .68f))
+                sameHueTone(progressAccent, .68f),
+                progressBackdropStyle)
         // Mirrors applySeekPanelLayout on the watch: the edge family keeps the bezel ring and only
         // scales its stroke, while the remaining layouts author their own meter geometry.
         val edgeRing = seekLayout in setOf("edge", "edge_thin", "edge_thick")
@@ -7477,7 +7749,8 @@ class WatchPreviewView @JvmOverloads constructor(
         val accent = quickPanelAccent()
         drawConfiguredOverlayBackdrop(
                 canvas, geometry, quickPanelStyle,
-                accent, quickPanelSecondaryAccent(), quickPanelTertiaryAccent())
+                accent, quickPanelSecondaryAccent(), quickPanelTertiaryAccent(),
+                quickPanelBackdropStyle)
         val metadataColor = when (quickPanelStyle) {
             "light" -> 0xFF111111.toInt()
             "terminal" -> TERMINAL_GREEN
@@ -7934,14 +8207,76 @@ class WatchPreviewView @JvmOverloads constructor(
         }
     }
 
+    /**
+     * The lyrics screen: black, an accent floor, and the line before / now / next.
+     *
+     * The one surface in the app whose entire job is a wall of text, and the one whose accent
+     * appears in exactly two places - the current line and the floor wash - which is what makes a
+     * colour choice here so visible and why it needed a preview of its own rather than borrowing
+     * the player's. Geometry mirrors `LyricsScreen`'s constants; the accent goes through
+     * [lyricsAccent], so both sides answer from the same resolver.
+     */
+    private fun drawLyricsSurface(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        val accent = lyricsAccent()
+        // No content style of its own, so "Follow style" resolves to solid black - the ground this
+        // screen was designed on, kept unless the user names a backdrop. Mirrors LyricsActivity.
+        drawConfiguredOverlayBackdrop(
+                canvas, geometry, contentStyle = "",
+                accent = accent,
+                secondary = sameHueTone(accent, .42f),
+                tertiary = sameHueTone(accent, .68f),
+                surfaceStyle = lyricsBackdropStyle)
+        // Shared with the Verse face on the watch - see AccentFloorGlow.
+        drawAccentFloor(canvas, geometry, AccentFloorStyle.STANDARD, accent, alphaScale = 1f)
+
+        drawSmallClock(canvas, geometry.cx, geometry.bounds.top + dp(22f), dp, sizeSp = 16f)
+
+        val lines = listOf(
+                context.getString(R.string.preview_sample_lyric_previous),
+                context.getString(R.string.preview_sample_lyric_current),
+                context.getString(R.string.preview_sample_lyric_next)
+        )
+        // CURRENT_LINE_SP / NEIGHBOUR_LINE_SP and the alphas from LyricsScreen.
+        val sizes = listOf(15.5f, 17f, 15.5f)
+        val alphas = listOf(0.55f, 1f, 0.55f)
+
+        textPaint.style = Paint.Style.FILL
+        textPaint.textAlign = Paint.Align.CENTER
+        textPaint.typeface = lyricTypeface()
+
+        val maxWidth = geometry.radius * 1.5f
+        var y = geometry.cy - dp(20f)
+        for (index in lines.indices) {
+            val current = index == 1
+            textPaint.textSize = dp(sizes[index])
+            textPaint.color = if (current) {
+                accent
+            } else {
+                ColorUtils.setAlphaComponent(Color.WHITE, (alphas[index] * 255).toInt())
+            }
+            canvas.drawText(ellipsize(lines[index], maxWidth), geometry.cx, y, textPaint)
+            y += dp(sizes[index] + LYRIC_LINE_SPACING_DP)
+        }
+        textPaint.typeface = null
+    }
+
     private fun drawQueueSurface(
             canvas: Canvas,
             geometry: PreviewGeometry,
             dp: (Float) -> Float
     ) {
-        fillPaint.shader = null
-        fillPaint.color = Color.BLACK
-        canvas.drawRect(geometry.bounds, fillPaint)
+        // The configured ground, not a flat black field. The queue and the lyrics screen were the
+        // only two surfaces painting one, which is what made them look unrelated to the theme -
+        // and it is what the "glass" row style has always promised, frosted panels being just
+        // dark grey over black. Tinted by the queue's own accent, following its row style.
+        drawConfiguredOverlayBackdrop(
+                canvas, geometry, queueStyle,
+                queueAccent(), queueSecondaryAccent(), queueTertiaryAccent(),
+                queueBackdropStyle)
         drawSmallClock(canvas, geometry.cx, geometry.bounds.top + dp(20f), dp, sizeSp = 16f)
 
         textPaint.style = Paint.Style.FILL
@@ -8092,7 +8427,25 @@ class WatchPreviewView @JvmOverloads constructor(
 
     /** QueueActivity intentionally keeps the extracted album accent even when the player face's
      *  dynamic-accent toggle is off. */
-    private fun queueAccent(): Int = liveAccent ?: SAMPLE_ALBUM_ACCENT
+    /**
+     * The queue's resolved accent.
+     *
+     * Was `liveAccent ?: SAMPLE_ALBUM_ACCENT` - the raw album colour, which meant the miniature
+     * showed a queue the global treatment, modifier and hue shift had never touched, matching a
+     * watch that was itself ignoring them. Both sides go through the shared resolver now.
+     */
+    private fun queueAccent(): Int =
+            resolveTint(queueColorMode, queueCustomColor, legacyDesaturated = false)
+
+    private fun queueSecondaryAccent(): Int =
+            resolveSecondaryTint(queueColorMode, queueCustomColor, false)
+
+    private fun queueTertiaryAccent(): Int =
+            resolveTertiaryTint(queueColorMode, queueCustomColor, false)
+
+    /** The lyrics screen's resolved accent, lifted for its black backdrop as the watch does. */
+    private fun lyricsAccent(): Int = accentForText(
+            resolveTint(lyricsColorMode, lyricsCustomColor, legacyDesaturated = false))
 
     private fun queueSpacingDp(style: String): Float = when (style) {
         "minimal", "terminal", "ink", "rail" -> 2f
@@ -8103,16 +8456,12 @@ class WatchPreviewView @JvmOverloads constructor(
 
     private fun queueSkin(style: String, active: Boolean, accent: Int): PreviewSkin {
         val lightAccent = accentForSurface(accent)
-        val secondary = liveSecondaryAccent ?: if (liveAccent == null) {
-            SAMPLE_ALBUM_SECONDARY
-        } else {
-            sameHueTone(accent, .42f)
-        }
-        val tertiary = liveTertiaryAccent ?: if (liveAccent == null) {
-            SAMPLE_ALBUM_TERTIARY
-        } else {
-            sameHueTone(accent, .68f)
-        }
+        // The whole triad through the queue's own colour mode, mirroring QueueViewModel, which
+        // publishes all three slots of one resolved triad. Taking the raw live swatches here left
+        // the Gradient/Duotone/Prisma styles drawing untreated companions beside a treated
+        // primary - the treatments those styles exist to show.
+        val secondary = queueSecondaryAccent()
+        val tertiary = queueTertiaryAccent()
         return when (style) {
             "minimal" -> PreviewSkin(
                     onColor = if (active) accent else Color.WHITE,
@@ -9159,7 +9508,225 @@ class WatchPreviewView @JvmOverloads constructor(
         strokePaint.shader = null
     }
 
-    private fun drawClassic(
+    /**
+     * The inset the Classic block's `BoxInsetLayout` leaves on every edge.
+     *
+     * Its 14.6447% round-screen inset yields the central inscribed square; rectangular screens
+     * instead retain the 30dp XML margin. (The old fixed .80 diameter approximated neither and made
+     * the preview's wrap/sizing decision differ before any text was drawn.)
+     *
+     * Shared with the Matejdro face rather than given a value of its own, which is the correction
+     * to how that face first shipped: `music_screen_text_margin` is 30dp in `values` but **0dp** in
+     * `values-round`, so on a round watch the original laid its bands out inside this inset and
+     * nothing else. Adding 30dp on top of it is what made every line come out smaller than the
+     * face being reproduced.
+     */
+    private fun classicTextInset(geometry: PreviewGeometry, dp: (Float) -> Float): Float =
+            if (geometry.round) {
+                maxOf(geometry.bounds.width(), geometry.bounds.height()) *
+                        CLASSIC_ROUND_BOX_INSET_FRACTION
+            } else {
+                dp(CLASSIC_SQUARE_TEXT_MARGIN_DP)
+            }
+
+    /**
+     * The four quadrant hint icons and the awake clock, shared by both View faces.
+     *
+     * Extracted rather than copied when the Matejdro face arrived: it reproduces this chrome
+     * exactly (the icons *are* the original's control surface), and a second copy here is the
+     * drift WatchPreviewParityTest exists to catch, only between two miniatures rather than
+     * between a miniature and its face.
+     */
+    /**
+     * The 2017 original: matejdro's WearMusicCenter, the app this one is a fork of.
+     *
+     * Shares Classic's chrome outright - the quadrant hints and the clock are drawn by the same
+     * function - because on the watch it *is* the Classic View presentation. The one thing it
+     * composes differently is the text, and that difference is the whole face: artist and title as
+     * two proportional bands filling the screen, each line sized to fill its own band, where
+     * Classic centres a wrap-content block. Everything else the original looked like reaches this
+     * miniature as ordinary preference values, through FaceScopedPreferences.MATEJDRO_DEFAULTS.
+     */
+    private fun drawMatejdroPlayer(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        drawClassicQuadrantChrome(canvas, geometry, dp)
+
+        // The same block Classic uses, measured on both axes: this face divides that area into
+        // bands rather than centring a group inside it, so it needs the height as well.
+        val inset = classicTextInset(geometry, dp)
+        val textWidth = (geometry.bounds.width() - inset * 2f).coerceAtLeast(1f)
+        val areaTop = geometry.bounds.top + inset
+        val cx = geometry.cx
+
+        // The elapsed readout defaults off here - the original had none - but it is a setting, and
+        // switching it back on puts a third child in the watch's block. That child is
+        // wrap_content, so the layout gives it its height *before* the weights divide what is
+        // left; the bands therefore shrink rather than the row overflowing them.
+        val timeVisible = trackTimeVisible()
+        val timeSize = trackTimeTypographySpec.scaled(dp(CLASSIC_TRACK_TIME_SP))
+        val timeGap = dp(4f)
+        var timeLineH = 0f
+        var timeAscent = 0f
+        if (timeVisible) {
+            textPaint.typeface = trackTimeTypeface(fontRegular)
+            textPaint.letterSpacing = trackTimeTypographySpec.trackingEm
+            textPaint.textSize = timeSize
+            val metrics = textPaint.fontMetrics
+            timeLineH = metrics.descent - metrics.ascent
+            timeAscent = metrics.ascent
+            resetTrackTextPaint()
+        }
+        val timeBlock = if (timeVisible) timeGap + timeLineH else 0f
+        val areaHeight =
+                (geometry.bounds.height() - inset * 2f - timeBlock).coerceAtLeast(1f)
+        val artistBand = areaHeight * MATEJDRO_ARTIST_BAND_FRACTION
+        val titleBand = areaHeight - artistBand
+
+        val artistVisible = showTrackArtist || !isPlayingShown()
+        val artistText = if (isPlayingShown()) {
+            displayArtist()
+        } else {
+            context.getString(R.string.preview_playback_stopped)
+        }
+        // The source mark defaults off on this face (the original had none), but it is a setting
+        // like any other, so the band still makes room for it when it is switched back on.
+        val hasSourceGlyph = artistVisible && showSourceIcon && sourceGlyph != null
+        if (artistVisible) {
+            val plan = planClassicArtist(
+                    artistText,
+                    textWidth,
+                    hasSourceGlyph,
+                    dp,
+                    maxSizeOverride = dp(MATEJDRO_TEXT_MAX_SP),
+                    minSizeOverride = dp(MATEJDRO_TEXT_MIN_SP),
+                    maxHeight = artistBand)
+            // The original set textStyle only on its title - see
+            // FaceGeometry.Matejdro.ARTIST_DESIGNED_BOLD, which the watch reads at the same point.
+            val typeface = artistTypeface(bold = FaceGeometry.Matejdro.ARTIST_DESIGNED_BOLD)
+            textPaint.typeface = typeface
+            textPaint.letterSpacing = artistTypographySpec.trackingEm
+            textPaint.textSize = plan.size
+            textPaint.textAlign = Paint.Align.CENTER
+            val metrics = textPaint.fontMetrics
+            val lineH = metrics.descent - metrics.ascent
+            val blockH = plan.lines.size * lineH
+            // Centred inside its own band, which is what a weighted LinearLayout child with
+            // gravity=center does on the watch.
+            var y = areaTop + (artistBand - blockH) / 2f
+            val rawColor = if (isPlayingShown()) artistTextColor() else Color.WHITE
+            textPaint.color = artistAlpha(rawColor)
+            val sourceDiameter = plan.size * CLASSIC_SOURCE_ICON_SIZE_ARTIST_FACTOR *
+                    sourceIconTypographySpec.scale
+            val sourceGap = plan.size * CLASSIC_SOURCE_ICON_END_MARGIN_ARTIST_FACTOR
+            val widestLine = if (plan.marquee || plan.lines.size > 1) {
+                plan.labelWidth
+            } else {
+                plan.lines.maxOfOrNull { textPaint.measureText(it) } ?: 0f
+            }
+            val groupWidth = widestLine + if (hasSourceGlyph) sourceDiameter + sourceGap else 0f
+            val groupLeft = cx - groupWidth / 2f
+            val labelCx = if (hasSourceGlyph) {
+                groupLeft + sourceDiameter + sourceGap + widestLine / 2f
+            } else {
+                groupLeft + widestLine / 2f
+            }
+            if (hasSourceGlyph) {
+                drawSourceGlyph(
+                        canvas, groupLeft + sourceDiameter / 2f, y + blockH / 2f,
+                        sourceDiameter, rawColor)
+            }
+            if (plan.marquee) {
+                drawMarqueeText(canvas, artistText, labelCx, y - metrics.ascent, plan.labelWidth)
+            } else {
+                plan.lines.forEachIndexed { index, line ->
+                    canvas.drawText(line, labelCx, y - metrics.ascent + index * lineH, textPaint)
+                }
+            }
+            resetTrackTextPaint()
+        }
+
+        if (showTrackTitle) {
+            val plan = planMatejdroTitle(textWidth, titleBand, dp)
+            textPaint.typeface = titleTypeface(bold = true)
+            textPaint.letterSpacing = titleTypographySpec.trackingEm
+            textPaint.textSize = plan.size
+            textPaint.textAlign = Paint.Align.CENTER
+            textPaint.color = titleAlpha(Color.WHITE)
+            val metrics = textPaint.fontMetrics
+            val lineH = metrics.descent - metrics.ascent
+            val blockH = plan.lines.size * lineH
+            var y = areaTop + artistBand + (titleBand - blockH) / 2f
+            if (plan.marquee) {
+                drawMarqueeText(canvas, plan.lines.first(), cx, y - metrics.ascent, textWidth)
+            } else {
+                plan.lines.forEach { line ->
+                    canvas.drawText(line, cx, y - metrics.ascent, textPaint)
+                    y += lineH
+                }
+            }
+            resetTrackTextPaint()
+        }
+
+        if (timeVisible) {
+            drawTrackTimeText(
+                    canvas,
+                    timeText(),
+                    cx,
+                    areaTop + areaHeight + timeGap - timeAscent,
+                    dp(CLASSIC_TRACK_TIME_SP),
+                    Color.WHITE,
+                    fontRegular)
+        }
+
+        drawBottomChrome(canvas, cx, geometry.cy, geometry.radius, dp)
+    }
+
+    /**
+     * [planTitle] under the extra ceiling of a fixed band height.
+     *
+     * The watch reaches the same answer by stepping the size down until the wrapped block fits
+     * both the width and the band; see [MATEJDRO_BAND_FIT_STEPS] for why this corrects
+     * proportionally instead. The mode is still the user's - a marquee title scrolls here exactly
+     * as it does on Classic - because the band is the composition and the mode is the setting.
+     */
+    private fun planMatejdroTitle(
+            availWidth: Float,
+            bandHeight: Float,
+            dp: (Float) -> Float
+    ): TitlePlan {
+        val floor = MATEJDRO_TEXT_MIN_SP
+        var ceiling = MATEJDRO_TEXT_MAX_SP
+        var plan = planTitle(
+                availWidth,
+                dp(ceiling),
+                dp(floor),
+                smartFallsBackToMarquee = true,
+                maxLines = FaceGeometry.Matejdro.TITLE_MAX_LINES)
+        repeat(MATEJDRO_BAND_FIT_STEPS) {
+            textPaint.typeface = titleTypeface(bold = true)
+            textPaint.letterSpacing = titleTypographySpec.trackingEm
+            textPaint.textSize = plan.size
+            val metrics = textPaint.fontMetrics
+            val blockH = plan.lines.size * (metrics.descent - metrics.ascent)
+            resetTrackTextPaint()
+            if (blockH <= bandHeight || ceiling <= floor) return plan
+            // Line height scales with text size, so the ratio is the correction. The margin keeps
+            // a value that lands exactly on the boundary from needing another pass.
+            ceiling = (ceiling * (bandHeight / blockH) * .98f).coerceAtLeast(floor)
+            plan = planTitle(
+                    availWidth,
+                    dp(ceiling),
+                    dp(floor),
+                    smartFallsBackToMarquee = true,
+                    maxLines = FaceGeometry.Matejdro.TITLE_MAX_LINES)
+        }
+        return plan
+    }
+
+    private fun drawClassicQuadrantChrome(
             canvas: Canvas,
             geometry: PreviewGeometry,
             dp: (Float) -> Float
@@ -9168,10 +9735,6 @@ class WatchPreviewView @JvmOverloads constructor(
         val cy = geometry.cy
         val radius = geometry.radius
         val theme = screenThemeSpec()
-        // The seek ring uses the raw resolved accent (like the watch's seekBar.progressColor);
-        // only the artist text gets the accentForText lightness lift.
-        val artistColor = artistTextColor()
-
         // Quadrant hints are visual affordances only; the four touch zones remain unchanged on
         // the watch. The visual style theme only changes how these icon glyphs are drawn -
         // opacity and size - never their position, color or the surrounding chrome.
@@ -9202,18 +9765,24 @@ class WatchPreviewView @JvmOverloads constructor(
             hint(ScreenQuadrant.RIGHT, commonR.drawable.action_skip_next,
                     cx + radius - edge - iconSize / 2f, cy)
         }
+    }
 
-        // The watch uses BoxInsetLayout around the Classic View block. Its 14.6447% round-screen
-        // inset yields the central inscribed square; rectangular screens instead retain their
-        // 30dp XML margin. The old fixed .80 diameter approximated neither and made the preview's
-        // wrap/sizing decision differ before any text was drawn.
-        val classicTextWidth = if (geometry.round) {
-            geometry.bounds.width() - 2f *
-                    maxOf(geometry.bounds.width(), geometry.bounds.height()) *
-                    CLASSIC_ROUND_BOX_INSET_FRACTION
-        } else {
-            geometry.bounds.width() - dp(CLASSIC_SQUARE_TEXT_MARGIN_DP * 2f)
-        }.coerceAtLeast(1f)
+    private fun drawClassic(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        val cx = geometry.cx
+        val cy = geometry.cy
+        val radius = geometry.radius
+        // The seek ring uses the raw resolved accent (like the watch's seekBar.progressColor);
+        // only the artist text gets the accentForText lightness lift.
+        val artistColor = artistTextColor()
+
+        drawClassicQuadrantChrome(canvas, geometry, dp)
+
+        val classicTextWidth =
+                (geometry.bounds.width() - 2f * classicTextInset(geometry, dp)).coerceAtLeast(1f)
         drawClassicTextBlock(
                 canvas,
                 cx,
@@ -9510,7 +10079,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val base = when (clockColorMode) {
             // Only the album colour is corrected - it is the one derived rather than chosen.
             // Mirrors MainActivity.adaptedClockAlbumColor.
-            "album" -> albumAccent().let { base ->
+            "album" -> clockAlbumAccent().let { base ->
                 val background = clockBandLuminance()
                 if (clockAdaptiveContrast && background != null) {
                     AdaptiveTextContrast.adapt(base, background)
@@ -11281,8 +11850,10 @@ class WatchPreviewView @JvmOverloads constructor(
         textPaint.style = Paint.Style.FILL
         textPaint.textAlign = Paint.Align.CENTER
 
-        // Running head: artist letterspaced above the title, both small.
-        var y = cy - radius * .58f
+        // Running head: artist letterspaced above the title, both small. Its baseline comes from
+        // the same shared geometry as VerseFace's top padding, so a three-line lyric has the same
+        // clearance in the miniature and on the wrist.
+        var y = geometry.bounds.top + screen * VERSE_HEADER_ARTIST_BASELINE
         if (showTrackArtist || !isPlayingShown()) {
             val artistText = if (isPlayingShown()) {
                 displayArtist()
@@ -11318,9 +11889,8 @@ class WatchPreviewView @JvmOverloads constructor(
 
         // The words themselves, in the lyrics typeface rather than the track one - see
         // lyricTypeface. letterSpacing is reset because titleTypeface above set the title's.
-        // The block sits at the band's centre, not the screen's - see VERSE_BAND_CENTER. Applied as
-        // one offset to every row and to the hairline so the miniature keeps showing where the
-        // words actually land on the wrist.
+        // The block is anchored at the screen centre. Keep the shared expression on every row and
+        // the hairline so the miniature stays in lock-step with the Compose watch face.
         val bandShift = screen * (VERSE_BAND_CENTER - 0.5f)
 
         textPaint.typeface = lyricTypeface()
@@ -11369,8 +11939,9 @@ class WatchPreviewView @JvmOverloads constructor(
             textPaint.typeface = artistTypeface(bold = false)
             textPaint.textSize = dp(9f)
             textPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, 0x9E)
+            // Down 0.025 of the screen with VerseFace's own bottom padding.
             drawTrackTimeText(
-                    canvas, timeText(), cx, cy + radius * .70f, dp(9f),
+                    canvas, timeText(), cx, cy + radius * .75f, dp(9f),
                     ColorUtils.setAlphaComponent(Color.WHITE, 0x9E), textPaint.typeface)
         }
     }
@@ -11584,6 +12155,159 @@ class WatchPreviewView @JvmOverloads constructor(
             add(R.string.preview_metadata_bitrate, "1041 kbps")
         }
         return rows
+    }
+
+    /**
+     * Artist: the performer's picture, their name first, the track underneath.
+     *
+     * Mirrors `ArtistFace.ArtistTextBlock`. The picture itself is not drawn here - it arrives as
+     * the backdrop, exactly as on the watch, where the host substitutes the artist photograph for
+     * the album cover in the one artwork pipeline. The miniature substitutes nothing, because the
+     * phone has no artist picture to hand for a preview: what it shows is the current cover under
+     * this face's typography, which is also what the wrist shows for any artist Deezer does not
+     * list. The one thing it must not do is invent a stand-in portrait, which would promise a
+     * picture that may never arrive.
+     *
+     * Both placement controls are honoured, so moving the block on the phone moves it here. The
+     * face paints no scrim of its own - legibility over artwork is the shared shading stack's job,
+     * which the miniature already draws through drawBackgroundLayers - so neither does this.
+     */
+    private fun drawArtistPlayer(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        val cx = geometry.cx
+        val radius = geometry.radius
+        val screen = radius * 2f
+        val side = screen * ARTIST_SIDE_PADDING_FRACTION
+        val edge = screen * ARTIST_EDGE_PADDING_FRACTION
+        val available = screen - side * 2f
+
+        val nameVisible = showTrackArtist || !isPlayingShown()
+        val trackVisible = showTrackTitle
+        val timeVisible = trackTimeVisible()
+        if (!nameVisible && !trackVisible && !timeVisible) return
+
+        // What the block costs from its baseline upward, so a moved block can be anchored by its
+        // own height rather than by the screen's - the same reason the face measures its Column.
+        var blockHeight = 0f
+        if (timeVisible) blockHeight += dp(ARTIST_TRACK_TIME_TOP_PADDING_DP + ARTIST_TRACK_TIME_LINE_HEIGHT_SP)
+        if (trackVisible) blockHeight += dp(ARTIST_TRACK_TOP_PADDING_DP + ARTIST_TRACK_LINE_HEIGHT_SP)
+        if (nameVisible) blockHeight += dp(ARTIST_NAME_LINE_HEIGHT_SP)
+
+        val bottom = blockAnchorY(geometry, blockHeight, edge) ?: (geometry.bounds.bottom - edge)
+
+        val align = blockAlign(Paint.Align.LEFT)
+        val anchorX = when (align) {
+            Paint.Align.LEFT -> cx - available / 2f
+            Paint.Align.RIGHT -> cx + available / 2f
+            else -> cx
+        }
+
+        var y = bottom
+        if (timeVisible) {
+            textPaint.textAlign = align
+            drawTrackTimeText(
+                    canvas,
+                    timeText(),
+                    anchorX,
+                    y,
+                    dp(ARTIST_TRACK_TIME_SP),
+                    0x9EFFFFFF.toInt(),
+                    // The face's authored family, mirroring the fontFamily ArtistFace hands
+                    // TrackTimeText - the fallback the playback-time font key resolves to while it
+                    // is `follow`. fontRegular here would show the system face on the phone and
+                    // the chosen one on the wrist.
+                    titleTypeface(bold = false))
+            y -= dp(ARTIST_TRACK_TIME_TOP_PADDING_DP + ARTIST_TRACK_TIME_LINE_HEIGHT_SP)
+        }
+        if (trackVisible) {
+            // The track is this face's *title*, drawn one step down from the name - the inversion
+            // the face exists for. It is a fixed line rather than an adaptive one, mirroring the
+            // face's TitleLineText: the line that may overflow here is the artist's, and it is the
+            // one that gets the overflow behaviour.
+            textPaint.style = Paint.Style.FILL
+            textPaint.textAlign = align
+            textPaint.typeface = titleTypeface(bold = false)
+            textPaint.textSize = titleTypographySpec.scaled(dp(ARTIST_TRACK_SP))
+            textPaint.letterSpacing = titleTypographySpec.trackingEm
+            textPaint.color = titleAlpha(ColorUtils.setAlphaComponent(Color.WHITE, 0xC7))
+            canvas.drawText(
+                    ellipsize(titleTypographySpec.case.apply(displayTitle()), available),
+                    anchorX, y, textPaint)
+            textPaint.letterSpacing = 0f
+            y -= dp(ARTIST_TRACK_TOP_PADDING_DP + ARTIST_TRACK_LINE_HEIGHT_SP)
+        }
+        if (nameVisible) {
+            drawArtistLine(
+                    canvas,
+                    if (isPlayingShown()) displayArtist()
+                    else context.getString(R.string.preview_playback_stopped),
+                    anchorX, y, available,
+                    artistTextColor(),
+                    dp(ARTIST_NAME_SP),
+                    bold = true,
+                    align = align,
+                    sourceGlyph = true,
+                    glyphSize = dp(ARTIST_SOURCE_ICON_SIZE_DP))
+        }
+    }
+
+    /**
+     * The Artist always-on: the two lines on black, no picture.
+     *
+     * Mirrors `ArtistAmbient`, which drops the photograph rather than dimming it - so this must
+     * draw no cover either. "artist" is in [AOD_STYLES_OVER_BLACK] for that reason.
+     */
+    private fun drawArtistAod(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float
+    ) {
+        if (!aodShowTrackInfo) return
+        val geo = FaceGeometry.Artist.Ambient
+        val screen = geometry.radius * 2f
+        val side = screen * ARTIST_SIDE_PADDING_FRACTION
+        val edge = screen * ARTIST_EDGE_PADDING_FRACTION
+        val available = screen - side * 2f
+        val tint = ambientColor(resolvedAodTint())
+
+        val align = blockAlign(Paint.Align.LEFT)
+        val anchorX = when (align) {
+            Paint.Align.LEFT -> geometry.cx - available / 2f
+            Paint.Align.RIGHT -> geometry.cx + available / 2f
+            else -> geometry.cx
+        }
+
+        val nameSize = dp(geo.NAME_SP)
+        val trackSize = dp(geo.TRACK_SP)
+        val blockHeight = nameSize + trackSize * 1.6f
+        val bottom = blockAnchorY(geometry, blockHeight, edge) ?: (geometry.bounds.bottom - edge)
+
+        textPaint.style = Paint.Style.FILL
+        textPaint.textAlign = align
+
+        val track = if (showTrackTitle) displayTitle() else ""
+        var y = bottom
+        if (track.isNotEmpty()) {
+            textPaint.typeface = titleTypeface(bold = false)
+            textPaint.textSize = trackSize
+            textPaint.color = ambientColor(tint, geo.TRACK_ALPHA)
+            canvas.drawText(ellipsize(track, available), anchorX, y, textPaint)
+            y -= trackSize * 1.6f
+        }
+        val name = when {
+            !isPlayingShown() -> context.getString(R.string.preview_playback_stopped)
+            showTrackArtist -> displayArtist()
+            else -> ""
+        }
+        if (name.isNotEmpty()) {
+            textPaint.typeface = artistTypeface(bold = true)
+            textPaint.textSize = nameSize
+            textPaint.color = ambientColor(tint, geo.NAME_ALPHA)
+            canvas.drawText(ellipsize(name, available), anchorX, y, textPaint)
+        }
     }
 
     private fun drawNotePlayer(

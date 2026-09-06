@@ -15,9 +15,9 @@ class TypographyEditorModelTest {
     fun `every legacy Typography row has exactly one editor spec`() {
         val xmlRows = typographyRowsFromXml()
 
-        assertEquals(80, xmlRows.size)
+        assertEquals(81, xmlRows.size)
         assertEquals(xmlRows.keys, TypographyEditorModel.keys)
-        assertEquals(80, TypographyEditorModel.specs.size)
+        assertEquals(81, TypographyEditorModel.specs.size)
     }
 
     @Test
@@ -26,6 +26,7 @@ class TypographyEditorModelTest {
                 "wear_font" to "google_sans",
                 "wear_title_font" to "follow",
                 "wear_title_text_mode" to "smart",
+                "wear_artist_text_mode" to "static",
                 "wear_title_text_case" to "normal",
                 "wear_title_shadow_style" to "none",
                 "wear_title_shadow_color_mode" to "black",
@@ -58,7 +59,7 @@ class TypographyEditorModelTest {
                 "wear_clock_font_italic" to false)
         val expectedNumbers = mapOf(
                 "wear_title_font_weight" to NumberContract(400, 1..1000),
-                "wear_title_font_scale" to NumberContract(100, 70..140),
+                "wear_title_font_scale" to NumberContract(100, 1..300),
                 "wear_title_font_opacity" to NumberContract(100, 20..100),
                 "wear_title_font_tracking" to NumberContract(0, -5..20),
                 "wear_title_shadow_strength" to NumberContract(100, 0..200),
@@ -68,19 +69,19 @@ class TypographyEditorModelTest {
                 "wear_font_flex_grade" to NumberContract(0, 0..100),
                 "wear_font_flex_roundness" to NumberContract(0, 0..100),
                 "wear_artist_font_weight" to NumberContract(400, 1..1000),
-                "wear_artist_font_scale" to NumberContract(100, 70..140),
+                "wear_artist_font_scale" to NumberContract(100, 1..300),
                 "wear_artist_font_opacity" to NumberContract(100, 20..100),
                 "wear_artist_font_tracking" to NumberContract(0, -5..20),
                 "wear_artist_shadow_strength" to NumberContract(100, 0..200),
                 "wear_artist_text_bg_opacity" to NumberContract(100, 0..100),
                 "wear_track_time_font_weight" to NumberContract(400, 1..1000),
-                "wear_track_time_font_scale" to NumberContract(100, 70..140),
+                "wear_track_time_font_scale" to NumberContract(100, 1..300),
                 "wear_track_time_font_opacity" to NumberContract(100, 20..100),
                 "wear_track_time_font_tracking" to NumberContract(0, -5..20),
                 "wear_clock_font_weight" to NumberContract(400, 1..1000),
-                "wear_clock_font_scale" to NumberContract(100, 70..140),
+                "wear_clock_font_scale" to NumberContract(100, 1..300),
                 "wear_clock_font_tracking" to NumberContract(0, -5..20),
-                "wear_source_icon_scale" to NumberContract(100, 70..140),
+                "wear_source_icon_scale" to NumberContract(100, 1..300),
                 "wear_source_icon_opacity" to NumberContract(100, 20..100)) +
                 flexAxisContracts("wear_title_font_flex") +
                 flexAxisContracts("wear_artist_font_flex") +
@@ -153,6 +154,8 @@ class TypographyEditorModelTest {
                         TypographyTarget.TITLE, TypographyControl.VISIBILITY),
                 "wear_title_text_mode" to destination(
                         TypographyTarget.TITLE, TypographyControl.TEXT_BEHAVIOR),
+                "wear_artist_text_mode" to destination(
+                        TypographyTarget.ARTIST, TypographyControl.TEXT_BEHAVIOR),
                 "wear_title_text_case" to destination(
                         TypographyTarget.TITLE, TypographyControl.CASE),
                 "wear_title_shadow_style" to destination(
@@ -287,14 +290,14 @@ class TypographyEditorModelTest {
         assertEquals(
                 setOf("wear_flex_axes_hint"),
                 TypographyEditorModel.specs.filterNot { it.persisted }.map { it.key }.toSet())
-        assertEquals(79, TypographyEditorModel.specs.count { it.persisted })
+        assertEquals(80, TypographyEditorModel.specs.count { it.persisted })
     }
 
     @Test
     fun `target groups keep the compact editor shape`() {
         val expectedCounts = mapOf(
                 TypographyTarget.TITLE to 31,
-                TypographyTarget.ARTIST to 23,
+                TypographyTarget.ARTIST to 24,
                 TypographyTarget.TRACK_TIME to 10,
                 TypographyTarget.CLOCK to 9,
                 TypographyTarget.ICON to 2,

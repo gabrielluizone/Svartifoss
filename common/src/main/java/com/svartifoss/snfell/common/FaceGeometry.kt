@@ -44,6 +44,100 @@ object FaceGeometry {
         const val SQUARE_TEXT_MARGIN_DP = 30f
     }
 
+    /**
+     * The 2017 original, reproduced: matejdro's WearMusicCenter, which this app is a fork of.
+     *
+     * It is a *View* face rather than a Compose one, and that is the whole reason it can exist at
+     * all. Its four quadrant hint icons are the element that made the original screen readable at
+     * a glance, and they live in the host's [FourWayTouchLayout] - which `applyScreenThemeNow`
+     * forces `GONE` for every Compose face. Rebuilt in Compose this face would have lost the one
+     * thing it is here to preserve, so it shares Classic's View presentation and overrides only
+     * the geometry of the text block.
+     *
+     * That geometry is the single compositional difference from [Classic], and it is not
+     * expressible as a preference: the original stacked artist over title in two *proportional
+     * bands* filling the whole screen, each autosizing to fill its own band, where Classic centres
+     * a wrap-content block at fixed sizes. Everything else the original did - white text, no
+     * progress, no mini buttons, the evenly darkened cover - is a setting, and ships as this
+     * face's per-face defaults instead of being welded in here.
+     */
+    object Matejdro {
+        /** `layout_weight` on the artist band: the upper third of the text area. */
+        const val ARTIST_BAND_WEIGHT = 1f
+
+        /** `layout_weight` on the title band: the lower two thirds. The title is the subject. */
+        const val TITLE_BAND_WEIGHT = 2f
+
+        /** Fraction of the text area the artist band occupies, derived from the two weights so a
+         *  renderer that thinks in fractions cannot disagree with one that thinks in weights. */
+        const val ARTIST_BAND_FRACTION =
+                ARTIST_BAND_WEIGHT / (ARTIST_BAND_WEIGHT + TITLE_BAND_WEIGHT)
+
+        /** Fraction of the text area the title band occupies. */
+        const val TITLE_BAND_FRACTION = 1f - ARTIST_BAND_FRACTION
+
+        /**
+         * Upper bound for a title's wrapping search on the band face.
+         *
+         * This is intentionally a generous ceiling, not a promise that every title gets this
+         * many lines. The weighted title band and the autosize floor remain the real constraints;
+         * the ceiling only prevents the Classic XML default (`maxLines=2`) from truncating a long
+         * Matejdro title before that band can decide whether three, four, or more lines fit.
+         */
+        const val TITLE_MAX_LINES = 20
+
+        /**
+         * The platform's own `autoSizeTextType="uniform"` bounds, which is what the original
+         * declared: it set neither `autoSizeMinTextSize` nor `autoSizeMaxTextSize`, so both lines
+         * were free to grow to whatever their band could hold. Quoted explicitly rather than left
+         * implicit because the phone miniature has no TextView to inherit them from, and a
+         * miniature that invents its own ceiling stops being a preview of this face.
+         */
+        const val AUTOSIZE_MIN_SP = 12f
+        const val AUTOSIZE_MAX_SP = 112f
+        const val AUTOSIZE_STEP_SP = 1f
+
+        /**
+         * The text area is [Classic]'s, and deliberately carries no margin of its own.
+         *
+         * This was got wrong first time, from reading `values/dimens.xml` alone: the original's
+         * `music_screen_text_margin` is 30dp there but **0dp** in `values-round`, so on a round
+         * watch it laid its bands out inside the `BoxInsetLayout` inset and nothing else. Forcing
+         * 30dp on every display *added* that margin on top of the ~14.6% inset, which is what made
+         * every line visibly smaller than the face it reproduces. There is no third value to
+         * declare here: the block is the same block, so it uses [Classic.ROUND_BOX_INSET_FRACTION]
+         * and [Classic.SQUARE_TEXT_MARGIN_DP] like Classic does, and only the *division* of that
+         * area into bands belongs to this face.
+         */
+
+        /**
+         * The original set `textStyle="bold"` on its title and **nothing** on its artist, so the
+         * two lines differ in weight as well as size - which is a large part of what the screen
+         * reads like. This app's Classic layout hardcodes bold on both, and its identity weight
+         * (400) is defined as "keep what the face designed", so the face has to state its design
+         * rather than inherit Classic's. The user's own weight control still overrides it.
+         */
+        const val ARTIST_DESIGNED_BOLD = false
+
+        /**
+         * `android:alpha` on the original's full-screen album art ImageView.
+         *
+         * Reproduced as a darkening layer rather than by fading the bitmap: this app composites the
+         * cover through the background stack, where the equivalent of art at a third brightness is
+         * an even black filter at two thirds. [DIM_STRENGTH_PERCENT] carries that conversion.
+         */
+        const val COVER_ALPHA = .333f
+
+        /**
+         * `album_art_dim_strength` reproducing [COVER_ALPHA] through `FULL_FILTER`.
+         *
+         * That style paints black at `.55 * intensity`, and the alpha which leaves the artwork at
+         * [COVER_ALPHA] is `1 - COVER_ALPHA`, so the intensity is `(1 - .333) / .55` ≈ 1.21. Stored
+         * as the percent the preference actually holds; a default only, adjustable like any other.
+         */
+        const val DIM_STRENGTH_PERCENT = 121
+    }
+
     /** The full-bleed cover rail. Every text anchor derives from these rather than being tuned
      *  separately, so moving or resizing the cover keeps the artist and title attached to it. */
     object Carousel {
@@ -183,6 +277,68 @@ object FaceGeometry {
         const val TRACK_TIME_TOP_PADDING_DP = 5f
         const val TRACK_TIME_SP = 11f
         const val TRACK_TIME_LINE_HEIGHT_SP = 12f
+    }
+
+    /**
+     * The Artist face: the performer's own picture, their name, then the track.
+     *
+     * Deliberately a near-sibling of [Immersive] - full-bleed artwork with a grounded text block -
+     * rather than a new set of proportions, because the difference between the two faces is which
+     * line is the subject, not how the screen is divided. What changes here is the hierarchy: the
+     * artist runs at title size with the source glyph in front of it, and the track sits below at
+     * what would elsewhere be the artist's size.
+     */
+    object Artist {
+        const val SIDE_PADDING_FRACTION = .11f
+        const val EDGE_PADDING_FRACTION = .13f
+
+        /** The performer's name, and the largest type on the face. */
+        const val NAME_SP = 18f
+        const val NAME_LINE_HEIGHT_SP = 20f
+
+        /**
+         * The most lines the name may wrap to before the block is simply too tall for the band it
+         * sits in.
+         *
+         * A ceiling rather than the answer: `RoundScreenText.linesThatFit` narrows it further
+         * whenever the block has been placed somewhere the chord cannot hold that many lines, which
+         * on a round screen the top and bottom bands routinely cannot.
+         */
+        const val NAME_MAX_LINES = 3
+
+        /**
+         * The centred square that takes play/pause taps, as a fraction of the screen.
+         *
+         * Deliberately a fraction and never the whole screen: this region *consumes* touches, so a
+         * full-screen one silently disables the quadrant taps, the configured swipes and the
+         * mini-button row that sit under the face. Sized to stop clear of the bottom band the
+         * buttons occupy and of the four edges the gestures need.
+         */
+        const val CENTER_REGION_FRACTION = 0.58f
+        const val CENTER_PULSE_FRACTION = 0.38f
+
+        /** The mark in front of the name. Sized to the cap height of [NAME_SP] rather than to the
+         *  line box, so it reads as part of the name rather than as a button beside it. */
+        const val SOURCE_ICON_SIZE_DP = 14f
+        const val SOURCE_ICON_GAP_DP = 5f
+
+        /** The track, one step down and directly beneath the name. */
+        const val TRACK_TOP_PADDING_DP = 3f
+        const val TRACK_SP = 13f
+        const val TRACK_LINE_HEIGHT_SP = 15f
+
+        const val TRACK_TIME_TOP_PADDING_DP = 5f
+        const val TRACK_TIME_SP = 11f
+        const val TRACK_TIME_LINE_HEIGHT_SP = 12f
+
+
+        /** The always-on variant keeps the name and the track and drops the picture. */
+        object Ambient {
+            const val NAME_SP = 17f
+            const val TRACK_SP = 12f
+            const val NAME_ALPHA = .92f
+            const val TRACK_ALPHA = .62f
+        }
     }
 
     /** The notification-card layout: cover above, album-coloured panel below. */
@@ -426,12 +582,31 @@ object FaceGeometry {
 
     /** The lyric face: previous, current and next line. */
     object Verse {
-        const val BAND_TOP = 0.28f
-        const val BAND_BOTTOM = 0.80f
+        // The asymmetric band trades a little horizontal space for room below the reel: its lower
+        // edge is deeper on a round screen, so the usable chord is roughly 7% narrower. It only
+        // bounds the safe text width, though; the content anchor remains the display centre.
+        const val BAND_TOP = 0.31f
+        const val BAND_BOTTOM = 0.83f
 
-        /** The block is centred within the band, not on the screen - the band reaches into the
-         *  strip the composition leaves empty below the words. */
-        const val BAND_CENTER = (BAND_TOP + BAND_BOTTOM) / 2f
+        /**
+         * Top of the artist/title running head.
+         *
+         * Raised to the 14% anchor: a three-row current lyric otherwise puts its preceding line
+         * into the same visual band as the track identity.
+         */
+        const val HEADER_TOP = .14f
+
+        /** The Canvas preview's artist baseline, matching [HEADER_TOP] plus its text ascent. */
+        const val HEADER_ARTIST_BASELINE = HEADER_TOP + .06f
+
+        /**
+         * The lyric/title-card block is centred on the display.
+         *
+         * The band still describes the vertical span used to derive a bezel-safe text width, but
+         * it must not move the content's anchor. Deriving this from the asymmetric band put both
+         * the fallback title card and the lyric reel at 57% of the dial instead of its centre.
+         */
+        const val BAND_CENTER = .5f
 
         /**
          * The always-on variant: the running head and the current line alone.

@@ -71,6 +71,27 @@ enum class ColorModifier {
             return ((hue + delta * BIAS_STRENGTH) % 360f + 360f) % 360f
         }
 
+        /**
+         * The value meaning "whatever the watch-wide Tone is set to".
+         *
+         * The same sentinel the per-element typefaces use, and for the same reason: a per-element
+         * tone has to be offerable on Title, Artist and Clock without changing a single saved
+         * theme or published theme, so its default must mean *keep what the watch already does*
+         * rather than naming a tone of its own.
+         */
+        const val FOLLOW = "follow"
+
+        /**
+         * The tone one element paints in - its own choice, or [global] when it follows.
+         *
+         * An unknown or empty value resolves to [global] rather than to [NONE], since the value
+         * can arrive from an imported backup, a community theme or a newer build, and silently
+         * stripping someone's watch-wide tone off one element is the more surprising answer.
+         */
+        fun resolveElement(value: String?, global: ColorModifier): ColorModifier =
+                if (value.isNullOrBlank() || value == FOLLOW) global
+                else fromPreference(value, default = global)
+
         fun fromPreference(value: String?, default: ColorModifier = NONE): ColorModifier =
                 when (value) {
                     "none" -> NONE

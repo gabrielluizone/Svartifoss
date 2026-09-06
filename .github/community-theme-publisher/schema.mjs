@@ -29,6 +29,7 @@ export const ALLOWED_BASE_FACES = Object.freeze([
     "note",
     "verse",
     "metadata",
+    "artist",
     "ribbon",
     "frame",
 ]);
@@ -48,6 +49,7 @@ const STRING_SETTINGS = [
     "wear_aod_custom_color",
     "wear_aod_style",
     "wear_artist_color_mode",
+    "wear_artist_color_modifier",
     "wear_artist_custom_color",
     "wear_artist_font",
     "wear_artist_text_case",
@@ -55,6 +57,7 @@ const STRING_SETTINGS = [
     "wear_carousel_card_shape",
     "wear_chat_cover_shape",
     "wear_clock_color_mode",
+    "wear_clock_color_modifier",
     "wear_clock_custom_color",
     "wear_clock_font",
     "wear_color_modifier",
@@ -63,7 +66,10 @@ const STRING_SETTINGS = [
     "wear_font",
     "wear_gestures_mode",
     "wear_list_row_size",
+    "wear_lyrics_backdrop_style",
     "wear_lyrics_font",
+    "wear_lyrics_color_mode",
+    "wear_lyrics_custom_color",
     "wear_metadata_cover_shape",
     "wear_mini_buttons_mode",
     "wear_normal_color",
@@ -71,11 +77,16 @@ const STRING_SETTINGS = [
     "wear_overlay_backdrop_style",
     "wear_player_shading_intensity",
     "wear_player_shading_style",
+    "wear_progress_backdrop_style",
     "wear_progress_color_mode",
     "wear_progress_custom_color",
     "wear_progress_layout",
     "wear_progress_style",
+    "wear_queue_backdrop_style",
+    "wear_queue_color_mode",
+    "wear_queue_custom_color",
     "wear_queue_style",
+    "wear_quick_panel_backdrop_style",
     "wear_quick_panel_color_mode",
     "wear_quick_panel_custom_color",
     "wear_quick_panel_layout",
@@ -96,7 +107,12 @@ const STRING_SETTINGS = [
     "wear_shading_color_mode",
     "wear_shading_custom_color",
     "wear_split_panel",
+    "wear_album_art_source",
+    "wear_artist_text_mode",
+    "wear_text_block_align",
+    "wear_text_block_position",
     "wear_title_color_mode",
+    "wear_title_color_modifier",
     "wear_title_custom_color",
     "wear_title_text_bg_color_mode",
     "wear_title_text_bg_custom_color",
@@ -113,6 +129,7 @@ const STRING_SETTINGS = [
     "wear_track_time_font",
     "wear_track_time_mode",
     "wear_up_next_pill_style",
+    "wear_volume_backdrop_style",
     "wear_volume_color_mode",
     "wear_volume_custom_color",
     "wear_volume_layout",
@@ -681,6 +698,7 @@ const DEFAULT_VALUES = Object.freeze({
     wear_aod_style: "follow",
     wear_artist_adaptive_contrast: false,
     wear_artist_color_mode: "follow",
+    wear_artist_color_modifier: "follow",
     wear_artist_custom_color: "",
     wear_artist_desaturated: false,
     wear_artist_font: "follow",
@@ -703,6 +721,7 @@ const DEFAULT_VALUES = Object.freeze({
     wear_classic_icons_visible: true,
     wear_clock_adaptive_contrast: false,
     wear_clock_color_mode: "white",
+    wear_clock_color_modifier: "follow",
     wear_clock_custom_color: "",
     wear_clock_font: "follow",
     wear_clock_font_italic: false,
@@ -731,6 +750,9 @@ const DEFAULT_VALUES = Object.freeze({
     wear_internal_progress_visible: true,
     wear_keep_screen_on: false,
     wear_list_row_size: "normal",
+    wear_lyrics_backdrop_style: "shared",
+    wear_lyrics_color_mode: "follow",
+    wear_lyrics_custom_color: "",
     wear_lyrics_font: "follow",
     wear_lyrics_font_flex_grade: 0,
     wear_lyrics_font_flex_optical_size: 18,
@@ -749,7 +771,14 @@ const DEFAULT_VALUES = Object.freeze({
     wear_normal_color_multi: true,
     wear_note_cover_shape: "circle",
     wear_note_show_cover: true,
+    wear_progress_backdrop_style: "shared",
+    wear_queue_backdrop_style: "shared",
+    wear_quick_panel_backdrop_style: "shared",
     wear_title_centered: false,
+    wear_album_art_source: "local",
+    wear_artist_text_mode: "static",
+    wear_text_block_align: "follow",
+    wear_text_block_position: "follow",
     wear_overlay_backdrop_style: "follow",
     wear_player_shading_intensity: "balanced",
     wear_player_shading_style: "follow",
@@ -760,6 +789,8 @@ const DEFAULT_VALUES = Object.freeze({
     wear_progress_layout: "edge",
     wear_progress_style: "solid",
     wear_quadrant_tap_flash: false,
+    wear_queue_color_mode: "follow",
+    wear_queue_custom_color: "",
     wear_queue_style: "glass",
     wear_quick_panel_color_mode: "follow",
     wear_quick_panel_custom_color: "",
@@ -803,6 +834,7 @@ const DEFAULT_VALUES = Object.freeze({
     wear_split_panel: "blur",
     wear_title_adaptive_contrast: false,
     wear_title_color_mode: "face",
+    wear_title_color_modifier: "follow",
     wear_title_custom_color: "",
     wear_title_font: "follow",
     wear_title_font_flex_grade: 0,
@@ -828,6 +860,7 @@ const DEFAULT_VALUES = Object.freeze({
     wear_track_time_font_weight: 400,
     wear_track_time_mode: "always",
     wear_up_next_pill_style: "follow",
+    wear_volume_backdrop_style: "shared",
     wear_volume_color_mode: "follow",
     wear_volume_custom_color: "",
     wear_volume_layout: "edge",
@@ -851,6 +884,7 @@ const ALBUM_ART_DEFAULTS = Object.freeze({
     note: "hidden",
     verse: "hidden",
     metadata: "hidden",
+    artist: "cover",
     ribbon: "hidden",
     frame: "hidden",
 });
@@ -860,7 +894,7 @@ const SELF_COMPOSED_FACES = new Set(["split", "verse", "ribbon", "frame"]);
 
 /** FaceScopedPreferences.ALBUM_ACCENT_SURFACE_DEFAULTS, applied to the faces that ask for it. */
 const ALBUM_ACCENT_SURFACE_FACES = new Set([
-    ...ALBUM_ACCENT_FACES, "ribbon", "frame",
+    ...ALBUM_ACCENT_FACES, "ribbon", "frame", "artist",
 ]);
 
 if (SETTING_KEYS.length !== Object.keys(DEFAULT_VALUES).length ||
@@ -885,6 +919,15 @@ export function defaultSettingsForFace(baseFace) {
     }
     if (SELF_COMPOSED_FACES.has(baseFace)) {
         settings.wear_mini_buttons_mode.value = "never";
+        settings.wear_edge_progress_visible.value = false;
+    }
+    // FaceScopedPreferences.ARTIST_DEFAULTS: the arrangement the face was drawn for, expressed as
+    // ordinary placement values rather than as anything the renderer special-cases.
+    if (baseFace === "artist") {
+        settings.wear_album_art_source.value = "artist";
+        settings.wear_text_block_align.value = "start";
+        settings.wear_text_block_position.value = "bottom";
+        settings.wear_show_source_icon.value = true;
         settings.wear_edge_progress_visible.value = false;
     }
     if (baseFace === "verse") settings.wear_accent_floor.value = "standard";

@@ -96,7 +96,7 @@ class CommunityThemeSubmissionsActivity : AppCompatActivity() {
             val row = inflater.inflate(R.layout.item_community_theme_submission, container, false)
             val status = row.findViewById<TextView>(R.id.submission_status)
             status.setText(statusLabel(record.status))
-            status.setTextColor(getColor(statusColor(record.status)))
+            status.setTextColor(statusColor(record.status))
             row.findViewById<TextView>(R.id.submission_name).text = record.name
             row.findViewById<TextView>(R.id.submission_meta).text = metaLine(record)
             row.findViewById<TextView>(R.id.submission_explanation)
@@ -167,10 +167,13 @@ class CommunityThemeSubmissionsActivity : AppCompatActivity() {
 
     private fun statusColor(status: CommunityThemeSubmissionStatus): Int = when (status) {
         CommunityThemeSubmissionStatus.PUBLISHED, CommunityThemeSubmissionStatus.APPROVED ->
-            R.color.lyra_accent
+            LyraAccent.contrastSafe(
+                    LyraAccent.resolve(this),
+                    getColor(R.color.lyra_background),
+                    minimumContrast = 4.5)
         CommunityThemeSubmissionStatus.REJECTED, CommunityThemeSubmissionStatus.WITHDRAWN ->
-            R.color.lyra_text_secondary
-        else -> R.color.lyra_on_surface
+            getColor(R.color.lyra_text_secondary)
+        else -> getColor(R.color.lyra_on_surface)
     }
 
     /**

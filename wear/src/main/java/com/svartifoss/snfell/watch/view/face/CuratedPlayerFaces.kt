@@ -336,14 +336,16 @@ private fun BoxScope.ImmersiveComposition(
             // and broke the composition the face exists for.
             val bottomPadding = screen * FaceGeometry.Immersive.BOTTOM_PADDING_FRACTION
             Column(
-                    Modifier.align(Alignment.BottomCenter)
+                    Modifier.align(state.blockPlacement(Alignment.BottomCenter))
+                            .padding(horizontal = state.blockSafeSideInset(screen))
+                            .padding(vertical = state.blockSafeVerticalInset(screen))
                             .padding(
-                                    bottom = bottomPadding,
+                                    bottom = state.blockDesignedBottomPadding(bottomPadding),
                                     start = screen * FaceGeometry.Immersive.SIDE_PADDING_FRACTION,
                                     end = screen * FaceGeometry.Immersive.SIDE_PADDING_FRACTION
                             )
                             .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
             ) {
                 if (state.showTitle) {
                     // AdaptiveTitleText, not a bare Text, so the user's Title text behaviour
@@ -367,7 +369,7 @@ private fun BoxScope.ImmersiveComposition(
                             modifier = Modifier.padding(
                                     top = FaceGeometry.Immersive.ARTIST_TOP_PADDING_DP.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
+                            horizontalArrangement = state.blockArrangement(Arrangement.Center)
                     ) {
                         // Immersive's artist line is the largest of any face (13sp), so it carries
                         // the full-size glyph.
@@ -489,10 +491,15 @@ private fun BoxScope.DepthComposition(
 
         if (state.showTitle || state.showArtist) {
             Column(
-                    Modifier.align(Alignment.BottomCenter)
-                            .padding(bottom = screen * .15f, start = screen * .11f, end = screen * .11f)
+                    Modifier.align(state.blockPlacement(Alignment.BottomCenter))
+                            .padding(horizontal = state.blockSafeSideInset(screen))
+                            .padding(vertical = state.blockSafeVerticalInset(screen))
+                            .padding(
+                                    bottom = state.blockDesignedBottomPadding(screen * .15f),
+                                    start = screen * .11f,
+                                    end = screen * .11f)
                             .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
             ) {
                 if (state.showTitle) {
                     AdaptiveTitleText(
@@ -512,7 +519,7 @@ private fun BoxScope.DepthComposition(
                     Row(
                             modifier = Modifier.padding(top = 3.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
+                            horizontalArrangement = state.blockArrangement(Arrangement.Center)
                     ) {
                         SourceIconGlyph(state, 13.dp, artistOrStatusColor(state, .78f))
                         ArtistLineText(
@@ -948,10 +955,13 @@ private fun BoxScope.SpectrumHeader(
         showArtist: Boolean
 ) {
     Column(
-            Modifier.align(Alignment.TopCenter)
-                    .padding(top = screen * .15f + metadataSingleLineOffset(state))
+            Modifier.align(state.blockPlacement(Alignment.TopCenter))
+                    .padding(horizontal = state.blockSafeSideInset(screen))
+                    .padding(vertical = state.blockSafeVerticalInset(screen))
+                    .padding(top = state.blockDesignedTopPadding(
+                            screen * .15f + metadataSingleLineOffset(state)))
                     .width(screen * .68f),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
         if (state.showTitle) {
             AdaptiveTitleText(state.title.uppercase(), mode = state.titleTextMode,
@@ -964,7 +974,7 @@ private fun BoxScope.SpectrumHeader(
         }
         if (showArtist && state.showArtist) {
             Row(verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
+                    horizontalArrangement = state.blockArrangement(Arrangement.Center),
                     modifier = Modifier.padding(top = 2.dp)) {
                 SourceIconGlyph(state, 11.dp, Color(state.artistColor).copy(alpha = .78f))
                 ArtistLineText(artistOrStatus(state), state,
@@ -978,14 +988,17 @@ private fun BoxScope.SpectrumHeader(
 @Composable
 private fun BoxScope.VinylMetadata(state: NowPlayingFaceState, screen: Dp) {
     Column(
-            Modifier.align(Alignment.TopCenter)
-                    .padding(top = screen * .14f + metadataSingleLineOffset(state))
+            Modifier.align(state.blockPlacement(Alignment.TopCenter))
+                    .padding(horizontal = state.blockSafeSideInset(screen))
+                    .padding(vertical = state.blockSafeVerticalInset(screen))
+                    .padding(top = state.blockDesignedTopPadding(
+                            screen * .14f + metadataSingleLineOffset(state)))
                     .width(screen * .62f),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
         if (state.showArtist) {
             Row(verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center) {
+                    horizontalArrangement = state.blockArrangement(Arrangement.Center)) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .58f))
                 ArtistLineText(
                         text = artistOrStatus(state).uppercase(),
@@ -1044,15 +1057,24 @@ private fun BoxScope.TitleAnchoredMetadata(
     val anchorTitle = state.titleCentered && state.showTitle
     Column(
             modifier
-                    .align(Alignment.Center)
+                    .align(state.blockPlacement(Alignment.Center))
                     .offset {
                         IntOffset(0, if (anchorTitle) (blockHeight - titleHeight) / 2 else 0)
                     }
                     .onSizeChanged { blockHeight = it.height },
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
-        // Full width so the title measures and wraps exactly as it did before this box existed.
-        Box(Modifier.fillMaxWidth().onSizeChanged { titleHeight = it.height }) { title() }
+        // Full width so the title measures and wraps exactly as it did before this box existed -
+        // and centred, because that is the other half of what it replaced. The title used to be a
+        // direct child of this Column, whose horizontalAlignment centred it; wrapped in a
+        // fillMaxWidth Box it inherits the Box's default TopStart instead, and a title narrower
+        // than the column - which is most of them - was left sitting against the left edge on both
+        // faces that use this. TextAlign.Center cannot fix that: it aligns lines inside the text's
+        // own measured width, and a wrap-content Text is exactly as wide as its longest line.
+        Box(
+                modifier = Modifier.fillMaxWidth().onSizeChanged { titleHeight = it.height },
+                contentAlignment = Alignment.TopCenter
+        ) { title() }
         rest()
     }
 }
@@ -1061,7 +1083,11 @@ private fun BoxScope.TitleAnchoredMetadata(
 private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
     TitleAnchoredMetadata(
             state,
-            Modifier.padding(horizontal = screen * .08f).width(screen * .72f),
+            // Narrowed, not padded: the column has a fixed width, and once the placement control
+            // moves this block into a narrow band of the round screen that width is what has to
+            // give. Zero unless it has actually been moved - see blockSafeSideInset.
+            Modifier.padding(horizontal = screen * .08f)
+                    .width(screen * .72f - state.blockSafeSideInset(screen) * 2),
             title = {
         if (state.showTitle) {
             // AdaptiveTitleText, not a bare Text, so the user's Title text behaviour actually
@@ -1084,7 +1110,7 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
     }, rest = {
         if (state.showArtist) {
             Row(verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
+                    horizontalArrangement = state.blockArrangement(Arrangement.Center),
                     modifier = Modifier.padding(top = if (state.showTitle) 6.dp else 0.dp)) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .76f))
                 ArtistLineText(
@@ -1105,7 +1131,11 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
 private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: CuratedPalette) {
     TitleAnchoredMetadata(
             state,
-            Modifier.padding(horizontal = screen * .08f).width(screen * .72f),
+            // Narrowed, not padded: the column has a fixed width, and once the placement control
+            // moves this block into a narrow band of the round screen that width is what has to
+            // give. Zero unless it has actually been moved - see blockSafeSideInset.
+            Modifier.padding(horizontal = screen * .08f)
+                    .width(screen * .72f - state.blockSafeSideInset(screen) * 2),
             title = {
         if (state.showTitle) {
             // AdaptiveTitleText for the same reason as PosterMetadata above.
@@ -1125,7 +1155,7 @@ private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: C
     }, rest = {
         if (state.showArtist) {
             Row(verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
+                    horizontalArrangement = state.blockArrangement(Arrangement.Center),
                     modifier = Modifier.padding(top = if (state.showTitle) 5.dp else 0.dp)) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .62f))
                 ArtistLineText(
@@ -1145,10 +1175,13 @@ private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: C
 @Composable
 private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
     Column(
-            Modifier.align(Alignment.TopCenter)
-                    .padding(top = screen * .145f + metadataSingleLineOffset(state))
+            Modifier.align(state.blockPlacement(Alignment.TopCenter))
+                    .padding(horizontal = state.blockSafeSideInset(screen))
+                    .padding(vertical = state.blockSafeVerticalInset(screen))
+                    .padding(top = state.blockDesignedTopPadding(
+                            screen * .145f + metadataSingleLineOffset(state)))
                     .width(screen * .66f),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
         if (state.showTitle) {
             AdaptiveTitleText(
@@ -1169,7 +1202,7 @@ private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
             // The tonal pill wraps the icon too, so the glyph reads as part of the same chip
             // rather than floating loose beside it.
             Row(verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
+                    horizontalArrangement = state.blockArrangement(Arrangement.Center),
                     modifier = Modifier.padding(top = if (state.showTitle) 3.dp else 0.dp)
                             .clip(RoundedCornerShape(20.dp))
                             .background(Color.White.copy(alpha = .09f))
@@ -1192,10 +1225,13 @@ private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
 @Composable
 private fun BoxScope.EclipseMetadata(state: NowPlayingFaceState, screen: Dp) {
     Column(
-            Modifier.align(Alignment.TopCenter)
-                    .padding(top = screen * .15f + metadataSingleLineOffset(state))
+            Modifier.align(state.blockPlacement(Alignment.TopCenter))
+                    .padding(horizontal = state.blockSafeSideInset(screen))
+                    .padding(vertical = state.blockSafeVerticalInset(screen))
+                    .padding(top = state.blockDesignedTopPadding(
+                            screen * .15f + metadataSingleLineOffset(state)))
                     .width(screen * .64f),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
         if (state.showTitle) {
             AdaptiveTitleText(
@@ -1214,7 +1250,7 @@ private fun BoxScope.EclipseMetadata(state: NowPlayingFaceState, screen: Dp) {
         }
         if (state.showArtist) {
             Row(verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
+                    horizontalArrangement = state.blockArrangement(Arrangement.Center),
                     modifier = Modifier.padding(top = if (state.showTitle) 3.dp else 0.dp)) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .48f))
                 ArtistLineText(
@@ -1461,7 +1497,7 @@ internal fun artistOrStatus(state: NowPlayingFaceState): String =
         if (state.playing) state.artist else stringResource(R.string.playback_stopped)
 
 /** Album tint belongs to real metadata; operational stopped/status copy remains neutral white. */
-private fun artistOrStatusColor(state: NowPlayingFaceState, alpha: Float): Color =
+internal fun artistOrStatusColor(state: NowPlayingFaceState, alpha: Float): Color =
         (if (state.playing) Color(state.artistColor) else Color.White).copy(alpha = alpha)
 
 /** Keeps either remaining metadata line centred in the vertical slot previously shared by two
@@ -1555,24 +1591,30 @@ private fun CuratedAmbientFace(state: NowPlayingFaceState, layout: CuratedLayout
                     CuratedLayout.DEPTH
             )
             val metadataModifier = if (centredMetadata) {
-                Modifier.align(Alignment.Center).width(screen * .72f)
+                Modifier.align(state.blockPlacement(Alignment.Center)).width(screen * .72f)
+                        .padding(horizontal = state.blockSafeSideInset(screen))
+                        .padding(vertical = state.blockSafeVerticalInset(screen))
             } else {
-                Modifier.align(Alignment.TopCenter).padding(top = screen * .20f).width(screen * .62f)
+                Modifier.align(state.blockPlacement(Alignment.TopCenter))
+                        .padding(horizontal = state.blockSafeSideInset(screen))
+                        .padding(vertical = state.blockSafeVerticalInset(screen))
+                        .padding(top = state.blockDesignedTopPadding(screen * .20f))
+                        .width(screen * .62f)
             }
             Column(metadataModifier,
-                    horizontalAlignment = Alignment.CenterHorizontally) {
+                    horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)) {
                 if (state.showTitle) {
                     Text(state.title, color = tint.copy(alpha = .82f * intensity),
                             fontSize = if (layout == CuratedLayout.POSTER) 17.sp else 15.sp,
                             fontWeight = FontWeight.Bold, fontFamily = state.titleFont,
-                            textAlign = TextAlign.Center,
+                            textAlign = state.blockTextAlign(TextAlign.Center),
                             maxLines = if (centredMetadata) 2 else 1,
                             overflow = TextOverflow.Ellipsis)
                 }
                 if (state.showArtist) {
                     Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
+                            horizontalArrangement = state.blockArrangement(Arrangement.Center),
                             modifier = Modifier.padding(top = if (state.showTitle) 4.dp else 0.dp)
                     ) {
                         // Which app is playing, as a monochrome template flattened to the AOD tint.
@@ -1588,7 +1630,7 @@ private fun CuratedAmbientFace(state: NowPlayingFaceState, layout: CuratedLayout
             if (layout == CuratedLayout.MATERIAL) {
                 Row(
                         modifier = Modifier.align(Alignment.Center).fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center,
+                        horizontalArrangement = state.blockArrangement(Arrangement.Center),
                         verticalAlignment = Alignment.CenterVertically
                 ) {
                     if (state.leftActionIcon != null) {
@@ -1712,10 +1754,15 @@ private fun BoxScope.MaterialComposition(
     // the same clock-to-control band without letting the artist line touch the center disc.
     Column(
             modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .padding(top = screen * 0.17f, start = screen * 0.12f, end = screen * 0.12f)
+                    .align(state.blockPlacement(Alignment.TopCenter))
+                            .padding(horizontal = state.blockSafeSideInset(screen))
+                            .padding(vertical = state.blockSafeVerticalInset(screen))
+                    .padding(
+                            top = state.blockDesignedTopPadding(screen * .17f),
+                            start = screen * .12f,
+                            end = screen * .12f)
                     .width(screen * 0.76f),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
         if (state.showTitle) {
             AdaptiveTitleText(
@@ -1734,7 +1781,7 @@ private fun BoxScope.MaterialComposition(
         if (state.showArtist && state.artist.isNotEmpty()) {
             Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
+                    horizontalArrangement = state.blockArrangement(Arrangement.Center),
                     modifier = Modifier.padding(top = 2.dp)
             ) {
                 SourceIconGlyph(state, 13.dp, artistOrStatusColor(state, 0.70f))

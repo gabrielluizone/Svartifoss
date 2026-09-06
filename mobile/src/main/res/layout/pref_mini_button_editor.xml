@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The Mini buttons page, in the same contextual shape as its five siblings.
+
+     One card for the row itself and one for the screen gestures that share this page, with the
+     link to Controls first: assigning what a mini button actually *does* happens there, not here,
+     and that is the first question anybody arriving on this page has. The rows carry short nouns
+     rather than their preference titles, four of which begin "Mini buttons" on a page already
+     called Mini buttons.
+
+     Which rows appear is decided at bind time from MiniButtonEditorModel, so a face that hosts the
+     row inside its own composition does not offer an arrangement or a shape it places itself. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="12dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="18dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/lyra_surface"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/lyra_divider"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="12dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:id="@+id/mini_button_editor_row_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans"
+                android:includeFontPadding="false"
+                android:text="@string/category_mini_buttons"
+                android:textAllCaps="true"
+                android:textColor="@color/lyra_accent"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <!-- What the buttons do is assigned on Controls; this page only styles them. The note
+                 travels with the link because nothing else on this screen says so. -->
+            <TextView
+                android:id="@+id/mini_button_editor_assign_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/google_sans"
+                android:includeFontPadding="false"
+                android:textColor="@color/lyra_text_secondary"
+                android:textSize="12sp"
+                tools:text="Up to three visible buttons, each with tap and long-press actions." />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mini_button_editor_assign_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:icon="@drawable/ic_joystick"
+                tools:text="Assign actions" />
+
+            <!-- The style rows, built in model order so a hidden one closes its own gap. -->
+            <LinearLayout
+                android:id="@+id/mini_button_editor_row_controls"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:cardBackgroundColor="@color/lyra_surface"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:strokeColor="@color/lyra_divider"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="12dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="12dp">
+
+            <TextView
+                android:id="@+id/mini_button_editor_gestures_heading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/google_sans"
+                android:includeFontPadding="false"
+                android:text="@string/category_wf_gestures"
+                android:textAllCaps="true"
+                android:textColor="@color/lyra_accent"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/mini_button_editor_gestures_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/google_sans"
+                android:includeFontPadding="false"
+                android:text="@string/mini_button_gestures_note"
+                android:textColor="@color/lyra_text_secondary"
+                android:textSize="12sp" />
+
+            <!-- The heading names the setting, so this row carries the value alone. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mini_button_editor_gestures_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:icon="@drawable/ic_swipe_directions"
+                tools:text="Always" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

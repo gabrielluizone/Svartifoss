@@ -17,6 +17,8 @@ class CommunityThemeConstraintsTest {
         assertFalse(constraints.accepts("wear_font", WatchThemeValue.Text("typewriter")))
         assertTrue(constraints.accepts("wear_font", WatchThemeValue.Text("atkinson_hyperlegible")))
         assertTrue(constraints.accepts("wear_title_font", WatchThemeValue.Text("dancing_script")))
+        assertTrue(constraints.accepts(
+                "wear_overlay_backdrop_style", WatchThemeValue.Text("transparent")))
         assertFalse(constraints.accepts("wear_overlay_backdrop_style", WatchThemeValue.Text("liquid_glass")))
         assertFalse(constraints.accepts("screen_buttons_bg_style", WatchThemeValue.Text("solid_theme")))
         assertTrue(constraints.accepts("wear_seek_style", WatchThemeValue.Text("solid_theme")))

@@ -348,7 +348,7 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
                 detectedIcon.imageTintList = ColorStateList.valueOf(secondary)
                 detectedIcon.setImageResource(R.drawable.ic_music_note)
                 detectedTitle.setText(R.string.playlist_shortcut_detection_waiting)
-                detectedSubtitle.setText(R.string.playlist_shortcut_detection_waiting_hint)
+                detectedSubtitle.text = supportedStreamingServiceNames()
                 return
             }
             val info = StreamingShortcutLinks.inspect(link)
@@ -617,9 +617,20 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
                 StreamingService.APPLE_MUSIC -> R.string.playlist_source_apple_music
                 StreamingService.AMAZON_MUSIC -> R.string.playlist_source_amazon_music
                 StreamingService.SOUNDCLOUD -> R.string.playlist_source_soundcloud
+                StreamingService.QOBUZ -> R.string.playlist_source_qobuz
+                StreamingService.BANDCAMP -> R.string.playlist_source_bandcamp
+                StreamingService.AUDIOMACK -> R.string.playlist_source_audiomack
+                StreamingService.MIXCLOUD -> R.string.playlist_source_mixcloud
+                StreamingService.PANDORA -> R.string.playlist_source_pandora
                 StreamingService.GENERIC -> R.string.playlist_source_link
             }
     )
+
+    /** Brand names need no sentence-level translation. Deriving this list from the enum keeps the
+     * editor accurate whenever a supported provider is added or removed. */
+    private fun supportedStreamingServiceNames(): String = StreamingService.values()
+            .filter { it.packageName != null }
+            .joinToString(" • ") { streamingServiceName(it) }
 
     private fun streamingContentTypeName(type: StreamingContentType): String? = when (type) {
         StreamingContentType.TRACK -> getString(R.string.playlist_type_track)

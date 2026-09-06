@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">ซิงค์การตั้งค่ากับนาฬิกาแล้ว</string>
     <string name="dev_copy_debug_info">คัดลอกข้อมูลดีบัก</string>
     <string name="dev_copy_debug_info_description">คัดลอกรายละเอียดบิลด์และอุปกรณ์ไปยังคลิปบอร์ด</string>
+    <string name="dev_export_defaults">ส่งออกเป็นค่าเริ่มต้นของแอป</string>
+    <string name="dev_export_defaults_description">บันทึกการตั้งค่านี้เป็น default_config.json ซึ่งเป็นสถานะเริ่มต้นของการติดตั้งใหม่ ไม่รวมประวัติ ตัวเลือกการยินยอม และสถานะเฉพาะของเครื่องนี้</string>
+    <string name="dev_export_defaults_done">ส่งออกค่าเริ่มต้นแล้ว (%1$s)</string>
     <string name="dev_show_archived">แสดงตัวเลือกที่เก็บถาวร</string>
     <string name="dev_show_archived_description">แสดงเลย์เอาต์และการตั้งค่านาฬิกาที่ถูกเก็บถาวรเนื่องจากปัญหาที่ทราบ</string>
     <string name="dev_copy_debug_info_done">คัดลอกข้อมูลดีบักแล้ว</string>
@@ -273,6 +276,9 @@
     <string name="setting_wear_font_flex_roundness_description">ปรับปลายเส้นจากคม (0) ไปจนถึงมนเต็มที่ (100) เพื่อให้ดูเป็นมิตรมากขึ้น</string>
     <string name="preview_sample_title">ชื่อเพลง</string>
     <string name="preview_sample_artist">ชื่อศิลปิน</string>
+    <string name="preview_sample_lyric_previous">บรรทัดก่อนหน้า</string>
+    <string name="preview_sample_lyric_current">บรรทัดที่เล่นอยู่</string>
+    <string name="preview_sample_lyric_next">บรรทัดถัดไป</string>
     <string name="preview_sample_next_title">เพลงถัดไป</string>
     <string name="preview_playback_stopped">หยุดแล้ว</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -535,8 +541,6 @@
     <string name="wear_font_small_caps_description">รูปทรงคล้ายตัวพิมพ์ใหญ่แบบกระชับ ให้ความรู้สึกแบบงานบรรณาธิการ</string>
     <string name="wear_font_casual">ลำลอง</string>
     <string name="wear_font_casual_description">ตระกูลแบบอักษรระบบลายมือที่ดูสนุกสนาน</string>
-    <string name="wear_font_typewriter">เครื่องพิมพ์ดีด (เก็บถาวร)</string>
-    <string name="wear_font_typewriter_description">ลุคเครื่องพิมพ์ดีดเรโทร (Mom\'s Typewriter)</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">ฟอนต์ sans-serif เรขาคณิตแบบโค้งมน เป็นทางเลือกฟรี (OFL) ในแนวทางของ Circular</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -602,6 +606,12 @@
     <string name="setting_wear_quick_panel_color">สีการทำงานด่วน</string>
     <string name="setting_wear_quick_panel_custom_color">สีการทำงานด่วนแบบกำหนดเอง</string>
     <string name="setting_wear_quick_panel_custom_color_description">เลือกสีการทำงานด่วนที่ใช้กับการประมวลผลแบบปกติ</string>
+    <string name="setting_wear_lyrics_color">สีเนื้อเพลง</string>
+    <string name="setting_wear_lyrics_custom_color">สีเนื้อเพลงแบบกำหนดเอง</string>
+    <string name="setting_wear_lyrics_custom_color_description">เลือกสีเนื้อเพลงที่ใช้กับการประมวลผลแบบปกติ</string>
+    <string name="setting_wear_queue_color">สีคิว</string>
+    <string name="setting_wear_queue_custom_color">สีคิวแบบกำหนดเอง</string>
+    <string name="setting_wear_queue_custom_color_description">เลือกสีคิวที่ใช้กับการประมวลผลแบบปกติ</string>
     <string name="setting_wear_shading_custom_color_description">เลือกสีที่ใช้แต้มโทนให้กับการไล่เฉดเงา</string>
 
     <string-array name="wear_accent_color_entries">
@@ -634,8 +644,10 @@
         <item>โน้ต</item>
         <item>ท่อนเพลง</item>
         <item>ข้อมูลเมตา</item>
+        <item>ศิลปิน</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -656,8 +668,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">การเลื่อนตำแหน่งแบบเอ็กซ์เพรสซีฟ</string>
@@ -691,6 +705,7 @@
         <item>แบ่ง</item>
         <item>โน้ต</item>
         <item>ท่อนเพลง</item>
+        <item>ศิลปิน</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -709,6 +724,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -815,8 +831,15 @@
     <string name="category_wf_panel_seek">แผงความคืบหน้าและการเลื่อนตำแหน่ง</string>
     <string name="category_wf_panel_quick">แผงการทำงานด่วน</string>
     <string name="category_wf_panel_queue">คิวและรายการ</string>
+    <string name="category_wf_panel_lyrics">เนื้อเพลง</string>
     <string name="category_wf_panel_effects">เอฟเฟกต์แผง</string>
     <string name="setting_wear_overlay_backdrop_style">พื้นหลังแผง</string>
+    <string name="wear_backdrop_shared">ตามพื้นหลังแผงที่ใช้ร่วมกัน</string>
+    <string name="setting_wear_volume_backdrop_style">พื้นหลังระดับเสียง</string>
+    <string name="setting_wear_progress_backdrop_style">พื้นหลังความคืบหน้า</string>
+    <string name="setting_wear_quick_panel_backdrop_style">พื้นหลังการทำงานด่วน</string>
+    <string name="setting_wear_queue_backdrop_style">พื้นหลังคิว</string>
+    <string name="setting_wear_lyrics_backdrop_style">พื้นหลังเนื้อเพลง</string>
     <string name="setting_wear_volume_style">สไตล์ระดับเสียง</string>
     <string name="setting_wear_volume_layout">เค้าโครงระดับเสียง</string>
     <string name="setting_wear_quick_panel_style">สไตล์แผงด่วน</string>
@@ -904,10 +927,14 @@
     <string name="setting_wear_source_icon_scale">ขนาดไอคอนแอป</string>
     <string name="setting_wear_source_icon_opacity">ความทึบไอคอนแอป</string>
     <string name="setting_wear_typography_weight_description">1–1000 ค่า 400 คือน้ำหนักปกติของหน้าปัด ค่าสูงขึ้นจะหนาขึ้น สำหรับ Google Sans Flex ค่านี้คือแกนน้ำหนักของฟอนต์เอง</string>
-    <string name="setting_wear_typography_scale_description">เปอร์เซ็นต์ของขนาดเดิมของหน้าปัด (70–140) ค่า 100 คงขนาดที่ออกแบบไว้ของแต่ละเค้าโครง</string>
+    <string name="setting_wear_typography_scale_description">เปอร์เซ็นต์ของขนาดเดิมของหน้าปัด (1–300) ค่า 100 คงขนาดที่ออกแบบไว้ของแต่ละเค้าโครง</string>
     <string name="setting_wear_typography_opacity_description">เปอร์เซ็นต์ (20–100) ค่า 100 คงความทึบเดิมของหน้าปัด</string>
     <string name="setting_wear_typography_tracking_description">ระยะห่างเพิ่มเติมระหว่างตัวอักษร หน่วยเป็นหนึ่งในร้อยของ em (−5 ถึง 20) ค่า 0 คงระยะห่างเดิมของฟอนต์</string>
     <string name="setting_wear_color_modifier">โทน</string>
+    <string name="setting_wear_title_color_modifier">โทนของชื่อ</string>
+    <string name="setting_wear_artist_color_modifier">โทนของศิลปิน</string>
+    <string name="setting_wear_clock_color_modifier">โทนของนาฬิกา</string>
+    <string name="wear_color_modifier_follow">ตามโทนของนาฬิกา</string>
     <string name="setting_wear_color_modifier_description">ปรับพาเลตทั้งหมดโดยไม่เปลี่ยนวิธีที่สร้างพาเลต — ใช้ได้กับการจัดการสีทุกแบบ</string>
     <string name="setting_wear_color_hue_shift">การเลื่อนสี</string>
     <string name="setting_wear_color_hue_shift_description">หมุนพาเลตอัลบั้มไปรอบวงล้อสีเป็นองศา (0–359) การจัดการทุกแบบจะคงสีหลักไว้ที่เฉดเดิมของอัลบั้ม ดังนั้นค่านี้จึงใช้ปรับความแตกต่าง 0 ใช้สีอัลบั้มตามเดิม; สีปกติแบบคงที่จะไม่ถูกเลื่อน</string>
@@ -1300,7 +1327,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1419,7 +1445,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1440,7 +1473,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1559,7 +1591,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">เรียกดูคลัง</string>
@@ -2267,5 +2306,56 @@
         <item>ไฮไลต์</item>
         <item>บางเบา</item>
         <item>ทึบ</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>ตามหน้าปัด</item>
+        <item>เริ่มต้น</item>
+        <item>กึ่งกลาง</item>
+        <item>สิ้นสุด</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>ตามหน้าปัด</item>
+        <item>บน</item>
+        <item>กลาง</item>
+        <item>ล่าง</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>คงที่ (หนึ่งบรรทัด ไม่เลื่อนหรือย่อ)</item>
+        <item>เลื่อน (ตัวอักษรวิ่ง)</item>
+        <item>ย่อให้พอดี</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>จากแอปเพลง</item>
+        <item>ค้นหาออนไลน์</item>
+        <item>รูปศิลปิน</item>
+        <item>รูปจากแกลเลอรีของฉัน</item>
+        <item>สุ่มจากโฟลเดอร์</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

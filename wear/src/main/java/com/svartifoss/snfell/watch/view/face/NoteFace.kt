@@ -33,6 +33,7 @@ import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.ColorHarmony
 import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.RoundScreenText
+import com.svartifoss.snfell.common.TextBlockPosition
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.compose.FaceClock
 
@@ -85,9 +86,11 @@ fun NoteFace(
         Column(
                 modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = screen * NOTE_TEXT_INSET),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                        .padding(horizontal = maxOf(
+                                screen * NOTE_TEXT_INSET, state.blockSafeSideInset(screen)))
+                        .padding(vertical = state.blockSafeVerticalInset(screen)),
+                horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally),
+                verticalArrangement = state.blockVerticalArrangement(Arrangement.Center)
         ) {
             // Hiding the cover is a layout decision, not a shape - with it off the sentence alone
             // fills the block the Column already centres, rather than leaving the gap the disc
@@ -100,9 +103,23 @@ fun NoteFace(
                 Spacer(Modifier.height(screen * .05f))
             }
             NoteLine(state, screen)
+            // When the block is deliberately moved, time must travel with the sentence instead
+            // of remaining an unrelated footer. The Follow layout keeps the designed footer.
+            if (state.showTrackTime && state.textBlockPosition != TextBlockPosition.FOLLOW) {
+                TrackTimeText(
+                        text = "${formatFaceClockTime(state.positionMs)} / " +
+                                formatFaceClockTime(state.durationMs),
+                        state = state,
+                        color = noteTitleColor(state).copy(alpha = .55f),
+                        fontFamily = state.artistFont,
+                        fontSize = 11.sp,
+                        maxLines = 1,
+                        modifier = Modifier.padding(top = screen * .04f)
+                )
+            }
         }
 
-        if (state.showTrackTime) {
+        if (state.showTrackTime && state.textBlockPosition == TextBlockPosition.FOLLOW) {
             TrackTimeText(
                     text = "${formatFaceClockTime(state.positionMs)} / " +
                             formatFaceClockTime(state.durationMs),
@@ -314,7 +331,7 @@ private fun NoteAmbient(state: NowPlayingFaceState) {
                 modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = screen * geo.SIDE_PADDING_FRACTION),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally),
                 verticalArrangement = Arrangement.Center
         ) {
             val text = buildAnnotatedString {

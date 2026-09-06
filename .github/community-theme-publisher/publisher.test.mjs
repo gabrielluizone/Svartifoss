@@ -4,10 +4,12 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import test from "node:test";
 import {
+    ALLOWED_BASE_FACES as ADMIN_ALLOWED_BASE_FACES,
     SETTING_KEYS as ADMIN_SETTING_KEYS,
     SETTING_TYPES as ADMIN_SETTING_TYPES,
 } from "../../docs/admin/theme-profile-schema.mjs";
 import {
+    ALLOWED_BASE_FACES,
     COMMUNITY_THEME_CONSTRAINTS,
     defaultSettingsForFace,
     isOriginalityApplicableSetting,
@@ -500,6 +502,7 @@ test("the publisher mirrors the pinned CommunityThemeSubmissionPolicy digest", (
 });
 
 test("the browser moderation schema stays aligned with the publisher schema", () => {
+    assert.deepEqual(ADMIN_ALLOWED_BASE_FACES, ALLOWED_BASE_FACES);
     assert.deepEqual(ADMIN_SETTING_TYPES, SETTING_TYPES);
     assert.deepEqual(ADMIN_SETTING_KEYS, SETTING_KEYS);
     assert.deepEqual(Object.keys(ADMIN_SETTING_TYPES).sort(), ADMIN_SETTING_KEYS);
@@ -562,14 +565,14 @@ test("individual title and artist fonts retain their Flex contracts", () => {
 test("the published vocabulary is pinned to the app version that can read it", () => {
     assert.deepEqual(
         { settings: SETTING_KEYS.length, minimumAppVersion: MINIMUM_APP_VERSION },
-        { settings: 180, minimumAppVersion: "3.3" },
+        { settings: 196, minimumAppVersion: "3.3" },
     );
 });
 
 test("a complete approved intake creates a preview-free public profile", () => {
     const candidate = validateApprovedDocument(approvedDocument());
 
-    assert.equal(SETTING_KEYS.length, 180);
+    assert.equal(SETTING_KEYS.length, 196);
     assert.equal(candidate.id, ID);
     assert.equal(candidate.publicProfile.author, "Theme maker");
     assert.equal(candidate.publicProfile.publishedAt, PUBLISHED_AT);

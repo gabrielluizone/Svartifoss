@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.view.watchface
 
+import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.BackgroundLayerKind
 import com.svartifoss.snfell.common.MiscPreferences
 
@@ -17,7 +18,19 @@ import com.svartifoss.snfell.common.MiscPreferences
  * the same arrangement the Text, Color, Panel and Player pages already use.
  */
 internal enum class BackgroundControl {
-    /** How the cover itself is composed: square-fit, blurred or hidden. */
+    /** Which picture goes behind the player at all - see [AlbumArtSource]. */
+    SOURCE,
+
+    /**
+     * The file or folder a device-local source draws from.
+     *
+     * One control for two keys, because the two sources are alternatives: at most one of
+     * `custom_album_art_image` and `custom_album_art_folder` is ever the one being read, so a
+     * control per key would mean one of them permanently pointing at a picture nothing draws.
+     */
+    PICTURE,
+
+    /** How that picture is composed: square-fit, blurred or hidden. */
     ARTWORK,
 
     /** The independent colour layer applied over the selected artwork style. */
@@ -37,6 +50,9 @@ internal object BackgroundEditorModel {
 
     /** The artwork controls, top to bottom, in the order the editor renders them. */
     val artworkKeys: List<String> = listOf(
+            MiscPreferences.WEAR_ALBUM_ART_SOURCE.key,
+            MiscPreferences.CUSTOM_ALBUM_ART_IMAGE.key,
+            MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key,
             MiscPreferences.ALBUM_ART_STYLE.key,
             MiscPreferences.ALBUM_ART_FILTER.key,
             MiscPreferences.ALBUM_ART_BLUR_RADIUS.key,
@@ -61,7 +77,24 @@ internal object BackgroundEditorModel {
 
     val keys: Set<String> = (artworkKeys + layerKeys).toSet()
 
+    /**
+     * The keys on this page that are deliberately *not* face-scoped, named here rather than in the
+     * test that checks them - the shape [PanelEditorModel.globalKeys] already uses.
+     *
+     * Both hold a `content://` URI for a device-local artwork source. Which *source* a face draws
+     * is an appearance choice and is scoped like every other; which file on this phone that source
+     * points at is not, and scoping it would mean re-picking the same photograph once per face and
+     * writing a storage reference into every saved theme. See
+     * [com.svartifoss.snfell.common.DeviceLocalAppearance].
+     */
+    val globalKeys: Set<String> = setOf(
+            MiscPreferences.CUSTOM_ALBUM_ART_IMAGE.key,
+            MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key)
+
     fun controlFor(key: String): BackgroundControl? = when (key) {
+        MiscPreferences.WEAR_ALBUM_ART_SOURCE.key -> BackgroundControl.SOURCE
+        MiscPreferences.CUSTOM_ALBUM_ART_IMAGE.key,
+        MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key -> BackgroundControl.PICTURE
         MiscPreferences.ALBUM_ART_STYLE.key -> BackgroundControl.ARTWORK
         MiscPreferences.ALBUM_ART_FILTER.key -> BackgroundControl.FILTER
         MiscPreferences.ALBUM_ART_BLUR_RADIUS.key -> BackgroundControl.BLUR

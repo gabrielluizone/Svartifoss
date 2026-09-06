@@ -175,9 +175,9 @@
                         android:fontFamily="@font/google_sans"
                         android:includeFontPadding="false"
                         android:lineHeight="18sp"
-                        android:text="@string/playlist_shortcut_detection_waiting_hint"
                         android:textColor="@color/lyra_text_secondary"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="YouTube Music • Spotify • Deezer • TIDAL • Apple Music • Amazon Music • SoundCloud • Qobuz • Bandcamp • Audiomack • Mixcloud • Pandora" />
 
                 </LinearLayout>
 

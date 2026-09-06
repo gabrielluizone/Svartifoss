@@ -4,9 +4,28 @@
  *
  * The reviewer runs from GitHub Pages and therefore cannot import a workflow
  * file. Keep this table deliberately narrow: it contains only the typed
- * settings needed to inspect an intake payload. publisher.test.mjs asserts
- * parity with the publishing trust boundary on every publisher test run.
+ * settings and base faces needed to inspect an intake payload.
+ * publisher.test.mjs asserts parity with the publishing trust boundary on
+ * every publisher test run.
  */
+export const ALLOWED_BASE_FACES = Object.freeze([
+  "classic",
+  "expressive",
+  "poster",
+  "studio",
+  "material",
+  "immersive",
+  "carousel",
+  "chat",
+  "split",
+  "note",
+  "verse",
+  "metadata",
+  "artist",
+  "ribbon",
+  "frame",
+]);
+
 const STRING_SETTINGS = [
   "album_art_filter",
   "album_art_style",
@@ -22,6 +41,7 @@ const STRING_SETTINGS = [
   "wear_aod_custom_color",
   "wear_aod_style",
   "wear_artist_color_mode",
+  "wear_artist_color_modifier",
   "wear_artist_custom_color",
   "wear_artist_font",
   "wear_artist_text_case",
@@ -29,6 +49,7 @@ const STRING_SETTINGS = [
   "wear_carousel_card_shape",
   "wear_chat_cover_shape",
   "wear_clock_color_mode",
+  "wear_clock_color_modifier",
   "wear_clock_custom_color",
   "wear_clock_font",
   "wear_color_modifier",
@@ -37,7 +58,10 @@ const STRING_SETTINGS = [
   "wear_font",
   "wear_gestures_mode",
   "wear_list_row_size",
+  "wear_lyrics_backdrop_style",
   "wear_lyrics_font",
+  "wear_lyrics_color_mode",
+  "wear_lyrics_custom_color",
   "wear_metadata_cover_shape",
   "wear_mini_buttons_mode",
   "wear_normal_color",
@@ -45,11 +69,16 @@ const STRING_SETTINGS = [
   "wear_overlay_backdrop_style",
   "wear_player_shading_intensity",
   "wear_player_shading_style",
+  "wear_progress_backdrop_style",
   "wear_progress_color_mode",
   "wear_progress_custom_color",
   "wear_progress_layout",
   "wear_progress_style",
+  "wear_queue_backdrop_style",
+  "wear_queue_color_mode",
+  "wear_queue_custom_color",
   "wear_queue_style",
+  "wear_quick_panel_backdrop_style",
   "wear_quick_panel_color_mode",
   "wear_quick_panel_custom_color",
   "wear_quick_panel_layout",
@@ -70,7 +99,12 @@ const STRING_SETTINGS = [
   "wear_shading_color_mode",
   "wear_shading_custom_color",
   "wear_split_panel",
+  "wear_album_art_source",
+  "wear_artist_text_mode",
+  "wear_text_block_align",
+  "wear_text_block_position",
   "wear_title_color_mode",
+  "wear_title_color_modifier",
   "wear_title_custom_color",
   "wear_title_text_bg_color_mode",
   "wear_title_text_bg_custom_color",
@@ -87,6 +121,7 @@ const STRING_SETTINGS = [
   "wear_track_time_font",
   "wear_track_time_mode",
   "wear_up_next_pill_style",
+  "wear_volume_backdrop_style",
   "wear_volume_color_mode",
   "wear_volume_custom_color",
   "wear_volume_layout",

@@ -52,7 +52,7 @@
 
     --edge: min(6vw, 72px);
     --col-w: 1180px;
-    --doc-w: 760px;
+    --doc-w: var(--col-w);
   }
 
   * { box-sizing: border-box; }
@@ -171,6 +171,27 @@
   }
   .nav-links a { color: var(--ash); text-decoration: none; }
   .nav-links a:hover { color: var(--snow); }
+  .language-picker { position: relative; display: inline-flex; align-items: center; }
+  .language-picker select {
+    appearance: none;
+    min-width: 70px;
+    padding: 8px 25px 8px 10px;
+    border: 1px solid var(--carbon-soft);
+    border-radius: var(--r-sm);
+    background: var(--shadow) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%239a9a9a' d='m2 3 3 3 3-3 .8.8-3.8 3.8L1.2 3.8z'/%3E%3C/svg%3E") no-repeat right 9px center;
+    color: var(--ash);
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .language-picker select:hover, .language-picker select:focus { border-color: var(--sage); color: var(--snow); outline: none; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+  @media (max-width: 640px) {
+    .nav-links { gap: 10px; }
+    .nav-links a:not(:first-child) { display: none; }
+  }
 
   /* ================= DOC HERO ================= */
   .doc-hero {
@@ -196,6 +217,7 @@
     color: var(--ash);
     font-size: 15.5px;
     margin: 0 0 22px;
+    max-width: 100%;
   }
   .callout {
     background: var(--shadow);
@@ -259,19 +281,21 @@
     margin: 24px 0 10px;
     color: var(--snow);
   }
-  .doc-body p {
+  .doc-body p,
+  .doc-body ul,
+  .doc-body ol {
     color: var(--ash);
     margin: 0 0 16px;
     font-size: 15px;
+    max-width: 100%;
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: break-word;
+    text-wrap: pretty;
   }
   .doc-body p:last-child { margin-bottom: 0; }
   .doc-body strong { color: var(--snow); font-weight: 700; }
-  .doc-body ul {
-    color: var(--ash);
-    font-size: 15px;
-    padding-left: 20px;
-    margin: 0 0 16px;
-  }
+  .doc-body ul { padding-left: 20px; }
   .doc-body li { margin-bottom: 8px; }
   .doc-body li:last-child { margin-bottom: 0; }
 
@@ -281,8 +305,16 @@
     border: 1px solid var(--carbon);
     border-radius: var(--r-md);
   }
-  table { width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 520px; }
-  th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--carbon); vertical-align: top; }
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 13.5px; min-width: 0; }
+  th, td {
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--carbon);
+    vertical-align: top;
+    overflow-wrap: anywhere;
+  }
+  th:first-child, td:first-child { width: 34%; white-space: normal; }
+  th:last-child, td:last-child { width: 66%; }
   th {
     color: var(--snow);
     background: var(--shadow);
@@ -292,7 +324,7 @@
     font-weight: 700;
   }
   td { color: var(--ash); line-height: 1.6; }
-  td:first-child { color: var(--snow); font-weight: 600; white-space: nowrap; }
+  td:first-child { color: var(--snow); font-weight: 600; white-space: normal; }
   tr:last-child td { border-bottom: none; }
 
   /* ================= FOOTER ================= */
@@ -321,6 +353,43 @@
     flex-wrap: wrap;
     gap: 8px;
   }
+  @media (max-width: 720px) {
+    .doc-wrap { max-width: none; }
+    .table-wrap { overflow: visible; border: 0; }
+    table, tbody, tr, td { display: block; }
+    thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    tbody tr {
+      margin: 0 0 12px;
+      padding: 16px;
+      border: 1px solid var(--carbon);
+      border-radius: var(--r-md);
+      background: linear-gradient(135deg, var(--shadow), #101010);
+    }
+    tbody tr:last-child { margin-bottom: 0; }
+    tbody td, tbody td:first-child, tbody td:last-child {
+      width: auto;
+      padding: 0;
+      border: 0;
+      white-space: normal;
+    }
+    tbody td:first-child {
+      margin-bottom: 7px;
+      color: var(--snow);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    tbody td:last-child { line-height: 1.55; }
+  }
 </style>
 </head>
 <body>
@@ -340,6 +409,14 @@
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="https://github.com/gabrielluizone/Svartifoss">GitHub</a>
+      <label class="language-picker">
+        <span class="sr-only">Language</span>
+        <select id="language-select" aria-label="Language">
+          <option value="en">EN</option>
+          <option value="pt-BR">PT-BR</option>
+          <option value="es">ES</option>
+        </select>
+      </label>
     </div>
   </div>
 </nav>
@@ -357,7 +434,7 @@
   <div class="doc-wrap">
     <div class="eyebrow"><span class="dot">●</span> Legal</div>
     <h1>Privacy Policy</h1>
-    <p class="doc-updated">Last updated: 02-09-2026</p>
+    <p class="doc-updated">Last updated: 05-09-2026</p>
     <p class="doc-lede">Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a paired watch control music playback on your phone. This policy explains what information the app accesses, what it stores, and what — if anything — leaves your device.</p>
     <div class="callout">
       <p><strong>The short version:</strong> Svartifoss does not require an account for playback, watch control, or Community-theme browsing; does not operate its own backend server; and does not sell or share your data with advertisers. The phone and watch talk to each other directly over your local Bluetooth/Wi-Fi connection. Optional update checks and the opt-in Community themes gallery contact GitHub Pages. Liking a published Community theme, installing one, and reporting one all need no account: the app creates an anonymous Firebase Authentication account for them silently, and Google Cloud Firestore keeps the private record under that anonymous ID. <strong>Submitting</strong> a theme is the one action that asks you to sign in with Google, and even then your Google account name and email are not published. The phone app also includes Google Firebase Crashlytics and Analytics for diagnostics, plus Firebase Cloud Messaging for occasional developer announcements. Crash reporting and announcement notifications are both enabled by default and can each be disabled at any time — see <a href="#crash-reports">Crash reports</a> and <a href="#announcement-notifications">Announcement notifications</a> below. A separate, off-by-default setting can also fetch cover art for your saved playlist shortcuts directly from the streaming service — see <a href="#streaming-shortcut-artwork-optional">Streaming shortcut artwork</a> below.</p>
@@ -377,6 +454,7 @@
     <a href="#queue-covers">Queue covers</a>
     <a href="#track-details">Track details</a>
     <a href="#lyrics">Song lyrics</a>
+    <a href="#artwork-online">Artwork looked up online</a>
     <a href="#usage-diagnostics">Usage diagnostics</a>
     <a href="#what-we-dont-do">What we don't do</a>
     <a href="#children">Children's privacy</a>
@@ -402,7 +480,7 @@
           <thead><tr><th>Permission</th><th>What it's for</th></tr></thead>
           <tbody>
             <tr><td>Foreground service / "Post notifications"</td><td>Keeps the phone↔watch connection alive while music plays, shown as a persistent notification (required by Android for background media apps). Also required to show the optional developer announcement notifications described below.</td></tr>
-            <tr><td>Photos</td><td>Only used if you explicitly choose to save the current album art to your device's photo gallery. Nothing is saved unless you tap that option.</td></tr>
+            <tr><td>Photos</td><td>Only used if you explicitly choose to save the current album art to your device's photo gallery. Nothing is saved unless you tap that option. Separately, if you set Album art source to <strong>Picture from my gallery</strong> or <strong>Random from a folder</strong>, the app reads the one image or folder you pick through Android's own file picker &mdash; it receives access to nothing else, and those pictures stay between your phone and your watch.</td></tr>
             <tr><td>Vibrate</td><td>Haptic feedback on the watch when you press a button, if you enable that setting.</td></tr>
             <tr><td>Run Tasker tasks</td><td>Only relevant if you have the separate Tasker app installed and choose to bind a Tasker task to a button. Svartifoss does not read Tasker's data — it only triggers a task you've configured.</td></tr>
             <tr><td>Music and audio (Android 13+) / Storage (older versions)</td><td>Only used to read album covers for entries in the playback queue, when the music app publishes them as references into your music library rather than as images. Requested from Settings → Apps, never at startup, and only ever read locally — nothing is uploaded. Decline it and the queue simply shows blank thumbnails. On very old Android versions the same legacy Storage permission also covers saving the current album art to your gallery, which only happens if you tap that option.</td></tr>
@@ -420,6 +498,7 @@
         <li>Your search history and playlist shortcuts, if you use those features.</li>
         <li>A short local history of recently played tracks, used as a fallback when an app doesn't expose a real playback queue.</li>
         <li>Your private theme library and other app preferences (theme, colors, timeouts, etc.). A profile leaves the device only if you select it for an explicit Community-theme submission.</li>
+        <li>A copy of any font file you import (Watch tab &rarr; Text &rarr; My own font) and, if you set Album art source to one of the two options that use your own pictures, the reference to the image or folder you picked. The font is copied into the app's private storage so it keeps working if you move or delete the original; the pictures are read from where they already are. Both are sent to your paired watch so it can render them, and neither leaves your two devices &mdash; a theme that uses them cannot be submitted to the Community themes gallery, and the app refuses such a submission rather than sharing the file.</li>
         <li>A disposable cache of the public Community themes catalogue, theme files and author screenshots after you open that gallery. It contains only the public JSON served from this project's GitHub Pages site, is not included in configuration backups, and can be cleared with Android's app-cache controls.</li>
       </ul>
       <p>Uninstalling the app removes all of this data. If you use the app's Export Config feature, that file is saved wherever you choose to save it (e.g. your own device storage or cloud drive) — that's your copy, under your control, and we never see it.</p>
@@ -528,6 +607,15 @@
       <p>This is <strong>on by default</strong>, for the same reason the queue covers above are: a lyric has no second source, so switching it off does not degrade the screen, it empties it. <strong>Look up lyrics online</strong> (Settings → Apps → Music apps &amp; services) turns it off, and both surfaces then simply report that lookups are disabled. Everything else in the app keeps working offline.</p>
     </section>
 
+    <section id="artwork-online">
+      <h2>Artwork looked up online</h2>
+      <p>Two of the three <strong>Album art source</strong> choices put a picture behind the player that is not on your phone: <strong>Artist picture</strong>, a photograph of the performer, and <strong>Looked up online</strong>, an album cover for a player that publishes none. The third, <strong>From the music app</strong>, is the default and involves no network at all.</p>
+      <p>Nothing on your phone or in Android carries an artist photograph — MediaStore has never stored artist images, the playing app publishes no field for one, and a music player that shows them keeps them in its own private storage where no other app can read them — so those pictures have to be looked up.</p>
+      <p>The <strong>phone</strong> does the lookup, never the watch, since a watch paired over Bluetooth has no internet connection of its own. It sends the <strong>artist name</strong>, and for a cover the <strong>track name</strong> as well, to <a href="https://www.deezer.com">Deezer</a>'s public catalogue search, which needs no account and no API key. Nothing else is attached: no identifier, no account, no listening history, and no record of which app was playing. The request goes directly to Deezer, not through any server of ours, and is governed by that service's own terms rather than this policy.</p>
+      <p>Nothing is looked up while the source is <strong>From the music app</strong>. When one of the other two is selected, each new artist (or each new track, for a cover) is looked up once and the result is cached on your phone, so an album playing through under <strong>Artist picture</strong> costs a single request. A record Deezer does not list is remembered as "no picture" for a week so the same name is not asked about again, and the player shows the artwork your music app published instead.</p>
+      <p>This is <strong>on by default</strong>, for the same reason the lyrics lookup is: choosing one of those sources is itself the choice to use it, and switching it off does not give you a cheaper version of anything — it falls back to the artwork you already had. <strong>Online artwork</strong> (Settings → Apps → Music apps &amp; services) turns it off. Cached pictures live in the phone's cache directory, are never included in a settings backup, and are removed whenever Android clears app caches or you clear the app's storage.</p>
+    </section>
+
     <section id="usage-diagnostics">
       <h2>Usage diagnostics</h2>
       <p>The phone app also includes <strong>Google Analytics for Firebase</strong>. It collects Firebase's standard automatic app/session events and technical context such as app version, device/OS class and an installation-scoped identifier. Svartifoss does not attach an account, name, email, media metadata or message content to these events and does not log custom Analytics events. This service is governed by <a href="https://policies.google.com/privacy">Google's Privacy Policy</a> and <a href="https://firebase.google.com/support/privacy">Firebase's privacy information</a>. The crash-reporting switch described above controls Crashlytics reports; it does not control these separate automatic Analytics events.</p>
@@ -590,5 +678,6 @@
   </div>
 </footer>
 
+<script src="privacy-languages.js"></script>
 </body>
 </html>

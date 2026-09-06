@@ -8,10 +8,13 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.net.Uri
+import android.text.format.Formatter
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -30,6 +33,7 @@ import com.svartifoss.snfell.common.RotaryAction
 import com.svartifoss.snfell.common.model.AutoStartMode
 import com.svartifoss.snfell.config.ConfigBackup
 import com.svartifoss.snfell.config.ConfigBackupSection
+import com.svartifoss.snfell.config.DefaultConfigExport
 import com.svartifoss.snfell.update.UpdateActivity
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
@@ -41,6 +45,14 @@ import com.svartifoss.snfell.music.StreamingShortcutLinks
 import com.svartifoss.snfell.util.WearableAvailability
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.svartifoss.snfell.view.TitledActivity
+import com.svartifoss.snfell.view.applyLyraDialogStyling
+import com.svartifoss.snfell.view.settings.dev.buildAppearanceResolutionReport
+import com.svartifoss.snfell.view.settings.dev.buildDataLayerReport
+import com.svartifoss.snfell.view.settings.dev.buildMediaSessionsReport
+import com.svartifoss.snfell.view.settings.dev.buildPhoneLogReport
+import com.svartifoss.snfell.view.settings.dev.buildThemeSubmissionPreflightReport
+import com.svartifoss.snfell.view.settings.dev.buildWatchSnapshotReport
+import com.svartifoss.snfell.view.settings.dev.showDevReportDialog
 import com.svartifoss.snfell.view.watchface.theme.CommunityThemeAccountActivity
 import com.svartifoss.snfell.view.watchface.theme.CommunityThemeAccountRepository
 import com.svartifoss.snfell.view.watchface.theme.CommunityThemeAccountState
@@ -51,11 +63,14 @@ import com.matejdro.wearutils.preferencesync.PreferencePusher
 import com.google.android.gms.wearable.Wearable
 import dagger.android.support.AndroidSupportInjection
 import de.psdev.licensesdialog.LicensesDialog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.io.IOException
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -98,6 +113,14 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
     private val importConfigLauncher = registerForActivityResult(
             ActivityResultContracts.OpenDocument()
     ) { uri -> uri?.let { importConfigFrom(it) } }
+
+    /** Developer-only: writes the document that ships as `res/raw/default_config.json`. Kept apart
+     *  from the ordinary backup export, which lives on its own selection screen, because the two
+     *  produce the same format and only this one is safe to put inside an APK - see
+     *  [DefaultConfigExport]. */
+    private val exportDefaultConfigLauncher = registerForActivityResult(
+            ActivityResultContracts.CreateDocument("application/json")
+    ) { uri -> uri?.let { exportDefaultConfigTo(it) } }
 
     /** Media access for local-library queue covers - see [QueueArtworkResolver]. Requested from
      *  its own preference row rather than at startup, so the grant dialog appears with the reason
@@ -489,6 +512,11 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                 StreamingService.APPLE_MUSIC -> R.string.playlist_source_apple_music
                 StreamingService.AMAZON_MUSIC -> R.string.playlist_source_amazon_music
                 StreamingService.SOUNDCLOUD -> R.string.playlist_source_soundcloud
+                StreamingService.QOBUZ -> R.string.playlist_source_qobuz
+                StreamingService.BANDCAMP -> R.string.playlist_source_bandcamp
+                StreamingService.AUDIOMACK -> R.string.playlist_source_audiomack
+                StreamingService.MIXCLOUD -> R.string.playlist_source_mixcloud
+                StreamingService.PANDORA -> R.string.playlist_source_pandora
                 StreamingService.GENERIC -> R.string.playlist_source_link
             }
     )
@@ -617,6 +645,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                 .setCancelable(false)
                 .setPositiveButton(R.string.action_restart_now) { _, _ -> restartApp() }
                 .show()
+                .applyLyraDialogStyling(accent = lyraRuntimeAccent())
         }
     }
 
@@ -689,11 +718,18 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
 
         findPreference<Preference>("aboutDeveloper")?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
-                AlertDialog.Builder(requireContext())
-                        .setTitle(R.string.about_developer_dialog_title)
+                // setCustomTitle rather than setTitle + setIcon: the platform's icon slot is a
+                // fixed 32dp badge beside the text, and this is a portrait introducing a name.
+                val builder = AlertDialog.Builder(requireContext())
+                val titleView = LayoutInflater.from(builder.context)
+                        .inflate(R.layout.dialog_title_developer, null)
+                titleView.findViewById<ImageView>(R.id.developer_avatar)
+                        .setImageDrawable(developerAvatar(builder.context))
+                builder.setCustomTitle(titleView)
                         .setMessage(R.string.about_developer_dialog_message)
                         .setPositiveButton(android.R.string.ok, null)
                         .show()
+                        .applyLyraDialogStyling(accent = lyraRuntimeAccent())
                 true
             }
 
@@ -766,11 +802,113 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                 true
             }
 
+        findPreference<Preference>("dev_export_defaults")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                exportDefaultConfigLauncher.launch(DefaultConfigExport.FILE_NAME)
+                true
+            }
+
         findPreference<Preference>("dev_disable_mode")?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 disableDevMode()
                 true
             }
+
+        findPreference<Preference>("dev_watch_snapshot_inspector")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                showDevReportDialog(
+                        requireContext(), getString(R.string.dev_watch_snapshot_inspector),
+                        buildWatchSnapshotReport(requireContext()))
+                true
+            }
+
+        findPreference<Preference>("dev_data_layer_inspector")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                val title = getString(R.string.dev_data_layer_inspector)
+                lifecycleScope.launch {
+                    val report = buildDataLayerReport(requireContext(), watchInfoProvider.value)
+                    showDevReportDialog(requireContext(), title, report)
+                }
+                true
+            }
+
+        findPreference<Preference>("dev_media_sessions_inspector")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                showDevReportDialog(
+                        requireContext(), getString(R.string.dev_media_sessions_inspector),
+                        buildMediaSessionsReport(requireContext()))
+                true
+            }
+
+        findPreference<Preference>("dev_view_phone_log")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                val title = getString(R.string.dev_view_phone_log)
+                val context = requireContext().applicationContext
+                lifecycleScope.launch {
+                    val report = withContext(Dispatchers.IO) { buildPhoneLogReport(context) }
+                    showDevReportDialog(requireContext(), title, report)
+                }
+                true
+            }
+
+        findPreference<Preference>("dev_theme_submission_preflight")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                val title = getString(R.string.dev_theme_submission_preflight)
+                val context = requireContext().applicationContext
+                lifecycleScope.launch {
+                    val report = withContext(Dispatchers.IO) {
+                        buildThemeSubmissionPreflightReport(context)
+                    }
+                    showDevReportDialog(requireContext(), title, report)
+                }
+                true
+            }
+
+        findPreference<Preference>("dev_appearance_resolution_inspector")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                showDevReportDialog(
+                        requireContext(), getString(R.string.dev_appearance_resolution_inspector),
+                        buildAppearanceResolutionReport(requireContext()))
+                true
+            }
+    }
+
+    /**
+     * Writes the defaults snapshot and reports its size.
+     *
+     * The size is on screen because this file is compiled into the APK: the icon stores travel
+     * with it, so a library of fetched shortcut artwork can turn a few kilobytes of settings into
+     * several megabytes of release, and nothing else would say so until the build was measured.
+     */
+    private fun exportDefaultConfigTo(uri: Uri) {
+        val context = context ?: return
+        try {
+            val preferences = preferenceManager.sharedPreferences
+                    ?: throw IOException("No preference store")
+            val json = DefaultConfigExport.build(context, preferences)
+            val bytes = json.toString(2).toByteArray(Charsets.UTF_8)
+            context.contentResolver.openOutputStream(uri)?.use { it.write(bytes) }
+                    ?: throw IOException("Could not open output stream")
+            Toast.makeText(
+                    context,
+                    getString(
+                            R.string.dev_export_defaults_done,
+                            Formatter.formatShortFileSize(context, bytes.size.toLong())),
+                    Toast.LENGTH_LONG
+            ).show()
+        } catch (e: Exception) {
+            Timber.e(e, "Default config export failed")
+            val reason = e.message
+            Toast.makeText(
+                    context,
+                    if (reason.isNullOrBlank()) {
+                        getString(R.string.export_config_failed)
+                    } else {
+                        getString(R.string.export_config_failed_detail, reason)
+                    },
+                    Toast.LENGTH_LONG
+            ).show()
+        }
     }
 
     private fun disableDevMode() {

@@ -7,6 +7,7 @@ import org.junit.Test
 
 class OverlayBackdropTest {
     private val explicitPreferenceMappings = linkedMapOf(
+            "transparent" to OverlayBackdrop.TRANSPARENT,
             "acrylic" to OverlayBackdrop.ACRYLIC,
             "blur" to OverlayBackdrop.ACRYLIC,
             "black" to OverlayBackdrop.SOLID_BLACK,
@@ -94,6 +95,10 @@ class OverlayBackdropTest {
 
     @Test
     fun explicitBackgroundNeverDependsOnContentStyle() {
+        assertEquals(
+                OverlayBackdrop.TRANSPARENT,
+                OverlayBackdropResolver.resolve("transparent", "material")
+        )
         assertEquals(
                 OverlayBackdrop.ACRYLIC,
                 OverlayBackdropResolver.resolve("acrylic", "minimal")

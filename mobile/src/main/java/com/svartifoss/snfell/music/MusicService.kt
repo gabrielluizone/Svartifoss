@@ -55,6 +55,7 @@ import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.actions.playback.LikeAction
 import com.svartifoss.snfell.actions.playback.RepeatAction
 import com.svartifoss.snfell.actions.playback.ShuffleAction
+import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.QueueEntry
@@ -307,6 +308,20 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // Apply the toggle live instead of only on the next service start. observe/
             // removeObserver must run on the main thread, and queueRefreshHandler is main-looper.
             queueRefreshHandler.post { applyNotificationPopupObserver() }
+        } else if (key == MiscPreferences.CUSTOM_ALBUM_ART_IMAGE.key ||
+                key == MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key) {
+            // Picking a different picture or folder has to reach the wrist now rather than at the
+            // next track change: choosing a background and watching nothing happen is
+            // indistinguishable from the control not working. Both memos are cleared - the shared
+            // one in CustomArtworkSource, keyed by URI, and this service's own backdrop key, which
+            // would otherwise report the previous picture as already current.
+            queueRefreshHandler.post {
+                CustomArtworkSource.invalidate()
+                backdropArtKey = ""
+                backdropArtBytes = null
+                backdropArtPending = false
+                buildMusicStateAndTransmit(currentMediaController)
+            }
         }
     }
 
@@ -354,6 +369,27 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     /** Whether the current package has already had one state update pass without its media
      *  notification. Gates the launcher fallback so it never flashes ahead of the real glyph. */
     private var sourceIconAwaitedOnce = false
+
+    /**
+     * The looked-up picture currently on the wrist, and the lookup it belongs to.
+     *
+     * Held here rather than resolved inside [transmitToWear] because the lookup is a *network*
+     * round trip on this device (see [OnlineArtworkFetcher]) and a transmit must never wait on
+     * one - the state carrying the new track's title would arrive behind it. The key is kept
+     * alongside so a stale picture can be recognised as belonging to the previous track: a
+     * transmit that fired while the fetch was still out would otherwise attach the last record's
+     * artwork to this one, which is the failure mode worse than showing none.
+     */
+    private var backdropArtBytes: ByteArray? = null
+    private var backdropArtKey: String = ""
+
+    /** Set while a lookup for [backdropArtKey] is outstanding, mirrored to the watch as
+     *  MusicState.backdropArtPending so the face holds what it has instead of blanking. */
+    private var backdropArtPending = false
+
+    /** Last backdrop picture actually transmitted, so one that arrives late defeats the state
+     *  dedupe the way a late notification glyph does. */
+    private var previousBackdropArtBytes: ByteArray? = null
 
     // Guards against a transmit that suspended for art encoding finishing after a newer
     // transmit already shipped fresher state - see transmitToWear.
@@ -1153,6 +1189,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         musicStateBuilder.sourceIconTemplate = lastSourceIconIsTemplate
         val sourceIconChanged = !sourceIconBytes.contentEqualsNullable(previousSourceIconBytes)
 
+        // Resolved before the state is built, for the same reason the source icon is: the two
+        // flags below ride on this very state, and a picture that landed since the last transmit
+        // has to be able to defeat the dedupe.
+        val backdropArt = resolveBackdropArtwork(musicStateBuilder.artist, musicStateBuilder.title)
+        musicStateBuilder.hasBackdropArt = backdropArt != null
+        musicStateBuilder.backdropArtPending = backdropArtPending
+        val backdropArtChanged = !backdropArt.contentEqualsNullable(previousBackdropArtBytes)
+
         val musicState = musicStateBuilder.build()
 
         // MediaMetadata is immutable, so as long as the source app hasn't published a new
@@ -1166,7 +1210,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val albumArtChanged = albumArt !== previousAlbumArt
 
         // Do not waste BT bandwitch and re-transmit equal music state
-        if (!albumArtChanged && !sourceIconChanged &&
+        if (!albumArtChanged && !sourceIconChanged && !backdropArtChanged &&
                 musicState.equalsIgnoringTime(previousMusicState)) {
             return
         }
@@ -1177,7 +1221,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         previousMusicState = musicState
         previousAlbumArt = albumArt
         previousSourceIconBytes = sourceIconBytes
-        transmitToWear(musicState, albumArt, sourceIconBytes)
+        previousBackdropArtBytes = backdropArt
+        transmitToWear(musicState, albumArt, sourceIconBytes, backdropArt)
 
         // Keep the watch's queue data (QueueActivity + the quick panel's "Up Next" preview)
         // in step with playback. It used to be pushed only when explicitly requested, so the
@@ -1236,6 +1281,121 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                     ThemeAppearance.resolve(preferences)
             )
     ).squareCornerRadiusFraction != null
+
+    /**
+     * The picture source the face on the wrist has asked for.
+     *
+     * Read through the resolved appearance context rather than the raw key so an active custom
+     * theme counts too, and face-scoped like the style it pairs with - so one face can wear the
+     * performer's photograph while another keeps the sleeve.
+     */
+    private fun selectedArtSource(): AlbumArtSource = AlbumArtSource.fromPref(
+            FaceScopedPreferences.getString(
+                    preferences,
+                    MiscPreferences.WEAR_ALBUM_ART_SOURCE,
+                    ThemeAppearance.resolve(preferences)))
+
+    /**
+     * The looked-up picture for the current track, from memory or from disk, starting a lookup when
+     * neither has one.
+     *
+     * Never blocks on the network. A cache miss returns null *and* sets [backdropArtPending], which
+     * travels with the state so the face keeps whatever it is showing rather than blanking; the
+     * lookup re-enters [buildMusicStateAndTransmit] when it lands. A resolved absence is remembered
+     * as [backdropArtKey] with null bytes and is therefore not retried for the same lookup - it is
+     * cached on disk too, but this saves even the file check for the common case of an album
+     * playing through under the artist source.
+     */
+    private fun resolveBackdropArtwork(artist: String, title: String): ByteArray? {
+        val source = selectedArtSource()
+        // The device-local sources come first and are deliberately outside
+        // OnlineArtworkFetcher.isEnabled: that switch governs leaving the phone, and a picture the
+        // user picked out of their own gallery never does. Gating it there would have a network
+        // preference silently refuse a file already on disk.
+        if (source.isDeviceLocal) return resolveCustomBackdropArtwork(source, artist, title)
+
+        val key = OnlineArtworkFetcher.cacheKeyFor(source, artist, title)
+        if (key == null || !OnlineArtworkFetcher.isEnabled(this)) {
+            backdropArtKey = ""
+            backdropArtBytes = null
+            backdropArtPending = false
+            return null
+        }
+        if (key == backdropArtKey) return backdropArtBytes
+
+        backdropArtKey = key
+        backdropArtBytes = OnlineArtworkFetcher.cached(this, source, artist, title)
+        if (backdropArtBytes != null) {
+            backdropArtPending = false
+            return backdropArtBytes
+        }
+
+        backdropArtPending = true
+        lifecycleScope.launch {
+            val fetched = withContext(Dispatchers.IO) {
+                OnlineArtworkFetcher.artworkFor(this@MusicService, source, artist, title)
+            }
+            // The track can move on while a lookup is out. Applying the answer then would attach
+            // one record's artwork to another's, so a late answer for something nobody is listening
+            // to any more is dropped rather than shown.
+            if (key != backdropArtKey) return@launch
+            backdropArtBytes = fetched
+            backdropArtPending = false
+            Timber.d("Backdrop artwork %s for %s",
+                    if (fetched == null) "unavailable" else "ready", key)
+            buildMusicStateAndTransmit(currentMediaController)
+        }
+        return null
+    }
+
+    /**
+     * The picture for a source the user picked out of their own storage - one image, or one drawn
+     * from a chosen folder per track.
+     *
+     * Shares [backdropArtKey] and [backdropArtPending] with the online path rather than adding a
+     * second memo, so switching a face between an online and a local source invalidates cleanly:
+     * the key names the source, so the two can never be confused for one another's answer.
+     *
+     * Resolved off the main thread for the same reason the lookup is. It reads no network, but it
+     * queries a `ContentProvider` and decodes a photograph, and this runs inside the state build
+     * that happens on every pause, seek and volume step.
+     */
+    private fun resolveCustomBackdropArtwork(
+            source: AlbumArtSource,
+            artist: String,
+            title: String
+    ): ByteArray? {
+        if (!CustomArtworkSource.isConfigured(this, source)) {
+            backdropArtKey = ""
+            backdropArtBytes = null
+            backdropArtPending = false
+            return null
+        }
+        // The folder source re-rolls per track, so the track belongs in its key; the single-image
+        // source does not, and including it would re-resolve one unchanging picture on every track.
+        val trackKey = "${artist.trim()}|${title.trim()}"
+        val key = when (source) {
+            AlbumArtSource.CUSTOM_FOLDER -> "folder|$trackKey"
+            else -> "image"
+        }
+        if (key == backdropArtKey) return backdropArtBytes
+
+        backdropArtKey = key
+        backdropArtPending = true
+        backdropArtBytes = null
+        lifecycleScope.launch {
+            val resolved = withContext(Dispatchers.IO) {
+                CustomArtworkSource.artworkFor(this@MusicService, source, trackKey)
+            }
+            if (key != backdropArtKey) return@launch
+            backdropArtBytes = resolved
+            backdropArtPending = false
+            Timber.d("Custom backdrop %s for %s",
+                    if (resolved == null) "unavailable" else "ready", key)
+            buildMusicStateAndTransmit(currentMediaController)
+        }
+        return null
+    }
 
     private fun resolveSourceIconBytes(controller: MediaController?): ByteArray? {
         if (!showSourceIconEnabled()) {
@@ -1312,7 +1472,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private fun transmitToWear(
             musicState: MusicState,
             originalAlbumArt: Bitmap?,
-            sourceIconBytes: ByteArray?
+            sourceIconBytes: ByteArray?,
+            backdropArtBytes: ByteArray?
     ) {
         val mySequence = ++transmitSequence
 
@@ -1407,6 +1568,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             if (sourceIconBytes != null) {
                 putDataRequest.putAsset(
                         CommPaths.ASSET_SOURCE_ICON, Asset.createFromBytes(sourceIconBytes))
+            }
+            if (backdropArtBytes != null) {
+                // Already encoded and size-bounded by OnlineArtworkFetcher, so unlike the album
+                // cover there is nothing to do here: the phone re-encodes that one per transmit
+                // because it arrives as a live Bitmap from another app, while this one was
+                // prepared once when it was downloaded and never changes again.
+                putDataRequest.putAsset(
+                        CommPaths.ASSET_BACKDROP_ART, Asset.createFromBytes(backdropArtBytes))
             }
             // Stamp the sequence at the actual put (not on the early stateBytes snapshot) so it
             // reflects true send order relative to the state-only put above.
@@ -1716,16 +1885,23 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 }
             }
             CustomLists.PLAYLIST_SHORTCUTS -> {
-                // The entry id IS the playlist's deep link - see OpenPlaylistShortcutsAction.
+                // The cached watch row carries either the link itself or the
+                // `targetPackage|link` launch envelope needed by RemoteActivityHelper. Strip only
+                // a syntactically valid envelope before feeding the URI to the playback ladder.
                 //
                 // The saved name has to travel with it: playDeepLink can only play an *artist* by
                 // issuing playFromSearch for that name, because an artist URI merely navigates.
                 // Without it (as was the case here) picking an artist shortcut from the watch menu
                 // just opened the artist page and never started playback, while the very same
                 // shortcut assigned to a button worked - that path passes the name.
-                val link = customListItemAction.entryId
+                val link = StreamingShortcutLinks.unwrapRemoteTarget(
+                        customListItemAction.entryId)
                 val savedName = PlaylistShortcutStorage.load(this)
-                        .firstOrNull { it.link == link }
+                        .firstOrNull { shortcut ->
+                            shortcut.link == link ||
+                                    StreamingShortcutLinks.forInstalledApp(shortcut.link) == link ||
+                                    StreamingShortcutLinks.forBrowser(shortcut.link) == link
+                        }
                         ?.name
                 playDeepLink(link, savedName)
             }
@@ -2278,9 +2454,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             openMode == StreamingShortcutLinks.OPEN_MODE_APP && isPackageInstalled(packageName)
         }
         val browserLink = StreamingShortcutLinks.forBrowser(link)
+        Timber.d("playDeepLink: service=%s contentType=%s openMode=%s targetPackage=%s " +
+                "preferSearch=%s", service.name, contentType, openMode, targetPackage, preferSearch)
         if (openMode == StreamingShortcutLinks.OPEN_MODE_CHOOSER &&
                 startStreamingLinkChooser(browserLink)) {
             // The chooser is already on screen; the watch must not open the link a second time.
+            Timber.d("playDeepLink: showed the app chooser instead of playing directly")
             sendDeepLinkVerdict(null)
             return
         }
@@ -2321,6 +2500,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // at the paused track is legitimately satisfied by resuming it.
                 val movedOn = playbackIdentity(after) != before
                 if (after?.isPlaying() == true && (movedOn || !wasPlayingBefore)) {
+                    Timber.d("playDeepLink: %s started playing via playFromUri (step 1, verified)",
+                            targetPackage)
                     sendDeepLinkVerdict(null)
                     return@launch
                 }
@@ -2330,6 +2511,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             return
         }
 
+        Timber.d("playDeepLink: step 1 (playFromUri) not attempted, moving to step 2")
         continueWithBrowserThenVisibleOpen()
     }
 
@@ -2356,9 +2538,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                     query,
                     preferSearch)
             if (played) {
+                Timber.d("playDeepLink: %s played via MediaBrowserService (step 2)", targetPackage)
                 sendDeepLinkVerdict(null)
                 scheduleStateRefresh()
             } else {
+                Timber.d("playDeepLink: step 2 (MediaBrowserService) did not play %s, moving to step 3",
+                        targetPackage)
                 startStreamingLinkWithPlaybackNudge(
                         link, service, targetPackage, browserLink, query, preferSearch)
             }
@@ -2378,6 +2563,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val primaryLink = if (targetPackage != null) {
             StreamingShortcutLinks.forInstalledApp(link)
         } else browserLink
+        Timber.d("playDeepLink: step 3 (visible open) opening %s", primaryLink)
 
         // Every silent route is spent, so the link has to be opened visibly - and only the watch
         // can do that reliably, since startStreamingLink below is subject to the background
@@ -2846,7 +3032,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // never retransmitted (LikeAction.scheduleStateRefresh hit the same dedupe).
                 other.shuffleEnabled != shuffleEnabled ||
                 other.repeatMode != repeatMode ||
-                other.liked != liked
+                other.liked != liked ||
+                // The Artist face draws its backdrop from these, and the lookup behind them
+                // completes *after* the state that announced the track - so a resolution that
+                // changes nothing else must still reach the watch, exactly as a late shuffle or
+                // like flip must.
+                other.hasBackdropArt != hasBackdropArt ||
+                other.backdropArtPending != backdropArtPending
                 || other.mediaActionsList != mediaActionsList
         ) {
             return false

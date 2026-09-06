@@ -29,6 +29,9 @@
     <string name="dev_sync_watch_done">Pengaturan disinkronkan ke jam tangan</string>
     <string name="dev_copy_debug_info">Salin info debug</string>
     <string name="dev_copy_debug_info_description">Salin detail build dan perangkat ke clipboard</string>
+    <string name="dev_export_defaults">Ekspor sebagai default aplikasi</string>
+    <string name="dev_export_defaults_description">Menyimpan penyiapan ini sebagai default_config.json, yaitu keadaan awal pemasangan baru. Tidak menyertakan riwayat, pilihan persetujuan, dan keadaan ponsel ini sendiri.</string>
+    <string name="dev_export_defaults_done">Default diekspor (%1$s)</string>
     <string name="dev_show_archived">Tampilkan opsi yang diarsipkan</string>
     <string name="dev_show_archived_description">Tampilkan tata letak dan pengaturan jam tangan yang diarsipkan karena masalah yang diketahui</string>
     <string name="dev_copy_debug_info_done">Info debug disalin</string>
@@ -236,6 +239,9 @@
     <string name="category_music_colors">Warna dari musik</string>
     <string name="preview_sample_title">Judul lagu</string>
     <string name="preview_sample_artist">Nama artis</string>
+    <string name="preview_sample_lyric_previous">Baris sebelumnya</string>
+    <string name="preview_sample_lyric_current">Baris yang diputar sekarang</string>
+    <string name="preview_sample_lyric_next">Baris berikutnya</string>
     <string name="preview_sample_next_title">Lagu berikutnya</string>
     <string name="preview_playback_stopped">Dihentikan</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -452,8 +458,6 @@
     <string name="wear_font_small_caps_description">Bentuk kapital kompak dengan nuansa editorial.</string>
     <string name="wear_font_casual">Santai</string>
     <string name="wear_font_casual_description">Keluarga sistem tulisan tangan yang menyenangkan.</string>
-    <string name="wear_font_typewriter">Mesin Tik (Diarsipkan)</string>
-    <string name="wear_font_typewriter_description">Tampilan mesin tik retro (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Sans geometris bulat, alternatif gratis (OFL) dalam semangat Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -519,6 +523,12 @@
     <string name="setting_wear_quick_panel_color">Warna Aksi Cepat</string>
     <string name="setting_wear_quick_panel_custom_color">Warna kustom Aksi Cepat</string>
     <string name="setting_wear_quick_panel_custom_color_description">Pilih warna Aksi Cepat yang digunakan dengan perlakuan Normal</string>
+    <string name="setting_wear_lyrics_color">Warna lirik</string>
+    <string name="setting_wear_lyrics_custom_color">Warna lirik kustom</string>
+    <string name="setting_wear_lyrics_custom_color_description">Pilih warna lirik yang digunakan dengan perlakuan Normal</string>
+    <string name="setting_wear_queue_color">Warna antrean</string>
+    <string name="setting_wear_queue_custom_color">Warna antrean kustom</string>
+    <string name="setting_wear_queue_custom_color_description">Pilih warna antrean yang digunakan dengan perlakuan Normal</string>
     <string name="setting_wear_shading_custom_color_description">Pilih warna yang mewarnai gradien bayangan</string>
 
     <string-array name="wear_accent_color_entries">
@@ -551,8 +561,10 @@
         <item>Catatan</item>
         <item>Bait</item>
         <item>Metadata</item>
+        <item>Artis</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -573,8 +585,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Pencarian Expressive</string>
@@ -608,6 +622,7 @@
         <item>Terbagi</item>
         <item>Catatan</item>
         <item>Bait</item>
+        <item>Artis</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -626,6 +641,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -728,6 +744,12 @@
 
     <string name="category_overlays_queue">Overlay &amp; antrean</string>
     <string name="setting_wear_overlay_backdrop_style">Latar belakang panel</string>
+    <string name="wear_backdrop_shared">Ikuti latar belakang panel bersama</string>
+    <string name="setting_wear_volume_backdrop_style">Latar belakang volume</string>
+    <string name="setting_wear_progress_backdrop_style">Latar belakang progres</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Latar belakang aksi cepat</string>
+    <string name="setting_wear_queue_backdrop_style">Latar belakang antrean</string>
+    <string name="setting_wear_lyrics_backdrop_style">Latar belakang lirik</string>
     <string name="setting_wear_volume_style">Gaya volume</string>
     <string name="setting_wear_volume_layout">Tata letak volume</string>
     <string name="setting_wear_quick_panel_style">Gaya panel cepat</string>
@@ -1548,6 +1570,10 @@
     <string name="setting_wear_color_hue_shift">Pergeseran warna</string>
     <string name="setting_wear_color_hue_shift_description">Memutar palet album di sekitar roda warna, dalam derajat (0–359). Setiap perlakuan mempertahankan warna utamanya pada rona asli album, jadi inilah yang bervariasi. 0 menggunakan warna album apa adanya; warna Normal tetap tidak pernah digeser.</string>
     <string name="setting_wear_color_modifier">Corak</string>
+    <string name="setting_wear_title_color_modifier">Corak judul</string>
+    <string name="setting_wear_artist_color_modifier">Corak artis</string>
+    <string name="setting_wear_clock_color_modifier">Corak jam</string>
+    <string name="wear_color_modifier_follow">Ikuti corak jam tangan</string>
     <string name="setting_wear_color_modifier_description">Menyesuaikan seluruh palet tanpa mengubah cara penurunannya — berfungsi dengan setiap perlakuan warna</string>
     <string name="setting_wear_flex_axes_hint">Pengaturan ini secara khusus menyempurnakan Google Sans Flex — pilih di atas untuk menggunakannya. Ketebalan dan kemiringan judul serta artis di atas sudah mengatur sumbu ketebalan (wght) dan kemiringan (slnt) miliknya sendiri; empat kontrol di bawah berlaku untuk seluruh wajah.</string>
     <string name="setting_wear_font_all_screens">Gunakan tipografi di mana saja</string>
@@ -1581,7 +1607,7 @@
     <string name="setting_wear_title_font_tracking">Jarak antarhuruf judul</string>
     <string name="setting_wear_title_font_weight">Ketebalan judul</string>
     <string name="setting_wear_typography_opacity_description">Persentase (20–100). 100 mempertahankan opasitas asli wajah jam</string>
-    <string name="setting_wear_typography_scale_description">Persentase dari ukuran asli wajah jam (70–140). 100 mempertahankan ukuran yang dirancang untuk setiap tata letak</string>
+    <string name="setting_wear_typography_scale_description">Persentase dari ukuran asli wajah jam (1–300). 100 mempertahankan ukuran yang dirancang untuk setiap tata letak</string>
     <string name="setting_wear_typography_tracking_description">Jarak tambahan antarhuruf, dalam perseratus em (−5 hingga 20). 0 mempertahankan jarak asli tipografi</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 adalah ketebalan normal wajah jam; lebih tinggi berarti lebih tebal. Untuk Google Sans Flex, ini adalah sumbu ketebalan tipografi itu sendiri</string>
     <string name="settings_search_breadcrumb">%1$s › %2$s</string>
@@ -1789,7 +1815,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1908,7 +1933,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1929,7 +1961,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -2048,7 +2079,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
     <string-array name="wear_idle_auto_open_entries">
         <item>@string/wear_idle_auto_open_none</item>
@@ -2172,6 +2210,7 @@
     <string name="category_wf_panel_seek">Panel progres &amp; penggeseran</string>
     <string name="category_wf_panel_quick">Panel Aksi cepat</string>
     <string name="category_wf_panel_queue">Antrean &amp; daftar</string>
+    <string name="category_wf_panel_lyrics">Lirik</string>
     <string name="category_wf_panel_effects">Efek panel</string>
     <string name="category_apps_content">Lirik &amp; metadata</string>
     <string name="category_streaming_services">Pintasan streaming</string>
@@ -2250,5 +2289,56 @@
         <item>Stabilo</item>
         <item>Halus</item>
         <item>Blok</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Ikuti wajah</item>
+        <item>Awal</item>
+        <item>Tengah</item>
+        <item>Akhir</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Ikuti wajah</item>
+        <item>Atas</item>
+        <item>Tengah</item>
+        <item>Bawah</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Statis (satu baris, tanpa gulir atau kecilkan)</item>
+        <item>Gulir (marquee)</item>
+        <item>Kecilkan agar muat</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>Dari aplikasi musik</item>
+        <item>Dicari online</item>
+        <item>Foto artis</item>
+        <item>Gambar dari galeri saya</item>
+        <item>Acak dari suatu folder</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

@@ -17,7 +17,7 @@ class PanelOptionCatalogTest {
 
     private val catalogs = listOf(
             Catalog("wear_overlay_backdrop_style", "wear_overlay_backdrop_values",
-                    "wear_overlay_backdrop_extra_entries", "wear_overlay_backdrop_extra_values", 64),
+                    "wear_overlay_backdrop_extra_entries", "wear_overlay_backdrop_extra_values", 65),
             Catalog("wear_volume_style", "wear_volume_style_values",
                     "wear_volume_style_extra_entries", "wear_volume_style_extra_values", 26),
             Catalog("wear_volume_layout", "wear_volume_layout_values",

@@ -29,6 +29,9 @@
     <string name="dev_sync_watch_done">Instellingen gesynchroniseerd met het horloge</string>
     <string name="dev_copy_debug_info">Debuginfo kopiëren</string>
     <string name="dev_copy_debug_info_description">Build- en apparaatgegevens naar het klembord kopiëren</string>
+    <string name="dev_export_defaults">Exporteren als app-standaarden</string>
+    <string name="dev_export_defaults_description">Slaat deze configuratie op als default_config.json, de staat waarmee een nieuwe installatie begint. Zonder geschiedenis, toestemmingskeuzes en de eigen staat van deze telefoon.</string>
+    <string name="dev_export_defaults_done">Standaarden geëxporteerd (%1$s)</string>
     <string name="dev_show_archived">Gearchiveerde opties tonen</string>
     <string name="dev_show_archived_description">Horloge-indelingen en instellingen tonen die zijn gearchiveerd vanwege bekende problemen</string>
     <string name="dev_copy_debug_info_done">Debuginfo gekopieerd</string>
@@ -237,6 +240,9 @@
     <string name="category_music_colors">Kleuren uit de muziek</string>
     <string name="preview_sample_title">Nummertitel</string>
     <string name="preview_sample_artist">Naam artiest</string>
+    <string name="preview_sample_lyric_previous">De vorige regel</string>
+    <string name="preview_sample_lyric_current">De regel die nu speelt</string>
+    <string name="preview_sample_lyric_next">De volgende regel</string>
     <string name="preview_sample_next_title">Volgend nummer</string>
     <string name="preview_playback_stopped">Gestopt</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -458,8 +464,6 @@
     <string name="wear_font_small_caps_description">Compacte, hoofdletterachtige vormen met een redactioneel gevoel.</string>
     <string name="wear_font_casual">Casual</string>
     <string name="wear_font_casual_description">Een speelse handgeschreven systeemfamilie.</string>
-    <string name="wear_font_typewriter">Typemachine (gearchiveerd)</string>
-    <string name="wear_font_typewriter_description">Een retro typemachine-look (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Een afgeronde geometrische schreefloze letter, een vrij (OFL) alternatief in de geest van Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -525,6 +529,12 @@
     <string name="setting_wear_quick_panel_color">Kleur Snelle Acties</string>
     <string name="setting_wear_quick_panel_custom_color">Aangepaste kleur Snelle Acties</string>
     <string name="setting_wear_quick_panel_custom_color_description">Kies de kleur van Snelle Acties die wordt gebruikt bij de behandeling Normaal</string>
+    <string name="setting_wear_lyrics_color">Kleur songtekst</string>
+    <string name="setting_wear_lyrics_custom_color">Aangepaste songtekstkleur</string>
+    <string name="setting_wear_lyrics_custom_color_description">Kies de songtekstkleur die wordt gebruikt bij de behandeling Normaal</string>
+    <string name="setting_wear_queue_color">Kleur wachtrij</string>
+    <string name="setting_wear_queue_custom_color">Aangepaste wachtrijkleur</string>
+    <string name="setting_wear_queue_custom_color_description">Kies de wachtrijkleur die wordt gebruikt bij de behandeling Normaal</string>
     <string name="setting_wear_shading_custom_color_description">Kies de kleur die het schaduwverloop tint</string>
 
     <string-array name="wear_accent_color_entries">
@@ -557,8 +567,10 @@
         <item>Notitie</item>
         <item>Vers</item>
         <item>Metadata</item>
+        <item>Artiest</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -579,8 +591,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive-zoeken</string>
@@ -614,6 +628,7 @@
         <item>Split</item>
         <item>Notitie</item>
         <item>Vers</item>
+        <item>Artiest</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -632,6 +647,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -734,6 +750,12 @@
 
     <string name="category_overlays_queue">Overlays en wachtrij</string>
     <string name="setting_wear_overlay_backdrop_style">Paneelachtergrond</string>
+    <string name="wear_backdrop_shared">Gedeelde paneelachtergrond volgen</string>
+    <string name="setting_wear_volume_backdrop_style">Volumeachtergrond</string>
+    <string name="setting_wear_progress_backdrop_style">Voortgangsachtergrond</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Achtergrond snelle acties</string>
+    <string name="setting_wear_queue_backdrop_style">Wachtrijachtergrond</string>
+    <string name="setting_wear_lyrics_backdrop_style">Songtekstachtergrond</string>
     <string name="setting_wear_volume_style">Volumestijl</string>
     <string name="setting_wear_volume_layout">Volume-indeling</string>
     <string name="setting_wear_quick_panel_style">Snelpaneelstijl</string>
@@ -1572,10 +1594,14 @@
     <string name="setting_wear_source_icon_scale">Grootte app-icoon</string>
     <string name="setting_wear_source_icon_opacity">Dekking app-icoon</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 is het normale gewicht van de wijzerplaat; hogere waarden zijn vetter. Voor Google Sans Flex is dit de eigen gewicht-as van dat lettertype</string>
-    <string name="setting_wear_typography_scale_description">Percentage van de eigen grootte van de wijzerplaat (70–140). 100 behoudt de ontworpen grootte van elke lay-out</string>
+    <string name="setting_wear_typography_scale_description">Percentage van de eigen grootte van de wijzerplaat (1–300). 100 behoudt de ontworpen grootte van elke lay-out</string>
     <string name="setting_wear_typography_opacity_description">Percentage (20–100). 100 behoudt de eigen dekking van de wijzerplaat</string>
     <string name="setting_wear_typography_tracking_description">Extra ruimte tussen letters, in honderdsten van een em (−5 tot 20). 0 behoudt de eigen letterafstand van het lettertype</string>
     <string name="setting_wear_color_modifier">Tint</string>
+    <string name="setting_wear_title_color_modifier">Tint van de titel</string>
+    <string name="setting_wear_artist_color_modifier">Tint van de artiest</string>
+    <string name="setting_wear_clock_color_modifier">Tint van de klok</string>
+    <string name="wear_color_modifier_follow">Tint van het horloge volgen</string>
     <string name="setting_wear_color_modifier_description">Past het hele palet aan zonder te veranderen hoe het wordt afgeleid — werkt met elke kleurbehandeling</string>
     <string name="setting_wear_color_hue_shift">Kleurverschuiving</string>
     <string name="setting_wear_color_hue_shift_description">Draait het albumpalet rond het kleurenwiel, in graden (0–359). Elke behandeling houdt de hoofdkleur op de eigen tint van het album, dus dit is wat varieert. 0 gebruikt de albumkleur zoals hij is; een vaste Normale kleur wordt nooit gedraaid.</string>
@@ -1723,7 +1749,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1842,7 +1867,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1863,7 +1895,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1982,7 +2013,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
     <string-array name="wear_cover_shape_entries">
         <item>Afgerond</item>
@@ -2176,6 +2214,7 @@
     <string name="category_wf_panel_seek">Voortgangs- en zoekpaneel</string>
     <string name="category_wf_panel_quick">Paneel Snelle acties</string>
     <string name="category_wf_panel_queue">Wachtrij en lijsten</string>
+    <string name="category_wf_panel_lyrics">Songtekst</string>
     <string name="category_wf_panel_effects">Paneeleffecten</string>
     <string name="category_apps_content">Songteksten en metadata</string>
     <string name="category_streaming_services">Streamingsnelkoppelingen</string>
@@ -2254,5 +2293,56 @@
         <item>Markering</item>
         <item>Zacht</item>
         <item>Blok</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Gezicht volgen</item>
+        <item>Begin</item>
+        <item>Gecentreerd</item>
+        <item>Einde</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Gezicht volgen</item>
+        <item>Boven</item>
+        <item>Midden</item>
+        <item>Onder</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Statisch (één regel, geen scrollen of verkleinen)</item>
+        <item>Scrollen (lopende tekst)</item>
+        <item>Verkleinen om te passen</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>Uit de muziek-app</item>
+        <item>Online opgezocht</item>
+        <item>Artiestenfoto</item>
+        <item>Afbeelding uit mijn galerij</item>
+        <item>Willekeurig uit een map</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

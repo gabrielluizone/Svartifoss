@@ -107,6 +107,30 @@
             android:summary="@string/setting_wear_title_centered_description"
             android:layout="@layout/pref_switch_item" />
 
+        <!-- Where the face's block of track text sits, on both axes. Unlike the row above these
+             apply to every face, because every face composes such a block somewhere and both keys
+             default to the "follow" sentinel - meaning "keep what this face composed", so a face
+             nobody has adjusted is untouched. See common/TextBlockPlacement.kt. -->
+        <ListPreference
+            android:defaultValue="follow"
+            android:key="wear_text_block_align"
+            android:icon="@drawable/ic_text_fields"
+            android:title="@string/setting_wear_text_block_align"
+            android:summary="%s"
+            android:entries="@array/wear_text_block_align_entries"
+            android:entryValues="@array/wear_text_block_align_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="follow"
+            android:key="wear_text_block_position"
+            android:icon="@drawable/ic_arrow_upward"
+            android:title="@string/setting_wear_text_block_position"
+            android:summary="%s"
+            android:entries="@array/wear_text_block_position_entries"
+            android:entryValues="@array/wear_text_block_position_values"
+            android:layout="@layout/pref_item" />
+
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="true"
             android:key="wear_note_show_cover"
@@ -272,6 +296,19 @@
 
         <com.svartifoss.snfell.view.watchface.TypographyEditorPreference
             android:key="typography_editor_surface" />
+
+        <!-- Imports a .ttf/.otf from the user's own storage and adds it to every font picker.
+             It sits in the *editor* category rather than with the legacy font rows below for the
+             reason those rows are hidden: this one has to stay on screen. It is also not a
+             typography setting - it stores a file plus a display name in `user_font_name`, and
+             the pickers gain their row at runtime - so it has no editor spec to be given, which
+             is exactly what every row in the hidden categories must have. -->
+        <Preference
+            android:key="user_font_import"
+            android:icon="@drawable/ic_upload_file"
+            android:title="@string/setting_user_font"
+            android:summary="@string/setting_user_font_empty"
+            android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
 
@@ -707,6 +744,46 @@
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
 
+        <!-- The lyrics screen and the queue are full screens of their own, not overlays on the
+             player, and each resolves one accent. Both used to derive it straight from the cover,
+             so the palette controls above reached every other surface in the app and stopped at
+             these two. -->
+        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
+            android:defaultValue="follow"
+            android:key="wear_lyrics_color_mode"
+            android:icon="@drawable/action_lyrics"
+            android:title="@string/setting_wear_lyrics_color"
+            android:summary="%s"
+            android:entries="@array/wear_component_color_treatment_entries"
+            android:entryValues="@array/wear_component_color_treatment_values"
+            app:customColorKey="wear_lyrics_custom_color"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_lyrics_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_lyrics_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <com.svartifoss.snfell.view.settings.ColorTreatmentPreference
+            android:defaultValue="follow"
+            android:key="wear_queue_color_mode"
+            android:icon="@drawable/ic_playlist_play"
+            android:title="@string/setting_wear_queue_color"
+            android:summary="%s"
+            android:entries="@array/wear_component_color_treatment_entries"
+            android:entryValues="@array/wear_component_color_treatment_values"
+            app:customColorKey="wear_queue_custom_color"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.HexColorDotPreference
+            android:key="wear_queue_custom_color"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_wear_queue_custom_color"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_color_dot" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -735,6 +812,18 @@
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
 
+        <!-- Entries are built in WatchFacePrefsFragment.applyElementToneEntries by prepending the
+             "follow the watch tone" option to the shared tone arrays, so the tone vocabulary has
+             one source of truth. -->
+        <ListPreference
+            android:defaultValue="follow"
+            android:key="wear_title_color_modifier"
+            android:icon="@drawable/ic_colors"
+            android:title="@string/setting_wear_title_color_modifier"
+            android:summary="%s"
+            android:dependency="wear_show_track_title"
+            android:layout="@layout/pref_item" />
+
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="false"
             android:key="wear_title_adaptive_contrast"
@@ -758,6 +847,25 @@
             android:title="@string/setting_wear_show_track_artist"
             android:summary="@string/setting_wear_show_track_artist_description"
             android:layout="@layout/pref_switch_item" />
+
+        <!-- The title's own Text behaviour picker, scoped to the artist line. Shares that key's
+             own three-value picker. The wrap tiers are deliberately absent: every face reserves
+             exactly one line for the artist, so offering "wrap to three lines" here would let the
+             credit grow into whatever the layout puts below it on all twenty-two of them. What is
+             left is the three single-line answers - keep it, scroll it, or shrink it to fit. The
+             labels are lifted from the title picker's own translations so the same idea reads the
+             same way on both rows. Defaults to "static", the single ellipsized line every face
+             already drew. -->
+        <ListPreference
+            android:defaultValue="static"
+            android:key="wear_artist_text_mode"
+            android:icon="@drawable/ic_person"
+            android:dependency="wear_show_track_artist"
+            android:title="@string/setting_wear_artist_text_mode"
+            android:summary="%s"
+            android:entries="@array/wear_artist_text_mode_entries"
+            android:entryValues="@array/wear_artist_text_mode_values"
+            android:layout="@layout/pref_item" />
 
         <!-- As the title picker, but scoped to the artist line so each can choose a different
              family while “Follow global font” preserves existing themes. -->
@@ -961,6 +1069,18 @@
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
 
+        <!-- Entries are built in WatchFacePrefsFragment.applyElementToneEntries by prepending the
+             "follow the watch tone" option to the shared tone arrays, so the tone vocabulary has
+             one source of truth. -->
+        <ListPreference
+            android:defaultValue="follow"
+            android:key="wear_artist_color_modifier"
+            android:icon="@drawable/ic_colors"
+            android:title="@string/setting_wear_artist_color_modifier"
+            android:summary="%s"
+            android:dependency="wear_show_track_artist"
+            android:layout="@layout/pref_item" />
+
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="false"
             android:key="wear_artist_adaptive_contrast"
@@ -1103,6 +1223,17 @@
             android:summary="@string/setting_wear_clock_custom_color_description"
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <!-- Entries are built in WatchFacePrefsFragment.applyElementToneEntries by prepending the
+             "follow the watch tone" option to the shared tone arrays, so the tone vocabulary has
+             one source of truth. -->
+        <ListPreference
+            android:defaultValue="follow"
+            android:key="wear_clock_color_modifier"
+            android:icon="@drawable/ic_colors"
+            android:title="@string/setting_wear_clock_color_modifier"
+            android:summary="%s"
+            android:layout="@layout/pref_item" />
 
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="60"
@@ -1364,6 +1495,18 @@
 
     </PreferenceCategory>
 
+    <!-- The legacy ambient category below remains inflated as the authoritative preferences
+         (search metadata, scoped persistence, validation and dialogs), but the Always-on page
+         presents this one contextual editor instead of rendering every row in sequence. -->
+    <PreferenceCategory
+        android:key="cat_wf_aod_editor"
+        android:layout="@layout/pref_category_hidden_header">
+
+        <com.svartifoss.snfell.view.watchface.AodEditorPreference
+            android:key="aod_editor_surface" />
+
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:key="cat_wf_aod"
         android:title="@string/category_wear_aod"
@@ -1530,6 +1673,17 @@
             android:entryValues="@array/wear_volume_layout_values"
             android:layout="@layout/pref_item" />
 
+            <!-- Entries are built in WatchFacePrefsFragment.applySurfaceBackdropEntries by prepending
+             the "follow the shared choice" option to the shared backdrop arrays, so the background
+             vocabulary has one source of truth. -->
+        <ListPreference
+            android:defaultValue="shared"
+            android:key="wear_volume_backdrop_style"
+            android:icon="@drawable/ic_backdrop_style"
+            android:title="@string/setting_wear_volume_backdrop_style"
+            android:summary="%s"
+            android:layout="@layout/pref_item" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -1585,6 +1739,17 @@
             android:summary="%s"
             android:entries="@array/wear_seek_layout_entries"
             android:entryValues="@array/wear_seek_layout_values"
+            android:layout="@layout/pref_item" />
+
+            <!-- Entries are built in WatchFacePrefsFragment.applySurfaceBackdropEntries by prepending
+             the "follow the shared choice" option to the shared backdrop arrays, so the background
+             vocabulary has one source of truth. -->
+        <ListPreference
+            android:defaultValue="shared"
+            android:key="wear_progress_backdrop_style"
+            android:icon="@drawable/ic_backdrop_style"
+            android:title="@string/setting_wear_progress_backdrop_style"
+            android:summary="%s"
             android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
@@ -1668,6 +1833,17 @@
             android:summary="@string/setting_wear_quick_panel_shortcut_cover_description"
             android:layout="@layout/pref_switch_item" />
 
+            <!-- Entries are built in WatchFacePrefsFragment.applySurfaceBackdropEntries by prepending
+             the "follow the shared choice" option to the shared backdrop arrays, so the background
+             vocabulary has one source of truth. -->
+        <ListPreference
+            android:defaultValue="shared"
+            android:key="wear_quick_panel_backdrop_style"
+            android:icon="@drawable/ic_backdrop_style"
+            android:title="@string/setting_wear_quick_panel_backdrop_style"
+            android:summary="%s"
+            android:layout="@layout/pref_item" />
+
     </PreferenceCategory>
 
     <PreferenceCategory
@@ -1707,6 +1883,17 @@
             android:title="@string/setting_queue_remote_artwork"
             android:summary="@string/setting_queue_remote_artwork_short_description"
             android:layout="@layout/pref_switch_item" />
+
+            <!-- Entries are built in WatchFacePrefsFragment.applySurfaceBackdropEntries by prepending
+             the "follow the shared choice" option to the shared backdrop arrays, so the background
+             vocabulary has one source of truth. -->
+        <ListPreference
+            android:defaultValue="shared"
+            android:key="wear_queue_backdrop_style"
+            android:icon="@drawable/ic_backdrop_style"
+            android:title="@string/setting_wear_queue_backdrop_style"
+            android:summary="%s"
+            android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
 
@@ -1753,6 +1940,37 @@
             android:summary="@string/setting_wear_accent_floor_custom_color_description"
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
+
+        <!-- The source axis of the style below: which picture is treated, as opposed to how. Two
+             of the three leave the phone, which is why "From the music app" is the default and why
+             a second switch (Settings -> Apps) can refuse the lookup outright. -->
+        <ListPreference
+            android:defaultValue="local"
+            android:key="wear_album_art_source"
+            android:icon="@drawable/ic_album"
+            android:title="@string/setting_wear_album_art_source"
+            android:summary="%s"
+            android:entries="@array/wear_album_art_source_entries"
+            android:entryValues="@array/wear_album_art_source_values"
+            android:layout="@layout/pref_item" />
+
+        <!-- The two device-local sources need somewhere to pick their picture, and it has to be a
+             row of its own: re-selecting the already-selected value in the list above fires no
+             change event, so choosing the source could never be the moment you re-choose the file.
+             Each is shown only while its own source is selected. -->
+        <Preference
+            android:key="custom_album_art_image"
+            android:icon="@drawable/ic_imagesearch_roller"
+            android:title="@string/setting_custom_album_art_image"
+            android:summary="@string/setting_custom_album_art_none"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="custom_album_art_folder"
+            android:icon="@drawable/ic_folder_open"
+            android:title="@string/setting_custom_album_art_folder"
+            android:summary="@string/setting_custom_album_art_none"
+            android:layout="@layout/pref_item" />
 
         <ListPreference
             android:key="album_art_style"
@@ -1840,6 +2058,24 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:key="cat_wf_panel_lyrics"
+        android:title="@string/category_wf_panel_lyrics"
+        android:layout="@layout/pref_category_header">
+
+        <!-- Entries are built in WatchFacePrefsFragment.applySurfaceBackdropEntries by prepending
+             the "follow the shared choice" option to the shared backdrop arrays, so the background
+             vocabulary has one source of truth. -->
+        <ListPreference
+            android:defaultValue="shared"
+            android:key="wear_lyrics_backdrop_style"
+            android:icon="@drawable/ic_backdrop_style"
+            android:title="@string/setting_wear_lyrics_backdrop_style"
+            android:summary="%s"
+            android:layout="@layout/pref_item" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:key="cat_wf_panel_effects"
         android:title="@string/category_wf_panel_effects"
         android:layout="@layout/pref_category_header">
@@ -1851,6 +2087,18 @@
             android:title="@string/setting_overlay_blur_radius"
             android:summary="@string/setting_overlay_blur_radius_description"
             android:layout="@layout/pref_item" />
+
+    </PreferenceCategory>
+
+    <!-- The legacy mini-button and gesture categories below remain inflated as the authoritative
+         preferences (search metadata, scoped persistence, validation and dialogs), but the Mini
+         buttons page presents this one contextual editor instead of rendering every row. -->
+    <PreferenceCategory
+        android:key="cat_wf_mini_buttons_editor"
+        android:layout="@layout/pref_category_hidden_header">
+
+        <com.svartifoss.snfell.view.watchface.MiniButtonEditorPreference
+            android:key="mini_button_editor_surface" />
 
     </PreferenceCategory>
 

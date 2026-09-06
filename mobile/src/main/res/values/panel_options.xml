@@ -8,6 +8,7 @@
     <string name="setting_wear_progress_layout">Progress ring layout</string>
 
     <string-array name="wear_overlay_backdrop_extra_entries">
+        <item>Fully transparent</item>
         <item>Secondary color</item>
         <item>Tertiary color</item>
         <item>Color mesh</item>
@@ -63,6 +64,7 @@
         <item>Spectrum</item>
     </string-array>
     <string-array name="wear_overlay_backdrop_extra_values" translatable="false">
+        <item>transparent</item>
         <item>secondary</item>
         <item>tertiary</item>
         <item>mesh</item>

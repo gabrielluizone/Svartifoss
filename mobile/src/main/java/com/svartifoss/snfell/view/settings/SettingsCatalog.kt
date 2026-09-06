@@ -110,7 +110,7 @@ object SettingsCatalog {
                     "cat_wf_typography_track_time",
                     "cat_wf_typography_icon",
                     "cat_wf_typography_flex"),
-            WatchFacePrefsFragment.SECTION_AOD to setOf("cat_wf_aod"),
+            WatchFacePrefsFragment.SECTION_AOD to setOf("cat_wf_aod_editor", "cat_wf_aod"),
             WatchFacePrefsFragment.SECTION_PANELS to setOf(
                     "cat_wf_panels_editor",
                     "cat_wf_panel_shared",
@@ -118,10 +118,12 @@ object SettingsCatalog {
                     "cat_wf_panel_seek",
                     "cat_wf_panel_quick",
                     "cat_wf_panel_queue",
+                    "cat_wf_panel_lyrics",
                     "cat_wf_panel_effects"),
             // Mini buttons and the screen-gesture toggles are both input controls, so they share
             // the one section.
-            WatchFacePrefsFragment.SECTION_MINI_BUTTONS to setOf("cat_wf_mini_buttons", "cat_wf_gestures")
+            WatchFacePrefsFragment.SECTION_MINI_BUTTONS to setOf(
+                    "cat_wf_mini_buttons_editor", "cat_wf_mini_buttons", "cat_wf_gestures")
     )
 
     /** Every category in `watch_face_settings.xml`. See [SETTINGS_CATEGORIES]. */
@@ -131,6 +133,7 @@ object SettingsCatalog {
             "cat_wf_player_layout",
             "cat_wf_player_progress",
             "cat_wf_metadata",
+            "cat_wf_aod_editor",
             "cat_wf_aod",
             "cat_wf_panels_editor",
             "cat_wf_panel_shared",
@@ -138,6 +141,7 @@ object SettingsCatalog {
             "cat_wf_panel_seek",
             "cat_wf_panel_quick",
             "cat_wf_panel_queue",
+            "cat_wf_panel_lyrics",
             "cat_wf_panel_effects",
             "cat_wf_background_editor",
             "cat_wf_background",
@@ -155,6 +159,7 @@ object SettingsCatalog {
             "cat_wf_typography_artist",
             "cat_wf_typography_icon",
             "cat_wf_typography_flex",
+            "cat_wf_mini_buttons_editor",
             "cat_wf_mini_buttons",
             "cat_wf_gestures",
             "cat_wf_layout_actions"

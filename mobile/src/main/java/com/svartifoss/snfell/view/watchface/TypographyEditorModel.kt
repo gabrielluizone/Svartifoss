@@ -276,6 +276,10 @@ internal object TypographyEditorModel {
                     TypographyTarget.ARTIST,
                     TypographyControl.VISIBILITY),
             choice(
+                    MiscPreferences.WEAR_ARTIST_TEXT_MODE,
+                    TypographyTarget.ARTIST,
+                    TypographyControl.TEXT_BEHAVIOR),
+            choice(
                     MiscPreferences.WEAR_ARTIST_FONT,
                     TypographyTarget.ARTIST,
                     TypographyControl.ELEMENT_FONT),

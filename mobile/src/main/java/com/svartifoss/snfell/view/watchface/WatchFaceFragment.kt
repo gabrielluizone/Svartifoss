@@ -35,6 +35,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat.AccessibilityActionCompat
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.NotificationService
+import com.svartifoss.snfell.common.AlbumArtSource
+import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.music.CustomArtworkSource
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.databinding.FragmentWatchFaceBinding
@@ -412,6 +415,9 @@ class WatchFaceFragment : Fragment() {
     ) {
         if (_binding == null || selectedSection != section) return
         selectedPreviewPreference = key
+        // The source and the file it points at are two separate edits, and the miniature has to
+        // answer both - so this runs for any interaction rather than being keyed to one row.
+        refreshCustomBackdrop()
         previews { it.showPreference(key, candidateValue) }
     }
 
@@ -443,6 +449,13 @@ class WatchFaceFragment : Fragment() {
         pushNowPlaying(mediaController?.metadata)
         pushPlayback()
         loadMiniButtons()
+    }
+
+    /** Loads the device-local backdrop for whatever source the current face has, so the miniature
+     *  is right on entry rather than only after the next preference touch. */
+    private fun primeCustomBackdrop() {
+        customBackdropKey = null
+        refreshCustomBackdrop()
     }
 
     /** Exposes the preview's live album accent triple to the color-treatment picker dialog
@@ -583,7 +596,8 @@ class WatchFaceFragment : Fragment() {
     }
 
     private fun pushNowPlaying(metadata: MediaMetadata?) {
-        val art = metadata?.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART)
+        val art = customBackdrop
+                ?: metadata?.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART)
                 ?: metadata?.getBitmap(MediaMetadata.METADATA_KEY_ART)
         previews {
             it.setNowPlaying(
@@ -593,6 +607,71 @@ class WatchFaceFragment : Fragment() {
             )
         }
         pushSourceGlyph()
+    }
+
+    /**
+     * The picture a device-local artwork source would put behind the player, once loaded.
+     *
+     * Substituted for the cover in the one place the miniature is handed artwork, which is the same
+     * arrangement the watch has: `MusicService` resolves one backdrop and the faces draw it through
+     * the ordinary pipeline, so every treatment, filter, shading layer and the album-accent palette
+     * all follow the picture actually on screen. Doing it here rather than inside
+     * `readPreferenceSnapshot` is what keeps a gallery decode off the synchronous path that runs on
+     * every preference change.
+     */
+    private var customBackdrop: android.graphics.Bitmap? = null
+
+    /** Which source and file the loaded [customBackdrop] belongs to, so an unchanged selection is
+     *  not re-decoded on every preference touch. */
+    private var customBackdropKey: String? = null
+
+    /**
+     * Loads the chosen picture when the selected source needs one, and drops it when it does not.
+     *
+     * Deliberately re-run on preference changes rather than only at start: choosing the source, and
+     * then choosing the file, are two separate interactions, and the preview has to answer the
+     * second one. A folder shows its first picture rather than a random draw - the miniature is a
+     * still, and a background that changed every time a slider moved would read as a glitch instead
+     * of as the feature.
+     */
+    private fun refreshCustomBackdrop() {
+        val context = context ?: return
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context.applicationContext)
+        val source = AlbumArtSource.fromPref(FaceScopedPreferences.getString(
+                prefs, MiscPreferences.WEAR_ALBUM_ART_SOURCE, ThemeAppearance.resolve(prefs)))
+        if (!source.isDeviceLocal) {
+            if (customBackdrop != null || customBackdropKey != null) {
+                customBackdrop = null
+                customBackdropKey = null
+                pushNowPlaying(mediaController?.metadata)
+            }
+            return
+        }
+        val stored = prefs.getString(
+                if (source == AlbumArtSource.CUSTOM_FOLDER) {
+                    MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key
+                } else {
+                    MiscPreferences.CUSTOM_ALBUM_ART_IMAGE.key
+                }, "").orEmpty()
+        val key = "${source.preferenceValue}|$stored"
+        if (key == customBackdropKey) return
+        customBackdropKey = key
+        if (stored.isBlank()) {
+            customBackdrop = null
+            pushNowPlaying(mediaController?.metadata)
+            return
+        }
+        val appContext = context.applicationContext
+        viewLifecycleOwner.lifecycleScope.launch {
+            val bytes = withContext(Dispatchers.IO) {
+                CustomArtworkSource.previewArtwork(appContext, source)
+            }
+            if (_binding == null || key != customBackdropKey) return@launch
+            customBackdrop = bytes?.let {
+                android.graphics.BitmapFactory.decodeByteArray(it, 0, it.size)
+            }
+            pushNowPlaying(mediaController?.metadata)
+        }
     }
 
     /**
@@ -690,6 +769,9 @@ class WatchFaceFragment : Fragment() {
         tintNavigation()
         loadMiniButtons()
         restartPlaybackTicker()
+        // Re-primed rather than merely refreshed: the picture may have been re-picked, or the file
+        // deleted, while another screen was in front of this one.
+        primeCustomBackdrop()
     }
 
     override fun onStop() {

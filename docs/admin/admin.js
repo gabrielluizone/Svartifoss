@@ -1,4 +1,4 @@
-import { SETTING_KEYS, SETTING_TYPES } from "./theme-profile-schema.mjs";
+import { ALLOWED_BASE_FACES, SETTING_KEYS, SETTING_TYPES } from "./theme-profile-schema.mjs";
 
 const FIREBASE_VERSION = "12.17.1";
 const INTAKE_COLLECTION = "themeIntake";
@@ -61,10 +61,7 @@ const MAX_SETTING_TEXT_LENGTH = 128;
 const MAX_PUBLIC_TEXT_LENGTH = 48;
 const CANONICAL_HEADER = "svartifoss-community-theme-settings-v1";
 const textEncoder = new TextEncoder();
-const ALLOWED_BASE_FACES = new Set([
-  "classic", "expressive", "poster", "studio", "material", "immersive",
-  "carousel", "chat", "split", "note", "verse", "metadata", "ribbon", "frame"
-]);
+const allowedBaseFaces = new Set(ALLOWED_BASE_FACES);
 
 const elements = {
   user: document.querySelector("#user"),
@@ -637,7 +634,7 @@ async function inspectSubmissionPayload(documentId, data) {
       profile.id !== documentId ||
       profile.name !== data.name ||
       profile.baseFace !== data.baseFace ||
-      !ALLOWED_BASE_FACES.has(profile.baseFace) ||
+      !allowedBaseFaces.has(profile.baseFace) ||
       profile.revision !== 1 ||
       !Number.isSafeInteger(profile.createdAt) || profile.createdAt < 0 ||
       !Number.isSafeInteger(profile.updatedAt) || profile.updatedAt < 0 ||

@@ -14,9 +14,9 @@ import javax.inject.Inject
 /**
  * Shows the user's configured playlist shortcuts (see
  * [com.svartifoss.snfell.view.settings.PlaylistShortcutsActivity]) as a list on the
- * watch. Selecting an entry comes back as a custom-list item press whose entry id is the
- * playlist's deep link - MusicService then opens it on the phone, so e.g. a YouTube Music
- * playlist starts playing without touching the phone.
+ * watch. Selecting an entry comes back as a custom-list item press whose entry id carries either
+ * the link or the target-package launch envelope. MusicService unwraps it and runs the normal
+ * playback ladder on the phone, so e.g. a YouTube Music playlist can start without touching it.
  */
 class OpenPlaylistShortcutsAction : SelectableAction {
     constructor(context: Context) : super(context)

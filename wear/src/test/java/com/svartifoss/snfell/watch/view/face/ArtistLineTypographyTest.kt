@@ -44,6 +44,9 @@ class ArtistLineTypographyTest {
 
                 // --- Always-on variants: AOD is styled by WEAR_AOD_* and must not read the awake
                 // artist spec at all.
+                "ArtistAmbient" to "AOD variant",
+                "ArtistTextBlock" to
+                        "passes the face's authored family to TrackTimeText, as the other track-time sites do",
                 "CarouselAmbient" to "AOD variant",
                 "ChatAmbient" to "AOD variant",
                 "CuratedAmbientFace" to "AOD variant",

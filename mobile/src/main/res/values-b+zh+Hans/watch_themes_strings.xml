@@ -78,6 +78,8 @@
     <string name="watch_theme_face_metadata">元数据</string>
     <string name="watch_theme_face_ribbon">Ribbon</string>
     <string name="watch_theme_face_frame">Frame</string>
+    <!-- Proper noun: the author of WearMusicCenter, the app this one is a fork of. -->
+    <string name="watch_theme_face_matejdro">MatejDro</string>
     <string name="online_theme_filter_not_installed">未添加</string>
     <string name="online_theme_filter_not_installed_selected">已隐藏你添加过的主题</string>
     <string name="online_theme_filter_not_installed_off">正在显示你添加过的主题</string>

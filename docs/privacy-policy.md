@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 02-09-2026**
+**Last updated: 05-09-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -59,7 +59,7 @@ all.
 | Permission                                                   | What it's for                                                                                                                                                                                  |
 | ------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Foreground service / "Post notifications"                    | Keeps the phone↔watch connection alive while music plays, shown as a persistent notification (required by Android for background media apps). Also required to show the optional developer announcement notifications described below.                                                 |
-| Photos                                                       | Only used if you explicitly choose to save the current album art to your device's photo gallery. Nothing is saved unless you tap that option.                                                  |
+| Photos                                                       | Only used if you explicitly choose to save the current album art to your device's photo gallery. Nothing is saved unless you tap that option. Separately, if you set Album art source to **Picture from my gallery** or **Random from a folder**, the app reads the one image or folder you pick through Android's own file picker — it receives access to nothing else, and those pictures stay between your phone and your watch.                                                  |
 | Vibrate                                                      | Haptic feedback on the watch when you press a button, if you enable that setting.                                                                                                              |
 | Run Tasker tasks                                             | Only relevant if you have the separate Tasker app installed and choose to bind a Tasker task to a button. Svartifoss does not read Tasker's data — it only triggers a task you've configured. |
 | Music and audio (Android 13+) / Storage (older versions)     | Only used to read album covers for entries in the playback queue, when the music app publishes them as references into your music library rather than as images. Requested from Settings → Apps, never at startup, and only ever read locally — nothing is uploaded. Decline it and the queue simply shows blank thumbnails. On very old Android versions the same legacy Storage permission also covers saving the current album art to your gallery, which only happens if you tap that option. |
@@ -79,6 +79,7 @@ queue, described below.
 - Your private theme library and other app preferences (theme, colors,
   timeouts, etc.). A profile leaves the device only if you select it for an
   explicit Community-theme submission.
+- A copy of any font file you import (Watch tab → Text → My own font) and, if you set Album art source to one of the two options that use your own pictures, the reference to the image or folder you picked. The font is copied into the app's private storage so it keeps working if you move or delete the original; the pictures are read from where they already are. Both are sent to your paired watch so it can render them, and neither leaves your two devices — a theme that uses them cannot be submitted to the Community themes gallery, and the app refuses such a submission rather than sharing the file.
 - A disposable cache of the public Community themes catalogue, theme files and author screenshots after you open that gallery. It contains only the public JSON served from this project's GitHub Pages site, is not included in configuration backups, and can be cleared with Android's app-cache controls.
 
 Uninstalling the app removes all of this data. If you use the app's
@@ -524,6 +525,38 @@ lyric has no second source, so switching it off does not degrade the screen, it
 empties it. **Look up lyrics online** (Settings → Apps → Music apps & services)
 turns it off, and both surfaces then simply report that lookups are
 disabled. Everything else in the app keeps working offline.
+
+## Artwork looked up online
+
+Two of the three **Album art source** choices put a picture behind the player that is not on your
+phone: **Artist picture**, a photograph of the performer, and **Looked up online**, an album cover
+for a player that publishes none. The third, **From the music app**, is the default and involves
+no network at all.
+
+Nothing on your phone or in Android carries an artist photograph — MediaStore has never stored
+artist images, the playing app publishes no field for one, and a music player that shows them
+keeps them in its own private storage where no other app can read them — so those pictures have
+to be looked up.
+
+The **phone** does the lookup, never the watch, since a watch paired over Bluetooth has no
+internet connection of its own. It sends the **artist name**, and for a cover the **track name**
+as well, to [Deezer](https://www.deezer.com)'s public catalogue search, which needs no account and
+no API key. Nothing else is attached: no identifier, no account, no listening history, and no
+record of which app was playing. The request goes directly to Deezer, not through any server of
+ours, and is governed by that service's own terms rather than this policy.
+
+Nothing is looked up while the source is **From the music app**. When one of the other two is
+selected, each new artist (or each new track, for a cover) is looked up once and the result is
+cached on your phone, so an album playing through under **Artist picture** costs a single request.
+A record Deezer does not list is remembered as "no picture" for a week so the same name is not
+asked about again, and the player shows the artwork your music app published instead.
+
+This is **on by default**, for the same reason the lyrics lookup is: choosing one of those sources
+is itself the choice to use it, and switching it off does not give you a cheaper version of
+anything — it falls back to the artwork you already had. **Online artwork** (Settings → Apps →
+Music apps & services) turns it off. Cached pictures live in the phone's cache directory, are never
+included in a settings backup, and are removed whenever Android clears app caches or you clear the
+app's storage.
 
 ## Usage diagnostics
 

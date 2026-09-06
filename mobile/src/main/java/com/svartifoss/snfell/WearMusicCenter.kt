@@ -5,7 +5,10 @@ import android.content.pm.ApplicationInfo
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.CenterLongPressAction
+import com.svartifoss.snfell.common.AlbumArtSource
+import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.MatejdroArtistAutosizeMigration
 import com.svartifoss.snfell.di.DaggerAppComponent
 import com.svartifoss.snfell.logging.CrashlyticsExceptionWearHandler
 import com.svartifoss.snfell.logging.CrashReporting
@@ -19,6 +22,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
 import com.svartifoss.snfell.view.settings.AppLanguage
+import com.svartifoss.snfell.view.settings.UserFontStore
 import pl.tajchert.exceptionwear.ExceptionDataListenerService
 import timber.log.Timber
 import javax.inject.Inject
@@ -56,6 +60,13 @@ class WearMusicCenter : Application(), HasAndroidInjector {
         Timber.plant(fileLogger)
 
         repairCenterLongPressPreference()
+        migrateRetiredArtistPhotoStyle()
+        // Builds that first introduced the artist-behaviour picker could materialize its generic
+        // `static` default inside Matejdro's scope. Repair it before the process-lifetime sync
+        // starts, otherwise that stale explicit value keeps overriding the face's smart default
+        // on the watch even after an update.
+        MatejdroArtistAutosizeMigration.repair(
+                PreferenceManager.getDefaultSharedPreferences(this))
         repairShortcutArtworkStore()
         // The on-watch face picker reads the theme library from a synced preference that only the
         // library's own save path writes, so a library created before that key existed never
@@ -64,6 +75,15 @@ class WearMusicCenter : Application(), HasAndroidInjector {
             WatchThemeRepository(this).publishAvailableThemes()
         } catch (e: RuntimeException) {
             Timber.w(e, "Could not publish the custom theme list to the watch")
+        }
+        // Same once-per-process republish, for the same reason: a font imported while the watch was
+        // unreachable - or by a build from before this path existed - has no other occasion to be
+        // sent. It is free when nothing changed, since the DataItem's payload is the font's own
+        // fingerprint and an identical item is never re-delivered.
+        try {
+            UserFontStore.publishToWatch(this)
+        } catch (e: RuntimeException) {
+            Timber.w(e, "Could not publish the imported font to the watch")
         }
         applyThemeFromPreferences()
         // Before any activity is created, so the first screen is already in the chosen language.
@@ -121,6 +141,63 @@ class WearMusicCenter : Application(), HasAndroidInjector {
      * "Open the queue" is never undone. The flag is local bookkeeping and stays out of
      * [MiscPreferences.EXPORTABLE] - a restored backup should not re-run it.
      */
+    /**
+     * Rewrites the retired `artist_photo` background style as the source it became.
+     *
+     * The value was a [PlayerBackgroundStyle] for one development cycle before the picture's
+     * *source* was split from its *treatment*. Nothing released ever wrote it, but a device that
+     * ran a development build did - and a stored value the style enum no longer knows leaves the
+     * settings row showing a raw string, its picker with nothing selected, and the face quietly
+     * drawing the album cover with no way for the user to see why.
+     *
+     * Face-scoped, so it can be stored under any number of `album_art_style@<face>` keys plus the
+     * active-theme scope; the sweep covers all of them at once rather than guessing which face was
+     * in use. [AlbumArtSource.migrate] does the translating, and it is lossless: the pair it writes
+     * renders exactly what the old value rendered.
+     *
+     * Not one-shot-flagged, unlike the repairs above, and deliberately: this one is idempotent by
+     * construction (it only ever matches a value it then removes), so it costs one preference scan
+     * on a cold start and can never fire twice on the same key. A flag would only add a second
+     * thing that must stay right.
+     */
+    private fun migrateRetiredArtistPhotoStyle() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val styleKey = MiscPreferences.ALBUM_ART_STYLE.key
+        val sourceKey = MiscPreferences.WEAR_ALBUM_ART_SOURCE.key
+
+        val stale = try {
+            prefs.all.keys.filter {
+                it == styleKey || it.startsWith("$styleKey${FaceScopedPreferences.SCOPE_SEPARATOR}")
+            }
+        } catch (e: RuntimeException) {
+            Timber.w(e, "Could not read preferences to migrate the retired artwork style")
+            return
+        }
+        if (stale.isEmpty()) return
+
+        val editor = prefs.edit()
+        var changed = false
+        stale.forEach { key ->
+            val current = try {
+                prefs.getString(key, null)
+            } catch (_: ClassCastException) {
+                null
+            }
+            val migrated = AlbumArtSource.migrate(current) ?: return@forEach
+            // The scope travels with the key, so the source lands on the same face the style was
+            // stored for - writing the bare source key would move every other face onto the
+            // artist picture.
+            val scope = key.removePrefix(styleKey)
+            editor.putString(key, migrated.first)
+            editor.putString(sourceKey + scope, migrated.second.preferenceValue)
+            changed = true
+        }
+        if (changed) {
+            editor.apply()
+            Timber.i("Migrated the retired artist_photo artwork style to the source setting")
+        }
+    }
+
     private fun repairCenterLongPressPreference() {
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         if (prefs.getBoolean(CENTER_LONG_PRESS_REPAIRED, false)) return

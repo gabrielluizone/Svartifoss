@@ -593,10 +593,29 @@ object MiscPreferences {
      *  to follow this value. The catalog combines the bundled Google Sans/Special Elite faces with
      *  Android system-family aliases (rounded, light, thin, medium, black, small caps, casual,
      *  serif, mono, condensed and cursive), plus the packaged OFL reading, display, mono and
-     *  script families. The older bundled "typewriter" choice remains readable but is hidden
-     *  unless developer archived options are enabled. Decoded by watchFontFamily and mirrored by
+     *  script families. The older bundled "typewriter" choice (Mom's Typewriter) had no
+     *  redistribution license this project ever held, so the font file was removed; the key is
+     *  retired and now aliases to Special Elite rather than appearing in the picker at all, even
+     *  with developer archived options enabled. Decoded by watchFontFamily and mirrored by
      *  WatchPreviewView. */
     val WEAR_FONT: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_font", "google_sans")
+
+    /**
+     * Display name of the typeface the user imported, or empty when they have not imported one.
+     *
+     * The presence of a name is what the settings UI treats as "a font is loaded" - the file itself
+     * lives outside preferences (see [CommPaths.DATA_USER_FONT]), and asking the filesystem on
+     * every preference read to decide whether one picker row exists would be the wrong shape.
+     *
+     * In [EXPORTABLE] so it travels with the font. `ConfigBackup`'s internal-files sweep captures
+     * anything under `filesDir` that no other section claims, which is exactly where the imported
+     * file sits and comfortably inside that sweep's per-file ceiling - so the font survives a
+     * reinstall, and this is what stops it arriving nameless. Global rather than face-scoped for
+     * the reason [ONLINE_ARTWORK_ENABLED] is: which file this phone holds is a property of the
+     * install, not of a theme, and every face that selects `user_font` means the same one.
+     */
+    val USER_FONT_NAME: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("user_font_name", "")
 
     /** Card outline for the Carousel face's cover rail - see [CoverShape]. */
     val WEAR_CAROUSEL_CARD_SHAPE: PreferenceDefinition<String> =
@@ -640,6 +659,41 @@ object MiscPreferences {
      */
     val WEAR_TITLE_CENTERED: PreferenceDefinition<Boolean> =
             SimplePreferenceDefinition("wear_title_centered", false)
+
+    /**
+     * Which edge the face's block of track text lines up on - see [TextBlockAlign].
+     *
+     * Offered on every face rather than on an allow-list, which only works because the default is
+     * the `follow` sentinel: until someone picks a side, each face keeps the alignment it composed,
+     * so no saved theme and no published community theme changes appearance because this key now
+     * exists. Distinct from [WEAR_TITLE_CENTERED], which moves one line's own centre within a block
+     * this key moves as a whole.
+     */
+    val WEAR_TEXT_BLOCK_ALIGN: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_text_block_align", TextBlockAlign.DEFAULT.preferenceValue)
+
+    /** Where that block sits vertically - see [TextBlockPosition]. [WEAR_TEXT_BLOCK_ALIGN]'s sibling
+     *  and its `follow` default applies for the same reason. */
+    val WEAR_TEXT_BLOCK_POSITION: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_text_block_position", TextBlockPosition.DEFAULT.preferenceValue)
+
+    /**
+     * Whether the phone may look a picture up online for [WEAR_ALBUM_ART_SOURCE].
+     *
+     * On by default, for the reason [LYRICS_ENABLED] is rather than the opt-in stance the shortcut
+     * thumbnails take: nothing is fetched until a user selects a source that needs it, so choosing
+     * that source is itself the consent, and off does not degrade anything into a cheaper version
+     * of itself - it falls back to the picture the player already published. The switch exists so
+     * the lookup can be refused outright, since it is the only part of this that leaves the phone.
+     *
+     * In [EXPORTABLE] although the watch never reads it: that registry is also what `ConfigBackup`
+     * exports, and a refusal to make network requests is exactly the kind of choice that should
+     * survive a reinstall rather than quietly returning to its default. It is deliberately *not*
+     * in [FaceScopedPreferences.SCOPED_KEYS] - whether the phone may look a picture up is a
+     * property of this install, not of a theme, so a shared theme can never switch it back on.
+     */
+    val ONLINE_ARTWORK_ENABLED: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("online_artwork_enabled", true)
 
     /** Silhouette of Chat's avatar - the same [CoverShape] vocabulary as [WEAR_NOTE_COVER_SHAPE]
      *  and [WEAR_CAROUSEL_CARD_SHAPE], its own key for the same reason theirs is: a rail of cards,
@@ -1015,13 +1069,24 @@ object MiscPreferences {
     val WEAR_TRACK_TIME_FONT_FLEX_ROUNDNESS: PreferenceDefinition<Int> =
             SimplePreferenceDefinition("wear_track_time_font_flex_roundness", 0)
 
-    /** Bounds for the percentage-based typography controls. The scale ceiling is deliberately
-     *  modest: the faces reserve fixed vertical space for the title/artist block, so a larger
-     *  multiplier would push the artist line under the transport controls rather than look bigger.
-     *  The opacity floor keeps text from being configured into complete invisibility, which reads
-     *  as a rendering bug rather than a setting. */
-    const val TYPOGRAPHY_MIN_SCALE: Int = 70
-    const val TYPOGRAPHY_MAX_SCALE: Int = 140
+    /** Bounds for the percentage-based typography controls.
+     *
+     *  The scale ceiling was 140 on the reasoning that the faces reserve fixed vertical space for
+     *  the title/artist block, so a larger multiplier would push the artist line under the
+     *  transport controls rather than look bigger. That reasoning describes what happens at the
+     *  top of the range, not a reason to refuse it: a title set very large is a legitimate look on
+     *  a face built around one line of text, every title already resolves through
+     *  `AdaptiveTitleText`, whose shrink/wrap/marquee modes decide what to do when a line does not
+     *  fit, and a collision is visible on the phone's own preview before it reaches the wrist.
+     *  So the ceiling is now a limit rather than a judgement, and picking a size that overruns the
+     *  composition is the user's call to make and to see.
+     *
+     *  The lower bound is deliberately 1 rather than zero: a user may reduce text to a nearly
+     *  invisible detail, but zero would remove it while the separate visibility switch still says
+     *  it is shown. The opacity floor follows the same rule and keeps text from being configured
+     *  into complete invisibility, which reads as a rendering bug rather than a setting. */
+    const val TYPOGRAPHY_MIN_SCALE: Int = 1
+    const val TYPOGRAPHY_MAX_SCALE: Int = 300
     const val TYPOGRAPHY_MIN_OPACITY: Int = 20
     const val TYPOGRAPHY_MIN_TRACKING: Int = -5
     const val TYPOGRAPHY_MAX_TRACKING: Int = 20
@@ -1097,6 +1162,60 @@ object MiscPreferences {
     val WEAR_TITLE_TEXT_MODE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_title_text_mode", "smart")
 
+    /**
+     * How the *artist* line behaves when it does not fit - the same vocabulary as
+     * [WEAR_TITLE_TEXT_MODE], scoped to the other line.
+     *
+     * Its default is `static` rather than the title's `smart`, and that is not a stylistic choice:
+     * `static` is a single ellipsized line at the fixed size, which is exactly what every face
+     * already drew before this key existed. So adding the control changes nothing anywhere until
+     * somebody picks a behaviour - the same reason the placement keys default to `follow`.
+     *
+     * The title had this from the start and the artist did not, which meant a long credit was
+     * simply cut on every layout with no way to ask for anything else - no marquee, no shrink to
+     * fit, and no way to *stop* a face that wrapped it from doing so.
+     */
+    val WEAR_ARTIST_TEXT_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_artist_text_mode", "static")
+
+    /**
+     * Which picture goes behind the player - see [AlbumArtSource].
+     *
+     * The source axis of what [ALBUM_ART_STYLE] treats. Face-scoped like every appearance key, so
+     * one face can wear the performer's photograph while another keeps the sleeve, and `local` by
+     * default everywhere: it is the only value that makes no network request, and nobody should
+     * acquire one by upgrading.
+     */
+    val WEAR_ALBUM_ART_SOURCE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_album_art_source", AlbumArtSource.DEFAULT.preferenceValue)
+
+    /**
+     * The single picture [AlbumArtSource.CUSTOM_IMAGE] draws, as a persisted `content://` URI.
+     *
+     * Deliberately **not** in [EXPORTABLE], and the reason is not privacy but honesty. A URI is
+     * only readable through a persistable grant, and a grant does not survive the app being
+     * uninstalled - so restoring this string onto a fresh install would produce a settings screen
+     * reporting a chosen picture that cannot be opened, which is worse than reporting none. The
+     * same applies across devices, where the row id it names belongs to somebody else's library.
+     *
+     * The settings UI therefore has to treat an unreadable URI as "no picture" regardless, since a
+     * user can delete or move the file at any time; leaving this out of the backup simply means
+     * that path is the only one, rather than one of two that look different and behave the same.
+     */
+    val CUSTOM_ALBUM_ART_IMAGE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("custom_album_art_image", "")
+
+    /**
+     * The folder [AlbumArtSource.CUSTOM_FOLDER] draws from, as a persisted document *tree* URI.
+     *
+     * A tree rather than a list of files: a folder the user keeps adding to goes on working without
+     * being re-picked, which is the whole appeal over choosing one picture. Out of [EXPORTABLE] for
+     * [CUSTOM_ALBUM_ART_IMAGE]'s reason, and more strongly - a tree grant names a directory only
+     * this install can enumerate.
+     */
+    val CUSTOM_ALBUM_ART_FOLDER: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("custom_album_art_folder", "")
+
     /** Per-surface treatment for artist text: "follow" inherits [WEAR_COLOR_TREATMENT], while
      *  "normal", "desaturated" and "expressive" override it for this target only.
      *  Historical "neutral"/"album"/"custom" values are still accepted by the watch and migrated
@@ -1138,6 +1257,66 @@ object MiscPreferences {
 
     val WEAR_QUICK_PANEL_CUSTOM_COLOR: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_quick_panel_custom_color", "")
+
+    /**
+     * Per-surface treatment and optional Normal color for the lyrics screen.
+     *
+     * The lyrics screen is a wall of text on black whose accent appears in exactly two places -
+     * the current line and the floor glow - so it is the surface where a colour choice is most
+     * visible and was, until now, the one with no control at all.
+     */
+    val WEAR_LYRICS_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_lyrics_color_mode", "follow")
+
+    val WEAR_LYRICS_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_lyrics_custom_color", "")
+
+    /** Per-surface treatment and optional Normal color for the queue screen. */
+    val WEAR_QUEUE_COLOR_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_queue_color_mode", "follow")
+
+    val WEAR_QUEUE_CUSTOM_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_queue_custom_color", "")
+
+    /**
+     * Per-element Tone, defaulting to the watch-wide [WEAR_COLOR_MODIFIER].
+     *
+     * The tone filter was watch-wide only, so "pastel clock over a vibrant title" was unreachable
+     * even though the two colours are otherwise independently configurable. `follow` is the
+     * default on all three, so nothing an existing install or a published theme renders changes
+     * until someone picks a tone - see [ColorModifier.resolveElement].
+     */
+    val WEAR_TITLE_COLOR_MODIFIER: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_title_color_modifier", "follow")
+
+    val WEAR_ARTIST_COLOR_MODIFIER: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_artist_color_modifier", "follow")
+
+    val WEAR_CLOCK_COLOR_MODIFIER: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_clock_color_modifier", "follow")
+
+    /**
+     * Per-surface background, defaulting to the shared [WEAR_OVERLAY_BACKDROP_STYLE].
+     *
+     * The overlay background was one watch-wide choice, so the five surfaces that paint one could
+     * only ever agree. Each may now keep following that choice - the `"shared"` sentinel every one
+     * of these ships with, so nothing changes until a surface is given its own - or name a
+     * background of its own. See [OverlayBackdropResolver.resolveSurface].
+     */
+    val WEAR_VOLUME_BACKDROP_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_volume_backdrop_style", "shared")
+
+    val WEAR_PROGRESS_BACKDROP_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_progress_backdrop_style", "shared")
+
+    val WEAR_QUICK_PANEL_BACKDROP_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_quick_panel_backdrop_style", "shared")
+
+    val WEAR_QUEUE_BACKDROP_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_queue_backdrop_style", "shared")
+
+    val WEAR_LYRICS_BACKDROP_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_lyrics_backdrop_style", "shared")
 
     /** Cross-fade album art when the track changes. */
     val WEAR_ALBUM_ART_FADE: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("wear_album_art_fade", true)
@@ -1390,8 +1569,11 @@ object MiscPreferences {
             WEAR_ACCENT_FLOOR_COLOR_MODE, WEAR_ACCENT_FLOOR_CUSTOM_COLOR,
             WEAR_BACKGROUND_LAYERS,
             WEAR_EXPRESSIVE_SEEK_MODE, WEAR_SCREEN_THEME, WEAR_QUADRANT_TAP_FLASH, WEAR_FONT,
+            USER_FONT_NAME,
             WEAR_FONT_ALL_SCREENS, WEAR_CAROUSEL_CARD_SHAPE, WEAR_NOTE_COVER_SHAPE, WEAR_NOTE_SHOW_COVER,
-            WEAR_TITLE_CENTERED,
+            WEAR_TITLE_CENTERED, WEAR_TEXT_BLOCK_ALIGN, WEAR_TEXT_BLOCK_POSITION,
+            WEAR_ARTIST_TEXT_MODE, WEAR_ALBUM_ART_SOURCE,
+            ONLINE_ARTWORK_ENABLED,
             WEAR_CHAT_COVER_SHAPE, WEAR_CHAT_SHOW_COVER, WEAR_METADATA_COVER_SHAPE, WEAR_METADATA_SHOW_COVER,
             WEAR_TITLE_SHADOW_STYLE, WEAR_TITLE_SHADOW_COLOR_MODE,
             WEAR_TITLE_SHADOW_CUSTOM_COLOR, WEAR_TITLE_SHADOW_STRENGTH,
@@ -1442,6 +1624,12 @@ object MiscPreferences {
             WEAR_TITLE_TEXT_MODE, WEAR_ARTIST_COLOR_MODE, WEAR_ARTIST_CUSTOM_COLOR, WEAR_ARTIST_DESATURATED,
             WEAR_PROGRESS_COLOR_MODE, WEAR_PROGRESS_CUSTOM_COLOR, WEAR_PROGRESS_DESATURATED,
             WEAR_VOLUME_COLOR_MODE, WEAR_VOLUME_CUSTOM_COLOR,
-            WEAR_QUICK_PANEL_COLOR_MODE, WEAR_QUICK_PANEL_CUSTOM_COLOR
+            WEAR_QUICK_PANEL_COLOR_MODE, WEAR_QUICK_PANEL_CUSTOM_COLOR,
+            WEAR_LYRICS_COLOR_MODE, WEAR_LYRICS_CUSTOM_COLOR,
+            WEAR_QUEUE_COLOR_MODE, WEAR_QUEUE_CUSTOM_COLOR,
+            WEAR_TITLE_COLOR_MODIFIER, WEAR_ARTIST_COLOR_MODIFIER, WEAR_CLOCK_COLOR_MODIFIER,
+            WEAR_VOLUME_BACKDROP_STYLE, WEAR_PROGRESS_BACKDROP_STYLE,
+            WEAR_QUICK_PANEL_BACKDROP_STYLE, WEAR_QUEUE_BACKDROP_STYLE,
+            WEAR_LYRICS_BACKDROP_STYLE
     )
 }

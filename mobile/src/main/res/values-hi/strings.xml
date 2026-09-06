@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">सेटिंग घड़ी से सिंक हो गईं</string>
     <string name="dev_copy_debug_info">डीबग जानकारी कॉपी करें</string>
     <string name="dev_copy_debug_info_description">बिल्ड और डिवाइस विवरण क्लिपबोर्ड पर कॉपी करें</string>
+    <string name="dev_export_defaults">ऐप डिफ़ॉल्ट के रूप में निर्यात करें</string>
+    <string name="dev_export_defaults_description">इस सेटअप को default_config.json के रूप में सहेजता है, यानी नई इंस्टॉल की शुरुआती स्थिति। इतिहास, सहमति विकल्प और इस फ़ोन की अपनी स्थिति शामिल नहीं होती।</string>
+    <string name="dev_export_defaults_done">डिफ़ॉल्ट निर्यात किए गए (%1$s)</string>
     <string name="dev_show_archived">आर्काइव किए गए विकल्प दिखाएँ</string>
     <string name="dev_show_archived_description">ज्ञात समस्याओं के कारण आर्काइव किए गए वॉच लेआउट और सेटिंग दिखाएँ</string>
     <string name="dev_copy_debug_info_done">डीबग जानकारी कॉपी हो गई</string>
@@ -287,6 +290,9 @@ Svartifoss — काले बेसाल्ट के स्तंभ
     <string name="setting_wear_font_flex_roundness_description">स्ट्रोक के सिरों को तीखे (0) से पूरी तरह गोल (100) तक मिलाता है, जिससे रूप अधिक सहज लगता है।</string>
     <string name="preview_sample_title">गाने का शीर्षक</string>
     <string name="preview_sample_artist">कलाकार का नाम</string>
+    <string name="preview_sample_lyric_previous">पिछली पंक्ति</string>
+    <string name="preview_sample_lyric_current">अभी चल रही पंक्ति</string>
+    <string name="preview_sample_lyric_next">अगली पंक्ति</string>
     <string name="preview_sample_next_title">अगला गाना</string>
     <string name="preview_playback_stopped">रुका हुआ</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -559,8 +565,6 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
     <string name="wear_font_small_caps_description">संपादकीय रूप वाले छोटे बड़े-अक्षर आकार।</string>
     <string name="wear_font_casual">कैज़ुअल</string>
     <string name="wear_font_casual_description">खेलपूर्ण हस्तलिखित सिस्टम परिवार।</string>
-    <string name="wear_font_typewriter">टाइपराइटर (आर्काइव)</string>
-    <string name="wear_font_typewriter_description">रेट्रो टाइपराइटर रूप (Mom\'s Typewriter)।</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">गोलाकार ज्यामितीय sans, Circular की शैली में मुफ़्त (OFL) विकल्प।</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -626,6 +630,12 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
     <string name="setting_wear_quick_panel_color">Quick Actions का रंग</string>
     <string name="setting_wear_quick_panel_custom_color">Quick Actions का कस्टम रंग</string>
     <string name="setting_wear_quick_panel_custom_color_description">Normal treatment में इस्तेमाल होने वाला Quick Actions रंग चुनें</string>
+    <string name="setting_wear_lyrics_color">बोल का रंग</string>
+    <string name="setting_wear_lyrics_custom_color">बोल का कस्टम रंग</string>
+    <string name="setting_wear_lyrics_custom_color_description">Normal treatment में इस्तेमाल होने वाला बोल का रंग चुनें</string>
+    <string name="setting_wear_queue_color">कतार का रंग</string>
+    <string name="setting_wear_queue_custom_color">कतार का कस्टम रंग</string>
+    <string name="setting_wear_queue_custom_color_description">Normal treatment में इस्तेमाल होने वाला कतार का रंग चुनें</string>
     <string name="setting_wear_shading_custom_color_description">शेडिंग ग्रेडिएंट को रंगने वाला रंग चुनें</string>
 
     <string-array name="wear_accent_color_entries">
@@ -658,8 +668,10 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
         <item>नोट</item>
         <item>वर्स</item>
         <item>मेटाडेटा</item>
+        <item>कलाकार</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -680,8 +692,10 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive सीक</string>
@@ -715,6 +729,7 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
         <item>स्प्लिट</item>
         <item>नोट</item>
         <item>वर्स</item>
+        <item>कलाकार</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -733,6 +748,7 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -839,8 +855,15 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
     <string name="category_wf_panel_seek">प्रगति और सीक पैनल</string>
     <string name="category_wf_panel_quick">क्विक ऐक्शन पैनल</string>
     <string name="category_wf_panel_queue">कतार और सूचियाँ</string>
+    <string name="category_wf_panel_lyrics">बोल</string>
     <string name="category_wf_panel_effects">पैनल प्रभाव</string>
     <string name="setting_wear_overlay_backdrop_style">पैनल बैकग्राउंड</string>
+    <string name="wear_backdrop_shared">साझा पैनल बैकग्राउंड का पालन करें</string>
+    <string name="setting_wear_volume_backdrop_style">वॉल्यूम बैकग्राउंड</string>
+    <string name="setting_wear_progress_backdrop_style">प्रगति बैकग्राउंड</string>
+    <string name="setting_wear_quick_panel_backdrop_style">क्विक ऐक्शन बैकग्राउंड</string>
+    <string name="setting_wear_queue_backdrop_style">कतार बैकग्राउंड</string>
+    <string name="setting_wear_lyrics_backdrop_style">बोल बैकग्राउंड</string>
     <string name="setting_wear_volume_style">वॉल्यूम शैली</string>
     <string name="setting_wear_volume_layout">वॉल्यूम लेआउट</string>
     <string name="setting_wear_quick_panel_style">क्विक पैनल शैली</string>
@@ -928,10 +951,14 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
     <string name="setting_wear_source_icon_scale">ऐप आइकन आकार</string>
     <string name="setting_wear_source_icon_opacity">ऐप आइकन अपारदर्शिता</string>
     <string name="setting_wear_typography_weight_description">1–1000। 400 फ़ेस का सामान्य वज़न है; अधिक मान अधिक बोल्ड हैं। Google Sans Flex के लिए यह उसी फ़ॉन्ट का अपना weight axis है</string>
-    <string name="setting_wear_typography_scale_description">फ़ेस के अपने आकार का प्रतिशत (70–140)। 100 हर लेआउट का डिज़ाइन किया गया आकार रखता है</string>
+    <string name="setting_wear_typography_scale_description">फ़ेस के अपने आकार का प्रतिशत (1–300)। 100 हर लेआउट का डिज़ाइन किया गया आकार रखता है</string>
     <string name="setting_wear_typography_opacity_description">प्रतिशत (20–100)। 100 फ़ेस की अपनी अपारदर्शिता रखता है</string>
     <string name="setting_wear_typography_tracking_description">अक्षरों के बीच अतिरिक्त जगह, em के सौवें हिस्से में (−5 से 20)। 0 फ़ॉन्ट की अपनी स्पेसिंग रखता है</string>
     <string name="setting_wear_color_modifier">टोन</string>
+    <string name="setting_wear_title_color_modifier">शीर्षक का टोन</string>
+    <string name="setting_wear_artist_color_modifier">कलाकार का टोन</string>
+    <string name="setting_wear_clock_color_modifier">घड़ी का टोन</string>
+    <string name="wear_color_modifier_follow">वॉच टोन का पालन करें</string>
     <string name="setting_wear_color_modifier_description">पूरे पैलेट को उसकी उत्पत्ति बदले बिना समायोजित करें — हर color treatment के साथ काम करता है</string>
     <string name="setting_wear_color_hue_shift">रंग शिफ़्ट</string>
     <string name="setting_wear_color_hue_shift_description">एल्बम पैलेट को रंग चक्र पर डिग्री (0–359) में घुमाता है। हर treatment अपना मुख्य रंग एल्बम की मूल hue पर रखता है, इसलिए यही उसे बदलता है। 0 एल्बम रंग को ज्यों का त्यों इस्तेमाल करता है; तय Normal रंग कभी शिफ़्ट नहीं होता।</string>
@@ -1324,7 +1351,6 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1443,7 +1469,14 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1464,7 +1497,6 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1583,7 +1615,14 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">लाइब्रेरी ब्राउज़ करें</string>
@@ -2296,5 +2335,56 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
         <item>हाइलाइट</item>
         <item>हल्की</item>
         <item>ठोस</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>फ़ेस के अनुसार</item>
+        <item>आरंभ</item>
+        <item>केंद्र में</item>
+        <item>अंत</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>फ़ेस के अनुसार</item>
+        <item>ऊपर</item>
+        <item>मध्य</item>
+        <item>नीचे</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>स्थिर (एक पंक्ति, स्क्रॉल या छोटा नहीं)</item>
+        <item>स्क्रॉल (मार्की)</item>
+        <item>फ़िट होने तक छोटा करें</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>म्यूज़िक ऐप से</item>
+        <item>ऑनलाइन खोजी गई</item>
+        <item>कलाकार की तस्वीर</item>
+        <item>मेरी गैलरी की तस्वीर</item>
+        <item>फ़ोल्डर से कोई भी</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">ההגדרות סונכרנו לשעון</string>
     <string name="dev_copy_debug_info">העתק פרטי ניפוי שגיאות</string>
     <string name="dev_copy_debug_info_description">העתק פרטי גרסה ומכשיר ללוח</string>
+    <string name="dev_export_defaults">ייצוא כברירת מחדל של האפליקציה</string>
+    <string name="dev_export_defaults_description">שומר את התצורה הזו כ‑default_config.json, המצב שממנו מתחילה התקנה חדשה. לא כולל היסטוריה, בחירות הסכמה ומצב הטלפון עצמו.</string>
+    <string name="dev_export_defaults_done">ברירות המחדל יוצאו (%1$s)</string>
     <string name="dev_show_archived">הצג אפשרויות בארכיון</string>
     <string name="dev_show_archived_description">חשוף פריסות והגדרות שעון שנשמרו בארכיון בגלל בעיות ידועות</string>
     <string name="dev_copy_debug_info_done">פרטי ניפוי השגיאות הועתקו</string>
@@ -275,6 +278,9 @@
     <string name="setting_wear_font_flex_roundness_description">מערבב קצות קווים מחדים (0) לעגולים לגמרי (100) למראה ידידותי יותר.</string>
     <string name="preview_sample_title">שם השיר</string>
     <string name="preview_sample_artist">שם האמן</string>
+    <string name="preview_sample_lyric_previous">השורה הקודמת</string>
+    <string name="preview_sample_lyric_current">השורה המתנגנת עכשיו</string>
+    <string name="preview_sample_lyric_next">השורה הבאה</string>
     <string name="preview_sample_next_title">השיר הבא</string>
     <string name="preview_playback_stopped">נעצר</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -537,8 +543,6 @@
     <string name="wear_font_small_caps_description">צורות קומפקטיות דמויות אותיות רישיות עם תחושה מערכתית.</string>
     <string name="wear_font_casual">קליל</string>
     <string name="wear_font_casual_description">משפחת גופני מערכת בכתב יד שובב.</string>
-    <string name="wear_font_typewriter">מכונת כתיבה (בארכיון)</string>
-    <string name="wear_font_typewriter_description">מראה רטרו של מכונת כתיבה (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">גופן סנס־סריפ גאומטרי מעוגל, חלופה חינמית (OFL) ברוח Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -604,6 +608,12 @@
     <string name="setting_wear_quick_panel_color">צבע פעולות מהירות</string>
     <string name="setting_wear_quick_panel_custom_color">צבע פעולות מהירות מותאם אישית</string>
     <string name="setting_wear_quick_panel_custom_color_description">בחר את צבע הפעולות המהירות לשימוש בעיבוד רגיל</string>
+    <string name="setting_wear_lyrics_color">צבע המילים</string>
+    <string name="setting_wear_lyrics_custom_color">צבע מילים מותאם אישית</string>
+    <string name="setting_wear_lyrics_custom_color_description">בחר את צבע המילים לשימוש בעיבוד רגיל</string>
+    <string name="setting_wear_queue_color">צבע התור</string>
+    <string name="setting_wear_queue_custom_color">צבע תור מותאם אישית</string>
+    <string name="setting_wear_queue_custom_color_description">בחר את צבע התור לשימוש בעיבוד רגיל</string>
     <string name="setting_wear_shading_custom_color_description">בחר את הצבע שמגוון את מעבר ההצללה</string>
 
     <string-array name="wear_accent_color_entries">
@@ -636,8 +646,10 @@
         <item>תו</item>
         <item>בית</item>
         <item>מטא-נתונים</item>
+        <item>אמן</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -658,8 +670,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">חיפוש אקספרסיבי</string>
@@ -693,6 +707,7 @@
         <item>מפוצל</item>
         <item>תו</item>
         <item>בית</item>
+        <item>אמן</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -711,6 +726,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -817,8 +833,15 @@
     <string name="category_wf_panel_seek">לוח התקדמות וחיפוש</string>
     <string name="category_wf_panel_quick">חלונית פעולות מהירות</string>
     <string name="category_wf_panel_queue">תור ורשימות</string>
+    <string name="category_wf_panel_lyrics">מילים</string>
     <string name="category_wf_panel_effects">אפקטי לוח</string>
     <string name="setting_wear_overlay_backdrop_style">רקע לוח</string>
+    <string name="wear_backdrop_shared">לפי רקע הלוח המשותף</string>
+    <string name="setting_wear_volume_backdrop_style">רקע עוצמת הקול</string>
+    <string name="setting_wear_progress_backdrop_style">רקע ההתקדמות</string>
+    <string name="setting_wear_quick_panel_backdrop_style">רקע הפעולות המהירות</string>
+    <string name="setting_wear_queue_backdrop_style">רקע התור</string>
+    <string name="setting_wear_lyrics_backdrop_style">רקע המילים</string>
     <string name="setting_wear_volume_style">סגנון עוצמת קול</string>
     <string name="setting_wear_volume_layout">פריסת עוצמת קול</string>
     <string name="setting_wear_quick_panel_style">סגנון לוח מהיר</string>
@@ -906,10 +929,14 @@
     <string name="setting_wear_source_icon_scale">גודל סמל אפליקציה</string>
     <string name="setting_wear_source_icon_opacity">אטימות סמל אפליקציה</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 הוא המשקל הרגיל של התצוגה; ערך גבוה יותר הוא מודגש יותר. ב-Google Sans Flex זהו ציר המשקל של הגופן עצמו</string>
-    <string name="setting_wear_typography_scale_description">אחוז מהגודל המקורי של התצוגה (70–140). 100 שומר על הגודל שתוכנן לכל פריסה</string>
+    <string name="setting_wear_typography_scale_description">אחוז מהגודל המקורי של התצוגה (1–300). 100 שומר על הגודל שתוכנן לכל פריסה</string>
     <string name="setting_wear_typography_opacity_description">אחוז (20–100). 100 שומר על האטימות המקורית של התצוגה</string>
     <string name="setting_wear_typography_tracking_description">מרווח נוסף בין אותיות, במאיות em (−5 עד 20). 0 שומר על ריווח הגופן המקורי</string>
     <string name="setting_wear_color_modifier">גוון</string>
+    <string name="setting_wear_title_color_modifier">גוון הכותרת</string>
+    <string name="setting_wear_artist_color_modifier">גוון האמן</string>
+    <string name="setting_wear_clock_color_modifier">גוון השעון</string>
+    <string name="wear_color_modifier_follow">לפי גוון השעון</string>
     <string name="setting_wear_color_modifier_description">התאם את כל הפלטה בלי לשנות את אופן יצירתה — עובד עם כל עיבוד צבע</string>
     <string name="setting_wear_color_hue_shift">הסטת צבע</string>
     <string name="setting_wear_color_hue_shift_description">מסובב את פלטת האלבום סביב גלגל הצבעים, במעלות (0–359). כל עיבוד שומר את הצבע הראשי על הגוון המקורי של האלבום, ולכן זה מה שמשנה אותו. 0 משתמש בצבע האלבום כפי שהוא; צבע רגיל קבוע לעולם אינו מוזז.</string>
@@ -1302,7 +1329,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1421,7 +1447,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1442,7 +1475,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1561,7 +1593,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">עיין בספרייה</string>
@@ -2275,5 +2314,56 @@
         <item>הדגשה</item>
         <item>עדין</item>
         <item>מלא</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>לפי פני השעון</item>
+        <item>התחלה</item>
+        <item>מרכז</item>
+        <item>סוף</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>לפי פני השעון</item>
+        <item>למעלה</item>
+        <item>אמצע</item>
+        <item>למטה</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>סטטי (שורה אחת, ללא גלילה או כיווץ)</item>
+        <item>גלילה (טקסט נע)</item>
+        <item>כווץ להתאמה</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>מאפליקציית המוזיקה</item>
+        <item>חיפוש מקוון</item>
+        <item>תמונת האמן</item>
+        <item>תמונה מהגלריה שלי</item>
+        <item>אקראית מתיקייה</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">সেটিং ঘড়িতে সিঙ্ক হয়েছে</string>
     <string name="dev_copy_debug_info">ডিবাগ তথ্য কপি করুন</string>
     <string name="dev_copy_debug_info_description">বিল্ড ও ডিভাইসের বিবরণ ক্লিপবোর্ডে কপি করুন</string>
+    <string name="dev_export_defaults">অ্যাপের ডিফল্ট হিসেবে এক্সপোর্ট করুন</string>
+    <string name="dev_export_defaults_description">এই সেটআপটি default_config.json হিসেবে সংরক্ষণ করে, যা নতুন ইনস্টলের শুরুর অবস্থা। ইতিহাস, সম্মতির পছন্দ এবং এই ফোনের নিজস্ব অবস্থা বাদ দেওয়া হয়।</string>
+    <string name="dev_export_defaults_done">ডিফল্ট এক্সপোর্ট হয়েছে (%1$s)</string>
     <string name="dev_show_archived">আর্কাইভ করা অপশন দেখান</string>
     <string name="dev_show_archived_description">জানা সমস্যার কারণে আর্কাইভ করা ঘড়ির লেআউট ও সেটিং দেখান</string>
     <string name="dev_copy_debug_info_done">ডিবাগ তথ্য কপি হয়েছে</string>
@@ -274,6 +277,9 @@
     <string name="setting_wear_font_flex_roundness_description">স্ট্রোকের প্রান্ত ধারালো (0) থেকে পুরো গোল (100) পর্যন্ত মিশিয়ে আরও বন্ধুসুলভ অনুভূতি দেয়।</string>
     <string name="preview_sample_title">গানের শিরোনাম</string>
     <string name="preview_sample_artist">শিল্পীর নাম</string>
+    <string name="preview_sample_lyric_previous">আগের লাইন</string>
+    <string name="preview_sample_lyric_current">এখন চলছে যে লাইন</string>
+    <string name="preview_sample_lyric_next">পরের লাইন</string>
     <string name="preview_sample_next_title">পরের গান</string>
     <string name="preview_playback_stopped">বন্ধ</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -536,8 +542,6 @@
     <string name="wear_font_small_caps_description">সম্পাদকীয় আবহের কমপ্যাক্ট বড়-হাতের অক্ষরের মতো রূপ।</string>
     <string name="wear_font_casual">ক্যাজুয়াল</string>
     <string name="wear_font_casual_description">খেলাচ্ছলে হাতে লেখা সিস্টেম ফন্ট পরিবার।</string>
-    <string name="wear_font_typewriter">টাইপরাইটার (আর্কাইভড)</string>
-    <string name="wear_font_typewriter_description">রেট্রো টাইপরাইটার লুক (Mom\'s Typewriter)।</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">গোলাকার জ্যামিতিক স্যান্স-সেরিফ, Circular-এর ধাঁচে বিনামূল্যের (OFL) বিকল্প।</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -603,6 +607,12 @@
     <string name="setting_wear_quick_panel_color">কুইক অ্যাকশনের রং</string>
     <string name="setting_wear_quick_panel_custom_color">কুইক অ্যাকশনের কাস্টম রং</string>
     <string name="setting_wear_quick_panel_custom_color_description">স্বাভাবিক ট্রিটমেন্টে ব্যবহৃত কুইক অ্যাকশনের রং বেছে নিন</string>
+    <string name="setting_wear_lyrics_color">লিরিক্সের রং</string>
+    <string name="setting_wear_lyrics_custom_color">লিরিক্সের কাস্টম রং</string>
+    <string name="setting_wear_lyrics_custom_color_description">স্বাভাবিক ট্রিটমেন্টে ব্যবহৃত লিরিক্সের রং বেছে নিন</string>
+    <string name="setting_wear_queue_color">কিউয়ের রং</string>
+    <string name="setting_wear_queue_custom_color">কিউয়ের কাস্টম রং</string>
+    <string name="setting_wear_queue_custom_color_description">স্বাভাবিক ট্রিটমেন্টে ব্যবহৃত কিউয়ের রং বেছে নিন</string>
     <string name="setting_wear_shading_custom_color_description">শেডিং গ্রেডিয়েন্টে টিন্ট দেওয়ার রং বেছে নিন</string>
 
     <string-array name="wear_accent_color_entries">
@@ -635,8 +645,10 @@
         <item>নোট</item>
         <item>পংক্তি</item>
         <item>মেটাডেটা</item>
+        <item>শিল্পী</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -657,8 +669,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">এক্সপ্রেসিভ সিক</string>
@@ -692,6 +706,7 @@
         <item>বিভক্ত</item>
         <item>নোট</item>
         <item>পংক্তি</item>
+        <item>শিল্পী</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -710,6 +725,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -816,8 +832,15 @@
     <string name="category_wf_panel_seek">অগ্রগতি ও সিক প্যানেল</string>
     <string name="category_wf_panel_quick">কুইক অ্যাকশন প্যানেল</string>
     <string name="category_wf_panel_queue">কিউ ও তালিকা</string>
+    <string name="category_wf_panel_lyrics">লিরিক্স</string>
     <string name="category_wf_panel_effects">প্যানেল ইফেক্ট</string>
     <string name="setting_wear_overlay_backdrop_style">প্যানেলের পটভূমি</string>
+    <string name="wear_backdrop_shared">শেয়ার্ড প্যানেল পটভূমি অনুসরণ করুন</string>
+    <string name="setting_wear_volume_backdrop_style">ভলিউমের পটভূমি</string>
+    <string name="setting_wear_progress_backdrop_style">অগ্রগতির পটভূমি</string>
+    <string name="setting_wear_quick_panel_backdrop_style">কুইক অ্যাকশনের পটভূমি</string>
+    <string name="setting_wear_queue_backdrop_style">কিউয়ের পটভূমি</string>
+    <string name="setting_wear_lyrics_backdrop_style">লিরিক্সের পটভূমি</string>
     <string name="setting_wear_volume_style">ভলিউম স্টাইল</string>
     <string name="setting_wear_volume_layout">ভলিউম লেআউট</string>
     <string name="setting_wear_quick_panel_style">কুইক প্যানেল স্টাইল</string>
@@ -905,10 +928,14 @@
     <string name="setting_wear_source_icon_scale">অ্যাপ আইকনের আকার</string>
     <string name="setting_wear_source_icon_opacity">অ্যাপ আইকনের অস্বচ্ছতা</string>
     <string name="setting_wear_typography_weight_description">1–1000। 400 হলো ফেসের স্বাভাবিক ওজন; বেশি মানে আরও মোটা। Google Sans Flex-এর ক্ষেত্রে এটি ফন্টটির নিজস্ব ওজন অক্ষ</string>
-    <string name="setting_wear_typography_scale_description">ফেসের নিজস্ব আকারের শতাংশ (70–140)। 100 প্রতিটি লেআউটের ডিজাইন করা আকার বজায় রাখে</string>
+    <string name="setting_wear_typography_scale_description">ফেসের নিজস্ব আকারের শতাংশ (1–300)। 100 প্রতিটি লেআউটের ডিজাইন করা আকার বজায় রাখে</string>
     <string name="setting_wear_typography_opacity_description">শতাংশ (20–100)। 100 ফেসের নিজস্ব অস্বচ্ছতা বজায় রাখে</string>
     <string name="setting_wear_typography_tracking_description">অক্ষরের মধ্যে অতিরিক্ত ফাঁক, em-এর শতভাগে (−5 থেকে 20)। 0 ফন্টের নিজস্ব স্পেসিং বজায় রাখে</string>
     <string name="setting_wear_color_modifier">টোন</string>
+    <string name="setting_wear_title_color_modifier">শিরোনামের টোন</string>
+    <string name="setting_wear_artist_color_modifier">শিল্পীর টোন</string>
+    <string name="setting_wear_clock_color_modifier">ঘড়ির টোন</string>
+    <string name="wear_color_modifier_follow">ঘড়ির টোন অনুসরণ করুন</string>
     <string name="setting_wear_color_modifier_description">প্যালেট কীভাবে তৈরি হয় তা না বদলে পুরো প্যালেট সামঞ্জস্য করুন — সব কালার ট্রিটমেন্টে কাজ করে</string>
     <string name="setting_wear_color_hue_shift">রঙের শিফট</string>
     <string name="setting_wear_color_hue_shift_description">অ্যালবাম প্যালেটকে কালার হুইলে ডিগ্রিতে (0–359) ঘোরায়। প্রতিটি ট্রিটমেন্ট প্রধান রংকে অ্যালবামের নিজস্ব হিউতে রাখে, তাই এই সেটিং সেটিই বদলায়। 0 অ্যালবামের রং অপরিবর্তিত রাখে; স্থির স্বাভাবিক রং কখনও শিফট হয় না।</string>
@@ -1301,7 +1328,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1420,7 +1446,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1441,7 +1474,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1560,7 +1592,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">লাইব্রেরি ব্রাউজ করুন</string>
@@ -2271,5 +2310,56 @@
         <item>হাইলাইট</item>
         <item>মৃদু</item>
         <item>নিরেট</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>ওয়াচ ফেস অনুসরণ করুন</item>
+        <item>শুরু</item>
+        <item>মাঝখানে</item>
+        <item>শেষ</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>ওয়াচ ফেস অনুসরণ করুন</item>
+        <item>উপরে</item>
+        <item>মাঝে</item>
+        <item>নিচে</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>স্থির (এক লাইন, স্ক্রল বা ছোট করা নয়)</item>
+        <item>স্ক্রল (মার্কি)</item>
+        <item>ফিট করতে ছোট করুন</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>মিউজিক অ্যাপ থেকে</item>
+        <item>অনলাইনে খোঁজা</item>
+        <item>শিল্পীর ছবি</item>
+        <item>আমার গ্যালারির ছবি</item>
+        <item>একটি ফোল্ডার থেকে এলোমেলো</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

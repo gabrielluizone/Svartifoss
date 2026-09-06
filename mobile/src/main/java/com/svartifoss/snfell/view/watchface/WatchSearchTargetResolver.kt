@@ -1,5 +1,7 @@
 package com.svartifoss.snfell.view.watchface
 
+import com.svartifoss.snfell.common.AlbumArtSource
+
 import com.svartifoss.snfell.common.MiniButtonPlacement
 import com.svartifoss.snfell.common.OverlayBackdropResolver
 import com.svartifoss.snfell.common.MiscPreferences
@@ -54,18 +56,9 @@ internal object WatchSearchTargetResolver {
             "wear_artist_custom_color",
             "wear_artist_adaptive_contrast")
 
-    private val visualAodKeys = setOf(
-            "wear_aod_show_transport", "wear_aod_show_progress", "wear_aod_show_pills")
-
-    // Must match WatchFacePrefsFragment.updateAodDetailVisibility. An explicit allow-list also
-    // keeps removed/unknown persisted styles (notably legacy "minimal") on the safe Classic path.
-    private val visualAodStyles = setOf(
-            "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
-            "spectrum", "material", "immersive", "depth", "carousel", "chat", "split",
-            "note", "verse", "metadata", "ribbon", "frame")
-
-    private val artworkAodKeys = setOf(
-            "wear_aod_show_art", "wear_aod_art_treatment", "ambient_album_art_opacity")
+    // The ambient style rules are read from AodEditorModel rather than repeated here. They used to
+    // be a second copy of the list in WatchFacePrefsFragment.updateAodDetailVisibility, which is
+    // exactly how a decision list goes stale silently when a face is added.
 
     private val modePrerequisites = mapOf(
             "wear_aod_custom_color" to ModePrerequisite(
@@ -91,7 +84,25 @@ internal object WatchSearchTargetResolver {
             // result goes to the list, where every one of these values now lives.
             "wear_quick_panel_custom_color" to ModePrerequisite(
                     "wear_quick_panel_color_mode", setOf("normal", "custom"),
-                    WatchFacePrefsFragment.SECTION_COLORS))
+                    WatchFacePrefsFragment.SECTION_COLORS),
+            "wear_lyrics_custom_color" to ModePrerequisite(
+                    "wear_lyrics_color_mode", setOf("normal", "custom"),
+                    WatchFacePrefsFragment.SECTION_COLORS),
+            "wear_queue_custom_color" to ModePrerequisite(
+                    "wear_queue_color_mode", setOf("normal", "custom"),
+                    WatchFacePrefsFragment.SECTION_COLORS),
+            // The two file pickers behind the device-local artwork sources. Each is on screen only
+            // while its own source is selected, so a search that landed on one from any other
+            // source would find nothing - and unlike a colour mode, the prerequisite here is also
+            // the explanation: the row exists because that source needs a file named.
+            MiscPreferences.CUSTOM_ALBUM_ART_IMAGE.key to ModePrerequisite(
+                    MiscPreferences.WEAR_ALBUM_ART_SOURCE.key,
+                    setOf(AlbumArtSource.CUSTOM_IMAGE.preferenceValue),
+                    WatchFacePrefsFragment.SECTION_BACKGROUND),
+            MiscPreferences.CUSTOM_ALBUM_ART_FOLDER.key to ModePrerequisite(
+                    MiscPreferences.WEAR_ALBUM_ART_SOURCE.key,
+                    setOf(AlbumArtSource.CUSTOM_FOLDER.preferenceValue),
+                    WatchFacePrefsFragment.SECTION_BACKGROUND))
 
     fun resolve(
             section: String,
@@ -203,11 +214,11 @@ internal object WatchSearchTargetResolver {
             return redirect(WatchFacePrefsFragment.SECTION_COLORS, "wear_title_color_mode")
         }
 
-        val aodStyle = readString("wear_aod_style", "follow")
-        val effectiveAod = if (aodStyle == "follow") face else aodStyle
-        val visualAod = effectiveAod in visualAodStyles
-        if (key in visualAodKeys && !visualAod ||
-                key in artworkAodKeys && effectiveAod in setOf("chrono", "eclipse")) {
+        val effectiveAod = AodEditorModel.effectiveStyle(readString("wear_aod_style", "follow"), face)
+        val styleGatedAod = AodEditorModel.specs
+                .firstOrNull { it.key == key && it.control in AodEditorModel.STYLE_GATED_CONTROLS }
+        if (styleGatedAod != null &&
+                !AodEditorModel.appliesToStyle(styleGatedAod.control, effectiveAod)) {
             return redirect(WatchFacePrefsFragment.SECTION_AOD, "wear_aod_style")
         }
         if (key == "wear_aod_show_progress" &&

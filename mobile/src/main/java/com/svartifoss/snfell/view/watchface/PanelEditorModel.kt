@@ -8,7 +8,8 @@ internal enum class PanelTarget {
     VOLUME,
     SEEK,
     QUICK_PANEL,
-    QUEUE
+    QUEUE,
+    LYRICS
 }
 
 /**
@@ -19,7 +20,10 @@ internal enum class PanelTarget {
  * ring and the seek overlay are two different surfaces that happen to share a settings group.
  */
 internal enum class PanelControl {
+    /** The page-wide *Shared panel appearance* background. */
     BACKDROP,
+    /** One surface's own background, which may defer to [BACKDROP]. */
+    SURFACE_BACKDROP,
     BLUR,
     RING_STYLE,
     RING_LAYOUT,
@@ -183,7 +187,29 @@ internal object PanelEditorModel {
                     "queue_remote_artwork",
                     PanelTarget.QUEUE,
                     PanelControl.REMOTE_ARTWORK,
-                    PanelValueSpec.Toggle(true)))
+                    PanelValueSpec.Toggle(true)),
+
+            // Each surface may keep following the shared background above or name its own.
+            choice(
+                    MiscPreferences.WEAR_VOLUME_BACKDROP_STYLE,
+                    PanelTarget.VOLUME,
+                    PanelControl.SURFACE_BACKDROP),
+            choice(
+                    MiscPreferences.WEAR_PROGRESS_BACKDROP_STYLE,
+                    PanelTarget.SEEK,
+                    PanelControl.SURFACE_BACKDROP),
+            choice(
+                    MiscPreferences.WEAR_QUICK_PANEL_BACKDROP_STYLE,
+                    PanelTarget.QUICK_PANEL,
+                    PanelControl.SURFACE_BACKDROP),
+            choice(
+                    MiscPreferences.WEAR_QUEUE_BACKDROP_STYLE,
+                    PanelTarget.QUEUE,
+                    PanelControl.SURFACE_BACKDROP),
+            choice(
+                    MiscPreferences.WEAR_LYRICS_BACKDROP_STYLE,
+                    PanelTarget.LYRICS,
+                    PanelControl.SURFACE_BACKDROP))
 
     private val specsByKey: Map<String, PanelSettingSpec> =
             specs.associateBy(PanelSettingSpec::key).also { indexed ->

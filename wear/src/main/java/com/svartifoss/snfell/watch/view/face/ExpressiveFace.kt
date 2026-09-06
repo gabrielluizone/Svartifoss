@@ -152,8 +152,10 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
         if (state.showTitle || state.showArtist) {
             Column(
                     modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .padding(top = screen * 0.17f,
+                            .align(state.blockPlacement(Alignment.TopCenter))
+                                    .padding(horizontal = state.blockSafeSideInset(screen))
+                                    .padding(vertical = state.blockSafeVerticalInset(screen))
+                            .padding(top = state.blockDesignedTopPadding(screen * .17f),
                                     start = titleHorizontalPadding, end = titleHorizontalPadding)
                             // Bound the title block to the top section (17% top margin down to the
                             // ring top) and clip. Without this, a two-line "wrap" title plus artist
@@ -162,7 +164,7 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                             // controls. Ring top from screen top = center (0.5) minus half the ring.
                             .heightIn(max = (screen * 0.33f - ringBottom).coerceAtLeast(screen * 0.14f))
                             .clipToBounds(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
             ) {
                 if (state.showTitle) {
                     AdaptiveTitleText(
@@ -180,7 +182,7 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                 }
                 if (state.showArtist && state.artist.isNotEmpty()) {
                     Row(verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
+                            horizontalArrangement = state.blockArrangement(Arrangement.Center),
                             modifier = Modifier.padding(top = if (state.showTitle) 2.dp else 0.dp)) {
                         SourceIconGlyph(state, 13.dp, Color(state.artistColor))
                         ArtistLineText(
@@ -320,9 +322,14 @@ private fun ExpressiveAmbientFace(state: NowPlayingFaceState) {
             // center transport row, so switching into AOD does not make the text jump.
             Column(
                     modifier = Modifier
-                            .align(Alignment.TopCenter)
-                            .padding(top = screen * 0.17f, start = 26.dp, end = 26.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                            .align(state.blockPlacement(Alignment.TopCenter))
+                                    .padding(horizontal = state.blockSafeSideInset(screen))
+                                    .padding(vertical = state.blockSafeVerticalInset(screen))
+                            .padding(
+                                    top = state.blockDesignedTopPadding(screen * .17f),
+                                    start = 26.dp,
+                                    end = 26.dp),
+                    horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
             ) {
                 if (state.showTitle) {
                     Text(
@@ -339,7 +346,7 @@ private fun ExpressiveAmbientFace(state: NowPlayingFaceState) {
                 if (state.showArtist && state.artist.isNotEmpty()) {
                     Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center
+                            horizontalArrangement = state.blockArrangement(Arrangement.Center)
                     ) {
                         AmbientSourceIconGlyph(state, 13.dp, tint.copy(alpha = 0.55f * i))
                         Text(

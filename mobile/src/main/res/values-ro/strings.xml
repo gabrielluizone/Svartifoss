@@ -29,6 +29,9 @@
     <string name="dev_sync_watch_done">Setări sincronizate cu ceasul</string>
     <string name="dev_copy_debug_info">Copiază informațiile de depanare</string>
     <string name="dev_copy_debug_info_description">Copiază detaliile build-ului și ale dispozitivului în clipboard</string>
+    <string name="dev_export_defaults">Exportă drept setări implicite</string>
+    <string name="dev_export_defaults_description">Salvează această configurație ca default_config.json, starea de la care pornește o instalare nouă. Exclude istoricul, opțiunile de consimțământ și starea proprie a acestui telefon.</string>
+    <string name="dev_export_defaults_done">Setări implicite exportate (%1$s)</string>
     <string name="dev_show_archived">Afișează opțiunile arhivate</string>
     <string name="dev_show_archived_description">Dezvăluie aspectele și setările ceasului arhivate din cauza unor probleme cunoscute</string>
     <string name="dev_copy_debug_info_done">Informațiile de depanare au fost copiate</string>
@@ -238,6 +241,9 @@
     <string name="category_music_colors">Culori din muzică</string>
     <string name="preview_sample_title">Titlul piesei</string>
     <string name="preview_sample_artist">Numele artistului</string>
+    <string name="preview_sample_lyric_previous">Rândul anterior</string>
+    <string name="preview_sample_lyric_current">Rândul care se aude acum</string>
+    <string name="preview_sample_lyric_next">Rândul următor</string>
     <string name="preview_sample_next_title">Piesa următoare</string>
     <string name="preview_playback_stopped">Oprit</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -454,8 +460,6 @@
     <string name="wear_font_small_caps_description">Forme compacte în formă de majusculă, cu un aer editorial.</string>
     <string name="wear_font_casual">Casual</string>
     <string name="wear_font_casual_description">O familie de sistem manuscrisă și jucăușă.</string>
-    <string name="wear_font_typewriter">Mașină de scris (Arhivat)</string>
-    <string name="wear_font_typewriter_description">Un aspect retro de mașină de scris (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Un sans geometric rotunjit, o alternativă gratuită (OFL) în spiritul Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -521,6 +525,12 @@
     <string name="setting_wear_quick_panel_color">Culoare Acțiuni Rapide</string>
     <string name="setting_wear_quick_panel_custom_color">Culoare personalizată Acțiuni Rapide</string>
     <string name="setting_wear_quick_panel_custom_color_description">Alegeți culoarea Acțiunilor Rapide folosită cu tratamentul Normal</string>
+    <string name="setting_wear_lyrics_color">Culoarea versurilor</string>
+    <string name="setting_wear_lyrics_custom_color">Culoare personalizată a versurilor</string>
+    <string name="setting_wear_lyrics_custom_color_description">Alegeți culoarea versurilor folosită cu tratamentul Normal</string>
+    <string name="setting_wear_queue_color">Culoarea cozii</string>
+    <string name="setting_wear_queue_custom_color">Culoare personalizată a cozii</string>
+    <string name="setting_wear_queue_custom_color_description">Alegeți culoarea cozii folosită cu tratamentul Normal</string>
     <string name="setting_wear_shading_custom_color_description">Alegeți culoarea care colorează gradientul de umbrire</string>
 
     <string-array name="wear_accent_color_entries">
@@ -553,8 +563,10 @@
         <item>Notă</item>
         <item>Vers</item>
         <item>Metadata</item>
+        <item>Artist</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -575,8 +587,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Căutare Expressive</string>
@@ -610,6 +624,7 @@
         <item>Divizat</item>
         <item>Notă</item>
         <item>Vers</item>
+        <item>Artist</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -628,6 +643,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -730,6 +746,12 @@
 
     <string name="category_overlays_queue">Suprapuneri și coadă</string>
     <string name="setting_wear_overlay_backdrop_style">Fundal panou</string>
+    <string name="wear_backdrop_shared">Urmează fundalul comun</string>
+    <string name="setting_wear_volume_backdrop_style">Fundalul volumului</string>
+    <string name="setting_wear_progress_backdrop_style">Fundalul progresului</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Fundalul acțiunilor rapide</string>
+    <string name="setting_wear_queue_backdrop_style">Fundalul cozii</string>
+    <string name="setting_wear_lyrics_backdrop_style">Fundalul versurilor</string>
     <string name="setting_wear_volume_style">Stil volum</string>
     <string name="setting_wear_volume_layout">Aspect volum</string>
     <string name="setting_wear_quick_panel_style">Stil panou rapid</string>
@@ -1571,10 +1593,14 @@
     <string name="setting_wear_source_icon_scale">Dimensiune pictogramă aplicație</string>
     <string name="setting_wear_source_icon_opacity">Opacitate pictogramă aplicație</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 este greutatea normală a ecranului; valorile mai mari sunt mai îngroșate. Pentru Google Sans Flex, aceasta este chiar axa de greutate proprie a fontului</string>
-    <string name="setting_wear_typography_scale_description">Procent din dimensiunea proprie a ecranului (70–140). 100 păstrează dimensiunea proiectată a fiecărui aspect</string>
+    <string name="setting_wear_typography_scale_description">Procent din dimensiunea proprie a ecranului (1–300). 100 păstrează dimensiunea proiectată a fiecărui aspect</string>
     <string name="setting_wear_typography_opacity_description">Procent (20–100). 100 păstrează opacitatea proprie a ecranului</string>
     <string name="setting_wear_typography_tracking_description">Spațiu suplimentar între litere, în sutimi de em (de la −5 la 20). 0 păstrează spațierea proprie a fontului</string>
     <string name="setting_wear_color_modifier">Tonalitate</string>
+    <string name="setting_wear_title_color_modifier">Tonalitatea titlului</string>
+    <string name="setting_wear_artist_color_modifier">Tonalitatea artistului</string>
+    <string name="setting_wear_clock_color_modifier">Tonalitatea ceasului</string>
+    <string name="wear_color_modifier_follow">Urmează tonalitatea ceasului</string>
     <string name="setting_wear_color_modifier_description">Ajustează întreaga paletă fără a schimba modul în care este derivată — funcționează cu fiecare tratament de culoare</string>
     <string name="setting_wear_color_hue_shift">Rotire culoare</string>
     <string name="setting_wear_color_hue_shift_description">Rotește paleta albumului pe cercul cromatic, în grade (0–359). Fiecare tratament păstrează culoarea sa principală pe nuanța proprie a albumului, deci aceasta este cea care variază. 0 folosește culoarea albumului așa cum este; o culoare Normală fixă nu este niciodată rotită.</string>
@@ -1722,7 +1748,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1841,7 +1866,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1862,7 +1894,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1981,7 +2012,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
     <string-array name="wear_cover_shape_entries">
         <item>Rotunjit</item>
@@ -2180,6 +2218,7 @@
     <string name="category_wf_panel_seek">Panoul de progres și derulare</string>
     <string name="category_wf_panel_quick">Panoul Acțiuni rapide</string>
     <string name="category_wf_panel_queue">Coadă și liste</string>
+    <string name="category_wf_panel_lyrics">Versuri</string>
     <string name="category_wf_panel_effects">Efecte de panou</string>
     <string name="category_apps_content">Versuri și metadate</string>
     <string name="category_streaming_services">Scurtături de streaming</string>
@@ -2258,5 +2297,56 @@
         <item>Evidențiere</item>
         <item>Discret</item>
         <item>Bloc</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Urmează fața</item>
+        <item>Început</item>
+        <item>Centrat</item>
+        <item>Sfârșit</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Urmează fața</item>
+        <item>Sus</item>
+        <item>Mijloc</item>
+        <item>Jos</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Static (o linie, fără derulare sau micșorare)</item>
+        <item>Derulare (marquee)</item>
+        <item>Micșorare pentru a se încadra</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>Din aplicația muzicală</item>
+        <item>Căutată online</item>
+        <item>Fotografia artistului</item>
+        <item>Imagine din galeria mea</item>
+        <item>Aleatoriu dintr-un folder</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

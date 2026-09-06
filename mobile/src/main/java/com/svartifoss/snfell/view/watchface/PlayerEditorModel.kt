@@ -3,6 +3,7 @@ package com.svartifoss.snfell.view.watchface
 import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.TrackMetadataFields
 
 /**
@@ -46,6 +47,8 @@ internal enum class PlayerControl {
     ALWAYS_SHOW_TIME,
     CAROUSEL_SHAPE,
     TITLE_CENTERED,
+    TEXT_BLOCK_ALIGN,
+    TEXT_BLOCK_POSITION,
     NOTE_COVER_SHAPE,
     NOTE_SHOW_COVER,
     CHAT_COVER_SHAPE,
@@ -134,6 +137,9 @@ internal object PlayerEditorModel {
      * rather than as inapplicable. The same rule Carousel's card shape and Split's panel follow.
      */
     val TITLE_CENTERED_FACES: Set<String> = setOf("classic", "poster", "studio")
+    // Matejdro is deliberately absent: its two bands already fill the whole text area, so there is
+    // no slack for the anchor to slide into and `applyClassicTitleAnchor` skips the face outright.
+    // Offering the row would be offering a switch that provably moves nothing.
 
     /**
      * Faces whose own composition draws icon glyphs [MiscPreferences.WEAR_SCREEN_THEME] actually
@@ -153,7 +159,19 @@ internal object PlayerEditorModel {
      */
     val CONTROL_STYLE_FACES: Set<String> = setOf(
             "classic", "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
-            "spectrum", "material", "frame", "ribbon")
+            // Matejdro is the second View face and draws Classic's four quadrant hints through the
+            // very same `applyScreenThemeNow` branch, so the picker restyles it identically.
+            "spectrum", "material", "frame", "ribbon", "matejdro")
+
+    /**
+     * Frame and Ribbon keep title, artist and time in independent fixed card/rail bands. A shared
+     * placement choice can therefore only move one of them, which is worse than not offering the
+     * choice: it makes the row appear broken and can put text over the artwork. Every other face
+     * has a movable metadata container (or the View-based Classic gravity), so it may expose the
+     * two block controls.
+     */
+    val TEXT_BLOCK_PLACEMENT_FACES: Set<String> =
+            ThemeAppearance.ALLOWED_BASE_FACES - setOf("frame", "ribbon")
 
     val specs: List<PlayerSettingSpec> = listOf(
             // The face leads because it is the page's subject rather than one setting among many:
@@ -225,6 +243,21 @@ internal object PlayerEditorModel {
                     MiscPreferences.WEAR_TITLE_CENTERED,
                     PlayerControl.TITLE_CENTERED,
                     R.string.player_element_title_centered),
+            /*
+             * Applies to faces with one movable metadata container.
+             *
+             * Frame and Ribbon deliberately remain absent: their metadata is in separate fixed
+             * bands, so an override cannot move title, artist and time together. `follow` still
+             * protects all supported faces from visual change until the user picks an override.
+             */
+            choice(
+                    MiscPreferences.WEAR_TEXT_BLOCK_ALIGN,
+                    PlayerSlot.CHOICE,
+                    PlayerControl.TEXT_BLOCK_ALIGN),
+            choice(
+                    MiscPreferences.WEAR_TEXT_BLOCK_POSITION,
+                    PlayerSlot.CHOICE,
+                    PlayerControl.TEXT_BLOCK_POSITION),
             element(
                     MiscPreferences.WEAR_NOTE_SHOW_COVER,
                     PlayerControl.NOTE_SHOW_COVER,
@@ -304,6 +337,8 @@ internal object PlayerEditorModel {
         PlayerControl.SCREEN_THEME -> face in CONTROL_STYLE_FACES
         PlayerControl.QUADRANT_FLASH -> face == "classic"
         PlayerControl.TITLE_CENTERED -> face in TITLE_CENTERED_FACES
+        PlayerControl.TEXT_BLOCK_ALIGN, PlayerControl.TEXT_BLOCK_POSITION ->
+                face in TEXT_BLOCK_PLACEMENT_FACES
         PlayerControl.CAROUSEL_SHAPE -> face == "carousel"
         PlayerControl.NOTE_COVER_SHAPE, PlayerControl.NOTE_SHOW_COVER -> face == "note"
         PlayerControl.CHAT_COVER_SHAPE, PlayerControl.CHAT_SHOW_COVER -> face == "chat"

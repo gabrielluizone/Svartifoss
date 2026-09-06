@@ -7,6 +7,7 @@ import com.svartifoss.snfell.actions.OpenPlaylistShortcutsAction
 import com.svartifoss.snfell.actions.OpenLibraryAction
 import com.svartifoss.snfell.actions.OpenLyricsAction
 import com.svartifoss.snfell.actions.OpenSearchHistoryAction
+import com.svartifoss.snfell.actions.PlayDeezerFlowAction
 import com.svartifoss.snfell.actions.PlayLikedSongsAction
 import com.svartifoss.snfell.actions.PlayLikedSongsShuffledAction
 import com.svartifoss.snfell.actions.PlaySoundCloudLikesAction
@@ -202,6 +203,11 @@ abstract class ActionHandlersModule {
     @IntoMap
     @ClassKey(PlaySoundCloudLikesAction::class)
     abstract fun bindPlaySoundCloudLikesActionsHandler(handler: PlaySoundCloudLikesAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
+    @ClassKey(PlayDeezerFlowAction::class)
+    abstract fun bindPlayDeezerFlowActionsHandler(handler: PlayDeezerFlowAction.Handler): ActionHandler<*>
 
     @Binds
     @IntoMap

@@ -54,6 +54,22 @@ message MusicState {
   // back to the old subtraction. positionUpdateTime is still sent for exactly the same reason in
   // reverse: watch builds from before this change read only that.
   optional int64 positionAgeMs = 19 [default = -1];
+
+  // True when CommPaths.ASSET_BACKDROP_ART is attached to this put - the picture the face asked
+  // for in place of the sleeve (the performing artist, or a cover looked up online).
+  //
+  // The flag is needed because *absent* has two meanings the watch must not confuse. The phone only
+  // looks one up while such a source is selected, so "no asset" is usually "nobody asked for one";
+  // but a lookup that ran and found nothing is also "no asset", and in that case the face has to
+  // stop waiting and fall back to the player's own cover. See backdropArtPending for the third.
+  optional bool hasBackdropArt = 20 [default = false];
+
+  // Set on a put made while that lookup is still outstanding - the same "it is coming, keep what
+  // you have" signal albumArtPending gives for the cover, and needed for the same reason: the
+  // lookup is a network round trip on the phone, so the first state for a new track routinely
+  // arrives before it. Without it the face blanks the backdrop on every track change and fills it a
+  // moment later, which reads as flicker rather than as loading.
+  optional bool backdropArtPending = 21 [default = false];
 }
 
 message MediaAction {

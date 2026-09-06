@@ -30,7 +30,7 @@ the fork.
   <img src="docs/images/watch-expressive-blue.jpg" width="215" alt="Expressive face, album-derived palette" />
   <img src="docs/images/watch-poster.jpg" width="215" alt="Poster face, full-bleed album art" />
 </p>
-<p align="center"><em>Same watch, three of the twenty built-in faces &mdash; each one built from whatever's playing</em></p>
+<p align="center"><em>Same watch, three of the twenty-two built-in faces &mdash; each one built from whatever's playing</em></p>
 
 ## Contents
 
@@ -46,13 +46,13 @@ the fork.
 
 | | |
 |---|---|
-| **Twenty now-playing faces** | Classic, Expressive, and a curated collection (Poster, Studio, Vinyl, Halo, Aurora, Eclipse, Spectrum, Material, Depth, Carousel, Chat, Split, Note, the lyric-following Verse, the detail-listing Metadata, the Spotify-style Immersive layout, the queue-art Ribbon and the framed Frame) — each one builds its gradients, accents and progress treatment from the album art actually playing. An optional edge progress ring can be made draggable on every layout, with optional rotary-crown seek. Title and artist can each be hidden independently, with configurable sizing/marquee behavior. |
+| **Twenty-two now-playing faces** | Classic, MatejDro (a tribute to the original WearMusicCenter this app forked from), Expressive, and a curated collection (Poster, Studio, Vinyl, Halo, Aurora, Eclipse, Spectrum, Material, Depth, Carousel, Chat, Split, Note, the lyric-following Verse, the detail-listing Metadata, the performer-forward Artist, the Spotify-style Immersive layout, the queue-art Ribbon and the framed Frame) — each one builds its gradients, accents and progress treatment from the album art actually playing. An optional edge progress ring can be made draggable on every layout, with optional rotary-crown seek. Title and artist can each be hidden independently, with configurable sizing/marquee behavior. |
 | **Configurable input** | Assign any supported action — play/pause, skip, volume, shuffle, repeat (including repeat-one), like/favorite, search, playlist shortcuts, Tasker tasks, opening another app — to physical buttons, screen quadrants (tap zones), swipe gestures (up/down/left), or the now-configurable center tap. |
 | **Quick actions panel** | Four distinct layouts — Arc, Hero, Grid, and Labelled rows — each in a choice of styles, from full glass containers down to a bare accent marker. Slots can be manually assigned or mirror the current media notification's real actions and icons. |
 | **Queue and play history** | Browse the app's real playback queue when one is exposed, or fall back to a locally tracked play-history list when it isn't. A dozen+ visual styles, including cover-art rows that mirror each entry's own artwork. |
 | **Full action menu** | A full-screen list for anything not bound to a button or gesture. |
 | **Search** | Trigger a voice or keyboard search against the currently playing app's media library directly from the watch, with a history of past searches you can replay or delete. |
-| **Playlist shortcuts that actually play** | Save links from Spotify, YouTube Music, Apple Music, TIDAL, Deezer, Amazon Music or SoundCloud — the watch drives real playback through progressively stronger contracts (an active session, the app's background media browser, then a visible fallback), so a shortcut starts playing instead of just opening a link. A second Tile lists them as tappable chips. |
+| **Playlist shortcuts that actually play** | Save links from YouTube Music, Spotify, Deezer, TIDAL, Apple Music, Amazon Music, SoundCloud, Qobuz, Bandcamp, Audiomack, Mixcloud or Pandora. The watch first tries an active session and the app's background media browser; when a service declines those contracts, it falls back to visibly opening the link. A second Tile lists the shortcuts as tappable chips. |
 | **Glanceable surfaces** | A media Tile (track info, transport, ±10s seek) that follows the album's accent color, a Shortcuts Tile for one-tap playlist access, and a watch-face complication showing the current album art / title. |
 
 <p align="center">
@@ -127,9 +127,11 @@ the fork.
 - Custom icon picker and color picker for personalizing actions.
 - A redesigned **Streaming shortcuts** screen: live link inspection,
   share/clipboard input, drag reordering, Open now / Copy link / Undo after
-  deletion, and recognized links across seven services. An optional,
-  off-by-default toggle fetches each shortcut's real cover art once from the
-  service's public preview data.
+  deletion, and recognized links across twelve services. The action picker also
+  includes the account-wide Deezer Flow route alongside the existing YouTube
+  Music, Spotify and SoundCloud library shortcuts. An optional,
+  off-by-default toggle fetches a shortcut's real cover art once when its
+  service exposes public preview data.
 - **14 languages**: English, Brazilian Portuguese, European Portuguese,
   German, Spanish, Italian, Dutch, Russian, Greek, Romanian, Indonesian,
   Persian, Simplified Chinese, and Icelandic — covering both apps and their

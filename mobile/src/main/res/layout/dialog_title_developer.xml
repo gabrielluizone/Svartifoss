@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The "About the developer" dialog title: the photo, then the name. Used through
+    setCustomTitle because setTitle + setIcon would size the picture to the platform's 32dp
+    icon slot, which reads as a badge next to the text rather than as a portrait.
+
+    Padding is ?attr/dialogPreferredPadding rather than a literal, so the name stays on the
+    same left edge as the message underneath it whatever the dialog theme resolves it to.
+    The photo is decorative - the name it introduces is the very next view - so it is left
+    out of the accessibility tree instead of being given a description to read aloud.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="?attr/dialogPreferredPadding"
+    android:paddingTop="20dp"
+    android:paddingEnd="?attr/dialogPreferredPadding"
+    android:paddingBottom="6dp">
+
+    <ImageView
+        android:id="@+id/developer_avatar"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:importantForAccessibility="no"
+        android:scaleType="fitCenter" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:fontFamily="@font/google_sans"
+        android:includeFontPadding="false"
+        android:text="@string/about_developer_dialog_title"
+        android:textColor="@color/lyra_on_surface"
+        android:textSize="19sp" />
+
+</LinearLayout>

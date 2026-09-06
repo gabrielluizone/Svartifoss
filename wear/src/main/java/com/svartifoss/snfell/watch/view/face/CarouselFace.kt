@@ -210,7 +210,7 @@ private fun CarouselFrameContent(
                                     end = screen * artistInset)
                             .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = state.blockArrangement(Arrangement.Center)
             ) {
                 // Through the shared glyph, like every other Compose face. Carousel drew its own
                 // copy, which centre-CROPPED the bitmap inside a circle and never tinted it - but
@@ -283,17 +283,19 @@ private fun CarouselFrameContent(
         }
 
         Column(
-                Modifier.align(Alignment.TopCenter)
+                Modifier.align(state.blockPlacement(Alignment.TopCenter))
+                        .padding(horizontal = state.blockSafeSideInset(screen))
+                        .padding(vertical = state.blockSafeVerticalInset(screen))
                         // Anchored just below the card rather than to the bottom edge, and inset by
                         // the real chord at the depth the text actually reaches - see titleInset.
                         // Sitting against the cover also reads as one block instead of two things
                         // floating apart.
                         .padding(
-                                top = screen * TITLE_TOP,
+                                top = state.blockDesignedTopPadding(screen * TITLE_TOP),
                                 start = screen * titleInset,
                                 end = screen * titleInset)
                         .fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
         ) {
             if (state.showTitle) {
                 AdaptiveTitleText(
@@ -427,10 +429,13 @@ private fun CarouselAmbient(state: NowPlayingFaceState) {
         }
         if (state.ambientShowTrackInfo && (state.showTitle || state.showArtist)) {
             Column(
-                    Modifier.align(Alignment.BottomCenter)
-                            .padding(bottom = screen * geo.TEXT_BOTTOM_FRACTION)
+                    Modifier.align(state.blockPlacement(Alignment.BottomCenter))
+                            .padding(horizontal = state.blockSafeSideInset(screen))
+                            .padding(vertical = state.blockSafeVerticalInset(screen))
+                            .padding(bottom = state.blockDesignedBottomPadding(
+                                    screen * geo.TEXT_BOTTOM_FRACTION))
                             .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
             ) {
                 if (state.showTitle) {
                     Text(state.title.uppercase(),

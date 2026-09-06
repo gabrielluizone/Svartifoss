@@ -19,6 +19,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentContainerView
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.view.applyLyraDialogStyling
 import com.svartifoss.snfell.view.settings.lyraRuntimeAccent
 import com.svartifoss.snfell.actions.NullAction
 import com.svartifoss.snfell.actions.PhoneAction
@@ -329,6 +330,7 @@ class GesturePickerFragment : DialogFragment() {
                     .setMessage(R.string.icon_selection_no_icon_pack)
                     .setPositiveButton(android.R.string.ok, null)
                     .show()
+                    .applyLyraDialogStyling(accent = lyraRuntimeAccent())
         }
     }
 
@@ -342,6 +344,7 @@ class GesturePickerFragment : DialogFragment() {
                             REQUEST_CODE_PICK_ACTION)
                 }
                 .show()
+                .applyLyraDialogStyling(accent = lyraRuntimeAccent())
 
     }
 

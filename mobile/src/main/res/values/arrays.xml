@@ -70,7 +70,6 @@
         <item>condensed_light</item>
         <item>condensed_medium</item>
         <item>cursive</item>
-        <item>typewriter</item>
         <item>poppins</item>
         <item>montserrat</item>
         <item>marcellus</item>
@@ -190,6 +189,11 @@
         <item>kumbh_sans</item>
         <item>alegreya</item>
         <item>assistant</item>
+        <item>roboto_thin</item>
+        <item>roboto_light</item>
+        <item>roboto_medium</item>
+        <item>roboto_black</item>
+        <item>roboto_condensed</item>
     </string-array>
     <string-array name="streaming_open_mode_values" translatable="false">
         <item>app</item>

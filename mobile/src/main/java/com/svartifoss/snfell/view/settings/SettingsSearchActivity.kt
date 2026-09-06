@@ -55,6 +55,7 @@ class SettingsSearchActivity : AppCompatActivity() {
         val accent = LyraAccent.resolve(this)
         message = findViewById(R.id.search_message)
         input = findViewById(R.id.search_input)
+        LyraAccent.applyToEditText(input, accent)
         clearButton = findViewById(R.id.button_clear)
 
         val recycler = findViewById<RecyclerView>(R.id.recycler)

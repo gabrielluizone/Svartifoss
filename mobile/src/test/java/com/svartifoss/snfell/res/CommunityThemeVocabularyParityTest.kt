@@ -6,6 +6,7 @@ import org.json.JSONObject
 import com.svartifoss.snfell.common.BackgroundLayerColor
 import com.svartifoss.snfell.common.BackgroundLayerKind
 import com.svartifoss.snfell.common.BackgroundLayerStack
+import com.svartifoss.snfell.common.DeviceLocalAppearance
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
@@ -66,7 +67,9 @@ class CommunityThemeVocabularyParityTest {
 
         eachPicker { key, setName, offered, accepted, archived, source ->
             checked++
-            val rejected = offered.filterNot { it in accepted || it in archived }
+            val rejected = offered.filterNot {
+                it in accepted || it in archived || DeviceLocalAppearance.isDeviceLocal(key, it)
+            }
             if (rejected.isNotEmpty()) {
                 problems += "$key ($source) offers ${rejected.size} value(s) that value set " +
                         "\"$setName\" rejects: " + rejected.joinToString(", ")
@@ -108,6 +111,97 @@ class CommunityThemeVocabularyParityTest {
                     "common/src/main/assets/community-theme-constraints.json, or stop archiving " +
                     "them in WatchFacePrefsFragment.")
         }
+    }
+
+    /**
+     * The values that name a file on this phone must stay outside the public vocabulary.
+     *
+     * They are the third category the two sweeps above do not cover: offered, current, and
+     * permanently unpublishable - not archived, and not a gap in the contract. The exemption is
+     * derived from [DeviceLocalAppearance] rather than typed here, so this is the check that keeps
+     * the derivation honest in the other direction. Adding `custom_image` or `user_font` to the
+     * constraints asset would make a theme submittable whose font or picture cannot travel with it,
+     * and the recipient would install it and see a typeface, or a background, they have never had.
+     *
+     * The font keys are checked through the derived pickers rather than the XML rows: the six font
+     * controls are built in code from the global catalogue, so `user_font` never appears in a
+     * `values/` array at all.
+     */
+    @Test
+    fun everyDeviceLocalValueIsRefusedByThePublicVocabulary() {
+        val problems = mutableListOf<String>()
+        var checkedKeys = 0
+
+        eachPicker { key, setName, _, accepted, _, _ ->
+            val deviceLocal = DeviceLocalAppearance.VALUES_BY_KEY[key] ?: return@eachPicker
+            checkedKeys++
+            val leaked = deviceLocal.filter { it in accepted }
+            if (leaked.isNotEmpty()) {
+                problems += "$key may hold ${leaked.sorted().joinToString(", ")}, which name a " +
+                        "file on this phone, but value set \"$setName\" accepts them"
+            }
+        }
+
+        // The derived font pickers are keyed by their own set names rather than by a preference
+        // key, so they are swept separately - and they are the ones that matter, since the
+        // imported font is selectable from all six font controls.
+        val fontSets = DERIVED_FONT_PICKERS.keys
+        eachPicker { key, setName, _, accepted, _, _ ->
+            if (key !in fontSets) return@eachPicker
+            checkedKeys++
+            if (DeviceLocalAppearance.USER_FONT_KEY in accepted) {
+                problems += "value set \"$setName\" accepts " +
+                        "${DeviceLocalAppearance.USER_FONT_KEY}, the user's own imported typeface"
+            }
+        }
+
+        assertTrue(
+                "no device-local settings were swept - has DeviceLocalAppearance.VALUES_BY_KEY " +
+                        "stopped naming keys these pickers declare?",
+                checkedKeys > 0)
+        if (problems.isNotEmpty()) {
+            fail("Public vocabulary accepts values that only exist on one phone:\n  " +
+                    problems.joinToString("\n  ") +
+                    "\nRemove them from common/src/main/assets/community-theme-constraints.json. " +
+                    "A theme carrying one of these cannot be reproduced by anyone else - the font " +
+                    "file and the picture are not in the profile and cannot be.")
+        }
+    }
+
+    /**
+     * The two device-local artwork sources stay archived, and the imported font stays out of the
+     * catalogue array.
+     *
+     * A decision rather than an invariant, pinned here for the reason
+     * `AppearancePreferenceScopingTest.DELIBERATELY_GLOBAL` is: both features shipped, did not work
+     * in practice, and were hidden behind the developer switch rather than deleted - so the values
+     * still resolve, saved themes still render, and anyone who had selected one keeps their picker
+     * legible. Un-archiving them is a real choice about shipping them again, and changing this test
+     * is where that choice gets made.
+     *
+     * The font has no `archived*` entry to check because it has no `wear_font_values` entry either:
+     * `WatchFacePrefsFragment.importedFontChoice` injects its row at runtime and gates it on the
+     * same switch. What is checked here is that it has not quietly been added to the array, which
+     * would put it back in every picker unconditionally.
+     */
+    @Test
+    fun theDeviceLocalAppearanceOptionsStayArchived() {
+        val archived = archivedOptionSets()["archivedAlbumArtSources"]
+        assertEquals(
+                "the two device-local album-art sources should be archived",
+                setOf("custom_image", "custom_folder"),
+                archived)
+        assertEquals(
+                "wear_album_art_source should be filtered against archivedAlbumArtSources",
+                "archivedAlbumArtSources",
+                archivedSetNamesByPreferenceKey()["wear_album_art_source"])
+
+        val fonts = stringArrays()[FONT_ARRAY].orEmpty()
+        assertTrue(
+                "the imported font is injected at runtime and gated on the archived switch; " +
+                        "adding it to @array/$FONT_ARRAY would offer it in every picker " +
+                        "unconditionally",
+                DeviceLocalAppearance.USER_FONT_KEY !in fonts)
     }
 
     /**

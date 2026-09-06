@@ -16,11 +16,11 @@ import org.json.JSONException
 import org.json.JSONObject
 import timber.log.Timber
 
-/** One user-defined playlist shortcut shown on the watch: display name + deep link to open. */
+/** One user-defined streaming shortcut shown on the watch: display name + link to open. */
 data class PlaylistShortcut(val name: String, val link: String)
 
 /**
- * Persists the playlist shortcuts as a JSON array in the default SharedPreferences. Configured
+ * Persists streaming shortcuts as a JSON array in the default SharedPreferences. Configured
  * in [com.svartifoss.snfell.view.settings.PlaylistShortcutsActivity], read by
  * [com.svartifoss.snfell.actions.OpenPlaylistShortcutsAction] when the watch asks for
  * the list.
@@ -58,6 +58,11 @@ object PlaylistShortcutStorage {
             StreamingService.APPLE_MUSIC -> context.getString(R.string.playlist_source_apple_music)
             StreamingService.AMAZON_MUSIC -> context.getString(R.string.playlist_source_amazon_music)
             StreamingService.SOUNDCLOUD -> context.getString(R.string.playlist_source_soundcloud)
+            StreamingService.QOBUZ -> context.getString(R.string.playlist_source_qobuz)
+            StreamingService.BANDCAMP -> context.getString(R.string.playlist_source_bandcamp)
+            StreamingService.AUDIOMACK -> context.getString(R.string.playlist_source_audiomack)
+            StreamingService.MIXCLOUD -> context.getString(R.string.playlist_source_mixcloud)
+            StreamingService.PANDORA -> context.getString(R.string.playlist_source_pandora)
             StreamingService.GENERIC -> if (host.isNotBlank()) host.removePrefix("www.")
                 else context.getString(R.string.playlist_source_link)
         }

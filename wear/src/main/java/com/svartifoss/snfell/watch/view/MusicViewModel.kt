@@ -186,6 +186,18 @@ class MusicViewModel @Inject constructor(
         get() = phoneConnection.sourceIcon
 
     /**
+     * The picture the phone resolved for a non-local artwork source, when there is one.
+     *
+     * A plain passthrough, unlike [albumArt]: there is nothing to predict here. It is published
+     * beside the cover rather than in place of it because the substitution is the *host's*
+     * decision - [MainActivity] feeds whichever of the two the selected source calls for into the
+     * one artwork pipeline, so the background styles, filters, shading and the album-accent palette
+     * all operate on the picture actually on screen. A face never has to ask which it is looking at.
+     */
+    val backdropArt
+        get() = phoneConnection.backdropArt
+
+    /**
      * One position update, with no follow-up scheduled.
      *
      * Relies on [setContinuousPositionTicking] having been turned off first: the tick reschedules
@@ -411,6 +423,10 @@ class MusicViewModel @Inject constructor(
         phoneConnection.playbackClock.anchorLocally(positionMs, playing)
         phoneConnection.requestPlaybackResync()
     }
+
+    /** For the developer overlay ([MiscPreferences.WEAR_DEV_SHOW_PLAYER_INFO]) - see
+     *  [com.svartifoss.snfell.watch.communication.PlaybackSyncDiagnostics]. */
+    fun playbackSyncDiagnostics() = phoneConnection.playbackClock.diagnostics()
 
     private fun tickPlaybackPosition() {
         val state = latestMusicState

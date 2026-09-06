@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">Баптаулар сағатпен синхрондалды</string>
     <string name="dev_copy_debug_info">Жөндеу ақпаратын көшіру</string>
     <string name="dev_copy_debug_info_description">Құрастыру және құрылғы мәліметтерін алмасу буферіне көшіру</string>
+    <string name="dev_export_defaults">Қолданбаның әдепкі күйі ретінде экспорттау</string>
+    <string name="dev_export_defaults_description">Осы бапталымды default_config.json ретінде сақтайды — жаңа орнату басталатын күй. Тарих, келісім таңдаулары және осы телефонның өз күйі кірмейді.</string>
+    <string name="dev_export_defaults_done">Әдепкі күй экспортталды (%1$s)</string>
     <string name="dev_show_archived">Мұрағатталған параметрлерді көрсету</string>
     <string name="dev_show_archived_description">Белгілі мәселелерге байланысты мұрағатталған сағат орналасулары мен баптауларын көрсету</string>
     <string name="dev_copy_debug_info_done">Жөндеу ақпараты көшірілді</string>
@@ -286,6 +289,9 @@ Svartifoss — Исландиядағы сарқыраманы
     <string name="setting_wear_font_flex_roundness_description">Сызық ұштарын өткірден (0) толық дөңгелекке (100) дейін араластырып, жұмсақ көрініс береді.</string>
     <string name="preview_sample_title">Ән атауы</string>
     <string name="preview_sample_artist">Орындаушы аты</string>
+    <string name="preview_sample_lyric_previous">Алдыңғы жол</string>
+    <string name="preview_sample_lyric_current">Қазір ойнап тұрған жол</string>
+    <string name="preview_sample_lyric_next">Келесі жол</string>
     <string name="preview_sample_next_title">Келесі ән</string>
     <string name="preview_playback_stopped">Тоқтатылды</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -558,8 +564,6 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
     <string name="wear_font_small_caps_description">Редакциялық әсері бар ықшам бас әріп пішіндері.</string>
     <string name="wear_font_casual">Еркін</string>
     <string name="wear_font_casual_description">Ойыншыл қолжазба жүйелік қарпі.</string>
-    <string name="wear_font_typewriter">Баспа машинасы (мұрағатталған)</string>
-    <string name="wear_font_typewriter_description">Ретро баспа машинасы көрінісі (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Circular рухындағы тегін (OFL) балама — дөңгелек геометриялық sans.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -625,6 +629,12 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
     <string name="setting_wear_quick_panel_color">Quick Actions түсі</string>
     <string name="setting_wear_quick_panel_custom_color">Quick Actions арнаулы түсі</string>
     <string name="setting_wear_quick_panel_custom_color_description">Normal өңдеуінде қолданылатын Quick Actions түсін таңдаңыз</string>
+    <string name="setting_wear_lyrics_color">Ән мәтінінің түсі</string>
+    <string name="setting_wear_lyrics_custom_color">Ән мәтінінің арнаулы түсі</string>
+    <string name="setting_wear_lyrics_custom_color_description">Normal өңдеуінде қолданылатын ән мәтінінің түсін таңдаңыз</string>
+    <string name="setting_wear_queue_color">Кезектің түсі</string>
+    <string name="setting_wear_queue_custom_color">Кезектің арнаулы түсі</string>
+    <string name="setting_wear_queue_custom_color_description">Normal өңдеуінде қолданылатын кезек түсін таңдаңыз</string>
     <string name="setting_wear_shading_custom_color_description">Көлеңке градиентін бояйтын түсті таңдаңыз</string>
 
     <string-array name="wear_accent_color_entries">
@@ -657,8 +667,10 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
         <item>Жазба</item>
         <item>Өлең</item>
         <item>Метадеректер</item>
+        <item>Орындаушы</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -679,8 +691,10 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Expressive іздеу</string>
@@ -714,6 +728,7 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
         <item>Бөлінген</item>
         <item>Жазба</item>
         <item>Өлең</item>
+        <item>Орындаушы</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -732,6 +747,7 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -838,8 +854,15 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
     <string name="category_wf_panel_seek">Прогресс және іздеу панелі</string>
     <string name="category_wf_panel_quick">Жылдам әрекеттер панелі</string>
     <string name="category_wf_panel_queue">Кезек және тізімдер</string>
+    <string name="category_wf_panel_lyrics">Ән мәтіні</string>
     <string name="category_wf_panel_effects">Панель әсерлері</string>
     <string name="setting_wear_overlay_backdrop_style">Панель фоны</string>
+    <string name="wear_backdrop_shared">Ортақ панель фонын қадағалау</string>
+    <string name="setting_wear_volume_backdrop_style">Дыбыс фоны</string>
+    <string name="setting_wear_progress_backdrop_style">Прогресс фоны</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Жылдам әрекеттер фоны</string>
+    <string name="setting_wear_queue_backdrop_style">Кезек фоны</string>
+    <string name="setting_wear_lyrics_backdrop_style">Ән мәтінінің фоны</string>
     <string name="setting_wear_volume_style">Дыбыс стилі</string>
     <string name="setting_wear_volume_layout">Дыбыс орналасуы</string>
     <string name="setting_wear_quick_panel_style">Жылдам панель стилі</string>
@@ -927,10 +950,14 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
     <string name="setting_wear_source_icon_scale">Қолданба белгішесінің өлшемі</string>
     <string name="setting_wear_source_icon_opacity">Қолданба белгішесінің мөлдірлігі</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 — циферблаттың қалыпты қалыңдығы; жоғарысы қалыңырақ. Google Sans Flex үшін бұл қаріптің өз weight осі</string>
-    <string name="setting_wear_typography_scale_description">Циферблаттың өз өлшемінің пайызы (70–140). 100 әр орналасудың жобаланған өлшемін сақтайды</string>
+    <string name="setting_wear_typography_scale_description">Циферблаттың өз өлшемінің пайызы (1–300). 100 әр орналасудың жобаланған өлшемін сақтайды</string>
     <string name="setting_wear_typography_opacity_description">Пайыз (20–100). 100 циферблаттың өз мөлдірлігін сақтайды</string>
     <string name="setting_wear_typography_tracking_description">Әріптер арасындағы қосымша бос орын, em-нің жүзден бір бөлігінде (−5-тен 20-ға дейін). 0 қаріптің өз аралығын сақтайды</string>
     <string name="setting_wear_color_modifier">Реңк</string>
+    <string name="setting_wear_title_color_modifier">Атау реңкі</string>
+    <string name="setting_wear_artist_color_modifier">Орындаушы реңкі</string>
+    <string name="setting_wear_clock_color_modifier">Сағат реңкі</string>
+    <string name="wear_color_modifier_follow">Сағат реңкін қадағалау</string>
     <string name="setting_wear_color_modifier_description">Палитраның қалай алынатынын өзгертпей түгел реттеңіз — барлық түс өңдеуімен жұмыс істейді</string>
     <string name="setting_wear_color_hue_shift">Түс ығысуы</string>
     <string name="setting_wear_color_hue_shift_description">Альбом палитрасын түс шеңбері бойымен градуспен (0–359) бұрады. Әр өңдеу негізгі түсін альбомның өз реңкінде ұстайды, сондықтан оны осы параметр өзгертеді. 0 альбом түсін сол күйінде пайдаланады; тұрақты Normal түс ешқашан ығыспайды.</string>
@@ -1323,7 +1350,6 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1442,7 +1468,14 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1463,7 +1496,6 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1582,7 +1614,14 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">Кітапхананы шолу</string>
@@ -2292,5 +2331,56 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
         <item>Маркер</item>
         <item>Жеңіл</item>
         <item>Тұтас</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Циферблатты қолдану</item>
+        <item>Басы</item>
+        <item>Ортасында</item>
+        <item>Соңы</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Циферблатты қолдану</item>
+        <item>Жоғарыда</item>
+        <item>Ортада</item>
+        <item>Төменде</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Тұрақты (бір жол, айналдыру не кішірейту жоқ)</item>
+        <item>Айналдыру (marquee)</item>
+        <item>Сыйғанша кішірейту</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>Музыка қолданбасынан</item>
+        <item>Онлайн ізделген</item>
+        <item>Орындаушы суреті</item>
+        <item>Галереямдағы сурет</item>
+        <item>Қалтадан кездейсоқ</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

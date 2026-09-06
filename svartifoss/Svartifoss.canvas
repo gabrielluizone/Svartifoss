@@ -1,0 +1,243 @@
+{
+  "nodes": [
+    {
+      "id": "home",
+      "type": "file",
+      "file": "Home.md",
+      "x": 0,
+      "y": 0,
+      "width": 400,
+      "height": 260
+    },
+    {
+      "id": "product",
+      "type": "file",
+      "file": "01-product/product-map.md",
+      "x": -920,
+      "y": -420,
+      "width": 360,
+      "height": 220,
+      "color": "4"
+    },
+    {
+      "id": "architecture",
+      "type": "file",
+      "file": "02-architecture/architecture-map.md",
+      "x": -920,
+      "y": 0,
+      "width": 360,
+      "height": 220,
+      "color": "2"
+    },
+    {
+      "id": "codebase",
+      "type": "file",
+      "file": "03-codebase/codebase-map.md",
+      "x": -920,
+      "y": 420,
+      "width": 360,
+      "height": 220,
+      "color": "6"
+    },
+    {
+      "id": "development",
+      "type": "file",
+      "file": "04-development/development-map.md",
+      "x": 920,
+      "y": -260,
+      "width": 360,
+      "height": 220,
+      "color": "5"
+    },
+    {
+      "id": "reference",
+      "type": "file",
+      "file": "05-reference/reference-map.md",
+      "x": 920,
+      "y": 260,
+      "width": 360,
+      "height": 220,
+      "color": "3"
+    },
+    {
+      "id": "system",
+      "type": "file",
+      "file": "02-architecture/system-architecture.md",
+      "x": -250,
+      "y": 610,
+      "width": 330,
+      "height": 190,
+      "color": "2"
+    },
+    {
+      "id": "communication",
+      "type": "file",
+      "file": "02-architecture/phone-watch-communication.md",
+      "x": 130,
+      "y": 610,
+      "width": 330,
+      "height": 190,
+      "color": "2"
+    },
+    {
+      "id": "playback",
+      "type": "file",
+      "file": "02-architecture/playback-and-media-sessions.md",
+      "x": 510,
+      "y": 610,
+      "width": 330,
+      "height": 190,
+      "color": "2"
+    },
+    {
+      "id": "preferences",
+      "type": "file",
+      "file": "02-architecture/preferences-and-state-sync.md",
+      "x": -250,
+      "y": 890,
+      "width": 330,
+      "height": 190,
+      "color": "2"
+    },
+    {
+      "id": "appearance",
+      "type": "file",
+      "file": "02-architecture/watch-ui-and-appearance.md",
+      "x": 130,
+      "y": 890,
+      "width": 330,
+      "height": 190,
+      "color": "2"
+    },
+    {
+      "id": "themes",
+      "type": "file",
+      "file": "02-architecture/community-themes.md",
+      "x": 510,
+      "y": 890,
+      "width": 330,
+      "height": 190,
+      "color": "2"
+    },
+    {
+      "id": "mental-model",
+      "type": "text",
+      "text": "# Core model\n\n**Phone:** authority, media access, execution, persistence, network\n\n**Watch:** wrist input, presentation, proxy media session, Tiles and complication\n\n**Common:** protocol, stable identifiers, shared deterministic policy",
+      "x": -100,
+      "y": -460,
+      "width": 600,
+      "height": 300,
+      "color": "1"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-home-product",
+      "fromNode": "home",
+      "fromSide": "left",
+      "toNode": "product",
+      "toSide": "right"
+    },
+    {
+      "id": "e-home-architecture",
+      "fromNode": "home",
+      "fromSide": "left",
+      "toNode": "architecture",
+      "toSide": "right"
+    },
+    {
+      "id": "e-home-codebase",
+      "fromNode": "home",
+      "fromSide": "left",
+      "toNode": "codebase",
+      "toSide": "right"
+    },
+    {
+      "id": "e-home-development",
+      "fromNode": "home",
+      "fromSide": "right",
+      "toNode": "development",
+      "toSide": "left"
+    },
+    {
+      "id": "e-home-reference",
+      "fromNode": "home",
+      "fromSide": "right",
+      "toNode": "reference",
+      "toSide": "left"
+    },
+    {
+      "id": "e-model-home",
+      "fromNode": "mental-model",
+      "fromSide": "bottom",
+      "toNode": "home",
+      "toSide": "top"
+    },
+    {
+      "id": "e-architecture-system",
+      "fromNode": "architecture",
+      "fromSide": "bottom",
+      "toNode": "system",
+      "toSide": "left"
+    },
+    {
+      "id": "e-architecture-communication",
+      "fromNode": "architecture",
+      "fromSide": "bottom",
+      "toNode": "communication",
+      "toSide": "left"
+    },
+    {
+      "id": "e-architecture-playback",
+      "fromNode": "architecture",
+      "fromSide": "bottom",
+      "toNode": "playback",
+      "toSide": "left"
+    },
+    {
+      "id": "e-architecture-preferences",
+      "fromNode": "architecture",
+      "fromSide": "bottom",
+      "toNode": "preferences",
+      "toSide": "left"
+    },
+    {
+      "id": "e-architecture-appearance",
+      "fromNode": "architecture",
+      "fromSide": "bottom",
+      "toNode": "appearance",
+      "toSide": "left"
+    },
+    {
+      "id": "e-architecture-themes",
+      "fromNode": "architecture",
+      "fromSide": "bottom",
+      "toNode": "themes",
+      "toSide": "left"
+    },
+    {
+      "id": "e-communication-playback",
+      "fromNode": "communication",
+      "fromSide": "right",
+      "toNode": "playback",
+      "toSide": "left",
+      "label": "state and commands"
+    },
+    {
+      "id": "e-preferences-appearance",
+      "fromNode": "preferences",
+      "fromSide": "right",
+      "toNode": "appearance",
+      "toSide": "left",
+      "label": "scoped styling"
+    },
+    {
+      "id": "e-appearance-themes",
+      "fromNode": "appearance",
+      "fromSide": "right",
+      "toNode": "themes",
+      "toSide": "left",
+      "label": "profiles"
+    }
+  ]
+}

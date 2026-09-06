@@ -29,6 +29,9 @@
     <string name="dev_sync_watch_done">Οι ρυθμίσεις συγχρονίστηκαν με το ρολόι</string>
     <string name="dev_copy_debug_info">Αντιγραφή πληροφοριών αποσφαλμάτωσης</string>
     <string name="dev_copy_debug_info_description">Αντιγραφή στοιχείων έκδοσης και συσκευής στο πρόχειρο</string>
+    <string name="dev_export_defaults">Εξαγωγή ως προεπιλογές εφαρμογής</string>
+    <string name="dev_export_defaults_description">Αποθηκεύει αυτήν τη διαμόρφωση ως default_config.json, την κατάσταση από την οποία ξεκινά μια νέα εγκατάσταση. Εξαιρεί ιστορικό, επιλογές συγκατάθεσης και την κατάσταση αυτού του τηλεφώνου.</string>
+    <string name="dev_export_defaults_done">Οι προεπιλογές εξήχθησαν (%1$s)</string>
     <string name="dev_show_archived">Εμφάνιση αρχειοθετημένων επιλογών</string>
     <string name="dev_show_archived_description">Αποκάλυψη διατάξεων και ρυθμίσεων ρολογιού που αρχειοθετήθηκαν λόγω γνωστών προβλημάτων</string>
     <string name="dev_copy_debug_info_done">Οι πληροφορίες αποσφαλμάτωσης αντιγράφηκαν</string>
@@ -237,6 +240,9 @@
     <string name="category_music_colors">Χρώματα από τη μουσική</string>
     <string name="preview_sample_title">Τίτλος τραγουδιού</string>
     <string name="preview_sample_artist">Όνομα καλλιτέχνη</string>
+    <string name="preview_sample_lyric_previous">Η προηγούμενη γραμμή</string>
+    <string name="preview_sample_lyric_current">Η γραμμή που παίζει τώρα</string>
+    <string name="preview_sample_lyric_next">Η επόμενη γραμμή</string>
     <string name="preview_sample_next_title">Επόμενο τραγούδι</string>
     <string name="preview_playback_stopped">Σταμάτησε</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -453,8 +459,6 @@
     <string name="wear_font_small_caps_description">Συμπαγείς μορφές σε σχήμα κεφαλαίων με εκδοτικό αίσθημα.</string>
     <string name="wear_font_casual">Καθημερινή</string>
     <string name="wear_font_casual_description">Μια παιχνιδιάρικη χειρόγραφη οικογένεια συστήματος.</string>
-    <string name="wear_font_typewriter">Γραφομηχανή (Αρχειοθετημένη)</string>
-    <string name="wear_font_typewriter_description">Μια ρετρό εμφάνιση γραφομηχανής (Mom\'s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Μια στρογγυλεμένη γεωμετρική sans, μια δωρεάν (OFL) εναλλακτική στο πνεύμα της Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -520,6 +524,12 @@
     <string name="setting_wear_quick_panel_color">Χρώμα Γρήγορων Ενεργειών</string>
     <string name="setting_wear_quick_panel_custom_color">Προσαρμοσμένο χρώμα Γρήγορων Ενεργειών</string>
     <string name="setting_wear_quick_panel_custom_color_description">Επιλέξτε το χρώμα Γρήγορων Ενεργειών που χρησιμοποιείται με την Κανονική επεξεργασία</string>
+    <string name="setting_wear_lyrics_color">Χρώμα στίχων</string>
+    <string name="setting_wear_lyrics_custom_color">Προσαρμοσμένο χρώμα στίχων</string>
+    <string name="setting_wear_lyrics_custom_color_description">Επιλέξτε το χρώμα στίχων που χρησιμοποιείται με την Κανονική επεξεργασία</string>
+    <string name="setting_wear_queue_color">Χρώμα ουράς</string>
+    <string name="setting_wear_queue_custom_color">Προσαρμοσμένο χρώμα ουράς</string>
+    <string name="setting_wear_queue_custom_color_description">Επιλέξτε το χρώμα ουράς που χρησιμοποιείται με την Κανονική επεξεργασία</string>
     <string name="setting_wear_shading_custom_color_description">Επιλέξτε το χρώμα που χρωματίζει τη διαβάθμιση σκίασης</string>
 
     <string-array name="wear_accent_color_entries">
@@ -552,8 +562,10 @@
         <item>Σημείωση</item>
         <item>Στίχος</item>
         <item>Μεταδεδομένα</item>
+        <item>Καλλιτέχνης</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -574,8 +586,10 @@
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Αναζήτηση Expressive</string>
@@ -609,6 +623,7 @@
         <item>Διαίρεση</item>
         <item>Σημείωση</item>
         <item>Στίχος</item>
+        <item>Καλλιτέχνης</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -627,6 +642,7 @@
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -729,6 +745,12 @@
 
     <string name="category_overlays_queue">Επικαλύψεις &amp; ουρά</string>
     <string name="setting_wear_overlay_backdrop_style">Φόντο πάνελ</string>
+    <string name="wear_backdrop_shared">Χρήση κοινού φόντου πάνελ</string>
+    <string name="setting_wear_volume_backdrop_style">Φόντο έντασης</string>
+    <string name="setting_wear_progress_backdrop_style">Φόντο προόδου</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Φόντο γρήγορων ενεργειών</string>
+    <string name="setting_wear_queue_backdrop_style">Φόντο ουράς</string>
+    <string name="setting_wear_lyrics_backdrop_style">Φόντο στίχων</string>
     <string name="setting_wear_volume_style">Στυλ έντασης</string>
     <string name="setting_wear_volume_layout">Διάταξη έντασης</string>
     <string name="setting_wear_quick_panel_style">Στυλ γρήγορου πάνελ</string>
@@ -1567,10 +1589,14 @@
     <string name="setting_wear_source_icon_scale">Μέγεθος εικονιδίου εφαρμογής</string>
     <string name="setting_wear_source_icon_opacity">Αδιαφάνεια εικονιδίου εφαρμογής</string>
     <string name="setting_wear_typography_weight_description">1–1000. Το 400 είναι το κανονικό βάρος της όψης· υψηλότερες τιμές είναι πιο έντονες. Για το Google Sans Flex αυτός είναι ο δικός του άξονας βάρους</string>
-    <string name="setting_wear_typography_scale_description">Ποσοστό του δικού της μεγέθους της όψης (70–140). Το 100 διατηρεί το σχεδιασμένο μέγεθος κάθε διάταξης</string>
+    <string name="setting_wear_typography_scale_description">Ποσοστό του δικού της μεγέθους της όψης (1–300). Το 100 διατηρεί το σχεδιασμένο μέγεθος κάθε διάταξης</string>
     <string name="setting_wear_typography_opacity_description">Ποσοστό (20–100). Το 100 διατηρεί τη δική της αδιαφάνεια της όψης</string>
     <string name="setting_wear_typography_tracking_description">Επιπλέον χώρος μεταξύ γραμμάτων, σε εκατοστά του em (−5 έως 20). Το 0 διατηρεί τη δική της απόσταση της γραμματοσειράς</string>
     <string name="setting_wear_color_modifier">Απόχρωση</string>
+    <string name="setting_wear_title_color_modifier">Απόχρωση τίτλου</string>
+    <string name="setting_wear_artist_color_modifier">Απόχρωση καλλιτέχνη</string>
+    <string name="setting_wear_clock_color_modifier">Απόχρωση ρολογιού</string>
+    <string name="wear_color_modifier_follow">Να ακολουθεί την απόχρωση του ρολογιού</string>
     <string name="setting_wear_color_modifier_description">Ρυθμίζει ολόκληρη την παλέτα χωρίς να αλλάζει τον τρόπο εξαγωγής της — λειτουργεί με κάθε μεταχείριση χρώματος</string>
     <string name="setting_wear_color_hue_shift">Μετατόπιση χρώματος</string>
     <string name="setting_wear_color_hue_shift_description">Περιστρέφει την παλέτα του άλμπουμ στον κύκλο χρωμάτων, σε μοίρες (0–359). Κάθε μεταχείριση διατηρεί το κύριο χρώμα της στην απόχρωση του ίδιου του άλμπουμ, οπότε αυτό είναι που μεταβάλλεται. Το 0 χρησιμοποιεί το χρώμα του άλμπουμ ως έχει· ένα σταθερό κανονικό χρώμα δεν περιστρέφεται ποτέ.</string>
@@ -1718,7 +1744,6 @@
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1837,7 +1862,14 @@
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1858,7 +1890,6 @@
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1977,7 +2008,14 @@
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
     <string-array name="wear_cover_shape_entries">
         <item>Στρογγυλεμένο</item>
@@ -2176,6 +2214,7 @@
     <string name="category_wf_panel_seek">Πάνελ προόδου &amp; μετακίνησης</string>
     <string name="category_wf_panel_quick">Πάνελ Γρήγορων ενεργειών</string>
     <string name="category_wf_panel_queue">Ουρά &amp; λίστες</string>
+    <string name="category_wf_panel_lyrics">Στίχοι</string>
     <string name="category_wf_panel_effects">Εφέ πάνελ</string>
     <string name="category_apps_content">Στίχοι &amp; μεταδεδομένα</string>
     <string name="category_streaming_services">Συντομεύσεις ροής</string>
@@ -2254,5 +2293,56 @@
         <item>Επισήμανση</item>
         <item>Απαλό</item>
         <item>Πλήρες</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Ακολούθηση όψης</item>
+        <item>Αρχή</item>
+        <item>Στο κέντρο</item>
+        <item>Τέλος</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Ακολούθηση όψης</item>
+        <item>Πάνω</item>
+        <item>Μέση</item>
+        <item>Κάτω</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Στατικό (μία γραμμή, χωρίς κύλιση ή συρρίκνωση)</item>
+        <item>Κύλιση (μαρκίζα)</item>
+        <item>Συρρίκνωση για προσαρμογή</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>Από την εφαρμογή μουσικής</item>
+        <item>Αναζήτηση online</item>
+        <item>Φωτογραφία καλλιτέχνη</item>
+        <item>Εικόνα από τη συλλογή μου</item>
+        <item>Τυχαία από φάκελο</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

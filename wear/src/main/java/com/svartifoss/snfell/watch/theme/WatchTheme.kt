@@ -13,6 +13,7 @@ import androidx.core.graphics.ColorUtils
 import com.svartifoss.snfell.common.ColorHarmony
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.DeviceLocalAppearance
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 
@@ -144,15 +145,12 @@ fun flexFontFamily(
     )
 }
 
-/** Mom's Typewriter — a retro typewriter-style font, available for curated face text. */
-val MomsTypewriterFamily = FontFamily(
-        Font(R.font.moms_typewriter, FontWeight.Normal),
-        Font(R.font.moms_typewriter, FontWeight.Bold),
-        Font(R.font.moms_typewriter, FontWeight.Medium),
-        Font(R.font.moms_typewriter, FontWeight.Light)
-)
-
-/** Special Elite — a distressed typewriter-style font for an aged, analog look. */
+/** Special Elite — a distressed typewriter-style font for an aged, analog look. Also the fallback
+ *  for the retired "typewriter" key: that value used to select Mom's Typewriter, bundled with no
+ *  redistribution license this project ever held, so the font file was removed. The key itself is
+ *  kept as a legacy alias - the same treatment "love_letter" already gets below - so an old saved
+ *  config or downloaded theme still renders in a typewriter-style family instead of silently
+ *  falling back to Google Sans. */
 val SpecialEliteFamily = FontFamily(
         Font(R.font.special_elite_regular, FontWeight.Normal),
         Font(R.font.special_elite_regular, FontWeight.Bold),
@@ -413,6 +411,11 @@ private val ModernSystemFamilies: Map<String, FontFamily> by lazy {
             "sans_thin" to "sans-serif-thin",
             "sans_medium" to "sans-serif-medium",
             "sans_black" to "sans-serif-black",
+            "roboto_thin" to "sans-serif-thin",
+            "roboto_light" to "sans-serif-light",
+            "roboto_medium" to "sans-serif-medium",
+            "roboto_black" to "sans-serif-black",
+            "roboto_condensed" to "sans-serif-condensed",
             "small_caps" to "sans-serif-smallcaps",
             "casual" to "casual",
             "serif_monospace" to "serif-monospace",
@@ -429,6 +432,11 @@ private val modernSystemTypefaceNames = mapOf(
         "sans_thin" to "sans-serif-thin",
         "sans_medium" to "sans-serif-medium",
         "sans_black" to "sans-serif-black",
+        "roboto_thin" to "sans-serif-thin",
+        "roboto_light" to "sans-serif-light",
+        "roboto_medium" to "sans-serif-medium",
+        "roboto_black" to "sans-serif-black",
+        "roboto_condensed" to "sans-serif-condensed",
         "small_caps" to "sans-serif-smallcaps",
         "casual" to "casual",
         "serif_monospace" to "serif-monospace",
@@ -445,9 +453,14 @@ private val modernSystemTypefaceNames = mapOf(
 fun watchFontFamily(key: String?): FontFamily =
         key?.let(ExpandedBundledFontFamilies::get) ?: when (key) {
             "roboto" -> FontFamily.Default
+            // The user's imported typeface, sent from the phone as an asset. It resolves through
+            // the ordinary fallback below when this watch has not been sent one - which is the
+            // right answer both before the first delivery and after the phone clears it.
+            DeviceLocalAppearance.USER_FONT_KEY -> UserFont.fontFamily() ?: GoogleSansFamily
             "google_sans_flex" -> GoogleSansFlexFamily
-            "typewriter" -> MomsTypewriterFamily
-            // Keep the legacy key so saved preferences and imported themes continue to work.
+            // Keep both legacy keys so saved preferences and imported themes continue to work.
+            // "typewriter" (Mom's Typewriter) lost its bundled font - see SpecialEliteFamily's doc.
+            "typewriter" -> SpecialEliteFamily
             "love_letter" -> SpecialEliteFamily
             "poppins" -> PoppinsFamily
             "montserrat" -> MontserratFamily
@@ -537,12 +550,18 @@ fun watchFontTypeface(context: Context, key: String?): Typeface =
                 ?.let { ResourcesCompat.getFont(context, it) }
                 ?: when (key) {
                     "roboto" -> Typeface.DEFAULT
+                    // See watchFontFamily: same key, same fallback, so the classic and Compose
+                    // faces can never render different families for one choice.
+                    DeviceLocalAppearance.USER_FONT_KEY ->
+                        UserFont.typeface() ?: ResourcesCompat.getFont(context, R.font.google_sans_regular)
                     // The plain (non-variable) instance - callers that need per-element axis
                     // control use WatchTheme.flexTypeface instead, which every classic-face draw
                     // site already does (applyClassicFont / styledClassicTypeface in MainActivity).
                     "google_sans_flex" -> ResourcesCompat.getFont(context, R.font.google_sans_flex)
-                    "typewriter" -> ResourcesCompat.getFont(context, R.font.moms_typewriter)
-                    // Keep the legacy key so saved preferences and imported themes continue to work.
+                    // Keep both legacy keys so saved preferences and imported themes continue to
+                    // work. "typewriter" (Mom's Typewriter) lost its bundled font - see
+                    // SpecialEliteFamily's doc above.
+                    "typewriter" -> ResourcesCompat.getFont(context, R.font.special_elite_regular)
                     "love_letter" -> ResourcesCompat.getFont(context, R.font.special_elite_regular)
                     "poppins" -> ResourcesCompat.getFont(context, R.font.poppins_regular)
                     "montserrat" -> ResourcesCompat.getFont(context, R.font.montserrat_regular)

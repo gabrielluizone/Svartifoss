@@ -9,6 +9,10 @@ package com.svartifoss.snfell.common
  */
 enum class OverlayBackdrop {
     FOLLOW_STYLE,
+
+    /** No panel-owned pixels; the player's configured backdrop remains visible underneath. */
+    TRANSPARENT,
+
     ACRYLIC,
     SOLID_BLACK,
     SOLID_ALBUM,
@@ -198,6 +202,7 @@ enum class OverlayBackdrop {
 
     companion object {
         fun fromPreference(value: String?): OverlayBackdrop = when (value) {
+            "transparent" -> TRANSPARENT
             "acrylic", "blur" -> ACRYLIC
             "black" -> SOLID_BLACK
             "album" -> SOLID_ALBUM
@@ -280,6 +285,47 @@ enum class OverlayBackdrop {
 
 /** Resolves the compatibility option without leaking renderer-specific Android classes here. */
 object OverlayBackdropResolver {
+
+    /**
+     * The per-surface value meaning "use the *Shared panel appearance* choice".
+     *
+     * Deliberately not `"follow"`, which this vocabulary already spends on
+     * [OverlayBackdrop.FOLLOW_STYLE] - "derive the background from this surface's own style". The
+     * two are different questions and a surface can answer them independently: follow the shared
+     * choice, or make its own, which may itself be "follow my style".
+     */
+    const val SHARED = "shared"
+
+    /**
+     * The background one panel surface paints, from its own choice or the shared one.
+     *
+     * An unrecognised surface value resolves to the shared choice rather than to
+     * [OverlayBackdrop.FOLLOW_STYLE]. That distinction is the whole reason this is not a plain
+     * [resolve] call: `fromPreference` funnels every unknown string into FOLLOW_STYLE, so a value
+     * from an imported backup, a community theme or a newer build would silently become "follow my
+     * own style" - a real, different background - instead of the deferral the default expresses.
+     */
+    fun resolveSurface(
+            surfacePreference: String?,
+            sharedPreference: String?,
+            contentStyle: String?
+    ): OverlayBackdrop {
+        val effective = if (followsShared(surfacePreference)) sharedPreference else surfacePreference
+        return resolve(effective, contentStyle)
+    }
+
+    /** True while [surfacePreference] defers to the shared choice - unset, the sentinel, or junk. */
+    fun followsShared(surfacePreference: String?): Boolean {
+        if (surfacePreference.isNullOrBlank() || surfacePreference == SHARED) return true
+        // Unrecognised: fromPreference cannot report "unknown", so an unknown value and the
+        // literal "follow" are the only two inputs that reach FOLLOW_STYLE.
+        return OverlayBackdrop.fromPreference(surfacePreference) == OverlayBackdrop.FOLLOW_STYLE &&
+                surfacePreference != FOLLOW_PREFERENCE_VALUE
+    }
+
+    /** The shared key's own "derive from the content style" value. */
+    const val FOLLOW_PREFERENCE_VALUE = "follow"
+
     fun resolve(preference: String?, contentStyle: String?): OverlayBackdrop {
         val requested = OverlayBackdrop.fromPreference(preference)
         if (requested != OverlayBackdrop.FOLLOW_STYLE) return requested

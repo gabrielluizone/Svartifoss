@@ -17,9 +17,10 @@ object CustomLists {
      *  MusicService.onCustomMenuItemPresed. */
     const val SEARCH_RESULTS = "SearchResults"
 
-    /** User-defined playlist shortcuts (name + deep link) configured in the phone app. The
-     *  entry id is the playlist's link; selecting one opens it on the phone - see
-     *  MusicService.onCustomMenuItemPresed. */
+    /** User-defined streaming shortcuts (name + deep link) configured in the phone app. The entry
+     *  id is either the launch link or `targetPackage|link` when the phone knows which installed
+     *  app should receive a visible fallback; selecting it still runs the phone playback ladder
+     *  before the watch opens anything. */
     const val PLAYLIST_SHORTCUTS = "PlaylistShortcuts"
 
     /** Recently searched queries, newest first (see SearchHistoryStorage). The entry id IS the

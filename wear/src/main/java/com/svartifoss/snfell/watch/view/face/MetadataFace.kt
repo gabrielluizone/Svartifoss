@@ -129,9 +129,11 @@ fun MetadataFace(
         Column(
                 modifier = Modifier
                         .fillMaxSize()
-                        .padding(start = screen * inset, end = screen * inset),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center
+                        .padding(horizontal = maxOf(screen * inset, state.blockSafeSideInset(screen)))
+                        .padding(vertical = state.blockSafeVerticalInset(screen)),
+                horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally),
+                verticalArrangement = state.blockVerticalArrangement(
+                        androidx.compose.foundation.layout.Arrangement.Center)
         ) {
             Identity(state, screen, coverShape, showCover)
             Box(Modifier.height(screen * 0.045f))
@@ -363,7 +365,7 @@ private fun MetadataAmbient(state: NowPlayingFaceState) {
         Column(
                 modifier = Modifier.fillMaxSize()
                         .padding(horizontal = maxWidth * geo.SIDE_PADDING_FRACTION),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally),
                 verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center
         ) {
             // The title also follows its own element switch, as it does on every other face. The

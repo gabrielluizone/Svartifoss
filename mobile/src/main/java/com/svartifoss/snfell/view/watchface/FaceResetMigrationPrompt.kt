@@ -12,6 +12,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.view.LyraAccent
+import com.svartifoss.snfell.view.applyLyraDialogStyling
 import timber.log.Timber
 
 /**
@@ -80,6 +82,7 @@ object FaceResetMigrationPrompt {
                 }
                 .show()
 
+        dialog.applyLyraDialogStyling(accent = LyraAccent.resolve(activity))
         armReadDelay(dialog)
     }
 

@@ -64,12 +64,29 @@ class PanelEditorModelTest {
         }
     }
 
+    /**
+     * The invariant is that no tab opens empty - not that every tab has a *style*.
+     *
+     * Lyrics is why the two are no longer the same question: it is a full screen with no rows of
+     * its own beyond the background it can now be given, so requiring a style control would either
+     * exclude it from the rail or demand a picker with nothing behind it.
+     */
     @Test
-    fun `every surface offers a style`() {
+    fun `every surface offers at least one control`() {
+        PanelTarget.entries.forEach { target ->
+            assertTrue(
+                    "$target has no controls at all, so its card would open empty",
+                    PanelEditorModel.specsFor(target).isNotEmpty())
+        }
+    }
+
+    /** Every surface that paints a background can be given one of its own. */
+    @Test
+    fun `every surface offers a background of its own`() {
         PanelTarget.entries.forEach { target ->
             assertNotNull(
-                    "$target has no style control, so its card would open empty",
-                    PanelEditorModel.keyFor(target, PanelControl.STYLE))
+                    "$target cannot be given its own background",
+                    PanelEditorModel.keyFor(target, PanelControl.SURFACE_BACKDROP))
         }
     }
 

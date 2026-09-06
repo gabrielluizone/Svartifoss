@@ -249,6 +249,22 @@
                 android:minWidth="96dp"
                 android:text="@string/watch_element_quick_panel" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_target_lyrics"
+                style="@style/LyraCommunityDetailSurfaceButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:minWidth="82dp"
+                android:text="@string/watch_element_lyrics" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_target_queue"
+                style="@style/LyraCommunityDetailSurfaceButton"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
+                android:minWidth="82dp"
+                android:text="@string/watch_element_queue" />
+
         </com.google.android.material.button.MaterialButtonToggleGroup>
 
     </HorizontalScrollView>
@@ -292,6 +308,18 @@
                 android:visibility="gone"
                 app:icon="@drawable/color_dot_circle"
                 tools:text="Custom color"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/color_editor_tone_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:visibility="gone"
+                app:icon="@drawable/ic_colors"
+                tools:text="Title tone · Follow watch tone"
                 tools:visibility="visible" />
 
             <com.google.android.material.button.MaterialButton

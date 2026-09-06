@@ -188,6 +188,18 @@ class PlayerEditorModelTest {
         assertTrue(PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, "classic"))
     }
 
+    @Test
+    fun `text block controls are not offered where metadata is split across fixed bands`() {
+        listOf(PlayerControl.TEXT_BLOCK_ALIGN, PlayerControl.TEXT_BLOCK_POSITION).forEach { control ->
+            listOf("frame", "ribbon").forEach { face ->
+                assertFalse("$control on $face", PlayerEditorModel.appliesToFace(control, face))
+            }
+            listOf("artist", "immersive", "split", "note", "metadata").forEach { face ->
+                assertTrue("$control on $face", PlayerEditorModel.appliesToFace(control, face))
+            }
+        }
+    }
+
     /**
      * The regression this list keeps producing: a face grows its own progress element and the
      * three places that decide whether to offer the switch are not among the files touched. The
@@ -211,6 +223,7 @@ class PlayerEditorModelTest {
         val named = PlayerEditorModel.INTERNAL_PROGRESS_FACES +
                 PlayerEditorModel.FIXED_TRANSPORT_FACES +
                 PlayerEditorModel.CONTROL_STYLE_FACES +
+                PlayerEditorModel.TEXT_BLOCK_PLACEMENT_FACES +
                 setOf("classic", "carousel", "note", "split", "expressive", "metadata")
         val unknown = named - ThemeAppearance.ALLOWED_BASE_FACES
         assertTrue("Capability rules name unregistered faces: $unknown", unknown.isEmpty())

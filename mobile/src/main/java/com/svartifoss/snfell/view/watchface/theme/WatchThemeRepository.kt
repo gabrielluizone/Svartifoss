@@ -7,10 +7,12 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.WATCH_SNAPSHOT_GUARD_BYTES
 import com.svartifoss.snfell.estimateWatchPreferenceSnapshotBytes
 import com.svartifoss.snfell.selectWatchPreferenceSnapshot
+import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.AppearanceNumericRanges
 import com.svartifoss.snfell.common.BackgroundLayerStack
 import com.svartifoss.snfell.common.ArchivedFaces
+import com.svartifoss.snfell.common.DeviceLocalAppearance
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
@@ -119,6 +121,22 @@ sealed class CommunityThemeSubmissionDraftResult {
     data class UnsupportedSetting(
             val key: String,
             val value: WatchThemeValue
+    ) : CommunityThemeSubmissionDraftResult()
+
+    /**
+     * The theme uses a font or a picture stored on this phone, so it cannot be shared at all.
+     *
+     * Kept apart from [UnsupportedSetting] even though the public vocabulary refuses both, because
+     * the two ask for opposite things. An unsupported value is usually a value that *should* have
+     * reached the contract and did not - the fifty-one missing fonts were exactly that - so its
+     * message says "change this setting and submit again", and acting on it is right. This one is
+     * permanent by design: the bytes behind the setting are not in the profile and could not be, so
+     * telling someone to change the setting would send them to swap out the very thing they
+     * designed the theme around. See [com.svartifoss.snfell.common.DeviceLocalAppearance].
+     */
+    data class DeviceLocalSetting(
+            val key: String,
+            val value: String
     ) : CommunityThemeSubmissionDraftResult()
 }
 
@@ -238,6 +256,15 @@ internal object CommunityThemeSubmissionDraftFactory {
                             value.value.length > maxPublicTextLengthFor(definition.key))) {
                 return CommunityThemeSubmissionDraftResult.InvalidProfile
             }
+            // Before the vocabulary check, deliberately. Both refuse the same values, but the
+            // asset can only say "this is not an accepted value" while this knows *why* it never
+            // will be, and the generic message would send someone looking for a setting to change
+            // that they are not meant to change.
+            if (value is WatchThemeValue.Text &&
+                    DeviceLocalAppearance.isDeviceLocal(definition.key, value.value)) {
+                return CommunityThemeSubmissionDraftResult.DeviceLocalSetting(
+                        definition.key, value.value)
+            }
             // Kept apart from the checks above: those describe a broken profile, this one
             // describes a choice, so the caller can say which setting to change.
             if (constraints != null && !constraints.accepts(definition.key, value)) {
@@ -325,8 +352,10 @@ class WatchThemeRepository(context: Context) {
                 "note" to R.string.watch_theme_face_note,
                 "verse" to R.string.watch_theme_face_verse,
                 "metadata" to R.string.watch_theme_face_metadata,
+                "artist" to R.string.watch_theme_face_artist,
                 "ribbon" to R.string.watch_theme_face_ribbon,
-                "frame" to R.string.watch_theme_face_frame
+                "frame" to R.string.watch_theme_face_frame,
+                "matejdro" to R.string.watch_theme_face_matejdro
         )
 
         fun displayNameForFace(context: Context, face: String): String =
@@ -810,8 +839,23 @@ class WatchThemeRepository(context: Context) {
         val id = normalizeUuid(profile.id) ?: return null
         val base = ThemeAppearance.normalizeBaseFace(profile.baseFace)
         val defaults = captureSettings(defaultPrefs, AppearanceContext.BuiltIn(base))
+        // A profile saved while `artist_photo` was a background style still carries it. The style
+        // enum no longer knows the value, so without this the whole setting would fall back to the
+        // face default and the theme would silently lose the picture it was built around - see
+        // AlbumArtSource.migrate, which translates it losslessly into the two settings that
+        // replaced it.
+        val storedStyle = (profile.settings[MiscPreferences.ALBUM_ART_STYLE.key]
+                as? WatchThemeValue.Text)?.value
+        val settings = AlbumArtSource.migrate(storedStyle)
+                ?.let { (style, source) ->
+                    profile.settings +
+                            (MiscPreferences.ALBUM_ART_STYLE.key to WatchThemeValue.Text(style)) +
+                            (MiscPreferences.WEAR_ALBUM_ART_SOURCE.key to
+                                    WatchThemeValue.Text(source.preferenceValue))
+                }
+                ?: profile.settings
         val complete = FaceScopedPreferences.SCOPED_DEFINITIONS.associate { definition ->
-            val candidate = profile.settings[definition.key]
+            val candidate = settings[definition.key]
             definition.key to if (valueMatchesDefinition(candidate, definition.defaultValue)) {
                 inRange(definition.key, candidate!!)
             } else {

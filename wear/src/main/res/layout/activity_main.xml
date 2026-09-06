@@ -72,7 +72,11 @@
                 android:orientation="vertical"
                 app:boxedEdges="all">
 
+                <!-- Given an id so applyClassicBandGeometry can retarget it: the Matejdro face
+                     turns this row and the title below into two proportional bands filling the
+                     block, where Classic keeps them wrap_content. -->
                 <LinearLayout
+                    android:id="@+id/classic_artist_row"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"

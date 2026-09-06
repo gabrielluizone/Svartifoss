@@ -31,6 +31,30 @@ import timber.log.Timber
  * delivery, the ViewModel tickers, `PhoneConnection`'s main-dispatcher scope), and adding
  * synchronisation would only hide a caller that had wandered off it.
  */
+
+/**
+ * A snapshot of [PlaybackClock]'s sync-correction bookkeeping, for the on-watch developer overlay
+ * ([com.svartifoss.snfell.common.MiscPreferences.WEAR_DEV_SHOW_PLAYER_INFO]).
+ *
+ * Every field mirrors a classification [PlaybackClock.onSyncReply] already makes against
+ * [PlaybackSyncPolicy] - this only remembers it instead of letting it vanish into a `Timber.d` line
+ * nobody is tailing. Counters are cumulative for the life of this [PlaybackClock] (one per
+ * `PhoneConnection`, so effectively for the process), deliberately not reset on a track change:
+ * whether Bluetooth sync has been behaving is a question about the session, not about one song.
+ */
+data class PlaybackSyncDiagnostics(
+        val currentIntervalMs: Long,
+        val repliesRefused: Int,
+        val lastRefusalReason: String?,
+        val repliesWithinTolerance: Int,
+        val repliesCorrectedFractionally: Int,
+        val repliesSnapped: Int,
+        val unansweredChecks: Int,
+        val lastRoundTripMs: Long?,
+        val lastDriftMs: Long?,
+        val lastCorrectionMs: Long?
+)
+
 class PlaybackClock {
 
     /** The sample being extrapolated from, and everything needed to extrapolate it. */
@@ -59,6 +83,32 @@ class PlaybackClock {
     /** Current wait between checks, grown and reset by [PlaybackSyncPolicy.nextIntervalMs]. */
     var syncIntervalMs: Long = PlaybackSyncPolicy.MIN_INTERVAL_MS
         private set
+
+    // Diagnostic-only bookkeeping for PlaybackSyncDiagnostics/the developer overlay. Purely
+    // additive: nothing below is ever read by a correction decision, so recording it can never
+    // change playback behaviour.
+    private var diagRepliesRefused = 0
+    private var diagLastRefusalReason: String? = null
+    private var diagRepliesWithinTolerance = 0
+    private var diagRepliesCorrectedFractionally = 0
+    private var diagRepliesSnapped = 0
+    private var diagUnansweredChecks = 0
+    private var diagLastRoundTripMs: Long? = null
+    private var diagLastDriftMs: Long? = null
+    private var diagLastCorrectionMs: Long? = null
+
+    /** Snapshot for the developer overlay. See [PlaybackSyncDiagnostics]. */
+    fun diagnostics(): PlaybackSyncDiagnostics = PlaybackSyncDiagnostics(
+            currentIntervalMs = syncIntervalMs,
+            repliesRefused = diagRepliesRefused,
+            lastRefusalReason = diagLastRefusalReason,
+            repliesWithinTolerance = diagRepliesWithinTolerance,
+            repliesCorrectedFractionally = diagRepliesCorrectedFractionally,
+            repliesSnapped = diagRepliesSnapped,
+            unansweredChecks = diagUnansweredChecks,
+            lastRoundTripMs = diagLastRoundTripMs,
+            lastDriftMs = diagLastDriftMs,
+            lastCorrectionMs = diagLastCorrectionMs)
 
     /** Whether a correction is worth asking for at all: a paused track's position does not move,
      *  so checking it would spend Bluetooth to confirm a number that cannot have changed. */
@@ -147,10 +197,14 @@ class PlaybackClock {
      */
     fun onSyncReply(sync: PlaybackSync, sentAtRealtimeMs: Long): Boolean {
         if (!sync.hasSession) {
+            diagRepliesRefused++
+            diagLastRefusalReason = "no session on the phone"
             return false
         }
         if (trackKeyOf(sync.title, sync.artist) != trackKey) {
             Timber.v("Discarding a playback sync for a track that is no longer showing")
+            diagRepliesRefused++
+            diagLastRefusalReason = "reply was for a different track"
             return false
         }
 
@@ -158,6 +212,8 @@ class PlaybackClock {
         val roundTripMs = now - sentAtRealtimeMs
         if (!PlaybackSyncPolicy.isUsableRoundTrip(roundTripMs)) {
             Timber.v("Discarding a playback sync with a %d ms round trip", roundTripMs)
+            diagRepliesRefused++
+            diagLastRefusalReason = "round trip too long ($roundTripMs ms)"
             return false
         }
 
@@ -174,6 +230,9 @@ class PlaybackClock {
         val estimatedNow = positionNowMs()
         val driftMs = estimatedNow - confirmedNow
         val correction = PlaybackSyncPolicy.correctionMs(driftMs)
+        diagLastRoundTripMs = roundTripMs
+        diagLastDriftMs = driftMs
+        diagLastCorrectionMs = correction
 
         // The phone's view of play/pause is authoritative regardless of whether the position needed
         // touching - a pause performed on the phone that never produced a state the watch saw would
@@ -185,8 +244,14 @@ class PlaybackClock {
         }
 
         if (correction == 0L) {
+            diagRepliesWithinTolerance++
             syncIntervalMs = PlaybackSyncPolicy.nextIntervalMs(syncIntervalMs, corrected = false)
             return false
+        }
+        if (kotlin.math.abs(driftMs) >= PlaybackSyncPolicy.STEP_THRESHOLD_MS) {
+            diagRepliesSnapped++
+        } else {
+            diagRepliesCorrectedFractionally++
         }
 
         Timber.d("Playback sync: drift %d ms over a %d ms round trip, applying %d ms",
@@ -216,6 +281,7 @@ class PlaybackClock {
      * does bounds that at roughly one message a minute, and the first successful reply resets it.
      */
     fun backOffUnanswered() {
+        diagUnansweredChecks++
         syncIntervalMs = PlaybackSyncPolicy.nextIntervalMs(syncIntervalMs, corrected = false)
     }
 

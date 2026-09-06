@@ -30,6 +30,9 @@
     <string name="dev_sync_watch_done">Réglages synchronisés avec la montre</string>
     <string name="dev_copy_debug_info">Copier les informations de débogage</string>
     <string name="dev_copy_debug_info_description">Copier les détails du build et de l’appareil dans le presse-papiers</string>
+    <string name="dev_export_defaults">Exporter comme réglages par défaut</string>
+    <string name="dev_export_defaults_description">Enregistre cette configuration sous default_config.json, l\'état de départ d\'une nouvelle installation. Sans l\'historique, les choix de consentement ni l\'état propre à ce téléphone.</string>
+    <string name="dev_export_defaults_done">Réglages par défaut exportés (%1$s)</string>
     <string name="dev_show_archived">Afficher les options archivées</string>
     <string name="dev_show_archived_description">Afficher les dispositions et réglages de montre archivés en raison de problèmes connus</string>
     <string name="dev_copy_debug_info_done">Informations de débogage copiées</string>
@@ -287,6 +290,9 @@ Certains packs d’icônes exigent que les applications disposent de l’autoris
     <string name="setting_wear_font_flex_roundness_description">Fait varier les terminaisons des traits de nettes (0) à entièrement arrondies (100), pour un rendu plus chaleureux.</string>
     <string name="preview_sample_title">Titre de la chanson</string>
     <string name="preview_sample_artist">Nom de l’artiste</string>
+    <string name="preview_sample_lyric_previous">La ligne précédente</string>
+    <string name="preview_sample_lyric_current">La ligne en cours</string>
+    <string name="preview_sample_lyric_next">La ligne suivante</string>
     <string name="preview_sample_next_title">Chanson suivante</string>
     <string name="preview_playback_stopped">Arrêté</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
@@ -559,8 +565,6 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
     <string name="wear_font_small_caps_description">Formes compactes inspirées des capitales, avec un aspect éditorial.</string>
     <string name="wear_font_casual">Décontracté</string>
     <string name="wear_font_casual_description">Une famille système manuscrite et ludique.</string>
-    <string name="wear_font_typewriter">Machine à écrire (archivée)</string>
-    <string name="wear_font_typewriter_description">Un aspect rétro de machine à écrire (Mom’s Typewriter).</string>
     <string name="wear_font_poppins">Poppins</string>
     <string name="wear_font_poppins_description">Une sans sérif géométrique arrondie, alternative libre (OFL) dans l’esprit de Circular.</string>
     <string name="wear_font_montserrat">Montserrat</string>
@@ -626,6 +630,12 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
     <string name="setting_wear_quick_panel_color">Couleur des Actions rapides</string>
     <string name="setting_wear_quick_panel_custom_color">Couleur personnalisée des Actions rapides</string>
     <string name="setting_wear_quick_panel_custom_color_description">Choisissez la couleur des Actions rapides utilisée avec le traitement Normal</string>
+    <string name="setting_wear_lyrics_color">Couleur des paroles</string>
+    <string name="setting_wear_lyrics_custom_color">Couleur personnalisée des paroles</string>
+    <string name="setting_wear_lyrics_custom_color_description">Choisissez la couleur des paroles utilisée avec le traitement Normal</string>
+    <string name="setting_wear_queue_color">Couleur de la file d’attente</string>
+    <string name="setting_wear_queue_custom_color">Couleur personnalisée de la file d’attente</string>
+    <string name="setting_wear_queue_custom_color_description">Choisissez la couleur de la file d’attente utilisée avec le traitement Normal</string>
     <string name="setting_wear_shading_custom_color_description">Choisissez la couleur qui teinte le dégradé d’ombrage</string>
 
     <string-array name="wear_accent_color_entries">
@@ -658,8 +668,10 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>Note</item>
         <item>Vers</item>
         <item>Métadonnées</item>
+        <item>Artiste</item>
         <item>Ribbon</item>
         <item>Frame</item>
+        <item>MatejDro</item>
     </string-array>
     <string-array name="wear_screen_face_values">
         <item>classic</item>
@@ -680,8 +692,10 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>note</item>
         <item>verse</item>
         <item>metadata</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>matejdro</item>
     </string-array>
 
     <string name="setting_wear_expressive_seek_mode">Recherche expressive</string>
@@ -715,6 +729,7 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>Partagé</item>
         <item>Note</item>
         <item>Vers</item>
+        <item>Artiste</item>
         <item>Ribbon</item>
         <item>Frame</item>
     </string-array>
@@ -733,6 +748,7 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>split</item>
         <item>note</item>
         <item>verse</item>
+        <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
     </string-array>
@@ -839,8 +855,15 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
     <string name="category_wf_panel_seek">Panneau de progression et de recherche</string>
     <string name="category_wf_panel_quick">Panneau d’actions rapides</string>
     <string name="category_wf_panel_queue">File d’attente et listes</string>
+    <string name="category_wf_panel_lyrics">Paroles</string>
     <string name="category_wf_panel_effects">Effets des panneaux</string>
     <string name="setting_wear_overlay_backdrop_style">Arrière-plan des panneaux</string>
+    <string name="wear_backdrop_shared">Suivre l’arrière-plan partagé</string>
+    <string name="setting_wear_volume_backdrop_style">Arrière-plan du volume</string>
+    <string name="setting_wear_progress_backdrop_style">Arrière-plan de la progression</string>
+    <string name="setting_wear_quick_panel_backdrop_style">Arrière-plan des actions rapides</string>
+    <string name="setting_wear_queue_backdrop_style">Arrière-plan de la file d’attente</string>
+    <string name="setting_wear_lyrics_backdrop_style">Arrière-plan des paroles</string>
     <string name="setting_wear_volume_style">Style du volume</string>
     <string name="setting_wear_volume_layout">Disposition du volume</string>
     <string name="setting_wear_quick_panel_style">Style du panneau rapide</string>
@@ -928,10 +951,14 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
     <string name="setting_wear_source_icon_scale">Taille de l’icône de l’application</string>
     <string name="setting_wear_source_icon_opacity">Opacité de l’icône de l’application</string>
     <string name="setting_wear_typography_weight_description">1–1000. 400 correspond à la graisse normale du cadran ; une valeur plus élevée est plus grasse. Pour Google Sans Flex, il s’agit de l’axe de graisse propre à cette police</string>
-    <string name="setting_wear_typography_scale_description">Pourcentage de la taille propre au cadran (70–140). 100 conserve la taille prévue pour chaque disposition</string>
+    <string name="setting_wear_typography_scale_description">Pourcentage de la taille propre au cadran (1–300). 100 conserve la taille prévue pour chaque disposition</string>
     <string name="setting_wear_typography_opacity_description">Pourcentage (20–100). 100 conserve l’opacité propre au cadran</string>
     <string name="setting_wear_typography_tracking_description">Espace supplémentaire entre les lettres, en centièmes d’em (−5 à 20). 0 conserve l’espacement propre à la police</string>
     <string name="setting_wear_color_modifier">Tonalité</string>
+    <string name="setting_wear_title_color_modifier">Tonalité du titre</string>
+    <string name="setting_wear_artist_color_modifier">Tonalité de l’artiste</string>
+    <string name="setting_wear_clock_color_modifier">Tonalité de l’horloge</string>
+    <string name="wear_color_modifier_follow">Suivre la tonalité de la montre</string>
     <string name="setting_wear_color_modifier_description">Ajuster toute la palette sans changer sa méthode de dérivation — fonctionne avec tous les traitements de couleur</string>
     <string name="setting_wear_color_hue_shift">Décalage de couleur</string>
     <string name="setting_wear_color_hue_shift_description">Fait tourner la palette de l’album sur le cercle chromatique, en degrés (0–359). Chaque traitement conserve sa couleur principale sur la teinte propre à l’album ; ce réglage permet donc de la faire varier. 0 utilise la couleur de l’album telle quelle ; une couleur Normal fixe n’est jamais décalée.</string>
@@ -1324,7 +1351,6 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>@string/wear_font_condensed_light</item>
         <item>@string/wear_font_condensed_medium</item>
         <item>@string/wear_font_cursive</item>
-        <item>@string/wear_font_typewriter</item>
         <item>@string/wear_font_poppins</item>
         <item>@string/wear_font_montserrat</item>
         <item>@string/wear_font_marcellus</item>
@@ -1443,7 +1469,14 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>@string/wear_font_hind_madurai</item>
         <item>@string/wear_font_kumbh_sans</item>
         <item>@string/wear_font_alegreya</item>
+
+
         <item>@string/wear_font_assistant</item>
+        <item>@string/wear_font_roboto_thin</item>
+        <item>@string/wear_font_roboto_light</item>
+        <item>@string/wear_font_roboto_medium</item>
+        <item>@string/wear_font_roboto_black</item>
+        <item>@string/wear_font_roboto_condensed</item>
     </string-array>
     <string-array name="wear_font_descriptions">
         <item>@string/wear_font_google_sans_description</item>
@@ -1464,7 +1497,6 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>@string/wear_font_condensed_light_description</item>
         <item>@string/wear_font_condensed_medium_description</item>
         <item>@string/wear_font_cursive_description</item>
-        <item>@string/wear_font_typewriter_description</item>
         <item>@string/wear_font_poppins_description</item>
         <item>@string/wear_font_montserrat_description</item>
         <item>@string/wear_font_marcellus_description</item>
@@ -1583,7 +1615,14 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>@string/wear_font_hind_madurai_description</item>
         <item>@string/wear_font_kumbh_sans_description</item>
         <item>@string/wear_font_alegreya_description</item>
+
+
         <item>@string/wear_font_assistant_description</item>
+        <item>@string/wear_font_roboto_thin_description</item>
+        <item>@string/wear_font_roboto_light_description</item>
+        <item>@string/wear_font_roboto_medium_description</item>
+        <item>@string/wear_font_roboto_black_description</item>
+        <item>@string/wear_font_roboto_condensed_description</item>
     </string-array>
 
     <string name="action_open_library">Parcourir la bibliothèque</string>
@@ -2296,5 +2335,56 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
         <item>Surlignage</item>
         <item>Léger</item>
         <item>Bloc</item>
+    </string-array>
+
+    <string-array name="wear_text_block_align_entries">
+        <item>Suivre le cadran</item>
+        <item>Début</item>
+        <item>Centré</item>
+        <item>Fin</item>
+    </string-array>
+    <string-array name="wear_text_block_align_values">
+        <item>follow</item>
+        <item>start</item>
+        <item>center</item>
+        <item>end</item>
+    </string-array>
+    <string-array name="wear_text_block_position_entries">
+        <item>Suivre le cadran</item>
+        <item>Haut</item>
+        <item>Milieu</item>
+        <item>Bas</item>
+    </string-array>
+    <string-array name="wear_text_block_position_values">
+        <item>follow</item>
+        <item>top</item>
+        <item>middle</item>
+        <item>bottom</item>
+    </string-array>
+
+    <string-array name="wear_artist_text_mode_entries">
+        <item>Statique (une ligne, sans défilement ni réduction)</item>
+        <item>Défilement (marquee)</item>
+        <item>Réduire pour adapter</item>
+    </string-array>
+    <string-array name="wear_artist_text_mode_values">
+        <item>static</item>
+        <item>marquee</item>
+        <item>shrink</item>
+    </string-array>
+
+    <string-array name="wear_album_art_source_entries">
+        <item>Depuis l\'appli musique</item>
+        <item>Recherchée en ligne</item>
+        <item>Photo de l\'artiste</item>
+        <item>Image de ma galerie</item>
+        <item>Aléatoire dans un dossier</item>
+    </string-array>
+    <string-array name="wear_album_art_source_values">
+        <item>local</item>
+        <item>online</item>
+        <item>artist</item>
+        <item>custom_image</item>
+        <item>custom_folder</item>
     </string-array>
 </resources>

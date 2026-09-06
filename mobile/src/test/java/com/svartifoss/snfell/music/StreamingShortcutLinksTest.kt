@@ -23,6 +23,29 @@ class StreamingShortcutLinksTest {
             StreamingShortcutLinks.detect("https://music.amazon.com/albums/example"))
         assertEquals(StreamingService.SOUNDCLOUD,
             StreamingShortcutLinks.detect("https://on.soundcloud.com/example"))
+        assertEquals(StreamingService.QOBUZ,
+            StreamingShortcutLinks.detect("https://open.qobuz.com/playlist/12345"))
+        assertEquals(StreamingService.BANDCAMP,
+            StreamingShortcutLinks.detect("https://artist.bandcamp.com/album/example"))
+        assertEquals(StreamingService.AUDIOMACK,
+            StreamingShortcutLinks.detect("https://audiomack.com/artist/song/example"))
+        assertEquals(StreamingService.MIXCLOUD,
+            StreamingShortcutLinks.detect("https://www.mixcloud.com/artist/example-show/"))
+        assertEquals(StreamingService.PANDORA,
+            StreamingShortcutLinks.detect("https://pandora.app.link/example"))
+    }
+
+    @Test
+    fun providerLookalikeHostsStayGeneric() {
+        listOf(
+            "https://qobuz.com.example.org/track/1",
+            "https://notbandcamp.com/album/example",
+            "https://audiomack.com.example.org/artist/song/example",
+            "https://notmixcloud.com/artist/example-show/",
+            "https://pandora.app.link.example.org/example"
+        ).forEach { link ->
+            assertEquals(StreamingService.GENERIC, StreamingShortcutLinks.detect(link))
+        }
     }
 
     @Test
@@ -147,6 +170,42 @@ class StreamingShortcutLinksTest {
     }
 
     @Test
+    fun detectsAdditionalProviderEntityShapes() {
+        assertEquals(
+            StreamingContentType.TRACK,
+            StreamingShortcutLinks.detectContentType("https://open.qobuz.com/track/12345")
+        )
+        assertEquals(
+            StreamingContentType.ALBUM,
+            StreamingShortcutLinks.detectContentType(
+                "https://artist.bandcamp.com/album/example"
+            )
+        )
+        assertEquals(
+            StreamingContentType.PLAYLIST,
+            StreamingShortcutLinks.detectContentType(
+                "https://audiomack.com/artist/playlist/example"
+            )
+        )
+        assertEquals(
+            StreamingContentType.SHOW,
+            StreamingShortcutLinks.detectContentType(
+                "https://www.mixcloud.com/artist/example-show/"
+            )
+        )
+        assertEquals(
+            StreamingContentType.SHOW,
+            StreamingShortcutLinks.detectContentType(
+                "https://www.pandora.com/podcast/example/PC:123"
+            )
+        )
+        assertEquals(
+            StreamingContentType.MIX,
+            StreamingShortcutLinks.detectContentType("https://www.deezer.com/flow")
+        )
+    }
+
+    @Test
     fun spotifyUriHasWebFallback() {
         assertEquals(
             "https://open.spotify.com/playlist/abc123",
@@ -203,6 +262,30 @@ class StreamingShortcutLinksTest {
         assertFalse(StreamingShortcutLinks.isSafeLink("intent://playlist#Intent;end"))
         assertFalse(StreamingShortcutLinks.isSafeLink("javascript:alert(1)"))
         assertNull(StreamingShortcutLinks.extractSharedLink("this is not a streaming link"))
+    }
+
+    @Test
+    fun unwrapsOnlyValidRemoteLaunchTargets() {
+        assertEquals(
+            "https://open.qobuz.com/album/12345",
+            StreamingShortcutLinks.unwrapRemoteTarget(
+                "com.qobuz.music|https://open.qobuz.com/album/12345"
+            )
+        )
+        assertEquals(
+            "spotify:collection:tracks",
+            StreamingShortcutLinks.unwrapRemoteTarget(
+                "com.spotify.music|spotify:collection:tracks"
+            )
+        )
+
+        val ordinaryLinkWithPipe = "https://example.com/playlist/one|two"
+        assertEquals(
+            ordinaryLinkWithPipe,
+            StreamingShortcutLinks.unwrapRemoteTarget(ordinaryLinkWithPipe)
+        )
+        val unsafeEnvelope = "com.qobuz.music|javascript:alert(1)"
+        assertEquals(unsafeEnvelope, StreamingShortcutLinks.unwrapRemoteTarget(unsafeEnvelope))
     }
 
     @Test

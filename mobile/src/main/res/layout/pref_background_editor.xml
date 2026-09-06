@@ -44,12 +44,40 @@
                 android:textSize="12sp"
                 android:textStyle="bold" />
 
+            <!-- Which picture, before how it is treated. The two are different questions and the
+                 order says so: this one can send the phone looking one up, the rest only compose
+                 whatever arrived. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/background_editor_source_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:icon="@drawable/ic_person"
+                tools:text="Source · From the music app" />
+
+            <!-- Names the file or folder the two device-local sources draw from. One button for
+                 both: they are mutually exclusive sources, so the pair could never be on screen
+                 together, and a second permanently-hidden row would only be a second thing to
+                 keep in step. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/background_editor_picture_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:icon="@drawable/ic_imagesearch_roller"
+                tools:text="Picture to use · sunset.jpg" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/background_editor_artwork_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="6dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 app:icon="@drawable/ic_album"

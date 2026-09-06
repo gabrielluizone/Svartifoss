@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.core.view.doOnLayout
+import com.svartifoss.snfell.common.OverlayBackdrop
 import com.svartifoss.snfell.watch.view.OverlayBackdropDrawables
 import com.svartifoss.snfell.watch.view.PlayerBackgroundDrawable
 
@@ -74,7 +75,23 @@ class PanelBackdropView(context: Context) : FrameLayout(context) {
         addView(overlayDim)
     }
 
-    fun render(appearance: PanelAppearance, backdrop: PanelBackdrop, albumArt: Bitmap?) {
+    fun render(appearance: PanelAppearance, backdrop: PanelBackdrop, albumArt: Bitmap?) =
+            render(appearance.backdrop, appearance.triad, backdrop, albumArt)
+
+    /**
+     * The same ground, addressed by the two things it actually needs.
+     *
+     * [PanelAppearance] carries the volume and progress style pairs as well, which a screen that
+     * is not a panel has no answer for - the queue and the lyrics screen both paint this ground
+     * and neither has a volume style. Only [overlay] and [triad] were ever read here, so taking
+     * them directly is what lets those two reuse this rather than inventing a second renderer.
+     */
+    fun render(
+            overlay: OverlayBackdrop,
+            triad: PanelTriad,
+            backdrop: PanelBackdrop,
+            albumArt: Bitmap?
+    ) {
         val source = backdrop.frostedArtwork(albumArt)
 
         PlayerBackdropRenderer.applyArtwork(
@@ -115,7 +132,7 @@ class PanelBackdropView(context: Context) : FrameLayout(context) {
 
         shading.background = null
 
-        if (appearance.usesAlbumBlur && albumArt != null && !albumArt.isRecycled) {
+        if (overlay.usesAlbumBlur && albumArt != null && !albumArt.isRecycled) {
             overlayBlur.visibility = View.VISIBLE
             PlayerBackdropRenderer.applyArtwork(
                     overlayBlur,
@@ -136,10 +153,10 @@ class PanelBackdropView(context: Context) : FrameLayout(context) {
         }
 
         overlayDim.background = OverlayBackdropDrawables.build(
-                appearance.backdrop,
-                appearance.triad.primary,
-                appearance.triad.secondary,
-                appearance.triad.tertiary,
+                overlay,
+                triad.primary,
+                triad.secondary,
+                triad.tertiary,
                 resources.displayMetrics.density,
                 resources.displayMetrics.widthPixels,
                 resources.configuration.isScreenRound)
