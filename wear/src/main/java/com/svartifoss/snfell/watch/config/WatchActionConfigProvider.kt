@@ -25,6 +25,7 @@ class WatchActionConfigProvider(context: Context, scope: CoroutineScope, private
             SimpleArrayMap<ButtonInfo, ButtonAction>()
 
     var volumeStep = 0.1f
+    private var decodeJob: Job? = null
 
     fun getAction(buttonInfo: ButtonInfo): ButtonAction? {
         return (configMap.get(buttonInfo) ?: configMap.get(buttonInfo.getLegacyButtonInfo()))
@@ -42,7 +43,7 @@ class WatchActionConfigProvider(context: Context, scope: CoroutineScope, private
 
     @Suppress("BlockingMethodInNonBlockingContext")
     private val rawConfigObserver = Observer<DataItem?> {
-        configMap.clear()
+        decodeJob?.cancel()
 
         if (it == null) {
             return@Observer
@@ -50,12 +51,11 @@ class WatchActionConfigProvider(context: Context, scope: CoroutineScope, private
 
         val dataItem = it
 
-        scope.launch {
+        decodeJob = scope.launch {
             val newConfigMap =
                     SimpleArrayMap<ButtonInfo, ButtonAction>()
 
             val actions = WatchActions.parseFrom(it.data)
-            volumeStep = actions.volumeStep
 
             for (action in actions.actionsList) {
                 val buttonInfo = ButtonInfo(action)
@@ -91,6 +91,10 @@ class WatchActionConfigProvider(context: Context, scope: CoroutineScope, private
                 )
             }
 
+            ensureActive()
+            // Keep the working assignments available while replacement icons load, then swap
+            // the map and its volume policy together.
+            volumeStep = actions.volumeStep
             configMap = newConfigMap
             updateListener.value = this@WatchActionConfigProvider
         }
@@ -106,6 +110,7 @@ class WatchActionConfigProvider(context: Context, scope: CoroutineScope, private
      *  observeForever would keep this provider (and every decoded icon bitmap in [configMap])
      *  alive for the whole process, one leaked copy per ViewModel recreation. */
     fun destroy() {
+        decodeJob?.cancel()
         rawConfigData.removeObserver(rawConfigObserver)
     }
 }

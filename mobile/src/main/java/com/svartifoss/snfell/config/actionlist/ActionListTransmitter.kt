@@ -23,6 +23,8 @@ import com.svartifoss.snfell.proto.WatchList
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.matejdro.wearutils.miscutils.BitmapUtils
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.tasks.await
 
 @AutoFactory
@@ -53,7 +55,7 @@ class ActionListTransmitter(actionList: ActionList,
                 }
             }
             if (!dataOnWatch.any() || missingMetadata) {
-                sendConfigToWatch(actionList.actions)
+                withContext(Dispatchers.Main) { actionList.retransmit() }
             }
 
             dataOnWatch.release()

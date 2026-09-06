@@ -278,6 +278,31 @@
 
 ### Fixed
 
+- **Rapid theme and settings changes no longer accumulate an avoidable backlog.** Pending updates
+  now keep the latest selection, and immediate delivery can proceed while a previous durable sync
+  finishes. Both delivery paths share the same ordering, so a delayed older update cannot bring
+  back a previous theme or setting. Duplicate copies also avoid refreshing the appearance again.
+  Resets and synchronization after reconnecting remain supported. Update both the phone and watch
+  apps to enable the shared ordering protection.
+
+- **The first watch command is no longer lost while the phone service starts.** The command is
+  retained until the service is ready, and commands reaching an already running service execute
+  without another service start. Duplicate listener deliveries are handled once; intentional
+  repeated skips and play/pause taps remain separate commands.
+
+- **Overlapping action-menu edits no longer cause endless retransmission.** Edits, icon refreshes
+  and startup repairs now share one synchronization queue, keeping the latest pending configuration
+  and preserving requested saves. A failed transmission no longer strands subsequent edits.
+
+- **Late artwork and button-icon loads no longer replace newer results.** Music updates can reach
+  the watch independently of artwork loading, and obsolete decoding is cancelled. Existing button
+  assignments remain usable until their complete replacement is ready, instead of disappearing
+  while its icons load.
+
+- **Developer “Sync watch settings” now uses the same delivery path as ordinary edits.** It sends
+  the selected watch settings through both transports, instead of bypassing filtering and ordering
+  by pushing the phone's entire preference file.
+
 - **The Matejdro face's cover was never dimmed to its tribute level.** `FaceScopedPreferences.getInt`'s built-in-face branch never consulted a per-face default at all - only the custom-theme branch did - so `album_art_dim_strength` (the only `Int`-typed key with one) silently fell back to the ordinary global dim instead of the level `MATEJDRO_DEFAULTS` set for it. The exact gap [getBoolean] had already closed twice, just never noticed for `Int` because no other numeric setting had a per-face default yet. Anyone on the plain built-in face now sees the intended dim; a saved custom theme built from it already did.
 
 - **Poster and Studio drew the track title against the left edge.** Both centre their metadata column, and both were centring the *block* while leaving the title itself wherever its own width happened to put it — which, for any title shorter than the column, was hard against the left. Any title long enough to fill the column looked correct, which is why it read as an intermittent glitch rather than a fixed one. Centred now, on the watch and in the phone's preview.

@@ -13,9 +13,11 @@ import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.common.WatchPreferenceSyncProtocol
 import com.svartifoss.snfell.common.WatchPreferenceMessage
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.math.max
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,6 +26,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import kotlin.math.min
 
@@ -230,15 +233,23 @@ internal class WatchPreferenceSyncCoordinator(context: Context) {
 
     private val messageClient = Wearable.getMessageClient(appContext)
     private val nodeClient = Wearable.getNodeClient(appContext)
-    // Seeded from wall-clock time (like PreferencePusher's revision) so it stays monotonic across
-    // process restarts without needing to persist it on the phone.
-    private val preferenceSequence = AtomicLong(System.currentTimeMillis())
+    private val syncState = appContext.getSharedPreferences("watch_preference_sync", Context.MODE_PRIVATE)
+    private val preferenceSequence = AtomicLong(max(System.currentTimeMillis(),
+            syncState.getLong("sequence", Long.MIN_VALUE)))
     private fun nextPreferenceSequence(): Long =
-            preferenceSequence.updateAndGet { max(it + 1L, System.currentTimeMillis()) }
+            preferenceSequence.updateAndGet { max(it + 1L, System.currentTimeMillis()) }.also {
+                // Keep ordering across process restarts even if the phone clock moves backwards.
+                syncState.edit().putLong("sequence", it).apply()
+            }
+
+    private data class Publication(val sequence: Long, val values: Map<String, Any?>)
 
     private var debounceJob: Job? = null
-    private var syncJob: Job? = null
-    private var syncRequestedWhileRunning = false
+    private var lastValues: Map<String, Any?>? = null
+    private var latestPublication: Publication? = null
+    private val refreshWaiters = mutableMapOf<Long, CompletableDeferred<Unit>>()
+    private val delivery = PreferenceSnapshotDelivery<Publication>(scope,
+            sendMessage = ::sendImmediatePreferenceMessage, putData = ::putPreferenceSnapshot)
     private var retryJob: Job? = null
     private var retryDelayMs = INITIAL_RETRY_MS
     private var started = false
@@ -251,7 +262,7 @@ internal class WatchPreferenceSyncCoordinator(context: Context) {
     private var disabled = false
 
     private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-        if (shouldSyncWatchPreference(key)) requestSync(CHANGE_DEBOUNCE_MS)
+        if (key == null || shouldSyncWatchPreference(key)) requestSync(CHANGE_DEBOUNCE_MS)
     }
 
     fun start() {
@@ -278,96 +289,114 @@ internal class WatchPreferenceSyncCoordinator(context: Context) {
         debounceJob = null
         retryJob?.cancel()
         retryJob = null
+        delivery.stop()
+        refreshWaiters.values.toList().forEach {
+            it.completeExceptionally(IllegalStateException("Watch preference synchronization stopped"))
+        }
     }
 
     private fun requestSync(delayMs: Long) {
-        retryJob?.cancel()
-        retryJob = null
-        debounceJob?.cancel()
+        // A bounded coalescing window, measured from the first edit. Repeated slider/theme edits
+        // cannot postpone publication forever, and one SharedPreferences transaction still travels
+        // as one complete snapshot rather than once per changed key.
+        if (!started || debounceJob?.isActive == true) return
         debounceJob = scope.launch {
             if (delayMs > 0L) delay(delayMs)
             debounceJob = null
-            enqueueSync()
+            publishLatestSnapshot()
         }
     }
 
-    /** Never cancel a DataClient put that has started: cancelling await() does not guarantee the
-     * underlying Play Services task is cancelled, so a stale put could otherwise finish last.
-     * Conflate edits that arrive in flight and send one fresh snapshot after the current put. */
-    private fun enqueueSync() {
-        if (syncJob?.isActive == true) {
-            syncRequestedWhileRunning = true
-            return
-        }
-        syncJob = scope.launch {
-            do {
-                syncRequestedWhileRunning = false
-                pushLatestSnapshot()
-            } while (syncRequestedWhileRunning)
+    /** Manual refresh uses the same filtered, ordered stream as ordinary edits. */
+    suspend fun forceSync() {
+        check(started) { "Watch preference synchronization is unavailable" }
+        debounceJob?.cancel()
+        debounceJob = null
+        val publication = prepareLatestSnapshot(force = true)!!
+        val completion = CompletableDeferred<Unit>()
+        refreshWaiters[publication.sequence] = completion
+        delivery.offer(publication)
+        try {
+            completion.await()
+        } finally {
+            refreshWaiters.remove(publication.sequence)
         }
     }
 
-    private suspend fun pushLatestSnapshot() {
-        // Read the phone's preferences exactly once and drive both transports from that one map,
-        // so the DataItem and the message can never describe two different moments.
+    private fun publishLatestSnapshot() {
+        prepareLatestSnapshot()?.let(delivery::offer)
+    }
+
+    private fun prepareLatestSnapshot(force: Boolean = false): Publication? {
         val all = preferences.all
         val selection = selectWatchPreferenceSnapshot(all, activeWatchAppearanceScope(all))
         val snapshot = selection.values
         reportDroppedScopes(selection)
         warnIfSnapshotIsOversized(snapshot)
+        // Changes to an omitted inactive scope, and repeated identical writes, need no transport.
+        if (!force && snapshot == lastValues) return null
+        lastValues = snapshot
+        retryJob?.cancel()
+        retryJob = null
+        retryDelayMs = INITIAL_RETRY_MS
+        val sequence = nextPreferenceSequence()
+        // One sequence and one immutable envelope feed BOTH transports. The marker in the v1
+        // message also lets a new watch distinguish an upgraded sender from a legacy phone.
+        return Publication(sequence, snapshot + (WatchPreferenceSyncProtocol.SEQUENCE_KEY to sequence))
+                .also { latestPublication = it }
+    }
 
-        // The accelerant runs first and unconditionally. It used to run *after* the DataItem put
-        // and inside its try block, which made one failing put take the whole channel down: the
-        // put is retried with the identical payload, so a payload the Data Layer rejects (a
-        // snapshot over its 100 KB item limit is the realistic way to get there) fails forever and
-        // the message that would still have worked was never reached. The watch then keeps
-        // whatever it last received - the previous theme, the previous language - with nothing on
-        // either device saying why.
-        sendImmediatePreferenceMessage(snapshot)
-
+    private suspend fun putPreferenceSnapshot(publication: Publication) {
         try {
             PreferencePusher.pushPreferences(
                     appContext,
-                    SnapshotPreferences(snapshot),
+                    SnapshotPreferences(publication.values),
                     CommPaths.PREFERENCES_PREFIX,
                     urgent = true)
-            retryDelayMs = INITIAL_RETRY_MS
-            retryJob?.cancel()
-            retryJob = null
+            finishRefreshes(publication.sequence)
+            if (publication === latestPublication) {
+                retryDelayMs = INITIAL_RETRY_MS
+                retryJob?.cancel()
+                retryJob = null
+            }
         } catch (e: CancellationException) {
             throw e
         } catch (e: GooglePlayServicesRepairableException) {
+            finishRefreshes(publication.sequence, e)
             GoogleApiAvailability.getInstance()
                     .showErrorNotification(appContext, e.connectionStatusCode)
             Timber.w(e, "Watch preference sync requires Play Services repair")
-            scheduleRetry()
+            if (publication === latestPublication) scheduleRetry()
         } catch (e: Exception) {
+            finishRefreshes(publication.sequence, e)
             if (WearableAvailability.isApiUnavailable(e)) {
-                // The Data Layer does not exist on this device, so retrying can only ever fail
-                // again. Backing off forever burnt battery and kept a doomed job alive; stopping
-                // is the honest response, and the settings banner explains it to the user.
                 Timber.w(e, "Wearable API unavailable on this device; stopping preference sync")
                 stop()
                 return
             }
             Timber.w(e, "Could not synchronize watch preferences; retrying")
-            scheduleRetry()
+            if (publication === latestPublication) scheduleRetry()
         }
     }
 
-    /**
-     * Sends the watch-synced preference values over MessageClient for immediate application. A
-     * monotonic sequence lets the watch reject a delayed older message.
-     */
-    private suspend fun sendImmediatePreferenceMessage(snapshot: Map<String, Any?>) {
+    private fun finishRefreshes(sequence: Long, failure: Exception? = null) {
+        refreshWaiters.filterKeys { it <= sequence }.values.toList().forEach {
+            if (failure == null) it.complete(Unit) else it.completeExceptionally(failure)
+        }
+    }
+
+    private suspend fun sendImmediatePreferenceMessage(publication: Publication) {
         try {
-            if (snapshot.isEmpty()) return
-            val bytes = WatchPreferenceMessage.encode(nextPreferenceSequence(), snapshot)
+            val bytes = withContext(Dispatchers.Default) {
+                WatchPreferenceMessage.encode(publication.sequence, publication.values)
+            }
+            // Serialization can suspend while a newer snapshot is published. Skip obsolete work
+            // before giving it to Play Services; a send already started is allowed to finish.
+            if (publication !== latestPublication) return
             messageClient.sendMessageToNearestClient(nodeClient, CommPaths.MESSAGE_APPLY_PREFERENCES, bytes)
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            // The DataItem carries the same change durably; a failed accelerant is not fatal.
             Timber.d(e, "Immediate preference message not delivered (DataItem still applies)")
         }
     }
@@ -469,7 +498,7 @@ internal class WatchPreferenceSyncCoordinator(context: Context) {
         retryJob = scope.launch {
             delay(waitMs)
             retryJob = null
-            enqueueSync()
+            latestPublication?.let(delivery::retryData)
         }
     }
 }

@@ -200,6 +200,8 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     // in-memory only: the phone's seq out-numbers any stored revision across a phone restart, and
     // a watch restart resets to 0 and re-seeds from loadCurrentMusicState.
     private var lastAppliedMusicSeq: Long = 0L
+    private var musicAssetJob: Job? = null
+    private val musicAssetOrder = MusicAssetOrder()
 
     // Data Layer asset id (content-derived) of the currently decoded album art - lets an
     // unchanged cover riding along on every state put be skipped without decoding it again.
@@ -506,7 +508,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                         // Buffer order isn't guaranteed, so for music state keep the higher seq
                         // rather than the last-iterated item.
                         if (existing != null && path == CommPaths.DATA_MUSIC_STATE &&
-                                musicSeqOf(item) < musicSeqOf(existing)) {
+                                !shouldReplaceMusicData(item, existing)) {
                             return@forEach
                         }
                         latestByPath[path] = item
@@ -521,11 +523,18 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                         // Assets are only worth decoding for a state that was actually applied -
                         // a revision the seq gate dropped, or an error, has nothing to attach.
                         if (applyMusicState(receivedMusicState)) {
-                            sendAck()
-
-                            deliverAlbumArt(dataItem, receivedMusicState)
-                            deliverSourceIcon(dataItem, receivedMusicState)
-                            deliverBackdropArt(dataItem, receivedMusicState)
+                            // Asset loading and the ACK must not hold unrelated config updates
+                            // behind a radio round trip. New music DataItems replace this decode.
+                            scheduleMusicAssets(dataItem, receivedMusicState)
+                            scope?.launch {
+                                try {
+                                    sendToPhone(CommPaths.MESSAGE_ACK)
+                                } catch (e: CancellationException) {
+                                    throw e
+                                } catch (e: Exception) {
+                                    Timber.d(e, "Could not acknowledge music state")
+                                }
+                            }
                         }
                     }
                     CommPaths.DATA_NOTIFICATION -> {
@@ -587,7 +596,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     private fun applyMusicState(state: MusicState): Boolean {
         // Drop a stale revision replayed after a newer one already applied. seq is wall-clock
         // monotonic per put; 0 = a pre-seq phone build, never gated.
-        if (state.seq != 0L && state.seq < lastAppliedMusicSeq) {
+        if (!isCurrentMusicSnapshot(state.seq, lastAppliedMusicSeq)) {
             return false
         }
 
@@ -603,6 +612,38 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
         deliverMusicState(state)
         return true
+    }
+
+    @Synchronized
+    private fun isCurrentMusicState(state: MusicState): Boolean =
+            isCurrentMusicSnapshot(state.seq, lastAppliedMusicSeq)
+
+    @Synchronized
+    private fun publishMusicAsset(state: MusicState, publish: () -> Unit) {
+        // The message transport can advance the revision while DataClient is loading an asset.
+        // Check and publish under the same lock as applyMusicState, after every suspension.
+        if (isCurrentMusicState(state)) publish()
+    }
+
+    @Synchronized
+    private fun scheduleMusicAssets(dataItem: DataItem, state: MusicState) {
+        // Separate callbacks can carry the final and interim phase in reverse order too. The
+        // latter must not cancel the former's asset load just because their revisions are equal.
+        if (!isCurrentMusicState(state) || !musicAssetOrder.accept(state)) return
+        musicAssetJob?.cancel()
+        musicAssetJob = scope?.launch {
+            try {
+                deliverAlbumArt(dataItem, state)
+                deliverSourceIcon(dataItem, state)
+                deliverBackdropArt(dataItem, state)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                // Decorative assets failing must not replace usable playback controls with an
+                // error screen. A later DataItem can retry the asset.
+                Timber.w(e, "Could not load music artwork")
+            }
+        }
     }
 
     @Synchronized
@@ -713,6 +754,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
      * main thread - it used to stall input and animation frames right as a track changed.
      */
     private suspend fun deliverAlbumArt(dataItem: DataItem, state: MusicState) {
+        if (!isCurrentMusicState(state)) return
         val asset = dataItem.assets[CommPaths.ASSET_ALBUM_ART]
 
         if (asset == null) {
@@ -722,8 +764,10 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             // blanking between the two puts. A state with no asset and no pending flag genuinely
             // has no art: clear.
             if (!state.albumArtPending) {
-                lastAlbumArtAssetId = null
-                albumArt.postValue(null)
+                publishMusicAsset(state) {
+                    lastAlbumArtAssetId = null
+                    albumArt.postValue(null)
+                }
             }
             return
         }
@@ -737,19 +781,24 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             withContext(Dispatchers.Default) { BitmapUtils.deserialize(bytes) }
         }
         if (receivedAlbumArt != null) {
-            lastAlbumArtAssetId = asset.id
-            albumArt.postValue(receivedAlbumArt)
+            publishMusicAsset(state) {
+                lastAlbumArtAssetId = asset.id
+                albumArt.postValue(receivedAlbumArt)
+            }
         } else if (!state.albumArtPending) {
             // Asset attached but unreadable and nothing newer on the way: clear rather than
             // keep showing the previous track's cover indefinitely.
-            lastAlbumArtAssetId = null
-            albumArt.postValue(null)
+            publishMusicAsset(state) {
+                lastAlbumArtAssetId = null
+                albumArt.postValue(null)
+            }
         }
     }
 
     /** Decodes the optional source-app icon asset. It only changes when the playing app changes
      *  (the phone dedupes it), so track by asset id and keep the cached bitmap otherwise. */
     private suspend fun deliverSourceIcon(dataItem: DataItem, state: MusicState) {
+        if (!isCurrentMusicState(state)) return
         val asset = dataItem.assets[CommPaths.ASSET_SOURCE_ICON]
         if (asset == null) {
             // An albumArtPending state is the interim put the phone ships on every track change so
@@ -758,15 +807,19 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             // change until the second put landed. Only a settled state genuinely means "no icon".
             // deliverAlbumArt guards on the same flag for the same reason.
             if (state.albumArtPending) return
-            lastSourceIconAssetId = null
-            sourceIcon.postValue(null)
+            publishMusicAsset(state) {
+                lastSourceIconAssetId = null
+                sourceIcon.postValue(null)
+            }
             return
         }
         if (asset.id == lastSourceIconAssetId && sourceIcon.value != null) return
         val bytes = dataClient.getByteArrayAsset(asset)
         val bitmap = bytes?.let { withContext(Dispatchers.Default) { BitmapUtils.deserialize(it) } }
-        lastSourceIconAssetId = asset.id
-        sourceIcon.postValue(bitmap)
+        publishMusicAsset(state) {
+            lastSourceIconAssetId = asset.id
+            sourceIcon.postValue(bitmap)
+        }
     }
 
     /**
@@ -780,24 +833,31 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
      * settled absence, at which point the face should genuinely fall back.
      */
     private suspend fun deliverBackdropArt(dataItem: DataItem, state: MusicState) {
+        if (!isCurrentMusicState(state)) return
         val asset = dataItem.assets[CommPaths.ASSET_BACKDROP_ART]
         if (asset == null) {
             // Same guard deliverSourceIcon documents: the interim put a track change ships first
             // carries no assets at all, so only a settled state means anything by their absence.
             if (state.albumArtPending || state.backdropArtPending) return
-            lastBackdropArtAssetId = null
-            backdropArt.postValue(null)
+            publishMusicAsset(state) {
+                lastBackdropArtAssetId = null
+                backdropArt.postValue(null)
+            }
             return
         }
         if (asset.id == lastBackdropArtAssetId && backdropArt.value != null) return
         val bytes = dataClient.getByteArrayAsset(asset)
         val bitmap = bytes?.let { withContext(Dispatchers.Default) { BitmapUtils.deserialize(it) } }
         if (bitmap != null) {
-            lastBackdropArtAssetId = asset.id
-            backdropArt.postValue(bitmap)
+            publishMusicAsset(state) {
+                lastBackdropArtAssetId = asset.id
+                backdropArt.postValue(bitmap)
+            }
         } else if (!state.backdropArtPending) {
-            lastBackdropArtAssetId = null
-            backdropArt.postValue(null)
+            publishMusicAsset(state) {
+                lastBackdropArtAssetId = null
+                backdropArt.postValue(null)
+            }
         }
     }
 
@@ -816,27 +876,25 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         val storedState = MusicState.parseFrom(dataItem.data)
         // Seed the seq guard from the store's current (latest) revision so the buffered older
         // puts that onDataChanged is about to replay on reconnect are gated as stale from the off.
-        if (storedState.seq > lastAppliedMusicSeq) {
-            lastAppliedMusicSeq = storedState.seq
-        }
         if (storedState.error) {
             // A stored error ("nothing playing" etc.) may predate whatever the phone is about to
             // send in response to MESSAGE_WATCH_OPENED - keep showing loading instead.
             return
         }
 
-        applyMusicState(storedState)
-        deliverAlbumArt(dataItem, storedState)
-        deliverBackdropArt(dataItem, storedState)
+        if (applyMusicState(storedState)) {
+            scheduleMusicAssets(dataItem, storedState)
+        }
     }
 
-    /** Parses just the transport seq off a music-state DataItem for the in-buffer collapse; a
-     *  malformed or pre-seq item reads as 0 (never gated). */
-    private fun musicSeqOf(dataItem: DataItem): Long =
+    /** Collapse a buffer by snapshot revision, preferring completed art when revisions tie. */
+    private fun shouldReplaceMusicData(candidate: DataItem, current: DataItem): Boolean =
             try {
-                MusicState.parseFrom(dataItem.data).seq
+                val candidateState = MusicState.parseFrom(candidate.data)
+                val currentState = MusicState.parseFrom(current.data)
+                shouldReplaceMusicSnapshot(candidateState, currentState)
             } catch (e: Exception) {
-                0L
+                true
             }
 
     private suspend fun loadCurrentActionConfig(configPath: String, targetLiveData: MutableLiveData<DataItem>) {

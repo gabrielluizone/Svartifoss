@@ -11,18 +11,22 @@ import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.proto.WatchList
 import com.svartifoss.snfell.watch.communication.getIcon
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 
 class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, private val rawData: LiveData<DataItem>) {
     private val dataClient = Wearable.getDataClient(context)
     val config = MutableLiveData<List<ButtonAction>>()
+    private var decodeJob: Job? = null
 
     private val dataObserver = Observer<DataItem?> { dataItem ->
+        decodeJob?.cancel()
         if (dataItem == null) {
             return@Observer
         }
 
-        coroutineScope.launch {
+        decodeJob = coroutineScope.launch {
             @Suppress("BlockingMethodInNonBlockingContext")
             val listProto = WatchList.parseFrom(dataItem.data)
 
@@ -60,7 +64,8 @@ class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, 
                                 it.value.hasIconIsCoverArt() && it.value.iconIsCoverArt)
             }.toList()
 
-            config.postValue(actions)
+            ensureActive()
+            config.value = actions
         }
     }
 
@@ -73,6 +78,7 @@ class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, 
      *  observeForever would keep this provider (and its decoded icon bitmaps) alive for the whole
      *  process, one leaked copy per ViewModel recreation. */
     fun destroy() {
+        decodeJob?.cancel()
         rawData.removeObserver(dataObserver)
     }
 }

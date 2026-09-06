@@ -59,7 +59,7 @@ import com.svartifoss.snfell.view.watchface.theme.CommunityThemeAccountState
 import com.matejdro.wearutils.logging.LogRetrievalTask
 import com.matejdro.wearutils.preferences.compat.PreferenceFragmentCompatEx
 import com.matejdro.wearutils.preferences.definition.Preferences
-import com.matejdro.wearutils.preferencesync.PreferencePusher
+import com.svartifoss.snfell.WearMusicCenter
 import com.google.android.gms.wearable.Wearable
 import dagger.android.support.AndroidSupportInjection
 import de.psdev.licensesdialog.LicensesDialog
@@ -966,12 +966,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
 
     private fun forceSyncWatchSettings() {
         lifecycleScope.launchWithPlayServicesErrorHandling(requireContext().applicationContext) {
-            PreferencePusher.pushPreferences(
-                requireContext().applicationContext,
-                preferenceManager.sharedPreferences!!,
-                CommPaths.PREFERENCES_PREFIX,
-                true
-            )
+            (requireContext().applicationContext as WearMusicCenter).syncWatchPreferences()
             Toast.makeText(requireContext(), R.string.dev_sync_watch_done, Toast.LENGTH_SHORT).show()
         }
     }

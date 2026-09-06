@@ -220,6 +220,8 @@ class WearMusicCenter : Application(), HasAndroidInjector {
         AppCompatDelegate.setDefaultNightMode(mode)
     }
 
+    suspend fun syncWatchPreferences() = watchPreferenceSync.forceSync()
+
     override fun androidInjector(): AndroidInjector<Any> = androidInjector
 
     private companion object {

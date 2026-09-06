@@ -1,10 +1,14 @@
 package com.svartifoss.snfell.config.actionlist
 
 import android.content.Context
+import com.google.android.gms.common.GoogleApiAvailability
+import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.svartifoss.snfell.actions.PhoneAction
-import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
+import com.svartifoss.snfell.config.ConfigSyncQueue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import timber.log.Timber
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -12,9 +16,6 @@ class GlobalActionList @Inject constructor(actionListTransmitterFactory: ActionL
                                            private val diskStorage: DiskActionListStorage,
                                            private val context: Context) : ActionList {
     override var actions: List<PhoneAction> = emptyList()
-
-    private var committing: Boolean = false
-    private var commitAgain: Boolean = false
 
 
     private val transmitter: ActionListTransmitter
@@ -25,32 +26,22 @@ class GlobalActionList @Inject constructor(actionListTransmitterFactory: ActionL
         transmitter = actionListTransmitterFactory.create(this)
     }
 
-    override fun retransmit() {
-        GlobalScope.launchWithPlayServicesErrorHandling(context, Dispatchers.Main) {
-            withContext(Dispatchers.Default) {
-                transmitter.sendConfigToWatch(actions)
-            }
+    private val syncQueue = ConfigSyncQueue(
+            CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
+            onFailure = {
+                if (it is GooglePlayServicesRepairableException) {
+                    GoogleApiAvailability.getInstance().showErrorNotification(context, it.connectionStatusCode)
+                }
+                Timber.w(it, "Could not synchronize action list")
+            }) { saveToDisk ->
+        val snapshot = actions.toList()
+        withContext(Dispatchers.Default) {
+            if (saveToDisk) diskStorage.saveActions(snapshot)
+            transmitter.sendConfigToWatch(snapshot)
         }
     }
 
-    override fun commit() {
-        if (committing) {
-            commitAgain = true
-            return
-        }
+    override fun retransmit() = syncQueue.request(saveToDisk = false)
 
-        committing = true
-
-        GlobalScope.launchWithPlayServicesErrorHandling(context, Dispatchers.Main) {
-            withContext(Dispatchers.Default) {
-                diskStorage.saveActions(actions)
-                transmitter.sendConfigToWatch(actions)
-            }
-
-            committing = false
-            if (commitAgain) {
-                commit()
-            }
-        }
-    }
+    override fun commit() = syncQueue.request(saveToDisk = true)
 }

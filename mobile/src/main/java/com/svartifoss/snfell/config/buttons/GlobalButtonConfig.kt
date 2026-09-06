@@ -9,8 +9,9 @@ import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.svartifoss.snfell.config.ConfigSyncQueue
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -30,8 +31,6 @@ constructor(private val playbackConfig: Boolean,
     }
 
     private val configMap = ArrayMap<ButtonInfo, PhoneAction>()
-    private var commiting: Boolean = false
-    private var commitAgain: Boolean = false
 
     private val diskButtonStorage: DiskButtonConfigStorage
     private val buttonTransmitter: ButtonConfigTransmitter
@@ -71,49 +70,23 @@ constructor(private val playbackConfig: Boolean,
     }
 
 
-    override fun retransmit() {
-        GlobalScope.launch(Dispatchers.Main) {
-            try {
-                withContext(Dispatchers.Default) {
-                    buttonTransmitter.sendConfigToWatch(configMap.entries)
+    private val syncQueue = ConfigSyncQueue(
+            CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate),
+            onFailure = { Timber.w(it, "Could not synchronize button configuration") }) { saveToDisk ->
+        val snapshot = configMap.entries.associate { it.key to it.value }.entries
+        withContext(Dispatchers.Default) {
+            if (saveToDisk && diskButtonStorage.saveButtons(snapshot)) {
+                if (playbackConfig) {
+                    mutablePlayingConfigSaved.postValue(Unit)
+                } else {
+                    mutableStoppedConfigSaved.postValue(Unit)
                 }
-            } catch (e: Exception) {
-                Timber.e(e, "Could not re-transmit button configuration")
             }
+            buttonTransmitter.sendConfigToWatch(snapshot)
         }
     }
 
-    override fun commit() {
-        if (commiting) {
-            commitAgain = true
-            return
-        }
+    override fun retransmit() = syncQueue.request(saveToDisk = false)
 
-        commiting = true
-
-        GlobalScope.launch(Dispatchers.Main) {
-            try {
-                withContext(Dispatchers.Default) worker@ {
-                    val saved = diskButtonStorage.saveButtons(configMap.entries)
-                    if (saved) {
-                        if (playbackConfig) {
-                            mutablePlayingConfigSaved.postValue(Unit)
-                        } else {
-                            mutableStoppedConfigSaved.postValue(Unit)
-                        }
-                    }
-                    buttonTransmitter.sendConfigToWatch(configMap.entries)
-                }
-            } catch (e: Exception) {
-                Timber.e(e, "Could not commit button configuration")
-            } finally {
-                commiting = false
-                val runQueuedCommit = commitAgain
-                commitAgain = false
-                if (runQueuedCommit) {
-                    commit()
-                }
-            }
-        }
-    }
+    override fun commit() = syncQueue.request(saveToDisk = true)
 }

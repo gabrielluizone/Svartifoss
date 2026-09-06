@@ -17,8 +17,9 @@ import java.io.DataOutputStream
  * snapshot this way makes the change land immediately. The DataItem stays the source of truth for
  * durability (it survives a watch reboot / process death), so this message is purely an accelerant.
  *
- * A monotonic [sequence] lets the watch drop an out-of-order message, so a delayed older snapshot
- * can never clobber a newer one. Application is additive (keys present are written); key *removals*
+ * The coordinator also carries [WatchPreferenceSyncProtocol.SEQUENCE_KEY] in both transports.
+ * Upgraded receivers order their shared sequence together, so a delayed DataItem cannot undo
+ * newer message-delivered values. Application is additive (keys present are written); key *removals*
  * are left to the DataItem path's inventory logic, so a dropped message can never wrongly delete a
  * preference.
  */

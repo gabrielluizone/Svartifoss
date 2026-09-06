@@ -39,6 +39,7 @@ import androidx.core.app.ServiceCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.withStarted
 import com.google.android.gms.wearable.Asset
 import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.MessageClient
@@ -101,11 +102,16 @@ import com.matejdro.wearutils.preferences.definition.Preferences
 import com.matejdro.wearvibrationcenter.notificationprovider.ReceivedNotification
 import dagger.android.AndroidInjection
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.CoroutineStart
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -214,6 +220,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // the Data Layer store, or the watch would gate the fresh state away as "stale". The watch
         // uses it to drop the older buffered revisions Play Services replays on reconnect.
         private val musicStateSequence = AtomicLong(System.currentTimeMillis())
+        // Outlives a service instance whose submitted put is still finishing during teardown.
+        private val musicDataPutMutex = Mutex()
 
         private fun nextMusicSeq(): Long =
                 musicStateSequence.updateAndGet { max(it + 1L, System.currentTimeMillis()) }
@@ -223,6 +231,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private lateinit var dataClient: DataClient
 
     private lateinit var preferences: SharedPreferences
+
+    private val watchCommandReceiver: (WatchCommand) -> Unit = ::executeWatchCommand
 
     /** Identity of the track last read from metadata, and when it was first seen on this device's
      *  monotonic clock. Together they let a stale position sample be spotted - see
@@ -391,9 +401,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      *  dedupe the way a late notification glyph does. */
     private var previousBackdropArtBytes: ByteArray? = null
 
-    // Guards against a transmit that suspended for art encoding finishing after a newer
-    // transmit already shipped fresher state - see transmitToWear.
+    // One logical revision belongs to the snapshot, across both transports and both art phases.
+    // Cancelling preparation cannot retract a submitted Play Services Task, so puts also share
+    // a lock that stays held until that Task actually completes.
     private var transmitSequence = 0L
+    private var musicTransmitJob: Job? = null
+    private var musicMessageJob: Job? = null
 
     // Cache of the last album art decoded from a content URI, keyed by the URI string. Apps
     // that publish art as a URI would otherwise get a fresh Bitmap object on every state
@@ -443,6 +456,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     @SuppressLint("LaunchActivityFromNotification")
     override fun onCreate() {
         super.onCreate()
+        WatchCommandDelivery.beginStartup(watchCommandReceiver)
 
         AndroidInjection.inject(this)
         actionHandlers = musicServiceComponentFactory.build(this).getActionHandlers()
@@ -488,6 +502,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
 
         active = true
+        lifecycleScope.launch {
+            // The media-session LiveData activates at STARTED. Draining during onCreate would
+            // consume a cold-start transport command while currentMediaController is still null.
+            lifecycle.withStarted { WatchCommandDelivery.attach(watchCommandReceiver) }
+        }
         Timber.d("Service started")
     }
 
@@ -716,6 +735,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     }
 
     override fun onDestroy() {
+        WatchCommandDelivery.detach(watchCommandReceiver)
         Timber.d("Service stopped")
 
         // The ordinary stop path ("Stop", an idle timeout, the system reclaiming us) goes through
@@ -1476,12 +1496,16 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             backdropArtBytes: ByteArray?
     ) {
         val mySequence = ++transmitSequence
+        val versionedState = musicState.toBuilder().setSeq(nextMusicSeq()).build()
+        musicTransmitJob?.cancel()
 
-        lifecycleScope.launchWithPlayServicesErrorHandling(this) {
+        musicTransmitJob = lifecycleScope.launchWithPlayServicesErrorHandling(this) {
             // Before any art work: this is the copy that decides how quickly a track change shows
             // up on the wrist, and everything below it can suspend for hundreds of milliseconds
             // encoding a cover.
-            sendMusicStateMessage(musicState)
+            // Delivery over either transport can stall independently. The durable state must
+            // never wait for a node lookup or a MessageClient acknowledgement.
+            sendMusicStateMessageAsync(versionedState)
 
             val previousArtSource = lastSerializedArtSource
             val artChanged = when {
@@ -1507,12 +1531,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // albumArtPending tells the watch "the cover for this state is in transit" so it
                 // keeps the previous cover up (smooth crossfade once the new one lands) instead
                 // of blanking - as opposed to a final state that genuinely has no art.
-                stateOnlyRequest.data = musicState.toBuilder()
+                stateOnlyRequest.data = versionedState.toBuilder()
                         .setAlbumArtPending(true)
-                        .setSeq(nextMusicSeq())
                         .build().toByteArray()
                 stateOnlyRequest.setUrgent()
-                dataClient.putDataItem(stateOnlyRequest).await()
+                putCurrentMusicState(stateOnlyRequest, mySequence)
             }
 
             val artBytes = when {
@@ -1549,9 +1572,6 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                         albumArt.compress(Bitmap.CompressFormat.JPEG, 85, stream)
                         stream.toByteArray()
                     }
-                }.also {
-                    lastSerializedArtSource = originalAlbumArt
-                    lastSerializedArt = it
                 }
             }
 
@@ -1560,6 +1580,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             if (transmitSequence != mySequence) {
                 return@launchWithPlayServicesErrorHandling
             }
+            lastSerializedArtSource = originalAlbumArt
+            lastSerializedArt = artBytes
 
             val putDataRequest = PutDataRequest.create(CommPaths.DATA_MUSIC_STATE)
             if (artBytes != null) {
@@ -1577,20 +1599,21 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 putDataRequest.putAsset(
                         CommPaths.ASSET_BACKDROP_ART, Asset.createFromBytes(backdropArtBytes))
             }
-            // Stamp the sequence at the actual put (not on the early stateBytes snapshot) so it
-            // reflects true send order relative to the state-only put above.
-            putDataRequest.data = musicState.toBuilder().setSeq(nextMusicSeq()).build().toByteArray()
+            // Reuse the snapshot's revision. Giving an old snapshot a fresh revision after an
+            // await made it appear newer than the state that superseded it.
+            putDataRequest.data = versionedState.toByteArray()
             putDataRequest.setUrgent()
 
-            dataClient.putDataItem(putDataRequest).await()
-            startTimeout()
+            putCurrentMusicState(putDataRequest, mySequence)
+            if (transmitSequence == mySequence) startTimeout()
         }
     }
 
-    private fun transmitError(error: String) = lifecycleScope.launchWithPlayServicesErrorHandling(this) {
+    private fun transmitError(error: String): Job {
         // Invalidate any in-flight transmitToWear still encoding art, so it can't finish after
         // this and overwrite the error with stale "playing" state.
-        ++transmitSequence
+        val mySequence = ++transmitSequence
+        musicTransmitJob?.cancel()
 
         val musicStateBuilder = MusicState.newBuilder()
 
@@ -1602,7 +1625,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         musicStateBuilder.title = error
         musicStateBuilder.playing = false
 
-        val musicState = musicStateBuilder.build()
+        val musicState = musicStateBuilder.setSeq(nextMusicSeq()).build()
 
         // Record the error as the last-transmitted state (buildMusicStateAndTransmit bypasses this
         // path entirely, so it wouldn't otherwise know an error went out). Without this, if
@@ -1612,21 +1635,41 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         previousMusicState = musicState
         previousAlbumArt = null
 
-        sendMusicStateMessage(musicState)
+        return lifecycleScope.launchWithPlayServicesErrorHandling(this) {
+            sendMusicStateMessageAsync(musicState)
 
-        val putDataRequest = PutDataRequest.create(CommPaths.DATA_MUSIC_STATE)
+            val putDataRequest = PutDataRequest.create(CommPaths.DATA_MUSIC_STATE)
 
-        putDataRequest.data = musicState.toBuilder().setSeq(nextMusicSeq()).build().toByteArray()
-        putDataRequest.setUrgent()
+            putDataRequest.data = musicState.toByteArray()
+            putDataRequest.setUrgent()
 
-        dataClient.putDataItem(putDataRequest).await()
+            putCurrentMusicState(putDataRequest, mySequence)
+        }.also { musicTransmitJob = it }
+    }
+
+    private suspend fun putCurrentMusicState(request: PutDataRequest, generation: Long) {
+        musicDataPutMutex.withLock {
+            if (transmitSequence != generation) return
+            // await() cancellation does not cancel putDataItem. Finish that local-store write
+            // before releasing the lock so a replacement cannot be overtaken by an old Task.
+            withContext(NonCancellable) { dataClient.putDataItem(request).await() }
+        }
+    }
+
+    private fun sendMusicStateMessageAsync(state: MusicState) {
+        // Replace a suspended lookup/send without holding the durable writer behind it. A Task
+        // already handed to Play Services can still deliver; its original revision stays stale.
+        musicMessageJob?.cancel()
+        musicMessageJob = lifecycleScope.launch(start = CoroutineStart.UNDISPATCHED) {
+            sendMusicStateMessage(state)
+        }
     }
 
     /**
      * Sends [musicState] to the watch over MessageClient, alongside the DataItem put that follows.
      *
-     * See [CommPaths.MESSAGE_MUSIC_STATE]. The seq is taken here so it orders correctly against the
-     * puts below - the watch keeps whichever arrives first and drops the rest by content, so the
+     * See [CommPaths.MESSAGE_MUSIC_STATE]. All copies carry the snapshot's original seq; the watch
+     * keeps whichever arrives first and drops the rest by content, so the
      * duplicate costs one comparison rather than a second pass over every observer.
      *
      * Skipped when the payload is too large. A MusicState is normally a few hundred bytes, but it
@@ -1636,7 +1679,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      * "as slow as it used to be" rather than "no state at all".
      */
     private suspend fun sendMusicStateMessage(musicState: MusicState) {
-        val bytes = musicState.toBuilder().setSeq(nextMusicSeq()).build().toByteArray()
+        val bytes = musicState.toByteArray()
         if (bytes.size > MUSIC_STATE_MESSAGE_MAX_BYTES) {
             Timber.d("Music state too large for a message (%d bytes) - DataItem only", bytes.size)
             return
@@ -1646,6 +1689,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                     Wearable.getNodeClient(applicationContext),
                     CommPaths.MESSAGE_MUSIC_STATE,
                     bytes)
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: Exception) {
             // No watch in range, or Play Services unavailable. The DataItem below is the durable
             // path and still carries this state whenever the watch comes back.
@@ -2898,6 +2943,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     }
 
     override fun onMessageReceived(event: MessageEvent) {
+        WatchCommandDelivery.receive(this, event)
+    }
+
+    private fun executeWatchCommand(event: WatchCommand) {
         Timber.d("Message %s", event.path)
 
         when (event.path) {

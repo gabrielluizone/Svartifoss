@@ -19,6 +19,8 @@ import com.svartifoss.snfell.proto.WatchActions
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.matejdro.wearutils.miscutils.BitmapUtils
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.tasks.await
 
 @AutoFactory
@@ -49,7 +51,7 @@ class ButtonConfigTransmitter(buttonConfig: ButtonConfig,
                 }
             }
             if (!dataOnWatch.any() || missingRemoteUri) {
-                sendConfigToWatch(buttonConfig.getAllActions())
+                withContext(Dispatchers.Main) { buttonConfig.retransmit() }
             }
 
             dataOnWatch.release()

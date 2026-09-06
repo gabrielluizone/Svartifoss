@@ -33,7 +33,7 @@ message MusicState {
   // template glyph the watch tints to match its artist line. False means the phone fell back to
   // the app's full-colour launcher icon, which must be drawn untinted.
   optional bool sourceIconTemplate = 17 [default = false];
-  // Monotonic transport sequence stamped on every put to the DATA_MUSIC_STATE DataItem (see
+  // Monotonic snapshot sequence shared by its MessageClient copy and both DataItem art phases (see
   // MusicService.nextMusicSeq - wall-clock seeded so it stays monotonic across phone process
   // restarts). Lets the watch discard the older, buffered revisions Play Services replays when a
   // watch that was unreachable reconnects (skip-skip-skip / theme-hopping used to replay one by

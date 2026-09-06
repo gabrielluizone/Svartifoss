@@ -116,6 +116,7 @@ dependencies {
     implementation libs.google.firebase.firestore
     implementation libs.google.identity.googleid
 
+    testImplementation libs.kotlin.coroutines.test
     testImplementation libs.junit4
     // Android's org.json is a runtime stub in local JVM tests; use the reference implementation
     // for the checked-in GitHub Pages catalogue contract test.
