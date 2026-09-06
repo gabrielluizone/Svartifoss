@@ -1,7 +1,33 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-09-06T14:29:33.296Z",
+  "generatedAt": "2026-09-06T18:35:35.395Z",
   "themes": [
+    {
+      "id": "110b4b46-2049-4a12-9161-f04de8ce4f4c",
+      "name": "New Split",
+      "author": "Gabriel L Svafoss",
+      "baseFace": "poster",
+      "revision": 1,
+      "schemaVersion": 1,
+      "minimumAppVersion": "4.0",
+      "publishedAt": "2026-09-06T18:35:35.395Z",
+      "likes": 0,
+      "settingsDigest": "sha256:426e8a65f68ff69bd991c735b7badf2d767af692107d45b5bcd226cc93279671",
+      "installs": 0
+    },
+    {
+      "id": "f9bc072f-1097-4bb9-85fc-c695fa64c5a6",
+      "name": "Material Design 2",
+      "author": "Gabriel L Svafoss",
+      "baseFace": "poster",
+      "revision": 1,
+      "schemaVersion": 1,
+      "minimumAppVersion": "4.0",
+      "publishedAt": "2026-09-06T18:35:35.395Z",
+      "likes": 0,
+      "settingsDigest": "sha256:78d3650ab932eddde0442d1f7c57535a88e9c51d5a842f3255ff95764fd2d6c7",
+      "installs": 0
+    },
     {
       "id": "634ec24e-c4f6-4a00-a582-a268ddf56f9b",
       "name": "Haibane",
