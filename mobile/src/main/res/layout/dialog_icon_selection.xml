@@ -9,6 +9,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <!-- background=null, matching activity_settings_search.xml's search field: the default
+         Material underline spans the view's full width while drawableStart indents the actual
+         text, so the bar never lines up under it - and it draws from the static theme accent,
+         not the runtime one. Dropping it removes both problems instead of insetting a drawable
+         to chase a line nothing else here needs. -->
     <EditText
         android:id="@+id/icon_search_input"
         android:layout_width="match_parent"
@@ -17,10 +22,12 @@
         android:layout_marginTop="4dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="6dp"
+        android:background="@null"
         android:drawableStart="@drawable/ic_search"
         android:drawablePadding="10dp"
         android:drawableTint="@color/lyra_text_secondary"
         android:fontFamily="@font/google_sans"
+        android:gravity="center_vertical"
         android:hint="@string/icon_selection_search_hint"
         android:imeOptions="actionSearch"
         android:importantForAutofill="no"

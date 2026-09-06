@@ -206,18 +206,21 @@ class LyricsActivity : ComponentActivity() {
             val albumArt by viewModel.albumArt.observeAsState()
             val accentTriad by viewModel.accentTriad.observeAsState()
 
-            // The configured ground. No content style of its own, so "Follow style" resolves to
-            // solid black - the ground this screen was designed on, kept unless a backdrop is
-            // named. Dropped entirely in ambient: an always-on panel must not light artwork.
-            val screenBackdrop = rememberScreenBackdrop(
-                    prefs = preferences,
-                    appearanceContext = appearance,
-                    albumArt = albumArt,
-                    accentSource = accentSource,
-                    themeAccent = themeAccent,
-                    triad = accentTriad ?: PanelTriad(accent, accent, accent),
-                    contentStyle = null,
-                    backdropStyle = MiscPreferences.WEAR_LYRICS_BACKDROP_STYLE)
+            // The configured ground is accent-dependent. Keep the black Activity window visible
+            // until the real triad is ready instead of briefly painting the default sage while
+            // this screen's palette extraction catches up. Dropped entirely in ambient: an
+            // always-on panel must not light artwork.
+            val screenBackdrop = accentTriad?.let { triad ->
+                rememberScreenBackdrop(
+                        prefs = preferences,
+                        appearanceContext = appearance,
+                        albumArt = albumArt,
+                        accentSource = accentSource,
+                        themeAccent = themeAccent,
+                        triad = triad,
+                        contentStyle = null,
+                        backdropStyle = MiscPreferences.WEAR_LYRICS_BACKDROP_STYLE)
+            }
 
             val (dx, dy) = JIGGLE_STEPS[jiggleStep]
 

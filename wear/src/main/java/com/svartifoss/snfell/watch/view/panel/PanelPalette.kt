@@ -63,7 +63,9 @@ object AlbumPaletteCache {
 /** A panel screen's two resolved colour products: its own surface, and the player behind it. */
 data class PanelPalette(
         val appearance: PanelAppearance,
-        val backdrop: PanelBackdrop
+        val backdrop: PanelBackdrop,
+        /** False only while a non-cached cover is still being sampled. */
+        val isResolved: Boolean
 )
 
 /**
@@ -77,8 +79,8 @@ data class PanelPalette(
  * already extracted is on screen at the *first* composition, not one frame later: a `LaunchedEffect`
  * runs after the first frame is drawn, so even an instant answer would have flashed the fallback
  * once. The effect still runs for the case the cache cannot answer - a screen opened from a Tile
- * with the player never having been up - where drawing the fallback first is honest rather than a
- * defect.
+ * with the player never having been up. That state is exposed as [PanelPalette.isResolved] so a
+ * full-screen panel can remain black rather than paint a provisional colour.
  */
 @Composable
 fun rememberPanelPalette(
@@ -105,6 +107,11 @@ fun rememberPanelPalette(
         mutableStateOf(PanelAppearanceResolver.surfaceTriad(
                 prefs, appearanceContext, surface, seed ?: fallbackTriad, themeAccent))
     }
+    var isResolved by remember(albumArt, accentSource) {
+        // A null cover and a cached cover already have a final answer. Only an uncached Bitmap
+        // must wait before it is allowed to tint a newly opened full-screen panel.
+        mutableStateOf(albumArt == null || seed != null)
+    }
 
     LaunchedEffect(albumArt, accentSource) {
         // Already seeded above; asking again would re-run Palette for an answer we are showing.
@@ -113,6 +120,7 @@ fun rememberPanelPalette(
             rawTriad = raw
             triad = PanelAppearanceResolver.surfaceTriad(
                     prefs, appearanceContext, surface, raw, themeAccent)
+            isResolved = true
         }
     }
 
@@ -125,5 +133,5 @@ fun rememberPanelPalette(
     val backdrop = remember(rawTriad) {
         PanelAppearanceResolver.resolveBackdrop(prefs, appearanceContext, rawTriad, themeAccent)
     }
-    return PanelPalette(appearance, backdrop)
+    return PanelPalette(appearance, backdrop, isResolved)
 }

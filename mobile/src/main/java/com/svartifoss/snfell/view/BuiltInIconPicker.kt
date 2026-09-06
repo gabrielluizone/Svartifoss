@@ -379,9 +379,9 @@ object BuiltInIconPicker {
                 .setNegativeButton(android.R.string.cancel, null)
                 .show()
 
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(accent)
-        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(
-                ContextCompat.getColor(activity, R.color.lyra_text_secondary))
+        // Also reaches searchInput's cursor/selection handles, which a setView() dialog's shell
+        // never styles - see LyraDialogStyling's own comment on why that walk is needed.
+        dialog.applyLyraDialogStyling(accent)
     }
 
     /** Accent/case-insensitive comparison so "assao"/"ação" and "Colors"/"colors" match the same

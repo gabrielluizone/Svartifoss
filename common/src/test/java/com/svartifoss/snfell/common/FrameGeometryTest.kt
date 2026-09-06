@@ -22,6 +22,20 @@ class FrameGeometryTest {
         assertTrue(frame.ARTWORK_BOTTOM_FRACTION < frame.CARD_BOTTOM_FRACTION)
     }
 
+    @Test
+    fun `frame centre gestures leave the card side bands to quadrant actions`() {
+        val frame = FaceGeometry.Frame
+        val touchLeft = (1f - frame.CENTER_REGION_FRACTION) / 2f
+        val cardLeft = frame.CARD_INSET_FRACTION
+
+        // A side tap within the card must still reach FourWayTouchLayout rather than its invisible
+        // centre play/pause region. The remaining 15.5% on each card side is large enough to be
+        // intentional on a round watch, while the 46% centre remains an 88 dp target at 192 dp.
+        assertTrue(touchLeft > cardLeft)
+        assertEquals(.46f, frame.CENTER_REGION_FRACTION, epsilon)
+        assertTrue(frame.CENTER_REGION_FRACTION * REFERENCE_WATCH_DP >= 48f)
+    }
+
     /**
      * The reported defect: the cover reached to within half its own side inset of the card's
      * bottom, which on a rounded card means *past* the corner arc. The watch clips its card

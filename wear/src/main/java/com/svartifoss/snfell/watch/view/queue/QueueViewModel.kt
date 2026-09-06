@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.core.graphics.ColorUtils
 import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
@@ -73,6 +72,15 @@ class QueueViewModel @Inject constructor(
                     MiscPreferences.WEAR_ALBUM_ACCENT_SOURCE,
                     appearanceContext))
 
+    /**
+     * MainActivity has normally already extracted the current cover. Read that answer while this
+     * ViewModel is constructed, before Compose draws its first loading frame, rather than waiting
+     * for LiveData to dispatch the same Bitmap on the next main-loop turn.
+     */
+    private val cachedAccentTriad = AlbumPaletteCache
+            .get(phoneConnection.albumArt.value, albumAccentSource)
+            ?.let(::resolveAccent)
+
     private var latestList: CustomListWithBitmaps? = null
 
     val items = MediatorLiveData<List<QueueItemUi>>().apply {
@@ -116,13 +124,14 @@ class QueueViewModel @Inject constructor(
         }
     }
 
-    /** A second real quantized cover swatch for Gradient/Duotone queue rows. */
-    val secondaryAccentColor = MutableLiveData(DEFAULT_QUEUE_ACCENT)
-    /** Third real quantized cover swatch used only by the Prisma queue style. */
-    val tertiaryAccentColor = MutableLiveData(DEFAULT_QUEUE_ACCENT)
-
-    val accentColor = MediatorLiveData<Int>().apply {
-        value = DEFAULT_QUEUE_ACCENT
+    /**
+     * The queue's fully resolved palette. It deliberately starts empty instead of with the sage
+     * default: rendering an accent-dependent backdrop with that placeholder made a newly opened
+     * queue flash green before its cover palette arrived. The already-cached current palette is
+     * installed synchronously, so the usual loading frame still opens in its real accent.
+     */
+    val accentTriad = MediatorLiveData<PanelTriad?>().apply {
+        value = cachedAccentTriad
         addSource(phoneConnection.albumArt) { bitmap ->
             if (bitmap == null) {
                 // Still through the resolver: a chosen queue colour is a choice about the queue,
@@ -180,17 +189,20 @@ class QueueViewModel @Inject constructor(
      * other surface in the app and stopped at the queue, and there was no per-screen override to
      * reach for either. [MiscPreferences.WEAR_QUEUE_COLOR_MODE] is that override.
      */
-    private fun publishAccent(raw: PanelTriad) {
-        val resolved = PanelAppearanceResolver.componentTriad(
+    private fun resolveAccent(raw: PanelTriad): PanelTriad =
+            PanelAppearanceResolver.componentTriad(
                 prefs,
                 appearanceContext,
                 MiscPreferences.WEAR_QUEUE_COLOR_MODE,
                 MiscPreferences.WEAR_QUEUE_CUSTOM_COLOR,
                 raw,
                 DEFAULT_QUEUE_ACCENT)
-        accentColor.postValue(resolved.primary)
-        secondaryAccentColor.postValue(resolved.secondary)
-        tertiaryAccentColor.postValue(resolved.tertiary)
+
+    private fun publishAccent(raw: PanelTriad) {
+        val resolved = resolveAccent(raw)
+        // Publish every swatch together. Aside from keeping styles such as Prism internally
+        // consistent, this lets QueueActivity treat the palette as one readiness signal.
+        accentTriad.postValue(resolved)
     }
 
     /** Monochromatic covers still get two readable tones without fabricating another hue. */

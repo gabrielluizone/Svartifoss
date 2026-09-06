@@ -252,6 +252,18 @@
 
 ### Changed
 
+- **The Immersive face's text sits on the floor of the screen again.** Its title, artist and
+  playback time stopped a full eighth of the screen short of the bottom edge, which on a face whose
+  whole composition is the cover plus one grounded block left an empty band under the text and made
+  the block read as floating in the middle of the picture. It now rests close to the margin the
+  clock keeps at the top, so the two read as a matched pair. The Watch tab's preview follows.
+
+- **The watch's now-playing screen loads with the three bars, not a spinning arc.** Opening the
+  app while it works out what is playing (and returning from the always-on display before that
+  finishes) showed a generic circular spinner - the one platform shape left in a screen whose
+  every other waiting state, on the queue, the menu and the lyrics screen, is already the pulsing
+  three-bar music indicator. It now uses that everywhere.
+
 - **About the developer now has a face on it.** The row in Settings → Data & support carries the
   developer's own photo instead of a generic person glyph, and the dialog it opens leads with the
   same picture beside the name. The image is bundled with the app - nothing is fetched from GitHub,
@@ -277,6 +289,8 @@
   silently falling back to Google Sans.
 
 ### Fixed
+
+- **The icon picker's search box showed the static theme colour, not your accent.** `BuiltInIconPicker`'s dialog is built with `setView()`, so its `EditText` was never reached by the runtime accent styling every other custom-content dialog gets — its cursor and selection handles drew from the theme's fixed sage green regardless of the chosen accent. The field's search icon was also vertically misaligned against the hint text, and the default Material underline spanned the full width while the (icon-indented) text started well to its right, so the bar never lined up under it either. The underline is now dropped entirely, matching the Settings search field's own search box, and the accent styling now reaches this dialog like it does every other one.
 
 - **Rapid theme and settings changes no longer accumulate an avoidable backlog.** Pending updates
   now keep the latest selection, and immediate delivery can proceed while a previous durable sync

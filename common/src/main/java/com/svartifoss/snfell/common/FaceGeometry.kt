@@ -264,7 +264,23 @@ object FaceGeometry {
     /** Full-bleed cover with the text block grounded over its lower scrim. */
     object Immersive {
         const val SIDE_PADDING_FRACTION = .10f
-        const val BOTTOM_PADDING_FRACTION = .13f
+
+        /**
+         * How far the block's last line stops short of the bottom edge.
+         *
+         * The face is the cover plus one grounded block, so this number *is* the composition: too
+         * much of it and the text floats in the middle of the picture with an empty band beneath
+         * it, which is what .13 produced. It sits close to the clock's own inset at the top so the
+         * two read as a matched pair of margins rather than as text that stopped early.
+         *
+         * The floor is the round glass, not the rectangle: the block is [SIDE_PADDING_FRACTION]
+         * from each side, so 80% of the diameter wide, and the chord only holds that down to about
+         * 80% depth. Measured at the glyph band rather than the line box, the artist - the widest
+         * line that can reach the full width - still lands inside it here. The track time below it
+         * sits deeper than the chord would hold, as it already did, because it is a dozen
+         * characters centred in a box it never fills.
+         */
+        const val BOTTOM_PADDING_FRACTION = .085f
 
         const val TITLE_SP = 17f
         const val TITLE_LINE_HEIGHT_SP = 19f
@@ -488,6 +504,14 @@ object FaceGeometry {
         const val CARD_BOTTOM_FRACTION = .795f
         const val CARD_CORNER_FRACTION = .17f
         const val CONTENT_INSET_FRACTION = .04f
+
+        /**
+         * Frame has no visible transport button, so its centre handles play/pause. Keep that
+         * target comfortably above Wear's 48 dp touch-target guidance without letting it consume
+         * the card's side bands, where the shared left/right quadrant actions live.
+         */
+        const val CENTER_REGION_FRACTION = .46f
+        const val CENTER_PULSE_FRACTION = .34f
 
         /** The chip keeps the same margin from the card's top edge that it keeps from its side. */
         const val ART_TOP_FRACTION = CARD_TOP_FRACTION + CONTENT_INSET_FRACTION

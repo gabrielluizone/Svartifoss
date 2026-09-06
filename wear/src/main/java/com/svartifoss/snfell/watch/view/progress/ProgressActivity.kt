@@ -201,6 +201,7 @@ class ProgressActivity : ComponentActivity() {
                         appearance = appearance,
                         albumArt = albumArt,
                         backdrop = backdrop,
+                        showBackdrop = palette.isResolved,
                         screenFace = appearanceContext.baseFace,
                         themeAccentColor = themeAccent,
                         uiTypeface = uiTypeface,

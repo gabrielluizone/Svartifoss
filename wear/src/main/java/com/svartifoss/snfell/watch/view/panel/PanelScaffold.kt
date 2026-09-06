@@ -54,6 +54,8 @@ fun PanelScaffold(
         appearance: PanelAppearance,
         backdrop: PanelBackdrop,
         albumArt: Bitmap?,
+        /** Keep the opaque black window visible until an uncached cover palette is ready. */
+        showBackdrop: Boolean = true,
         onDismiss: () -> Unit,
         content: @Composable BoxScope.() -> Unit
 ) {
@@ -70,11 +72,13 @@ fun PanelScaffold(
                 modifier = Modifier.fillMaxSize().background(Color.Black),
                 contentAlignment = Alignment.Center
         ) {
-            AndroidView(
-                    modifier = Modifier.fillMaxSize(),
-                    factory = { PanelBackdropView(it) },
-                    update = { it.render(appearance, backdrop, albumArt) })
-            content()
+            if (showBackdrop) {
+                AndroidView(
+                        modifier = Modifier.fillMaxSize(),
+                        factory = { PanelBackdropView(it) },
+                        update = { it.render(appearance, backdrop, albumArt) })
+                content()
+            }
         }
     }
 }

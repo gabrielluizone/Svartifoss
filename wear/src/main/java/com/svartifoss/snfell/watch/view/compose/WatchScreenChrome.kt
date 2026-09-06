@@ -1,11 +1,6 @@
 package com.svartifoss.snfell.watch.view.compose
 
-import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
@@ -16,10 +11,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withFrameNanos
 import android.text.format.DateFormat
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,6 +51,7 @@ import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.sin
 
 /**
  * Screen furniture shared by the full-screen Compose list screens (queue, actions menu) so they
@@ -258,8 +256,10 @@ internal fun BoxScope.CurvedScrollIndicator(listState: ScalingLazyListState) {
  * each frame a redraw-only invalidation of one small node, cheap enough that freezing it bought
  * nothing and only made the playing row look stopped exactly when the user was moving.
  *
- * The three bars carry deliberately mismatched, non-harmonic periods (480/360/560 ms). Equal ones
+ * The three bars carry deliberately mismatched, non-harmonic periods (960/720/1120 ms). Equal ones
  * would beat in step and read as a single block breathing rather than as three independent bars.
+ * Their clock comes from Compose frames rather than the platform animation-duration scale: a
+ * loading status must keep indicating progress even when a watch disables decorative transitions.
  */
 @Composable
 internal fun EqualizerBars(
@@ -269,19 +269,15 @@ internal fun EqualizerBars(
         barGap: Dp = 2.dp,
         height: Dp = 16.dp
 ) {
-    val transition = rememberInfiniteTransition(label = "equalizer")
-    val h1 by transition.animateFloat(
-            initialValue = 0.30f, targetValue = 1.0f,
-            animationSpec = infiniteRepeatable(tween(480), RepeatMode.Reverse), label = "bar1"
-    )
-    val h2 by transition.animateFloat(
-            initialValue = 1.0f, targetValue = 0.40f,
-            animationSpec = infiniteRepeatable(tween(360), RepeatMode.Reverse), label = "bar2"
-    )
-    val h3 by transition.animateFloat(
-            initialValue = 0.55f, targetValue = 0.90f,
-            animationSpec = infiniteRepeatable(tween(560), RepeatMode.Reverse), label = "bar3"
-    )
+    // Unlike InfiniteTransition, this is not suspended when Android's global *Animator duration
+    // scale* is zero. Some watches expose that setting as "remove animations", which had frozen
+    // the only indicator that a Bluetooth queue request was still pending.
+    val frameTimeNanos = remember { mutableLongStateOf(0L) }
+    LaunchedEffect(Unit) {
+        while (true) {
+            withFrameNanos { frameTimeNanos.longValue = it }
+        }
+    }
     Canvas(modifier.size(width = barWidth * 3 + barGap * 2, height = height)) {
         val widthPx = barWidth.toPx()
         val gapPx = barGap.toPx()
@@ -289,7 +285,18 @@ internal fun EqualizerBars(
         // scales with the bar, which a fixed radius would not: the loading size is nearly twice the
         // row size and a 2dp corner on it looks square.
         val corner = CornerRadius(widthPx / 2f)
-        listOf(h1, h2, h3).forEachIndexed { index, fraction ->
+        val elapsedNanos = frameTimeNanos.longValue
+        fun pulse(min: Float, max: Float, periodNanos: Long, phase: Double): Float {
+            val cycle = (elapsedNanos % periodNanos).toDouble() / periodNanos
+            return min + (max - min) * ((sin(cycle * 2.0 * Math.PI + phase) + 1.0) / 2.0).toFloat()
+        }
+        val heights = floatArrayOf(
+                // These are full periods: each preserves the old tween(..., Reverse) rate and
+                // starting pose (low / high / low respectively).
+                pulse(.30f, 1.0f, 960_000_000L, -Math.PI / 2.0),
+                pulse(.40f, 1.0f, 720_000_000L, Math.PI / 2.0),
+                pulse(.55f, .90f, 1_120_000_000L, -Math.PI / 2.0))
+        heights.forEachIndexed { index, fraction ->
             // Floored at the bar width so a bar at its lowest is still a visible dot rather than a
             // sliver: the animation reads as three bars dancing, not as bars vanishing.
             val barHeight = (size.height * fraction).coerceAtLeast(widthPx)

@@ -98,35 +98,40 @@ class QueueActivity : ComponentActivity() {
             // No default value: null means the phone hasn't answered the queue request yet, which
             // QueueScreen renders as a loading spinner instead of a bare black screen.
             val items by viewModel.items.observeAsState()
-            val accent by viewModel.accentColor.observeAsState(DEFAULT_QUEUE_ACCENT)
-            val secondaryAccent by viewModel.secondaryAccentColor.observeAsState(DEFAULT_QUEUE_ACCENT)
-            val tertiaryAccent by viewModel.tertiaryAccentColor.observeAsState(DEFAULT_QUEUE_ACCENT)
+            val accentTriad by viewModel.accentTriad.observeAsState()
             val nowPlaying by viewModel.nowPlaying.observeAsState()
             val canLoadMore by viewModel.canLoadMore.observeAsState(false)
             val loadingMore by viewModel.loadingMore.observeAsState(false)
             val isHistoryFallback by viewModel.isHistoryFallback.observeAsState(false)
             val albumArt by viewModel.albumArt.observeAsState()
 
-            // The configured ground, tinted by the queue's own accent rather than the face-wide
-            // one - see ScreenBackdrop.
-            val screenBackdrop = rememberScreenBackdrop(
-                    prefs = prefs,
-                    appearanceContext = appearanceContext,
-                    albumArt = albumArt,
-                    accentSource = accentSource,
-                    themeAccent = themeAccent,
-                    triad = PanelTriad(accent, secondaryAccent, tertiaryAccent),
-                    contentStyle = queueStylePreference,
-                    backdropStyle = MiscPreferences.WEAR_QUEUE_BACKDROP_STYLE)
+            // The configured ground is accent-dependent. QueueViewModel installs the current
+            // cached palette synchronously, so this first loading frame is normally already in
+            // the album accent. On a genuinely cold start we still wait rather than flash sage.
+            val screenBackdrop = accentTriad?.let { triad ->
+                rememberScreenBackdrop(
+                        prefs = prefs,
+                        appearanceContext = appearanceContext,
+                        albumArt = albumArt,
+                        accentSource = accentSource,
+                        themeAccent = themeAccent,
+                        triad = triad,
+                        contentStyle = queueStylePreference,
+                        backdropStyle = MiscPreferences.WEAR_QUEUE_BACKDROP_STYLE)
+            }
+            // A cold start has no honest album colour yet. Keep the loading mark neutral there;
+            // normal openings use the synchronously cached album triad above.
+            val resolvedTriad = accentTriad ?: PanelTriad(
+                    0xFFFFFFFF.toInt(), 0xFFFFFFFF.toInt(), 0xFFFFFFFF.toInt())
 
             CompositionLocalProvider(
                     LocalWatchUiFontFamily provides watchUiFontFamily(
                             PreferenceManager.getDefaultSharedPreferences(this))) {
             QueueScreen(
                     items = items,
-                    accentColor = Color(accent),
-                    secondaryAccentColor = Color(secondaryAccent),
-                    tertiaryAccentColor = Color(tertiaryAccent),
+                    accentColor = Color(resolvedTriad.primary),
+                    secondaryAccentColor = Color(resolvedTriad.secondary),
+                    tertiaryAccentColor = Color(resolvedTriad.tertiary),
                     nowPlayingTitle = nowPlaying?.title,
                     nowPlayingArtist = nowPlaying?.artist,
                     onItemClick = { entryId ->

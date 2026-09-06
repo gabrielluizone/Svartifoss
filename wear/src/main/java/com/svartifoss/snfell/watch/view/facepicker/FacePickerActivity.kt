@@ -136,17 +136,18 @@ class FacePickerActivity : ComponentActivity() {
      * The current cover's accent, so the picker is tinted like the player it belongs to.
      *
      * Extracted off the main thread and cached per bitmap - Palette on a cover is cheap but not
-     * free, and this screen recomposes on every scroll frame. Falls back to the app accent whenever
-     * there is no artwork, which is also the state the idle screen is in.
+     * free, and this screen recomposes on every scroll frame. A real cover starts as null so the
+     * picker stays neutral until extraction completes instead of flashing the default sage wash.
+     * With no artwork, the app accent is the final, intentional fallback.
      */
     @Composable
-    private fun rememberAlbumAccent(art: android.graphics.Bitmap?): Color {
-        var accent by remember { mutableStateOf(Color(WatchTheme.ACCENT_DEFAULT)) }
+    private fun rememberAlbumAccent(art: android.graphics.Bitmap?): Color? {
+        var accent by remember(art) {
+            mutableStateOf(if (art == null) Color(WatchTheme.ACCENT_DEFAULT) else null)
+        }
         LaunchedEffect(art) {
-            accent = if (art == null) {
-                Color(WatchTheme.ACCENT_DEFAULT)
-            } else {
-                withContext(Dispatchers.Default) {
+            if (art != null) {
+                accent = withContext(Dispatchers.Default) {
                     val palette = Palette.from(art).generate()
                     val rgb = palette.vibrantSwatch?.rgb
                             ?: palette.mutedSwatch?.rgb

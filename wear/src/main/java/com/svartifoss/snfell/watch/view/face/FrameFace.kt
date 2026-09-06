@@ -67,13 +67,15 @@ fun FrameFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
 
         // The card is intentionally visual-only; this shared region keeps centre tap, double tap
         // and long press available without adding a conflicting play control to the reference.
-        // It goes *after* the card, not before: the card is opaque, so a region underneath it drew
-        // its confirmation into the back of the surface and every tap looked like a miss. Nothing
+        // It is deliberately narrower than the card: its former .68-screen square consumed most
+        // of Frame's side bands, making ordinary left/right quadrant taps toggle playback. It goes
+        // *after* the card, not before: the card is opaque, so a region underneath it drew its
+        // confirmation into the back of the surface and every tap looked like a miss. Nothing
         // inside the card is clickable, so there is nothing here for the region to swallow.
         CenterGestureRegion(
                 listener,
-                size = screen * .68f,
-                pulseSize = screen * .46f,
+                size = screen * FaceGeometry.Frame.CENTER_REGION_FRACTION,
+                pulseSize = screen * FaceGeometry.Frame.CENTER_PULSE_FRACTION,
                 state = state)
 
         FaceClock(

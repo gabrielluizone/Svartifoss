@@ -62,6 +62,7 @@ fun VolumeScreen(
         appearance: PanelAppearance,
         backdrop: PanelBackdrop,
         albumArt: Bitmap?,
+        showBackdrop: Boolean = true,
         screenFace: String,
         themeAccentColor: Int,
         uiTypeface: Typeface?,
@@ -70,7 +71,7 @@ fun VolumeScreen(
         onTogglePlayPause: () -> Unit,
         onDismiss: () -> Unit
 ) {
-    PanelScaffold(appearance, backdrop, albumArt, onDismiss) {
+    PanelScaffold(appearance, backdrop, albumArt, showBackdrop, onDismiss) {
         val configuration = LocalConfiguration.current
         val screenWidth = configuration.screenWidthDp.dp
         val screenHeight = configuration.screenHeightDp.dp

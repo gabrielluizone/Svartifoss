@@ -72,7 +72,8 @@ fun FacePickerScreen(
         builtIn: List<WatchFaceOption>,
         custom: List<WatchFaceOption>,
         selectedFace: String,
-        accentColor: Color,
+        /** Null while a real cover's palette is still being extracted. */
+        accentColor: Color?,
         phoneConnected: Boolean,
         onSelect: (WatchFaceOption) -> Unit,
         onDismiss: () -> Unit
@@ -87,14 +88,16 @@ fun FacePickerScreen(
                     Modifier
                             .fillMaxSize()
                             .background(Color.Black)
-                            // A faint wash of the playing album's colour, so the picker belongs to
-                            // the track on screen rather than looking like a system dialog.
-                            .background(
-                                    Brush.verticalGradient(
-                                            listOf(
-                                                    accentColor.copy(alpha = .22f),
-                                                    Color.Transparent,
-                                                    Color.Transparent)))
+                            // A faint wash of the playing album's colour, once it is known. A
+                            // neutral opening is preferable to briefly washing the screen sage.
+                            .then(accentColor?.let { accent ->
+                                Modifier.background(
+                                        Brush.verticalGradient(
+                                                listOf(
+                                                        accent.copy(alpha = .22f),
+                                                        Color.Transparent,
+                                                        Color.Transparent)))
+                            } ?: Modifier)
             ) {
                 FaceList(builtIn, custom, selectedFace, accentColor, phoneConnected, onSelect)
             }
@@ -107,7 +110,7 @@ private fun FaceList(
         builtIn: List<WatchFaceOption>,
         custom: List<WatchFaceOption>,
         selectedFace: String,
-        accentColor: Color,
+        accentColor: Color?,
         phoneConnected: Boolean,
         onSelect: (WatchFaceOption) -> Unit
 ) {
@@ -216,10 +219,10 @@ private fun PickerHeader(phoneConnected: Boolean) {
 }
 
 @Composable
-private fun SectionLabel(text: String, accentColor: Color) {
+private fun SectionLabel(text: String, accentColor: Color?) {
     Text(
             text = text,
-            color = accentColor.copy(alpha = .85f),
+            color = (accentColor ?: Color.White).copy(alpha = .85f),
             fontFamily = LocalWatchUiFontFamily.current,
             fontWeight = FontWeight.Bold,
             fontSize = 11.sp,
@@ -235,7 +238,7 @@ private fun SectionLabel(text: String, accentColor: Color) {
 private fun FaceRow(
         option: WatchFaceOption,
         selectedFace: String,
-        accentColor: Color,
+        accentColor: Color?,
         onSelect: (WatchFaceOption) -> Unit
 ) {
     val selected = option.key == selectedFace
@@ -243,19 +246,19 @@ private fun FaceRow(
     val shape = RoundedCornerShape(26.dp)
     // The active face is the accent pill; the rest are the near-black idle surface the queue and
     // menu use, so the picker looks like part of the app rather than a system dialog.
-    val background = if (selected) {
+    val background = if (selected && accentColor != null) {
         Color(WatchTheme.accentForSurface(accentColor.toArgb()))
     } else {
         Color(WatchTheme.SURFACE_DARK)
     }
-    val onSurface = if (selected) Color.Black else Color.White
+    val onSurface = if (selected && accentColor != null) Color.Black else Color.White
     Row(
             modifier = Modifier
                     .fillMaxWidth()
                     .clip(shape)
                     .background(background)
                     .then(
-                            if (selected) {
+                            if (selected && accentColor != null) {
                                 Modifier.border(1.dp, accentColor.copy(alpha = .6f), shape)
                             } else {
                                 Modifier
@@ -299,7 +302,7 @@ private fun FaceRow(
                 )
             }
         }
-        if (selected) {
+        if (selected && accentColor != null) {
             Spacer(Modifier.width(6.dp))
             Box(
                     modifier = Modifier
