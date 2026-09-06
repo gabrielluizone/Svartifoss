@@ -3,7 +3,7 @@
 A curated, community-submitted gallery of watch appearance themes: users publish the profiles they
 build in the Watch tab, browse what others published, and apply them on their own watch.
 
-> **Status: Version 3.3 implementation (2026-08-24).** The repository now contains local
+> **Status: Version 4.0 implementation (2026-08-24).** The repository now contains local
 > discovery (search, base-face filters, newest/most-liked ordering, and an explicit Liked filter),
 > a detail screen, private likes, Android submission intake, Firestore rules, a restricted reviewer
 > page, and the trusted
@@ -217,7 +217,7 @@ repository can remain in Git history and third-party copies. The privacy-policy 
 documents therefore describe authored-content storage explicitly rather than claiming an automatic
 account deletion mechanism.
 
-### Deleting an account (3.3)
+### Deleting an account (4.0)
 
 Two things make this different from an ordinary "delete my account" button, and both push the work
 out of the app.

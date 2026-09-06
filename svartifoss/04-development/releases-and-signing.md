@@ -17,8 +17,8 @@ At the vault snapshot, module files declare:
 
 | Module | `versionCode` | `versionName` |
 | --- | ---: | --- |
-| `mobile` | 61 | 3.3 |
-| `wear` | 161 | 3.3 |
+| `mobile` | 61 | 4.0 |
+| `wear` | 161 | 4.0 |
 
 The codes are intentionally independent and must each increase monotonically. Their gaps include history from the shelved Play Console attempt. The shared name should remain aligned. The checked-out tree also contains unreleased work and may be ahead of the most recent Git tag; do not infer release status solely from `versionName`.
 

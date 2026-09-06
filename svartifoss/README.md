@@ -36,7 +36,7 @@ No community plugins are required. The vault uses standard Markdown links, YAML 
 
 ## Scope and accuracy
 
-This vault describes the checked-out source tree as reviewed on **2026-09-04**. Build metadata currently identifies both apps as version `3.3`; the working source may include changes intended for a later release. Where release copy and source code differ, the notes call out the distinction and follow the executable source and its tests.
+This vault describes the checked-out source tree as reviewed on **2026-09-04**. Build metadata currently identifies both apps as version `4.0`; the working source may include changes intended for a later release. Where release copy and source code differ, the notes call out the distinction and follow the executable source and its tests.
 
 The material is intentionally public-facing:
 

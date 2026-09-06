@@ -338,7 +338,7 @@ repository; GitHub Pages then serves those public files in the catalogue. The
 Firebase Auth UID and Google account name/email are not copied to the public
 repository or catalogue.
 
-Version 3.3 does not implement comments or theme-update submissions.
+Version 4.0 does not implement comments or theme-update submissions.
 
 **My submissions** (Community account → See my submissions, or the history
 button in the community gallery) reads back the submissions this account has

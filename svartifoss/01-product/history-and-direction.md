@@ -20,8 +20,7 @@ Svartifoss is a rename and continuation of **Music Center for Wear** by matejdro
 | 2.2 | Cable-free update path for the watch and more robust self-update behavior |
 | 3.0 | Per-face appearance scopes, richer customization, localization expansion, and performance work |
 | 3.1–3.2 | Broader color, typography, surface, queue, and face systems; compatibility and preview-parity hardening |
-| 3.3 | Local theme library matured into a moderated public community gallery; account and privacy workflows added |
-| Current source | Ordered background layers, broader panels and face behavior, author screenshots, stronger cross-language schema parity, and continued regression hardening |
+| 4.0 (unreleased) | Local theme library matured into a moderated public community gallery with account and privacy workflows; ordered background layers, broader panels and face behavior, author screenshots, stronger cross-language schema parity, and continued regression hardening — merged from what had been separate `3.3`/`Unreleased` changelog sections and renamed 4.0, none of it shipped yet |
 
 `CHANGELOG.md` is the user-facing chronology. Commit history and `CLAUDE.md` explain why many apparently small policies exist.
 

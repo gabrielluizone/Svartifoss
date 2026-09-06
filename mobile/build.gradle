@@ -16,7 +16,7 @@ android {
         targetSdkVersion 36
         compileSdk 36
         versionCode 61
-        versionName "3.3"
+        versionName "4.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         wearAppUnbundled true
         multiDexEnabled true
