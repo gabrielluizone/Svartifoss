@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.VectorDrawable
 import android.os.Bundle
 import android.os.PersistableBundle
 import androidx.appcompat.app.AlertDialog
@@ -203,7 +202,7 @@ class ActionEditorActivity : AppCompatActivity() {
         val currentAction = currentAction ?: return
 
         val icon = iconStorage[currentAction]
-        if (icon is VectorDrawable) {
+        if (currentAction.iconTintable) {
             // Theme-aware, not Color.BLACK - black icons vanish on the dark dialog surface.
             binding.icon.setColorFilter(ContextCompat.getColor(this, R.color.lyra_on_surface))
         } else {

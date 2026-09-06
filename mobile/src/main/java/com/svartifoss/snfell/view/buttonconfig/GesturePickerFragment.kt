@@ -7,7 +7,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.PorterDuff
-import android.graphics.drawable.VectorDrawable
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.LayoutInflater
@@ -224,9 +223,14 @@ class GesturePickerFragment : DialogFragment() {
         } else {
             customIconStorage[mutableAction]
         }
-        if (icon is VectorDrawable) {
-            icon = icon.mutate()
-            icon.setColorFilter(if (isNotSet) mutedColor else primaryColor, PorterDuff.Mode.SRC_ATOP)
+        icon = icon.mutate()
+        if (isNotSet || mutableAction.iconTintable) {
+            icon.setColorFilter(
+                    if (isNotSet) mutedColor else primaryColor,
+                    PorterDuff.Mode.SRC_ATOP
+            )
+        } else {
+            icon.clearColorFilter()
         }
 
         buttonSet.button.text = mutableAction.title

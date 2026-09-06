@@ -87,6 +87,8 @@
       "wear_note_cover_shape": ["note"],
       "wear_note_show_cover": ["note"],
       "wear_title_centered": ["classic", "poster", "studio"],
+      "wear_text_block_align": ["classic", "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "immersive", "carousel", "split", "artist", "matejdro"],
+      "wear_text_block_position": ["classic", "expressive", "poster", "studio", "aurora", "eclipse", "immersive", "chat", "note", "artist"],
       "wear_chat_cover_shape": ["chat"],
       "wear_chat_show_cover": ["chat"],
       "wear_metadata_cover_shape": ["metadata"],

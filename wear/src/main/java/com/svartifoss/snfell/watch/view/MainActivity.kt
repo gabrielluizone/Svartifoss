@@ -146,6 +146,8 @@ import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.SpecialEliteKeywordPolicy
 import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.TextBlockAlign
+import com.svartifoss.snfell.common.RoundScreenText
+import com.svartifoss.snfell.common.TextBlockPlacementSupport
 import com.svartifoss.snfell.common.TextBlockPosition
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.TitleTextMode
@@ -913,6 +915,13 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.classicMetadataBlock.addOnLayoutChangeListener {
             _, _, _, _, _, _, _, _, _ ->
             applyClassicTitleAnchor()
+            applyClassicLineInsets()
+        }
+        // The rows themselves too: their own heights change with the track and the sizing cascade
+        // without the block's bounds moving at all, and it is the rows' depths the chord is
+        // measured at. Without these the inset was only ever right for the first track drawn.
+        listOf(binding.classicArtistRow, binding.textTitle, binding.textPlaybackTime).forEach {
+            it.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ -> applyClassicLineInsets() }
         }
         doublePinchGestureController = DoublePinchGestureController(
                 this,
@@ -4724,9 +4733,19 @@ class MainActivity : WearCompanionWatchActivity(),
         updateFaceState { it.copy(titleCentered = titleCentered) }
         // Read here, resolved in FaceChrome's blockAlignment/blockTextAlign/blockPlacement. Both
         // default to `follow`, so publishing them changes no face until the user picks a side.
-        textBlockAlign = TextBlockAlign.fromPref(faceString(MiscPreferences.WEAR_TEXT_BLOCK_ALIGN))
-        textBlockPosition =
-                TextBlockPosition.fromPref(faceString(MiscPreferences.WEAR_TEXT_BLOCK_POSITION))
+        //
+        // Filtered through TextBlockPlacementSupport at the read rather than only in the phone's
+        // picker, and per axis: hiding a row stops somebody *choosing* a value, which is not the
+        // same as a value never arriving. An imported backup, a published community theme or a
+        // phone build that still offered the row all deliver one, and a face that cannot honour it
+        // would then draw the mess the picker was hidden to prevent. Unsupported reads back as
+        // `follow`, which is always safe - it is the face's own composition.
+        textBlockAlign = TextBlockPlacementSupport.resolveAlign(
+                screenFace,
+                TextBlockAlign.fromPref(faceString(MiscPreferences.WEAR_TEXT_BLOCK_ALIGN)))
+        textBlockPosition = TextBlockPlacementSupport.resolvePosition(
+                screenFace,
+                TextBlockPosition.fromPref(faceString(MiscPreferences.WEAR_TEXT_BLOCK_POSITION)))
         updateFaceState {
             it.copy(
                     textBlockAlign = textBlockAlign,
@@ -6094,7 +6113,76 @@ class MainActivity : WearCompanionWatchActivity(),
         val textGravity = (horizontal ?: Gravity.CENTER_HORIZONTAL) or Gravity.CENTER_VERTICAL
         binding.textTitle.gravity = textGravity
         binding.textPlaybackTime.gravity = textGravity
+        applyClassicLineInsets()
     }
+
+    /**
+     * Keep each of Classic's three lines inside the round glass at *its own* depth.
+     *
+     * Gravity alone was the whole of this face's placement support, and gravity does not know the
+     * screen is a circle. `BoxInsetLayout` hands the block the inscribed square, whose corners lie
+     * exactly *on* the glass, so a block lined up against an edge - or grounded and then lined up -
+     * put its lowest line outside the circle while the layout believed everything was in bounds.
+     * The Compose faces answer this through `blockLineInsets`; a View hierarchy has no equivalent,
+     * so the same arithmetic runs here against the rows' measured positions.
+     *
+     * Per row rather than per block for the reason [RoundScreenText.lineSideInsets] exists: the
+     * artist row sits a line below the title and the elapsed readout a line below that, so one
+     * shared margin is only ever correct for one of the three. Padding each row by its own answer
+     * is what makes an edge-aligned block step inwards as it descends instead of squaring off
+     * against a bezel that is not square.
+     *
+     * Runs on measured geometry rather than on declared sizes because this face's text is
+     * autosized: the title's height is whatever the sizing cascade settled on, which nothing here
+     * can predict. [reentrant] is what keeps that from looping - writing the padding starts
+     * another layout pass, and that pass must not write again.
+     */
+    private fun applyClassicLineInsets() {
+        if (applyingClassicLineInsets) return
+        val rows = listOf(
+                binding.classicArtistRow, binding.textTitle, binding.textPlaybackTime)
+        val overridden = textBlockAlign != TextBlockAlign.FOLLOW ||
+                textBlockPosition != TextBlockPosition.FOLLOW
+        if (!overridden || !resources.configuration.isScreenRound) {
+            // Back to the face's own composition, which is the inscribed square and nothing else.
+            rows.forEach { row ->
+                if (row.paddingLeft != 0 || row.paddingRight != 0) {
+                    applyingClassicLineInsets = true
+                    row.setPadding(0, row.paddingTop, 0, row.paddingBottom)
+                    applyingClassicLineInsets = false
+                }
+            }
+            return
+        }
+        val host = binding.contentFrame
+        val screenHeight = host.height
+        val screenWidth = host.width
+        if (screenHeight <= 0 || screenWidth <= 0) return
+        val hostLocation = IntArray(2).also(host::getLocationInWindow)
+        val rowLocation = IntArray(2)
+        var changed = false
+        rows.forEach { row ->
+            if (row.visibility != View.VISIBLE || row.height <= 0) return@forEach
+            row.getLocationInWindow(rowLocation)
+            val top = (rowLocation[1] - hostLocation[1]).toFloat() / screenHeight
+            val bottom = top + row.height.toFloat() / screenHeight
+            val inset = RoundScreenText.sideInsetFor(top, bottom)
+            val current = row.paddingLeft.toFloat() / screenWidth
+            if (RoundScreenText.insetsAreEquivalent(current, inset)) return@forEach
+            val px = (inset * screenWidth).toInt()
+            applyingClassicLineInsets = true
+            row.setPadding(px, row.paddingTop, px, row.paddingBottom)
+            applyingClassicLineInsets = false
+            changed = true
+        }
+        // The anchor is computed from the block's measured height, which the padding above can
+        // change by rewrapping a title. Re-running it here rather than waiting for the next layout
+        // pass keeps the two from disagreeing for a frame.
+        if (changed) applyClassicTitleAnchor()
+    }
+
+    /** Guards [applyClassicLineInsets] against the layout pass its own writes start. */
+    private var applyingClassicLineInsets = false
 
     private fun applyClassicTitleAnchor() {
         val block = binding.classicMetadataBlock

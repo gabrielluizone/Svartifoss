@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.NinePatchDrawable
-import android.graphics.drawable.VectorDrawable
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.os.Vibrator
@@ -274,7 +273,7 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
                 } else {
                     ContextCompat.getDrawable(requireContext(), defaultIcons[index])
                 }
-                if (icon is VectorDrawable) {
+                if (assigned?.iconTintable != false) {
                     iconView.setColorFilter(
                             ContextCompat.getColor(requireContext(), R.color.lyra_on_surface))
                 } else {
@@ -440,7 +439,7 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
 
 
             val icon = customIconStorage[phoneAction]
-            if (icon is VectorDrawable) {
+            if (phoneAction.iconTintable) {
                 // Theme-aware, not Color.BLACK: a hardcoded black icon disappears against
                 // the dark theme's circle background.
                 holder.icon.setColorFilter(

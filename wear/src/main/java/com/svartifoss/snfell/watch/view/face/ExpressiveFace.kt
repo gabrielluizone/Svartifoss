@@ -150,20 +150,41 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
         val isRound = LocalConfiguration.current.isScreenRound
         val titleHorizontalPadding = if (isRound) screen * 0.16f else 16.dp
         if (state.showTitle || state.showArtist) {
+            val insets = state.blockLineInsets(
+                    screen,
+                    BlockAnchor.TOP,
+                    EXPRESSIVE_TEXT_TOP_FRACTION,
+                    listOf(EXPRESSIVE_TITLE_LINE_DP.dp, EXPRESSIVE_ARTIST_ROW_DP.dp),
+                    floor = titleHorizontalPadding)
             Column(
                     modifier = Modifier
                             .align(state.blockPlacement(Alignment.TopCenter))
-                                    .padding(horizontal = state.blockSafeSideInset(screen))
-                                    .padding(vertical = state.blockSafeVerticalInset(screen))
-                            .padding(top = state.blockDesignedTopPadding(screen * .17f),
-                                    start = titleHorizontalPadding, end = titleHorizontalPadding)
+                            .padding(horizontal = insets.outer)
+                            .padding(vertical = state.blockSafeVerticalInset(screen))
+                            .padding(
+                                    top = state.blockDesignedTopPadding(
+                                            screen * EXPRESSIVE_TEXT_TOP_FRACTION),
+                                    // The face's own margin is the floor inside `insets`, so it is
+                                    // applied there rather than a second time here.
+                                    start = if (state.blockPlacementOverridden) 0.dp
+                                            else titleHorizontalPadding,
+                                    end = if (state.blockPlacementOverridden) 0.dp
+                                            else titleHorizontalPadding)
                             // Bound the title block to the top section (17% top margin down to the
                             // ring top) and clip. Without this, a two-line "wrap" title plus artist
                             // spills past the ring top and paints over the transport row; clipping a
                             // rare overflowing second line is far better than overlapping the
                             // controls. Ring top from screen top = center (0.5) minus half the ring.
-                            .heightIn(max = (screen * 0.33f - ringBottom).coerceAtLeast(screen * 0.14f))
-                            .clipToBounds(),
+                            //
+                            // The cap describes the band *above the ring* and is therefore only
+                            // true while the block is still in it: once the user has moved the
+                            // block the ring is no longer what it has to clear, and keeping the
+                            // cap clipped a wrapped title to a single line at the bottom of the
+                            // screen for no reason anybody could see.
+                            .then(if (state.blockPlacementOverridden) Modifier else Modifier
+                                    .heightIn(max = (screen * 0.33f - ringBottom)
+                                            .coerceAtLeast(screen * 0.14f))
+                                    .clipToBounds()),
                     horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
             ) {
                 if (state.showTitle) {
@@ -177,13 +198,15 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                             fontWeight = FontWeight.Bold,
                             fontFamily = state.titleFont,
                             textAlign = TextAlign.Center,
-                            minFontSize = 12.sp
+                            minFontSize = 12.sp,
+                            modifier = Modifier.padding(horizontal = insets.extra(0))
                     )
                 }
                 if (state.showArtist && state.artist.isNotEmpty()) {
                     Row(verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = state.blockArrangement(Arrangement.Center),
-                            modifier = Modifier.padding(top = if (state.showTitle) 2.dp else 0.dp)) {
+                            modifier = Modifier.padding(horizontal = insets.extra(1))
+                                    .padding(top = if (state.showTitle) 2.dp else 0.dp)) {
                         SourceIconGlyph(state, 13.dp, Color(state.artistColor))
                         ArtistLineText(
                                 text = state.artist,
@@ -323,10 +346,15 @@ private fun ExpressiveAmbientFace(state: NowPlayingFaceState) {
             Column(
                     modifier = Modifier
                             .align(state.blockPlacement(Alignment.TopCenter))
-                                    .padding(horizontal = state.blockSafeSideInset(screen))
-                                    .padding(vertical = state.blockSafeVerticalInset(screen))
+                            // The interactive band, which this variant deliberately matches.
+                            .padding(horizontal = state.blockSafeSideInset(
+                                    screen,
+                                    designedTop = EXPRESSIVE_TEXT_TOP_FRACTION,
+                                    designedHeight = EXPRESSIVE_AMBIENT_HEIGHT_FRACTION))
+                            .padding(vertical = state.blockSafeVerticalInset(screen))
                             .padding(
-                                    top = state.blockDesignedTopPadding(screen * .17f),
+                                    top = state.blockDesignedTopPadding(
+                                            screen * EXPRESSIVE_TEXT_TOP_FRACTION),
                                     start = 26.dp,
                                     end = 26.dp),
                     horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
@@ -885,3 +913,21 @@ private fun DrawScope.drawContourStroke(
             style = strokeStyle ?: Stroke(width = strokeWidth, cap = StrokeCap.Round)
     )
 }
+
+/**
+ * Where this face composes its track text, and how tall each element of it is.
+ *
+ * Only the inputs `blockLineInsets` needs to measure the round screen's chord at the block's real
+ * depth. Local rather than in `FaceGeometry` because the phone's miniature draws this face's text
+ * from the same literals it always has; if that changes, both sides move here together.
+ */
+private const val EXPRESSIVE_TEXT_TOP_FRACTION = .17f
+
+/** 16sp title with default leading, plus the 2dp gap above the artist row folded into it. */
+private const val EXPRESSIVE_TITLE_LINE_DP = 21f
+
+/** The 13dp source glyph is taller than the 11sp line beside it. */
+private const val EXPRESSIVE_ARTIST_ROW_DP = 13f
+
+/** The AOD variant's two outlined lines, as a screen-height fraction. */
+private const val EXPRESSIVE_AMBIENT_HEIGHT_FRACTION = .16f

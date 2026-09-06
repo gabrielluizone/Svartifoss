@@ -1,10 +1,8 @@
 package com.svartifoss.snfell.view.buttonconfig
 
 import android.app.Activity
-import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.VectorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -462,13 +460,14 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
             return
         }
 
-        // The watch face preview is always dark, so default (vector) icons are forced white
-        // to stay legible. Custom user-picked bitmaps are shown untouched.
+        // The watch face preview is always dark, so template icons are forced white to stay
+        // legible. This includes persistent notification glyphs and built-in icons saved as PNGs,
+        // which are bitmaps even though they are still meant to be tinted.
         val icon = customIconStorage[phoneAction]
-        if (icon is VectorDrawable) {
-            icon.mutate().setTint(Color.WHITE)
-        }
         imageView.clearColorFilter()
+        if (phoneAction.iconTintable) {
+            imageView.setColorFilter(Color.WHITE)
+        }
         imageView.setImageDrawable(icon)
         imageView.alpha = 1f
     }
@@ -524,8 +523,7 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         }
         tile.binding.icon.setImageDrawable(icon)
         tile.binding.icon.clearColorFilter()
-        val isTemplate = isNotSet || icon is VectorDrawable ||
-                phoneAction?.customIconUri?.scheme == ContentResolver.SCHEME_ANDROID_RESOURCE
+        val isTemplate = isNotSet || phoneAction?.iconTintable == true
         if (isTemplate) {
             tile.binding.icon.setColorFilter(if (isNotSet) mutedColor else primaryColor)
         }

@@ -29,10 +29,10 @@ class FrameGeometryTest {
         val cardLeft = frame.CARD_INSET_FRACTION
 
         // A side tap within the card must still reach FourWayTouchLayout rather than its invisible
-        // centre play/pause region. The remaining 15.5% on each card side is large enough to be
-        // intentional on a round watch, while the 46% centre remains an 88 dp target at 192 dp.
+        // centre play/pause region. The remaining 18% on each card side is large enough to be
+        // intentional on a round watch, while the 40% centre remains a 76 dp target at 192 dp.
         assertTrue(touchLeft > cardLeft)
-        assertEquals(.46f, frame.CENTER_REGION_FRACTION, epsilon)
+        assertEquals(.40f, frame.CENTER_REGION_FRACTION, epsilon)
         assertTrue(frame.CENTER_REGION_FRACTION * REFERENCE_WATCH_DP >= 48f)
     }
 

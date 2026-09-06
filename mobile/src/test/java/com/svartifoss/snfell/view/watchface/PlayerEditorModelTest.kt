@@ -188,15 +188,51 @@ class PlayerEditorModelTest {
         assertTrue(PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, "classic"))
     }
 
+    /**
+     * The two rows are two questions, and nine faces answer them differently.
+     *
+     * They shared one allow-list until the placement controls were found to be producing the three
+     * failures `TextBlockPlacementSupport` records - text off the glass, text on the face's own
+     * furniture, and artwork moving with the text. Merging them forced every one of those faces to
+     * be all-in or all-out on a pair of controls it can honour exactly one of.
+     */
     @Test
-    fun `text block controls are not offered where metadata is split across fixed bands`() {
+    fun `the two text block rows are gated separately`() {
+        // Neither, on the faces whose metadata is in independent fixed bands: one shared choice
+        // can only ever move one of them.
         listOf(PlayerControl.TEXT_BLOCK_ALIGN, PlayerControl.TEXT_BLOCK_POSITION).forEach { control ->
-            listOf("frame", "ribbon").forEach { face ->
+            listOf("frame", "ribbon", "verse", "metadata").forEach { face ->
                 assertFalse("$control on $face", PlayerEditorModel.appliesToFace(control, face))
             }
-            listOf("artist", "immersive", "split", "note", "metadata").forEach { face ->
+            listOf("classic", "artist", "immersive", "poster").forEach { face ->
                 assertTrue("$control on $face", PlayerEditorModel.appliesToFace(control, face))
             }
+        }
+
+        // Align but not position: the block may be lined up, but it has nowhere to go - Carousel's
+        // two bands straddle the cover rail, Split's seam is the face, Matejdro's bands already
+        // fill the whole text area, and Vinyl/Halo/Spectrum/Material each keep their own furniture
+        // in the band a moved block would land on.
+        listOf("carousel", "split", "matejdro", "vinyl", "halo", "spectrum", "material")
+                .forEach { face ->
+                    assertTrue(
+                            "align on $face",
+                            PlayerEditorModel.appliesToFace(PlayerControl.TEXT_BLOCK_ALIGN, face))
+                    assertFalse(
+                            "position on $face",
+                            PlayerEditorModel.appliesToFace(
+                                    PlayerControl.TEXT_BLOCK_POSITION, face))
+                }
+
+        // Position but not align: aligning a bubble thread would say who sent the current track,
+        // and aligning Note's sentence drags the cover disc that centres with it.
+        listOf("chat", "note").forEach { face ->
+            assertFalse(
+                    "align on $face",
+                    PlayerEditorModel.appliesToFace(PlayerControl.TEXT_BLOCK_ALIGN, face))
+            assertTrue(
+                    "position on $face",
+                    PlayerEditorModel.appliesToFace(PlayerControl.TEXT_BLOCK_POSITION, face))
         }
     }
 
@@ -223,7 +259,8 @@ class PlayerEditorModelTest {
         val named = PlayerEditorModel.INTERNAL_PROGRESS_FACES +
                 PlayerEditorModel.FIXED_TRANSPORT_FACES +
                 PlayerEditorModel.CONTROL_STYLE_FACES +
-                PlayerEditorModel.TEXT_BLOCK_PLACEMENT_FACES +
+                PlayerEditorModel.TEXT_BLOCK_ALIGN_FACES +
+                PlayerEditorModel.TEXT_BLOCK_POSITION_FACES +
                 setOf("classic", "carousel", "note", "split", "expressive", "metadata")
         val unknown = named - ThemeAppearance.ALLOWED_BASE_FACES
         assertTrue("Capability rules name unregistered faces: $unknown", unknown.isEmpty())

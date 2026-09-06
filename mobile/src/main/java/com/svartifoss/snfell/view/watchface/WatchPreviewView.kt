@@ -82,6 +82,7 @@ import com.svartifoss.snfell.common.AdaptiveTextContrast
 import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.TextBlockAlign
+import com.svartifoss.snfell.common.TextBlockPlacementSupport
 import com.svartifoss.snfell.common.TextBlockPosition
 import com.svartifoss.snfell.common.TextCase
 import com.svartifoss.snfell.common.RoundScreenText
@@ -305,6 +306,7 @@ class WatchPreviewView @JvmOverloads constructor(
         private val SPLIT_BADGE_FRACTION = FaceGeometry.Split.BADGE_FRACTION
 
         private val NOTE_COVER_FRACTION = FaceGeometry.Note.COVER_FRACTION
+        private val NOTE_BLOCK_EDGE_FRACTION = FaceGeometry.Note.MOVED_BLOCK_EDGE_FRACTION
         private val NOTE_MAX_LINES = FaceGeometry.Note.MAX_LINES
 
         private val VERSE_BAND_TOP = FaceGeometry.Verse.BAND_TOP
@@ -802,6 +804,89 @@ class WatchPreviewView @JvmOverloads constructor(
         TextBlockAlign.END -> Paint.Align.RIGHT
     }
 
+    /** Where one line of a moved text block ends up: its alignment, its anchor and its width. */
+    private data class BlockLine(val align: Paint.Align, val x: Float, val width: Float)
+
+    /**
+     * The watch's `blockLineInsets`, for a renderer that draws a line at a time.
+     *
+     * Compose gets most of this free - a `Text` filling a padded parent is already inside the
+     * padding - so the wear side expresses it as per-element padding on the container. A `Canvas`
+     * has neither a container nor a parent: it is handed an anchor point and a band, so the same
+     * decision has to be re-made here as "which anchor, and how wide". Every face's title, artist
+     * and elapsed line passes through one of three helpers, and all three call this, which is what
+     * makes the mirror one function rather than twenty-one.
+     *
+     * The clamp is measured at *this line's own* baseline rather than for the block as a whole, so
+     * the artist line - one line further from the middle of the circle than the title above it -
+     * stops where the glass actually ends instead of on a margin borrowed from the title. That is
+     * the difference between a block that has been moved and one that has been organised.
+     *
+     * Identity while both axes still follow the face: the same rule the sentinel encodes
+     * everywhere else, so an unmoved face draws from exactly the point it always did.
+     */
+    private fun blockLine(
+            designed: Paint.Align,
+            designedX: Float,
+            availWidth: Float,
+            top: Float,
+            bottom: Float
+    ): BlockLine {
+        val geometry = frameGeometry
+        if (textBlockAlign == TextBlockAlign.FOLLOW &&
+                textBlockPosition == TextBlockPosition.FOLLOW ||
+                geometry == null ||
+                geometry.bounds.height() <= 0f) {
+            return BlockLine(designed, designedX, availWidth)
+        }
+        // The band the face laid out, normalised to its left edge: a caller's anchor means
+        // different things at different alignments, and the override has to act on the band rather
+        // than on whichever end of it the face happened to hand over.
+        val bandLeft = when (designed) {
+            Paint.Align.LEFT -> designedX
+            Paint.Align.RIGHT -> designedX - availWidth
+            else -> designedX - availWidth / 2f
+        }
+        val bounds = geometry.bounds
+        val inset = if (geometry.round) {
+            RoundScreenText.sideInsetFor(
+                    (top - bounds.top) / bounds.height(),
+                    (bottom - bounds.top) / bounds.height()) * bounds.width()
+        } else {
+            0f
+        }
+        val left = maxOf(bandLeft, bounds.left + inset)
+        val right = minOf(bandLeft + availWidth, bounds.right - inset)
+        val width = (right - left).coerceAtLeast(1f)
+        val align = blockAlign(designed)
+        val x = when (align) {
+            Paint.Align.LEFT -> left
+            Paint.Align.RIGHT -> left + width
+            else -> left + width / 2f
+        }
+        return BlockLine(align, x, width)
+    }
+
+    /** This frame's screen geometry, published by [onDraw] for [blockLine]. */
+    private var frameGeometry: PreviewGeometry? = null
+
+    /**
+     * [frameGeometry], or a stand-in built around a caller's own centre.
+     *
+     * The stand-in exists for the drawing paths that run outside [onDraw] (a measurement pass, a
+     * unit-test harness); it is never the value a real frame uses.
+     */
+    private fun geometryFor(cx: Float, cy: Float): PreviewGeometry = frameGeometry ?: run {
+        val radius = min(width, height) / 2f
+        PreviewGeometry(
+                bounds = RectF(cx - radius, cy - radius, cx + radius, cy + radius),
+                cx = cx,
+                cy = cy,
+                radius = radius,
+                dpScale = 1f,
+                round = deviceRound != false)
+    }
+
     /**
      * Where the text anchor sits once [blockAlign] has moved it off centre.
      *
@@ -810,27 +895,6 @@ class WatchPreviewView @JvmOverloads constructor(
      * left-aligned line would start at the centre and run off the right edge. [availWidth] is the
      * band the caller laid out for the text, which every text helper here already receives.
      */
-    /**
-     * [blockAnchorX] for a caller that has already resolved its alignment.
-     *
-     * Returns [designedX] untouched whenever the resolved alignment is still centre, so a face the
-     * user has not moved draws from exactly the point it always did.
-     */
-    private fun blockAnchorXFor(align: Paint.Align, designedX: Float, availWidth: Float): Float =
-            when (align) {
-                Paint.Align.LEFT -> if (textBlockAlign == TextBlockAlign.FOLLOW) designedX
-                        else designedX - availWidth / 2f
-                Paint.Align.RIGHT -> if (textBlockAlign == TextBlockAlign.FOLLOW) designedX
-                        else designedX + availWidth / 2f
-                else -> designedX
-            }
-
-    private fun blockAnchorX(centerX: Float, availWidth: Float): Float = when (blockAlign(Paint.Align.CENTER)) {
-        Paint.Align.LEFT -> centerX - availWidth / 2f
-        Paint.Align.RIGHT -> centerX + availWidth / 2f
-        else -> centerX
-    }
-
     /**
      * The vertical anchor for a block the user has moved, or null while they have not.
      *
@@ -869,15 +933,21 @@ class WatchPreviewView @JvmOverloads constructor(
             glyphGapFraction: Float = .33f
     ) {
         val text = artistTypographySpec.case.apply(text)
-        // The user's block alignment, applied only where the face designed a *centred* line. A
-        // face that already aligns to an edge passes its own anchor (Chat's bubbles, Note's
-        // sentence, the Artist face's own block), and shifting that by half the band would put
-        // the text somewhere neither the face nor the user asked for. Compose gets this for free
-        // because a filled Text aligns inside the width it already has; a Canvas draws from a
-        // point, so the point has to move with the alignment.
-        @Suppress("NAME_SHADOWING") val align =
-                if (align == Paint.Align.CENTER) blockAlign(align) else align
-        @Suppress("NAME_SHADOWING") val x = blockAnchorXFor(align, x, availWidth)
+        // The user's block placement, resolved against this line's own depth. It used to be
+        // applied only where the face designed a *centred* line, so a face that anchors its
+        // artist to an edge (Split's panel, the Artist face's own block) opted out of the
+        // override the watch was applying to it. blockLine normalises the band to its left edge
+        // instead, so the designed anchor no longer decides whether the setting is honoured -
+        // only where the line starts from when it is not.
+        val line = blockLine(
+                align,
+                x,
+                availWidth,
+                top = baselineY - artistTypographySpec.scaled(designedSize),
+                bottom = baselineY)
+        @Suppress("NAME_SHADOWING") val align = line.align
+        @Suppress("NAME_SHADOWING") val x = line.x
+        @Suppress("NAME_SHADOWING") val availWidth = line.width
         textPaint.typeface = artistTypeface(bold = bold)
         textPaint.textSize = artistTypographySpec.scaled(designedSize)
         textPaint.color = artistAlpha(color)
@@ -1419,9 +1489,14 @@ class WatchPreviewView @JvmOverloads constructor(
         noteCoverShape = readString("wear_note_cover_shape", "circle")
         noteShowCover = readBoolean("wear_note_show_cover", true)
         titleCentered = readBoolean("wear_title_centered", false)
-        textBlockAlign = TextBlockAlign.fromPref(readString("wear_text_block_align", "follow"))
-        textBlockPosition =
-                TextBlockPosition.fromPref(readString("wear_text_block_position", "follow"))
+        // Through the same support registry the watch reads them through, and for the same reason:
+        // the picker hides the row, but a stored value still arrives from a backup, a published
+        // theme or an older build, and a miniature that acted on one the wrist ignores would be
+        // lying in the one screen built to show what a setting does.
+        textBlockAlign = TextBlockPlacementSupport.resolveAlign(
+                face, TextBlockAlign.fromPref(readString("wear_text_block_align", "follow")))
+        textBlockPosition = TextBlockPlacementSupport.resolvePosition(
+                face, TextBlockPosition.fromPref(readString("wear_text_block_position", "follow")))
         chatCoverShape = readString("wear_chat_cover_shape", "circle")
         chatShowCover = readBoolean("wear_chat_show_cover", true)
         metadataCoverShape = readString("wear_metadata_cover_shape", "rounded")
@@ -2505,13 +2580,25 @@ class WatchPreviewView @JvmOverloads constructor(
             align: Paint.Align = Paint.Align.CENTER,
             bottomAnchored: Boolean = false
     ): Float {
-        // Same rule drawArtistLine documents: the block alignment reaches a line the face centred,
-        // and leaves a line the face deliberately anchored to an edge exactly where it put it.
-        @Suppress("NAME_SHADOWING") val align =
-                if (align == Paint.Align.CENTER) blockAlign(align) else align
-        @Suppress("NAME_SHADOWING") val x = blockAnchorXFor(align, x, availWidth)
+        // Same resolver drawArtistLine uses, and measured over the title's *whole* run rather
+        // than one line of it: a title that wrapped reaches further down the circle than its first
+        // baseline suggests, which is exactly the case a shared block inset used to get wrong in
+        // the other direction.
         textPaint.typeface = titleTypeface(bold = bold)
         textPaint.textSize = plan.size
+        val planLineHeight = lineHeight
+                ?: (textPaint.fontMetrics.descent - textPaint.fontMetrics.ascent)
+        val runBottom = baselineY + planLineHeight * (plan.lines.size - 1)
+        val line = blockLine(
+                align,
+                x,
+                availWidth,
+                top = if (bottomAnchored) baselineY - planLineHeight * plan.lines.size
+                        else baselineY - plan.size,
+                bottom = if (bottomAnchored) baselineY else runBottom)
+        @Suppress("NAME_SHADOWING") val align = line.align
+        @Suppress("NAME_SHADOWING") val x = line.x
+        @Suppress("NAME_SHADOWING") val availWidth = line.width
         textPaint.color = color
         textPaint.textAlign = align
         textPaint.letterSpacing =
@@ -2792,6 +2879,10 @@ class WatchPreviewView @JvmOverloads constructor(
         textPaint.clearShadowLayer()
 
         val geometry = previewGeometry()
+        // Held for the frame so the shared text helpers can ask where the glass is. They receive a
+        // baseline and a band but not the screen, and the round-screen inset a moved block needs
+        // is a function of both - see blockLine.
+        frameGeometry = geometry
         val dp: (Float) -> Float = { value -> value * geometry.dpScale }
 
         drawDeviceShadow(canvas, geometry, dp)
@@ -9627,7 +9718,17 @@ class WatchPreviewView @JvmOverloads constructor(
                 plan.lines.maxOfOrNull { textPaint.measureText(it) } ?: 0f
             }
             val groupWidth = widestLine + if (hasSourceGlyph) sourceDiameter + sourceGap else 0f
-            val groupLeft = cx - groupWidth / 2f
+            // Aligned inside the band and clamped to the glass at this band's own depth, the same
+            // way the Classic miniature moves its artist row - this face offers the alignment
+            // control (its two bands already fill the text area, so the vertical one is not
+            // offered and its band never moves).
+            val artistLine = blockLine(
+                    Paint.Align.CENTER, cx, textWidth, top = y, bottom = y + blockH)
+            val groupLeft = when (artistLine.align) {
+                Paint.Align.LEFT -> artistLine.x
+                Paint.Align.RIGHT -> artistLine.x - groupWidth
+                else -> artistLine.x - groupWidth / 2f
+            }
             val labelCx = if (hasSourceGlyph) {
                 groupLeft + sourceDiameter + sourceGap + widestLine / 2f
             } else {
@@ -9659,11 +9760,23 @@ class WatchPreviewView @JvmOverloads constructor(
             val lineH = metrics.descent - metrics.ascent
             val blockH = plan.lines.size * lineH
             var y = areaTop + artistBand + (titleBand - blockH) / 2f
+            val titleLine = blockLine(
+                    Paint.Align.CENTER, cx, textWidth, top = y, bottom = y + blockH)
+            textPaint.textAlign = titleLine.align
             if (plan.marquee) {
-                drawMarqueeText(canvas, plan.lines.first(), cx, y - metrics.ascent, textWidth)
+                drawMarqueeText(
+                        canvas,
+                        plan.lines.first(),
+                        when (titleLine.align) {
+                            Paint.Align.LEFT -> titleLine.x + titleLine.width / 2f
+                            Paint.Align.RIGHT -> titleLine.x - titleLine.width / 2f
+                            else -> titleLine.x
+                        },
+                        y - metrics.ascent,
+                        titleLine.width)
             } else {
                 plan.lines.forEach { line ->
-                    canvas.drawText(line, cx, y - metrics.ascent, textPaint)
+                    canvas.drawText(line, titleLine.x, y - metrics.ascent, textPaint)
                     y += lineH
                 }
             }
@@ -9890,8 +10003,20 @@ class WatchPreviewView @JvmOverloads constructor(
         val totalH = artistH +
                 (if (titleVisible) titleH else 0f) +
                 (if (timeVisible) timeGap + timeLineH else 0f)
-        var y = cy - totalH / 2f +
-                titleAnchorShift(totalH, artistH, titleH, titleVisible)
+        // The watch moves this block with gravity on a BoxInsetLayout child, so the three anchors
+        // are the inscribed square's top edge, the screen's middle and the square's bottom edge.
+        // The title anchor is a Follow-only refinement: once the user has grounded or raised the
+        // block, where its title's centre falls is no longer what they asked to control.
+        val classicInset = classicTextInset(geometryFor(cx, cy), dp)
+        var y = when (textBlockPosition) {
+            TextBlockPosition.TOP -> (frameGeometry?.bounds?.top ?: (cy - totalH / 2f)) +
+                    classicInset
+            TextBlockPosition.BOTTOM ->
+                (frameGeometry?.bounds?.bottom ?: (cy + totalH / 2f)) - classicInset - totalH
+            TextBlockPosition.MIDDLE -> cy - totalH / 2f
+            TextBlockPosition.FOLLOW -> cy - totalH / 2f +
+                    titleAnchorShift(totalH, artistH, titleH, titleVisible)
+        }
 
         // Artist (or the "Playback Stopped" status in white while paused).
         if (artistPlan != null) {
@@ -9912,7 +10037,17 @@ class WatchPreviewView @JvmOverloads constructor(
                 artistPlan.lines.maxOfOrNull { textPaint.measureText(it) } ?: 0f
             }
             val groupWidth = widestLine + if (hasClassicSourceGlyph) sourceDiameter + sourceGap else 0f
-            val groupLeft = cx - groupWidth / 2f
+            // The glyph and the name travel together, exactly as the watch's `classic_artist_row`
+            // gravity moves the pair rather than the label alone. Measured at this row's own
+            // depth, which is what stopped the name being cut off by the bezel when the block was
+            // lined up against an edge.
+            val artistBand = blockLine(
+                    Paint.Align.CENTER, cx, textWidth, top = y, bottom = y + artistH)
+            val groupLeft = when (artistBand.align) {
+                Paint.Align.LEFT -> artistBand.x
+                Paint.Align.RIGHT -> artistBand.x - groupWidth
+                else -> artistBand.x - groupWidth / 2f
+            }
             val labelCx = if (hasClassicSourceGlyph) {
                 groupLeft + sourceDiameter + sourceGap + widestLine / 2f
             } else {
@@ -9948,28 +10083,46 @@ class WatchPreviewView @JvmOverloads constructor(
             textPaint.letterSpacing = titleTypographySpec.trackingEm
             textPaint.color = titleAlpha(Color.WHITE)
             textPaint.textSize = plan.size
+            val titleBand = blockLine(
+                    Paint.Align.CENTER, cx, textWidth, top = y, bottom = y + titleH)
+            textPaint.textAlign = titleBand.align
             if (plan.marquee) {
-                drawMarqueeText(canvas, plan.lines.first(), cx, y - titleFm.ascent, textWidth)
+                // drawMarqueeText centres its window on the x it is handed, so a line the user
+                // pushed to an edge has to be given the middle of its own run instead.
+                drawMarqueeText(
+                        canvas,
+                        plan.lines.first(),
+                        when (titleBand.align) {
+                            Paint.Align.LEFT -> titleBand.x + titleBand.width / 2f
+                            Paint.Align.RIGHT -> titleBand.x - titleBand.width / 2f
+                            else -> titleBand.x
+                        },
+                        y - titleFm.ascent,
+                        titleBand.width)
                 y += titleLineH
             } else {
                 plan.lines.forEach { line ->
-                    canvas.drawText(line, cx, y - titleFm.ascent, textPaint)
+                    canvas.drawText(line, titleBand.x, y - titleFm.ascent, textPaint)
                     y += titleLineH
                 }
             }
+            textPaint.textAlign = Paint.Align.CENTER
         }
 
         // Track time, 4dp below the title.
         if (timeVisible) {
             y += timeGap
+            val timeBand = blockLine(
+                    Paint.Align.CENTER, cx, textWidth, top = y, bottom = y + timeLineH)
             drawTrackTimeText(
                     canvas,
                     timeText(),
-                    cx,
+                    timeBand.x,
                     y - timeFm.ascent,
                     dp(CLASSIC_TRACK_TIME_SP),
                     Color.WHITE,
-                    fontRegular)
+                    fontRegular,
+                    align = timeBand.align)
         }
     }
 
@@ -10060,7 +10213,16 @@ class WatchPreviewView @JvmOverloads constructor(
             designedTextSize: Float,
             designedColor: Int,
             fallback: Typeface? = fontRegular,
-            bold: Boolean = false
+            bold: Boolean = false,
+            /**
+             * Resolved by the caller through `blockLine` where the block can be moved.
+             *
+             * Null means *leave the shared paint's alignment alone*, which is not the same as
+             * centring it: Frame's header time and Chat's timestamp both set `Paint.Align.RIGHT`
+             * before calling and place their x on that assumption, so a default of centre here
+             * would silently shift both of them into the elements beside them.
+             */
+            align: Paint.Align? = null
     ) {
         textPaint.typeface = trackTimeTypeface(fallback, bold)
         textPaint.textSize = trackTimeTypographySpec.scaled(designedTextSize)
@@ -10068,7 +10230,10 @@ class WatchPreviewView @JvmOverloads constructor(
                 designedColor,
                 trackTimeTypographySpec.applyAlpha(Color.alpha(designedColor)))
         textPaint.letterSpacing = trackTimeTypographySpec.trackingEm
+        val restoreAlign = textPaint.textAlign
+        if (align != null) textPaint.textAlign = align
         canvas.drawText(text, x, y, textPaint)
+        if (align != null) textPaint.textAlign = restoreAlign
         // This Paint is shared by all preview drawings. Tracking cannot leak into the next line.
         resetTrackTextPaint()
     }
@@ -12390,9 +12555,22 @@ class WatchPreviewView @JvmOverloads constructor(
         // wrapped lifts the artwork instead of running off the bottom. With both lines hidden the
         // disc is the whole block, as the face's own Column is when NoteLine draws nothing.
         val lineCount = if (sentence.isEmpty()) 0 else plan.lines.size
-        val blockHeight = discSize + if (lineCount == 0 || !noteShowCover) 0f else
-            blockGap + lineHeight * lineCount
-        val discCy = cy - blockHeight / 2f + discSize / 2f
+        // Once the block is moved the elapsed readout travels with it rather than staying a
+        // footer, exactly as NoteFace does - so it is part of the block's height here too.
+        val movedTime = textBlockPosition != TextBlockPosition.FOLLOW && trackTimeVisible()
+        val timeBlock = if (movedTime) screen * .04f + dp(11f) else 0f
+        val blockHeight = discSize + (if (lineCount == 0 || !noteShowCover) 0f else
+            blockGap + lineHeight * lineCount) + timeBlock
+        // Note offers the vertical control only: aligning would drag the cover disc, which is
+        // artwork rather than track text. Top and bottom are measured off the glass with the same
+        // edge margin the watch's own block keeps.
+        val edge = screen * NOTE_BLOCK_EDGE_FRACTION
+        val blockTop = when (textBlockPosition) {
+            TextBlockPosition.TOP -> geometry.bounds.top + edge
+            TextBlockPosition.BOTTOM -> geometry.bounds.bottom - edge - blockHeight
+            else -> cy - blockHeight / 2f
+        }
+        val discCy = blockTop + discSize / 2f
         val art = displayedArt()
         if (noteShowCover) {
             val discRect = RectF(
@@ -12436,8 +12614,15 @@ class WatchPreviewView @JvmOverloads constructor(
             textPaint.textAlign = Paint.Align.CENTER
             textPaint.textSize = dp(11f)
             textPaint.color = ColorUtils.setAlphaComponent(titleColor, 0x8C)
+            // Follow keeps the designed footer at the foot of the screen; a moved block takes the
+            // readout with it, or the sentence and its time end up at opposite ends of the face.
+            val timeY = if (movedTime) {
+                blockTop + blockHeight - dp(11f) * .2f
+            } else {
+                cy + radius - screen * .07f
+            }
             drawTrackTimeText(
-                    canvas, timeText(), cx, cy + radius - screen * .07f, dp(11f),
+                    canvas, timeText(), cx, timeY, dp(11f),
                     ColorUtils.setAlphaComponent(titleColor, 0x8C), textPaint.typeface)
         }
 

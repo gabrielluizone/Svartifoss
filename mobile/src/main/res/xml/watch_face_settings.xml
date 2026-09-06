@@ -107,10 +107,12 @@
             android:summary="@string/setting_wear_title_centered_description"
             android:layout="@layout/pref_switch_item" />
 
-        <!-- Where the face's block of track text sits, on both axes. Unlike the row above these
-             apply to every face, because every face composes such a block somewhere and both keys
-             default to the "follow" sentinel - meaning "keep what this face composed", so a face
-             nobody has adjusted is untouched. See common/TextBlockPlacement.kt. -->
+        <!-- Where the face's block of track text sits, on both axes. Each row is offered only on
+             the faces that can honour that axis, and the two lists differ - Carousel's bands may
+             be aligned but not moved, Note's sentence moved but not aligned. The registry is
+             common/TextBlockPlacement.kt's TextBlockPlacementSupport, read by the picker, the
+             watch and the preview alike; both keys still default to the "follow" sentinel, so a
+             face nobody has adjusted is untouched. -->
         <ListPreference
             android:defaultValue="follow"
             android:key="wear_text_block_align"

@@ -1305,10 +1305,18 @@ internal fun ChronoAmbientFace(state: NowPlayingFaceState) {
         Column(
                 modifier = Modifier
                         .align(state.blockPlacement(Alignment.Center))
-                                .padding(horizontal = state.blockSafeSideInset(screen))
-                                .padding(vertical = state.blockSafeVerticalInset(screen))
                         .fillMaxWidth()
-                        .padding(horizontal = screen * .08f),
+                        // The chord inset has to come *after* fillMaxWidth, not before: applied
+                        // first it was re-expanded by the fill and the block sat on the bezel
+                        // exactly as it had before. Chrono's block is centred by design, so that
+                        // is the band it is measured in.
+                        .padding(horizontal = maxOf(
+                                screen * .08f,
+                                state.blockSafeSideInset(
+                                        screen,
+                                        designedTop = CHRONO_BLOCK_TOP_FRACTION,
+                                        designedHeight = CHRONO_BLOCK_HEIGHT_FRACTION)))
+                        .padding(vertical = state.blockSafeVerticalInset(screen)),
                 horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
         ) {
             Text(
@@ -1828,40 +1836,151 @@ internal fun NowPlayingFaceState.blockArrangement(
 }
 
 /**
- * Extra side inset a text block needs once the user has moved it into a narrow band of the circle.
+ * Where a block of track text actually ends up, as top/bottom depths in screen-height fractions.
  *
- * The screen is round, so the usable chord collapses towards the top and bottom. Every face's own
- * side padding was tuned for the depth that face composes its text at - which is exactly the
- * assumption [blockPlacement] breaks, since it lets the block be moved somewhere its author never
- * placed it. Without this, choosing Top or Bottom on a face designed around a centred block runs
- * the text into the bezel.
+ * Depth is what [RoundScreenText] measures against, and the whole difficulty is that a moved block
+ * is not at the depth its author composed it at. [designedTop] and [designedHeight] describe the
+ * band the *face* laid out; this resolves that against the placement the user chose, so every
+ * inset below is measured where the text will really be rather than where it was drawn.
  *
- * Zero for `follow` (the face keeps the padding it was tuned with). The middle still receives a
- * small chord-derived inset: the container is rectangular even there, while the painted screen is
- * not. The estimate is deliberately conservative and shared
- * rather than per-face: it assumes a block of [ASSUMED_BLOCK_FRACTION] of the screen's height
- * against the edge, which over-insets a short block slightly rather than under-insetting a tall
- * one. A face that knows its own height exactly - as the Artist face does, since it measures its
- * own line count - computes the chord itself through [RoundScreenText] instead and does not need
- * this.
+ * `follow` returns the face's own band unchanged, which is what keeps an unmoved face pixel-identical.
  */
-internal fun NowPlayingFaceState.blockSafeSideInset(screen: Dp): Dp {
-    val fraction = when (textBlockPosition) {
-        TextBlockPosition.FOLLOW -> return 0.dp
-        // A centred block can still be tall enough to reach outside the wide middle chord. Keep
-        // a small real-circle inset instead of treating the rectangular parent as usable glass.
-        TextBlockPosition.MIDDLE -> RoundScreenText.sideInsetFor(
-                top = .40f,
-                bottom = .60f)
-        TextBlockPosition.TOP -> RoundScreenText.sideInsetFor(
-                top = blockTopClearanceFraction(),
-                bottom = blockTopClearanceFraction() + ASSUMED_BLOCK_FRACTION)
-        TextBlockPosition.BOTTOM -> RoundScreenText.sideInsetFor(
-                top = 1f - EDGE_MARGIN_FRACTION - ASSUMED_BLOCK_FRACTION,
-                bottom = 1f - EDGE_MARGIN_FRACTION)
-    }
-    return screen * fraction
+internal fun NowPlayingFaceState.blockBand(
+        designedTop: Float,
+        designedHeight: Float
+): ClosedFloatingPointRange<Float> {
+    val height = designedHeight.coerceIn(0f, 1f)
+    val top = when (textBlockPosition) {
+        TextBlockPosition.FOLLOW -> designedTop
+        TextBlockPosition.TOP -> blockTopClearanceFraction()
+        TextBlockPosition.MIDDLE -> (1f - height) / 2f
+        TextBlockPosition.BOTTOM -> 1f - blockBottomClearanceFraction() - height
+    }.coerceIn(0f, 1f)
+    return top..(top + height).coerceAtMost(1f)
 }
+
+/**
+ * Extra side inset a text block needs once the user has moved it out of the band it was composed in.
+ *
+ * The screen is round, so the usable chord collapses towards the top and bottom, *and* towards the
+ * sides at any depth away from centre. Every face's own side padding was tuned for one depth and
+ * one alignment - a block its author centred, which never reaches the glass at all. Both halves of
+ * that assumption are what these controls break, and until this function was corrected only one of
+ * them was covered: it keyed off [textBlockPosition] alone and returned zero whenever that was
+ * `follow`, so *lining a block up against an edge without moving it vertically* - the commonest
+ * thing a user does here, and the one the picker offers first - got no protection at all. On a
+ * face whose text is grounded low by design (Immersive, Depth) that put the artist line, one line
+ * deeper than the title, straight under the bezel.
+ *
+ * Zero only while **both** axes still follow the face. Otherwise the band is resolved through
+ * [blockBand] and measured for real, so a face that passes its own [designedTop]/[designedHeight]
+ * gets an answer for where its text is rather than for the conservative stand-in the defaults
+ * describe - roughly two lines of track text centred on the screen, which over-insets a short
+ * block slightly rather than under-insetting a tall one.
+ *
+ * This is still **one inset for the whole block**, i.e. the deepest line's answer applied to all of
+ * them. That is the right keep-out and the wrong layout; a face that wants each line to stop at the
+ * glass on its own terms uses [blockLineInsets] instead.
+ */
+internal fun NowPlayingFaceState.blockSafeSideInset(
+        screen: Dp,
+        designedTop: Float = DEFAULT_DESIGNED_BLOCK_TOP,
+        designedHeight: Float = ASSUMED_BLOCK_FRACTION
+): Dp {
+    if (!blockPlacementOverridden) return 0.dp
+    val band = blockBand(designedTop, designedHeight)
+    return screen * RoundScreenText.sideInsetFor(band.start, band.endInclusive)
+}
+
+/**
+ * Per-element side insets for a block whose lines should each stop at the glass on their own terms.
+ *
+ * The complaint [blockSafeSideInset] cannot answer: aligning a block to an edge moved the title,
+ * the artist and the elapsed readout to the *same* x, and on a round screen that is only ever
+ * correct for one of the three. The artist sits a line below the title, where the chord is
+ * narrower, so it either clipped or - once the shared inset was widened enough to save it - the
+ * title lost width it had every right to. Each element gets its own answer here, so an
+ * edge-aligned block steps inwards as it descends and every line ends up against the glass rather
+ * than against a margin borrowed from its neighbour.
+ *
+ * [elementHeights] are the elements' real heights in draw order, gaps folded into the element above
+ * them (see [RoundScreenText.lineSideInsets]); [designedAnchor]/[designedEdgeFraction] say where
+ * the face itself put the block, which is the band measured while the placement still follows it.
+ * [floor] is the face's own designed padding,
+ * which survives as a minimum: near the centre the circle constrains nothing and the composition
+ * still wants its margin there.
+ *
+ * Returns [BlockLineInsets], which is split into an `outer` container padding plus a per-element
+ * `extra` rather than one padding per element, because the container is what an alignment acts in:
+ * padding only the children would leave a `fillMaxWidth` column measuring the full screen and the
+ * outermost line would still be placed on the bezel.
+ */
+internal fun NowPlayingFaceState.blockLineInsets(
+        screen: Dp,
+        designedAnchor: BlockAnchor,
+        designedEdgeFraction: Float,
+        elementHeights: List<Dp>,
+        floor: Dp = 0.dp
+): BlockLineInsets {
+    val floorFraction = if (screen > 0.dp) floor / screen else 0f
+    if (!blockPlacementOverridden || elementHeights.isEmpty()) {
+        return BlockLineInsets(floor, List(elementHeights.size) { 0.dp })
+    }
+    val fractions = elementHeights.map { if (screen > 0.dp) it / screen else 0f }
+    val height = fractions.sum()
+    val designedTop = when (designedAnchor) {
+        BlockAnchor.TOP -> designedEdgeFraction
+        BlockAnchor.CENTER -> (1f - height) / 2f
+        BlockAnchor.BOTTOM -> 1f - designedEdgeFraction - height
+    }
+    val band = blockBand(designedTop, height)
+    val insets = RoundScreenText.lineSideInsets(band.start, fractions)
+            .map { maxOf(it, floorFraction) }
+    val outer = insets.min()
+    return BlockLineInsets(screen * outer, insets.map { screen * (it - outer) })
+}
+
+/**
+ * Which edge a face's own composition anchors its text block to.
+ *
+ * Only ever used to *reconstruct where the face put the block* so the chord can be measured there
+ * under `follow`; the placement the user chose is resolved separately in [blockBand]. It is an
+ * anchor plus a distance rather than a bare top fraction because a centred block does not know its
+ * own top until its elements have been measured, and making every call site compute
+ * `(1 - height) / 2` itself is three chances to get the same expression wrong.
+ */
+internal enum class BlockAnchor { TOP, CENTER, BOTTOM }
+
+/**
+ * The result of [blockLineInsets]: what the container reserves, and what each element adds to it.
+ *
+ * Kept as two halves rather than as one padding per element so a caller cannot apply the second
+ * without the first - see [blockLineInsets] for why the container's own inset is load-bearing.
+ */
+internal data class BlockLineInsets(val outer: Dp, private val extras: List<Dp>) {
+    /** Additional padding for the element at [index], on top of [outer]. Zero past the end. */
+    fun extra(index: Int): Dp = extras.getOrElse(index) { 0.dp }
+}
+
+/** True once the user has moved this block on either axis, which is when the circle starts to bind. */
+internal val NowPlayingFaceState.blockPlacementOverridden: Boolean
+    get() = textBlockAlign != TextBlockAlign.FOLLOW || textBlockPosition != TextBlockPosition.FOLLOW
+
+/**
+ * The narrowest a fixed-width text column is allowed to become once the chord has taken its cut.
+ *
+ * A face that composes its metadata at a fixed fraction of the screen has to subtract the inset
+ * from that width rather than pad around it - padding leaves the column exactly as wide as it was
+ * and simply hangs the surplus off the far edge. Subtracting can in principle reach zero on a very
+ * low band, so it stops here instead: a clipped line is legible and says the block is too low,
+ * where a one-character column says nothing at all. The same argument
+ * [RoundScreenText]'s own `MAX_INSET` makes.
+ */
+internal val MIN_TEXT_COLUMN: Dp = 48.dp
+
+/** Chrono's clock-plus-two-lines block, centred by design - the band its chord is measured in. */
+private const val CHRONO_BLOCK_TOP_FRACTION = .33f
+private const val CHRONO_BLOCK_HEIGHT_FRACTION = .34f
 
 /**
  * The vertical keep-out required by a block explicitly moved to an edge.
@@ -1906,6 +2025,15 @@ private fun NowPlayingFaceState.blockBottomClearanceFraction(): Float = maxOf(
 
 /** Roughly two lines of track text plus its breathing room - the block most faces compose. */
 private const val ASSUMED_BLOCK_FRACTION = 0.20f
+
+/**
+ * The stand-in band for a caller that has not told [blockSafeSideInset] where its text lives: a
+ * block of [ASSUMED_BLOCK_FRACTION] centred on the screen. Conservative in the safe direction -
+ * the middle is the widest part of the glass, so a face that actually composes lower gets *less*
+ * inset than it needs rather than a wrong one, and every face that can be moved passes its own
+ * numbers instead.
+ */
+private const val DEFAULT_DESIGNED_BLOCK_TOP = 0.5f - ASSUMED_BLOCK_FRACTION / 2f
 
 /** How close to the glass a moved block is allowed to sit before the chord is measured. */
 private const val EDGE_MARGIN_FRACTION = 0.08f

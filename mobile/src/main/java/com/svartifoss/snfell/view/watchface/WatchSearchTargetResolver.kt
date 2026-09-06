@@ -141,6 +141,13 @@ internal object WatchSearchTargetResolver {
                 key == "wear_note_show_cover" && face != "note" ||
                 key == "wear_title_centered" &&
                         face !in PlayerEditorModel.TITLE_CENTERED_FACES ||
+                // Two rows, two allow-lists, because nine faces offer one of them and not the
+                // other. One shared clause would send somebody looking for the row that *is* on
+                // this face to the face picker instead.
+                key == "wear_text_block_align" &&
+                        face !in PlayerEditorModel.TEXT_BLOCK_ALIGN_FACES ||
+                key == "wear_text_block_position" &&
+                        face !in PlayerEditorModel.TEXT_BLOCK_POSITION_FACES ||
                 key == "wear_chat_cover_shape" && face != "chat" ||
                 key == "wear_chat_show_cover" && face != "chat" ||
                 // wear_metadata_cover_shape / wear_metadata_show_cover need no entry here: the

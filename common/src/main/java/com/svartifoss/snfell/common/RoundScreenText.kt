@@ -94,6 +94,40 @@ object RoundScreenText {
     }
 
     /**
+     * One inset per stacked element of a text block, each measured at that element's own depth.
+     *
+     * This is the difference between a block that has been *moved* and one that has been
+     * *organised*. [sideInsetFor] answers for a whole block by taking the narrower of its two
+     * edges, which is correct as a keep-out but wrong as a layout: on a block grounded near the
+     * bottom the artist line sits a line-height below the title, where the chord is measurably
+     * narrower, so one shared inset either wastes the title's width or lets the artist run under
+     * the bezel. Padding each element by its own answer instead is what makes an edge-aligned
+     * block step in as it descends - the title reaching furthest, the artist a little less, the
+     * elapsed readout under it less again - each stopping at the glass rather than on a line
+     * borrowed from a neighbour.
+     *
+     * [elementHeights] are fractions of the screen's height, in draw order from [top] downwards;
+     * an element that wraps passes its real height (line height times line count), which is what
+     * `AdaptiveTitleText`'s `onLineCount` exists to report. Elements are stacked with no gap - a
+     * caller that composes one folds it into the height above it, since a gap and a taller element
+     * bind the chord identically.
+     *
+     * Returns one inset per element, in the same order.
+     */
+    fun lineSideInsets(
+            top: Float,
+            elementHeights: List<Float>,
+            margin: Float = DEFAULT_MARGIN
+    ): List<Float> {
+        var cursor = top
+        return elementHeights.map { height ->
+            val lineTop = cursor
+            cursor += height.coerceAtLeast(0f)
+            sideInsetFor(lineTop, cursor, margin)
+        }
+    }
+
+    /**
      * Whether [a] and [b] are close enough to treat as the same inset.
      *
      * The measure-then-inset loop a wrapping title runs (render, count lines, re-inset, re-render)

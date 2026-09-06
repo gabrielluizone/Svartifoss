@@ -5058,6 +5058,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 ?.isVisible = !hostedMiniButtons
         // Quadrant hint icons only exist on Classic - every Compose face hides them entirely.
         findPreference<Preference>("wear_quadrant_tap_flash")?.isVisible = face == "classic"
+        // The legacy rows behind the Player editor. Hidden wholesale on SECTION_STYLE today, so
+        // these two lines change nothing on screen - they are here because `appliesToFace`
+        // documents itself as mirroring this function, and a mirror missing half its subjects is
+        // how the next page that inflates these rows would ship them on every face again.
+        findPreference<Preference>(MiscPreferences.WEAR_TEXT_BLOCK_ALIGN.key)?.isVisible =
+                face in PlayerEditorModel.TEXT_BLOCK_ALIGN_FACES
+        findPreference<Preference>(MiscPreferences.WEAR_TEXT_BLOCK_POSITION.key)?.isVisible =
+                face in PlayerEditorModel.TEXT_BLOCK_POSITION_FACES
     }
 
     private fun updateBackgroundCapabilityVisibility(overrideFace: String? = null) {

@@ -75,4 +75,44 @@ class RoundScreenTextTest {
         assertTrue(RoundScreenText.insetsAreEquivalent(0.2000f, 0.2010f))
         assertTrue(!RoundScreenText.insetsAreEquivalent(0.20f, 0.25f))
     }
+
+    /**
+     * The staircase: each element measured at its own depth, not at the block's worst one.
+     *
+     * This is what separates a moved block from an organised one. Below the centre the chord
+     * narrows with every line, so an artist line sitting under a title has to stop short of where
+     * the title may reach - and the elapsed readout under it shorter again.
+     */
+    @Test
+    fun `each element of a low block is inset further than the one above it`() {
+        val insets = RoundScreenText.lineSideInsets(
+                top = 0.66f,
+                elementHeights = listOf(0.09f, 0.06f, 0.05f))
+        assertEquals(3, insets.size)
+        assertTrue("title vs artist: ${insets[0]} vs ${insets[1]}", insets[1] > insets[0])
+        assertTrue("artist vs time: ${insets[1]} vs ${insets[2]}", insets[2] > insets[1])
+    }
+
+    @Test
+    fun `a block straddling the centre is bound by whichever edge reaches further out`() {
+        // The top element reaches higher than the bottom one descends, so it is the narrower of
+        // the two - the same rule sideInsetFor documents, applied per element.
+        val insets = RoundScreenText.lineSideInsets(
+                top = 0.30f,
+                elementHeights = listOf(0.12f, 0.12f))
+        assertTrue(insets[0] > insets[1])
+    }
+
+    @Test
+    fun `one element answers exactly as the whole-block helper does`() {
+        assertEquals(
+                RoundScreenText.sideInsetFor(0.70f, 0.80f),
+                RoundScreenText.lineSideInsets(0.70f, listOf(0.10f)).single(),
+                0.0001f)
+    }
+
+    @Test
+    fun `no elements means no insets rather than an exception`() {
+        assertEquals(emptyList<Float>(), RoundScreenText.lineSideInsets(0.5f, emptyList()))
+    }
 }

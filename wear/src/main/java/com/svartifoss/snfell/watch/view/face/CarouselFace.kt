@@ -284,12 +284,17 @@ private fun CarouselFrameContent(
 
         Column(
                 Modifier.align(state.blockPlacement(Alignment.TopCenter))
-                        .padding(horizontal = state.blockSafeSideInset(screen))
-                        .padding(vertical = state.blockSafeVerticalInset(screen))
-                        // Anchored just below the card rather than to the bottom edge, and inset by
-                        // the real chord at the depth the text actually reaches - see titleInset.
-                        // Sitting against the cover also reads as one block instead of two things
-                        // floating apart.
+                        // No `blockSafeSideInset` here, and that is deliberate: this face already
+                        // measures the real chord at each of its two bands (titleInset just above,
+                        // artistInset for the row under the clock), so the shared estimate would
+                        // land *on top of* a better answer and narrow the column twice. Carousel
+                        // does not offer the vertical control at all - its artist is pinned above
+                        // the rail and its title below it, two bands a single move cannot keep
+                        // apart - so these insets stay true wherever the alignment puts the text.
+                        //
+                        // Anchored just below the card rather than to the bottom edge. Sitting
+                        // against the cover also reads as one block instead of two things floating
+                        // apart.
                         .padding(
                                 top = state.blockDesignedTopPadding(screen * TITLE_TOP),
                                 start = screen * titleInset,
@@ -354,6 +359,9 @@ private const val MAX_TITLE_LINES = 3
 
 private const val CAROUSEL_TITLE_SIZE = 14f
 private const val CAROUSEL_TITLE_LINE_HEIGHT = 16f
+
+/** The AOD variant's two outlined lines, as a screen-height fraction. */
+private const val AMBIENT_TEXT_HEIGHT_FRACTION = .16f
 private const val CAROUSEL_ARTIST_SIZE = 10f
 
 /** Sized against the 10sp artist line it annotates, matching the curated faces' proportion. */
@@ -430,7 +438,13 @@ private fun CarouselAmbient(state: NowPlayingFaceState) {
         if (state.ambientShowTrackInfo && (state.showTitle || state.showArtist)) {
             Column(
                     Modifier.align(state.blockPlacement(Alignment.BottomCenter))
-                            .padding(horizontal = state.blockSafeSideInset(screen))
+                            // Its own band, not the shared centred stand-in: this block is
+                            // grounded, which is the depth where the chord actually bites.
+                            .padding(horizontal = state.blockSafeSideInset(
+                                    screen,
+                                    designedTop = 1f - geo.TEXT_BOTTOM_FRACTION -
+                                            AMBIENT_TEXT_HEIGHT_FRACTION,
+                                    designedHeight = AMBIENT_TEXT_HEIGHT_FRACTION))
                             .padding(vertical = state.blockSafeVerticalInset(screen))
                             .padding(bottom = state.blockDesignedBottomPadding(
                                     screen * geo.TEXT_BOTTOM_FRACTION))

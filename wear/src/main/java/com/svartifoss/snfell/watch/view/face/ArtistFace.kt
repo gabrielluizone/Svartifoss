@@ -91,8 +91,8 @@ fun ArtistFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
         // playback" - it means this face swallows every touch on the display, and the quadrant
         // taps, the full-screen swipes and the mini-button row underneath all stop working. The
         // fraction is what leaves the edges to the shared input layers, and every face in the
-        // collection picks one for that reason (Metadata .50, Verse .52, Note .60, Chat .62,
-        // Frame .68). This face has no transport control of its own, so the region is generous -
+        // collection picks one for that reason (Frame .40, Metadata .50, Verse .52, Chat .52,
+        // Note .52). This face has no transport control of its own, so the region is generous -
         // but it stops clear of the bottom band the mini buttons occupy and of the four edges.
         CenterGestureRegion(
                 listener = listener,

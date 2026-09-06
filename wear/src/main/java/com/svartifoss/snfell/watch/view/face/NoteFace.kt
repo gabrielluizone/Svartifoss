@@ -77,7 +77,10 @@ fun NoteFace(
         // backdrop on this face should get one.
         PlayerBackgroundTreatment(state)
 
-        CenterGestureRegion(listener, size = screen * .60f, pulseSize = screen * .36f)
+        CenterGestureRegion(
+                listener,
+                size = screen * FaceGeometry.Note.CENTER_REGION_FRACTION,
+                pulseSize = screen * FaceGeometry.Note.CENTER_PULSE_FRACTION)
 
         // Cover and sentence centre together as one block. Anchoring them separately was tried -
         // it pins the artwork so it cannot shift when a title wraps - but it costs a visible gap
@@ -86,8 +89,15 @@ fun NoteFace(
         Column(
                 modifier = Modifier
                         .fillMaxSize()
+                        // Note offers the vertical control only - aligning would drag the cover
+                        // disc, which is artwork rather than text - so the band is this column's
+                        // own, resolved against wherever the user grounded or raised it.
                         .padding(horizontal = maxOf(
-                                screen * NOTE_TEXT_INSET, state.blockSafeSideInset(screen)))
+                                screen * NOTE_TEXT_INSET,
+                                state.blockSafeSideInset(
+                                        screen,
+                                        designedTop = NOTE_BLOCK_TOP_FRACTION,
+                                        designedHeight = NOTE_BLOCK_HEIGHT_FRACTION)))
                         .padding(vertical = state.blockSafeVerticalInset(screen)),
                 horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally),
                 verticalArrangement = state.blockVerticalArrangement(Arrangement.Center)
@@ -149,6 +159,17 @@ private const val COVER_FRACTION = FaceGeometry.Note.COVER_FRACTION
 /** Side padding for the text block. Wide, because a centred two-line sentence on a round screen
  *  loses its corners first. */
 private const val NOTE_TEXT_INSET = .17f
+
+/**
+ * The band this face's own composition occupies, as screen-height fractions.
+ *
+ * Disc, sentence and - once the block has been moved - the elapsed readout, centred as one group.
+ * Only used to measure the round screen's chord at the depth the block actually sits at, which is
+ * why it is an approximation of the group rather than of any one element: a shorter title simply
+ * gets a slightly wider inset than it strictly needs.
+ */
+private const val NOTE_BLOCK_TOP_FRACTION = .32f
+private const val NOTE_BLOCK_HEIGHT_FRACTION = .36f
 
 /**
  * The album cover, cut to the user's chosen [shape]. Falls back to an accent fill before any

@@ -335,14 +335,31 @@ private fun BoxScope.ImmersiveComposition(
             // Lifting the block to clear them, as this used to, made the text float mid-screen
             // and broke the composition the face exists for.
             val bottomPadding = screen * FaceGeometry.Immersive.BOTTOM_PADDING_FRACTION
+            // Grounded low by design, which is exactly where the circle bites hardest: the artist
+            // line sits one line below the title and the elapsed readout one below that, so the
+            // three get three answers rather than the deepest one applied to all of them.
+            val insets = state.blockLineInsets(
+                    screen,
+                    BlockAnchor.BOTTOM,
+                    FaceGeometry.Immersive.BOTTOM_PADDING_FRACTION,
+                    listOf(
+                            FaceGeometry.Immersive.TITLE_LINE_HEIGHT_SP.dp,
+                            (FaceGeometry.Immersive.ARTIST_TOP_PADDING_DP + FaceGeometry.Immersive.SOURCE_ICON_SIZE_DP).dp,
+                            (FaceGeometry.Immersive.TRACK_TIME_TOP_PADDING_DP +
+                                    FaceGeometry.Immersive.TRACK_TIME_LINE_HEIGHT_SP).dp),
+                    floor = screen * FaceGeometry.Immersive.SIDE_PADDING_FRACTION)
             Column(
                     Modifier.align(state.blockPlacement(Alignment.BottomCenter))
-                            .padding(horizontal = state.blockSafeSideInset(screen))
+                            .padding(horizontal = insets.outer)
                             .padding(vertical = state.blockSafeVerticalInset(screen))
                             .padding(
                                     bottom = state.blockDesignedBottomPadding(bottomPadding),
-                                    start = screen * FaceGeometry.Immersive.SIDE_PADDING_FRACTION,
-                                    end = screen * FaceGeometry.Immersive.SIDE_PADDING_FRACTION
+                                    // The face's own margin survives as a floor inside `insets`,
+                                    // so it is applied there rather than twice.
+                                    start = if (state.blockPlacementOverridden) 0.dp
+                                            else screen * FaceGeometry.Immersive.SIDE_PADDING_FRACTION,
+                                    end = if (state.blockPlacementOverridden) 0.dp
+                                            else screen * FaceGeometry.Immersive.SIDE_PADDING_FRACTION
                             )
                             .fillMaxWidth(),
                     horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
@@ -361,13 +378,16 @@ private fun BoxScope.ImmersiveComposition(
                             lineHeight = FaceGeometry.Immersive.TITLE_LINE_HEIGHT_SP.sp,
                             fontWeight = FontWeight.Bold,
                             fontFamily = state.titleFont,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = insets.extra(0))
                     )
                 }
                 if (state.showArtist) {
                     Row(
-                            modifier = Modifier.padding(
-                                    top = FaceGeometry.Immersive.ARTIST_TOP_PADDING_DP.dp),
+                            modifier = Modifier
+                                    .padding(horizontal = insets.extra(1))
+                                    .padding(
+                                            top = FaceGeometry.Immersive.ARTIST_TOP_PADDING_DP.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = state.blockArrangement(Arrangement.Center)
                     ) {
@@ -403,8 +423,10 @@ private fun BoxScope.ImmersiveComposition(
                             fontFamily = state.artistFont,
                             textAlign = TextAlign.Center,
                             maxLines = 1,
-                            modifier = Modifier.padding(
-                                    top = FaceGeometry.Immersive.TRACK_TIME_TOP_PADDING_DP.dp)
+                            modifier = Modifier
+                                    .padding(horizontal = insets.extra(2))
+                                    .padding(
+                                            top = FaceGeometry.Immersive.TRACK_TIME_TOP_PADDING_DP.dp)
                     )
                 }
             }
@@ -490,14 +512,25 @@ private fun BoxScope.DepthComposition(
         }
 
         if (state.showTitle || state.showArtist) {
+            val insets = state.blockLineInsets(
+                    screen,
+                    BlockAnchor.BOTTOM,
+                    FaceGeometry.CuratedText.DEPTH_BOTTOM_FRACTION,
+                    listOf(
+                            FaceGeometry.CuratedText.DEPTH_TITLE_LINE_DP.dp,
+                            FaceGeometry.CuratedText.DEPTH_ARTIST_ROW_DP.dp),
+                    floor = screen * .11f)
             Column(
                     Modifier.align(state.blockPlacement(Alignment.BottomCenter))
-                            .padding(horizontal = state.blockSafeSideInset(screen))
+                            .padding(horizontal = insets.outer)
                             .padding(vertical = state.blockSafeVerticalInset(screen))
                             .padding(
-                                    bottom = state.blockDesignedBottomPadding(screen * .15f),
-                                    start = screen * .11f,
-                                    end = screen * .11f)
+                                    bottom = state.blockDesignedBottomPadding(
+                                            screen * FaceGeometry.CuratedText.DEPTH_BOTTOM_FRACTION),
+                                    start = if (state.blockPlacementOverridden) 0.dp
+                                            else screen * .11f,
+                                    end = if (state.blockPlacementOverridden) 0.dp
+                                            else screen * .11f)
                             .fillMaxWidth(),
                     horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
             ) {
@@ -512,12 +545,15 @@ private fun BoxScope.DepthComposition(
                             lineHeight = 18.sp,
                             fontWeight = FontWeight.Bold,
                             fontFamily = state.titleFont,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(horizontal = insets.extra(0))
                     )
                 }
                 if (state.showArtist) {
                     Row(
-                            modifier = Modifier.padding(top = 3.dp),
+                            modifier = Modifier
+                                    .padding(horizontal = insets.extra(1))
+                                    .padding(top = 3.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = state.blockArrangement(Arrangement.Center)
                     ) {
@@ -732,17 +768,35 @@ private fun BoxScope.AuroraComposition(
         )
     }
     if (hasMetadata) {
+        // Aurora was the one awake face in the collection that called none of the block helpers,
+        // so both placement rows were offered here and did visibly nothing beyond re-aligning
+        // each line inside a card-width column that never moved. A control that appears inert is
+        // worse than one that is absent, so the block is wired like every other face's - and it
+        // keeps its authored offsets while the placement still follows the face.
+        val insets = state.blockLineInsets(
+                screen,
+                BlockAnchor.CENTER,
+                0f,
+                listOf(FaceGeometry.CuratedText.AURORA_ARTIST_ROW_DP.dp, FaceGeometry.CuratedText.AURORA_TITLE_LINE_DP.dp))
+        val designed = !state.blockPlacementOverridden
         Column(
-                Modifier.align(Alignment.Center)
+                Modifier.align(state.blockPlacement(Alignment.Center))
                         .offset(
-                                x = cardWidth * -.06f,
-                                y = cardHeight * -.08f + metadataSingleLineOffset(state)
+                                x = if (designed) cardWidth * -.06f else 0.dp,
+                                y = if (designed) {
+                                    cardHeight * -.08f + metadataSingleLineOffset(state)
+                                } else 0.dp
                         )
-                        .width(cardWidth * .70f),
-                horizontalAlignment = Alignment.Start
+                        .padding(horizontal = insets.outer)
+                        .padding(vertical = state.blockSafeVerticalInset(screen))
+                        .width((cardWidth * .70f - insets.outer * 2)
+                                .coerceAtLeast(MIN_TEXT_COLUMN)),
+                horizontalAlignment = state.blockAlignment(Alignment.Start)
         ) {
             if (state.showArtist) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(modifier = Modifier.padding(horizontal = insets.extra(0)),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = state.blockArrangement(Arrangement.Start)) {
                     SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .70f))
                     ArtistLineText(
                             text = artistOrStatus(state).uppercase(),
@@ -768,7 +822,9 @@ private fun BoxScope.AuroraComposition(
                         fontFamily = state.titleFont,
                         fontStyle = FontStyle.Italic,
                         textAlign = TextAlign.Start,
-                        modifier = Modifier.padding(top = if (state.showArtist) 3.dp else 0.dp)
+                        modifier = Modifier
+                                .padding(horizontal = insets.extra(1))
+                                .padding(top = if (state.showArtist) 3.dp else 0.dp)
                 )
             }
         }
@@ -954,13 +1010,19 @@ private fun BoxScope.SpectrumHeader(
         screen: Dp,
         showArtist: Boolean
 ) {
+    val insets = state.blockLineInsets(
+            screen,
+            BlockAnchor.TOP,
+            FaceGeometry.CuratedText.SPECTRUM_TOP_FRACTION,
+            listOf(FaceGeometry.CuratedText.SPECTRUM_TITLE_LINE_DP.dp, FaceGeometry.CuratedText.SPECTRUM_ARTIST_ROW_DP.dp))
     Column(
             Modifier.align(state.blockPlacement(Alignment.TopCenter))
-                    .padding(horizontal = state.blockSafeSideInset(screen))
+                    .padding(horizontal = insets.outer)
                     .padding(vertical = state.blockSafeVerticalInset(screen))
                     .padding(top = state.blockDesignedTopPadding(
-                            screen * .15f + metadataSingleLineOffset(state)))
-                    .width(screen * .68f),
+                            screen * FaceGeometry.CuratedText.SPECTRUM_TOP_FRACTION + metadataSingleLineOffset(state)))
+                    // Narrowed rather than padded - see VinylMetadata.
+                    .width((screen * .68f - insets.outer * 2).coerceAtLeast(MIN_TEXT_COLUMN)),
             horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
         if (state.showTitle) {
@@ -970,12 +1032,14 @@ private fun BoxScope.SpectrumHeader(
                     color = titleTextColor(state, Color.White.copy(alpha = .92f)),
                     fontSize = 12.sp, lineHeight = 14.sp,
                     letterSpacing = 1.1.sp, fontWeight = FontWeight.Bold,
-                    fontFamily = state.titleFont, textAlign = TextAlign.Center)
+                    fontFamily = state.titleFont, textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = insets.extra(0)))
         }
         if (showArtist && state.showArtist) {
             Row(verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = state.blockArrangement(Arrangement.Center),
-                    modifier = Modifier.padding(top = 2.dp)) {
+                    modifier = Modifier.padding(horizontal = insets.extra(1))
+                            .padding(top = 2.dp)) {
                 SourceIconGlyph(state, 11.dp, Color(state.artistColor).copy(alpha = .78f))
                 ArtistLineText(artistOrStatus(state), state,
                         color = Color(state.artistColor).copy(alpha = .78f),
@@ -987,17 +1051,30 @@ private fun BoxScope.SpectrumHeader(
 
 @Composable
 private fun BoxScope.VinylMetadata(state: NowPlayingFaceState, screen: Dp) {
+    // Artist above title here, so the artist row is element 0. Both get their own chord answer:
+    // the lower of the two is one line further from the centre of the circle, which is where a
+    // shared inset either clipped it or robbed the line above it of width it was entitled to.
+    val insets = state.blockLineInsets(
+            screen,
+            BlockAnchor.TOP,
+            FaceGeometry.CuratedText.VINYL_TOP_FRACTION,
+            listOf(FaceGeometry.CuratedText.VINYL_ARTIST_ROW_DP.dp, FaceGeometry.CuratedText.VINYL_TITLE_ROW_DP.dp))
     Column(
             Modifier.align(state.blockPlacement(Alignment.TopCenter))
-                    .padding(horizontal = state.blockSafeSideInset(screen))
+                    .padding(horizontal = insets.outer)
                     .padding(vertical = state.blockSafeVerticalInset(screen))
                     .padding(top = state.blockDesignedTopPadding(
-                            screen * .14f + metadataSingleLineOffset(state)))
-                    .width(screen * .62f),
+                            screen * FaceGeometry.CuratedText.VINYL_TOP_FRACTION +
+                                    metadataSingleLineOffset(state)))
+                    // Narrowed rather than padded, the correction Poster and Studio already carry:
+                    // this column has a fixed width, so an outer padding leaves it exactly as wide
+                    // as it was and simply hangs the surplus off the far edge of the screen.
+                    .width((screen * .62f - insets.outer * 2).coerceAtLeast(MIN_TEXT_COLUMN)),
             horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
         if (state.showArtist) {
-            Row(verticalAlignment = Alignment.CenterVertically,
+            Row(modifier = Modifier.padding(horizontal = insets.extra(0)),
+                    verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = state.blockArrangement(Arrangement.Center)) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .58f))
                 ArtistLineText(
@@ -1024,7 +1101,9 @@ private fun BoxScope.VinylMetadata(state: NowPlayingFaceState, screen: Dp) {
                     fontWeight = FontWeight.Bold,
                     fontFamily = state.titleFont,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier.padding(top = if (state.showArtist) 2.dp else 0.dp)
+                    modifier = Modifier
+                            .padding(horizontal = insets.extra(1))
+                            .padding(top = if (state.showArtist) 2.dp else 0.dp)
             )
         }
     }
@@ -1049,6 +1128,7 @@ private fun BoxScope.VinylMetadata(state: NowPlayingFaceState, screen: Dp) {
 private fun BoxScope.TitleAnchoredMetadata(
         state: NowPlayingFaceState,
         modifier: Modifier,
+        insets: BlockLineInsets,
         title: @Composable () -> Unit,
         rest: @Composable () -> Unit
 ) {
@@ -1072,7 +1152,9 @@ private fun BoxScope.TitleAnchoredMetadata(
         // faces that use this. TextAlign.Center cannot fix that: it aligns lines inside the text's
         // own measured width, and a wrap-content Text is exactly as wide as its longest line.
         Box(
-                modifier = Modifier.fillMaxWidth().onSizeChanged { titleHeight = it.height },
+                modifier = Modifier.fillMaxWidth()
+                        .padding(horizontal = insets.extra(0))
+                        .onSizeChanged { titleHeight = it.height },
                 contentAlignment = Alignment.TopCenter
         ) { title() }
         rest()
@@ -1081,13 +1163,20 @@ private fun BoxScope.TitleAnchoredMetadata(
 
 @Composable
 private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
+    val insets = state.blockLineInsets(
+            screen,
+            BlockAnchor.CENTER,
+            0f,
+            listOf(FaceGeometry.CuratedText.POSTER_TITLE_LINE_DP.dp, FaceGeometry.CuratedText.POSTER_ARTIST_ROW_DP.dp))
     TitleAnchoredMetadata(
             state,
             // Narrowed, not padded: the column has a fixed width, and once the placement control
             // moves this block into a narrow band of the round screen that width is what has to
-            // give. Zero unless it has actually been moved - see blockSafeSideInset.
+            // give. Zero unless it has actually been moved - see blockLineInsets.
             Modifier.padding(horizontal = screen * .08f)
-                    .width(screen * .72f - state.blockSafeSideInset(screen) * 2),
+                    .padding(vertical = state.blockSafeVerticalInset(screen))
+                    .width((screen * .72f - insets.outer * 2).coerceAtLeast(MIN_TEXT_COLUMN)),
+            insets,
             title = {
         if (state.showTitle) {
             // AdaptiveTitleText, not a bare Text, so the user's Title text behaviour actually
@@ -1111,7 +1200,8 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
         if (state.showArtist) {
             Row(verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = state.blockArrangement(Arrangement.Center),
-                    modifier = Modifier.padding(top = if (state.showTitle) 6.dp else 0.dp)) {
+                    modifier = Modifier.padding(horizontal = insets.extra(1))
+                            .padding(top = if (state.showTitle) 6.dp else 0.dp)) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .76f))
                 ArtistLineText(
                         text = artistOrStatus(state).uppercase(),
@@ -1129,13 +1219,18 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
 
 @Composable
 private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: CuratedPalette) {
+    val insets = state.blockLineInsets(
+            screen,
+            BlockAnchor.CENTER,
+            0f,
+            listOf(FaceGeometry.CuratedText.STUDIO_TITLE_LINE_DP.dp, FaceGeometry.CuratedText.STUDIO_ARTIST_ROW_DP.dp))
     TitleAnchoredMetadata(
             state,
-            // Narrowed, not padded: the column has a fixed width, and once the placement control
-            // moves this block into a narrow band of the round screen that width is what has to
-            // give. Zero unless it has actually been moved - see blockSafeSideInset.
+            // Narrowed, not padded - see PosterMetadata.
             Modifier.padding(horizontal = screen * .08f)
-                    .width(screen * .72f - state.blockSafeSideInset(screen) * 2),
+                    .padding(vertical = state.blockSafeVerticalInset(screen))
+                    .width((screen * .72f - insets.outer * 2).coerceAtLeast(MIN_TEXT_COLUMN)),
+            insets,
             title = {
         if (state.showTitle) {
             // AdaptiveTitleText for the same reason as PosterMetadata above.
@@ -1156,7 +1251,8 @@ private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: C
         if (state.showArtist) {
             Row(verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = state.blockArrangement(Arrangement.Center),
-                    modifier = Modifier.padding(top = if (state.showTitle) 5.dp else 0.dp)) {
+                    modifier = Modifier.padding(horizontal = insets.extra(1))
+                            .padding(top = if (state.showTitle) 5.dp else 0.dp)) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .62f))
                 ArtistLineText(
                         text = artistOrStatus(state).uppercase(),
@@ -1174,13 +1270,19 @@ private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: C
 
 @Composable
 private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
+    val insets = state.blockLineInsets(
+            screen,
+            BlockAnchor.TOP,
+            FaceGeometry.CuratedText.HALO_TOP_FRACTION,
+            listOf(FaceGeometry.CuratedText.HALO_TITLE_LINE_DP.dp, FaceGeometry.CuratedText.HALO_ARTIST_ROW_DP.dp))
     Column(
             Modifier.align(state.blockPlacement(Alignment.TopCenter))
-                    .padding(horizontal = state.blockSafeSideInset(screen))
+                    .padding(horizontal = insets.outer)
                     .padding(vertical = state.blockSafeVerticalInset(screen))
                     .padding(top = state.blockDesignedTopPadding(
-                            screen * .145f + metadataSingleLineOffset(state)))
-                    .width(screen * .66f),
+                            screen * FaceGeometry.CuratedText.HALO_TOP_FRACTION + metadataSingleLineOffset(state)))
+                    // Narrowed rather than padded - see VinylMetadata.
+                    .width((screen * .66f - insets.outer * 2).coerceAtLeast(MIN_TEXT_COLUMN)),
             horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
         if (state.showTitle) {
@@ -1195,7 +1297,8 @@ private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
                     letterSpacing = .75.sp,
                     fontWeight = FontWeight.Light,
                     fontFamily = state.titleFont,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = insets.extra(0))
             )
         }
         if (state.showArtist) {
@@ -1203,7 +1306,8 @@ private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
             // rather than floating loose beside it.
             Row(verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = state.blockArrangement(Arrangement.Center),
-                    modifier = Modifier.padding(top = if (state.showTitle) 3.dp else 0.dp)
+                    modifier = Modifier.padding(horizontal = insets.extra(1))
+                            .padding(top = if (state.showTitle) 3.dp else 0.dp)
                             .clip(RoundedCornerShape(20.dp))
                             .background(Color.White.copy(alpha = .09f))
                             .padding(horizontal = 8.dp, vertical = 2.dp)) {
@@ -1224,13 +1328,19 @@ private fun BoxScope.HaloMetadata(state: NowPlayingFaceState, screen: Dp) {
 
 @Composable
 private fun BoxScope.EclipseMetadata(state: NowPlayingFaceState, screen: Dp) {
+    val insets = state.blockLineInsets(
+            screen,
+            BlockAnchor.TOP,
+            FaceGeometry.CuratedText.ECLIPSE_TOP_FRACTION,
+            listOf(FaceGeometry.CuratedText.ECLIPSE_TITLE_LINE_DP.dp, FaceGeometry.CuratedText.ECLIPSE_ARTIST_ROW_DP.dp))
     Column(
             Modifier.align(state.blockPlacement(Alignment.TopCenter))
-                    .padding(horizontal = state.blockSafeSideInset(screen))
+                    .padding(horizontal = insets.outer)
                     .padding(vertical = state.blockSafeVerticalInset(screen))
                     .padding(top = state.blockDesignedTopPadding(
-                            screen * .15f + metadataSingleLineOffset(state)))
-                    .width(screen * .64f),
+                            screen * FaceGeometry.CuratedText.ECLIPSE_TOP_FRACTION + metadataSingleLineOffset(state)))
+                    // Narrowed rather than padded - see VinylMetadata.
+                    .width((screen * .64f - insets.outer * 2).coerceAtLeast(MIN_TEXT_COLUMN)),
             horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
         if (state.showTitle) {
@@ -1245,13 +1355,15 @@ private fun BoxScope.EclipseMetadata(state: NowPlayingFaceState, screen: Dp) {
                     letterSpacing = 2.sp,
                     fontWeight = FontWeight.Light,
                     fontFamily = state.titleFont,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(horizontal = insets.extra(0))
             )
         }
         if (state.showArtist) {
             Row(verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = state.blockArrangement(Arrangement.Center),
-                    modifier = Modifier.padding(top = if (state.showTitle) 3.dp else 0.dp)) {
+                    modifier = Modifier.padding(horizontal = insets.extra(1))
+                            .padding(top = if (state.showTitle) 3.dp else 0.dp)) {
                 SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .48f))
                 ArtistLineText(
                         text = artistOrStatus(state).uppercase(),
@@ -1590,16 +1702,28 @@ private fun CuratedAmbientFace(state: NowPlayingFaceState, layout: CuratedLayout
                     CuratedLayout.IMMERSIVE,
                     CuratedLayout.DEPTH
             )
+            // Narrowed rather than padded on both branches, the same correction the awake faces
+            // carry: a fixed-width column with an outer padding stays exactly as wide as it was
+            // and hangs the surplus off the far edge of the screen instead.
+            val ambientInset = state.blockSafeSideInset(
+                    screen,
+                    designedTop = if (centredMetadata) AMBIENT_CENTRED_TOP_FRACTION
+                            else AMBIENT_TOP_ANCHORED_TOP_FRACTION,
+                    designedHeight = AMBIENT_BLOCK_HEIGHT_FRACTION)
             val metadataModifier = if (centredMetadata) {
-                Modifier.align(state.blockPlacement(Alignment.Center)).width(screen * .72f)
-                        .padding(horizontal = state.blockSafeSideInset(screen))
+                Modifier.align(state.blockPlacement(Alignment.Center))
+                        .padding(horizontal = ambientInset)
                         .padding(vertical = state.blockSafeVerticalInset(screen))
+                        .width((screen * .72f - ambientInset * 2)
+                                .coerceAtLeast(MIN_TEXT_COLUMN))
             } else {
                 Modifier.align(state.blockPlacement(Alignment.TopCenter))
-                        .padding(horizontal = state.blockSafeSideInset(screen))
+                        .padding(horizontal = ambientInset)
                         .padding(vertical = state.blockSafeVerticalInset(screen))
-                        .padding(top = state.blockDesignedTopPadding(screen * .20f))
-                        .width(screen * .62f)
+                        .padding(top = state.blockDesignedTopPadding(
+                                screen * AMBIENT_TOP_ANCHORED_TOP_FRACTION))
+                        .width((screen * .62f - ambientInset * 2)
+                                .coerceAtLeast(MIN_TEXT_COLUMN))
             }
             Column(metadataModifier,
                     horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)) {
@@ -1752,16 +1876,27 @@ private fun BoxScope.MaterialComposition(
 ) {
     // The awake typography is larger than Material AOD's, so 17% places the visible baselines in
     // the same clock-to-control band without letting the artist line touch the center disc.
+    val insets = state.blockLineInsets(
+            screen,
+            BlockAnchor.TOP,
+            FaceGeometry.CuratedText.MATERIAL_TOP_FRACTION,
+            listOf(
+                    FaceGeometry.CuratedText.MATERIAL_TITLE_LINE_DP.dp,
+                    FaceGeometry.CuratedText.MATERIAL_ARTIST_ROW_DP.dp))
     Column(
             modifier = Modifier
                     .align(state.blockPlacement(Alignment.TopCenter))
-                            .padding(horizontal = state.blockSafeSideInset(screen))
-                            .padding(vertical = state.blockSafeVerticalInset(screen))
+                    .padding(horizontal = insets.outer)
+                    .padding(vertical = state.blockSafeVerticalInset(screen))
                     .padding(
-                            top = state.blockDesignedTopPadding(screen * .17f),
+                            top = state.blockDesignedTopPadding(
+                                    screen * FaceGeometry.CuratedText.MATERIAL_TOP_FRACTION),
                             start = screen * .12f,
                             end = screen * .12f)
-                    .width(screen * 0.76f),
+                    // Narrowed rather than padded - see VinylMetadata. This column's own .12
+                    // margins plus its .76 width already fill the screen exactly, so the inset
+                    // had nowhere to go but over the edge of the parent.
+                    .width((screen * 0.76f - insets.outer * 2).coerceAtLeast(MIN_TEXT_COLUMN)),
             horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
         if (state.showTitle) {
@@ -1775,14 +1910,16 @@ private fun BoxScope.MaterialComposition(
                     fontWeight = FontWeight.Bold,
                     fontFamily = state.titleFont,
                     textAlign = TextAlign.Center,
-                    minFontSize = 13.sp
+                    minFontSize = 13.sp,
+                    modifier = Modifier.padding(horizontal = insets.extra(0))
             )
         }
         if (state.showArtist && state.artist.isNotEmpty()) {
             Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = state.blockArrangement(Arrangement.Center),
-                    modifier = Modifier.padding(top = 2.dp)
+                    modifier = Modifier.padding(horizontal = insets.extra(1))
+                            .padding(top = 2.dp)
             ) {
                 SourceIconGlyph(state, 13.dp, artistOrStatusColor(state, 0.70f))
                 ArtistLineText(
@@ -1968,3 +2105,16 @@ private fun MaterialSideAction(
         }
     }
 }
+
+/**
+ * Where the shared curated AOD puts its two lines, for the round-screen chord only.
+ *
+ * The ambient variants are outline-only reductions of the awake faces and keep their geometry, so
+ * these describe the same two bands: a centred pair for the layouts whose awake block is centred,
+ * and one hung .20 from the top for the rest.
+ */
+private const val AMBIENT_TOP_ANCHORED_TOP_FRACTION = .20f
+private const val AMBIENT_CENTRED_TOP_FRACTION = .42f
+
+/** Two ambient lines and the gap between them. */
+private const val AMBIENT_BLOCK_HEIGHT_FRACTION = .16f

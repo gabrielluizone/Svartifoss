@@ -3,7 +3,7 @@ package com.svartifoss.snfell.view.watchface
 import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.MiscPreferences
-import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.common.TextBlockPlacementSupport
 import com.svartifoss.snfell.common.TrackMetadataFields
 
 /**
@@ -164,14 +164,20 @@ internal object PlayerEditorModel {
             "spectrum", "material", "frame", "ribbon", "matejdro")
 
     /**
-     * Frame and Ribbon keep title, artist and time in independent fixed card/rail bands. A shared
-     * placement choice can therefore only move one of them, which is worse than not offering the
-     * choice: it makes the row appear broken and can put text over the artwork. Every other face
-     * has a movable metadata container (or the View-based Classic gravity), so it may expose the
-     * two block controls.
+     * Which faces offer *Text alignment*, and which offer *Text position* - two questions, not one.
+     *
+     * Read from [TextBlockPlacementSupport] rather than declared here, because the picker is only
+     * one of three consumers: the watch and the phone's own miniature resolve every stored value
+     * through the same registry, so a face that is not offered the row cannot be moved by a value
+     * that arrives from somewhere else either. See that object for what each exclusion is about.
+     *
+     * They were one set until now (`ALLOWED_BASE_FACES - frame - ribbon`), which forced nine faces
+     * to be all-in or all-out on a pair of controls they can only honour one of - Carousel's two
+     * bands may be aligned but not moved, Note's sentence may be moved but not aligned without
+     * dragging its cover disc with it.
      */
-    val TEXT_BLOCK_PLACEMENT_FACES: Set<String> =
-            ThemeAppearance.ALLOWED_BASE_FACES - setOf("frame", "ribbon")
+    val TEXT_BLOCK_ALIGN_FACES: Set<String> = TextBlockPlacementSupport.ALIGN_FACES
+    val TEXT_BLOCK_POSITION_FACES: Set<String> = TextBlockPlacementSupport.POSITION_FACES
 
     val specs: List<PlayerSettingSpec> = listOf(
             // The face leads because it is the page's subject rather than one setting among many:
@@ -244,11 +250,9 @@ internal object PlayerEditorModel {
                     PlayerControl.TITLE_CENTERED,
                     R.string.player_element_title_centered),
             /*
-             * Applies to faces with one movable metadata container.
-             *
-             * Frame and Ribbon deliberately remain absent: their metadata is in separate fixed
-             * bands, so an override cannot move title, artist and time together. `follow` still
-             * protects all supported faces from visual change until the user picks an override.
+             * Applies to the faces that can honour each axis - see [TextBlockPlacementSupport].
+             * `follow` still protects every supported face from visual change until the user
+             * picks an override.
              */
             choice(
                     MiscPreferences.WEAR_TEXT_BLOCK_ALIGN,
@@ -337,8 +341,8 @@ internal object PlayerEditorModel {
         PlayerControl.SCREEN_THEME -> face in CONTROL_STYLE_FACES
         PlayerControl.QUADRANT_FLASH -> face == "classic"
         PlayerControl.TITLE_CENTERED -> face in TITLE_CENTERED_FACES
-        PlayerControl.TEXT_BLOCK_ALIGN, PlayerControl.TEXT_BLOCK_POSITION ->
-                face in TEXT_BLOCK_PLACEMENT_FACES
+        PlayerControl.TEXT_BLOCK_ALIGN -> face in TEXT_BLOCK_ALIGN_FACES
+        PlayerControl.TEXT_BLOCK_POSITION -> face in TEXT_BLOCK_POSITION_FACES
         PlayerControl.CAROUSEL_SHAPE -> face == "carousel"
         PlayerControl.NOTE_COVER_SHAPE, PlayerControl.NOTE_SHOW_COVER -> face == "note"
         PlayerControl.CHAT_COVER_SHAPE, PlayerControl.CHAT_SHOW_COVER -> face == "chat"

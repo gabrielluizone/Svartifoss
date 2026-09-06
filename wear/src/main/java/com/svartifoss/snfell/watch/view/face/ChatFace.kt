@@ -127,14 +127,24 @@ fun ChatFace(
         // for every Compose face, so a face that wires nothing here has no working centre at all.
         // Placed under the content: the bubbles are not interactive, so taps land here, while the
         // two round actions below sit on top and take their own.
-        CenterGestureRegion(listener, size = screen * .62f)
+        CenterGestureRegion(listener, size = screen * FaceGeometry.Chat.CENTER_REGION_FRACTION)
 
         Column(
                 modifier = Modifier
                         .fillMaxSize()
                         // Wide side padding: bubbles are rectangles on a round screen, so their
-                        // corners are the first thing the bezel eats.
-                        .padding(horizontal = screen * SIDE_PADDING_FRACTION)
+                        // corners are the first thing the bezel eats. Once the thread has been
+                        // raised or grounded that fixed .09 stops being enough - the chord at the
+                        // top and bottom of the glass is far narrower than at the centre this was
+                        // tuned for - so the measured answer takes over as a floor above it. Chat
+                        // offers the vertical control only: a bubble's side is who is speaking,
+                        // not a preference, so the band never moves horizontally.
+                        .padding(horizontal = maxOf(
+                                screen * SIDE_PADDING_FRACTION,
+                                state.blockSafeSideInset(
+                                        screen,
+                                        designedTop = CHAT_THREAD_TOP_FRACTION,
+                                        designedHeight = CHAT_THREAD_HEIGHT_FRACTION)))
                         .padding(vertical = state.blockSafeVerticalInset(screen))
                         .padding(
                                 top = screen * FaceGeometry.Chat.TOP_PADDING_FRACTION,
@@ -189,6 +199,16 @@ private val BUBBLE_TAIL_CORNER = FaceGeometry.Chat.BUBBLE_TAIL_CORNER_DP.dp
 private const val ACTION_DIAMETER_FRACTION = FaceGeometry.Chat.ACTION_DIAMETER_FRACTION
 private const val GLYPH_FRACTION = FaceGeometry.Chat.ACTION_GLYPH_FRACTION
 private const val SIDE_PADDING_FRACTION = FaceGeometry.Chat.SIDE_PADDING_FRACTION
+
+/**
+ * The band the thread occupies, as screen-height fractions - the day chip, the current-track
+ * bubble, the voice bubble and the action row, which between them fill most of the glass.
+ *
+ * Only consulted to measure the round screen's chord once the user has moved the thread; the
+ * designed composition is bottom-anchored and keeps its own fixed margin.
+ */
+private const val CHAT_THREAD_TOP_FRACTION = .18f
+private const val CHAT_THREAD_HEIGHT_FRACTION = .74f
 private const val ACTION_GAP_FRACTION = FaceGeometry.Chat.ACTION_GAP_FRACTION
 
 /** Floor on a circle's diameter once three of them have to share the row. Below this the target

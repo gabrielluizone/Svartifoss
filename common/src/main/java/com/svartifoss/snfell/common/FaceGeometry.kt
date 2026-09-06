@@ -177,8 +177,72 @@ object FaceGeometry {
         }
     }
 
+    /**
+     * The metadata blocks of the curated player faces, as the two renderers both need them.
+     *
+     * These faces have no geometry object of their own - their sizes are literals at each draw
+     * site, mirrored by hand in `WatchPreviewView` - and that was tolerable while nothing had to
+     * reason about *where a block sits* rather than merely what is in it. The placement controls
+     * changed that: keeping a moved block inside a round screen means measuring the chord at the
+     * block's real depth, so the depth and the element heights stop being drawing details and
+     * become shared inputs. Only the values that feed `blockLineInsets` live here; the fonts,
+     * colours and spacings each face composes with stay at their draw sites.
+     *
+     * `*_TOP_FRACTION` / `*_BOTTOM_FRACTION` are the face's own designed distance from that edge
+     * to the near edge of its block. The `*_DP` heights are what each element occupies in the
+     * stack, in draw order, with the gap above an element folded into it - a gap and a taller
+     * element bind the chord identically (see `RoundScreenText.lineSideInsets`).
+     */
+    object CuratedText {
+        /** Artist row above the title, hung from the top of the screen. */
+        const val VINYL_TOP_FRACTION = .14f
+        const val VINYL_ARTIST_ROW_DP = 11f
+        const val VINYL_TITLE_ROW_DP = 15f
+
+        /** Poster and Studio centre one title-anchored block; both are 72% of the screen wide. */
+        const val POSTER_TITLE_LINE_DP = 24f
+        const val POSTER_ARTIST_ROW_DP = 16f
+        const val STUDIO_TITLE_LINE_DP = 17f
+        const val STUDIO_ARTIST_ROW_DP = 15f
+
+        const val HALO_TOP_FRACTION = .145f
+        const val HALO_TITLE_LINE_DP = 16f
+        /** The tonal pill adds 2dp of padding either side of its 10dp glyph, plus a 3dp gap. */
+        const val HALO_ARTIST_ROW_DP = 17f
+
+        const val ECLIPSE_TOP_FRACTION = .15f
+        const val ECLIPSE_TITLE_LINE_DP = 17f
+        const val ECLIPSE_ARTIST_ROW_DP = 13f
+
+        const val SPECTRUM_TOP_FRACTION = .15f
+        const val SPECTRUM_TITLE_LINE_DP = 14f
+        const val SPECTRUM_ARTIST_ROW_DP = 13f
+
+        const val MATERIAL_TOP_FRACTION = .17f
+        const val MATERIAL_TITLE_LINE_DP = 21f
+        const val MATERIAL_ARTIST_ROW_DP = 15f
+
+        /** Depth grounds its block like Immersive, a little higher off the floor. */
+        const val DEPTH_BOTTOM_FRACTION = .15f
+        const val DEPTH_TITLE_LINE_DP = 18f
+        const val DEPTH_ARTIST_ROW_DP = 16f
+
+        /** Aurora leads with the artist, in a block centred inside its card. */
+        const val AURORA_ARTIST_ROW_DP = 11f
+        const val AURORA_TITLE_LINE_DP = 23f
+    }
+
     /** The session as a messaging thread. */
     object Chat {
+        /**
+         * Was .62 - the largest center-tap region outside Frame's opaque card - and large enough
+         * to reach into the diagonal quadrant taps' apex near the vertical center line, stealing
+         * the left/right quadrant gestures that live right beside it. The bubbles aren't clickable
+         * so the region still needs to be generous, just not more so than a face with real
+         * interactive content (the hosted action row) needs.
+         */
+        const val CENTER_REGION_FRACTION = .52f
+
         const val INCOMING_LIGHTNESS = .17f
         const val OUTGOING_LIGHTNESS = .32f
 
@@ -397,6 +461,25 @@ object FaceGeometry {
         const val COVER_FRACTION = .21f
 
         /**
+         * How close to the glass a *moved* Note block is allowed to sit, as a screen fraction.
+         *
+         * Matches `FaceChrome`'s own edge margin for a raised or grounded block, so the watch and
+         * the miniature put it in the same place. Only ever consulted once the user has overridden
+         * the vertical placement; the designed composition is centred and keeps no such margin.
+         */
+        const val MOVED_BLOCK_EDGE_FRACTION = .08f
+
+        /**
+         * Was .60 - large enough to reach into the diagonal quadrant taps' apex near the vertical
+         * centre line and swallow a left/right quadrant tap aimed near it before
+         * `FourWayTouchLayout` ever saw the touch. The disc and sentence leave the centre visually
+         * open, but that openness isn't a reason to claim more of it than a face with real
+         * interactive content needs.
+         */
+        const val CENTER_REGION_FRACTION = .52f
+        const val CENTER_PULSE_FRACTION = .34f
+
+        /**
          * Line ceiling for the `Artist: Title` sentence.
          *
          * The user's Title text behaviour decides how the sentence overflows; this is only how
@@ -509,9 +592,15 @@ object FaceGeometry {
          * Frame has no visible transport button, so its centre handles play/pause. Keep that
          * target comfortably above Wear's 48 dp touch-target guidance without letting it consume
          * the card's side bands, where the shared left/right quadrant actions live.
+         *
+         * Was .68, then .46 - the card itself spans 77% of the screen width
+         * (`1 - CARD_INSET_FRACTION * 2`), so even at .46 a tap meant for the card's own corner,
+         * short of its true edge, could still land inside the swallowed square. Tightened again to
+         * leave a wider honest margin between the two, still well above the 48 dp floor on any
+         * supported screen size.
          */
-        const val CENTER_REGION_FRACTION = .46f
-        const val CENTER_PULSE_FRACTION = .34f
+        const val CENTER_REGION_FRACTION = .40f
+        const val CENTER_PULSE_FRACTION = .30f
 
         /** The chip keeps the same margin from the card's top edge that it keeps from its side. */
         const val ART_TOP_FRACTION = CARD_TOP_FRACTION + CONTENT_INSET_FRACTION

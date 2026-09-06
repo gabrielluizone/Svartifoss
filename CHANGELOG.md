@@ -293,6 +293,27 @@
 
 ### Changed
 
+- **Text alignment and Text position are now offered per face, and each of the two is asked
+  separately.** Both rows appeared on twenty of the twenty-two faces, and on more than half of them
+  choosing anything but *Follow face* produced one of three failures: the text left the round
+  screen, it landed on the face's own furniture, or something that is not track text moved with it.
+
+  Which faces offer which row is now decided per axis, because nine faces can honour one and not
+  the other. **Carousel, Split, Matejdro, Vinyl, Halo, Spectrum and Material** keep *Text
+  alignment* and lose *Text position* — Carousel's artist is pinned above the cover rail and its
+  title below it, Split's seam is the face, Matejdro's two bands already fill the whole text area,
+  and the other four keep a record label, a pair of rings, a bar field or a transport row in the
+  band a grounded block would land on. **Chat and Note** keep *Text position* and lose *Text
+  alignment* — a bubble's side is who is speaking rather than a preference, and aligning Note's
+  sentence drags the cover disc that centres with it. **Verse and Metadata** lose both: the running
+  head has nowhere to go but onto the lyric reel, and a right-aligned table is not a table. Frame
+  and Ribbon were already excluded.
+
+  The gate is applied where each side *reads* the setting, not only where the picker is drawn, so a
+  value arriving from an imported backup, a published community theme or an older build cannot move
+  a face that has no way to honour it. Nothing already saved changes: both keys still default to
+  *Follow face*, and a stored value on a face that no longer offers the row is simply not acted on.
+
 - **Six more built-in faces can now be submitted to and installed from the community gallery.**
   Vinyl, Halo, Aurora, Eclipse, Spectrum and the Matejdro tribute face were unsubmittable for the
   same reason they are archived — hidden from the on-device face picker — even though archiving a
@@ -412,6 +433,53 @@
   silently falling back to Google Sans.
 
 ### Fixed
+
+- **Moving a face's text sideways sent it under the bezel.** The round-screen guard that keeps a
+  moved block on the glass only ran when *Text position* had been changed, so choosing a *Text
+  alignment* on its own — the commonest thing to do here, and the first row offered — got no
+  protection at all. Every face's own side padding was tuned for a block its author *centred*, and
+  a centred block never reaches the edge of a circle. On the faces whose text is grounded low by
+  design the artist line, sitting one line below the title, was the first thing cut off.
+
+- **The whole block moved to one margin instead of each line finding its own.** Title, artist and
+  elapsed time shared a single inset, which on a round screen can only ever be right for one of the
+  three: each line sits at a different depth, and the chord narrows with every one of them. Each
+  element is now measured where it actually is, so an edge-aligned block steps inwards as it
+  descends — the title reaching furthest, the artist a little less, the elapsed readout less again
+  — with every line stopping at the glass rather than on a margin borrowed from its neighbour.
+
+- **On five faces the guard was applied and did nothing.** Vinyl, Halo, Eclipse, Spectrum and
+  Material lay their metadata out in a column of fixed width, and the inset was added *around* that
+  column instead of taken out of it — so the column stayed exactly as wide as before and the
+  surplus simply hung off the far edge of the screen. The same mistake was in the shared curated
+  always-on display and in Chrono's. **Poster and Studio** were missing the vertical keep-out
+  entirely, so a block grounded there sat below the round screen's usable band and under the
+  mini-button row.
+
+- **Aurora ignored both rows completely.** It was the one awake face wired to none of the shared
+  placement machinery, so its block stayed glued to the aurora card whatever was chosen and only
+  the lines inside it re-aligned. A control that appears inert is worse than one that is absent.
+
+- **Classic and the Matejdro tribute had no round-screen protection at all**, and the phone's
+  preview showed nothing for either. Both are drawn with Android Views, where the placement was
+  applied as plain gravity inside the inscribed square — whose corners lie exactly *on* the glass,
+  so a block lined up against an edge put its lowest line outside the circle while the layout
+  believed everything was in bounds. Each of the three rows is now inset by the chord at its own
+  measured depth, and the Watch tab's miniature honours both rows on both faces for the first time.
+
+- **The Watch tab preview did not clamp a moved block anywhere.** It is the one screen built to
+  show what a setting does, and on this setting it was drawing text outside the glass that the
+  watch was drawing inside it — or, on Classic, Matejdro and Note, drawing nothing different at
+  all. All of it now runs through the same chord arithmetic the watch uses.
+
+- **Chat, Note and Frame's centre tap regions ate into the quadrant taps beside them.** Each
+  face's centre play/pause region is a square centred on the screen, and `FourWayTouchLayout`'s
+  left/right/top/bottom quadrants converge at that same centre point, so a large enough square
+  reaches past the middle and swallows a quadrant tap aimed near it before the quadrant layout
+  ever sees the touch. Chat (.62, the largest outside Frame's opaque card) and Note (.60) are
+  reduced to .52, matching Verse; Frame, already once reduced from .68 to .46, is tightened again
+  to .40 - its card spans 77% of the screen width, so even .46 left a tap meant for the card's own
+  corner exposed to being swallowed instead.
 
 - **Several Watch tab editor buttons and the drawer's "Buy Me a Coffee" row showed an invisible
   white icon on the light theme.** `LyraGestureButton` sets `iconTint=@null` so rows that hand-tint

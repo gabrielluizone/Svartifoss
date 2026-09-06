@@ -1,13 +1,17 @@
 package com.svartifoss.snfell.common
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 /**
  * Pins the two fallbacks, which is the whole reason [TextBlockAlign] and [TextBlockPosition] exist
  * as enums rather than as raw strings read at three draw sites.
  *
- * The controls are offered on every face, and that is only safe because an unset, unknown or
+ * Also pins [TextBlockPlacementSupport], which decides *which faces are asked at all* - two sets,
+ * one per axis, because nine faces can honour one of the two and not the other.
+ *
+ * The keys are stored on every face, and that is only safe because an unset, unknown or
  * malformed value resolves to `follow` - meaning "keep the composition this face authored". If any
  * of those resolved to a real position instead, adding these keys would silently rearrange every
  * saved theme and every published community theme built before they existed.
@@ -113,5 +117,80 @@ class TextBlockPlacementTest {
                 "${definition.key} must be exportable"
             }
         }
+    }
+
+    @Test
+    fun `both support sets name only registered faces`() {
+        // A rule naming a face that no longer exists hides a control forever, which is
+        // indistinguishable from the control never having been written.
+        listOf(
+                "align" to TextBlockPlacementSupport.ALIGN_FACES,
+                "position" to TextBlockPlacementSupport.POSITION_FACES
+        ).forEach { (name, faces) ->
+            assertEquals(
+                    "$name names unregistered faces",
+                    emptySet<String>(),
+                    faces - ThemeAppearance.ALLOWED_BASE_FACES)
+        }
+    }
+
+    @Test
+    fun `a face that ships a placement default must be able to honour it`() {
+        // The Artist face is pinned to the leading edge and grounded by its own per-face defaults.
+        // Excluding it from either set would leave those defaults stored, exported, published in
+        // every saved theme, and silently ignored by both renderers.
+        ThemeAppearance.ALLOWED_BASE_FACES.forEach { face ->
+            if (FaceScopedPreferences.perFaceDefault(
+                            face, MiscPreferences.WEAR_TEXT_BLOCK_ALIGN.key) != null) {
+                assertTrue(
+                        "$face ships an alignment default it cannot honour",
+                        TextBlockPlacementSupport.allowsAlign(face))
+            }
+            if (FaceScopedPreferences.perFaceDefault(
+                            face, MiscPreferences.WEAR_TEXT_BLOCK_POSITION.key) != null) {
+                assertTrue(
+                        "$face ships a position default it cannot honour",
+                        TextBlockPlacementSupport.allowsPosition(face))
+            }
+        }
+    }
+
+    @Test
+    fun `an unsupported face reads back as the sentinel rather than as the stored value`() {
+        // The gate has to hold at the *renderer*, not only in the picker: a value still arrives
+        // from an imported backup, a published theme or the other app on an older build.
+        assertEquals(
+                TextBlockAlign.FOLLOW,
+                TextBlockPlacementSupport.resolveAlign("chat", TextBlockAlign.END))
+        assertEquals(
+                TextBlockPosition.FOLLOW,
+                TextBlockPlacementSupport.resolvePosition("carousel", TextBlockPosition.TOP))
+        assertEquals(
+                TextBlockAlign.FOLLOW,
+                TextBlockPlacementSupport.resolveAlign(null, TextBlockAlign.START))
+        assertEquals(
+                TextBlockAlign.FOLLOW,
+                TextBlockPlacementSupport.resolveAlign("no-such-face", TextBlockAlign.START))
+    }
+
+    @Test
+    fun `a supported face is handed its stored value untouched`() {
+        assertEquals(
+                TextBlockAlign.END,
+                TextBlockPlacementSupport.resolveAlign("classic", TextBlockAlign.END))
+        assertEquals(
+                TextBlockPosition.BOTTOM,
+                TextBlockPlacementSupport.resolvePosition("artist", TextBlockPosition.BOTTOM))
+    }
+
+    @Test
+    fun `the two axes are asked separately`() {
+        // The whole reason there are two sets. Carousel pins its artist above the cover rail and
+        // its title below it, so both may be aligned and neither may be moved; Note's sentence may
+        // be raised or grounded, but aligning it drags the cover disc that centres with it.
+        assertTrue(TextBlockPlacementSupport.allowsAlign("carousel"))
+        assertTrue(!TextBlockPlacementSupport.allowsPosition("carousel"))
+        assertTrue(!TextBlockPlacementSupport.allowsAlign("note"))
+        assertTrue(TextBlockPlacementSupport.allowsPosition("note"))
     }
 }

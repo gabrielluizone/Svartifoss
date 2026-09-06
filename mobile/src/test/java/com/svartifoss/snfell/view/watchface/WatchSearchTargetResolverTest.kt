@@ -108,6 +108,12 @@ class WatchSearchTargetResolverTest {
                 "wear_quadrant_tap_flash" to "expressive",
                 "wear_classic_icons_visible" to "material",
                 "wear_internal_progress_visible" to "classic",
+                // Two rows, two allow-lists: a face that offers one of them must not send a
+                // search for the *other* to the same place, so both directions are pinned.
+                "wear_text_block_align" to "chat",
+                "wear_text_block_align" to "verse",
+                "wear_text_block_position" to "carousel",
+                "wear_text_block_position" to "split",
                 "screen_buttons_curve_style" to "chat",
                 "screen_buttons_shape" to "chat")
 
@@ -131,6 +137,10 @@ class WatchSearchTargetResolverTest {
                 "wear_internal_progress_visible" to "vinyl",
                 "wear_internal_progress_visible" to "depth",
                 "wear_internal_progress_visible" to "verse",
+                "wear_text_block_align" to "carousel",
+                "wear_text_block_align" to "split",
+                "wear_text_block_position" to "chat",
+                "wear_text_block_position" to "note",
                 "screen_buttons_curve_style" to "classic",
                 "screen_buttons_shape" to "classic")
 

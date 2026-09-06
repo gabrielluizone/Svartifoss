@@ -262,7 +262,16 @@ private fun BoxScope.TrackText(
             modifier = Modifier
                     .align(state.blockPlacement(Alignment.TopStart))
                     .fillMaxWidth()
-                    .padding(horizontal = maxOf(screen * inset, state.blockSafeSideInset(screen)))
+                    // The panel's own band, measured above, is the answer here - not the shared
+                    // estimate, which assumes a block centred on the screen. Split offers only the
+                    // alignment control (its seam is the face, so text above the seam is not
+                    // Split), which is what makes this band true wherever the text is lined up.
+                    .padding(horizontal = maxOf(
+                            screen * inset,
+                            state.blockSafeSideInset(
+                                    screen,
+                                    designedTop = SEAM_FRACTION + .04f,
+                                    designedHeight = .24f)))
                     .padding(vertical = state.blockSafeVerticalInset(screen))
                     .padding(top = if (state.textBlockPosition == TextBlockPosition.FOLLOW) {
                         seam + screen * .04f
