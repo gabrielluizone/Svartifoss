@@ -1011,6 +1011,27 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             }
         }
 
+        // LyraGestureButton sets iconTint=@null so the gesture/action pickers can hand-tint their
+        // action icons; these rows never do, so their icon drawables' own flat white fill was
+        // showing through unmodified - invisible on the light theme's surface. The colour-swatch
+        // rows (bindColorSwatchButton/bindTypographyCustomColor) already set their own iconTint
+        // from the picked colour and must stay out of this list.
+        listOf(
+                R.id.typography_font_button,
+                R.id.typography_flex_button,
+                R.id.typography_element_font_button,
+                R.id.typography_element_flex_button,
+                R.id.typography_behavior_button,
+                R.id.typography_shadow_button,
+                R.id.typography_shadow_color_button,
+                R.id.typography_shadow_strength_button,
+                R.id.typography_outline_button,
+                R.id.typography_outline_color_button,
+                R.id.typography_backdrop_button,
+                R.id.typography_backdrop_color_button,
+                R.id.typography_backdrop_opacity_button
+        ).forEach { id -> root.findViewById<MaterialButton>(id)?.iconTint = neutralForegrounds }
+
         val switchStates = arrayOf(
                 intArrayOf(-android.R.attr.state_enabled),
                 intArrayOf(android.R.attr.state_checked),
@@ -1884,6 +1905,16 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             }
         }
 
+        // Same trap as tintTypographyEditor: LyraGestureButton's iconTint=@null leaves these
+        // rows' static glyphs at the drawable's own white fill. color_editor_normal_color_button,
+        // _mode_button and _custom_color_button are deliberately absent - tintColorButtonIcon
+        // already tints their dot to the colour it names.
+        listOf(
+                R.id.color_editor_treatment_button,
+                R.id.color_editor_tone_button,
+                R.id.color_editor_opacity_button
+        ).forEach { id -> root.findViewById<MaterialButton>(id)?.iconTint = neutralForegrounds }
+
         val switchStates = arrayOf(
                 intArrayOf(-android.R.attr.state_enabled),
                 intArrayOf(android.R.attr.state_checked),
@@ -2244,6 +2275,21 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             strokeColor = neutralStrokes
         }
 
+        // Same trap as tintTypographyEditor: LyraGestureButton's iconTint=@null leaves these
+        // rows' static glyphs at the drawable's own white fill, invisible on the light theme.
+        listOf(
+                R.id.panel_editor_backdrop_button,
+                R.id.panel_editor_ring_style_button,
+                R.id.panel_editor_ring_layout_button,
+                R.id.panel_editor_surface_backdrop_button,
+                R.id.panel_editor_style_button,
+                R.id.panel_editor_layout_button,
+                R.id.panel_editor_row_size_button,
+                R.id.panel_editor_up_next_style_button,
+                R.id.panel_editor_source_button,
+                R.id.panel_editor_shortcuts_button
+        ).forEach { id -> root.findViewById<MaterialButton>(id)?.iconTint = neutralForegrounds }
+
         val switchStates = arrayOf(
                 intArrayOf(-android.R.attr.state_enabled),
                 intArrayOf(android.R.attr.state_checked),
@@ -2552,6 +2598,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                     it.iconTint = neutralForegrounds
                     it.strokeColor = neutralStrokes
                 }
+
+        // Same trap as tintTypographyEditor: LyraGestureButton's iconTint=@null leaves these
+        // rows' static glyphs at the drawable's own white fill, invisible on the light theme.
+        listOf(
+                R.id.player_editor_face_button,
+                R.id.player_editor_screen_theme_button,
+                R.id.player_editor_reset_button
+        ).forEach { id -> root.findViewById<MaterialButton>(id)?.iconTint = neutralForegrounds }
 
         val switchStates = arrayOf(
                 intArrayOf(-android.R.attr.state_enabled),

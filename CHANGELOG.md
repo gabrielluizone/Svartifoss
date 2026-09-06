@@ -338,6 +338,14 @@
 
 ### Fixed
 
+- **Several Watch tab editor buttons and the drawer's "Buy Me a Coffee" row showed an invisible
+  white icon on the light theme.** `LyraGestureButton` sets `iconTint=@null` so rows that hand-tint
+  their own icon (a colour swatch, a picked accent) aren't fought by a style default — but every
+  row listed here never did that, so each button's drawable kept its own flat white fill,
+  invisible against a light surface. Affected rows: the Typography, Colors, Panels and Player
+  contextual editors' font/behaviour/shadow/outline/backdrop/layout/reset buttons, and the drawer's
+  support button.
+
 - **The icon picker's search box showed the static theme colour, not your accent.** `BuiltInIconPicker`'s dialog is built with `setView()`, so its `EditText` was never reached by the runtime accent styling every other custom-content dialog gets — its cursor and selection handles drew from the theme's fixed sage green regardless of the chosen accent. The field's search icon was also vertically misaligned against the hint text, and the default Material underline spanned the full width while the (icon-indented) text started well to its right, so the bar never lined up under it either. The underline is now dropped entirely, matching the Settings search field's own search box, and the accent styling now reaches this dialog like it does every other one.
 
 - **Rapid theme and settings changes no longer accumulate an avoidable backlog.** Pending updates

@@ -2,6 +2,7 @@ package com.svartifoss.snfell.view.mainactivity
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.net.Uri
 import android.media.MediaMetadata
 import android.media.session.MediaController
@@ -52,6 +53,7 @@ import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
 import androidx.lifecycle.lifecycleScope
 import com.svartifoss.snfell.update.UpdateGateway
@@ -1049,10 +1051,19 @@ class MainActivity : WearCompanionPhoneActivity(),
             versionText.text = getString(R.string.drawer_version_format, versionName)
         }
 
-        header.findViewById<View>(R.id.drawer_support_button)?.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BUY_ME_A_COFFEE_URL)))
+        // LyraGestureButton sets iconTint=@null so screens that hand-tint an action icon (the
+        // gesture/action pickers) aren't fought by a style default - but this row never tints its
+        // own icon, so ic_buy_me_a_coffee's plain white fill was showing through unmodified,
+        // invisible on the light theme's surface. Same trap as the Watch tab's contextual editors.
+        header.findViewById<MaterialButton>(R.id.drawer_support_button)?.apply {
+            iconTint = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lyra_on_surface))
+            setOnClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BUY_ME_A_COFFEE_URL)))
+            }
         }
 
+        // ic_kofi is deliberately left untinted - it's a real, multi-colour brand mark (see its
+        // own comment), not a template glyph.
         header.findViewById<View>(R.id.drawer_kofi_button)?.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(KOFI_URL)))
         }
