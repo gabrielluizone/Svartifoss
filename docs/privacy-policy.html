@@ -563,7 +563,7 @@
       <p>From that screen you can <strong>remove any of your own themes</strong> without deleting your account. It is a request rather than an instant delete, for the same reason account deletion is: the catalogue is a set of files in this project's Git repository, so the trusted publisher removes the file, the catalogue entry and the theme's likes on its next run, normally within about a day, and then deletes the submission record. Anyone who already installed the theme keeps their own local copy.</p>
       <p> It reads only records whose owner is your own Firebase Auth UID; Firestore rules refuse anyone else's. It deliberately does not show who reviewed a submission — the reviewer's identity is kept in a separate moderator-only record precisely so that showing you your own outcomes never reveals it.</p>
 
-      <h3>Deleting your community account</h3>
+      <h3 id="delete-account">Deleting your community account</h3>
       <p><strong>Settings → General → Community themes → Community account → Delete account</strong> deletes the account itself. Before it is submitted, the app asks the one question it cannot answer for you — what should happen to the themes you have already published:</p>
       <ul>
         <li><strong>Keep my published themes.</strong> They stay in the public catalogue under the author credit they were published with, and the record linking them to your account is stripped of your Firebase Auth UID.</li>
