@@ -251,7 +251,7 @@ class OnlineThemeDiscoveryTest {
             baseFace = baseFace,
             revision = 1,
             schemaVersion = 1,
-            minimumAppVersion = "3.3",
+            minimumAppVersion = "4.0",
             publishedAt = publishedAt,
             likes = likes,
             installs = installs)

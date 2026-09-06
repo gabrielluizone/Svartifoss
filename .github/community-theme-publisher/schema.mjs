@@ -9,7 +9,7 @@ import { readFileSync } from "node:fs";
 export const PROFILE_SCHEMA_VERSION = 1;
 export const SUBMISSION_SCHEMA_VERSION = 2;
 export const PROFILE_REVISION = 1;
-export const MINIMUM_APP_VERSION = "3.3";
+export const MINIMUM_APP_VERSION = "4.0";
 
 export const MAX_PUBLIC_TEXT_LENGTH = 48;
 export const MAX_SETTING_TEXT_LENGTH = 128;

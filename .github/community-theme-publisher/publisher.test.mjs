@@ -565,7 +565,7 @@ test("individual title and artist fonts retain their Flex contracts", () => {
 test("the published vocabulary is pinned to the app version that can read it", () => {
     assert.deepEqual(
         { settings: SETTING_KEYS.length, minimumAppVersion: MINIMUM_APP_VERSION },
-        { settings: 196, minimumAppVersion: "3.3" },
+        { settings: 196, minimumAppVersion: "4.0" },
     );
 });
 
@@ -576,7 +576,7 @@ test("a complete approved intake creates a preview-free public profile", () => {
     assert.equal(candidate.id, ID);
     assert.equal(candidate.publicProfile.author, "Theme maker");
     assert.equal(candidate.publicProfile.publishedAt, PUBLISHED_AT);
-    assert.equal(candidate.summary.minimumAppVersion, "3.3");
+    assert.equal(candidate.summary.minimumAppVersion, "4.0");
     assert.equal(Object.hasOwn(candidate.publicProfile, "moderationPreviewWebpBase64"), false);
     assert.deepEqual(Object.keys(candidate.publicProfile.settings), SETTING_KEYS);
 });
@@ -1179,7 +1179,7 @@ test("partial Phase-1 profiles are materialized before duplicate comparison", as
         createdAt: 1_787_594_181_000,
         updatedAt: 1_787_594_181_000,
         revision: 1,
-        minimumAppVersion: "3.3",
+        minimumAppVersion: "4.0",
         publishedAt: "2026-08-24T00:00:00Z",
         settings: partialSettings,
     };
@@ -1229,7 +1229,7 @@ test("a trusted partial Phase-1 profile can use its segregated legacy-read vocab
         createdAt: 1_787_594_181_000,
         updatedAt: 1_787_594_181_000,
         revision: 1,
-        minimumAppVersion: "3.3",
+        minimumAppVersion: "4.0",
         publishedAt: "2026-08-24T00:00:00Z",
         settings: {
             wear_screen_theme: { type: "string", value: "cinema" },

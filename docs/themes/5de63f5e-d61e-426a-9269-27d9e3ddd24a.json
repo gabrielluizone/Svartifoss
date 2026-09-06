@@ -7,7 +7,7 @@
   "createdAt": 1787594181000,
   "updatedAt": 1787594181000,
   "revision": 1,
-  "minimumAppVersion": "3.3",
+  "minimumAppVersion": "4.0",
   "publishedAt": "2026-08-24T00:00:00Z",
   "settings": {
     "wear_color_treatment": { "type": "string", "value": "monochrome" },
