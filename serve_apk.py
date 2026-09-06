@@ -69,6 +69,21 @@ FILES = [
         APK_MIME,
     ),
 
+    # play release APKs - sideloadable, for verifying the Play-signed build on a device
+    # before it goes anywhere near the Play Console.
+    (
+        "mobile-play-release.apk",
+        ROOT / "mobile/build/outputs/apk/play/release/mobile-play-release.apk",
+        "Svartifoss (phone, Play build, release)",
+        APK_MIME,
+    ),
+    (
+        "wear-play-release.apk",
+        ROOT / "wear/build/outputs/apk/play/release/wear-play-release.apk",
+        "Svartifoss (watch, Play build, release)",
+        APK_MIME,
+    ),
+
     # play release bundles - what gets uploaded to the Play Console. App first, then Wear OS.
     (
         "mobile-release.aab",
@@ -1075,6 +1090,7 @@ def main():
         print(f"  Phone (github debug): http://{ip}:{PORT}/mobile-debug.apk")
         print(f"  Watch (github debug): http://{ip}:{PORT}/wear-debug.apk")
         print(f"  Play build APKs:      http://{ip}:{PORT}/mobile-play-debug.apk , /wear-play-debug.apk")
+        print(f"  Play release APKs:    http://{ip}:{PORT}/mobile-play-release.apk , /wear-play-release.apk")
         print(f"  Play Store bundles:   http://{ip}:{PORT}/mobile-release.aab , /wear-release.aab")
         print("Press Ctrl+C to stop.\n")
         try:
