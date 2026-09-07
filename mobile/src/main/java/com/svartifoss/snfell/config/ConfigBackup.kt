@@ -589,9 +589,13 @@ object ConfigBackup {
     ): List<RestoredNamedPreferenceStore> {
         val storesJson = json.optJSONObject(NAMED_PREFERENCES_KEY)
                 ?: throw IOException("Backup is missing named preferences")
-        return namedPreferenceStores(context).map { store ->
-            val valuesJson = storesJson.optJSONObject(store.name)
-                    ?: throw IOException("Backup is missing named preference store '${store.name}'")
+        // A store absent from the document is left untouched, not an error: DefaultConfigExport
+        // deliberately redacts community_theme_submission (the author's own gallery identity)
+        // before this ever reaches an install, and ConfigBackup.export() itself always writes
+        // every registered store's key (even an empty one), so a key that is genuinely missing
+        // here only ever means "this document was never meant to carry it" - never corruption.
+        return namedPreferenceStores(context).mapNotNull { store ->
+            val valuesJson = storesJson.optJSONObject(store.name) ?: return@mapNotNull null
             val values = LinkedHashMap<String, JSONObject>()
             val keys = valuesJson.keys()
             while (keys.hasNext()) {
