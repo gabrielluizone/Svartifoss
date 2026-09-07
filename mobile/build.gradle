@@ -15,7 +15,7 @@ android {
         // Wear OS has a separate API-35 requirement and remains configured in wear/build.gradle.
         targetSdkVersion 36
         compileSdk 36
-        versionCode 70
+        versionCode 72
         versionName "4.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         wearAppUnbundled true
@@ -30,6 +30,9 @@ android {
             // When keystore.properties exists, the root build.gradle afterEvaluate swaps the
             // debug config's credentials for the real keystore, so this also covers releases.
             signingConfig signingConfigs.debug
+            ndk {
+                debugSymbolLevel 'FULL'
+            }
         }
     }
     // Two distribution channels, one codebase (see docs/play-store-migration-plan.md):
