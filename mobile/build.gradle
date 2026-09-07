@@ -30,9 +30,6 @@ android {
             // When keystore.properties exists, the root build.gradle afterEvaluate swaps the
             // debug config's credentials for the real keystore, so this also covers releases.
             signingConfig signingConfigs.debug
-            ndk {
-                debugSymbolLevel 'FULL'
-            }
         }
     }
     // Two distribution channels, one codebase (see docs/play-store-migration-plan.md):
