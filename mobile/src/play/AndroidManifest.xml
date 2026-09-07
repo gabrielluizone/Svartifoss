@@ -4,12 +4,29 @@
   REQUEST_INSTALL_PACKAGES, strip it, so the Play Store artifact never requests the ability to
   install packages. The self-updater code and components are simply absent from this flavor
   (they live in src/github/). See docs/play-store-migration-plan.md.
+
+  AD_ID and its Android-13+ Privacy Sandbox counterpart ACCESS_ADSERVICES_AD_ID are stripped for
+  the same reason: firebase-analytics's own manifest declares both (it can use the advertising ID
+  for Google-signals features unless told otherwise), and the manifest merger pulls them into
+  every variant. The app never reads the advertising ID, and Play Console's "Does your app use
+  advertising ID?" declaration is answered "No" - but Play Console cross-checks that answer
+  against the merged manifest, and flags "Incomplete advertising ID declaration" if either
+  permission is present regardless of the form answer. Removing both here is what makes the
+  manifest agree with the declaration.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission
         android:name="android.permission.REQUEST_INSTALL_PACKAGES"
+        tools:node="remove" />
+
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove" />
+
+    <uses-permission
+        android:name="android.permission.ACCESS_ADSERVICES_AD_ID"
         tools:node="remove" />
 
 </manifest>
