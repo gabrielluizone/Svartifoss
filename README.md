@@ -1,8 +1,8 @@
 <h1>Svartifoss</h1>
 
-<div align="center">
-
-<a href="docs/images/Svartifoss-4-Poster.png"><img src="docs/images/Svartifoss-4-Poster.png" width="100%" alt="Svartifoss on a Wear OS watch in front of the Svartifoss waterfall" /></a>
+<p align="center">
+  <a href="docs/images/Svartifoss-4-Poster.png"><img src="docs/images/Svartifoss-4-Poster.png" width="100%" alt="Svartifoss on a Wear OS watch in front of the Svartifoss waterfall" /></a>
+</p>
 
 Svartifoss connects the media app on your Android phone to your paired Wear OS watch. Music, podcasts and audiobooks appear on your wrist with their artwork, track information, playback position and available controls. Configure everything from the phone, then use physical buttons, touch gestures, the crown or on-screen actions to control it.
 
