@@ -252,8 +252,8 @@ Svartifoss is not publicly released yet. To join the closed test:
     </td>
     <td valign="middle">
       <ol>
-        <li><a href="https://groups.google.com/g/svartifoss-wearos">Join the Svartifoss Google Group</a> with the Google account you use on your phone.</li>
-        <li>Then <a href="https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share">install Svartifoss from Google Play</a> on your phone and Wear OS watch.</li>
+        <li><a href="https://groups.google.com/g/svartifoss-wearos">Join the Google Group</a> with the Google account you use on your phone.</li>
+        <li>Then <a href="https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share">install from Google Play</a> on your phone and Wear OS watch.</li>
       </ol>
     </td>
   </tr>
