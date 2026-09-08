@@ -245,10 +245,19 @@ You need an **Android phone running Android 6.0 / API 23 or newer** and a **pair
 
 Svartifoss is not publicly released yet. To join the closed test:
 
-1. [Join the Svartifoss Google Group](https://groups.google.com/g/svartifoss-wearos) with the Google account you use on your phone.
-2. Then [install Svartifoss from Google Play](https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share) on your phone and Wear OS watch.
-
-   <a href="https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share"><img src="docs/images/PreRegisterOnGooglePlay_Badge_Web_color_english.png" width="270" alt="Pre-register on Google Play" /></a>
+<table>
+  <tr>
+    <td width="176" valign="middle">
+      <a href="https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share"><img src="docs/images/PreRegisterOnGooglePlay_Badge_Web_color_english.png" width="160" alt="Pre-register on Google Play" /></a>
+    </td>
+    <td valign="middle">
+      <ol>
+        <li><a href="https://groups.google.com/g/svartifoss-wearos">Join the Svartifoss Google Group</a> with the Google account you use on your phone.</li>
+        <li>Then <a href="https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share">install Svartifoss from Google Play</a> on your phone and Wear OS watch.</li>
+      </ol>
+    </td>
+  </tr>
+</table>
 
 Google Play can take a few minutes to recognize a new group membership. Updates for the test arrive through Google Play.
 
