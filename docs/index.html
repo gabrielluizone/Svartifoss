@@ -8,8 +8,10 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Svartifoss — control your music from your wrist">
-<meta property="og:description" content="Free, open-source, sideload-only. Control playback, search your library, read lyrics, browse queues and customize every watch surface around whatever's playing on your phone.">
+<meta property="og:description" content="Customize your Wear OS music controls. Explore layouts, lyrics and queues, then install Svartifoss on your phone and watch.">
 <meta property="og:image" content="https://gabrielluizone.github.io/Svartifoss/images/banner.png">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="color-scheme" content="dark">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" type="image/png" href="images/favicon-light.png" media="(prefers-color-scheme: light)">
@@ -38,8 +40,8 @@
     --carbon: #1e1e1e;
     --carbon-soft: #272727;
     --snow: #f0f0f0;
-    --ash: #9a9a9a;
-    --ash-dim: #6f6f6f;
+    --ash: #b0b7b4;
+    --ash-dim: #969e9b;
     --sage: #87a89f;
     --sage-dark: #6b9088;
     --sage-glow: rgba(135, 168, 159, 0.18);
@@ -56,7 +58,8 @@
   }
 
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; color-scheme: dark; }
+  [id] { scroll-margin-top: 16px; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
@@ -72,7 +75,7 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  img { max-width: 100%; display: block; }
+  img { max-width: 100%; height: auto; display: block; }
   a { color: var(--sage); }
   ::selection { background: var(--sage); color: var(--void); }
   :focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
@@ -133,74 +136,55 @@
   }
 
   /* ================= NAV ================= */
-  .nav {
-    position: sticky;
-    top: 0;
-    z-index: 20;
-    background: rgba(10, 10, 10, 0.82);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--carbon);
-  }
-  .nav .wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 64px;
-  }
-  .nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-family: var(--face);
-    font-weight: 700;
-    font-size: 19px;
-    color: var(--snow);
-    text-decoration: none;
-  }
+  .skip-link { position: fixed; top: 8px; left: 16px; z-index: 100; padding: 12px 18px; background: var(--sage); color: var(--void); border-radius: var(--r-sm); transform: translateY(-150%); font-weight: 700; }
+  .skip-link:focus { transform: translateY(0); }
+  .nav { position: sticky; top: 0; z-index: 20; background: rgba(10, 10, 10, 0.94); backdrop-filter: blur(16px); border-bottom: 1px solid var(--carbon-soft); }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 72px; }
+  .nav-brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 19px; color: var(--snow); text-decoration: none; flex-shrink: 0; }
   .nav-brand img { width: 26px; height: 26px; border-radius: 7px; }
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    font-size: 13px;
-    font-weight: 500;
-  }
-  .nav-links a { color: var(--ash); text-decoration: none; }
-  .nav-links a:hover { color: var(--snow); }
-  .nav-links a.cta {
-    color: var(--void);
-    background: var(--sage);
-    padding: 9px 18px;
-    border-radius: var(--r-sm);
-    font-weight: 700;
-  }
-  .nav-links a.cta:hover { background: var(--sage-dark); }
+  .nav-menu { display: flex; align-items: center; gap: 18px; margin-left: auto; }
+  .nav-menu a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ash); font-size: 13px; text-decoration: none; white-space: nowrap; }
+  .nav-menu a:hover, .nav-menu a[aria-current] { color: var(--snow); }
+  .nav-menu a[aria-current] { text-decoration: underline; text-decoration-color: var(--sage); text-underline-offset: 8px; }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+  .nav-download { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 18px; background: var(--sage); color: var(--void); border-radius: var(--r-sm); font-size: 13px; font-weight: 700; text-decoration: none; }
+  .nav-download:hover { background: var(--sage-dark); }
+  .nav-toggle { display: none; flex: none; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--carbon-soft); border-radius: var(--r-sm); background: var(--shadow); color: var(--snow); cursor: pointer; }
+  .nav-toggle:hover, .nav-toggle[aria-expanded="true"] { border-color: var(--sage); background: var(--sage-wash); }
   .language-picker { position: relative; display: inline-flex; align-items: center; }
-  .language-picker select {
-    appearance: none;
-    min-width: 70px;
-    padding: 8px 25px 8px 10px;
-    border: 1px solid var(--carbon-soft);
-    border-radius: var(--r-sm);
-    background: var(--shadow) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%239a9a9a' d='m2 3 3 3 3-3 .8.8-3.8 3.8L1.2 3.8z'/%3E%3C/svg%3E") no-repeat right 9px center;
-    color: var(--ash);
-    cursor: pointer;
-    font: inherit;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-  }
-  .language-picker select:hover, .language-picker select:focus { border-color: var(--sage); color: var(--snow); outline: none; }
+  .language-picker select { min-height: 44px; max-width: 82px; padding: 8px; border: 1px solid var(--carbon-soft); border-radius: var(--r-sm); background: var(--shadow); color: var(--snow); cursor: pointer; font: inherit; font-size: 12px; font-weight: 700; }
+  .language-picker select:hover { border-color: var(--sage); }
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
-  @media (max-width: 640px) {
-    .nav-links a:not(.cta) { display: none; }
-    .nav-links { gap: 8px; }
+  @media (max-width: 1100px) {
+    .nav .wrap { flex-wrap: wrap; gap: 0 16px; padding-top: 10px; padding-bottom: 10px; }
+    .nav-menu { order: 3; width: 100%; flex-wrap: wrap; gap: 4px 24px; padding-top: 8px; margin-top: 8px; border-top: 1px solid var(--carbon-soft); }
+    .nav-menu a { font-size: 15px; padding: 0 8px; }
+    .nav-ready .nav-menu { display: none; }
+    .nav-ready .nav-toggle { display: inline-flex; }
+    .nav-ready.is-open .nav-menu { display: flex; }
+  }
+  @media (max-width: 480px) {
+    .nav .wrap { gap: 0 8px; }
+    .nav-brand { font-size: 16px; gap: 7px; }
+    .nav-actions { gap: 6px; }
+    .nav-download { padding: 10px 12px; }
+    .language-picker select { max-width: 72px; font-size: 11px; }
+    .nav-menu { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 12px; }
+    .nav-ready.is-open .nav-menu { display: grid; }
+  }
+  @media (max-width: 359px) {
+    .nav-brand { font-size: 14px; gap: 5px; }
+    .nav-brand img { width: 22px; height: 22px; }
+    .nav-actions { gap: 4px; }
+    .nav-download { padding: 10px 8px; font-size: 12px; }
+    .nav-toggle { width: 44px; }
+    .language-picker select { max-width: 66px; padding: 6px 4px; }
   }
 
   /* ================= HERO ================= */
   .hero {
     position: relative;
-    padding: 88px 0 72px;
+    padding: 72px 0 64px;
     overflow: hidden;
     border-bottom: 1px solid var(--carbon);
   }
@@ -213,7 +197,9 @@
     align-items: center;
   }
   .hero h1 {
-    font-size: clamp(44px, 6.4vw, 84px);
+    font-size: clamp(46px, 5.4vw, 76px);
+    letter-spacing: -0.045em;
+    line-height: 1.02;
     margin: 18px 0 20px;
   }
   .hero-tagline {
@@ -292,17 +278,17 @@
 
   @media (max-width: 860px) {
     .hero .wrap { grid-template-columns: 1fr; text-align: left; }
-    .hero-art { order: -1; margin-bottom: 8px; }
+    .hero-art { margin: 16px auto 0; width: 100%; max-width: 420px; }
     .hero-art img { width: min(78%, 360px); margin: 0 auto; }
     .hero-tagline, .hero-sub { max-width: none; }
     .stats { gap: 28px; }
   }
 
   /* ================= SECTION shell ================= */
-  section { position: relative; padding: 88px 0; border-bottom: 1px solid var(--carbon); }
+  section { position: relative; padding: 72px 0; border-bottom: 1px solid var(--carbon); }
   section:last-of-type { border-bottom: none; }
   #possibilities { background: var(--shadow); }
-  .section-head { max-width: 640px; margin-bottom: 52px; }
+  .section-head { max-width: 640px; margin-bottom: 36px; }
   .section-head h2 { font-size: clamp(28px, 3.8vw, 42px); margin-top: 14px; }
   .section-head p { color: var(--ash); font-size: 16px; margin-top: 16px; max-width: 56ch; }
 
@@ -363,16 +349,16 @@
   }
 
   /* ================= FACES WALL (look section) ================= */
-  .faces-wall {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-    gap: 34px 24px;
-  }
-  .face-tile { text-align: center; }
+  /* Galleries remain scrollable by touch, keyboard and the arrow controls. */
+  .marquee-viewport { margin: 0 calc(var(--edge) * -1); }
+  .marquee-track { display: flex; width: auto; align-items: flex-start; }
+  .faces-wall.marquee-track { gap: 26px; }
+  .gallery-marquee.marquee-track { gap: 20px; }
+  .face-tile { flex: 0 0 auto; width: 200px; text-align: center; }
   .face-tile .disc {
     position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     overflow: hidden;
     border: 1px solid var(--carbon);
@@ -402,7 +388,81 @@
     text-overflow: ellipsis;
   }
   @media (max-width: 640px) {
-    .faces-wall { grid-template-columns: repeat(2, 1fr); gap: 26px 16px; }
+    .face-tile { width: 150px; }
+    .face-tile .disc { width: 150px; height: 150px; }
+    .faces-wall.marquee-track { gap: 18px; }
+  }
+
+  /* ================= COMPARE (try-it-yourself tool) ================= */
+  .compare-tool { display: grid; gap: 34px; }
+  .compare-faces {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 14px;
+  }
+  .compare-face-swatch {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    width: 72px;
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--ash);
+    font: inherit;
+    cursor: pointer;
+  }
+  .compare-face-swatch .thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--carbon-soft);
+    background: var(--shadow);
+    transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .compare-face-swatch .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .compare-face-swatch span {
+    font-size: 11.5px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .compare-face-swatch:hover .thumb { border-color: var(--sage); transform: translateY(-3px); }
+  .compare-face-swatch.is-active .thumb { border-color: var(--sage); box-shadow: 0 0 0 3px var(--sage-wash); }
+  .compare-face-swatch.is-active span { color: var(--snow); }
+  .compare-tracks {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+  }
+  .compare-track { text-align: center; margin: 0; }
+  .compare-disc {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid var(--carbon);
+    background: radial-gradient(circle at 50% 35%, #1a1a1a, #0d0d0d 72%);
+  }
+  .compare-disc img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.18s ease; }
+  .compare-disc.is-swapping img { opacity: 0; }
+  .compare-track figcaption { margin-top: 13px; font-size: 12px; color: var(--ash-dim); }
+  .compare-track figcaption strong { display: block; color: var(--snow); font-weight: 700; font-size: 14px; margin-bottom: 1px; }
+  .compare-track .dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+  .dot-blue { background: #5b9bd5; }
+  .dot-red { background: #e0645f; }
+  .dot-yellow { background: #e0b64a; }
+  .dot-green { background: #6fae6a; }
+  @media (max-width: 760px) {
+    .compare-tracks { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+  }
+  @media (max-width: 480px) {
+    .compare-face-swatch { width: 60px; }
+    .compare-face-swatch .thumb { width: 52px; height: 52px; }
+    .compare-face-swatch span { font-size: 10.5px; }
   }
 
   /* ================= MURAL (possibilities section) ================= */
@@ -455,7 +515,7 @@
   /* ================= SPEC GRID (customize section) ================= */
   .spec-grid {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 16px;
   }
   .spec-card {
@@ -541,6 +601,18 @@
   .detail-card p { color: var(--ash); font-size: 14.5px; margin: 0; }
   .detail-card p + p { margin-top: 10px; }
   .detail-card strong { color: var(--snow); font-weight: 500; }
+  .detail-card-thumb {
+    float: right;
+    width: 25%;
+    min-width: 76px;
+    max-width: 110px;
+    margin: 0 0 14px 16px;
+    border: 1px solid var(--carbon-soft);
+    border-radius: var(--r-sm);
+    overflow: hidden;
+    background: var(--carbon);
+  }
+  .detail-card-thumb img { width: 100%; display: block; }
   @media (max-width: 760px) {
     .detail-grid { grid-template-columns: 1fr; }
   }
@@ -878,14 +950,37 @@
   .control-shot-main {
     position: relative;
     display: grid;
-    place-items: center;
+    grid-template-rows: minmax(150px, 0.42fr) minmax(0, 1fr);
+    gap: 14px;
     min-height: 420px;
+    padding: 14px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,0.09);
     border-radius: 21px;
     background: rgba(7, 10, 10, 0.54);
   }
-  .control-shot-main::before {
+  .control-shot-main-mini {
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 15px;
+    background: #080a0a;
+  }
+  .control-shot-main-mini img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 58%;
+  }
+  .control-shot-main-player {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .control-shot-main-player::before {
     content: "";
     position: absolute;
     width: 74%;
@@ -894,12 +989,13 @@
     border-radius: 50%;
     box-shadow: 0 0 0 31px rgba(135, 168, 159, 0.035), 0 0 0 62px rgba(135, 168, 159, 0.018);
   }
-  .control-shot-main img { position: relative; z-index: 1; width: min(91%, 360px); filter: drop-shadow(0 22px 30px rgba(0,0,0,0.38)); }
+  .control-shot-main-player img { position: relative; z-index: 1; width: min(91%, 300px); max-height: 100%; object-fit: contain; filter: drop-shadow(0 22px 30px rgba(0,0,0,0.38)); }
   .control-shot figcaption { color: var(--ash); font-size: 11px; line-height: 1.35; }
   .control-shot figcaption strong, .control-shot figcaption span { display: block; }
   .control-shot figcaption strong { color: var(--snow); font-size: 12px; margin-bottom: 2px; }
-  .control-shot-main figcaption { position: absolute; z-index: 2; left: 17px; bottom: 15px; padding: 9px 11px; border: 1px solid rgba(255,255,255,0.11); border-radius: 12px; background: rgba(10, 12, 12, 0.72); }
-  .control-shot-rail { display: grid; grid-template-rows: 1fr 1fr; gap: 16px; }
+  .control-shot-main figcaption { position: absolute; z-index: 2; left: 10px; bottom: 10px; padding: 7px 9px; border: 1px solid rgba(255,255,255,0.11); border-radius: 10px; background: rgba(10, 12, 12, 0.78); }
+  .control-shot-main-mini figcaption { right: 10px; left: auto; text-align: right; }
+  .control-shot-rail { display: grid; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .control-shot-rail .control-shot {
     display: grid;
     grid-template-rows: minmax(0, 1fr) auto;
@@ -910,7 +1006,7 @@
     border-radius: 20px;
     background: rgba(7, 10, 10, 0.54);
   }
-  .control-shot-rail img { align-self: center; justify-self: center; width: min(100%, 180px); max-height: 165px; object-fit: contain; }
+  .control-shot-rail img { align-self: center; justify-self: center; width: min(100%, 156px); max-height: 128px; object-fit: contain; }
   .control-shot-rail figcaption { padding: 8px 3px 1px; }
   .control-story-list { display: grid; align-content: center; gap: 0; }
   .control-story {
@@ -935,10 +1031,12 @@
   .control-story .kicker, .content-real-card .kicker { color: var(--sage); font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .control-story h3 { margin: 7px 0 7px; font-size: 19px; }
   .control-story p { margin: 0; color: var(--ash); font-size: 13.6px; line-height: 1.55; }
-  .content-real-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px; }
+  .content-real-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
   .content-real-card {
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
     padding: 27px;
     border: 1px solid var(--carbon);
     border-radius: 22px;
@@ -948,46 +1046,48 @@
   .content-real-copy, .content-real-card > .kicker, .content-real-card > h3, .content-real-card > p, .content-fact-list, .content-real-shortcuts .service-chips { position: relative; z-index: 1; }
   .content-real-copy h3, .content-real-card > h3 { margin: 10px 0 8px; font-size: 22px; }
   .content-real-copy p, .content-real-card > p { margin: 0; color: var(--ash); font-size: 13.8px; line-height: 1.57; }
-  .content-real-queue { grid-column: span 7; display: grid; grid-template-columns: minmax(0, 1fr) minmax(175px, 0.57fr); gap: 15px; align-items: center; min-height: 320px; background: radial-gradient(circle at 85% 25%, rgba(225,161,169,0.14), transparent 37%), #161415; }
-  .content-real-lists { grid-column: span 5; display: grid; grid-template-columns: minmax(0, 1fr) minmax(140px, 0.5fr); gap: 8px; align-items: center; min-height: 320px; background: radial-gradient(circle at 79% 76%, rgba(135,168,159,0.14), transparent 36%), #121616; }
+  .content-real-queue { background: radial-gradient(circle at 85% 8%, rgba(225,161,169,0.16), transparent 42%), #161415; }
+  .content-real-lists { background: radial-gradient(circle at 79% 8%, rgba(135,168,159,0.16), transparent 42%), #121616; }
+  .content-real-details { background: radial-gradient(circle at 83% 8%, rgba(192,160,103,0.19), transparent 42%), #171512; }
+  .content-real-shortcuts { background: radial-gradient(circle at 84% 8%, rgba(161,130,183,0.19), transparent 42%), #151217; }
   .content-shot {
-    display: grid;
-    grid-template-rows: minmax(0, 1fr) auto;
-    align-self: stretch;
-    justify-self: end;
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 24px 0 0;
     text-align: center;
+    flex: 1;
+    justify-content: center;
   }
   .content-shot img {
-    width: min(100%, 255px);
-    max-height: 250px;
-    align-self: center;
-    justify-self: center;
+    width: auto;
+    max-width: min(100%, 320px);
+    max-height: 300px;
     object-fit: contain;
     filter: drop-shadow(0 20px 25px rgba(0,0,0,0.38));
   }
-  .content-shot figcaption { margin-top: 4px; color: var(--ash-dim); font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em; }
-  .content-real-details { grid-column: span 5; min-height: 280px; background: radial-gradient(circle at 83% 23%, rgba(192,160,103,0.18), transparent 40%), #171512; }
-  .content-real-shortcuts { grid-column: span 7; min-height: 280px; background: radial-gradient(circle at 84% 78%, rgba(161,130,183,0.18), transparent 39%), #151217; }
+  .content-shot figcaption { margin-top: 12px; color: var(--ash-dim); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em; }
   .content-fact-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
   .content-fact-list span { padding: 7px 10px; border: 1px solid rgba(215,186,126,0.22); border-radius: 999px; color: #dbc79f; font-size: 11px; background: rgba(21,19,15,0.46); }
-  .content-real-shortcuts .service-chips { max-width: 76%; }
+  .content-real-shortcuts .service-chips { max-width: 100%; }
   .content-real-shortcuts .service-chip { border-color: rgba(216,198,230,0.22); }
   @media (max-width: 900px) {
     .control-real-layout { grid-template-columns: 1fr; }
-    .content-real-queue, .content-real-lists, .content-real-details, .content-real-shortcuts { grid-column: span 12; }
-    .content-real-shortcuts .service-chips { max-width: 100%; }
   }
   @media (max-width: 560px) {
     .control-real-showcase { grid-template-columns: 1fr; min-height: 0; padding: 16px; }
-    .control-shot-main { min-height: 340px; }
-    .control-shot-rail { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
-    .control-shot-rail .control-shot { min-height: 210px; }
-    .control-shot-rail img { max-height: 135px; }
+    .control-shot-main { grid-template-rows: 132px minmax(0, 1fr); min-height: 470px; padding: 10px; gap: 10px; }
+    .control-shot-main-mini { border-radius: 12px; }
+    .control-shot-main-player img { width: min(91%, 255px); }
+    .control-shot-rail { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: none; gap: 10px; }
+    .control-shot-rail .control-shot { min-height: 190px; padding: 9px; }
+    .control-shot-rail img { max-height: 104px; }
+    .control-shot-rail figcaption { padding: 6px 1px 0; }
+    .control-shot-rail figcaption strong { font-size: 10.5px; }
+    .control-shot-rail figcaption span { font-size: 10px; }
     .control-story { grid-template-columns: 39px minmax(0, 1fr); gap: 13px; padding: 19px 0; }
+    .content-real-grid { grid-template-columns: 1fr; }
     .content-real-card { padding: 22px; }
-    .content-real-queue, .content-real-lists { grid-template-columns: 1fr; min-height: 0; }
-    .content-shot { justify-self: center; margin-top: 18px; }
     .content-shot img { max-height: 235px; }
   }
 
@@ -999,18 +1099,24 @@
   .gallery-label { position: absolute; top: 24px; left: 24px; z-index: 2; color: var(--ash); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
   .gallery-count { position: absolute; top: 20px; right: 20px; z-index: 2; padding: 7px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 999px; background: rgba(10,10,10,0.47); color: #c8ded8; font-size: 11px; }
   .theme-stack { position: absolute; inset: 78px 28px 30px; }
-  .theme-card-preview { position: absolute; width: 61%; aspect-ratio: 0.82; padding: 15px; border: 1px solid rgba(255,255,255,0.16); border-radius: 22px; box-shadow: 0 24px 48px rgba(0,0,0,0.3); }
-  .theme-card-preview::before { content: ""; display: block; width: 64px; height: 64px; border-radius: 50%; margin-bottom: auto; }
-  .theme-card-preview .preview-caption { position: absolute; left: 15px; bottom: 15px; }
+  .theme-card-preview {
+    position: absolute;
+    width: 58%;
+    aspect-ratio: 0.5;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.16);
+    border-radius: 22px;
+    background: #0c0d0d;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.3);
+  }
+  .theme-card-preview img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .theme-card-preview::after { content: ""; position: absolute; inset: auto 0 0 0; height: 46%; background: linear-gradient(0deg, rgba(0,0,0,0.75), transparent); pointer-events: none; }
+  .theme-card-preview .preview-caption { position: absolute; left: 15px; bottom: 15px; z-index: 1; }
   .preview-caption strong, .preview-caption span { display: block; }
   .preview-caption strong { color: var(--snow); font-size: 15px; }
   .preview-caption span { color: rgba(240,240,240,0.62); font-size: 10px; margin-top: 3px; }
-  .theme-card-preview.first { top: 12px; left: 0; transform: rotate(-8deg); background: linear-gradient(150deg, #a99d83, #32352b 63%, #111410); }
-  .theme-card-preview.first::before { background: radial-gradient(circle at 38% 34%, #f0dfc1, #72735d 50%, #24261e); }
-  .theme-card-preview.second { top: 62px; right: 0; transform: rotate(8deg); background: linear-gradient(150deg, #2c5270, #192533 64%, #101315); }
-  .theme-card-preview.second::before { background: radial-gradient(circle at 36% 36%, #a6d7e7, #4d597f 50%, #151a2a); }
-  .theme-card-preview.third { z-index: 2; bottom: 0; left: 18%; transform: rotate(-1deg); background: linear-gradient(150deg, #823d6f, #2a1830 67%, #130f16); }
-  .theme-card-preview.third::before { background: radial-gradient(circle at 36% 36%, #f5bdd9, #994f81 50%, #291429); }
+  .theme-card-preview.first { top: 6px; left: 0; transform: rotate(-6deg); }
+  .theme-card-preview.second { z-index: 2; bottom: 0; right: 2%; transform: rotate(4deg); }
   .community-steps { display: grid; gap: 12px; }
   .community-step { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 20px; border: 1px solid var(--carbon); border-radius: var(--r-md); background: rgba(20,20,20,0.7); transition: transform 0.2s ease, border-color 0.2s ease; }
   .community-step:hover { transform: translateX(4px); border-color: rgba(135,168,159,0.5); }
@@ -1050,17 +1156,18 @@
 
   /* ================= IMAGE LIGHTBOX ================= */
   .zoom-surface { position: relative; cursor: zoom-in; }
-  .zoom-surface::after { content: "Expand"; position: absolute; right: 10px; bottom: 10px; z-index: 3; padding: 5px 8px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; background: rgba(10,10,10,0.72); color: var(--snow); font-size: 10px; font-weight: 700; letter-spacing: 0.04em; opacity: 0; transform: translateY(4px); transition: opacity 0.18s ease, transform 0.18s ease; pointer-events: none; }
+  .zoom-surface::after { content: attr(data-zoom-label); position: absolute; right: 10px; bottom: 10px; z-index: 3; padding: 5px 8px; border: 1px solid rgba(255,255,255,0.16); border-radius: 999px; background: rgba(10,10,10,0.72); color: var(--snow); font-size: 10px; font-weight: 700; letter-spacing: 0.04em; opacity: 0; transform: translateY(4px); transition: opacity 0.18s ease, transform 0.18s ease; pointer-events: none; }
   .zoom-surface:hover::after, .zoom-surface:focus-visible::after { opacity: 1; transform: translateY(0); }
   .zoom-surface:focus-visible { outline: 2px solid var(--sage); outline-offset: 4px; }
   .zoom-surface img { transition: transform 0.24s ease, filter 0.24s ease; }
+  .slideshow.zoom-surface img { transition: opacity 0.9s ease, transform 0.24s ease, filter 0.24s ease; }
   .zoom-surface:hover img { transform: scale(1.025); filter: brightness(1.06); }
   .image-lightbox { width: min(1000px, calc(100vw - 32px)); max-width: none; max-height: calc(100vh - 32px); margin: auto; padding: 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.16); border-radius: 18px; background: #121414; color: var(--snow); box-shadow: 0 30px 90px rgba(0,0,0,0.65); }
   .image-lightbox::backdrop { background: rgba(0,0,0,0.82); backdrop-filter: blur(7px); }
   .lightbox-shell { position: relative; display: grid; max-height: calc(100vh - 32px); }
   .lightbox-shell img { max-width: 100%; max-height: calc(100vh - 102px); object-fit: contain; margin: auto; background: #090a0a; }
   .lightbox-caption { margin: 0; padding: 14px 58px 14px 17px; color: var(--ash); font-size: 13px; }
-  .lightbox-close { position: absolute; top: 12px; right: 12px; z-index: 2; display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid rgba(255,255,255,0.17); border-radius: 50%; background: rgba(10,10,10,0.72); color: var(--snow); cursor: pointer; font: inherit; font-size: 23px; line-height: 1; }
+  .lightbox-close { position: absolute; top: 12px; right: 12px; z-index: 2; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid rgba(255,255,255,0.17); border-radius: 50%; background: rgba(10,10,10,0.72); color: var(--snow); cursor: pointer; font: inherit; font-size: 23px; line-height: 1; }
   .lightbox-close:hover { border-color: var(--sage); color: var(--sage); }
 
   /* ================= GALLERY (filmstrip) ================= */
@@ -1089,14 +1196,14 @@
     padding: 4px var(--edge) 20px;
     -ms-overflow-style: none;
     scrollbar-width: thin;
-    scrollbar-color: var(--carbon-soft) transparent;
+    scrollbar-color: var(--ash-dim) var(--shadow);
     cursor: grab;
     user-select: none;
     overflow-anchor: none;
   }
   .filmstrip.dragging { cursor: grabbing; scroll-snap-type: none; }
   .filmstrip::-webkit-scrollbar { height: 6px; }
-  .filmstrip::-webkit-scrollbar-thumb { background: var(--carbon-soft); border-radius: 3px; }
+  .filmstrip::-webkit-scrollbar-thumb { background: var(--ash-dim); border-radius: 3px; }
   .film-nav {
     position: absolute;
     top: calc(50% - 10px);
@@ -1117,11 +1224,14 @@
   }
   .film-nav svg.icon { width: 20px; height: 20px; }
   .film-nav:hover { border-color: var(--sage); color: var(--sage); }
-  .film-nav:disabled { opacity: 0; pointer-events: none; }
+  .film-nav:disabled { opacity: 0.35; cursor: default; }
   .film-nav.prev { left: 8px; }
   .film-nav.next { right: 8px; }
   @media (max-width: 640px) {
-    .film-nav { display: none; }
+    .film-nav { top: auto; bottom: 0; transform: none; }
+    .filmstrip-wrap { padding-bottom: 48px; }
+    .film-nav.prev { left: var(--edge); }
+    .film-nav.next { right: var(--edge); }
   }
   .film-card {
     flex: 0 0 auto;
@@ -1146,6 +1256,13 @@
     font-size: 13px;
     color: var(--ash);
     font-weight: 500;
+  }
+  .film-card.tall { width: 118px; }
+  .film-card.tall .disc {
+    width: 118px;
+    height: 236px;
+    border-radius: 16px;
+    background: var(--shadow);
   }
 
   /* ================= THE NAME ================= */
@@ -1226,9 +1343,108 @@
     flex-wrap: wrap;
     gap: 8px;
   }
+
+  /* ================= CONTENT HIERARCHY ================= */
+  .hero { background: radial-gradient(ellipse at 78% 48%, rgba(135,168,159,0.07), transparent 58%); }
+  .hero h1 span { color: var(--sage); }
+  .hero-tagline { font-size: 21px; line-height: 1.4; max-width: 32ch; }
+  .hero-sub { max-width: 42ch; font-size: 16px; line-height: 1.65; margin-bottom: 26px; }
+  .hero .wrap { gap: 40px; }
+  .hero-ctas { gap: 12px; }
+  .btn { min-height: 48px; justify-content: center; text-align: center; line-height: 1.45; }
+  .hero-requirements { display: flex; flex-wrap: wrap; gap: 4px; color: var(--ash-dim); font-size: 12px; margin: 18px 0 0; }
+  .hero-requirements a { text-underline-offset: 4px; }
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--carbon-soft); padding-top: 24px; gap: 28px; margin-top: 28px; }
+  .stat { min-width: 0; }
+  .stat .num { font-size: 22px; }
+  .stat .label { font-size: 11px; }
+  .version-link { display: block; text-decoration: underline; text-decoration-color: var(--carbon-soft); text-underline-offset: 5px; }
+  .section-head h2 { line-height: 1.12; text-wrap: balance; }
+  .section-head p { line-height: 1.7; }
+  .disclosure { border: 1px solid var(--carbon-soft); border-radius: var(--r-md); background: var(--shadow); padding: 0 20px; }
+  .disclosure summary { padding: 17px 0; min-height: 48px; color: var(--snow); font-weight: 700; cursor: pointer; }
+  .disclosure summary::marker { color: var(--sage); }
+  .disclosure p { color: var(--ash); font-size: 14px; line-height: 1.7; }
+  .disclosure[open] { padding-bottom: 12px; }
+  .disclosure[open] > summary { border-bottom: 1px solid var(--carbon-soft); }
+  .sync-pair { max-width: 620px; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+  .slideshow-toggle { display: block; min-height: 44px; margin: 12px auto 0; padding: 8px 12px; border: 1px solid var(--carbon-soft); border-radius: 8px; color: var(--snow); background: transparent; font: inherit; font-size: 12px; cursor: pointer; }
+  .slideshow-toggle:hover { border-color: var(--sage); }
+  .gallery-hint { font-size: 13px; color: var(--ash); margin: 0 0 20px; }
+  .film-card, .face-tile { scroll-snap-align: start; }
+  .compare-tool { gap: 20px; padding: 26px; border: 1px solid var(--carbon-soft); border-radius: 20px; background: var(--shadow); }
+  .compare-faces { gap: 16px 12px; padding-bottom: 20px; border-bottom: 1px solid var(--carbon-soft); }
+  .compare-face-swatch.is-active { color: var(--snow); }
+  .compare-face-swatch.is-active .thumb { box-shadow: 0 0 0 3px var(--sage); }
+  .compare-face-swatch.is-active span:last-child { text-decoration: underline; text-underline-offset: 4px; }
+  .compare-face-swatch.is-loading .thumb { border-color: var(--sage); border-style: dashed; }
+  .compare-status { color: var(--sage); font-size: 13px; margin: 0; min-height: 21px; }
+  .install-card { display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 32px; border: 1px solid var(--sage-dark); border-radius: 20px; background: linear-gradient(125deg, #1a2924, #111916); }
+  .install-copy { max-width: 55ch; }
+  .install-card h3 { font-size: 27px; line-height: 1.15; margin-top: 12px; }
+  .install-card p { color: var(--ash); font-size: 15px; margin: 14px 0 0; }
+  .install-card .btn { flex-shrink: 0; }
+  .install-card .install-requirements { font-size: 12px; color: var(--snow); }
+  .sideload-options { margin-top: 20px; padding: 0 24px; }
+  .sideload-options > p { max-width: 70ch; }
+  .sideload-options .steps { gap: 16px; margin: 24px 0; }
+  .sideload-options .step { padding: 20px; background: var(--void); }
+  .sideload-options .downloads { padding: 24px 0; border: 0; border-top: 1px solid var(--carbon-soft); border-radius: 0; }
+  .install-help { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 24px; margin-top: 20px; font-size: 13px; }
+  .install-help > span { color: var(--ash); }
+  .install-help a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: 4px; }
+  #install { background: #0d1210; }
+  .footer-links a { min-height: 44px; }
+  .footer-brand { text-decoration: none; }
+  @media (max-width: 900px) {
+    .install-card { align-items: flex-start; flex-direction: column; gap: 24px; }
+  }
+  @media (max-width: 860px) {
+    .hero { padding-top: 44px; }
+    .hero h1 { font-size: clamp(46px, 8vw, 64px); }
+    .hero-copy { max-width: 600px; }
+    .hero .wrap { gap: 24px; }
+    .hero-tagline { max-width: none; }
+    .hero-art img { width: min(78%, 300px); }
+  }
+  @media (max-width: 640px) {
+    :root { --edge: 20px; }
+    section { padding: 52px 0; }
+    .hero { padding: 34px 0 40px; }
+    .hero h1 { margin-top: 16px; font-size: 52px; }
+    .hero-tagline { font-size: 19px; }
+    .hero-sub { font-size: 15px; margin-bottom: 22px; }
+    .hero-ctas { display: grid; grid-template-columns: 1fr; }
+    .hero-requirements { font-size: 11.5px; }
+    .hero-requirements > span[aria-hidden] { display: none; }
+    .hero-requirements { gap: 4px 12px; }
+    .hero-art { margin-top: 0; }
+    .stats { gap: 18px; justify-content: space-between; margin-top: 24px; padding-top: 20px; }
+    .stat .num { font-size: 20px; }
+    .stat .label { font-size: 11px; line-height: 1.5; letter-spacing: 0.02em; }
+    .section-head { margin-bottom: 28px; }
+    .sync-pair { grid-template-columns: minmax(0,1fr) 16px minmax(0,1fr); gap: 10px; }
+    .sync-frame { padding: 8px; }
+    .sync-frame .cap { font-size: 10px; }
+    .sync-arrow .line { display: none; }
+    .sync-arrow svg.icon { transform: none; }
+    .compare-tool { padding: 16px; }
+    .compare-faces { flex-wrap: nowrap; overflow-x: auto; gap: 16px; padding: 8px 4px 18px; scroll-snap-type: x proximity; scrollbar-color: var(--ash-dim) var(--shadow); }
+    .compare-face-swatch { flex: 0 0 64px; scroll-snap-align: start; }
+    .compare-tracks { gap: 22px 12px; }
+    .compare-track figcaption strong { font-size: 13px; }
+    .install-card { padding: 24px; }
+    .install-card .btn { width: 100%; }
+    .sideload-options { padding: 0 16px; }
+    .downloads .dl-group, .downloads .btn { width: 100%; }
+    .footer-links { gap: 4px 20px; }
+    .story { padding: 64px 0; }
+  }
+  @media (max-width: 359px) { :root { --edge: 14px; } .hero h1 { font-size: 46px; } }
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <!-- Inline icon sprite (Material Symbols, from icons/) -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1247,37 +1463,38 @@
     <symbol id="i-arrow-outward" viewBox="0 -960 960 960"><path d="m256-240-56-56 384-384H240v-80h480v480h-80v-344L256-240Z"/></symbol>
     <symbol id="i-arrow-back" viewBox="0 -960 960 960"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></symbol>
     <symbol id="i-arrow-forward" viewBox="0 -960 960 960"><path d="M647-440H160v-80h487L423-744l57-56 320 320-320 320-57-56 224-224Z"/></symbol>
+    <symbol id="i-google-play" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M2 3.65629C2 2.15127 3.59967 1.18549 4.93149 1.88645L20.7844 10.2301C22.2091 10.9799 22.2091 13.0199 20.7844 13.7698L4.9315 22.1134C3.59968 22.8144 2 21.8486 2 20.3436V3.65629ZM19.8529 11.9999L16.2682 10.1132L14.2243 11.9999L16.2682 13.8866L19.8529 11.9999ZM14.3903 14.875L12.75 13.3608L6.75782 18.8921L14.3903 14.875ZM12.75 10.639L14.3903 9.12488L6.75782 5.10777L12.75 10.639ZM4 5.28391L11.2757 11.9999L4 18.7159V5.28391Z"/></symbol>
   </defs>
 </svg>
 
-<nav class="nav">
+<nav class="nav" aria-label="Main navigation" data-i18n-aria-label="Main navigation">
   <div class="wrap">
-    <a class="nav-brand" href="#top">
-      <img src="images/app-icon-512.png" alt="">
-      Svartifoss
-    </a>
-    <div class="nav-links">
+    <a class="nav-brand" href="#top"><img decoding="async" src="images/app-icon-512.png" alt="" width="26" height="26">Svartifoss</a>
+    <div class="nav-menu" id="site-menu">
       <a href="#features">Features</a>
-      <a href="#control">Control</a>
-      <a href="#content">Content</a>
-      <a href="#look">Look &amp; feel</a>
-      <a href="#possibilities">Possibilities</a>
+      <a href="#compare">Compare</a>
       <a href="#customize">Customize</a>
+      <a href="#gallery">Gallery</a>
       <a href="#compatibility">Compatibility</a>
-      <a href="#install">Install</a>
       <a href="https://github.com/gabrielluizone/Svartifoss">GitHub</a>
+    </div>
+    <div class="nav-actions">
       <label class="language-picker">
         <span class="sr-only">Language</span>
         <select id="language-select" aria-label="Language">
-          <option value="en">EN</option>
-          <option value="pt-BR">PT-BR</option>
-          <option value="es">ES</option>
+          <option value="en" lang="en">EN</option>
+          <option value="pt-BR" lang="pt-BR">PT-BR</option>
+          <option value="es" lang="es">ES</option>
+          <option value="is" lang="is">IS</option>
         </select>
       </label>
-      <a class="cta" href="#install">Download</a>
+      <a class="nav-download" href="#install">Download</a>
+      <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Toggle navigation" data-i18n-aria-label="Toggle navigation"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
   </div>
 </nav>
+
+<main id="main" tabindex="-1">
 
 <header class="hero" id="top">
   <div class="columns-bg" aria-hidden="true">
@@ -1296,24 +1513,24 @@
   </div>
   <div class="wrap">
     <div class="hero-copy">
-      <div class="eyebrow" data-i18n-html="hero.badge"><span class="dot">●</span> Free &amp; open source · sideload-only</div>
-      <h1>Svartifoss</h1>
-      <p class="hero-tagline">The most customizable media controls on Wear OS</p>
-      <p class="hero-sub">Svartifoss reads whatever's playing on your phone — music, podcasts, audiobooks or any other media app — and puts playback, search, queues, lyrics and metadata on your wrist. Every button, gesture, screen and visual layer can be shaped around the way you use your watch.</p>
+      <div class="eyebrow" data-i18n-html="hero.badge"><span class="dot" aria-hidden="true">●</span> Open source · Made for Wear OS</div>
+      <h1 data-i18n-html="hero.title">Svartifoss</h1>
+      <p class="hero-tagline">Media controls for Wear OS, made yours.</p>
+      <p class="hero-sub">Control music, follow lyrics and make every gesture your own. Svartifoss connects the player on your phone to a watch that feels like you.</p>
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="#install">Download Svartifoss</a>
-        <a class="btn btn-ghost" href="https://github.com/gabrielluizone/Svartifoss">View source on GitHub</a>
+        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.svartifoss.snfell" data-i18n-html="download.play"><svg class="icon" aria-hidden="true"><use href="#i-google-play"/></svg> Get it on Google Play</a>
+        <a class="btn btn-ghost" href="#compare">Explore the layouts</a>
       </div>
+      <p class="hero-requirements"><span>Android phone + Wear OS watch</span><span aria-hidden="true"> · </span><a href="#install">Installation options</a></p>
       <div class="stats">
-        <div class="stat"><div class="num" data-stat="downloads">—</div><div class="label">Downloads</div></div>
-        <div class="stat"><div class="num" data-stat="version">—</div><div class="label">Latest version</div></div>
-        <div class="stat"><div class="num" data-stat="stars">—</div><div class="label">GitHub stars</div></div>
-        <div class="stat"><div class="num">21</div><div class="label">Watch faces</div></div>
+        <div class="stat"><a class="num version-link" data-stat="version" data-i18n-dynamic href="https://github.com/gabrielluizone/Svartifoss/releases/latest">See releases</a><div class="label">Latest version</div></div>
+        <div class="stat"><div class="num">Local</div><div class="label">No account needed</div></div>
+        <div class="stat"><div class="num">15</div><div class="label">Player layouts</div></div>
       </div>
     </div>
     <div class="hero-art">
       <div class="ring" aria-hidden="true"></div>
-      <img src="images/watch-hero.png" alt="Svartifoss now-playing screen on a Wear OS watch">
+      <img width="811" height="744" src="images/watch-hero.png" fetchpriority="high" decoding="async" alt="Svartifoss now-playing screen on a Wear OS watch">
     </div>
   </div>
 </header>
@@ -1323,16 +1540,18 @@
     <div class="section-head">
       <div class="eyebrow muted">How it works</div>
       <h2 data-i18n-html="sync.title">Set it up on your phone.<br>It's on your watch instantly.</h2>
-      <p>Every button, gesture, and screen is yours to assign from the phone app. The watch mirrors it over the local Wearable Data Layer — no account or Svartifoss server. Beyond your two devices, the app talks to GitHub for the optional update check and only when you explicitly open the Community themes gallery, to Firebase for diagnostics and occasional developer announcement notifications, and — only if you opt in — to the streaming service itself to fetch a saved shortcut's cover art. Crashlytics reports, announcement notifications, and shortcut artwork can all be switched off under Data &amp; support → Privacy or Apps.</p>
+      <p>Choose your controls and style on the phone. Your paired watch updates automatically, with no Svartifoss account needed.</p>
+      <details class="disclosure"><summary>Connection &amp; privacy details</summary><p>Every button, gesture, and screen is yours to assign from the phone app. The watch mirrors it over the local Wearable Data Layer — no account or Svartifoss server. Beyond your two devices, the app talks to GitHub for the optional update check and only when you explicitly open the Community themes gallery, to Firebase for diagnostics and occasional developer announcement notifications, and — only if you opt in — to the streaming service itself to fetch a saved shortcut's cover art. Crashlytics reports, announcement notifications, and shortcut artwork can all be switched off under Data &amp; support → Privacy or Apps.</p></details>
     </div>
     <div class="sync-pair">
       <div class="sync-frame">
         <div class="slideshow phone" data-slideshow="phone" role="img" aria-label="Configuring Svartifoss on the phone app">
-          <img class="is-active" src="images/phone-pick-action.jpg" alt="">
-          <img src="images/phone-themes.jpg" alt="">
-          <img src="images/phone-seek-styles.jpg" alt="">
-          <img src="images/phone-queue-styles.jpg" alt="">
-          <img src="images/phone-color-treatment.jpg" alt="">
+          <img loading="lazy" decoding="async" width="1080" height="2160" class="is-active" src="images/phone-albumart-style.jpg" alt="">
+          <img loading="lazy" decoding="async" width="1080" height="2160" src="images/phone-color-treatment2.jpg" alt="">
+          <img loading="lazy" decoding="async" width="1080" height="2160" src="images/phone-queue-style2.jpg" alt="">
+          <img loading="lazy" decoding="async" width="1080" height="2160" src="images/phone-volume-style2.jpg" alt="">
+          <img loading="lazy" decoding="async" width="1080" height="2160" src="images/phone-panel-style.jpg" alt="">
+          <img loading="lazy" decoding="async" width="1080" height="2160" src="images/phone-typeface-picker.jpg" alt="">
         </div>
         <div class="cap">Assign on the phone</div>
       </div>
@@ -1343,12 +1562,12 @@
       </div>
       <div class="sync-frame">
         <div class="slideshow watch" data-slideshow="watch" role="img" aria-label="The configured now-playing screen live on the watch, cycling through faces">
-          <img class="is-active" src="images/watch-sync-live.jpg" alt="">
-          <img src="images/face-poster-abaddream.jpg" alt="">
-          <img src="images/face-expressive-pink.jpg" alt="">
-          <img src="images/watch-studio.jpg" alt="">
-          <img src="images/face-poster-nirvana.jpg" alt="">
-          <img src="images/watch-face-olive.jpg" alt="">
+          <img loading="lazy" decoding="async" width="329" height="329" class="is-active" src="images/watch-sync-live.jpg" alt="">
+          <img loading="lazy" decoding="async" width="329" height="329" src="images/face-frame-keane.png" alt="">
+          <img loading="lazy" decoding="async" width="329" height="329" src="images/face-expressive-muse.png" alt="">
+          <img loading="lazy" decoding="async" width="329" height="329" src="images/face-artist-deer.png" alt="">
+          <img loading="lazy" decoding="async" width="329" height="329" src="images/face-carousel-brandi.png" alt="">
+          <img loading="lazy" decoding="async" width="329" height="329" src="images/face-metadata-betrayal.png" alt="">
         </div>
         <div class="cap">Live on the watch</div>
       </div>
@@ -1367,7 +1586,7 @@
       <div class="feature">
         <div class="icon-badge"><svg class="icon"><use href="#i-album"/></svg></div>
         <h3>Now-playing screen</h3>
-        <p>Album art, live position, transport controls and a draggable seek surface. Choose from twenty-two in-app faces, including Classic, the original-tribute MatejDro, Expressive, Poster, Studio, Verse, Metadata and the performer-forward Artist — each one rebuilt around the cover that's playing.</p>
+        <p>Album art, live position, transport controls and a draggable seek surface. Choose from fifteen in-app faces, including Classic, Expressive, Poster, Studio, Carousel, Verse, Metadata and the performer-forward Artist — each one rebuilt around the cover that's playing.</p>
       </div>
       <div class="feature">
         <div class="icon-badge"><svg class="icon"><use href="#i-watch-vibration"/></svg></div>
@@ -1418,18 +1637,28 @@
     <div class="control-real-layout">
       <div class="control-real-showcase">
         <div class="control-real-head"><span>Real player surfaces</span><span>Tap any image to enlarge</span></div>
-        <figure class="control-shot control-shot-main">
-          <img src="images/watch-minibuttons.png" alt="Svartifoss player on a round Wear OS watch with three mini buttons" loading="lazy">
-          <figcaption><strong>Mini buttons</strong><span>Real player surface</span></figcaption>
-        </figure>
+        <div class="control-shot-main">
+          <figure class="control-shot control-shot-main-mini">
+            <img decoding="async" width="1080" height="2160" src="images/gallery-phone-minibuttons-tab.jpg" alt="Svartifoss phone app showing the Mini buttons configuration" loading="lazy">
+            <figcaption><strong>Mini buttons</strong><span>Choose each action</span></figcaption>
+          </figure>
+          <figure class="control-shot control-shot-main-player">
+            <img decoding="async" width="329" height="329" src="images/watch-minibuttons.png" alt="Svartifoss player on a round Wear OS watch with three mini buttons" loading="lazy">
+            <figcaption><strong>Mini buttons</strong><span>Real player surface</span></figcaption>
+          </figure>
+        </div>
         <div class="control-shot-rail">
           <figure class="control-shot">
-            <img src="images/watch-seekring.png" alt="Svartifoss round player showing an edge seek ring" loading="lazy">
+            <img decoding="async" width="329" height="329" src="images/mural-seek-glow.png" alt="Svartifoss round player showing a glowing edge seek arc" loading="lazy">
             <figcaption><strong>Edge seek</strong><span>Drag around the bezel</span></figcaption>
           </figure>
           <figure class="control-shot">
-            <img src="images/watch-quickpanel.png" alt="Svartifoss quick-actions panel on a round Wear OS watch" loading="lazy">
+            <img decoding="async" width="329" height="329" src="images/mural-panel-upnext.png" alt="Svartifoss quick-actions panel with an Up Next preview" loading="lazy">
             <figcaption><strong>Quick actions</strong><span>Double-tap from the player</span></figcaption>
+          </figure>
+          <figure class="control-shot">
+            <img decoding="async" width="329" height="329" src="images/watch-minimal.png" alt="Svartifoss now-playing screen with transport controls on a Wear OS watch" loading="lazy">
+            <figcaption><strong>Full player</strong><span>The essentials in view</span></figcaption>
           </figure>
         </div>
       </div>
@@ -1453,19 +1682,21 @@
     <div class="content-real-grid">
       <article class="content-real-card content-real-queue">
         <div class="content-real-copy"><div class="kicker">Queue &amp; history</div><h3>Use the player's queue when it exists.</h3><p>Browse the current playback queue, request more items and jump to a track. If the active player does not publish a queue, Svartifoss shows its locally tracked listening history instead.</p></div>
-        <figure class="content-shot"><img src="images/watch-queue.png" alt="Svartifoss playback queue on the watch" loading="lazy"><figcaption>Actual queue screen</figcaption></figure>
+        <figure class="content-shot"><img decoding="async" width="329" height="329" src="images/mural-queue-coral.png" alt="Svartifoss playback queue on the watch, Sia playing" loading="lazy"><figcaption>Actual queue screen</figcaption></figure>
       </article>
       <article class="content-real-card content-real-lists">
         <div class="content-real-copy"><div class="kicker">Search, library &amp; lists</div><h3>Ask the player for what it knows.</h3><p>Search by voice or keyboard, replay recent searches, browse a MediaBrowser library when the app offers one, and keep saved playlist shortcuts reachable from the watch.</p></div>
-        <figure class="content-shot"><img src="images/watch-menu.png" alt="Svartifoss list screen on the watch" loading="lazy"><figcaption>Actual list surface</figcaption></figure>
+        <figure class="content-shot"><img decoding="async" width="329" height="329" src="images/watch-search-results.png" alt="Svartifoss search results on the watch, with thumbnails" loading="lazy"><figcaption>Real search results</figcaption></figure>
       </article>
       <article class="content-real-card content-real-details">
-        <div class="kicker">Lyrics &amp; Metadata</div><h3>Optional, on-demand detail.</h3><p>Lyrics are requested only when a lyrics surface or Verse needs them. Metadata is built from player tags, local-file details where permitted, and optional MusicBrainz enrichment — it never invents information the source does not provide.</p>
-        <div class="content-fact-list"><span>Synced lyrics</span><span>Track tags</span><span>File details</span><span>Output route</span><span>Optional lookup</span></div>
+        <div class="content-real-copy"><div class="kicker">Lyrics &amp; Metadata</div><h3>Optional, on-demand detail.</h3><p>Lyrics are requested only when a lyrics surface or Verse needs them. Metadata is built from player tags, local-file details where permitted, and optional MusicBrainz enrichment — it never invents information the source does not provide.</p>
+        <div class="content-fact-list"><span>Synced lyrics</span><span>Track tags</span><span>File details</span><span>Output route</span><span>Optional lookup</span></div></div>
+        <figure class="content-shot"><img decoding="async" width="329" height="329" src="images/watch-verse-glow.png" alt="Synced lyrics glowing on the watch's Verse face" loading="lazy"><figcaption>Verse, synced live</figcaption></figure>
       </article>
       <article class="content-real-card content-real-shortcuts">
-        <div class="kicker">Streaming shortcuts</div><h3>Save a link. Let the phone do the rest.</h3><p>Share or paste a track, album, artist, playlist, show, episode or mix. Svartifoss first attempts the contracts the target app supports and opens the link visibly only when direct playback is unavailable.</p>
-        <div class="service-chips" aria-label="Recognized streaming services"><span class="service-chip">YouTube Music</span><span class="service-chip">Spotify</span><span class="service-chip">Deezer</span><span class="service-chip">TIDAL</span><span class="service-chip">Apple Music</span><span class="service-chip">Amazon Music</span><span class="service-chip">SoundCloud</span><span class="service-chip">Qobuz</span><span class="service-chip">Bandcamp</span><span class="service-chip">Audiomack</span><span class="service-chip">Mixcloud</span><span class="service-chip">Pandora</span></div>
+        <div class="content-real-copy"><div class="kicker">Streaming shortcuts</div><h3>Save a link. Let the phone do the rest.</h3><p>Share or paste a track, album, artist, playlist, show, episode or mix. Svartifoss first attempts the contracts the target app supports and opens the link visibly only when direct playback is unavailable.</p>
+        <div class="service-chips" aria-label="Recognized streaming services"><span class="service-chip">YouTube Music</span><span class="service-chip">Spotify</span><span class="service-chip">Deezer</span><span class="service-chip">TIDAL</span><span class="service-chip">Apple Music</span><span class="service-chip">Amazon Music</span><span class="service-chip">SoundCloud</span><span class="service-chip">Qobuz</span><span class="service-chip">Bandcamp</span><span class="service-chip">Audiomack</span><span class="service-chip">Mixcloud</span><span class="service-chip">Pandora</span></div></div>
+        <figure class="content-shot"><img decoding="async" width="1080" height="2160" src="images/phone-shortcuts.jpg" alt="Streaming shortcuts screen on the phone, six saved shortcuts" loading="lazy"><figcaption>Saved on the phone</figcaption></figure>
       </article>
     </div>
   </div>
@@ -1475,26 +1706,146 @@
   <div class="wrap">
     <div class="section-head">
       <div class="eyebrow muted">Faces</div>
-      <h2>Twenty-two faces. Every one drawn from the art.</h2>
+      <h2>Fifteen faces. Every one drawn from the art.</h2>
       <p>These are in-app now-playing layouts, not separate Wear OS watch-face packages. Immersive, Poster, Studio, Expressive, Classic and more rebuild their palette, gradients and progress from the cover that's playing. Pick one per playback state and preview it live from the phone.</p>
     </div>
-    <div class="faces-wall">
-      <div class="face-tile"><div class="disc"><img src="images/face-poster-abaddream.jpg" alt="Immersive face, A Bad Dream by Keane" loading="lazy"></div><div class="style">Immersive</div><div class="track">A Bad Dream</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/watch-expressive-blue.jpg" alt="Expressive face, Atlantic by Keane" loading="lazy"></div><div class="style">Expressive</div><div class="track">Atlantic</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/watch-poster.jpg" alt="Poster face, Creep by Radiohead" loading="lazy"></div><div class="style">Poster</div><div class="track">Creep</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/watch-studio.jpg" alt="Immersive face, Your Confession by hikota" loading="lazy"></div><div class="style">Immersive</div><div class="track">Your Confession</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/face-poster-nirvana.jpg" alt="Poster face, Smells Like Teen Spirit by Nirvana" loading="lazy"></div><div class="style">Poster</div><div class="track">Smells Like Teen Spirit</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/watch-face-olive.jpg" alt="Poster face, Somewhere Only We Know by Keane" loading="lazy"></div><div class="style">Poster</div><div class="track">Somewhere Only We Know</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/face-expressive-cream.jpg" alt="Expressive face, Breaking the Habit by Linkin Park" loading="lazy"></div><div class="style">Expressive</div><div class="track">Breaking the Habit</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/face-poster-greenday.jpg" alt="Studio face, Boulevard of Broken Dreams by Green Day" loading="lazy"></div><div class="style">Studio</div><div class="track">Boulevard of Broken Dreams</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/face-eclipse-yellow.jpg" alt="Studio face, Yellow by Coldplay" loading="lazy"></div><div class="style">Studio</div><div class="track">Yellow</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/watch-halo.jpg" alt="Immersive face, Talking To Sirens by Thirteen Senses" loading="lazy"></div><div class="style">Immersive</div><div class="track">Talking To Sirens</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/face-classic-decode.jpg" alt="Classic face, Decode by Paramore" loading="lazy"></div><div class="style">Classic</div><div class="track">Decode</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/face-studio-side.jpg" alt="Studio face, Side by Travis" loading="lazy"></div><div class="style">Studio</div><div class="track">Side</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/face-expressive-pink.jpg" alt="Expressive face, Invincible by Muse" loading="lazy"></div><div class="style">Expressive</div><div class="track">Invincible</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/watch-poster-vivid.jpg" alt="Immersive face, Uprising by Muse" loading="lazy"></div><div class="style">Immersive</div><div class="track">Uprising</div></div>
-      <div class="face-tile"><div class="disc"><img src="images/face-immersive-temporary.jpg" alt="Studio face with an Up Next pill" loading="lazy"></div><div class="style">Studio</div><div class="track">i was only temporary</div></div>
+    <p class="gallery-hint">Swipe or use the arrows to browse. Select an image to enlarge.</p>
+    <div class="marquee-viewport filmstrip-wrap">
+      <button class="film-nav prev" type="button" aria-label="Previous images" data-i18n-aria-label="Previous images"><svg class="icon" aria-hidden="true"><use href="#i-arrow-back"/></svg></button>
+      <button class="film-nav next" type="button" aria-label="Next images" data-i18n-aria-label="Next images"><svg class="icon" aria-hidden="true"><use href="#i-arrow-forward"/></svg></button>
+      <div class="faces-wall marquee-track filmstrip">
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-poster-coffee.png" alt="Poster face, Before It Breaks by Brandi Carlile" loading="lazy"></div><div class="style">Poster</div><div class="track">Before It Breaks</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/face-expressive-muse.png" alt="Expressive face, Hysteria by Muse" loading="lazy"></div><div class="style">Expressive</div><div class="track">Hysteria</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/face-artist-deer.png" alt="Artist face, October by Adri&#225;n Berenguer" loading="lazy"></div><div class="style">Artist</div><div class="track">October</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/face-carousel-brandi.png" alt="Carousel face, The Story by Brandi Carlile" loading="lazy"></div><div class="style">Carousel</div><div class="track">The Story</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/face-metadata-betrayal.png" alt="Metadata face, betrayal by &#216;neheart" loading="lazy"></div><div class="style">Metadata</div><div class="track">betrayal</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/face-split-cranberries.png" alt="Split face, When You're Gone by The Cranberries" loading="lazy"></div><div class="style">Split</div><div class="track">When You're Gone</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/face-immersive-dave.png" alt="Immersive face, Let Me Love You by DAVE" loading="lazy"></div><div class="style">Immersive</div><div class="track">Let Me Love You</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/face-frame-keane.png" alt="Frame face, Dirt by Keane" loading="lazy"></div><div class="style">Frame</div><div class="track">Dirt</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/face-classic-decode.jpg" alt="Classic face, Decode by Paramore" loading="lazy"></div><div class="style">Classic</div><div class="track">Decode</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/face-verse-muse.png" alt="Verse face, Eternally Missed by Muse" loading="lazy"></div><div class="style">Verse</div><div class="track">Eternally Missed</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/compare-studio-escapism.png" alt="Studio face, escapism by far.north" loading="lazy"></div><div class="style">Studio</div><div class="track">escapism</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/compare-material-comatose.png" alt="Material face, Comatose by Skillet" loading="lazy"></div><div class="style">Material</div><div class="track">Comatose</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/compare-chat-breaks.png" alt="Chat face, Before It Breaks by Brandi Carlile" loading="lazy"></div><div class="style">Chat</div><div class="track">Before It Breaks</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/compare-note-sirens.png" alt="Note face, Talking to Sirens by Thirteen Senses" loading="lazy"></div><div class="style">Note</div><div class="track">Talking to Sirens</div></div>
+      <div class="face-tile"><div class="disc"><img decoding="async" width="329" height="329" src="images/compare-ribbon-comatose.png" alt="Ribbon face, Comatose by Skillet" loading="lazy"></div><div class="style">Ribbon</div><div class="track">Comatose</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
     </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow muted">Try it yourself</div>
+      <h2>Pick a face. See it on four real tracks.</h2>
+      <p>Choose one of 15 sample layouts to see how it adapts to four album covers. These are real captures from a watch.</p>
+    </div>
+    <div class="compare-tool">
+      <div class="compare-faces" role="group" aria-label="Choose a now-playing face" data-i18n-aria-label="Choose a now-playing face">
+        <button class="compare-face-swatch is-active" type="button" data-face="classic" aria-pressed="true"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-classic-escapism.png" alt="" loading="lazy"></span><span>Classic</span></button>
+        <button class="compare-face-swatch" type="button" data-face="expressive" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-expressive-escapism.png" alt="" loading="lazy"></span><span>Expressive</span></button>
+        <button class="compare-face-swatch" type="button" data-face="poster" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-poster-escapism.png" alt="" loading="lazy"></span><span>Poster</span></button>
+        <button class="compare-face-swatch" type="button" data-face="studio" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-studio-escapism.png" alt="" loading="lazy"></span><span>Studio</span></button>
+        <button class="compare-face-swatch" type="button" data-face="material" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-material-escapism.png" alt="" loading="lazy"></span><span>Material</span></button>
+        <button class="compare-face-swatch" type="button" data-face="immersive" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-immersive-escapism.png" alt="" loading="lazy"></span><span>Immersive</span></button>
+        <button class="compare-face-swatch" type="button" data-face="carousel" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-carousel-escapism.png" alt="" loading="lazy"></span><span>Carousel</span></button>
+        <button class="compare-face-swatch" type="button" data-face="chat" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-chat-escapism.png" alt="" loading="lazy"></span><span>Chat</span></button>
+        <button class="compare-face-swatch" type="button" data-face="split" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-split-escapism.png" alt="" loading="lazy"></span><span>Split</span></button>
+        <button class="compare-face-swatch" type="button" data-face="note" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-note-escapism.png" alt="" loading="lazy"></span><span>Note</span></button>
+        <button class="compare-face-swatch" type="button" data-face="verse" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-verse-escapism.png" alt="" loading="lazy"></span><span>Verse</span></button>
+        <button class="compare-face-swatch" type="button" data-face="metadata" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-metadata-escapism.png" alt="" loading="lazy"></span><span>Metadata</span></button>
+        <button class="compare-face-swatch" type="button" data-face="artist" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-artist-escapism.png" alt="" loading="lazy"></span><span>Artist</span></button>
+        <button class="compare-face-swatch" type="button" data-face="ribbon" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-ribbon-escapism.png" alt="" loading="lazy"></span><span>Ribbon</span></button>
+        <button class="compare-face-swatch" type="button" data-face="frame" aria-pressed="false"><span class="thumb"><img decoding="async" width="329" height="329" src="images/compare-frame-escapism.png" alt="" loading="lazy"></span><span>Frame</span></button>
+      </div>
+      <p class="compare-status" id="compare-status" role="status" data-i18n-dynamic></p>
+      <div class="compare-tracks">
+        <figure class="compare-track" data-track="escapism">
+          <div class="compare-disc"><img decoding="async" width="329" height="329" src="images/compare-classic-escapism.png" alt="Classic face, escapism by far.north" loading="lazy"></div>
+          <figcaption><span class="dot dot-blue" aria-hidden="true"></span><strong>escapism</strong><span>far.north</span></figcaption>
+        </figure>
+        <figure class="compare-track" data-track="breaks">
+          <div class="compare-disc"><img decoding="async" width="329" height="329" src="images/compare-classic-breaks.png" alt="Classic face, Before It Breaks by Brandi Carlile" loading="lazy"></div>
+          <figcaption><span class="dot dot-red" aria-hidden="true"></span><strong>Before It Breaks</strong><span>Brandi Carlile</span></figcaption>
+        </figure>
+        <figure class="compare-track" data-track="sirens">
+          <div class="compare-disc"><img decoding="async" width="329" height="329" src="images/compare-classic-sirens.png" alt="Classic face, Talking to Sirens by Thirteen Senses" loading="lazy"></div>
+          <figcaption><span class="dot dot-yellow" aria-hidden="true"></span><strong>Talking to Sirens</strong><span>Thirteen Senses</span></figcaption>
+        </figure>
+        <figure class="compare-track" data-track="comatose">
+          <div class="compare-disc"><img decoding="async" width="329" height="329" src="images/compare-classic-comatose.png" alt="Classic face, Comatose by Skillet" loading="lazy"></div>
+          <figcaption><span class="dot dot-green" aria-hidden="true"></span><strong>Comatose</strong><span>Skillet</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="install">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow muted">Get started</div>
+      <h2>Your next track is a tap away.</h2>
+      <p>Install Svartifoss on both your Android phone and Wear OS watch, then open both apps to get connected.</p>
+    </div>
+    <div class="install-card">
+      <div class="install-copy">
+        <span class="eyebrow">Recommended</span>
+        <h3>One listing. Both devices.</h3>
+        <p>Get the phone and watch apps from Google Play. On your phone, allow notification access so Svartifoss can find your music player.</p>
+        <p class="install-requirements">Android 6.0+ · Wear OS 2 or newer</p>
+      </div>
+      <a class="btn btn-primary" data-i18n-html="download.play" href="https://play.google.com/store/apps/details?id=com.svartifoss.snfell"><svg class="icon" aria-hidden="true"><use href="#i-google-play"/></svg> Get it on Google Play</a>
+    </div>
+    <details class="sideload-options disclosure">
+      <summary>Prefer APKs? Install from GitHub</summary>
+      <p>Download both APKs for a manual installation. Open the phone app and allow notification access, then open the watch app.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="num"></div>
+        <h3>Install on your phone</h3>
+        <p>Download the phone APK below and open it. Android may ask you to allow installs from your browser first.</p>
+      </div>
+      <div class="step">
+        <div class="num"></div>
+        <h3>Install on your watch</h3>
+        <p data-i18n-html="install.watch.step">Download the watch APK and sideload it to your Wear OS watch — easiest with <a href="https://www.xda-developers.com/wear-installer-sideload-wear-os-apps/">Wear Installer <svg class="icon"><use href="#i-open-new"/></svg></a>.</p>
+      </div>
+      <div class="step">
+        <div class="num"></div>
+        <h3>Open both apps</h3>
+        <p>They find each other automatically over the Wearable Data Layer — no account, no pairing code, nothing else to configure.</p>
+      </div>
+    </div>
+    <div class="downloads">
+      <div class="dl-group">
+        <span>Phone · Android 6.0+ (sideload)</span>
+        <a class="btn btn-ghost" data-i18n-html="download.phone" data-dl="mobile" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-send-mobile"/></svg> Download phone APK</a>
+      </div>
+      <div class="dl-group">
+        <span>Watch · Wear OS 2 or newer (sideload)</span>
+        <a class="btn btn-ghost" data-i18n-html="download.watch" data-dl="wear" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-watch-down"/></svg> Download watch APK</a>
+      </div>
+      <div class="spacer"></div>
+    </div>
+    </details>
+    <div class="install-help"><span>Check your setup</span><a href="#compatibility">Compatibility &amp; privacy</a></div>
   </div>
 </section>
 
@@ -1503,51 +1854,62 @@
     <div class="section-head">
       <div class="eyebrow muted">Possibilities</div>
       <h2>Every overlay is its own wardrobe.</h2>
-      <p>Volume, seek, the quick-actions panel and the queue each carry a full catalog of styles — a sample of each is below. Mix and match them freely; none of it is tied to whichever face is running underneath.</p>
+      <p>Volume, seek, the quick-actions panel, the queue and the lyrics screen each carry a full catalog of styles — a sample of each is below. Mix and match them freely; none of it is tied to whichever face is running underneath.</p>
     </div>
     <div class="mural">
       <div class="mural-group">
         <div class="mural-label"><span class="n">Volume</span><span class="k">6 of the readout styles</span></div>
         <div class="mural-row">
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-volume-ring.jpg" alt="Volume overlay: thin arc ring" loading="lazy"></div><div class="cap">Ring</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-volume-dotted.jpg" alt="Volume overlay: dotted arc with pill readout" loading="lazy"></div><div class="cap">Dotted</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-volume-split.jpg" alt="Volume overlay: dark minimal arc" loading="lazy"></div><div class="cap">Minimal</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-volume-pillbar.jpg" alt="Volume overlay: horizontal pill bar" loading="lazy"></div><div class="cap">Pill bar</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-volume-dark.jpg" alt="Volume overlay: glass ring" loading="lazy"></div><div class="cap">Glass</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-volume-warm.jpg" alt="Volume overlay: warm album-toned ring" loading="lazy"></div><div class="cap">Album tone</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-volume-halo.png" alt="Volume overlay: pale arc ring over a warm backdrop" loading="lazy"></div><div class="cap">Arc ring</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-volume-gradient.png" alt="Volume overlay: maroon-to-indigo gradient ring" loading="lazy"></div><div class="cap">Gradient ring</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-volume-noir.png" alt="Volume overlay: pastel pink arc on pure black" loading="lazy"></div><div class="cap">High contrast</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-volume-ring.jpg" alt="Volume overlay: thin arc ring" loading="lazy"></div><div class="cap">Ring</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-volume-dotted.jpg" alt="Volume overlay: dotted arc with pill readout" loading="lazy"></div><div class="cap">Dotted</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-volume-pillbar.jpg" alt="Volume overlay: horizontal pill bar" loading="lazy"></div><div class="cap">Pill bar</div></div>
         </div>
       </div>
       <div class="mural-group">
         <div class="mural-label"><span class="n">Seek</span><span class="k">scrub &amp; progress</span></div>
         <div class="mural-row">
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-seek-dial.jpg" alt="Seek overlay: clock-dial ticks" loading="lazy"></div><div class="cap">Clock dial</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-seek-linear.jpg" alt="Seek overlay: linear scrub bar over album art" loading="lazy"></div><div class="cap">Linear</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-seek-dotted-blue.jpg" alt="Seek overlay: dotted ring with pill readout" loading="lazy"></div><div class="cap">Dotted</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-seek-ring.jpg" alt="Seek overlay: thin AMOLED ring" loading="lazy"></div><div class="cap">Thin ring</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-seek-dotted.jpg" alt="Seek overlay: album-toned dotted ring" loading="lazy"></div><div class="cap">Album dots</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-seek-warm.jpg" alt="Seek overlay: warm minimal ring" loading="lazy"></div><div class="cap">Album tone</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-seek-ticks.png" alt="Seek overlay: tick-mark bezel ring around an elapsed-time pill" loading="lazy"></div><div class="cap">Tick bezel</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-seek-glow.png" alt="Seek overlay: glowing arc segment along the bezel" loading="lazy"></div><div class="cap">Glow arc</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-seek-dial.jpg" alt="Seek overlay: clock-dial ticks" loading="lazy"></div><div class="cap">Clock dial</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-seek-linear.jpg" alt="Seek overlay: linear scrub bar over album art" loading="lazy"></div><div class="cap">Linear</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-seek-dotted-blue.jpg" alt="Seek overlay: dotted ring with pill readout" loading="lazy"></div><div class="cap">Dotted</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-seek-ring.jpg" alt="Seek overlay: thin AMOLED ring" loading="lazy"></div><div class="cap">Thin ring</div></div>
         </div>
       </div>
       <div class="mural-group">
         <div class="mural-label"><span class="n">Quick panel</span><span class="k">double-tap actions</span></div>
         <div class="mural-row">
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-panel-round.jpg" alt="Quick panel: round icon slots with an Up Next row" loading="lazy"></div><div class="cap">Round slots</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-panel-gold.jpg" alt="Quick panel: warm round slots" loading="lazy"></div><div class="cap">Album tint</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-panel-red.jpg" alt="Quick panel: two-slot compact layout" loading="lazy"></div><div class="cap">Compact</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-panel-check.jpg" alt="Quick panel: state-aware toggle slot" loading="lazy"></div><div class="cap">State-aware</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-panel-rows.jpg" alt="Quick panel: labelled full-width rows" loading="lazy"></div><div class="cap">Labelled rows</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-panel-labelblue.jpg" alt="Quick panel: album-tinted labelled rows" loading="lazy"></div><div class="cap">Album rows</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-panel-indigo.png" alt="Quick panel: like/shuffle/repeat row over a blurred indigo cover" loading="lazy"></div><div class="cap">Indigo blur</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-panel-teal.png" alt="Quick panel: shuffle/add/cast row on a dark teal gradient" loading="lazy"></div><div class="cap">Teal gradient</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-panel-upnext.png" alt="Quick panel: Up Next row with a colorful thumbnail" loading="lazy"></div><div class="cap">Up Next preview</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-panel-olive.png" alt="Quick panel: heart/shuffle/repeat row on olive-green" loading="lazy"></div><div class="cap">Album tint</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-panel-cyrillic.png" alt="Quick panel: warm brown blur with a peach like button" loading="lazy"></div><div class="cap">Warm blur</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-panel-blur.png" alt="Quick panel: glass icon pills over a dark blurred cover" loading="lazy"></div><div class="cap">Glass pills</div></div>
         </div>
       </div>
       <div class="mural-group">
         <div class="mural-label"><span class="n">Queue</span><span class="k">up-next &amp; history</span></div>
         <div class="mural-row">
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-queue-photos.jpg" alt="Queue: album-tinted rows with cover thumbnails" loading="lazy"></div><div class="cap">Cover rows</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-queue-select.jpg" alt="Queue: AMOLED rows with selected highlight" loading="lazy"></div><div class="cap">AMOLED</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-queue-tonal.jpg" alt="Queue: tonal gradient cards" loading="lazy"></div><div class="cap">Tonal cards</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-queue-covers.jpg" alt="Queue: full cover-photo rows" loading="lazy"></div><div class="cap">Photo rows</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-queue-cards.jpg" alt="Queue: gold tonal cards" loading="lazy"></div><div class="cap">Gold cards</div></div>
-          <div class="mural-cell"><div class="mural-disc"><img src="images/mural-queue-olive.jpg" alt="Queue: album-tinted rows" loading="lazy"></div><div class="cap">Album tint</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-queue-handpan.png" alt="Queue: warm rows with a pink playing-row highlight" loading="lazy"></div><div class="cap">Pink highlight</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-queue-coral.png" alt="Queue: coral-pink playing row with circular thumbnails" loading="lazy"></div><div class="cap">Coral rows</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-queue-sepia.png" alt="Queue: sepia album thumbnails on a black list" loading="lazy"></div><div class="cap">Sepia rows</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-queue-photos.jpg" alt="Queue: album-tinted rows with cover thumbnails" loading="lazy"></div><div class="cap">Cover rows</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-queue-select.jpg" alt="Queue: AMOLED rows with selected highlight" loading="lazy"></div><div class="cap">AMOLED</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/mural-queue-tonal.jpg" alt="Queue: tonal gradient cards" loading="lazy"></div><div class="cap">Tonal cards</div></div>
+        </div>
+      </div>
+      <div class="mural-group">
+        <div class="mural-label"><span class="n">Lyrics</span><span class="k">the Verse face, synced live</span></div>
+        <div class="mural-row">
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/watch-verse-glow.png" alt="Lyrics: glowing current line, note glyph" loading="lazy"></div><div class="cap">Glow</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-verse-red.png" alt="Lyrics: current line highlighted red" loading="lazy"></div><div class="cap">Red highlight</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-verse-gold-a.png" alt="Lyrics: current line highlighted gold" loading="lazy"></div><div class="cap">Gold highlight</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-verse-gold-b.png" alt="Lyrics: short line highlighted gold" loading="lazy"></div><div class="cap">Gold, short line</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-verse-underline.png" alt="Lyrics: bold underlined current line" loading="lazy"></div><div class="cap">Underline</div></div>
+          <div class="mural-cell"><div class="mural-disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-verse-eternally-missed.png" alt="Lyrics: icy blue current line" loading="lazy"></div><div class="cap">Blue highlight</div></div>
         </div>
       </div>
     </div>
@@ -1561,45 +1923,41 @@
       <h2>Not a coat of paint — every surface, really tunable.</h2>
       <p>Save a look as a named theme and switch between them in one tap. Each profile can combine a base face, typography, colors, artwork, background layers, progress, overlays, panels, mini buttons and the always-on display. Every gallery miniature is rendered on your phone from the theme data against a built-in sample track.</p>
     </div>
-    <div class="spec-grid">
-      <div class="spec-card">
-        <img src="images/phone-themes.jpg" alt="Watch themes library on the phone, with a Create theme button">
-        <div class="cap">Named themes, one tap to switch</div>
+    <div class="filmstrip-wrap">
+      <button class="film-nav prev" type="button" aria-label="Scroll left" data-i18n-aria-label="Scroll left" data-film-prev><svg class="icon"><use href="#i-arrow-back"/></svg></button>
+      <div class="filmstrip">
+        <div class="film-card tall"><div class="disc"><img decoding="async" width="1080" height="2160" src="images/phone-albumart-style.jpg" alt="Album art style picker with over a dozen treatments" loading="lazy"></div><div class="cap">A dozen+ album art treatments</div></div>
+        <div class="film-card tall"><div class="disc"><img decoding="async" width="1080" height="2160" src="images/phone-color-treatment2.jpg" alt="Watch color treatment picker with live color swatches" loading="lazy"></div><div class="cap">Color treatment, previewed as swatches</div></div>
+        <div class="film-card tall"><div class="disc"><img decoding="async" width="1080" height="2160" src="images/phone-typeface-picker.jpg" alt="Typeface picker, each font rendered in itself" loading="lazy"></div><div class="cap">Every font, set in itself</div></div>
+        <div class="film-card tall"><div class="disc"><img decoding="async" width="1080" height="2160" src="images/phone-panel-style.jpg" alt="Panel background style picker" loading="lazy"></div><div class="cap">A dozen+ panel backgrounds</div></div>
+        <div class="film-card tall"><div class="disc"><img decoding="async" width="1080" height="2160" src="images/phone-queue-style2.jpg" alt="Long list of queue styles" loading="lazy"></div><div class="cap">A dozen+ queue styles</div></div>
+        <div class="film-card tall"><div class="disc"><img decoding="async" width="1080" height="2160" src="images/phone-volume-style2.jpg" alt="Long list of volume readout styles" loading="lazy"></div><div class="cap">A dozen+ volume styles</div></div>
+        <div class="film-card tall"><div class="disc"><img decoding="async" width="1080" height="2160" src="images/phone-aod-style.jpg" alt="Always-on display style picker, one option per face" loading="lazy"></div><div class="cap">Always-on, styled per face</div></div>
+        <div class="film-card tall"><div class="disc"><img decoding="async" width="1080" height="2160" src="images/phone-button-shapes.jpg" alt="Mini buttons shape picker" loading="lazy"></div><div class="cap">Pill, circle, squircle, leaf, drop&hellip;</div></div>
       </div>
-      <div class="spec-card">
-        <img src="images/phone-color-treatment.jpg" alt="Watch color treatment picker with live color swatches">
-        <div class="cap">Color treatment, previewed as swatches</div>
-      </div>
-      <div class="spec-card">
-        <img src="images/phone-seek-styles.jpg" alt="Long list of seek and volume readout styles">
-        <div class="cap">A dozen+ seek &amp; volume styles</div>
-      </div>
-      <div class="spec-card">
-        <img src="images/phone-queue-styles.jpg" alt="Long list of queue styles">
-        <div class="cap">A dozen+ queue styles</div>
-      </div>
-      <div class="spec-card">
-        <img src="images/phone-button-shapes.jpg" alt="Mini buttons shape picker">
-        <div class="cap">Pill, circle, squircle, leaf, drop&hellip;</div>
-      </div>
+      <button class="film-nav next" type="button" aria-label="Scroll right" data-i18n-aria-label="Scroll right" data-film-next><svg class="icon"><use href="#i-arrow-forward"/></svg></button>
     </div>
     <div class="detail-grid" style="margin-top: 24px;">
       <div class="detail-card">
+        <div class="detail-card-thumb"><img decoding="async" width="1080" height="2160" src="images/phone-haibane-colors.jpg" alt="Colors tab for a custom theme, album-derived swatches" loading="lazy"></div>
         <div class="kicker">Per-face editing</div>
         <h3>One watch, different moods.</h3>
         <p>Store appearance independently for each face instead of forcing one global look. Change title, artist, clock, lyrics and track-time typography; choose album treatments, color harmony, progress style, panel layout and custom button shapes.</p>
       </div>
       <div class="detail-card">
+        <div class="detail-card-thumb"><img decoding="async" width="329" height="329" src="images/watch-aod-chrono.png" alt="Chrono always-on display, a large clock on pure black" loading="lazy"></div>
         <div class="kicker">Always-on display</div>
         <h3>Designed for the low-power screen too.</h3>
         <p>Choose an always-on presentation, artwork treatment, dim level, visibility and typography separately from the interactive player. The phone preview lets you check the ambient result before it reaches the watch.</p>
       </div>
       <div class="detail-card">
+        <div class="detail-card-thumb"><img decoding="async" width="1080" height="2160" src="images/phone-text-artist.jpg" alt="Artist text controls: weight, italic, size and shadow" loading="lazy"></div>
         <div class="kicker">Readable by design</div>
         <h3>Make text hold its ground.</h3>
         <p>Use album-aware or custom colors, adjustable opacity, shadow, outline and backdrop treatments for the title and artist. The same visual system also covers volume, seek, panels and queue rows.</p>
       </div>
       <div class="detail-card">
+        <div class="detail-card-thumb"><img decoding="async" width="1080" height="2160" src="images/gallery-phone-player-tab-poster.jpg" alt="Watch tab live preview above the Player editor" loading="lazy"></div>
         <div class="kicker">On the phone</div>
         <h3>Preview before you send.</h3>
         <p>The Watch tab mirrors the current track or a built-in sample and updates as you edit. Apply, duplicate, rename or delete profiles without changing the others.</p>
@@ -1616,13 +1974,12 @@
       <p>Browse a public catalogue of appearance profiles from the phone, inspect the full set of local previews and install only what you choose. A community theme is a starting point, not a locked preset.</p>
     </div>
     <div class="community-layout">
-      <div class="community-showcase" aria-label="Illustration of community theme cards">
+      <div class="community-showcase" aria-label="Real screenshots of the community themes gallery and My themes library">
         <span class="gallery-label">Community catalogue</span>
-        <span class="gallery-count">Made on a phone</span>
-        <div class="theme-stack" aria-hidden="true">
-          <div class="theme-card-preview first"><div class="preview-caption"><strong>Basalt light</strong><span>by Nori</span></div></div>
-          <div class="theme-card-preview second"><div class="preview-caption"><strong>Blue hour</strong><span>by Mae</span></div></div>
-          <div class="theme-card-preview third"><div class="preview-caption"><strong>Velvet pulse</strong><span>by Anonymous</span></div></div>
+        <span class="gallery-count">Real screenshots</span>
+        <div class="theme-stack">
+          <div class="theme-card-preview first"><img decoding="async" width="1080" height="2160" src="images/phone-themes-library.jpg" alt="My themes library with a theme applied" loading="lazy"><div class="preview-caption"><strong>Install</strong><span>Then make it yours</span></div></div>
+          <div class="theme-card-preview second"><img decoding="async" width="1080" height="2160" src="images/phone-community-gallery.jpg" alt="Community themes gallery grid, browsable and filterable" loading="lazy"><div class="preview-caption"><strong>Browse</strong><span>Search, filter, sort</span></div></div>
         </div>
       </div>
       <div class="community-steps">
@@ -1668,6 +2025,83 @@
   </div>
 </section>
 
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow muted">Every screen, for real</div>
+      <h2>Not mockups. Screenshots.</h2>
+      <p>Explore real watch captures, from album-inspired layouts to lyrics and quick controls. Browse at your own pace and open any image for a closer look.</p>
+    </div>
+    <p class="gallery-hint">Swipe or use the arrows to browse. Select an image to enlarge.</p>
+    <div class="marquee-viewport filmstrip-wrap">
+      <button class="film-nav prev" type="button" aria-label="Previous images" data-i18n-aria-label="Previous images"><svg class="icon" aria-hidden="true"><use href="#i-arrow-back"/></svg></button>
+      <button class="film-nav next" type="button" aria-label="Next images" data-i18n-aria-label="Next images"><svg class="icon" aria-hidden="true"><use href="#i-arrow-forward"/></svg></button>
+      <div class="gallery-marquee marquee-track filmstrip">
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-immersive-forest.png" alt="Your Eyes, foggy forest backdrop, no controls" loading="lazy"></div><div class="cap">Immersive</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-poster-forest.png" alt="Your Eyes, foggy forest with a progress bar" loading="lazy"></div><div class="cap">Poster</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-zombie.png" alt="Zombie, sage-tinted band photo" loading="lazy"></div><div class="cap">Zombie</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-poster-grayscale-rain.png" alt="grayscale rain photo" loading="lazy"></div><div class="cap">Poster</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-am-i-one.png" alt="glitch-textured anime art" loading="lazy"></div><div class="cap">Am I One?</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-poster-muse-stopped.png" alt="Muse, stopped state" loading="lazy"></div><div class="cap">Poster</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-let-it-slide.png" alt="Let It Slide, wave illustration" loading="lazy"></div><div class="cap">Let It Slide</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-poster-coffee.png" alt="Before It Breaks, coffee photo" loading="lazy"></div><div class="cap">Poster</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-expressive-butterflies.png" alt="Muse, teal cookie control" loading="lazy"></div><div class="cap">Expressive</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-expressive-dido.png" alt="Dido, rose-pink control" loading="lazy"></div><div class="cap">Expressive</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-expressive-rose.png" alt="Haibane Renmei, tonal rose" loading="lazy"></div><div class="cap">Expressive</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-immersive-anime.png" alt="anime artwork, no controls" loading="lazy"></div><div class="cap">Immersive</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-immersive-desert.png" alt="sepia desert scene" loading="lazy"></div><div class="cap">Immersive</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-verse-red.png" alt="current line highlighted red" loading="lazy"></div><div class="cap">Verse</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-verse-gold-a.png" alt="current line highlighted gold" loading="lazy"></div><div class="cap">Verse</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-verse-gold-b.png" alt="short line highlighted gold" loading="lazy"></div><div class="cap">Verse</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-verse-underline.png" alt="bold underlined current line" loading="lazy"></div><div class="cap">Verse</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-verse-eternally-missed.png" alt="Eternally Missed, icy blue line" loading="lazy"></div><div class="cap">Verse</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-face-picker.png" alt="My themes &amp; built-in faces" loading="lazy"></div><div class="cap">Face picker</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-quickpanel-thescientist.png" alt="The Scientist, teal like icon" loading="lazy"></div><div class="cap">Quick actions panel</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-menu-shortcuts-brown.png" alt="saved playlist shortcuts" loading="lazy"></div><div class="cap">Menu</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-menu-root-olive.png" alt="root actions, olive rows" loading="lazy"></div><div class="cap">Menu</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-menu-streaming-a.png" alt="streaming app shortcuts" loading="lazy"></div><div class="cap">Menu</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-menu-streaming-b.png" alt="streaming app shortcuts" loading="lazy"></div><div class="cap">Menu</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-menu-pink-pills.png" alt="Retro Music, pink pill rows" loading="lazy"></div><div class="cap">Menu</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-chandelier.png" alt="Chandelier by Sia over a wig portrait" loading="lazy"></div><div class="cap">Chandelier</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-no-surprises.png" alt="No Surprises by Radiohead, OK Computer cover" loading="lazy"></div><div class="cap">No Surprises</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-immersive-sia-egg.png" alt="Immersive face, Courage to Change by Sia" loading="lazy"></div><div class="cap">Immersive</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-repeat-until-death.png" alt="Repeat Until Death, dark floral backdrop" loading="lazy"></div><div class="cap">Repeat Until Death</div></div>
+        <div class="film-card"><div class="disc"><img decoding="async" width="329" height="329" src="images/gallery-watch-ember.png" alt="Ember by Ardie Son, iceberg illustration" loading="lazy"></div><div class="cap">Ember</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="story" id="name">
   <div class="columns-bg" aria-hidden="true">
     <span style="left:15%;"></span>
@@ -1684,50 +2118,15 @@
   </div>
 </section>
 
-<section id="install">
-  <div class="wrap">
-    <div class="section-head">
-      <div class="eyebrow muted">Install</div>
-      <h2>Sideload it. Takes a minute.</h2>
-      <p>Svartifoss isn't on the Play Store — install the two APKs directly from GitHub Releases onto your phone and watch. The phone needs Android notification access to discover the active media session; the watch app is installed separately. After the first setup, the phone can notify you about releases and send watch updates over Bluetooth.</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <div class="num"></div>
-        <h3>Install on your phone</h3>
-        <p>Download the phone APK below and open it. Android may ask you to allow installs from your browser first.</p>
-      </div>
-      <div class="step">
-        <div class="num"></div>
-        <h3>Install on your watch</h3>
-        <p data-i18n-html="install.watch.step">Download the watch APK and sideload it to your Wear OS watch — easiest with <a href="https://www.xda-developers.com/wear-installer-sideload-wear-os-apps/">Wear Installer <svg class="icon"><use href="#i-open-new"/></svg></a>.</p>
-      </div>
-      <div class="step">
-        <div class="num"></div>
-        <h3>Open both apps</h3>
-        <p>They find each other automatically over the Wearable Data Layer — no account, no pairing code, nothing else to configure.</p>
-      </div>
-    </div>
-    <div class="downloads">
-      <div class="dl-group">
-        <span>Phone · Android 6.0+</span>
-        <a class="btn btn-primary" data-i18n-html="download.phone" data-dl="mobile" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-send-mobile"/></svg> Download phone APK</a>
-      </div>
-      <div class="dl-group">
-        <span>Watch · Wear OS 2 or newer (3, 4, 5…)</span>
-        <a class="btn btn-ghost" data-i18n-html="download.watch" data-dl="wear" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-watch-down"/></svg> Download watch APK</a>
-      </div>
-      <div class="spacer"></div>
-      <div class="req" data-i18n-html="install.source">Building from source? See the <a href="https://github.com/gabrielluizone/Svartifoss#building">README</a>.</div>
-    </div>
-  </div>
-</section>
+
+
+</main>
 
 <footer>
   <div class="wrap">
     <div class="footer-top">
       <a class="footer-brand" href="#top">
-        <img src="images/app-icon-512.png" alt="">
+        <img decoding="async" width="512" height="512" src="images/app-icon-512.png" alt="">
         Svartifoss
       </a>
       <div class="footer-links">
@@ -1749,188 +2148,13 @@
 <dialog class="image-lightbox" id="image-lightbox" aria-labelledby="lightbox-caption">
   <div class="lightbox-shell">
     <button class="lightbox-close" type="button" aria-label="Close enlarged image">&times;</button>
-    <img id="lightbox-image" src="" alt="">
+    <img id="lightbox-image" alt="">
     <p class="lightbox-caption" id="lightbox-caption"></p>
   </div>
 </dialog>
 
 <script src="languages.js"></script>
-<script>
-(function () {
-  // Cross-fading slideshows in the "How it works" pair. Honours reduced-motion by
-  // leaving the first frame static. Staggered intervals keep the two sides from
-  // flipping in lockstep.
-  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function initSlideshow(el, intervalMs) {
-    if (!el || reduceMotion) return;
-    var slides = el.querySelectorAll('img');
-    if (slides.length < 2) return;
-    var i = 0;
-    setInterval(function () {
-      slides[i].classList.remove('is-active');
-      i = (i + 1) % slides.length;
-      slides[i].classList.add('is-active');
-    }, intervalMs);
-  }
-  initSlideshow(document.querySelector('[data-slideshow="watch"]'), 2500);
-  initSlideshow(document.querySelector('[data-slideshow="phone"]'), 3200);
-
-  // Screenshots and artwork samples open in a keyboard-accessible lightbox.
-  var lightbox = document.getElementById('image-lightbox');
-  var lightboxImage = document.getElementById('lightbox-image');
-  var lightboxCaption = document.getElementById('lightbox-caption');
-  var lightboxClose = lightbox && lightbox.querySelector('.lightbox-close');
-  var lightboxOpener = null;
-
-  function imageForSurface(surface) {
-    return surface.querySelector('.is-active') || surface.querySelector('img');
-  }
-  function labelForSurface(surface, image) {
-    return image.getAttribute('alt') || surface.getAttribute('aria-label') || 'Svartifoss preview';
-  }
-  function openLightbox(surface) {
-    if (!lightbox || !lightboxImage) return;
-    var image = imageForSurface(surface);
-    if (!image) return;
-    lightboxOpener = surface;
-    var label = labelForSurface(surface, image);
-    lightboxImage.src = image.currentSrc || image.src;
-    lightboxImage.alt = label;
-    lightboxCaption.textContent = label;
-    if (typeof lightbox.showModal === 'function') lightbox.showModal();
-    else lightbox.setAttribute('open', '');
-    lightboxClose.focus();
-  }
-  document.querySelectorAll('.hero-art, .slideshow, .face-tile, .mural-cell, .spec-card, .film-card, .control-shot, .content-shot').forEach(function (surface) {
-    if (!imageForSurface(surface)) return;
-    surface.classList.add('zoom-surface');
-    surface.setAttribute('tabindex', '0');
-    surface.setAttribute('role', 'button');
-    surface.setAttribute('aria-label', 'Open enlarged image: ' + labelForSurface(surface, imageForSurface(surface)));
-    surface.addEventListener('click', function () { openLightbox(surface); });
-    surface.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        openLightbox(surface);
-      }
-    });
-  });
-  if (lightbox) {
-    lightbox.addEventListener('click', function (event) {
-      if (event.target === lightbox && typeof lightbox.close === 'function') lightbox.close();
-    });
-    lightbox.addEventListener('close', function () {
-      lightboxImage.removeAttribute('src');
-      if (lightboxOpener) lightboxOpener.focus();
-    });
-  }
-  if (lightboxClose) {
-    lightboxClose.addEventListener('click', function () {
-      if (typeof lightbox.close === 'function') lightbox.close();
-      else lightbox.removeAttribute('open');
-    });
-  }
-
-  var strip = document.querySelector('.filmstrip');
-  var prevBtn = document.querySelector('[data-film-prev]');
-  var nextBtn = document.querySelector('[data-film-next]');
-  if (strip && prevBtn && nextBtn) {
-    var step = function () {
-      var card = strip.querySelector('.film-card');
-      var gap = parseFloat(getComputedStyle(strip).gap) || 18;
-      return card ? card.offsetWidth * 2 + gap * 2 : 300;
-    };
-
-    var updateNavState = function () {
-      var max = strip.scrollWidth - strip.clientWidth - 1;
-      prevBtn.disabled = strip.scrollLeft <= 0;
-      nextBtn.disabled = strip.scrollLeft >= max;
-    };
-
-    prevBtn.addEventListener('click', function () {
-      strip.scrollBy({ left: -step(), behavior: 'smooth' });
-    });
-    nextBtn.addEventListener('click', function () {
-      strip.scrollBy({ left: step(), behavior: 'smooth' });
-    });
-    strip.addEventListener('scroll', updateNavState, { passive: true });
-    window.addEventListener('resize', updateNavState);
-    strip.scrollLeft = 0;
-    updateNavState();
-    window.addEventListener('load', updateNavState);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(updateNavState);
-
-    // Let vertical mouse-wheel scrolling pan the strip horizontally too.
-    strip.addEventListener('wheel', function (e) {
-      if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
-      e.preventDefault();
-      strip.scrollLeft += e.deltaY;
-    }, { passive: false });
-
-    // Click-and-drag panning for desktop mice (not just touch/trackpad).
-    var isDown = false, startX = 0, startScroll = 0, moved = false;
-    strip.addEventListener('pointerdown', function (e) {
-      isDown = true;
-      moved = false;
-      startX = e.clientX;
-      startScroll = strip.scrollLeft;
-      strip.classList.add('dragging');
-      strip.setPointerCapture(e.pointerId);
-    });
-    strip.addEventListener('pointermove', function (e) {
-      if (!isDown) return;
-      var dx = e.clientX - startX;
-      if (Math.abs(dx) > 3) moved = true;
-      strip.scrollLeft = startScroll - dx;
-    });
-    var endDrag = function () { isDown = false; strip.classList.remove('dragging'); };
-    strip.addEventListener('pointerup', endDrag);
-    strip.addEventListener('pointerleave', endDrag);
-    strip.addEventListener('pointercancel', endDrag);
-    // Suppress the click-through on an image/link if the pointer actually dragged.
-    strip.addEventListener('click', function (e) { if (moved) e.preventDefault(); }, true);
-  }
-
-  function setText(key, value) {
-    document.querySelectorAll('[data-stat="' + key + '"]').forEach(function (el) { el.textContent = value; });
-  }
-  function formatCount(n) {
-    if (n >= 1000) return (n / 1000).toFixed(n >= 10000 ? 0 : 1).replace(/\.0$/, '') + 'k';
-    return String(n);
-  }
-
-  fetch('https://api.github.com/repos/gabrielluizone/Svartifoss')
-    .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-    .then(function (repo) { setText('stars', formatCount(repo.stargazers_count)); })
-    .catch(function () { setText('stars', '—'); });
-
-  fetch('https://api.github.com/repos/gabrielluizone/Svartifoss/releases?per_page=100')
-    .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-    .then(function (releases) {
-      if (!releases.length) return;
-
-      // Every install is a PAIR of downloads (phone APK + watch APK), so the raw asset total
-      // double-counts people - halve it, rounded down, to report actual installs.
-      var totalDownloads = 0;
-      releases.forEach(function (rel) {
-        (rel.assets || []).forEach(function (a) { totalDownloads += a.download_count || 0; });
-      });
-      setText('downloads', formatCount(Math.floor(totalDownloads / 2)));
-
-      var latest = releases[0];
-      setText('version', latest.tag_name);
-
-      var mobile = (latest.assets || []).find(function (a) { return a.name.indexOf('mobile') !== -1; });
-      var wear = (latest.assets || []).find(function (a) { return a.name.indexOf('wear') !== -1; });
-      if (mobile) document.querySelectorAll('[data-dl="mobile"]').forEach(function (el) { el.href = mobile.browser_download_url; });
-      if (wear) document.querySelectorAll('[data-dl="wear"]').forEach(function (el) { el.href = wear.browser_download_url; });
-    })
-    .catch(function () {
-      setText('downloads', '—');
-      setText('version', 'see GitHub');
-    });
-})();
-</script>
+<script src="site.js"></script>
 
 </body>
 </html>
