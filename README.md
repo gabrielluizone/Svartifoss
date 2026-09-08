@@ -11,7 +11,7 @@ Choose an artwork-focused player for the couch, large controls for a walk, or ly
 **Explore:** [Lyrics](#lyrics-that-follow-the-song) · [Faces and appearance](#make-the-watch-your-own) · [Controls and queues](#what-it-can-do) · [Track details](#look-beyond-the-track-title) · [Shortcuts and Tiles](#keep-favorite-music-one-tap-away) · [Live editor](#design-it-on-your-phone) · [Community themes](#community-themes) · [Compatibility and privacy](#compatibility-and-privacy) · [Installing](#installing) · [Support](#support)
 
 > [!IMPORTANT]
-> Svartifoss is in closed Google Play testing before its public launch, and I am looking for testers. First [join the Google Group](https://groups.google.com/g/svartifoss-wearos) with the Google account you use on your phone; then [install Svartifoss from Google Play](https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share). If Google Play does not show the app immediately, allow a few minutes for the new group membership to sync.
+> Svartifoss is in closed Google Play testing before its public launch, and I am looking for testers. First [join the Google Group](https://groups.google.com/g/svartifoss-wearos) with the Google account you use on your phone; then [install Svartifoss from Google Play](https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share). The Google Play edition is free through **September 22, 2026**. If Google Play does not show the app immediately, allow a few minutes for the new group membership to sync.
 
 Select any screenshot in this README to open it at full size.
 
@@ -250,9 +250,11 @@ Svartifoss is not publicly released yet. To join the closed test:
 
 Google Play can take a few minutes to recognize a new group membership. Updates for the test arrive through Google Play.
 
+The Google Play edition is free through **September 22, 2026**.
+
 ### GitHub releases
 
-Already using the GitHub edition? **GitHub releases will continue to be published for the time being**, so existing users can keep updating through their current distribution. Find the latest release on the [GitHub releases page](https://github.com/gabrielluizone/Svartifoss/releases/latest).
+Already using the GitHub edition? It will continue, and the next release will be published soon. Existing users can keep updating through their current distribution; find the latest available build on the [GitHub releases page](https://github.com/gabrielluizone/Svartifoss/releases/latest).
 
 ### First connection
 

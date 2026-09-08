@@ -291,6 +291,7 @@
   add("Install from Google Play", "Instalar pela Google Play", "Instalar desde Google Play", "Setja upp frá Google Play");
   add("After joining the group, open Google Play and install Svartifoss on your Android phone and Wear OS watch.", "Depois de entrar no grupo, abra a Google Play e instale o Svartifoss no telefone Android e no relógio Wear OS.", "Después de unirte al grupo, abre Google Play e instala Svartifoss en tu teléfono Android y reloj Wear OS.", "Eftir að þú hefur skráð þig í hópinn skaltu opna Google Play og setja Svartifoss upp í Android-símann og Wear OS úrið.");
   add("Google Play does not show the app yet? It can take a few minutes for your new group membership to sync.", "A Google Play ainda não mostra o app? A nova participação no grupo pode levar alguns minutos para sincronizar.", "¿Google Play todavía no muestra la app? La nueva membresía del grupo puede tardar unos minutos en sincronizarse.", "Sýnir Google Play ekki appið enn? Það getur tekið nokkrar mínútur fyrir nýja hópaðildina að samstillast.");
+  add("The GitHub edition will continue, and its next release will be published soon. Download both APKs for a manual installation, then open the phone app and allow notification access before opening the watch app.", "A edição do GitHub continuará, e a próxima versão será publicada em breve. Baixe os dois APKs para instalar manualmente; depois, abra o app do telefone e permita o acesso às notificações antes de abrir o app do relógio.", "La edición de GitHub continuará y su próxima versión se publicará pronto. Descarga los dos APK para una instalación manual; después, abre la app del teléfono y permite el acceso a las notificaciones antes de abrir la app del reloj.", "GitHub-útgáfan mun halda áfram og næsta útgáfa verður birt fljótlega. Sæktu báðar APK-skrárnar fyrir handvirka uppsetningu, opnaðu síðan símaforritið og leyfðu aðgang að tilkynningum áður en þú opnar úraforritið.");
   add("Recommended", "Recomendado", "Recomendado", "Mælt með");
   add("One listing. Both devices.", "Uma página. Dois dispositivos.", "Una ficha. Dos dispositivos.", "Ein færsla. Bæði tækin.");
   add("Get the phone and watch apps from Google Play. On your phone, allow notification access so Svartifoss can find your music player.", "Baixe os apps para telefone e relógio na Google Play. No telefone, permita o acesso às notificações para que o Svartifoss encontre seu player de música.", "Descarga las apps para teléfono y reloj desde Google Play. En el teléfono, permite el acceso a las notificaciones para que Svartifoss encuentre tu reproductor de música.", "Sæktu forritin fyrir síma og úr á Google Play. Leyfðu aðgang að tilkynningum í símanum svo Svartifoss finni tónlistarspilarann þinn.");
@@ -349,6 +350,11 @@
       'pt-BR': '<strong>A Google Play ainda não mostra o app?</strong> A nova participação no grupo pode levar alguns minutos para sincronizar.',
       es: '<strong>¿Google Play todavía no muestra la app?</strong> La nueva membresía del grupo puede tardar unos minutos en sincronizarse.',
       is: '<strong>Sýnir Google Play ekki appið enn?</strong> Það getur tekið nokkrar mínútur fyrir nýja hópaðildina að samstillast.'
+    },
+    'beta.free': {
+      'pt-BR': '<strong>Grátis na Google Play até 22 de setembro de 2026.</strong>',
+      es: '<strong>Gratis en Google Play hasta el 22 de septiembre de 2026.</strong>',
+      is: '<strong>Ókeypis á Google Play til 22. september 2026.</strong>'
     },
     'download.phone': {
       'pt-BR': '<svg class="icon"><use href="#i-send-mobile"/></svg> Baixar APK do telefone',
