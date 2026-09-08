@@ -265,6 +265,12 @@
   add("Explore the layouts", "Explore os layouts", "Explora los diseños", "Skoðaðu útlitin");
   add("Android phone + Wear OS watch", "Telefone Android + relógio Wear OS", "Teléfono Android + reloj Wear OS", "Android sími + Wear OS úr");
   add("Installation options", "Opções de instalação", "Opciones de instalación", "Uppsetningarmöguleikar");
+  add("Closed test", "Teste fechado", "Prueba cerrada", "Lokað próf");
+  add("Test", "Teste", "Prueba", "Próf");
+  add("Join the closed test", "Participe do teste fechado", "Únete a la prueba cerrada", "Taktu þátt í lokaða prófinu");
+  add("Join the group before installing", "Entre no grupo antes de instalar", "Únete al grupo antes de instalar", "Skráðu þig í hópinn áður en þú setur upp");
+  add("Google account", "Conta Google", "Cuenta de Google", "Google-reikningur");
+  add("Required for test", "Necessária para o teste", "Necesaria para la prueba", "Nauðsynlegur fyrir prófið");
   add("Player layouts", "Layouts do player", "Diseños del reproductor", "Útlit spilarans");
   add("No account needed", "Sem precisar de conta", "Sin necesidad de cuenta", "Enginn aðgangur nauðsynlegur");
   add("Local", "Local", "Local", "Staðbundið");
@@ -277,6 +283,14 @@
   add("Get started", "Comece aqui", "Empieza aquí", "Byrjaðu núna");
   add("Your next track is a tap away.", "Sua próxima faixa está a um toque.", "Tu próxima canción está a un toque.", "Næsta lag er eina snertingu í burtu.");
   add("Install Svartifoss on both your Android phone and Wear OS watch, then open both apps to get connected.", "Instale o Svartifoss no telefone Android e no relógio Wear OS. Depois, abra os dois apps para conectar.", "Instala Svartifoss en tu teléfono Android y tu reloj Wear OS. Después, abre ambas apps para conectarlos.", "Settu upp Svartifoss bæði í Android símanum og Wear OS úrinu, opnaðu síðan bæði forritin til að tengjast.");
+  add("Help shape Svartifoss before launch.", "Ajude a preparar o Svartifoss antes do lançamento.", "Ayuda a dar forma a Svartifoss antes de su lanzamiento.", "Hjálpaðu til við að móta Svartifoss fyrir útgáfu.");
+  add("Svartifoss is in closed Google Play testing. Join the tester group first, then install it from Google Play.", "O Svartifoss está em teste fechado na Google Play. Entre primeiro no grupo de testers e depois instale pela Google Play.", "Svartifoss está en pruebas cerradas de Google Play. Únete primero al grupo de testers y después instálalo desde Google Play.", "Svartifoss er í lokuðu prófi á Google Play. Skráðu þig fyrst í prófunarhópinn og settu hann síðan upp frá Google Play.");
+  add("Join the tester group", "Entre no grupo de testers", "Únete al grupo de testers", "Skráðu þig í prófunarhópinn");
+  add("Join with the Google account you use on your phone. Group membership unlocks access to the closed test on Google Play.", "Entre com a conta Google que você usa no telefone. A participação no grupo libera o acesso ao teste fechado na Google Play.", "Únete con la cuenta de Google que usas en tu teléfono. Pertenecer al grupo desbloquea el acceso a la prueba cerrada en Google Play.", "Skráðu þig með Google-reikningnum sem þú notar í símanum. Aðild að hópnum opnar aðgang að lokaða prófinu á Google Play.");
+  add("Join Google Group", "Entrar no Google Groups", "Unirse al grupo de Google", "Skrá sig í Google-hóp");
+  add("Install from Google Play", "Instalar pela Google Play", "Instalar desde Google Play", "Setja upp frá Google Play");
+  add("After joining the group, open Google Play and install Svartifoss on your Android phone and Wear OS watch.", "Depois de entrar no grupo, abra a Google Play e instale o Svartifoss no telefone Android e no relógio Wear OS.", "Después de unirte al grupo, abre Google Play e instala Svartifoss en tu teléfono Android y reloj Wear OS.", "Eftir að þú hefur skráð þig í hópinn skaltu opna Google Play og setja Svartifoss upp í Android-símann og Wear OS úrið.");
+  add("Google Play does not show the app yet? It can take a few minutes for your new group membership to sync.", "A Google Play ainda não mostra o app? A nova participação no grupo pode levar alguns minutos para sincronizar.", "¿Google Play todavía no muestra la app? La nueva membresía del grupo puede tardar unos minutos en sincronizarse.", "Sýnir Google Play ekki appið enn? Það getur tekið nokkrar mínútur fyrir nýja hópaðildina að samstillast.");
   add("Recommended", "Recomendado", "Recomendado", "Mælt með");
   add("One listing. Both devices.", "Uma página. Dois dispositivos.", "Una ficha. Dos dispositivos.", "Ein færsla. Bæði tækin.");
   add("Get the phone and watch apps from Google Play. On your phone, allow notification access so Svartifoss can find your music player.", "Baixe os apps para telefone e relógio na Google Play. No telefone, permita o acesso às notificações para que o Svartifoss encontre seu player de música.", "Descarga las apps para teléfono y reloj desde Google Play. En el teléfono, permite el acceso a las notificaciones para que Svartifoss encuentre tu reproductor de música.", "Sæktu forritin fyrir síma og úr á Google Play. Leyfðu aðgang að tilkynningum í símanum svo Svartifoss finni tónlistarspilarann þinn.");
@@ -302,9 +316,9 @@
 
   var htmlCopy = {
     'hero.badge': {
-      'pt-BR': '<span class="dot" aria-hidden="true">●</span> Código aberto · Feito para Wear OS',
-      es: '<span class="dot" aria-hidden="true">●</span> Código abierto · Hecho para Wear OS',
-      is: '<span class="dot" aria-hidden="true">●</span> Opinn hugbúnaður · Gert fyrir Wear OS'
+      'pt-BR': '<span class="dot" aria-hidden="true">●</span> Teste fechado · Feito para Wear OS',
+      es: '<span class="dot" aria-hidden="true">●</span> Prueba cerrada · Hecho para Wear OS',
+      is: '<span class="dot" aria-hidden="true">●</span> Lokað próf · Gert fyrir Wear OS'
     },
     'sync.title': {
       'pt-BR': 'Configure no telefone.<br>Ele aparece no relógio na hora.',
@@ -325,6 +339,16 @@
       'pt-BR': '<svg class="icon"><use href="#i-google-play"/></svg> Baixar na Google Play',
       es: '<svg class="icon"><use href="#i-google-play"/></svg> Consíguelo en Google Play',
       is: '<svg class="icon"><use href="#i-google-play"/></svg> Sæktu á Google Play'
+    },
+    'beta.install': {
+      'pt-BR': '<svg class="icon"><use href="#i-google-play"/></svg> Instalar pela Google Play',
+      es: '<svg class="icon"><use href="#i-google-play"/></svg> Instalar desde Google Play',
+      is: '<svg class="icon"><use href="#i-google-play"/></svg> Setja upp frá Google Play'
+    },
+    'beta.sync': {
+      'pt-BR': '<strong>A Google Play ainda não mostra o app?</strong> A nova participação no grupo pode levar alguns minutos para sincronizar.',
+      es: '<strong>¿Google Play todavía no muestra la app?</strong> La nueva membresía del grupo puede tardar unos minutos en sincronizarse.',
+      is: '<strong>Sýnir Google Play ekki appið enn?</strong> Það getur tekið nokkrar mínútur fyrir nýja hópaðildina að samstillast.'
     },
     'download.phone': {
       'pt-BR': '<svg class="icon"><use href="#i-send-mobile"/></svg> Baixar APK do telefone',

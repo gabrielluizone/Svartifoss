@@ -1385,6 +1385,14 @@
   .install-card p { color: var(--ash); font-size: 15px; margin: 14px 0 0; }
   .install-card .btn { flex-shrink: 0; }
   .install-card .install-requirements { font-size: 12px; color: var(--snow); }
+  .test-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .test-step { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 18px; padding: 28px 24px; border: 1px solid var(--carbon); border-radius: var(--r-md); background: var(--shadow); }
+  .test-step-index { grid-row: span 2; color: var(--sage); font-family: var(--display); font-size: 28px; font-weight: 700; line-height: 1; }
+  .test-step h3 { margin: 0; font-size: 19px; }
+  .test-step p { margin: 10px 0 20px; color: var(--ash); font-size: 14px; line-height: 1.65; }
+  .test-step .btn { justify-self: start; }
+  .test-note { margin: 18px 0 0; color: var(--ash); font-size: 13px; line-height: 1.6; }
+  .test-note strong { color: var(--snow); }
   .sideload-options { margin-top: 20px; padding: 0 24px; }
   .sideload-options > p { max-width: 70ch; }
   .sideload-options .steps { gap: 16px; margin: 24px 0; }
@@ -1398,6 +1406,7 @@
   .footer-brand { text-decoration: none; }
   @media (max-width: 900px) {
     .install-card { align-items: flex-start; flex-direction: column; gap: 24px; }
+    .test-steps { grid-template-columns: 1fr; }
   }
   @media (max-width: 860px) {
     .hero { padding-top: 44px; }
@@ -1435,6 +1444,8 @@
     .compare-track figcaption strong { font-size: 13px; }
     .install-card { padding: 24px; }
     .install-card .btn { width: 100%; }
+    .test-step { padding: 24px 20px; }
+    .test-step .btn { width: 100%; }
     .sideload-options { padding: 0 16px; }
     .downloads .dl-group, .downloads .btn { width: 100%; }
     .footer-links { gap: 4px 20px; }
@@ -1488,7 +1499,7 @@
           <option value="is" lang="is">IS</option>
         </select>
       </label>
-      <a class="nav-download" href="#install">Download</a>
+      <a class="nav-download" href="#install" data-i18n="Test">Test</a>
       <button class="nav-toggle" type="button" aria-controls="site-menu" aria-expanded="false" aria-label="Toggle navigation" data-i18n-aria-label="Toggle navigation"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
   </div>
@@ -1513,18 +1524,18 @@
   </div>
   <div class="wrap">
     <div class="hero-copy">
-      <div class="eyebrow" data-i18n-html="hero.badge"><span class="dot" aria-hidden="true">●</span> Open source · Made for Wear OS</div>
+      <div class="eyebrow" data-i18n-html="hero.badge"><span class="dot" aria-hidden="true">●</span> Closed test · Made for Wear OS</div>
       <h1 data-i18n-html="hero.title">Svartifoss</h1>
       <p class="hero-tagline">Media controls for Wear OS, made yours.</p>
       <p class="hero-sub">Control music, follow lyrics and make every gesture your own. Svartifoss connects the player on your phone to a watch that feels like you.</p>
       <div class="hero-ctas">
-        <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=com.svartifoss.snfell" data-i18n-html="download.play"><svg class="icon" aria-hidden="true"><use href="#i-google-play"/></svg> Get it on Google Play</a>
+        <a class="btn btn-primary" href="https://groups.google.com/g/svartifoss-wearos" data-i18n="Join the closed test">Join the closed test</a>
         <a class="btn btn-ghost" href="#compare">Explore the layouts</a>
       </div>
-      <p class="hero-requirements"><span>Android phone + Wear OS watch</span><span aria-hidden="true"> · </span><a href="#install">Installation options</a></p>
+      <p class="hero-requirements"><span data-i18n="Android phone + Wear OS watch">Android phone + Wear OS watch</span><span aria-hidden="true"> · </span><a href="#install" data-i18n="Join the group before installing">Join the group before installing</a></p>
       <div class="stats">
         <div class="stat"><a class="num version-link" data-stat="version" data-i18n-dynamic href="https://github.com/gabrielluizone/Svartifoss/releases/latest">See releases</a><div class="label">Latest version</div></div>
-        <div class="stat"><div class="num">Local</div><div class="label">No account needed</div></div>
+        <div class="stat"><div class="num" data-i18n="Google account">Google account</div><div class="label" data-i18n="Required for test">Required for test</div></div>
         <div class="stat"><div class="num">15</div><div class="label">Player layouts</div></div>
       </div>
     </div>
@@ -1800,50 +1811,60 @@
 <section id="install">
   <div class="wrap">
     <div class="section-head">
-      <div class="eyebrow muted">Get started</div>
-      <h2>Your next track is a tap away.</h2>
-      <p>Install Svartifoss on both your Android phone and Wear OS watch, then open both apps to get connected.</p>
+      <div class="eyebrow muted" data-i18n="Closed test">Closed test</div>
+      <h2 data-i18n="Help shape Svartifoss before launch.">Help shape Svartifoss before launch.</h2>
+      <p data-i18n="Svartifoss is in closed Google Play testing. Join the tester group first, then install it from Google Play.">Svartifoss is in closed Google Play testing. Join the tester group first, then install it from Google Play.</p>
     </div>
-    <div class="install-card">
-      <div class="install-copy">
-        <span class="eyebrow">Recommended</span>
-        <h3>One listing. Both devices.</h3>
-        <p>Get the phone and watch apps from Google Play. On your phone, allow notification access so Svartifoss can find your music player.</p>
-        <p class="install-requirements">Android 6.0+ · Wear OS 2 or newer</p>
-      </div>
-      <a class="btn btn-primary" data-i18n-html="download.play" href="https://play.google.com/store/apps/details?id=com.svartifoss.snfell"><svg class="icon" aria-hidden="true"><use href="#i-google-play"/></svg> Get it on Google Play</a>
+    <div class="test-steps">
+      <article class="test-step">
+        <span class="test-step-index" aria-hidden="true">01</span>
+        <div>
+          <h3 data-i18n="Join the tester group">Join the tester group</h3>
+          <p data-i18n="Join with the Google account you use on your phone. Group membership unlocks access to the closed test on Google Play.">Join with the Google account you use on your phone. Group membership unlocks access to the closed test on Google Play.</p>
+          <a class="btn btn-primary" href="https://groups.google.com/g/svartifoss-wearos" data-i18n="Join Google Group">Join Google Group</a>
+        </div>
+      </article>
+      <article class="test-step">
+        <span class="test-step-index" aria-hidden="true">02</span>
+        <div>
+          <h3 data-i18n="Install from Google Play">Install from Google Play</h3>
+          <p data-i18n="After joining the group, open Google Play and install Svartifoss on your Android phone and Wear OS watch.">After joining the group, open Google Play and install Svartifoss on your Android phone and Wear OS watch.</p>
+          <a class="btn btn-ghost" data-i18n-html="beta.install" href="https://play.google.com/store/apps/details?id=com.svartifoss.snfell"><svg class="icon" aria-hidden="true"><use href="#i-google-play"/></svg> Install from Google Play</a>
+        </div>
+      </article>
     </div>
+    <p class="test-note" data-i18n-html="beta.sync"><strong>Google Play does not show the app yet?</strong> It can take a few minutes for your new group membership to sync.</p>
     <details class="sideload-options disclosure">
       <summary>Prefer APKs? Install from GitHub</summary>
       <p>Download both APKs for a manual installation. Open the phone app and allow notification access, then open the watch app.</p>
-    <div class="steps">
-      <div class="step">
-        <div class="num"></div>
-        <h3>Install on your phone</h3>
-        <p>Download the phone APK below and open it. Android may ask you to allow installs from your browser first.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="num"></div>
+          <h3>Install on your phone</h3>
+          <p>Download the phone APK below and open it. Android may ask you to allow installs from your browser first.</p>
+        </div>
+        <div class="step">
+          <div class="num"></div>
+          <h3>Install on your watch</h3>
+          <p data-i18n-html="install.watch.step">Download the watch APK and sideload it to your Wear OS watch — easiest with <a href="https://www.xda-developers.com/wear-installer-sideload-wear-os-apps/">Wear Installer <svg class="icon"><use href="#i-open-new"/></svg></a>.</p>
+        </div>
+        <div class="step">
+          <div class="num"></div>
+          <h3>Open both apps</h3>
+          <p>They find each other automatically over the Wearable Data Layer — no account, no pairing code, nothing else to configure.</p>
+        </div>
       </div>
-      <div class="step">
-        <div class="num"></div>
-        <h3>Install on your watch</h3>
-        <p data-i18n-html="install.watch.step">Download the watch APK and sideload it to your Wear OS watch — easiest with <a href="https://www.xda-developers.com/wear-installer-sideload-wear-os-apps/">Wear Installer <svg class="icon"><use href="#i-open-new"/></svg></a>.</p>
+      <div class="downloads">
+        <div class="dl-group">
+          <span>Phone · Android 6.0+ (sideload)</span>
+          <a class="btn btn-ghost" data-i18n-html="download.phone" data-dl="mobile" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-send-mobile"/></svg> Download phone APK</a>
+        </div>
+        <div class="dl-group">
+          <span>Watch · Wear OS 2 or newer (sideload)</span>
+          <a class="btn btn-ghost" data-i18n-html="download.watch" data-dl="wear" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-watch-down"/></svg> Download watch APK</a>
+        </div>
+        <div class="spacer"></div>
       </div>
-      <div class="step">
-        <div class="num"></div>
-        <h3>Open both apps</h3>
-        <p>They find each other automatically over the Wearable Data Layer — no account, no pairing code, nothing else to configure.</p>
-      </div>
-    </div>
-    <div class="downloads">
-      <div class="dl-group">
-        <span>Phone · Android 6.0+ (sideload)</span>
-        <a class="btn btn-ghost" data-i18n-html="download.phone" data-dl="mobile" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-send-mobile"/></svg> Download phone APK</a>
-      </div>
-      <div class="dl-group">
-        <span>Watch · Wear OS 2 or newer (sideload)</span>
-        <a class="btn btn-ghost" data-i18n-html="download.watch" data-dl="wear" href="https://github.com/gabrielluizone/Svartifoss/releases/latest"><svg class="icon"><use href="#i-watch-down"/></svg> Download watch APK</a>
-      </div>
-      <div class="spacer"></div>
-    </div>
     </details>
     <div class="install-help"><span>Check your setup</span><a href="#compatibility">Compatibility &amp; privacy</a></div>
   </div>

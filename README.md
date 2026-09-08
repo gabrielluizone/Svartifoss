@@ -10,6 +10,9 @@ Choose an artwork-focused player for the couch, large controls for a walk, or ly
 
 **Explore:** [Lyrics](#lyrics-that-follow-the-song) · [Faces and appearance](#make-the-watch-your-own) · [Controls and queues](#what-it-can-do) · [Track details](#look-beyond-the-track-title) · [Shortcuts and Tiles](#keep-favorite-music-one-tap-away) · [Live editor](#design-it-on-your-phone) · [Community themes](#community-themes) · [Compatibility and privacy](#compatibility-and-privacy) · [Installing](#installing) · [Support](#support)
 
+> [!IMPORTANT]
+> Svartifoss is in closed Google Play testing before its public launch, and I am looking for testers. First [join the Google Group](https://groups.google.com/g/svartifoss-wearos) with the Google account you use on your phone; then [install Svartifoss from Google Play](https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share). If Google Play does not show the app immediately, allow a few minutes for the new group membership to sync.
+
 Select any screenshot in this README to open it at full size.
 
 ## Lyrics that follow the song
@@ -238,13 +241,18 @@ The app asks for notification access to read and control the active media sessio
 
 You need an **Android phone running Android 6.0 / API 23 or newer** and a **paired Wear OS watch running Android 8.0 / API 26 or newer**.
 
-### Google Play
+### Google Play closed test
 
-[Open Svartifoss on Google Play](https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share) and install the official edition on both your phone and watch. Updates are delivered through Google Play.
+Svartifoss is not publicly released yet. To join the closed test:
+
+1. [Join the Svartifoss Google Group](https://groups.google.com/g/svartifoss-wearos) with the Google account you use on your phone.
+2. Then [install Svartifoss from Google Play](https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share) on your phone and Wear OS watch.
+
+Google Play can take a few minutes to recognize a new group membership. Updates for the test arrive through Google Play.
 
 ### GitHub releases
 
-Already using the GitHub edition? You will not lose updates because Svartifoss is now on Google Play. **GitHub releases will continue to be published for the time being**, so existing users can keep updating through their current distribution. Find the latest release on the [GitHub releases page](https://github.com/gabrielluizone/Svartifoss/releases/latest).
+Already using the GitHub edition? **GitHub releases will continue to be published for the time being**, so existing users can keep updating through their current distribution. Find the latest release on the [GitHub releases page](https://github.com/gabrielluizone/Svartifoss/releases/latest).
 
 ### First connection
 
@@ -259,7 +267,7 @@ If track information is missing, check notification access, the phone–watch co
 
 Found a bug or a player-specific limitation? [Open an issue](https://github.com/gabrielluizone/Svartifoss/issues) with your phone and watch models, Android/Wear OS versions, Svartifoss version, media app and steps to reproduce it. Screenshots help with visual issues.
 
-Svartifoss is open source software. To support development beyond the official Google Play edition, you can use [Buy Me a Coffee](https://buymeacoffee.com/gabrielsvafoss) or [Ko-fi](https://ko-fi.com/gabrielsvafoss).
+Svartifoss is open source software. To support development during the closed test, you can use [Buy Me a Coffee](https://buymeacoffee.com/gabrielsvafoss) or [Ko-fi](https://ko-fi.com/gabrielsvafoss).
 
 ## License
 
