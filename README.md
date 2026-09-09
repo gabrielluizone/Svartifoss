@@ -11,7 +11,7 @@ Choose an artwork-focused player for the couch, large controls for a walk, or ly
 **Explore:** [Lyrics](#lyrics-that-follow-the-song) · [Faces and appearance](#make-the-watch-your-own) · [Controls and queues](#what-it-can-do) · [Track details](#look-beyond-the-track-title) · [Shortcuts and Tiles](#keep-favorite-music-one-tap-away) · [Live editor](#design-it-on-your-phone) · [Community themes](#community-themes) · [Compatibility and privacy](#compatibility-and-privacy) · [Installing](#installing) · [Support](#support)
 
 > [!IMPORTANT]
-> Svartifoss is in closed Google Play testing before its public launch, and I am looking for testers. First [join the Google Group](https://groups.google.com/g/svartifoss-wearos) with the Google account you use on your phone; then [install Svartifoss from Google Play](https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share). The Google Play edition is free through **September 22, 2026**. If Google Play does not show the app immediately, allow a few minutes for the new group membership to sync.
+> Svartifoss is in closed Google Play testing before its public launch, and I am looking for testers. Two steps, both required: [join the Google Group](https://groups.google.com/g/svartifoss-wearos) with the Google account you use on your phone, then [accept the test invitation](https://play.google.com/apps/testing/com.svartifoss.snfell) — that page links straight to Google Play, where you install it on your phone and watch. The Google Play edition is free through **September 22, 2026**. Going to the store listing without accepting the invitation is why it would show the app as unavailable; if you did accept it, allow a few minutes for the new membership to sync.
 
 Select any screenshot in this README to open it at full size.
 
@@ -248,18 +248,18 @@ Svartifoss is not publicly released yet. To join the closed test:
 <table>
   <tr>
     <td width="176" valign="middle">
-      <a href="https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share"><img src="docs/images/PreRegisterOnGooglePlay_Badge_Web_color_english.png" width="160" alt="Pre-register on Google Play" /></a>
+      <a href="https://play.google.com/apps/testing/com.svartifoss.snfell"><img src="docs/images/PreRegisterOnGooglePlay_Badge_Web_color_english.png" width="160" alt="Pre-register on Google Play" /></a>
     </td>
     <td valign="middle">
       <ol>
         <li><a href="https://groups.google.com/g/svartifoss-wearos">Join the Google Group</a> with the Google account you use on your phone.</li>
-        <li>Then <a href="https://play.google.com/store/apps/details?id=com.svartifoss.snfell&pcampaignid=web_share">install from Google Play</a> on your phone and Wear OS watch.</li>
+        <li>Then <a href="https://play.google.com/apps/testing/com.svartifoss.snfell">accept the test invitation</a> and choose to become a tester. That page links straight to Google Play, where you install Svartifoss on your phone and Wear OS watch.</li>
       </ol>
     </td>
   </tr>
 </table>
 
-Google Play can take a few minutes to recognize a new group membership. Updates for the test arrive through Google Play.
+If Google Play says the app is unavailable, the invitation in step 2 is almost always what was missed — going straight to the store listing is not enough. Once accepted, Play can still take a few minutes to recognize the new membership. Updates for the test arrive through Google Play.
 
 The Google Play edition is free through **September 22, 2026**.
 
