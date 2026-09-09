@@ -768,8 +768,8 @@
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
     <string name="notification_access_banner_summary">அனுமதி வழங்க தட்டவும் — அதுவரை playback கட்டுப்பாடு செயலற்றதாக இருக்கும்</string>
     <string name="no_watch_app_title">உங்கள் கடிகாரத்தில் Svartifoss-ஐ நிறுவவும்</string>
-    <string name="no_watch_app_description">இணைக்கப்பட்ட Wear OS கடிகாரத்தில் Svartifoss தனது watch app-ஐக் கண்டுபிடிக்கவில்லை. தொலைபேசி மற்றும் கடிகார apps ஒன்றாக வேலை செய்கின்றன — watch app இல்லாமல் மணிக்கட்டிலிருந்து playback கட்டுப்பாடு இயங்காது.\n\nSvartifoss Play Store-இல் இல்லை — watch app தனியாக sideload செய்யப்படுகிறது (எ.கா. Wear Installer மூலம்). GitHub releases பக்கத்தைத் திறந்து watch APK பெற \"வெளியீடுகளைப் பார்\" என்பதைத் தட்டவும். இப்போது தான் நிறுவியிருந்தால் sync முடிய ஒரு நிமிடம் கொடுக்கவும்.</string>
-    <string name="no_watch_app_button">வெளியீடுகளைப் பார்</string>
+    <string name="no_watch_app_description">இணைக்கப்பட்ட Wear OS கடிகாரத்தில் Svartifoss தனது watch app-ஐக் கண்டுபிடிக்கவில்லை. தொலைபேசி மற்றும் கடிகார apps ஒன்றாக வேலை செய்கின்றன — watch app இல்லாமல் மணிக்கட்டிலிருந்து playback கட்டுப்பாடு இயங்காது.\n\nGoogle Play கடிகார ஆப்ஸை தானாகவே நிறுவும் — இதற்கு சில நிமிடங்கள் ஆகலாம். அது தோன்றவில்லை என்றால், உங்கள் கடிகாரத்தின் Play Store இல் Svartifoss ஐத் திறக்க கீழே தட்டவும்.</string>
+    <string name="no_watch_app_button">கடிகாரத்தில் திற</string>
     <string name="required_permission">தேவையான அனுமதி</string>
     <string name="setting_pause_on_swipe_exit">ஸ்வைப் செய்து வெளியேறும் போது playback-ஐ pause செய்</string>
     <string name="setting_pause_on_swipe_exit_description">கடிகாரத்தில் இடப்புற ஸ்வைப் மூலம் Svartifoss-இலிருந்து வெளியேறும் போது எந்த playback-ஐயும் தானாக pause செய்யவும்.\n\nPower button மூலம் வெளியேறுவது பாதிக்கப்படாது; அப்போது auto-pause எப்போதும் நடக்காது.</string>
@@ -2114,8 +2114,6 @@
     <string name="update_available_line">புதிய பதிப்பு: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(pre-release)</string>
     <string name="update_up_to_date">நீங்கள் சமீபத்திய பதிப்பில் உள்ளீர்கள் (%1$s)</string>
-    <string name="update_no_wear_asset">இந்த release-இல் அனுப்ப watch APK இல்லை.</string>
-    <string name="update_watch_hint">\u201cWatch-ஐ update செய்\u201d புதிய watch app-ஐ download செய்து Bluetooth வழியாக அனுப்பும் \u2014 நிறுவலை watch-இலேயே நீங்கள் உறுதிப்படுத்த வேண்டும்; cable அல்லது Wear Installer தேவையில்லை.</string>
     <string name="update_downloading">பதிவிறக்கப்படுகிறது\u2026 %1$d%%</string>
     <string name="update_connecting_watch">கடிகாரத்துடன் இணைக்கப்படுகிறது\u2026</string>
     <string name="update_transferring">கடிகாரத்துக்கு அனுப்பப்படுகிறது\u2026 %1$d%%</string>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss ไม่พบแอปสำหรับนาฬิกาบนนาฬิกา Wear OS ที่จับคู่ไว้ แอปบนโทรศัพท์และนาฬิกาทำงานร่วมกัน — หากไม่มีแอปบนหน้าจอนาฬิกา การควบคุมการเล่นจากข้อมือจะไม่ทำงาน\n\nSvartifoss ไม่มีใน Play Store — แอปนาฬิกาต้องไซด์โหลดแยกต่างหาก (เช่น ด้วย Wear Installer) แตะ \"ดูรุ่น\" เพื่อเปิดหน้ารุ่นของ GitHub และดาวน์โหลด APK สำหรับนาฬิกา หากเพิ่งติดตั้ง ให้รอสักครู่เพื่อให้การซิงค์เสร็จสิ้น</string>
+    <string name="no_watch_app_button">ดูรุ่น</string>
+    <string name="update_watch_hint">“อัปเดตนาฬิกา” จะดาวน์โหลดแอปนาฬิกาใหม่และส่งผ่าน Bluetooth — คุณยืนยันการติดตั้งบนตัวนาฬิกาได้เลย โดยไม่ต้องใช้สายหรือ Wear Installer</string>
+    <string name="update_no_wear_asset">รุ่นนี้ไม่มี APK สำหรับนาฬิกาให้ส่ง</string>
+</resources>

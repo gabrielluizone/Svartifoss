@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss आपकी पेयर की गई Wear OS घड़ी पर अपना वॉच ऐप नहीं ढूँढ सका। फ़ोन और वॉच ऐप साथ काम करते हैं — वॉच ऐप के बिना कलाई से प्लेबैक नियंत्रित नहीं होगा।
+
+Svartifoss Play Store पर नहीं है — वॉच ऐप अलग से sideload किया जाता है (जैसे Wear Installer से)। GitHub releases पेज खोलने और वॉच APK लेने के लिए \"रिलीज़ देखें\" पर टैप करें। यदि आपने अभी इंस्टॉल किया है, तो सिंक पूरा होने के लिए एक मिनट दें।</string>
+    <string name="no_watch_app_button">रिलीज़ देखें</string>
+    <string name="update_watch_hint">“वॉच अपडेट करें” नया वॉच ऐप डाउनलोड करके Bluetooth से भेजता है — इंस्टॉल की पुष्टि घड़ी पर ही करते हैं, केबल या Wear Installer की ज़रूरत नहीं।</string>
+    <string name="update_no_wear_asset">इस रिलीज़ में भेजने के लिए वॉच APK नहीं है।</string>
+</resources>

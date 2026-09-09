@@ -459,7 +459,15 @@ object ConfigBackup {
         }
     }
 
-    private fun putTypedPreference(
+    /**
+     * Writes one typed envelope from a backup document under [key].
+     *
+     * Exposed for [BundledAppearanceDefaults], which restores individual scoped appearance values
+     * out of the shipped `default_config.json`. It reuses this rather than carrying a second copy
+     * of the type table: a reset that decoded `int` as `string` would write a value the watch then
+     * silently falls back from, which is the failure this whole path exists to remove.
+     */
+    internal fun putTypedPreference(
             editor: SharedPreferences.Editor,
             key: String,
             entry: JSONObject

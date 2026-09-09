@@ -288,8 +288,8 @@
 
     <!-- Overrides for the wearutils "watch app missing" dialog (WearCompanionPhoneActivity) -->
     <string name="no_watch_app_title">Svartifoss auf deiner Uhr installieren</string>
-    <string name="no_watch_app_description">Svartifoss konnte seine Uhren-App auf deiner gekoppelten Wear-OS-Uhr nicht finden. Telefon- und Uhren-App arbeiten zusammen — ohne die Uhren-App funktioniert das Steuern der Wiedergabe vom Handgelenk aus nicht.\n\nSvartifoss ist nicht im Play Store — die Uhren-App wird separat per Sideload installiert (z. B. mit Wear Installer). Tippe auf „Releases ansehen“, um die GitHub-Releases-Seite zu öffnen und die Uhren-APK zu holen. Wenn du sie gerade installiert hast, gib ihr eine Minute zum Synchronisieren.</string>
-    <string name="no_watch_app_button">Releases ansehen</string>
+    <string name="no_watch_app_description">Svartifoss konnte seine Uhren-App auf deiner gekoppelten Wear-OS-Uhr nicht finden. Telefon- und Uhren-App arbeiten zusammen — ohne die Uhren-App funktioniert das Steuern der Wiedergabe vom Handgelenk aus nicht.\n\nGoogle Play installiert die Uhren-App automatisch – das kann einige Minuten dauern. Falls sie nicht erschienen ist, tippe unten, um Svartifoss im Play Store auf deiner Uhr zu öffnen.</string>
+    <string name="no_watch_app_button">Auf der Uhr öffnen</string>
     <string name="required_permission">Erforderliche Berechtigung</string>
     <string name="setting_pause_on_swipe_exit">Wiedergabe beim Wisch-Verlassen pausieren</string>
     <string name="setting_pause_on_swipe_exit_description">Pausiert jede Wiedergabe automatisch, wenn du Svartifoss auf der Uhr per Wischen-nach-links verlässt.\n\nDas Verlassen per Power-Taste ist davon nicht betroffen und pausiert nie automatisch.</string>
@@ -1487,8 +1487,6 @@
     <string name="update_available_line">Neue Version: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(Vorabversion)</string>
     <string name="update_up_to_date">Du hast die neueste Version (%1$s)</string>
-    <string name="update_no_wear_asset">Dieses Release hat keine Uhren-APK zum Senden.</string>
-    <string name="update_watch_hint">„Uhr aktualisieren“ lädt die neue Uhren-App und sendet sie über Bluetooth — du bestätigst die Installation auf der Uhr selbst, kein Kabel oder Wear Installer nötig.</string>
     <string name="update_downloading">Wird heruntergeladen… %1$d%%</string>
     <string name="update_connecting_watch">Verbinde mit der Uhr…</string>
     <string name="update_transferring">Sende an die Uhr… %1$d%%</string>

@@ -347,8 +347,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Pasang Svartifoss pada jam tangan</string>
-    <string name="no_watch_app_description">Svartifoss tidak menemui aplikasi jam tangannya pada jam Wear OS yang dipasangkan. Aplikasi telefon dan jam tangan berfungsi bersama — tanpa aplikasi jam tangan, kawalan main balik dari pergelangan tangan tidak akan berfungsi.\n\nSvartifoss tiada di Play Store — aplikasi jam tangan dipasang secara sideload berasingan (cth. dengan Wear Installer). Ketik \"Lihat keluaran\" untuk membuka halaman keluaran GitHub dan dapatkan APK jam tangan. Jika baru memasangnya, tunggu kira-kira seminit sehingga penyegerakan selesai.</string>
-    <string name="no_watch_app_button">Lihat keluaran</string>
+    <string name="no_watch_app_description">Svartifoss tidak menemui aplikasi jam tangannya pada jam Wear OS yang dipasangkan. Aplikasi telefon dan jam tangan berfungsi bersama — tanpa aplikasi jam tangan, kawalan main balik dari pergelangan tangan tidak akan berfungsi.\n\nGoogle Play memasang apl jam tangan secara automatik — ini mungkin mengambil masa beberapa minit. Jika ia belum muncul, ketik di bawah untuk membuka Svartifoss di Play Store pada jam tangan anda.</string>
+    <string name="no_watch_app_button">Buka pada jam tangan</string>
     <string name="required_permission">Kebenaran diperlukan</string>
     <string name="setting_pause_on_swipe_exit">Jeda main balik apabila keluar dengan leretan</string>
     <string name="setting_pause_on_swipe_exit_description">Jeda sebarang main balik secara automatik apabila keluar daripada Svartifoss pada jam tangan melalui gerak leret kiri.\n\nKeluar melalui butang kuasa tidak terjejas dan tidak akan menjeda secara automatik.</string>
@@ -2155,8 +2155,6 @@
     <string name="update_available_line">Versi baharu: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(prakeluaran)</string>
     <string name="update_up_to_date">Anda menggunakan versi terkini (%1$s)</string>
-    <string name="update_no_wear_asset">Keluaran ini tiada APK jam untuk dihantar.</string>
-    <string name="update_watch_hint">“Kemas kini jam” memuat turun aplikasi jam baharu dan menghantarnya melalui Bluetooth — anda mengesahkan pemasangan pada jam itu sendiri, tanpa kabel atau Wear Installer.</string>
     <string name="update_downloading">Memuat turun… %1$d%%</string>
     <string name="update_connecting_watch">Menyambung ke jam…</string>
     <string name="update_transferring">Menghantar ke jam… %1$d%%</string>

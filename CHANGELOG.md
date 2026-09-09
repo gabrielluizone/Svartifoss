@@ -434,6 +434,62 @@
 
 ### Fixed
 
+- **The "watch app is missing" dialog sent people outside Google Play.** It read "Svartifoss isn't
+  on the Play Store — the watch app is sideloaded separately" and offered a GitHub releases link,
+  which is exactly the wrong instruction to give someone who installed the phone app from Play —
+  and the first thing a reviewer testing only the phone app would see. The wording and the button's
+  destination are now split by how the app was distributed: the GitHub build still sends people to
+  the releases page to fetch the watch APK by hand, while the Play build opens the shared Play
+  Store listing on the watch instead, since phone and watch are one listing sharing an
+  `applicationId` and Play delivers the watch half on its own. The watch's matching "phone app
+  missing" notice is corrected the same way.
+
+- **"Reset this layout" restored a look the app has never shipped.** This is the worst kind of bug
+  a reset can have: it did something, it looked deliberate, and it could not be undone.
+
+  A fresh install does not start from the defaults written next to each row — it starts from a
+  saved setup bundled into the app, which since 3.0 has carried an explicit value for every
+  appearance setting on Classic, Expressive, Poster, Studio, Material and Immersive (and, in this
+  release, on all twenty-two faces). Those are the defaults anyone has ever actually seen. Reset
+  did not restore them; it **deleted** them, and the app then fell back to whatever lay
+  underneath — a built-in per-face default, a leftover setting from before per-face styling
+  existed in 3.0, or the bare value declared in the row. The result was a face nobody had chosen
+  and nobody had ever been shown, from a button whose description promises "its original
+  defaults".
+
+  It was also one-way. Since the only copy of the shipped look was the one reset had just erased,
+  there was no way back to it short of reinstalling the app or importing a backup made before the
+  tap. Reset now writes the shipped values back and removes only the settings the shipped setup
+  never carried, so the button returns the face to how it arrived, in both directions. **Reset all
+  faces to default** — the one-time prompt offered after upgrading from 2.x — is corrected the same
+  way.
+
+  Resetting while one of your own saved themes is active deliberately still clears rather than
+  restores: the bundled setup's theme snapshot is the author's own theme, not a default for
+  anybody else's, so restoring it there would replace your theme with a stranger's instead of
+  resetting it. Cleared, it falls back to its base face's defaults, which is what resetting a
+  theme means.
+
+- **Colours set on one saved theme followed you onto another.** Changing the layout from the watch
+  left the *previous* theme marked as the one in use: the wrist wrote the newly chosen layout's base
+  face but kept pointing at the theme you had switched away from. A theme's appearance is read from
+  one shared snapshot, so the new layout was drawn wearing the old theme's colours, typography and
+  panel styling. Set a colour on the phone, pick a different theme on the watch, and the colour
+  appeared to come across with it — which is indistinguishable from the colours not belonging to
+  each theme at all.
+
+  The same switch also threw the change away. Edits to a theme live in that shared snapshot until
+  something writes them back into the theme they belong to, and every route on the phone does
+  that: leaving the Watch tab, opening the themes screen, making a backup, submitting to the
+  gallery. Switching from the wrist was the one route that did not — and it is the only one that
+  can happen while the phone's editor is still open, so nothing else was there to save the work
+  first. The colour you had just picked was gone from the theme you picked it on.
+
+  Both halves are fixed. A layout chosen on the watch no longer leaves another theme active: it
+  shows that layout's own styling for the moment it takes the phone to send the real theme, the
+  same brief wait choosing a built-in layout has always had. And pending edits are written back
+  before the switch, whether it comes from the watch or from installing a theme out of the gallery.
+
 - **Moving a face's text sideways sent it under the bezel.** The round-screen guard that keeps a
   moved block on the glass only ran when *Text position* had been changed, so choosing a *Text
   alignment* on its own — the commonest thing to do here, and the first row offered — got no

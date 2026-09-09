@@ -364,10 +364,8 @@ Svartifoss bildirimlerinizin içeriğini asla okumaz. Bu izni yalnızca etkin me
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Svartifoss’u saatinize yükleyin</string>
-    <string name="no_watch_app_description">Svartifoss, eşleştirilmiş Wear OS saatinizde saat uygulamasını bulamadı. Telefon ve saat uygulamaları birlikte çalışır — saat uygulaması olmadan oynatmayı bileğinizden kontrol edemezsiniz.
-
-Svartifoss Play Store’da değildir — saat uygulaması ayrı olarak yandan yüklenir (ör. Wear Installer ile). GitHub sürümleri sayfasını açıp saat APK’sını almak için “Sürümleri görüntüle”ye dokunun. Yeni yüklediyseniz eşitlemenin tamamlanması için bir dakika bekleyin.</string>
-    <string name="no_watch_app_button">Sürümleri görüntüle</string>
+    <string name="no_watch_app_description">Svartifoss, eşleştirilmiş Wear OS saatinizde saat uygulamasını bulamadı. Telefon ve saat uygulamaları birlikte çalışır — saat uygulaması olmadan oynatmayı bileğinizden kontrol edemezsiniz.\n\nGoogle Play, saat uygulamasını otomatik olarak yükler — bu birkaç dakika sürebilir. Görünmediyse, saatinizdeki Play Store\'da Svartifoss\'u açmak için aşağıya dokunun.</string>
+    <string name="no_watch_app_button">Saatte aç</string>
     <string name="required_permission">Gerekli izin</string>
     <string name="setting_pause_on_swipe_exit">Kaydırarak çıkarken oynatmayı duraklat</string>
     <string name="setting_pause_on_swipe_exit_description">Saatte sola kaydırma hareketiyle Svartifoss’tan çıkarken tüm oynatmayı otomatik olarak duraklatır.
@@ -2180,8 +2178,6 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     <string name="update_available_line">Yeni sürüm: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(ön sürüm)</string>
     <string name="update_up_to_date">En son sürümdesiniz (%1$s)</string>
-    <string name="update_no_wear_asset">Bu sürümde gönderilecek saat APK’sı yok.</string>
-    <string name="update_watch_hint">“Saati güncelle” yeni saat uygulamasını indirir ve Bluetooth üzerinden gönderir — kurulumu saatin üzerinde onaylarsınız; kabloya veya Wear Installer’a gerek yoktur.</string>
     <string name="update_downloading">İndiriliyor… %1$d%%</string>
     <string name="update_connecting_watch">Saate bağlanılıyor…</string>
     <string name="update_transferring">Saate gönderiliyor… %1$d%%</string>

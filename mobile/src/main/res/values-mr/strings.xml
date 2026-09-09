@@ -768,8 +768,8 @@
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
     <string name="notification_access_banner_summary">परवानगी देण्यासाठी टॅप करा — तोपर्यंत प्लेबॅक नियंत्रण निष्क्रिय राहील</string>
     <string name="no_watch_app_title">तुमच्या घड्याळावर Svartifoss इन्स्टॉल करा</string>
-    <string name="no_watch_app_description">Svartifoss ला पेअर केलेल्या Wear OS घड्याळावर त्याचे watch app सापडले नाही. फोन आणि घड्याळ अॅप्स एकत्र काम करतात — watch app शिवाय मनगटावरून प्लेबॅक नियंत्रित करता येणार नाही.\n\nSvartifoss Play Store वर नाही — watch app स्वतंत्रपणे sideload करावा लागतो (उदा. Wear Installer वापरून). GitHub releases पृष्ठ उघडून watch APK मिळवण्यासाठी \"Releases पहा\" टॅप करा. तुम्ही आत्ताच इन्स्टॉल केले असल्यास sync पूर्ण होण्यासाठी एक मिनिट द्या.</string>
-    <string name="no_watch_app_button">Releases पहा</string>
+    <string name="no_watch_app_description">Svartifoss ला पेअर केलेल्या Wear OS घड्याळावर त्याचे watch app सापडले नाही. फोन आणि घड्याळ अॅप्स एकत्र काम करतात — watch app शिवाय मनगटावरून प्लेबॅक नियंत्रित करता येणार नाही.\n\nGoogle Play घड्याळाचे अ‍ॅप आपोआप इंस्टॉल करते — याला काही मिनिटे लागू शकतात. ते दिसले नसेल, तर तुमच्या घड्याळाच्या Play Store मध्ये Svartifoss उघडण्यासाठी खाली टॅप करा.</string>
+    <string name="no_watch_app_button">घड्याळावर उघडा</string>
     <string name="required_permission">आवश्यक परवानगी</string>
     <string name="setting_pause_on_swipe_exit">स्वाइप करून बाहेर पडताना प्लेबॅक पॉज करा</string>
     <string name="setting_pause_on_swipe_exit_description">घड्याळावर डावीकडे स्वाइप करून Svartifoss मधून बाहेर पडताना कोणतेही प्लेबॅक आपोआप पॉज करा.\n\nपॉवर बटणाने बाहेर पडल्यास याचा परिणाम होत नाही आणि तेव्हा कधीही auto-pause होणार नाही.</string>
@@ -2114,8 +2114,6 @@
     <string name="update_available_line">नवीन आवृत्ती: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(pre-release)</string>
     <string name="update_up_to_date">तुमच्याकडे नवीनतम आवृत्ती आहे (%1$s)</string>
-    <string name="update_no_wear_asset">या release मध्ये पाठवण्यासाठी watch APK नाही.</string>
-    <string name="update_watch_hint">\u201cघड्याळ अपडेट करा\u201d नवीन watch app डाउनलोड करून Bluetooth वरून पाठवते \u2014 स्थापना स्वतः घड्याळावर तुम्ही मंजूर करता; cable किंवा Wear Installer आवश्यक नाही.</string>
     <string name="update_downloading">डाउनलोड होत आहे\u2026 %1$d%%</string>
     <string name="update_connecting_watch">घड्याळाशी कनेक्ट होत आहे\u2026</string>
     <string name="update_transferring">घड्याळाकडे पाठवत आहे\u2026 %1$d%%</string>

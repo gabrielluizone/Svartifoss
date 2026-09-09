@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss kunne ikke finde sin ur-app på dit parrede Wear OS-ur. Telefon- og ur-appen arbejder sammen — uden ur-appen kan afspilning ikke styres fra håndleddet.\n\nSvartifoss findes ikke i Play Butik — ur-appen sideloades separat (f.eks. med Wear Installer). Tryk \"Se udgivelser\" for at åbne GitHub-udgivelsessiden og hente ur-APK\'en. Hvis du lige har installeret den, så giv den et minut til at synkronisere færdig.</string>
+    <string name="no_watch_app_button">Se udgivelser</string>
+    <string name="update_watch_hint">“Opdater ur” downloader den nye urapp og sender den via Bluetooth — du bekræfter installationen på selve uret, uden kabel eller Wear Installer.</string>
+    <string name="update_no_wear_asset">Denne udgivelse har ingen ur-APK, der kan sendes.</string>
+</resources>

@@ -348,8 +348,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Инсталирайте Svartifoss на часовника</string>
-    <string name="no_watch_app_description">Svartifoss не намери приложението си за часовник на сдвоения ви Wear OS часовник. Приложенията на телефона и часовника работят заедно — без приложението на часовника управлението на възпроизвеждането от китката няма да работи.\n\nSvartifoss не е в Play Store — приложението за часовник се инсталира отделно чрез sideload (напр. с Wear Installer). Докоснете \"Преглед на изданията\", за да отворите страницата с издания в GitHub и да изтеглите APK за часовника. Ако току-що сте го инсталирали, изчакайте около минута за завършване на синхронизацията.</string>
-    <string name="no_watch_app_button">Преглед на изданията</string>
+    <string name="no_watch_app_description">Svartifoss не намери приложението си за часовник на сдвоения ви Wear OS часовник. Приложенията на телефона и часовника работят заедно — без приложението на часовника управлението на възпроизвеждането от китката няма да работи.\n\nGoogle Play инсталира приложението за часовника автоматично — това може да отнеме няколко минути. Ако не се е появило, докоснете по-долу, за да отворите Svartifoss в Play Store на часовника си.</string>
+    <string name="no_watch_app_button">Отваряне на часовника</string>
     <string name="required_permission">Необходимо разрешение</string>
     <string name="setting_pause_on_swipe_exit">Пауза при изход с плъзгане</string>
     <string name="setting_pause_on_swipe_exit_description">Автоматично поставяйте на пауза всяко възпроизвеждане при изход от Svartifoss на часовника чрез плъзгане наляво.\n\nИзходът чрез бутона за захранване не се засяга и никога няма да поставя автоматично на пауза.</string>
@@ -2159,8 +2159,6 @@
     <string name="update_available_line">Нова версия: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(предварителна версия)</string>
     <string name="update_up_to_date">Използвате най-новата версия (%1$s)</string>
-    <string name="update_no_wear_asset">Тази версия няма APK за часовника за изпращане.</string>
-    <string name="update_watch_hint">„Актуализиране на часовника“ изтегля новото приложение за часовника и го изпраща чрез Bluetooth — потвърждавате инсталирането на самия часовник, без кабел или Wear Installer.</string>
     <string name="update_downloading">Изтегляне… %1$d%%</string>
     <string name="update_connecting_watch">Свързване с часовника…</string>
     <string name="update_transferring">Изпращане към часовника… %1$d%%</string>

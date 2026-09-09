@@ -288,8 +288,8 @@
 
     <!-- Overrides for the wearutils "watch app missing" dialog -->
     <string name="no_watch_app_title">Instalați Svartifoss pe ceas</string>
-    <string name="no_watch_app_description">Svartifoss nu a putut găsi aplicația sa pentru ceas pe ceasul Wear OS împerecheat. Aplicațiile pentru telefon și ceas lucrează împreună — fără aplicația pentru ceas, controlul redării de la încheietură nu va funcționa.\n\nSvartifoss nu se află în Play Store — aplicația pentru ceas este instalată separat prin sideload (de exemplu cu Wear Installer). Atingeți „Vezi versiunile” pentru a deschide pagina de versiuni GitHub și a obține APK-ul pentru ceas. Dacă tocmai l-ați instalat, oferiți-i un minut pentru a termina sincronizarea.</string>
-    <string name="no_watch_app_button">Vezi versiunile</string>
+    <string name="no_watch_app_description">Svartifoss nu a putut găsi aplicația sa pentru ceas pe ceasul Wear OS împerecheat. Aplicațiile pentru telefon și ceas lucrează împreună — fără aplicația pentru ceas, controlul redării de la încheietură nu va funcționa.\n\nGoogle Play instalează automat aplicația pentru ceas — poate dura câteva minute. Dacă nu a apărut, atinge mai jos pentru a deschide Svartifoss în Play Store de pe ceasul tău.</string>
+    <string name="no_watch_app_button">Deschide pe ceas</string>
     <string name="required_permission">Permisiune necesară</string>
     <string name="setting_pause_on_swipe_exit">Pune redarea pe pauză la ieșirea prin glisare</string>
     <string name="setting_pause_on_swipe_exit_description">Pune automat pauză oricărei redări la ieșirea din Svartifoss pe ceas prin gestul de glisare la stânga.\n\nIeșirea prin butonul de pornire nu este afectată și nu va pune niciodată pauză automat.</string>
@@ -1490,8 +1490,6 @@
     <string name="update_available_line">Versiune nouă: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(pre-lansare)</string>
     <string name="update_up_to_date">Aveți cea mai recentă versiune (%1$s)</string>
-    <string name="update_no_wear_asset">Această lansare nu are un APK de ceas de trimis.</string>
-    <string name="update_watch_hint">„Actualizează ceasul” descarcă noua aplicație pentru ceas și o trimite prin Bluetooth — confirmați instalarea pe ceas însuși, fără cablu sau Wear Installer.</string>
     <string name="update_downloading">Se descarcă… %1$d%%</string>
     <string name="update_connecting_watch">Se conectează la ceas…</string>
     <string name="update_transferring">Se trimite la ceas… %1$d%%</string>

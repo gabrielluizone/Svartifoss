@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss couldn\'t find its watch app on your paired Wear OS watch. The phone and watch apps work together — without the watch app, controlling playback from your wrist won\'t work.\n\nSvartifoss isn\'t on the Play Store — the watch app is sideloaded separately (e.g. with Wear Installer). Tap \"View releases\" to open the GitHub releases page and grab the watch APK. If you just installed it, give it a minute to finish syncing.</string>
+    <string name="no_watch_app_button">View releases</string>
+    <string name="update_watch_hint">\u201cUpdate watch\u201d downloads the new watch app and sends it over Bluetooth \u2014 you confirm the install on the watch itself, no cable or Wear Installer needed.</string>
+    <string name="update_no_wear_asset">This release has no watch APK to send.</string>
+</resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss nu a putut găsi aplicația sa pentru ceas pe ceasul Wear OS împerecheat. Aplicațiile pentru telefon și ceas lucrează împreună — fără aplicația pentru ceas, controlul redării de la încheietură nu va funcționa.\n\nSvartifoss nu se află în Play Store — aplicația pentru ceas este instalată separat prin sideload (de exemplu cu Wear Installer). Atingeți „Vezi versiunile” pentru a deschide pagina de versiuni GitHub și a obține APK-ul pentru ceas. Dacă tocmai l-ați instalat, oferiți-i un minut pentru a termina sincronizarea.</string>
+    <string name="no_watch_app_button">Vezi versiunile</string>
+    <string name="update_watch_hint">„Actualizează ceasul” descarcă noua aplicație pentru ceas și o trimite prin Bluetooth — confirmați instalarea pe ceas însuși, fără cablu sau Wear Installer.</string>
+    <string name="update_no_wear_asset">Această lansare nu are un APK de ceas de trimis.</string>
+</resources>

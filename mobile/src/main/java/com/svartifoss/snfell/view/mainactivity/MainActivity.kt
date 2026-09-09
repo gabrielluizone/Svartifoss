@@ -77,7 +77,6 @@ private const val NOTIFICATION_ACCESS_PROMPTED_PREF = "notification_access_promp
 
 private const val BUY_ME_A_COFFEE_URL = "https://buymeacoffee.com/gabrielsvafoss"
 private const val KOFI_URL = "https://ko-fi.com/gabrielsvafoss"
-private const val SVARTIFOSS_RELEASES_URL = "https://github.com/gabrielluizone/Svartifoss/releases"
 
 class MainActivity : WearCompanionPhoneActivity(),
         TitledActivity, ActivityResultReceiver, HasAndroidInjector {
@@ -1464,21 +1463,12 @@ class MainActivity : WearCompanionPhoneActivity(),
 
     override fun getWatchAppPresenceCapability(): String = CommPaths.WATCH_APP_CAPABILITY
 
-    // The base implementation remote-opens a market:// URI on the WATCH - a dead end now that
-    // the app isn't on the Play Store (this used to be the "dummy Google Play page" users hit).
-    // There's also no useful action a watch browser could take anyway: installing the watch APK
-    // is a phone-side Wear Installer sideload, not something triggered from a watch web link. So
-    // this opens the GitHub releases page locally on the phone instead, mirroring the fix already
-    // applied to the watch's equivalent "phone app missing" notice (which opens GitHub, not the
-    // Play Store, via PhoneAppNoticeActivity in wearutils).
-    override fun openWatchPlayStorePage() {
-        val releasesIntent = Intent(Intent.ACTION_VIEW, Uri.parse(SVARTIFOSS_RELEASES_URL))
-        try {
-            startActivity(releasesIntent)
-        } catch (e: Exception) {
-            Timber.e(e, "Activity start crash")
-        }
-    }
+    // Where this leads depends on how the app was distributed, so it is answered by the flavour
+    // rather than here: the sideload build opens the GitHub releases page on the phone, while the
+    // Play build remote-opens the shared listing on the watch (the `wearutils` base behaviour,
+    // which was only ever wrong while the app was off the Play Store). The dialog's wording is
+    // split the same way, through each flavour's own `no_watch_app_description`.
+    override fun openWatchPlayStorePage() = WatchAppInstallRoute.open(this)
 
     @Suppress("UNCHECKED_CAST")
     override fun androidInjector(): AndroidInjector<Any> {

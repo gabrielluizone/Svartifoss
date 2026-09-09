@@ -347,8 +347,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">ウォッチに Svartifoss をインストール</string>
-    <string name="no_watch_app_description">ペアリング済みの Wear OS ウォッチで Svartifoss のウォッチアプリが見つかりませんでした。スマートフォンとウォッチのアプリは連携して動作するため、ウォッチアプリがないと手首から再生を操作できません。\n\nSvartifoss は Play ストアにはありません。ウォッチアプリは別途サイドロードします（例: Wear Installer）。「リリースを見る」をタップして GitHub のリリースページを開き、ウォッチ APK を取得してください。インストールしたばかりの場合は、同期が完了するまで1分ほど待ってください。</string>
-    <string name="no_watch_app_button">リリースを見る</string>
+    <string name="no_watch_app_description">ペアリング済みの Wear OS ウォッチで Svartifoss のウォッチアプリが見つかりませんでした。スマートフォンとウォッチのアプリは連携して動作するため、ウォッチアプリがないと手首から再生を操作できません。\n\nGoogle Play がウォッチアプリを自動的にインストールします。数分かかることがあります。表示されていない場合は、下をタップしてウォッチの Play ストアで Svartifoss を開いてください。</string>
+    <string name="no_watch_app_button">ウォッチで開く</string>
     <string name="required_permission">必要な権限</string>
     <string name="setting_pause_on_swipe_exit">スワイプ終了時に再生を一時停止</string>
     <string name="setting_pause_on_swipe_exit_description">ウォッチで左スワイプして Svartifoss を終了すると、再生中の内容を自動的に一時停止します。\n\n電源ボタンから終了した場合は影響せず、自動一時停止もしません。</string>
@@ -2155,8 +2155,6 @@
     <string name="update_available_line">新しいバージョン: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">（プレリリース）</string>
     <string name="update_up_to_date">最新バージョン (%1$s) を使用しています</string>
-    <string name="update_no_wear_asset">このリリースには送信できるウォッチ APK がありません。</string>
-    <string name="update_watch_hint">「ウォッチをアップデート」は新しいウォッチアプリをダウンロードし、Bluetooth で送信します。インストールはウォッチ側で確認します。ケーブルや Wear Installer は不要です。</string>
     <string name="update_downloading">ダウンロード中… %1$d%%</string>
     <string name="update_connecting_watch">ウォッチに接続しています…</string>
     <string name="update_transferring">ウォッチに送信中… %1$d%%</string>

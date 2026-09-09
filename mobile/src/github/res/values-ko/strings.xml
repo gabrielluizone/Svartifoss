@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss가 페어링된 Wear OS 시계에서 시계 앱을 찾지 못했습니다. 휴대전화와 시계 앱은 함께 작동하므로 시계 앱이 없으면 손목에서 재생을 제어할 수 없습니다.\n\nSvartifoss는 Play 스토어에 없습니다. 시계 앱은 별도로 사이드로드됩니다(예: Wear Installer). \"릴리스 보기\"를 탭하여 GitHub 릴리스 페이지를 열고 시계 APK를 받으세요. 방금 설치했다면 동기화가 끝날 때까지 1분 정도 기다리세요.</string>
+    <string name="no_watch_app_button">릴리스 보기</string>
+    <string name="update_watch_hint">“시계 업데이트”는 새 시계 앱을 다운로드하여 Bluetooth로 전송합니다. 설치는 시계에서 직접 확인하며 케이블이나 Wear Installer가 필요하지 않습니다.</string>
+    <string name="update_no_wear_asset">이 릴리스에는 전송할 시계 APK가 없습니다.</string>
+</resources>

@@ -287,8 +287,8 @@
 
     <!-- Overrides for the wearutils "watch app missing" dialog -->
     <string name="no_watch_app_title">Svartifoss را روی ساعت خود نصب کنید</string>
-    <string name="no_watch_app_description">Svartifoss نتوانست برنامه ساعت خود را روی ساعت Wear OS جفت‌شده شما پیدا کند. برنامه‌های گوشی و ساعت با هم کار می‌کنند — بدون برنامه ساعت، کنترل پخش از مچ دست شما کار نخواهد کرد.\n\nSvartifoss در فروشگاه Play نیست — برنامه ساعت جداگانه از طریق sideload (مثلاً با Wear Installer) نصب می‌شود. برای باز کردن صفحه انتشارات گیت‌هاب و دریافت فایل APK ساعت، روی «مشاهده انتشارات» ضربه بزنید. اگر همین حالا آن را نصب کرده‌اید، یک دقیقه فرصت دهید تا همگام‌سازی کامل شود.</string>
-    <string name="no_watch_app_button">مشاهده انتشارات</string>
+    <string name="no_watch_app_description">Svartifoss نتوانست برنامه ساعت خود را روی ساعت Wear OS جفت‌شده شما پیدا کند. برنامه‌های گوشی و ساعت با هم کار می‌کنند — بدون برنامه ساعت، کنترل پخش از مچ دست شما کار نخواهد کرد.\n\nGoogle Play برنامهٔ ساعت را به‌طور خودکار نصب می‌کند — این کار ممکن است چند دقیقه طول بکشد. اگر ظاهر نشده است، برای باز کردن Svartifoss در Play Store ساعتتان روی گزینهٔ زیر ضربه بزنید.</string>
+    <string name="no_watch_app_button">باز کردن روی ساعت</string>
     <string name="required_permission">مجوز مورد نیاز</string>
     <string name="setting_pause_on_swipe_exit">مکث پخش هنگام خروج با کشیدن</string>
     <string name="setting_pause_on_swipe_exit_description">هنگام خروج از Svartifoss روی ساعت با حرکت کشیدن به چپ، هر پخشی را به‌طور خودکار متوقف می‌کند.\n\nخروج از طریق دکمه روشن/خاموش تحت‌تأثیر قرار نمی‌گیرد و هرگز به‌طور خودکار مکث نمی‌کند.</string>
@@ -1486,8 +1486,6 @@
     <string name="update_available_line">نسخه جدید: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(پیش‌انتشار)</string>
     <string name="update_up_to_date">شما در جدیدترین نسخه هستید (%1$s)</string>
-    <string name="update_no_wear_asset">این انتشار هیچ فایل APK ساعتی برای ارسال ندارد.</string>
-    <string name="update_watch_hint">«به‌روزرسانی ساعت» برنامه جدید ساعت را دانلود کرده و از طریق بلوتوث ارسال می‌کند — شما نصب را روی خود ساعت تأیید می‌کنید، بدون نیاز به کابل یا Wear Installer.</string>
     <string name="update_downloading">در حال دانلود… %1$d٪</string>
     <string name="update_connecting_watch">در حال اتصال به ساعت…</string>
     <string name="update_transferring">در حال ارسال به ساعت… %1$d٪</string>

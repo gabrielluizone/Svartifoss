@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss không tìm thấy ứng dụng dành cho đồng hồ trên đồng hồ Wear OS đã ghép nối. Ứng dụng điện thoại và đồng hồ hoạt động cùng nhau — nếu không có ứng dụng đồng hồ, bạn sẽ không thể điều khiển phát từ cổ tay.
+
+Svartifoss không có trên Play Store — ứng dụng đồng hồ được sideload riêng (ví dụ bằng Wear Installer). Nhấn \"Xem bản phát hành\" để mở trang phát hành GitHub và tải APK dành cho đồng hồ. Nếu bạn vừa cài, hãy chờ một phút để đồng bộ hoàn tất.</string>
+    <string name="no_watch_app_button">Xem bản phát hành</string>
+    <string name="update_watch_hint">“Cập nhật đồng hồ” tải ứng dụng đồng hồ mới và gửi qua Bluetooth — bạn xác nhận cài đặt trên chính đồng hồ, không cần cáp hay Wear Installer.</string>
+    <string name="update_no_wear_asset">Bản phát hành này không có APK đồng hồ để gửi.</string>
+</resources>

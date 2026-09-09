@@ -287,8 +287,8 @@
 
     <!-- Overrides for the wearutils "watch app missing" dialog -->
     <string name="no_watch_app_title">Εγκαταστήστε το Svartifoss στο ρολόι σας</string>
-    <string name="no_watch_app_description">Το Svartifoss δεν κατάφερε να βρει την εφαρμογή ρολογιού του στο συζευγμένο ρολόι Wear OS σας. Οι εφαρμογές τηλεφώνου και ρολογιού λειτουργούν μαζί — χωρίς την εφαρμογή ρολογιού, ο έλεγχος της αναπαραγωγής από τον καρπό σας δεν θα λειτουργήσει.\n\nΤο Svartifoss δεν βρίσκεται στο Play Store — η εφαρμογή ρολογιού εγκαθίσταται ξεχωριστά με sideload (π.χ. με Wear Installer). Πατήστε \"Προβολή εκδόσεων\" για να ανοίξετε τη σελίδα εκδόσεων του GitHub και να πάρετε το APK του ρολογιού. Αν μόλις το εγκαταστήσατε, δώστε του ένα λεπτό να ολοκληρώσει τον συγχρονισμό.</string>
-    <string name="no_watch_app_button">Προβολή εκδόσεων</string>
+    <string name="no_watch_app_description">Το Svartifoss δεν κατάφερε να βρει την εφαρμογή ρολογιού του στο συζευγμένο ρολόι Wear OS σας. Οι εφαρμογές τηλεφώνου και ρολογιού λειτουργούν μαζί — χωρίς την εφαρμογή ρολογιού, ο έλεγχος της αναπαραγωγής από τον καρπό σας δεν θα λειτουργήσει.\n\nΤο Google Play εγκαθιστά την εφαρμογή του ρολογιού αυτόματα — αυτό μπορεί να διαρκέσει μερικά λεπτά. Αν δεν εμφανίστηκε, πατήστε παρακάτω για να ανοίξετε το Svartifoss στο Play Store του ρολογιού σας.</string>
+    <string name="no_watch_app_button">Άνοιγμα στο ρολόι</string>
     <string name="required_permission">Απαιτούμενη άδεια</string>
     <string name="setting_pause_on_swipe_exit">Παύση αναπαραγωγής κατά την έξοδο με σύρσιμο</string>
     <string name="setting_pause_on_swipe_exit_description">Θέτει αυτόματα σε παύση οποιαδήποτε αναπαραγωγή κατά την έξοδο από το Svartifoss στο ρολόι μέσω της χειρονομίας σύρσιμο-αριστερά.\n\nΗ έξοδος μέσω κουμπιού λειτουργίας δεν επηρεάζεται και δεν θα θέσει ποτέ αυτόματα σε παύση.</string>
@@ -1486,8 +1486,6 @@
     <string name="update_available_line">Νέα έκδοση: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(προ-έκδοση)</string>
     <string name="update_up_to_date">Έχετε την τελευταία έκδοση (%1$s)</string>
-    <string name="update_no_wear_asset">Αυτή η έκδοση δεν έχει APK ρολογιού για αποστολή.</string>
-    <string name="update_watch_hint">Το \"Ενημέρωση ρολογιού\" κατεβάζει τη νέα εφαρμογή ρολογιού και τη στέλνει μέσω Bluetooth — επιβεβαιώνετε την εγκατάσταση στο ίδιο το ρολόι, χωρίς καλώδιο ή Wear Installer.</string>
     <string name="update_downloading">Λήψη… %1$d%%</string>
     <string name="update_connecting_watch">Σύνδεση με το ρολόι…</string>
     <string name="update_transferring">Αποστολή στο ρολόι… %1$d%%</string>

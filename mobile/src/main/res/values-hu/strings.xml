@@ -365,10 +365,8 @@ Koppintson a \"Beállítások megnyitása\" lehetőségre, majd kapcsolja be a S
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Telepítse a Svartifosst az órára</string>
-    <string name="no_watch_app_description">A Svartifoss nem találta az óraalkalmazását a párosított Wear OS-órán. A telefonos és óraalkalmazás együtt működik — az óraalkalmazás nélkül a csuklóról történő lejátszásvezérlés nem működik.
-
-A Svartifoss nincs a Play Áruházban — az óraalkalmazást külön kell sideloadolni (pl. Wear Installerrel). Koppintson a \"Kiadások megtekintése\" elemre a GitHub kiadási oldalának megnyitásához és az óra APK-jának letöltéséhez. Ha most telepítette, várjon egy percet a szinkronizálás befejezésére.</string>
-    <string name="no_watch_app_button">Kiadások megtekintése</string>
+    <string name="no_watch_app_description">A Svartifoss nem találta az óraalkalmazását a párosított Wear OS-órán. A telefonos és óraalkalmazás együtt működik — az óraalkalmazás nélkül a csuklóról történő lejátszásvezérlés nem működik.\n\nA Google Play automatikusan telepíti az óraalkalmazást – ez néhány percet vehet igénybe. Ha nem jelent meg, koppintson alább a Svartifoss megnyitásához az óra Play Áruházában.</string>
+    <string name="no_watch_app_button">Megnyitás az órán</string>
     <string name="required_permission">Szükséges engedély</string>
     <string name="setting_pause_on_swipe_exit">Lejátszás szüneteltetése húzásos kilépéskor</string>
     <string name="setting_pause_on_swipe_exit_description">Automatikusan szünetelteti a lejátszást, amikor balra húzással kilép a Svartifossból az órán.
@@ -2184,8 +2182,6 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
     <string name="update_available_line">Új verzió: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(előzetes kiadás)</string>
     <string name="update_up_to_date">A legújabb verziót használja (%1$s)</string>
-    <string name="update_no_wear_asset">Ehhez a kiadáshoz nincs elküldhető óra-APK.</string>
-    <string name="update_watch_hint">Az „Óra frissítése” letölti az új óraalkalmazást, és Bluetoothon elküldi — a telepítést magán az órán erősíti meg, kábel vagy Wear Installer nélkül.</string>
     <string name="update_downloading">Letöltés… %1$d%%</string>
     <string name="update_connecting_watch">Kapcsolódás az órához…</string>
     <string name="update_transferring">Küldés az órára… %1$d%%</string>

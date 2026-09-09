@@ -318,8 +318,8 @@
     <string name="notification_access_banner_summary">Ýttu til að veita hana — spilunarstýring er óvirk þar til þú gerir það</string>
 
     <string name="no_watch_app_title">Settu Svartifoss upp á úrið þitt</string>
-    <string name="no_watch_app_description">Svartifoss fann ekki úraforritið sitt á parðaða Wear OS-úrinu þínu. Síma- og úraöppin vinna saman — án úraforritsins mun stýring spilunar frá úlnliðnum ekki virka.\n\nSvartifoss er ekki á Play Store — úraforritið er sett upp sérstaklega utan verslunar (t.d. með Wear Installer). Ýttu á \"Skoða útgáfur\" til að opna GitHub útgáfusíðuna og sækja APK-skrá úrsins. Ef þú settir það rétt upp, gefðu því mínútu til að ljúka samstillingu.</string>
-    <string name="no_watch_app_button">Skoða útgáfur</string>
+    <string name="no_watch_app_description">Svartifoss fann ekki úraforritið sitt á parðaða Wear OS-úrinu þínu. Síma- og úraöppin vinna saman — án úraforritsins mun stýring spilunar frá úlnliðnum ekki virka.\n\nGoogle Play setur úrsforritið upp sjálfkrafa — það getur tekið nokkrar mínútur. Ef það hefur ekki birst skaltu ýta hér fyrir neðan til að opna Svartifoss í Play Store á úrinu þínu.</string>
+    <string name="no_watch_app_button">Opna á úrinu</string>
     <string name="required_permission">Nauðsynleg heimild</string>
     <string name="setting_pause_on_swipe_exit">Pása spilun þegar farið er út með stroki</string>
     <string name="setting_pause_on_swipe_exit_description">Pása sjálfkrafa alla spilun þegar Svartifoss er lokað á úrinu með stroki-til-vinstri.\n\nAð fara út með aflhnappi hefur ekki áhrif og pásar aldrei sjálfkrafa.</string>
@@ -2112,8 +2112,6 @@
     <string name="update_available_line">Ný útgáfa: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(forútgáfa)</string>
     <string name="update_up_to_date">Þú ert með nýjustu útgáfuna (%1$s)</string>
-    <string name="update_no_wear_asset">Þessi útgáfa er ekki með APK-skrá fyrir úr til að senda.</string>
-    <string name="update_watch_hint">“Uppfæra úr” sækir nýja úraforritið og sendir það um Bluetooth — þú staðfestir uppsetninguna á úrinu sjálfu, engin snúra eða Wear Installer er nauðsynleg.</string>
     <string name="update_downloading">Sæki… %1$d%%</string>
     <string name="update_connecting_watch">Tengist úrinu…</string>
     <string name="update_transferring">Sendi á úrið… %1$d%%</string>

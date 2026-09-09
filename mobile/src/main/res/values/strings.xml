@@ -483,8 +483,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Install Svartifoss on your watch</string>
-    <string name="no_watch_app_description">Svartifoss couldn\'t find its watch app on your paired Wear OS watch. The phone and watch apps work together — without the watch app, controlling playback from your wrist won\'t work.\n\nSvartifoss isn\'t on the Play Store — the watch app is sideloaded separately (e.g. with Wear Installer). Tap \"View releases\" to open the GitHub releases page and grab the watch APK. If you just installed it, give it a minute to finish syncing.</string>
-    <string name="no_watch_app_button">View releases</string>
+    <string name="no_watch_app_description">Svartifoss couldn\'t find its watch app on your paired Wear OS watch. The phone and watch apps work together — without the watch app, controlling playback from your wrist won\'t work.\n\nGoogle Play installs the watch app automatically — this can take a few minutes. If it hasn\'t appeared, tap below to open Svartifoss in the Play Store on your watch.</string>
+    <string name="no_watch_app_button">Open on watch</string>
     <string name="required_permission">Required permission</string>
     <string name="setting_pause_on_swipe_exit">Pause playback on swipe exit</string>
     <string name="setting_pause_on_swipe_exit_description">Automatically pause any playback when exiting Svartifoss on the watch via swipe-left gesture.\n\nExiting via power button is not affected and it will never auto-pause.</string>
@@ -2705,8 +2705,6 @@
     <string name="update_available_line">New version: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(pre-release)</string>
     <string name="update_up_to_date">You are on the latest version (%1$s)</string>
-    <string name="update_no_wear_asset">This release has no watch APK to send.</string>
-    <string name="update_watch_hint">\u201cUpdate watch\u201d downloads the new watch app and sends it over Bluetooth \u2014 you confirm the install on the watch itself, no cable or Wear Installer needed.</string>
     <string name="update_downloading">Downloading\u2026 %1$d%%</string>
     <string name="update_connecting_watch">Connecting to the watch\u2026</string>
     <string name="update_transferring">Sending to the watch\u2026 %1$d%%</string>

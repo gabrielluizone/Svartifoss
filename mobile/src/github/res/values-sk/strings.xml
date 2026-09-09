@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss nenašiel svoju aplikáciu pre hodinky na spárovaných hodinkách Wear OS. Aplikácie telefónu a hodiniek fungujú spolu — bez aplikácie v hodinkách nebude ovládanie prehrávania zo zápästia fungovať.\n\nSvartifoss nie je v Obchode Play — aplikácia hodiniek sa inštaluje samostatne cez sideload (napr. pomocou Wear Installer). Ťuknite na \"Zobraziť vydania\", otvorte stránku vydaní GitHub a stiahnite APK pre hodinky. Ak ste ju práve nainštalovali, počkajte asi minútu na dokončenie synchronizácie.</string>
+    <string name="no_watch_app_button">Zobraziť vydania</string>
+    <string name="update_watch_hint">„Aktualizovať hodinky“ stiahne novú aplikáciu pre hodinky a odošle ju cez Bluetooth — inštaláciu potvrdíte priamo na hodinkách, bez kábla alebo Wear Installer.</string>
+    <string name="update_no_wear_asset">Toto vydanie nemá APK pre hodinky na odoslanie.</string>
+</resources>

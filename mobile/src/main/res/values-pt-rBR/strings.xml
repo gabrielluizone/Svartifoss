@@ -346,8 +346,8 @@
          app-module strings win over the library's, so these replace the outdated, typo'd
          ("Anroid Wear 2") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Instale o Svartifoss no seu relógio</string>
-    <string name="no_watch_app_description">O Svartifoss não encontrou o app do relógio no seu Wear OS pareado. Os apps do celular e do relógio trabalham juntos — sem o app do relógio, controlar a reprodução pelo pulso não vai funcionar.\n\nO Svartifoss não está na Play Store — o app do relógio é instalado separadamente (ex.: com o Wear Installer). Toque em \"Ver releases\" para abrir a página de releases no GitHub e baixar o APK do relógio. Se você acabou de instalá-lo, dê um minuto para terminar de sincronizar.</string>
-    <string name="no_watch_app_button">Ver releases</string>
+    <string name="no_watch_app_description">O Svartifoss não encontrou o app do relógio no seu Wear OS pareado. Os apps do celular e do relógio trabalham juntos — sem o app do relógio, controlar a reprodução pelo pulso não vai funcionar.\n\nO Google Play instala o app do relógio automaticamente — isso pode levar alguns minutos. Se ele não apareceu, toque abaixo para abrir o Svartifoss na Play Store do seu relógio.</string>
+    <string name="no_watch_app_button">Abrir no relógio</string>
     <string name="required_permission">Permissão necessária</string>
     <string name="setting_pause_on_swipe_exit">Pausar reprodução ao sair com deslize</string>
     <string name="setting_pause_on_swipe_exit_description">Pausa automaticamente qualquer reprodução ao sair do Svartifoss no relógio pelo gesto de deslizar para a esquerda.\n\nSair pelo botão de força não é afetado e nunca pausa automaticamente.</string>
@@ -1592,8 +1592,6 @@
     <string name="update_available_line">Nova versão: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(pre-release)</string>
     <string name="update_up_to_date">Você está na versão mais recente (%1$s)</string>
-    <string name="update_no_wear_asset">Esta release não tem APK do relógio para enviar.</string>
-    <string name="update_watch_hint">\u201cAtualizar relógio\u201d baixa o novo app do relógio e envia por Bluetooth \u2014 você confirma a instalação no próprio relógio, sem cabo nem Wear Installer.</string>
     <string name="update_downloading">Baixando\u2026 %1$d%%</string>
     <string name="update_connecting_watch">Conectando ao relógio\u2026</string>
     <string name="update_transferring">Enviando ao relógio\u2026 %1$d%%</string>

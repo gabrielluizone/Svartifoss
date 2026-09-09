@@ -22,6 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.WatchFacePicks
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.watch.communication.PhoneConnection
 import com.svartifoss.snfell.watch.config.PreferencesBus
@@ -176,20 +177,31 @@ class FacePickerActivity : ComponentActivity() {
      * how picking one of your own themes used to visibly switch the watch to the wrong face. So
      * for a theme this applies its *base* face locally, which is the part the watch can honestly
      * render on its own, and lets the phone deliver the rest.
+     *
+     * The corollary is that it must also *deactivate* whatever was active, which is
+     * [WatchFacePicks]'s whole subject - see there for why picking a theme while another one was on
+     * left the watch wearing the previous theme's colours.
      */
     private fun applyFace(prefs: android.content.SharedPreferences, option: WatchFaceOption) {
         // Recorded against the option's own key, so a saved theme and the built-in face it is based
         // on are remembered separately - they are different picks and appear in different sections.
         FaceRecency.recordUse(prefs, option.key)
+        // Decided by WatchFacePicks, which carries the reasoning: whatever was picked, the write
+        // must not leave the *previous* theme active. This used to clear the theme metadata only
+        // for a built-in pick, so switching between two saved themes rendered the new layout
+        // wearing the old theme's colours until the phone delivered the real snapshot.
+        val pick = WatchFacePicks.localWriteFor(
+                optionBaseFace = option.baseFace,
+                isCustomTheme = option.isCustomTheme,
+                customThemeId = option.key.removePrefix(WatchFaceOption.CUSTOM_PREFIX))
         prefs.edit().apply {
-            putString(MiscPreferences.WEAR_SCREEN_FACE.key, option.baseFace)
-            if (!option.isCustomTheme) {
-                // Mirrors MusicService.applyScreenFaceFromWatch. Without it a watch that currently
-                // has a theme active keeps resolving to that theme, and picking a built-in face
-                // does nothing at all until the phone syncs back.
+            putString(MiscPreferences.WEAR_SCREEN_FACE.key, pick.baseFace)
+            if (pick.activeCustomThemeId == null) {
                 remove(MiscPreferences.WEAR_ACTIVE_CUSTOM_THEME_ID.key)
-                putBoolean(MiscPreferences.WEAR_CUSTOM_THEME_COMPLETE.key, false)
+            } else {
+                putString(MiscPreferences.WEAR_ACTIVE_CUSTOM_THEME_ID.key, pick.activeCustomThemeId)
             }
+            putBoolean(MiscPreferences.WEAR_CUSTOM_THEME_COMPLETE.key, pick.customComplete)
         }.apply()
         // Writing the file is not enough on its own: MainActivity re-reads its appearance only when
         // PreferencesBus emits (that is how a phone sync applies), and it does not reload on

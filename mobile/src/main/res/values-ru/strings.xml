@@ -289,8 +289,8 @@
 
     <!-- Overrides for the wearutils "watch app missing" dialog -->
     <string name="no_watch_app_title">Установите Svartifoss на часы</string>
-    <string name="no_watch_app_description">Svartifoss не удалось найти своё приложение для часов на сопряжённых часах Wear OS. Приложения для телефона и часов работают вместе — без приложения для часов управление воспроизведением с запястья работать не будет.\n\nSvartifoss нет в Play Store — приложение для часов устанавливается отдельно способом sideload (например, с помощью Wear Installer). Нажмите «Смотреть версии», чтобы открыть страницу релизов GitHub и скачать APK для часов. Если вы только что установили его, дайте минуту на завершение синхронизации.</string>
-    <string name="no_watch_app_button">Смотреть версии</string>
+    <string name="no_watch_app_description">Svartifoss не удалось найти своё приложение для часов на сопряжённых часах Wear OS. Приложения для телефона и часов работают вместе — без приложения для часов управление воспроизведением с запястья работать не будет.\n\nGoogle Play устанавливает приложение для часов автоматически — это может занять несколько минут. Если оно не появилось, нажмите ниже, чтобы открыть Svartifoss в Play Маркете на часах.</string>
+    <string name="no_watch_app_button">Открыть на часах</string>
     <string name="required_permission">Требуемое разрешение</string>
     <string name="setting_pause_on_swipe_exit">Ставить на паузу при выходе свайпом</string>
     <string name="setting_pause_on_swipe_exit_description">Автоматически ставит любое воспроизведение на паузу при выходе из Svartifoss на часах жестом свайпа влево.\n\nВыход кнопкой питания на это не влияет и никогда не ставит на паузу автоматически.</string>
@@ -1494,8 +1494,6 @@
     <string name="update_available_line">Новая версия: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(предварительная версия)</string>
     <string name="update_up_to_date">У вас последняя версия (%1$s)</string>
-    <string name="update_no_wear_asset">В этом релизе нет APK для часов для отправки.</string>
-    <string name="update_watch_hint">«Обновить часы» скачивает новое приложение для часов и отправляет его по Bluetooth — вы подтверждаете установку на самих часах, без кабеля или Wear Installer.</string>
     <string name="update_downloading">Скачивание… %1$d%%</string>
     <string name="update_connecting_watch">Подключение к часам…</string>
     <string name="update_transferring">Отправка на часы… %1$d%%</string>

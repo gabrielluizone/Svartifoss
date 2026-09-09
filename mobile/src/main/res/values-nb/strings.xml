@@ -365,10 +365,8 @@ Trykk på \"Åpne innstillinger\", og slå deretter på Svartifoss under varslin
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Installer Svartifoss på klokken</string>
-    <string name="no_watch_app_description">Svartifoss fant ikke klokkeappen sin på den parede Wear OS-klokken. Telefon- og klokkeappen fungerer sammen — uten klokkeappen vil styring av avspilling fra håndleddet ikke fungere.
-
-Svartifoss finnes ikke i Play Butikk — klokkeappen sidelastes separat (f.eks. med Wear Installer). Trykk på \"Vis utgivelser\" for å åpne utgivelsessiden på GitHub og hente APK-en for klokken. Hvis du nettopp installerte den, gi synkroniseringen et minutt til å fullføres.</string>
-    <string name="no_watch_app_button">Vis utgivelser</string>
+    <string name="no_watch_app_description">Svartifoss fant ikke klokkeappen sin på den parede Wear OS-klokken. Telefon- og klokkeappen fungerer sammen — uten klokkeappen vil styring av avspilling fra håndleddet ikke fungere.\n\nGoogle Play installerer klokke-appen automatisk – det kan ta noen minutter. Hvis den ikke har dukket opp, trykk nedenfor for å åpne Svartifoss i Play Butikk på klokken.</string>
+    <string name="no_watch_app_button">Åpne på klokken</string>
     <string name="required_permission">Nødvendig tillatelse</string>
     <string name="setting_pause_on_swipe_exit">Pause avspilling ved avslutning med sveip</string>
     <string name="setting_pause_on_swipe_exit_description">Pause all avspilling automatisk når du avslutter Svartifoss på klokken med et sveip til venstre.
@@ -2184,8 +2182,6 @@ Når Vibration Center får klokken til å vibrere, viser Svartifoss en popup med
     <string name="update_available_line">Ny versjon: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(forhåndsutgivelse)</string>
     <string name="update_up_to_date">Du bruker den nyeste versjonen (%1$s)</string>
-    <string name="update_no_wear_asset">Denne utgivelsen har ingen klokke-APK å sende.</string>
-    <string name="update_watch_hint">«Oppdater klokken» laster ned den nye klokkeappen og sender den via Bluetooth — du bekrefter installasjonen på selve klokken, uten kabel eller Wear Installer.</string>
     <string name="update_downloading">Laster ned… %1$d%%</string>
     <string name="update_connecting_watch">Kobler til klokken…</string>
     <string name="update_transferring">Sender til klokken… %1$d%%</string>

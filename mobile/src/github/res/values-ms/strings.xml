@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss tidak menemui aplikasi jam tangannya pada jam Wear OS yang dipasangkan. Aplikasi telefon dan jam tangan berfungsi bersama — tanpa aplikasi jam tangan, kawalan main balik dari pergelangan tangan tidak akan berfungsi.\n\nSvartifoss tiada di Play Store — aplikasi jam tangan dipasang secara sideload berasingan (cth. dengan Wear Installer). Ketik \"Lihat keluaran\" untuk membuka halaman keluaran GitHub dan dapatkan APK jam tangan. Jika baru memasangnya, tunggu kira-kira seminit sehingga penyegerakan selesai.</string>
+    <string name="no_watch_app_button">Lihat keluaran</string>
+    <string name="update_watch_hint">“Kemas kini jam” memuat turun aplikasi jam baharu dan menghantarnya melalui Bluetooth — anda mengesahkan pemasangan pada jam itu sendiri, tanpa kabel atau Wear Installer.</string>
+    <string name="update_no_wear_asset">Keluaran ini tiada APK jam untuk dihantar.</string>
+</resources>

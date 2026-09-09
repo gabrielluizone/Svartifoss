@@ -348,8 +348,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Installer Svartifoss på dit ur</string>
-    <string name="no_watch_app_description">Svartifoss kunne ikke finde sin ur-app på dit parrede Wear OS-ur. Telefon- og ur-appen arbejder sammen — uden ur-appen kan afspilning ikke styres fra håndleddet.\n\nSvartifoss findes ikke i Play Butik — ur-appen sideloades separat (f.eks. med Wear Installer). Tryk \"Se udgivelser\" for at åbne GitHub-udgivelsessiden og hente ur-APK\'en. Hvis du lige har installeret den, så giv den et minut til at synkronisere færdig.</string>
-    <string name="no_watch_app_button">Se udgivelser</string>
+    <string name="no_watch_app_description">Svartifoss kunne ikke finde sin ur-app på dit parrede Wear OS-ur. Telefon- og ur-appen arbejder sammen — uden ur-appen kan afspilning ikke styres fra håndleddet.\n\nGoogle Play installerer ur-appen automatisk – det kan tage et par minutter. Hvis den ikke er dukket op, skal du trykke nedenfor for at åbne Svartifoss i Play Butik på uret.</string>
+    <string name="no_watch_app_button">Åbn på uret</string>
     <string name="required_permission">Påkrævet tilladelse</string>
     <string name="setting_pause_on_swipe_exit">Sæt afspilning på pause ved stryge-afslutning</string>
     <string name="setting_pause_on_swipe_exit_description">Sæt automatisk al afspilning på pause, når du afslutter Svartifoss på uret med et stryg til venstre.\n\nAfslutning med tænd/sluk-knappen påvirkes ikke og vil aldrig automatisk sætte på pause.</string>
@@ -2159,8 +2159,6 @@
     <string name="update_available_line">Ny version: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(forhåndsudgivelse)</string>
     <string name="update_up_to_date">Du bruger den nyeste version (%1$s)</string>
-    <string name="update_no_wear_asset">Denne udgivelse har ingen ur-APK, der kan sendes.</string>
-    <string name="update_watch_hint">“Opdater ur” downloader den nye urapp og sender den via Bluetooth — du bekræfter installationen på selve uret, uden kabel eller Wear Installer.</string>
     <string name="update_downloading">Downloader… %1$d%%</string>
     <string name="update_connecting_watch">Opretter forbindelse til uret…</string>
     <string name="update_transferring">Sender til uret… %1$d%%</string>

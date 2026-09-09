@@ -369,10 +369,8 @@ Svartifoss — أعمدة بازلت سوداء
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">ثبّت Svartifoss على ساعتك</string>
-    <string name="no_watch_app_description">تعذّر على Svartifoss العثور على تطبيق الساعة على ساعة Wear OS المقترنة. يعمل تطبيق الهاتف والساعة معًا — ومن دون تطبيق الساعة لن يعمل التحكم بالتشغيل من معصمك.
-
-Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبيق الساعة منفصلًا عبر sideload (مثلًا باستخدام Wear Installer). انقر على \"عرض الإصدارات\" لفتح صفحة إصدارات GitHub وتنزيل APK الخاص بالساعة. إذا كنت قد ثبّتّه للتو، فامنحه دقيقة لإكمال المزامنة.</string>
-    <string name="no_watch_app_button">عرض الإصدارات</string>
+    <string name="no_watch_app_description">تعذّر على Svartifoss العثور على تطبيق الساعة على ساعة Wear OS المقترنة. يعمل تطبيق الهاتف والساعة معًا — ومن دون تطبيق الساعة لن يعمل التحكم بالتشغيل من معصمك.\n\nيقوم Google Play بتثبيت تطبيق الساعة تلقائيًا، وقد يستغرق ذلك بضع دقائق. إذا لم يظهر، فانقر أدناه لفتح Svartifoss في متجر Play على ساعتك.</string>
+    <string name="no_watch_app_button">فتح على الساعة</string>
     <string name="required_permission">إذن مطلوب</string>
     <string name="setting_pause_on_swipe_exit">إيقاف التشغيل مؤقتًا عند الخروج بالسحب</string>
     <string name="setting_pause_on_swipe_exit_description">إيقاف أي تشغيل تلقائيًا عند الخروج من Svartifoss على الساعة عبر إيماءة السحب لليسار.
@@ -2200,8 +2198,6 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
     <string name="update_available_line">إصدار جديد: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(إصدار تجريبي)</string>
     <string name="update_up_to_date">أنت تستخدم أحدث إصدار (%1$s)</string>
-    <string name="update_no_wear_asset">لا يحتوي هذا الإصدار على APK للساعة لإرساله.</string>
-    <string name="update_watch_hint">يقوم “تحديث الساعة” بتنزيل تطبيق الساعة الجديد وإرساله عبر Bluetooth — تؤكد التثبيت على الساعة نفسها، من دون كابل أو Wear Installer.</string>
     <string name="update_downloading">جارٍ التنزيل… %1$d%%</string>
     <string name="update_connecting_watch">جارٍ الاتصال بالساعة…</string>
     <string name="update_transferring">جارٍ الإرسال إلى الساعة… %1$d%%</string>

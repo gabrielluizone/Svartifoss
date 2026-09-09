@@ -348,8 +348,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">ঘড়িতে Svartifoss ইনস্টল করুন</string>
-    <string name="no_watch_app_description">Svartifoss আপনার পেয়ার করা Wear OS ঘড়িতে তার ঘড়ি অ্যাপ খুঁজে পায়নি। ফোন ও ঘড়ির অ্যাপ একসঙ্গে কাজ করে—ঘড়ির অ্যাপ ছাড়া কবজি থেকে প্লেব্যাক নিয়ন্ত্রণ কাজ করবে না।\n\nSvartifoss Play Store-এ নেই—ঘড়ির অ্যাপ আলাদাভাবে sideload করতে হয় (যেমন Wear Installer দিয়ে)। GitHub releases পৃষ্ঠা খুলে ঘড়ির APK পেতে \"রিলিজ দেখুন\" ট্যাপ করুন। এখনই ইনস্টল করলে সিঙ্ক শেষ হতে প্রায় এক মিনিট দিন।</string>
-    <string name="no_watch_app_button">রিলিজ দেখুন</string>
+    <string name="no_watch_app_description">Svartifoss আপনার পেয়ার করা Wear OS ঘড়িতে তার ঘড়ি অ্যাপ খুঁজে পায়নি। ফোন ও ঘড়ির অ্যাপ একসঙ্গে কাজ করে—ঘড়ির অ্যাপ ছাড়া কবজি থেকে প্লেব্যাক নিয়ন্ত্রণ কাজ করবে না।\n\nGoogle Play স্বয়ংক্রিয়ভাবে ঘড়ির অ্যাপটি ইনস্টল করে — এতে কয়েক মিনিট লাগতে পারে। যদি এটি না আসে, আপনার ঘড়ির Play Store-এ Svartifoss খুলতে নিচে ট্যাপ করুন।</string>
+    <string name="no_watch_app_button">ঘড়িতে খুলুন</string>
     <string name="required_permission">প্রয়োজনীয় অনুমতি</string>
     <string name="setting_pause_on_swipe_exit">সোয়াইপ করে বের হলে প্লেব্যাক পজ করুন</string>
     <string name="setting_pause_on_swipe_exit_description">ঘড়িতে বামে সোয়াইপ করে Svartifoss থেকে বের হলে যেকোনো প্লেব্যাক স্বয়ংক্রিয়ভাবে পজ করুন।\n\nপাওয়ার বাটন দিয়ে বের হলে প্রভাব পড়বে না এবং কখনো অটো-পজ হবে না।</string>
@@ -2159,8 +2159,6 @@
     <string name="update_available_line">নতুন সংস্করণ: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(প্রাক-রিলিজ)</string>
     <string name="update_up_to_date">আপনি সর্বশেষ সংস্করণ (%1$s) ব্যবহার করছেন</string>
-    <string name="update_no_wear_asset">এই রিলিজে পাঠানোর মতো ঘড়ির APK নেই।</string>
-    <string name="update_watch_hint">“ঘড়ি আপডেট করুন” নতুন ঘড়ি অ্যাপ ডাউনলোড করে Bluetooth-এর মাধ্যমে পাঠায় — ইনস্টলেশন ঘড়িতেই নিশ্চিত করবেন, কোনো কেবল বা Wear Installer লাগবে না।</string>
     <string name="update_downloading">ডাউনলোড হচ্ছে… %1$d%%</string>
     <string name="update_connecting_watch">ঘড়ির সাথে সংযোগ করা হচ্ছে…</string>
     <string name="update_transferring">ঘড়িতে পাঠানো হচ্ছে… %1$d%%</string>

@@ -40,7 +40,10 @@ data class WatchFaceOption(
  *
  * A face with no label entry is dropped rather than shown with a placeholder: an unnamed row in a
  * picker is worse than one fewer row, and the omission is a build-time mistake to fix, not a state
- * to render.
+ * to render. That drop is silent by construction, which is how "artist" reached every other
+ * registry - the phone's picker, the preview, the constraints asset, the rules - and stayed
+ * unselectable from the wrist with nothing anywhere naming a cause, so `WatchFaceCatalogTest`
+ * turns the missing label into a failing build instead.
  */
 object WatchFaceCatalog {
 
@@ -63,8 +66,10 @@ object WatchFaceCatalog {
             "note" to R.string.face_name_note,
             "verse" to R.string.face_name_verse,
             "metadata" to R.string.face_name_metadata,
+            "artist" to R.string.face_name_artist,
             "ribbon" to R.string.face_name_ribbon,
-            "frame" to R.string.face_name_frame
+            "frame" to R.string.face_name_frame,
+            "matejdro" to R.string.face_name_matejdro
     )
 
     /**

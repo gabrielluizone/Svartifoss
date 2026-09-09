@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss nije pronašao svoju aplikaciju za sat na uparenom Wear OS satu. Aplikacije telefona i sata rade zajedno — bez aplikacije na satu upravljanje reprodukcijom sa zapešća neće raditi.\n\nSvartifoss nije u Play trgovini — aplikacija za sat zasebno se instalira sideloadom (npr. pomoću Wear Installer). Dodirnite \"Prikaži izdanja\" da biste otvorili GitHub stranicu izdanja i preuzeli APK za sat. Ako ste je upravo instalirali, pričekajte oko minutu da se sinkronizacija dovrši.</string>
+    <string name="no_watch_app_button">Prikaži izdanja</string>
+    <string name="update_watch_hint">„Ažuriraj sat” preuzima novu aplikaciju za sat i šalje je putem Bluetootha — instalaciju potvrđujete na samom satu, bez kabela ili Wear Installera.</string>
+    <string name="update_no_wear_asset">Ovo izdanje nema APK za sat koji se može poslati.</string>
+</resources>

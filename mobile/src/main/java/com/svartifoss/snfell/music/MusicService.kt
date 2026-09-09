@@ -2135,10 +2135,19 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private fun applyScreenFaceFromWatch(rawFace: String) {
         val face = rawFace.trim()
         if (face.isEmpty()) return
-        
+
+        // Every custom theme shares the one `custom_active` scope, so an edit made in the Watch
+        // editor lives *only* there until something writes it back into the profile it belongs to.
+        // Both branches below overwrite or invalidate that scope, and this was the one route to
+        // either that never captured first - the phone's own paths all do (WatchFaceFragment.onStop
+        // and the themes screen's onCreate/onResume). Switching from the wrist therefore discarded
+        // whatever the user had just changed, silently and unrecoverably: the values were gone
+        // before any screen that could have saved them was next opened.
+        val repository = WatchThemeRepository(this)
+        repository.captureActive(preferences)
+
         if (face.startsWith("custom:")) {
             val themeId = face.removePrefix("custom:")
-            val repository = WatchThemeRepository(this)
             val profile = repository.profiles.find { it.id == themeId }
             if (profile != null) {
                 repository.applyProfile(preferences, profile)

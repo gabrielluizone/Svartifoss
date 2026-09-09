@@ -348,8 +348,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Asenna Svartifoss kelloon</string>
-    <string name="no_watch_app_description">Svartifoss ei löytänyt kellosovellustaan paritetusta Wear OS -kellosta. Puhelin- ja kellosovellukset toimivat yhdessä — ilman kellosovellusta toistoa ei voi hallita ranteesta.\n\nSvartifoss ei ole Play Kaupassa — kellosovellus sivuladataan erikseen (esim. Wear Installerilla). Avaa GitHubin julkaisusivu napauttamalla \"Näytä julkaisut\" ja lataa kellon APK. Jos asensit sen juuri, odota noin minuutti synkronoinnin valmistumista.</string>
-    <string name="no_watch_app_button">Näytä julkaisut</string>
+    <string name="no_watch_app_description">Svartifoss ei löytänyt kellosovellustaan paritetusta Wear OS -kellosta. Puhelin- ja kellosovellukset toimivat yhdessä — ilman kellosovellusta toistoa ei voi hallita ranteesta.\n\nGoogle Play asentaa kellosovelluksen automaattisesti – siinä voi kestää muutaman minuutin. Jos se ei ole ilmestynyt, avaa Svartifoss kellosi Play Kaupassa napauttamalla alta.</string>
+    <string name="no_watch_app_button">Avaa kellossa</string>
     <string name="required_permission">Vaadittu lupa</string>
     <string name="setting_pause_on_swipe_exit">Keskeytä toisto pyyhkäisypoistumisessa</string>
     <string name="setting_pause_on_swipe_exit_description">Keskeytä automaattisesti kaikki toisto, kun poistut Svartifossista kellossa pyyhkäisemällä vasemmalle.\n\nVirtapainikkeella poistuminen ei vaikuta tähän eikä koskaan keskeytä automaattisesti.</string>
@@ -2159,8 +2159,6 @@
     <string name="update_available_line">Uusi versio: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(esijulkaisu)</string>
     <string name="update_up_to_date">Käytössäsi on uusin versio (%1$s)</string>
-    <string name="update_no_wear_asset">Tässä julkaisussa ei ole lähetettävää kellon APK:ta.</string>
-    <string name="update_watch_hint">”Päivitä kello” lataa uuden kellosovelluksen ja lähettää sen Bluetoothin kautta — vahvistat asennuksen itse kellossa ilman kaapelia tai Wear Installeria.</string>
     <string name="update_downloading">Ladataan… %1$d%%</string>
     <string name="update_connecting_watch">Yhdistetään kelloon…</string>
     <string name="update_transferring">Lähetetään kelloon… %1$d%%</string>

@@ -364,10 +364,8 @@ Nhấn \"Mở Cài đặt\", sau đó bật Svartifoss trong quyền truy cập 
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Cài Svartifoss trên đồng hồ</string>
-    <string name="no_watch_app_description">Svartifoss không tìm thấy ứng dụng dành cho đồng hồ trên đồng hồ Wear OS đã ghép nối. Ứng dụng điện thoại và đồng hồ hoạt động cùng nhau — nếu không có ứng dụng đồng hồ, bạn sẽ không thể điều khiển phát từ cổ tay.
-
-Svartifoss không có trên Play Store — ứng dụng đồng hồ được sideload riêng (ví dụ bằng Wear Installer). Nhấn \"Xem bản phát hành\" để mở trang phát hành GitHub và tải APK dành cho đồng hồ. Nếu bạn vừa cài, hãy chờ một phút để đồng bộ hoàn tất.</string>
-    <string name="no_watch_app_button">Xem bản phát hành</string>
+    <string name="no_watch_app_description">Svartifoss không tìm thấy ứng dụng dành cho đồng hồ trên đồng hồ Wear OS đã ghép nối. Ứng dụng điện thoại và đồng hồ hoạt động cùng nhau — nếu không có ứng dụng đồng hồ, bạn sẽ không thể điều khiển phát từ cổ tay.\n\nGoogle Play tự động cài đặt ứng dụng đồng hồ — quá trình này có thể mất vài phút. Nếu ứng dụng chưa xuất hiện, hãy nhấn bên dưới để mở Svartifoss trong Cửa hàng Play trên đồng hồ của bạn.</string>
+    <string name="no_watch_app_button">Mở trên đồng hồ</string>
     <string name="required_permission">Quyền bắt buộc</string>
     <string name="setting_pause_on_swipe_exit">Tạm dừng khi vuốt để thoát</string>
     <string name="setting_pause_on_swipe_exit_description">Tự động tạm dừng mọi nội dung đang phát khi thoát Svartifoss trên đồng hồ bằng cử chỉ vuốt trái.
@@ -2180,8 +2178,6 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
     <string name="update_available_line">Phiên bản mới: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(bản phát hành trước)</string>
     <string name="update_up_to_date">Bạn đang dùng phiên bản mới nhất (%1$s)</string>
-    <string name="update_no_wear_asset">Bản phát hành này không có APK đồng hồ để gửi.</string>
-    <string name="update_watch_hint">“Cập nhật đồng hồ” tải ứng dụng đồng hồ mới và gửi qua Bluetooth — bạn xác nhận cài đặt trên chính đồng hồ, không cần cáp hay Wear Installer.</string>
     <string name="update_downloading">Đang tải xuống… %1$d%%</string>
     <string name="update_connecting_watch">Đang kết nối với đồng hồ…</string>
     <string name="update_transferring">Đang gửi tới đồng hồ… %1$d%%</string>

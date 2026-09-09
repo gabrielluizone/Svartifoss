@@ -286,8 +286,8 @@
 
     <!-- Overrides for the wearutils "watch app missing" dialog -->
     <string name="no_watch_app_title">在你的手表上安装 Svartifoss</string>
-    <string name="no_watch_app_description">Svartifoss 未能在你配对的 Wear OS 手表上找到其手表应用。手机和手表应用需要协同工作——没有手表应用，从手腕控制播放将无法实现。\n\nSvartifoss 不在 Play 商店上架——手表应用需要通过侧载方式单独安装（例如使用 Wear Installer）。点按「查看发布版本」以打开 GitHub 发布页面并获取手表 APK。如果你刚安装完，请给它一分钟时间完成同步。</string>
-    <string name="no_watch_app_button">查看发布版本</string>
+    <string name="no_watch_app_description">Svartifoss 未能在你配对的 Wear OS 手表上找到其手表应用。手机和手表应用需要协同工作——没有手表应用，从手腕控制播放将无法实现。\n\nGoogle Play 会自动安装手表应用，这可能需要几分钟。如果还没有出现，请点按下方在手表的 Play 商店中打开 Svartifoss。</string>
+    <string name="no_watch_app_button">在手表上打开</string>
     <string name="required_permission">所需权限</string>
     <string name="setting_pause_on_swipe_exit">滑动退出时暂停播放</string>
     <string name="setting_pause_on_swipe_exit_description">当你通过向左滑动手势在手表上退出 Svartifoss 时，自动暂停任何正在进行的播放。\n\n通过电源键退出不受影响，且永远不会自动暂停。</string>
@@ -1482,8 +1482,6 @@
     <string name="update_available_line">新版本：%1$s（%2$s）</string>
     <string name="update_prerelease_marker">（预发布版本）</string>
     <string name="update_up_to_date">你已是最新版本（%1$s）</string>
-    <string name="update_no_wear_asset">此发布版本没有可发送的手表 APK。</string>
-    <string name="update_watch_hint">「更新手表」会下载新的手表应用并通过蓝牙发送——你在手表本身确认安装，无需数据线或 Wear Installer。</string>
     <string name="update_downloading">正在下载… %1$d%%</string>
     <string name="update_connecting_watch">正在连接手表…</string>
     <string name="update_transferring">正在发送到手表… %1$d%%</string>

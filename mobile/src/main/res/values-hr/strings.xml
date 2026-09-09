@@ -349,8 +349,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Instalirajte Svartifoss na sat</string>
-    <string name="no_watch_app_description">Svartifoss nije pronašao svoju aplikaciju za sat na uparenom Wear OS satu. Aplikacije telefona i sata rade zajedno — bez aplikacije na satu upravljanje reprodukcijom sa zapešća neće raditi.\n\nSvartifoss nije u Play trgovini — aplikacija za sat zasebno se instalira sideloadom (npr. pomoću Wear Installer). Dodirnite \"Prikaži izdanja\" da biste otvorili GitHub stranicu izdanja i preuzeli APK za sat. Ako ste je upravo instalirali, pričekajte oko minutu da se sinkronizacija dovrši.</string>
-    <string name="no_watch_app_button">Prikaži izdanja</string>
+    <string name="no_watch_app_description">Svartifoss nije pronašao svoju aplikaciju za sat na uparenom Wear OS satu. Aplikacije telefona i sata rade zajedno — bez aplikacije na satu upravljanje reprodukcijom sa zapešća neće raditi.\n\nGoogle Play automatski instalira aplikaciju za sat — to može potrajati nekoliko minuta. Ako se nije pojavila, dodirnite ispod da otvorite Svartifoss u Play Storeu na satu.</string>
+    <string name="no_watch_app_button">Otvori na satu</string>
     <string name="required_permission">Potrebna dozvola</string>
     <string name="setting_pause_on_swipe_exit">Pauziraj pri izlasku povlačenjem</string>
     <string name="setting_pause_on_swipe_exit_description">Automatski pauzirajte svaku reprodukciju pri izlasku iz Svartifossa na satu gestom povlačenja ulijevo.\n\nIzlazak putem gumba za napajanje nije obuhvaćen i nikada neće automatski pauzirati.</string>
@@ -2163,8 +2163,6 @@
     <string name="update_available_line">Nova verzija: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(predizdanje)</string>
     <string name="update_up_to_date">Koristite najnoviju verziju (%1$s)</string>
-    <string name="update_no_wear_asset">Ovo izdanje nema APK za sat koji se može poslati.</string>
-    <string name="update_watch_hint">„Ažuriraj sat” preuzima novu aplikaciju za sat i šalje je putem Bluetootha — instalaciju potvrđujete na samom satu, bez kabela ili Wear Installera.</string>
     <string name="update_downloading">Preuzimanje… %1$d%%</string>
     <string name="update_connecting_watch">Povezivanje sa satom…</string>
     <string name="update_transferring">Slanje na sat… %1$d%%</string>

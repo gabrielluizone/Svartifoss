@@ -292,8 +292,8 @@
 
     <!-- Overrides for the wearutils "watch app missing" dialog -->
     <string name="no_watch_app_title">Installeer Svartifoss op je horloge</string>
-    <string name="no_watch_app_description">Svartifoss kon zijn horloge-app niet vinden op je gekoppelde Wear OS-horloge. De telefoon- en horloge-app werken samen — zonder de horloge-app werkt het bedienen van afspelen vanaf je pols niet.\n\nSvartifoss staat niet in de Play Store — de horloge-app wordt apart via sideload geïnstalleerd (bijvoorbeeld met Wear Installer). Tik op \"Releases bekijken\" om de GitHub-releasepagina te openen en de horloge-APK te downloaden. Als je hem net hebt geïnstalleerd, geef hem dan een minuut om te synchroniseren.</string>
-    <string name="no_watch_app_button">Releases bekijken</string>
+    <string name="no_watch_app_description">Svartifoss kon zijn horloge-app niet vinden op je gekoppelde Wear OS-horloge. De telefoon- en horloge-app werken samen — zonder de horloge-app werkt het bedienen van afspelen vanaf je pols niet.\n\nGoogle Play installeert de horloge-app automatisch — dit kan een paar minuten duren. Als hij niet is verschenen, tik hieronder om Svartifoss te openen in de Play Store op je horloge.</string>
+    <string name="no_watch_app_button">Openen op horloge</string>
     <string name="required_permission">Vereiste toestemming</string>
     <string name="setting_pause_on_swipe_exit">Afspelen pauzeren bij afsluiten via vegen</string>
     <string name="setting_pause_on_swipe_exit_description">Pauzeert automatisch alles wat afspeelt wanneer je Svartifoss op het horloge verlaat via het naar-links-vegen-gebaar.\n\nAfsluiten via de aan/uit-knop wordt hier niet door beïnvloed en pauzeert nooit automatisch.</string>
@@ -1491,8 +1491,6 @@
     <string name="update_available_line">Nieuwe versie: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(voorafgaande release)</string>
     <string name="update_up_to_date">Je hebt de nieuwste versie (%1$s)</string>
-    <string name="update_no_wear_asset">Deze release heeft geen horloge-APK om te versturen.</string>
-    <string name="update_watch_hint">\"Horloge bijwerken\" downloadt de nieuwe horloge-app en stuurt hem via Bluetooth — je bevestigt de installatie op het horloge zelf, geen kabel of Wear Installer nodig.</string>
     <string name="update_downloading">Downloaden… %1$d%%</string>
     <string name="update_connecting_watch">Verbinden met het horloge…</string>
     <string name="update_transferring">Versturen naar het horloge… %1$d%%</string>

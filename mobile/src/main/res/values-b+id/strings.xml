@@ -286,8 +286,8 @@
 
     <!-- Overrides for the wearutils "watch app missing" dialog -->
     <string name="no_watch_app_title">Instal Svartifoss di jam tangan Anda</string>
-    <string name="no_watch_app_description">Svartifoss tidak dapat menemukan aplikasi jam tangannya di jam tangan Wear OS yang dipasangkan. Aplikasi ponsel dan jam tangan bekerja sama — tanpa aplikasi jam tangan, mengontrol pemutaran dari pergelangan tangan Anda tidak akan berfungsi.\n\nSvartifoss tidak ada di Play Store — aplikasi jam tangan diinstal secara terpisah melalui sideload (misalnya dengan Wear Installer). Ketuk \"Lihat rilis\" untuk membuka halaman rilis GitHub dan ambil APK jam tangan. Jika Anda baru saja menginstalnya, beri waktu satu menit untuk menyelesaikan sinkronisasi.</string>
-    <string name="no_watch_app_button">Lihat rilis</string>
+    <string name="no_watch_app_description">Svartifoss tidak dapat menemukan aplikasi jam tangannya di jam tangan Wear OS yang dipasangkan. Aplikasi ponsel dan jam tangan bekerja sama — tanpa aplikasi jam tangan, mengontrol pemutaran dari pergelangan tangan Anda tidak akan berfungsi.\n\nGoogle Play memasang aplikasi jam tangan secara otomatis — ini bisa memakan waktu beberapa menit. Jika belum muncul, ketuk di bawah untuk membuka Svartifoss di Play Store pada jam tangan Anda.</string>
+    <string name="no_watch_app_button">Buka di jam tangan</string>
     <string name="required_permission">Izin yang diperlukan</string>
     <string name="setting_pause_on_swipe_exit">Jeda pemutaran saat keluar dengan geseran</string>
     <string name="setting_pause_on_swipe_exit_description">Secara otomatis jeda pemutaran apa pun saat keluar dari Svartifoss di jam tangan melalui gestur geser-kiri.\n\nKeluar melalui tombol daya tidak terpengaruh dan tidak akan pernah menjeda secara otomatis.</string>
@@ -1482,8 +1482,6 @@
     <string name="update_available_line">Versi baru: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(pra-rilis)</string>
     <string name="update_up_to_date">Anda menggunakan versi terbaru (%1$s)</string>
-    <string name="update_no_wear_asset">Rilis ini tidak memiliki APK jam tangan untuk dikirim.</string>
-    <string name="update_watch_hint">“Perbarui jam tangan” mengunduh aplikasi jam tangan baru dan mengirimkannya melalui Bluetooth — Anda mengonfirmasi instalasi di jam tangan itu sendiri, tanpa kabel atau Wear Installer yang diperlukan.</string>
     <string name="update_downloading">Mengunduh… %1$d%%</string>
     <string name="update_connecting_watch">Menghubungkan ke jam tangan…</string>
     <string name="update_transferring">Mengirim ke jam tangan… %1$d%%</string>

@@ -43,6 +43,7 @@ import timber.log.Timber
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
+import com.svartifoss.snfell.config.BundledAppearanceDefaults
 import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.DeviceLocalAppearance
 import com.svartifoss.snfell.common.FaceScopedPreferences
@@ -159,10 +160,15 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             WatchThemeRepository(context).applyBuiltIn(prefs, currentFace)
 
             val editor = prefs.edit()
+            for (face in ThemeAppearance.ALLOWED_BASE_FACES) {
+                BundledAppearanceDefaults.restoreScope(context, editor, face)
+            }
             for (baseKey in FaceScopedPreferences.SCOPED_KEYS) {
-                for (face in ThemeAppearance.ALLOWED_BASE_FACES) {
-                    editor.remove(FaceScopedPreferences.scopedKey(baseKey, face))
-                }
+                // The custom snapshot is cleared rather than restored, for the reason
+                // [resetCurrentFaceAppearance] documents: the shipped `custom_active` scope is the
+                // author's own theme. The legacy pre-3.0 globals go too - every face has just been
+                // given its shipped value, so a global can now only ever leak into a key the
+                // shipped setup did not carry.
                 editor.remove(FaceScopedPreferences.scopedKey(baseKey, ThemeAppearance.CUSTOM_SCOPE))
                 editor.remove(baseKey)
             }
@@ -4946,11 +4952,31 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      *  scoped appearance keys are touched; behaviour prefs and the face selector are untouched.
      *  Writing (removing) the flat scoped keys triggers the normal phone -> watch sync, and the
      *  preview/controls re-read via refreshConditionalPreferences below. */
+    /**
+     * Restores the current scope to the appearance the app actually shipped with.
+     *
+     * It used to only *delete* this scope's keys, which is not the same thing: a fresh install
+     * seeds ~160 explicit `key@face` values per face from `default_config.json`, so deleting them
+     * dropped the face to a per-face default, a leftover pre-3.0 global or the definition default -
+     * a look that has never shipped to anybody, and one the user could not get back out of without
+     * reinstalling. [BundledAppearanceDefaults] writes the shipped values back and removes only
+     * what the shipped setup never carried.
+     *
+     * An **active custom theme** is the deliberate exception and keeps the old clear-only path.
+     * `custom_active` in the shipped document is the author's *own* saved theme, not a default for
+     * anybody else's, so restoring it here would replace the user's theme with a stranger's rather
+     * than reset it. Cleared, the Custom context falls back to its base face's defaults, which is
+     * what resetting a theme means.
+     */
     private fun resetCurrentFaceAppearance() {
         val currentScope = FaceScopedPreferences.scopeFor(ThemeAppearance.resolve(rawPrefs))
         val editor = rawPrefs.edit()
-        for (baseKey in FaceScopedPreferences.SCOPED_KEYS) {
-            editor.remove(FaceScopedPreferences.scopedKey(baseKey, currentScope))
+        if (currentScope == ThemeAppearance.CUSTOM_SCOPE) {
+            for (baseKey in FaceScopedPreferences.SCOPED_KEYS) {
+                editor.remove(FaceScopedPreferences.scopedKey(baseKey, currentScope))
+            }
+        } else {
+            BundledAppearanceDefaults.restoreScope(requireContext(), editor, currentScope)
         }
         editor.apply()
         // The preference controls cache their shown values; re-inflate the screen so it reflects

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss kunde inte hitta sin klockapp på din parkopplade Wear OS-klocka. Telefon- och klockapparna arbetar tillsammans — utan klockappen fungerar inte uppspelningskontroll från handleden.
+
+Svartifoss finns inte i Play Butik — klockappen sidoladdas separat (t.ex. med Wear Installer). Tryck på \"Visa utgåvor\" för att öppna utgåvesidan på GitHub och hämta klockans APK. Om du precis installerade den, ge synkroniseringen en minut att slutföras.</string>
+    <string name="no_watch_app_button">Visa utgåvor</string>
+    <string name="update_watch_hint">”Uppdatera klockan” hämtar den nya klockappen och skickar den via Bluetooth — du bekräftar installationen på själva klockan, utan kabel eller Wear Installer.</string>
+    <string name="update_no_wear_asset">Den här utgåvan har ingen APK för klockan att skicka.</string>
+</resources>

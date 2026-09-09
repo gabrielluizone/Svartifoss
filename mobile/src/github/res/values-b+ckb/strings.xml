@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss نەیتوانی ئەپی کاتژمێری خۆی لەسەر کاتژمێری Wear OS ـی هاوتاکراو بدۆزێتەوە. ئەپی مۆبایل و کاتژمێر پێکەوە کار دەکەن — بێ ئەپی کاتژمێر، کۆنترۆڵکردنی پخش لە مەچەکەت کار ناکات.\n\nSvartifoss لە Play Store نییە — ئەپی کاتژمێر بە جیا sideload دەکرێت (بۆ نموونە بە Wear Installer). لە \"وەشانەکان ببینە\" بدە بۆ کردنەوەی پەڕەی GitHub releases و وەرگرتنی watch APK. ئەگەر هەر ئێستا دامەزراندووتە، یەک خولەک بدە تا sync تەواو بێت.</string>
+    <string name="no_watch_app_button">وەشانەکان ببینە</string>
+    <string name="update_watch_hint">\u201cکاتژمێر نوێ بکەرەوە\u201d ئەپی نوێی کاتژمێر دادەگرێت و بە Bluetooth دەنێرێت \u2014 تۆ لەسەر خودی کاتژمێر دامەزراندن پشتڕاست دەکەیتەوە؛ cable یان Wear Installer پێویست نییە.</string>
+    <string name="update_no_wear_asset">ئەم release ـە watch APK ـێکی بۆ ناردن نییە.</string>
+</resources>

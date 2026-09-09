@@ -347,8 +347,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">시계에 Svartifoss 설치</string>
-    <string name="no_watch_app_description">Svartifoss가 페어링된 Wear OS 시계에서 시계 앱을 찾지 못했습니다. 휴대전화와 시계 앱은 함께 작동하므로 시계 앱이 없으면 손목에서 재생을 제어할 수 없습니다.\n\nSvartifoss는 Play 스토어에 없습니다. 시계 앱은 별도로 사이드로드됩니다(예: Wear Installer). \"릴리스 보기\"를 탭하여 GitHub 릴리스 페이지를 열고 시계 APK를 받으세요. 방금 설치했다면 동기화가 끝날 때까지 1분 정도 기다리세요.</string>
-    <string name="no_watch_app_button">릴리스 보기</string>
+    <string name="no_watch_app_description">Svartifoss가 페어링된 Wear OS 시계에서 시계 앱을 찾지 못했습니다. 휴대전화와 시계 앱은 함께 작동하므로 시계 앱이 없으면 손목에서 재생을 제어할 수 없습니다.\n\nGoogle Play가 워치 앱을 자동으로 설치합니다. 몇 분 정도 걸릴 수 있습니다. 나타나지 않았다면 아래를 탭하여 워치의 Play 스토어에서 Svartifoss를 여세요.</string>
+    <string name="no_watch_app_button">워치에서 열기</string>
     <string name="required_permission">필수 권한</string>
     <string name="setting_pause_on_swipe_exit">스와이프 종료 시 재생 일시정지</string>
     <string name="setting_pause_on_swipe_exit_description">시계에서 왼쪽 스와이프하여 Svartifoss를 종료할 때 재생 중인 항목을 자동으로 일시정지합니다.\n\n전원 버튼으로 종료하는 경우에는 영향을 주지 않으며 자동으로 일시정지하지 않습니다.</string>
@@ -2155,8 +2155,6 @@
     <string name="update_available_line">새 버전: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(사전 출시)</string>
     <string name="update_up_to_date">최신 버전(%1$s)을 사용 중입니다</string>
-    <string name="update_no_wear_asset">이 릴리스에는 전송할 시계 APK가 없습니다.</string>
-    <string name="update_watch_hint">“시계 업데이트”는 새 시계 앱을 다운로드하여 Bluetooth로 전송합니다. 설치는 시계에서 직접 확인하며 케이블이나 Wear Installer가 필요하지 않습니다.</string>
     <string name="update_downloading">다운로드 중… %1$d%%</string>
     <string name="update_connecting_watch">시계에 연결 중…</string>
     <string name="update_transferring">시계로 전송 중… %1$d%%</string>

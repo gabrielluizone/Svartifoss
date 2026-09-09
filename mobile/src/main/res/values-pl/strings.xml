@@ -350,8 +350,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Zainstaluj Svartifoss na zegarku</string>
-    <string name="no_watch_app_description">Svartifoss nie znalazł aplikacji zegarka na sparowanym zegarku Wear OS. Aplikacje telefonu i zegarka działają razem — bez aplikacji na zegarku sterowanie odtwarzaniem z nadgarstka nie będzie działać.\n\nSvartifoss nie ma w Sklepie Play — aplikację zegarka instaluje się osobno przez sideloading (np. Wear Installer). Dotknij \"Zobacz wydania\", aby otworzyć stronę wydań GitHub i pobrać APK zegarka. Jeśli właśnie ją zainstalowałeś, odczekaj minutę na zakończenie synchronizacji.</string>
-    <string name="no_watch_app_button">Zobacz wydania</string>
+    <string name="no_watch_app_description">Svartifoss nie znalazł aplikacji zegarka na sparowanym zegarku Wear OS. Aplikacje telefonu i zegarka działają razem — bez aplikacji na zegarku sterowanie odtwarzaniem z nadgarstka nie będzie działać.\n\nGoogle Play instaluje aplikację na zegarek automatycznie — może to potrwać kilka minut. Jeśli się nie pojawiła, kliknij poniżej, aby otworzyć Svartifoss w Sklepie Play na zegarku.</string>
+    <string name="no_watch_app_button">Otwórz na zegarku</string>
     <string name="required_permission">Wymagane uprawnienie</string>
     <string name="setting_pause_on_swipe_exit">Wstrzymaj odtwarzanie przy wyjściu przesunięciem</string>
     <string name="setting_pause_on_swipe_exit_description">Automatycznie wstrzymuj odtwarzanie przy wychodzeniu ze Svartifoss na zegarku gestem przesunięcia w lewo.\n\nWyjście przyciskiem zasilania nie jest objęte i nigdy nie powoduje automatycznej pauzy.</string>
@@ -2167,8 +2167,6 @@
     <string name="update_available_line">Nowa wersja: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(wersja wstępna)</string>
     <string name="update_up_to_date">Masz najnowszą wersję (%1$s)</string>
-    <string name="update_no_wear_asset">Ta wersja nie zawiera pliku APK zegarka do wysłania.</string>
-    <string name="update_watch_hint">„Aktualizuj zegarek” pobiera nową aplikację zegarka i wysyła ją przez Bluetooth — instalację potwierdzasz na samym zegarku, bez kabla i bez Wear Installer.</string>
     <string name="update_downloading">Pobieranie… %1$d%%</string>
     <string name="update_connecting_watch">Łączenie z zegarkiem…</string>
     <string name="update_transferring">Wysyłanie do zegarka… %1$d%%</string>

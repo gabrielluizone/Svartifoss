@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss আপনার পেয়ার করা Wear OS ঘড়িতে তার ঘড়ি অ্যাপ খুঁজে পায়নি। ফোন ও ঘড়ির অ্যাপ একসঙ্গে কাজ করে—ঘড়ির অ্যাপ ছাড়া কবজি থেকে প্লেব্যাক নিয়ন্ত্রণ কাজ করবে না।\n\nSvartifoss Play Store-এ নেই—ঘড়ির অ্যাপ আলাদাভাবে sideload করতে হয় (যেমন Wear Installer দিয়ে)। GitHub releases পৃষ্ঠা খুলে ঘড়ির APK পেতে \"রিলিজ দেখুন\" ট্যাপ করুন। এখনই ইনস্টল করলে সিঙ্ক শেষ হতে প্রায় এক মিনিট দিন।</string>
+    <string name="no_watch_app_button">রিলিজ দেখুন</string>
+    <string name="update_watch_hint">“ঘড়ি আপডেট করুন” নতুন ঘড়ি অ্যাপ ডাউনলোড করে Bluetooth-এর মাধ্যমে পাঠায় — ইনস্টলেশন ঘড়িতেই নিশ্চিত করবেন, কোনো কেবল বা Wear Installer লাগবে না।</string>
+    <string name="update_no_wear_asset">এই রিলিজে পাঠানোর মতো ঘড়ির APK নেই।</string>
+</resources>

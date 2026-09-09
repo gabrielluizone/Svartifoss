@@ -768,8 +768,8 @@
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
     <string name="notification_access_banner_summary">ခွင့်ပြုရန် နှိပ်ပါ — မလုပ်မချင်း playback control သည် မလှုပ်ရှားပါ</string>
     <string name="no_watch_app_title">သင့်နာရီတွင် Svartifoss ကို ထည့်သွင်းပါ</string>
-    <string name="no_watch_app_description">Pair လုပ်ထားသော Wear OS နာရီတွင် Svartifoss ၏ watch app ကို မတွေ့ပါ။ ဖုန်းနှင့် နာရီ apps များ အတူအလုပ်လုပ်သည် — watch app မရှိပါက လက်ကောက်ဝတ်မှ playback ကို ထိန်းချုပ်၍ မရပါ။\n\nSvartifoss သည် Play Store တွင် မရှိပါ — watch app ကို သီးခြား sideload လုပ်ရသည် (ဥပမာ Wear Installer ဖြင့်)။ GitHub releases စာမျက်နှာဖွင့်ပြီး watch APK ရယူရန် \"Releases ကြည့်ရန်\" ကို နှိပ်ပါ။ ယခုတင်ထည့်ထားပါက sync ပြီးရန် တစ်မိနစ်ပေးပါ။</string>
-    <string name="no_watch_app_button">Releases ကြည့်ရန်</string>
+    <string name="no_watch_app_description">Pair လုပ်ထားသော Wear OS နာရီတွင် Svartifoss ၏ watch app ကို မတွေ့ပါ။ ဖုန်းနှင့် နာရီ apps များ အတူအလုပ်လုပ်သည် — watch app မရှိပါက လက်ကောက်ဝတ်မှ playback ကို ထိန်းချုပ်၍ မရပါ။\n\nGoogle Play က နာရီအက်ပ်ကို အလိုအလျောက် ထည့်သွင်းပေးပါသည် — မိနစ်အနည်းငယ် ကြာနိုင်ပါသည်။ မပေါ်လာသေးပါက သင့်နာရီရှိ Play Store တွင် Svartifoss ကိုဖွင့်ရန် အောက်တွင် တို့ပါ။</string>
+    <string name="no_watch_app_button">နာရီတွင်ဖွင့်ရန်</string>
     <string name="required_permission">လိုအပ်သော permission</string>
     <string name="setting_pause_on_swipe_exit">ပွတ်ဆွဲထွက်ချိန် playback ကို pause လုပ်ရန်</string>
     <string name="setting_pause_on_swipe_exit_description">နာရီတွင် ဘယ်ဘက်သို့ ပွတ်ဆွဲပြီး Svartifoss မှ ထွက်သည့်အခါ playback ကို အလိုအလျောက် pause လုပ်ပါ။\n\nPower button ဖြင့် ထွက်ခြင်းကို မသက်ရောက်ဘဲ ထိုအခါ auto-pause လုံးဝ မဖြစ်ပါ။</string>
@@ -2114,8 +2114,6 @@
     <string name="update_available_line">Version အသစ်: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(pre-release)</string>
     <string name="update_up_to_date">သင်သည် နောက်ဆုံး version (%1$s) ကိုသုံးနေသည်</string>
-    <string name="update_no_wear_asset">ဤ release တွင် ပို့ရန် watch APK မရှိပါ။</string>
-    <string name="update_watch_hint">\u201cနာရီကို update လုပ်ပါ\u201d က watch app အသစ်ကို download လုပ်ပြီး Bluetooth ဖြင့်ပို့သည် \u2014 install ကို နာရီပေါ်မှာပဲ အတည်ပြုရမည်၊ cable သို့မဟုတ် Wear Installer မလိုပါ။</string>
     <string name="update_downloading">Download လုပ်နေသည်\u2026 %1$d%%</string>
     <string name="update_connecting_watch">နာရီနှင့် ချိတ်ဆက်နေသည်\u2026</string>
     <string name="update_transferring">နာရီသို့ ပို့နေသည်\u2026 %1$d%%</string>

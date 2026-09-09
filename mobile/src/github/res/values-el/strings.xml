@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Το Svartifoss δεν κατάφερε να βρει την εφαρμογή ρολογιού του στο συζευγμένο ρολόι Wear OS σας. Οι εφαρμογές τηλεφώνου και ρολογιού λειτουργούν μαζί — χωρίς την εφαρμογή ρολογιού, ο έλεγχος της αναπαραγωγής από τον καρπό σας δεν θα λειτουργήσει.\n\nΤο Svartifoss δεν βρίσκεται στο Play Store — η εφαρμογή ρολογιού εγκαθίσταται ξεχωριστά με sideload (π.χ. με Wear Installer). Πατήστε \"Προβολή εκδόσεων\" για να ανοίξετε τη σελίδα εκδόσεων του GitHub και να πάρετε το APK του ρολογιού. Αν μόλις το εγκαταστήσατε, δώστε του ένα λεπτό να ολοκληρώσει τον συγχρονισμό.</string>
+    <string name="no_watch_app_button">Προβολή εκδόσεων</string>
+    <string name="update_watch_hint">Το \"Ενημέρωση ρολογιού\" κατεβάζει τη νέα εφαρμογή ρολογιού και τη στέλνει μέσω Bluetooth — επιβεβαιώνετε την εγκατάσταση στο ίδιο το ρολόι, χωρίς καλώδιο ή Wear Installer.</string>
+    <string name="update_no_wear_asset">Αυτή η έκδοση δεν έχει APK ρολογιού για αποστολή.</string>
+</resources>

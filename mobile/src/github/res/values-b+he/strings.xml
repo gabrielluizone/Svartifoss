@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss לא מצא את אפליקציית השעון שלו בשעון Wear OS המצומד. אפליקציות הטלפון והשעון פועלות יחד — בלי אפליקציית השעון, השליטה בניגון מפרק כף היד לא תעבוד.\n\nSvartifoss אינו נמצא בחנות Play — את אפליקציית השעון מתקינים בנפרד ב-sideload (למשל עם Wear Installer). הקש \"הצג גרסאות\" כדי לפתוח את דף הגרסאות ב-GitHub ולהוריד את APK השעון. אם זה עתה התקנת אותה, המתן כדקה לסיום הסנכרון.</string>
+    <string name="no_watch_app_button">הצג גרסאות</string>
+    <string name="update_watch_hint">„עדכון השעון” מוריד את אפליקציית השעון החדשה ושולח אותה דרך Bluetooth — את ההתקנה מאשרים בשעון עצמו, ללא כבל או Wear Installer.</string>
+    <string name="update_no_wear_asset">אין בגרסה זו APK לשעון שניתן לשלוח.</string>
+</resources>

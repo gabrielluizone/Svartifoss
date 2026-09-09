@@ -350,8 +350,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Встановіть Svartifoss на годинник</string>
-    <string name="no_watch_app_description">Svartifoss не знайшов свій застосунок для годинника на сполученому годиннику Wear OS. Застосунки телефону й годинника працюють разом — без застосунку на годиннику керування відтворенням із зап’ястя не працюватиме.\n\nSvartifoss немає в Play Маркеті — застосунок для годинника встановлюється окремо через sideload (наприклад, Wear Installer). Натисніть \"Переглянути випуски\", щоб відкрити сторінку випусків GitHub і завантажити APK для годинника. Якщо щойно встановили його, зачекайте близько хвилини, щоб синхронізація завершилася.</string>
-    <string name="no_watch_app_button">Переглянути випуски</string>
+    <string name="no_watch_app_description">Svartifoss не знайшов свій застосунок для годинника на сполученому годиннику Wear OS. Застосунки телефону й годинника працюють разом — без застосунку на годиннику керування відтворенням із зап’ястя не працюватиме.\n\nGoogle Play встановлює застосунок для годинника автоматично — це може зайняти кілька хвилин. Якщо він не з\'явився, натисніть нижче, щоб відкрити Svartifoss у Play Маркеті на годиннику.</string>
+    <string name="no_watch_app_button">Відкрити на годиннику</string>
     <string name="required_permission">Необхідний дозвіл</string>
     <string name="setting_pause_on_swipe_exit">Призупиняти відтворення при виході проведенням</string>
     <string name="setting_pause_on_swipe_exit_description">Автоматично призупиняти будь-яке відтворення, коли ви виходите зі Svartifoss на годиннику жестом проведення ліворуч.\n\nВихід кнопкою живлення не впливає на це й ніколи не спричиняє автопаузу.</string>
@@ -2167,8 +2167,6 @@
     <string name="update_available_line">Нова версія: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(попередній випуск)</string>
     <string name="update_up_to_date">У вас найновіша версія (%1$s)</string>
-    <string name="update_no_wear_asset">У цьому випуску немає APK годинника для надсилання.</string>
-    <string name="update_watch_hint">«Оновити годинник» завантажує новий застосунок для годинника й надсилає його через Bluetooth — установлення підтверджується на самому годиннику, без кабелю чи Wear Installer.</string>
     <string name="update_downloading">Завантаження… %1$d%%</string>
     <string name="update_connecting_watch">Підключення до годинника…</string>
     <string name="update_transferring">Надсилання на годинник… %1$d%%</string>

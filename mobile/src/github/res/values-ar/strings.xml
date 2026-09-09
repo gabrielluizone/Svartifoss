@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">تعذّر على Svartifoss العثور على تطبيق الساعة على ساعة Wear OS المقترنة. يعمل تطبيق الهاتف والساعة معًا — ومن دون تطبيق الساعة لن يعمل التحكم بالتشغيل من معصمك.
+
+Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبيق الساعة منفصلًا عبر sideload (مثلًا باستخدام Wear Installer). انقر على \"عرض الإصدارات\" لفتح صفحة إصدارات GitHub وتنزيل APK الخاص بالساعة. إذا كنت قد ثبّتّه للتو، فامنحه دقيقة لإكمال المزامنة.</string>
+    <string name="no_watch_app_button">عرض الإصدارات</string>
+    <string name="update_watch_hint">يقوم “تحديث الساعة” بتنزيل تطبيق الساعة الجديد وإرساله عبر Bluetooth — تؤكد التثبيت على الساعة نفسها، من دون كابل أو Wear Installer.</string>
+    <string name="update_no_wear_asset">لا يحتوي هذا الإصدار على APK للساعة لإرساله.</string>
+</resources>

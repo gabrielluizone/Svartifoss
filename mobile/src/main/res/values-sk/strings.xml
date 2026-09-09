@@ -350,8 +350,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Nainštalujte Svartifoss do hodiniek</string>
-    <string name="no_watch_app_description">Svartifoss nenašiel svoju aplikáciu pre hodinky na spárovaných hodinkách Wear OS. Aplikácie telefónu a hodiniek fungujú spolu — bez aplikácie v hodinkách nebude ovládanie prehrávania zo zápästia fungovať.\n\nSvartifoss nie je v Obchode Play — aplikácia hodiniek sa inštaluje samostatne cez sideload (napr. pomocou Wear Installer). Ťuknite na \"Zobraziť vydania\", otvorte stránku vydaní GitHub a stiahnite APK pre hodinky. Ak ste ju práve nainštalovali, počkajte asi minútu na dokončenie synchronizácie.</string>
-    <string name="no_watch_app_button">Zobraziť vydania</string>
+    <string name="no_watch_app_description">Svartifoss nenašiel svoju aplikáciu pre hodinky na spárovaných hodinkách Wear OS. Aplikácie telefónu a hodiniek fungujú spolu — bez aplikácie v hodinkách nebude ovládanie prehrávania zo zápästia fungovať.\n\nGoogle Play nainštaluje aplikáciu pre hodinky automaticky — môže to trvať niekoľko minút. Ak sa neobjavila, klepnutím nižšie otvorte Svartifoss v Obchode Play na hodinkách.</string>
+    <string name="no_watch_app_button">Otvoriť na hodinkách</string>
     <string name="required_permission">Požadované povolenie</string>
     <string name="setting_pause_on_swipe_exit">Pozastaviť prehrávanie pri ukončení potiahnutím</string>
     <string name="setting_pause_on_swipe_exit_description">Automaticky pozastaviť akékoľvek prehrávanie pri ukončení Svartifoss na hodinkách gestom potiahnutia doľava.\n\nUkončenie tlačidlom napájania nie je ovplyvnené a nikdy automaticky nepozastaví prehrávanie.</string>
@@ -2167,8 +2167,6 @@
     <string name="update_available_line">Nová verzia: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(predbežné vydanie)</string>
     <string name="update_up_to_date">Používate najnovšiu verziu (%1$s)</string>
-    <string name="update_no_wear_asset">Toto vydanie nemá APK pre hodinky na odoslanie.</string>
-    <string name="update_watch_hint">„Aktualizovať hodinky“ stiahne novú aplikáciu pre hodinky a odošle ju cez Bluetooth — inštaláciu potvrdíte priamo na hodinkách, bez kábla alebo Wear Installer.</string>
     <string name="update_downloading">Sťahovanie… %1$d%%</string>
     <string name="update_connecting_watch">Pripájanie k hodinkám…</string>
     <string name="update_transferring">Odosielanie do hodiniek… %1$d%%</string>

@@ -768,8 +768,8 @@
     <string name="settings_search_breadcrumb_detailed">%1$s › %2$s › %3$s</string>
     <string name="notification_access_banner_summary">بۆ مۆڵەتدان بدە — تا ئەو کاتە کۆنترۆڵی پخش ناچالاک دەمێنێتەوە</string>
     <string name="no_watch_app_title">Svartifoss لەسەر کاتژمێرەکەت دابمەزرێنە</string>
-    <string name="no_watch_app_description">Svartifoss نەیتوانی ئەپی کاتژمێری خۆی لەسەر کاتژمێری Wear OS ـی هاوتاکراو بدۆزێتەوە. ئەپی مۆبایل و کاتژمێر پێکەوە کار دەکەن — بێ ئەپی کاتژمێر، کۆنترۆڵکردنی پخش لە مەچەکەت کار ناکات.\n\nSvartifoss لە Play Store نییە — ئەپی کاتژمێر بە جیا sideload دەکرێت (بۆ نموونە بە Wear Installer). لە \"وەشانەکان ببینە\" بدە بۆ کردنەوەی پەڕەی GitHub releases و وەرگرتنی watch APK. ئەگەر هەر ئێستا دامەزراندووتە، یەک خولەک بدە تا sync تەواو بێت.</string>
-    <string name="no_watch_app_button">وەشانەکان ببینە</string>
+    <string name="no_watch_app_description">Svartifoss نەیتوانی ئەپی کاتژمێری خۆی لەسەر کاتژمێری Wear OS ـی هاوتاکراو بدۆزێتەوە. ئەپی مۆبایل و کاتژمێر پێکەوە کار دەکەن — بێ ئەپی کاتژمێر، کۆنترۆڵکردنی پخش لە مەچەکەت کار ناکات.\n\nGoogle Play بە شێوەی خۆکار ئەپی کاتژمێر دادەمەزرێنێت — لەوانەیە چەند خولەکێک بخایەنێت. ئەگەر دەرنەکەوت، لە خوارەوە دەست لێبدە بۆ کردنەوەی Svartifoss لە Play Store لەسەر کاتژمێرەکەت.</string>
+    <string name="no_watch_app_button">کردنەوە لەسەر کاتژمێر</string>
     <string name="required_permission">مۆڵەتی پێویست</string>
     <string name="setting_pause_on_swipe_exit">لە دەرچوون بە swipe پخش pause بکە</string>
     <string name="setting_pause_on_swipe_exit_description">کاتێک بە swipe بۆ چەپ لە Svartifoss لە کاتژمێر دەردەچیت، هەر پخشێک بەخۆکار pause بکە.\n\nدەرچوون بە دوگمەی power کاریگەری لەسەر نییە و هەرگیز auto-pause ناکات.</string>
@@ -2114,8 +2114,6 @@
     <string name="update_available_line">وەشانی نوێ: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(pre-release)</string>
     <string name="update_up_to_date">لە نوێترین وەشانیت (%1$s)</string>
-    <string name="update_no_wear_asset">ئەم release ـە watch APK ـێکی بۆ ناردن نییە.</string>
-    <string name="update_watch_hint">\u201cکاتژمێر نوێ بکەرەوە\u201d ئەپی نوێی کاتژمێر دادەگرێت و بە Bluetooth دەنێرێت \u2014 تۆ لەسەر خودی کاتژمێر دامەزراندن پشتڕاست دەکەیتەوە؛ cable یان Wear Installer پێویست نییە.</string>
     <string name="update_downloading">دابەزاندن\u2026 %1$d%%</string>
     <string name="update_connecting_watch">پەیوەندی بە کاتژمێرەوە\u2026</string>
     <string name="update_transferring">ناردن بۆ کاتژمێر\u2026 %1$d%%</string>

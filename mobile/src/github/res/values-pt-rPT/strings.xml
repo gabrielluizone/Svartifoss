@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">O Svartifoss não conseguiu encontrar a sua aplicação de relógio no teu relógio Wear OS emparelhado. As aplicações do telemóvel e do relógio funcionam em conjunto — sem a aplicação do relógio, controlar a reprodução a partir do pulso não funciona.\n\nO Svartifoss não está na Play Store — a aplicação do relógio é instalada à parte por sideload (por exemplo, com o Wear Installer). Toca em \"Ver versões\" para abrir a página de versões do GitHub e obter o APK do relógio. Se acabaste de o instalar, dá-lhe um minuto para terminar a sincronização.</string>
+    <string name="no_watch_app_button">Ver versões</string>
+    <string name="update_watch_hint">“Atualizar relógio” transfere a nova aplicação do relógio e envia-a por Bluetooth — confirmas a instalação no próprio relógio, sem cabo ou Wear Installer.</string>
+    <string name="update_no_wear_asset">Esta versão não tem um APK de relógio para enviar.</string>
+</resources>

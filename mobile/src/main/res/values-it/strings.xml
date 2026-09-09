@@ -287,8 +287,8 @@
 
     <!-- Overrides for the wearutils "watch app missing" dialog -->
     <string name="no_watch_app_title">Installa Svartifoss sul tuo orologio</string>
-    <string name="no_watch_app_description">Svartifoss non è riuscito a trovare la sua app per orologio sul tuo orologio Wear OS associato. Le app per telefono e orologio funzionano insieme — senza l\'app per orologio, controllare la riproduzione dal polso non funzionerà.\n\nSvartifoss non è sul Play Store — l\'app per orologio viene installata separatamente tramite sideload (ad esempio con Wear Installer). Tocca \"Vedi versioni\" per aprire la pagina delle versioni GitHub e ottenere l\'APK dell\'orologio. Se l\'hai appena installata, dalle un minuto per finire la sincronizzazione.</string>
-    <string name="no_watch_app_button">Vedi versioni</string>
+    <string name="no_watch_app_description">Svartifoss non è riuscito a trovare la sua app per orologio sul tuo orologio Wear OS associato. Le app per telefono e orologio funzionano insieme — senza l\'app per orologio, controllare la riproduzione dal polso non funzionerà.\n\nGoogle Play installa l\'app dell\'orologio automaticamente: può richiedere qualche minuto. Se non è comparsa, tocca qui sotto per aprire Svartifoss nel Play Store del tuo orologio.</string>
+    <string name="no_watch_app_button">Apri sull\'orologio</string>
     <string name="required_permission">Autorizzazione richiesta</string>
     <string name="setting_pause_on_swipe_exit">Metti in pausa la riproduzione all\'uscita con scorrimento</string>
     <string name="setting_pause_on_swipe_exit_description">Mette automaticamente in pausa qualsiasi riproduzione quando esci da Svartifoss sull\'orologio tramite il gesto di scorrimento a sinistra.\n\nUscire con il pulsante di accensione non è interessato e non metterà mai automaticamente in pausa.</string>
@@ -1486,8 +1486,6 @@
     <string name="update_available_line">Nuova versione: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(versione preliminare)</string>
     <string name="update_up_to_date">Hai la versione più recente (%1$s)</string>
-    <string name="update_no_wear_asset">Questa versione non ha un APK per l\'orologio da inviare.</string>
-    <string name="update_watch_hint">\"Aggiorna orologio\" scarica la nuova app per l\'orologio e la invia via Bluetooth — confermi l\'installazione sull\'orologio stesso, senza cavo o Wear Installer.</string>
     <string name="update_downloading">Download in corso… %1$d%%</string>
     <string name="update_connecting_watch">Connessione all\'orologio…</string>
     <string name="update_transferring">Invio all\'orologio… %1$d%%</string>

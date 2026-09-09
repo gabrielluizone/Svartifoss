@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Hindi makita ng Svartifoss ang watch app nito sa naka-pair mong Wear OS watch. Magkasamang gumagana ang phone at watch apps — kung walang watch app, hindi gagana ang pagkontrol sa playback mula sa pulsuhan.
+
+Wala ang Svartifoss sa Play Store — hiwalay na sini-sideload ang watch app (hal. gamit ang Wear Installer). I-tap ang \"View releases\" para buksan ang GitHub releases page at kunin ang watch APK. Kung kaka-install mo lang nito, bigyan ito ng isang minuto para matapos ang pag-sync.</string>
+    <string name="no_watch_app_button">Tingnan ang releases</string>
+    <string name="update_watch_hint">Dina-download ng “Update watch” ang bagong watch app at ipinapadala sa Bluetooth — ikaw ang nagko-confirm ng install sa mismong relo, walang cable o Wear Installer na kailangan.</string>
+    <string name="update_no_wear_asset">Walang watch APK na maipapadala ang release na ito.</string>
+</resources>

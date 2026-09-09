@@ -347,8 +347,8 @@
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">在手錶上安裝 Svartifoss</string>
-    <string name="no_watch_app_description">Svartifoss 在已配對的 Wear OS 手錶上找不到手錶應用程式。手機與手錶應用程式需搭配運作——沒有手錶應用程式，就無法從手腕控制播放。\n\nSvartifoss 不在 Play 商店上架——手錶應用程式需另行側載（例如使用 Wear Installer）。輕觸「查看版本」開啟 GitHub Releases 頁面並取得手錶 APK。若剛完成安裝，請等待約一分鐘讓同步完成。</string>
-    <string name="no_watch_app_button">查看版本</string>
+    <string name="no_watch_app_description">Svartifoss 在已配對的 Wear OS 手錶上找不到手錶應用程式。手機與手錶應用程式需搭配運作——沒有手錶應用程式，就無法從手腕控制播放。\n\nGoogle Play 會自動安裝手錶應用程式，這可能需要幾分鐘。如果還沒有出現，請點選下方在手錶的 Play 商店中開啟 Svartifoss。</string>
+    <string name="no_watch_app_button">在手錶上開啟</string>
     <string name="required_permission">必要權限</string>
     <string name="setting_pause_on_swipe_exit">滑動離開時暫停播放</string>
     <string name="setting_pause_on_swipe_exit_description">在手錶上以向左滑動手勢離開 Svartifoss 時，自動暫停任何正在播放的內容。\n\n使用電源按鈕離開不受影響，也絕不會自動暫停。</string>
@@ -2155,8 +2155,6 @@
     <string name="update_available_line">新版本：%1$s (%2$s)</string>
     <string name="update_prerelease_marker">（預發行版）</string>
     <string name="update_up_to_date">您目前使用的是最新版本 (%1$s)</string>
-    <string name="update_no_wear_asset">此版本沒有可傳送的手錶 APK。</string>
-    <string name="update_watch_hint">「更新手錶」會下載新版手錶應用程式並透過 Bluetooth 傳送；您需在手錶上確認安裝，不需要傳輸線或 Wear Installer。</string>
     <string name="update_downloading">正在下載… %1$d%%</string>
     <string name="update_connecting_watch">正在連線至手錶…</string>
     <string name="update_transferring">正在傳送至手錶… %1$d%%</string>

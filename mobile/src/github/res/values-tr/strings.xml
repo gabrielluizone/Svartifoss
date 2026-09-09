@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss, eşleştirilmiş Wear OS saatinizde saat uygulamasını bulamadı. Telefon ve saat uygulamaları birlikte çalışır — saat uygulaması olmadan oynatmayı bileğinizden kontrol edemezsiniz.
+
+Svartifoss Play Store’da değildir — saat uygulaması ayrı olarak yandan yüklenir (ör. Wear Installer ile). GitHub sürümleri sayfasını açıp saat APK’sını almak için “Sürümleri görüntüle”ye dokunun. Yeni yüklediyseniz eşitlemenin tamamlanması için bir dakika bekleyin.</string>
+    <string name="no_watch_app_button">Sürümleri görüntüle</string>
+    <string name="update_watch_hint">“Saati güncelle” yeni saat uygulamasını indirir ve Bluetooth üzerinden gönderir — kurulumu saatin üzerinde onaylarsınız; kabloya veya Wear Installer’a gerek yoktur.</string>
+    <string name="update_no_wear_asset">Bu sürümde gönderilecek saat APK’sı yok.</string>
+</resources>

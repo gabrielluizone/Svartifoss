@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss kon zijn horloge-app niet vinden op je gekoppelde Wear OS-horloge. De telefoon- en horloge-app werken samen — zonder de horloge-app werkt het bedienen van afspelen vanaf je pols niet.\n\nSvartifoss staat niet in de Play Store — de horloge-app wordt apart via sideload geïnstalleerd (bijvoorbeeld met Wear Installer). Tik op \"Releases bekijken\" om de GitHub-releasepagina te openen en de horloge-APK te downloaden. Als je hem net hebt geïnstalleerd, geef hem dan een minuut om te synchroniseren.</string>
+    <string name="no_watch_app_button">Releases bekijken</string>
+    <string name="update_watch_hint">\"Horloge bijwerken\" downloadt de nieuwe horloge-app en stuurt hem via Bluetooth — je bevestigt de installatie op het horloge zelf, geen kabel of Wear Installer nodig.</string>
+    <string name="update_no_wear_asset">Deze release heeft geen horloge-APK om te versturen.</string>
+</resources>

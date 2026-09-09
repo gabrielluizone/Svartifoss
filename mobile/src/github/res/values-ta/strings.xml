@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">இணைக்கப்பட்ட Wear OS கடிகாரத்தில் Svartifoss தனது watch app-ஐக் கண்டுபிடிக்கவில்லை. தொலைபேசி மற்றும் கடிகார apps ஒன்றாக வேலை செய்கின்றன — watch app இல்லாமல் மணிக்கட்டிலிருந்து playback கட்டுப்பாடு இயங்காது.\n\nSvartifoss Play Store-இல் இல்லை — watch app தனியாக sideload செய்யப்படுகிறது (எ.கா. Wear Installer மூலம்). GitHub releases பக்கத்தைத் திறந்து watch APK பெற \"வெளியீடுகளைப் பார்\" என்பதைத் தட்டவும். இப்போது தான் நிறுவியிருந்தால் sync முடிய ஒரு நிமிடம் கொடுக்கவும்.</string>
+    <string name="no_watch_app_button">வெளியீடுகளைப் பார்</string>
+    <string name="update_watch_hint">\u201cWatch-ஐ update செய்\u201d புதிய watch app-ஐ download செய்து Bluetooth வழியாக அனுப்பும் \u2014 நிறுவலை watch-இலேயே நீங்கள் உறுதிப்படுத்த வேண்டும்; cable அல்லது Wear Installer தேவையில்லை.</string>
+    <string name="update_no_wear_asset">இந்த release-இல் அனுப்ப watch APK இல்லை.</string>
+</resources>

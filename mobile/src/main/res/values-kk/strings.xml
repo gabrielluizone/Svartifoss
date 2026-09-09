@@ -364,10 +364,8 @@ Svartifoss хабарландыруларыңыздың мазмұнын ешқ�
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Сағатыңызға Svartifoss орнатыңыз</string>
-    <string name="no_watch_app_description">Svartifoss жұпталған Wear OS сағатыңыздан өзінің сағат қолданбасын таба алмады. Телефон мен сағат қолданбалары бірге жұмыс істейді — сағат қолданбасынсыз білектен ойнатуды басқару жұмыс істемейді.
-
-Svartifoss Play Store дүкенінде жоқ — сағат қолданбасы бөлек sideload арқылы орнатылады (мысалы, Wear Installer көмегімен). GitHub releases бетін ашып, сағат APK файлын алу үшін \"Релиздерді көру\" түймесін түртіңіз. Егер жаңа ғана орнатсаңыз, синхрондалуына бір минут беріңіз.</string>
-    <string name="no_watch_app_button">Релиздерді көру</string>
+    <string name="no_watch_app_description">Svartifoss жұпталған Wear OS сағатыңыздан өзінің сағат қолданбасын таба алмады. Телефон мен сағат қолданбалары бірге жұмыс істейді — сағат қолданбасынсыз білектен ойнатуды басқару жұмыс істемейді.\n\nGoogle Play сағат қолданбасын автоматты түрде орнатады — бұл бірнеше минут алуы мүмкін. Егер ол пайда болмаса, сағатыңыздағы Play Store дүкенінде Svartifoss ашу үшін төменде түртіңіз.</string>
+    <string name="no_watch_app_button">Сағатта ашу</string>
     <string name="required_permission">Қажетті рұқсат</string>
     <string name="setting_pause_on_swipe_exit">Сырғытып шыққанда ойнатуды кідірту</string>
     <string name="setting_pause_on_swipe_exit_description">Сағаттағы Svartifoss қолданбасынан солға сырғыту арқылы шыққанда кез келген ойнатуды автоматты түрде кідірту.
@@ -2180,8 +2178,6 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
     <string name="update_available_line">Жаңа нұсқа: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(алдын ала релиз)</string>
     <string name="update_up_to_date">Сізде соңғы нұсқа орнатылған (%1$s)</string>
-    <string name="update_no_wear_asset">Бұл релизде жіберілетін сағат APK файлы жоқ.</string>
-    <string name="update_watch_hint">“Сағатты жаңарту” жаңа сағат қолданбасын жүктеп, Bluetooth арқылы жібереді — орнатуды сағаттың өзінде растайсыз, кабель не Wear Installer қажет емес.</string>
     <string name="update_downloading">Жүктелуде… %1$d%%</string>
     <string name="update_connecting_watch">Сағатқа қосылуда…</string>
     <string name="update_transferring">Сағатқа жіберілуде… %1$d%%</string>

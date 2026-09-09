@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss не намери приложението си за часовник на сдвоения ви Wear OS часовник. Приложенията на телефона и часовника работят заедно — без приложението на часовника управлението на възпроизвеждането от китката няма да работи.\n\nSvartifoss не е в Play Store — приложението за часовник се инсталира отделно чрез sideload (напр. с Wear Installer). Докоснете \"Преглед на изданията\", за да отворите страницата с издания в GitHub и да изтеглите APK за часовника. Ако току-що сте го инсталирали, изчакайте около минута за завършване на синхронизацията.</string>
+    <string name="no_watch_app_button">Преглед на изданията</string>
+    <string name="update_watch_hint">„Актуализиране на часовника“ изтегля новото приложение за часовника и го изпраща чрез Bluetooth — потвърждавате инсталирането на самия часовник, без кабел или Wear Installer.</string>
+    <string name="update_no_wear_asset">Тази версия няма APK за часовника за изпращане.</string>
+</resources>

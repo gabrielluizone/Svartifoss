@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">ペアリング済みの Wear OS ウォッチで Svartifoss のウォッチアプリが見つかりませんでした。スマートフォンとウォッチのアプリは連携して動作するため、ウォッチアプリがないと手首から再生を操作できません。\n\nSvartifoss は Play ストアにはありません。ウォッチアプリは別途サイドロードします（例: Wear Installer）。「リリースを見る」をタップして GitHub のリリースページを開き、ウォッチ APK を取得してください。インストールしたばかりの場合は、同期が完了するまで1分ほど待ってください。</string>
+    <string name="no_watch_app_button">リリースを見る</string>
+    <string name="update_watch_hint">「ウォッチをアップデート」は新しいウォッチアプリをダウンロードし、Bluetooth で送信します。インストールはウォッチ側で確認します。ケーブルや Wear Installer は不要です。</string>
+    <string name="update_no_wear_asset">このリリースには送信できるウォッチ APK がありません。</string>
+</resources>

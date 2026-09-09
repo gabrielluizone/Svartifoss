@@ -365,10 +365,8 @@ I-tap ang \"Open Settings\", pagkatapos ay i-on ang Svartifoss sa notification a
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">I-install ang Svartifoss sa relo mo</string>
-    <string name="no_watch_app_description">Hindi makita ng Svartifoss ang watch app nito sa naka-pair mong Wear OS watch. Magkasamang gumagana ang phone at watch apps — kung walang watch app, hindi gagana ang pagkontrol sa playback mula sa pulsuhan.
-
-Wala ang Svartifoss sa Play Store — hiwalay na sini-sideload ang watch app (hal. gamit ang Wear Installer). I-tap ang \"View releases\" para buksan ang GitHub releases page at kunin ang watch APK. Kung kaka-install mo lang nito, bigyan ito ng isang minuto para matapos ang pag-sync.</string>
-    <string name="no_watch_app_button">Tingnan ang releases</string>
+    <string name="no_watch_app_description">Hindi makita ng Svartifoss ang watch app nito sa naka-pair mong Wear OS watch. Magkasamang gumagana ang phone at watch apps — kung walang watch app, hindi gagana ang pagkontrol sa playback mula sa pulsuhan.\n\nAwtomatikong ini-install ng Google Play ang watch app — maaari itong tumagal ng ilang minuto. Kung hindi pa ito lumalabas, i-tap sa ibaba para buksan ang Svartifoss sa Play Store ng iyong relo.</string>
+    <string name="no_watch_app_button">Buksan sa relo</string>
     <string name="required_permission">Kinakailangang permission</string>
     <string name="setting_pause_on_swipe_exit">I-pause ang playback kapag lumabas sa swipe</string>
     <string name="setting_pause_on_swipe_exit_description">Awtomatikong i-pause ang anumang playback kapag lumalabas sa Svartifoss sa relo gamit ang swipe-left gesture.
@@ -2184,8 +2182,6 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     <string name="update_available_line">Bagong bersyon: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(pre-release)</string>
     <string name="update_up_to_date">Nasa pinakabagong bersyon ka (%1$s)</string>
-    <string name="update_no_wear_asset">Walang watch APK na maipapadala ang release na ito.</string>
-    <string name="update_watch_hint">Dina-download ng “Update watch” ang bagong watch app at ipinapadala sa Bluetooth — ikaw ang nagko-confirm ng install sa mismong relo, walang cable o Wear Installer na kailangan.</string>
     <string name="update_downloading">Nagda-download… %1$d%%</string>
     <string name="update_connecting_watch">Kumokonekta sa relo…</string>
     <string name="update_transferring">Ipinapadala sa relo… %1$d%%</string>

@@ -365,10 +365,8 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">अपनी घड़ी पर Svartifoss इंस्टॉल करें</string>
-    <string name="no_watch_app_description">Svartifoss आपकी पेयर की गई Wear OS घड़ी पर अपना वॉच ऐप नहीं ढूँढ सका। फ़ोन और वॉच ऐप साथ काम करते हैं — वॉच ऐप के बिना कलाई से प्लेबैक नियंत्रित नहीं होगा।
-
-Svartifoss Play Store पर नहीं है — वॉच ऐप अलग से sideload किया जाता है (जैसे Wear Installer से)। GitHub releases पेज खोलने और वॉच APK लेने के लिए \"रिलीज़ देखें\" पर टैप करें। यदि आपने अभी इंस्टॉल किया है, तो सिंक पूरा होने के लिए एक मिनट दें।</string>
-    <string name="no_watch_app_button">रिलीज़ देखें</string>
+    <string name="no_watch_app_description">Svartifoss आपकी पेयर की गई Wear OS घड़ी पर अपना वॉच ऐप नहीं ढूँढ सका। फ़ोन और वॉच ऐप साथ काम करते हैं — वॉच ऐप के बिना कलाई से प्लेबैक नियंत्रित नहीं होगा।\n\nGoogle Play घड़ी का ऐप अपने आप इंस्टॉल करता है — इसमें कुछ मिनट लग सकते हैं। अगर यह नहीं आया है, तो अपनी घड़ी के Play Store में Svartifoss खोलने के लिए नीचे टैप करें।</string>
+    <string name="no_watch_app_button">घड़ी पर खोलें</string>
     <string name="required_permission">आवश्यक अनुमति</string>
     <string name="setting_pause_on_swipe_exit">स्वाइप से बाहर निकलने पर प्लेबैक पॉज़ करें</string>
     <string name="setting_pause_on_swipe_exit_description">घड़ी पर Svartifoss से बाएँ स्वाइप करके बाहर निकलते समय किसी भी प्लेबैक को अपने-आप पॉज़ करें।
@@ -2184,8 +2182,6 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
     <string name="update_available_line">नया संस्करण: %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(प्री-रिलीज़)</string>
     <string name="update_up_to_date">आप नवीनतम संस्करण (%1$s) पर हैं</string>
-    <string name="update_no_wear_asset">इस रिलीज़ में भेजने के लिए वॉच APK नहीं है।</string>
-    <string name="update_watch_hint">“वॉच अपडेट करें” नया वॉच ऐप डाउनलोड करके Bluetooth से भेजता है — इंस्टॉल की पुष्टि घड़ी पर ही करते हैं, केबल या Wear Installer की ज़रूरत नहीं।</string>
     <string name="update_downloading">डाउनलोड हो रहा है… %1$d%%</string>
     <string name="update_connecting_watch">घड़ी से कनेक्ट हो रहा है…</string>
     <string name="update_transferring">घड़ी को भेजा जा रहा है… %1$d%%</string>

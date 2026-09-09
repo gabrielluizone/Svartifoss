@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Play build: overrides the `wearutils` defaults for the "phone app missing" notice.
+
+  The library ships GitHub wording and a GitHub URL, which Play's Device and Network Abuse policy
+  forbids an app on the store from showing - and which is wrong here anyway, since phone and watch
+  are one listing and the phone half is installed from Play like any other app. `PhoneAppNoticeActivity`
+  remote-opens `no_phone_app_github_url` on the phone, so pointing that at the listing keeps the
+  button doing something useful without any code change.
+
+  These names carry no translations in `wearutils`, so overriding the default `values/` is complete
+  rather than partial. The github flavour keeps the library's own text.
+-->
+<resources>
+    <string name="no_phone_app_description">To use this app, you also need the Svartifoss phone app. Google Play installs it on your phone — open it there to finish setting up.</string>
+    <string name="no_phone_app_button">Open on phone</string>
+    <string name="no_phone_app_github_url" translatable="false">https://play.google.com/store/apps/details?id=com.svartifoss.snfell</string>
+    <string name="github_page_opened">Opened on phone</string>
+    <string name="github_page_opening_failed">Could not open on phone</string>
+</resources>

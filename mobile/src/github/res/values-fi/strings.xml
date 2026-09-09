@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss ei löytänyt kellosovellustaan paritetusta Wear OS -kellosta. Puhelin- ja kellosovellukset toimivat yhdessä — ilman kellosovellusta toistoa ei voi hallita ranteesta.\n\nSvartifoss ei ole Play Kaupassa — kellosovellus sivuladataan erikseen (esim. Wear Installerilla). Avaa GitHubin julkaisusivu napauttamalla \"Näytä julkaisut\" ja lataa kellon APK. Jos asensit sen juuri, odota noin minuutti synkronoinnin valmistumista.</string>
+    <string name="no_watch_app_button">Näytä julkaisut</string>
+    <string name="update_watch_hint">”Päivitä kello” lataa uuden kellosovelluksen ja lähettää sen Bluetoothin kautta — vahvistat asennuksen itse kellossa ilman kaapelia tai Wear Installeria.</string>
+    <string name="update_no_wear_asset">Tässä julkaisussa ei ole lähetettävää kellon APK:ta.</string>
+</resources>

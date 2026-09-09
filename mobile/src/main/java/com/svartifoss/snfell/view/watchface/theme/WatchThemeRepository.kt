@@ -492,6 +492,15 @@ class WatchThemeRepository(context: Context) {
                 profile.copy(publishedTheme = source),
                 allowLegacyReadOnly = isTrustedLegacyPhaseOneProfile(profile))
                 ?: return PublishedThemeInstallResult.InvalidProfile
+        // Installing from the gallery *switches* the active theme, and every custom theme shares the
+        // one `custom_active` scope - so edits made to whatever was on before live only there until
+        // something writes them back. Capture belongs at a switch boundary like this one and
+        // deliberately not inside [applyProfile]: `replaceFromJson` saves an imported library
+        // before applying it, so a capture down there would write the outgoing theme's pending
+        // values into a freshly imported profile. The Activity lifecycle happens to capture on
+        // every route that reaches this screen today; that is luck, not a guarantee, and the same
+        // gap on the watch-initiated path is what discarded a colour somebody had just picked.
+        captureActive(defaultPrefs)
         val state = loadState()
         val existing = state.profiles.firstOrNull { it.publishedTheme?.id == source.id }
         val profileToApply = existing ?: normalized

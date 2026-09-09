@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss n’a pas trouvé son application pour montre sur votre montre Wear OS appairée. Les applications téléphone et montre fonctionnent ensemble — sans l’application de montre, vous ne pourrez pas contrôler la lecture depuis votre poignet.
+
+Svartifoss n’est pas disponible sur le Play Store — l’application de montre doit être installée séparément par sideload (par exemple avec Wear Installer). Touchez « Voir les versions » pour ouvrir la page des versions GitHub et télécharger l’APK de la montre. Si vous venez de l’installer, laissez-lui une minute pour terminer la synchronisation.</string>
+    <string name="no_watch_app_button">Voir les versions</string>
+    <string name="update_watch_hint">« Mettre à jour la montre » télécharge la nouvelle application de montre et l’envoie via Bluetooth — vous confirmez l’installation sur la montre elle-même, sans câble ni Wear Installer.</string>
+    <string name="update_no_wear_asset">Cette version ne contient aucun APK de montre à envoyer.</string>
+</resources>

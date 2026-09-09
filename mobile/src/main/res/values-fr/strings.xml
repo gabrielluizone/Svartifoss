@@ -365,10 +365,8 @@ Touchez « Ouvrir les paramètres », puis activez Svartifoss dans l’accès au
          app-module strings win over the library\'s, so these replace the outdated, typo\'d
          (\"Anroid Wear 2\") upstream copy without touching the submodule. -->
     <string name="no_watch_app_title">Installer Svartifoss sur votre montre</string>
-    <string name="no_watch_app_description">Svartifoss n’a pas trouvé son application pour montre sur votre montre Wear OS appairée. Les applications téléphone et montre fonctionnent ensemble — sans l’application de montre, vous ne pourrez pas contrôler la lecture depuis votre poignet.
-
-Svartifoss n’est pas disponible sur le Play Store — l’application de montre doit être installée séparément par sideload (par exemple avec Wear Installer). Touchez « Voir les versions » pour ouvrir la page des versions GitHub et télécharger l’APK de la montre. Si vous venez de l’installer, laissez-lui une minute pour terminer la synchronisation.</string>
-    <string name="no_watch_app_button">Voir les versions</string>
+    <string name="no_watch_app_description">Svartifoss n’a pas trouvé son application pour montre sur votre montre Wear OS appairée. Les applications téléphone et montre fonctionnent ensemble — sans l’application de montre, vous ne pourrez pas contrôler la lecture depuis votre poignet.\n\nGoogle Play installe l\'application de la montre automatiquement — cela peut prendre quelques minutes. Si elle n\'est pas apparue, appuyez ci-dessous pour ouvrir Svartifoss dans le Play Store de votre montre.</string>
+    <string name="no_watch_app_button">Ouvrir sur la montre</string>
     <string name="required_permission">Autorisation requise</string>
     <string name="setting_pause_on_swipe_exit">Mettre la lecture en pause en quittant par balayage</string>
     <string name="setting_pause_on_swipe_exit_description">Mettre automatiquement en pause toute lecture lorsque vous quittez Svartifoss sur la montre avec un balayage vers la gauche.
@@ -2184,8 +2182,6 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
     <string name="update_available_line">Nouvelle version : %1$s (%2$s)</string>
     <string name="update_prerelease_marker">(préversion)</string>
     <string name="update_up_to_date">Vous utilisez la dernière version (%1$s)</string>
-    <string name="update_no_wear_asset">Cette version ne contient aucun APK de montre à envoyer.</string>
-    <string name="update_watch_hint">« Mettre à jour la montre » télécharge la nouvelle application de montre et l’envoie via Bluetooth — vous confirmez l’installation sur la montre elle-même, sans câble ni Wear Installer.</string>
     <string name="update_downloading">Téléchargement… %1$d%%</string>
     <string name="update_connecting_watch">Connexion à la montre…</string>
     <string name="update_transferring">Envoi vers la montre… %1$d%%</string>

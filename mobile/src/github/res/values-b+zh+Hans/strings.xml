@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GitHub sideload build: the watch app is fetched by hand from GitHub releases.
+     The play flavour keeps these names and supplies its own text, so neither build
+     ever carries the other's instructions. See docs/play-store-migration-plan.md. -->
+<resources>
+    <string name="no_watch_app_description">Svartifoss 未能在你配对的 Wear OS 手表上找到其手表应用。手机和手表应用需要协同工作——没有手表应用，从手腕控制播放将无法实现。\n\nSvartifoss 不在 Play 商店上架——手表应用需要通过侧载方式单独安装（例如使用 Wear Installer）。点按「查看发布版本」以打开 GitHub 发布页面并获取手表 APK。如果你刚安装完，请给它一分钟时间完成同步。</string>
+    <string name="no_watch_app_button">查看发布版本</string>
+    <string name="update_watch_hint">「更新手表」会下载新的手表应用并通过蓝牙发送——你在手表本身确认安装，无需数据线或 Wear Installer。</string>
+    <string name="update_no_wear_asset">此发布版本没有可发送的手表 APK。</string>
+</resources>
