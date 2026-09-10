@@ -2,11 +2,15 @@ package com.svartifoss.snfell.view.settings
 
 import android.content.Context
 import android.graphics.Typeface
+import android.os.Build
+import androidx.annotation.FontRes
 import androidx.core.content.res.ResourcesCompat
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.DeviceLocalAppearance
 import com.svartifoss.snfell.common.WatchTypography
+import timber.log.Timber
 import java.io.File
+import java.util.WeakHashMap
 
 /**
  * Phone-side resolver for `MiscPreferences.WEAR_FONT` keys, mirroring the watch's
@@ -135,13 +139,13 @@ object WatchFontCatalog {
      * The typeface for [key], or null when the caller's own preloaded Google Sans should be used
      * (the default, and the fallback for unknown keys).
      *
-     * Bundled fonts load through [ResourcesCompat]; system families through [Typeface.create],
+     * Bundled fonts keep a stable base per resource; system families use [Typeface.create],
      * which silently substitutes the default family on a device that lacks one - that is also the
      * honest preview, since the watch would do exactly the same.
      */
     fun typefaceFor(context: Context, key: String?): Typeface? =
             key?.let(expandedBundledFontResources::get)
-                    ?.let { ResourcesCompat.getFont(context, it) }
+                    ?.let { bundledTypeface(context, it) }
                     ?: when (key) {
                         "roboto" -> Typeface.DEFAULT
                         // The typeface imported from this phone's storage. Resolving it here is
@@ -152,26 +156,26 @@ object WatchFontCatalog {
                         // to work. "typewriter" used to select Mom's Typewriter; that font carried
                         // no redistribution license this project ever held, so the file was
                         // removed and the key now aliases to Special Elite, mirroring "love_letter".
-                        "typewriter" -> ResourcesCompat.getFont(context, R.font.special_elite_regular)
-                        "love_letter" -> ResourcesCompat.getFont(context, R.font.special_elite_regular)
-                        "poppins" -> ResourcesCompat.getFont(context, R.font.poppins_regular)
-                        "montserrat" -> ResourcesCompat.getFont(context, R.font.montserrat_regular)
-                        "marcellus" -> ResourcesCompat.getFont(context, R.font.marcellus_regular)
-                        "bebas_neue" -> ResourcesCompat.getFont(context, R.font.bebas_neue_regular)
-                        "playfair" -> ResourcesCompat.getFont(context, R.font.playfair_display_regular)
-                        "space_grotesk" -> ResourcesCompat.getFont(context, R.font.space_grotesk_regular)
-                        "orbitron" -> ResourcesCompat.getFont(context, R.font.orbitron_regular)
-                        "caveat" -> ResourcesCompat.getFont(context, R.font.caveat_regular)
-                        "inter" -> ResourcesCompat.getFont(context, R.font.inter_regular)
-                        "atkinson_hyperlegible" -> ResourcesCompat.getFont(context, R.font.atkinson_hyperlegible_regular)
-                        "rubik" -> ResourcesCompat.getFont(context, R.font.rubik_regular)
-                        "barlow_condensed" -> ResourcesCompat.getFont(context, R.font.barlow_condensed_regular)
-                        "oswald" -> ResourcesCompat.getFont(context, R.font.oswald_regular)
-                        "lora" -> ResourcesCompat.getFont(context, R.font.lora_regular)
-                        "fraunces" -> ResourcesCompat.getFont(context, R.font.fraunces_regular)
-                        "space_mono" -> ResourcesCompat.getFont(context, R.font.space_mono_regular)
-                        "archivo_black" -> ResourcesCompat.getFont(context, R.font.archivo_black_regular)
-                        "dancing_script" -> ResourcesCompat.getFont(context, R.font.dancing_script_regular)
+                        "typewriter" -> bundledTypeface(context, R.font.special_elite_regular)
+                        "love_letter" -> bundledTypeface(context, R.font.special_elite_regular)
+                        "poppins" -> bundledTypeface(context, R.font.poppins_regular)
+                        "montserrat" -> bundledTypeface(context, R.font.montserrat_regular)
+                        "marcellus" -> bundledTypeface(context, R.font.marcellus_regular)
+                        "bebas_neue" -> bundledTypeface(context, R.font.bebas_neue_regular)
+                        "playfair" -> bundledTypeface(context, R.font.playfair_display_regular)
+                        "space_grotesk" -> bundledTypeface(context, R.font.space_grotesk_regular)
+                        "orbitron" -> bundledTypeface(context, R.font.orbitron_regular)
+                        "caveat" -> bundledTypeface(context, R.font.caveat_regular)
+                        "inter" -> bundledTypeface(context, R.font.inter_regular)
+                        "atkinson_hyperlegible" -> bundledTypeface(context, R.font.atkinson_hyperlegible_regular)
+                        "rubik" -> bundledTypeface(context, R.font.rubik_regular)
+                        "barlow_condensed" -> bundledTypeface(context, R.font.barlow_condensed_regular)
+                        "oswald" -> bundledTypeface(context, R.font.oswald_regular)
+                        "lora" -> bundledTypeface(context, R.font.lora_regular)
+                        "fraunces" -> bundledTypeface(context, R.font.fraunces_regular)
+                        "space_mono" -> bundledTypeface(context, R.font.space_mono_regular)
+                        "archivo_black" -> bundledTypeface(context, R.font.archivo_black_regular)
+                        "dancing_script" -> bundledTypeface(context, R.font.dancing_script_regular)
                         "rounded" -> Typeface.create("sans-serif-rounded", Typeface.NORMAL)
                         "sans_light" -> Typeface.create("sans-serif-light", Typeface.NORMAL)
                         "sans_thin" -> Typeface.create("sans-serif-thin", Typeface.NORMAL)
@@ -199,20 +203,100 @@ object WatchFontCatalog {
      * Google Sans. Google Sans Flex resolves to its own variable master at default axes - enough
      * for a picker row, which is not the place to preview axis settings.
      */
+    @Synchronized
     fun previewTypefaceFor(context: Context, key: String?): Typeface {
         if (WatchTypography.isFlexFont(key)) {
-            return runCatching { Typeface.createFromFile(flexFontFile(context)) }
-                    .getOrNull() ?: Typeface.DEFAULT
+            // Keep this base outside the variable LRU: menus derive bold styles from it, which
+            // Android retains in a process-wide cache keyed by the base's native identity.
+            return defaultFlexTypeface ?: (runCatching {
+                Typeface.createFromFile(flexFontFile(context))
+            }.getOrNull() ?: Typeface.DEFAULT).also { defaultFlexTypeface = it }
         }
         return typefaceFor(context, key)
-                ?: ResourcesCompat.getFont(context, R.font.google_sans_regular)
+                ?: bundledTypeface(context, R.font.google_sans_regular)
                 ?: Typeface.DEFAULT
+    }
+
+    // ResourcesCompat's small LRU can reload a font after browsing the picker. Android's styled
+    // typeface caches then retain another native family. This map is bounded by bundled resource
+    // IDs and deliberately shares aliases, so revisiting a font keeps the same native base.
+    private val bundledTypefaces = mutableMapOf<Int, Typeface?>()
+    private var defaultFlexTypeface: Typeface? = null
+    private val variableFlexTypefaces = FlexTypefaceCache<Typeface?>()
+    // A Paint may still hold a font after LRU eviction. Weak provenance lets us derive its style
+    // without passing that base to Android's permanently retained styled-typeface caches.
+    private data class FlexVariant(
+            val spec: WatchTypography.TextSpec,
+            val axes: WatchTypography.FlexAxes
+    )
+    private val flexVariants = WeakHashMap<Typeface, FlexVariant>()
+
+    @Synchronized
+    internal fun bundledTypeface(context: Context, @FontRes resourceId: Int): Typeface? {
+        if (bundledTypefaces.containsKey(resourceId)) return bundledTypefaces[resourceId]
+        return ResourcesCompat.getFont(context.applicationContext, resourceId).also {
+            bundledTypefaces[resourceId] = it
+        }
+    }
+
+    /** The same variable-font settings as Wear, reused across frames and preview instances. */
+    @Synchronized
+    fun flexTypefaceFor(
+            context: Context,
+            spec: WatchTypography.TextSpec,
+            axes: WatchTypography.FlexAxes
+    ): Typeface? = variableFlexTypefaces.getOrLoad(spec, axes) { settings ->
+        val fallback = { bundledTypeface(context, R.font.google_sans_flex) }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            fallback()
+        } else {
+            try {
+                Typeface.Builder(flexFontFile(context))
+                        .setFontVariationSettings(settings)
+                        .build()?.also { flexVariants[it] = FlexVariant(spec, axes) } ?: fallback()
+            } catch (e: Exception) {
+                Timber.w(e, "Flex variation settings rejected in preview: %s", settings)
+                fallback()
+            }
+        }
+    }
+
+    /** Derive Flex through its axes, so style changes cannot retain evicted variable families. */
+    @Synchronized
+    fun styledTypefaceFor(context: Context, base: Typeface?, style: Int): Typeface {
+        val variant = flexVariants[base] ?: return Typeface.create(base, style)
+        if (base != null && base.style == style) return base
+        return flexTypefaceFor(context, variant.spec.copy(
+                weight = if (style and Typeface.BOLD != 0) 700 else 400,
+                italic = style and Typeface.ITALIC != 0), variant.axes) ?: base ?: Typeface.DEFAULT
+    }
+
+    @Synchronized
+    fun weightedTypefaceFor(
+            context: Context,
+            base: Typeface,
+            weight: Int,
+            italic: Boolean
+    ): Typeface {
+        val variant = flexVariants[base]
+        if (variant != null) {
+            return flexTypefaceFor(context, variant.spec.copy(weight = weight, italic = italic),
+                    variant.axes) ?: base
+        }
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            Typeface.create(base, weight, italic)
+        } else {
+            val style = (if (weight >= 600) Typeface.BOLD else Typeface.NORMAL) or
+                    (if (italic) Typeface.ITALIC else Typeface.NORMAL)
+            Typeface.create(base, style)
+        }
     }
 
     private var cachedFlexFontFile: File? = null
 
-    /** Extract-to-cache, same trick `WatchPreviewView`/`WatchTheme` use - `Typeface.Builder` has
+    /** Extract-to-cache, same trick `WatchTheme` uses - `Typeface.Builder` has
      *  no constructor taking a `res/font` resource id. */
+    @Synchronized
     private fun flexFontFile(context: Context): File {
         cachedFlexFontFile?.takeIf { it.length() > 0L }?.let { return it }
         val target = File(context.cacheDir, "google_sans_flex_variable.ttf")

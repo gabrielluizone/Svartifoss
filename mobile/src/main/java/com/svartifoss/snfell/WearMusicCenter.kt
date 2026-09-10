@@ -12,6 +12,7 @@ import com.svartifoss.snfell.common.MatejdroArtistAutosizeMigration
 import com.svartifoss.snfell.di.DaggerAppComponent
 import com.svartifoss.snfell.logging.CrashlyticsExceptionWearHandler
 import com.svartifoss.snfell.logging.CrashReporting
+import com.svartifoss.snfell.logging.PlatformApiProbe
 import com.svartifoss.snfell.notifications.AnnouncementNotifications
 import com.svartifoss.snfell.logging.TimberCrashlytics
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
@@ -58,6 +59,11 @@ class WearMusicCenter : Application(), HasAndroidInjector {
         val fileLogger = FileLogger.getInstance(this)
         fileLogger.activate()
         Timber.plant(fileLogger)
+
+        // Labels the session with whether this platform actually has the API level it reports.
+        // Nothing here is repairable - a device that lies about SDK_INT crashes inside AndroidX,
+        // not inside our code - so this only makes the next such report say so on its own.
+        PlatformApiProbe.runAndReport()
 
         repairCenterLongPressPreference()
         migrateRetiredArtistPhotoStyle()

@@ -23,12 +23,10 @@ import android.text.TextUtils
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
 import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.R
-import timber.log.Timber
 import com.svartifoss.snfell.view.settings.WatchFontCatalog
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeProfile
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeValue
@@ -345,11 +343,11 @@ class WatchPreviewView @JvmOverloads constructor(
     private val bitmapPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
     private val iconDst = RectF()
 
-    private val fontRegular: Typeface? = ResourcesCompat.getFont(context, R.font.google_sans_regular)
-    private val fontBold: Typeface? = ResourcesCompat.getFont(context, R.font.google_sans_bold)
-    private val fontPoppins: Typeface? = ResourcesCompat.getFont(context, R.font.poppins_regular)
-    private val fontMontserrat: Typeface? = ResourcesCompat.getFont(context, R.font.montserrat_regular)
-    private val fontMarcellus: Typeface? = ResourcesCompat.getFont(context, R.font.marcellus_regular)
+    private val fontRegular: Typeface? = WatchFontCatalog.bundledTypeface(context, R.font.google_sans_regular)
+    private val fontBold: Typeface? = WatchFontCatalog.bundledTypeface(context, R.font.google_sans_bold)
+    private val fontPoppins: Typeface? = WatchFontCatalog.bundledTypeface(context, R.font.poppins_regular)
+    private val fontMontserrat: Typeface? = WatchFontCatalog.bundledTypeface(context, R.font.montserrat_regular)
+    private val fontMarcellus: Typeface? = WatchFontCatalog.bundledTypeface(context, R.font.marcellus_regular)
 
     private var sampleArt: Bitmap? = null
     private var sampleArtBlurred: Bitmap? = null
@@ -1084,43 +1082,15 @@ class WatchPreviewView @JvmOverloads constructor(
     private fun watchUiTypeface(bold: Boolean): Typeface? {
         if (!fontAllScreens) return if (bold) fontBold else fontRegular
         val base = WatchFontCatalog.previewTypefaceFor(context, wearFontKey)
-        return Typeface.create(base, if (bold) Typeface.BOLD else Typeface.NORMAL)
+        return WatchFontCatalog.styledTypefaceFor(context, base,
+                if (bold) Typeface.BOLD else Typeface.NORMAL)
     }
 
-    /** Cached copy of the bundled Flex font, extracted once per process - mirrors the watch's
-     *  identically-named private helper in WatchTheme.kt (mobile cannot depend on wear). */
-    private var cachedFlexFontFile: java.io.File? = null
-
-    private fun flexFontFile(): java.io.File {
-        cachedFlexFontFile?.takeIf { it.length() > 0L }?.let { return it }
-        val target = java.io.File(context.cacheDir, "google_sans_flex_variable.ttf")
-        if (!target.exists() || target.length() == 0L) {
-            context.resources.openRawResource(R.font.google_sans_flex).use { input ->
-                target.outputStream().use { output -> input.copyTo(output) }
-            }
-        }
-        cachedFlexFontFile = target
-        return target
-    }
-
-    /** [titleTypeface]'s Google Sans Flex path: the same `Typeface.Builder(File)
-     *  .setFontVariationSettings(String)` the watch's `flexTypeface` uses, built from the same
-     *  [WatchTypography.flexVariationSettings] string, so the preview cannot show an axis
-     *  combination the watch renders differently. */
+    /** The shared catalog reuses each native Flex variant across frames and preview instances. */
     private fun flexPreviewTypeface(
             spec: WatchTypography.TextSpec,
             axes: WatchTypography.FlexAxes = flexAxesSpec
-    ): Typeface? {
-        val settings = WatchTypography.flexVariationSettings(spec, axes)
-        return try {
-            Typeface.Builder(flexFontFile())
-                    .setFontVariationSettings(settings)
-                    .build()
-        } catch (e: Exception) {
-            Timber.w(e, "Flex variation settings rejected in preview: %s", settings)
-            ResourcesCompat.getFont(context, R.font.google_sans_flex)
-        }
-    }
+    ): Typeface? = WatchFontCatalog.flexTypefaceFor(context, spec, axes)
 
     /** Mirrors the watch's `styledClassicTypeface`: the identity weight (400) keeps the preview's
      *  designed bold/regular split, and any other weight uses the numeric API where available. */
@@ -1137,10 +1107,10 @@ class WatchPreviewView @JvmOverloads constructor(
                 spec.italic -> Typeface.ITALIC
                 else -> Typeface.NORMAL
             }
-            return Typeface.create(base, style)
+            return WatchFontCatalog.styledTypefaceFor(context, base, style)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            return Typeface.create(base, spec.weight, spec.italic)
+            return WatchFontCatalog.weightedTypefaceFor(context, base, spec.weight, spec.italic)
         }
         val style = when {
             spec.weight >= 600 && spec.italic -> Typeface.BOLD_ITALIC
@@ -1148,7 +1118,7 @@ class WatchPreviewView @JvmOverloads constructor(
             spec.italic -> Typeface.ITALIC
             else -> Typeface.NORMAL
         }
-        return Typeface.create(base, style)
+        return WatchFontCatalog.styledTypefaceFor(context, base, style)
     }
 
     /** [color] with the artist line's configured opacity applied. */
@@ -13508,7 +13478,8 @@ class WatchPreviewView @JvmOverloads constructor(
                         lineY += dp(12f)
                     }
                     if (titleVisible) {
-                        textPaint.typeface = Typeface.create(titleTypeface(bold = true), Typeface.ITALIC)
+                        textPaint.typeface = WatchFontCatalog.styledTypefaceFor(
+                                context, titleTypeface(bold = true), Typeface.ITALIC)
                         textPaint.textSize = dp(21f)
                         textPaint.color = Color.WHITE
                         val baseline = lineY + dp(14f)

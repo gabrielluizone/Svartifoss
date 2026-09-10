@@ -57,6 +57,16 @@ internal class CommunityThemeGoogleAuthentication(
             return CommunityThemeGoogleSignInResult.Failed(error)
         } catch (error: Exception) {
             return CommunityThemeGoogleSignInResult.Failed(error)
+        } catch (error: LinkageError) {
+            // Credential Manager reaches for the framework's android.credentials.CredentialManager
+            // as soon as Build.VERSION.SDK_INT reports 34, and a device whose framework does not
+            // actually carry that class - a spoofed API level, a trimmed system image - fails to
+            // resolve it. That failure is a LinkageError, an Error rather than an Exception, so it
+            // passes straight through every clause above and out of a suspend function nobody can
+            // catch it in: the process dies on a tap of "Sign in". Signing in is one optional step
+            // of an optional feature, so it is reported as a failed sign-in like any other and the
+            // rest of the gallery - which needs no account at all - goes on working.
+            return CommunityThemeGoogleSignInResult.Failed(error)
         }
         val credential = response.credential
         if (credential !is CustomCredential ||

@@ -79,9 +79,6 @@ class WatchMediaSession(
         setPlaybackToRemote(volumeProvider)
     }
 
-    val sessionToken: MediaSessionCompat.Token
-        get() = session.sessionToken
-
     // What the session's metadata was last built from. setMetadata ships the full cover bitmap
     // across binder every call, and update() runs on every state put (volume steps, seeks,
     // play/pause) - so metadata is only re-set when a field it contains actually changed. The

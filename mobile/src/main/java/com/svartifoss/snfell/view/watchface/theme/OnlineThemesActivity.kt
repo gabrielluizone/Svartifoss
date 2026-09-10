@@ -10,6 +10,7 @@ import android.graphics.drawable.Animatable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.os.Bundle
+import android.util.LruCache
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -428,8 +429,8 @@ class OnlineThemesActivity : AppCompatActivity() {
     override fun onDestroy() {
         catalogJob?.cancel()
         searchJob?.cancel()
-        previewJobs.values.forEach { it.cancel() }
-        detailJobs.values.forEach { it.cancel() }
+        discardLoadedProfiles()
+        adapter.clearScreenshots()
         super.onDestroy()
     }
 
@@ -1153,11 +1154,11 @@ class OnlineThemesActivity : AppCompatActivity() {
     }
 
     /**
-     * Loads the author's photograph for one card, once.
+     * Loads the author's photograph for one card while it is needed.
      *
      * The same lazy-on-bind shape the profile above already uses, and for the same reason: the list
-     * only ever pays for the rows somebody actually scrolled to. Reuses the repository's ETag disk
-     * cache, so a card that has been seen once costs nothing again.
+     * only ever pays for the rows somebody actually scrolled to. Decoded images have a bounded
+     * memory cache; the repository's ETag disk cache remains available after memory eviction.
      */
     private fun loadCardScreenshot(summary: OnlineThemeSummary) {
         if (!showAuthorScreenshots()) return
@@ -1166,26 +1167,29 @@ class OnlineThemesActivity : AppCompatActivity() {
         if (CommunityThemeScreenshots.SURFACE_PLAYER !in screenshotSurfaces[key].orEmpty()) return
         val generation = galleryGeneration
         screenshotJobs[key] = lifecycleScope.launch {
-            val bitmap = try {
-                catalogRepository.loadScreenshot(
-                        summary.id,
-                        CommunityThemeScreenshots.SURFACE_PLAYER)
-                        ?.let { bytes ->
-                            withContext(Dispatchers.Default) {
-                                BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            try {
+                val bitmap = try {
+                    catalogRepository.loadScreenshot(
+                            summary.id,
+                            CommunityThemeScreenshots.SURFACE_PLAYER)
+                            ?.let { bytes ->
+                                withContext(Dispatchers.Default) {
+                                    BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                                }
                             }
-                        }
-            } catch (e: CancellationException) {
-                throw e
-            } catch (error: Exception) {
-                Timber.d(error, "Could not load the card screenshot of %s", summary.id)
-                null
-            }
-            screenshotJobs -= key
-            // A photograph that never arrives leaves the rendered miniature in place, which is what
-            // every theme without one already shows.
-            if (bitmap != null && generation == galleryGeneration) {
-                adapter.setScreenshot(summary, bitmap)
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (error: Exception) {
+                    Timber.d(error, "Could not load the card screenshot of %s", summary.id)
+                    null
+                }
+                // A photograph that never arrives leaves the rendered miniature in place, which
+                // is what every theme without one already shows.
+                if (bitmap != null && generation == galleryGeneration) {
+                    adapter.setScreenshot(summary, bitmap)
+                }
+            } finally {
+                if (generation == galleryGeneration) screenshotJobs.remove(key)
             }
         }
     }
@@ -1250,6 +1254,9 @@ class OnlineThemesActivity : AppCompatActivity() {
         previewJobs.clear()
         detailJobs.values.forEach { it.cancel() }
         detailJobs.clear()
+        screenshotJobs.values.forEach { it.cancel() }
+        screenshotJobs.clear()
+        screenshotSurfaces.clear()
         parsedProfiles.clear()
     }
 
@@ -1363,7 +1370,13 @@ class OnlineThemesActivity : AppCompatActivity() {
         private var themes: List<OnlineThemeSummary> = emptyList()
         private var catalogue: List<OnlineThemeSummary> = emptyList()
         private val previews = mutableMapOf<OnlineThemeKey, WatchThemeProfile>()
-        private val screenshots = mutableMapOf<OnlineThemeKey, Bitmap>()
+        // A full 512px screenshot occupies 1 MiB after decoding even when its WebP is tiny.
+        // Retaining every visited card made memory grow with the whole gallery. Eviction only
+        // drops this cache's reference: a visible ImageView can still be drawing the same bitmap.
+        private val screenshots = object : LruCache<OnlineThemeKey, Bitmap>(
+                SCREENSHOT_CACHE_BYTES) {
+            override fun sizeOf(key: OnlineThemeKey, value: Bitmap): Int = value.allocationByteCount
+        }
         private val loadingPreviews = mutableSetOf<OnlineThemeKey>()
         private val failedPreviews = mutableSetOf<OnlineThemeKey>()
         private val opening = mutableSetOf<OnlineThemeKey>()
@@ -1379,7 +1392,7 @@ class OnlineThemesActivity : AppCompatActivity() {
         ) {
             catalogue = newCatalogue
             previews.clear()
-            screenshots.clear()
+            clearScreenshots()
             loadingPreviews.clear()
             failedPreviews.clear()
             opening.clear()
@@ -1451,11 +1464,13 @@ class OnlineThemesActivity : AppCompatActivity() {
             notifyThemeChanged(key)
         }
 
-        fun hasScreenshot(key: OnlineThemeKey): Boolean = key in screenshots
+        fun clearScreenshots() = screenshots.evictAll()
+
+        fun hasScreenshot(key: OnlineThemeKey): Boolean = screenshots.get(key) != null
 
         fun setScreenshot(summary: OnlineThemeSummary, bitmap: Bitmap) {
             val key = summary.key()
-            screenshots[key] = bitmap
+            screenshots.put(key, bitmap)
             notifyThemeChanged(key)
         }
 
@@ -1494,6 +1509,11 @@ class OnlineThemesActivity : AppCompatActivity() {
             holder.bind(themes[position])
         }
 
+        override fun onViewRecycled(holder: ThemeHolder) {
+            holder.releaseScreenshot()
+            super.onViewRecycled(holder)
+        }
+
         private inner class ThemeHolder(view: View) : RecyclerView.ViewHolder(view) {
             private val card: MaterialCardView = view.findViewById(R.id.community_theme_card)
             private val artwork: View = view.findViewById(R.id.community_theme_artwork)
@@ -1512,6 +1532,11 @@ class OnlineThemesActivity : AppCompatActivity() {
             private val installedMarker: ImageView =
                     view.findViewById(R.id.community_theme_installed_marker)
             private var boundKey: OnlineThemeKey? = null
+
+            fun releaseScreenshot() {
+                boundKey = null
+                screenshot.setImageDrawable(null)
+            }
 
             fun bind(summary: OnlineThemeSummary) {
                 val accent = LyraAccent.resolve(this@OnlineThemesActivity)
@@ -1608,7 +1633,7 @@ class OnlineThemesActivity : AppCompatActivity() {
                  * shows. Requested only once the profile is in hand, because the profile is what
                  * declares whether a photograph exists at all.
                  */
-                val authorShot = screenshots[key].takeIf { showScreenshots() }
+                val authorShot = screenshots.get(key).takeIf { showScreenshots() }
                 screenshot.setImageBitmap(authorShot)
                 screenshot.visibility = if (authorShot != null) View.VISIBLE else View.GONE
                 if (canOpenDetails && profile != null && authorShot == null && showScreenshots()) {
@@ -1741,5 +1766,6 @@ class OnlineThemesActivity : AppCompatActivity() {
         const val STATE_SUBMISSION_QUEUE = "online_themes.submission_queue"
         const val STATE_SUBMISSION_RUN_SIZE = "online_themes.submission_run_size"
         const val SEARCH_DEBOUNCE_MS = 120L
+        const val SCREENSHOT_CACHE_BYTES = 8 * 1024 * 1024
     }
 }

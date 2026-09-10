@@ -11,7 +11,6 @@ import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import androidx.core.app.ServiceCompat
-import androidx.media.app.NotificationCompat as MediaNotificationCompat
 import androidx.lifecycle.LifecycleService
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.lifecycleScope
@@ -90,7 +89,7 @@ class WatchMusicService : LifecycleService() {
 
         // Proxy MediaSession so the phone's playback shows up in the system Media Controls app and
         // the Wear OS media surfaces. State is pushed from PhoneConnection; controls forward back.
-        // Created before the first notification so createWearNotification() can reference its token.
+        // Its token is deliberately not attached to the notification - see createWearNotification().
         mediaSession = WatchMediaSession(this, phoneConnection, lifecycleScope)
         phoneConnection.musicState.observe(this) { resource ->
             val state = resource?.data
@@ -235,9 +234,14 @@ class WatchMusicService : LifecycleService() {
                 .setContentIntent(openAppPendingIntent)
                 .setSmallIcon(R.drawable.ic_notification_bars)
                 .setOngoing(true)
-                // Tag as a media notification bound to the proxy session so the Wear OS media
-                // template/surfaces derive their transport controls from the session state.
-                .setStyle(MediaNotificationCompat.MediaStyle().setMediaSession(mediaSession.sessionToken))
+                // Deliberately not a MediaStyle notification. Wear OS turns any media notification
+                // into an ongoing activity of its own ("Wear creates Ongoing Activities
+                // automatically for media apps"), so binding this one to the proxy session's token
+                // put a second entry beside the OngoingActivity below: two Svartifoss items in
+                // Samsung's Now Bar and a chooser on every tap. Google's rule for exactly this case
+                // is that a watch must not post a media notification while the media plays on the
+                // phone. The session stays active without it - only the style was the trigger.
+                // WatchServiceNotificationContractTest pins both halves.
 
         if (trackText != null) {
             notificationBuilder.setContentText(trackText)
