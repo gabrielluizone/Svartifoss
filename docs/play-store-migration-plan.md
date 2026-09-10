@@ -1,19 +1,34 @@
 # Play Store paid release — migration plan
 
-Status: **the flavor split is implemented and verified.** Build config, source-set moves, the
-`UpdateGateway` seam, manifests, `cat_updates` hidden + dropped from `SettingsSearchIndex` on the
-`play` flavor, the `FlavorSelfUpdateIsolationTest` guard, `serve_apk.py` and the `CLAUDE.md` /
-`AGENTS.md` build docs. All four assemble variants build; unit tests green on both flavors; the
-`play` merged manifest (mobile + wear) carries no `REQUEST_INSTALL_PACKAGES` or self-update
-components.
+Status: **shipped — Svartifoss entered Google Play closed testing on September 7, 2026** (free
+through September 22, 2026), one listing at package `com.svartifoss.snfell` covering both the
+phone and watch app, exactly per the "Decisions locked" section below. Build config, source-set
+moves, the `UpdateGateway` seam, manifests, `cat_updates` hidden + dropped from
+`SettingsSearchIndex` on the `play` flavor, the `FlavorSelfUpdateIsolationTest` guard,
+`serve_apk.py`, the `CLAUDE.md`/`AGENTS.md` build docs, and the docs/copy pass (README, the
+`docs/index.html` landing page, the in-app `no_watch_app_description` string) are all done. All
+four assemble variants build; unit tests green on both flavors; the `play` merged manifest (mobile
++ wear) carries no `REQUEST_INSTALL_PACKAGES` or self-update components; `bundlePlayRelease` is
+what's actually being uploaded to Play Console now.
 
-Still to do: the `release` signingConfig question (see *Signing* below — the current
-`afterEvaluate` hack already signs `bundlePlayRelease` with `release.keystore`, so this is
-cleanup, not a blocker), and the **docs/copy pass** for the paid listing — README line ~178
-("not on the Play Store"), `docs/index.html` (badge, meta, install section), `fastlane/`
-`full_description.txt`, `docs/play-console-*.md`, and the in-app strings `drawer_support_summary`
-/ `no_watch_app_description`. That pass is deliberately held until the listing is close, so the
-public copy does not describe a store page that does not exist yet.
+Enrollment is two required steps with the same Google account — join the tester Google Group
+(`groups.google.com/g/svartifoss-wearos`) *and* accept the test invitation at
+`play.google.com/apps/testing/com.svartifoss.snfell`. Skipping the invitation (going straight to
+the store listing or a search result) is the single most common support report during the test:
+Play reports the item as "not found"/"unavailable" to an account that hasn't accepted it. See the
+README's "Google Play closed test" section and `docs/index.html`'s closed-test panel for the
+tester-facing copy (fixed once already, commit `47b0f393`, after exactly this report). The same
+applies independently to whichever account a *watch* is signed into — a watch that never accepted
+the invitation shows the same "can't find/update" behavior in its own Play Store, separately from
+whatever account the phone uses.
+
+Still open: `docs/play-console-wear-store-listing.md` is leftover from the earlier split
+free-phone-app/paid-watch-app draft (a *second* Console app under `com.svartifoss.wrfell`) that
+did not ship — it describes a Console app that doesn't exist and should either be deleted or
+clearly marked superseded. The `release` signingConfig question (see *Signing* below — the current
+`afterEvaluate` hack already signs `bundlePlayRelease` with `release.keystore`, so this is cleanup,
+not a blocker) is still open. Public-launch copy (moving past "closed test" language once testing
+ends) is not written yet.
 
 ## Decisions locked
 
