@@ -2,6 +2,27 @@
 
 ## Unreleased
 
+### Added
+
+- **A corner tap now shows you which action it ran.** Tapping a corner zone has always drawn a
+  coloured ripple where you touched, but nothing in it said *what happened* - that was left to the
+  four corner icons, which sit permanently on top of the album art and which plenty of people would
+  rather turn off. The action's own icon now appears inside the ripple, at your fingertip, for a
+  moment. It does not depend on the corner icons being shown, so you can hide them for a clean cover
+  and still get the confirmation. Turn it on and off with **Flash icon on tap**, which is now
+  offered on every watch face instead of only Classic.
+
+  Only the single tap does this. A double tap or a long press on the same corner runs a *different*
+  action, and showing the single-tap icon for either would be telling you the wrong thing.
+
+- **The current lyric line can light up word by word.** When a track's synced lyric carries
+  "enhanced" per-word timing (a rarer format than the line-level sync LRCLIB serves for most
+  tracks), the Lyrics screen and the Verse face now colour each word in as its own timestamp
+  arrives, easing from the dim to the sung colour across the word's own span rather than the
+  whole line changing at once. A line with no word-level timing - which is still most lines, even
+  on a synced track - renders exactly as before, and neither surface fetches anything new: the
+  timing was always present in the text LRCLIB returns, only discarded until now.
+
 ### Fixed
 
 - **Pinch settings no longer crash calibration tests or subsequent app launches.** Both apps
@@ -61,10 +82,20 @@
   restores an icon the user hid. Expressive renders its stopped state instead of leaving an empty
   face while the host's idle screen is hidden.
 
-- **Repeat Once uses the same numbered repeat icon in every playback state and surface.** The
-  parameter-specific icon is transmitted with button and action-list configurations instead of
-  being replaced by the generic local repeat vector on the watch. Existing configurations missing
-  that asset are republished automatically.
+- **"Repeat once" now looks the same wherever you assign it — and the two actions with that name
+  are no longer both called that.** The icon really was wrong: the preset that sets repeat to one
+  track drew the plain repeat glyph, because the watch keeps one icon per action and the phone was
+  not telling it that this one depends on which mode was chosen. It now sends the numbered glyph,
+  and existing configurations are republished automatically.
+
+  Fixing that exposed the reason the two Controls tabs ended up holding different settings in the
+  first place: two separate actions were both named "Repeat one" — one that *toggles* repeat-one on
+  and off, and one that always *sets* it. Picking the wrong one was unavoidable. The setters are now
+  named "Set repeat: off / all / one track" and "Set shuffle: on / off", matching "Set speed to…"
+  and "Set volume to…". Anything you already assigned keeps working; only the label changed.
+
+  The new names are English for now. The other languages still carry translations of the old names,
+  so in some of them the two entries continue to read alike until they are translated.
 
 - **“Breakcore” no longer changes the title and artist to Special Elite.** The automatic font
   override is now limited to `iwakura`, `lain`, `wired` and `serial experiments`, matched without
@@ -80,16 +111,6 @@
 
   Nothing about needing the phone app changed — it is still required, and a watch that has the app
   without its phone half still says so and offers to open the listing on the phone.
-
-### Added
-
-- **The current lyric line can light up word by word.** When a track's synced lyric carries
-  "enhanced" per-word timing (a rarer format than the line-level sync LRCLIB serves for most
-  tracks), the Lyrics screen and the Verse face now colour each word in as its own timestamp
-  arrives, easing from the dim to the sung colour across the word's own span rather than the
-  whole line changing at once. A line with no word-level timing - which is still most lines, even
-  on a synced track - renders exactly as before, and neither surface fetches anything new: the
-  timing was always present in the text LRCLIB returns, only discarded until now.
 
 ## 4.0
 

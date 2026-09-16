@@ -132,3 +132,13 @@ download `mobile-debug.apk` / `wear-debug.apk` from the phone and watch browsers
 8. Switch through all fifteen faces with the same settings, then compare each against the phone's
    Watch tab preview. The preview and the wrist are supposed to agree about every item above; where
    they do not, the preview is the one that lies.
+
+### The tap confirmation (added after the chrome rework)
+
+9. Turn **Flash icon on tap** on, and turn the corner icons off (*Show player controls*). Assign a
+   different action to each of the four corners and tap each one. The action's own icon should
+   appear at your fingertip inside the ripple, on its own dark disc, and fade. Check it on Classic
+   and on at least two Compose faces, and confirm nothing appears when the corner icons are on but
+   the setting is off. Double-tap and long-press a corner: the ripple fires, **no icon** does -
+   those run different actions and the glyph shown is the single-tap one. Swipe from inside a
+   corner: no icon, because no corner action ran. Finally check ambient: no icon at all.

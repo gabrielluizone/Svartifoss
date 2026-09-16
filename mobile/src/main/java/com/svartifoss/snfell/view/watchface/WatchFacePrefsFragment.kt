@@ -5075,7 +5075,11 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         findPreference<Preference>(MiscPreferences.WEAR_SCREEN_BUTTONS_SHAPE.key)
                 ?.isVisible = !hostedMiniButtons
         // Quadrant hint icons only exist on Classic - every Compose face hides them entirely.
-        findPreference<Preference>("wear_quadrant_tap_flash")?.isVisible = face == "classic"
+        // Every face, not just Classic: the confirmation is now the action's glyph inside the tap
+        // ripple, which the host draws above whatever the face painted. It used to brighten the
+        // persistent hint, which only Classic drew - so the switch was hidden where it would have
+        // changed nothing, and that is no longer where it applies.
+        findPreference<Preference>("wear_quadrant_tap_flash")?.isVisible = true
         // The legacy rows behind the Player editor. Hidden wholesale on SECTION_STYLE today, so
         // these two lines change nothing on screen - they are here because `appliesToFace`
         // documents itself as mirroring this function, and a mirror missing half its subjects is

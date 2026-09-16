@@ -14,9 +14,9 @@ import com.google.auto.factory.Provided
 import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.actions.PlayPlaylistShortcutAction
 import com.svartifoss.snfell.common.CommPaths
-import com.svartifoss.snfell.common.actions.StandardActions
-import com.svartifoss.snfell.common.actions.StandardIcons
 import com.svartifoss.snfell.config.CustomIconStorage
+import com.svartifoss.snfell.config.actionKeyOf
+import com.svartifoss.snfell.config.needsTransmittedIcon
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.buttons.ConfigConstants
 import com.svartifoss.snfell.music.ShortcutArtworkFetcher
@@ -44,15 +44,19 @@ class ActionListTransmitter(actionList: ActionList,
         GlobalScope.launchWithPlayServicesErrorHandling(context) {
             val dataOnWatch = dataClient.getDataItems(Uri.parse("wear://*${CommPaths.DATA_LIST_ITEMS}")).await()
 
+            // Exactly the assets this payload would put - see ButtonConfigTransmitter for why
+            // asking by action key instead fired on every launch.
+            val expectedAssets = actionList.actions.withIndex()
+                    .filter { needsTransmittedIcon(it.value, actionKeyOf(it.value)) }
+                    .mapTo(mutableSetOf()) { CommPaths.ASSET_BUTTON_ICON_PREFIX + it.index }
+
             val missingMetadata = dataOnWatch.any { item ->
                 try {
-                    WatchList.parseFrom(item.data).actionsList.withIndex().any { (index, action) ->
+                    WatchList.parseFrom(item.data).actionsList.any { action ->
                         !action.hasIconTintable() ||
-                                (action.actionKey == StandardActions.ACTION_SET_REPEAT_MODE &&
-                                        !item.assets.containsKey(CommPaths.ASSET_BUTTON_ICON_PREFIX + index)) ||
                                 (action.actionKey == PlayPlaylistShortcutAction::class.java.canonicalName &&
                                         (!action.hasRemoteUri() || !action.hasIconIsCoverArt()))
-                    }
+                    } || expectedAssets.any { !item.assets.containsKey(it) }
                 } catch (_: Exception) {
                     true
                 }
@@ -92,11 +96,8 @@ class ActionListTransmitter(actionList: ActionList,
             action.remoteUri?.takeIf(String::isNotBlank)?.let { actionProto.remoteUri = it }
             protoBuilder.addActions(actionProto.build())
 
-            if (action.customIconUri == null &&
-                    StandardIcons.canUseLocalIcon(actionProto.actionKey)) {
-                // We already have vector icon of this on the watch.
-                // No need to waste bluetooth bandwith by transferring it
-
+            if (!needsTransmittedIcon(action, actionProto.actionKey)) {
+                // The watch ships the same vector and resolves it from the action key.
                 continue
             }
 

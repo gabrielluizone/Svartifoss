@@ -48,9 +48,11 @@ class SetRepeatModeAction : SelectableAction {
     })
 
     override val defaultIcon: Drawable
-        get() = AppCompatResources.getDrawable(
-                context,
-                repeatModeIcon(mode))!!
+        get() = AppCompatResources.getDrawable(context, repeatModeIcon(mode))!!
+
+    /** Declared because it varies by [mode]: see `needsTransmittedIcon`. */
+    override val defaultIconRes: Int
+        get() = repeatModeIcon(mode)
 
     override fun writeToBundle(bundle: PersistableBundle) {
         super.writeToBundle(bundle)

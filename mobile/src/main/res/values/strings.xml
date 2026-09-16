@@ -169,11 +169,11 @@
     <string name="action_shuffle">Shuffle</string>
     <string name="action_repeat">Repeat</string>
     <string name="action_repeat_one">Repeat one</string>
-    <string name="action_set_shuffle_on">Turn shuffle on</string>
-    <string name="action_set_shuffle_off">Turn shuffle off</string>
-    <string name="action_set_repeat_off">Turn repeat off</string>
-    <string name="action_set_repeat_all">Repeat all</string>
-    <string name="action_set_repeat_one">Repeat one</string>
+    <string name="action_set_shuffle_on">Set shuffle: on</string>
+    <string name="action_set_shuffle_off">Set shuffle: off</string>
+    <string name="action_set_repeat_off">Set repeat: off</string>
+    <string name="action_set_repeat_all">Set repeat: all</string>
+    <string name="action_set_repeat_one">Set repeat: one track</string>
     <string name="action_search">Search music</string>
     <string name="action_open_lyrics">Lyrics</string>
     <string name="group_playback_controls">Playback controls</string>
@@ -632,7 +632,7 @@
     <string name="setting_wear_player_controls_visible">Show player controls</string>
     <string name="setting_wear_player_controls_visible_description">Show or hide built-in buttons in Classic, Poster, Studio and other configurable layouts without disabling their touch targets</string>
     <string name="setting_wear_quadrant_tap_flash">Flash icon on tap</string>
-    <string name="setting_wear_quadrant_tap_flash_description">When a corner zone\'s action fires, briefly flash its icon to full brightness - especially useful on the Hidden screen theme, where the icon is otherwise invisible and gives no confirmation of which action just ran.</string>
+    <string name="setting_wear_quadrant_tap_flash_description">When a corner zone\'s action fires, show that action\'s icon inside the tap ripple, right where you touched - so you can turn the corner icons off to keep the cover art clean and still see which action just ran.</string>
     <string name="setting_wear_internal_progress_visible">Layout progress indicator</string>
     <string name="setting_wear_internal_progress_visible_description">Show the extra progress indicator designed into this layout. The Expressive and Material play-button rings are part of their controls and stay available.</string>
     <string name="setting_wear_edge_progress_visible">Show edge progress arc</string>

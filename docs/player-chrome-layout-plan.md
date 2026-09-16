@@ -1,6 +1,6 @@
 # Player chrome layout — study and plan
 
-Status: **proposal**, written 2026-09-16 in response to user feedback about the now-playing screen.
+Status: **implemented** - all seven steps, pending device validation. Written 2026-09-16 in response to user feedback about the now-playing screen.
 Supersedes the uncommitted `docs/player-layout-validation.md`, which documents an earlier attempt at
 the same defects (see *The earlier attempt* below).
 
@@ -447,7 +447,33 @@ Each step leaves the tree building and green, so the work can stop at any bounda
    **Artist** stays as step 3 left it - lifting above the row rather than only above the hint. It is
    a visible change to a face nobody complained about, and the cheap reversal is one line in the
    registry if a device says otherwise.
-7. **§7 refinements** — the transmit rule and the duplicate "Repeat one" title.
+7. **The repeat icon and the name behind it.** ✅ *Done.*
+
+   The transmit rule is now a comparison rather than a named exception: `PhoneAction.defaultIconRes`
+   declares an icon that depends on the action's own parameters, and `StandardIcons.canUseLocalIcon`
+   skips the transfer only when that resource *is* the one the watch resolves from the key. The two
+   repeat modes whose glyph is the local vector go back to costing nothing, and the next
+   parameterised action needs no entry anywhere.
+
+   That change also fixed a second-order bug it would otherwise have created. Both transmitters'
+   resend checks asked "does the watch have an asset for this action key", which was true only while
+   *every* mode transmitted one; with the comparison in place, a `Set repeat: off` assignment has no
+   asset by design and the check would have forced a pointless push on every launch. They now
+   compare against exactly the asset keys the payload is about to write.
+
+   **The title collision is fixed in English only.** `RepeatOneAction` (toggle) and
+   `SetRepeatModeAction(ONE)` (preset) both read "Repeat one", and fixing the icon made them
+   identical in every visible respect. The setters became "Set repeat: …" / "Set shuffle: …",
+   matching `action_set_playback_speed`'s existing shape. The other 44 locales still carry
+   translations of the old names - 24 of them collide outright and several more differ only by
+   accident - and disambiguating those is a translation pass, not something to invent.
+   `ActionTitleUniquenessTest` derives the titles from each action's own `retrieveTitle()` and fails
+   on any English collision; it was verified by reintroducing the old string and watching it name
+   both keys.
+
+   Not attempted: showing the picker breadcrumb ("Repeat mode") on an assigned row, which would fix
+   every locale without translation. The assigned row has one line of text for *both* gestures
+   ("Tap: … · Hold: …"), so there is nowhere to put it without making that line unreadable.
 
 ---
 

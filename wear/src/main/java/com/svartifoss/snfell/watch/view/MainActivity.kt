@@ -10,8 +10,6 @@ import android.content.ServiceConnection
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
@@ -5363,7 +5361,6 @@ class MainActivity : WearCompanionWatchActivity(),
 
     /** [applyScreenTheme] without the ambient guard - see [applyScreenFaceNow]. */
     private fun applyScreenThemeNow() {
-        quadrantFlashAnimator?.cancel()
         applyPlayerChrome()
         binding.screenButtonsRow.post { repositionScreenButtonsRow() }
     }
@@ -8615,6 +8612,7 @@ class MainActivity : WearCompanionWatchActivity(),
         if (!gesturesEnabledNow()) return
         buzz()
         pulseQuadrantIcon(quadrant)
+        revealQuadrantActionIcon(quadrant)
 
         viewModel.executeAction(ButtonInfo(false, quadrant, GESTURE_SINGLE_TAP))
     }
@@ -8639,8 +8637,8 @@ class MainActivity : WearCompanionWatchActivity(),
 
     /** Only Compose faces need the higher-z-order mirror pulse - Classic's own ripple (drawn by
      *  [binding.fourWayTouch] itself) is already visible since nothing opaque sits above it.
-     *  Boosted when "Flash icon on tap" is on - these faces have no persistent quadrant icon to
-     *  flash (see [pulseQuadrantIcon]), so the ripple itself has to carry that confirmation.
+     *  Boosted when "Flash icon on tap" is on, because that pulse is about to carry the action's
+     *  own glyph (see [revealQuadrantActionIcon]) and needs the room for it.
      */
     override fun onTouchDown(x: Float, y: Float) {
         if (screenFace in composeFaces) {
@@ -8652,10 +8650,38 @@ class MainActivity : WearCompanionWatchActivity(),
         composeTapPulse.release()
     }
 
+    /**
+     * Show the tapped action's own icon inside the tap ripple.
+     *
+     * The ripple has always said "I felt that" without ever saying *what ran*, and the quadrant
+     * hints that would have answered are exactly what a user turns off when they would rather see
+     * the album cover than four glyphs on top of it. So the answer goes where the eye already is -
+     * at the finger, inside the pulse - and is therefore independent of whether the hint is drawn.
+     *
+     * Fired from the tap rather than from touch-down on purpose: at touch-down the gesture has not
+     * been classified yet, and a press that turns into a swipe would have announced an action that
+     * never ran. Only the single tap; a double tap or a long press on the same quadrant runs a
+     * different action, and reporting the single-tap one for either would be worse than silence.
+     *
+     * The hint view's own drawable is reused - it is already the single-tap action's icon, kept
+     * current by `buttonConfigObserver` - but as a copy, because that view is still drawing the
+     * original at its own size.
+     */
+    private fun revealQuadrantActionIcon(quadrant: Int) {
+        if (!quadrantTapFlashEnabled || ambientObserver.isAmbient) return
+        val source = quadrantHintViews().firstOrNull { it.first == quadrant }?.second?.drawable
+                ?: return
+        val glyph = source.constantState?.newDrawable()?.mutate() ?: return
+        if (screenFace in composeFaces) {
+            composeTapPulse.revealIcon(glyph)
+        } else {
+            binding.fourWayTouch.revealTapIcon(glyph)
+        }
+    }
+
     /** Briefly scales the tapped quadrant's icon up and back, visually tying "I tapped here"
      *  to "that action ran" - the quadrant ripple alone doesn't point at the icon. */
     private fun pulseQuadrantIcon(quadrant: Int) {
-        if (screenFace in composeFaces) return // no persistent icon here - see composeTapPulse.
         val icon = when (quadrant) {
             ScreenQuadrant.TOP -> binding.iconTop
             ScreenQuadrant.BOTTOM -> binding.iconBottom
@@ -8664,11 +8690,10 @@ class MainActivity : WearCompanionWatchActivity(),
             else -> return
         }
 
-        // Hiding controls also hides tap flashes; the quadrant ripple remains the feedback. A
-        // quadrant whose hint this face does not draw is the same case - see
-        // PlayerChromeLayout.hostsSideAffordance.
-        if (!playerControlsVisible || screenTheme.tokens.iconAlpha <= 0f) return
-        if (icon.visibility != View.VISIBLE) return
+        // This bounce is only ever a *location* cue, so it needs a hint that is actually on screen.
+        // Naming the action is revealQuadrantActionIcon's job and does not depend on one - which is
+        // the point: it is what a user who hid the hints is left with.
+        if (icon.visibility != View.VISIBLE || icon.alpha <= 0f) return
 
         // Timed to the quadrant ring pulse (~350ms total, decelerating) so ring + icon read as
         // one gesture; the old 110ms bounce was over before the eye caught it.
@@ -8687,48 +8712,8 @@ class MainActivity : WearCompanionWatchActivity(),
                             .start()
                 }
                 .start()
-
-        if (quadrantTapFlashEnabled) {
-            flashQuadrantIconAlpha(icon, screenTheme.tokens.iconAlpha)
-        }
     }
 
-    private var quadrantFlashAnimator: AnimatorSet? = null
-
-    /** Flashes [icon] to full opacity, holds briefly, then fades back down to [restingAlpha] -
-     *  a separate property from [pulseQuadrantIcon]'s scale bounce above, so the two don't fight
-     *  over the same ViewPropertyAnimator. Makes the tap register visibly even when the icon is
-     *  normally invisible (Hidden theme, or forced temporarily visible while otherwise GONE),
-     *  where there would otherwise be no confirmation at all of which action fired. [onNaturalEnd]
-     *  only fires when this flash runs to completion undisturbed - a rapid re-tap cancels it to
-     *  start a fresh one instead, and must not also fire the superseded flash's end action (which
-     *  could hide the icon while the new flash is still using it). */
-    private fun flashQuadrantIconAlpha(
-            icon: ImageView, restingAlpha: Float, onNaturalEnd: (() -> Unit)? = null
-    ) {
-        quadrantFlashAnimator?.cancel()
-        val flashIn = ObjectAnimator.ofFloat(icon, View.ALPHA, 1f).apply {
-            duration = 100
-        }
-        val flashOut = ObjectAnimator.ofFloat(icon, View.ALPHA, restingAlpha).apply {
-            duration = 250
-            startDelay = 240
-        }
-        val set = AnimatorSet().apply { playTogether(flashIn, flashOut) }
-        if (onNaturalEnd != null) {
-            set.addListener(object : android.animation.AnimatorListenerAdapter() {
-                private var wasCancelled = false
-                override fun onAnimationCancel(animation: android.animation.Animator) {
-                    wasCancelled = true
-                }
-                override fun onAnimationEnd(animation: android.animation.Animator) {
-                    if (!wasCancelled) onNaturalEnd()
-                }
-            })
-        }
-        quadrantFlashAnimator = set
-        set.start()
-    }
 
     private class TimeoutsHandler(val activity: WeakReference<MainActivity>) :
             Handler(Looper.getMainLooper()) {

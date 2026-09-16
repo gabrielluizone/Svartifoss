@@ -42,6 +42,19 @@ abstract class PhoneAction : Bundlable {
     protected abstract fun retrieveTitle(): String
     abstract val defaultIcon: Drawable
 
+    /**
+     * The drawable resource [defaultIcon] came from, declared only when it depends on this
+     * action's own parameters.
+     *
+     * Null means "whatever the action key implies", which is true of almost every action and is
+     * what lets the phone skip transferring an icon the watch can draw from its own copy of the
+     * same vector. An action that picks between drawables - `SetRepeatModeAction` is the first -
+     * has to say so, or the watch resolves the one entry its map holds for the key and draws the
+     * wrong glyph. See `needsTransmittedIcon`.
+     */
+    open val defaultIconRes: Int?
+        get() = null
+
     /** Whether the action icon is a monochrome template that should follow its destination tint.
      * Built-in vectors default to true; actions backed by launcher artwork override
      * [defaultIconTintable]. User-picked gallery images remain full color, while packaged vector
