@@ -349,6 +349,10 @@ class MainActivity : WearCompanionWatchActivity(),
 
         private const val OVERLAY_FADE_OUT_MS = 150L
         private const val OVERLAY_FADE_IN_MS = 90L
+
+        /** See [enterQuickActionsPanel]: longer than the backdrop's fade, so the panel lands on it. */
+        private const val QUICK_PANEL_ENTER_MS = 160L
+        private const val QUICK_PANEL_ENTER_SCALE = 0.96f
         private const val ALBUM_ART_CROSSFADE_MS = 300
 
         /** How far two covers' aspect ratios may differ and still cross-fade directly - see
@@ -1104,6 +1108,10 @@ class MainActivity : WearCompanionWatchActivity(),
                         layout.post {
                             layout.translationX = 0f
                             layout.alpha = 1f
+                            // Also the entrance scale - a swipe can land while it is still
+                            // running, and the next open would inherit whatever it stopped at.
+                            layout.scaleX = 1f
+                            layout.scaleY = 1f
                         }
                     }
                 }
@@ -7012,9 +7020,12 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.seekOverlayMeter.visibility = View.GONE
         binding.volumeIconTop.visibility = View.GONE
         binding.volumeIconBottom.visibility = View.GONE
+        binding.quickActionsDismissFrame.animate().cancel()
         binding.quickActionsDismissFrame.visibility = View.GONE
         binding.quickActionsDismissFrame.translationX = 0f
         binding.quickActionsDismissFrame.alpha = 1f
+        binding.quickActionsDismissFrame.scaleX = 1f
+        binding.quickActionsDismissFrame.scaleY = 1f
         quickActionsPanelBackCallback.isEnabled = false
 
         handler.removeMessages(MESSAGE_HIDE_VOLUME)
@@ -7033,9 +7044,7 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.textSeekTime.visibility = View.GONE
         binding.seekOverlayMeter.visibility = View.GONE
         binding.volumeBar.visibility = View.GONE
-        binding.quickActionsDismissFrame.translationX = 0f
-        binding.quickActionsDismissFrame.alpha = 1f
-        binding.quickActionsDismissFrame.visibility = View.VISIBLE
+        enterQuickActionsPanel()
         quickActionsPanelBackCallback.isEnabled = true
 
         // Manual mode uses the configured slots; session mode mirrors controls supplied by the
@@ -7085,6 +7094,43 @@ class MainActivity : WearCompanionWatchActivity(),
             viewModel.customList.value?.let { updateUpNextPreview(it) }
             viewModel.openPlaybackQueue()
         }
+    }
+
+    /**
+     * Brings the panel on screen the way every other overlay arrives: it settles in.
+     *
+     * The backdrop behind it has always faded ([showOverlay]), and the volume ring fades in on its
+     * own, but the panel itself was set straight to full opacity - so the one overlay with the most
+     * on it was the one that appeared instantly, over a scrim that was still arriving. It read as
+     * the panel having no opening animation at all while its dismiss clearly had one.
+     *
+     * Alpha and a small scale, the same "settles rather than pops" the tap confirmation uses, and
+     * deliberately nothing more: a slide or a spring would be a motion vocabulary this app does not
+     * otherwise have. It runs a little longer than the backdrop's own fade so the scrim is
+     * established first and the panel arrives onto it rather than with it.
+     *
+     * Only the entrance. Closing is left instant on purpose: [isQuickActionsPanelShowing] reads the
+     * frame's visibility, and fading out would leave it VISIBLE but transparent for the length of
+     * the animation - a window in which a tap meant for the player behind it would still be routed
+     * to a panel button the user can no longer see.
+     */
+    private fun enterQuickActionsPanel() {
+        val frame = binding.quickActionsDismissFrame
+        val reopening = frame.visibility == View.VISIBLE
+        frame.animate().cancel()
+        frame.translationX = 0f
+        if (!reopening) {
+            frame.alpha = 0f
+            frame.scaleX = QUICK_PANEL_ENTER_SCALE
+            frame.scaleY = QUICK_PANEL_ENTER_SCALE
+        }
+        frame.visibility = View.VISIBLE
+        frame.animate()
+                .alpha(1f)
+                .scaleX(1f)
+                .scaleY(1f)
+                .setDuration(QUICK_PANEL_ENTER_MS)
+                .start()
     }
 
     private fun isQuickActionsPanelShowing() =

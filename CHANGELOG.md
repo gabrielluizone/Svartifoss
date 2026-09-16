@@ -25,6 +25,12 @@
 
 ### Fixed
 
+- **The quick actions panel opens with an animation instead of appearing all at once.** The dimmed
+  background behind it always faded in, and so does the volume ring, but the panel itself was placed
+  at full size and full opacity in one frame - on a scrim that had not finished arriving. It now
+  settles in over it, which is the same short fade-and-scale the tap confirmation uses. Closing is
+  unchanged.
+
 - **The progress ring is now edited on the Player page, where it is drawn.** Its style, layout and
   "blend palette into the ring" sat on the Panels page's Seek tab, which is about the overlay that
   appears while you drag. The ring is not that overlay - it is on the player - so touching any of
