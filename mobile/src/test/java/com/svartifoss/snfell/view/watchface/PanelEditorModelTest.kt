@@ -175,6 +175,72 @@ class PanelEditorModelTest {
                 PanelEditorModel.specFor("queue_remote_artwork")?.value)
     }
 
+    @Test
+    fun `every tab previews its own watch surface`() {
+        // One distinct surface per tab. A tab that shared another's would make the rail a lie -
+        // and the mapping exists precisely so the two page-wide controls can follow it.
+        val surfaces = PanelTarget.values().map(PanelEditorModel::previewSurfaceFor)
+        assertEquals(PanelTarget.values().size, surfaces.toSet().size)
+        assertEquals(WatchPreviewView.PreviewSurface.QUEUE,
+                PanelEditorModel.previewSurfaceFor(PanelTarget.QUEUE))
+        assertEquals(WatchPreviewView.PreviewSurface.LYRICS,
+                PanelEditorModel.previewSurfaceFor(PanelTarget.LYRICS))
+    }
+
+    /**
+     * Every panel setting has to be routed to a surface by name, or the preview answers "player".
+     *
+     * That fallback is silent and looks like the preview simply being wrong: the reported bug was
+     * a setting changed on one tab dropping the preview onto a different panel. A new row added to
+     * this editor without a line in `surfaceForPreference` lands in exactly the same place, so the
+     * routing table is swept rather than trusted.
+     */
+    @Test
+    fun `every persisted panel setting is routed to a surface by name`() {
+        val routing = surfaceRoutingBody()
+
+        val unrouted = PanelEditorModel.specs
+                .filter { it.persisted }
+                .map { it.key }
+                .filterNot { it in PanelEditorModel.pageWideKeys }
+                .filterNot { routing.contains("\"$it\"") }
+
+        assertTrue(
+                "These Panel settings are not named in WatchPreviewView.surfaceForPreference, so " +
+                        "editing them previews the player instead of the panel they belong to: " +
+                        "$unrouted",
+                unrouted.isEmpty())
+    }
+
+    /** The page-wide pair is routed by membership instead, which is the branch that follows the tab. */
+    @Test
+    fun `the page-wide controls follow the open tab`() {
+        assertEquals(
+                setOf(MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE.key,
+                        MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS.key),
+                PanelEditorModel.pageWideKeys)
+        assertTrue(
+                "the routing table must defer these to the open tab, not to a fixed surface",
+                surfaceRoutingBody().contains("key in PanelEditorModel.pageWideKeys"))
+        // And must not also carry a fixed entry for either, which would win and never be reached.
+        for (key in PanelEditorModel.pageWideKeys) {
+            assertFalse("$key still has a fixed routing entry",
+                    surfaceRoutingBody().contains("key == \"$key\""))
+        }
+    }
+
+    private fun surfaceRoutingBody(): String {
+        val source = File("src/main/java/com/svartifoss/snfell/view/watchface/WatchPreviewView.kt")
+                .takeIf { it.exists() }
+                ?: File("mobile/src/main/java/com/svartifoss/snfell/view/watchface/WatchPreviewView.kt")
+        val text = source.readText()
+        val start = text.indexOf("private fun surfaceForPreference(")
+        assertTrue("surfaceForPreference is gone from WatchPreviewView", start >= 0)
+        val end = text.indexOf("private fun readPreferenceSnapshot(", start)
+        assertTrue("could not bound surfaceForPreference", end > start)
+        return text.substring(start, end)
+    }
+
     /** The rows inside the six `cat_wf_panel*` categories, read straight from the XML. */
     private fun panelRowsInXml(): Set<String> {
         val xml = File("src/main/res/xml/watch_face_settings.xml").takeIf { it.exists() }

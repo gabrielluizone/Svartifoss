@@ -1279,7 +1279,35 @@ class WatchPreviewView @JvmOverloads constructor(
         invalidate()
     }
 
+    /**
+     * Which panel the Panels editor currently has open, for the two controls that sit above its
+     * tab rail and therefore belong to no single surface.
+     *
+     * Deliberately held here rather than passed at each call: five separate places route a key to
+     * a surface (an interaction, a committed change, a page change, a restore, the enlarged
+     * preview), and a parameter would have had to be remembered at all five, where the one that
+     * forgot would be silently wrong.
+     *
+     * Never cleared, and it does not need to be: the only keys that read it exist on one page, and
+     * the editor pushes the current tab every time that page renders.
+     */
+    private var pageWidePanelSurface: PreviewSurface? = null
+
+    /** See [pageWidePanelSurface]. Null restores the fixed default. */
+    fun setPanelEditorSurface(surface: PreviewSurface?) {
+        if (pageWidePanelSurface == surface) return
+        pageWidePanelSurface = surface
+        if (focusedPreference in PanelEditorModel.pageWideKeys) {
+            this.surface = surfaceForPreference(focusedPreference!!)
+            readPreferenceSnapshot()
+        }
+    }
+
     private fun surfaceForPreference(key: String): PreviewSurface = when {
+        // Shown on every tab of the Panels editor, so the surface they preview is whichever tab is
+        // open - not a fixed one. Volume when nothing says otherwise, which is the first tab.
+        key in PanelEditorModel.pageWideKeys ->
+            pageWidePanelSurface ?: PreviewSurface.VOLUME
         key.startsWith("wear_aod_") || key == "ambient_album_art_opacity" ->
             PreviewSurface.AOD
         // The awake clock lives on the player surface; editing its prefs previews the player.
@@ -1287,7 +1315,12 @@ class WatchPreviewView @JvmOverloads constructor(
         key == "wear_volume_style" || key == "wear_volume_layout" ||
                 key == "wear_volume_color_mode" || key == "wear_volume_custom_color" ->
             PreviewSurface.VOLUME
-        key == "wear_progress_style" || key == "wear_progress_layout" ->
+        // The resting progress ring is drawn on the player, not on the seek overlay, even though
+        // the editor groups all three with the seek controls - so these preview the player on
+        // purpose. wear_progress_gradient is listed with its two siblings rather than left to the
+        // fallback below, so the grouping is stated instead of being true by coincidence.
+        key == "wear_progress_style" || key == "wear_progress_layout" ||
+                key == "wear_progress_gradient" ->
             PreviewSurface.PLAYER
         key == "wear_seek_style" || key == "wear_seek_layout" -> PreviewSurface.SEEK
         key == "wear_quick_panel_style" || key == "wear_quick_panel_layout" ||
@@ -1304,14 +1337,12 @@ class WatchPreviewView @JvmOverloads constructor(
         key == "wear_lyrics_color_mode" || key == "wear_lyrics_custom_color" ->
             PreviewSurface.LYRICS
         key == "wear_font_all_screens" -> PreviewSurface.QUEUE
-        key == "wear_overlay_backdrop_style" -> PreviewSurface.VOLUME
         // Each surface's own background previews on that surface, not on the shared one.
         key == "wear_volume_backdrop_style" -> PreviewSurface.VOLUME
         key == "wear_progress_backdrop_style" -> PreviewSurface.SEEK
         key == "wear_quick_panel_backdrop_style" -> PreviewSurface.QUICK_PANEL
         key == "wear_queue_backdrop_style" -> PreviewSurface.QUEUE
         key == "wear_lyrics_backdrop_style" -> PreviewSurface.LYRICS
-        key == "overlay_blur_radius" -> PreviewSurface.VOLUME
         key.startsWith("screen_buttons_") || key == "wear_mini_buttons_mode" ->
             PreviewSurface.MINI_BUTTONS
         key == "wear_show_up_next_pill" -> PreviewSurface.PLAYER

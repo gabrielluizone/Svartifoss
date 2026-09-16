@@ -95,6 +95,32 @@ internal object PanelEditorModel {
             MiscPreferences.WEAR_QUICK_PANEL_SOURCE.key,
             "queue_remote_artwork")
 
+    /**
+     * The two controls the editor shows above the tab rail, on every tab.
+     *
+     * They are the reason the preview needs [previewSurfaceFor] at all. Every other key belongs to
+     * exactly one surface, so a fixed key -> surface table answers correctly for it; these two
+     * belong to whichever surface is on screen, and answering "volume" for them meant that editing
+     * the shared background while looking at the Queue tab dropped the preview onto the volume
+     * overlay - a panel the user was not editing and had not asked to see.
+     *
+     * Note this is a *different question* from [PanelSettingSpec.target], which is where search
+     * navigates to and is deliberately fixed at Volume: search arrives with no tab open, and
+     * landing somewhere definite beats landing wherever the page was left.
+     */
+    val pageWideKeys: Set<String> = setOf(
+            MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE.key,
+            MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS.key)
+
+    /** The watch surface a tab of this editor is showing. */
+    fun previewSurfaceFor(target: PanelTarget): WatchPreviewView.PreviewSurface = when (target) {
+        PanelTarget.VOLUME -> WatchPreviewView.PreviewSurface.VOLUME
+        PanelTarget.SEEK -> WatchPreviewView.PreviewSurface.SEEK
+        PanelTarget.QUICK_PANEL -> WatchPreviewView.PreviewSurface.QUICK_PANEL
+        PanelTarget.QUEUE -> WatchPreviewView.PreviewSurface.QUEUE
+        PanelTarget.LYRICS -> WatchPreviewView.PreviewSurface.LYRICS
+    }
+
     val specs: List<PanelSettingSpec> = listOf(
             choice(
                     MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE,

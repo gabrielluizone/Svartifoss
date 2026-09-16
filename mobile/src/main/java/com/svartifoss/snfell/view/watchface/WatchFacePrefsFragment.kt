@@ -2067,6 +2067,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
     @SuppressLint("SetTextI18n") // "Title · value" is the editor's own notation, not prose.
     private fun renderPanelEditor(root: View) {
+        // Every render, not only a tab change: this also covers the first bind and a return to the
+        // page, where the restored tab would otherwise leave the preview routing the two page-wide
+        // controls to whichever surface was last pushed.
+        (parentFragment as? WatchFaceFragment)?.onPanelEditorTarget(
+                section, PanelEditorModel.previewSurfaceFor(panelTarget))
+
         bindPanelChoiceButton(
                 root.findViewById(R.id.panel_editor_backdrop_button),
                 MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE.key)

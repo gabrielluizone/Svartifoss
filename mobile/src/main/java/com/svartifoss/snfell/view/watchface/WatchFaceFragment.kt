@@ -408,6 +408,17 @@ class WatchFaceFragment : Fragment() {
     /** Called only by the currently visible preference page. Candidate values let List/Switch
      *  choices paint before Android persists them; the shared-preference callback then replaces
      *  that transient state with the committed value. */
+    /**
+     * Tells the preview which panel the Panels editor has open.
+     *
+     * Its two page-wide controls sit above the tab rail and belong to no single surface, so the
+     * preview cannot route them from the key alone. See `WatchPreviewView.setPanelEditorSurface`.
+     */
+    internal fun onPanelEditorTarget(section: String, surface: WatchPreviewView.PreviewSurface) {
+        if (_binding == null || selectedSection != section) return
+        previews { it.setPanelEditorSurface(surface) }
+    }
+
     internal fun onWatchPreferenceInteraction(
         section: String,
         key: String,

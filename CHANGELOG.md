@@ -25,6 +25,12 @@
 
 ### Fixed
 
+- **The Panels preview stays on the panel you are editing.** The two controls above the tab rail -
+  the shared background and its blur - belong to every tab, and the preview was routing them to the
+  volume overlay whatever tab was open. So changing the background while looking at the Queue tab
+  dropped the preview onto a panel you were not editing, and the change you had just made appeared
+  to have gone somewhere else. They now preview the tab you are on.
+
 - **The repeat button cycles again, and the shuffle button can switch shuffle on.** Both were
   reading the current mode from a connection that had not finished opening, so both were answered
   "unknown" every single time - and both treated unknown as a mode rather than as no answer. Repeat
