@@ -238,14 +238,9 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 rebindScopedValues()
                 refreshColorEditor()
             }
-            in PanelEditorModel.keys,
-            // Not panel rows themselves, but the two edge-progress switches on Player decide
-            // whether the Seek tab's ring controls apply at all.
-            MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key,
-            MiscPreferences.WEAR_EDGE_SEEK_ENABLED.key -> {
+            in PanelEditorModel.keys -> {
                 rebindScopedValues()
                 refreshPanelEditor()
-                refreshPlayerEditor()
             }
             in PlayerEditorModel.keys -> {
                 rebindScopedValues()
@@ -2041,8 +2036,6 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // Every per-surface control opens the real Preference's own dialog, so the editor adds no
         // second copy of a picker, its validation or its archived-option filtering.
         listOf(
-                R.id.panel_editor_ring_style_button to PanelControl.RING_STYLE,
-                R.id.panel_editor_ring_layout_button to PanelControl.RING_LAYOUT,
                 R.id.panel_editor_style_button to PanelControl.STYLE,
                 R.id.panel_editor_layout_button to PanelControl.LAYOUT,
                 R.id.panel_editor_row_size_button to PanelControl.ROW_SIZE,
@@ -2125,8 +2118,6 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         }
 
         listOf(
-                R.id.panel_editor_ring_style_button to PanelControl.RING_STYLE,
-                R.id.panel_editor_ring_layout_button to PanelControl.RING_LAYOUT,
                 R.id.panel_editor_style_button to PanelControl.STYLE,
                 R.id.panel_editor_layout_button to PanelControl.LAYOUT,
                 R.id.panel_editor_row_size_button to PanelControl.ROW_SIZE,
@@ -2140,7 +2131,6 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         }
 
         listOf(
-                R.id.panel_editor_ring_gradient_switch to PanelControl.RING_GRADIENT,
                 R.id.panel_editor_up_next_switch to PanelControl.UP_NEXT,
                 R.id.panel_editor_shortcut_cover_switch to PanelControl.SHORTCUT_COVER,
                 R.id.panel_editor_remote_artwork_switch to PanelControl.REMOTE_ARTWORK
@@ -2185,16 +2175,6 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      * [WatchSearchTargetResolver] disagreeing about whether a search result is reachable.
      */
     private fun panelControlApplies(control: PanelControl, key: String): Boolean = when (control) {
-        // See updatePlayerCapabilityVisibility: an active drag reveals the ring even with the
-        // resting ring off, so the picker survives as long as either route can show it.
-        PanelControl.RING_STYLE,
-        PanelControl.RING_LAYOUT ->
-            store.getBoolean("wear_edge_progress_visible", true) ||
-                    store.getBoolean("wear_edge_seek_enabled", true)
-        // See updateProgressGradientVisibility: only the Solid ring blends the companion colours.
-        PanelControl.RING_GRADIENT ->
-            panelControlApplies(PanelControl.RING_STYLE, key) &&
-                    readStringPreference(MiscPreferences.WEAR_PROGRESS_STYLE.key, "solid") == "solid"
         // Only a minority of OverlayBackdrop's ~35 treatments actually sample the blurred cover
         // (OverlayBackdrop.usesAlbumBlur) - the rest are solid fields or authored gradients this
         // radius has no effect on. The row is anchored to Volume (see PanelEditorModel's class
@@ -2291,8 +2271,6 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // rows' static glyphs at the drawable's own white fill, invisible on the light theme.
         listOf(
                 R.id.panel_editor_backdrop_button,
-                R.id.panel_editor_ring_style_button,
-                R.id.panel_editor_ring_layout_button,
                 R.id.panel_editor_surface_backdrop_button,
                 R.id.panel_editor_style_button,
                 R.id.panel_editor_layout_button,
@@ -2319,7 +2297,6 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                         ColorUtils.setAlphaComponent(accent, 0x80),
                         divider))
         listOf(
-                R.id.panel_editor_ring_gradient_switch,
                 R.id.panel_editor_up_next_switch,
                 R.id.panel_editor_shortcut_cover_switch,
                 R.id.panel_editor_remote_artwork_switch
@@ -2362,9 +2339,6 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         PanelControl.BACKDROP -> R.id.panel_editor_backdrop_button
         PanelControl.SURFACE_BACKDROP -> R.id.panel_editor_surface_backdrop_button
         PanelControl.BLUR -> R.id.panel_editor_blur_button
-        PanelControl.RING_STYLE -> R.id.panel_editor_ring_style_button
-        PanelControl.RING_LAYOUT -> R.id.panel_editor_ring_layout_button
-        PanelControl.RING_GRADIENT -> R.id.panel_editor_ring_gradient_switch
         PanelControl.STYLE -> R.id.panel_editor_style_button
         PanelControl.LAYOUT -> R.id.panel_editor_layout_button
         PanelControl.ROW_SIZE -> R.id.panel_editor_row_size_button
@@ -2442,20 +2416,39 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             bindPlayerChoiceButton(screenThemeButton, MiscPreferences.WEAR_SCREEN_THEME.key)
         }
 
-        renderPlayerChips(
-                root.findViewById(R.id.player_editor_element_chips),
-                PlayerEditorModel.visibleIn(PlayerSlot.ELEMENT, face))
-        // The one choice row gated by another preference rather than by the face: the position
-        // mark is drawn on the shared edge ring, so switching that ring off leaves it with nothing
-        // to sit on. A picker that changes nothing reads as broken, which is the same reason the
-        // control-style and per-face rows above are hidden rather than merely inert.
+        // The controls gated by another preference rather than by the face. All of them belong to
+        // the shared edge ring, so switching that ring off leaves them with nothing to act on, and
+        // a picker that changes nothing reads as broken - the same reason the control-style and
+        // per-face rows above are hidden rather than merely inert.
+        //
+        // The two gates differ and both are mirrored in WatchSearchTargetResolver, which must move
+        // with them. The position mark needs the *resting* ring, since that is what it marks. The
+        // ring's own style, layout and gradient survive on edge seek alone, because a drag reveals
+        // the ring whether or not it rests on screen. And the gradient needs the solid ring on top
+        // of that: it is the one style that blends the companion colours.
         val edgeArcOn = store.getBoolean(
                 MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key,
                 MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.defaultValue)
+        val ringReachable = edgeArcOn || store.getBoolean(
+                MiscPreferences.WEAR_EDGE_SEEK_ENABLED.key,
+                MiscPreferences.WEAR_EDGE_SEEK_ENABLED.defaultValue)
+        val solidRing = readStringPreference(
+                MiscPreferences.WEAR_PROGRESS_STYLE.key,
+                MiscPreferences.WEAR_PROGRESS_STYLE.defaultValue) == "solid"
+
+        renderPlayerChips(
+                root.findViewById(R.id.player_editor_element_chips),
+                PlayerEditorModel.visibleIn(PlayerSlot.ELEMENT, face).filter { spec ->
+                    spec.control != PlayerControl.RING_GRADIENT || (ringReachable && solidRing)
+                })
         renderPlayerChoiceRows(
                 root.findViewById(R.id.player_editor_choice_rows),
                 PlayerEditorModel.visibleIn(PlayerSlot.CHOICE, face).filter { spec ->
-                    spec.control != PlayerControl.SEEK_MARKER || edgeArcOn
+                    when (spec.control) {
+                        PlayerControl.SEEK_MARKER -> edgeArcOn
+                        PlayerControl.RING_STYLE, PlayerControl.RING_LAYOUT -> ringReachable
+                        else -> true
+                    }
                 })
 
         val details = PlayerEditorModel.visibleIn(PlayerSlot.DETAIL, face)

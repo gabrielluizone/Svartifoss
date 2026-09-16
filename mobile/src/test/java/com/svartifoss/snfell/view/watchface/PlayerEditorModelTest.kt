@@ -263,6 +263,39 @@ class PlayerEditorModelTest {
         assertEquals(
                 PlayerValueSpec.Toggle(true),
                 PlayerEditorModel.specFor(MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key)?.value)
+        assertEquals(
+                PlayerValueSpec.Toggle(true),
+                PlayerEditorModel.specFor(MiscPreferences.WEAR_PROGRESS_GRADIENT.key)?.value)
+    }
+
+    /**
+     * The resting ring is edited where it is drawn.
+     *
+     * Its style, layout and gradient used to sit on the Panels page's Seek tab, which holds the
+     * seek overlay - a different surface. Touching any of the three previewed the player, so three
+     * of that tab's five controls jumped to another screen, which reads as a broken preview. They
+     * are here now, beside the switch that turns their ring on.
+     */
+    @Test
+    fun `the resting ring is edited on the player page`() {
+        assertEquals(
+                PlayerValueSpec.Choice("solid"),
+                PlayerEditorModel.specFor(MiscPreferences.WEAR_PROGRESS_STYLE.key)?.value)
+        assertEquals(
+                PlayerValueSpec.Choice("edge"),
+                PlayerEditorModel.specFor(MiscPreferences.WEAR_PROGRESS_LAYOUT.key)?.value)
+
+        // The ring applies to every face, so none of the three may be face-gated - they are gated
+        // on the ring's own switches instead, which renderPlayerEditor reads and appliesToFace
+        // deliberately cannot. Same distinction the position mark already documents.
+        for (control in listOf(PlayerControl.RING_STYLE, PlayerControl.RING_LAYOUT,
+                PlayerControl.RING_GRADIENT)) {
+            for (face in ThemeAppearance.ALLOWED_BASE_FACES) {
+                assertTrue(
+                        "$control must be offered on $face",
+                        PlayerEditorModel.appliesToFace(control, face))
+            }
+        }
     }
 
     /** The rows inside the five categories the Player page owns, read straight from the XML. */

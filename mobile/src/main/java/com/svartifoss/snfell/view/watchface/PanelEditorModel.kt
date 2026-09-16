@@ -16,8 +16,12 @@ internal enum class PanelTarget {
  * The editor affordance that owns a setting.
  *
  * One entry per distinct role rather than one per key, so a single view can serve every target the
- * way [STYLE] does. The Seek tab is why [RING_STYLE] is separate from [STYLE]: the resting progress
- * ring and the seek overlay are two different surfaces that happen to share a settings group.
+ * way [STYLE] does.
+ *
+ * The Seek tab used to carry the resting progress ring's style, layout and gradient as well. They
+ * were moved to the Player page, where the ring is actually drawn: three of the tab's five controls
+ * previewed the player rather than the seek overlay, which read as the preview being broken rather
+ * than as the tab holding two unrelated surfaces.
  */
 internal enum class PanelControl {
     /** The page-wide *Shared panel appearance* background. */
@@ -25,9 +29,6 @@ internal enum class PanelControl {
     /** One surface's own background, which may defer to [BACKDROP]. */
     SURFACE_BACKDROP,
     BLUR,
-    RING_STYLE,
-    RING_LAYOUT,
-    RING_GRADIENT,
     STYLE,
     LAYOUT,
     ROW_SIZE,
@@ -145,18 +146,6 @@ internal object PanelEditorModel {
                     PanelTarget.VOLUME,
                     PanelControl.LAYOUT),
 
-            choice(
-                    MiscPreferences.WEAR_PROGRESS_STYLE,
-                    PanelTarget.SEEK,
-                    PanelControl.RING_STYLE),
-            choice(
-                    MiscPreferences.WEAR_PROGRESS_LAYOUT,
-                    PanelTarget.SEEK,
-                    PanelControl.RING_LAYOUT),
-            toggle(
-                    MiscPreferences.WEAR_PROGRESS_GRADIENT,
-                    PanelTarget.SEEK,
-                    PanelControl.RING_GRADIENT),
             choice(
                     MiscPreferences.WEAR_SEEK_STYLE,
                     PanelTarget.SEEK,

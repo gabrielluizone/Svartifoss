@@ -90,20 +90,33 @@ class PanelEditorModelTest {
         }
     }
 
+    /**
+     * The Seek tab is about the seek overlay alone.
+     *
+     * It used to carry the resting progress ring's style, layout and gradient too - two surfaces in
+     * one settings group. Their preview correctly showed the *player*, where the ring is drawn, so
+     * three of the tab's five controls jumped to another screen when touched. They belong to the
+     * Player page and [PlayerEditorModelTest] now owns them; what this keeps is that they did not
+     * come back.
+     */
     @Test
-    fun `the seek tab separates the resting ring from the seek overlay`() {
-        // They are two surfaces sharing one settings group: the ring is on screen always, the
-        // overlay only during a drag. Collapsing them onto one control would make the Seek tab
-        // claim that changing one changes the other.
-        assertEquals(
-                MiscPreferences.WEAR_PROGRESS_STYLE.key,
-                PanelEditorModel.keyFor(PanelTarget.SEEK, PanelControl.RING_STYLE))
-        assertEquals(
-                MiscPreferences.WEAR_PROGRESS_LAYOUT.key,
-                PanelEditorModel.keyFor(PanelTarget.SEEK, PanelControl.RING_LAYOUT))
+    fun `the seek tab holds only the seek overlay`() {
         assertEquals(
                 MiscPreferences.WEAR_SEEK_STYLE.key,
                 PanelEditorModel.keyFor(PanelTarget.SEEK, PanelControl.STYLE))
+        assertEquals(
+                MiscPreferences.WEAR_SEEK_LAYOUT.key,
+                PanelEditorModel.keyFor(PanelTarget.SEEK, PanelControl.LAYOUT))
+
+        val ringKeys = setOf(
+                MiscPreferences.WEAR_PROGRESS_STYLE.key,
+                MiscPreferences.WEAR_PROGRESS_LAYOUT.key,
+                MiscPreferences.WEAR_PROGRESS_GRADIENT.key)
+        val returned = PanelEditorModel.keys.intersect(ringKeys)
+        assertTrue(
+                "The resting ring's controls are back on the Panels page, where changing them " +
+                        "previews a different surface: $returned",
+                returned.isEmpty())
     }
 
     @Test
@@ -163,9 +176,6 @@ class PanelEditorModelTest {
         assertEquals(
                 PanelValueSpec.Choice("follow"),
                 PanelEditorModel.specFor(MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE.key)?.value)
-        assertEquals(
-                PanelValueSpec.Toggle(true),
-                PanelEditorModel.specFor(MiscPreferences.WEAR_PROGRESS_GRADIENT.key)?.value)
         assertEquals(
                 PanelValueSpec.Toggle(false),
                 PanelEditorModel.specFor(MiscPreferences.WEAR_SHOW_UP_NEXT_PILL.key)?.value)

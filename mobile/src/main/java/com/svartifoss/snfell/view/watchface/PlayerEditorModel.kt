@@ -46,6 +46,9 @@ internal enum class PlayerControl {
     INTERNAL_PROGRESS,
     EDGE_PROGRESS,
     EDGE_SEEK,
+    RING_STYLE,
+    RING_LAYOUT,
+    RING_GRADIENT,
     ALWAYS_SHOW_TIME,
     CAROUSEL_SHAPE,
     TITLE_CENTERED,
@@ -196,7 +199,29 @@ internal object PlayerEditorModel {
                     MiscPreferences.WEAR_QUADRANT_TAP_FLASH,
                     PlayerControl.QUADRANT_FLASH,
                     R.string.player_element_tap_flash),
+            /*
+             * The ring's own paint, gated the same way [SEEK_MARKER] below is: it is drawn on the
+             * shared edge ring, so switching that ring off leaves it nothing to act on.
+             *
+             * These three lived on the Panels page's Seek tab until they were moved here. That tab
+             * holds the *seek overlay*, a different surface, and the preview of these three
+             * correctly showed the player instead - so three of its five controls jumped to another
+             * screen, which reads as a broken preview rather than as a tab holding two subjects.
+             * They now sit beside the switch that turns their ring on.
+             */
+            element(
+                    MiscPreferences.WEAR_PROGRESS_GRADIENT,
+                    PlayerControl.RING_GRADIENT,
+                    R.string.player_element_ring_gradient),
 
+            choice(
+                    MiscPreferences.WEAR_PROGRESS_STYLE,
+                    PlayerSlot.CHOICE,
+                    PlayerControl.RING_STYLE),
+            choice(
+                    MiscPreferences.WEAR_PROGRESS_LAYOUT,
+                    PlayerSlot.CHOICE,
+                    PlayerControl.RING_LAYOUT),
             choice(
                     MiscPreferences.WEAR_TRACK_TIME_MODE,
                     PlayerSlot.CHOICE,

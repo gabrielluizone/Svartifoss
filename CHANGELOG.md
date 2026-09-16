@@ -25,6 +25,13 @@
 
 ### Fixed
 
+- **The progress ring is now edited on the Player page, where it is drawn.** Its style, layout and
+  "blend palette into the ring" sat on the Panels page's Seek tab, which is about the overlay that
+  appears while you drag. The ring is not that overlay - it is on the player - so touching any of
+  the three moved the preview to the player, and three of that tab's five controls led somewhere
+  else. They now sit with the switches that turn the ring and edge seek on. Nothing was renamed and
+  no value changed; searching for any of them still finds them.
+
 - **The Panels preview stays on the panel you are editing.** The two controls above the tab rail -
   the shared background and its blur - belong to every tab, and the preview was routing them to the
   volume overlay whatever tab was open. So changing the background while looking at the Queue tab

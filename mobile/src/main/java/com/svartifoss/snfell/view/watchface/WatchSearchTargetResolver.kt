@@ -191,7 +191,9 @@ internal object WatchSearchTargetResolver {
         }
         if (key == "wear_progress_gradient" &&
                 readString("wear_progress_style", "solid") != "solid") {
-            return redirect(WatchFacePrefsFragment.SECTION_PANELS, "wear_progress_style")
+            // On Style, not Panels: the ring's three controls moved to the page where the ring is
+            // drawn. Redirecting to the Panels page would land on a tab that no longer holds it.
+            return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_progress_style")
         }
 
         // Most OverlayBackdrop treatments are solid fields or authored gradients this radius has

@@ -174,45 +174,6 @@
             android:paddingEnd="10dp"
             android:paddingBottom="10dp">
 
-            <!-- The resting progress ring leads the Seek tab: it is on screen all the time, while
-                 the seek overlay below it only exists during a drag. -->
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/panel_editor_ring_style_button"
-                style="@style/LyraGestureButton"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:visibility="gone"
-                app:icon="@drawable/ic_progress_ring"
-                tools:text="Solid"
-                tools:visibility="visible" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/panel_editor_ring_layout_button"
-                style="@style/LyraGestureButton"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:visibility="gone"
-                app:icon="@drawable/ic_tune"
-                tools:text="Bezel edge"
-                tools:visibility="visible" />
-
-            <com.google.android.material.switchmaterial.SwitchMaterial
-                android:id="@+id/panel_editor_ring_gradient_switch"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:fontFamily="@font/google_sans"
-                android:gravity="center_vertical"
-                android:includeFontPadding="false"
-                android:textColor="@color/lyra_on_surface"
-                android:textSize="14sp"
-                android:visibility="gone"
-                tools:text="Blend the palette"
-                tools:visibility="visible" />
-
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/panel_editor_surface_backdrop_button"
                 style="@style/LyraGestureButton"

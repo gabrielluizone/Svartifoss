@@ -392,6 +392,7 @@
     <string name="player_element_tap_flash">Tap flash</string>
     <string name="player_element_inner_progress">Inner progress</string>
     <string name="player_element_edge_arc">Edge arc</string>
+    <string name="player_element_ring_gradient">Ring gradient</string>
     <string name="player_element_edge_seek">Edge seek</string>
     <string name="player_element_clock">Clock</string>
     <!-- Shared by Note/Chat/Metadata's cover-art toggle: only one is ever visible at a time, since

@@ -259,7 +259,8 @@ class WatchSearchTargetResolverTest {
                 resolve(
                         key = "wear_progress_gradient",
                         strings = mapOf("wear_progress_style" to "segmented")),
-                WatchFacePrefsFragment.SECTION_PANELS,
+                // Style, not Panels: the ring's controls live on the page where it is drawn.
+                WatchFacePrefsFragment.SECTION_STYLE,
                 "wear_progress_style")
         assertFalse(resolve(
                 key = "wear_progress_gradient",
