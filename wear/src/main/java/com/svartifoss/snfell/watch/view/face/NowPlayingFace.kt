@@ -171,8 +171,14 @@ data class NowPlayingFaceState(
          *  actions stay active when false; this is a visual preference, not an input remap. */
         val showControls: Boolean = true,
         val playing: Boolean = false,
-        /** True when there is no track at all - the face renders nothing and the shared idle
-         *  ("nothing playing") group shows through instead. A *paused* track is not idle. */
+        /** True when there is no track at all. A *paused* track is not idle.
+         *
+         *  A Compose face **owns its own "nothing playing" screen** and must keep drawing: the
+         *  host puts the shared idle group away for every face in `composeFaces`, so returning
+         *  early here leaves a black screen with nothing on it but the chrome layered above. This
+         *  said the opposite for two releases, and Expressive believed it - which is what was
+         *  reported as "when the phone is connected and nothing is playing it just shows black".
+         *  Carousel and the curated set carry the same note at their own early-return sites. */
         val idle: Boolean = true,
         /** Playback progress fraction (0f..1f) of [positionMs] / [durationMs]. */
         val progress: Float = 0f,
