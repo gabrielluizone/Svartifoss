@@ -2111,14 +2111,27 @@ class MainActivity : WearCompanionWatchActivity(),
         // pause even though nothing visually changed).
         val samePixels = previous != null && bitmap != null &&
                 (previous === bitmap || previous.sameAs(bitmap))
-        if (!ambient) {
-            if (albumArtFadeEnabled && previous != null && bitmap != null && !samePixels) {
-                fadeToAlbumArt(bitmap)
-            } else {
-                applyMainAlbumArtDisplay(bitmap, forceBlur = blurAlbumArtBackground)
+        // Two different animations, because they are two different situations: replacing a cover
+        // cross-fades between them, while the first cover of the session has nothing to cross-fade
+        // *from* and has to arrive out of the backdrop instead. See artworkTransition.
+        when (artworkTransition(
+                fadeEnabled = albumArtFadeEnabled,
+                ambient = ambient,
+                hasArtwork = bitmap != null,
+                hadArtwork = previous != null,
+                samePixels = samePixels)) {
+            ArtworkTransition.REVEAL -> revealFirstAlbumArt(bitmap!!)
+            ArtworkTransition.CROSSFADE -> revealNextAlbumArt(bitmap)
+            ArtworkTransition.IMMEDIATE -> {
+                // A reveal interrupted by the wrist dropping would otherwise freeze part-way and
+                // hand the always-on screen a half-transparent cover.
+                cancelArtworkReveal()
+                if (ambient) {
+                    applyAmbientAlbumArt()
+                } else {
+                    applyMainAlbumArtDisplay(bitmap, forceBlur = blurAlbumArtBackground)
+                }
             }
-        } else {
-            applyAmbientAlbumArt()
         }
         applyBlurredAlbumArt(bitmap)
         // Faces that draw the art themselves (vinyl disc) read it from the face state. The art is
@@ -2517,6 +2530,61 @@ class MainActivity : WearCompanionWatchActivity(),
      *  cross-fade, so a rapid follow-up (quick track skips) cancels it instead of letting it
      *  restore a drawable that is no longer the current one. */
     private var albumArtSettleRunnable: Runnable? = null
+
+    /**
+     * The session's first cover, arriving rather than appearing.
+     *
+     * The screen is assembled in stages: the artwork is ready as soon as its asset is decoded,
+     * while the mini buttons and quadrant hints wait for the button configuration to be decoded
+     * and its icons built. So on a cold open the cover landed at full opacity a moment before the
+     * controls did, and the two pops read as the app stuttering into place.
+     *
+     * Every *later* cover already cross-faded ([revealNextAlbumArt]) - this one did not, because
+     * that cross-fade needs an outgoing drawable and the first cover has none. It fades the view in
+     * instead, over the same duration, so the artwork settles onto the backdrop while the rest of
+     * the screen is still being built rather than beating it there.
+     *
+     * Not a delay. Holding the cover back for a fixed time would put it *after* the controls on a
+     * fast watch and still behind them on a slow one - a race with a different winner, not a
+     * smoother one - and would cost that time on every open.
+     */
+    private fun revealFirstAlbumArt(bitmap: Bitmap) {
+        cancelArtworkReveal()
+        albumArtSettleRunnable?.let { binding.albumArt.removeCallbacks(it) }
+        albumArtSettleRunnable = null
+
+        applyMainAlbumArtDisplay(bitmap, forceBlur = blurAlbumArtBackground)
+        // The background style may hide the artwork, in which case there is nothing to reveal and
+        // both views must be left opaque for whatever they are asked to draw next.
+        if (binding.albumArt.drawable == null) return
+
+        // The Square style's sharp inset is a second view over the blurred one, and it lands in
+        // the same pass - fading one without the other would replace the pop with a mismatch.
+        artworkViews().forEach { view ->
+            view.alpha = 0f
+            view.animate()
+                    .alpha(1f)
+                    .setDuration(ALBUM_ART_CROSSFADE_MS.toLong())
+                    .start()
+        }
+    }
+
+    private fun revealNextAlbumArt(bitmap: Bitmap?) {
+        // A first reveal may still be running - the cover can be replaced within its own fade.
+        // Cancelling leaves the views at whatever alpha they reached, so restore them before the
+        // cross-fade, which works on drawables and assumes an opaque view.
+        cancelArtworkReveal()
+        fadeToAlbumArt(bitmap)
+    }
+
+    /** Stops any running first-cover reveal and returns the artwork views to full opacity. */
+    private fun cancelArtworkReveal() = artworkViews().forEach { view ->
+        view.animate().cancel()
+        view.alpha = 1f
+    }
+
+    /** The two views the cover is drawn on: the backdrop, and the Square style's sharp inset. */
+    private fun artworkViews() = listOf(binding.albumArt, binding.albumArtSquareInset)
 
     private fun fadeToAlbumArt(bitmap: Bitmap?) {
         // Cross-fade instead of fade-out-then-in: the old art stays visible underneath while

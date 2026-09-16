@@ -25,6 +25,15 @@
 
 ### Fixed
 
+- **The album art no longer snaps in ahead of the rest of the screen when the app opens.** Every
+  cover *after* the first faded into the one before it, but the first had nothing to fade from and
+  was simply drawn at full opacity - and it is ready before the mini buttons and corner hints are,
+  since those wait for the button configuration and its icons. So a cold open was the cover landing,
+  then the controls landing, which read as the app stuttering into place. The first cover now fades
+  up out of the backdrop over the same time a track change takes, so it settles in while the rest of
+  the screen is still arriving. It is not held back: delaying it would only change which half won
+  the race. Turning off **Fade album art** still turns off both.
+
 - **The quick actions panel opens with an animation instead of appearing all at once.** The dimmed
   background behind it always faded in, and so does the volume ring, but the panel itself was placed
   at full size and full opacity in one frame - on a scrim that had not finished arriving. It now
