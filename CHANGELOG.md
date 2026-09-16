@@ -15,6 +15,17 @@
   Only the single tap does this. A double tap or a long press on the same corner runs a *different*
   action, and showing the single-tap icon for either would be telling you the wrong thing.
 
+- **The watch now reports which Wear OS it is running**, shown in Settings → Developer → the Data
+  Layer report beside the watch app's version. It is there to answer one question that could not be
+  answered before: why the always-on player is sometimes replaced by the watch face after a moment.
+  Wear OS has two inactivity timeouts - the first hands the screen to the app's own always-on
+  display, the second hides the app and returns to the watch face - and whether an app can be held
+  past the second one is decided by the platform version, not by the app. Svartifoss already does
+  the one thing that holds it, and that works from Wear OS 5 onwards; below it the watch face comes
+  back and nothing in the app can prevent it. The report now says which of the two a given watch is,
+  instead of the two behaviours being indistinguishable from a bug. Only the API level is sent - not
+  the model, and nothing that identifies the watch.
+
 - **The current lyric line can light up word by word.** When a track's synced lyric carries
   "enhanced" per-word timing (a rarer format than the line-level sync LRCLIB serves for most
   tracks), the Lyrics screen and the Verse face now colour each word in as its own timestamp
