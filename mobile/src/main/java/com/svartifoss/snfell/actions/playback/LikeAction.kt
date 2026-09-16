@@ -2,6 +2,7 @@ package com.svartifoss.snfell.actions.playback
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import android.media.Rating
 import android.media.session.PlaybackState
 import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
@@ -33,14 +34,37 @@ internal fun likeLabelIndicatesAlreadyLiked(vararg labels: CharSequence?): Boole
         }
 
 /**
- * Toggles a "like"/"favorite" custom action exposed by the currently playing app's
- * MediaSession, e.g. YouTube Music's or Retro Music's thumbs-up/favorite button.
+ * Whether a session's rating style can carry a "like" at all.
  *
- * There is no standardized MediaSession API for "like" - it is surfaced as one of the
- * app-defined [android.media.session.PlaybackState.CustomAction]s, so the best a generic
- * remote like this can do is look for a custom action whose name/id looks like a like button,
- * and guess whether it's currently active from whether its label reads like "like" or "unlike".
- * This is inherently best-effort and may not work identically on every app.
+ * `setRating` is the only like the media framework itself defines, and it is the route asked for
+ * by users whose player is not one of the ones the custom-action and notification hints happen to
+ * recognise. It only means "like" for two of the five rating styles: a heart is one, and a
+ * thumbs-up/down pair is the one every "thumb" custom action is modelled on. The three star scales
+ * are a *rating*, not a like - deciding that four stars means liked and three does not would be
+ * inventing the user's opinion, and `RATING_NONE` says outright that the session does not rate.
+ *
+ * A top-level predicate over an int, like [likeLabelIndicatesAlreadyLiked] above and for the same
+ * reason: the constants inline, so a JVM test reaches it without any of the Android types the
+ * ratings themselves need.
+ */
+internal fun ratingTypeExpressesLike(ratingType: Int): Boolean =
+        ratingType == Rating.RATING_HEART || ratingType == Rating.RATING_THUMB_UP_DOWN
+
+/**
+ * Likes the current track, through whichever of three routes the playing app actually offers.
+ *
+ * In order, and the order is the point: the app's own MediaSession custom action (YouTube Music's
+ * and Retro Music's thumbs-up, Spotify's save-to-library), then its like/save *notification*
+ * action, then the session's user rating. `MusicService.executeLikeCommand` is the ladder itself.
+ *
+ * The first two are matched by what their id and label look like, because a custom action is
+ * app-defined and nothing about it is standard - so they work on the players whose wording is
+ * recognised and silently on nobody else, which is what "the like button only works in some apps"
+ * meant. The rating is the standard one: `setRating` with a heart or a thumbs-up is the only like
+ * the framework itself defines. It is last because it is also the one most often declared and not
+ * implemented, and because an app that ships its own button is telling you which control it
+ * honours - but it is the reason a player that does none of the app-specific things can still be
+ * liked from the watch. See [ratingTypeExpressesLike] for which sessions it can reach.
  */
 class LikeAction : SelectableAction {
     constructor(context: Context) : super(context)
@@ -67,12 +91,36 @@ class LikeAction : SelectableAction {
             val action = findLikeCustomAction(playbackState) ?: return false
             return likeLabelIndicatesAlreadyLiked(action.action, action.name)
         }
+
+        /**
+         * Whether the session's own user rating says this track is liked, or null when the
+         * session's rating style cannot say either way.
+         *
+         * Null rather than false on purpose: this is the last of three sources, and "this session
+         * does not do hearts" has to stay distinguishable from "not liked", or it would overrule
+         * the two better-informed ones above it.
+         */
+        fun ratingLikedState(ratingType: Int, rating: Rating?): Boolean? {
+            if (!ratingTypeExpressesLike(ratingType)) return null
+            // Unrated is a real answer here, and it is "not liked".
+            if (rating == null || !rating.isRated) return false
+            return when (ratingType) {
+                Rating.RATING_HEART -> rating.hasHeart()
+                else -> rating.isThumbUp
+            }
+        }
+
+        /** The rating to send for [liked], or null for a style that cannot express one. */
+        fun likeRating(ratingType: Int, liked: Boolean): Rating? = when (ratingType) {
+            Rating.RATING_HEART -> Rating.newHeartRating(liked)
+            Rating.RATING_THUMB_UP_DOWN -> Rating.newThumbRating(liked)
+            else -> null
+        }
     }
 
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<LikeAction> {
         override suspend fun handleAction(action: LikeAction) {
-            // Use the same complete route as the panel's built-in Like button: MediaSession
-            // custom action first, then the notification action used by players such as Spotify.
+            // The same complete ladder as the panel's built-in Like button - see the class doc.
             service.executeLikeCommand()
         }
     }

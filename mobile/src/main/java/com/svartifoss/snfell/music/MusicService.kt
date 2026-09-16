@@ -17,6 +17,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaMetadata
 import android.media.session.MediaController
+import android.media.session.MediaSession
 import android.media.session.PlaybackState
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
@@ -56,6 +57,8 @@ import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.actions.playback.LikeAction
 import com.svartifoss.snfell.actions.playback.RepeatAction
 import com.svartifoss.snfell.actions.playback.ShuffleAction
+import com.svartifoss.snfell.actions.playback.isShuffleOn
+import com.svartifoss.snfell.actions.playback.repeatModeCode
 import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
@@ -361,6 +364,60 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         get() = previousAlbumArt
 
     var currentMediaController: MediaController? = null
+        set(value) {
+            field = value
+            // Eagerly, so the compat handshake below has the whole life of the session to finish
+            // rather than the few microseconds between a button press and its first read.
+            compatControllerFor(value)
+        }
+
+    private var compatControllerToken: MediaSession.Token? = null
+    private var compatController: MediaControllerCompat? = null
+
+    /**
+     * A [MediaControllerCompat] for the current session, built once per session and kept.
+     *
+     * Shuffle and repeat do not exist on the framework `MediaController` at all. They live only on
+     * the AndroidX compat layer, which reads them through an "extra binder" that
+     * `MediaControllerCompat`'s constructor *asks* the session for and receives on a later loop
+     * turn. Until it arrives, `getRepeatMode()` and `getShuffleMode()` both answer -1.
+     *
+     * Building a controller inside a button handler and reading it in the next statement therefore
+     * never got an answer - the request had not even left. That was the whole of "the repeat button
+     * doesn't work": the cycle read -1, fell to its last branch and set repeat *off* on every
+     * press, while the two presets that name their target mode outright kept working and made the
+     * fault look like it belonged to the cycle's icon. Shuffle had it too, silently: it read -1 as
+     * "not NONE", concluded shuffle was on and switched it off every time. And the state sent to
+     * the watch was built from a third throwaway controller, so both readouts were permanently off.
+     *
+     * One controller per session fixes all three, because by the time anyone presses anything the
+     * binder has long since arrived. A session never built on `MediaSessionCompat` still answers
+     * -1 forever, and `setRepeatMode`/`setShuffleMode` are still swallowed there as unrecognised
+     * custom actions - nothing available here can change that, so see [nextRepeatMode] for what a
+     * press does when the mode cannot be known.
+     */
+    val currentCompatController: MediaControllerCompat?
+        get() = compatControllerFor(currentMediaController)
+
+    /** [currentCompatController] for a specific controller, rebuilt only when the session changed. */
+    private fun compatControllerFor(controller: MediaController?): MediaControllerCompat? {
+        val token = controller?.sessionToken
+        if (token != compatControllerToken || (token != null && compatController == null)) {
+            compatControllerToken = token
+            compatController = token?.let {
+                try {
+                    MediaControllerCompat(this, MediaSessionCompat.Token.fromToken(it))
+                } catch (e: RuntimeException) {
+                    // A session that died between being handed over and being wrapped. Reported
+                    // as "no compat controller", which every caller already handles.
+                    Timber.w(e, "Could not wrap the current session for shuffle/repeat")
+                    null
+                }
+            }
+        }
+        return compatController
+    }
+
     private var startedFromWatch = false
 
     // Reference-keyed cache of the last art serialized for the watch. State-only changes
@@ -826,14 +883,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      *  not implement ACTION_SET_PLAYBACK_SPEED reports the same speed back on its next state,
      *  which is a harmless no-op rather than a reason to withhold the command. */
     private fun setPlaybackSpeed(multiplier: Float) {
-        val controller = currentMediaController ?: return
         // The framework method exists only from API 29 while this app supports API 23.
         // MediaControllerCompat carries the same command through its support protocol on older
         // phones, which also keeps this direct-message path aligned with SetPlaybackSpeedAction.
-        MediaControllerCompat(
-                this,
-                MediaSessionCompat.Token.fromToken(controller.sessionToken)
-        ).transportControls.setPlaybackSpeed(multiplier)
+        val controller = currentCompatController ?: return
+        controller.transportControls.setPlaybackSpeed(multiplier)
     }
 
     /** Seeks by [deltaMs] relative to the session's LIVE position. Senders like the Tile only
@@ -971,7 +1025,37 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             scheduleStateRefresh()
             return true
         }
+        if (toggleUserRating(controller)) {
+            scheduleStateRefresh()
+            return true
+        }
         return false
+    }
+
+    /**
+     * The last rung of the like ladder: the session's own user rating.
+     *
+     * The two rungs above match an app-defined button by what its id and label look like, so they
+     * reach the players whose wording is recognised and nobody else - which is what "the like
+     * button doesn't work outside the apps you made it work for" describes. `setRating` is the one
+     * like the framework standardises, so this is the rung that does not depend on recognising
+     * anybody's wording.
+     *
+     * Issued only when the session's rating style can carry a like at all, and the rating sent is
+     * the opposite of the one it is publishing - the button is a toggle on every other rung, and a
+     * heart that can only ever be set would leave no way to take it back. A session that declares a
+     * style and ignores the command is the ordinary unsupported-transport-command no-op; false is
+     * reported only when there was nothing to send, so the caller can still say nothing happened.
+     */
+    private fun toggleUserRating(controller: MediaController): Boolean {
+        val ratingType = controller.ratingType
+        val liked = LikeAction.ratingLikedState(
+                ratingType,
+                controller.metadata?.getRating(MediaMetadata.METADATA_KEY_USER_RATING))
+                ?: return false
+        val next = LikeAction.likeRating(ratingType, !liked) ?: return false
+        controller.transportControls.setRating(next)
+        return true
     }
 
     private fun executeAction(buttonInfo: ButtonInfo) {
@@ -1118,14 +1202,18 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
                 musicStateBuilder.playbackSpeed = playbackState.playbackSpeed
                 musicStateBuilder.seekable = (playbackState.actions and PlaybackState.ACTION_SEEK_TO) != 0L
-                // A custom action is authoritative when present; only apps with none at all (e.g.
-                // SoundCloud, whose "like" is solely a notification action) fall back to the
-                // notification-label guess - see MediaNotificationActions.likedStateForSession.
+                // Read in the same order executeLikeCommand writes, so the heart on the watch is
+                // always reporting the route a tap would actually take: the app's own custom
+                // action, then its notification action, then the session's user rating.
                 musicStateBuilder.liked = if (LikeAction.findLikeCustomAction(playbackState) != null) {
                     LikeAction.isCurrentlyLiked(playbackState)
                 } else {
                     MediaNotificationActions.likedStateForSession(
                             mediaController.packageName, mediaController.sessionToken)
+                            ?: LikeAction.ratingLikedState(
+                                    mediaController.ratingType,
+                                    meta?.getRating(MediaMetadata.METADATA_KEY_USER_RATING))
+                            ?: false
                 }
                 if (usesSessionQuickActions()) {
                     val notificationActions = MediaNotificationActions.actionsForSession(
@@ -1176,22 +1264,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
 
             // Shuffle/repeat only exist on the AndroidX media-compat layer, not the framework
-            // MediaController API - see ShuffleAction/RepeatAction for why this wrapping works.
-            val compatController = MediaControllerCompat(
-                    this,
-                    MediaSessionCompat.Token.fromToken(mediaController.sessionToken)
-            )
-            // Only treat shuffle as ON when explicitly set to ALL or GROUP.
-            // SHUFFLE_MODE_INVALID (-1) is returned by apps that never set shuffle mode, and
-            // (-1 != NONE) would have made the button always appear selected. :contentReference[oaicite:0]{index=0}
-            musicStateBuilder.shuffleEnabled =
-                    compatController.shuffleMode == PlaybackStateCompat.SHUFFLE_MODE_ALL ||
-                    compatController.shuffleMode == PlaybackStateCompat.SHUFFLE_MODE_GROUP
-            musicStateBuilder.repeatMode = when (compatController.repeatMode) {
-                PlaybackStateCompat.REPEAT_MODE_ALL, PlaybackStateCompat.REPEAT_MODE_GROUP -> 1
-                PlaybackStateCompat.REPEAT_MODE_ONE -> 2
-                else -> 0
-            }
+            // MediaController API - see currentCompatController for why this one is cached rather
+            // than built here, and why building it here reported both as permanently off.
+            val compatController = compatControllerFor(mediaController)
+            musicStateBuilder.shuffleEnabled = isShuffleOn(
+                    compatController?.shuffleMode ?: PlaybackStateCompat.SHUFFLE_MODE_INVALID)
+            musicStateBuilder.repeatMode = repeatModeCode(
+                    compatController?.repeatMode ?: PlaybackStateCompat.REPEAT_MODE_INVALID)
 
             currentVolume = mediaController.playbackInfo?.currentVolume ?: 0
 

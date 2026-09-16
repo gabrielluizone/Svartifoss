@@ -25,6 +25,28 @@
 
 ### Fixed
 
+- **The repeat button cycles again, and the shuffle button can switch shuffle on.** Both were
+  reading the current mode from a connection that had not finished opening, so both were answered
+  "unknown" every single time - and both treated unknown as a mode rather than as no answer. Repeat
+  read it as "repeat is on" and switched it off, on every press, which is why the two presets that
+  name a mode outright kept working while the cycling button appeared to do nothing. Shuffle read
+  the same non-answer as "shuffle is on" and switched it off, every press, so it could only ever be
+  turned off from the watch - and the watch drew both buttons as permanently off, for the same
+  reason. Repeat one had the quieter half of it: it turned repeat-one on and could never turn it
+  back off.
+
+  A press made while the mode genuinely cannot be read now switches repeat or shuffle **on**, which
+  is what the button's own icon promises. Some players never expose these modes at all, and there
+  the commands still go nowhere - nothing on the phone can change that.
+
+- **The Like button reaches players it used to ignore.** It looked for a like control the app had
+  published under a name it recognised, in its media session or its notification, and did nothing
+  at all on a player that names its own button something else. It now falls back to the one like
+  the media framework itself defines - a heart or a thumbs-up sent to the session - so a player
+  that offers that is likeable from the watch without its wording having to be recognised first.
+  The heart shown on the watch reads the same three sources in the same order, so it reports the
+  route a tap would really take.
+
 - **Pinch settings no longer crash calibration tests or subsequent app launches.** Both apps
   accept the integer values saved by earlier calibration builds; saving now uses the standard
   text preference format. Existing settings and calibration can be kept without clearing data.
