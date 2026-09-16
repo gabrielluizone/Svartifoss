@@ -1,5 +1,96 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- **Pinch settings no longer crash calibration tests or subsequent app launches.** Both apps
+  accept the integer values saved by earlier calibration builds; saving now uses the standard
+  text preference format. Existing settings and calibration can be kept without clearing data.
+
+- **Player controls now share the watch face without covering track information or each other.**
+  Title and artist blocks on Expressive and Material are measured as a unit and fitted above the
+  transport, so a long title or enlarged source icon can no longer consume the other line or paint
+  over the playback ring. Their time readout, and the title bands on Ribbon and Carousel, now use
+  the space that remains above the real lower controls. Note, Verse, Artist, Studio and Chat also
+  reserve the visible bottom-action hint instead of drawing their footer or face-owned actions
+  underneath it. The phone preview follows the same allocation.
+
+- **The quadrant action icons are visible again, on every watch face.** All four were hidden on
+  every face except Classic, so a top, bottom, left or right action worked when tapped with nothing
+  on screen to say it was there. They now draw above the face on all of them, as a cross on the
+  bezel: same size, same distance from the glass, one per side. The two faces whose own prev/next
+  buttons already carry the left and right actions keep showing them there instead of twice.
+
+  Nothing is shrunk to make room any more. Where the clock and the top icon used to fight over the
+  top of the screen - the icon simply disappeared whenever **Always show time** was on - the clock
+  now curves along the bezel on a round watch and the icon keeps the middle, both centred. The
+  mini-button row rests above the bottom icon rather than on it, at any number of buttons.
+
+- **Track titles are no longer pressed up against the playback circle.** On the two faces built
+  around a central control the text block and the control were never given separate space: the text
+  was allowed to run to exactly where the ring began, and was clipped rather than moved. They now
+  get their own bands with a real gap, and when the screen is too crowded to hold everything there
+  is one order to what gives way - the elapsed-time readout goes first, then the text gives up some
+  of its share, and the control itself never shrinks below a size you can still hit.
+
+- **Watch faces keep clear of the mini buttons consistently.** Whether a face lifted its text, its
+  clock readout or its own controls out of the way of the shortcut row depended on which face it
+  was: some cleared the row, some cleared only the bottom action icon, and some cleared neither, so
+  the same settings produced an overlap on one face and not on the next. Every face now works from
+  one measurement of what the bottom of the screen already holds. The Details face in particular was
+  fitting its table to the whole screen, so its last rows ended up underneath the buttons; it now
+  fits them to the space that is actually free. Immersive and Split are the deliberate exceptions -
+  both compose right to the edge of the screen, which is why they ship with the shortcut row off.
+
+- **Mini buttons no longer take the bottom action icon's place.** A row of one or two buttons sat
+  low enough on a round screen to land on the bottom icon; it now clears it. On compact displays
+  mini buttons keep a readable minimum size, and an overly steep curved row falls back to a flat
+  arrangement rather than shrinking into tiny or clipped targets.
+
+- **Hiding the player controls now actually hides them, on every face.** It was unavailable for
+  Expressive and Material, which forced their transport visible; elsewhere it faded the glyph to
+  invisible but left its space reserved and, on those two faces, left the ring drawn around
+  nothing - so the switch looked like it had done nothing. The controls now leave the layout, and
+  the room they were holding goes back to the track text, which recentres instead of staying pushed
+  up against a control that is no longer there. The centre of the screen still toggles playback,
+  opens the quick actions on a double tap and the face picker on a long press. Use the bezel
+  progress ring if you want the position shown on a face with its controls hidden.
+
+  Chat also follows the selected icon scale and opacity, and tap feedback no longer briefly
+  restores an icon the user hid. Expressive renders its stopped state instead of leaving an empty
+  face while the host's idle screen is hidden.
+
+- **Repeat Once uses the same numbered repeat icon in every playback state and surface.** The
+  parameter-specific icon is transmitted with button and action-list configurations instead of
+  being replaced by the generic local repeat vector on the watch. Existing configurations missing
+  that asset are republished automatically.
+
+- **“Breakcore” no longer changes the title and artist to Special Elite.** The automatic font
+  override is now limited to `iwakura`, `lain`, `wired` and `serial experiments`, matched without
+  regard to case in either the title or artist name.
+
+- **The watch app could not be installed from Google Play.** It was declared as a non-standalone
+  watch app, which tells Play it may only be installed alongside the phone app. A watch app
+  declared that way is not listed on its own in the watch's Play Store — it does not come up in
+  search there — and modern Wear OS no longer pushes the companion onto the watch when the phone
+  half is installed. Between the two, an account that did not already have the app in its Play
+  library had no route to the watch at all: no install button under the phone listing, and nothing
+  on the watch. It now installs on the watch on its own.
+
+  Nothing about needing the phone app changed — it is still required, and a watch that has the app
+  without its phone half still says so and offers to open the listing on the phone.
+
+### Added
+
+- **The current lyric line can light up word by word.** When a track's synced lyric carries
+  "enhanced" per-word timing (a rarer format than the line-level sync LRCLIB serves for most
+  tracks), the Lyrics screen and the Verse face now colour each word in as its own timestamp
+  arrives, easing from the dim to the sung colour across the word's own span rather than the
+  whole line changing at once. A line with no word-level timing - which is still most lines, even
+  on a synced track - renders exactly as before, and neither surface fetches anything new: the
+  timing was always present in the text LRCLIB returns, only discarded until now.
+
 ## 4.0
 
 ### Added

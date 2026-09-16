@@ -1,0 +1,10 @@
+syntax = "proto2";
+package com.svartifoss.snfell.proto;
+option java_package = "com.svartifoss.snfell.proto";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME;
+
+message PinchCalibrationMessage {
+  required string request_id = 1;
+  required string profile = 2;
+}

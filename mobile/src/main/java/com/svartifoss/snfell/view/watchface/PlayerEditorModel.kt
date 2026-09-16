@@ -1,5 +1,7 @@
 package com.svartifoss.snfell.view.watchface
 
+import com.svartifoss.snfell.common.ThemeAppearance
+
 import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.MiscPreferences
@@ -124,9 +126,6 @@ internal object PlayerEditorModel {
             "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "depth", "verse",
             "ribbon", "frame")
 
-    /** The two faces that must keep their central transport, so the switch cannot apply. */
-    val FIXED_TRANSPORT_FACES: Set<String> = setOf("expressive", "material")
-
     /**
      * Faces that centre a stacked metadata block, and so have something for
      * [MiscPreferences.WEAR_TITLE_CENTERED] to move.
@@ -141,27 +140,8 @@ internal object PlayerEditorModel {
     // no slack for the anchor to slide into and `applyClassicTitleAnchor` skips the face outright.
     // Offering the row would be offering a switch that provably moves nothing.
 
-    /**
-     * Faces whose own composition draws icon glyphs [MiscPreferences.WEAR_SCREEN_THEME] actually
-     * restyles - it only ever changes `ScreenThemeTokens.iconAlpha`/`iconScale` (see
-     * `common/.../ScreenTheme.kt`), so it does nothing wherever a face has no icon of its own.
-     *
-     * Classic and the icon-transport curated faces (Vinyl/Poster/Studio/Halo/Aurora/Eclipse/
-     * Spectrum/Material) draw a persistent play/pause or transport row through it, and Expressive
-     * always shows its cookie glyph at full opacity (see its own `screenTheme` read - the one
-     * exception is that "Hidden" alone still zeroes it there). Frame and Ribbon draw no persistent
-     * icon but do pass `state` into `CenterGestureRegion`, so the transient tap-confirmation glyph
-     * still honours it. Every other face (Immersive, Depth, Carousel, Chat, Split, Note, Verse,
-     * Metadata) either has no icon-based transport at all or calls `CenterGestureRegion` without
-     * `state`, so the picker changed nothing for them - a picker that changes nothing reads as
-     * broken rather than as inapplicable, the same rule Carousel's card shape and Split's panel
-     * already follow.
-     */
-    val CONTROL_STYLE_FACES: Set<String> = setOf(
-            "classic", "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
-            // Matejdro is the second View face and draws Classic's four quadrant hints through the
-            // very same `applyScreenThemeNow` branch, so the picker restyles it identically.
-            "spectrum", "material", "frame", "ribbon", "matejdro")
+    /** Every face can show the configured top/bottom hints, which use the control-style tokens. */
+    val CONTROL_STYLE_FACES: Set<String> = ThemeAppearance.ALLOWED_BASE_FACES
 
     /**
      * Which faces offer *Text alignment*, and which offer *Text position* - two questions, not one.
@@ -349,7 +329,6 @@ internal object PlayerEditorModel {
         PlayerControl.METADATA_COVER_SHAPE, PlayerControl.METADATA_SHOW_COVER -> face == "metadata"
         PlayerControl.SPLIT_PANEL -> face == "split"
         PlayerControl.EXPRESSIVE_SEEK -> face == "expressive"
-        PlayerControl.PLAYER_CONTROLS -> face !in FIXED_TRANSPORT_FACES
         PlayerControl.INTERNAL_PROGRESS -> face in INTERNAL_PROGRESS_FACES
         PlayerControl.METADATA_GROUPS -> face == "metadata"
         else -> true

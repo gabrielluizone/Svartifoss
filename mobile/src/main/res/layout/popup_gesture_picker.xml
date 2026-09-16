@@ -16,7 +16,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minWidth="280dp"
         android:orientation="vertical">
 
         <!-- Change icon chip (only for screen buttons). app:icon (not android:drawableStart) so
@@ -54,9 +53,12 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="20dp"
             android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:gravity="start"
+            android:textAlignment="viewStart"
             android:lineSpacingMultiplier="1.15"
             android:textColor="@color/lyra_pref_summary"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:visibility="gone"
             tools:text="Pinch your thumb and index finger together twice." />
 
@@ -79,12 +81,13 @@
             android:id="@+id/single_press_button"
             style="@style/LyraGestureButton"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginStart="16dp"
+            android:layout_height="wrap_content"
+            android:minHeight="52dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:layout_marginEnd="20dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             tools:text="Volume up" />
@@ -96,6 +99,16 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             tools:name="com.svartifoss.snfell.view.actionconfigs.SkipSecondsConfigFragment" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/pinch_settings"
+            style="@style/PinchButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/pinch_settings_title"
+            android:visibility="gone" />
 
         <!-- Center-button-only note: double tap and long press aren't editable here, so this
              explains what they still do (shown only when configuring the center tap zone). -->
@@ -132,12 +145,13 @@
             android:id="@+id/double_press_button"
             style="@style/LyraGestureButton"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginStart="16dp"
+            android:layout_height="wrap_content"
+            android:minHeight="52dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:layout_marginEnd="20dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             tools:text="Skip next" />
@@ -170,12 +184,13 @@
             android:id="@+id/long_press_button"
             style="@style/LyraGestureButton"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginStart="16dp"
+            android:layout_height="wrap_content"
+            android:minHeight="52dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="16dp"
-            android:ellipsize="end"
-            android:maxLines="1"
+            android:layout_marginEnd="20dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:visibility="gone"

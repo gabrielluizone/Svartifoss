@@ -34,6 +34,7 @@ import com.svartifoss.snfell.common.LyricLine
 import com.svartifoss.snfell.common.LyricsParser
 import com.svartifoss.snfell.common.MusicGlyphs
 import com.svartifoss.snfell.common.RoundScreenText
+import com.svartifoss.snfell.watch.view.compose.KaraokeLyricLine
 import com.svartifoss.snfell.watch.view.compose.rememberLyricText
 import com.svartifoss.snfell.watch.view.compose.svartifossNoteContent
 import com.svartifoss.snfell.watch.theme.WatchTheme
@@ -256,7 +257,12 @@ private fun androidx.compose.foundation.layout.BoxWithConstraintsScope.VerseBand
                     showProgress = state.showInternalProgress,
                     fontFamily = state.lyricFont,
                     screen = screen,
-                    align = state.blockAlignment(Alignment.CenterHorizontally))
+                    align = state.blockAlignment(Alignment.CenterHorizontally),
+                    positionMs = state.positionMs,
+                    // Same end-of-line boundary the progress hairline above already resolves,
+                    // so the current line's last word runs out exactly when the hairline fills.
+                    lineEndMs = LyricsParser.lineEnd(lines, index, state.durationMs)
+                            ?: state.positionMs)
             Box(Modifier.height(screen * 0.035f))
             NeighbourLine(next, state.lyricFont)
         }
@@ -303,6 +309,8 @@ private fun CurrentLine(
         /** Resolved by the caller, which is the one place that holds the face state. The lyric is
          *  part of this face's text block, so it follows the block's alignment like the rest. */
         align: Alignment.Horizontal,
+        positionMs: Long,
+        lineEndMs: Long,
 ) {
     val color by animateColorAsState(
             targetValue = if (line == null) Color.White.copy(alpha = NEIGHBOUR_ALPHA) else accent,
@@ -313,24 +321,42 @@ private fun CurrentLine(
             targetValue = rawFraction, animationSpec = tween(240), label = "verseLineProgress")
 
     Column(horizontalAlignment = align) {
-        Text(
-                text = rememberLyricText(
-                        line?.let { it.text.ifBlank { INSTRUMENTAL_MARKER } } ?: INSTRUMENTAL_MARKER),
-                color = color,
-                fontFamily = fontFamily,
-                inlineContent = svartifossNoteContent(color),
-                fontSize = 17.sp,
-                lineHeight = 21.sp,
-                // Three. Two was chosen when the band stopped at 0.72 and the block was centred on
-                // the screen, where a third row genuinely did collide with the running head; the
-                // band now reaches lower and the block is centred within it, so the row it needed
-                // is there. Deliberately not more: past three the block is deep enough that the
-                // chord narrows faster than the extra row adds, and the neighbours start being
-                // squeezed out of a face whose whole point is showing three lines at once.
-                maxLines = 3,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth())
+        // Word-by-word only when this track's lyric actually carries per-word timing (most do
+        // not, even synced ones - see LyricLine.words). Ambient never reaches this composable at
+        // all: VerseAmbient draws its own single line, so there is no ambient branch to guard here.
+        if (line != null && line.words.isNotEmpty()) {
+            KaraokeLyricLine(
+                    words = line.words,
+                    positionMs = positionMs,
+                    lineEndMs = lineEndMs,
+                    sungColor = color,
+                    upcomingColor = Color.White.copy(alpha = NEIGHBOUR_ALPHA),
+                    fontFamily = fontFamily,
+                    fontSize = 17.sp,
+                    maxLines = 3,
+                    modifier = Modifier.fillMaxWidth())
+        } else {
+            Text(
+                    text = rememberLyricText(
+                            line?.let { it.text.ifBlank { INSTRUMENTAL_MARKER } }
+                                    ?: INSTRUMENTAL_MARKER),
+                    color = color,
+                    fontFamily = fontFamily,
+                    inlineContent = svartifossNoteContent(color),
+                    fontSize = 17.sp,
+                    lineHeight = 21.sp,
+                    // Three. Two was chosen when the band stopped at 0.72 and the block was
+                    // centred on the screen, where a third row genuinely did collide with the
+                    // running head; the band now reaches lower and the block is centred within
+                    // it, so the row it needed is there. Deliberately not more: past three the
+                    // block is deep enough that the chord narrows faster than the extra row adds,
+                    // and the neighbours start being squeezed out of a face whose whole point is
+                    // showing three lines at once.
+                    maxLines = 3,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth())
+        }
 
         // It is a progress indicator, so it answers to the progress preferences like any other:
         // hidden when the user turns composition-owned progress off, and drawn in the resolved
@@ -424,7 +450,7 @@ private fun androidx.compose.foundation.layout.BoxWithConstraintsScope.ElapsedTi
                     .align(Alignment.BottomCenter)
                     // Closer to the floor than the 0.09 it shipped with: the strip it was
                     // floating above was the emptiest part of the composition.
-                    .padding(bottom = screen * 0.065f))
+                    .padding(bottom = maxOf(screen * 0.065f, state.safeArea.bottomDp.dp)))
 }
 
 /**

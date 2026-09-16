@@ -141,26 +141,10 @@ class PlayerEditorModelTest {
     }
 
     @Test
-    fun `control style is offered only where a face draws icons it can restyle`() {
-        // Persistent icon-based transport: Classic and the curated faces sharing its glyph
-        // vocabulary, plus Expressive's always-shown cookie glyph.
-        listOf(
-                "classic", "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
-                "spectrum", "material"
-        ).forEach {
+    fun `every face exposes the style used by its configured edge hints`() {
+        ThemeAppearance.ALLOWED_BASE_FACES.forEach {
             assertTrue(it, PlayerEditorModel.appliesToFace(PlayerControl.SCREEN_THEME, it))
-        }
-        // Frame and Ribbon draw no persistent icon, but both pass state into CenterGestureRegion,
-        // so the transient tap-confirmation glyph still honours the setting.
-        listOf("frame", "ribbon").forEach {
-            assertTrue(it, PlayerEditorModel.appliesToFace(PlayerControl.SCREEN_THEME, it))
-        }
-        // No icon-based transport at all, or CenterGestureRegion called without state: the
-        // picker would change nothing.
-        listOf(
-                "immersive", "depth", "carousel", "chat", "split", "note", "verse", "metadata"
-        ).forEach {
-            assertFalse(it, PlayerEditorModel.appliesToFace(PlayerControl.SCREEN_THEME, it))
+            assertTrue(it, PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, it))
         }
     }
 
@@ -181,10 +165,9 @@ class PlayerEditorModelTest {
     }
 
     @Test
-    fun `the two fixed-transport faces hide the player controls chip`() {
-        // Expressive and Material must keep their central transport, so the toggle cannot apply.
-        assertFalse(PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, "expressive"))
-        assertFalse(PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, "material"))
+    fun `centered transport faces offer the player controls switch`() {
+        assertTrue(PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, "expressive"))
+        assertTrue(PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, "material"))
         assertTrue(PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, "classic"))
     }
 
@@ -257,7 +240,6 @@ class PlayerEditorModelTest {
         // A rule naming a face that no longer exists silently hides its control forever, which is
         // indistinguishable from the control never having been written.
         val named = PlayerEditorModel.INTERNAL_PROGRESS_FACES +
-                PlayerEditorModel.FIXED_TRANSPORT_FACES +
                 PlayerEditorModel.CONTROL_STYLE_FACES +
                 PlayerEditorModel.TEXT_BLOCK_ALIGN_FACES +
                 PlayerEditorModel.TEXT_BLOCK_POSITION_FACES +

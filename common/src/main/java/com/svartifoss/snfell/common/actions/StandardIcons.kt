@@ -60,6 +60,10 @@ object StandardIcons {
             getButtonKey(SpecialButtonCodes.TURN_ROTARY_CCW) to R.drawable.button_turn_ccw
     )
 
+    /** Parameterized repeat icons need an asset; keep the generic vector as an old-payload fallback. */
+    fun canUseLocalIcon(key: String): Boolean =
+            key != StandardActions.ACTION_SET_REPEAT_MODE && hasIcon(key)
+
     fun hasIcon(key: String): Boolean = iconMap.containsKey(key)
     fun getIcon(key: String): Int = iconMap[key] ?: 0
 

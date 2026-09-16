@@ -2924,14 +2924,9 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             store.putString(MiscPreferences.WEAR_FONT.key, "google_sans")
         }
         if (readStringPreference(MiscPreferences.WEAR_SCREEN_THEME.key, "default") == "hidden") {
-            // "Hidden" duplicated the dedicated Show player controls switch and was the most
-            // common source of apparently broken styles. Migrate it losslessly: retain the clean
-            // control-free look on configurable faces, while essential-control faces normalize
-            // to Balanced (their transport cannot be hidden).
+            // Preserve the hidden appearance through the dedicated switch on every face.
             store.putString(MiscPreferences.WEAR_SCREEN_THEME.key, "default")
-            if (face !in setOf("material", "expressive")) {
-                store.putBoolean(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE.key, false)
-            }
+            store.putBoolean(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE.key, false)
         }
         filterArchivedListPreference(
                 key = "wear_screen_face",
@@ -5058,10 +5053,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // stored/scoped while hidden and reappear unchanged when that face is selected again.
         findPreference<Preference>("cat_wf_metadata")?.isVisible =
                 section == SECTION_STYLE && face == "metadata"
-        // Expressive and Material must keep their central transport visible. Other faces,
-        // including Poster and Studio, can still be reduced to a clean metadata/artwork layout.
-        findPreference<Preference>(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE.key)?.isVisible =
-                face !in setOf("expressive", "material")
+        findPreference<Preference>(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE.key)?.isVisible = true
         // One list, owned by the Player editor's model rather than repeated here - see
         // PlayerEditorModel.INTERNAL_PROGRESS_FACES.
         findPreference<Preference>("wear_internal_progress_visible")?.isVisible =

@@ -16,6 +16,10 @@ internal object WatchCommandDelivery {
     private val inbox = WatchCommandInbox()
 
     fun receive(context: Context, event: MessageEvent) {
+        if (event.path == CommPaths.MESSAGE_PINCH_CALIBRATION_RESULT) {
+            PinchCalibrationReceiver.receive(context.applicationContext, event)
+            return
+        }
         val command = WatchCommand(event.sourceNodeId, event.requestId, event.path,
                 event.data?.copyOf() ?: ByteArray(0))
         val appContext = context.applicationContext

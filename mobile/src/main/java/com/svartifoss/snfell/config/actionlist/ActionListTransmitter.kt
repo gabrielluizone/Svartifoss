@@ -14,6 +14,7 @@ import com.google.auto.factory.Provided
 import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.actions.PlayPlaylistShortcutAction
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.actions.StandardActions
 import com.svartifoss.snfell.common.actions.StandardIcons
 import com.svartifoss.snfell.config.CustomIconStorage
 import com.svartifoss.snfell.config.WatchInfoProvider
@@ -45,8 +46,10 @@ class ActionListTransmitter(actionList: ActionList,
 
             val missingMetadata = dataOnWatch.any { item ->
                 try {
-                    WatchList.parseFrom(item.data).actionsList.any { action ->
+                    WatchList.parseFrom(item.data).actionsList.withIndex().any { (index, action) ->
                         !action.hasIconTintable() ||
+                                (action.actionKey == StandardActions.ACTION_SET_REPEAT_MODE &&
+                                        !item.assets.containsKey(CommPaths.ASSET_BUTTON_ICON_PREFIX + index)) ||
                                 (action.actionKey == PlayPlaylistShortcutAction::class.java.canonicalName &&
                                         (!action.hasRemoteUri() || !action.hasIconIsCoverArt()))
                     }
@@ -90,7 +93,7 @@ class ActionListTransmitter(actionList: ActionList,
             protoBuilder.addActions(actionProto.build())
 
             if (action.customIconUri == null &&
-                    StandardIcons.hasIcon(actionProto.actionKey)) {
+                    StandardIcons.canUseLocalIcon(actionProto.actionKey)) {
                 // We already have vector icon of this on the watch.
                 // No need to waste bluetooth bandwith by transferring it
 

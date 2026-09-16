@@ -54,6 +54,7 @@ import com.svartifoss.snfell.common.LyricLine
 import com.svartifoss.snfell.common.LyricsParser
 import com.svartifoss.snfell.common.MusicGlyphs
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
+import com.svartifoss.snfell.watch.view.compose.KaraokeLyricLine
 import com.svartifoss.snfell.watch.view.compose.LoadingBars
 import com.svartifoss.snfell.watch.view.compose.rememberLyricText
 import com.svartifoss.snfell.watch.view.compose.svartifossNoteContent
@@ -246,13 +247,18 @@ private fun SyncedLyrics(
                     ambient = ambient,
                     fontFamily = fontFamily,
                     onSeek = { onSeekToLine(line) },
+                    positionMs = positionMs,
                     // Shared with the Verse face, which draws the same bar under its own current
                     // line - see LyricsParser.lineProgress.
                     lineProgress = if (index == currentIndex) {
                         LyricsParser.lineProgress(lines, index, positionMs, durationMs)
                     } else {
                         0f
-                    })
+                    },
+                    // The word-level renderer needs the same end-of-line boundary the progress
+                    // bar above already resolves, or the line's last word would run out at a
+                    // different moment than the hairline beneath it does.
+                    lineEndMs = LyricsParser.lineEnd(lines, index, durationMs) ?: positionMs)
         }
     }
 }
@@ -267,6 +273,8 @@ private fun LyricRow(
         fontFamily: FontFamily,
         lineProgress: Float,
         onSeek: () -> Unit,
+        positionMs: Long,
+        lineEndMs: Long,
 ) {
     val target = when {
         // Ambient is outline-only: the accent would be a large block of lit colour on a panel
@@ -332,21 +340,37 @@ private fun LyricRow(
             modifier = Modifier.fillMaxWidth().then(seekModifier),
             horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-                // Note characters in the words themselves become the mark too, not just our own
-                // instrumental marker above - see MusicNoteText.
-                text = rememberLyricText(line.text),
-                color = color,
-                fontFamily = fontFamily,
-                inlineContent = svartifossNoteContent(color),
-                fontSize = fontSize.sp,
-                // Line height tied to the size rather than left to the font's own default: at
-                // three lines a wrapped lyric's rows have to sit as tightly as the lines
-                // themselves, or one long line eats the room the trio needs.
-                lineHeight = (fontSize * 1.24f).sp,
-                fontWeight = if (isCurrent) FontWeight.SemiBold else FontWeight.Normal,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth())
+        // Word-by-word only for the current line of a track whose lyric actually carries that
+        // timing (see LyricLine.words - most tracks, even synced ones, do not), and never in
+        // ambient, where the display barely refreshes and a mid-word colour would just be stuck.
+        if (isCurrent && !ambient && line.words.isNotEmpty()) {
+            KaraokeLyricLine(
+                    words = line.words,
+                    positionMs = positionMs,
+                    lineEndMs = lineEndMs,
+                    sungColor = color,
+                    upcomingColor = Color.White.copy(alpha = INACTIVE_ALPHA),
+                    fontFamily = fontFamily,
+                    fontSize = fontSize.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.fillMaxWidth())
+        } else {
+            Text(
+                    // Note characters in the words themselves become the mark too, not just our
+                    // own instrumental marker above - see MusicNoteText.
+                    text = rememberLyricText(line.text),
+                    color = color,
+                    fontFamily = fontFamily,
+                    inlineContent = svartifossNoteContent(color),
+                    fontSize = fontSize.sp,
+                    // Line height tied to the size rather than left to the font's own default: at
+                    // three lines a wrapped lyric's rows have to sit as tightly as the lines
+                    // themselves, or one long line eats the room the trio needs.
+                    lineHeight = (fontSize * 1.24f).sp,
+                    fontWeight = if (isCurrent) FontWeight.SemiBold else FontWeight.Normal,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth())
+        }
 
         // How far through *this line* the song is - the one figure a wall of lyrics cannot show
         // and the reader actually wants, since a line can hold for the better part of ten seconds.

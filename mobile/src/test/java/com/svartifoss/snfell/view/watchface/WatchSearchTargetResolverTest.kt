@@ -106,7 +106,6 @@ class WatchSearchTargetResolverTest {
                 "wear_carousel_card_shape" to "classic",
                 "wear_split_panel" to "classic",
                 "wear_quadrant_tap_flash" to "expressive",
-                "wear_classic_icons_visible" to "material",
                 "wear_internal_progress_visible" to "classic",
                 // Two rows, two allow-lists: a face that offers one of them must not send a
                 // search for the *other* to the same place, so both directions are pinned.
@@ -130,6 +129,7 @@ class WatchSearchTargetResolverTest {
         val available = listOf(
                 "wear_metadata_album" to "metadata",
                 "wear_expressive_seek_mode" to "expressive",
+                "wear_classic_icons_visible" to "material",
                 "wear_carousel_card_shape" to "carousel",
                 "wear_split_panel" to "split",
                 "wear_quadrant_tap_flash" to "classic",

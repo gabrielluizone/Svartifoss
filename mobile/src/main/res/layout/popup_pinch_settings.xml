@@ -1,0 +1,73 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+    <TextView android:id="@+id/title" style="@style/PinchSection" android:layout_width="0dp"
+        android:text="@string/pinch_settings_title" android:textSize="20sp"
+        android:layout_marginStart="24dp" android:layout_marginEnd="24dp" android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.core.widget.NestedScrollView android:id="@+id/content_scroll"
+        android:layout_width="0dp" android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" android:clipToPadding="false"
+        android:scrollbars="vertical" app:layout_constrainedHeight="true"
+        app:layout_constraintTop_toBottomOf="@id/title" app:layout_constraintBottom_toTopOf="@id/footer"
+        app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="vertical" android:paddingStart="24dp" android:paddingEnd="24dp" android:paddingBottom="20dp">
+            <TextView style="@style/PinchBody" android:text="@string/pinch_settings_intro" />
+            <RadioGroup android:id="@+id/mode_group" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:layout_marginTop="12dp">
+                <com.google.android.material.radiobutton.MaterialRadioButton android:id="@+id/native_mode"
+                    style="@style/PinchRadio" android:text="@string/pinch_mode_native" />
+                <com.google.android.material.radiobutton.MaterialRadioButton android:id="@+id/experimental_mode"
+                    style="@style/PinchRadio" android:text="@string/pinch_mode_experimental" />
+            </RadioGroup>
+            <TextView android:id="@+id/mode_description" style="@style/PinchBody"
+                android:layout_marginTop="8dp" android:text="@string/pinch_native_description" />
+            <LinearLayout android:id="@+id/experimental_content" android:layout_width="match_parent"
+                android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone">
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:layout_marginVertical="20dp" android:background="@color/lyra_divider" />
+                <TextView style="@style/PinchSection" android:text="@string/pinch_calibration_step" />
+                <TextView android:id="@+id/profile_state" style="@style/PinchBody"
+                    android:layout_marginTop="8dp" android:text="@string/pinch_profile_missing" />
+                <TextView style="@style/PinchBody" android:layout_marginTop="8dp"
+                    android:text="@string/pinch_open_instruction" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/calibrate_button"
+                    style="@style/PinchButton" android:layout_marginTop="12dp"
+                    android:text="@string/pinch_calibrate_watch" />
+                <TextView android:id="@+id/connection_status" style="@style/PinchBody"
+                    android:layout_marginTop="8dp" android:accessibilityLiveRegion="polite" android:visibility="gone" />
+                <View android:layout_width="match_parent" android:layout_height="1dp"
+                    android:layout_marginVertical="20dp" android:background="@color/lyra_divider" />
+                <TextView style="@style/PinchSection" android:text="@string/pinch_tuning_step" android:layout_marginBottom="16dp" />
+                <include android:id="@+id/sensitivity" layout="@layout/item_pinch_slider" />
+                <com.google.android.material.button.MaterialButton android:id="@+id/advanced_button"
+                    style="@style/PinchButton" android:text="@string/pinch_advanced_show" />
+                <LinearLayout android:id="@+id/advanced_content" android:layout_width="match_parent"
+                    android:layout_height="wrap_content" android:layout_marginTop="20dp"
+                    android:orientation="vertical" android:visibility="gone">
+                    <include android:id="@+id/gap" layout="@layout/item_pinch_slider" />
+                    <include android:id="@+id/cooldown" layout="@layout/item_pinch_slider" />
+                </LinearLayout>
+            </LinearLayout>
+            <TextView style="@style/PinchBody" android:layout_marginTop="20dp" android:textSize="13sp"
+                android:text="@string/pinch_shared_settings" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+    <LinearLayout android:id="@+id/footer" android:layout_width="0dp" android:layout_height="wrap_content"
+        android:orientation="vertical" app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toBottomOf="parent">
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/lyra_divider" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:orientation="horizontal" android:gravity="center_vertical" android:baselineAligned="false"
+            android:padding="16dp">
+            <com.google.android.material.button.MaterialButton android:id="@+id/cancel_button"
+                style="@style/PinchButton" android:layout_width="0dp" android:layout_weight="1"
+                android:text="@android:string/cancel" app:strokeWidth="0dp" android:layout_marginEnd="12dp" />
+            <com.google.android.material.button.MaterialButton android:id="@+id/save_button"
+                style="@style/PinchButton" android:layout_width="0dp" android:layout_weight="1"
+                android:text="@string/pinch_settings_save" app:strokeWidth="0dp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

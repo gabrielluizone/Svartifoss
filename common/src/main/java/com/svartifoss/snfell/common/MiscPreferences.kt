@@ -47,6 +47,19 @@ object MiscPreferences {
 
     val HAPTIC_FEEDBACK: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("haptic_feedback", true)
 
+    // Global input settings, owned by the phone. Calibration is explicit; choosing the
+    // experimental mode without a valid profile must never start an uncalibrated detector.
+    val WEAR_HAND_GESTURE_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_hand_gesture_mode", "native")
+    val WEAR_PINCH_SENSITIVITY: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_pinch_sensitivity", 100)
+    val WEAR_PINCH_MAX_GAP: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_pinch_max_gap", 800)
+    val WEAR_PINCH_COOLDOWN: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_pinch_cooldown", 1000)
+    val WEAR_PINCH_CALIBRATION: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_pinch_calibration", "")
+
     /**
      * UI language as a BCP-47 tag ("en", "pt-BR"), or [AppLocales.SYSTEM] to follow the device.
      *
@@ -1537,6 +1550,8 @@ object MiscPreferences {
     val EXPORTABLE: List<PreferenceDefinition<*>> = listOf(
             ALWAYS_SHOW_TIME, PAUSE_ON_SWIPE_EXIT, ROTATING_CROWN_OFF_PERIOD, ROTATING_CROWN_SENSITIVITY,
             ROTARY_SEEK, WEAR_ROTARY_ACTION, HAPTIC_FEEDBACK, APP_LANGUAGE,
+            WEAR_HAND_GESTURE_MODE, WEAR_PINCH_SENSITIVITY, WEAR_PINCH_MAX_GAP,
+            WEAR_PINCH_COOLDOWN, WEAR_PINCH_CALIBRATION,
             DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT, AUTO_START_MODE,
             AUTO_START_APP_BLACKLIST, CLOSE_TIMEOUT, WEAR_CLOSE_ON_IDLE,
             WEAR_PAUSED_HOLD, WEAR_IDLE_BUTTON_ACTION, WEAR_IDLE_AUTO_OPEN,

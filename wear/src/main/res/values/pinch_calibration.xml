@@ -1,0 +1,24 @@
+<resources>
+    <string name="pinch_cal_title">Calibrate pinch</string>
+    <string name="pinch_cal_intro">Fit the strap snugly and raise your wrist. Follow the cues: rest, six double pinches, then arm movement without pinching. No music commands are sent.</string>
+    <string name="pinch_cal_start">Start / retry</string>
+    <string name="pinch_cal_test">Test without actions</string>
+    <string name="pinch_cal_save">Save calibration</string>
+    <string name="pinch_cal_close">Close</string>
+    <string name="pinch_cal_countdown">Get ready: %1$d</string>
+    <string name="pinch_cal_rest">Keep your wrist still. Do not pinch.</string>
+    <string name="pinch_cal_pinch">Attempt %1$d of 6\nDouble pinch now.</string>
+    <string name="pinch_cal_wait">Relax. Wait for the next cue.</string>
+    <string name="pinch_cal_prepare_move">Next: move your arm without pinching.</string>
+    <string name="pinch_cal_move">Move and turn your wrist normally. Do not pinch.</string>
+    <string name="pinch_cal_ready">Samples collected. Test without actions before saving. Try pinching, then ordinary arm movements. This detector is experimental.</string>
+    <string name="pinch_cal_failed">The samples could not be separated reliably. Adjust the strap, keep the wrist steady during pinches and retry. The previous saved calibration was kept.</string>
+    <string name="pinch_cal_interrupted">Test interrupted when the screen became inactive. Start again with the screen awake.</string>
+    <string name="pinch_cal_unavailable">Motion sensors unavailable. Reopen this screen and try again.</string>
+    <string name="pinch_cal_testing">Test only</string>
+    <string name="pinch_cal_test_count">Detections: %1$d\n%2$d seconds left\nNo actions are executed.</string>
+    <string name="pinch_cal_test_done">Detections: %1$d. Check whether the count matches your double pinches. If arm movements were counted, recalibrate or lower sensitivity on the phone.</string>
+    <string name="pinch_cal_sending">Saving on phone…</string>
+    <string name="pinch_cal_saved">Calibration saved. On your phone, select Experimental in Pinch settings and save. Assign an action for both playback states.</string>
+    <string name="pinch_cal_send_failed">Could not confirm saving on the phone. Check the connection, update both apps and tap Save calibration to retry.</string>
+</resources>

@@ -7,11 +7,13 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.PorterDuff
+import android.graphics.Rect
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -23,6 +25,7 @@ import com.svartifoss.snfell.view.settings.lyraRuntimeAccent
 import com.svartifoss.snfell.actions.NullAction
 import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.common.CenterButton
+import com.svartifoss.snfell.common.DoublePinchGesture
 import com.svartifoss.snfell.common.buttonconfig.ButtonGesture
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_DOUBLE_TAP
@@ -170,6 +173,14 @@ class GesturePickerFragment : DialogFragment() {
                 minimumContrast = 4.5)
         binding.customizeIcon.setTextColor(chipAccent)
         binding.customizeIcon.iconTint = ColorStateList.valueOf(chipAccent)
+        // TextButton defaults can contain theme-state greens that the generic traversal cannot
+        // identify by defaultColor. This button explicitly owns its foreground/background pair.
+        binding.pinchSettings.setTag(R.id.tag_handles_accent_locally, true)
+        binding.pinchSettings.setTextColor(chipAccent)
+        binding.pinchSettings.strokeColor = ColorStateList.valueOf(chipAccent)
+        binding.pinchSettings.backgroundTintList = ColorStateList.valueOf(android.graphics.Color.TRANSPARENT)
+        binding.pinchSettings.rippleColor = ColorStateList.valueOf(
+                androidx.core.graphics.ColorUtils.setAlphaComponent(chipAccent, 32))
 
         binding.longPressDescription.isVisible = supportsLongPress
         binding.longPressButton.isVisible = supportsLongPress
@@ -189,12 +200,30 @@ class GesturePickerFragment : DialogFragment() {
         binding.inputNote.text = note
         binding.inputNote.isVisible = !note.isNullOrBlank()
 
+        binding.pinchSettings.isVisible = !baseButtonInfo.physicalButton &&
+                baseButtonInfo.buttonCode == DoublePinchGesture.DOUBLE_PINCH
+        binding.pinchSettings.setOnClickListener {
+            PinchSettingsDialog().show(childFragmentManager, "pinch_settings")
+        }
+
         binding.customizeIcon.setOnClickListener { startIconSelection() }
         binding.singlePressButton.setOnClickListener { changeAction(GESTURE_SINGLE_TAP) }
         binding.doublePressButton.setOnClickListener { changeAction(GESTURE_DOUBLE_TAP) }
         binding.longPressButton.setOnClickListener { changeAction(GESTURE_LONG_TAP) }
         binding.okButton.setOnClickListener { save() }
         binding.cancelButton.setOnClickListener { dismiss() }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        // Give wrapping text a real width. The old zero-minimum dialog measured long notes
+        // against their desired width, which could exceed the visible rounded window.
+        val metrics = resources.displayMetrics
+        val available = Rect().also { requireActivity().window.decorView.getWindowVisibleDisplayFrame(it) }
+        val width = (available.width().takeIf { it > 0 } ?: metrics.widthPixels) -
+                (32 * metrics.density).toInt()
+        dialog?.window?.setLayout(width.coerceAtMost((520 * metrics.density).toInt()),
+                WindowManager.LayoutParams.WRAP_CONTENT)
     }
 
     private fun changeAction(gesture: Int) {

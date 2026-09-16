@@ -118,7 +118,15 @@ fun MetadataFace(
 
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val screen = maxWidth
-        val rowBudget = ((maxHeight * TABLE_HEIGHT_FRACTION) / ROW_HEIGHT)
+        // This face fits rows by measuring rather than scrolling, so the measurement has to be of
+        // the space that is actually free. Budgeting against the whole screen put the last rows
+        // under the mini-button row - and on the one face whose entire premise is showing as much
+        // of the record's detail as the screen holds, rows that are there but covered are the worst
+        // possible failure.
+        val topInset = maxOf(state.safeArea.topDp.dp, state.blockSafeVerticalInset(screen))
+        val bottomInset = maxOf(state.safeArea.bottomDp.dp, state.blockSafeVerticalInset(screen))
+        val rowBudget = (((maxHeight - topInset - bottomInset).coerceAtLeast(0.dp) *
+                TABLE_HEIGHT_FRACTION) / ROW_HEIGHT)
                 .toInt()
                 .coerceIn(MIN_ROWS, MAX_ROWS)
 
@@ -130,7 +138,7 @@ fun MetadataFace(
                 modifier = Modifier
                         .fillMaxSize()
                         .padding(horizontal = maxOf(screen * inset, state.blockSafeSideInset(screen)))
-                        .padding(vertical = state.blockSafeVerticalInset(screen)),
+                        .padding(top = topInset, bottom = bottomInset),
                 horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally),
                 verticalArrangement = state.blockVerticalArrangement(
                         androidx.compose.foundation.layout.Arrangement.Center)

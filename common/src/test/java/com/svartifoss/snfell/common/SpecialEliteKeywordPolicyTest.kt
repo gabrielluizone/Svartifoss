@@ -10,11 +10,12 @@ class SpecialEliteKeywordPolicyTest {
         assertTrue(SpecialEliteKeywordPolicy.matches("Serial Experiments Lain", "Artist"))
         assertTrue(SpecialEliteKeywordPolicy.matches("Track", "The Wired Project"))
         assertTrue(SpecialEliteKeywordPolicy.matches("IWAKURA", "Artist"))
-        assertTrue(SpecialEliteKeywordPolicy.matches("breakcore mix", "Artist"))
     }
 
     @Test
     fun ignoresTracksWithoutKeywords() {
         assertFalse(SpecialEliteKeywordPolicy.matches("Ordinary Song", "Ordinary Artist"))
+        assertFalse(SpecialEliteKeywordPolicy.matches("breakcore mix", "Artist"))
+        assertFalse(SpecialEliteKeywordPolicy.matches("Track", "Breakcore Artist"))
     }
 }

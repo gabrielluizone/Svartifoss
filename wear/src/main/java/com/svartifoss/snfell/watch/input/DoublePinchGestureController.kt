@@ -1,23 +1,38 @@
 package com.svartifoss.snfell.watch.input
 
 import android.content.Context
+import android.content.SharedPreferences
+import android.hardware.display.DisplayManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.view.Display
 import android.view.View
+import androidx.preference.PreferenceManager
+import com.matejdro.wearutils.preferences.definition.Preferences
 import com.google.wear.Sdk
 import com.google.wear.input.GestureEvent
 import com.google.wear.input.GestureInputManager
 import com.svartifoss.snfell.common.HandGestureAvailability
+import com.svartifoss.snfell.common.ExperimentalPinchDetector
+import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.PinchCalibration
+import com.svartifoss.snfell.common.PinchDetectorSettings
+import com.svartifoss.snfell.common.PinchPreferences
 import java.util.function.Consumer
 import timber.log.Timber
 
 /**
- * Owns the foreground subscription to Wear OS's primary one-handed gesture.
+ * Owns the foreground subscription to the watch's primary one-handed gesture.
  *
  * The public surface deliberately contains no Wear-SDK types. A watch running API 36 without the
  * 36.1 gesture feature therefore never loads [Api36PointOne], while a compatible watch registers
  * against [hostView]'s window and automatically stops receiving events whenever that window loses
  * focus. On current Pixel hardware the primary action is a double pinch; other OEMs may map the
- * same semantic action to an equivalent supported hand gesture.
+ * same semantic action to an equivalent supported hand gesture. Mobvoi watches with the vendor
+ * pinch sensor use [MobvoiPinchInput] when the public API is unavailable. This experimental path
+ * receives firmware detections, with no accelerometer polling or app-controlled sensitivity.
+ * Both subscriptions require an interactive, resumed player with window focus.
  *
  * **Registration waits for the host view's window.** [setEnabled] is driven by the button config,
  * which arrives on a `LiveData` observer bound to the Activity - so it first runs at `onStart`,
@@ -44,9 +59,19 @@ class DoublePinchGestureController(
 ) {
     private var registration: Registration? = null
     private var availabilityWatch: Registration? = null
+    private var options = readOptions(PreferenceManager.getDefaultSharedPreferences(context))
+    private val displays = context.getSystemService(DisplayManager::class.java)
+    private val displayListener = object : DisplayManager.DisplayListener {
+        override fun onDisplayAdded(displayId: Int) = Unit
+        override fun onDisplayRemoved(displayId: Int) = Unit
+        override fun onDisplayChanged(displayId: Int) {
+            if (canListen()) registerIfPossible() else unregister()
+        }
+    }
 
     /** Whether the active Controls state has an assignment for this input. */
     private var wanted = false
+    private var interactive = false
     private var disposed = false
 
     private val attachListener = object : View.OnAttachStateChangeListener {
@@ -57,6 +82,16 @@ class DoublePinchGestureController(
 
     init {
         hostView.addOnAttachStateChangeListener(attachListener)
+        displays?.registerDisplayListener(displayListener, Handler(Looper.getMainLooper()))
+    }
+
+    fun configure(preferences: SharedPreferences) {
+        val updated = readOptions(preferences)
+        if (options == updated) return
+        options = updated
+        unregister()
+        registerIfPossible()
+        onAvailabilityChanged()
     }
 
     /** Starts listening only while the active Controls state has an assignment for this input. */
@@ -68,6 +103,24 @@ class DoublePinchGestureController(
         } else {
             unregister()
         }
+    }
+
+    /** The Activity calls this on resume, pause, focus changes and ambient transitions. */
+    fun setInteractive(interactive: Boolean) {
+        this.interactive = interactive
+        if (canListen()) registerIfPossible() else unregister()
+    }
+
+    private fun canListen(): Boolean =
+            !disposed && wanted && interactive && hostView.isAttachedToWindow &&
+                    hostView.hasWindowFocus() && hostView.display?.state == Display.STATE_ON
+
+    private fun dispatchPrimaryGesture() {
+        if (!canListen()) {
+            Timber.d("Double pinch: ignoring event outside the active player")
+            return
+        }
+        onPrimaryGesture()
     }
 
     /** Lets Wear OS keep its own gesture-discovery cadence in sync with an action we handled. */
@@ -82,6 +135,7 @@ class DoublePinchGestureController(
     fun dispose() {
         disposed = true
         hostView.removeOnAttachStateChangeListener(attachListener)
+        displays?.unregisterDisplayListener(displayListener)
         unregister()
         try {
             availabilityWatch?.unregister()
@@ -92,20 +146,36 @@ class DoublePinchGestureController(
     }
 
     private fun registerIfPossible() {
-        if (disposed || !wanted || registration != null) return
-        if (!hostView.isAttachedToWindow) {
-            // Not an error: the attach listener above re-runs this as soon as the window exists.
-            Timber.d("Double pinch: assigned, waiting for the player window")
-            return
-        }
-        val availability = availability(context)
-        if (availability == HandGestureAvailability.UNSUPPORTED) {
-            Timber.i("Double pinch: this watch does not support the primary hand gesture (sdk %d)",
-                    Build.VERSION.SDK_INT)
+        if (!canListen() || registration != null) return
+        val capability = capability(context, options)
+        if (capability.backend == null) {
+            Timber.i("Double pinch: no available gesture input (%s, sdk %d)",
+                    capability.availability, Build.VERSION.SDK_INT)
             return
         }
         registration = try {
-            Api36PointOne.register(context, hostView, onPrimaryGesture)
+            when (capability.backend) {
+                Backend.EXPERIMENTAL -> {
+                    val detector = ExperimentalPinchDetector(options.calibration!!, options.settings)
+                    PinchMotionInput.register(context) { feature ->
+                        if (detector.add(feature)) {
+                            Timber.i("Double pinch: experimental detection")
+                            dispatchPrimaryGesture()
+                        }
+                    }?.let { input ->
+                        object : Registration {
+                            override fun unregister() = input.unregister()
+                        }
+                    }
+                }
+                Backend.WEAR -> Api36PointOne.register(context, hostView, ::dispatchPrimaryGesture)
+                Backend.MOBVOI -> MobvoiPinchInput.register(
+                        context, mobvoiEventFilter, ::dispatchPrimaryGesture)?.let { input ->
+                    object : Registration {
+                        override fun unregister() = input.unregister()
+                    }
+                }
+            }
         } catch (e: Throwable) {
             Timber.w(e, "Double pinch: could not subscribe to the primary gesture")
             null
@@ -115,19 +185,21 @@ class DoublePinchGestureController(
         // apart from an outright failure rather than folded into one "unavailable".
         Timber.i("Double pinch: %s", when {
             registration == null -> "unavailable"
-            availability == HandGestureAvailability.DISABLED ->
+            capability.availability == HandGestureAvailability.DISABLED ->
                 "listening, but the gesture is off in the watch's settings"
             else -> "listening"
         })
     }
 
     private fun unregister() {
+        val previous = registration ?: return
+        registration = null
         try {
-            registration?.unregister()
+            previous.unregister()
+            Timber.d("Double pinch: player subscription stopped")
         } catch (e: Throwable) {
             Timber.w(e, "Double pinch: unregister failed")
         }
-        registration = null
     }
 
     /**
@@ -139,7 +211,7 @@ class DoublePinchGestureController(
      */
     private fun watchAvailability() {
         if (disposed || availabilityWatch != null) return
-        if (availability(context) == HandGestureAvailability.UNSUPPORTED) return
+        if (capability(context).backend != Backend.WEAR) return
         availabilityWatch = try {
             Api36PointOne.watchEnabledActions(context) {
                 if (disposed) return@watchEnabledActions
@@ -163,12 +235,7 @@ class DoublePinchGestureController(
     /** Safe to load on base API 36, where the feature check returns false. */
     private object Api36 {
         fun hasGestureDetectionFeature(): Boolean =
-            try {
                 Sdk.hasApiFeature(Sdk.FEATURE_WEAR_GESTURE_DETECTION)
-            } catch (e: Throwable) {
-                Timber.w(e, "Double pinch: gesture-detection feature check failed")
-                false
-            }
     }
 
     /** Loaded only after [Api36] has confirmed the API-36.1 gesture feature. */
@@ -208,8 +275,9 @@ class DoublePinchGestureController(
             Timber.d("Double pinch: primary action maps to gesture %d",
                     manager.getGestureForAction(GestureEvent.ACTION_PRIMARY))
 
+            var active = true
             val listener = Consumer<GestureEvent> { event ->
-                if (event.action == GestureEvent.ACTION_PRIMARY) {
+                if (active && event.action == GestureEvent.ACTION_PRIMARY) {
                     onPrimaryGesture()
                 }
             }
@@ -222,6 +290,7 @@ class DoublePinchGestureController(
 
             return object : Registration {
                 override fun unregister() {
+                    active = false
                     manager.removeGestureEventListener(listener)
                 }
 
@@ -250,25 +319,74 @@ class DoublePinchGestureController(
     companion object {
         private const val DOUBLE_PINCH_EXPERIENCE_ID = "svartifoss_double_pinch"
 
+        // Sensor callbacks run on main. Keep the watermark when the Activity is recreated or
+        // reopened too; persisting it to disk would incorrectly carry timestamps across reboots.
+        private val mobvoiEventFilter = MobvoiPinchEventFilter()
+
+        private enum class Backend { WEAR, MOBVOI, EXPERIMENTAL }
+
+        private data class InputOptions(
+                val experimental: Boolean,
+                val calibration: PinchCalibration?,
+                val settings: PinchDetectorSettings
+        )
+
+        private fun readOptions(prefs: SharedPreferences): InputOptions = InputOptions(
+                Preferences.getString(prefs, MiscPreferences.WEAR_HAND_GESTURE_MODE) == "experimental",
+                PinchCalibration.decode(Preferences.getString(prefs, MiscPreferences.WEAR_PINCH_CALIBRATION)),
+                PinchPreferences.readSettings(prefs))
+
+        private data class Capability(
+            val backend: Backend?,
+            val availability: HandGestureAvailability
+        )
+
         /**
          * What this watch can do with the primary hand gesture, for the phone to render.
          *
-         * Never throws: an API level below 36.1's gesture feature is a definite [UNSUPPORTED],
-         * while a probe that fails for any other reason is [HandGestureAvailability.UNKNOWN] -
-         * claiming "your watch cannot do this" on the strength of an exception would be worse
-         * than admitting the app does not know.
+         * Public Wear support takes priority; older Mobvoi watches can expose a vendor sensor.
+         * A failed probe is UNKNOWN. READY reports a supported input, not recognition accuracy.
          */
-        fun availability(context: Context): HandGestureAvailability {
-            // `Sdk` itself is present from API 36; the feature distinguishes the 36.1 addition.
-            if (Build.VERSION.SDK_INT < 36 || !Api36.hasGestureDetectionFeature()) {
-                return HandGestureAvailability.UNSUPPORTED
+        fun availability(context: Context): HandGestureAvailability = capability(context).availability
+
+        private fun capability(context: Context, options: InputOptions = readOptions(
+                PreferenceManager.getDefaultSharedPreferences(context))): Capability {
+            if (options.experimental) {
+                return try {
+                    when {
+                        !PinchMotionInput.isAvailable(context) ->
+                            Capability(null, HandGestureAvailability.UNSUPPORTED)
+                        options.calibration == null -> Capability(null, HandGestureAvailability.UNKNOWN)
+                        else -> Capability(Backend.EXPERIMENTAL, HandGestureAvailability.READY)
+                    }
+                } catch (e: RuntimeException) {
+                    Timber.w(e, "Double pinch: could not inspect experimental input")
+                    Capability(null, HandGestureAvailability.UNKNOWN)
+                }
             }
-            return try {
-                Api36PointOne.availability(context)
+            var probeFailed = false
+            // Keep Wear SDK types behind the API/feature guard on Wear OS 4 (API 33).
+            try {
+                if (Build.VERSION.SDK_INT >= 36 && Api36.hasGestureDetectionFeature()) {
+                    val state = Api36PointOne.availability(context)
+                    if (state != HandGestureAvailability.UNSUPPORTED) {
+                        return Capability(Backend.WEAR, state)
+                    }
+                }
             } catch (e: Throwable) {
-                Timber.w(e, "Double pinch: could not read the gesture capability")
-                HandGestureAvailability.UNKNOWN
+                probeFailed = true
+                Timber.w(e, "Double pinch: could not read the Wear gesture capability")
             }
+            try {
+                if (MobvoiPinchInput.findSensor(context) != null) {
+                    return Capability(Backend.MOBVOI, HandGestureAvailability.READY)
+                }
+            } catch (e: RuntimeException) {
+                probeFailed = true
+                Timber.w(e, "Double pinch: could not read the Mobvoi gesture capability")
+            }
+            return Capability(null, if (probeFailed) HandGestureAvailability.UNKNOWN
+                    else HandGestureAvailability.UNSUPPORTED)
         }
     }
 }

@@ -1,0 +1,24 @@
+<resources>
+    <string name="pinch_cal_title">Calibrar pinça</string>
+    <string name="pinch_cal_intro">Ajuste a pulseira e levante o pulso. Siga as etapas: repouso, seis pinças duplas e movimento sem pinçar. Nenhum comando de música será enviado.</string>
+    <string name="pinch_cal_start">Iniciar / repetir</string>
+    <string name="pinch_cal_test">Testar sem ações</string>
+    <string name="pinch_cal_save">Salvar calibração</string>
+    <string name="pinch_cal_close">Fechar</string>
+    <string name="pinch_cal_countdown">Prepare-se: %1$d</string>
+    <string name="pinch_cal_rest">Mantenha o pulso parado. Não pince.</string>
+    <string name="pinch_cal_pinch">Tentativa %1$d de 6\nFaça uma pinça dupla agora.</string>
+    <string name="pinch_cal_wait">Relaxe. Aguarde a próxima indicação.</string>
+    <string name="pinch_cal_prepare_move">A seguir: mova o braço sem pinçar.</string>
+    <string name="pinch_cal_move">Mova e gire o pulso normalmente. Não pince.</string>
+    <string name="pinch_cal_ready">Amostras coletadas. Teste sem ações antes de salvar. Experimente pinçar e depois mover o braço normalmente. Este detector é experimental.</string>
+    <string name="pinch_cal_failed">Não foi possível distinguir as amostras suficientemente. Ajuste a pulseira, mantenha o pulso estável durante as pinças e tente novamente. A calibração salva anterior foi mantida.</string>
+    <string name="pinch_cal_interrupted">Teste interrompido porque a tela ficou inativa. Recomece com a tela ativa.</string>
+    <string name="pinch_cal_unavailable">Sensores de movimento indisponíveis. Reabra esta tela e tente novamente.</string>
+    <string name="pinch_cal_testing">Somente teste</string>
+    <string name="pinch_cal_test_count">Detecções: %1$d\nRestam %2$d segundos\nNenhuma ação é executada.</string>
+    <string name="pinch_cal_test_done">Detecções: %1$d. Confira se a contagem corresponde às suas pinças duplas. Se movimentos do braço foram contados, recalibre ou reduza a sensibilidade no celular.</string>
+    <string name="pinch_cal_sending">Salvando no celular…</string>
+    <string name="pinch_cal_saved">Calibração salva. No celular, selecione Experimental em Ajustes da pinça e salve. Atribua uma ação para os dois estados de reprodução.</string>
+    <string name="pinch_cal_send_failed">Não foi possível confirmar a gravação no celular. Confira a conexão, atualize os dois apps e toque em Salvar calibração para tentar novamente.</string>
+</resources>

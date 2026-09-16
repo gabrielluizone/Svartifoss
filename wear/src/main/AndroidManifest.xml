@@ -33,12 +33,27 @@
             android:name="com.google.android.wearable"
             android:required="true" />
         <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
+             This flag governs *distribution*, not function: it tells Play whether the watch half
+             may be installed on a watch on its own. It is not a claim that the app is useful
+             without the phone - it plainly is not, and nothing about that changed.
+
+             It was `false`, which is the honest reading of the sentence Google writes next to it,
+             and it made the watch app unreachable. A non-standalone watch app is not listed
+             independently on the watch's Play Store - it does not come up in search there - and
+             modern Wear OS does not push the companion onto the watch when the phone half is
+             installed, the way the old model did. So for anyone who did not already have the app
+             in their Play library there was no route to install it at all: no button under the
+             phone listing, nothing in the watch's search. Reproduced on a clean account that had
+             joined the group and accepted the test invitation, 2026-09-11.
+
+             Nobody is stranded by the watch half arriving first. MainActivity extends
+             `WearCompanionWatchActivity`, which shows `PhoneAppNoticeActivity` when the phone app
+             is not present, and the `play` flavour's `no_phone_app_description` already sends the
+             user to this same listing on their phone.
         -->
         <meta-data
             android:name="com.google.android.wearable.standalone"
-            android:value="false" />
+            android:value="true" />
 
         <activity
             android:name=".watch.view.MainActivity"
@@ -53,6 +68,9 @@
         </activity>
 
         <activity android:name="com.matejdro.wearutils.companionnotice.PhoneAppNoticeActivity" />
+        <activity android:name=".watch.input.PinchCalibrationActivity"
+            android:launchMode="singleTask"
+            android:exported="false" />
 
         <!-- Invisible bridge launched by a ShortcutsTileService chip: opens the shortcut on the
              phone and asks it to play, then finishes. Exported because the Tile framework (a

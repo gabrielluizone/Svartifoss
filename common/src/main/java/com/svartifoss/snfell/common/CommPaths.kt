@@ -62,6 +62,11 @@ interface CommPaths {
         const val MESSAGE_EXECUTE_MENU_ACTION = "/Messages/MenuAction"
         const val MESSAGE_SEND_LOGS = "/SendLogs"
         const val MESSAGE_OPEN_APP = "/IdleMessages/OpenApp"
+        const val MESSAGE_OPEN_PINCH_CALIBRATION = "/IdleMessages/OpenPinchCalibration"
+        // An explicitly saved watch calibration goes to the phone owner, which persists and
+        // echoes the validated payload as acknowledgement; normal preference sync follows.
+        const val MESSAGE_PINCH_CALIBRATION_RESULT = "/Messages/PinchCalibrationResult"
+        const val MESSAGE_PINCH_CALIBRATION_ACK = "/Messages/PinchCalibrationAck"
         const val MESSAGE_START_SERVICE = "/IdleMessages/StartService"
         const val MESSAGE_CUSTOM_LIST_ITEM_SELECTED = "/Messages/CustomListItemSelected"
         // Watch -> phone: delete one entry from a watch-managed deletable custom list (currently

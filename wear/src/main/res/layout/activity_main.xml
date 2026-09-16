@@ -149,42 +149,6 @@
             tools:deviceIds="wear"
             tools:ignore="KeyboardInaccessibleWidget">
 
-            <ImageView
-                android:id="@+id/icon_top"
-                android:layout_width="@dimen/music_screen_icon_size"
-                android:layout_height="@dimen/music_screen_icon_size"
-                android:layout_gravity="center|top"
-                android:layout_marginTop="@dimen/music_screen_icon_offset"
-                tools:ignore="ContentDescription"
-                tools:src="@drawable/action_volume_up" />
-
-            <ImageView
-                android:id="@+id/icon_bottom"
-                android:layout_width="@dimen/music_screen_icon_size"
-                android:layout_height="@dimen/music_screen_icon_size"
-                android:layout_gravity="center|bottom"
-                android:layout_marginBottom="@dimen/music_screen_icon_offset"
-                tools:ignore="ContentDescription"
-                tools:src="@drawable/action_volume_down" />
-
-            <ImageView
-                android:id="@+id/icon_left"
-                android:layout_width="@dimen/music_screen_icon_size"
-                android:layout_height="@dimen/music_screen_icon_size"
-                android:layout_gravity="center|left"
-                android:layout_marginLeft="@dimen/music_screen_icon_offset"
-                tools:ignore="ContentDescription,RtlHardcoded"
-                tools:src="@drawable/action_pause" />
-
-            <ImageView
-                android:id="@+id/icon_right"
-                android:layout_width="@dimen/music_screen_icon_size"
-                android:layout_height="@dimen/music_screen_icon_size"
-                android:layout_gravity="center|right"
-                android:layout_marginRight="@dimen/music_screen_icon_offset"
-                tools:ignore="ContentDescription,RtlHardcoded"
-                tools:src="@android:mipmap/sym_def_app_icon" />
-
             <TextView
                 android:id="@+id/ambient_clock"
                 android:layout_width="wrap_content"
@@ -292,6 +256,52 @@
                 android:visibility="gone" />
 
         </com.svartifoss.snfell.watch.view.ClaimedGestureHost>
+
+        <!-- Player chrome, drawn above every face because that is what it is: the clock and the
+             four quadrant hints belong to the screen, not to a composition, and a Compose face's
+             opaque backdrop used to paint over all of them. Non-clickable, so the shared quadrant
+             gesture layer underneath still receives their taps. Every position and size here comes
+             from PlayerChromeLayout - see applyPlayerChrome. -->
+
+        <!-- Shown instead of ambient_clock when the clock has to share the top with the hint;
+             see CurvedClockView for why it is a host view rather than per-face. -->
+        <com.svartifoss.snfell.watch.view.CurvedClockView
+            android:id="@+id/curved_clock"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/icon_top"
+            android:layout_width="@dimen/music_screen_icon_size"
+            android:layout_height="@dimen/music_screen_icon_size"
+            android:layout_gravity="center"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/action_volume_up" />
+
+        <ImageView
+            android:id="@+id/icon_bottom"
+            android:layout_width="@dimen/music_screen_icon_size"
+            android:layout_height="@dimen/music_screen_icon_size"
+            android:layout_gravity="center"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/action_volume_down" />
+
+        <ImageView
+            android:id="@+id/icon_left"
+            android:layout_width="@dimen/music_screen_icon_size"
+            android:layout_height="@dimen/music_screen_icon_size"
+            android:layout_gravity="center"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/action_skip_prev" />
+
+        <ImageView
+            android:id="@+id/icon_right"
+            android:layout_width="@dimen/music_screen_icon_size"
+            android:layout_height="@dimen/music_screen_icon_size"
+            android:layout_gravity="center"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/action_skip_next" />
 
         <!-- Mirrors FourWayTouchLayout's own tap-feedback pulse at a higher z-order: that
              layout's ripple is a child of itself, so it is drawn UNDER expressive_face and every

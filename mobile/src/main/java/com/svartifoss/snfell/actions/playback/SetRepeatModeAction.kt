@@ -21,6 +21,13 @@ internal fun normalizeRepeatMode(value: Int): Int = when (value) {
     else -> PlaybackStateCompat.REPEAT_MODE_NONE
 }
 
+internal fun repeatModeIcon(mode: Int): Int =
+        if (normalizeRepeatMode(mode) == PlaybackStateCompat.REPEAT_MODE_ONE) {
+            com.svartifoss.snfell.common.R.drawable.action_repeat_one
+        } else {
+            com.svartifoss.snfell.common.R.drawable.action_repeat
+        }
+
 /** Sets repeat off/all/one directly, without depending on the current cycle position. */
 class SetRepeatModeAction : SelectableAction {
     var mode: Int = PlaybackStateCompat.REPEAT_MODE_NONE
@@ -43,7 +50,7 @@ class SetRepeatModeAction : SelectableAction {
     override val defaultIcon: Drawable
         get() = AppCompatResources.getDrawable(
                 context,
-                com.svartifoss.snfell.common.R.drawable.action_repeat)!!
+                repeatModeIcon(mode))!!
 
     override fun writeToBundle(bundle: PersistableBundle) {
         super.writeToBundle(bundle)

@@ -19,6 +19,9 @@ import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.common.CenterButton
 import com.svartifoss.snfell.common.DoublePinchGesture
 import com.svartifoss.snfell.common.HandGestureAvailability
+import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.PinchCalibration
+import com.matejdro.wearutils.preferences.definition.Preferences
 import com.svartifoss.snfell.common.ScreenButtons
 import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.SwipeGesture
@@ -86,6 +89,7 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         // The developer switch lives on another screen, so re-check it every time this one comes
         // back rather than only at inflation.
         applyHandGestureVisibility()
+        updateHandGestureHint()
     }
 
     override fun onStart() {
@@ -269,13 +273,18 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
 
     /** The section caption's summary: one line, naming the state this watch is actually in. */
     private fun updateHandGestureHint() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        if (Preferences.getString(prefs, MiscPreferences.WEAR_HAND_GESTURE_MODE) == "experimental") {
+            val profile = PinchCalibration.decode(Preferences.getString(prefs, MiscPreferences.WEAR_PINCH_CALIBRATION))
+            binding.handGesturesHint.setText(if (profile == null) R.string.pinch_profile_missing
+                    else R.string.pinch_profile_saved)
+            return
+        }
         binding.handGesturesHint.setText(handGestureStateString())
     }
 
-    /** The verdict first, then the mechanics - a watch that cannot do this at all should not
-     *  have to be read past three paragraphs of instructions to find that out. */
-    private fun handGestureNote(): CharSequence = getString(handGestureStateString()) +
-            "\n\n" + getString(R.string.hand_gesture_how_it_works)
+    /** Keep the action window brief; availability is shown beside the Controls section. */
+    private fun handGestureNote(): CharSequence = getString(R.string.pinch_gesture_note)
 
     /** Populates the "Mini buttons" section: 3 fixed tiles, one per [ScreenButtons] slot, in
      *  the same left-to-right order the watch renders them under the track time. Unlike swipes

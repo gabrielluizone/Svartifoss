@@ -12,7 +12,6 @@ object SpecialEliteKeywordPolicy {
             "iwakura",
             "lain",
             "wired",
-            "breakcore",
             "serial experiments"
     )
 

@@ -11,6 +11,7 @@ import com.google.auto.factory.Provided
 import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.actions.PlayPlaylistShortcutAction
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.actions.StandardActions
 import com.svartifoss.snfell.common.actions.StandardIcons
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.config.CustomIconStorage
@@ -40,17 +41,21 @@ class ButtonConfigTransmitter(buttonConfig: ButtonConfig,
         GlobalScope.launchWithPlayServicesErrorHandling(context) {
             val dataOnWatch = dataClient.getDataItems(Uri.parse("wear://*$endpointPath")).await()
 
-            val missingRemoteUri = dataOnWatch.any { item ->
+            val missingMetadata = dataOnWatch.any { item ->
                 try {
                     WatchActions.parseFrom(item.data).actionsList.any { action ->
-                        action.actionKey == PlayPlaylistShortcutAction::class.java.canonicalName &&
-                                !action.hasRemoteUri()
+                        (action.actionKey == PlayPlaylistShortcutAction::class.java.canonicalName &&
+                                !action.hasRemoteUri()) ||
+                                (action.actionKey == StandardActions.ACTION_SET_REPEAT_MODE &&
+                                        !action.physicalButton &&
+                                        !item.assets.containsKey(CommPaths.ASSET_BUTTON_ICON_PREFIX +
+                                                ButtonInfo(action).getKey()))
                     }
                 } catch (_: Exception) {
                     true
                 }
             }
-            if (!dataOnWatch.any() || missingRemoteUri) {
+            if (!dataOnWatch.any() || missingMetadata) {
                 withContext(Dispatchers.Main) { buttonConfig.retransmit() }
             }
 
@@ -81,7 +86,7 @@ class ButtonConfigTransmitter(buttonConfig: ButtonConfig,
             }
 
             if (action.customIconUri == null &&
-                    StandardIcons.hasIcon(buttonInfoProto.actionKey)) {
+                    StandardIcons.canUseLocalIcon(buttonInfoProto.actionKey)) {
                 // We already have vector icon of this on the watch.
                 // No need to waste bluetooth bandwith by transferring it
 

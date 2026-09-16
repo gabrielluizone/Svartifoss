@@ -7,6 +7,18 @@ import org.junit.Test
 
 class PlaybackPresetPolicyTest {
     @Test
+    fun repeatOneKeepsItsNumberedIconWhenTransferredToTheWatch() {
+        assertEquals(com.svartifoss.snfell.common.R.drawable.action_repeat_one,
+                repeatModeIcon(PlaybackStateCompat.REPEAT_MODE_ONE))
+        assertEquals(com.svartifoss.snfell.common.R.drawable.action_repeat,
+                repeatModeIcon(PlaybackStateCompat.REPEAT_MODE_ALL))
+        assertEquals(com.svartifoss.snfell.common.R.drawable.action_repeat,
+                repeatModeIcon(PlaybackStateCompat.REPEAT_MODE_NONE))
+        org.junit.Assert.assertFalse(com.svartifoss.snfell.common.actions.StandardIcons.canUseLocalIcon(
+                com.svartifoss.snfell.common.actions.StandardActions.ACTION_SET_REPEAT_MODE))
+    }
+
+    @Test
     fun playbackSpeedIsFiniteAndClampedToSupportedPickerRange() {
         assertEquals(0.5f, normalizePlaybackSpeed(-4f))
         assertEquals(2f, normalizePlaybackSpeed(8f))
