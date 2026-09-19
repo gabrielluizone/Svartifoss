@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
-import com.svartifoss.snfell.common.PlayerControlGeometry
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -92,14 +90,6 @@ fun RibbonFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
     }
 }
 
-private fun ribbonLayout(state: NowPlayingFaceState, screen: Dp) =
-        PlayerControlGeometry.coverRailLayout(screen.value,
-                screen.value - state.safeArea.bottomDp,
-                FaceGeometry.Ribbon.COLUMN_TOP_FRACTION,
-                FaceGeometry.Ribbon.COLUMN_TOP_FRACTION + FaceGeometry.Ribbon.COLUMN_HEIGHT_FRACTION,
-                FaceGeometry.Ribbon.TITLE_TOP_FRACTION,
-                if (state.showTitle) FaceGeometry.Ribbon.TITLE_LINE_HEIGHT_DP else 0f)
-
 /** Four queue-cover capsules, with the outer pair intentionally clipped by the dial edge. */
 @Composable
 private fun BoxWithConstraintsScope.RibbonQueueRails(state: NowPlayingFaceState, screen: Dp) {
@@ -115,7 +105,7 @@ private fun BoxWithConstraintsScope.RibbonQueueRails(state: NowPlayingFaceState,
     // to put there - the same honest degradation Carousel makes.
     val railCards = listOf(cardAt(-2), cardAt(-1), cardAt(1), cardAt(2))
     val width = screen * FaceGeometry.Ribbon.COLUMN_WIDTH_FRACTION
-    val height = ribbonLayout(state, screen).artHeight.dp
+    val height = screen * FaceGeometry.Ribbon.COLUMN_HEIGHT_FRACTION
     val shape = RoundedCornerShape(width * FaceGeometry.Ribbon.COLUMN_CORNER_FRACTION)
     val centers = listOf(
             FaceGeometry.Ribbon.OUTER_COLUMN_CENTER_X,
@@ -150,7 +140,7 @@ private fun BoxWithConstraintsScope.RibbonQueueRails(state: NowPlayingFaceState,
 @Composable
 private fun BoxWithConstraintsScope.RibbonArtwork(state: NowPlayingFaceState, screen: Dp) {
     val width = screen * FaceGeometry.Ribbon.CENTER_COVER_WIDTH_FRACTION
-    val height = ribbonLayout(state, screen).artHeight.dp
+    val height = screen * FaceGeometry.Ribbon.CENTER_COVER_HEIGHT_FRACTION
     val shape = RoundedCornerShape(width * FaceGeometry.Ribbon.CENTER_COVER_CORNER_FRACTION)
     Box(
             modifier = Modifier
@@ -198,7 +188,6 @@ private fun BoxWithConstraintsScope.RibbonArtwork(state: NowPlayingFaceState, sc
 @Composable
 private fun BoxWithConstraintsScope.RibbonProgress(state: NowPlayingFaceState, screen: Dp) {
     if (!state.showInternalProgress) return
-    val layout = ribbonLayout(state, screen)
     val thickness = FaceGeometry.Ribbon.PROGRESS_THICKNESS_DP.dp
     val width = screen * FaceGeometry.Ribbon.PROGRESS_WIDTH_FRACTION
     // Eased rather than snapped, matching the curated faces' own progress animation: a hairline
@@ -210,7 +199,8 @@ private fun BoxWithConstraintsScope.RibbonProgress(state: NowPlayingFaceState, s
     Canvas(
             modifier = Modifier
                     .align(Alignment.TopCenter)
-                    .padding(top = ((layout.artTop + layout.artHeight + layout.titleTop) / 2f).dp - thickness / 2f)
+                    .padding(top = screen * FaceGeometry.Ribbon.PROGRESS_CENTER_FRACTION -
+                            thickness / 2f)
                     .size(width = width, height = thickness)
     ) {
         val radius = CornerRadius(size.height / 2f, size.height / 2f)
@@ -229,14 +219,13 @@ private fun BoxWithConstraintsScope.RibbonMetadata(state: NowPlayingFaceState, s
     // Both bands are inset for the glass rather than by a flat side padding. The title is the one
     // that needed it: it sits low enough that the chord has taken a quarter of the width away, so
     // the old .13 inset ran the ends of a long line under the bezel. See RoundScreenText.
-    val layout = ribbonLayout(state, screen)
     val titleLineFraction = FaceGeometry.Ribbon.TITLE_LINE_HEIGHT_DP.dp / screen
     val titleLines = RoundScreenText.linesThatFit(
-            top = layout.titleTop / screen.value,
+            top = FaceGeometry.Ribbon.TITLE_TOP_FRACTION,
             lineHeight = titleLineFraction,
             maxLines = FaceGeometry.Ribbon.TITLE_MAX_LINES)
     val titleInset = RoundScreenText.sideInsetForLines(
-            top = layout.titleTop / screen.value,
+            top = FaceGeometry.Ribbon.TITLE_TOP_FRACTION,
             lineHeight = titleLineFraction,
             lines = titleLines)
     if (state.showArtist && state.artist.isNotBlank()) {
@@ -272,22 +261,24 @@ private fun BoxWithConstraintsScope.RibbonMetadata(state: NowPlayingFaceState, s
         }
     }
     if (state.showTitle && state.title.isNotBlank()) {
-        FittedFaceContent(Modifier.align(Alignment.TopCenter)
-                .padding(top = layout.titleTop.dp, start = screen * titleInset, end = screen * titleInset)
-                .height(layout.titleHeight.dp).fillMaxWidth()) {
-            AdaptiveTitleText(
-                    text = state.title,
-                    mode = state.titleTextMode,
-                    state = state,
-                    color = titleTextColor(state, Color.White),
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = state.titleFont,
-                    typography = state.titleTypography,
-                    minFontSize = 15.sp,
-                    maxLines = titleLines,
-                    modifier = Modifier.fillMaxWidth())
-        }
+        AdaptiveTitleText(
+                text = state.title,
+                mode = state.titleTextMode,
+                state = state,
+                color = titleTextColor(state, Color.White),
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                fontFamily = state.titleFont,
+                typography = state.titleTypography,
+                minFontSize = 15.sp,
+                maxLines = titleLines,
+                modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(
+                                top = screen * FaceGeometry.Ribbon.TITLE_TOP_FRACTION,
+                                start = screen * titleInset,
+                                end = screen * titleInset)
+                        .fillMaxWidth())
     }
 }
 

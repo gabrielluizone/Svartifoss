@@ -140,32 +140,6 @@ object FaceGeometry {
 
     /** The full-bleed cover rail. Every text anchor derives from these rather than being tuned
      *  separately, so moving or resizing the cover keeps the artist and title attached to it. */
-    /**
-     * The awake "Up Next" pill, which occupies the bottom band whenever no mini-button row does.
-     *
-     * Here rather than in the composable because three renderers place it - the Compose faces, the
-     * phone's miniature, and `PlayerChromeLayout`, which has to know how much of the band it takes
-     * so the face above it can keep clear. The two that had these numbers disagreed: the pill used
-     * a flat bottom margin while the row followed the bezel chord, and the safe area above it was
-     * a hand-tuned 0.66 screen fraction that matched neither.
-     */
-    object UpNextPill {
-        const val WIDTH_FRACTION = .84f
-        const val HEIGHT_FRACTION = .25f
-        const val MIN_HEIGHT_DP = 44f
-        const val MAX_HEIGHT_DP = 52f
-
-        /**
-         * Its own distance from the glass, kept as a designed value rather than derived from the
-         * chord: the pill is nearly the full width of the screen and its corners are fully rounded,
-         * so following the chord the way the row does would drop it a third of the way up the face.
-         */
-        const val BOTTOM_MARGIN_FRACTION = .07f
-
-        fun heightDp(screenDp: Float): Float =
-                (screenDp * HEIGHT_FRACTION).coerceIn(MIN_HEIGHT_DP, MAX_HEIGHT_DP)
-    }
-
     object Carousel {
         const val CARD_FRACTION = .52f
         const val RAIL_CENTER = .475f

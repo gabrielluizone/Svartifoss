@@ -6,7 +6,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -148,14 +147,8 @@ internal fun FaceClock(
     )
     val time = rememberWallClockTime()
     Box(Modifier.fillMaxSize().graphicsLayer { alpha = clockAlpha.value }) {
-        // Straight and unconstrained: when the top quadrant hint is also on screen the host draws
-        // CurvedClockView instead and tells this one not to appear at all (showClock), so there is
-        // nothing here to squeeze the clock against. It used to be scaled into a 24%-wide band for
-        // exactly that collision, which made the clock small rather than making room.
         Text(
                 text = time,
-                maxLines = 1,
-                softWrap = false,
                 color = color,
                 fontSize = typography.scaled(FACE_CLOCK_SP).sp,
                 fontWeight = FontWeight(typography.weight),

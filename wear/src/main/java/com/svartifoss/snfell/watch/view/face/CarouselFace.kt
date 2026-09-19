@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import com.svartifoss.snfell.common.PlayerControlGeometry
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -156,13 +154,9 @@ private fun CarouselFrameContent(
     // each edge lands relative to the bezel. The near card's outer edge has to stop inside the glass
     // (~44%), or it covers the whole remaining width and the far card - drawn underneath it - can
     // never show. That was why only one neighbour was ever visible.
-    val layout = PlayerControlGeometry.coverRailLayout(screen.value,
-            screen.value - state.safeArea.bottomDp,
-            CARD_TOP, CARD_BOTTOM, TITLE_TOP,
-            if (state.showTitle) CAROUSEL_TITLE_LINE_HEIGHT * 2f else 0f)
-    val cardSize = layout.artHeight.dp
-    val nearSize = cardSize * (.46f / CARD_FRACTION)
-    val farSize = cardSize * (.34f / CARD_FRACTION)
+    val cardSize = screen * CARD_FRACTION
+    val nearSize = screen * .46f
+    val farSize = screen * .34f
     // Tuned so the two neighbours show roughly equal slivers. The near card is tucked far enough
     // behind the hero that its outer edge lands around 40% of the radius, leaving the stretch from
     // there to the bezel for the far card. Every earlier attempt widened the far card instead,
@@ -183,9 +177,9 @@ private fun CarouselFrameContent(
     // the inset at what fits keeps the column readable rather than collapsing it to a sliver for
     // lines that were never going to be on the glass anyway.
     val fittingLines = RoundScreenText.linesThatFit(
-            top = layout.titleTop / screen.value, lineHeight = titleLineFraction, maxLines = MAX_TITLE_LINES)
+            top = TITLE_TOP, lineHeight = titleLineFraction, maxLines = MAX_TITLE_LINES)
     val titleInset = RoundScreenText.sideInsetForLines(
-            top = layout.titleTop / screen.value,
+            top = TITLE_TOP,
             lineHeight = titleLineFraction,
             lines = titleLines.coerceAtMost(fittingLines))
     val artistInset = RoundScreenText.sideInsetFor(
@@ -256,7 +250,7 @@ private fun CarouselFrameContent(
                         // second title line. Centred, that band bottomed out where the chord is too
                         // narrow to hold anything, which is why a wrapped title was clipped at both
                         // ends no matter how the padding was tuned.
-                        .offset(y = (layout.artTop + layout.artHeight / 2f).dp - screen * .5f)
+                        .offset(y = -screen * (.5f - RAIL_CENTER))
                         .pointerInput(listener) {
                             detectTapGestures(
                                     onTap = { listener.onPlayPauseTap() },
@@ -288,29 +282,43 @@ private fun CarouselFrameContent(
             }
         }
 
-        FittedFaceContent(Modifier.align(Alignment.TopCenter)
-                .padding(top = layout.titleTop.dp, start = screen * titleInset, end = screen * titleInset)
-                .height(layout.titleHeight.dp).fillMaxWidth()) {
-            Column(Modifier.fillMaxWidth(),
-                        horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)) {
-                if (state.showTitle) {
-                    AdaptiveTitleText(
-                            text = frame.title.uppercase(),
-                            mode = state.titleTextMode,
-                            state = state,
-                            typography = state.titleTypography,
-                            color = titleTextColor(state, Color.White),
-                            fontSize = CAROUSEL_TITLE_SIZE.sp,
-                            lineHeight = CAROUSEL_TITLE_LINE_HEIGHT.sp,
-                            fontWeight = FontWeight.Normal,
-                            fontFamily = state.titleFont,
-                            textAlign = TextAlign.Center,
-                            // Only ever grows, and resets with the track. A narrower column can push
-                            // the text onto one more line, which narrows it again - monotonic growth is
-                            // what makes that settle instead of oscillating between two widths, and the
-                            // mode's own maxLines is the ceiling that ends it.
-                            onLineCount = { titleLines = maxOf(titleLines, it) })
-                }
+        Column(
+                Modifier.align(state.blockPlacement(Alignment.TopCenter))
+                        // No `blockSafeSideInset` here, and that is deliberate: this face already
+                        // measures the real chord at each of its two bands (titleInset just above,
+                        // artistInset for the row under the clock), so the shared estimate would
+                        // land *on top of* a better answer and narrow the column twice. Carousel
+                        // does not offer the vertical control at all - its artist is pinned above
+                        // the rail and its title below it, two bands a single move cannot keep
+                        // apart - so these insets stay true wherever the alignment puts the text.
+                        //
+                        // Anchored just below the card rather than to the bottom edge. Sitting
+                        // against the cover also reads as one block instead of two things floating
+                        // apart.
+                        .padding(
+                                top = state.blockDesignedTopPadding(screen * TITLE_TOP),
+                                start = screen * titleInset,
+                                end = screen * titleInset)
+                        .fillMaxWidth(),
+                horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
+        ) {
+            if (state.showTitle) {
+                AdaptiveTitleText(
+                        text = frame.title.uppercase(),
+                        mode = state.titleTextMode,
+                        state = state,
+                        typography = state.titleTypography,
+                        color = titleTextColor(state, Color.White),
+                        fontSize = CAROUSEL_TITLE_SIZE.sp,
+                        lineHeight = CAROUSEL_TITLE_LINE_HEIGHT.sp,
+                        fontWeight = FontWeight.Normal,
+                        fontFamily = state.titleFont,
+                        textAlign = TextAlign.Center,
+                        // Only ever grows, and resets with the track. A narrower column can push
+                        // the text onto one more line, which narrows it again - monotonic growth is
+                        // what makes that settle instead of oscillating between two widths, and the
+                        // mode's own maxLines is the ceiling that ends it.
+                        onLineCount = { titleLines = maxOf(titleLines, it) })
             }
         }
     }

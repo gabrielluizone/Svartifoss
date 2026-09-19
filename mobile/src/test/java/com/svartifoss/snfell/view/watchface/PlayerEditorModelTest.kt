@@ -141,17 +141,32 @@ class PlayerEditorModelTest {
     }
 
     @Test
-    fun `every face exposes the style used by its configured edge hints`() {
-        ThemeAppearance.ALLOWED_BASE_FACES.forEach {
+    fun `control style is offered only where a face draws icons it can restyle`() {
+        // Persistent icon-based transport: Classic and the curated faces sharing its glyph
+        // vocabulary, plus Expressive's always-shown cookie glyph.
+        listOf(
+                "classic", "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
+                "spectrum", "material"
+        ).forEach {
             assertTrue(it, PlayerEditorModel.appliesToFace(PlayerControl.SCREEN_THEME, it))
-            assertTrue(it, PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, it))
+        }
+        // Frame and Ribbon draw no persistent icon, but both pass state into CenterGestureRegion,
+        // so the transient tap-confirmation glyph still honours the setting.
+        listOf("frame", "ribbon").forEach {
+            assertTrue(it, PlayerEditorModel.appliesToFace(PlayerControl.SCREEN_THEME, it))
+        }
+        // No icon-based transport at all, or CenterGestureRegion called without state: the
+        // picker would change nothing.
+        listOf(
+                "immersive", "depth", "carousel", "chat", "split", "note", "verse", "metadata"
+        ).forEach {
+            assertFalse(it, PlayerEditorModel.appliesToFace(PlayerControl.SCREEN_THEME, it))
         }
     }
 
     @Test
     fun `face-specific controls appear for exactly one face`() {
         mapOf(
-                PlayerControl.QUADRANT_FLASH to "classic",
                 PlayerControl.CAROUSEL_SHAPE to "carousel",
                 PlayerControl.NOTE_COVER_SHAPE to "note",
                 PlayerControl.SPLIT_PANEL to "split",
@@ -164,11 +179,48 @@ class PlayerEditorModelTest {
         }
     }
 
+    /**
+     * The tap confirmation is drawn inside the tap ripple above whatever the face painted, so the
+     * Player page offers it everywhere - the same answer search and the legacy row already give.
+     * It was left Classic-only here once, which is what "search finds it but it is not an option"
+     * looked like.
+     */
     @Test
-    fun `centered transport faces offer the player controls switch`() {
-        assertTrue(PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, "expressive"))
-        assertTrue(PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, "material"))
-        assertTrue(PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, "classic"))
+    fun `the tap confirmation is offered on every face`() {
+        ThemeAppearance.ALLOWED_BASE_FACES.forEach {
+            assertTrue(it, PlayerEditorModel.appliesToFace(PlayerControl.QUADRANT_FLASH, it))
+            assertTrue(it, PlayerEditorModel.visibleIn(PlayerSlot.ELEMENT, it)
+                    .any { spec -> spec.control == PlayerControl.QUADRANT_FLASH })
+        }
+    }
+
+    /**
+     * Faces that do not offer *Show player controls*, each with the reason. Every registered face
+     * is either offered the switch or named here, so a new face fails this test until somebody
+     * decides - the alternative is a switch that does nothing, or a working one nobody can reach.
+     */
+    private val noPlayerControlsSwitch = mapOf(
+            "expressive" to "keeps its central transport whatever the switch says",
+            "material" to "keeps its central transport whatever the switch says",
+            "immersive" to "draws no playback control",
+            "depth" to "draws no playback control",
+            "carousel" to "draws no playback control",
+            "split" to "draws no playback control",
+            "note" to "draws no playback control",
+            "verse" to "draws no playback control",
+            "metadata" to "draws no playback control")
+
+    @Test
+    fun `the player controls switch is offered exactly where it hides something`() {
+        ThemeAppearance.ALLOWED_BASE_FACES.forEach { face ->
+            val offered = PlayerEditorModel.appliesToFace(PlayerControl.PLAYER_CONTROLS, face)
+            val reason = noPlayerControlsSwitch[face]
+            assertTrue(
+                    "$face is neither offered Show player controls nor listed with a reason",
+                    offered || reason != null)
+            assertFalse("$face is offered the switch but listed as having nothing to hide",
+                    offered && reason != null)
+        }
     }
 
     /**
@@ -240,6 +292,7 @@ class PlayerEditorModelTest {
         // A rule naming a face that no longer exists silently hides its control forever, which is
         // indistinguishable from the control never having been written.
         val named = PlayerEditorModel.INTERNAL_PROGRESS_FACES +
+                PlayerEditorModel.PLAYER_CONTROLS_FACES +
                 PlayerEditorModel.CONTROL_STYLE_FACES +
                 PlayerEditorModel.TEXT_BLOCK_ALIGN_FACES +
                 PlayerEditorModel.TEXT_BLOCK_POSITION_FACES +

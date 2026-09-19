@@ -2923,9 +2923,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             store.putString(MiscPreferences.WEAR_FONT.key, "google_sans")
         }
         if (readStringPreference(MiscPreferences.WEAR_SCREEN_THEME.key, "default") == "hidden") {
-            // Preserve the hidden appearance through the dedicated switch on every face.
+            // "Hidden" duplicated the dedicated Show player controls switch and was the most
+            // common source of apparently broken styles. Migrate it losslessly: retain the clean
+            // control-free look on configurable faces, while essential-control faces normalize
+            // to Balanced (their transport cannot be hidden).
             store.putString(MiscPreferences.WEAR_SCREEN_THEME.key, "default")
-            store.putBoolean(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE.key, false)
+            if (face !in setOf("material", "expressive")) {
+                store.putBoolean(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE.key, false)
+            }
         }
         filterArchivedListPreference(
                 key = "wear_screen_face",
@@ -5052,7 +5057,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // stored/scoped while hidden and reappear unchanged when that face is selected again.
         findPreference<Preference>("cat_wf_metadata")?.isVisible =
                 section == SECTION_STYLE && face == "metadata"
-        findPreference<Preference>(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE.key)?.isVisible = true
+        // One list, owned by the Player editor's model rather than repeated here - see
+        // PlayerEditorModel.PLAYER_CONTROLS_FACES for what the switch hides on each face.
+        findPreference<Preference>(MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE.key)?.isVisible =
+                face in PlayerEditorModel.PLAYER_CONTROLS_FACES
         // One list, owned by the Player editor's model rather than repeated here - see
         // PlayerEditorModel.INTERNAL_PROGRESS_FACES.
         findPreference<Preference>("wear_internal_progress_visible")?.isVisible =
@@ -5073,11 +5081,11 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 ?.isVisible = !hostedMiniButtons
         findPreference<Preference>(MiscPreferences.WEAR_SCREEN_BUTTONS_SHAPE.key)
                 ?.isVisible = !hostedMiniButtons
-        // Quadrant hint icons only exist on Classic - every Compose face hides them entirely.
-        // Every face, not just Classic: the confirmation is now the action's glyph inside the tap
+        // Every face, not just Classic: the confirmation is the action's glyph inside the tap
         // ripple, which the host draws above whatever the face painted. It used to brighten the
-        // persistent hint, which only Classic drew - so the switch was hidden where it would have
-        // changed nothing, and that is no longer where it applies.
+        // persistent quadrant hint, which only the View faces draw - so the switch was hidden where
+        // it would have changed nothing, and that is no longer where it applies. Mirrored by
+        // PlayerEditorModel.appliesToFace, which renders the row the Player page actually shows.
         findPreference<Preference>("wear_quadrant_tap_flash")?.isVisible = true
         // The legacy rows behind the Player editor. Hidden wholesale on SECTION_STYLE today, so
         // these two lines change nothing on screen - they are here because `appliesToFace`

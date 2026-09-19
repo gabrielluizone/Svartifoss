@@ -2,7 +2,6 @@ package com.svartifoss.snfell.watch.res
 
 import java.io.File
 import javax.xml.parsers.DocumentBuilderFactory
-import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
@@ -20,56 +19,6 @@ import org.w3c.dom.Element
  * here rather than left to the next person to rediscover on a watch.
  */
 class ScreenButtonsParentChainTest {
-    @Test
-    fun `edge hints draw above face artwork and below overlays`() {
-        val document = DocumentBuilderFactory.newInstance()
-                .apply { isNamespaceAware = true }
-                .newDocumentBuilder().parse(layout())
-        val root = document.documentElement
-        val frame = findById(root, "content_frame")!!
-        val children = (0 until frame.childNodes.length)
-                .mapNotNull { frame.childNodes.item(it) as? Element }
-                .map(::idOf)
-        // All four, and the curved clock with them: they are the player's chrome, and a Compose
-        // face's opaque backdrop used to paint over every one of them. The left and right hints
-        // lived inside FourWayTouchLayout - below that backdrop - which is why twelve of the
-        // fifteen faces showed no affordance at all for a configured side quadrant.
-        for (hint in listOf("icon_top", "icon_bottom", "icon_left", "icon_right", "curved_clock")) {
-            assertTrue("$hint must be declared in content_frame", children.contains(hint))
-            assertTrue("$hint must be above the artwork",
-                    children.indexOf(hint) > children.indexOf("expressive_face_gesture_host"))
-            assertTrue("$hint must stay below modal overlays",
-                    children.indexOf(hint) < children.indexOf("overlay_backdrop"))
-        }
-    }
-
-    /**
-     * One placement contract for the cross.
-     *
-     * Every hint is centred in the frame and moved to its cardinal point by `applyPlayerChrome`
-     * from `PlayerChromeLayout`. A gravity or a margin in the XML is a second opinion about where
-     * one of the four sits, which is how the top hint came to be nudged sideways past the clock
-     * while the other three stayed put.
-     */
-    @Test
-    fun `the four hints share one placement contract`() {
-        val document = DocumentBuilderFactory.newInstance()
-                .apply { isNamespaceAware = true }
-                .newDocumentBuilder().parse(layout())
-        val android = "http://schemas.android.com/apk/res/android"
-        for (id in listOf("icon_top", "icon_bottom", "icon_left", "icon_right")) {
-            val hint = findById(document.documentElement, id)
-                    ?: fail("activity_main.xml no longer declares $id").let { return }
-            assertEquals("$id must be centred and positioned by the resolver",
-                    "center", hint.getAttributeNS(android, "layout_gravity"))
-            for (attribute in (0 until hint.attributes.length)
-                    .mapNotNull { hint.attributes.item(it)?.nodeName }) {
-                assertTrue("$id must carry no layout margin of its own, found $attribute",
-                        !attribute.startsWith("android:layout_margin"))
-            }
-        }
-    }
-
 
     /**
      * A parent with `clipChildren` on clips each child to *the child's own* bounds. The row is

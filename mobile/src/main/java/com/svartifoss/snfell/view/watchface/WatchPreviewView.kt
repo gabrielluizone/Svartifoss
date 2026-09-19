@@ -1,7 +1,5 @@
 package com.svartifoss.snfell.view.watchface
 
-import com.svartifoss.snfell.common.PlayerChromeLayout
-import com.svartifoss.snfell.common.PlayerControlGeometry
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
@@ -191,10 +189,6 @@ class WatchPreviewView @JvmOverloads constructor(
                 FaceGeometry.Classic.SOURCE_ICON_SIZE_ARTIST_FACTOR
         private val CLASSIC_SOURCE_ICON_END_MARGIN_ARTIST_FACTOR =
                 FaceGeometry.Classic.SOURCE_ICON_END_MARGIN_ARTIST_FACTOR
-        /** Every quadrant, for a miniature that has no configured action to show yet. */
-        private val SAMPLE_QUADRANTS = setOf(ScreenQuadrant.TOP, ScreenQuadrant.BOTTOM,
-                ScreenQuadrant.LEFT, ScreenQuadrant.RIGHT)
-
         private val CLASSIC_CLOCK_SP = FaceGeometry.Classic.CLOCK_SP
         private val CLASSIC_CLOCK_TOP_PADDING_DP = FaceGeometry.Classic.CLOCK_TOP_PADDING_DP
         private val CLASSIC_TRACK_TIME_SP = FaceGeometry.Classic.TRACK_TIME_SP
@@ -835,22 +829,8 @@ class WatchPreviewView @JvmOverloads constructor(
             availWidth: Float,
             top: Float,
             bottom: Float,
-            fitToScreen: Boolean = false,
-            reservedBand: Boolean = false
+            fitToScreen: Boolean = false
     ): BlockLine {
-        if (reservedBand) {
-            val left = when (designed) {
-                Paint.Align.LEFT -> designedX
-                Paint.Align.RIGHT -> designedX - availWidth
-                else -> designedX - availWidth / 2f
-            }
-            val align = blockAlign(designed)
-            return BlockLine(align, when (align) {
-                Paint.Align.LEFT -> left
-                Paint.Align.RIGHT -> left + availWidth
-                else -> left + availWidth / 2f
-            }, availWidth)
-        }
         val geometry = frameGeometry
         if (!fitToScreen && textBlockAlign == TextBlockAlign.FOLLOW &&
                 textBlockPosition == TextBlockPosition.FOLLOW ||
@@ -949,8 +929,7 @@ class WatchPreviewView @JvmOverloads constructor(
             glyphSize: Float = designedSize * 1.25f,
             /** SourceIconGlyph's normal trailing spacer is .33 of the mark. Classic has a
              *  historical View margin of .28 of the artist text size, so it passes its own ratio. */
-            glyphGapFraction: Float = .33f,
-            reservedBand: Boolean = false
+            glyphGapFraction: Float = .33f
     ) {
         val text = artistTypographySpec.case.apply(text)
         textPaint.typeface = artistTypeface(bold = bold)
@@ -976,7 +955,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 top = if (face == "immersive") rowTop
                         else baselineY - artistTypographySpec.scaled(designedSize),
                 bottom = if (face == "immersive") rowBottom else baselineY,
-                fitToScreen = face == "immersive", reservedBand = reservedBand)
+                fitToScreen = face == "immersive")
         @Suppress("NAME_SHADOWING") val align = line.align
         @Suppress("NAME_SHADOWING") val x = line.x
         @Suppress("NAME_SHADOWING") val availWidth = line.width
@@ -2612,8 +2591,7 @@ class WatchPreviewView @JvmOverloads constructor(
             designedTracking: Float = 0f,
             lineHeight: Float? = null,
             align: Paint.Align = Paint.Align.CENTER,
-            bottomAnchored: Boolean = false,
-            reservedBand: Boolean = false
+            bottomAnchored: Boolean = false
     ): Float {
         // Same resolver drawArtistLine uses, and measured over the title's *whole* run rather
         // than one line of it: a title that wrapped reaches further down the circle than its first
@@ -2631,7 +2609,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 top = if (bottomAnchored) baselineY - planLineHeight * plan.lines.size
                         else baselineY - plan.size,
                 bottom = if (bottomAnchored) baselineY else runBottom,
-                fitToScreen = face == "immersive", reservedBand = reservedBand)
+                fitToScreen = face == "immersive")
         @Suppress("NAME_SHADOWING") val align = line.align
         @Suppress("NAME_SHADOWING") val x = line.x
         @Suppress("NAME_SHADOWING") val availWidth = line.width
@@ -3040,11 +3018,6 @@ class WatchPreviewView @JvmOverloads constructor(
                 drawCuratedPlayer(canvas, geometry, dp, demonstratedFace)
             else -> drawClassic(canvas, geometry, dp)
         }
-        // One chrome pass over every face, mirroring the watch: the hints and the curved clock
-        // are host views there, drawn above whatever the face painted. Classic and Matejdro used to
-        // draw their own copy from inside their composition - i.e. *under* their own text - while
-        // the Compose faces got only a top and a bottom hint.
-        drawPlayerChrome(canvas, geometry, dp, demonstratedFace)
         if (edgeProgressVisible) {
             drawEdgeSeekRing(canvas, geometry.cx, geometry.cy, geometry.radius, dp)
         }
@@ -9906,15 +9879,32 @@ class WatchPreviewView @JvmOverloads constructor(
         // Quadrant hints are visual affordances only; the four touch zones remain unchanged on
         // the watch. The visual style theme only changes how these icon glyphs are drawn -
         // opacity and size - never their position, color or the surrounding chrome.
-        // Clock only: near the top like the watch's ambient_clock (15sp, ~5dp below the very top),
-        // shown when Always-show-time is on or forced on while a clock preference is being edited
-        // so its effect is visible. drawFaceClock stands down when the arc is the resolved style.
-        //
-        // The four hints are no longer drawn here. They are chrome, so they go on after the face
-        // in one shared pass (drawPlayerChrome) - which is also the order the watch draws them in,
-        // where these were painted under this face's own text.
+        val iconAlpha = (theme.iconAlpha * 255).toInt().coerceIn(0, 255)
+        val iconSize = dp(24f * theme.iconScale)
+        val iconColor = Color.WHITE
+        val edge = dp(4f)
+        fun hint(quadrant: Int, iconRes: Int, x: Float, y: Float) {
+            drawActionIcon(
+                    canvas, quadrantIcons[quadrant], iconRes,
+                    x, y, iconSize, iconColor, iconAlpha
+            )
+        }
+        // Clock: near the top like the watch's ambient_clock (15sp, ~5dp below the very top),
+        // shown when Always-show-time is on (which also hides the top quadrant icon), or forced
+        // on while a clock preference is being edited so its effect is visible.
         if (alwaysShowTime || clockPreviewForced()) {
             drawFaceClock(canvas, cx, cy - radius, dp)
+        } else if (playerControlsVisible) {
+            hint(ScreenQuadrant.TOP, commonR.drawable.action_volume_up,
+                    cx, cy - radius + edge + iconSize / 2f)
+        }
+        if (playerControlsVisible) {
+            hint(ScreenQuadrant.BOTTOM, commonR.drawable.action_volume_down,
+                    cx, cy + radius - edge - iconSize / 2f)
+            hint(ScreenQuadrant.LEFT, commonR.drawable.action_skip_prev,
+                    cx - radius + edge + iconSize / 2f, cy)
+            hint(ScreenQuadrant.RIGHT, commonR.drawable.action_skip_next,
+                    cx + radius - edge - iconSize / 2f, cy)
         }
     }
 
@@ -10334,120 +10324,12 @@ class WatchPreviewView @JvmOverloads constructor(
      * box. Convert the shared 5dp layout top using the configured clock font metrics instead of
      * passing a guessed baseline (the former 24dp anchor placed the miniature clock too low).
      */
-    /**
-     * The same discrete facts the watch's `playerChromeInputs` collects, from the preview's own
-     * state, so both sides ask one resolver where the chrome goes.
-     *
-     * The one deliberate difference is the fallback: with nothing configured at all the miniature
-     * shows the four sample hints, the way its mini-button row shows sample buttons. Without it a
-     * fresh install would see no quadrant icons here and the Control style picker - which restyles
-     * exactly these - would look broken. Configure even one quadrant and the preview stops
-     * inventing the rest.
-     */
-    private fun playerChromeInputs(screenDp: Float, face: String): PlayerChromeLayout.Inputs {
-        val theme = screenThemeSpec()
-        return PlayerChromeLayout.Inputs(
-                screenDp = screenDp,
-                round = deviceRound != false,
-                face = face,
-                configuredQuadrants = quadrantIcons.keys.ifEmpty { SAMPLE_QUADRANTS },
-                hintsVisible = playerControlsVisible && theme.iconAlpha > 0f,
-                hintScale = theme.iconScale,
-                clockVisible = alwaysShowTime || clockPreviewForced(),
-                clockTextDp = clockTypographySpec.scaled(CLASSIC_CLOCK_SP))
-    }
-
-    /** Which clock the resolver picked, asked from inside a face's own straight-clock draw. */
-    private fun resolvedChromeClock(): PlayerChromeLayout.ClockStyle =
-            PlayerChromeLayout.resolve(
-                    playerChromeInputs(min(deviceWidthDp, deviceHeightDp), face)).clock
-
-    /**
-     * The quadrant hints and, when it is the resolved style, the curved clock.
-     *
-     * Drawn after the face for every one of them, because that is what they are on the watch: host
-     * views above the whole composition. Each hint is placed from the resolver's own fraction, so
-     * the miniature cannot put the cross somewhere the wrist does not.
-     */
-    private fun drawPlayerChrome(
-            canvas: Canvas,
-            geometry: PreviewGeometry,
-            dp: (Float) -> Float,
-            demonstratedFace: String
-    ) {
-        val diameter = geometry.radius * 2f
-        val chrome = PlayerChromeLayout.resolve(
-                playerChromeInputs(diameter / dp(1f), demonstratedFace))
-        val alpha = (screenThemeSpec().iconAlpha * 255).toInt().coerceIn(0, 255)
-        for (hint in chrome.hints) {
-            drawActionIcon(
-                    canvas,
-                    quadrantIcons[hint.quadrant],
-                    sampleQuadrantIcon(hint.quadrant),
-                    geometry.cx + (hint.centerXFraction - .5f) * diameter,
-                    geometry.cy + (hint.centerYFraction - .5f) * diameter,
-                    dp(hint.sizeDp),
-                    Color.WHITE,
-                    alpha)
-        }
-        if (chrome.clock == PlayerChromeLayout.ClockStyle.CURVED_ARC) {
-            drawCurvedClock(canvas, geometry, dp)
-        }
-    }
-
-    private fun sampleQuadrantIcon(quadrant: Int): Int = when (quadrant) {
-        ScreenQuadrant.TOP -> commonR.drawable.action_volume_up
-        ScreenQuadrant.BOTTOM -> commonR.drawable.action_volume_down
-        ScreenQuadrant.LEFT -> commonR.drawable.action_skip_prev
-        else -> commonR.drawable.action_skip_next
-    }
-
-    /** `CurvedClockView`'s arc, from the identical geometry, drawn with Canvas instead of a View. */
-    private fun drawCurvedClock(
-            canvas: Canvas,
-            geometry: PreviewGeometry,
-            dp: (Float) -> Float
-    ) {
-        textPaint.style = Paint.Style.FILL
-        // LEFT because the run is centred by where the arc starts, exactly as on the watch.
-        textPaint.textAlign = Paint.Align.LEFT
-        textPaint.typeface = clockTypeface(clockTypographySpec)
-        textPaint.letterSpacing = clockTypographySpec.trackingEm
-        textPaint.color = resolveClockColor()
-        textPaint.textSize = dp(clockTypographySpec.scaled(CLASSIC_CLOCK_SP))
-
-        val text = previewClockText()
-        val screenDp = geometry.radius * 2f / dp(1f)
-        val radiusDp = PlayerChromeLayout.curvedClockBaselineRadiusDp(
-                screenDp, -textPaint.fontMetrics.ascent / dp(1f))
-        val sweep = PlayerChromeLayout.curvedClockSweepDegrees(
-                textPaint.measureText(text) / dp(1f), radiusDp)
-        if (sweep > 0f) {
-            val radius = dp(radiusDp)
-            curvedClockBounds.set(geometry.cx - radius, geometry.cy - radius,
-                    geometry.cx + radius, geometry.cy + radius)
-            curvedClockPath.rewind()
-            curvedClockPath.addArc(curvedClockBounds,
-                    PlayerChromeLayout.curvedClockStartAngleDegrees(sweep), sweep)
-            canvas.drawTextOnPath(text, curvedClockPath, 0f, 0f, textPaint)
-        }
-        // textPaint is shared across the whole preview - see drawSmallClock.
-        resetTrackTextPaint()
-    }
-
-    private val curvedClockPath = android.graphics.Path()
-    private val curvedClockBounds = RectF()
-
     private fun drawFaceClock(
             canvas: Canvas,
             x: Float,
             screenTop: Float,
             dp: (Float) -> Float
     ) {
-        // The arc and the apex are one decision, so this asks the same resolver the watch does
-        // instead of shrinking itself to share the top. It used to be squeezed into a 24%-wide
-        // band whenever a top hint existed, which made the clock small rather than making room.
-        if (resolvedChromeClock() == PlayerChromeLayout.ClockStyle.CURVED_ARC) return
         textPaint.typeface = clockTypeface(clockTypographySpec)
         textPaint.textSize = dp(clockTypographySpec.scaled(CLASSIC_CLOCK_SP))
         val baseline = screenTop + dp(CLASSIC_CLOCK_TOP_PADDING_DP) - textPaint.fontMetrics.ascent
@@ -10477,8 +10359,6 @@ class WatchPreviewView @JvmOverloads constructor(
             val iconSize: Float,
             val totalWidth: Float,
             val rowBottom: Float,
-            val scale: Float,
-            val maxRise: Float,
             val curved: Boolean
     )
 
@@ -10513,7 +10393,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
         val gapDp: Float
         val iconDp: Float
-        if (iconCount > 0) {
+        if (!compact) {
             val contentWidthDp = radius * 2f / dp(1f).coerceAtLeast(0.01f)
             val equalAspectShape = buttonsShape in setOf(
                     "circle", "square", "rounded_square_soft", "rounded_square_medium",
@@ -10557,45 +10437,16 @@ class WatchPreviewView @JvmOverloads constructor(
         val totalWidth = iconCount * pillW + (iconCount - 1) * gap
 
         val round = deviceRound != false
-        var curved = round && buttonsCurveStyle != "flat"
+        val curved = round && buttonsCurveStyle != "flat"
         // Curved rows determine their resting line from one pill; the side buttons then rise
         // along the bezel with a bounded offset. Classic's row width was already count-clamped.
-        val placement = MiniButtonPlacement.fromPreference(buttonsCurveStyle)
-        val outerDx = (totalWidth / 2f).coerceIn(0f, radius - 1f)
-        val referenceDx = (pillW / 2f).coerceIn(0f, radius - 1f)
-        val naturalRise = (sqrt(radius * radius - referenceDx * referenceDx) -
-                sqrt(radius * radius - outerDx * outerDx)).coerceAtLeast(0f) * placement.riseScale
-        var maxRise = if (!curved) 0f else minOf(naturalRise, dp(placement.maxRiseDp)) +
-                if (iconCount == 3 && placement != MiniButtonPlacement.CURVED_EXTREME) dp(4f) else 0f
-        // The bezel chord and the bottom hint in one answer, from the resolver the watch's
-        // rowRestingLine uses. These were two separate numbers here as well.
-        fun restingLine(scale: Float): Float {
-            val width = (if (curved) pillW else totalWidth) * scale
-            return cy + radius - dp(PlayerChromeLayout.resolve(
-                    playerChromeInputs(radius * 2f / dp(1f), face).copy(
-                            lowerContent = PlayerChromeLayout.LowerContent.row(
-                                    widthDp = width / dp(1f),
-                                    heightDp = (pillH + maxRise) * scale / dp(1f),
-                                    placement = placement,
-                                    hostedByFace = MiniButtonPlacement.isHostedByFace(face))))
-                    .lowerMarginDp)
-        }
-        if (face in setOf("expressive", "material") && maxRise > 0f &&
-                restingLine(1f) - maxRise - pillH <
-                cy - radius + dp(PlayerControlGeometry.minimumContentBottom(
-                        radius * 2f / dp(1f)))) {
-            curved = false
-            maxRise = 0f
-        }
-        var scale = 1f
-        var rowBottom = restingLine(scale)
-        if (!placement.isRail) {
-            scale = PlayerControlGeometry.miniRowScale(
-                    face, radius * 2f / dp(1f), (rowBottom - cy + radius) / dp(1f),
-                    (pillH + maxRise) / dp(1f)) { candidate ->
-                (restingLine(candidate) - cy + radius) / dp(1f)
-            }
-            rowBottom = restingLine(scale)
+        val halfWidth = if (curved) pillW / 2f else totalWidth / 2f
+        val autoMargin = if (!round) {
+            dp(16f)
+        } else if (radius > halfWidth) {
+            radius - sqrt(radius * radius - halfWidth * halfWidth) + dp(6f)
+        } else {
+            dp(16f)
         }
         return PreviewMiniGeometry(
                 compact = compact,
@@ -10604,9 +10455,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 gap = gap,
                 iconSize = dp(iconDp),
                 totalWidth = totalWidth,
-                rowBottom = rowBottom,
-                scale = scale,
-                maxRise = maxRise,
+                rowBottom = cy + radius - autoMargin,
                 curved = curved
         )
     }
@@ -10631,135 +10480,42 @@ class WatchPreviewView @JvmOverloads constructor(
         if (icons.isEmpty()) return desiredY
         val placement = MiniButtonPlacement.fromPreference(buttonsCurveStyle)
         // A rail sits against the side bezel and blocks nothing at the bottom, so the text keeps
-        // the height it asked for - the same thing PlayerChromeLayout reports for a rail, whose
-        // LowerContent.followsBezel is false.
+        // the height it asked for - the same thing the watch reports through RAIL_TOP_FRACTION.
         if (placement.isRail) return desiredY
         val geometry = previewMiniGeometry(icons.size, cy, radius, dp)
-        val miniButtonsTop = geometry.rowBottom -
-                (geometry.pillHeight + geometry.maxRise) * geometry.scale
+        val riseScale = placement.riseScale
+        val dx = geometry.totalWidth / 2f - geometry.pillWidth / 2f
+        val outerDx = if (dx != 0f) dx + geometry.pillWidth / 2f else 0f
+        val clamped = outerDx.coerceIn(-radius + 1f, radius - 1f)
+        val referenceDx = (geometry.pillWidth / 2f).coerceIn(0f, radius - 1f)
+        val referenceClearance = radius - sqrt(radius * radius - referenceDx * referenceDx)
+        val outerClearance = radius - sqrt(radius * radius - clamped * clamped)
+        val naturalRise = (outerClearance - referenceClearance).coerceAtLeast(0f) * riseScale
+        val maxCap = if (buttonsCurveStyle == "curved_extreme") 36f else 18f
+        val maxRise = if (!geometry.curved) {
+            0f
+        } else {
+            minOf(naturalRise, dp(maxCap))
+        } + if (geometry.curved && icons.size == 3 &&
+                buttonsCurveStyle != "curved_extreme") dp(4f) else 0f
+        val miniButtonsTop = geometry.rowBottom - geometry.pillHeight - maxRise
         return minOf(desiredY, miniButtonsTop - dp(10f))
     }
 
-    /**
-     * What the bottom band holds right now, described for the resolver - the miniature's copy of
-     * the watch's `lowerChromeContent`.
-     */
-    private fun previewLowerContent(
-            cy: Float,
+    /** Exact preview counterpart of Wear's centeredTransportTrackTimeOffset. Curved outer mini
+     * buttons can rise beside the transport ring, but a centered time label must never be pulled
+     * through that ring merely because those side pills occupy the same vertical band. */
+    private fun centeredTransportTimeY(
+            desiredY: Float,
+            miniConfigured: Boolean,
             radius: Float,
-            dp: (Float) -> Float
-    ): PlayerChromeLayout.LowerContent? {
-        val icons = activeMiniButtonIcons()
-        if (icons.isNotEmpty()) {
-            val row = previewMiniGeometry(icons.size, cy, radius, dp)
-            val width = if (row.curved) row.pillWidth else row.totalWidth
-            return PlayerChromeLayout.LowerContent.row(
-                    widthDp = width * row.scale / dp(1f),
-                    heightDp = (row.pillHeight + row.maxRise) * row.scale / dp(1f),
-                    placement = MiniButtonPlacement.fromPreference(buttonsCurveStyle),
-                    hostedByFace = MiniButtonPlacement.isHostedByFace(face))
-        }
-        if (showUpNextPill && isPlayingShown()) {
-            return PlayerChromeLayout.LowerContent.upNextPill(radius * 2f / dp(1f))
-        }
-        return null
-    }
-
-    private fun previewChrome(
             cy: Float,
-            radius: Float,
             dp: (Float) -> Float
-    ): PlayerChromeLayout.Chrome = PlayerChromeLayout.resolve(
-            playerChromeInputs(radius * 2f / dp(1f), face)
-                    .copy(lowerContent = previewLowerContent(cy, radius, dp)))
-
-    /** Everything the shared chrome has spoken for at the bottom - the watch's `safeArea.bottomDp`. */
-    private fun bottomHintInset(cy: Float, radius: Float, dp: (Float) -> Float): Float =
-            dp(previewChrome(cy, radius, dp).safeArea.bottomDp)
-
-    private fun lowerControlsTop(cy: Float, radius: Float, dp: (Float) -> Float): Float =
-            cy + radius - bottomHintInset(cy, radius, dp)
-
-    private fun transportLayout(cy: Float, radius: Float, dp: (Float) -> Float) =
-            PlayerControlGeometry.transportLayout(face, radius * 2f / dp(1f),
-                    (lowerControlsTop(cy, radius, dp) - cy + radius) / dp(1f),
-                    // Mirrors ExpressiveFace: the band is asked for when the readout or a scrub
-                    // will use it, not unconditionally because the face is Expressive.
-                    trackTimeVisible() ||
-                            (face == "expressive" && expressiveSeekMode == "central"),
-                    textBlockPosition,
-                    showTransport = playerControlsVisible && screenThemeSpec().iconAlpha > 0f)
-
-    /** Measure title, artist and source glyph together before scaling into their reserved band. */
-    private fun drawTransportMetadata(canvas: Canvas, cx: Float, cy: Float, radius: Float,
-            dp: (Float) -> Float, layout: PlayerControlGeometry.TransportLayout) {
-        val expressive = face == "expressive"
-        val inset = maxOf(if (expressive) .16f else .12f,
-                if (deviceRound != false) RoundScreenText.sideInsetFor(
-                        layout.metadataTop / (radius * 2f / dp(1f)),
-                        (layout.metadataTop + layout.metadataHeight) / (radius * 2f / dp(1f))) else 0f)
-        val width = radius * 2f * (1f - inset * 2f)
-        val title = if (showTrackTitle) planTitle(width, dp(if (expressive) 16f else 18f),
-                dp(if (expressive) 12f else 13f)) else null
-        textPaint.typeface = titleTypeface(bold = true)
-        textPaint.textSize = title?.size ?: dp(16f)
-        val titleAscent = textPaint.fontMetrics.ascent
-        val titleHeight = if (title != null)
-            (textPaint.fontMetrics.descent - titleAscent) * title.lines.size else 0f
-        val artistVisible = showTrackArtist || !isPlayingShown()
-        val artistSize = dp(if (expressive) 11f else 13f)
-        textPaint.typeface = artistTypeface(bold = false)
-        textPaint.textSize = artistTypographySpec.scaled(artistSize)
-        val artistAscent = textPaint.fontMetrics.ascent
-        val artistTextHeight = textPaint.fontMetrics.descent - artistAscent
-        val glyphHeight = if (showSourceIcon && sourceGlyph != null)
-            dp(13f) * sourceIconTypographySpec.scale else 0f
-        val artistHeight = if (artistVisible) maxOf(artistTextHeight, glyphHeight) else 0f
-        val gap = if (title != null && artistVisible) dp(2f) else 0f
-        val naturalHeight = titleHeight + gap + artistHeight
-        val scale = minOf(1f, dp(layout.metadataHeight) / naturalHeight.coerceAtLeast(1f))
-        val saved = canvas.save()
-        canvas.translate(cx, cy - radius + dp(layout.metadataTop))
-        canvas.scale(scale, scale)
-        if (title != null) drawTitlePlan(canvas, title, 0f, -titleAscent, width, titleAlpha(Color.WHITE), reservedBand = true)
-        if (artistVisible) drawArtistLine(canvas,
-                if (isPlayingShown()) displayArtist() else context.getString(R.string.preview_playback_stopped),
-                0f, titleHeight + gap + (artistHeight - artistTextHeight) / 2f - artistAscent,
-                width, artistTextColor(), artistSize, sourceGlyph = true, glyphSize = dp(13f), reservedBand = true)
-        canvas.restoreToCount(saved)
-    }
-
-    private fun drawReservedTitle(canvas: Canvas, cx: Float, top: Float, width: Float,
-            height: Float, plan: TitlePlan, bold: Boolean = true, lineHeight: Float? = null) {
-        textPaint.typeface = titleTypeface(bold)
-        textPaint.textSize = plan.size
-        val ascent = textPaint.fontMetrics.ascent
-        val naturalHeight = (lineHeight ?: (textPaint.fontMetrics.descent - ascent)) * plan.lines.size
-        val scale = minOf(1f, height / naturalHeight.coerceAtLeast(1f))
-        val saved = canvas.save()
-        canvas.translate(cx, top)
-        canvas.scale(scale, scale)
-        drawTitlePlan(canvas, plan, 0f, -ascent, width, titleAlpha(Color.WHITE),
-                bold = bold, lineHeight = lineHeight, reservedBand = true)
-        canvas.restoreToCount(saved)
-    }
-
-    private fun drawTransportTime(canvas: Canvas, cx: Float, cy: Float, radius: Float,
-            dp: (Float) -> Float, layout: PlayerControlGeometry.TransportLayout) {
-        // Zero means the allocation dropped it to keep the control tappable, exactly as on the
-        // watch - see PlayerControlGeometry.allocateTransportBands.
-        if (layout.timeHeight <= 0f || !trackTimeVisible()) return
-        textPaint.typeface = trackTimeTypeface(fontRegular)
-        textPaint.textSize = trackTimeTypographySpec.scaled(dp(11f))
-        val height = textPaint.fontMetrics.descent - textPaint.fontMetrics.ascent
-        val scale = minOf(1f, dp(layout.timeHeight) / height.coerceAtLeast(1f))
-        val saved = canvas.save()
-        canvas.translate(cx, cy - radius + dp(layout.timeCenterY))
-        canvas.scale(scale, scale)
-        drawTrackTimeText(canvas, timeText(), 0f,
-                -(textPaint.fontMetrics.ascent + textPaint.fontMetrics.descent) / 2f,
-                dp(11f), 0xB3FFFFFF.toInt(), fontRegular, align = Paint.Align.CENTER)
-        canvas.restoreToCount(saved)
+    ): Float {
+        val screenDp = radius * 2f / dp(1f).coerceAtLeast(.01f)
+        val ringBottom = dp(if (screenDp >= 225f) 39f else 31f)
+        return clampTimeY(desiredY, miniConfigured, radius, cy, dp)
+                .coerceAtLeast(cy + ringBottom + dp(10f))
     }
 
     /** The player's bottom band: the mini-buttons row if it shows, otherwise the awake Up Next
@@ -10778,10 +10534,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val (fill, onColor) = awakePillColors()
         val width = radius * 2f * .84f
         val height = (radius * 2f * .25f).coerceIn(dp(44f), dp(52f))
-        // The pill is the band's content, so it takes the resting line - not the reserve that
-        // describes it, which would push it up by its own height.
-        val centerY = cy + radius -
-                dp(previewChrome(cy, radius, dp).safeArea.lowerContentMarginDp) - height / 2f
+        val centerY = cy + radius - dp(14f) - height / 2f
         val rect = RectF(cx - width / 2f, centerY - height / 2f, cx + width / 2f, centerY + height / 2f)
         if (Color.alpha(fill) > 0) {
             fillPaint.shader = null
@@ -10841,6 +10594,7 @@ class WatchPreviewView @JvmOverloads constructor(
      */
     private fun activeMiniButtonIcons(): List<PreviewActionIcon> {
         if (!ActivityVisibility.isActive(miniButtonsMode, isPlayingShown())) return emptyList()
+        if (!isPlayingShown()) return emptyList()
         return when {
             miniButtonIcons.isNotEmpty() -> miniButtonIcons
             surface == PreviewSurface.MINI_BUTTONS -> demoMiniButtonIcons
@@ -10869,9 +10623,6 @@ class WatchPreviewView @JvmOverloads constructor(
         val totalWidth = geometry.totalWidth
         val rowBottom = geometry.rowBottom
 
-        val rowLayer = canvas.save()
-        canvas.scale(geometry.scale, geometry.scale, cx, rowBottom)
-
         val neutralSkin = neutralMiniButtonSkin(dp)
         // The style's colours are decided by the shared resolver, not by a copy of the watch's
         // `when` kept in step by hand - which is how this preview came to stroke glow_exp with the
@@ -10893,7 +10644,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val forceGroupIconTint = buttonSurface.forceIconTint
 
         val placement = MiniButtonPlacement.fromPreference(buttonsCurveStyle)
-        val curveFraction = if (!geometry.curved || !placement.followsCurve) {
+        val curveFraction = if (deviceRound == false || !placement.followsCurve) {
             null
         } else {
             placement.tiltFraction
@@ -11129,7 +10880,6 @@ class WatchPreviewView @JvmOverloads constructor(
             canvas.restore()
         }
         opacityLayer?.let(canvas::restoreToCount)
-        canvas.restoreToCount(rowLayer)
         bitmapPaint.colorFilter = null
         bitmapPaint.alpha = 255
         return true
@@ -11272,29 +11022,47 @@ class WatchPreviewView @JvmOverloads constructor(
 
         if (alwaysShowTime || clockPreviewForced()) drawFaceClock(canvas, cx, cy - radius, dp)
 
-        val layout = transportLayout(cy, radius, dp)
-        drawTransportMetadata(canvas, cx, cy, radius, dp, layout)
-        val expressiveControlsVisible = playerControlsVisible && theme.iconAlpha > 0f
-        // Hidden removes the cookie, its contour ring and both side buttons from the layout, and
-        // transportLayout has already handed their band back to the text above. Nothing is scaled
-        // to nothing: the block is not entered at all.
-        if (expressiveControlsVisible) {
-            val transportSave = canvas.save()
-            val transportScale = layout.diameter /
-                    (PlayerControlGeometry.transportDiameter("expressive", radius * 2f / dp(1f)) ?: 62f)
-            canvas.translate(cx, cy - radius + dp(layout.centerY))
-            canvas.scale(transportScale, transportScale)
-            canvas.translate(-cx, -cy)
+        // Title/artist near the top. ExpressiveFace calls AdaptiveTitleText with an explicit
+        // 12sp floor against its 16sp size, so the title honours the user's text mode here too -
+        // this used to marquee unconditionally on the claim that the watch did, which it does not.
+        if (showTrackTitle) {
+            drawAdaptiveTitle(
+                    canvas,
+                    cx,
+                    cy - radius + dp(43f),
+                    radius * 1.45f,
+                    dp(16f),
+                    titleAlpha(Color.WHITE),
+                    minSize = dp(12f))
+        }
+        // Artist, or the "Playback Stopped" status in white while paused (the watch's expressive
+        // face mirrors the same textArtist line the classic face swaps).
+        if (isPlayingShown() && showTrackArtist) {
+            drawArtistLine(
+                    canvas, displayArtist(), cx, cy - radius + dp(57f), radius * 1.45f,
+                    artistColor, dp(12f), sourceGlyph = true, glyphSize = dp(13f))
+        } else if (!isPlayingShown()) {
+            // Status copy stays neutral white and keeps the mark beside it, as the face does.
+            drawArtistLine(
+                    canvas, context.getString(R.string.preview_playback_stopped),
+                    cx, cy - radius + dp(57f), radius * 1.45f,
+                    Color.WHITE, dp(12f), sourceGlyph = true, glyphSize = dp(13f))
+        }
 
-            // Keep the same 225dp breakpoint as expressiveMetrics() on Wear.
-            val largeScreen = min(deviceWidthDp, deviceHeightDp) >= 225f
-            val sideWidth = dp(if (largeScreen) 48f else 42f)
-            val sideHeight = dp(if (largeScreen) 58f else 50f)
-            val ringBox = dp(if (largeScreen) 78f else 62f)
-            val cookieSize = dp(if (largeScreen) 62f else 48f)
-            val gap = dp(4f)
-            val sideOffset = ringBox / 2f + gap + sideWidth / 2f
-            val expressiveIconAlpha = (theme.iconAlpha * 255).toInt().coerceIn(0, 255)
+        // Keep the same 225dp breakpoint as expressiveMetrics() on Wear.
+        val largeScreen = min(deviceWidthDp, deviceHeightDp) >= 225f
+        val sideWidth = dp(if (largeScreen) 48f else 42f)
+        val sideHeight = dp(if (largeScreen) 58f else 50f)
+        val ringBox = dp(if (largeScreen) 78f else 62f)
+        val cookieSize = dp(if (largeScreen) 62f else 48f)
+        val gap = dp(4f)
+        val sideOffset = ringBox / 2f + gap + sideWidth / 2f
+        // Every other control-style theme only fades or scales these icons; only Hidden zeroes
+        // them out. Expressive's cookie/transport row is its one visual focus, so mirror the
+        // watch: always show these icons at full opacity - Hidden becomes a no-op here.
+        val expressiveIconAlpha = ((theme.iconAlpha.takeIf { it > 0f } ?: 1f) * 255).toInt().coerceIn(0, 255)
+        val expressiveControlsVisible = true
+        if (expressiveControlsVisible) {
             fillPaint.color = sideContainer
             // Corner radius = half the shorter (width) side -> rounded top and bottom.
             val sideCorner = sideWidth / 2f
@@ -11324,13 +11092,15 @@ class WatchPreviewView @JvmOverloads constructor(
                     onContainer,
                     expressiveIconAlpha
             )
+        }
 
-            // Cookie button + contour-following ring. Paused flattens both into plain circles and
-            // swaps the icon, matching the watch face's morph.
-            val playing = isPlayingShown()
-            val cookieModulation = if (playing) COOKIE_MODULATION else 0f
-            val ringModulation = if (playing) RING_MODULATION else 0f
-            val cookieRadius = cookieSize / 2f / (1f + COOKIE_MODULATION)
+        // Cookie button + contour-following ring. Paused flattens both into plain circles and
+        // swaps the icon, matching the watch face's morph.
+        val playing = isPlayingShown()
+        val cookieModulation = if (playing) COOKIE_MODULATION else 0f
+        val ringModulation = if (playing) RING_MODULATION else 0f
+        val cookieRadius = cookieSize / 2f / (1f + COOKIE_MODULATION)
+        if (expressiveControlsVisible) {
             fillPaint.color = centerContainer
             val cookiePath = contourPath(cx, cy, cookieRadius, cookieModulation, 0f, 360f).apply { close() }
             canvas.drawPath(cookiePath, fillPaint)
@@ -11339,31 +11109,42 @@ class WatchPreviewView @JvmOverloads constructor(
                     else commonR.drawable.action_play_filled,
                     cx, cy, cookieSize * 0.48f * theme.iconScale, onContainer,
                     expressiveIconAlpha)
-
-            // The ring is the cookie's own silhouette, so it goes with it: hiding the controls leaves
-            // no lone circle floating where the button was. The bezel progress ring is the setting that
-            // still shows position on a face with its transport hidden.
-            val stroke = dp(if (largeScreen) 4f else 3f)
-            val ringRadius = (ringBox / 2f - stroke) / (1f + RING_MODULATION)
-            val sweep = progressFraction() * 360f
-            val halfGap = RING_GAP_DEGREES / 2f
-            strokePaint.strokeWidth = stroke
-            strokePaint.strokeCap = Paint.Cap.ROUND
-            // Track wraps back to 12 o'clock (no gap at the start); one gap straddles the playhead.
-            strokePaint.color = 0x4DFFFFFF
-            if (sweep + halfGap < 360f) {
-                canvas.drawPath(contourPath(cx, cy, ringRadius, ringModulation, sweep + halfGap, 360f), strokePaint)
-            }
-            if (sweep > halfGap) {
-                strokePaint.color = progressColor
-                canvas.drawPath(contourPath(cx, cy, ringRadius, ringModulation, 0f, sweep - halfGap), strokePaint)
-            }
-            // No thumb dot - the gap between the played and track segments marks the position,
-            // matching the watch face.
-
-            canvas.restoreToCount(transportSave)
         }
-        drawTransportTime(canvas, cx, cy, radius, dp, layout)
+
+        val stroke = dp(if (largeScreen) 4f else 3f)
+        val ringRadius = (ringBox / 2f - stroke) / (1f + RING_MODULATION)
+        val sweep = progressFraction() * 360f
+        val halfGap = RING_GAP_DEGREES / 2f
+        strokePaint.strokeWidth = stroke
+        strokePaint.strokeCap = Paint.Cap.ROUND
+        // Track wraps back to 12 o'clock (no gap at the start); one gap straddles the playhead.
+        strokePaint.color = 0x4DFFFFFF
+        if (sweep + halfGap < 360f) {
+            canvas.drawPath(contourPath(cx, cy, ringRadius, ringModulation, sweep + halfGap, 360f), strokePaint)
+        }
+        if (sweep > halfGap) {
+            strokePaint.color = progressColor
+            canvas.drawPath(contourPath(cx, cy, ringRadius, ringModulation, 0f, sweep - halfGap), strokePaint)
+        }
+        // No thumb dot - the gap between the played and track segments marks the position,
+        // matching the watch face.
+
+        if (trackTimeVisible()) {
+            textPaint.typeface = fontRegular
+            textPaint.color = 0xB3FFFFFF.toInt()
+            textPaint.textSize = dp(10f)
+            // Same preferred 45dp offset as Wear, clamped against the measured mini-button row.
+            val miniConfigured = isPlayingShown() &&
+                    (miniButtonIcons.isNotEmpty() || surface == PreviewSurface.MINI_BUTTONS)
+            drawTrackTimeText(
+                    canvas,
+                    timeText(),
+                    cx,
+                    centeredTransportTimeY(cy + dp(45f), miniConfigured, radius, cy, dp),
+                    dp(10f),
+                    0xB3FFFFFF.toInt(),
+                    textPaint.typeface)
+        }
 
         // The watch's expressive face has no default queue/volume/overflow trio - that row is
         // left entirely to the user's configured mini buttons.
@@ -11397,15 +11178,9 @@ class WatchPreviewView @JvmOverloads constructor(
 
         val art = displayedArt()
         val shape = CoverShape.fromPreference(carouselCardShape)
-        val layout = PlayerControlGeometry.coverRailLayout(screen / dp(1f),
-                (lowerControlsTop(cy, radius, dp) - screenTop) / dp(1f),
-                FaceGeometry.Carousel.CARD_TOP, FaceGeometry.Carousel.CARD_BOTTOM,
-                CAROUSEL_TITLE_TOP, if (showTrackTitle) 25f else 0f)
-        val cardScale = dp(layout.artHeight) / (screen * CAROUSEL_CARD_FRACTION)
-        val railCenterY = screenTop + dp(layout.artTop + layout.artHeight / 2f)
+        val railCenterY = screenTop + screen * CAROUSEL_RAIL_CENTER
 
         fun card(size: Float, dx: Float, shade: Float) {
-            val size = size * cardScale
             val rect = RectF(
                     cx + dx - size / 2f, railCenterY - size / 2f,
                     cx + dx + size / 2f, railCenterY + size / 2f)
@@ -11464,7 +11239,7 @@ class WatchPreviewView @JvmOverloads constructor(
             val lineHeight = dp(12.5f) / screen
             val firstBaseline = screenTop + screen * CAROUSEL_TITLE_TOP + dp(9f)
             fun widthForLines(lines: Int) = screen * (1f - 2f *
-                    RoundScreenText.sideInsetForLines(layout.titleTop / (screen / dp(1f)), lineHeight, lines))
+                    RoundScreenText.sideInsetForLines(CAROUSEL_TITLE_TOP, lineHeight, lines))
             // The usable chord narrows the deeper the block reaches, and how deep it reaches is
             // decided by the line count the text mode settles on - so plan at the one-line width
             // first and, only if it wrapped, re-plan at the narrower width those lines actually
@@ -11482,8 +11257,9 @@ class WatchPreviewView @JvmOverloads constructor(
             }
             // No designedTracking: CarouselFace tracks its *artist* line and its ambient variant,
             // but passes no letterSpacing to the awake title's AdaptiveTitleText.
-            drawReservedTitle(canvas, cx, screenTop + dp(layout.titleTop), settledWidth,
-                    dp(layout.titleHeight), plan, bold = false, lineHeight = dp(12.5f))
+            drawTitlePlan(
+                    canvas, plan, cx, firstBaseline, settledWidth,
+                    titleAlpha(Color.WHITE), bold = false, lineHeight = dp(12.5f))
         }
 
         if (alwaysShowTime || clockPreviewForced()) {
@@ -11509,14 +11285,8 @@ class WatchPreviewView @JvmOverloads constructor(
         val screenLeft = cx - radius
         val screenTop = geometry.cy - radius
 
-        val layout = PlayerControlGeometry.coverRailLayout(screen / dp(1f),
-                (lowerControlsTop(geometry.cy, radius, dp) - screenTop) / dp(1f),
-                FaceGeometry.Ribbon.COLUMN_TOP_FRACTION,
-                FaceGeometry.Ribbon.COLUMN_TOP_FRACTION + FaceGeometry.Ribbon.COLUMN_HEIGHT_FRACTION,
-                FaceGeometry.Ribbon.TITLE_TOP_FRACTION,
-                if (showTrackTitle) FaceGeometry.Ribbon.TITLE_LINE_HEIGHT_DP else 0f)
         val columnWidth = screen * FaceGeometry.Ribbon.COLUMN_WIDTH_FRACTION
-        val columnHeight = dp(layout.artHeight)
+        val columnHeight = screen * FaceGeometry.Ribbon.COLUMN_HEIGHT_FRACTION
         val columnTop = screenTop + screen * FaceGeometry.Ribbon.COLUMN_TOP_FRACTION
         val columnCorner = min(columnWidth, columnHeight) *
                 FaceGeometry.Ribbon.COLUMN_CORNER_FRACTION
@@ -11542,7 +11312,7 @@ class WatchPreviewView @JvmOverloads constructor(
         }
 
         val coverWidth = screen * FaceGeometry.Ribbon.CENTER_COVER_WIDTH_FRACTION
-        val coverHeight = dp(layout.artHeight)
+        val coverHeight = screen * FaceGeometry.Ribbon.CENTER_COVER_HEIGHT_FRACTION
         val coverTop = screenTop + screen * FaceGeometry.Ribbon.CENTER_COVER_TOP_FRACTION
         val cover = RectF(
                 cx - coverWidth / 2f,
@@ -11563,7 +11333,7 @@ class WatchPreviewView @JvmOverloads constructor(
         if (internalProgressVisible) {
             val barWidth = screen * FaceGeometry.Ribbon.PROGRESS_WIDTH_FRACTION
             val barHeight = dp(FaceGeometry.Ribbon.PROGRESS_THICKNESS_DP)
-            val barCenterY = screenTop + dp((layout.artTop + layout.artHeight + layout.titleTop) / 2f)
+            val barCenterY = screenTop + screen * FaceGeometry.Ribbon.PROGRESS_CENTER_FRACTION
             val bar = RectF(
                     cx - barWidth / 2f,
                     barCenterY - barHeight / 2f,
@@ -11586,11 +11356,11 @@ class WatchPreviewView @JvmOverloads constructor(
         // watch), all of them too wide for the title's depth on a round dial.
         val titleLineFraction = dp(FaceGeometry.Ribbon.TITLE_LINE_HEIGHT_DP) / screen
         val titleLines = RoundScreenText.linesThatFit(
-                top = layout.titleTop / (screen / dp(1f)),
+                top = FaceGeometry.Ribbon.TITLE_TOP_FRACTION,
                 lineHeight = titleLineFraction,
                 maxLines = FaceGeometry.Ribbon.TITLE_MAX_LINES)
         val titleInset = RoundScreenText.sideInsetForLines(
-                top = layout.titleTop / (screen / dp(1f)),
+                top = FaceGeometry.Ribbon.TITLE_TOP_FRACTION,
                 lineHeight = titleLineFraction,
                 lines = titleLines)
 
@@ -11617,15 +11387,29 @@ class WatchPreviewView @JvmOverloads constructor(
             )
         }
         if (showTrackTitle) {
-            val width = screen * (1f - titleInset * 2f)
-            val plan = planTitle(width, dp(24f), dp(15f), maxLines = titleLines)
-            drawReservedTitle(canvas, cx, screenTop + dp(layout.titleTop), width,
-                    dp(layout.titleHeight), plan)
+            drawAdaptiveTitle(
+                    canvas,
+                    cx,
+                    screenTop + screen * FaceGeometry.Ribbon.TITLE_BASELINE_FRACTION,
+                    screen * (1f - titleInset * 2f),
+                    dp(18f),
+                    titleAlpha(Color.WHITE),
+                    bold = true,
+                    minSize = dp(11f),
+                    maxLines = titleLines
+            )
         }
         if (alwaysShowTime || clockPreviewForced()) {
-            drawFaceClock(canvas, cx, screenTop, dp)
+            drawSmallClock(
+                    canvas,
+                    cx,
+                    screenTop + screen * FaceGeometry.Ribbon.CLOCK_BASELINE_FRACTION,
+                    dp,
+                    sizeSp = 15f
+            )
         }
-        drawBottomChrome(canvas, cx, geometry.cy, radius, dp)
+        // Ribbon hosts only its cards and metadata; the generic mini-button rail would cover the
+        // title and is intentionally not part of this face's composition.
     }
 
     /**
@@ -11860,8 +11644,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 (screen * (1f - CHAT_SIDE_PADDING_FRACTION * 2f) -
                         actionGap * (chatActionCount - 1)) / chatActionCount
         ).coerceAtLeast(dp(CHAT_ACTION_MIN_DIAMETER_DP))
-        val actionCy = cy + radius - maxOf(screen * CHAT_BOTTOM_PADDING_FRACTION,
-                bottomHintInset(cy, radius, dp)) - actionDiameter / 2f
+        val actionCy = cy + radius - screen * CHAT_BOTTOM_PADDING_FRACTION - actionDiameter / 2f
         val chatTimeVisible = trackTimeVisible()
         val chatTimeTypeface = trackTimeTypeface(artistTypeface(bold = false))
         textPaint.typeface = chatTimeTypeface
@@ -12045,11 +11828,10 @@ class WatchPreviewView @JvmOverloads constructor(
         val glyphCx = right - dp(CHAT_VOICE_HORIZONTAL_PADDING_DP) - glyphSize / 2f
         val glyphCy = (bubbleTop + bubbleBottom) / 2f
         fillPaint.color = ColorUtils.setAlphaComponent(Color.BLACK, 0x73)
+        canvas.drawCircle(glyphCx, glyphCy, glyphSize / 2f, fillPaint)
         if (playerControlsVisible) {
-            canvas.drawCircle(glyphCx, glyphCy, glyphSize / 2f, fillPaint)
-            val tokens = screenThemeSpec()
-            fillPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, (tokens.iconAlpha * 255).toInt())
-            val g = dp(CHAT_GLYPH_MARK_DP) * tokens.iconScale
+            fillPaint.color = Color.WHITE
+            val g = dp(CHAT_GLYPH_MARK_DP)
             if (chatPlaying) {
                 val bar = g * .3f
                 canvas.drawRect(
@@ -12352,8 +12134,7 @@ class WatchPreviewView @JvmOverloads constructor(
             textPaint.color = ColorUtils.setAlphaComponent(Color.WHITE, 0x9E)
             // Down 0.025 of the screen with VerseFace's own bottom padding.
             drawTrackTimeText(
-                    canvas, timeText(), cx, minOf(cy + radius * .75f,
-                            lowerControlsTop(cy, radius, dp) - dp(6f)), dp(9f),
+                    canvas, timeText(), cx, cy + radius * .75f, dp(9f),
                     ColorUtils.setAlphaComponent(Color.WHITE, 0x9E), textPaint.typeface)
         }
     }
@@ -12468,13 +12249,7 @@ class WatchPreviewView @JvmOverloads constructor(
         // ending the table - the same budget MetadataFace applies, so the miniature shows which
         // rows survive rather than an arbitrary first five. The budget mirrors the watch's
         // TABLE_HEIGHT_FRACTION / ROW_HEIGHT with its 4..12 clamp.
-        // Budgeted against what the shared chrome leaves free, exactly as MetadataFace does: this
-        // is the one face whose premise is fitting as many rows as the screen holds, so rows that
-        // are there but covered by the mini-button row are the worst outcome available.
-        val metadataFree = (screen -
-                dp(previewChrome(cy, radius, dp).safeArea.let { it.topDp + it.bottomDp }))
-                .coerceAtLeast(0f)
-        var remaining = ((metadataFree * METADATA_TABLE_HEIGHT_FRACTION) / dp(METADATA_ROW_HEIGHT_DP))
+        var remaining = ((screen * METADATA_TABLE_HEIGHT_FRACTION) / dp(METADATA_ROW_HEIGHT_DP))
                 .toInt().coerceIn(METADATA_MIN_ROWS, METADATA_MAX_ROWS)
         val lineHeight = dp(9.5f)
         for (row in previewMetadataRows()) {
@@ -12596,11 +12371,10 @@ class WatchPreviewView @JvmOverloads constructor(
             dp: (Float) -> Float
     ) {
         val cx = geometry.cx
-        val cy = geometry.cy
         val radius = geometry.radius
         val screen = radius * 2f
         val side = screen * ARTIST_SIDE_PADDING_FRACTION
-        val edge = maxOf(screen * ARTIST_EDGE_PADDING_FRACTION, bottomHintInset(cy, radius, dp))
+        val edge = screen * ARTIST_EDGE_PADDING_FRACTION
         val available = screen - side * 2f
 
         val nameVisible = showTrackArtist || !isPlayingShown()
@@ -12873,7 +12647,7 @@ class WatchPreviewView @JvmOverloads constructor(
             val timeY = if (movedTime) {
                 blockTop + blockHeight - dp(11f) * .2f
             } else {
-                minOf(cy + radius - screen * .07f, lowerControlsTop(cy, radius, dp) - dp(6f))
+                cy + radius - screen * .07f
             }
             drawTrackTimeText(
                     canvas, timeText(), cx, timeY, dp(11f),
@@ -13141,8 +12915,10 @@ class WatchPreviewView @JvmOverloads constructor(
             Color.WHITE
         }
         val theme = screenThemeSpec()
-        val controlsVisible = playerControlsVisible && theme.iconAlpha > 0f
-        val iconAlpha = (theme.iconAlpha * 255).toInt().coerceIn(0, 255)
+        val essentialTransport = kind == "material"
+        val controlsVisible = playerControlsVisible || essentialTransport
+        val iconAlpha = ((if (essentialTransport) theme.iconAlpha.takeIf { it > 0f } ?: 1f
+                else theme.iconAlpha) * 255).toInt().coerceIn(0, 255)
         val miniConfigured = isPlayingShown() &&
                 (miniButtonIcons.isNotEmpty() || surface == PreviewSurface.MINI_BUTTONS)
         val titleVisible = showTrackTitle
@@ -13611,13 +13387,11 @@ class WatchPreviewView @JvmOverloads constructor(
                                 sourceGlyph = true, glyphSize = dp(10f))
                     }
                 }
-                val orbR = screenDiameter * .16f
+                val orbR = dp(if (hasMiniButtons) 26f else 31f)
                 // The watch's StudioComposition anchors this ring near the screen's bottom edge,
                 // not its center - no play/pause glyph is drawn on it either (tap still toggles
                 // playback; only the progress arc is visible).
-                val studioBottom = cy + radius -
-                        maxOf(screenDiameter * .04f, bottomHintInset(cy, radius, dp))
-                val orbY = studioBottom - orbR
+                val orbY = cy + radius * .42f
                 if (internalProgressVisible) {
                     strokePaint.strokeWidth = dp(4f); strokePaint.strokeCap = Paint.Cap.ROUND
                     strokePaint.color = 0x3CFFFFFF
@@ -13626,7 +13400,6 @@ class WatchPreviewView @JvmOverloads constructor(
                     canvas.drawArc(RectF(cx - orbR, orbY - orbR, cx + orbR, orbY + orbR), -90f,
                             progressFraction() * 360f, false, strokePaint)
                 }
-                playGlyph(cx, studioBottom - orbR * .275f, orbR * .55f)
                 if (trackTimeVisible()) {
                     textPaint.color = 0xA8FFFFFF.toInt(); textPaint.textSize = dp(9f)
                     // Inside the orb when it's drawn, on the floor when it isn't (mirrors the
@@ -13913,85 +13686,85 @@ class WatchPreviewView @JvmOverloads constructor(
                 }
             }
             "material" -> {
-                val layout = transportLayout(cy, radius, dp)
-                drawTransportMetadata(canvas, cx, cy, radius, dp, layout)
-                // Hidden removes the disc, its defining ring and the side actions from
-                // the layout - transportLayout has already handed their band back to
-                // the text above. The centre keeps its gesture on the watch through
-                // CenterGestureRegion, which has nothing to draw here.
+                header(cy - radius + dp(51f), compact = false, showArtist = true)
+
+                val centerCircleR = radius * 0.30f
+                val skipIconSize = dp(30f)
+                val skipOffset = radius * 0.54f
+                val prevX = cx - skipOffset
+                val nextX = cx + skipOffset
+
                 if (controlsVisible) {
-                    val transportSave = canvas.save()
-                    val transportScale = dp(layout.diameter) / maxOf(radius * .60f, dp(48f))
-                    canvas.translate(cx, cy - radius + dp(layout.centerY))
-                    canvas.scale(transportScale, transportScale)
-                    canvas.translate(-cx, -cy)
-
-                    val centerCircleR = radius * 0.30f
-                    val skipIconSize = dp(30f)
-                    val skipOffset = radius * 0.54f
-                    val prevX = cx - skipOffset
-                    val nextX = cx + skipOffset
-
-                    if (controlsVisible) {
-                        drawActionIcon(
-                                canvas,
-                                quadrantIcons[ScreenQuadrant.LEFT],
-                                commonR.drawable.action_skip_prev,
-                                prevX,
-                                cy,
-                                skipIconSize * theme.iconScale,
-                                Color.WHITE,
-                                iconAlpha
-                        )
-                    }
-
-                    val strokeW = dp(4.5f)
-                    strokePaint.strokeWidth = strokeW
-                    strokePaint.strokeCap = Paint.Cap.ROUND
-                    strokePaint.shader = null
-                    val progressRect = RectF(
-                            cx - centerCircleR,
-                            cy - centerCircleR,
-                            cx + centerCircleR,
-                            cy + centerCircleR
+                    drawActionIcon(
+                            canvas,
+                            quadrantIcons[ScreenQuadrant.LEFT],
+                            commonR.drawable.action_skip_prev,
+                            prevX,
+                            cy,
+                            skipIconSize * theme.iconScale,
+                            Color.WHITE,
+                            iconAlpha
                     )
-
-                    strokePaint.color = 0x2DFFFFFF
-                    canvas.drawArc(progressRect, -90f, 360f, false, strokePaint)
-
-                    strokePaint.color = progressColor
-                    val sweep = progressFraction() * 360f
-                    canvas.drawArc(progressRect, -90f, sweep, false, strokePaint)
-
-                    if (controlsVisible) {
-                        fillPaint.shader = null
-                        fillPaint.color = 0x19FFFFFF
-                        val innerR = centerCircleR - strokeW
-                        canvas.drawCircle(cx, cy, innerR, fillPaint)
-
-                        playGlyph(
-                                cx + if (isPlayingShown()) 0f else dp(1f),
-                                cy,
-                                dp(if (isPlayingShown()) 34f else 38f)
-                        )
-                    }
-
-                    if (controlsVisible) {
-                        drawActionIcon(
-                                canvas,
-                                quadrantIcons[ScreenQuadrant.RIGHT],
-                                commonR.drawable.action_skip_next,
-                                nextX,
-                                cy,
-                                skipIconSize * theme.iconScale,
-                                Color.WHITE,
-                                iconAlpha
-                        )
-                    }
-
-                    canvas.restoreToCount(transportSave)
                 }
-                drawTransportTime(canvas, cx, cy, radius, dp, layout)
+
+                val strokeW = dp(4.5f)
+                strokePaint.strokeWidth = strokeW
+                strokePaint.strokeCap = Paint.Cap.ROUND
+                strokePaint.shader = null
+                val progressRect = RectF(
+                        cx - centerCircleR,
+                        cy - centerCircleR,
+                        cx + centerCircleR,
+                        cy + centerCircleR
+                )
+
+                strokePaint.color = 0x2DFFFFFF
+                canvas.drawArc(progressRect, -90f, 360f, false, strokePaint)
+
+                strokePaint.color = progressColor
+                val sweep = progressFraction() * 360f
+                canvas.drawArc(progressRect, -90f, sweep, false, strokePaint)
+
+                if (controlsVisible) {
+                    fillPaint.shader = null
+                    fillPaint.color = 0x19FFFFFF
+                    val innerR = centerCircleR - strokeW
+                    canvas.drawCircle(cx, cy, innerR, fillPaint)
+
+                    playGlyph(
+                            cx + if (isPlayingShown()) 0f else dp(1f),
+                            cy,
+                            dp(if (isPlayingShown()) 34f else 38f)
+                    )
+                }
+
+                if (controlsVisible) {
+                    drawActionIcon(
+                            canvas,
+                            quadrantIcons[ScreenQuadrant.RIGHT],
+                            commonR.drawable.action_skip_next,
+                            nextX,
+                            cy,
+                            skipIconSize * theme.iconScale,
+                            Color.WHITE,
+                            iconAlpha
+                    )
+                }
+
+                if (trackTimeVisible()) {
+                    textPaint.typeface = fontRegular
+                    textPaint.color = 0xB3FFFFFF.toInt()
+                    textPaint.textSize = dp(10f)
+                    // Same preferred baseline and mini-button clearance used by Expressive.
+                    drawTrackTimeText(
+                            canvas,
+                            timeText(),
+                            cx,
+                            centeredTransportTimeY(cy + dp(45f), miniConfigured, radius, cy, dp),
+                            dp(10f),
+                            0xB3FFFFFF.toInt(),
+                            textPaint.typeface)
+                }
             }
         }
 

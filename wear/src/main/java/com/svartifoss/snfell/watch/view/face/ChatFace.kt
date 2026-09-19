@@ -148,7 +148,7 @@ fun ChatFace(
                         .padding(vertical = state.blockSafeVerticalInset(screen))
                         .padding(
                                 top = screen * FaceGeometry.Chat.TOP_PADDING_FRACTION,
-                                bottom = maxOf(screen * FaceGeometry.Chat.BOTTOM_PADDING_FRACTION, state.safeArea.bottomDp.dp)),
+                                bottom = screen * FaceGeometry.Chat.BOTTOM_PADDING_FRACTION),
                 horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally),
                 // Bottom-anchored, so the newest message is always the one at a fixed place and
                 // older ones drift up and out - a thread, not a list that grows downward off-screen.
@@ -412,7 +412,7 @@ private fun VoiceBubble(
                 Spacer(Modifier.width(FaceGeometry.Chat.WAVE_TO_GLYPH_GAP_DP.dp))
                 // Display-only: it mirrors playback state so the bubble reads as a voice note, but
                 // the gesture that changes it is the centre tap.
-                PlayGlyph(state)
+                PlayGlyph(playing = state.playing, showControls = state.showControls)
             }
         }
 
@@ -512,21 +512,19 @@ private val WAVE_PATTERN = FaceGeometry.Chat.WAVE_PATTERN
 
 /** Filled play/pause glyph in the dark circle the reference chat uses. */
 @Composable
-private fun PlayGlyph(state: NowPlayingFaceState) {
-    val tokens = state.screenTheme.tokens
+private fun PlayGlyph(playing: Boolean, showControls: Boolean) {
     Box(
             modifier = Modifier
                     .size(FaceGeometry.Chat.PLAY_GLYPH_SIZE_DP.dp)
                     .clip(CircleShape)
-                    .background(if (state.showControls) Color.Black.copy(alpha = .45f) else Color.Transparent),
+                    .background(Color.Black.copy(alpha = .45f)),
             contentAlignment = Alignment.Center
     ) {
         // "Hidden" screen themes keep the hit target and the accessibility action but draw no
         // glyph, matching ScreenTheme's contract everywhere else.
-        if (!state.showControls) return@Box
-        Canvas(Modifier.size(FaceGeometry.Chat.PLAY_GLYPH_MARK_DP.dp * tokens.iconScale)
-                .alpha(tokens.iconAlpha)) {
-            if (state.playing) {
+        if (!showControls) return@Box
+        Canvas(Modifier.size(FaceGeometry.Chat.PLAY_GLYPH_MARK_DP.dp)) {
+            if (playing) {
                 val barWidth = size.width * .3f
                 drawRect(Color.White, Offset(0f, 0f), Size(barWidth, size.height))
                 drawRect(Color.White, Offset(size.width - barWidth, 0f), Size(barWidth, size.height))

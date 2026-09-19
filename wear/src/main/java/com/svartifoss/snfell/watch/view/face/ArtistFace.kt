@@ -131,8 +131,7 @@ fun ArtistFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
  */
 @Composable
 private fun BoxScope.ArtistTextBlock(state: NowPlayingFaceState, screen: Dp) {
-    val edge = maxOf(screen * FaceGeometry.Artist.EDGE_PADDING_FRACTION,
-            if (state.ambient) 0.dp else state.safeArea.bottomDp.dp)
+    val edge = screen * FaceGeometry.Artist.EDGE_PADDING_FRACTION
     // The face owns its real chord calculation, but a top override must clear the optional clock
     // before that calculation chooses its top edge. Otherwise the name is safely inside the glass
     // while still painting directly underneath the clock.

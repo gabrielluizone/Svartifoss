@@ -450,7 +450,7 @@ private fun androidx.compose.foundation.layout.BoxWithConstraintsScope.ElapsedTi
                     .align(Alignment.BottomCenter)
                     // Closer to the floor than the 0.09 it shipped with: the strip it was
                     // floating above was the emptiest part of the composition.
-                    .padding(bottom = maxOf(screen * 0.065f, state.safeArea.bottomDp.dp)))
+                    .padding(bottom = screen * 0.065f))
 }
 
 /**

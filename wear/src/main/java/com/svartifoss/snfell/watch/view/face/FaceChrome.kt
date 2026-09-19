@@ -1058,6 +1058,22 @@ internal fun formatFaceClockTime(timeMs: Long): String {
     return String.format(java.util.Locale.getDefault(), "%d:%02d", totalSeconds / 60, totalSeconds % 60)
 }
 
+/**
+ * Vertical offset shared by Expressive and Material for their interactive track-time readout.
+ * Both faces keep their transport focus centered, so using one metric prevents the Material
+ * layout from drifting when mini buttons need extra clearance near the lower bezel.
+ */
+internal fun centeredTransportTrackTimeOffset(
+        screen: Dp,
+        miniButtonsTopFraction: Float
+): Dp {
+    val ringBottom = if (screen >= 225.dp) 39.dp else 31.dp
+    val desiredOffset = ringBottom + 14.dp
+    val miniRowClearance = screen * miniButtonsTopFraction.coerceIn(.20f, .95f) -
+            screen * .50f - 10.dp
+    return minOf(desiredOffset, miniRowClearance).coerceAtLeast(ringBottom + 10.dp)
+}
+
 /** A press-scaling tap target of any [shape] - the shared skeleton for the Beta faces' buttons,
  *  pills and chips. Theme visuals may inset the painted fill/outline, but this outer box retains
  *  its original hit geometry; everything around it falls through to the host gesture layers. */
@@ -1830,7 +1846,6 @@ internal fun NowPlayingFaceState.blockArrangement(
  * `follow` returns the face's own band unchanged, which is what keeps an unmoved face pixel-identical.
  */
 internal fun NowPlayingFaceState.blockBand(
-        screen: Dp,
         designedTop: Float,
         designedHeight: Float
 ): ClosedFloatingPointRange<Float> {
@@ -1839,7 +1854,7 @@ internal fun NowPlayingFaceState.blockBand(
         TextBlockPosition.FOLLOW -> designedTop
         TextBlockPosition.TOP -> blockTopClearanceFraction()
         TextBlockPosition.MIDDLE -> (1f - height) / 2f
-        TextBlockPosition.BOTTOM -> 1f - blockBottomClearanceFraction(screen) - height
+        TextBlockPosition.BOTTOM -> 1f - blockBottomClearanceFraction() - height
     }.coerceIn(0f, 1f)
     return top..(top + height).coerceAtMost(1f)
 }
@@ -1873,7 +1888,7 @@ internal fun NowPlayingFaceState.blockSafeSideInset(
         designedHeight: Float = ASSUMED_BLOCK_FRACTION
 ): Dp {
     if (!blockPlacementOverridden) return 0.dp
-    val band = blockBand(screen, designedTop, designedHeight)
+    val band = blockBand(designedTop, designedHeight)
     return screen * RoundScreenText.sideInsetFor(band.start, band.endInclusive)
 }
 
@@ -1922,7 +1937,7 @@ internal fun NowPlayingFaceState.blockLineInsets(
         BlockAnchor.CENTER -> (1f - height) / 2f
         BlockAnchor.BOTTOM -> 1f - designedEdgeFraction - height
     }
-    val band = blockBand(screen, designedTop, height)
+    val band = blockBand(designedTop, height)
     val insets = RoundScreenText.lineSideInsets(band.start, fractions)
             .map { maxOf(it, floorFraction) }
     val outer = insets.min()
@@ -1984,7 +1999,7 @@ private const val CHRONO_BLOCK_HEIGHT_FRACTION = .34f
  */
 internal fun NowPlayingFaceState.blockSafeVerticalInset(screen: Dp): Dp = when (textBlockPosition) {
     TextBlockPosition.TOP -> screen * blockTopClearanceFraction()
-    TextBlockPosition.BOTTOM -> screen * blockBottomClearanceFraction(screen)
+    TextBlockPosition.BOTTOM -> screen * blockBottomClearanceFraction()
     TextBlockPosition.FOLLOW, TextBlockPosition.MIDDLE -> 0.dp
 }
 
@@ -2010,9 +2025,9 @@ private fun NowPlayingFaceState.blockTopClearanceFraction(): Float =
         if (showClock) CLOCK_CLEARANCE_FRACTION else EDGE_MARGIN_FRACTION
 
 /** The shared mini-button row or Up Next pill occupies the bottom band when its top is below 1. */
-private fun NowPlayingFaceState.blockBottomClearanceFraction(screen: Dp): Float = maxOf(
+private fun NowPlayingFaceState.blockBottomClearanceFraction(): Float = maxOf(
         EDGE_MARGIN_FRACTION,
-        if (screen.value > 0f) (safeArea.bottomDp / screen.value).coerceAtLeast(0f) else 0f)
+        (1f - miniButtonsTopFraction).coerceAtLeast(0f))
 
 /** Roughly two lines of track text plus its breathing room - the block most faces compose. */
 private const val ASSUMED_BLOCK_FRACTION = 0.20f

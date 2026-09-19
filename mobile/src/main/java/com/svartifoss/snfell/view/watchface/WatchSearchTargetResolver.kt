@@ -153,6 +153,7 @@ internal object WatchSearchTargetResolver {
                 // wear_metadata_cover_shape / wear_metadata_show_cover need no entry here: the
                 // "wear_metadata_" prefix check above already redirects both.
                 key == "wear_split_panel" && face != "split" ||
+                key == "wear_classic_icons_visible" && face !in PlayerEditorModel.PLAYER_CONTROLS_FACES ||
                 key == "wear_internal_progress_visible" && face !in PlayerEditorModel.INTERNAL_PROGRESS_FACES ||
                 key in setOf("screen_buttons_curve_style", "screen_buttons_shape") &&
                     MiniButtonPlacement.isHostedByFace(face)) {

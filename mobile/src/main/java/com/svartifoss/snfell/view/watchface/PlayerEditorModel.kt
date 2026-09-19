@@ -1,7 +1,5 @@
 package com.svartifoss.snfell.view.watchface
 
-import com.svartifoss.snfell.common.ThemeAppearance
-
 import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.MiscPreferences
@@ -130,6 +128,25 @@ internal object PlayerEditorModel {
             "ribbon", "frame")
 
     /**
+     * Faces where [MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE] hides something.
+     *
+     * The single copy: `WatchFacePrefsFragment.updatePlayerCapabilityVisibility` and
+     * `WatchSearchTargetResolver` both read this rather than repeating it. The switch means a
+     * different thing per face kind: on the View faces (Classic, Matejdro) it hides the quadrant
+     * hints; on Vinyl/Poster/Studio/Halo/Aurora/Eclipse/Spectrum the face's own play/pause glyph;
+     * on Chat the glyph in its voice bubble; on Artist, Frame and Ribbon the play/pause flash that
+     * `CenterGestureRegion` draws when those faces hand it their `state`.
+     *
+     * Absent on purpose: Expressive and Material keep their central transport whatever the switch
+     * says (`keepsEssentialTransport` on the watch), and Immersive, Depth, Carousel, Split, Note,
+     * Verse and Metadata draw no control the switch could hide - offering it there reads as broken
+     * rather than as inapplicable, the same rule Carousel's card shape and Split's panel follow.
+     */
+    val PLAYER_CONTROLS_FACES: Set<String> = setOf(
+            "classic", "matejdro", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
+            "spectrum", "chat", "artist", "frame", "ribbon")
+
+    /**
      * Faces that centre a stacked metadata block, and so have something for
      * [MiscPreferences.WEAR_TITLE_CENTERED] to move.
      *
@@ -143,8 +160,27 @@ internal object PlayerEditorModel {
     // no slack for the anchor to slide into and `applyClassicTitleAnchor` skips the face outright.
     // Offering the row would be offering a switch that provably moves nothing.
 
-    /** Every face can show the configured top/bottom hints, which use the control-style tokens. */
-    val CONTROL_STYLE_FACES: Set<String> = ThemeAppearance.ALLOWED_BASE_FACES
+    /**
+     * Faces whose own composition draws icon glyphs [MiscPreferences.WEAR_SCREEN_THEME] actually
+     * restyles - it only ever changes `ScreenThemeTokens.iconAlpha`/`iconScale` (see
+     * `common/.../ScreenTheme.kt`), so it does nothing wherever a face has no icon of its own.
+     *
+     * Classic and the icon-transport curated faces (Vinyl/Poster/Studio/Halo/Aurora/Eclipse/
+     * Spectrum/Material) draw a persistent play/pause or transport row through it, and Expressive
+     * always shows its cookie glyph at full opacity (see its own `screenTheme` read - the one
+     * exception is that "Hidden" alone still zeroes it there). Frame and Ribbon draw no persistent
+     * icon but do pass `state` into `CenterGestureRegion`, so the transient tap-confirmation glyph
+     * still honours it. Every other face (Immersive, Depth, Carousel, Chat, Split, Note, Verse,
+     * Metadata) either has no icon-based transport at all or calls `CenterGestureRegion` without
+     * `state`, so the picker changed nothing for them - a picker that changes nothing reads as
+     * broken rather than as inapplicable, the same rule Carousel's card shape and Split's panel
+     * already follow.
+     */
+    val CONTROL_STYLE_FACES: Set<String> = setOf(
+            "classic", "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse",
+            // Matejdro is the second View face and draws Classic's four quadrant hints through the
+            // very same `applyScreenThemeNow` branch, so the picker restyles it identically.
+            "spectrum", "material", "frame", "ribbon", "matejdro")
 
     /**
      * Which faces offer *Text alignment*, and which offer *Text position* - two questions, not one.
@@ -344,7 +380,10 @@ internal object PlayerEditorModel {
      */
     fun appliesToFace(control: PlayerControl, face: String): Boolean = when (control) {
         PlayerControl.SCREEN_THEME -> face in CONTROL_STYLE_FACES
-        PlayerControl.QUADRANT_FLASH -> face == "classic"
+        // QUADRANT_FLASH is deliberately absent: the tap confirmation draws the action's glyph
+        // inside the tap ripple, which the host paints above every face, so it applies to all of
+        // them. It was once Classic-only here while search and the legacy row had already moved
+        // on, which hid the row on the Player page while search still found it.
         PlayerControl.TITLE_CENTERED -> face in TITLE_CENTERED_FACES
         PlayerControl.TEXT_BLOCK_ALIGN -> face in TEXT_BLOCK_ALIGN_FACES
         PlayerControl.TEXT_BLOCK_POSITION -> face in TEXT_BLOCK_POSITION_FACES
@@ -354,6 +393,7 @@ internal object PlayerEditorModel {
         PlayerControl.METADATA_COVER_SHAPE, PlayerControl.METADATA_SHOW_COVER -> face == "metadata"
         PlayerControl.SPLIT_PANEL -> face == "split"
         PlayerControl.EXPRESSIVE_SEEK -> face == "expressive"
+        PlayerControl.PLAYER_CONTROLS -> face in PLAYER_CONTROLS_FACES
         PlayerControl.INTERNAL_PROGRESS -> face in INTERNAL_PROGRESS_FACES
         PlayerControl.METADATA_GROUPS -> face == "metadata"
         else -> true

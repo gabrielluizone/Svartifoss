@@ -14,7 +14,6 @@ import com.svartifoss.snfell.common.MiniButtonSurfaces
 import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.common.LyricLine
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
-import com.svartifoss.snfell.common.PlayerChromeLayout
 import com.svartifoss.snfell.common.TrackMetadataFields
 import com.svartifoss.snfell.common.SpecialEliteKeywordPolicy
 import com.svartifoss.snfell.common.TextBlockAlign
@@ -322,19 +321,10 @@ data class NowPlayingFaceState(
          *  button trio (queue/volume/overflow) may show it; configured mini buttons own that
          *  part of the screen otherwise. */
         val showDefaultBottomPills: Boolean = false,
-        /**
-         * What the shared chrome has already spoken for, in dp from each edge.
-         *
-         * Resolved once by [PlayerChromeLayout][com.svartifoss.snfell.common.PlayerChromeLayout]
-         * and read by every face, so "how much room is left?" has one answer.
-         *
-         * It replaced three channels that described the same band and were combined differently by
-         * each face: a dp inset for the bottom hint, a boolean for the top one, and a fraction for
-         * the top edge of the mini-button row. Six faces each carried their own expression over
-         * them, the host wrote the fraction from three places, and some combinations double-counted
-         * the hint while others missed it entirely.
-         */
-        val safeArea: PlayerChromeLayout.SafeArea = PlayerChromeLayout.SafeArea(0f, 0f, 0f),
+        /** Actual top edge of the configured mini-button row as a fraction of screen height.
+         *  Curated layouts use this instead of assuming the default offset, so a user can move
+         *  the shortcuts without making the player overlap them. */
+        val miniButtonsTopFraction: Float = .58f,
         /**
          * The configured mini buttons, for a face that draws them itself.
          *

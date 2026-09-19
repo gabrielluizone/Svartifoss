@@ -1,7 +1,6 @@
 # Player layout checks
 
-> **Read the 2026-09-16 chrome-rework section at the end first.** Two expectations in the original
-> checklist below have been superseded and are marked as such; everything else still stands.
+> **Reverted on 2026-09-19.** The layout this checklist validates was taken back out before it shipped, and the player is back to its 4.0 layout - see the status note at the top of `docs/player-chrome-layout-plan.md`. Two checks still apply, because those features were kept: item 5 of the first *Device validation* list (the Repeat once icon) and item 9, *The tap confirmation*. Everything else describes a layout the app no longer has.
 
 ## Revision after the audit — 2026-09-16
 

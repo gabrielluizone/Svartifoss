@@ -4,13 +4,7 @@
 
 ### Added
 
-- **A corner tap now shows you which action it ran.** Tapping a corner zone has always drawn a
-  coloured ripple where you touched, but nothing in it said *what happened* - that was left to the
-  four corner icons, which sit permanently on top of the album art and which plenty of people would
-  rather turn off. The action's own icon now appears inside the ripple, at your fingertip, for a
-  moment. It does not depend on the corner icons being shown, so you can hide them for a clean cover
-  and still get the confirmation. Turn it on and off with **Flash icon on tap**, which is now
-  offered on every watch face instead of only Classic.
+- **A corner tap now shows you which action it ran.** Tapping a corner zone has always drawn a coloured ripple where you touched, but nothing in it said *what happened*. The corner icons that could answer are only drawn on Classic, and even there plenty of people would rather turn them off to keep the cover clean. The action's own icon now appears inside the ripple, at your fingertip, for a moment - on every watch face, whether or not the corner icons are shown. Turn it on and off with **Flash icon on tap**, which is now offered on every watch face instead of only Classic.
 
   Only the single tap does this. A double tap or a long press on the same corner runs a *different*
   action, and showing the single-tap icon for either would be telling you the wrong thing.
@@ -90,58 +84,9 @@
   accept the integer values saved by earlier calibration builds; saving now uses the standard
   text preference format. Existing settings and calibration can be kept without clearing data.
 
-- **Player controls now share the watch face without covering track information or each other.**
-  Title and artist blocks on Expressive and Material are measured as a unit and fitted above the
-  transport, so a long title or enlarged source icon can no longer consume the other line or paint
-  over the playback ring. Their time readout, and the title bands on Ribbon and Carousel, now use
-  the space that remains above the real lower controls. Note, Verse, Artist, Studio and Chat also
-  reserve the visible bottom-action hint instead of drawing their footer or face-owned actions
-  underneath it. The phone preview follows the same allocation.
+- **Expressive no longer shows a black screen when nothing is playing.** With the phone connected and no track loaded, the face drew nothing at all - it was waiting for a shared "nothing playing" screen that the watch had stopped showing for faces like it. It now shows its own stopped state, as every other face already did.
 
-- **The quadrant action icons are visible again, on every watch face.** All four were hidden on
-  every face except Classic, so a top, bottom, left or right action worked when tapped with nothing
-  on screen to say it was there. They now draw above the face on all of them, as a cross on the
-  bezel: same size, same distance from the glass, one per side. The two faces whose own prev/next
-  buttons already carry the left and right actions keep showing them there instead of twice.
-
-  Nothing is shrunk to make room any more. Where the clock and the top icon used to fight over the
-  top of the screen - the icon simply disappeared whenever **Always show time** was on - the clock
-  now curves along the bezel on a round watch and the icon keeps the middle, both centred. The
-  mini-button row rests above the bottom icon rather than on it, at any number of buttons.
-
-- **Track titles are no longer pressed up against the playback circle.** On the two faces built
-  around a central control the text block and the control were never given separate space: the text
-  was allowed to run to exactly where the ring began, and was clipped rather than moved. They now
-  get their own bands with a real gap, and when the screen is too crowded to hold everything there
-  is one order to what gives way - the elapsed-time readout goes first, then the text gives up some
-  of its share, and the control itself never shrinks below a size you can still hit.
-
-- **Watch faces keep clear of the mini buttons consistently.** Whether a face lifted its text, its
-  clock readout or its own controls out of the way of the shortcut row depended on which face it
-  was: some cleared the row, some cleared only the bottom action icon, and some cleared neither, so
-  the same settings produced an overlap on one face and not on the next. Every face now works from
-  one measurement of what the bottom of the screen already holds. The Details face in particular was
-  fitting its table to the whole screen, so its last rows ended up underneath the buttons; it now
-  fits them to the space that is actually free. Immersive and Split are the deliberate exceptions -
-  both compose right to the edge of the screen, which is why they ship with the shortcut row off.
-
-- **Mini buttons no longer take the bottom action icon's place.** A row of one or two buttons sat
-  low enough on a round screen to land on the bottom icon; it now clears it. On compact displays
-  mini buttons keep a readable minimum size, and an overly steep curved row falls back to a flat
-  arrangement rather than shrinking into tiny or clipped targets.
-
-- **Hiding the player controls now actually hides them, on every face.** It was unavailable for
-  Expressive and Material, which forced their transport visible; elsewhere it faded the glyph to
-  invisible but left its space reserved and, on those two faces, left the ring drawn around
-  nothing - so the switch looked like it had done nothing. The controls now leave the layout, and
-  the room they were holding goes back to the track text, which recentres instead of staying pushed
-  up against a control that is no longer there. The centre of the screen still toggles playback,
-  opens the quick actions on a double tap and the face picker on a long press. Use the bezel
-  progress ring if you want the position shown on a face with its controls hidden.
-
-  Chat also follows the selected icon scale and opacity, and tap feedback no longer briefly
-  restores an icon the user hid. Expressive renders its stopped state instead of leaving an empty
-  face while the host's idle screen is hidden.
+- **Show player controls is only offered on faces it changes.** On Immersive, Depth, Carousel, Split, Note, Verse and Metadata the switch sat on the Player page and did nothing, because those faces draw no playback control for it to hide. It no longer appears there. On the faces that keep it, it does what it always did: the corner icons on Classic, and the face's own play/pause on the others. A value you had already set is kept and applies again if you switch back to such a face.
 
 - **"Repeat once" now looks the same wherever you assign it — and the two actions with that name
   are no longer both called that.** The icon really was wrong: the preset that sets repeat to one

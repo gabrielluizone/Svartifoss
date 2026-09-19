@@ -140,7 +140,7 @@ fun NoteFace(
                     maxLines = 1,
                     modifier = Modifier
                             .align(Alignment.BottomCenter)
-                            .padding(bottom = maxOf(screen * .07f, state.safeArea.bottomDp.dp))
+                            .padding(bottom = screen * .07f)
             )
         }
 

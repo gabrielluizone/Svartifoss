@@ -1,7 +1,5 @@
 package com.svartifoss.snfell.watch.view.face
 
-import com.svartifoss.snfell.common.PlayerControlGeometry
-import com.svartifoss.snfell.common.RoundScreenText
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -20,9 +18,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.platform.LocalConfiguration
@@ -37,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -85,7 +82,7 @@ import kotlin.math.tanh
  * wrapped in a progress ring that follows the cookie's scalloped contour, flanked by large
  * round prev/next buttons in the album accent's light container tone, over the album art
  * darkened by an accent tint and a radial black vignette. Queue/volume/menu access is left
- * entirely to the user's configured mini buttons (see [NowPlayingFaceState.safeArea])
+ * entirely to the user's configured mini buttons (see [NowPlayingFaceState.miniButtonsTopFraction])
  * rather than a fixed default trio, so there is never a second, conflicting set of shortcuts.
  *
  * Buttons retain their own taps and the ring retains drag-to-seek, while MainActivity's
@@ -94,6 +91,9 @@ import kotlin.math.tanh
  */
 @Composable
 fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
+    // Deliberately no early return on idle: the host hides the shared idle group for every Compose
+    // face, so returning here left a black screen whenever nothing was playing (see
+    // NowPlayingFaceState.idle). The layout below already renders the stopped-state text.
     if (state.ambient) {
         ExpressiveAmbientFace(state)
         return
@@ -102,16 +102,17 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val screen = maxWidth
         val metrics = expressiveMetrics(screen)
-        // The band is asked for when something will use it: the readout itself, or a scrub, which
-        // needs somewhere to report where the finger is pointing. It used to be reserved
-        // unconditionally, which spent the band on a readout the user had turned off.
-        val layout = PlayerControlGeometry.transportLayout("expressive", screen.value,
-                screen.value - state.safeArea.bottomDp,
-                state.showTrackTime || state.centralSeekEnabled, state.textBlockPosition,
-                showTransport = state.showControls)
+        // The ring's bottom edge below screen center - the transport row is centered and the ring
+        // fills the cookie box, so half the box height. Layout clamps (title height, track-time
+        // offset) hang off this instead of a magic fraction, so they track the real button size.
+        val ringBottom = metrics.cookieBox / 2
         val theme = state.screenTheme
         val themeTokens = theme.tokens
-        val expressiveIconAlpha = themeTokens.iconAlpha
+        // Every other control-style theme only fades or scales these icons; only Hidden zeroes
+        // them out. Expressive's cookie/transport row is its one visual focus (there is no
+        // quadrant/gesture fallback the way Classic and the curated faces have), so this face
+        // always shows its icons at full opacity - Hidden becomes a no-op here.
+        val expressiveIconAlpha = themeTokens.iconAlpha.takeIf { it > 0f } ?: 1f
         val surfaceAccent = state.accentColor
 
         // Non-null while the user is dragging the ring to scrub (central seek mode). Drives both
@@ -146,153 +147,151 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
         val isRound = LocalConfiguration.current.isScreenRound
         val titleHorizontalPadding = if (isRound) screen * 0.16f else 16.dp
         if (state.showTitle || state.showArtist) {
-            val metadataInset = maxOf(titleHorizontalPadding,
-                    if (isRound) screen * RoundScreenText.sideInsetFor(
-                            layout.metadataTop / screen.value,
-                            (layout.metadataTop + layout.metadataHeight) / screen.value) else 0.dp)
-            FittedFaceContent(
-                    Modifier.align(Alignment.TopCenter)
-                            .padding(horizontal = metadataInset)
-                            .offset(y = layout.metadataTop.dp)
-                            .height(layout.metadataHeight.dp)
-                            .fillMaxWidth()
+            val insets = state.blockLineInsets(
+                    screen,
+                    BlockAnchor.TOP,
+                    EXPRESSIVE_TEXT_TOP_FRACTION,
+                    listOf(EXPRESSIVE_TITLE_LINE_DP.dp, EXPRESSIVE_ARTIST_ROW_DP.dp),
+                    floor = titleHorizontalPadding)
+            Column(
+                    modifier = Modifier
+                            .align(state.blockPlacement(Alignment.TopCenter))
+                            .padding(horizontal = insets.outer)
+                            .padding(vertical = state.blockSafeVerticalInset(screen))
+                            .padding(
+                                    top = state.blockDesignedTopPadding(
+                                            screen * EXPRESSIVE_TEXT_TOP_FRACTION))
+                            // Bound the title block to the top section (17% top margin down to the
+                            // ring top) and clip. Without this, a two-line "wrap" title plus artist
+                            // spills past the ring top and paints over the transport row; clipping a
+                            // rare overflowing second line is far better than overlapping the
+                            // controls. Ring top from screen top = center (0.5) minus half the ring.
+                            //
+                            // The cap describes the band *above the ring* and is therefore only
+                            // true while the block is still in it: once the user has moved the
+                            // block the ring is no longer what it has to clear, and keeping the
+                            // cap clipped a wrapped title to a single line at the bottom of the
+                            // screen for no reason anybody could see.
+                            .then(if (state.blockPlacementOverridden) Modifier else Modifier
+                                    .heightIn(max = (screen * 0.33f - ringBottom)
+                                            .coerceAtLeast(screen * 0.14f))
+                                    .clipToBounds()),
+                    horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
             ) {
-                Column(Modifier.fillMaxWidth(),
-                        horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)) {
-                    if (state.showTitle) {
-                        AdaptiveTitleText(
-                                text = state.title,
-                                mode = state.titleTextMode,
+                if (state.showTitle) {
+                    AdaptiveTitleText(
+                            text = state.title,
+                            mode = state.titleTextMode,
+                            state = state,
+                            typography = state.titleTypography,
+                            color = titleTextColor(state, Color.White),
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = state.titleFont,
+                            textAlign = TextAlign.Center,
+                            minFontSize = 12.sp,
+                            modifier = Modifier.padding(horizontal = insets.extra(0))
+                    )
+                }
+                if (state.showArtist && state.artist.isNotEmpty()) {
+                    Row(verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = state.blockArrangement(Arrangement.Center),
+                            modifier = Modifier.padding(horizontal = insets.extra(1))
+                                    .padding(top = if (state.showTitle) 2.dp else 0.dp)) {
+                        SourceIconGlyph(state, 13.dp, Color(state.artistColor))
+                        ArtistLineText(
+                                text = state.artist,
                                 state = state,
-                                typography = state.titleTypography,
-                                color = titleTextColor(state, Color.White),
-                                fontSize = 16.sp,
-                                fontWeight = FontWeight.Bold,
-                                fontFamily = state.titleFont,
-                                textAlign = TextAlign.Center,
-                                minFontSize = 12.sp,
-                                modifier = Modifier
+                                color = Color(state.artistColor),
+                                fontSize = 11.sp
                         )
-                    }
-                    if (state.showArtist && state.artist.isNotEmpty()) {
-                        Row(verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = state.blockArrangement(Arrangement.Center),
-                                modifier = Modifier
-                                        .padding(top = if (state.showTitle) 2.dp else 0.dp)) {
-                            SourceIconGlyph(state, 13.dp, Color(state.artistColor))
-                            ArtistLineText(
-                                    text = state.artist,
-                                    state = state,
-                                    color = Color(state.artistColor),
-                                    fontSize = 11.sp
-                            )
-                        }
                     }
                 }
             }
-
         }
 
-        // Hidden means gone, not transparent. The cookie, its contour ring and the two side
-        // buttons leave the layout entirely, and transportLayout hands their band back to the text
-        // above - the alpha-0 version left a hole the metadata could not move into, which is why
-        // turning the setting off looked like it had done nothing.
-        if (!state.showControls) {
-            // The gesture is not the glyph: the centre still toggles playback, opens the quick
-            // panel and opens the face picker, exactly as on every face with no visible control.
-            CenterGestureRegion(
+        Row(
+                modifier = Modifier.align(Alignment.Center),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(metrics.spacing)
+        ) {
+            RoundTransportButton(
+                    iconRes = commonR.drawable.action_skip_prev,
+                    contentDescription = state.leftActionDescription
+                            ?: stringResource(R.string.action_name_skip_prev),
+                    width = metrics.side,
+                    height = metrics.sideHeight,
+                    container = sideContainer,
+                    content = sideContent,
+                    borderColor = sideStroke,
+                    visible = state.showControls,
+                    iconAlpha = expressiveIconAlpha,
+                    iconScale = themeTokens.iconScale,
+                    iconOverride = state.leftActionIcon,
+                    iconOverrideTintable = state.leftActionIconTintable,
+                    onClick = listener::onSkipPreviousTap
+            )
+            CookiePlayButton(
+                    state = state,
+                    boxSize = metrics.cookieBox,
+                    cookieSize = metrics.cookie,
+                    ringStroke = metrics.ringStroke,
+                    container = centerContainer,
+                    content = centerContent,
+                    borderColor = centerStroke,
+                    iconAlpha = expressiveIconAlpha,
+                    iconScale = themeTokens.iconScale,
                     listener = listener,
-                    size = screen * PlayerControlGeometry.HIDDEN_TRANSPORT_REGION_FRACTION,
-                    pulseSize = screen * PlayerControlGeometry.HIDDEN_TRANSPORT_PULSE_FRACTION,
-                    state = state)
-        } else FittedFaceContent(Modifier.align(Alignment.TopCenter)
-                .offset(y = (layout.centerY - layout.diameter / 2f).dp)
-                .height(layout.diameter.dp).fillMaxWidth()) {
-            Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(metrics.spacing)
-            ) {
-                RoundTransportButton(
-                        iconRes = commonR.drawable.action_skip_prev,
-                        contentDescription = state.leftActionDescription
-                                ?: stringResource(R.string.action_name_skip_prev),
-                        width = metrics.side,
-                        height = metrics.sideHeight,
-                        container = sideContainer,
-                        content = sideContent,
-                        borderColor = sideStroke,
-                        visible = state.showControls,
-                        iconAlpha = expressiveIconAlpha,
-                        iconScale = themeTokens.iconScale,
-                        iconOverride = state.leftActionIcon,
-                        iconOverrideTintable = state.leftActionIconTintable,
-                        onClick = listener::onSkipPreviousTap
-                )
-                CookiePlayButton(
-                        state = state,
-                        boxSize = metrics.cookieBox,
-                        cookieSize = metrics.cookie,
-                        ringStroke = metrics.ringStroke,
-                        container = centerContainer,
-                        content = centerContent,
-                        borderColor = centerStroke,
-                        iconAlpha = expressiveIconAlpha,
-                        iconScale = themeTokens.iconScale,
-                        listener = listener,
-                        scrubFraction = scrubFraction,
-                        onScrub = { scrubFraction = it },
-                        onScrubCommit = {
-                            val committed = scrubFraction
-                            scrubFraction = null
-                            committed?.let(listener::onSeek)
-                        }
-                )
-                RoundTransportButton(
-                        iconRes = commonR.drawable.action_skip_next,
-                        contentDescription = state.rightActionDescription
-                                ?: stringResource(R.string.action_name_skip_next),
-                        width = metrics.side,
-                        height = metrics.sideHeight,
-                        container = sideContainer,
-                        content = sideContent,
-                        borderColor = sideStroke,
-                        visible = state.showControls,
-                        iconAlpha = expressiveIconAlpha,
-                        iconScale = themeTokens.iconScale,
-                        iconOverride = state.rightActionIcon,
-                        iconOverrideTintable = state.rightActionIconTintable,
-                        onClick = listener::onSkipNextTap
-                )
-            }
+                    scrubFraction = scrubFraction,
+                    onScrub = { scrubFraction = it },
+                    onScrubCommit = {
+                        val committed = scrubFraction
+                        scrubFraction = null
+                        committed?.let(listener::onSeek)
+                    }
+            )
+            RoundTransportButton(
+                    iconRes = commonR.drawable.action_skip_next,
+                    contentDescription = state.rightActionDescription
+                            ?: stringResource(R.string.action_name_skip_next),
+                    width = metrics.side,
+                    height = metrics.sideHeight,
+                    container = sideContainer,
+                    content = sideContent,
+                    borderColor = sideStroke,
+                    visible = state.showControls,
+                    iconAlpha = expressiveIconAlpha,
+                    iconScale = themeTokens.iconScale,
+                    iconOverride = state.rightActionIcon,
+                    iconOverrideTintable = state.rightActionIconTintable,
+                    onClick = listener::onSkipNextTap
+            )
         }
 
         val scrubbing = scrubFraction != null
-        // timeHeight is zero when the allocation dropped the readout to keep the control tappable -
-        // see PlayerControlGeometry.allocateTransportBands. Drawing it anyway would put it back on
-        // top of whatever took its place.
-        if (layout.timeHeight > 0f && (state.showTrackTime || scrubbing)) {
+        if (state.showTrackTime || scrubbing) {
             // While scrubbing, show the position the finger is pointing at (and brighten it) even
             // if the user normally hides the track time - it's the only readout of where the seek
             // will land.
             val shownPositionMs = scrubFraction?.let { (it * state.durationMs).toLong() } ?: state.positionMs
             // The default bottom trio is gone (mini buttons own that row now), so leave clearance
             // for the real row position. Material consumes the same metric for exact parity.
-            FittedFaceContent(Modifier.align(Alignment.TopCenter)
-                    .offset(y = (layout.timeCenterY - layout.timeHeight / 2f).dp)
-                    .width(screen * .68f).height(layout.timeHeight.dp), unboundedWidth = true) {
-                TrackTimeText(
-                        text = stringResource(
-                                R.string.playback_time_format,
-                                formatFaceTime(shownPositionMs),
-                                formatFaceTime(state.durationMs)
-                        ),
-                        state = state,
-                        color = if (scrubbing) Color.White else Color.White.copy(alpha = 0.7f),
-                        fontSize = 11.sp,
-                        fontFamily = GoogleSansFamily,
-                        maxLines = 1
-                )
-            }
+            val timeOffset = centeredTransportTrackTimeOffset(
+                    screen, state.miniButtonsTopFraction)
+            TrackTimeText(
+                    text = stringResource(
+                            R.string.playback_time_format,
+                            formatFaceTime(shownPositionMs),
+                            formatFaceTime(state.durationMs)
+                    ),
+                    state = state,
+                    color = if (scrubbing) Color.White else Color.White.copy(alpha = 0.7f),
+                    fontSize = 11.sp,
+                    fontFamily = GoogleSansFamily,
+                    modifier = Modifier
+                            .align(Alignment.Center)
+                            .offset(y = timeOffset)
+            )
         }
 
         if (state.showUpNextPill) {
@@ -302,9 +301,7 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                     onClick = listener::onQueueTap,
                     modifier = Modifier
                             .align(Alignment.BottomCenter)
-                            // The pill *is* the bottom band's content, so it takes the resting
-                            // line rather than the reserve that describes it.
-                            .padding(bottom = state.safeArea.lowerContentMarginDp.dp)
+                            .padding(bottom = screen * .07f)
             )
         }
     }

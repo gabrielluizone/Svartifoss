@@ -1,7 +1,5 @@
 package com.svartifoss.snfell.watch.view
 
-import com.svartifoss.snfell.common.PlayerChromeLayout
-import com.svartifoss.snfell.common.PlayerControlGeometry
 import android.Manifest
 import android.content.ComponentName
 import android.content.Context
@@ -299,6 +297,7 @@ class MainActivity : WearCompanionWatchActivity(),
 
         /** What a rail reports as the top of the mini-button band: nothing, in practice. The
          *  bottom-row value is clamped to .95 at most, so this is "the whole screen is yours". */
+        private const val RAIL_TOP_FRACTION = .95f
 
         /** The classic face's designed text sizes, which the user's size scale multiplies. Named
          *  so the initial setup and applyClassicTypography cannot drift out of step. */
@@ -334,6 +333,11 @@ class MainActivity : WearCompanionWatchActivity(),
         // one-screen hint. A version is persisted only after the final page is completed.
         private const val KEY_GESTURE_GUIDE_VERSION = "gesture_guide_version"
         private const val GESTURE_GUIDE_VERSION = 2
+
+        /** Top edge of the awake Up Next pill as a fraction of screen height: it sits at
+         *  BottomCenter with ~.07 bottom padding and ~.25 height, so its top is ~1 - .07 - .25.
+         *  Fed to the faces as miniButtonsTopFraction so the track time clears it. */
+        private const val AWAKE_PILL_TOP_FRACTION = 0.66f
 
         private const val ROTARY_SEEK_COMMIT_DELAY_MS = 400L
         private const val SEEK_CANCEL_FADE_MS = 140L
@@ -1455,7 +1459,6 @@ class MainActivity : WearCompanionWatchActivity(),
         val time = java.text.SimpleDateFormat(pattern, java.util.Locale.getDefault())
                 .format(java.util.Date())
         binding.ambientClock.text = time
-        binding.curvedClock.text = time
         // Keep the Chrono ambient face's large Compose clock in sync with the per-minute update.
         if (faceState.value.clockText != time) {
             updateFaceState { it.copy(clockText = time) }
@@ -3192,7 +3195,6 @@ class MainActivity : WearCompanionWatchActivity(),
         backButtonOverrideCallback.isEnabled = config.isActionActive(ButtonInfo(true, KeyEvent.KEYCODE_BACK, GESTURE_SINGLE_TAP))
 
         updateScreenButtons(config)
-        applyScreenTheme()
 
         quickPanelSlots = Array(QuickPanelButtons.ALL_SLOTS.size) {
             config.getAction(ButtonInfo(false, QuickPanelButtons.ALL_SLOTS[it], GESTURE_SINGLE_TAP))
@@ -3724,21 +3726,7 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Compose layouts reserve their lower chrome for shortcuts, so their mini buttons use a
      * compact bezel row instead of the Classic face's larger, user-positioned overlay. This
      * keeps the row away from play controls without shrinking artwork or changing typography. */
-    private var screenButtonsForceFlat = false
-
-    /**
-     * What currently occupies the bottom band - the measured mini-button row, the Up Next pill, or
-     * nothing - as the single input the safe area is resolved from.
-     *
-     * Held as a field because the two facts arrive from different places at different times: the
-     * row can only be described once it has been measured, while whether it is on screen at all is
-     * decided by `syncScreenButtonsVisibility`. Three separate writers used to publish three
-     * different bottom-band numbers between them.
-     */
-    private var lowerChromeContent: PlayerChromeLayout.LowerContent? = null
-
     private fun configureScreenButtonsGeometry() {
-        screenButtonsForceFlat = false
         val density = resources.displayMetrics.density
         val compact = screenFace in composeFaces
         var baseW = if (compact) 46f else 52f
@@ -3779,7 +3767,7 @@ class MainActivity : WearCompanionWatchActivity(),
         // their width is clamped instead of allowing a 210-276dp row to overflow a 192dp watch.
         // Compose geometry deliberately remains unchanged.
         var gapDp = if (visibleCount == 2) 16f else 12f
-        if (visibleCount > 0) {
+        if (!compact && visibleCount > 0) {
             val contentWidthPx = binding.contentFrame.width.takeIf { it > 0 }
                     ?: resources.displayMetrics.widthPixels
             val contentWidthDp = contentWidthPx / density
@@ -3877,6 +3865,21 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Round-safe bottom margin for an already measured/scaled visual width. Unlike the legacy
      *  count helper above, an over-wide value is clamped to the circle instead of falling back to
      *  16dp and placing its corners outside the display. */
+    private fun autoRowBottomMarginForWidthPx(rowWidthPx: Float): Int {
+        val density = resources.displayMetrics.density
+        if (!resources.configuration.isScreenRound) {
+            return (16f * density).roundToInt()
+        }
+        val content = binding.contentFrame
+        val radius = minOf(
+                content.width.takeIf { it > 0 } ?: resources.displayMetrics.widthPixels,
+                content.height.takeIf { it > 0 } ?: resources.displayMetrics.heightPixels) / 2f
+        if (radius <= 1f) return (16f * density).roundToInt()
+
+        val halfWidth = (rowWidthPx / 2f).coerceIn(0f, radius - 1f)
+        val minMargin = radius - kotlin.math.sqrt(radius * radius - halfWidth * halfWidth)
+        return (minMargin + 6f * density).roundToInt()
+    }
 
     /** Shows each configured mini-button slot with its action's icon and hides the rest; the
      *  whole row collapses when nothing is configured, so the screen looks exactly like before
@@ -3959,19 +3962,18 @@ class MainActivity : WearCompanionWatchActivity(),
         // not (and never on the empty idle screen).
         val pillVisible = showUpNextPillPref && !active && !faceState.value.idle
         updateFaceState { state ->
-            state.copy(showDefaultBottomPills = !active, showUpNextPill = pillVisible)
-        }
-        // The pill takes the band the row would have, so it is described to the resolver the same
-        // way. An inactive row leaves the band empty until repositionScreenButtonsRow measures it.
-        if (!active) {
-            val screenDp = minOf(resources.displayMetrics.widthPixels,
-                    resources.displayMetrics.heightPixels) / resources.displayMetrics.density
-            lowerChromeContent = if (pillVisible) {
-                PlayerChromeLayout.LowerContent.upNextPill(screenDp)
-            } else {
-                null
-            }
-            applyPlayerChrome()
+            state.copy(
+                    showDefaultBottomPills = !active,
+                    // The faces read miniButtonsTopFraction to keep the track time / lower content
+                    // clear of whatever occupies the bottom band. The pill takes the same band the
+                    // mini-button row would (BottomCenter, padding .07, height ~.25 of the screen),
+                    // so reserve its top edge (~.66) - otherwise the track time drew behind it.
+                    miniButtonsTopFraction = when {
+                        active -> state.miniButtonsTopFraction
+                        pillVisible -> AWAKE_PILL_TOP_FRACTION
+                        else -> 1f
+                    },
+                    showUpNextPill = pillVisible)
         }
         if (visible) {
             binding.screenButtonsRow.post { repositionScreenButtonsRow() }
@@ -3997,8 +3999,13 @@ class MainActivity : WearCompanionWatchActivity(),
             if (row.alpha != screenButtonsOpacity) {
                 row.alpha = screenButtonsOpacity
             }
-            lowerChromeContent = rowLowerContent(row.width.toFloat(), row.height.toFloat())
-            applyPlayerChrome()
+            updateFaceState { state ->
+                if (abs(state.miniButtonsTopFraction - RAIL_TOP_FRACTION) < .002f) {
+                    state
+                } else {
+                    state.copy(miniButtonsTopFraction = RAIL_TOP_FRACTION)
+                }
+            }
             return
         }
 
@@ -4012,9 +4019,10 @@ class MainActivity : WearCompanionWatchActivity(),
         // Classic's static View text, which the row must dodge. Compose faces have no equivalent
         // fixed block to measure (the View-based text block is GONE, and reading its last
         // measured geometry only made the row jump according to stale Classic text); their own
-        // content instead reads the safe area this publishes at the end and keeps itself clear of
-        // wherever the row ends up (see NowPlayingFaceState.safeArea), so the row here settles at
-        // its preferred offset without chasing a synthetic measurement.
+        // content instead reads the resulting miniButtonsTopFraction below and keeps itself clear
+        // of wherever the row ends up (see NowPlayingFaceState.miniButtonsTopFraction and
+        // CuratedPlayerFaces.TrackFooter), so the row here settles at its preferred offset
+        // without chasing a synthetic measurement.
         val textBottom = if (screenFace in composeFaces) {
             null
         } else {
@@ -4024,6 +4032,19 @@ class MainActivity : WearCompanionWatchActivity(),
                         it.getLocationInWindow(viewLoc)
                         (viewLoc[1] + it.height - contentLoc[1]).toFloat()
                     }
+        }
+
+        // Clear the bottom quadrant only when it is really drawn. Compose covers the old View
+        // chrome, Hidden has alpha 0, and an unconfigured quadrant has no drawable.
+        val bottomIconDrawn = screenFace !in composeFaces &&
+                binding.iconBottom.visibility == View.VISIBLE &&
+                binding.iconBottom.alpha > 0f &&
+                binding.iconBottom.drawable != null
+        val iconBottomLimit = if (bottomIconDrawn) {
+            binding.iconBottom.getLocationInWindow(viewLoc)
+            viewLoc[1] - contentLoc[1] - gapPx
+        } else {
+            Float.POSITIVE_INFINITY
         }
 
         // Where the static layout put the row (its automatic bottom margin).
@@ -4036,32 +4057,17 @@ class MainActivity : WearCompanionWatchActivity(),
 
         // Curvature is established before calculating the visible extent. Its padding is only a
         // touch-bounds reserve; maxRise is the part that is actually painted above the buttons.
-        var maxRise = applyScreenButtonsCurvature()
-        // A steep curve can spend most of a small watch's height. Keep the controls legible:
-        // use a flat row when the centered transport has no usable band left above the curve.
-        val centeredTransport = PlayerControlGeometry.transportDiameter(screenFace, content.height / density) != null
-        if (centeredTransport && maxRise > 0f &&
-                minOf(baseBottom, rowRestingLine(row.width.toFloat(), row.height.toFloat())) -
-                maxRise - 38f * density <
-                PlayerControlGeometry.minimumContentBottom(content.height / density) * density) {
-            screenButtonsForceFlat = true
-            visibleButtons.forEach {
-                it.translationY = 0f
-                it.rotation = 0f
-            }
-            row.setPadding(0, 0, 0, 0)
-            maxRise = 0f
-        }
+        val maxRise = applyScreenButtonsCurvature()
         val buttonHeight = visibleButtons.maxOf { it.height }.toFloat()
         val buttonWidth = visibleButtons.maxOf { it.width }.toFloat()
         val rowWidth = row.width.toFloat().coerceAtLeast(buttonWidth)
-        val isCurved = maxRise > 0f
+        val isCurved = resources.configuration.isScreenRound && screenButtonsCurveStyle != "flat"
 
         // Guard against old extra-wide persisted shapes and very small displays even before the
         // vertical collision calculation. Classic already receives count-aware LayoutParams in
         // configureScreenButtonsGeometry; this is the final measured-size safety net.
         val horizontalInset = 6f * density
-        val minimumScale = PlayerControlGeometry.MIN_MINI_SCALE
+        val minimumScale = if (screenFace in composeFaces) 0.45f else 0.78f
         val horizontalScale = ((content.width - horizontalInset * 2f) / rowWidth)
                 .coerceIn(minimumScale, 1f)
         var scale = horizontalScale
@@ -4071,7 +4077,8 @@ class MainActivity : WearCompanionWatchActivity(),
         // a few times because that lower resting line in turn gives Classic more vertical room.
         repeat(4) {
             val safeWidth = (if (isCurved) buttonWidth else rowWidth) * scale
-            bottom = rowRestingLine(safeWidth, (buttonHeight + maxRise) * scale)
+            val safeBottom = (content.height - autoRowBottomMarginForWidthPx(safeWidth)).toFloat()
+            bottom = minOf(safeBottom, iconBottomLimit)
 
             val requiredTop = textBottom?.plus(gapPx)
             if (requiredTop != null) {
@@ -4083,16 +4090,10 @@ class MainActivity : WearCompanionWatchActivity(),
         }
 
         // Re-evaluate the resting line once with the final scale from the loop.
-        if (screenFace in composeFaces) {
-            scale = minOf(scale, PlayerControlGeometry.miniRowScale(
-                    screenFace, content.height / density, bottom / density,
-                    (buttonHeight + maxRise) / density) { candidate ->
-                val width = (if (isCurved) buttonWidth else rowWidth) * candidate
-                rowRestingLine(width, (buttonHeight + maxRise) * candidate) / density
-            })
-        }
         val safeWidth = (if (isCurved) buttonWidth else rowWidth) * scale
-        bottom = rowRestingLine(safeWidth, (buttonHeight + maxRise) * scale)
+        bottom = minOf(
+                (content.height - autoRowBottomMarginForWidthPx(safeWidth)).toFloat(),
+                iconBottomLimit)
 
         row.translationY = bottom - baseBottom
         row.pivotX = row.width / 2f
@@ -4105,9 +4106,15 @@ class MainActivity : WearCompanionWatchActivity(),
             row.alpha = screenButtonsOpacity
         }
 
-        // Placed: report what it now occupies, through the one publisher.
-        lowerChromeContent = rowLowerContent(safeWidth, (buttonHeight + maxRise) * scale)
-        applyPlayerChrome()
+        val effectiveTop = bottom - (buttonHeight + maxRise) * scale
+        val topFraction = (effectiveTop / content.height).coerceIn(.20f, .95f)
+        updateFaceState { state ->
+            if (abs(state.miniButtonsTopFraction - topFraction) < .002f) {
+                state
+            } else {
+                state.copy(miniButtonsTopFraction = topFraction)
+            }
+        }
     }
 
     /**
@@ -4139,7 +4146,7 @@ class MainActivity : WearCompanionWatchActivity(),
         val placement = MiniButtonPlacement.fromPreference(screenButtonsCurveStyle)
         val tiltFraction = placement.tiltFraction
 
-        if (screenButtonsForceFlat || !placement.followsCurve || !resources.configuration.isScreenRound) {
+        if (!placement.followsCurve || !resources.configuration.isScreenRound) {
             for (button in buttons) {
                 button.translationX = 0f
                 button.translationY = 0f
@@ -4795,12 +4802,21 @@ class MainActivity : WearCompanionWatchActivity(),
         }
 
         alwaysDisplayClock = faceBool(MiscPreferences.ALWAYS_SHOW_TIME)
-        // Which clock is drawn, and how the top hint sits with it, is one decision taken in
-        // applyPlayerChrome - reached from the applyScreenFace() call at the end of this block.
-        // This used to be a second place that hid iconTop and toggled ambient_clock, and it is how
-        // "Always show time" came to delete the top quadrant's icon outright.
-        if (alwaysDisplayClock && !ambientObserver.isAmbient) {
-            handler.sendEmptyMessage(MESSAGE_UPDATE_CLOCK)
+        if (!ambientObserver.isAmbient) {
+            if (screenFace in composeFaces) {
+                // Compose faces render their own FaceClock. Keep the classic View clock (and the
+                // top quadrant icon) hidden so the two clocks never stack - they use slightly
+                // different top offsets and briefly read as a doubled clock otherwise.
+                binding.ambientClock.visibility = View.GONE
+                binding.iconTop.visibility = View.GONE
+            } else if (alwaysDisplayClock) {
+                binding.ambientClock.visibility = View.VISIBLE
+                binding.iconTop.visibility = View.GONE
+                handler.sendEmptyMessage(MESSAGE_UPDATE_CLOCK)
+            } else {
+                binding.iconTop.visibility = View.VISIBLE
+                binding.ambientClock.visibility = View.GONE
+            }
         }
 
         dimAlbumArt = faceBool(MiscPreferences.DIM_ALBUM_ART)
@@ -5082,13 +5098,24 @@ class MainActivity : WearCompanionWatchActivity(),
                 .filterTo(mutableSetOf()) { group ->
                     faceBool(MiscPreferences.metadataGroupPreference(group))
                 }
+        val keepsEssentialTransport = screenFace == "expressive" || screenFace == "material"
+        // Expressive and Material use their center transport as the composition's only obvious
+        // playback affordance. Hidden/Show controls off therefore become a deliberate no-op for
+        // those two faces, while Poster, Studio, Classic and every other curated face continue to
+        // honor both control visibility and style.
+        val effectiveFaceTheme = if (keepsEssentialTransport && screenTheme == ScreenTheme.HIDDEN) {
+            ScreenTheme.DEFAULT
+        } else {
+            screenTheme
+        }
         updateFaceState {
             it.copy(
-                    screenTheme = screenTheme,
-                    showControls = playerControlsVisible && screenTheme != ScreenTheme.HIDDEN,
+                    screenTheme = effectiveFaceTheme,
+                    showControls = playerControlsVisible || keepsEssentialTransport,
                     showInternalProgress = internalProgressVisible,
                     // Cookie and bezel are disjoint targets; neither disables the other.
                     centralSeekEnabled = shouldEnableCentralSeek(expressiveSeekMode),
+                    showClock = alwaysDisplayClock,
                     fontKey = wearFontKey,
                     titleFontKey = wearTitleFontKey,
                     artistFontKey = wearArtistFontKey,
@@ -5437,131 +5464,44 @@ class MainActivity : WearCompanionWatchActivity(),
 
     /** [applyScreenTheme] without the ambient guard - see [applyScreenFaceNow]. */
     private fun applyScreenThemeNow() {
-        applyPlayerChrome()
-        binding.screenButtonsRow.post { repositionScreenButtonsRow() }
+        val icons = listOf(binding.iconTop, binding.iconBottom, binding.iconLeft, binding.iconRight)
+        val alwaysShowTime = faceBool(MiscPreferences.ALWAYS_SHOW_TIME)
+        val tokens = screenTheme.tokens
+
+        // The backdrop is never theme-owned. Gesture regions, the center tap zone, seek ring,
+        // text and the user-configured mini buttons keep their existing geometry for every theme -
+        // only the quadrant hint icons' opacity and size change.
+
+        if (screenFace in composeFaces) {
+            // Compose faces resolve the same tokens from NowPlayingFaceState. The host still owns
+            // the shared art/scrim, while Vinyl and Poster deliberately paint their own backdrop.
+            icons.forEach { it.visibility = View.GONE }
+            binding.ambientClock.visibility = View.GONE
+            return
+        }
+
+        val iconSizeDefault = resources.getDimensionPixelSize(R.dimen.music_screen_icon_size)
+        val iconSize = (iconSizeDefault * tokens.iconScale).roundToInt()
+        icons.forEach { icon ->
+            val hideTop = icon === binding.iconTop && alwaysShowTime
+            icon.visibility = if (playerControlsVisible && !hideTop) View.VISIBLE else View.GONE
+            icon.alpha = tokens.iconAlpha
+            val params = icon.layoutParams
+            params.width = iconSize
+            params.height = iconSize
+            icon.layoutParams = params
+        }
+        binding.ambientClock.visibility = if (alwaysShowTime) View.VISIBLE else View.GONE
     }
 
-    /** The measured row, in the terms the resolver takes. */
-    private fun rowLowerContent(widthPx: Float, heightPx: Float): PlayerChromeLayout.LowerContent {
-        val density = resources.displayMetrics.density
-        return PlayerChromeLayout.LowerContent.row(
-                widthDp = widthPx / density,
-                heightDp = heightPx / density,
-                placement = MiniButtonPlacement.fromPreference(screenButtonsCurveStyle),
-                hostedByFace = MiniButtonPlacement.isHostedByFace(screenFace))
-    }
-
-    /**
-     * Where a row of this width may rest, in pixels from the top of the frame.
-     *
-     * The bezel chord *and* the bottom hint in one answer. These were two separate measurements -
-     * a chord margin computed here and the hint's laid-out position read off the View - and the
-     * second only worked once the icon had been through a layout pass.
-     */
-    private fun rowRestingLine(widthPx: Float, heightPx: Float): Float =
-            binding.contentFrame.height - PlayerChromeLayout.resolve(
-                    playerChromeInputs().copy(lowerContent = rowLowerContent(widthPx, heightPx)))
-                    .lowerMarginDp * resources.displayMetrics.density
-
-    /** The four quadrant hints, paired with the quadrant each one describes. */
+    /** The four quadrant hints, paired with the quadrant each one describes. The hint views are
+     *  also where the tap confirmation reads each quadrant's single-tap icon from, which is kept
+     *  current by `buttonConfigObserver` whether or not the hint itself is drawn. */
     private fun quadrantHintViews(): List<Pair<Int, ImageView>> = listOf(
             ScreenQuadrant.TOP to binding.iconTop,
             ScreenQuadrant.BOTTOM to binding.iconBottom,
             ScreenQuadrant.LEFT to binding.iconLeft,
             ScreenQuadrant.RIGHT to binding.iconRight)
-
-    /**
-     * The discrete facts [PlayerChromeLayout] needs, and nothing it can work out for itself.
-     *
-     * A quadrant counts as configured when its icon has a drawable, which is what
-     * `buttonConfigObserver` sets from the active playing/stopped config. Whether that hint is then
-     * *drawn* - the control-style gate, and the two faces that carry the side actions in their own
-     * transport row - is the resolver's decision, not this one's.
-     */
-    private fun playerChromeInputs(): PlayerChromeLayout.Inputs {
-        val metrics = resources.displayMetrics
-        val content = binding.contentFrame
-        val widthPx = content.width.takeIf { it > 0 } ?: metrics.widthPixels
-        val heightPx = content.height.takeIf { it > 0 } ?: metrics.heightPixels
-        val tokens = screenTheme.tokens
-        return PlayerChromeLayout.Inputs(
-                screenDp = minOf(widthPx, heightPx) / metrics.density,
-                round = resources.configuration.isScreenRound,
-                face = screenFace,
-                configuredQuadrants = quadrantHintViews()
-                        .filter { it.second.drawable != null }
-                        .mapTo(mutableSetOf()) { it.first },
-                hintsVisible = playerControlsVisible && tokens.iconAlpha > 0f,
-                hintScale = tokens.iconScale,
-                clockVisible = alwaysDisplayClock,
-                // The clock is the one chrome item the user scales, so its band cannot be assumed.
-                // sp to dp, because the system font scale moves it too.
-                clockTextDp = clockTypography.scaled(CLASSIC_CLOCK_SP) *
-                        resources.configuration.fontScale,
-                lowerContent = lowerChromeContent)
-    }
-
-    /**
-     * Place every piece of chrome from one resolved answer.
-     *
-     * The backdrop is never theme-owned: gesture regions, the centre tap zone, the seek ring, the
-     * text and the user-configured mini buttons keep their geometry for every control style. What
-     * this owns is the clock and the four hints - where they sit, how large they are, and which of
-     * them are drawn at all.
-     *
-     * Each hint is centred in the frame and then moved to its cardinal point, so one expression
-     * places all four and the cross cannot drift. The sizes come straight from the resolver, which
-     * never shrinks one: the 16dp hints, the sideways nudge past the clock and the scaled-down
-     * Classic clock that used to live here were all attempts to buy space by making the chrome
-     * smaller, and each of them read as a mistake rather than as a design.
-     */
-    private fun applyPlayerChrome() {
-        val chrome = PlayerChromeLayout.resolve(playerChromeInputs())
-        val metrics = resources.displayMetrics
-        val content = binding.contentFrame
-        val widthPx = (content.width.takeIf { it > 0 } ?: metrics.widthPixels).toFloat()
-        val heightPx = (content.height.takeIf { it > 0 } ?: metrics.heightPixels).toFloat()
-        val iconAlpha = screenTheme.tokens.iconAlpha
-
-        for ((quadrant, icon) in quadrantHintViews()) {
-            icon.animate().cancel()
-            icon.scaleX = 1f
-            icon.scaleY = 1f
-            val placement = chrome.hint(quadrant)
-            if (placement == null) {
-                icon.visibility = View.GONE
-                continue
-            }
-            icon.visibility = View.VISIBLE
-            icon.alpha = iconAlpha
-            val size = (placement.sizeDp * metrics.density).roundToInt()
-            val params = icon.layoutParams
-            // Guarded: assigning layoutParams starts the layout pass this runs from.
-            if (params.width != size || params.height != size) {
-                params.width = size
-                params.height = size
-                icon.layoutParams = params
-            }
-            icon.translationX = (placement.centerXFraction - .5f) * widthPx
-            icon.translationY = (placement.centerYFraction - .5f) * heightPx
-        }
-
-        val curved = chrome.clock == PlayerChromeLayout.ClockStyle.CURVED_ARC
-        binding.curvedClock.visibility = if (curved) View.VISIBLE else View.GONE
-        // The straight clock has one renderer per face kind - this View for Classic and Matejdro,
-        // FaceClock inside each Compose composition - while the curved one is a single host view
-        // above all of them, so only the View faces read this.
-        binding.ambientClock.visibility = if (!curved && alwaysDisplayClock &&
-                screenFace !in composeFaces) View.VISIBLE else View.GONE
-
-        updateFaceState { state ->
-            if (state.safeArea == chrome.safeArea && state.showClock == (alwaysDisplayClock && !curved)) {
-                state
-            } else {
-                state.copy(safeArea = chrome.safeArea, showClock = alwaysDisplayClock && !curved)
-            }
-        }
-    }
 
     private val notificationObserver = Observer<Notification?> {
         if (it == null) {
@@ -6431,14 +6371,6 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.ambientClock.setTextSize(
                 TypedValue.COMPLEX_UNIT_SP, clockTypography.scaled(CLASSIC_CLOCK_SP))
         binding.ambientClock.letterSpacing = clockTypography.trackingEm
-        // The curved clock takes the values the straight one just resolved rather than resolving
-        // the font key, the Flex axes and the colour mode a second time - that is what keeps the
-        // two from drifting apart when only one of them is on screen.
-        binding.curvedClock.setClockPaint(
-                binding.ambientClock.typeface,
-                binding.ambientClock.textSize,
-                color,
-                clockTypography.trackingEm)
         if (faceState.value.clockColor != color) {
             updateFaceState { it.copy(clockColor = color) }
         }
@@ -6478,9 +6410,6 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.textArtist.alpha = 1f
         binding.textPlaybackTime.alpha = 1f
         binding.ambientClock.alpha = aodIntensity
-        // The arc is an awake affordance; AOD keeps the straight clock, which is the variant the
-        // burn-in jiggle and the intensity scaling were audited against.
-        binding.curvedClock.visibility = View.GONE
         // Chrono draws its own large clock in Compose, so the small View clock is hidden for it.
         binding.ambientClock.visibility =
                 if (aodShowClock && style != "chrono") View.VISIBLE else View.GONE

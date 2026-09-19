@@ -1,8 +1,14 @@
 # Player chrome layout — study and plan
 
-Status: **implemented** - all seven steps, pending device validation. Written 2026-09-16 in response to user feedback about the now-playing screen.
-Supersedes the uncommitted `docs/player-layout-validation.md`, which documents an earlier attempt at
-the same defects (see *The earlier attempt* below).
+Status: **reverted** on 2026-09-19, before it shipped. Written 2026-09-16 in response to user feedback about the now-playing screen, implemented the same day, then taken back out.
+
+> **Why it was reverted.** On the wrist the result did not read as chrome making room for a face - it read as the faces being rearranged. Drawing the quadrant hints above every Compose face, resting the mini-button row above the bottom hint and re-allocating Expressive's and Material's metadata / transport / time bands together pushed the title up, lifted the row into the transport and put a hint at each edge of compositions that were designed without one. The author's judgement was that this interfered directly with how each layout is meant to look, so the player's layout is back to the 4.0 state: hints hidden on Compose faces, the row placed as in 4.0, every face's own composition untouched, and Expressive and Material keeping their transport visible.
+>
+> Kept from this work, because none of it is layout: the Repeat Once icon and the "Set repeat: …" labels (§7), the action glyph inside the tap ripple (*Flash icon on tap*, now offered on every face), and Expressive drawing its stopped state instead of a black screen.
+>
+> The study below is kept as the record of the reported defects and why they exist, so the question is not re-opened from first principles. Any future answer to them has to leave each face's composition as its author drew it - which this one did not.
+
+Originally superseded the uncommitted `docs/player-layout-validation.md`, which documents an earlier attempt at the same defects (see *The earlier attempt* below).
 
 The subject is the chrome that surrounds a now-playing face — the clock, the four quadrant hints,
 the mini-button row, the Up Next pill — and how the fifteen shipping faces share the screen with it.

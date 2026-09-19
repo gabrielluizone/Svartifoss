@@ -1,7 +1,5 @@
 package com.svartifoss.snfell.watch.view.face
 
-import com.svartifoss.snfell.common.PlayerControlGeometry
-import com.svartifoss.snfell.common.RoundScreenText
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
@@ -199,9 +197,7 @@ private fun CuratedPlayerFace(
                     onClick = listener::onQueueTap,
                     modifier = Modifier
                             .align(Alignment.BottomCenter)
-                            // The pill *is* the bottom band's content, so it takes the resting
-                            // line rather than the reserve that describes it.
-                            .padding(bottom = state.safeArea.lowerContentMarginDp.dp)
+                            .padding(bottom = screen * .07f)
             )
         }
     }
@@ -652,12 +648,11 @@ private fun BoxScope.StudioComposition(
         StudioMetadata(state, screen, p)
     }
     val orbR = screen * .16f
-    val bottomInset = maxOf(screen * .04f, state.safeArea.bottomDp.dp)
     InteractiveFocus(state, listener, RoundedCornerShape(0.dp),
             Modifier.fillMaxSize()) {
         if (state.showInternalProgress) {
             Canvas(Modifier.align(Alignment.BottomCenter)
-                    .padding(bottom = bottomInset)
+                    .padding(bottom = screen * .04f)
                     .size(orbR * 2)) {
                 val stroke = 4.dp.toPx()
                 drawArc(Color.White.copy(alpha = .24f), -90f, 360f, false,
@@ -673,7 +668,7 @@ private fun BoxScope.StudioComposition(
         // staying completely unobscured.
         PlayPauseGlyph(
                 state, Color.White, orbR * .55f,
-                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = bottomInset)
+                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = screen * .04f)
         )
     }
     // Inside the bottom progress orb when it's drawn; anchored to the floor when it isn't,
@@ -1408,19 +1403,15 @@ private fun BoxScope.TrackFooter(
     // fully opaque white at 13sp, visible whenever there's a position to show - Classic never
     // hides its time line just because mini buttons are configured, so this doesn't either.
     if (!state.showTrackTime) return
-    // Clamped above whatever the shared chrome occupies, rather than above a fixed lower band
-    // this text used to avoid by disappearing. `y` is an offset from the centre, so the chrome's
-    // top edge is half the screen minus its reserve - and that reserve already carries its own
-    // breathing gap, which is why nothing is subtracted here. The clearance goes negative on a
-    // crowded screen; coerceAtLeast keeps it from yanking the time up over the face's own focus,
-    // never above screen*0.16f, so it always stays below centre.
-    val miniRowClearance = screen * .5f - state.safeArea.bottomDp.dp
-    val floor = minOf(y, screen * 0.16f)
-    // The time yields rather than being clamped into the composition - the same order
-    // PlayerControlGeometry.allocateTransportBands applies to the centred faces. Pushed past this
-    // floor it would be sitting on the face's own focus, which is worse than not being drawn.
-    if (miniRowClearance < floor) return
-    val clampedY = minOf(y, miniRowClearance).coerceAtLeast(floor)
+    // Same defensive clearance as ExpressiveFace's track time: clamp above wherever the
+    // mini-button row actually settled (see NowPlayingFaceState.miniButtonsTopFraction) instead
+    // of the row occupying a fixed lower band this text used to just avoid by disappearing.
+    // The clearance term goes negative when the row settles high (fraction near its .20f floor);
+    // coerceAtLeast keeps this from yanking the time up over the face's central focus. The floor
+    // is the caller's desired y, but never above screen*0.16f, so it always stays below center.
+    val miniRowClearance =
+            screen * state.miniButtonsTopFraction.coerceIn(.20f, .95f) - screen * .50f - 10.dp
+    val clampedY = minOf(y, miniRowClearance).coerceAtLeast(minOf(y, screen * 0.16f))
     TrackTimeText(
             text = stringResource(R.string.playback_time_format,
                     formatFaceClockTime(state.positionMs), formatFaceClockTime(state.durationMs)),
@@ -1897,182 +1888,180 @@ private fun BoxScope.MaterialComposition(
         progress: () -> Float,
         screen: Dp
 ) {
-    val layout = PlayerControlGeometry.transportLayout("material", screen.value,
-            screen.value - state.safeArea.bottomDp, state.showTrackTime, state.textBlockPosition,
-            showTransport = state.showControls)
     // The awake typography is larger than Material AOD's, so 17% places the visible baselines in
     // the same clock-to-control band without letting the artist line touch the center disc.
-    val metadataInset = maxOf(screen * .12f,
-            if (androidx.compose.ui.platform.LocalConfiguration.current.isScreenRound)
-                screen * RoundScreenText.sideInsetFor(layout.metadataTop / screen.value,
-                        (layout.metadataTop + layout.metadataHeight) / screen.value) else 0.dp)
-    FittedFaceContent(Modifier.align(Alignment.TopCenter)
-            .padding(horizontal = metadataInset)
-            .offset(y = layout.metadataTop.dp)
-            .height(layout.metadataHeight.dp).fillMaxWidth()) {
-        Column(Modifier.fillMaxWidth(),
-                        horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)) {
-            if (state.showTitle) {
-                AdaptiveTitleText(
-                        text = state.title,
-                        mode = state.titleTextMode,
+    val insets = state.blockLineInsets(
+            screen,
+            BlockAnchor.TOP,
+            FaceGeometry.CuratedText.MATERIAL_TOP_FRACTION,
+            listOf(
+                    FaceGeometry.CuratedText.MATERIAL_TITLE_LINE_DP.dp,
+                    FaceGeometry.CuratedText.MATERIAL_ARTIST_ROW_DP.dp),
+            floor = screen * .12f)
+    Column(
+            modifier = Modifier
+                    .align(state.blockPlacement(Alignment.TopCenter))
+                    .padding(horizontal = insets.outer)
+                    .padding(vertical = state.blockSafeVerticalInset(screen))
+                    .padding(
+                            top = state.blockDesignedTopPadding(
+                                    screen * FaceGeometry.CuratedText.MATERIAL_TOP_FRACTION))
+                    // The inset already includes the designed margin. Fill what remains instead
+                    // of subtracting the chord from a column that has its own side margins.
+                    .fillMaxWidth(),
+            horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
+    ) {
+        if (state.showTitle) {
+            AdaptiveTitleText(
+                    text = state.title,
+                    mode = state.titleTextMode,
+                    state = state,
+                    typography = state.titleTypography,
+                    color = titleTextColor(state, Color.White),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = state.titleFont,
+                    textAlign = TextAlign.Center,
+                    minFontSize = 13.sp,
+                    modifier = Modifier.padding(horizontal = insets.extra(0))
+            )
+        }
+        if (state.showArtist && state.artist.isNotEmpty()) {
+            Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = state.blockArrangement(Arrangement.Center),
+                    modifier = Modifier.padding(horizontal = insets.extra(1))
+                            .padding(top = 2.dp)
+            ) {
+                SourceIconGlyph(state, 13.dp, artistOrStatusColor(state, 0.70f))
+                ArtistLineText(
+                        text = state.artist,
                         state = state,
-                        typography = state.titleTypography,
-                        color = titleTextColor(state, Color.White),
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        fontFamily = state.titleFont,
-                        textAlign = TextAlign.Center,
-                        minFontSize = 13.sp,
-                        modifier = Modifier
+                        color = artistOrStatusColor(state, 0.70f),
+                        fontSize = 13.sp
                 )
-            }
-            if (state.showArtist && state.artist.isNotEmpty()) {
-                Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = state.blockArrangement(Arrangement.Center),
-                        modifier = Modifier
-                                .padding(top = 2.dp)
-                ) {
-                    SourceIconGlyph(state, 13.dp, artistOrStatusColor(state, 0.70f))
-                    ArtistLineText(
-                            text = state.artist,
-                            state = state,
-                            color = artistOrStatusColor(state, 0.70f),
-                            fontSize = 13.sp
-                    )
-                }
             }
         }
     }
 
     val discSize = screen * 0.30f
-    // Same contract as Expressive: hidden removes the disc, its ring and the side actions from the
-    // layout so the band goes back to the text, and the centre keeps its gesture.
-    if (!state.showControls) {
-        CenterGestureRegion(
+    Row(
+            modifier = Modifier
+                    .align(Alignment.Center)
+                    .fillMaxWidth()
+                    .padding(horizontal = screen * 0.05f),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
+    ) {
+        MaterialSideAction(
+                iconRes = commonR.drawable.action_skip_prev,
+                iconOverride = state.leftActionIcon,
+                iconOverrideTintable = state.leftActionIconTintable,
+                description = state.leftActionDescription
+                        ?: stringResource(R.string.action_name_skip_prev),
+                visible = state.showControls,
+                iconAlpha = state.screenTheme.tokens.iconAlpha,
+                iconScale = state.screenTheme.tokens.iconScale,
+                onClick = listener::onSkipPreviousTap
+        )
+
+        InteractiveFocus(
+                state = state,
                 listener = listener,
-                size = screen * PlayerControlGeometry.HIDDEN_TRANSPORT_REGION_FRACTION,
-                pulseSize = screen * PlayerControlGeometry.HIDDEN_TRANSPORT_PULSE_FRACTION,
-                state = state)
-    } else FittedFaceContent(Modifier.align(Alignment.TopCenter)
-            .offset(y = (layout.centerY - layout.diameter / 2f).dp)
-            .height(layout.diameter.dp).fillMaxWidth()) {
-        Row(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = screen * 0.05f),
-                horizontalArrangement = Arrangement.SpaceAround,
-                verticalAlignment = Alignment.CenterVertically
+                shape = CircleShape,
+                modifier = Modifier.size(discSize)
         ) {
-            MaterialSideAction(
-                    iconRes = commonR.drawable.action_skip_prev,
-                    iconOverride = state.leftActionIcon,
-                    iconOverrideTintable = state.leftActionIconTintable,
-                    description = state.leftActionDescription
-                            ?: stringResource(R.string.action_name_skip_prev),
-                    visible = state.showControls,
-                    iconAlpha = state.screenTheme.tokens.iconAlpha,
-                    iconScale = state.screenTheme.tokens.iconScale,
-                    onClick = listener::onSkipPreviousTap
-            )
+            Canvas(Modifier.fillMaxSize()) {
+                val stroke = 4.5.dp.toPx()
+                val inset = stroke / 2f
+                val arcSize = Size(size.width - stroke, size.height - stroke)
+                val topLeft = Offset(inset, inset)
 
-            InteractiveFocus(
-                    state = state,
-                    listener = listener,
-                    shape = CircleShape,
-                    modifier = Modifier.size(discSize)
-            ) {
-                Canvas(Modifier.fillMaxSize()) {
-                    val stroke = 4.5.dp.toPx()
-                    val inset = stroke / 2f
-                    val arcSize = Size(size.width - stroke, size.height - stroke)
-                    val topLeft = Offset(inset, inset)
+                // This ring is the Material center control's defining outline, like the contour
+                // ring on Expressive, so it remains present independently of the optional extra
+                // progress indicators used by the other curated layouts.
+                drawArc(
+                        color = Color.White.copy(alpha = 0.18f),
+                        startAngle = -90f,
+                        sweepAngle = 360f,
+                        useCenter = false,
+                        topLeft = topLeft,
+                        size = arcSize,
+                        style = Stroke(width = stroke)
+                )
+                drawArc(
+                        color = Color(state.progressColor),
+                        startAngle = -90f,
+                        sweepAngle = progress() * 360f,
+                        useCenter = false,
+                        topLeft = topLeft,
+                        size = arcSize,
+                        style = Stroke(width = stroke, cap = StrokeCap.Round)
+                )
 
-                    // This ring is the Material center control's defining outline, like the contour
-                    // ring on Expressive, so it remains present independently of the optional extra
-                    // progress indicators used by the other curated layouts.
-                    drawArc(
-                            color = Color.White.copy(alpha = 0.18f),
-                            startAngle = -90f,
-                            sweepAngle = 360f,
-                            useCenter = false,
-                            topLeft = topLeft,
-                            size = arcSize,
-                            style = Stroke(width = stroke)
+                if (state.showControls) {
+                    val innerR = size.minDimension / 2f - stroke
+                    drawCircle(
+                            color = Color.White.copy(alpha = 0.10f),
+                            radius = innerR
                     )
-                    drawArc(
-                            color = Color(state.progressColor),
-                            startAngle = -90f,
-                            sweepAngle = progress() * 360f,
-                            useCenter = false,
-                            topLeft = topLeft,
-                            size = arcSize,
-                            style = Stroke(width = stroke, cap = StrokeCap.Round)
-                    )
-
-                    if (state.showControls) {
-                        val innerR = size.minDimension / 2f - stroke
-                        drawCircle(
-                                color = Color.White.copy(alpha = 0.10f),
-                                radius = innerR
-                        )
-                    }
-                }
-
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    if (state.showControls) {
-                        Icon(
-                                painter = painterResource(
-                                        if (state.playing) commonR.drawable.action_pause_filled
-                                        else commonR.drawable.action_play_filled
-                                ),
-                                contentDescription = null,
-                                tint = Color.White.copy(alpha = state.screenTheme.tokens.iconAlpha),
-                                // The narrower play triangle gets a small optical increase and offset;
-                                // only the glyph grows, while the surrounding control stays unchanged.
-                                modifier = Modifier
-                                        .size(
-                                                (if (state.playing) 34.dp else 38.dp) *
-                                                        state.screenTheme.tokens.iconScale
-                                        )
-                                        .offset(x = if (state.playing) 0.dp else 1.dp)
-                        )
-                    }
                 }
             }
 
-            MaterialSideAction(
-                    iconRes = commonR.drawable.action_skip_next,
-                    iconOverride = state.rightActionIcon,
-                    iconOverrideTintable = state.rightActionIconTintable,
-                    description = state.rightActionDescription
-                            ?: stringResource(R.string.action_name_skip_next),
-                    visible = state.showControls,
-                    iconAlpha = state.screenTheme.tokens.iconAlpha,
-                    iconScale = state.screenTheme.tokens.iconScale,
-                    onClick = listener::onSkipNextTap
-            )
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                if (state.showControls) {
+                    Icon(
+                            painter = painterResource(
+                                    if (state.playing) commonR.drawable.action_pause_filled
+                                    else commonR.drawable.action_play_filled
+                            ),
+                            contentDescription = null,
+                            tint = Color.White.copy(alpha = state.screenTheme.tokens.iconAlpha),
+                            // The narrower play triangle gets a small optical increase and offset;
+                            // only the glyph grows, while the surrounding control stays unchanged.
+                            modifier = Modifier
+                                    .size(
+                                            (if (state.playing) 34.dp else 38.dp) *
+                                                    state.screenTheme.tokens.iconScale
+                                    )
+                                    .offset(x = if (state.playing) 0.dp else 1.dp)
+                    )
+                }
+            }
         }
+
+        MaterialSideAction(
+                iconRes = commonR.drawable.action_skip_next,
+                iconOverride = state.rightActionIcon,
+                iconOverrideTintable = state.rightActionIconTintable,
+                description = state.rightActionDescription
+                        ?: stringResource(R.string.action_name_skip_next),
+                visible = state.showControls,
+                iconAlpha = state.screenTheme.tokens.iconAlpha,
+                iconScale = state.screenTheme.tokens.iconScale,
+                onClick = listener::onSkipNextTap
+        )
     }
 
-    if (layout.timeHeight > 0f) {
-        FittedFaceContent(Modifier.align(Alignment.TopCenter)
-                .offset(y = (layout.timeCenterY - layout.timeHeight / 2f).dp)
-                .width(screen * .68f).height(layout.timeHeight.dp), unboundedWidth = true) {
-            TrackTimeText(
-                    text = stringResource(
-                            R.string.playback_time_format,
-                            formatFaceClockTime(state.positionMs),
-                            formatFaceClockTime(state.durationMs)
-                    ),
-                    state = state,
-                    color = Color.White.copy(alpha = .70f),
-                    fontSize = 11.sp,
-                    fontFamily = GoogleSansFamily,
-                    textAlign = TextAlign.Center,
-                    maxLines = 1,
-                    modifier = Modifier.fillMaxWidth()
-            )
-        }
+    if (state.showTrackTime) {
+        TrackTimeText(
+                text = stringResource(
+                        R.string.playback_time_format,
+                        formatFaceClockTime(state.positionMs),
+                        formatFaceClockTime(state.durationMs)
+                ),
+                state = state,
+                color = Color.White.copy(alpha = .70f),
+                fontSize = 11.sp,
+                fontFamily = GoogleSansFamily,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                modifier = Modifier
+                        .align(Alignment.Center)
+                        .offset(y = centeredTransportTrackTimeOffset(
+                                screen, state.miniButtonsTopFraction))
+                        .width(screen * .68f)
+        )
     }
 }
 
