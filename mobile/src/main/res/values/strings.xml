@@ -2612,6 +2612,9 @@
     <string name="playlist_shortcuts_help">Share a playlist, album or track directly to Svartifoss, paste a copied link, or add one manually. The watch asks the phone to open it; no service login is required.</string>
     <string name="back">Back</string>
     <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <!-- The same pill wherever a feature is marked unfinished; an alias so every locale keeps the
+         translation it already has. -->
+    <string name="beta_badge" translatable="false">@string/playlist_shortcuts_beta_badge</string>
     <string name="playlist_shortcuts_intro_title">Your music, one tap away</string>
     <string name="playlist_shortcuts_yours">Your shortcuts</string>
     <string name="playlist_shortcuts_empty_hint">Add a shared track, album or playlist link to make it available on your watch.</string>

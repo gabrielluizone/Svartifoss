@@ -9,7 +9,6 @@ import android.content.res.ColorStateList
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.NinePatchDrawable
 import android.net.Uri
 import android.os.Bundle
@@ -55,6 +54,7 @@ import com.svartifoss.snfell.music.StreamingService
 import com.svartifoss.snfell.music.StreamingContentType
 import com.svartifoss.snfell.music.StreamingShortcutLinks
 import com.svartifoss.snfell.view.LyraAccent
+import com.svartifoss.snfell.view.styleAsBetaBadge
 
 /**
  * Manages the streaming shortcuts shown by the watch: name + deep link pairs persisted via
@@ -142,15 +142,7 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         val onAccent = bestOnAccentColor(accent)
         findViewById<ImageView>(R.id.intro_icon).imageTintList =
                 ColorStateList.valueOf(accentForeground)
-        findViewById<TextView>(R.id.beta_badge).apply {
-            setTextColor(accentForeground)
-            background = GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                cornerRadius = 16f * resources.displayMetrics.density
-                setColor(ColorUtils.setAlphaComponent(accent, 24))
-                setStroke((resources.displayMetrics.density + 0.5f).toInt(), accentForeground)
-            }
-        }
+        findViewById<TextView>(R.id.beta_badge).styleAsBetaBadge()
         findViewById<View>(R.id.button_back).setOnClickListener { finish() }
         findViewById<View>(R.id.button_reload_covers).setOnClickListener { reloadAllArtwork() }
         findViewById<MaterialButton>(R.id.button_paste).apply {

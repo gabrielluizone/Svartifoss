@@ -41,16 +41,9 @@ Mobvoi sensitivity control was found.
 
 ## Integration and validation boundary
 
-The player listens only with an assigned action in the current playback config, while resumed,
-focused, attached and outside ambient mode. Leaving the player or entering AOD unregisters the
-sensor; queued callbacks from the old subscription cannot dispatch. A process-owned timestamp
-filter suppresses already consumed events across pauses and Activity recreation. It does not
-persist across process death/reboot. Whether this firmware replays old events into a new process
-has not been established; discarding the first event unconditionally would lose a real gesture.
+The player listens only with an assigned action in the current playback config, while resumed, focused, attached and outside ambient mode. Leaving the player or entering AOD unregisters the sensor; queued callbacks from the old subscription cannot dispatch. A process-owned timestamp filter suppresses already consumed events across pauses and Activity recreation. It does not persist across process death/reboot. Whether this firmware replays old events into a new process has not been established; discarding the first event unconditionally would lose a real gesture. Revised 2026-09-19: the Android contract for on-change sensors reports the current value on activation, so an event arriving within 300 ms of registration (`REPLAY_WINDOW_MS`, app clock only) is treated as that replay - it seeds the watermark and is not dispatched. A real double pinch that soon after the player takes focus is not a realistic gesture.
 
-The existing playing/stopped configurations, pseudo-button code and capability wire values are
-unchanged. The Controls row remains archived. Availability READY means a supported input was
-found; subscription failures and missed detections remain possible and are logged.
+The existing playing/stopped configurations, pseudo-button code and capability wire values are unchanged. The Controls row was archived until 2026-09-19; it is now public, marked BETA. Availability READY means a supported input was found; subscription failures and missed detections remain possible and are logged.
 
 The user subsequently confirmed playback control in Svartifoss, but reported intermittent misses
 even with an active screen. There is no new device log for these misses. When testing, check Play/Pause with both configurations assigned, absence of
@@ -90,26 +83,11 @@ The controls are global input preferences shared by playing/stopped assignments:
 | Time between pinches | 800 ms | 250–1500 ms | Maximum separation of two distinct impulses |
 | Time between commands | 1000 ms | 250–3000 ms | Suppresses further pairs after one detection |
 
-These five `MiscPreferences` keys (`wear_hand_gesture_mode`, `wear_pinch_sensitivity`,
-`wear_pinch_max_gap`, `wear_pinch_cooldown`, `wear_pinch_calibration`) are global and EXPORTABLE,
-not face-scoped. There is no migration: absent mode is native, absent profile is uncalibrated.
-A user selecting experimental without a profile cannot save that choice in the phone UI; the
-watch also rejects an invalid/missing profile, including one arriving from a backup.
+These five `MiscPreferences` keys (`wear_hand_gesture_mode`, `wear_pinch_sensitivity`, `wear_pinch_max_gap`, `wear_pinch_cooldown`, `wear_pinch_calibration`) are global and EXPORTABLE, not face-scoped. There is no migration: absent mode is native, absent profile is uncalibrated. A user may save experimental without a profile (revised 2026-09-19: refusing it made Save look dead). The watch starts no detector until a valid profile exists and starts it on its own once one is saved; it also rejects an invalid/missing profile, including one arriving from a backup.
 
-**Calibrate on watch** sends `/IdleMessages/OpenPinchCalibration` to the reachable watch.
-Keep Svartifoss open on the watch when requesting this; the OS can refuse background activity
-launches. The watch collects a countdown/warmup, 4 seconds of rest, six 3-second double-pinch
-windows separated by 2-second rests, then a 2-second transition and 6 seconds of arm movement
-without pinching. Raw samples remain only in memory. Pausing, losing focus or leaving display
-state ON interrupts capture; KEEP_SCREEN_ON is cleared when capture finishes or stops. There
-are no music commands or vibrations during calibration or the 20-second test screen.
+**Calibrate on watch** sends `/IdleMessages/OpenPinchCalibration` to the reachable watch. Keep Svartifoss open on the watch when requesting this; the OS can refuse background activity launches. The watch collects a countdown/warmup, 4 seconds of rest, six 3-second double-pinch windows separated by 2-second rests, then a 2-second transition and 6 seconds of arm movement without pinching (`PinchCalibrationTimeline`, shared by the sample filing and the screen). Raw samples remain only in memory. Pausing, losing focus or leaving display state ON interrupts capture - except that an interruption during the movement step, with at least ~2 s of movement recorded, fits what was captured, because that step is the one that makes Wear OS decide the wrist was lowered. KEEP_SCREEN_ON is cleared when capture finishes or stops. There are no music commands or vibrations during calibration or the 20-second test screen.
 
-The fitter uses rest noise, a robust trial peak and pulse rotation. It rejects incomplete,
-corrupt or inseparable data, checks recovery of one pair in at least 75% of trial windows, and
-rejects negative motion pulses that pass the gyro and amplitude gates. This fit check reuses
-training examples; it is not an accuracy estimate. **Test without actions** counts detections
-on fresh movements for the user to compare before saving. Calibration always starts with
-standard detector timing/sensitivity; the test uses the currently saved phone settings.
+The fitter uses rest noise, a robust trial peak and pulse rotation. It rejects incomplete, corrupt or inseparable data and checks for at least one detection in two thirds of the usable trial windows (never fewer than three); a trial broken by a sensor gap is dropped, not fatal. Negative motion is judged by running the detector over it: the first version refused a profile if any single movement sample passed the gyro and amplitude gates, which ordinary arm movement does constantly, so almost every real calibration failed (reported 2026-09-19). Now only detector firings during rest or movement count against a profile, and the fit searches a grid of thresholds (60% down to 30% of the median attempt peak, above the noise guard) and rotation limits instead of fixing the threshold at 60% - that peak is often the arm, not the fingers. Ringing within 120 ms of a rise now extends that pulse instead of cancelling it. A refusal names its reason on the watch, shows the recognised count and taps per attempt, and logs the numbers; the capture screen draws the live motion/rotation signal against the target line. This fit check reuses training examples; it is not an accuracy estimate. **Test without actions** counts detections on fresh movements for the user to compare before saving. Calibration always starts with standard detector timing/sensitivity; the test uses the currently saved phone settings.
 
 Saving sends a bounded, validated `PinchCalibrationMessage` from `pinch_calibration.proto`,
 containing request ID and versioned profile. The phone persists it before echoing an ACK with
@@ -118,11 +96,7 @@ command inbox, so it cannot start playback or a foreground music service. A fail
 keeps the result available for retry; it does not report success. The existing preference
 coordinator then synchronizes the profile normally. No existing action/WatchInfo wire codes change.
 
-EN and pt-BR labels are included; other locales use English for the new controls. Both phone
-and watch APKs must be updated with the same signing key. A different wrist, strap fit or watch
-needs a new calibration. Physical accuracy, battery cost and UI interaction of this experimental
-path still require the user's device test; no device connection is currently available. Similar
-arm motion can still be indistinguishable from a pinch. Galaxy support remains deferred.
+The new controls are translated into every supported locale (`pinch_settings.xml` on the phone, `pinch_calibration.xml` on the watch); the watch's calibration screen shrinks a long translation to fit its line instead of truncating it, down to a floor, and only then ellipsizes. Both phone and watch APKs must be updated with the same signing key. A different wrist, strap fit or watch needs a new calibration. Physical accuracy, battery cost and UI interaction of this experimental path still require the user's device test; no device connection is currently available. Similar arm motion can still be indistinguishable from a pinch. Galaxy support remains deferred.
 
 Validation of the experimental implementation on 2026-09-12 (JDK 21): affected common, watch
 and phone debug suites passed; `./gradlew test :wear:assembleGithubDebug :mobile:assembleGithubDebug`

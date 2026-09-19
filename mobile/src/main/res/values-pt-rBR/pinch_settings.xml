@@ -5,7 +5,7 @@
     <string name="pinch_mode_experimental">Detector experimental</string>
     <string name="pinch_native_description">Usa o reconhecimento do próprio relógio. Não possui calibração ou ajuste de sensibilidade.</string>
     <string name="pinch_experimental_description">Detecta movimentos do pulso com sua calibração. Pode acionar sem querer e usa mais bateria com o player aberto.</string>
-    <string name="pinch_profile_missing">Ainda não calibrado. Conclua o teste antes de salvar este modo.</string>
+    <string name="pinch_profile_missing">Ainda não calibrado. Você já pode salvar este modo: o relógio continua usando o próprio detector até uma calibração ser salva nele, e então troca sozinho.</string>
     <string name="pinch_profile_saved">Calibração salva. Pronto para usar.</string>
     <string name="pinch_calibration_step">1. Calibre seu gesto</string>
     <string name="pinch_tuning_step">2. Ajuste o reconhecimento</string>
@@ -28,4 +28,6 @@
     <string name="pinch_shared_settings">Estes ajustes valem com a música tocando ou pausada.</string>
     <string name="pinch_settings_save">Salvar</string>
     <string name="pinch_gesture_note">Toque o polegar e o indicador duas vezes, com o player aberto e a tela do relógio ativa.</string>
+    <string name="pinch_controls_uncalibrated">Detector experimental escolhido, ainda não calibrado. O detector do próprio relógio é usado até você calibrar.</string>
+    <string name="pinch_controls_calibrated">Detector experimental calibrado. Pince duas vezes com o player do Svartifoss aberto.</string>
 </resources>

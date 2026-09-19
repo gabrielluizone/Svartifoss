@@ -92,4 +92,22 @@ class MobvoiPinchEventFilterTest {
         assertFalse(filter.accept(3_000L, floatArrayOf(Float.NaN)))
         assertTrue(filter.accept(2_000L, floatArrayOf(2f)))
     }
+
+    /**
+     * An on-change sensor reports its current value on activation, so a completed double pinch
+     * arriving in the first moments of a subscription is the previous gesture replayed. In a fresh
+     * process the watermark knows nothing, and a replay carrying a new timestamp would pass it in
+     * any process - either way the player would run its action the moment it opened.
+     */
+    @Test
+    fun `a double pinch delivered right after registering is taken for the activation replay`() {
+        val filter = MobvoiPinchEventFilter()
+        val window = MobvoiPinchEventFilter.REPLAY_WINDOW_MS
+
+        assertFalse(filter.acceptLive(5_000L, floatArrayOf(2f), sinceRegistrationMs = 20L))
+        // It still seeds the watermark, so the same event cannot come back later as "new".
+        assertFalse(filter.acceptLive(5_000L, floatArrayOf(2f), sinceRegistrationMs = window + 1))
+        assertTrue(filter.acceptLive(6_000L, floatArrayOf(2f), sinceRegistrationMs = window))
+        assertFalse(filter.acceptLive(7_000L, floatArrayOf(1f), sinceRegistrationMs = 10_000L))
+    }
 }

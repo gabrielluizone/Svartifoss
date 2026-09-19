@@ -6689,6 +6689,14 @@ class MainActivity : WearCompanionWatchActivity(),
 
             }
 
+    /** A touch, a key or the crown - see [DoublePinchGestureController.noteUserInteraction]. */
+    override fun onUserInteraction() {
+        super.onUserInteraction()
+        if (::doublePinchGestureController.isInitialized) {
+            doublePinchGestureController.noteUserInteraction()
+        }
+    }
+
     override fun onGenericMotionEvent(ev: android.view.MotionEvent): Boolean {
         // Quick Actions is a real scrollable list now. Route rotary input into it before the
         // normal volume/seek mapping, including on watches with a discrete crown.

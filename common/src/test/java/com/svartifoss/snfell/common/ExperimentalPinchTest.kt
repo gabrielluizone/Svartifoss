@@ -97,6 +97,17 @@ class ExperimentalPinchTest {
         assertEquals(0, detections(mapOf(100L to 1.0, 200L to 1.0)))
     }
 
+    /**
+     * A real tap rings: the sensor swings back over the threshold a few tens of milliseconds
+     * later. That swing belongs to the first pulse. It used to cancel it instead, so the second tap
+     * became a lone "first" pulse and a genuine double pinch was never recognised.
+     */
+    @Test
+    fun `ringing after the first tap does not cancel the pair`() {
+        assertEquals(1, detections(mapOf(100L to 1.0, 160L to 0.9, 460L to 1.0)))
+        assertEquals(1, detections(mapOf(100L to 1.0, 160L to 0.9, 200L to 0.8, 500L to 1.0)))
+    }
+
     @Test
     fun `hysteresis requires the pulse to fall well below the trigger before rearming`() {
         val plateau = (100L..400L step 20).associateWith { if (it == 100L || it == 400L) 1.0 else 0.5 }
@@ -185,13 +196,93 @@ class ExperimentalPinchTest {
     }
 
     @Test
-    fun `negative arm movements can be distinguished by rotation but similar quiet pulses cannot`() {
+    fun `arm movement is judged by whether the detector would fire, not by single samples`() {
         val trials = List(4) { trial(1.0) }
+        // High rotation is refused by the gyro gate.
         assertNotNull(PinchCalibrationFitter.fit(recording(0.02), trials, recording(2.0, 2.0)))
-        assertNull(PinchCalibrationFitter.fit(recording(0.02), trials, recording(0.8, 0.02)))
-        val oneConfusablePulse = recording(0.02).toMutableList()
-        oneConfusablePulse[20] = oneConfusablePulse[20].copy(acceleration = 0.8)
-        assertNull(PinchCalibrationFitter.fit(recording(0.02), trials, oneConfusablePulse))
+        // A sustained push and a lone spike are strong and slow-turning, but neither is a pair,
+        // so neither can fire a double pinch. Refusing them is what made calibration fail on
+        // nearly every real recording.
+        assertNotNull(PinchCalibrationFitter.fit(recording(0.02), trials, recording(0.8, 0.02)))
+        val oneSpike = recording(0.02).toMutableList()
+        oneSpike[20] = oneSpike[20].copy(acceleration = 0.8)
+        assertNotNull(PinchCalibrationFitter.fit(recording(0.02), trials, oneSpike))
+        // A pinch-shaped pair with no rotation at all has nothing to tell it apart.
+        val result = PinchCalibrationFitter.evaluate(recording(0.02), trials,
+                pulsePair(0.8, rotation = 0.02))
+        assertNull(result.calibration)
+        assertEquals(PinchCalibrationFailure.MOVEMENT_TRIGGERS, result.failure)
+    }
+
+    @Test
+    fun `a tighter rotation gate is tried before movement is declared confusable`() {
+        // Guided pinches turn by 0.1; the movement pair by 0.18. The first limit (0.2) lets the
+        // movement through, a stricter one refuses it while still passing every pinch.
+        val result = PinchCalibrationFitter.evaluate(recording(0.02), List(4) { trial(1.0) },
+                pulsePair(0.8, rotation = 0.18))
+        val profile = result.calibration!!
+        assertTrue(profile.rotationLimit < 0.18)
+        assertTrue(profile.rotationLimit >= 0.1)
+    }
+
+    @Test
+    fun `each refusal names what went wrong`() {
+        val rest = recording(0.02)
+        val trials = List(4) { trial(1.0) }
+        val movement = recording(0.1)
+        assertEquals(PinchCalibrationFailure.RECORDING_INCOMPLETE,
+                PinchCalibrationFitter.evaluate(rest.take(10), trials, movement).failure)
+        assertEquals(PinchCalibrationFailure.PINCHES_TOO_WEAK,
+                PinchCalibrationFitter.evaluate(recording(0.2), List(4) { trial(0.21) }, movement)
+                        .failure)
+        val singles = List(4) { trial(1.0).map { sample ->
+            if (sample.timestampNanos == nanos(500)) sample.copy(acceleration = 0.02) else sample
+        } }
+        assertEquals(PinchCalibrationFailure.PINCHES_NOT_RECOGNIZED,
+                PinchCalibrationFitter.evaluate(rest, singles, movement).failure)
+        val fitted = PinchCalibrationFitter.evaluate(rest, trials, movement)
+        assertNull(fitted.failure)
+        assertNotNull(fitted.calibration)
+    }
+
+    /**
+     * Each attempt's largest sample is often not the pinch but whatever the arm did in the same
+     * window. With the threshold pinned to 60% of that, it sat above both taps and nothing was
+     * ever recognised; the fit now lowers it as far as rest and movement allow.
+     */
+    @Test
+    fun `a stray spike in the attempt window does not lift the threshold above the pinches`() {
+        val trials = List(4) {
+            trial(1.0).map { sample ->
+                if (sample.timestampNanos == nanos(800)) sample.copy(acceleration = 3.0) else sample
+            }
+        }
+        val result = PinchCalibrationFitter.evaluate(recording(0.02), trials, recording(0.1))
+        val profile = result.calibration!!
+        // The stored reference peak carries the chosen threshold at 60% of it.
+        assertTrue(profile.pinchPeak * 0.6 < 1.0)
+        assertEquals(4, result.attemptsRecognized)
+    }
+
+    @Test
+    fun `a refusal reports the pulses each attempt contained`() {
+        val singles = List(5) { trial(1.0).map { sample ->
+            if (sample.timestampNanos == nanos(500)) sample.copy(acceleration = 0.02) else sample
+        } }
+        val result = PinchCalibrationFitter.evaluate(recording(0.02), singles, recording(0.1))
+        assertEquals(PinchCalibrationFailure.PINCHES_NOT_RECOGNIZED, result.failure)
+        assertEquals(List(5) { 1 }, result.attemptPulses)
+        assertEquals(0, result.attemptsRecognized)
+    }
+
+    @Test
+    fun `two thirds of the attempts have to be recognized, never fewer than three`() {
+        assertEquals(3, PinchCalibrationFitter.requiredTrials(4))
+        assertEquals(4, PinchCalibrationFitter.requiredTrials(6))
+        assertEquals(3, PinchCalibrationFitter.requiredTrials(1))
+        // One missed pinch in six still calibrates.
+        val trials = List(5) { trial(1.0) } + listOf(trial(0.03))
+        assertNotNull(PinchCalibrationFitter.fit(recording(0.02), trials, recording(0.1)))
     }
 
     @Test
@@ -204,7 +295,10 @@ class ExperimentalPinchTest {
         assertNull(PinchCalibrationFitter.fit(rest, trials.take(3), movement))
         assertNull(PinchCalibrationFitter.fit(rest, trials, emptyList()))
         assertNull(PinchCalibrationFitter.fit(rest.take(10), trials, movement))
-        assertNull(PinchCalibrationFitter.fit(rest, listOf(emptyList<PinchMotionFeature>()) + trials, movement))
+        // An unusable attempt is dropped, not fatal - but the rest must still reach the minimum.
+        assertNotNull(PinchCalibrationFitter.fit(rest, listOf(emptyList<PinchMotionFeature>()) + trials, movement))
+        assertNull(PinchCalibrationFitter.fit(rest,
+                listOf(emptyList<PinchMotionFeature>()) + trials.take(3), movement))
         assertNull(PinchCalibrationFitter.fit(recording(0.2), List(4) { trial(0.21) }, movement))
         assertNull(PinchCalibrationFitter.fit(rest,
                 listOf(trial(1.0), trial(0.03), trial(0.04), trial(0.03)), movement))
@@ -217,7 +311,11 @@ class ExperimentalPinchTest {
         val rest = recording(0.02)
         assertNull(PinchCalibrationFitter.fit(rest.reversed(), trials, movement))
         assertNull(PinchCalibrationFitter.fit(rest + rest.last(), trials, movement))
-        assertNull(PinchCalibrationFitter.fit(rest.dropLast(1) + feature(2000, 0.02), trials, movement))
+        // A sensor gap does not bias a resting percentile, so it no longer refuses the recording;
+        // inside a guided attempt it can split the very pair, so that attempt is dropped.
+        assertNotNull(PinchCalibrationFitter.fit(rest.dropLast(1) + feature(2000, 0.02), trials, movement))
+        val splitTrial = trial(1.0).filter { it.timestampNanos < nanos(300) || it.timestampNanos > nanos(620) }
+        assertNull(PinchCalibrationFitter.fit(rest, trials.take(3) + listOf(splitTrial), movement))
         assertNull(PinchCalibrationFitter.fit(rest, trials,
                 movement.dropLast(1) + movement.last().copy(rotation = Double.NaN)))
     }
@@ -228,6 +326,15 @@ class ExperimentalPinchTest {
             if (sample.timestampNanos == nanos(500)) sample.copy(acceleration = 0.02) else sample
         } }
         assertNull(PinchCalibrationFitter.fit(recording(0.02), singles, recording(0.1)))
+    }
+
+    @Test
+    fun `a detection right after touching the watch is not a pinch`() {
+        val quiet = PinchInteractionGuard.QUIET_AFTER_INTERACTION_MS
+        assertTrue(PinchInteractionGuard.allows(10_000L, null))
+        assertFalse(PinchInteractionGuard.allows(10_000L, 10_000L - 200L))
+        assertFalse(PinchInteractionGuard.allows(10_000L, 10_000L - quiet + 1))
+        assertTrue(PinchInteractionGuard.allows(10_000L, 10_000L - quiet))
     }
 
     @Test
@@ -270,6 +377,14 @@ class ExperimentalPinchTest {
 
     private fun recording(acceleration: Double, rotation: Double = 0.02): List<PinchMotionFeature> =
             (0L..1000L step 20).map { feature(it, acceleration, rotation) }
+
+    /** A recording holding one pinch-shaped pair of pulses, 300 ms apart. */
+    private fun pulsePair(peak: Double, rotation: Double): List<PinchMotionFeature> =
+            recording(0.02).map { sample ->
+                if (sample.timestampNanos == nanos(200) || sample.timestampNanos == nanos(500)) {
+                    sample.copy(acceleration = peak, rotation = rotation)
+                } else sample
+            }
 
     private fun trial(peak: Double): List<PinchMotionFeature> =
             recording(0.02).map { sample ->

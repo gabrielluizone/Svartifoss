@@ -7,6 +7,7 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import timber.log.Timber
 
 /**
@@ -21,6 +22,9 @@ internal class MobvoiPinchInput private constructor(
     private val onDoublePinch: () -> Unit
 ) {
     private var active = true
+    /** Set just before registering, so the activation replay can be told apart - see
+     *  [MobvoiPinchEventFilter.acceptLive]. */
+    private var registeredAtMs = SystemClock.elapsedRealtime()
 
     private val listener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
@@ -28,9 +32,11 @@ internal class MobvoiPinchInput private constructor(
                 Timber.d("Double pinch: ignoring queued Mobvoi event after unregister")
                 return
             }
-            if (!eventFilter.accept(event.timestamp, event.values)) {
-                Timber.d("Double pinch: ignoring Mobvoi value or repeated/out-of-order event: %s at %d",
-                        event.values.contentToString(), event.timestamp)
+            val sinceRegistration = SystemClock.elapsedRealtime() - registeredAtMs
+            if (!eventFilter.acceptLive(event.timestamp, event.values, sinceRegistration)) {
+                Timber.d("Double pinch: ignoring Mobvoi value, activation replay or repeated/" +
+                        "out-of-order event: %s at %d, %d ms after registering",
+                        event.values.contentToString(), event.timestamp, sinceRegistration)
                 return
             }
             Timber.i("Double pinch: Mobvoi double pinch received at %d", event.timestamp)
@@ -81,6 +87,7 @@ internal class MobvoiPinchInput private constructor(
             val sensor = findSensor(manager) ?: return null
             val input = MobvoiPinchInput(manager, sensor, eventFilter, onDoublePinch)
             val registered = try {
+                input.registeredAtMs = SystemClock.elapsedRealtime()
                 // Match the tested delivery rate; this does not change firmware sensitivity.
                 manager.registerListener(input.listener, sensor, SensorManager.SENSOR_DELAY_FASTEST,
                         Handler(Looper.getMainLooper()))

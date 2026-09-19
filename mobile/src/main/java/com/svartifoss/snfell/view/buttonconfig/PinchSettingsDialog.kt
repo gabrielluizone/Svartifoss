@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
+import androidx.core.view.doOnLayout
 import androidx.core.view.isVisible
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.DialogFragment
@@ -30,6 +31,7 @@ import com.svartifoss.snfell.common.PinchPreferences
 import com.svartifoss.snfell.databinding.ItemPinchSliderBinding
 import com.svartifoss.snfell.databinding.PopupPinchSettingsBinding
 import com.svartifoss.snfell.view.LyraAccent
+import com.svartifoss.snfell.view.styleAsBetaBadge
 import com.svartifoss.snfell.view.settings.lyraRuntimeAccent
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
@@ -132,11 +134,13 @@ class PinchSettingsDialog : DialogFragment() {
         binding.modeDescription.setText(if (experimental) R.string.pinch_experimental_description
                 else R.string.pinch_native_description)
         updateColors()
+        fitWindowHeight()
     }
 
     private fun renderAdvanced() {
         binding.advancedContent.isVisible = advanced
         binding.advancedButton.setText(if (advanced) R.string.pinch_advanced_hide else R.string.pinch_advanced_show)
+        fitWindowHeight()
     }
 
     private fun updateProfileState() {
@@ -165,6 +169,7 @@ class PinchSettingsDialog : DialogFragment() {
             button.rippleColor = ColorStateList.valueOf(androidx.core.graphics.ColorUtils.setAlphaComponent(
                     if (filled) text else readable, 32))
         }
+        binding.betaBadge.styleAsBetaBadge()
         button(binding.calibrateButton)
         button(binding.advancedButton)
         button(binding.saveButton, filled = true)
@@ -192,24 +197,65 @@ class PinchSettingsDialog : DialogFragment() {
         prefs.registerOnSharedPreferenceChangeListener(listener)
         updateProfileState()
         updateColors()
-        val metrics = resources.displayMetrics
-        val available = Rect().also { requireActivity().window.decorView.getWindowVisibleDisplayFrame(it) }
-        val width = (available.width().takeIf { it > 0 } ?: metrics.widthPixels) - dp(32)
-        val height = (available.height().takeIf { it > 0 } ?: metrics.heightPixels) - dp(32)
-        binding.root.maxHeight = height.coerceAtLeast(dp(160))
-        dialog?.window?.setLayout(width.coerceAtMost(dp(520)), WindowManager.LayoutParams.WRAP_CONTENT)
+        dialog?.window?.setLayout(dialogWidth(), WindowManager.LayoutParams.WRAP_CONTENT)
+        fitWindowHeight()
+    }
+
+    private fun availableFrame(): Rect =
+            Rect().also { requireActivity().window.decorView.getWindowVisibleDisplayFrame(it) }
+
+    private fun dialogWidth(): Int {
+        val width = (availableFrame().width().takeIf { it > 0 }
+                ?: resources.displayMetrics.widthPixels) - dp(32)
+        return width.coerceAtMost(dp(520))
+    }
+
+    private fun availableHeight(): Int = ((availableFrame().height().takeIf { it > 0 }
+            ?: resources.displayMetrics.heightPixels) - dp(32)).coerceAtLeast(dp(160))
+
+    /**
+     * Wraps the content while it fits, and pins the window to the available height once it does
+     * not - the one state in which the weighted body is handed a bounded height and scrolls.
+     *
+     * Measured rather than left to the window: a WRAP_CONTENT window around taller content is
+     * clipped by the display instead of being told to shrink, which is how the advanced sliders
+     * ended up below the screen with nothing to scroll. Re-run whenever a section opens or closes.
+     */
+    private fun fitWindowHeight() {
+        val root = viewBinding?.root ?: return
+        // After a layout (so the width is real), and posted out of it, since resizing the window
+        // from inside a layout pass would only schedule another one mid-flight.
+        root.doOnLayout { root.post { applyWindowHeight(root) } }
+    }
+
+    private fun applyWindowHeight(root: View) {
+        // Posted, so the dialog may have been dismissed in between.
+        if (!isAdded || viewBinding == null || root.width <= 0) return
+        val window = dialog?.window ?: return
+        root.measure(
+                View.MeasureSpec.makeMeasureSpec(root.width, View.MeasureSpec.EXACTLY),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+        // The dialog background's own insets sit between the window edge and this root.
+        val chrome = (window.decorView.height - root.height).coerceAtLeast(0)
+        val limit = availableHeight()
+        val height = if (root.measuredHeight + chrome > limit) limit
+                else WindowManager.LayoutParams.WRAP_CONTENT
+        if (window.attributes.height != height) {
+            window.setLayout(dialogWidth(), height)
+        }
+        // The measure above was taken with an unbounded height; lay out again with the real one.
+        root.requestLayout()
     }
 
     private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
 
+    /**
+     * Always saves. Experimental without a calibration used to be refused here by scrolling to the
+     * profile line - which, with the body unable to scroll, made Save look like it did nothing.
+     * Saving it is safe: the watch starts no detector until a valid profile exists, and starts it
+     * by itself the moment one is saved there, so there is no second trip back to this dialog.
+     */
     private fun saveSettings() {
-        if (experimental && PinchCalibration.decode(Preferences.getString(prefs,
-                        MiscPreferences.WEAR_PINCH_CALIBRATION)) == null) {
-            binding.profileState.setText(R.string.pinch_profile_missing)
-            binding.contentScroll.smoothScrollTo(0, binding.experimentalContent.top)
-            binding.calibrateButton.requestFocus()
-            return
-        }
         prefs.edit()
                 .putString(MiscPreferences.WEAR_HAND_GESTURE_MODE.key, if (experimental) "experimental" else "native")
                 .also { PinchPreferences.writeSettings(it, settings) }

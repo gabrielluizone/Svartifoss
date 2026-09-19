@@ -6,6 +6,7 @@ import android.hardware.display.DisplayManager
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.view.Display
 import android.view.View
 import androidx.preference.PreferenceManager
@@ -18,6 +19,7 @@ import com.svartifoss.snfell.common.ExperimentalPinchDetector
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PinchCalibration
 import com.svartifoss.snfell.common.PinchDetectorSettings
+import com.svartifoss.snfell.common.PinchInteractionGuard
 import com.svartifoss.snfell.common.PinchPreferences
 import java.util.function.Consumer
 import timber.log.Timber
@@ -71,6 +73,9 @@ class DoublePinchGestureController(
 
     /** Whether the active Controls state has an assignment for this input. */
     private var wanted = false
+
+    /** When the wearer last touched the screen, pressed a button or turned the crown. */
+    private var lastInteractionMs: Long? = null
     private var interactive = false
     private var disposed = false
 
@@ -123,6 +128,16 @@ class DoublePinchGestureController(
         onPrimaryGesture()
     }
 
+    /**
+     * The Activity calls this from `onUserInteraction` - a touch, a key or the crown. Only the
+     * experimental detector listens: it reads wrist motion, and tapping the watch moves the wrist
+     * the way a pinch does. See [PinchInteractionGuard].
+     */
+    fun noteUserInteraction() {
+        lastInteractionMs = SystemClock.elapsedRealtime()
+        registration?.onUserInteraction()
+    }
+
     /** Lets Wear OS keep its own gesture-discovery cadence in sync with an action we handled. */
     fun notifyGestureConsumed() {
         try {
@@ -158,13 +173,19 @@ class DoublePinchGestureController(
                 Backend.EXPERIMENTAL -> {
                     val detector = ExperimentalPinchDetector(options.calibration!!, options.settings)
                     PinchMotionInput.register(context) { feature ->
-                        if (detector.add(feature)) {
+                        if (!detector.add(feature)) return@register
+                        if (PinchInteractionGuard.allows(SystemClock.elapsedRealtime(), lastInteractionMs)) {
                             Timber.i("Double pinch: experimental detection")
                             dispatchPrimaryGesture()
+                        } else {
+                            Timber.d("Double pinch: experimental detection ignored after a touch")
                         }
                     }?.let { input ->
                         object : Registration {
                             override fun unregister() = input.unregister()
+
+                            // A tap may have left half a pair behind; it must not complete one.
+                            override fun onUserInteraction() = detector.reset()
                         }
                     }
                 }
@@ -230,6 +251,7 @@ class DoublePinchGestureController(
     private interface Registration {
         fun unregister()
         fun notifyGestureConsumed() = Unit
+        fun onUserInteraction() = Unit
     }
 
     /** Safe to load on base API 36, where the feature check returns false. */
@@ -351,17 +373,20 @@ class DoublePinchGestureController(
 
         private fun capability(context: Context, options: InputOptions = readOptions(
                 PreferenceManager.getDefaultSharedPreferences(context))): Capability {
+            // Experimental only once it can actually run. Chosen but not yet calibrated - or on a
+            // watch without the motion sensors - it falls through to the watch's own detector
+            // rather than to nothing: the phone lets that mode be saved before calibrating, and it
+            // must not switch off a gesture that was working in the meantime. The two are still
+            // never subscribed together.
             if (options.experimental) {
-                return try {
-                    when {
-                        !PinchMotionInput.isAvailable(context) ->
-                            Capability(null, HandGestureAvailability.UNSUPPORTED)
-                        options.calibration == null -> Capability(null, HandGestureAvailability.UNKNOWN)
-                        else -> Capability(Backend.EXPERIMENTAL, HandGestureAvailability.READY)
+                try {
+                    if (options.calibration != null && PinchMotionInput.isAvailable(context)) {
+                        return Capability(Backend.EXPERIMENTAL, HandGestureAvailability.READY)
                     }
+                    Timber.i("Double pinch: experimental mode without a usable calibration; " +
+                            "using the watch detector until one is saved")
                 } catch (e: RuntimeException) {
                     Timber.w(e, "Double pinch: could not inspect experimental input")
-                    Capability(null, HandGestureAvailability.UNKNOWN)
                 }
             }
             var probeFailed = false
