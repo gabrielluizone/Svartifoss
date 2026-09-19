@@ -195,6 +195,37 @@ class PlayerEditorModelTest {
     }
 
     /**
+     * Note and Metadata offer "Hidden" inside their Cover shape picker, so the separate chip for
+     * the same switch is not drawn - and a search for that switch has to land on the picker.
+     */
+    @Test
+    fun `a cover switch folded into its shape picker is reached through the picker`() {
+        PlayerEditorModel.COVER_VISIBILITY_BY_SHAPE.forEach { (shapeKey, visibilityKey) ->
+            val shape = PlayerEditorModel.specFor(shapeKey)
+            val visibility = PlayerEditorModel.specFor(visibilityKey)
+            assertNotNull(shapeKey, shape)
+            assertNotNull(visibilityKey, visibility)
+            assertEquals(PlayerSlot.CHOICE, shape!!.slot)
+            assertTrue(visibility!!.value is PlayerValueSpec.Toggle)
+            ThemeAppearance.ALLOWED_BASE_FACES.forEach { face ->
+                assertEquals("$shapeKey and $visibilityKey must belong to the same face ($face)",
+                        PlayerEditorModel.appliesToFace(shape.control, face),
+                        PlayerEditorModel.appliesToFace(visibility.control, face))
+                assertFalse("$visibilityKey is drawn twice on $face",
+                        PlayerEditorModel.visibleIn(PlayerSlot.ELEMENT, face)
+                                .any { it.key == visibilityKey })
+            }
+            assertEquals(shapeKey, PlayerEditorModel.editorKeyFor(visibilityKey))
+        }
+        assertEquals(setOf("wear_note_cover_shape", "wear_metadata_cover_shape"),
+                PlayerEditorModel.COVER_VISIBILITY_BY_SHAPE.keys)
+        // Every other key answers for itself - Chat keeps its own chip.
+        assertEquals("wear_chat_show_cover", PlayerEditorModel.editorKeyFor("wear_chat_show_cover"))
+        assertTrue(PlayerEditorModel.visibleIn(PlayerSlot.ELEMENT, "chat")
+                .any { it.key == "wear_chat_show_cover" })
+    }
+
+    /**
      * Faces that do not offer *Show player controls*, each with the reason. Every registered face
      * is either offered the switch or named here, so a new face fails this test until somebody
      * decides - the alternative is a switch that does nothing, or a working one nobody can reach.

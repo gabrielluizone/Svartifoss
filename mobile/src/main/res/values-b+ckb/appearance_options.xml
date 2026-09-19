@@ -96,4 +96,12 @@
         <item>ڕەنگی سێیەمی ئالبوم</item>
         <item>هێڵی دەرەوەی Neon</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>گەڵا</item>
+        <item>دڵۆپ</item>
+        <item>کەوانە</item>
+        <item>بەردۆکە</item>
+        <item>قەڵغان</item>
+    </string-array>
 </resources>

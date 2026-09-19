@@ -398,6 +398,9 @@
     <!-- Shared by Note/Chat/Metadata's cover-art toggle: only one is ever visible at a time, since
          each is gated to its own face. -->
     <string name="player_element_cover_art">Cover art</string>
+    <!-- The "no cover" entry of a Cover shape picker. An alias rather than a new string so every
+         locale shows the already translated word for a hidden appearance option. -->
+    <string name="player_cover_hidden" translatable="false">@string/wear_screen_theme_hidden</string>
     <string name="category_wf_colors_title">Title colors</string>
     <string name="category_wf_colors_artist">Artist colors</string>
     <string name="category_wf_colors_clock">Clock colors</string>

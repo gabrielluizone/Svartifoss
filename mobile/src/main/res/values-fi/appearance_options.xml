@@ -96,4 +96,12 @@
         <item>Albumin kolmas väri</item>
         <item>Neonääriviiva</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Lehti</item>
+        <item>Pisara</item>
+        <item>Kaari</item>
+        <item>Kivi</item>
+        <item>Kilpi</item>
+    </string-array>
 </resources>

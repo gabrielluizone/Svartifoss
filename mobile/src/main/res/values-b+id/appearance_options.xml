@@ -96,4 +96,12 @@
         <item>Warna album tersier</item>
         <item>Garis luar neon</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Daun</item>
+        <item>Tetesan</item>
+        <item>Lengkung</item>
+        <item>Kerikil</item>
+        <item>Perisai</item>
+    </string-array>
 </resources>

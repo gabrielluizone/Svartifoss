@@ -96,4 +96,12 @@
         <item>צבע אלבום שלישוני</item>
         <item>קו מתאר ניאון</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>עלה</item>
+        <item>טיפה</item>
+        <item>קשת</item>
+        <item>חלוק אבן</item>
+        <item>מגן</item>
+    </string-array>
 </resources>

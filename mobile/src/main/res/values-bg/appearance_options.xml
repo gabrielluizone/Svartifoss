@@ -96,4 +96,12 @@
         <item>Третичен цвят на албума</item>
         <item>Неонов контур</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Листо</item>
+        <item>Капка</item>
+        <item>Дъга</item>
+        <item>Камъче</item>
+        <item>Щит</item>
+    </string-array>
 </resources>

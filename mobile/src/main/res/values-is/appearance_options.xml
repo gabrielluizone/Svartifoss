@@ -96,4 +96,12 @@
         <item>Þriðji litur plötu</item>
         <item>Neonútlína</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Blað</item>
+        <item>Dropi</item>
+        <item>Bogi</item>
+        <item>Smásteinn</item>
+        <item>Skjöldur</item>
+    </string-array>
 </resources>

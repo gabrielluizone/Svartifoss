@@ -96,4 +96,12 @@
         <item>Tertiärfarbe des Albums</item>
         <item>Neonkontur</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Blatt</item>
+        <item>Tropfen</item>
+        <item>Bogen</item>
+        <item>Kiesel</item>
+        <item>Schild</item>
+    </string-array>
 </resources>

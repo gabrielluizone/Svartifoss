@@ -22,6 +22,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.CompositionLocalProvider
@@ -1365,13 +1366,20 @@ internal fun ChronoAmbientFace(state: NowPlayingFaceState) {
 /**
  * Resolves the shared [CoverShape] vocabulary into a Compose [Shape] for artwork of [size].
  *
- * Here rather than in one face because two draw a cover the user can reshape - Carousel's rail
- * cards and Note's disc - and the corner is a *fraction* of the size, so the two must derive it the
- * same way or the same choice reads as a different shape on each.
+ * Here rather than in one face because four draw a cover the user can reshape - Carousel's rail
+ * cards, Note's disc, Chat's avatar and Metadata's thumbnail - and each corner is a *fraction* of
+ * the size, so they must derive it the same way or the same choice reads as a different shape on
+ * each. Absolute corners, matching the phone preview's Canvas - see [CoverShape].
  */
-internal fun CoverShape.toComposeShape(size: Dp): Shape =
-        if (this == CoverShape.CIRCLE) CircleShape
-        else RoundedCornerShape(size * cornerFraction)
+internal fun CoverShape.toComposeShape(size: Dp): Shape = when {
+    this == CoverShape.CIRCLE -> CircleShape
+    isUniform -> RoundedCornerShape(size * topLeft)
+    else -> AbsoluteRoundedCornerShape(
+            topLeft = size * topLeft,
+            topRight = size * topRight,
+            bottomRight = size * bottomRight,
+            bottomLeft = size * bottomLeft)
+}
 
 /** The "⋮" overflow glyph, drawn directly so no icon resource is needed. */
 @Composable

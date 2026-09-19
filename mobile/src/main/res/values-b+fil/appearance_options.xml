@@ -96,4 +96,12 @@
         <item>Tertiary na kulay ng album</item>
         <item>Neon outline</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Dahon</item>
+        <item>Patak</item>
+        <item>Arko</item>
+        <item>Pebble</item>
+        <item>Shield</item>
+    </string-array>
 </resources>

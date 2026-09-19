@@ -96,4 +96,12 @@
         <item>টারশিয়ারি অ্যালবাম রঙ</item>
         <item>নিয়ন আউটলাইন</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>পাতা</item>
+        <item>ফোঁটা</item>
+        <item>আর্চ</item>
+        <item>নুড়ি</item>
+        <item>শিল্ড</item>
+    </string-array>
 </resources>

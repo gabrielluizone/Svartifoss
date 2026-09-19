@@ -96,4 +96,12 @@
         <item>மூன்றாம் ஆல்பம் நிறம்</item>
         <item>நியான் வெளிக்கோடு</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>இலை</item>
+        <item>துளி</item>
+        <item>வளைவு</item>
+        <item>கூழாங்கல்</item>
+        <item>கேடயம்</item>
+    </string-array>
 </resources>

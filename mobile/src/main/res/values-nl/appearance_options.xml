@@ -96,4 +96,12 @@
         <item>Tertiaire albumkleur</item>
         <item>Neoncontour</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Blad</item>
+        <item>Druppel</item>
+        <item>Boog</item>
+        <item>Kiezel</item>
+        <item>Schild</item>
+    </string-array>
 </resources>

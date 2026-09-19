@@ -96,4 +96,12 @@
         <item>专辑第三颜色</item>
         <item>霓虹轮廓</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>叶形</item>
+        <item>水滴形</item>
+        <item>拱形</item>
+        <item>鹅卵石</item>
+        <item>盾牌</item>
+    </string-array>
 </resources>

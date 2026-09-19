@@ -2505,7 +2505,11 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         container.removeAllViews()
         container.isVisible = specs.isNotEmpty()
         specs.forEach { spec ->
-            val button = newEditorChoiceRow(spec.key) { openPreferenceDialog(spec.key) }
+            val visibilityKey = PlayerEditorModel.COVER_VISIBILITY_BY_SHAPE[spec.key]
+            val button = newEditorChoiceRow(spec.key) {
+                if (visibilityKey != null) showCoverShapeDialog(spec.key, visibilityKey)
+                else openPreferenceDialog(spec.key)
+            }
             bindPlayerChoiceRow(button, spec.key)
             container.addView(button)
         }
@@ -2516,9 +2520,62 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val default = (PlayerEditorModel.specFor(key)?.value as? PlayerValueSpec.Choice)
                 ?.defaultValue ?: ""
         val title = findPreference<Preference>(key)?.title ?: key
-        val label = choiceLabel(key, readStringPreference(key, default))
+        val label = if (coverHiddenFor(key)) {
+            getString(R.string.player_cover_hidden)
+        } else {
+            choiceLabel(key, readStringPreference(key, default))
+        }
         button.text = "$title · $label"
         button.contentDescription = buildPreferenceDescription(key, label)
+    }
+
+    /** Whether [shapeKey] is a cover picker whose face currently draws no cover at all. */
+    private fun coverHiddenFor(shapeKey: String): Boolean {
+        val visibilityKey = PlayerEditorModel.COVER_VISIBILITY_BY_SHAPE[shapeKey] ?: return false
+        val default = (PlayerEditorModel.specFor(visibilityKey)?.value as? PlayerValueSpec.Toggle)
+                ?.defaultValue ?: true
+        return !store.getBoolean(visibilityKey, default)
+    }
+
+    /**
+     * The shape list with "Hidden" as its first entry - see
+     * [PlayerEditorModel.COVER_VISIBILITY_BY_SHAPE].
+     *
+     * Both halves still commit through their own Preference, exactly as the legacy rows would, so
+     * scoping, validation, the preview and the watch sync see two ordinary writes. Picking a shape
+     * while the cover is hidden writes the shape and shows the cover again, because that is what
+     * choosing a shape for it means.
+     */
+    private fun showCoverShapeDialog(shapeKey: String, visibilityKey: String) {
+        val preference = findPreference<ListPreference>(shapeKey) ?: return
+        val entries = preference.entries ?: return
+        val values = preference.entryValues ?: return
+        notifyPreviewInteraction(shapeKey, null)
+        val default = (PlayerEditorModel.specFor(shapeKey)?.value as? PlayerValueSpec.Choice)
+                ?.defaultValue ?: ""
+        val current = readStringPreference(shapeKey, default)
+        val shapeIndex = values.indexOfFirst { it.toString() == current }
+                .takeIf { it >= 0 }
+                ?: values.indexOfFirst { it.toString() == default }.coerceAtLeast(0)
+        val labels = arrayOf<CharSequence>(getString(R.string.player_cover_hidden)) + entries
+        showLyraChoiceDialog(
+                preference.title ?: shapeKey,
+                labels,
+                checkedItem = if (coverHiddenFor(shapeKey)) 0 else shapeIndex + 1) { index ->
+            if (index == 0) {
+                commitPlayerBoolean(visibilityKey, false)
+                return@showLyraChoiceDialog
+            }
+            val value = values[index - 1].toString()
+            if (preference.callChangeListener(value)) {
+                preference.value = value
+            }
+            if (coverHiddenFor(shapeKey)) {
+                commitPlayerBoolean(visibilityKey, true)
+            } else {
+                refreshPlayerEditor()
+            }
+        }
     }
 
     private fun bindPlayerChoiceButton(button: MaterialButton, key: String) {
@@ -2679,7 +2736,11 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 refreshPlayerEditor()
                 listView?.scrollToPosition(0)
                 listView?.post {
-                    playerEditor?.pulse(key, findPreference<Preference>(key)?.title)
+                    // A cover switch lives inside its shape picker now, so that row is the one to
+                    // pulse - see PlayerEditorModel.COVER_VISIBILITY_BY_SHAPE.
+                    playerEditor?.pulse(
+                            PlayerEditorModel.editorKeyFor(key),
+                            findPreference<Preference>(key)?.title)
                 }
                 return@post
             }

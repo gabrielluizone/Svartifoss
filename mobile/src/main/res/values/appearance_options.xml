@@ -198,4 +198,19 @@
         <item>tertiary</item>
         <item>neon_outline</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Leaf</item>
+        <item>Drop</item>
+        <item>Arch</item>
+        <item>Pebble</item>
+        <item>Shield</item>
+    </string-array>
+    <string-array name="wear_cover_shape_extra_values" translatable="false">
+        <item>leaf</item>
+        <item>drop</item>
+        <item>arch</item>
+        <item>pebble</item>
+        <item>shield</item>
+    </string-array>
 </resources>

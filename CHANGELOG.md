@@ -9,6 +9,8 @@
   Only the single tap does this. A double tap or a long press on the same corner runs a *different*
   action, and showing the single-tap icon for either would be telling you the wrong thing.
 
+- **Five more cover shapes, and a way to hide the cover from the same picker.** Leaf, Drop, Arch, Pebble and Shield join Rounded, Square, Squircle, Samsung style and Circle - the same silhouettes the mini buttons already offer, now for artwork. They are offered for Note's and Metadata's covers and for Carousel's cards and Chat's avatar, which share the one vocabulary. On Note and Metadata the Cover shape picker now starts with **Hidden**: that switch used to be a separate "Cover art" chip among the element toggles, where it was easy to miss. Picking a shape brings the cover back with it, and a hidden cover remembers the shape it returns with. Community themes can carry the new shapes.
+
 - **The watch now reports which Wear OS it is running**, shown in Settings → Developer → the Data
   Layer report beside the watch app's version. It is there to answer one question that could not be
   answered before: why the always-on player is sometimes replaced by the watch face after a moment.

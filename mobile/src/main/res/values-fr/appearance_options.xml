@@ -96,4 +96,12 @@
         <item>Couleur tertiaire de l’album</item>
         <item>Contour néon</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Feuille</item>
+        <item>Goutte</item>
+        <item>Arc</item>
+        <item>Galet</item>
+        <item>Bouclier</item>
+    </string-array>
 </resources>

@@ -96,4 +96,12 @@
         <item>رنگ سوم آلبوم</item>
         <item>خط دور نئون</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>برگ</item>
+        <item>قطره</item>
+        <item>قوس</item>
+        <item>سنگ‌ریزه</item>
+        <item>سپر</item>
+    </string-array>
 </resources>

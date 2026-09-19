@@ -96,4 +96,12 @@
         <item>Colore terziario album</item>
         <item>Contorno neon</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Foglia</item>
+        <item>Goccia</item>
+        <item>Arco</item>
+        <item>Ciottolo</item>
+        <item>Scudo</item>
+    </string-array>
 </resources>

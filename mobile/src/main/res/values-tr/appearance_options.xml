@@ -96,4 +96,12 @@
         <item>Albüm üçüncül rengi</item>
         <item>Neon ana hat</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Yaprak</item>
+        <item>Damla</item>
+        <item>Yay</item>
+        <item>Çakıl taşı</item>
+        <item>Kalkan</item>
+    </string-array>
 </resources>

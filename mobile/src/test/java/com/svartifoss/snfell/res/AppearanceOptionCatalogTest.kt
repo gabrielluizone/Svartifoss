@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.res
 
+import com.svartifoss.snfell.common.CoverShape
 import java.io.File
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -39,7 +40,12 @@ class AppearanceOptionCatalogTest {
                     listOf("whisper", "radiant", "flood", "glimmer", "deep")),
             Catalog("wear_up_next_pill_style", "wear_up_next_pill_extra_entries",
                     "wear_up_next_pill_extra_values", "upNextPillStyle",
-                    listOf("outline_album", "gradient_album", "secondary", "glass_album", "tertiary", "neon_outline")))
+                    listOf("outline_album", "gradient_album", "secondary", "glass_album", "tertiary", "neon_outline"))) +
+            listOf("wear_carousel_card_shape", "wear_note_cover_shape", "wear_chat_cover_shape",
+                    "wear_metadata_cover_shape").map { key ->
+                Catalog(key, "wear_cover_shape_extra_entries", "wear_cover_shape_extra_values",
+                        "coverShape", listOf("leaf", "drop", "arch", "pebble", "shield"))
+            }
 
     @Test
     fun `additive appearance catalogs are aligned translated and wired`() {
@@ -67,6 +73,21 @@ class AppearanceOptionCatalogTest {
             assertTrue(source.contains("R.array.${catalog.entries}"))
             assertTrue(source.contains("R.array.${catalog.values}"))
         }
+    }
+
+    /**
+     * The cover pickers offer the whole [CoverShape] vocabulary and nothing else: the base array
+     * plus the additive one. A shape added to the enum without a picker entry is unreachable, and
+     * one added to a picker without the enum resolves to the face's default on the watch.
+     */
+    @Test
+    fun `cover pickers offer exactly the shared shape vocabulary`() {
+        val base = resource("values/arrays.xml")
+        val extra = resource("values/appearance_options.xml")
+        val offered = arrayItems(base, "wear_cover_shape_values") +
+                arrayItems(extra, "wear_cover_shape_extra_values")
+        assertEquals(CoverShape.entries.map { it.preferenceValue }.sorted(), offered.sorted())
+        assertEquals("a shape is offered twice", offered.size, offered.toSet().size)
     }
 
     private fun resource(relative: String): File =

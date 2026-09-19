@@ -96,4 +96,12 @@
         <item>Третинний колір альбому</item>
         <item>Неоновий контур</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Листок</item>
+        <item>Крапля</item>
+        <item>Дуга</item>
+        <item>Галька</item>
+        <item>Щит</item>
+    </string-array>
 </resources>

@@ -11184,9 +11184,8 @@ class WatchPreviewView @JvmOverloads constructor(
             val rect = RectF(
                     cx + dx - size / 2f, railCenterY - size / 2f,
                     cx + dx + size / 2f, railCenterY + size / 2f)
-            val corner = size * shape.cornerFraction
             canvas.save()
-            canvas.clipPath(Path().apply { addRoundRect(rect, corner, corner, Path.Direction.CW) })
+            canvas.clipPath(Path().apply { addRoundRect(rect, shape.radii(size), Path.Direction.CW) })
             if (art != null) {
                 drawArtwork(canvas, art, rect, 255)
             } else {
@@ -11808,11 +11807,11 @@ class WatchPreviewView @JvmOverloads constructor(
             val art = displayedArt()
             // A round-rect at half the (square) side is a perfect circle, same as drawNotePlayer's
             // disc - no separate CIRCLE case needed.
-            val avatarCorner = avatarSize *
-                    CoverShape.fromPreference(chatCoverShape, CoverShape.CIRCLE).cornerFraction
+            val avatarRadii = CoverShape.fromPreference(chatCoverShape, CoverShape.CIRCLE)
+                    .radii(avatarSize)
             canvas.save()
             canvas.clipPath(Path().apply {
-                addRoundRect(avatarRect, avatarCorner, avatarCorner, Path.Direction.CW)
+                addRoundRect(avatarRect, avatarRadii, Path.Direction.CW)
             })
             if (art != null) {
                 drawArtwork(canvas, art, avatarRect, 255)
@@ -12215,11 +12214,11 @@ class WatchPreviewView @JvmOverloads constructor(
         if (art != null && metadataShowCover) {
             val side = screen * .17f
             val rect = RectF(cx - side / 2f, y, cx + side / 2f, y + side)
-            val corner = side *
-                    CoverShape.fromPreference(metadataCoverShape, CoverShape.ROUNDED).cornerFraction
+            val radii = CoverShape.fromPreference(metadataCoverShape, CoverShape.ROUNDED)
+                    .radii(side)
             canvas.save()
             canvas.clipPath(Path().apply {
-                addRoundRect(rect, corner, corner, Path.Direction.CW)
+                addRoundRect(rect, radii, Path.Direction.CW)
             })
             drawArtwork(canvas, art, rect, 255)
             canvas.restore()
@@ -12607,11 +12606,11 @@ class WatchPreviewView @JvmOverloads constructor(
             // The same shared silhouette Carousel's cards are cut to, so one vocabulary answers
             // both faces here as it does on the watch. A circle is only this face's default, not
             // its shape.
-            val discCorner = discSize * CoverShape.fromPreference(noteCoverShape, CoverShape.CIRCLE)
-                    .cornerFraction
+            val discRadii = CoverShape.fromPreference(noteCoverShape, CoverShape.CIRCLE)
+                    .radii(discSize)
             canvas.save()
             canvas.clipPath(Path().apply {
-                addRoundRect(discRect, discCorner, discCorner, Path.Direction.CW)
+                addRoundRect(discRect, discRadii, Path.Direction.CW)
             })
             if (art != null) {
                 drawArtwork(canvas, art, discRect, 255)

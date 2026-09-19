@@ -365,9 +365,34 @@ internal object PlayerEditorModel {
     fun keyFor(control: PlayerControl): String? =
             specs.firstOrNull { it.control == control }?.key
 
+    /**
+     * Cover switches the Player page offers *inside* their face's Cover shape picker, keyed by the
+     * shape key: "No cover" is the picker's first entry, and choosing any shape brings the cover
+     * back.
+     *
+     * Storage is untouched - each face still keeps a shape and a separate boolean, so a hidden
+     * cover remembers the shape it returns with, and no saved or published theme changes. Only
+     * the presentation moved: as a lone "Cover art" chip among the element toggles, far from the
+     * shape row, the switch was not found by the people looking for it.
+     */
+    val COVER_VISIBILITY_BY_SHAPE: Map<String, String> = mapOf(
+            MiscPreferences.WEAR_NOTE_COVER_SHAPE.key to MiscPreferences.WEAR_NOTE_SHOW_COVER.key,
+            MiscPreferences.WEAR_METADATA_COVER_SHAPE.key to
+                    MiscPreferences.WEAR_METADATA_SHOW_COVER.key)
+
+    /**
+     * The key of the control that answers [key] on this page - itself, except for a cover switch
+     * folded into its shape picker, where a search result has to pulse the picker instead of a
+     * chip that is no longer drawn.
+     */
+    fun editorKeyFor(key: String): String =
+            COVER_VISIBILITY_BY_SHAPE.entries.firstOrNull { it.value == key }?.key ?: key
+
     /** The rows of [slot] this face can actually consume, in the order they should render. */
     fun visibleIn(slot: PlayerSlot, face: String): List<PlayerSettingSpec> =
-            specsFor(slot).filter { appliesToFace(it.control, face) }
+            specsFor(slot).filter {
+                appliesToFace(it.control, face) && it.key !in COVER_VISIBILITY_BY_SHAPE.values
+            }
 
     /**
      * Whether [control] applies to [face], mirroring

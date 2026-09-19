@@ -96,4 +96,12 @@
         <item>앨범 3차 색상</item>
         <item>네온 윤곽선</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>리프</item>
+        <item>드롭</item>
+        <item>아치</item>
+        <item>자갈</item>
+        <item>실드</item>
+    </string-array>
 </resources>
