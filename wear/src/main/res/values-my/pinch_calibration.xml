@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Pinch ကို ချိန်ညှိပါ</string>
+    <string name="pinch_cal_intro">ပတ်ကို တင်းတင်းပတ်ပြီး လက်ကောက်ဝတ်ကို မြှင့်ထားပါ။ ၄၅ စက္ကန့်ခန့်။ အနားယူခြင်း၊ နှစ်ဆ pinch ခြောက်ကြိမ်၊ ထို့နောက် လက်လှုပ်ရှားမှု။ ဂီတအမိန့်များ မပို့ပါ။</string>
+    <string name="pinch_cal_start">စတင်ရန်</string>
+    <string name="pinch_cal_restart">ပြန်စရန်</string>
+    <string name="pinch_cal_test">လုပ်ဆောင်ချက်မပါ စမ်းရန်</string>
+    <string name="pinch_cal_save">ချိန်ညှိမှုကို သိမ်းရန်</string>
+    <string name="pinch_cal_close">ပိတ်ရန်</string>
+
+    <string name="pinch_cal_step_ready">ပြင်ဆင်ပါ</string>
+    <string name="pinch_cal_step_ready_hint">လက်ကောက်ဝတ်ကို မြှင့်ပြီး မျက်နှာပြင်ကို သင့်ဘက်လှည့်ပါ။</string>
+    <string name="pinch_cal_step_rest">မလှုပ်ပါနှင့်</string>
+    <string name="pinch_cal_step_rest_hint">pinch မလုပ်ပါနှင့်။</string>
+    <string name="pinch_cal_step_attempt">ကြိုးစားမှု %1$d / %2$d</string>
+    <string name="pinch_cal_step_pinch">နှစ်ဆ pinch</string>
+    <string name="pinch_cal_step_pinch_hint">လက်မနှင့် လက်ညှိုးကို နှစ်ကြိမ် ထိပါ။</string>
+    <string name="pinch_cal_step_wait">အေးဆေးပါ</string>
+    <string name="pinch_cal_step_wait_hint">နောက်ကြိုးစားမှု လာနေပါပြီ။</string>
+    <string name="pinch_cal_step_prepare">နီးပါးပြီးပါပြီ</string>
+    <string name="pinch_cal_step_prepare_hint">နောက်တစ်ဆင့်: pinch မလုပ်ဘဲ လက်ကို လှုပ်ပါ။</string>
+    <string name="pinch_cal_step_move">လက်ကို လှုပ်ပါ</string>
+    <string name="pinch_cal_step_move_hint">သဘာဝကျကျ လှည့်ပြီး ဝှေ့ယမ်းပါ၊ မျက်နှာပြင်ကို သင့်ဘက်လှည့်ထားပါ။ pinch မလုပ်ပါနှင့်။</string>
+
+    <string name="pinch_cal_testing">စမ်းသပ်မှု</string>
+    <string name="pinch_cal_detections">ရှာဖွေတွေ့ရှိမှုများ</string>
+    <string name="pinch_cal_test_hint">%1$d စက္ကန့်ကျန် · လုပ်ဆောင်ချက်မရှိ</string>
+
+    <string name="pinch_cal_ready">ချိန်ညှိပြီးပါပြီ။ မသိမ်းမီ စမ်းကြည့်ပါ။ pinch ကို အကြိမ်အနည်းငယ်လုပ်ပြီး လက်ကို ပုံမှန်လှုပ်ပါ။</string>
+    <string name="pinch_cal_test_done">ရှာဖွေတွေ့ရှိမှု %1$d ကြိမ်။ သင့်နှစ်ဆ pinch များနှင့် ကိုက်ညီပါက သိမ်းပါ။ လက်လှုပ်ရှားမှုများကို ရေတွက်ထားပါက ပြန်ချိန်ညှိပါ သို့မဟုတ် ဖုန်းတွင် အာရုံခံနိုင်စွမ်းကို လျှော့ပါ။</string>
+    <string name="pinch_cal_failed_incomplete">မှတ်တမ်းတင်မှု ပြတ်သွားပါသည်။ စမ်းသပ်မှုတစ်လျှောက် မျက်နှာပြင်ကို ဖွင့်ပြီး သင့်ဘက်လှည့်ထားကာ ပြန်စပါ။</string>
+    <string name="pinch_cal_failed_weak">သင်၏ pinch များသည် မလှုပ်သော လက်ကောက်ဝတ်နှင့် မကွဲပြားပါ။ ပတ်ကို အနည်းငယ်တင်းပြီး ပိုအားထည့်၍ pinch လုပ်ပါ။</string>
+    <string name="pinch_cal_failed_unrecognized">ကြိုးစားမှုအများစုကို နှစ်ဆ pinch အဖြစ် မသိပါ။ ကြိုးစားမှုတိုင်းတွင် ရှင်းရှင်းလင်းလင်း နှစ်ကြိမ် pinch လုပ်ပြီး လက်ကို မလှုပ်ဘဲထားပါ။</string>
+    <string name="pinch_cal_failed_movement">သင့်လက်လှုပ်ရှားမှုသည် pinch များနှင့် ဆင်ပါသည်။ ကြိုးစားစဉ် လက်ကောက်ဝတ်ကို ပိုငြိမ်အောင်ထားပြီး ပြန်စပါ။</string>
+    <string name="pinch_cal_failed_kept">ယခင်ချိန်ညှိမှုကို ထားရှိပါသည်။</string>
+    <string name="pinch_cal_interrupted">မျက်နှာပြင်ပိတ်သွားသဖြင့် ရပ်သွားပါသည်။ မျက်နှာပြင်ဖွင့်ထားပြီး ပြန်စပါ။</string>
+    <string name="pinch_cal_unavailable">လှုပ်ရှားမှု အာရုံခံကိရိယာများ မရနိုင်ပါ။ ဤမျက်နှာပြင်ကို ပြန်ဖွင့်ပြီး ထပ်ကြိုးစားပါ။</string>
+
+    <string name="pinch_cal_sending">ဖုန်းတွင် သိမ်းနေသည်…</string>
+    <string name="pinch_cal_saved">ချိန်ညှိမှုကို သိမ်းပြီးပါပြီ။ ဖုန်းတွင် pinch ဆက်တင်များ၌ စမ်းသပ်ကို ရွေးပြီး သိမ်းပါ။</string>
+    <string name="pinch_cal_saved_active">ချိန်ညှိမှုကို သိမ်းပြီးပါပြီ။ ပလေယာဖွင့်ထားစဉ် စမ်းသပ် ရှာဖွေကိရိယာ အလုပ်လုပ်သည်။</string>
+    <string name="pinch_cal_send_failed">ဖုန်းတွင် သိမ်းမှု အတည်မပြုနိုင်ပါ။ ချိတ်ဆက်မှုကို စစ်ပြီး ချိန်ညှိမှုကို သိမ်းရန်ကို ထပ်နှိပ်ပါ။</string>
+    <string name="pinch_cal_legend_motion">လှုပ်ရှားမှု</string>
+    <string name="pinch_cal_legend_rotation">လည်ပတ်မှု</string>
+    <string name="pinch_cal_legend_target">စံတန်ဖိုး</string>
+    <string name="pinch_cal_no_signal">အာရုံခံဒေတာ မရှိပါ</string>
+    <string name="pinch_cal_detail">%2$d မှ %1$d ခု သိရှိ · ကြိုးစားမှုတစ်ခုလျှင် ထိတွေ့မှု: %3$s</string>
+</resources>

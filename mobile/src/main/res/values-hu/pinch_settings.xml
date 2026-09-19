@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Csippentés beállításai</string>
+    <string name="pinch_settings_intro">Hogyan ismerje fel az óra a mozdulatodat?</string>
+    <string name="pinch_mode_native">Az óra érzékelője</string>
+    <string name="pinch_mode_experimental">Kísérleti érzékelő</string>
+    <string name="pinch_native_description">Az óra beépített felismerését használja. Kalibrálás és érzékenységbeállítás nélkül.</string>
+    <string name="pinch_experimental_description">A csukló mozgását a kalibrálásod alapján ismeri fel. Véletlenül is aktiválódhat, és több akkumulátort használ, amíg a lejátszó nyitva van.</string>
+    <string name="pinch_profile_missing">Még nincs kalibrálva. Ezt az üzemmódot már most mentheted: az óra a saját érzékelőjét használja, amíg nem mentenek benne kalibrálást, utána magától átvált.</string>
+    <string name="pinch_profile_saved">Kalibrálás mentve. Használatra kész.</string>
+    <string name="pinch_calibration_step">1. Kalibráld a mozdulatot</string>
+    <string name="pinch_tuning_step">2. Állítsd be a felismerést</string>
+    <string name="pinch_calibrate_watch">Kalibrálás az órán</string>
+    <string name="pinch_recalibrate_watch">Kalibrálás újra</string>
+    <string name="pinch_open_instruction">Nyisd meg a Svartifossot az órán. Kövesd ott a tesztet, és mentsd a kalibrálást.</string>
+    <string name="pinch_open_sending">Csatlakozás az órához…</string>
+    <string name="pinch_open_sent">Folytasd az órán. Ha a teszt nem nyílik meg, nyisd meg ott újra a Svartifossot, és próbáld újra.</string>
+    <string name="pinch_open_failed">Az óra nem érhető el. Ellenőrizd a kapcsolatot, frissítsd mindkét alkalmazást, majd próbáld újra.</string>
+    <string name="pinch_sensitivity_label">Érzékenység</string>
+    <string name="pinch_sensitivity_help">Növeld, ha a csippentések kimaradnak. Csökkentsd, ha más mozdulatok műveleteket indítanak.</string>
+    <string name="pinch_gap_label">Csippentések közti idő</string>
+    <string name="pinch_gap_help">A legnagyobb idő az első és a második csippentés között. Lassabb mozdulathoz növeld.</string>
+    <string name="pinch_cooldown_label">Szünet a parancsok között</string>
+    <string name="pinch_cooldown_help">Mennyit vár egy művelet után, mielőtt új mozdulatot fogad el.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">További beállítások</string>
+    <string name="pinch_advanced_hide">Kevesebb beállítás</string>
+    <string name="pinch_shared_settings">Ezek a beállítások zenelejátszás és szüneteltetés közben érvényesek.</string>
+    <string name="pinch_settings_save">Mentés</string>
+    <string name="pinch_gesture_note">Érintsd össze kétszer a hüvelykujjadat és a mutatóujjadat, nyitott lejátszóval és bekapcsolt óra-kijelzővel.</string>
+    <string name="pinch_controls_uncalibrated">Kísérleti érzékelő kiválasztva, még nincs kalibrálva. Kalibrálásig az óra saját érzékelője működik.</string>
+    <string name="pinch_controls_calibrated">Kísérleti érzékelő kalibrálva. Csippents kétszer, amíg a Svartifoss lejátszó nyitva van.</string>
+</resources>

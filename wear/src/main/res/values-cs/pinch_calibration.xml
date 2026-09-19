@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Kalibrace sevření</string>
+    <string name="pinch_cal_intro">Dobře utáhněte řemínek a držte zápěstí nahoře. Asi 45 sekund: klid, šest dvojitých sevření a pak pohyb paže. Neodesílají se žádné hudební příkazy.</string>
+    <string name="pinch_cal_start">Spustit</string>
+    <string name="pinch_cal_restart">Začít znovu</string>
+    <string name="pinch_cal_test">Test bez akcí</string>
+    <string name="pinch_cal_save">Uložit kalibraci</string>
+    <string name="pinch_cal_close">Zavřít</string>
+
+    <string name="pinch_cal_step_ready">Připravte se</string>
+    <string name="pinch_cal_step_ready_hint">Držte zápěstí nahoře, displejem k sobě.</string>
+    <string name="pinch_cal_step_rest">Nehýbejte se</string>
+    <string name="pinch_cal_step_rest_hint">Nesvírejte prsty.</string>
+    <string name="pinch_cal_step_attempt">Pokus %1$d z %2$d</string>
+    <string name="pinch_cal_step_pinch">Dvojité sevření</string>
+    <string name="pinch_cal_step_pinch_hint">Dvakrát se dotkněte palcem a ukazovákem.</string>
+    <string name="pinch_cal_step_wait">Uvolněte se</string>
+    <string name="pinch_cal_step_wait_hint">Blíží se další pokus.</string>
+    <string name="pinch_cal_step_prepare">Skoro hotovo</string>
+    <string name="pinch_cal_step_prepare_hint">Dále: hýbejte paží bez sevření.</string>
+    <string name="pinch_cal_step_move">Hýbejte paží</string>
+    <string name="pinch_cal_step_move_hint">Otáčejte s ní a mávejte přirozeně, displejem k sobě. Nesvírejte prsty.</string>
+
+    <string name="pinch_cal_testing">Test</string>
+    <string name="pinch_cal_detections">Detekce</string>
+    <string name="pinch_cal_test_hint">Zbývá %1$d s · bez akcí</string>
+
+    <string name="pinch_cal_ready">Zkalibrováno. Před uložením vyzkoušejte: několikrát sevřete prsty a pak hýbejte paží normálně.</string>
+    <string name="pinch_cal_test_done">Detekcí: %1$d. Pokud to odpovídá vašim dvojitým sevřením, uložte. Pokud se započítaly pohyby paže, kalibrujte znovu nebo snižte citlivost v telefonu.</string>
+    <string name="pinch_cal_failed_incomplete">Záznam byl přerušen. Nechte displej po celý test zapnutý a otočený k sobě a začněte znovu.</string>
+    <string name="pinch_cal_failed_weak">Vaše sevření se nelišila od klidného zápěstí. Řemínek trochu utáhněte a svírejte pevněji.</string>
+    <string name="pinch_cal_failed_unrecognized">Většina pokusů nebyla rozpoznána jako dvojité sevření. V každém pokusu jasně sevřete prsty dvakrát a držte paži v klidu.</string>
+    <string name="pinch_cal_failed_movement">Pohyb paže připomínal sevření. Během pokusů držte zápěstí klidněji a začněte znovu.</string>
+    <string name="pinch_cal_failed_kept">Předchozí kalibrace byla zachována.</string>
+    <string name="pinch_cal_interrupted">Zastaveno, protože se displej vypnul. Začněte znovu se zapnutým displejem.</string>
+    <string name="pinch_cal_unavailable">Senzory pohybu nejsou dostupné. Otevřete tuto obrazovku znovu a zkuste to ještě jednou.</string>
+
+    <string name="pinch_cal_sending">Ukládání do telefonu…</string>
+    <string name="pinch_cal_saved">Kalibrace uložena. V telefonu zvolte v nastavení sevření Experimentální a uložte.</string>
+    <string name="pinch_cal_saved_active">Kalibrace uložena. Experimentální detektor je aktivní, když je přehrávač otevřený.</string>
+    <string name="pinch_cal_send_failed">Uložení v telefonu se nepodařilo potvrdit. Zkontrolujte připojení a znovu klepněte na Uložit kalibraci.</string>
+    <string name="pinch_cal_legend_motion">Pohyb</string>
+    <string name="pinch_cal_legend_rotation">Rotace</string>
+    <string name="pinch_cal_legend_target">Práh</string>
+    <string name="pinch_cal_no_signal">Žádná data ze senzoru</string>
+    <string name="pinch_cal_detail">Rozpoznáno %1$d z %2$d · dotyků na pokus: %3$s</string>
+</resources>

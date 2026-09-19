@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Knijpgebaar kalibreren</string>
+    <string name="pinch_cal_intro">Draag de band strak en houd je pols omhoog. Ongeveer 45 seconden: rust, zes dubbele knijpbewegingen en daarna armbeweging. Er worden geen muziekopdrachten verzonden.</string>
+    <string name="pinch_cal_start">Starten</string>
+    <string name="pinch_cal_restart">Opnieuw starten</string>
+    <string name="pinch_cal_test">Testen zonder acties</string>
+    <string name="pinch_cal_save">Kalibratie opslaan</string>
+    <string name="pinch_cal_close">Sluiten</string>
+
+    <string name="pinch_cal_step_ready">Maak je klaar</string>
+    <string name="pinch_cal_step_ready_hint">Pols omhoog, scherm naar je toe.</string>
+    <string name="pinch_cal_step_rest">Houd stil</string>
+    <string name="pinch_cal_step_rest_hint">Niet knijpen.</string>
+    <string name="pinch_cal_step_attempt">Poging %1$d van %2$d</string>
+    <string name="pinch_cal_step_pinch">Dubbel knijpen</string>
+    <string name="pinch_cal_step_pinch_hint">Tik duim en wijsvinger twee keer tegen elkaar.</string>
+    <string name="pinch_cal_step_wait">Ontspan</string>
+    <string name="pinch_cal_step_wait_hint">De volgende poging komt eraan.</string>
+    <string name="pinch_cal_step_prepare">Bijna klaar</string>
+    <string name="pinch_cal_step_prepare_hint">Straks: beweeg je arm zonder te knijpen.</string>
+    <string name="pinch_cal_step_move">Beweeg je arm</string>
+    <string name="pinch_cal_step_move_hint">Draai en zwaai hem natuurlijk, met het scherm naar je toe. Niet knijpen.</string>
+
+    <string name="pinch_cal_testing">Test</string>
+    <string name="pinch_cal_detections">Detecties</string>
+    <string name="pinch_cal_test_hint">Nog %1$d s · geen acties</string>
+
+    <string name="pinch_cal_ready">Gekalibreerd. Test het vóór het opslaan: knijp een paar keer en beweeg dan je arm normaal.</string>
+    <string name="pinch_cal_test_done">%1$d detecties. Komt dat overeen met je dubbele knijpbewegingen, sla dan op. Zijn armbewegingen meegeteld, kalibreer dan opnieuw of verlaag de gevoeligheid op de telefoon.</string>
+    <string name="pinch_cal_failed_incomplete">De opname is afgebroken. Houd het scherm tijdens de hele test aan en naar je toe, en begin opnieuw.</string>
+    <string name="pinch_cal_failed_weak">Je knijpbewegingen vielen niet op tegen een stille pols. Draag de band iets strakker en knijp steviger.</string>
+    <string name="pinch_cal_failed_unrecognized">De meeste pogingen werden niet als dubbele knijpbeweging herkend. Knijp bij elke poging duidelijk twee keer en houd je arm stil.</string>
+    <string name="pinch_cal_failed_movement">Je armbeweging leek op knijpbewegingen. Houd je pols tijdens de pogingen rustiger en begin opnieuw.</string>
+    <string name="pinch_cal_failed_kept">De vorige kalibratie is behouden.</string>
+    <string name="pinch_cal_interrupted">Gestopt omdat het scherm uitging. Begin opnieuw met het scherm aan.</string>
+    <string name="pinch_cal_unavailable">Bewegingssensoren niet beschikbaar. Open dit scherm opnieuw en probeer het nog eens.</string>
+
+    <string name="pinch_cal_sending">Opslaan op de telefoon…</string>
+    <string name="pinch_cal_saved">Kalibratie opgeslagen. Kies op je telefoon Experimenteel bij de knijpinstellingen en sla op.</string>
+    <string name="pinch_cal_saved_active">Kalibratie opgeslagen. De experimentele detector is actief zolang de speler open is.</string>
+    <string name="pinch_cal_send_failed">Opslaan op de telefoon kon niet worden bevestigd. Controleer de verbinding en tik nogmaals op Kalibratie opslaan.</string>
+    <string name="pinch_cal_legend_motion">Beweging</string>
+    <string name="pinch_cal_legend_rotation">Rotatie</string>
+    <string name="pinch_cal_legend_target">Drempel</string>
+    <string name="pinch_cal_no_signal">Geen sensorgegevens</string>
+    <string name="pinch_cal_detail">%1$d van %2$d herkend · tikken per poging: %3$s</string>
+</resources>

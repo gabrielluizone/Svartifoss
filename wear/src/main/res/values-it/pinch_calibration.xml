@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Calibra il pizzico</string>
+    <string name="pinch_cal_intro">Stringi bene il cinturino e tieni il polso alzato. Circa 45 secondi: riposo, sei doppi pizzichi, poi movimento del braccio. Nessun comando musicale viene inviato.</string>
+    <string name="pinch_cal_start">Avvia</string>
+    <string name="pinch_cal_restart">Riavvia</string>
+    <string name="pinch_cal_test">Prova senza azioni</string>
+    <string name="pinch_cal_save">Salva calibrazione</string>
+    <string name="pinch_cal_close">Chiudi</string>
+
+    <string name="pinch_cal_step_ready">Preparati</string>
+    <string name="pinch_cal_step_ready_hint">Polso alzato, schermo verso di te.</string>
+    <string name="pinch_cal_step_rest">Resta fermo</string>
+    <string name="pinch_cal_step_rest_hint">Non pizzicare.</string>
+    <string name="pinch_cal_step_attempt">Tentativo %1$d di %2$d</string>
+    <string name="pinch_cal_step_pinch">Doppio pizzico</string>
+    <string name="pinch_cal_step_pinch_hint">Tocca due volte pollice e indice.</string>
+    <string name="pinch_cal_step_wait">Rilassati</string>
+    <string name="pinch_cal_step_wait_hint">Sta per arrivare il prossimo tentativo.</string>
+    <string name="pinch_cal_step_prepare">Quasi fatto</string>
+    <string name="pinch_cal_step_prepare_hint">Ora: muovi il braccio senza pizzicare.</string>
+    <string name="pinch_cal_step_move">Muovi il braccio</string>
+    <string name="pinch_cal_step_move_hint">Giralo e muovilo in modo naturale, con lo schermo verso di te. Non pizzicare.</string>
+
+    <string name="pinch_cal_testing">Prova</string>
+    <string name="pinch_cal_detections">Rilevamenti</string>
+    <string name="pinch_cal_test_hint">%1$d s rimasti · nessuna azione</string>
+
+    <string name="pinch_cal_ready">Calibrato. Provalo prima di salvare: pizzica alcune volte, poi muovi il braccio normalmente.</string>
+    <string name="pinch_cal_test_done">%1$d rilevamenti. Se corrispondono ai tuoi doppi pizzichi, salva. Se sono stati contati movimenti del braccio, calibra di nuovo o abbassa la sensibilità sul telefono.</string>
+    <string name="pinch_cal_failed_incomplete">La registrazione è stata interrotta. Tieni lo schermo acceso e rivolto verso di te per tutto il test, poi ricomincia.</string>
+    <string name="pinch_cal_failed_weak">I pizzichi non si distinguevano da un polso fermo. Stringi un po\' il cinturino e pizzica con più decisione.</string>
+    <string name="pinch_cal_failed_unrecognized">La maggior parte dei tentativi non è stata riconosciuta come doppio pizzico. Pizzica due volte, con chiarezza, in ogni tentativo e tieni il braccio fermo.</string>
+    <string name="pinch_cal_failed_movement">Il movimento del braccio sembrava dei pizzichi. Tieni il polso più fermo durante i tentativi, poi ricomincia.</string>
+    <string name="pinch_cal_failed_kept">La calibrazione precedente è stata mantenuta.</string>
+    <string name="pinch_cal_interrupted">Interrotto perché lo schermo si è spento. Ricomincia con lo schermo acceso.</string>
+    <string name="pinch_cal_unavailable">Sensori di movimento non disponibili. Riapri questa schermata e riprova.</string>
+
+    <string name="pinch_cal_sending">Salvataggio sul telefono…</string>
+    <string name="pinch_cal_saved">Calibrazione salvata. Sul telefono scegli Sperimentale nelle impostazioni del pizzico e salva.</string>
+    <string name="pinch_cal_saved_active">Calibrazione salvata. Il rilevatore sperimentale è attivo finché il player è aperto.</string>
+    <string name="pinch_cal_send_failed">Impossibile confermare il salvataggio sul telefono. Controlla la connessione e tocca di nuovo Salva calibrazione.</string>
+    <string name="pinch_cal_legend_motion">Movimento</string>
+    <string name="pinch_cal_legend_rotation">Rotazione</string>
+    <string name="pinch_cal_legend_target">Soglia</string>
+    <string name="pinch_cal_no_signal">Nessun dato dal sensore</string>
+    <string name="pinch_cal_detail">%1$d riconosciuti su %2$d · tocchi per tentativo: %3$s</string>
+</resources>

@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Calibrar pinça</string>
+    <string name="pinch_cal_intro">Aperta bem a bracelete e mantém o pulso levantado. Cerca de 45 segundos: repouso, seis pinças duplas e depois movimento do braço. Nenhum comando de música é enviado.</string>
+    <string name="pinch_cal_start">Iniciar</string>
+    <string name="pinch_cal_restart">Recomeçar</string>
+    <string name="pinch_cal_test">Testar sem ações</string>
+    <string name="pinch_cal_save">Guardar calibração</string>
+    <string name="pinch_cal_close">Fechar</string>
+
+    <string name="pinch_cal_step_ready">Prepara-te</string>
+    <string name="pinch_cal_step_ready_hint">Pulso levantado, ecrã virado para ti.</string>
+    <string name="pinch_cal_step_rest">Fica parado</string>
+    <string name="pinch_cal_step_rest_hint">Não faças a pinça.</string>
+    <string name="pinch_cal_step_attempt">Tentativa %1$d de %2$d</string>
+    <string name="pinch_cal_step_pinch">Pinça dupla</string>
+    <string name="pinch_cal_step_pinch_hint">Toca duas vezes com o polegar e o indicador.</string>
+    <string name="pinch_cal_step_wait">Relaxa</string>
+    <string name="pinch_cal_step_wait_hint">Vem aí a próxima tentativa.</string>
+    <string name="pinch_cal_step_prepare">Quase pronto</string>
+    <string name="pinch_cal_step_prepare_hint">A seguir: mexe o braço sem fazer a pinça.</string>
+    <string name="pinch_cal_step_move">Mexe o braço</string>
+    <string name="pinch_cal_step_move_hint">Roda-o e balança-o naturalmente, com o ecrã virado para ti. Não faças a pinça.</string>
+
+    <string name="pinch_cal_testing">Teste</string>
+    <string name="pinch_cal_detections">Deteções</string>
+    <string name="pinch_cal_test_hint">Restam %1$d s · sem ações</string>
+
+    <string name="pinch_cal_ready">Calibrado. Testa antes de guardar: faz a pinça algumas vezes e depois mexe o braço normalmente.</string>
+    <string name="pinch_cal_test_done">%1$d deteções. Se corresponder às tuas pinças duplas, guarda. Se foram contados movimentos do braço, calibra novamente ou reduz a sensibilidade no telemóvel.</string>
+    <string name="pinch_cal_failed_incomplete">A gravação foi interrompida. Mantém o ecrã ligado e virado para ti durante todo o teste e recomeça.</string>
+    <string name="pinch_cal_failed_weak">As tuas pinças não se distinguiram de um pulso parado. Aperta um pouco a bracelete e faz a pinça com mais firmeza.</string>
+    <string name="pinch_cal_failed_unrecognized">A maioria das tentativas não foi reconhecida como pinça dupla. Faz a pinça duas vezes, com clareza, em cada tentativa e mantém o braço parado.</string>
+    <string name="pinch_cal_failed_movement">O movimento do teu braço parecia pinças. Mantém o pulso mais firme durante as tentativas e recomeça.</string>
+    <string name="pinch_cal_failed_kept">A calibração anterior foi mantida.</string>
+    <string name="pinch_cal_interrupted">Parou porque o ecrã se desligou. Recomeça com o ecrã ligado.</string>
+    <string name="pinch_cal_unavailable">Sensores de movimento indisponíveis. Volta a abrir este ecrã e tenta novamente.</string>
+
+    <string name="pinch_cal_sending">A guardar no telemóvel…</string>
+    <string name="pinch_cal_saved">Calibração guardada. No telemóvel, escolhe Experimental nas definições da pinça e guarda.</string>
+    <string name="pinch_cal_saved_active">Calibração guardada. O detetor experimental está ativo enquanto o leitor estiver aberto.</string>
+    <string name="pinch_cal_send_failed">Não foi possível confirmar a gravação no telemóvel. Verifica a ligação e toca em Guardar calibração novamente.</string>
+    <string name="pinch_cal_legend_motion">Movimento</string>
+    <string name="pinch_cal_legend_rotation">Rotação</string>
+    <string name="pinch_cal_legend_target">Limiar</string>
+    <string name="pinch_cal_no_signal">Sem dados do sensor</string>
+    <string name="pinch_cal_detail">%1$d reconhecidas de %2$d · toques por tentativa: %3$s</string>
+</resources>

@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Калибровка щипка</string>
+    <string name="pinch_cal_intro">Плотно затяните ремешок и держите запястье поднятым. Около 45 секунд: покой, шесть двойных щипков, затем движение рукой. Музыкальные команды не отправляются.</string>
+    <string name="pinch_cal_start">Начать</string>
+    <string name="pinch_cal_restart">Начать заново</string>
+    <string name="pinch_cal_test">Тест без действий</string>
+    <string name="pinch_cal_save">Сохранить калибровку</string>
+    <string name="pinch_cal_close">Закрыть</string>
+
+    <string name="pinch_cal_step_ready">Приготовьтесь</string>
+    <string name="pinch_cal_step_ready_hint">Держите запястье поднятым, экраном к себе.</string>
+    <string name="pinch_cal_step_rest">Не двигайтесь</string>
+    <string name="pinch_cal_step_rest_hint">Не сжимайте пальцы.</string>
+    <string name="pinch_cal_step_attempt">Попытка %1$d из %2$d</string>
+    <string name="pinch_cal_step_pinch">Двойной щипок</string>
+    <string name="pinch_cal_step_pinch_hint">Дважды коснитесь большим и указательным пальцами.</string>
+    <string name="pinch_cal_step_wait">Расслабьтесь</string>
+    <string name="pinch_cal_step_wait_hint">Скоро следующая попытка.</string>
+    <string name="pinch_cal_step_prepare">Почти готово</string>
+    <string name="pinch_cal_step_prepare_hint">Далее: двигайте рукой, не сжимая пальцы.</string>
+    <string name="pinch_cal_step_move">Двигайте рукой</string>
+    <string name="pinch_cal_step_move_hint">Поворачивайте и взмахивайте ею естественно, экраном к себе. Не сжимайте пальцы.</string>
+
+    <string name="pinch_cal_testing">Тест</string>
+    <string name="pinch_cal_detections">Срабатывания</string>
+    <string name="pinch_cal_test_hint">Осталось %1$d с · без действий</string>
+
+    <string name="pinch_cal_ready">Откалибровано. Проверьте перед сохранением: несколько раз сожмите пальцы, затем двигайте рукой как обычно.</string>
+    <string name="pinch_cal_test_done">Срабатываний: %1$d. Если это совпадает с вашими двойными щипками, сохраните. Если засчитались движения руки, откалибруйте снова или снизьте чувствительность в телефоне.</string>
+    <string name="pinch_cal_failed_incomplete">Запись прервалась. Держите экран включённым и направленным на себя весь тест и начните заново.</string>
+    <string name="pinch_cal_failed_weak">Ваши щипки не отличались от неподвижного запястья. Немного затяните ремешок и сжимайте пальцы сильнее.</string>
+    <string name="pinch_cal_failed_unrecognized">Большинство попыток не распознано как двойной щипок. В каждой попытке чётко сожмите пальцы дважды и держите руку неподвижно.</string>
+    <string name="pinch_cal_failed_movement">Движение руки было похоже на щипки. Держите запястье устойчивее во время попыток и начните заново.</string>
+    <string name="pinch_cal_failed_kept">Предыдущая калибровка сохранена.</string>
+    <string name="pinch_cal_interrupted">Остановлено, так как экран погас. Начните заново при включённом экране.</string>
+    <string name="pinch_cal_unavailable">Датчики движения недоступны. Откройте этот экран снова и повторите попытку.</string>
+
+    <string name="pinch_cal_sending">Сохранение в телефоне…</string>
+    <string name="pinch_cal_saved">Калибровка сохранена. В телефоне выберите Экспериментальный в настройках щипка и сохраните.</string>
+    <string name="pinch_cal_saved_active">Калибровка сохранена. Экспериментальный детектор работает, пока проигрыватель открыт.</string>
+    <string name="pinch_cal_send_failed">Не удалось подтвердить сохранение в телефоне. Проверьте соединение и снова нажмите Сохранить калибровку.</string>
+    <string name="pinch_cal_legend_motion">Движение</string>
+    <string name="pinch_cal_legend_rotation">Вращение</string>
+    <string name="pinch_cal_legend_target">Порог</string>
+    <string name="pinch_cal_no_signal">Нет данных датчика</string>
+    <string name="pinch_cal_detail">Распознано %1$d из %2$d · касаний за попытку: %3$s</string>
+</resources>

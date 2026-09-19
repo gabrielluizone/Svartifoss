@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">ピンチのキャリブレーション</string>
+    <string name="pinch_cal_intro">バンドをしっかり締めて、手首を上げてください。約45秒間：安静、ダブルピンチ6回、そして腕の動きです。音楽コマンドは送信されません。</string>
+    <string name="pinch_cal_start">開始</string>
+    <string name="pinch_cal_restart">やり直す</string>
+    <string name="pinch_cal_test">操作なしでテスト</string>
+    <string name="pinch_cal_save">キャリブレーションを保存</string>
+    <string name="pinch_cal_close">閉じる</string>
+
+    <string name="pinch_cal_step_ready">準備してください</string>
+    <string name="pinch_cal_step_ready_hint">手首を上げ、画面を自分に向けます。</string>
+    <string name="pinch_cal_step_rest">じっとして</string>
+    <string name="pinch_cal_step_rest_hint">ピンチしないでください。</string>
+    <string name="pinch_cal_step_attempt">%1$d／%2$d回目</string>
+    <string name="pinch_cal_step_pinch">ダブルピンチ</string>
+    <string name="pinch_cal_step_pinch_hint">親指と人差し指を2回くっつけます。</string>
+    <string name="pinch_cal_step_wait">力を抜いて</string>
+    <string name="pinch_cal_step_wait_hint">次の試行が始まります。</string>
+    <string name="pinch_cal_step_prepare">もうすぐ終了</string>
+    <string name="pinch_cal_step_prepare_hint">次は、ピンチせずに腕を動かします。</string>
+    <string name="pinch_cal_step_move">腕を動かして</string>
+    <string name="pinch_cal_step_move_hint">画面を自分に向けたまま、自然にひねったり振ったりします。ピンチはしません。</string>
+
+    <string name="pinch_cal_testing">テスト</string>
+    <string name="pinch_cal_detections">検出</string>
+    <string name="pinch_cal_test_hint">残り%1$d秒・操作は実行されません</string>
+
+    <string name="pinch_cal_ready">キャリブレーションしました。保存する前に試してください：数回ピンチしてから、腕を普通に動かします。</string>
+    <string name="pinch_cal_test_done">%1$d回検出しました。ダブルピンチの回数と合っていれば保存してください。腕の動きが数えられた場合は、キャリブレーションをやり直すか、スマートフォンで感度を下げてください。</string>
+    <string name="pinch_cal_failed_incomplete">録音が途中で中断されました。テストの間は画面をつけたまま自分に向けて、もう一度やり直してください。</string>
+    <string name="pinch_cal_failed_weak">ピンチが静止した手首と区別できませんでした。バンドを少し締めて、もっと強くピンチしてください。</string>
+    <string name="pinch_cal_failed_unrecognized">ほとんどの試行がダブルピンチとして認識されませんでした。各試行ではっきり2回ピンチし、腕は動かさないでください。</string>
+    <string name="pinch_cal_failed_movement">腕の動きがピンチのように見えました。試行中は手首をもっと安定させて、もう一度やり直してください。</string>
+    <string name="pinch_cal_failed_kept">前回のキャリブレーションはそのまま保持されました。</string>
+    <string name="pinch_cal_interrupted">画面が消えたため停止しました。画面をつけた状態でやり直してください。</string>
+    <string name="pinch_cal_unavailable">モーションセンサーを利用できません。この画面を開き直して、もう一度お試しください。</string>
+
+    <string name="pinch_cal_sending">スマートフォンに保存しています…</string>
+    <string name="pinch_cal_saved">キャリブレーションを保存しました。スマートフォンのピンチ設定で「試験的」を選んで保存してください。</string>
+    <string name="pinch_cal_saved_active">キャリブレーションを保存しました。プレーヤーを開いている間、試験的な検出機能が動作します。</string>
+    <string name="pinch_cal_send_failed">スマートフォンへの保存を確認できませんでした。接続を確認して、「キャリブレーションを保存」をもう一度タップしてください。</string>
+    <string name="pinch_cal_legend_motion">動き</string>
+    <string name="pinch_cal_legend_rotation">回転</string>
+    <string name="pinch_cal_legend_target">しきい値</string>
+    <string name="pinch_cal_no_signal">センサーデータなし</string>
+    <string name="pinch_cal_detail">%2$d回中%1$d回を認識・試行ごとのタップ数：%3$s</string>
+</resources>

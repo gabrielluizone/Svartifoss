@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">पिंच कॅलिब्रेट करा</string>
+    <string name="pinch_cal_intro">पट्टा घट्ट बांधा आणि मनगट वर धरा. सुमारे ४५ सेकंद: विश्रांती, सहा दुहेरी पिंच, मग हाताची हालचाल. कोणतीही संगीत कमांड पाठवली जात नाही.</string>
+    <string name="pinch_cal_start">सुरू करा</string>
+    <string name="pinch_cal_restart">पुन्हा सुरू करा</string>
+    <string name="pinch_cal_test">क्रियांशिवाय चाचणी</string>
+    <string name="pinch_cal_save">कॅलिब्रेशन सेव्ह करा</string>
+    <string name="pinch_cal_close">बंद करा</string>
+
+    <string name="pinch_cal_step_ready">तयार व्हा</string>
+    <string name="pinch_cal_step_ready_hint">मनगट वर धरा, स्क्रीन तुमच्या दिशेने.</string>
+    <string name="pinch_cal_step_rest">स्थिर रहा</string>
+    <string name="pinch_cal_step_rest_hint">पिंच करू नका.</string>
+    <string name="pinch_cal_step_attempt">प्रयत्न %1$d / %2$d</string>
+    <string name="pinch_cal_step_pinch">दुहेरी पिंच</string>
+    <string name="pinch_cal_step_pinch_hint">अंगठा आणि तर्जनी दोनदा एकमेकांना लावा.</string>
+    <string name="pinch_cal_step_wait">आराम करा</string>
+    <string name="pinch_cal_step_wait_hint">पुढचा प्रयत्न येत आहे.</string>
+    <string name="pinch_cal_step_prepare">जवळजवळ झाले</string>
+    <string name="pinch_cal_step_prepare_hint">पुढे: पिंच न करता हात हलवा.</string>
+    <string name="pinch_cal_step_move">हात हलवा</string>
+    <string name="pinch_cal_step_move_hint">तो नैसर्गिकपणे फिरवा आणि झुलवा, स्क्रीन तुमच्या दिशेने ठेवून. पिंच करू नका.</string>
+
+    <string name="pinch_cal_testing">चाचणी</string>
+    <string name="pinch_cal_detections">ओळखी</string>
+    <string name="pinch_cal_test_hint">%1$d सेकंद बाकी · कोणतीही क्रिया नाही</string>
+
+    <string name="pinch_cal_ready">कॅलिब्रेट झाले. सेव्ह करण्यापूर्वी तपासा: काही वेळा पिंच करा, मग हात नेहमीसारखा हलवा.</string>
+    <string name="pinch_cal_test_done">%1$d ओळखी. हे तुमच्या दुहेरी पिंचशी जुळत असेल तर सेव्ह करा. हाताच्या हालचाली मोजल्या गेल्या असतील तर पुन्हा कॅलिब्रेट करा किंवा फोनवर संवेदनशीलता कमी करा.</string>
+    <string name="pinch_cal_failed_incomplete">रेकॉर्डिंग अर्धवट थांबले. संपूर्ण चाचणीत स्क्रीन सुरू आणि तुमच्या दिशेने ठेवा, मग पुन्हा सुरू करा.</string>
+    <string name="pinch_cal_failed_weak">तुमचे पिंच स्थिर मनगटापासून वेगळे दिसले नाहीत. पट्टा थोडा घट्ट करा आणि अधिक जोराने पिंच करा.</string>
+    <string name="pinch_cal_failed_unrecognized">बहुतेक प्रयत्न दुहेरी पिंच म्हणून ओळखले गेले नाहीत. प्रत्येक प्रयत्नात स्पष्टपणे दोनदा पिंच करा आणि हात स्थिर ठेवा.</string>
+    <string name="pinch_cal_failed_movement">तुमच्या हाताची हालचाल पिंचसारखी वाटली. प्रयत्नांदरम्यान मनगट अधिक स्थिर ठेवा, मग पुन्हा सुरू करा.</string>
+    <string name="pinch_cal_failed_kept">आधीचे कॅलिब्रेशन कायम ठेवले.</string>
+    <string name="pinch_cal_interrupted">स्क्रीन बंद झाल्यामुळे थांबले. स्क्रीन सुरू ठेवून पुन्हा सुरू करा.</string>
+    <string name="pinch_cal_unavailable">मोशन सेन्सर उपलब्ध नाहीत. ही स्क्रीन पुन्हा उघडा आणि पुन्हा प्रयत्न करा.</string>
+
+    <string name="pinch_cal_sending">फोनवर सेव्ह होत आहे…</string>
+    <string name="pinch_cal_saved">कॅलिब्रेशन सेव्ह झाले. फोनवर पिंच सेटिंग्जमध्ये प्रायोगिक निवडा आणि सेव्ह करा.</string>
+    <string name="pinch_cal_saved_active">कॅलिब्रेशन सेव्ह झाले. प्लेअर उघडा असताना प्रायोगिक डिटेक्टर चालू असतो.</string>
+    <string name="pinch_cal_send_failed">फोनवर सेव्ह झाल्याची खात्री करता आली नाही. कनेक्शन तपासा आणि कॅलिब्रेशन सेव्ह करा वर पुन्हा टॅप करा.</string>
+    <string name="pinch_cal_legend_motion">हालचाल</string>
+    <string name="pinch_cal_legend_rotation">फिरणे</string>
+    <string name="pinch_cal_legend_target">मर्यादा</string>
+    <string name="pinch_cal_no_signal">सेन्सर डेटा नाही</string>
+    <string name="pinch_cal_detail">%2$d पैकी %1$d ओळखले · प्रति प्रयत्न स्पर्श: %3$s</string>
+</resources>

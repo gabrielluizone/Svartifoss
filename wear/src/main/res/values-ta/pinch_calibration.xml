@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">பிஞ்ச் அளவீடு</string>
+    <string name="pinch_cal_intro">பட்டையை இறுக்கமாகக் கட்டி மணிக்கட்டை உயர்த்திப் பிடிக்கவும். சுமார் 45 வினாடிகள்: ஓய்வு, ஆறு இரட்டை பிஞ்ச்கள், பிறகு கை அசைவு. இசை கட்டளைகள் எதுவும் அனுப்பப்படாது.</string>
+    <string name="pinch_cal_start">தொடங்கு</string>
+    <string name="pinch_cal_restart">மீண்டும் தொடங்கு</string>
+    <string name="pinch_cal_test">செயல்கள் இல்லாமல் சோதனை</string>
+    <string name="pinch_cal_save">அளவீட்டைச் சேமி</string>
+    <string name="pinch_cal_close">மூடு</string>
+
+    <string name="pinch_cal_step_ready">தயாராகுங்கள்</string>
+    <string name="pinch_cal_step_ready_hint">மணிக்கட்டை உயர்த்திப் பிடிக்கவும், திரை உங்கள் பக்கம்.</string>
+    <string name="pinch_cal_step_rest">அசையாதீர்கள்</string>
+    <string name="pinch_cal_step_rest_hint">பிஞ்ச் செய்யாதீர்கள்.</string>
+    <string name="pinch_cal_step_attempt">முயற்சி %1$d / %2$d</string>
+    <string name="pinch_cal_step_pinch">இரட்டை பிஞ்ச்</string>
+    <string name="pinch_cal_step_pinch_hint">கட்டைவிரலையும் ஆள்காட்டி விரலையும் இருமுறை ஒன்றாகத் தொடவும்.</string>
+    <string name="pinch_cal_step_wait">தளருங்கள்</string>
+    <string name="pinch_cal_step_wait_hint">அடுத்த முயற்சி வருகிறது.</string>
+    <string name="pinch_cal_step_prepare">கிட்டத்தட்ட முடிந்தது</string>
+    <string name="pinch_cal_step_prepare_hint">அடுத்து: பிஞ்ச் செய்யாமல் கையை அசையுங்கள்.</string>
+    <string name="pinch_cal_step_move">கையை அசையுங்கள்</string>
+    <string name="pinch_cal_step_move_hint">இயல்பாகச் சுழற்றி ஆட்டுங்கள், திரை உங்கள் பக்கம் இருக்கட்டும். பிஞ்ச் செய்யாதீர்கள்.</string>
+
+    <string name="pinch_cal_testing">சோதனை</string>
+    <string name="pinch_cal_detections">கண்டறிதல்கள்</string>
+    <string name="pinch_cal_test_hint">%1$d வி மீதம் · செயல்கள் இல்லை</string>
+
+    <string name="pinch_cal_ready">அளவீடு முடிந்தது. சேமிக்கும் முன் சோதிக்கவும்: சில முறை பிஞ்ச் செய்து, பிறகு கையை வழக்கம்போல் அசையுங்கள்.</string>
+    <string name="pinch_cal_test_done">%1$d கண்டறிதல்கள். இது உங்கள் இரட்டை பிஞ்ச்களுடன் பொருந்தினால் சேமிக்கவும். கை அசைவுகள் கணக்கிடப்பட்டிருந்தால் மீண்டும் அளவீடு செய்யவும் அல்லது தொலைபேசியில் உணர்திறனைக் குறைக்கவும்.</string>
+    <string name="pinch_cal_failed_incomplete">பதிவு பாதியில் நின்றது. முழு சோதனையிலும் திரையை இயக்கத்திலும் உங்கள் பக்கமும் வைத்து, மீண்டும் தொடங்குங்கள்.</string>
+    <string name="pinch_cal_failed_weak">உங்கள் பிஞ்ச்கள் அசையாத மணிக்கட்டிலிருந்து வேறுபடவில்லை. பட்டையை சற்று இறுக்கி, அழுத்தமாக பிஞ்ச் செய்யுங்கள்.</string>
+    <string name="pinch_cal_failed_unrecognized">பெரும்பாலான முயற்சிகள் இரட்டை பிஞ்சாக அடையாளம் காணப்படவில்லை. ஒவ்வொரு முயற்சியிலும் தெளிவாக இருமுறை பிஞ்ச் செய்து, கையை அசையாமல் வைத்திருங்கள்.</string>
+    <string name="pinch_cal_failed_movement">உங்கள் கை அசைவு பிஞ்ச் போலத் தோன்றியது. முயற்சிகளின்போது மணிக்கட்டை மேலும் நிலையாக வைத்து, மீண்டும் தொடங்குங்கள்.</string>
+    <string name="pinch_cal_failed_kept">முந்தைய அளவீடு வைத்திருக்கப்பட்டது.</string>
+    <string name="pinch_cal_interrupted">திரை அணைந்ததால் நிறுத்தப்பட்டது. திரை இயக்கத்தில் இருக்கும்போது மீண்டும் தொடங்குங்கள்.</string>
+    <string name="pinch_cal_unavailable">இயக்க உணரிகள் கிடைக்கவில்லை. இந்தத் திரையை மீண்டும் திறந்து மீண்டும் முயலவும்.</string>
+
+    <string name="pinch_cal_sending">தொலைபேசியில் சேமிக்கிறது…</string>
+    <string name="pinch_cal_saved">அளவீடு சேமிக்கப்பட்டது. தொலைபேசியில் பிஞ்ச் அமைப்புகளில் சோதனையைத் தேர்ந்தெடுத்துச் சேமிக்கவும்.</string>
+    <string name="pinch_cal_saved_active">அளவீடு சேமிக்கப்பட்டது. பிளேயர் திறந்திருக்கும்போது சோதனை டிடெக்டர் இயங்கும்.</string>
+    <string name="pinch_cal_send_failed">தொலைபேசியில் சேமிக்கப்பட்டதை உறுதிப்படுத்த முடியவில்லை. இணைப்பைச் சரிபார்த்து அளவீட்டைச் சேமி என்பதை மீண்டும் தொடவும்.</string>
+    <string name="pinch_cal_legend_motion">இயக்கம்</string>
+    <string name="pinch_cal_legend_rotation">சுழற்சி</string>
+    <string name="pinch_cal_legend_target">வரம்பு</string>
+    <string name="pinch_cal_no_signal">உணரி தரவு இல்லை</string>
+    <string name="pinch_cal_detail">%2$d இல் %1$d அடையாளம் காணப்பட்டது · ஒவ்வொரு முயற்சியிலும் தொடுதல்கள்: %3$s</string>
+</resources>

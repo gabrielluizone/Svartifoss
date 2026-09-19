@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">పించ్ క్యాలిబ్రేట్ చేయండి</string>
+    <string name="pinch_cal_intro">పట్టీని గట్టిగా కట్టి మణికట్టును పైకి ఉంచండి. సుమారు 45 సెకన్లు: విశ్రాంతి, ఆరు డబుల్ పించ్‌లు, తర్వాత చేయి కదలిక. ఎలాంటి మ్యూజిక్ ఆదేశాలు పంపబడవు.</string>
+    <string name="pinch_cal_start">ప్రారంభించు</string>
+    <string name="pinch_cal_restart">మళ్లీ ప్రారంభించు</string>
+    <string name="pinch_cal_test">చర్యలు లేకుండా పరీక్ష</string>
+    <string name="pinch_cal_save">క్యాలిబ్రేషన్ సేవ్ చేయి</string>
+    <string name="pinch_cal_close">మూసివేయి</string>
+
+    <string name="pinch_cal_step_ready">సిద్ధం అవ్వండి</string>
+    <string name="pinch_cal_step_ready_hint">మణికట్టును పైకి ఉంచండి, స్క్రీన్ మీ వైపు.</string>
+    <string name="pinch_cal_step_rest">కదలకండి</string>
+    <string name="pinch_cal_step_rest_hint">పించ్ చేయకండి.</string>
+    <string name="pinch_cal_step_attempt">ప్రయత్నం %1$d / %2$d</string>
+    <string name="pinch_cal_step_pinch">డబుల్ పించ్</string>
+    <string name="pinch_cal_step_pinch_hint">బొటనవేలు మరియు చూపుడు వేలును రెండుసార్లు కలపండి.</string>
+    <string name="pinch_cal_step_wait">రిలాక్స్ అవ్వండి</string>
+    <string name="pinch_cal_step_wait_hint">తదుపరి ప్రయత్నం వస్తోంది.</string>
+    <string name="pinch_cal_step_prepare">దాదాపు పూర్తయింది</string>
+    <string name="pinch_cal_step_prepare_hint">తర్వాత: పించ్ చేయకుండా చేయిని కదపండి.</string>
+    <string name="pinch_cal_step_move">చేయిని కదపండి</string>
+    <string name="pinch_cal_step_move_hint">సహజంగా తిప్పండి, ఊపండి, స్క్రీన్ మీ వైపు ఉంచండి. పించ్ చేయకండి.</string>
+
+    <string name="pinch_cal_testing">పరీక్ష</string>
+    <string name="pinch_cal_detections">గుర్తింపులు</string>
+    <string name="pinch_cal_test_hint">%1$d సె మిగిలి ఉంది · చర్యలు లేవు</string>
+
+    <string name="pinch_cal_ready">క్యాలిబ్రేట్ అయింది. సేవ్ చేసే ముందు పరీక్షించండి: కొన్నిసార్లు పించ్ చేసి, తర్వాత చేయిని మామూలుగా కదపండి.</string>
+    <string name="pinch_cal_test_done">%1$d గుర్తింపులు. ఇది మీ డబుల్ పించ్‌లతో సరిపోతే సేవ్ చేయండి. చేయి కదలికలు లెక్కించబడితే మళ్లీ క్యాలిబ్రేట్ చేయండి లేదా ఫోన్‌లో సున్నితత్వాన్ని తగ్గించండి.</string>
+    <string name="pinch_cal_failed_incomplete">రికార్డింగ్ మధ్యలో ఆగిపోయింది. మొత్తం పరీక్షలో స్క్రీన్‌ను ఆన్‌లో మీ వైపు ఉంచి, మళ్లీ ప్రారంభించండి.</string>
+    <string name="pinch_cal_failed_weak">మీ పించ్‌లు కదలని మణికట్టు నుండి వేరుగా కనిపించలేదు. పట్టీని కొంచెం బిగించి గట్టిగా పించ్ చేయండి.</string>
+    <string name="pinch_cal_failed_unrecognized">చాలా ప్రయత్నాలు డబుల్ పించ్‌గా గుర్తించబడలేదు. ప్రతి ప్రయత్నంలో స్పష్టంగా రెండుసార్లు పించ్ చేసి, చేయిని కదలకుండా ఉంచండి.</string>
+    <string name="pinch_cal_failed_movement">మీ చేయి కదలిక పించ్‌ల లాగా కనిపించింది. ప్రయత్నాల సమయంలో మణికట్టును మరింత స్థిరంగా ఉంచి, మళ్లీ ప్రారంభించండి.</string>
+    <string name="pinch_cal_failed_kept">మునుపటి క్యాలిబ్రేషన్ అలాగే ఉంచబడింది.</string>
+    <string name="pinch_cal_interrupted">స్క్రీన్ ఆఫ్ అయినందున ఆగిపోయింది. స్క్రీన్ ఆన్‌లో ఉండగా మళ్లీ ప్రారంభించండి.</string>
+    <string name="pinch_cal_unavailable">మోషన్ సెన్సార్‌లు అందుబాటులో లేవు. ఈ స్క్రీన్‌ను మళ్లీ తెరిచి మళ్లీ ప్రయత్నించండి.</string>
+
+    <string name="pinch_cal_sending">ఫోన్‌లో సేవ్ అవుతోంది…</string>
+    <string name="pinch_cal_saved">క్యాలిబ్రేషన్ సేవ్ అయింది. ఫోన్‌లో పించ్ సెట్టింగ్‌లలో ప్రయోగాత్మకం ఎంచుకుని సేవ్ చేయండి.</string>
+    <string name="pinch_cal_saved_active">క్యాలిబ్రేషన్ సేవ్ అయింది. ప్లేయర్ తెరిచి ఉన్నప్పుడు ప్రయోగాత్మక డిటెక్టర్ పనిచేస్తుంది.</string>
+    <string name="pinch_cal_send_failed">ఫోన్‌లో సేవ్ అయినట్లు నిర్ధారించలేకపోయాము. కనెక్షన్‌ను తనిఖీ చేసి క్యాలిబ్రేషన్ సేవ్ చేయి పై మళ్లీ నొక్కండి.</string>
+    <string name="pinch_cal_legend_motion">కదలిక</string>
+    <string name="pinch_cal_legend_rotation">తిరుగుడు</string>
+    <string name="pinch_cal_legend_target">పరిమితి</string>
+    <string name="pinch_cal_no_signal">సెన్సార్ డేటా లేదు</string>
+    <string name="pinch_cal_detail">%2$d లో %1$d గుర్తించబడ్డాయి · ప్రతి ప్రయత్నానికి తాకిళ్లు: %3$s</string>
+</resources>

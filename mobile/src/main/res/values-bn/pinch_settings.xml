@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">পিঞ্চ সেটিংস</string>
+    <string name="pinch_settings_intro">ঘড়ি কীভাবে আপনার জেসচার শনাক্ত করবে?</string>
+    <string name="pinch_mode_native">ঘড়ির ডিটেক্টর</string>
+    <string name="pinch_mode_experimental">পরীক্ষামূলক ডিটেক্টর</string>
+    <string name="pinch_native_description">ঘড়ির বিল্ট-ইন শনাক্তকরণ ব্যবহার করে। ক্যালিব্রেশন বা সংবেদনশীলতার নিয়ন্ত্রণ নেই।</string>
+    <string name="pinch_experimental_description">আপনার ক্যালিব্রেশন দিয়ে কব্জির নড়াচড়া শনাক্ত করে। ভুলে চালু হতে পারে এবং প্লেয়ার খোলা থাকলে বেশি ব্যাটারি খরচ করে।</string>
+    <string name="pinch_profile_missing">এখনও ক্যালিব্রেট করা হয়নি। আপনি এখনই এই মোড সেভ করতে পারেন: ঘড়িতে ক্যালিব্রেশন সেভ না হওয়া পর্যন্ত এটি নিজের ডিটেক্টর ব্যবহার করবে, তারপর নিজে থেকেই বদলে যাবে।</string>
+    <string name="pinch_profile_saved">ক্যালিব্রেশন সেভ হয়েছে। ব্যবহারের জন্য প্রস্তুত।</string>
+    <string name="pinch_calibration_step">১. আপনার জেসচার ক্যালিব্রেট করুন</string>
+    <string name="pinch_tuning_step">২. শনাক্তকরণ সামঞ্জস্য করুন</string>
+    <string name="pinch_calibrate_watch">ঘড়িতে ক্যালিব্রেট করুন</string>
+    <string name="pinch_recalibrate_watch">আবার ক্যালিব্রেট করুন</string>
+    <string name="pinch_open_instruction">ঘড়িতে Svartifoss খুলুন। সেখানে পরীক্ষাটি অনুসরণ করুন এবং ক্যালিব্রেশন সেভ করুন।</string>
+    <string name="pinch_open_sending">ঘড়ির সাথে সংযোগ হচ্ছে…</string>
+    <string name="pinch_open_sent">ঘড়িতে চালিয়ে যান। পরীক্ষা না খুললে সেখানে Svartifoss আবার খুলুন এবং পুনরায় চেষ্টা করুন।</string>
+    <string name="pinch_open_failed">ঘড়ি পাওয়া যাচ্ছে না। সংযোগ পরীক্ষা করুন এবং দুটি অ্যাপই আপডেট করুন, তারপর আবার চেষ্টা করুন।</string>
+    <string name="pinch_sensitivity_label">সংবেদনশীলতা</string>
+    <string name="pinch_sensitivity_help">পিঞ্চ মিস হলে বাড়ান। অন্য নড়াচড়া অ্যাকশন চালু করলে কমান।</string>
+    <string name="pinch_gap_label">পিঞ্চের মধ্যে সময়</string>
+    <string name="pinch_gap_help">প্রথম পিঞ্চ থেকে দ্বিতীয়টির সর্বোচ্চ সময়। ধীর জেসচারের জন্য বাড়ান।</string>
+    <string name="pinch_cooldown_label">কমান্ডের মধ্যে বিরতি</string>
+    <string name="pinch_cooldown_help">একটি অ্যাকশনের পরে আরেকটি জেসচার গ্রহণের আগে কতক্ষণ অপেক্ষা করতে হবে।</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">আরও সমন্বয়</string>
+    <string name="pinch_advanced_hide">কম সমন্বয়</string>
+    <string name="pinch_shared_settings">গান চলার বা বিরতির সময় এই সেটিংস প্রযোজ্য।</string>
+    <string name="pinch_settings_save">সেভ করুন</string>
+    <string name="pinch_gesture_note">প্লেয়ার খোলা রেখে এবং ঘড়ির স্ক্রিন চালু রেখে বুড়ো আঙুল ও তর্জনী দুইবার একসাথে ছোঁয়ান।</string>
+    <string name="pinch_controls_uncalibrated">পরীক্ষামূলক ডিটেক্টর বাছাই করা হয়েছে, এখনও ক্যালিব্রেট হয়নি। ক্যালিব্রেট না করা পর্যন্ত ঘড়ির নিজস্ব ডিটেক্টর ব্যবহার হবে।</string>
+    <string name="pinch_controls_calibrated">পরীক্ষামূলক ডিটেক্টর ক্যালিব্রেট হয়েছে। Svartifoss প্লেয়ার খোলা থাকলে দুইবার পিঞ্চ করুন।</string>
+</resources>

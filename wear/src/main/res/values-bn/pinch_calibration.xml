@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">পিঞ্চ ক্যালিব্রেট করুন</string>
+    <string name="pinch_cal_intro">ব্যান্ড শক্ত করে বাঁধুন এবং কব্জি উঁচু রাখুন। প্রায় ৪৫ সেকেন্ড: বিশ্রাম, ছয়টি ডাবল পিঞ্চ, তারপর হাতের নড়াচড়া। কোনো মিউজিক কমান্ড পাঠানো হয় না।</string>
+    <string name="pinch_cal_start">শুরু করুন</string>
+    <string name="pinch_cal_restart">আবার শুরু করুন</string>
+    <string name="pinch_cal_test">অ্যাকশন ছাড়া পরীক্ষা</string>
+    <string name="pinch_cal_save">ক্যালিব্রেশন সেভ করুন</string>
+    <string name="pinch_cal_close">বন্ধ করুন</string>
+
+    <string name="pinch_cal_step_ready">প্রস্তুত হোন</string>
+    <string name="pinch_cal_step_ready_hint">কব্জি উঁচু রাখুন, স্ক্রিন আপনার দিকে।</string>
+    <string name="pinch_cal_step_rest">স্থির থাকুন</string>
+    <string name="pinch_cal_step_rest_hint">পিঞ্চ করবেন না।</string>
+    <string name="pinch_cal_step_attempt">চেষ্টা %1$d / %2$d</string>
+    <string name="pinch_cal_step_pinch">ডাবল পিঞ্চ</string>
+    <string name="pinch_cal_step_pinch_hint">বুড়ো আঙুল ও তর্জনী দুইবার একসাথে ছোঁয়ান।</string>
+    <string name="pinch_cal_step_wait">শিথিল হোন</string>
+    <string name="pinch_cal_step_wait_hint">পরের চেষ্টা আসছে।</string>
+    <string name="pinch_cal_step_prepare">প্রায় শেষ</string>
+    <string name="pinch_cal_step_prepare_hint">এরপর: পিঞ্চ না করে হাত নাড়ান।</string>
+    <string name="pinch_cal_step_move">হাত নাড়ান</string>
+    <string name="pinch_cal_step_move_hint">স্বাভাবিকভাবে ঘোরান ও দোলান, স্ক্রিন আপনার দিকে রেখে। পিঞ্চ করবেন না।</string>
+
+    <string name="pinch_cal_testing">পরীক্ষা</string>
+    <string name="pinch_cal_detections">শনাক্তকরণ</string>
+    <string name="pinch_cal_test_hint">আর %1$d সেকেন্ড · কোনো অ্যাকশন নয়</string>
+
+    <string name="pinch_cal_ready">ক্যালিব্রেট হয়েছে। সেভ করার আগে পরখ করুন: কয়েকবার পিঞ্চ করুন, তারপর হাত স্বাভাবিকভাবে নাড়ান।</string>
+    <string name="pinch_cal_test_done">%1$d টি শনাক্তকরণ। এটি আপনার ডাবল পিঞ্চের সাথে মিললে সেভ করুন। হাতের নড়াচড়া গণনা হলে আবার ক্যালিব্রেট করুন বা ফোনে সংবেদনশীলতা কমান।</string>
+    <string name="pinch_cal_failed_incomplete">রেকর্ডিং মাঝপথে থেমে গেছে। পুরো পরীক্ষা জুড়ে স্ক্রিন চালু ও নিজের দিকে রাখুন, তারপর আবার শুরু করুন।</string>
+    <string name="pinch_cal_failed_weak">আপনার পিঞ্চ স্থির কব্জি থেকে আলাদা বোঝা যায়নি। ব্যান্ড একটু শক্ত করুন এবং আরও জোরে পিঞ্চ করুন।</string>
+    <string name="pinch_cal_failed_unrecognized">বেশিরভাগ চেষ্টা ডাবল পিঞ্চ হিসেবে শনাক্ত হয়নি। প্রতিটি চেষ্টায় স্পষ্টভাবে দুইবার পিঞ্চ করুন এবং হাত স্থির রাখুন।</string>
+    <string name="pinch_cal_failed_movement">আপনার হাতের নড়াচড়া পিঞ্চের মতো দেখাচ্ছিল। চেষ্টার সময় কব্জি আরও স্থির রাখুন, তারপর আবার শুরু করুন।</string>
+    <string name="pinch_cal_failed_kept">আগের ক্যালিব্রেশন রাখা হয়েছে।</string>
+    <string name="pinch_cal_interrupted">স্ক্রিন বন্ধ হয়ে যাওয়ায় থেমে গেছে। স্ক্রিন চালু রেখে আবার শুরু করুন।</string>
+    <string name="pinch_cal_unavailable">মোশন সেন্সর পাওয়া যাচ্ছে না। এই স্ক্রিনটি আবার খুলুন এবং পুনরায় চেষ্টা করুন।</string>
+
+    <string name="pinch_cal_sending">ফোনে সেভ হচ্ছে…</string>
+    <string name="pinch_cal_saved">ক্যালিব্রেশন সেভ হয়েছে। ফোনে পিঞ্চ সেটিংসে পরীক্ষামূলক বেছে নিন এবং সেভ করুন।</string>
+    <string name="pinch_cal_saved_active">ক্যালিব্রেশন সেভ হয়েছে। প্লেয়ার খোলা থাকলে পরীক্ষামূলক ডিটেক্টর চালু থাকে।</string>
+    <string name="pinch_cal_send_failed">ফোনে সেভ হওয়া নিশ্চিত করা যায়নি। সংযোগ পরীক্ষা করুন এবং আবার ক্যালিব্রেশন সেভ করুন-এ ট্যাপ করুন।</string>
+    <string name="pinch_cal_legend_motion">গতি</string>
+    <string name="pinch_cal_legend_rotation">ঘূর্ণন</string>
+    <string name="pinch_cal_legend_target">সীমা</string>
+    <string name="pinch_cal_no_signal">সেন্সরের তথ্য নেই</string>
+    <string name="pinch_cal_detail">%2$d এর মধ্যে %1$d শনাক্ত · প্রতি চেষ্টায় স্পর্শ: %3$s</string>
+</resources>

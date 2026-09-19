@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Kalibrera nypning</string>
+    <string name="pinch_cal_intro">Dra åt armbandet ordentligt och håll upp handleden. Cirka 45 sekunder: vila, sex dubbla nypningar och sedan armrörelse. Inga musikkommandon skickas.</string>
+    <string name="pinch_cal_start">Starta</string>
+    <string name="pinch_cal_restart">Börja om</string>
+    <string name="pinch_cal_test">Testa utan åtgärder</string>
+    <string name="pinch_cal_save">Spara kalibrering</string>
+    <string name="pinch_cal_close">Stäng</string>
+
+    <string name="pinch_cal_step_ready">Gör dig redo</string>
+    <string name="pinch_cal_step_ready_hint">Håll upp handleden med skärmen mot dig.</string>
+    <string name="pinch_cal_step_rest">Var stilla</string>
+    <string name="pinch_cal_step_rest_hint">Nyp inte.</string>
+    <string name="pinch_cal_step_attempt">Försök %1$d av %2$d</string>
+    <string name="pinch_cal_step_pinch">Dubbel nypning</string>
+    <string name="pinch_cal_step_pinch_hint">Nudda tummen och pekfingret två gånger.</string>
+    <string name="pinch_cal_step_wait">Slappna av</string>
+    <string name="pinch_cal_step_wait_hint">Nästa försök kommer strax.</string>
+    <string name="pinch_cal_step_prepare">Nästan klart</string>
+    <string name="pinch_cal_step_prepare_hint">Sedan: rör armen utan att nypa.</string>
+    <string name="pinch_cal_step_move">Rör armen</string>
+    <string name="pinch_cal_step_move_hint">Vrid och svinga den naturligt, med skärmen mot dig. Nyp inte.</string>
+
+    <string name="pinch_cal_testing">Test</string>
+    <string name="pinch_cal_detections">Registreringar</string>
+    <string name="pinch_cal_test_hint">%1$d s kvar · inga åtgärder</string>
+
+    <string name="pinch_cal_ready">Kalibrerad. Testa innan du sparar: nyp några gånger och rör sedan armen som vanligt.</string>
+    <string name="pinch_cal_test_done">%1$d registreringar. Stämmer det med dina dubbla nypningar, spara. Om armrörelser räknades, kalibrera igen eller sänk känsligheten på telefonen.</string>
+    <string name="pinch_cal_failed_incomplete">Inspelningen avbröts. Håll skärmen tänd och riktad mot dig under hela testet och börja sedan om.</string>
+    <string name="pinch_cal_failed_weak">Dina nypningar skilde sig inte från en stilla handled. Dra åt armbandet lite och nyp hårdare.</string>
+    <string name="pinch_cal_failed_unrecognized">De flesta försöken kändes inte igen som en dubbel nypning. Nyp tydligt två gånger vid varje försök och håll armen stilla.</string>
+    <string name="pinch_cal_failed_movement">Din armrörelse liknade nypningar. Håll handleden stadigare under försöken och börja sedan om.</string>
+    <string name="pinch_cal_failed_kept">Den tidigare kalibreringen behölls.</string>
+    <string name="pinch_cal_interrupted">Stoppades eftersom skärmen släcktes. Börja om med tänd skärm.</string>
+    <string name="pinch_cal_unavailable">Rörelsesensorerna är inte tillgängliga. Öppna den här vyn igen och försök på nytt.</string>
+
+    <string name="pinch_cal_sending">Sparar på telefonen …</string>
+    <string name="pinch_cal_saved">Kalibreringen är sparad. Välj Experimentell i nypinställningarna på telefonen och spara.</string>
+    <string name="pinch_cal_saved_active">Kalibreringen är sparad. Den experimentella detektorn är aktiv medan spelaren är öppen.</string>
+    <string name="pinch_cal_send_failed">Det gick inte att bekräfta sparandet på telefonen. Kontrollera anslutningen och tryck på Spara kalibrering igen.</string>
+    <string name="pinch_cal_legend_motion">Rörelse</string>
+    <string name="pinch_cal_legend_rotation">Rotation</string>
+    <string name="pinch_cal_legend_target">Tröskel</string>
+    <string name="pinch_cal_no_signal">Inga sensordata</string>
+    <string name="pinch_cal_detail">%1$d av %2$d igenkända · beröringar per försök: %3$s</string>
+</resources>

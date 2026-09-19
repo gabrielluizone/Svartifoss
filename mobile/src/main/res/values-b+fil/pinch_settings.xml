@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Mga setting ng pinch</string>
+    <string name="pinch_settings_intro">Paano dapat matukoy ng relo ang gesture mo?</string>
+    <string name="pinch_mode_native">Detector ng relo</string>
+    <string name="pinch_mode_experimental">Eksperimental na detector</string>
+    <string name="pinch_native_description">Gumagamit ng built-in na pagkilala ng relo. Walang calibration o kontrol sa sensitivity.</string>
+    <string name="pinch_experimental_description">Natutukoy ang galaw ng pulso gamit ang calibration mo. Maaari itong mag-trigger nang hindi sinasadya at mas malakas gumamit ng baterya habang bukas ang player.</string>
+    <string name="pinch_profile_missing">Hindi pa na-calibrate. Maaari mo nang i-save ang mode na ito ngayon: patuloy na gagamitin ng relo ang sarili nitong detector hanggang may ma-save na calibration doon, at saka ito awtomatikong lilipat.</string>
+    <string name="pinch_profile_saved">Na-save ang calibration. Handa nang gamitin.</string>
+    <string name="pinch_calibration_step">1. I-calibrate ang gesture mo</string>
+    <string name="pinch_tuning_step">2. Ayusin ang pagkilala</string>
+    <string name="pinch_calibrate_watch">I-calibrate sa relo</string>
+    <string name="pinch_recalibrate_watch">I-calibrate ulit</string>
+    <string name="pinch_open_instruction">Buksan ang Svartifoss sa relo. Sundin doon ang test at i-save ang calibration mo.</string>
+    <string name="pinch_open_sending">Kumokonekta sa relo…</string>
+    <string name="pinch_open_sent">Magpatuloy sa relo. Kung hindi bumukas ang test, buksan ulit doon ang Svartifoss at subukan muli.</string>
+    <string name="pinch_open_failed">Hindi available ang relo. Suriin ang koneksyon at i-update ang dalawang app, saka subukan muli.</string>
+    <string name="pinch_sensitivity_label">Sensitivity</string>
+    <string name="pinch_sensitivity_help">Dagdagan kung hindi natutukoy ang mga pinch. Bawasan kung may ibang galaw na nagti-trigger ng mga aksyon.</string>
+    <string name="pinch_gap_label">Pagitan ng mga pinch</string>
+    <string name="pinch_gap_help">Pinakamahabang oras mula sa unang pinch hanggang sa ikalawa. Dagdagan para sa mas mabagal na gesture.</string>
+    <string name="pinch_cooldown_label">Pahinga sa pagitan ng mga command</string>
+    <string name="pinch_cooldown_help">Gaano katagal maghihintay pagkatapos ng isang aksyon bago tumanggap ng isa pang gesture.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Higit pang mga pagsasaayos</string>
+    <string name="pinch_advanced_hide">Mas kaunting mga pagsasaayos</string>
+    <string name="pinch_shared_settings">Nalalapat ang mga setting na ito habang tumutugtog o naka-pause ang musika.</string>
+    <string name="pinch_settings_save">I-save</string>
+    <string name="pinch_gesture_note">Pagdikitin nang dalawang beses ang hinlalaki at hintuturo, habang bukas ang player at naka-on ang screen ng relo.</string>
+    <string name="pinch_controls_uncalibrated">Napili ang eksperimental na detector, hindi pa na-calibrate. Gagamitin ang sariling detector ng relo hanggang mag-calibrate ka.</string>
+    <string name="pinch_controls_calibrated">Na-calibrate ang eksperimental na detector. Mag-pinch nang dalawang beses habang bukas ang Svartifoss player.</string>
+</resources>

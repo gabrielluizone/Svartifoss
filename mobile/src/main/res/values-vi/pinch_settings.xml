@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Cài đặt chụm</string>
+    <string name="pinch_settings_intro">Đồng hồ nên nhận diện cử chỉ của bạn như thế nào?</string>
+    <string name="pinch_mode_native">Bộ phát hiện của đồng hồ</string>
+    <string name="pinch_mode_experimental">Bộ phát hiện thử nghiệm</string>
+    <string name="pinch_native_description">Dùng tính năng nhận diện tích hợp của đồng hồ. Không có điều khiển hiệu chỉnh hay độ nhạy.</string>
+    <string name="pinch_experimental_description">Phát hiện chuyển động cổ tay theo hiệu chỉnh của bạn. Có thể kích hoạt nhầm và tốn pin hơn khi trình phát đang mở.</string>
+    <string name="pinch_profile_missing">Chưa hiệu chỉnh. Bạn có thể lưu chế độ này ngay: đồng hồ tiếp tục dùng bộ phát hiện riêng cho đến khi có hiệu chỉnh được lưu trên đó, rồi tự chuyển.</string>
+    <string name="pinch_profile_saved">Đã lưu hiệu chỉnh. Sẵn sàng sử dụng.</string>
+    <string name="pinch_calibration_step">1. Hiệu chỉnh cử chỉ của bạn</string>
+    <string name="pinch_tuning_step">2. Điều chỉnh nhận diện</string>
+    <string name="pinch_calibrate_watch">Hiệu chỉnh trên đồng hồ</string>
+    <string name="pinch_recalibrate_watch">Hiệu chỉnh lại</string>
+    <string name="pinch_open_instruction">Mở Svartifoss trên đồng hồ. Làm theo bài kiểm tra ở đó và lưu hiệu chỉnh.</string>
+    <string name="pinch_open_sending">Đang kết nối với đồng hồ…</string>
+    <string name="pinch_open_sent">Tiếp tục trên đồng hồ. Nếu bài kiểm tra không mở, hãy mở lại Svartifoss ở đó và thử lại.</string>
+    <string name="pinch_open_failed">Không dùng được đồng hồ. Kiểm tra kết nối và cập nhật cả hai ứng dụng, rồi thử lại.</string>
+    <string name="pinch_sensitivity_label">Độ nhạy</string>
+    <string name="pinch_sensitivity_help">Tăng nếu các lần chụm bị bỏ sót. Giảm nếu chuyển động khác kích hoạt hành động.</string>
+    <string name="pinch_gap_label">Thời gian giữa các lần chụm</string>
+    <string name="pinch_gap_help">Thời gian tối đa từ lần chụm đầu đến lần thứ hai. Tăng cho cử chỉ chậm hơn.</string>
+    <string name="pinch_cooldown_label">Nghỉ giữa các lệnh</string>
+    <string name="pinch_cooldown_help">Chờ bao lâu sau một hành động trước khi nhận cử chỉ khác.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Thêm tùy chỉnh</string>
+    <string name="pinch_advanced_hide">Ít tùy chỉnh hơn</string>
+    <string name="pinch_shared_settings">Các cài đặt này áp dụng khi nhạc đang phát hoặc tạm dừng.</string>
+    <string name="pinch_settings_save">Lưu</string>
+    <string name="pinch_gesture_note">Chạm ngón cái và ngón trỏ vào nhau hai lần, khi trình phát đang mở và màn hình đồng hồ sáng.</string>
+    <string name="pinch_controls_uncalibrated">Đã chọn bộ phát hiện thử nghiệm, chưa hiệu chỉnh. Bộ phát hiện của chính đồng hồ được dùng cho đến khi bạn hiệu chỉnh.</string>
+    <string name="pinch_controls_calibrated">Đã hiệu chỉnh bộ phát hiện thử nghiệm. Chụm hai lần khi trình phát Svartifoss đang mở.</string>
+</resources>

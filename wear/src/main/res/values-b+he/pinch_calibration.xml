@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">כיול צביטה</string>
+    <string name="pinch_cal_intro">הדק היטב את הרצועה והחזק את פרק כף היד למעלה. כ-45 שניות: מנוחה, שש צביטות כפולות ואז תנועת זרוע. לא נשלחות פקודות מוזיקה.</string>
+    <string name="pinch_cal_start">התחל</string>
+    <string name="pinch_cal_restart">התחל מחדש</string>
+    <string name="pinch_cal_test">בדיקה ללא פעולות</string>
+    <string name="pinch_cal_save">שמור כיול</string>
+    <string name="pinch_cal_close">סגור</string>
+
+    <string name="pinch_cal_step_ready">התכונן</string>
+    <string name="pinch_cal_step_ready_hint">החזק את פרק כף היד למעלה, כשהמסך מופנה אליך.</string>
+    <string name="pinch_cal_step_rest">אל תזוז</string>
+    <string name="pinch_cal_step_rest_hint">אל תצבוט.</string>
+    <string name="pinch_cal_step_attempt">ניסיון %1$d מתוך %2$d</string>
+    <string name="pinch_cal_step_pinch">צביטה כפולה</string>
+    <string name="pinch_cal_step_pinch_hint">געת באגודל ובאצבע ביחד פעמיים.</string>
+    <string name="pinch_cal_step_wait">הירגע</string>
+    <string name="pinch_cal_step_wait_hint">הניסיון הבא מגיע.</string>
+    <string name="pinch_cal_step_prepare">כמעט סיימנו</string>
+    <string name="pinch_cal_step_prepare_hint">בהמשך: הזז את הזרוע בלי לצבוט.</string>
+    <string name="pinch_cal_step_move">הזז את הזרוע</string>
+    <string name="pinch_cal_step_move_hint">סובב ונענע אותה באופן טבעי, כשהמסך מופנה אליך. אל תצבוט.</string>
+
+    <string name="pinch_cal_testing">בדיקה</string>
+    <string name="pinch_cal_detections">זיהויים</string>
+    <string name="pinch_cal_test_hint">נותרו %1$d שניות · ללא פעולות</string>
+
+    <string name="pinch_cal_ready">כויל. בדוק לפני השמירה: צבוט כמה פעמים ואז הזז את הזרוע כרגיל.</string>
+    <string name="pinch_cal_test_done">%1$d זיהויים. אם זה תואם לצביטות הכפולות שלך, שמור. אם נספרו תנועות זרוע, כייל שוב או הנמך את הרגישות בטלפון.</string>
+    <string name="pinch_cal_failed_incomplete">ההקלטה נקטעה. השאר את המסך דלוק ומופנה אליך לאורך כל הבדיקה והתחל מחדש.</string>
+    <string name="pinch_cal_failed_weak">הצביטות שלך לא בלטו על רקע פרק כף יד נייח. הדק מעט את הרצועה וצבוט חזק יותר.</string>
+    <string name="pinch_cal_failed_unrecognized">רוב הניסיונות לא זוהו כצביטה כפולה. בכל ניסיון צבוט בבירור פעמיים והחזק את הזרוע נייחת.</string>
+    <string name="pinch_cal_failed_movement">תנועת הזרוע שלך נראתה כמו צביטות. החזק את פרק כף היד יציב יותר במהלך הניסיונות והתחל מחדש.</string>
+    <string name="pinch_cal_failed_kept">הכיול הקודם נשמר.</string>
+    <string name="pinch_cal_interrupted">נעצר כי המסך כבה. התחל מחדש כשהמסך דלוק.</string>
+    <string name="pinch_cal_unavailable">חיישני התנועה אינם זמינים. פתח מסך זה מחדש ונסה שוב.</string>
+
+    <string name="pinch_cal_sending">שומר בטלפון…</string>
+    <string name="pinch_cal_saved">הכיול נשמר. בטלפון בחר ניסיוני בהגדרות הצביטה ושמור.</string>
+    <string name="pinch_cal_saved_active">הכיול נשמר. הגלאי הניסיוני פעיל כשהנגן פתוח.</string>
+    <string name="pinch_cal_send_failed">לא ניתן היה לאשר את השמירה בטלפון. בדוק את החיבור והקש שוב על שמור כיול.</string>
+    <string name="pinch_cal_legend_motion">תנועה</string>
+    <string name="pinch_cal_legend_rotation">סיבוב</string>
+    <string name="pinch_cal_legend_target">סף</string>
+    <string name="pinch_cal_no_signal">אין נתוני חיישן</string>
+    <string name="pinch_cal_detail">זוהו %1$d מתוך %2$d · נגיעות בכל ניסיון: %3$s</string>
+</resources>

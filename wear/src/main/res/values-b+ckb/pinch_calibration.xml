@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">کالیبرەکردنی pinch</string>
+    <string name="pinch_cal_intro">پشتێنەکە توند ببەستە و مەچەک بەرز ڕابگرە. نزیکەی ٤٥ چرکە: ئارامی، شەش pinchی دووانە، پاشان جوڵەی بازوو. هیچ فەرمانێکی مۆسیقا نانێردرێت.</string>
+    <string name="pinch_cal_start">دەستپێکردن</string>
+    <string name="pinch_cal_restart">دووبارە دەستپێکردن</string>
+    <string name="pinch_cal_test">تاقیکردنەوە بێ کار</string>
+    <string name="pinch_cal_save">پاشەکەوتکردنی کالیبرەکردن</string>
+    <string name="pinch_cal_close">داخستن</string>
+
+    <string name="pinch_cal_step_ready">ئامادە بە</string>
+    <string name="pinch_cal_step_ready_hint">مەچەک بەرز ڕابگرە، شاشەکە ڕووی لە تۆ بێت.</string>
+    <string name="pinch_cal_step_rest">مەجوڵێ</string>
+    <string name="pinch_cal_step_rest_hint">pinch مەکە.</string>
+    <string name="pinch_cal_step_attempt">هەوڵی %1$d لە %2$d</string>
+    <string name="pinch_cal_step_pinch">pinchی دووانە</string>
+    <string name="pinch_cal_step_pinch_hint">دووجار پەنجەی گەورە و پەنجەی نیشانە بە یەکەوە بگەیەنە.</string>
+    <string name="pinch_cal_step_wait">ئارام بگرە</string>
+    <string name="pinch_cal_step_wait_hint">هەوڵی داهاتوو دێت.</string>
+    <string name="pinch_cal_step_prepare">نزیکە تەواو ببێت</string>
+    <string name="pinch_cal_step_prepare_hint">پاشان: بازووت بجوڵێنە بەبێ pinch.</string>
+    <string name="pinch_cal_step_move">بازووت بجوڵێنە</string>
+    <string name="pinch_cal_step_move_hint">بە سروشتی بیخولێنەوە و بیلەرێنەوە، شاشەکە ڕووی لە تۆ بێت. pinch مەکە.</string>
+
+    <string name="pinch_cal_testing">تاقیکردنەوە</string>
+    <string name="pinch_cal_detections">دۆزینەوەکان</string>
+    <string name="pinch_cal_test_hint">%1$d چرکە ماوە · بێ کار</string>
+
+    <string name="pinch_cal_ready">کالیبرە کرا. پێش پاشەکەوتکردن تاقی بکەرەوە: چەند جارێک pinch بکە، پاشان بازووت بە ئاسایی بجوڵێنە.</string>
+    <string name="pinch_cal_test_done">%1$d دۆزینەوە. ئەگەر ئەمە لەگەڵ pinchە دووانەکانت دەگونجێت پاشەکەوتی بکە. ئەگەر جوڵەی بازوو ژمێردرا، دووبارە کالیبرە بکە یان هەستیاری لەسەر مۆبایل کەم بکەرەوە.</string>
+    <string name="pinch_cal_failed_incomplete">تۆمارکردنەکە پچڕا. شاشەکە لە هەموو تاقیکردنەوەکەدا داگیرساو و ڕوو لە خۆت ڕابگرە و دووبارە دەستپێبکەرەوە.</string>
+    <string name="pinch_cal_failed_weak">pinchەکانت لە مەچەکی نەجوڵاو جیا نەبوونەوە. پشتێنەکە کەمێک توندتر ببەستە و بە هێزتر pinch بکە.</string>
+    <string name="pinch_cal_failed_unrecognized">زۆربەی هەوڵەکان وەک pinchی دووانە نەناسرانەوە. لە هەر هەوڵێکدا بە ڕوونی دووجار pinch بکە و بازووت نەجوڵاو ڕابگرە.</string>
+    <string name="pinch_cal_failed_movement">جوڵەی بازووت لە pinch دەچوو. لە کاتی هەوڵەکاندا مەچەک جێگیرتر ڕابگرە و دووبارە دەستپێبکەرەوە.</string>
+    <string name="pinch_cal_failed_kept">کالیبرەکردنی پێشوو هێڵرایەوە.</string>
+    <string name="pinch_cal_interrupted">وەستا چونکە شاشەکە کوژایەوە. بە شاشەی داگیرساوەوە دووبارە دەستپێبکەرەوە.</string>
+    <string name="pinch_cal_unavailable">هەستەوەرەکانی جوڵە بەردەست نین. ئەم شاشەیە دووبارە بکەرەوە و دووبارە هەوڵ بدە.</string>
+
+    <string name="pinch_cal_sending">پاشەکەوت دەکرێت لەسەر مۆبایل…</string>
+    <string name="pinch_cal_saved">کالیبرەکردن پاشەکەوت کرا. لەسەر مۆبایل لە ڕێکخستنەکانی pinch تاقیکاری هەڵبژێرە و پاشەکەوت بکە.</string>
+    <string name="pinch_cal_saved_active">کالیبرەکردن پاشەکەوت کرا. دۆزەرەوەی تاقیکاری کار دەکات تا پڵەیەرەکە کراوەیە.</string>
+    <string name="pinch_cal_send_failed">پشتڕاستکردنەوەی پاشەکەوتکردن لەسەر مۆبایل نەکرا. پەیوەندییەکە بپشکنە و دووبارە پاشەکەوتکردنی کالیبرەکردن دابگرە.</string>
+    <string name="pinch_cal_legend_motion">جوڵە</string>
+    <string name="pinch_cal_legend_rotation">سوڕانەوە</string>
+    <string name="pinch_cal_legend_target">سنوور</string>
+    <string name="pinch_cal_no_signal">هیچ زانیارییەکی هەستەوەر نییە</string>
+    <string name="pinch_cal_detail">%1$d لە %2$d ناسرایەوە · دەستلێدان بۆ هەر هەوڵێک: %3$s</string>
+</resources>

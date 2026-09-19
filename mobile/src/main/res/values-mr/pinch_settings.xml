@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">पिंच सेटिंग्ज</string>
+    <string name="pinch_settings_intro">घड्याळाने तुमचा जेस्चर कसा ओळखावा?</string>
+    <string name="pinch_mode_native">घड्याळाचा डिटेक्टर</string>
+    <string name="pinch_mode_experimental">प्रायोगिक डिटेक्टर</string>
+    <string name="pinch_native_description">घड्याळाची अंगभूत ओळख वापरतो. कॅलिब्रेशन किंवा संवेदनशीलतेची नियंत्रणे नाहीत.</string>
+    <string name="pinch_experimental_description">तुमच्या कॅलिब्रेशननुसार मनगटाच्या हालचाली ओळखतो. तो चुकून सुरू होऊ शकतो आणि प्लेअर उघडा असताना जास्त बॅटरी वापरतो.</string>
+    <string name="pinch_profile_missing">अजून कॅलिब्रेट केलेले नाही. तुम्ही हा मोड आत्ताच सेव्ह करू शकता: घड्याळात कॅलिब्रेशन सेव्ह होईपर्यंत ते स्वतःचा डिटेक्टर वापरत राहील, नंतर आपोआप बदलेल.</string>
+    <string name="pinch_profile_saved">कॅलिब्रेशन सेव्ह झाले. वापरासाठी तयार.</string>
+    <string name="pinch_calibration_step">१. तुमचा जेस्चर कॅलिब्रेट करा</string>
+    <string name="pinch_tuning_step">२. ओळख समायोजित करा</string>
+    <string name="pinch_calibrate_watch">घड्याळावर कॅलिब्रेट करा</string>
+    <string name="pinch_recalibrate_watch">पुन्हा कॅलिब्रेट करा</string>
+    <string name="pinch_open_instruction">घड्याळावर Svartifoss उघडा. तिथे चाचणी पूर्ण करा आणि कॅलिब्रेशन सेव्ह करा.</string>
+    <string name="pinch_open_sending">घड्याळाशी कनेक्ट होत आहे…</string>
+    <string name="pinch_open_sent">घड्याळावर सुरू ठेवा. चाचणी उघडली नाही तर तिथे Svartifoss पुन्हा उघडा आणि पुन्हा प्रयत्न करा.</string>
+    <string name="pinch_open_failed">घड्याळ उपलब्ध नाही. कनेक्शन तपासा आणि दोन्ही अॅप्स अपडेट करा, मग पुन्हा प्रयत्न करा.</string>
+    <string name="pinch_sensitivity_label">संवेदनशीलता</string>
+    <string name="pinch_sensitivity_help">पिंच चुकत असतील तर वाढवा. इतर हालचालींमुळे क्रिया सुरू होत असतील तर कमी करा.</string>
+    <string name="pinch_gap_label">पिंचमधील वेळ</string>
+    <string name="pinch_gap_help">पहिल्या पिंचपासून दुसऱ्यापर्यंतचा कमाल वेळ. हळू जेस्चरसाठी वाढवा.</string>
+    <string name="pinch_cooldown_label">कमांडमधील विराम</string>
+    <string name="pinch_cooldown_help">एखाद्या क्रियेनंतर दुसरा जेस्चर स्वीकारण्यापूर्वी किती वेळ थांबायचे.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">आणखी समायोजने</string>
+    <string name="pinch_advanced_hide">कमी समायोजने</string>
+    <string name="pinch_shared_settings">संगीत वाजत असताना किंवा थांबलेले असताना या सेटिंग्ज लागू होतात.</string>
+    <string name="pinch_settings_save">सेव्ह करा</string>
+    <string name="pinch_gesture_note">प्लेअर उघडा ठेवून आणि घड्याळाची स्क्रीन सुरू ठेवून, अंगठा आणि तर्जनी दोनदा एकमेकांना लावा.</string>
+    <string name="pinch_controls_uncalibrated">प्रायोगिक डिटेक्टर निवडला, अजून कॅलिब्रेट केलेला नाही. कॅलिब्रेट करेपर्यंत घड्याळाचा स्वतःचा डिटेक्टर वापरला जातो.</string>
+    <string name="pinch_controls_calibrated">प्रायोगिक डिटेक्टर कॅलिब्रेट झाला. Svartifoss प्लेअर उघडा असताना दोनदा पिंच करा.</string>
+</resources>

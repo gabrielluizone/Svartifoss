@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">کالیبره کردن نیشگون</string>
+    <string name="pinch_cal_intro">بند را محکم ببندید و مچ را بالا نگه دارید. حدود ۴۵ ثانیه: سکون، شش نیشگون دوتایی و سپس حرکت بازو. هیچ فرمان موسیقی ارسال نمی‌شود.</string>
+    <string name="pinch_cal_start">شروع</string>
+    <string name="pinch_cal_restart">شروع دوباره</string>
+    <string name="pinch_cal_test">آزمون بدون اقدام</string>
+    <string name="pinch_cal_save">ذخیره کالیبراسیون</string>
+    <string name="pinch_cal_close">بستن</string>
+
+    <string name="pinch_cal_step_ready">آماده شوید</string>
+    <string name="pinch_cal_step_ready_hint">مچ را بالا نگه دارید، صفحه رو به شما.</string>
+    <string name="pinch_cal_step_rest">بی‌حرکت بمانید</string>
+    <string name="pinch_cal_step_rest_hint">نیشگون نگیرید.</string>
+    <string name="pinch_cal_step_attempt">تلاش %1$d از %2$d</string>
+    <string name="pinch_cal_step_pinch">نیشگون دوگانه</string>
+    <string name="pinch_cal_step_pinch_hint">شست و انگشت اشاره را دو بار به هم بزنید.</string>
+    <string name="pinch_cal_step_wait">راحت باشید</string>
+    <string name="pinch_cal_step_wait_hint">تلاش بعدی در راه است.</string>
+    <string name="pinch_cal_step_prepare">تقریباً تمام شد</string>
+    <string name="pinch_cal_step_prepare_hint">بعد: بازو را بدون نیشگون حرکت دهید.</string>
+    <string name="pinch_cal_step_move">بازو را حرکت دهید</string>
+    <string name="pinch_cal_step_move_hint">آن را طبیعی بچرخانید و تاب دهید، صفحه رو به شما. نیشگون نگیرید.</string>
+
+    <string name="pinch_cal_testing">آزمون</string>
+    <string name="pinch_cal_detections">تشخیص‌ها</string>
+    <string name="pinch_cal_test_hint">%1$d ث مانده · بدون اقدام</string>
+
+    <string name="pinch_cal_ready">کالیبره شد. پیش از ذخیره امتحان کنید: چند بار نیشگون بگیرید، سپس بازو را عادی حرکت دهید.</string>
+    <string name="pinch_cal_test_done">%1$d تشخیص. اگر با نیشگون‌های دوتایی شما هم‌خوان است ذخیره کنید. اگر حرکت‌های بازو شمرده شد، دوباره کالیبره کنید یا حساسیت را در گوشی کم کنید.</string>
+    <string name="pinch_cal_failed_incomplete">ضبط نیمه‌کاره ماند. صفحه را در تمام آزمون روشن و رو به خود نگه دارید و دوباره شروع کنید.</string>
+    <string name="pinch_cal_failed_weak">نیشگون‌های شما از مچ بی‌حرکت متمایز نبود. بند را کمی محکم‌تر کنید و قوی‌تر نیشگون بگیرید.</string>
+    <string name="pinch_cal_failed_unrecognized">بیشتر تلاش‌ها به‌عنوان نیشگون دوگانه شناخته نشد. در هر تلاش واضح دو بار نیشگون بگیرید و بازو را ثابت نگه دارید.</string>
+    <string name="pinch_cal_failed_movement">حرکت بازوی شما شبیه نیشگون بود. در طول تلاش‌ها مچ را پایدارتر نگه دارید و دوباره شروع کنید.</string>
+    <string name="pinch_cal_failed_kept">کالیبراسیون قبلی حفظ شد.</string>
+    <string name="pinch_cal_interrupted">متوقف شد چون صفحه خاموش شد. با صفحه روشن دوباره شروع کنید.</string>
+    <string name="pinch_cal_unavailable">حسگرهای حرکت در دسترس نیستند. این صفحه را دوباره باز کنید و دوباره تلاش کنید.</string>
+
+    <string name="pinch_cal_sending">در حال ذخیره روی گوشی…</string>
+    <string name="pinch_cal_saved">کالیبراسیون ذخیره شد. در گوشی، در تنظیمات نیشگون گزینه آزمایشی را انتخاب و ذخیره کنید.</string>
+    <string name="pinch_cal_saved_active">کالیبراسیون ذخیره شد. آشکارساز آزمایشی تا وقتی پخش‌کننده باز است فعال است.</string>
+    <string name="pinch_cal_send_failed">ذخیره روی گوشی تأیید نشد. اتصال را بررسی کنید و دوباره روی ذخیره کالیبراسیون بزنید.</string>
+    <string name="pinch_cal_legend_motion">حرکت</string>
+    <string name="pinch_cal_legend_rotation">چرخش</string>
+    <string name="pinch_cal_legend_target">آستانه</string>
+    <string name="pinch_cal_no_signal">داده‌ای از حسگر نیست</string>
+    <string name="pinch_cal_detail">%1$d از %2$d تشخیص داده شد · لمس در هر تلاش: %3$s</string>
+</resources>

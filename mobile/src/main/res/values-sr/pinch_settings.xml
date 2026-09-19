@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Подешавања стиска</string>
+    <string name="pinch_settings_intro">Како сат треба да препознаје ваш покрет?</string>
+    <string name="pinch_mode_native">Детектор сата</string>
+    <string name="pinch_mode_experimental">Експериментални детектор</string>
+    <string name="pinch_native_description">Користи уграђено препознавање сата. Без калибрације и подешавања осетљивости.</string>
+    <string name="pinch_experimental_description">Препознаје покрете зглоба према вашој калибрацији. Може да се покрене грешком и троши више батерије док је плејер отворен.</string>
+    <string name="pinch_profile_missing">Још није калибрисано. Овај режим можете да сачувате одмах: сат користи сопствени детектор док се у њему не сачува калибрација, а затим се сам пребацује.</string>
+    <string name="pinch_profile_saved">Калибрација је сачувана. Спремно за коришћење.</string>
+    <string name="pinch_calibration_step">1. Калибришите покрет</string>
+    <string name="pinch_tuning_step">2. Подесите препознавање</string>
+    <string name="pinch_calibrate_watch">Калибриши на сату</string>
+    <string name="pinch_recalibrate_watch">Калибриши поново</string>
+    <string name="pinch_open_instruction">Отворите Svartifoss на сату. Пратите тест тамо и сачувајте калибрацију.</string>
+    <string name="pinch_open_sending">Повезивање са сатом…</string>
+    <string name="pinch_open_sent">Наставите на сату. Ако се тест не отвори, поново отворите Svartifoss тамо и покушајте опет.</string>
+    <string name="pinch_open_failed">Сат није доступан. Проверите везу и ажурирајте обе апликације, па покушајте поново.</string>
+    <string name="pinch_sensitivity_label">Осетљивост</string>
+    <string name="pinch_sensitivity_help">Повећајте ако се стисци не препознају. Смањите ако други покрети покрећу радње.</string>
+    <string name="pinch_gap_label">Време између стисака</string>
+    <string name="pinch_gap_help">Најдуже време од првог до другог стиска. Повећајте за спорији покрет.</string>
+    <string name="pinch_cooldown_label">Пауза између команди</string>
+    <string name="pinch_cooldown_help">Колико се чека након радње пре него што се прихвати нови покрет.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d мс</string>
+    <string name="pinch_advanced_show">Више подешавања</string>
+    <string name="pinch_advanced_hide">Мање подешавања</string>
+    <string name="pinch_shared_settings">Ова подешавања важе док музика свира или је паузирана.</string>
+    <string name="pinch_settings_save">Сачувај</string>
+    <string name="pinch_gesture_note">Двапут додирните палац и кажипрст, уз отворен плејер и укључен екран сата.</string>
+    <string name="pinch_controls_uncalibrated">Изабран је експериментални детектор, још некалибрисан. До калибрације користи се детектор самог сата.</string>
+    <string name="pinch_controls_calibrated">Експериментални детектор је калибрисан. Двапут спојите прсте док је Svartifoss плејер отворен.</string>
+</resources>

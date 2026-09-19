@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Калибриране на щипването</string>
+    <string name="pinch_cal_intro">Стегнете добре каишката и дръжте китката вдигната. Около 45 секунди: покой, шест двойни щипвания, след това движение на ръката. Не се изпращат музикални команди.</string>
+    <string name="pinch_cal_start">Старт</string>
+    <string name="pinch_cal_restart">Започни отначало</string>
+    <string name="pinch_cal_test">Тест без действия</string>
+    <string name="pinch_cal_save">Запази калибрирането</string>
+    <string name="pinch_cal_close">Затвори</string>
+
+    <string name="pinch_cal_step_ready">Пригответе се</string>
+    <string name="pinch_cal_step_ready_hint">Дръжте китката вдигната, екранът към вас.</string>
+    <string name="pinch_cal_step_rest">Не мърдайте</string>
+    <string name="pinch_cal_step_rest_hint">Не щипвайте.</string>
+    <string name="pinch_cal_step_attempt">Опит %1$d от %2$d</string>
+    <string name="pinch_cal_step_pinch">Двойно щипване</string>
+    <string name="pinch_cal_step_pinch_hint">Докоснете два пъти палеца и показалеца.</string>
+    <string name="pinch_cal_step_wait">Отпуснете се</string>
+    <string name="pinch_cal_step_wait_hint">Следва следващият опит.</string>
+    <string name="pinch_cal_step_prepare">Почти готово</string>
+    <string name="pinch_cal_step_prepare_hint">След това: движете ръката без да щипвате.</string>
+    <string name="pinch_cal_step_move">Движете ръката</string>
+    <string name="pinch_cal_step_move_hint">Въртете я и я мятайте естествено, екранът към вас. Не щипвайте.</string>
+
+    <string name="pinch_cal_testing">Тест</string>
+    <string name="pinch_cal_detections">Засичания</string>
+    <string name="pinch_cal_test_hint">Остават %1$d с · без действия</string>
+
+    <string name="pinch_cal_ready">Калибрирано. Изпробвайте преди запазване: щипнете няколко пъти, после движете ръката нормално.</string>
+    <string name="pinch_cal_test_done">Засичания: %1$d. Ако това съвпада с двойните ви щипвания, запазете. Ако са отчетени движения на ръката, калибрирайте отново или намалете чувствителността в телефона.</string>
+    <string name="pinch_cal_failed_incomplete">Записът беше прекъснат. Дръжте екрана включен и насочен към вас през целия тест и започнете отначало.</string>
+    <string name="pinch_cal_failed_weak">Щипванията ви не се открояваха от неподвижна китка. Стегнете малко каишката и щипвайте по-здраво.</string>
+    <string name="pinch_cal_failed_unrecognized">Повечето опити не бяха разпознати като двойно щипване. При всеки опит щипнете ясно два пъти и дръжте ръката неподвижна.</string>
+    <string name="pinch_cal_failed_movement">Движението на ръката приличаше на щипвания. Дръжте китката по-стабилно по време на опитите и започнете отначало.</string>
+    <string name="pinch_cal_failed_kept">Предишното калибриране беше запазено.</string>
+    <string name="pinch_cal_interrupted">Спряно, защото екранът се изключи. Започнете отначало с включен екран.</string>
+    <string name="pinch_cal_unavailable">Сензорите за движение не са достъпни. Отворете този екран отново и опитайте пак.</string>
+
+    <string name="pinch_cal_sending">Запазване в телефона…</string>
+    <string name="pinch_cal_saved">Калибрирането е запазено. В телефона изберете Експериментален в настройките на щипването и запазете.</string>
+    <string name="pinch_cal_saved_active">Калибрирането е запазено. Експерименталният детектор е активен, докато плейърът е отворен.</string>
+    <string name="pinch_cal_send_failed">Запазването в телефона не можа да се потвърди. Проверете връзката и докоснете отново Запази калибрирането.</string>
+    <string name="pinch_cal_legend_motion">Движение</string>
+    <string name="pinch_cal_legend_rotation">Въртене</string>
+    <string name="pinch_cal_legend_target">Праг</string>
+    <string name="pinch_cal_no_signal">Няма данни от сензора</string>
+    <string name="pinch_cal_detail">Разпознати %1$d от %2$d · докосвания на опит: %3$s</string>
+</resources>

@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Tentukur cubitan</string>
+    <string name="pinch_cal_intro">Ketatkan tali dan angkat pergelangan tangan anda. Kira-kira 45 saat: rehat, enam cubitan ganda, kemudian pergerakan lengan. Tiada arahan muzik dihantar.</string>
+    <string name="pinch_cal_start">Mula</string>
+    <string name="pinch_cal_restart">Mula semula</string>
+    <string name="pinch_cal_test">Uji tanpa tindakan</string>
+    <string name="pinch_cal_save">Simpan penentukuran</string>
+    <string name="pinch_cal_close">Tutup</string>
+
+    <string name="pinch_cal_step_ready">Bersedia</string>
+    <string name="pinch_cal_step_ready_hint">Angkat pergelangan tangan, skrin menghadap anda.</string>
+    <string name="pinch_cal_step_rest">Kekal diam</string>
+    <string name="pinch_cal_step_rest_hint">Jangan mencubit.</string>
+    <string name="pinch_cal_step_attempt">Percubaan %1$d daripada %2$d</string>
+    <string name="pinch_cal_step_pinch">Cubitan ganda</string>
+    <string name="pinch_cal_step_pinch_hint">Sentuh ibu jari dan jari telunjuk bersama dua kali.</string>
+    <string name="pinch_cal_step_wait">Bertenang</string>
+    <string name="pinch_cal_step_wait_hint">Percubaan seterusnya tiba.</string>
+    <string name="pinch_cal_step_prepare">Hampir siap</string>
+    <string name="pinch_cal_step_prepare_hint">Seterusnya: gerakkan lengan tanpa mencubit.</string>
+    <string name="pinch_cal_step_move">Gerakkan lengan</string>
+    <string name="pinch_cal_step_move_hint">Putar dan ayun dengan semula jadi, skrin menghadap anda. Jangan mencubit.</string>
+
+    <string name="pinch_cal_testing">Ujian</string>
+    <string name="pinch_cal_detections">Pengesanan</string>
+    <string name="pinch_cal_test_hint">%1$d s lagi · tiada tindakan</string>
+
+    <string name="pinch_cal_ready">Telah ditentukur. Cuba sebelum menyimpan: cubit beberapa kali, kemudian gerakkan lengan seperti biasa.</string>
+    <string name="pinch_cal_test_done">%1$d pengesanan. Jika ia sepadan dengan cubitan ganda anda, simpan. Jika pergerakan lengan turut dikira, tentukur semula atau kurangkan kepekaan pada telefon.</string>
+    <string name="pinch_cal_failed_incomplete">Rakaman terputus. Biarkan skrin menyala dan menghadap anda sepanjang ujian, kemudian mula semula.</string>
+    <string name="pinch_cal_failed_weak">Cubitan anda tidak menonjol berbanding pergelangan tangan yang diam. Ketatkan tali sedikit dan cubit dengan lebih kuat.</string>
+    <string name="pinch_cal_failed_unrecognized">Kebanyakan percubaan tidak dikenali sebagai cubitan ganda. Dalam setiap percubaan, cubit dua kali dengan jelas dan pastikan lengan kekal diam.</string>
+    <string name="pinch_cal_failed_movement">Pergerakan lengan anda kelihatan seperti cubitan. Kekalkan pergelangan tangan lebih stabil semasa percubaan, kemudian mula semula.</string>
+    <string name="pinch_cal_failed_kept">Penentukuran sebelumnya dikekalkan.</string>
+    <string name="pinch_cal_interrupted">Dihentikan kerana skrin mati. Mula semula dengan skrin menyala.</string>
+    <string name="pinch_cal_unavailable">Penderia gerakan tidak tersedia. Buka semula skrin ini dan cuba lagi.</string>
+
+    <string name="pinch_cal_sending">Menyimpan pada telefon…</string>
+    <string name="pinch_cal_saved">Penentukuran disimpan. Pada telefon, pilih Eksperimen dalam tetapan cubitan dan simpan.</string>
+    <string name="pinch_cal_saved_active">Penentukuran disimpan. Pengesan eksperimen aktif semasa pemain dibuka.</string>
+    <string name="pinch_cal_send_failed">Penyimpanan pada telefon tidak dapat disahkan. Semak sambungan dan ketik Simpan penentukuran sekali lagi.</string>
+    <string name="pinch_cal_legend_motion">Gerakan</string>
+    <string name="pinch_cal_legend_rotation">Putaran</string>
+    <string name="pinch_cal_legend_target">Ambang</string>
+    <string name="pinch_cal_no_signal">Tiada data penderia</string>
+    <string name="pinch_cal_detail">%1$d daripada %2$d dikenali · sentuhan setiap percubaan: %3$s</string>
+</resources>

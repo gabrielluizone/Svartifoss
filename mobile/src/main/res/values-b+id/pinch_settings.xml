@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Pengaturan cubitan</string>
+    <string name="pinch_settings_intro">Bagaimana jam tangan harus mendeteksi gerakanmu?</string>
+    <string name="pinch_mode_native">Detektor jam tangan</string>
+    <string name="pinch_mode_experimental">Detektor eksperimental</string>
+    <string name="pinch_native_description">Memakai pengenalan bawaan jam tangan. Tanpa kalibrasi atau pengaturan sensitivitas.</string>
+    <string name="pinch_experimental_description">Mendeteksi gerakan pergelangan tangan dengan kalibrasimu. Bisa aktif secara tidak sengaja dan memakai lebih banyak baterai saat pemutar terbuka.</string>
+    <string name="pinch_profile_missing">Belum dikalibrasi. Kamu bisa menyimpan mode ini sekarang: jam tangan tetap memakai detektornya sendiri sampai kalibrasi tersimpan di sana, lalu beralih sendiri.</string>
+    <string name="pinch_profile_saved">Kalibrasi tersimpan. Siap digunakan.</string>
+    <string name="pinch_calibration_step">1. Kalibrasi gerakanmu</string>
+    <string name="pinch_tuning_step">2. Atur pengenalan</string>
+    <string name="pinch_calibrate_watch">Kalibrasi di jam tangan</string>
+    <string name="pinch_recalibrate_watch">Kalibrasi ulang</string>
+    <string name="pinch_open_instruction">Buka Svartifoss di jam tangan. Ikuti tes di sana dan simpan kalibrasimu.</string>
+    <string name="pinch_open_sending">Menghubungkan ke jam tangan…</string>
+    <string name="pinch_open_sent">Lanjutkan di jam tangan. Jika tes tidak terbuka, buka lagi Svartifoss di sana lalu coba lagi.</string>
+    <string name="pinch_open_failed">Jam tangan tidak tersedia. Periksa koneksi dan perbarui kedua aplikasi, lalu coba lagi.</string>
+    <string name="pinch_sensitivity_label">Sensitivitas</string>
+    <string name="pinch_sensitivity_help">Naikkan jika cubitan terlewat. Turunkan jika gerakan lain memicu aksi.</string>
+    <string name="pinch_gap_label">Jarak waktu antar cubitan</string>
+    <string name="pinch_gap_help">Waktu maksimum dari cubitan pertama ke kedua. Naikkan untuk gerakan yang lebih lambat.</string>
+    <string name="pinch_cooldown_label">Jeda antar perintah</string>
+    <string name="pinch_cooldown_help">Berapa lama menunggu setelah suatu aksi sebelum menerima gerakan lain.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Pengaturan lainnya</string>
+    <string name="pinch_advanced_hide">Pengaturan lebih sedikit</string>
+    <string name="pinch_shared_settings">Pengaturan ini berlaku saat musik diputar atau dijeda.</string>
+    <string name="pinch_settings_save">Simpan</string>
+    <string name="pinch_gesture_note">Sentuhkan ibu jari dan jari telunjuk dua kali, dengan pemutar terbuka dan layar jam tangan menyala.</string>
+    <string name="pinch_controls_uncalibrated">Detektor eksperimental dipilih, belum dikalibrasi. Detektor jam tangan sendiri dipakai sampai kamu mengalibrasi.</string>
+    <string name="pinch_controls_calibrated">Detektor eksperimental telah dikalibrasi. Cubit dua kali saat pemutar Svartifoss terbuka.</string>
+</resources>

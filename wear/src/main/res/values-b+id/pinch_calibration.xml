@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Kalibrasi cubitan</string>
+    <string name="pinch_cal_intro">Kencangkan tali dan angkat pergelangan tanganmu. Sekitar 45 detik: diam, enam cubitan ganda, lalu gerakan lengan. Tidak ada perintah musik yang dikirim.</string>
+    <string name="pinch_cal_start">Mulai</string>
+    <string name="pinch_cal_restart">Mulai lagi</string>
+    <string name="pinch_cal_test">Tes tanpa aksi</string>
+    <string name="pinch_cal_save">Simpan kalibrasi</string>
+    <string name="pinch_cal_close">Tutup</string>
+
+    <string name="pinch_cal_step_ready">Bersiaplah</string>
+    <string name="pinch_cal_step_ready_hint">Angkat pergelangan tangan, layar menghadap kamu.</string>
+    <string name="pinch_cal_step_rest">Diam</string>
+    <string name="pinch_cal_step_rest_hint">Jangan mencubit.</string>
+    <string name="pinch_cal_step_attempt">Percobaan %1$d dari %2$d</string>
+    <string name="pinch_cal_step_pinch">Cubitan ganda</string>
+    <string name="pinch_cal_step_pinch_hint">Sentuhkan ibu jari dan jari telunjuk dua kali.</string>
+    <string name="pinch_cal_step_wait">Rileks</string>
+    <string name="pinch_cal_step_wait_hint">Percobaan berikutnya segera datang.</string>
+    <string name="pinch_cal_step_prepare">Hampir selesai</string>
+    <string name="pinch_cal_step_prepare_hint">Berikutnya: gerakkan lenganmu tanpa mencubit.</string>
+    <string name="pinch_cal_step_move">Gerakkan lenganmu</string>
+    <string name="pinch_cal_step_move_hint">Putar dan ayunkan secara alami, layar menghadap kamu. Jangan mencubit.</string>
+
+    <string name="pinch_cal_testing">Tes</string>
+    <string name="pinch_cal_detections">Deteksi</string>
+    <string name="pinch_cal_test_hint">Sisa %1$d dtk · tanpa aksi</string>
+
+    <string name="pinch_cal_ready">Terkalibrasi. Coba dulu sebelum menyimpan: cubit beberapa kali, lalu gerakkan lenganmu seperti biasa.</string>
+    <string name="pinch_cal_test_done">%1$d deteksi. Jika sesuai dengan cubitan gandamu, simpan. Jika gerakan lengan ikut terhitung, kalibrasi ulang atau turunkan sensitivitas di ponsel.</string>
+    <string name="pinch_cal_failed_incomplete">Perekaman terputus. Biarkan layar menyala dan menghadap kamu selama seluruh tes, lalu mulai lagi.</string>
+    <string name="pinch_cal_failed_weak">Cubitanmu tidak menonjol dari pergelangan tangan yang diam. Kencangkan tali sedikit dan cubit lebih kuat.</string>
+    <string name="pinch_cal_failed_unrecognized">Sebagian besar percobaan tidak dikenali sebagai cubitan ganda. Di setiap percobaan, cubit dua kali dengan jelas dan jaga lenganmu tetap diam.</string>
+    <string name="pinch_cal_failed_movement">Gerakan lenganmu terlihat seperti cubitan. Jaga pergelangan tangan lebih stabil selama percobaan, lalu mulai lagi.</string>
+    <string name="pinch_cal_failed_kept">Kalibrasi sebelumnya dipertahankan.</string>
+    <string name="pinch_cal_interrupted">Dihentikan karena layar mati. Mulai lagi dengan layar menyala.</string>
+    <string name="pinch_cal_unavailable">Sensor gerak tidak tersedia. Buka lagi layar ini dan coba lagi.</string>
+
+    <string name="pinch_cal_sending">Menyimpan di ponsel…</string>
+    <string name="pinch_cal_saved">Kalibrasi tersimpan. Di ponsel, pilih Eksperimental di pengaturan cubitan lalu simpan.</string>
+    <string name="pinch_cal_saved_active">Kalibrasi tersimpan. Detektor eksperimental aktif selama pemutar terbuka.</string>
+    <string name="pinch_cal_send_failed">Penyimpanan di ponsel tidak dapat dikonfirmasi. Periksa koneksi dan ketuk Simpan kalibrasi lagi.</string>
+    <string name="pinch_cal_legend_motion">Gerakan</string>
+    <string name="pinch_cal_legend_rotation">Rotasi</string>
+    <string name="pinch_cal_legend_target">Ambang</string>
+    <string name="pinch_cal_no_signal">Tidak ada data sensor</string>
+    <string name="pinch_cal_detail">%1$d dari %2$d dikenali · sentuhan per percobaan: %3$s</string>
+</resources>

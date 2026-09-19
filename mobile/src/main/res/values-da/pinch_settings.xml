@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Indstillinger for knib</string>
+    <string name="pinch_settings_intro">Hvordan skal uret registrere din bevægelse?</string>
+    <string name="pinch_mode_native">Urets detektor</string>
+    <string name="pinch_mode_experimental">Eksperimentel detektor</string>
+    <string name="pinch_native_description">Bruger urets indbyggede genkendelse. Ingen kalibrering eller følsomhedsindstillinger.</string>
+    <string name="pinch_experimental_description">Registrerer håndledsbevægelser med din kalibrering. Den kan udløses ved en fejl og bruger mere batteri, mens afspilleren er åben.</string>
+    <string name="pinch_profile_missing">Ikke kalibreret endnu. Du kan gemme denne tilstand nu: uret bruger sin egen detektor, indtil en kalibrering er gemt dér, og skifter så af sig selv.</string>
+    <string name="pinch_profile_saved">Kalibreringen er gemt. Klar til brug.</string>
+    <string name="pinch_calibration_step">1. Kalibrer din bevægelse</string>
+    <string name="pinch_tuning_step">2. Juster genkendelsen</string>
+    <string name="pinch_calibrate_watch">Kalibrer på uret</string>
+    <string name="pinch_recalibrate_watch">Kalibrer igen</string>
+    <string name="pinch_open_instruction">Åbn Svartifoss på uret. Følg testen dér, og gem din kalibrering.</string>
+    <string name="pinch_open_sending">Opretter forbindelse til uret …</string>
+    <string name="pinch_open_sent">Fortsæt på uret. Hvis testen ikke åbner, så åbn Svartifoss dér igen og prøv igen.</string>
+    <string name="pinch_open_failed">Uret er ikke tilgængeligt. Tjek forbindelsen og opdater begge apps, og prøv derefter igen.</string>
+    <string name="pinch_sensitivity_label">Følsomhed</string>
+    <string name="pinch_sensitivity_help">Øg, hvis knib ikke registreres. Sænk, hvis andre bevægelser udløser handlinger.</string>
+    <string name="pinch_gap_label">Tid mellem knib</string>
+    <string name="pinch_gap_help">Længste tid fra det første til det andet knib. Øg for en langsommere bevægelse.</string>
+    <string name="pinch_cooldown_label">Pause mellem kommandoer</string>
+    <string name="pinch_cooldown_help">Hvor længe der ventes efter en handling, før næste bevægelse accepteres.</string>
+    <string name="pinch_value_percent">%1$d %%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Flere justeringer</string>
+    <string name="pinch_advanced_hide">Færre justeringer</string>
+    <string name="pinch_shared_settings">Disse indstillinger gælder, mens musik afspilles eller er sat på pause.</string>
+    <string name="pinch_settings_save">Gem</string>
+    <string name="pinch_gesture_note">Rør tommelfingeren og pegefingeren mod hinanden to gange, med afspilleren åben og urets skærm tændt.</string>
+    <string name="pinch_controls_uncalibrated">Eksperimentel detektor valgt, ikke kalibreret endnu. Urets egen detektor bruges, indtil du kalibrerer.</string>
+    <string name="pinch_controls_calibrated">Eksperimentel detektor kalibreret. Knib to gange, mens Svartifoss-afspilleren er åben.</string>
+</resources>

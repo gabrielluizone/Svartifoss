@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Pinch ဆက်တင်များ</string>
+    <string name="pinch_settings_intro">နာရီက သင့်လက်ဟန်ကို မည်သို့ ရှာဖွေသင့်သနည်း။</string>
+    <string name="pinch_mode_native">နာရီ၏ ရှာဖွေကိရိယာ</string>
+    <string name="pinch_mode_experimental">စမ်းသပ် ရှာဖွေကိရိယာ</string>
+    <string name="pinch_native_description">နာရီ၏ built-in အသိအမှတ်ပြုမှုကို အသုံးပြုသည်။ ချိန်ညှိခြင်း သို့မဟုတ် အာရုံခံနိုင်စွမ်း ထိန်းချုပ်မှု မရှိပါ။</string>
+    <string name="pinch_experimental_description">သင့်ချိန်ညှိမှုဖြင့် လက်ကောက်ဝတ်လှုပ်ရှားမှုကို ရှာဖွေသည်။ မတော်တဆ အလုပ်လုပ်နိုင်ပြီး ပလေယာဖွင့်ထားစဉ် ဘက်ထရီ ပိုသုံးသည်။</string>
+    <string name="pinch_profile_missing">ချိန်ညှိမှု မပြုလုပ်ရသေးပါ။ ဤမုဒ်ကို ယခုသိမ်းနိုင်သည်။ နာရီတွင် ချိန်ညှိမှုသိမ်းသည်အထိ နာရီသည် ၎င်း၏ကိုယ်ပိုင် ရှာဖွေကိရိယာကို ဆက်သုံးပြီး ထို့နောက် အလိုအလျောက် ပြောင်းပါမည်။</string>
+    <string name="pinch_profile_saved">ချိန်ညှိမှုကို သိမ်းပြီးပါပြီ။ အသုံးပြုရန် အသင့်ဖြစ်ပါပြီ။</string>
+    <string name="pinch_calibration_step">၁။ သင့်လက်ဟန်ကို ချိန်ညှိပါ</string>
+    <string name="pinch_tuning_step">၂။ အသိအမှတ်ပြုမှုကို ညှိပါ</string>
+    <string name="pinch_calibrate_watch">နာရီတွင် ချိန်ညှိရန်</string>
+    <string name="pinch_recalibrate_watch">ထပ်မံချိန်ညှိရန်</string>
+    <string name="pinch_open_instruction">နာရီတွင် Svartifoss ကို ဖွင့်ပါ။ ထိုနေရာတွင် စမ်းသပ်မှုကို လိုက်လုပ်ပြီး ချိန်ညှိမှုကို သိမ်းပါ။</string>
+    <string name="pinch_open_sending">နာရီနှင့် ချိတ်ဆက်နေသည်…</string>
+    <string name="pinch_open_sent">နာရီတွင် ဆက်လုပ်ပါ။ စမ်းသပ်မှု မပွင့်ပါက ထိုနေရာတွင် Svartifoss ကို ပြန်ဖွင့်ပြီး ထပ်ကြိုးစားပါ။</string>
+    <string name="pinch_open_failed">နာရီကို မရနိုင်ပါ။ ချိတ်ဆက်မှုကို စစ်ပြီး အက်ပ်နှစ်ခုလုံးကို အပ်ဒိတ်လုပ်ပါ၊ ထို့နောက် ထပ်ကြိုးစားပါ။</string>
+    <string name="pinch_sensitivity_label">အာရုံခံနိုင်စွမ်း</string>
+    <string name="pinch_sensitivity_help">pinch များ လွတ်သွားပါက တိုးပါ။ အခြားလှုပ်ရှားမှုများက လုပ်ဆောင်ချက်များကို စတင်စေပါက လျှော့ပါ။</string>
+    <string name="pinch_gap_label">pinch များကြား အချိန်</string>
+    <string name="pinch_gap_help">ပထမ pinch မှ ဒုတိယ pinch အထိ အများဆုံးအချိန်။ ပိုနှေးသော လက်ဟန်အတွက် တိုးပါ။</string>
+    <string name="pinch_cooldown_label">အမိန့်များကြား နားချိန်</string>
+    <string name="pinch_cooldown_help">လုပ်ဆောင်ချက်တစ်ခုပြီးနောက် နောက်လက်ဟန်တစ်ခုကို လက်ခံမီ မည်မျှစောင့်မည်နည်း။</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">နောက်ထပ် ညှိမှုများ</string>
+    <string name="pinch_advanced_hide">ညှိမှုနည်းနည်းသာ</string>
+    <string name="pinch_shared_settings">ဤဆက်တင်များသည် ဂီတဖွင့်နေစဉ် သို့မဟုတ် ခေတ္တရပ်ထားစဉ် အသုံးပြုသည်။</string>
+    <string name="pinch_settings_save">သိမ်းရန်</string>
+    <string name="pinch_gesture_note">ပလေယာဖွင့်ထားပြီး နာရီမျက်နှာပြင် လင်းနေစဉ် လက်မနှင့် လက်ညှိုးကို နှစ်ကြိမ် ထိပါ။</string>
+    <string name="pinch_controls_uncalibrated">စမ်းသပ် ရှာဖွေကိရိယာကို ရွေးထားသော်လည်း မချိန်ညှိရသေးပါ။ ချိန်ညှိသည်အထိ နာရီ၏ကိုယ်ပိုင် ရှာဖွေကိရိယာကို သုံးမည်။</string>
+    <string name="pinch_controls_calibrated">စမ်းသပ် ရှာဖွေကိရိယာကို ချိန်ညှိပြီးပါပြီ။ Svartifoss ပလေယာဖွင့်ထားစဉ် နှစ်ကြိမ် pinch လုပ်ပါ။</string>
+</resources>

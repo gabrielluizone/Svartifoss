@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">पिंच कैलिब्रेट करें</string>
+    <string name="pinch_cal_intro">पट्टा कसकर बाँधें और कलाई ऊपर रखें। लगभग 45 सेकंड: आराम, छह डबल पिंच, फिर बाँह की हरकत। कोई संगीत कमांड नहीं भेजा जाता।</string>
+    <string name="pinch_cal_start">शुरू करें</string>
+    <string name="pinch_cal_restart">फिर से शुरू करें</string>
+    <string name="pinch_cal_test">बिना ऐक्शन के टेस्ट</string>
+    <string name="pinch_cal_save">कैलिब्रेशन सेव करें</string>
+    <string name="pinch_cal_close">बंद करें</string>
+
+    <string name="pinch_cal_step_ready">तैयार हो जाएँ</string>
+    <string name="pinch_cal_step_ready_hint">कलाई ऊपर रखें, स्क्रीन अपनी ओर।</string>
+    <string name="pinch_cal_step_rest">स्थिर रहें</string>
+    <string name="pinch_cal_step_rest_hint">पिंच न करें।</string>
+    <string name="pinch_cal_step_attempt">कोशिश %1$d / %2$d</string>
+    <string name="pinch_cal_step_pinch">डबल पिंच</string>
+    <string name="pinch_cal_step_pinch_hint">अँगूठे और तर्जनी को दो बार एक साथ छुएँ।</string>
+    <string name="pinch_cal_step_wait">आराम करें</string>
+    <string name="pinch_cal_step_wait_hint">अगली कोशिश आ रही है।</string>
+    <string name="pinch_cal_step_prepare">लगभग पूरा</string>
+    <string name="pinch_cal_step_prepare_hint">आगे: बिना पिंच किए बाँह हिलाएँ।</string>
+    <string name="pinch_cal_step_move">बाँह हिलाएँ</string>
+    <string name="pinch_cal_step_move_hint">इसे स्वाभाविक रूप से घुमाएँ और झुलाएँ, स्क्रीन अपनी ओर रखें। पिंच न करें।</string>
+
+    <string name="pinch_cal_testing">टेस्ट</string>
+    <string name="pinch_cal_detections">पहचान</string>
+    <string name="pinch_cal_test_hint">%1$d सेकंड बाकी · कोई ऐक्शन नहीं</string>
+
+    <string name="pinch_cal_ready">कैलिब्रेट हो गया। सेव करने से पहले आज़माएँ: कुछ बार पिंच करें, फिर बाँह सामान्य रूप से हिलाएँ।</string>
+    <string name="pinch_cal_test_done">%1$d पहचान। अगर यह आपके डबल पिंच से मेल खाती है, तो सेव करें। अगर बाँह की हरकतें गिनी गईं, तो फिर से कैलिब्रेट करें या फ़ोन पर संवेदनशीलता घटाएँ।</string>
+    <string name="pinch_cal_failed_incomplete">रिकॉर्डिंग बीच में रुक गई। पूरे टेस्ट में स्क्रीन चालू और अपनी ओर रखें, फिर दोबारा शुरू करें।</string>
+    <string name="pinch_cal_failed_weak">आपके पिंच स्थिर कलाई से अलग नहीं दिखे। पट्टा थोड़ा कसें और ज़्यादा ज़ोर से पिंच करें।</string>
+    <string name="pinch_cal_failed_unrecognized">ज़्यादातर कोशिशें डबल पिंच के रूप में नहीं पहचानी गईं। हर कोशिश में साफ़ तौर पर दो बार पिंच करें और बाँह स्थिर रखें।</string>
+    <string name="pinch_cal_failed_movement">आपकी बाँह की हरकत पिंच जैसी लगी। कोशिशों के दौरान कलाई ज़्यादा स्थिर रखें, फिर दोबारा शुरू करें।</string>
+    <string name="pinch_cal_failed_kept">पिछला कैलिब्रेशन बना रहा।</string>
+    <string name="pinch_cal_interrupted">स्क्रीन बंद होने से रुक गया। स्क्रीन चालू रखकर दोबारा शुरू करें।</string>
+    <string name="pinch_cal_unavailable">मोशन सेंसर उपलब्ध नहीं हैं। यह स्क्रीन फिर से खोलें और दोबारा कोशिश करें।</string>
+
+    <string name="pinch_cal_sending">फ़ोन पर सेव हो रहा है…</string>
+    <string name="pinch_cal_saved">कैलिब्रेशन सेव हो गया। फ़ोन पर पिंच सेटिंग में प्रायोगिक चुनें और सेव करें।</string>
+    <string name="pinch_cal_saved_active">कैलिब्रेशन सेव हो गया। प्लेयर खुला होने पर प्रायोगिक डिटेक्टर चालू रहता है।</string>
+    <string name="pinch_cal_send_failed">फ़ोन पर सेव होने की पुष्टि नहीं हो सकी। कनेक्शन जाँचें और कैलिब्रेशन सेव करें पर फिर टैप करें।</string>
+    <string name="pinch_cal_legend_motion">गति</string>
+    <string name="pinch_cal_legend_rotation">घुमाव</string>
+    <string name="pinch_cal_legend_target">सीमा</string>
+    <string name="pinch_cal_no_signal">सेंसर डेटा नहीं</string>
+    <string name="pinch_cal_detail">%2$d में से %1$d पहचाने गए · प्रति कोशिश स्पर्श: %3$s</string>
+</resources>

@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">การตั้งค่าการบีบ</string>
+    <string name="pinch_settings_intro">นาฬิกาควรตรวจจับท่าทางของคุณอย่างไร</string>
+    <string name="pinch_mode_native">ตัวตรวจจับของนาฬิกา</string>
+    <string name="pinch_mode_experimental">ตัวตรวจจับแบบทดลอง</string>
+    <string name="pinch_native_description">ใช้การจดจำที่มีในนาฬิกา ไม่มีการปรับเทียบหรือตัวควบคุมความไว</string>
+    <string name="pinch_experimental_description">ตรวจจับการเคลื่อนไหวของข้อมือด้วยการปรับเทียบของคุณ อาจทำงานโดยไม่ตั้งใจและใช้แบตเตอรี่มากขึ้นขณะเปิดเครื่องเล่น</string>
+    <string name="pinch_profile_missing">ยังไม่ได้ปรับเทียบ คุณบันทึกโหมดนี้ได้เลยตอนนี้ นาฬิกาจะใช้ตัวตรวจจับของตัวเองต่อไปจนกว่าจะมีการบันทึกการปรับเทียบในนาฬิกา แล้วจึงสลับเอง</string>
+    <string name="pinch_profile_saved">บันทึกการปรับเทียบแล้ว พร้อมใช้งาน</string>
+    <string name="pinch_calibration_step">1. ปรับเทียบท่าทางของคุณ</string>
+    <string name="pinch_tuning_step">2. ปรับการจดจำ</string>
+    <string name="pinch_calibrate_watch">ปรับเทียบบนนาฬิกา</string>
+    <string name="pinch_recalibrate_watch">ปรับเทียบอีกครั้ง</string>
+    <string name="pinch_open_instruction">เปิด Svartifoss บนนาฬิกา ทำตามการทดสอบที่นั่นและบันทึกการปรับเทียบ</string>
+    <string name="pinch_open_sending">กำลังเชื่อมต่อกับนาฬิกา…</string>
+    <string name="pinch_open_sent">ทำต่อบนนาฬิกา หากการทดสอบไม่เปิด ให้เปิด Svartifoss ที่นั่นอีกครั้งแล้วลองใหม่</string>
+    <string name="pinch_open_failed">ใช้งานนาฬิกาไม่ได้ ตรวจสอบการเชื่อมต่อและอัปเดตทั้งสองแอป แล้วลองอีกครั้ง</string>
+    <string name="pinch_sensitivity_label">ความไว</string>
+    <string name="pinch_sensitivity_help">เพิ่มหากการบีบไม่ถูกตรวจจับ ลดหากการเคลื่อนไหวอื่นทำให้เกิดการทำงาน</string>
+    <string name="pinch_gap_label">เวลาระหว่างการบีบ</string>
+    <string name="pinch_gap_help">เวลาสูงสุดจากการบีบครั้งแรกถึงครั้งที่สอง เพิ่มสำหรับท่าทางที่ช้าลง</string>
+    <string name="pinch_cooldown_label">หยุดพักระหว่างคำสั่ง</string>
+    <string name="pinch_cooldown_help">รอนานเท่าใดหลังการทำงานก่อนรับท่าทางถัดไป</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">การปรับเพิ่มเติม</string>
+    <string name="pinch_advanced_hide">การปรับน้อยลง</string>
+    <string name="pinch_shared_settings">การตั้งค่าเหล่านี้ใช้ขณะเพลงเล่นอยู่หรือหยุดชั่วคราว</string>
+    <string name="pinch_settings_save">บันทึก</string>
+    <string name="pinch_gesture_note">แตะนิ้วโป้งกับนิ้วชี้เข้าหากันสองครั้ง โดยเปิดเครื่องเล่นไว้และหน้าจอนาฬิกาสว่างอยู่</string>
+    <string name="pinch_controls_uncalibrated">เลือกตัวตรวจจับแบบทดลองแล้ว แต่ยังไม่ได้ปรับเทียบ จะใช้ตัวตรวจจับของนาฬิกาเองจนกว่าจะปรับเทียบ</string>
+    <string name="pinch_controls_calibrated">ปรับเทียบตัวตรวจจับแบบทดลองแล้ว บีบสองครั้งขณะเปิดเครื่องเล่น Svartifoss</string>
+</resources>

@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Калибрација стиска</string>
+    <string name="pinch_cal_intro">Добро затегните каиш и држите зглоб подигнутим. Око 45 секунди: мировање, шест двоструких стисака, а затим покрет руке. Не шаљу се никакве музичке команде.</string>
+    <string name="pinch_cal_start">Покрени</string>
+    <string name="pinch_cal_restart">Почни изнова</string>
+    <string name="pinch_cal_test">Тест без радњи</string>
+    <string name="pinch_cal_save">Сачувај калибрацију</string>
+    <string name="pinch_cal_close">Затвори</string>
+
+    <string name="pinch_cal_step_ready">Припремите се</string>
+    <string name="pinch_cal_step_ready_hint">Држите зглоб подигнутим, екраном ка себи.</string>
+    <string name="pinch_cal_step_rest">Мирујте</string>
+    <string name="pinch_cal_step_rest_hint">Не стискајте прсте.</string>
+    <string name="pinch_cal_step_attempt">Покушај %1$d од %2$d</string>
+    <string name="pinch_cal_step_pinch">Двоструки стисак</string>
+    <string name="pinch_cal_step_pinch_hint">Двапут додирните палац и кажипрст.</string>
+    <string name="pinch_cal_step_wait">Опустите се</string>
+    <string name="pinch_cal_step_wait_hint">Следи следећи покушај.</string>
+    <string name="pinch_cal_step_prepare">Скоро готово</string>
+    <string name="pinch_cal_step_prepare_hint">Затим: померајте руку без стискања.</string>
+    <string name="pinch_cal_step_move">Померајте руку</string>
+    <string name="pinch_cal_step_move_hint">Окрећите је и њишите природно, екраном ка себи. Не стискајте прсте.</string>
+
+    <string name="pinch_cal_testing">Тест</string>
+    <string name="pinch_cal_detections">Откривања</string>
+    <string name="pinch_cal_test_hint">Преостало %1$d с · без радњи</string>
+
+    <string name="pinch_cal_ready">Калибрисано. Испробајте пре чувања: неколико пута стисните прсте, а затим нормално померајте руку.</string>
+    <string name="pinch_cal_test_done">Откривања: %1$d. Ако то одговара вашим двоструким стисцима, сачувајте. Ако су се бројали покрети руке, калибришите поново или смањите осетљивост на телефону.</string>
+    <string name="pinch_cal_failed_incomplete">Снимање је прекинуто. Оставите екран укључен и окренут ка себи током целог теста, па почните изнова.</string>
+    <string name="pinch_cal_failed_weak">Ваши стисци нису се истицали у односу на мирни зглоб. Мало затегните каиш и стискајте јаче.</string>
+    <string name="pinch_cal_failed_unrecognized">Већина покушаја није препозната као двоструки стисак. У сваком покушају јасно двапут стисните прсте и држите руку мирном.</string>
+    <string name="pinch_cal_failed_movement">Покрет руке личио је на стиске. Током покушаја држите зглоб мирније, па почните изнова.</string>
+    <string name="pinch_cal_failed_kept">Претходна калибрација је задржана.</string>
+    <string name="pinch_cal_interrupted">Заустављено јер се екран искључио. Почните изнова са укљученим екраном.</string>
+    <string name="pinch_cal_unavailable">Сензори кретања нису доступни. Поново отворите овај екран и покушајте опет.</string>
+
+    <string name="pinch_cal_sending">Чување на телефон…</string>
+    <string name="pinch_cal_saved">Калибрација је сачувана. На телефону изаберите Експериментално у подешавањима стиска и сачувајте.</string>
+    <string name="pinch_cal_saved_active">Калибрација је сачувана. Експериментални детектор је активан док је плејер отворен.</string>
+    <string name="pinch_cal_send_failed">Није могуће потврдити чување на телефону. Проверите везу и поново додирните Сачувај калибрацију.</string>
+    <string name="pinch_cal_legend_motion">Кретање</string>
+    <string name="pinch_cal_legend_rotation">Ротација</string>
+    <string name="pinch_cal_legend_target">Праг</string>
+    <string name="pinch_cal_no_signal">Нема података сензора</string>
+    <string name="pinch_cal_detail">Препознато %1$d од %2$d · додира по покушају: %3$s</string>
+</resources>

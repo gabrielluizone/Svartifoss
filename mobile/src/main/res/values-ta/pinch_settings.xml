@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">பிஞ்ச் அமைப்புகள்</string>
+    <string name="pinch_settings_intro">கடிகாரம் உங்கள் சைகையை எவ்வாறு கண்டறிய வேண்டும்?</string>
+    <string name="pinch_mode_native">கடிகார டிடெக்டர்</string>
+    <string name="pinch_mode_experimental">சோதனை டிடெக்டர்</string>
+    <string name="pinch_native_description">கடிகாரத்தின் உள்ளமைந்த அடையாளம் காணலைப் பயன்படுத்துகிறது. அளவீடு அல்லது உணர்திறன் கட்டுப்பாடுகள் இல்லை.</string>
+    <string name="pinch_experimental_description">உங்கள் அளவீட்டைக் கொண்டு மணிக்கட்டு அசைவுகளைக் கண்டறிகிறது. தவறுதலாக செயல்படலாம்; பிளேயர் திறந்திருக்கும்போது அதிக பேட்டரியைப் பயன்படுத்தும்.</string>
+    <string name="pinch_profile_missing">இன்னும் அளவீடு செய்யப்படவில்லை. இந்த பயன்முறையை இப்போதே சேமிக்கலாம்: கடிகாரத்தில் அளவீடு சேமிக்கப்படும் வரை அது தனது டிடெக்டரையே பயன்படுத்தும், பிறகு தானாக மாறும்.</string>
+    <string name="pinch_profile_saved">அளவீடு சேமிக்கப்பட்டது. பயன்படுத்த தயார்.</string>
+    <string name="pinch_calibration_step">1. உங்கள் சைகையை அளவீடு செய்யுங்கள்</string>
+    <string name="pinch_tuning_step">2. அடையாளம் காணலை சரிசெய்யுங்கள்</string>
+    <string name="pinch_calibrate_watch">கடிகாரத்தில் அளவீடு செய்</string>
+    <string name="pinch_recalibrate_watch">மீண்டும் அளவீடு செய்</string>
+    <string name="pinch_open_instruction">கடிகாரத்தில் Svartifoss ஐத் திறக்கவும். அங்கே சோதனையைப் பின்பற்றி அளவீட்டைச் சேமிக்கவும்.</string>
+    <string name="pinch_open_sending">கடிகாரத்துடன் இணைக்கிறது…</string>
+    <string name="pinch_open_sent">கடிகாரத்தில் தொடரவும். சோதனை திறக்கவில்லை என்றால், அங்கே Svartifoss ஐ மீண்டும் திறந்து மீண்டும் முயலவும்.</string>
+    <string name="pinch_open_failed">கடிகாரம் கிடைக்கவில்லை. இணைப்பைச் சரிபார்த்து இரு பயன்பாடுகளையும் புதுப்பித்து, மீண்டும் முயலவும்.</string>
+    <string name="pinch_sensitivity_label">உணர்திறன்</string>
+    <string name="pinch_sensitivity_help">பிஞ்ச்கள் தவறினால் அதிகரிக்கவும். பிற அசைவுகள் செயல்களைத் தூண்டினால் குறைக்கவும்.</string>
+    <string name="pinch_gap_label">பிஞ்ச்களுக்கு இடையிலான நேரம்</string>
+    <string name="pinch_gap_help">முதல் பிஞ்சிலிருந்து இரண்டாவதுக்கு அதிகபட்ச நேரம். மெதுவான சைகைக்கு அதிகரிக்கவும்.</string>
+    <string name="pinch_cooldown_label">கட்டளைகளுக்கு இடையே இடைவெளி</string>
+    <string name="pinch_cooldown_help">ஒரு செயலுக்குப் பிறகு அடுத்த சைகையை ஏற்கும் முன் எவ்வளவு நேரம் காத்திருக்க வேண்டும்.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">மேலும் சரிசெய்தல்கள்</string>
+    <string name="pinch_advanced_hide">குறைவான சரிசெய்தல்கள்</string>
+    <string name="pinch_shared_settings">இசை இயங்கும்போதும் இடைநிறுத்தப்பட்டிருக்கும்போதும் இந்த அமைப்புகள் பொருந்தும்.</string>
+    <string name="pinch_settings_save">சேமி</string>
+    <string name="pinch_gesture_note">பிளேயர் திறந்திருக்கும்போதும் கடிகாரத் திரை இயங்கும்போதும் கட்டைவிரலையும் ஆள்காட்டி விரலையும் இருமுறை ஒன்றாகத் தொடவும்.</string>
+    <string name="pinch_controls_uncalibrated">சோதனை டிடெக்டர் தேர்ந்தெடுக்கப்பட்டது, இன்னும் அளவீடு செய்யப்படவில்லை. அளவீடு செய்யும் வரை கடிகாரத்தின் சொந்த டிடெக்டர் பயன்படுத்தப்படும்.</string>
+    <string name="pinch_controls_calibrated">சோதனை டிடெக்டர் அளவீடு செய்யப்பட்டது. Svartifoss பிளேயர் திறந்திருக்கும்போது இருமுறை பிஞ்ச் செய்யவும்.</string>
+</resources>

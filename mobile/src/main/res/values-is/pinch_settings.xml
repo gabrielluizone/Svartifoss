@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Klípustillingar</string>
+    <string name="pinch_settings_intro">Hvernig á úrið að nema hreyfinguna þína?</string>
+    <string name="pinch_mode_native">Skynjari úrsins</string>
+    <string name="pinch_mode_experimental">Tilraunaskynjari</string>
+    <string name="pinch_native_description">Notar innbyggða greiningu úrsins. Engar kvörðunar- eða næmnistillingar.</string>
+    <string name="pinch_experimental_description">Nemur hreyfingar úlnliðsins með kvörðuninni þinni. Hann getur farið af stað fyrir slysni og notar meiri rafhlöðu meðan spilarinn er opinn.</string>
+    <string name="pinch_profile_missing">Ekki kvarðað enn. Þú getur vistað þennan hátt núna: úrið heldur áfram að nota eigin skynjara þar til kvörðun er vistuð í því og skiptir þá sjálft.</string>
+    <string name="pinch_profile_saved">Kvörðun vistuð. Tilbúið til notkunar.</string>
+    <string name="pinch_calibration_step">1. Kvarðaðu hreyfinguna</string>
+    <string name="pinch_tuning_step">2. Stilltu greininguna</string>
+    <string name="pinch_calibrate_watch">Kvarða í úrinu</string>
+    <string name="pinch_recalibrate_watch">Kvarða aftur</string>
+    <string name="pinch_open_instruction">Opnaðu Svartifoss í úrinu. Fylgdu prófinu þar og vistaðu kvörðunina.</string>
+    <string name="pinch_open_sending">Tengist úrinu…</string>
+    <string name="pinch_open_sent">Haltu áfram í úrinu. Ef prófið opnast ekki skaltu opna Svartifoss þar aftur og reyna á ný.</string>
+    <string name="pinch_open_failed">Úrið er ekki tiltækt. Athugaðu tenginguna og uppfærðu bæði forritin og reyndu svo aftur.</string>
+    <string name="pinch_sensitivity_label">Næmni</string>
+    <string name="pinch_sensitivity_help">Auktu ef klíp nemast ekki. Minnkaðu ef aðrar hreyfingar ræsa aðgerðir.</string>
+    <string name="pinch_gap_label">Tími milli klípa</string>
+    <string name="pinch_gap_help">Lengsti tími frá fyrsta klípi til þess seinna. Auktu fyrir hægari hreyfingu.</string>
+    <string name="pinch_cooldown_label">Hlé milli skipana</string>
+    <string name="pinch_cooldown_help">Hve lengi er beðið eftir aðgerð áður en næsta hreyfing er tekin gild.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Fleiri stillingar</string>
+    <string name="pinch_advanced_hide">Færri stillingar</string>
+    <string name="pinch_shared_settings">Þessar stillingar gilda meðan tónlist spilar eða er í bið.</string>
+    <string name="pinch_settings_save">Vista</string>
+    <string name="pinch_gesture_note">Snertu þumal og vísifingur saman tvisvar, með spilarann opinn og skjá úrsins kveiktan.</string>
+    <string name="pinch_controls_uncalibrated">Tilraunaskynjari valinn, ekki kvarðaður enn. Eigin skynjari úrsins er notaður þar til þú kvarðar.</string>
+    <string name="pinch_controls_calibrated">Tilraunaskynjari kvarðaður. Klíptu tvisvar meðan Svartifoss-spilarinn er opinn.</string>
+</resources>

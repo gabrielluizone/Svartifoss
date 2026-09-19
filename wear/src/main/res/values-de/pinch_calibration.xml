@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Pinch kalibrieren</string>
+    <string name="pinch_cal_intro">Ziehe das Armband fest und halte das Handgelenk hoch. Etwa 45 Sekunden: Ruhe, sechs Doppel-Pinches, dann Armbewegung. Es werden keine Musikbefehle gesendet.</string>
+    <string name="pinch_cal_start">Starten</string>
+    <string name="pinch_cal_restart">Neu starten</string>
+    <string name="pinch_cal_test">Test ohne Aktionen</string>
+    <string name="pinch_cal_save">Kalibrierung speichern</string>
+    <string name="pinch_cal_close">Schließen</string>
+
+    <string name="pinch_cal_step_ready">Bereit machen</string>
+    <string name="pinch_cal_step_ready_hint">Halte das Handgelenk hoch, Display zu dir.</string>
+    <string name="pinch_cal_step_rest">Ruhig halten</string>
+    <string name="pinch_cal_step_rest_hint">Kein Pinch.</string>
+    <string name="pinch_cal_step_attempt">Versuch %1$d von %2$d</string>
+    <string name="pinch_cal_step_pinch">Doppel-Pinch</string>
+    <string name="pinch_cal_step_pinch_hint">Tippe Daumen und Zeigefinger zweimal aneinander.</string>
+    <string name="pinch_cal_step_wait">Entspannen</string>
+    <string name="pinch_cal_step_wait_hint">Gleich kommt der nächste Versuch.</string>
+    <string name="pinch_cal_step_prepare">Fast geschafft</string>
+    <string name="pinch_cal_step_prepare_hint">Als Nächstes: Arm bewegen, ohne zu pinchen.</string>
+    <string name="pinch_cal_step_move">Arm bewegen</string>
+    <string name="pinch_cal_step_move_hint">Drehe und schwinge ihn natürlich. Display bleibt zu dir gerichtet. Kein Pinch.</string>
+
+    <string name="pinch_cal_testing">Test</string>
+    <string name="pinch_cal_detections">Erkennungen</string>
+    <string name="pinch_cal_test_hint">Noch %1$d s · keine Aktionen</string>
+
+    <string name="pinch_cal_ready">Kalibriert. Teste vor dem Speichern: Pinche einige Male, dann bewege den Arm normal.</string>
+    <string name="pinch_cal_test_done">%1$d Erkennungen. Passt das zu deinen Doppel-Pinches, speichere. Wurden Armbewegungen gezählt, kalibriere neu oder senke die Empfindlichkeit am Smartphone.</string>
+    <string name="pinch_cal_failed_incomplete">Die Aufzeichnung wurde abgebrochen. Lass das Display während des ganzen Tests an und zu dir gerichtet, dann starte neu.</string>
+    <string name="pinch_cal_failed_weak">Deine Pinches hoben sich nicht von einem ruhigen Handgelenk ab. Ziehe das Armband etwas fester und pinche kräftiger.</string>
+    <string name="pinch_cal_failed_unrecognized">Die meisten Versuche wurden nicht als Doppel-Pinch erkannt. Pinche in jedem Versuch deutlich zweimal und halte den Arm dabei still.</string>
+    <string name="pinch_cal_failed_movement">Deine Armbewegung sah wie Pinches aus. Halte das Handgelenk bei den Versuchen ruhiger und starte neu.</string>
+    <string name="pinch_cal_failed_kept">Die vorherige Kalibrierung wurde beibehalten.</string>
+    <string name="pinch_cal_interrupted">Angehalten, weil sich das Display ausgeschaltet hat. Starte neu, während das Display an ist.</string>
+    <string name="pinch_cal_unavailable">Bewegungssensoren nicht verfügbar. Öffne diese Ansicht erneut und versuche es noch einmal.</string>
+
+    <string name="pinch_cal_sending">Speichern auf dem Smartphone …</string>
+    <string name="pinch_cal_saved">Kalibrierung gespeichert. Wähle am Smartphone in den Pinch-Einstellungen die experimentelle Erkennung und speichere.</string>
+    <string name="pinch_cal_saved_active">Kalibrierung gespeichert. Die experimentelle Erkennung ist aktiv, solange der Player geöffnet ist.</string>
+    <string name="pinch_cal_send_failed">Speichern auf dem Smartphone konnte nicht bestätigt werden. Prüfe die Verbindung und tippe erneut auf Kalibrierung speichern.</string>
+    <string name="pinch_cal_legend_motion">Bewegung</string>
+    <string name="pinch_cal_legend_rotation">Drehung</string>
+    <string name="pinch_cal_legend_target">Ziel</string>
+    <string name="pinch_cal_no_signal">Keine Sensordaten</string>
+    <string name="pinch_cal_detail">%1$d von %2$d erkannt · Berührungen pro Versuch: %3$s</string>
+</resources>

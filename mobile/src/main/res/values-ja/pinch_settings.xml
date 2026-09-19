@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">ピンチ設定</string>
+    <string name="pinch_settings_intro">ウォッチでジェスチャーをどのように検出しますか？</string>
+    <string name="pinch_mode_native">ウォッチの検出機能</string>
+    <string name="pinch_mode_experimental">試験的な検出機能</string>
+    <string name="pinch_native_description">ウォッチ内蔵の認識機能を使用します。キャリブレーションや感度の調整はありません。</string>
+    <string name="pinch_experimental_description">キャリブレーションをもとに手首の動きを検出します。誤作動することがあり、プレーヤーを開いている間はバッテリーの消費が増えます。</string>
+    <string name="pinch_profile_missing">まだキャリブレーションされていません。このモードは今すぐ保存できます。ウォッチ側でキャリブレーションが保存されるまでは、ウォッチ自身の検出機能が使われ、その後自動で切り替わります。</string>
+    <string name="pinch_profile_saved">キャリブレーションを保存しました。使用できます。</string>
+    <string name="pinch_calibration_step">1. ジェスチャーをキャリブレーション</string>
+    <string name="pinch_tuning_step">2. 認識を調整</string>
+    <string name="pinch_calibrate_watch">ウォッチでキャリブレーション</string>
+    <string name="pinch_recalibrate_watch">もう一度キャリブレーション</string>
+    <string name="pinch_open_instruction">ウォッチで Svartifoss を開いてください。そこでテストを行い、キャリブレーションを保存します。</string>
+    <string name="pinch_open_sending">ウォッチに接続しています…</string>
+    <string name="pinch_open_sent">ウォッチで続けてください。テストが開かない場合は、ウォッチで Svartifoss を開き直して、もう一度お試しください。</string>
+    <string name="pinch_open_failed">ウォッチを利用できません。接続を確認し、両方のアプリを更新してから、もう一度お試しください。</string>
+    <string name="pinch_sensitivity_label">感度</string>
+    <string name="pinch_sensitivity_help">ピンチが検出されないときは上げてください。ほかの動きで操作が実行されるときは下げてください。</string>
+    <string name="pinch_gap_label">ピンチの間隔</string>
+    <string name="pinch_gap_help">1回目から2回目のピンチまでの最大時間です。ゆっくりしたジェスチャーにする場合は長くしてください。</string>
+    <string name="pinch_cooldown_label">コマンド間の待ち時間</string>
+    <string name="pinch_cooldown_help">操作の実行後、次のジェスチャーを受け付けるまで待つ時間です。</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">詳細な調整</string>
+    <string name="pinch_advanced_hide">詳細な調整を隠す</string>
+    <string name="pinch_shared_settings">これらの設定は、音楽の再生中と一時停止中に適用されます。</string>
+    <string name="pinch_settings_save">保存</string>
+    <string name="pinch_gesture_note">プレーヤーを開き、ウォッチの画面をつけた状態で、親指と人差し指を2回くっつけてください。</string>
+    <string name="pinch_controls_uncalibrated">試験的な検出機能を選択済みですが、まだキャリブレーションされていません。キャリブレーションするまでは、ウォッチ自身の検出機能が使われます。</string>
+    <string name="pinch_controls_calibrated">試験的な検出機能のキャリブレーションが完了しました。Svartifoss プレーヤーを開いた状態で2回ピンチしてください。</string>
+</resources>

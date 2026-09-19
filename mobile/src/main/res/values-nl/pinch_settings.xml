@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Knijpinstellingen</string>
+    <string name="pinch_settings_intro">Hoe moet het horloge je gebaar herkennen?</string>
+    <string name="pinch_mode_native">Detector van het horloge</string>
+    <string name="pinch_mode_experimental">Experimentele detector</string>
+    <string name="pinch_native_description">Gebruikt de ingebouwde herkenning van het horloge. Geen kalibratie of gevoeligheidsinstellingen.</string>
+    <string name="pinch_experimental_description">Herkent polsbewegingen met jouw kalibratie. Kan per ongeluk activeren en verbruikt meer batterij zolang de speler open is.</string>
+    <string name="pinch_profile_missing">Nog niet gekalibreerd. Je kunt deze modus nu opslaan: het horloge blijft zijn eigen detector gebruiken tot daar een kalibratie is opgeslagen en schakelt dan vanzelf over.</string>
+    <string name="pinch_profile_saved">Kalibratie opgeslagen. Klaar voor gebruik.</string>
+    <string name="pinch_calibration_step">1. Kalibreer je gebaar</string>
+    <string name="pinch_tuning_step">2. Stel de herkenning af</string>
+    <string name="pinch_calibrate_watch">Kalibreren op het horloge</string>
+    <string name="pinch_recalibrate_watch">Opnieuw kalibreren</string>
+    <string name="pinch_open_instruction">Open Svartifoss op het horloge. Volg daar de test en sla je kalibratie op.</string>
+    <string name="pinch_open_sending">Verbinden met het horloge…</string>
+    <string name="pinch_open_sent">Ga verder op het horloge. Opent de test niet, open dan Svartifoss daar opnieuw en probeer het nog eens.</string>
+    <string name="pinch_open_failed">Horloge niet beschikbaar. Controleer de verbinding en werk beide apps bij; probeer het daarna opnieuw.</string>
+    <string name="pinch_sensitivity_label">Gevoeligheid</string>
+    <string name="pinch_sensitivity_help">Verhoog als knijpbewegingen worden gemist. Verlaag als andere bewegingen acties starten.</string>
+    <string name="pinch_gap_label">Tijd tussen knijpbewegingen</string>
+    <string name="pinch_gap_help">Maximale tijd tussen de eerste en de tweede knijpbeweging. Verhoog dit voor een langzamer gebaar.</string>
+    <string name="pinch_cooldown_label">Pauze tussen opdrachten</string>
+    <string name="pinch_cooldown_help">Hoe lang er na een actie wordt gewacht voordat een volgend gebaar wordt geaccepteerd.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Meer instellingen</string>
+    <string name="pinch_advanced_hide">Minder instellingen</string>
+    <string name="pinch_shared_settings">Deze instellingen gelden terwijl muziek speelt of gepauzeerd is.</string>
+    <string name="pinch_settings_save">Opslaan</string>
+    <string name="pinch_gesture_note">Raak duim en wijsvinger twee keer tegen elkaar, met de speler open en het scherm van het horloge aan.</string>
+    <string name="pinch_controls_uncalibrated">Experimentele detector gekozen, nog niet gekalibreerd. Tot je kalibreert wordt de eigen detector van het horloge gebruikt.</string>
+    <string name="pinch_controls_calibrated">Experimentele detector gekalibreerd. Knijp twee keer terwijl de Svartifoss-speler open is.</string>
+</resources>

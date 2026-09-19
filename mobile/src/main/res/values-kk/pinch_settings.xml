@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Шымшу параметрлері</string>
+    <string name="pinch_settings_intro">Сағат қимылыңызды қалай анықтауы керек?</string>
+    <string name="pinch_mode_native">Сағат детекторы</string>
+    <string name="pinch_mode_experimental">Эксперименттік детектор</string>
+    <string name="pinch_native_description">Сағаттың кіріктірілген тануын қолданады. Калибрлеусіз және сезімталдық параметрлерінсіз.</string>
+    <string name="pinch_experimental_description">Білек қозғалысын сіздің калибрлеуіңіз бойынша анықтайды. Кездейсоқ іске қосылуы мүмкін және ойнатқыш ашық кезде батареяны көбірек жұмсайды.</string>
+    <string name="pinch_profile_missing">Әлі калибрленбеген. Бұл режимді қазір сақтауға болады: сағат оған калибрлеу сақталғанша өз детекторын қолданады, содан кейін өзі ауысады.</string>
+    <string name="pinch_profile_saved">Калибрлеу сақталды. Пайдалануға дайын.</string>
+    <string name="pinch_calibration_step">1. Қимылды калибрлеңіз</string>
+    <string name="pinch_tuning_step">2. Танылуды реттеңіз</string>
+    <string name="pinch_calibrate_watch">Сағатта калибрлеу</string>
+    <string name="pinch_recalibrate_watch">Қайта калибрлеу</string>
+    <string name="pinch_open_instruction">Svartifoss қолданбасын сағатта ашыңыз. Сол жерде тестті орындап, калибрлеуді сақтаңыз.</string>
+    <string name="pinch_open_sending">Сағатқа қосылуда…</string>
+    <string name="pinch_open_sent">Сағатта жалғастырыңыз. Тест ашылмаса, Svartifoss қолданбасын сол жерде қайта ашып, әрекетті қайталаңыз.</string>
+    <string name="pinch_open_failed">Сағат қолжетімсіз. Байланысты тексеріп, екі қолданбаны да жаңартыңыз, сосын қайталаңыз.</string>
+    <string name="pinch_sensitivity_label">Сезімталдық</string>
+    <string name="pinch_sensitivity_help">Шымшулар анықталмаса, арттырыңыз. Басқа қозғалыстар әрекеттерді іске қосса, азайтыңыз.</string>
+    <string name="pinch_gap_label">Шымшулар арасындағы уақыт</string>
+    <string name="pinch_gap_help">Бірінші шымшудан екіншісіне дейінгі ең ұзақ уақыт. Баяуырақ қимыл үшін арттырыңыз.</string>
+    <string name="pinch_cooldown_label">Пәрмендер арасындағы үзіліс</string>
+    <string name="pinch_cooldown_help">Әрекеттен кейін келесі қимылды қабылдағанша қанша күту керек.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d мс</string>
+    <string name="pinch_advanced_show">Қосымша реттеулер</string>
+    <string name="pinch_advanced_hide">Азырақ реттеулер</string>
+    <string name="pinch_shared_settings">Бұл параметрлер музыка ойнап тұрғанда немесе кідіртілгенде қолданылады.</string>
+    <string name="pinch_settings_save">Сақтау</string>
+    <string name="pinch_gesture_note">Ойнатқыш ашық және сағат экраны қосулы кезде бас бармақ пен сұқ саусақты екі рет түйістіріңіз.</string>
+    <string name="pinch_controls_uncalibrated">Эксперименттік детектор таңдалды, әлі калибрленбеген. Калибрлегенше сағаттың өз детекторы қолданылады.</string>
+    <string name="pinch_controls_calibrated">Эксперименттік детектор калибрленді. Svartifoss ойнатқышы ашық кезде саусақтарды екі рет түйістіріңіз.</string>
+</resources>

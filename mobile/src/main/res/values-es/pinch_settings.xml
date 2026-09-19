@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Ajustes del pellizco</string>
+    <string name="pinch_settings_intro">¿Cómo debe detectar el reloj tu gesto?</string>
+    <string name="pinch_mode_native">Detector del reloj</string>
+    <string name="pinch_mode_experimental">Detector experimental</string>
+    <string name="pinch_native_description">Usa el reconocimiento integrado del reloj. Sin controles de calibración ni de sensibilidad.</string>
+    <string name="pinch_experimental_description">Detecta los movimientos de la muñeca con tu calibración. Puede activarse por error y gasta más batería mientras el reproductor está abierto.</string>
+    <string name="pinch_profile_missing">Aún sin calibrar. Ya puedes guardar este modo: el reloj sigue usando su propio detector hasta que se guarde una calibración en él y entonces cambia solo.</string>
+    <string name="pinch_profile_saved">Calibración guardada. Listo para usar.</string>
+    <string name="pinch_calibration_step">1. Calibra tu gesto</string>
+    <string name="pinch_tuning_step">2. Ajusta el reconocimiento</string>
+    <string name="pinch_calibrate_watch">Calibrar en el reloj</string>
+    <string name="pinch_recalibrate_watch">Calibrar de nuevo</string>
+    <string name="pinch_open_instruction">Abre Svartifoss en el reloj. Sigue allí la prueba y guarda tu calibración.</string>
+    <string name="pinch_open_sending">Conectando con el reloj…</string>
+    <string name="pinch_open_sent">Continúa en el reloj. Si la prueba no se abre, vuelve a abrir allí Svartifoss e inténtalo de nuevo.</string>
+    <string name="pinch_open_failed">Reloj no disponible. Comprueba la conexión y actualiza ambas apps; después inténtalo de nuevo.</string>
+    <string name="pinch_sensitivity_label">Sensibilidad</string>
+    <string name="pinch_sensitivity_help">Auméntala si no se detectan los pellizcos. Redúcela si otros movimientos activan acciones.</string>
+    <string name="pinch_gap_label">Tiempo entre pellizcos</string>
+    <string name="pinch_gap_help">Tiempo máximo entre el primer pellizco y el segundo. Auméntalo para un gesto más lento.</string>
+    <string name="pinch_cooldown_label">Pausa entre comandos</string>
+    <string name="pinch_cooldown_help">Cuánto esperar tras una acción antes de aceptar otro gesto.</string>
+    <string name="pinch_value_percent">%1$d %%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Más ajustes</string>
+    <string name="pinch_advanced_hide">Menos ajustes</string>
+    <string name="pinch_shared_settings">Estos ajustes se aplican mientras la música suena o está en pausa.</string>
+    <string name="pinch_settings_save">Guardar</string>
+    <string name="pinch_gesture_note">Junta el pulgar y el índice dos veces, con el reproductor abierto y la pantalla del reloj encendida.</string>
+    <string name="pinch_controls_uncalibrated">Detector experimental elegido, aún sin calibrar. Se usa el detector del propio reloj hasta que calibres.</string>
+    <string name="pinch_controls_calibrated">Detector experimental calibrado. Haz dos pellizcos mientras el reproductor de Svartifoss está abierto.</string>
+</resources>

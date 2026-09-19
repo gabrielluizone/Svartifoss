@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Ustawienia uszczypnięcia</string>
+    <string name="pinch_settings_intro">Jak zegarek ma wykrywać Twój gest?</string>
+    <string name="pinch_mode_native">Wykrywanie zegarka</string>
+    <string name="pinch_mode_experimental">Wykrywanie eksperymentalne</string>
+    <string name="pinch_native_description">Używa wbudowanego rozpoznawania zegarka. Bez kalibracji i ustawień czułości.</string>
+    <string name="pinch_experimental_description">Wykrywa ruchy nadgarstka na podstawie Twojej kalibracji. Może uruchomić się przypadkiem i zużywa więcej baterii, gdy odtwarzacz jest otwarty.</string>
+    <string name="pinch_profile_missing">Jeszcze nie skalibrowano. Możesz zapisać ten tryb już teraz: zegarek używa własnego wykrywania, dopóki nie zapisze się w nim kalibracja, po czym przełącza się sam.</string>
+    <string name="pinch_profile_saved">Kalibracja zapisana. Gotowe do użycia.</string>
+    <string name="pinch_calibration_step">1. Skalibruj gest</string>
+    <string name="pinch_tuning_step">2. Dostosuj rozpoznawanie</string>
+    <string name="pinch_calibrate_watch">Kalibruj na zegarku</string>
+    <string name="pinch_recalibrate_watch">Kalibruj ponownie</string>
+    <string name="pinch_open_instruction">Otwórz Svartifoss na zegarku. Wykonaj tam test i zapisz kalibrację.</string>
+    <string name="pinch_open_sending">Łączenie z zegarkiem…</string>
+    <string name="pinch_open_sent">Kontynuuj na zegarku. Jeśli test się nie otworzy, otwórz tam Svartifoss ponownie i spróbuj jeszcze raz.</string>
+    <string name="pinch_open_failed">Zegarek niedostępny. Sprawdź połączenie i zaktualizuj obie aplikacje, a następnie spróbuj ponownie.</string>
+    <string name="pinch_sensitivity_label">Czułość</string>
+    <string name="pinch_sensitivity_help">Zwiększ, jeśli uszczypnięcia są pomijane. Zmniejsz, jeśli inne ruchy uruchamiają akcje.</string>
+    <string name="pinch_gap_label">Czas między uszczypnięciami</string>
+    <string name="pinch_gap_help">Maksymalny czas od pierwszego do drugiego uszczypnięcia. Zwiększ dla wolniejszego gestu.</string>
+    <string name="pinch_cooldown_label">Przerwa między poleceniami</string>
+    <string name="pinch_cooldown_help">Jak długo czekać po akcji, zanim przyjmie się kolejny gest.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Więcej ustawień</string>
+    <string name="pinch_advanced_hide">Mniej ustawień</string>
+    <string name="pinch_shared_settings">Te ustawienia obowiązują podczas odtwarzania muzyki i po jej wstrzymaniu.</string>
+    <string name="pinch_settings_save">Zapisz</string>
+    <string name="pinch_gesture_note">Dotknij dwa razy kciukiem i palcem wskazującym, przy otwartym odtwarzaczu i włączonym ekranie zegarka.</string>
+    <string name="pinch_controls_uncalibrated">Wybrano wykrywanie eksperymentalne, jeszcze nieskalibrowane. Do czasu kalibracji używane jest wykrywanie zegarka.</string>
+    <string name="pinch_controls_calibrated">Wykrywanie eksperymentalne skalibrowane. Złącz palce dwa razy, gdy odtwarzacz Svartifoss jest otwarty.</string>
+</resources>

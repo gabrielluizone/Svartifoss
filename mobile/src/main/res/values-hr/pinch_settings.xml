@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Postavke stiska</string>
+    <string name="pinch_settings_intro">Kako sat treba prepoznavati vaš pokret?</string>
+    <string name="pinch_mode_native">Detektor sata</string>
+    <string name="pinch_mode_experimental">Eksperimentalni detektor</string>
+    <string name="pinch_native_description">Koristi ugrađeno prepoznavanje sata. Bez kalibracije i postavki osjetljivosti.</string>
+    <string name="pinch_experimental_description">Prepoznaje pokrete zapešća prema vašoj kalibraciji. Može se pokrenuti greškom i troši više baterije dok je reproduktor otvoren.</string>
+    <string name="pinch_profile_missing">Još nije kalibrirano. Ovaj način možete spremiti odmah: sat koristi vlastiti detektor dok se u njemu ne spremi kalibracija, a zatim se sam prebaci.</string>
+    <string name="pinch_profile_saved">Kalibracija spremljena. Spremno za korištenje.</string>
+    <string name="pinch_calibration_step">1. Kalibrirajte pokret</string>
+    <string name="pinch_tuning_step">2. Prilagodite prepoznavanje</string>
+    <string name="pinch_calibrate_watch">Kalibriraj na satu</string>
+    <string name="pinch_recalibrate_watch">Kalibriraj ponovno</string>
+    <string name="pinch_open_instruction">Otvorite Svartifoss na satu. Slijedite test tamo i spremite kalibraciju.</string>
+    <string name="pinch_open_sending">Povezivanje sa satom…</string>
+    <string name="pinch_open_sent">Nastavite na satu. Ako se test ne otvori, ponovno tamo otvorite Svartifoss i pokušajte opet.</string>
+    <string name="pinch_open_failed">Sat nije dostupan. Provjerite vezu i ažurirajte obje aplikacije, a zatim pokušajte ponovno.</string>
+    <string name="pinch_sensitivity_label">Osjetljivost</string>
+    <string name="pinch_sensitivity_help">Povećajte ako se stisci ne prepoznaju. Smanjite ako drugi pokreti pokreću radnje.</string>
+    <string name="pinch_gap_label">Vrijeme između stisaka</string>
+    <string name="pinch_gap_help">Najdulje vrijeme od prvog do drugog stiska. Povećajte za sporiji pokret.</string>
+    <string name="pinch_cooldown_label">Stanka između naredbi</string>
+    <string name="pinch_cooldown_help">Koliko se čeka nakon radnje prije nego što se prihvati novi pokret.</string>
+    <string name="pinch_value_percent">%1$d %%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Više prilagodbi</string>
+    <string name="pinch_advanced_hide">Manje prilagodbi</string>
+    <string name="pinch_shared_settings">Ove postavke vrijede dok glazba svira ili je pauzirana.</string>
+    <string name="pinch_settings_save">Spremi</string>
+    <string name="pinch_gesture_note">Dvaput dodirnite palac i kažiprst, uz otvoren reproduktor i uključen zaslon sata.</string>
+    <string name="pinch_controls_uncalibrated">Odabran je eksperimentalni detektor, još nekalibriran. Do kalibracije koristi se detektor samog sata.</string>
+    <string name="pinch_controls_calibrated">Eksperimentalni detektor kalibriran. Dvaput spojite prste dok je reproduktor Svartifoss otvoren.</string>
+</resources>
