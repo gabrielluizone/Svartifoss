@@ -41,6 +41,7 @@
     <string name="idle_action_search">தேடல்</string>
     <string name="idle_action_queue">சமீபத்தில் இயங்கியவற்றைத் திற</string>
     <string name="no_phone">தொலைபேசி இணைக்கப்படவில்லை</string>
+    <string name="phone_unavailable">பிளேபேக்கைக் கட்டுப்படுத்த தொலைபேசியைத் திறக்கவும்</string>
     <string name="playback_stopped">நிறுத்தப்பட்டது</string>
     <string name="error">பிழை</string>
     <string name="error_play_services">Play Services பிழை</string>

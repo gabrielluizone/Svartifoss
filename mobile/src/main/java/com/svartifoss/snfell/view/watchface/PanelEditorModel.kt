@@ -16,8 +16,12 @@ internal enum class PanelTarget {
  * The editor affordance that owns a setting.
  *
  * One entry per distinct role rather than one per key, so a single view can serve every target the
- * way [STYLE] does. The Seek tab is why [RING_STYLE] is separate from [STYLE]: the resting progress
- * ring and the seek overlay are two different surfaces that happen to share a settings group.
+ * way [STYLE] does.
+ *
+ * The Seek tab used to carry the resting progress ring's style, layout and gradient as well. They
+ * were moved to the Player page, where the ring is actually drawn: three of the tab's five controls
+ * previewed the player rather than the seek overlay, which read as the preview being broken rather
+ * than as the tab holding two unrelated surfaces.
  */
 internal enum class PanelControl {
     /** The page-wide *Shared panel appearance* background. */
@@ -25,9 +29,6 @@ internal enum class PanelControl {
     /** One surface's own background, which may defer to [BACKDROP]. */
     SURFACE_BACKDROP,
     BLUR,
-    RING_STYLE,
-    RING_LAYOUT,
-    RING_GRADIENT,
     STYLE,
     LAYOUT,
     ROW_SIZE,
@@ -95,6 +96,32 @@ internal object PanelEditorModel {
             MiscPreferences.WEAR_QUICK_PANEL_SOURCE.key,
             "queue_remote_artwork")
 
+    /**
+     * The two controls the editor shows above the tab rail, on every tab.
+     *
+     * They are the reason the preview needs [previewSurfaceFor] at all. Every other key belongs to
+     * exactly one surface, so a fixed key -> surface table answers correctly for it; these two
+     * belong to whichever surface is on screen, and answering "volume" for them meant that editing
+     * the shared background while looking at the Queue tab dropped the preview onto the volume
+     * overlay - a panel the user was not editing and had not asked to see.
+     *
+     * Note this is a *different question* from [PanelSettingSpec.target], which is where search
+     * navigates to and is deliberately fixed at Volume: search arrives with no tab open, and
+     * landing somewhere definite beats landing wherever the page was left.
+     */
+    val pageWideKeys: Set<String> = setOf(
+            MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE.key,
+            MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS.key)
+
+    /** The watch surface a tab of this editor is showing. */
+    fun previewSurfaceFor(target: PanelTarget): WatchPreviewView.PreviewSurface = when (target) {
+        PanelTarget.VOLUME -> WatchPreviewView.PreviewSurface.VOLUME
+        PanelTarget.SEEK -> WatchPreviewView.PreviewSurface.SEEK
+        PanelTarget.QUICK_PANEL -> WatchPreviewView.PreviewSurface.QUICK_PANEL
+        PanelTarget.QUEUE -> WatchPreviewView.PreviewSurface.QUEUE
+        PanelTarget.LYRICS -> WatchPreviewView.PreviewSurface.LYRICS
+    }
+
     val specs: List<PanelSettingSpec> = listOf(
             choice(
                     MiscPreferences.WEAR_OVERLAY_BACKDROP_STYLE,
@@ -119,18 +146,6 @@ internal object PanelEditorModel {
                     PanelTarget.VOLUME,
                     PanelControl.LAYOUT),
 
-            choice(
-                    MiscPreferences.WEAR_PROGRESS_STYLE,
-                    PanelTarget.SEEK,
-                    PanelControl.RING_STYLE),
-            choice(
-                    MiscPreferences.WEAR_PROGRESS_LAYOUT,
-                    PanelTarget.SEEK,
-                    PanelControl.RING_LAYOUT),
-            toggle(
-                    MiscPreferences.WEAR_PROGRESS_GRADIENT,
-                    PanelTarget.SEEK,
-                    PanelControl.RING_GRADIENT),
             choice(
                     MiscPreferences.WEAR_SEEK_STYLE,
                     PanelTarget.SEEK,

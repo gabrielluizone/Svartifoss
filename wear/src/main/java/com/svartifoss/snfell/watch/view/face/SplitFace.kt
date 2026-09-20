@@ -189,11 +189,7 @@ private fun ContinuousBackdrop(
             art, state.albumArtBlurRadiusPx.coerceAtLeast(MIN_PANEL_BLUR_PX))
 
     Box(Modifier.fillMaxSize()) {
-        Image(
-                bitmap = art,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize())
+        FaceCoverImage(state = state, art = art, modifier = Modifier.fillMaxSize())
 
         Box(
                 modifier = Modifier
@@ -203,10 +199,13 @@ private fun ContinuousBackdrop(
                         }
         ) {
             Canvas(Modifier.fillMaxSize()) { drawRect(panel) }
-            Image(
-                    bitmap = blurred,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
+            // The blurred copy travels on its own transition rather than being a second layer of
+            // the sharp one's: it is a different bitmap, arriving from rememberBlurredCover, and
+            // sharing one animation would mean holding both stale copies to redraw the pair.
+            // They start together and run identically, which is what the seam needs.
+            FaceCoverImage(
+                    state = state,
+                    art = blurred,
                     alpha = PANEL_ART_ALPHA,
                     modifier = Modifier.fillMaxSize())
         }
@@ -229,14 +228,7 @@ private fun CoverBand(state: NowPlayingFaceState, height: Dp, panel: Color) {
                                     listOf(panel.copy(alpha = .55f), panel))
                     )
     ) {
-        if (art != null) {
-            Image(
-                    bitmap = art,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-            )
-        }
+        FaceCoverImage(state = state, art = art, modifier = Modifier.fillMaxSize())
     }
 }
 

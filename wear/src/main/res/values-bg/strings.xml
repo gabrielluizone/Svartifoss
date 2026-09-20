@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Отваряне на наскоро възпроизвежданите</string>
 
     <string name="no_phone">Телефонът не е свързан</string>
+    <string name="phone_unavailable">Отключете телефона, за да управлявате възпроизвеждането</string>
     <string name="playback_stopped">Спряно</string>
     <string name="error">ГРЕШКА</string>
     <string name="error_play_services">Грешка в услугите Google Play</string>

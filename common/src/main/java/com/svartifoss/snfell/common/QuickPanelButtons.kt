@@ -11,16 +11,21 @@ package com.svartifoss.snfell.common
  * NullAction hides the slot; Like/Shuffle/Repeat assignments keep the stateful ring behavior
  * in whatever slot they land; any other action turns the slot into a plain trigger showing
  * that action's icon. The phone writes each assignment into BOTH the playing and stopped
- * configs so the panel behaves the same regardless of playback state.
+ * configs so the panel behaves the same regardless of playback state. None of this applies
+ * while the panel takes its buttons from the playing app - see [QuickPanelSource].
  */
 object QuickPanelButtons {
     const val SLOT_1 = 10
     const val SLOT_2 = 11
     const val SLOT_3 = 12
 
-    /** The long full-width row under the three buttons. Unset = the classic "Up Next" row
-     *  (queue preview, opens the queue); NullAction hides it; any other action turns it into
-     *  a full-width trigger for that action. */
+    /**
+     * **Retired.** The wide row under the three buttons is always "Up Next" (queue preview, opens
+     * the queue) - it used to be assignable to another action or hideable, but that was a choice
+     * nobody needed on a row the panel exists to carry. Nothing reads this code any more: the
+     * constant stays, and code 13 stays reserved, because configs written by an older build may
+     * still hold an entry for it: those are left in place, ignored, rather than migrated.
+     */
     const val SLOT_LONG = 13
 
     /** The three round buttons, in on-panel order, left to right. */

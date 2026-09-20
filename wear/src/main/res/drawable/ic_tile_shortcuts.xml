@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picker icon for the Shortcuts Tile: two saved rows, each with its own play affordance. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M4,5H14V8H4ZM4,10.5H14V13.5H4ZM4,16H14V19H4ZM16,4V9L21,6.5ZM16,9.5V14.5L21,12ZM16,15V20L21,17.5Z" />
+</vector>

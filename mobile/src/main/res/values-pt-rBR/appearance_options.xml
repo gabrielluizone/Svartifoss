@@ -96,4 +96,12 @@
         <item>Prata</item>
         <item>Doce</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Folha</item>
+        <item>Gota</item>
+        <item>Arco</item>
+        <item>Seixo</item>
+        <item>Escudo</item>
+    </string-array>
 </resources>

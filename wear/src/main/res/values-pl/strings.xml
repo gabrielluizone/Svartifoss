@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Otwórz ostatnio odtwarzane</string>
 
     <string name="no_phone">Telefon nie jest połączony</string>
+    <string name="phone_unavailable">Odblokuj telefon, aby sterować odtwarzaniem</string>
     <string name="playback_stopped">Zatrzymano</string>
     <string name="error">BŁĄD</string>
     <string name="error_play_services">Błąd Usług Google Play</string>

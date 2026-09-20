@@ -1,15 +1,14 @@
 package com.svartifoss.snfell.watch.tile
 
 import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Color
+import android.media.AudioManager
 import android.net.Uri
-import androidx.palette.graphics.Palette
-import androidx.preference.PreferenceManager
 import androidx.wear.protolayout.ActionBuilders
 import androidx.wear.protolayout.ColorBuilders.argb
 import androidx.wear.protolayout.DimensionBuilders.dp
+import androidx.wear.protolayout.DimensionBuilders.em
 import androidx.wear.protolayout.DimensionBuilders.expand
+import androidx.wear.protolayout.DimensionBuilders.sp
 import androidx.wear.protolayout.DimensionBuilders.wrap
 import androidx.wear.protolayout.LayoutElementBuilders
 import androidx.wear.protolayout.LayoutElementBuilders.Column
@@ -22,6 +21,8 @@ import androidx.wear.protolayout.TimelineBuilders
 import androidx.wear.protolayout.material.Button
 import androidx.wear.protolayout.material.ButtonColors
 import androidx.wear.protolayout.material.ButtonDefaults
+import androidx.wear.protolayout.material.ChipColors
+import androidx.wear.protolayout.material.CompactChip
 import androidx.wear.protolayout.material.Text
 import androidx.wear.protolayout.material.Typography
 import androidx.wear.tiles.RequestBuilders
@@ -30,14 +31,7 @@ import androidx.wear.tiles.TileService
 import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.Wearable
 import com.google.common.util.concurrent.ListenableFuture
-import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.CommPaths
-import com.svartifoss.snfell.common.FaceScopedPreferences
-import com.svartifoss.snfell.common.MiscPreferences
-import com.svartifoss.snfell.common.SwatchInfo
-import com.svartifoss.snfell.common.ThemeAppearance
-import com.svartifoss.snfell.common.ColorHarmony
-import com.svartifoss.snfell.common.selectPrimaryAccent
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.MainActivity
@@ -56,7 +50,7 @@ import timber.log.Timber
 
 /**
  * Glanceable quick-control Tile: shows the current track + artist, play/pause and skip prev/next
- * buttons plus a slimmer -10s/+10s seek row, without opening the app. Tapping the text opens
+ * buttons plus a slimmer volume row, without opening the app. Tapping the text opens
  * Svartifoss on the watch.
  *
  * The Tile is a pure proxy like [com.svartifoss.snfell.watch.communication.WatchMediaSession]:
@@ -67,7 +61,8 @@ import timber.log.Timber
  *
  * The accent used for the play/pause and open-app buttons is extracted from the current cover
  * (same Palette primary the now-playing faces pick) so the Tile tracks the album instead of a fixed
- * green; it falls back to [WatchTheme.ACCENT_DEFAULT] when no cover is available.
+ * green; an artwork-free idle state keeps the last album colour, and only a fresh install with no
+ * cover history falls back to [WatchTheme.ACCENT_DEFAULT].
  */
 class MediaTileService : TileService() {
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
@@ -108,7 +103,8 @@ class MediaTileService : TileService() {
                 WatchLanguage.localized(this@MediaTileService),
                 state,
                 flipPlaying,
-                snapshot.accent)
+                snapshot.accent,
+                requestParams.deviceConfiguration)
 
         TileBuilders.Tile.Builder()
             .setResourcesVersion(RESOURCES_VERSION)
@@ -126,8 +122,8 @@ class MediaTileService : TileService() {
             .addIdToImageMapping(ICON_NEXT, resourceById(com.svartifoss.snfell.common.R.drawable.action_skip_next))
             .addIdToImageMapping(ICON_PLAY, resourceById(com.svartifoss.snfell.common.R.drawable.action_play_filled))
             .addIdToImageMapping(ICON_PAUSE, resourceById(com.svartifoss.snfell.common.R.drawable.action_pause_filled))
-            .addIdToImageMapping(ICON_SEEK_BACK, resourceById(com.svartifoss.snfell.common.R.drawable.action_replay_10))
-            .addIdToImageMapping(ICON_SEEK_FORWARD, resourceById(com.svartifoss.snfell.common.R.drawable.action_forward_10))
+            .addIdToImageMapping(ICON_VOLUME_DOWN, resourceById(com.svartifoss.snfell.common.R.drawable.action_volume_down))
+            .addIdToImageMapping(ICON_VOLUME_UP, resourceById(com.svartifoss.snfell.common.R.drawable.action_volume_up))
             .addIdToImageMapping(
                 ICON_OPEN_APP,
                 resourceById(com.svartifoss.snfell.R.drawable.ic_complication_picker)
@@ -140,18 +136,18 @@ class MediaTileService : TileService() {
         val messageClient = Wearable.getMessageClient(this)
         val nodeClient = Wearable.getNodeClient(this)
 
-        // -10s/+10s carry a signed delta; the phone resolves it against the session's LIVE
-        // position (this Tile's snapshot can be up to one minute stale).
-        val seekDeltaMs = when (clickedId) {
-            ID_SEEK_BACK -> -SEEK_STEP_MS
-            ID_SEEK_FORWARD -> SEEK_STEP_MS
+        // Volume carries only a direction. The phone applies one native session step to its LIVE
+        // controller, so repeated taps never overwrite one another with this Tile's stale volume.
+        val volumeDirection = when (clickedId) {
+            ID_VOLUME_DOWN -> AudioManager.ADJUST_LOWER
+            ID_VOLUME_UP -> AudioManager.ADJUST_RAISE
             else -> null
         }
-        if (seekDeltaMs != null) {
-            val payload = java.nio.ByteBuffer.allocate(java.lang.Long.BYTES).putLong(seekDeltaMs).array()
+        if (volumeDirection != null) {
+            val payload = java.nio.ByteBuffer.allocate(Int.SIZE_BYTES).putInt(volumeDirection).array()
             return messageClient.sendMessageToNearestClient(
                 nodeClient,
-                CommPaths.MESSAGE_SEEK_RELATIVE,
+                CommPaths.MESSAGE_ADJUST_VOLUME,
                 payload
             ) != null
         }
@@ -183,76 +179,40 @@ class MediaTileService : TileService() {
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            return TileSnapshot(null, null)
+            return TileSnapshot(null, TileAlbumAccent.lastKnown(this))
         }
-        if (item == null) return TileSnapshot(null, null)
+        if (item == null) return TileSnapshot(null, TileAlbumAccent.lastKnown(this))
 
         val state = try {
             MusicState.parseFrom(item.data)
         } catch (e: Exception) {
-            return TileSnapshot(null, null)
+            return TileSnapshot(null, TileAlbumAccent.lastKnown(this))
         }
 
         // The cover rides the same DataItem as an asset (as the complication reads it). Extracting
         // the accent here lets the Tile tint its transport controls with the album colour instead
-        // of a fixed green; a missing/unreadable cover falls back to the default accent downstream.
+        // of a fixed green; a missing/unreadable cover retains the last successful album accent.
         val accent = try {
             val asset = item.assets[CommPaths.ASSET_ALBUM_ART]
             val bytes = asset?.let { dataClient.getByteArrayAsset(it) }
-            extractAccent(BitmapUtils.deserialize(bytes))
+            TileAlbumAccent.fromCoverOrLast(this, BitmapUtils.deserialize(bytes))
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            null
+            TileAlbumAccent.lastKnown(this)
         }
         return TileSnapshot(state, accent)
-    }
-
-    /** Runs Palette on the cover and picks the same primary accent the now-playing faces use. */
-    private fun extractAccent(bitmap: Bitmap?): Int? {
-        if (bitmap == null) return null
-        return try {
-            val palette = Palette.from(bitmap).generate()
-            val swatchInfos = palette.swatches.map { SwatchInfo(it.rgb, it.population) }
-            // Promoted here rather than in SurfacePaletteResolver like everything else, because
-            // the tile renders its own layout and never derives a triad. Without it a monochrome
-            // cover would leave the tile grey while the player it launches is not.
-            selectPrimaryAccent(
-                palette.getVibrantSwatch()?.let { SwatchInfo(it.rgb, it.population) },
-                swatchInfos,
-                accentSource()
-            )?.let(ColorHarmony::promoteNeutralAccent)
-        } catch (e: Exception) {
-            null
-        }
-    }
-
-    /**
-     * The user's accent-source choice, resolved through the active face like the player does.
-     *
-     * The tile reads no other preference - it renders its own layout rather than a face - but this
-     * one decides which colour the cover *is*, so ignoring it would put the tile on a different
-     * accent from the watch face showing the same track.
-     */
-    private fun accentSource(): AlbumAccentSource {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        return AlbumAccentSource.fromPreference(
-            FaceScopedPreferences.getString(
-                prefs,
-                MiscPreferences.WEAR_ALBUM_ACCENT_SOURCE,
-                ThemeAppearance.resolve(prefs)
-            )
-        )
     }
 
     private fun buildLayout(
         context: Context,
         state: MusicState?,
         flipPlaying: Boolean,
-        albumAccent: Int?
+        albumAccent: Int?,
+        deviceParameters: androidx.wear.protolayout.DeviceParametersBuilders.DeviceParameters
     ): LayoutElementBuilders.LayoutElement {
-        val accent = resolveTileAccent(albumAccent)
-        val onAccent = onAccentColor(accent)
+        val accent = TileAlbumAccent.displayColor(albumAccent)
+        val onAccent = TileAlbumAccent.contentColor(accent)
         // A controller-less state is still published as a valid proto with all media fields
         // empty. Treating every non-error proto as an active session left a row of dead controls
         // below "Nothing playing" after playback ended.
@@ -294,14 +254,44 @@ class MediaTileService : TileService() {
                     .setClickable(openAppClickable)
                     .build()
             )
-            .addContent(
-                Text.Builder(context, title)
-                    .setTypography(Typography.TYPOGRAPHY_TITLE3)
-                    .setColor(argb(WatchTheme.ON_SURFACE))
-                    .setMaxLines(1)
-                    .build()
-            )
             .apply {
+                if (hasMusic) {
+                    addContent(
+                        Text.Builder(
+                            context,
+                            context.getString(com.svartifoss.snfell.R.string.queue_now_playing)
+                        )
+                            .setTypography(Typography.TYPOGRAPHY_CAPTION2)
+                            .setColor(argb(accent))
+                            .setMaxLines(1)
+                            .build()
+                    )
+                    addContent(Spacer.Builder().setHeight(dp(2f)).build())
+                }
+                addContent(
+                    LayoutElementBuilders.Text.Builder()
+                        .setText(title)
+                        .setFontStyle(
+                            LayoutElementBuilders.FontStyle.Builder()
+                                .setSize(sp(16f))
+                                .setWeight(LayoutElementBuilders.FONT_WEIGHT_MEDIUM)
+                                .setVariant(LayoutElementBuilders.FONT_VARIANT_TITLE)
+                                .setLetterSpacing(em(0.01f))
+                                // Tiles render outside the app process, so @font resources cannot
+                                // be loaded. Prefer the system Google Sans family where exposed,
+                                // with the officially supported Roboto family as a safe fallback.
+                                .setPreferredFontFamilies(
+                                    GOOGLE_SANS_FONT,
+                                    LayoutElementBuilders.FontStyle.ROBOTO_FONT
+                                )
+                                .setColor(argb(WatchTheme.ON_SURFACE))
+                                .build()
+                        )
+                        .setMaxLines(1)
+                        .setOverflow(LayoutElementBuilders.TEXT_OVERFLOW_ELLIPSIZE)
+                        .setLineHeight(sp(20f))
+                        .build()
+                )
                 if (artist.isNotBlank()) {
                     addContent(
                         Text.Builder(context, artist)
@@ -317,7 +307,7 @@ class MediaTileService : TileService() {
         val controlsRow = Row.Builder()
             .setWidth(wrap())
             .addContent(controlButton(context, ID_SKIP_PREV, ICON_PREV, accent = false, accentColor = accent, onAccentColor = onAccent))
-            .addContent(Spacer.Builder().setWidth(dp(8f)).build())
+            .addContent(Spacer.Builder().setWidth(dp(6f)).build())
             .addContent(
                 controlButton(
                     context,
@@ -328,17 +318,31 @@ class MediaTileService : TileService() {
                     onAccentColor = onAccent
                 )
             )
-            .addContent(Spacer.Builder().setWidth(dp(8f)).build())
+            .addContent(Spacer.Builder().setWidth(dp(6f)).build())
             .addContent(controlButton(context, ID_SKIP_NEXT, ICON_NEXT, accent = false, accentColor = accent, onAccentColor = onAccent))
             .build()
 
-        // Second, slimmer row: -10s/+10s relative seek (long-pressing skip can't be used for
-        // scrubbing - the system claims Tile/widget long-presses for its own editor).
-        val seekRow = Row.Builder()
+        // Volume is available even when the active session is not seekable, and is more useful
+        // from a glanceable surface than another pair of transport controls.
+        val volumeRow = Row.Builder()
             .setWidth(wrap())
-            .addContent(smallControlButton(context, ID_SEEK_BACK, ICON_SEEK_BACK))
-            .addContent(Spacer.Builder().setWidth(dp(40f)).build())
-            .addContent(smallControlButton(context, ID_SEEK_FORWARD, ICON_SEEK_FORWARD))
+            .addContent(
+                volumeChip(
+                    context,
+                    deviceParameters,
+                    ID_VOLUME_DOWN,
+                    ICON_VOLUME_DOWN
+                )
+            )
+            .addContent(Spacer.Builder().setWidth(dp(18f)).build())
+            .addContent(
+                volumeChip(
+                    context,
+                    deviceParameters,
+                    ID_VOLUME_UP,
+                    ICON_VOLUME_UP
+                )
+            )
             .build()
 
         val openAppButton = Button.Builder(context, openAppClickable)
@@ -352,14 +356,12 @@ class MediaTileService : TileService() {
             .setWidth(expand())
             .setHorizontalAlignment(HORIZONTAL_ALIGN_CENTER)
             .addContent(textColumn)
-            .addContent(Spacer.Builder().setHeight(dp(10f)).build())
+            .addContent(Spacer.Builder().setHeight(dp(if (hasMusic) 8f else 12f)).build())
             .apply {
                 if (hasMusic) {
                     addContent(controlsRow)
-                    if (state!!.seekable && state.durationMs > 0L) {
-                        addContent(Spacer.Builder().setHeight(dp(6f)).build())
-                        addContent(seekRow)
-                    }
+                    addContent(Spacer.Builder().setHeight(dp(5f)).build())
+                    addContent(volumeRow)
                 } else {
                     addContent(openAppButton)
                 }
@@ -426,49 +428,38 @@ class MediaTileService : TileService() {
             .build()
     }
 
-    /** The seek row's compact variant - visually secondary to the main transport row. */
-    private fun smallControlButton(context: Context, clickId: String, iconId: String): Button {
+    /** The volume row's compact variant - visually secondary to the main transport row. */
+    private fun volumeChip(
+        context: Context,
+        deviceParameters: androidx.wear.protolayout.DeviceParametersBuilders.DeviceParameters,
+        clickId: String,
+        iconId: String
+    ): CompactChip {
         val clickable = Clickable.Builder()
             .setId(clickId)
             .setOnClick(ActionBuilders.LoadAction.Builder().build())
             .build()
 
-        return Button.Builder(context, clickable)
+        return CompactChip.Builder(context, clickable, deviceParameters)
             .setIconContent(iconId)
             .setContentDescription(
                 context.getString(
-                    if (clickId == ID_SEEK_BACK) {
-                        com.svartifoss.snfell.R.string.tile_rewind_10
+                    if (clickId == ID_VOLUME_DOWN) {
+                        com.svartifoss.snfell.R.string.action_name_volume_down
                     } else {
-                        com.svartifoss.snfell.R.string.tile_forward_10
+                        com.svartifoss.snfell.R.string.action_name_volume_up
                     }
                 )
             )
-            .setButtonColors(ButtonColors(WatchTheme.SURFACE_DARK, WatchTheme.TEXT_SECONDARY))
-            // Keep the secondary visual weight, but retain the platform's 48dp touch minimum.
-            .setSize(dp(48f))
+            .setChipColors(
+                ChipColors(
+                    WatchTheme.SURFACE_DARK,
+                    WatchTheme.TEXT_SECONDARY,
+                    WatchTheme.ON_SURFACE,
+                    WatchTheme.TEXT_SECONDARY
+                )
+            )
             .build()
-    }
-
-    /**
-     * Resolves the fill for the accent controls: the album accent when available, else the default
-     * green. Very dark or washed-out album colours are lifted so the filled button never sinks into
-     * the black Tile background.
-     */
-    private fun resolveTileAccent(raw: Int?): Int {
-        val base = raw ?: return WatchTheme.ACCENT_DEFAULT
-        val hsv = FloatArray(3)
-        Color.colorToHSV(base, hsv)
-        if (hsv[2] < 0.55f) hsv[2] = 0.55f
-        if (hsv[1] > 0.9f) hsv[1] = 0.9f
-        return Color.HSVToColor(hsv)
-    }
-
-    /** Picks the icon/label tint (black or white) that reads best on [accent]. */
-    private fun onAccentColor(accent: Int): Int {
-        val luminance =
-            (0.299 * Color.red(accent) + 0.587 * Color.green(accent) + 0.114 * Color.blue(accent)) / 255.0
-        return if (luminance > 0.6) WatchTheme.BACKGROUND_BLACK else WatchTheme.COLOR_WHITE
     }
 
     private fun resourceById(resId: Int): ResourceBuilders.ImageResource {
@@ -484,7 +475,7 @@ class MediaTileService : TileService() {
     companion object {
         // Bump whenever the image-id mappings change, or the renderer keeps its cached set and
         // new icons never load.
-        private const val RESOURCES_VERSION = "4"
+        private const val RESOURCES_VERSION = "5"
         // Android may throttle Tile requests made more often than once a minute. State changes
         // still request an immediate refresh through MusicStateListenerService.
         private const val REFRESH_INTERVAL_MS = 60_000L
@@ -493,18 +484,18 @@ class MediaTileService : TileService() {
         private const val ID_PLAY_PAUSE = "tile_play_pause"
         private const val ID_SKIP_NEXT = "tile_skip_next"
         private const val ID_SKIP_PREV = "tile_skip_prev"
-        private const val ID_SEEK_BACK = "tile_seek_back"
-        private const val ID_SEEK_FORWARD = "tile_seek_forward"
-
-        private const val SEEK_STEP_MS = 10_000L
+        private const val ID_VOLUME_DOWN = "tile_volume_down"
+        private const val ID_VOLUME_UP = "tile_volume_up"
 
         private const val ICON_PREV = "ic_prev"
         private const val ICON_NEXT = "ic_next"
         private const val ICON_PLAY = "ic_play"
         private const val ICON_PAUSE = "ic_pause"
-        private const val ICON_SEEK_BACK = "ic_seek_back"
-        private const val ICON_SEEK_FORWARD = "ic_seek_forward"
+        private const val ICON_VOLUME_DOWN = "ic_volume_down"
+        private const val ICON_VOLUME_UP = "ic_volume_up"
         private const val ICON_OPEN_APP = "ic_open_app"
+
+        private const val GOOGLE_SANS_FONT = "google-sans"
 
     }
 }

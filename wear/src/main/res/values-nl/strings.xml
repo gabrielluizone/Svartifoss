@@ -31,6 +31,7 @@
     <string name="idle_action_queue">Recent afgespeeld openen</string>
 
     <string name="no_phone">Geen telefoon verbonden</string>
+    <string name="phone_unavailable">Ontgrendel je telefoon om afspelen te bedienen</string>
     <string name="playback_stopped">Gestopt</string>
     <string name="error">FOUT</string>
     <string name="error_play_services">Play Services-fout</string>

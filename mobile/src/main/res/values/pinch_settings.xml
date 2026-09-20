@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Pinch settings</string>
+    <string name="pinch_settings_intro">How should the watch detect your gesture?</string>
+    <string name="pinch_mode_native">Watch detector</string>
+    <string name="pinch_mode_experimental">Experimental detector</string>
+    <string name="pinch_native_description">Uses the watch’s built-in recognition. No calibration or sensitivity controls.</string>
+    <string name="pinch_experimental_description">Detects wrist movements with your calibration. It may trigger accidentally and uses more battery while the player is open.</string>
+    <string name="pinch_profile_missing">Not calibrated yet. You can save this mode now: the watch keeps using its own detector until a calibration is saved there, then switches on its own.</string>
+    <string name="pinch_profile_saved">Calibration saved. Ready to use.</string>
+    <string name="pinch_calibration_step">1. Calibrate your gesture</string>
+    <string name="pinch_tuning_step">2. Adjust recognition</string>
+    <string name="pinch_calibrate_watch">Calibrate on watch</string>
+    <string name="pinch_recalibrate_watch">Calibrate again</string>
+    <string name="pinch_open_instruction">Open Svartifoss on the watch. Follow the test there and save your calibration.</string>
+    <string name="pinch_open_sending">Connecting to the watch…</string>
+    <string name="pinch_open_sent">Continue on the watch. If the test does not open, reopen Svartifoss there and try again.</string>
+    <string name="pinch_open_failed">Watch unavailable. Check the connection and update both apps, then try again.</string>
+    <string name="pinch_sensitivity_label">Sensitivity</string>
+    <string name="pinch_sensitivity_help">Increase if pinches are missed. Decrease if other movements trigger actions.</string>
+    <string name="pinch_gap_label">Time between pinches</string>
+    <string name="pinch_gap_help">Maximum time from the first pinch to the second. Increase for a slower gesture.</string>
+    <string name="pinch_cooldown_label">Pause between commands</string>
+    <string name="pinch_cooldown_help">How long to wait after an action before accepting another gesture.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">More adjustments</string>
+    <string name="pinch_advanced_hide">Fewer adjustments</string>
+    <string name="pinch_shared_settings">These settings apply while music is playing or paused.</string>
+    <string name="pinch_settings_save">Save</string>
+    <string name="pinch_gesture_note">Touch thumb and index finger together twice, with the player open and the watch screen awake.</string>
+    <string name="pinch_controls_uncalibrated">Experimental detector chosen, not calibrated yet. The watch\'s own detector is used until you calibrate.</string>
+    <string name="pinch_controls_calibrated">Experimental detector calibrated. Pinch twice while the Svartifoss player is open.</string>
+</resources>

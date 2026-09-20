@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Kalibrácia stisku</string>
+    <string name="pinch_cal_intro">Dobre utiahnite remienok a držte zápästie hore. Asi 45 sekúnd: pokoj, šesť dvojitých stiskov a potom pohyb ramena. Neodosielajú sa žiadne hudobné príkazy.</string>
+    <string name="pinch_cal_start">Spustiť</string>
+    <string name="pinch_cal_restart">Začať znova</string>
+    <string name="pinch_cal_test">Test bez akcií</string>
+    <string name="pinch_cal_save">Uložiť kalibráciu</string>
+    <string name="pinch_cal_close">Zavrieť</string>
+
+    <string name="pinch_cal_step_ready">Pripravte sa</string>
+    <string name="pinch_cal_step_ready_hint">Držte zápästie hore, displejom k sebe.</string>
+    <string name="pinch_cal_step_rest">Nehýbte sa</string>
+    <string name="pinch_cal_step_rest_hint">Nestláčajte prsty.</string>
+    <string name="pinch_cal_step_attempt">Pokus %1$d z %2$d</string>
+    <string name="pinch_cal_step_pinch">Dvojitý stisk</string>
+    <string name="pinch_cal_step_pinch_hint">Dvakrát sa dotknite palcom a ukazovákom.</string>
+    <string name="pinch_cal_step_wait">Uvoľnite sa</string>
+    <string name="pinch_cal_step_wait_hint">Blíži sa ďalší pokus.</string>
+    <string name="pinch_cal_step_prepare">Skoro hotovo</string>
+    <string name="pinch_cal_step_prepare_hint">Ďalej: hýbte ramenom bez stisku.</string>
+    <string name="pinch_cal_step_move">Hýbte ramenom</string>
+    <string name="pinch_cal_step_move_hint">Otáčajte ním a mávajte prirodzene, displejom k sebe. Nestláčajte prsty.</string>
+
+    <string name="pinch_cal_testing">Test</string>
+    <string name="pinch_cal_detections">Detekcie</string>
+    <string name="pinch_cal_test_hint">Zostáva %1$d s · bez akcií</string>
+
+    <string name="pinch_cal_ready">Skalibrované. Pred uložením vyskúšajte: niekoľkokrát spojte prsty a potom hýbte ramenom normálne.</string>
+    <string name="pinch_cal_test_done">Detekcií: %1$d. Ak to zodpovedá vašim dvojitým stiskom, uložte. Ak sa započítali pohyby ramena, kalibrujte znova alebo znížte citlivosť v telefóne.</string>
+    <string name="pinch_cal_failed_incomplete">Záznam bol prerušený. Nechajte displej počas celého testu zapnutý a otočený k sebe a začnite znova.</string>
+    <string name="pinch_cal_failed_weak">Vaše stisky sa nelíšili od pokojného zápästia. Remienok trochu utiahnite a stláčajte pevnejšie.</string>
+    <string name="pinch_cal_failed_unrecognized">Väčšina pokusov sa nerozpoznala ako dvojitý stisk. V každom pokuse jasne spojte prsty dvakrát a držte rameno v pokoji.</string>
+    <string name="pinch_cal_failed_movement">Pohyb ramena pripomínal stisky. Počas pokusov držte zápästie pokojnejšie a začnite znova.</string>
+    <string name="pinch_cal_failed_kept">Predchádzajúca kalibrácia bola zachovaná.</string>
+    <string name="pinch_cal_interrupted">Zastavené, pretože sa displej vypol. Začnite znova so zapnutým displejom.</string>
+    <string name="pinch_cal_unavailable">Senzory pohybu nie sú dostupné. Otvorte túto obrazovku znova a skúste to ešte raz.</string>
+
+    <string name="pinch_cal_sending">Ukladanie do telefónu…</string>
+    <string name="pinch_cal_saved">Kalibrácia uložená. V telefóne zvoľte v nastaveniach stisku Experimentálny a uložte.</string>
+    <string name="pinch_cal_saved_active">Kalibrácia uložená. Experimentálny detektor je aktívny, keď je prehrávač otvorený.</string>
+    <string name="pinch_cal_send_failed">Uloženie v telefóne sa nepodarilo potvrdiť. Skontrolujte pripojenie a znova klepnite na Uložiť kalibráciu.</string>
+    <string name="pinch_cal_legend_motion">Pohyb</string>
+    <string name="pinch_cal_legend_rotation">Rotácia</string>
+    <string name="pinch_cal_legend_target">Prah</string>
+    <string name="pinch_cal_no_signal">Žiadne dáta zo senzora</string>
+    <string name="pinch_cal_detail">Rozpoznané %1$d z %2$d · dotykov na pokus: %3$s</string>
+</resources>

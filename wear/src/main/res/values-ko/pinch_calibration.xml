@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">핀치 보정</string>
+    <string name="pinch_cal_intro">밴드를 단단히 조이고 손목을 들어 올리세요. 약 45초: 휴식, 두 번 핀치 6회, 그다음 팔 움직임입니다. 음악 명령은 전송되지 않습니다.</string>
+    <string name="pinch_cal_start">시작</string>
+    <string name="pinch_cal_restart">다시 시작</string>
+    <string name="pinch_cal_test">동작 없이 테스트</string>
+    <string name="pinch_cal_save">보정 저장</string>
+    <string name="pinch_cal_close">닫기</string>
+
+    <string name="pinch_cal_step_ready">준비하세요</string>
+    <string name="pinch_cal_step_ready_hint">손목을 들고 화면을 자신 쪽으로 향하세요.</string>
+    <string name="pinch_cal_step_rest">가만히 계세요</string>
+    <string name="pinch_cal_step_rest_hint">핀치하지 마세요.</string>
+    <string name="pinch_cal_step_attempt">%1$d/%2$d번째 시도</string>
+    <string name="pinch_cal_step_pinch">두 번 핀치</string>
+    <string name="pinch_cal_step_pinch_hint">엄지와 검지를 두 번 맞대세요.</string>
+    <string name="pinch_cal_step_wait">긴장을 푸세요</string>
+    <string name="pinch_cal_step_wait_hint">곧 다음 시도가 시작됩니다.</string>
+    <string name="pinch_cal_step_prepare">거의 끝났어요</string>
+    <string name="pinch_cal_step_prepare_hint">다음: 핀치하지 않고 팔을 움직이세요.</string>
+    <string name="pinch_cal_step_move">팔을 움직이세요</string>
+    <string name="pinch_cal_step_move_hint">화면을 자신 쪽으로 향한 채 자연스럽게 돌리고 흔드세요. 핀치하지 마세요.</string>
+
+    <string name="pinch_cal_testing">테스트</string>
+    <string name="pinch_cal_detections">감지</string>
+    <string name="pinch_cal_test_hint">%1$d초 남음 · 동작 실행 안 함</string>
+
+    <string name="pinch_cal_ready">보정되었습니다. 저장하기 전에 테스트해 보세요. 몇 번 핀치한 다음 팔을 평소처럼 움직이세요.</string>
+    <string name="pinch_cal_test_done">%1$d회 감지되었습니다. 두 번 핀치한 횟수와 일치하면 저장하세요. 팔 움직임까지 집계되었다면 다시 보정하거나 휴대전화에서 감도를 낮추세요.</string>
+    <string name="pinch_cal_failed_incomplete">녹화가 중간에 끊겼습니다. 테스트 내내 화면을 켜고 자신 쪽으로 향한 뒤 다시 시작하세요.</string>
+    <string name="pinch_cal_failed_weak">핀치가 가만히 있는 손목과 구별되지 않았습니다. 밴드를 조금 더 조이고 더 세게 핀치하세요.</string>
+    <string name="pinch_cal_failed_unrecognized">대부분의 시도가 두 번 핀치로 인식되지 않았습니다. 매 시도마다 분명하게 두 번 핀치하고 팔은 움직이지 마세요.</string>
+    <string name="pinch_cal_failed_movement">팔 움직임이 핀치처럼 보였습니다. 시도하는 동안 손목을 더 안정적으로 유지한 뒤 다시 시작하세요.</string>
+    <string name="pinch_cal_failed_kept">이전 보정이 유지되었습니다.</string>
+    <string name="pinch_cal_interrupted">화면이 꺼져서 중지되었습니다. 화면을 켠 상태에서 다시 시작하세요.</string>
+    <string name="pinch_cal_unavailable">모션 센서를 사용할 수 없습니다. 이 화면을 다시 열고 다시 시도하세요.</string>
+
+    <string name="pinch_cal_sending">휴대전화에 저장하는 중…</string>
+    <string name="pinch_cal_saved">보정이 저장되었습니다. 휴대전화의 핀치 설정에서 실험용을 선택하고 저장하세요.</string>
+    <string name="pinch_cal_saved_active">보정이 저장되었습니다. 플레이어가 열려 있는 동안 실험용 감지기가 작동합니다.</string>
+    <string name="pinch_cal_send_failed">휴대전화에 저장되었는지 확인하지 못했습니다. 연결을 확인하고 보정 저장을 다시 탭하세요.</string>
+    <string name="pinch_cal_legend_motion">움직임</string>
+    <string name="pinch_cal_legend_rotation">회전</string>
+    <string name="pinch_cal_legend_target">기준값</string>
+    <string name="pinch_cal_no_signal">센서 데이터 없음</string>
+    <string name="pinch_cal_detail">%2$d회 중 %1$d회 인식 · 시도당 탭 수: %3$s</string>
+</resources>

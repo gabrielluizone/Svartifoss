@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Kvarða klíp</string>
+    <string name="pinch_cal_intro">Hertu ólina vel og haltu úlnliðnum uppi. Um 45 sekúndur: hvíld, sex tvöföld klíp og síðan handleggshreyfing. Engar tónlistarskipanir eru sendar.</string>
+    <string name="pinch_cal_start">Byrja</string>
+    <string name="pinch_cal_restart">Byrja aftur</string>
+    <string name="pinch_cal_test">Prófa án aðgerða</string>
+    <string name="pinch_cal_save">Vista kvörðun</string>
+    <string name="pinch_cal_close">Loka</string>
+
+    <string name="pinch_cal_step_ready">Undirbúðu þig</string>
+    <string name="pinch_cal_step_ready_hint">Haltu úlnliðnum uppi, skjárinn að þér.</string>
+    <string name="pinch_cal_step_rest">Ekki hreyfa þig</string>
+    <string name="pinch_cal_step_rest_hint">Ekki klípa.</string>
+    <string name="pinch_cal_step_attempt">Tilraun %1$d af %2$d</string>
+    <string name="pinch_cal_step_pinch">Tvöfalt klíp</string>
+    <string name="pinch_cal_step_pinch_hint">Snertu þumal og vísifingur saman tvisvar.</string>
+    <string name="pinch_cal_step_wait">Slakaðu á</string>
+    <string name="pinch_cal_step_wait_hint">Næsta tilraun kemur brátt.</string>
+    <string name="pinch_cal_step_prepare">Næstum búið</string>
+    <string name="pinch_cal_step_prepare_hint">Næst: hreyfðu handlegginn án þess að klípa.</string>
+    <string name="pinch_cal_step_move">Hreyfðu handlegginn</string>
+    <string name="pinch_cal_step_move_hint">Snúðu honum og sveiflaðu eðlilega, skjárinn að þér. Ekki klípa.</string>
+
+    <string name="pinch_cal_testing">Próf</string>
+    <string name="pinch_cal_detections">Nemingar</string>
+    <string name="pinch_cal_test_hint">%1$d s eftir · engar aðgerðir</string>
+
+    <string name="pinch_cal_ready">Kvarðað. Prófaðu áður en þú vistar: klíptu nokkrum sinnum og hreyfðu svo handlegginn eðlilega.</string>
+    <string name="pinch_cal_test_done">%1$d nemingar. Ef það passar við tvöföldu klípin þín skaltu vista. Ef handleggshreyfingar voru taldar skaltu kvarða aftur eða minnka næmnina í símanum.</string>
+    <string name="pinch_cal_failed_incomplete">Upptakan var rofin. Hafðu skjáinn kveiktan og að þér allt prófið og byrjaðu aftur.</string>
+    <string name="pinch_cal_failed_weak">Klípin þín skáru sig ekki úr frá kyrrum úlnlið. Hertu ólina aðeins og klíptu fastar.</string>
+    <string name="pinch_cal_failed_unrecognized">Flestar tilraunir voru ekki greindar sem tvöfalt klíp. Klíptu greinilega tvisvar í hverri tilraun og haltu handleggnum kyrrum.</string>
+    <string name="pinch_cal_failed_movement">Handleggshreyfingin líktist klípum. Haltu úlnliðnum stöðugri í tilraununum og byrjaðu aftur.</string>
+    <string name="pinch_cal_failed_kept">Fyrri kvörðun var haldið.</string>
+    <string name="pinch_cal_interrupted">Stöðvað því slökknaði á skjánum. Byrjaðu aftur með kveiktan skjá.</string>
+    <string name="pinch_cal_unavailable">Hreyfiskynjarar eru ekki tiltækir. Opnaðu þessa sýn aftur og reyndu á ný.</string>
+
+    <string name="pinch_cal_sending">Vista í símanum…</string>
+    <string name="pinch_cal_saved">Kvörðun vistuð. Veldu Tilraunaskynjara í klípustillingunum í símanum og vistaðu.</string>
+    <string name="pinch_cal_saved_active">Kvörðun vistuð. Tilraunaskynjarinn er virkur meðan spilarinn er opinn.</string>
+    <string name="pinch_cal_send_failed">Ekki tókst að staðfesta vistun í símanum. Athugaðu tenginguna og ýttu aftur á Vista kvörðun.</string>
+    <string name="pinch_cal_legend_motion">Hreyfing</string>
+    <string name="pinch_cal_legend_rotation">Snúningur</string>
+    <string name="pinch_cal_legend_target">Þröskuldur</string>
+    <string name="pinch_cal_no_signal">Engin skynjaragögn</string>
+    <string name="pinch_cal_detail">%1$d af %2$d greint · snertingar í hverri tilraun: %3$s</string>
+</resources>

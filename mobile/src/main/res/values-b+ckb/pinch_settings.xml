@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">ڕێکخستنەکانی pinch</string>
+    <string name="pinch_settings_intro">کاتژمێرەکە چۆن ئاماژەکەت بدۆزێتەوە؟</string>
+    <string name="pinch_mode_native">دۆزەرەوەی کاتژمێر</string>
+    <string name="pinch_mode_experimental">دۆزەرەوەی تاقیکاری</string>
+    <string name="pinch_native_description">ناسینەوەی ناوخۆیی کاتژمێرەکە بەکاردەهێنێت. بێ کالیبرەکردن یان ڕێکخستنی هەستیاری.</string>
+    <string name="pinch_experimental_description">جوڵەی مەچەک بە کالیبرەکردنی تۆ دەدۆزێتەوە. لەوانەیە بە هەڵە کار بکات و لە کاتی کراوەیی پڵەیەرەکەدا باتری زیاتر بەکاربهێنێت.</string>
+    <string name="pinch_profile_missing">هێشتا کالیبرە نەکراوە. دەتوانیت ئێستا ئەم دۆخە پاشەکەوت بکەیت: کاتژمێرەکە دۆزەرەوەی خۆی بەکاردەهێنێت تا کالیبرەکردنێک تێیدا پاشەکەوت دەکرێت، پاشان خۆی دەگۆڕێت.</string>
+    <string name="pinch_profile_saved">کالیبرەکردن پاشەکەوت کرا. ئامادەیە بۆ بەکارهێنان.</string>
+    <string name="pinch_calibration_step">١. ئاماژەکەت کالیبرە بکە</string>
+    <string name="pinch_tuning_step">٢. ناسینەوەکە ڕێکبخە</string>
+    <string name="pinch_calibrate_watch">کالیبرەکردن لەسەر کاتژمێر</string>
+    <string name="pinch_recalibrate_watch">دووبارە کالیبرەکردن</string>
+    <string name="pinch_open_instruction">Svartifoss لەسەر کاتژمێرەکە بکەرەوە. لەوێ تاقیکردنەوەکە جێبەجێ بکە و کالیبرەکردنەکە پاشەکەوت بکە.</string>
+    <string name="pinch_open_sending">پەیوەندی بە کاتژمێرەکەوە دەکرێت…</string>
+    <string name="pinch_open_sent">لەسەر کاتژمێرەکە بەردەوام بە. ئەگەر تاقیکردنەوەکە نەکرایەوە، Svartifoss لەوێ دووبارە بکەرەوە و دووبارە هەوڵ بدە.</string>
+    <string name="pinch_open_failed">کاتژمێرەکە بەردەست نییە. پەیوەندییەکە بپشکنە و هەردوو بەرنامەکە نوێ بکەرەوە، پاشان دووبارە هەوڵ بدە.</string>
+    <string name="pinch_sensitivity_label">هەستیاری</string>
+    <string name="pinch_sensitivity_help">ئەگەر pinchەکان لەدەست دەچن زیادی بکە. ئەگەر جوڵەی تر کارەکان کار پێدەکەن کەمی بکە.</string>
+    <string name="pinch_gap_label">کات لە نێوان pinchەکان</string>
+    <string name="pinch_gap_help">زۆرترین کات لە pinchی یەکەمەوە بۆ دووەم. بۆ ئاماژەیەکی هێواشتر زیادی بکە.</string>
+    <string name="pinch_cooldown_label">وچان لە نێوان فەرمانەکان</string>
+    <string name="pinch_cooldown_help">دوای کارێک چەند چاوەڕێ بکرێت پێش وەرگرتنی ئاماژەیەکی تر.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">ڕێکخستنی زیاتر</string>
+    <string name="pinch_advanced_hide">ڕێکخستنی کەمتر</string>
+    <string name="pinch_shared_settings">ئەم ڕێکخستنانە لە کاتی لێدانی مۆسیقا یان وەستاندنی کاتیدا کار دەکەن.</string>
+    <string name="pinch_settings_save">پاشەکەوتکردن</string>
+    <string name="pinch_gesture_note">لە کاتێکدا پڵەیەرەکە کراوەیە و شاشەی کاتژمێرەکە داگیرساوە، دووجار پەنجەی گەورە و پەنجەی نیشانە بە یەکەوە بگەیەنە.</string>
+    <string name="pinch_controls_uncalibrated">دۆزەرەوەی تاقیکاری هەڵبژێردرا، هێشتا کالیبرە نەکراوە. تا کالیبرەی دەکەیت دۆزەرەوەی خودی کاتژمێرەکە بەکاردێت.</string>
+    <string name="pinch_controls_calibrated">دۆزەرەوەی تاقیکاری کالیبرە کرا. کاتێک پڵەیەری Svartifoss کراوەتەوە دووجار pinch بکە.</string>
+</resources>

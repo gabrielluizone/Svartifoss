@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Hiệu chỉnh chụm</string>
+    <string name="pinch_cal_intro">Đeo dây thật vừa và giơ cổ tay lên. Khoảng 45 giây: nghỉ, sáu lần chụm đôi, rồi cử động tay. Không có lệnh nhạc nào được gửi.</string>
+    <string name="pinch_cal_start">Bắt đầu</string>
+    <string name="pinch_cal_restart">Bắt đầu lại</string>
+    <string name="pinch_cal_test">Thử không thao tác</string>
+    <string name="pinch_cal_save">Lưu hiệu chỉnh</string>
+    <string name="pinch_cal_close">Đóng</string>
+
+    <string name="pinch_cal_step_ready">Chuẩn bị</string>
+    <string name="pinch_cal_step_ready_hint">Giơ cổ tay lên, màn hình hướng về bạn.</string>
+    <string name="pinch_cal_step_rest">Giữ yên</string>
+    <string name="pinch_cal_step_rest_hint">Đừng chụm.</string>
+    <string name="pinch_cal_step_attempt">Lần thử %1$d/%2$d</string>
+    <string name="pinch_cal_step_pinch">Chụm hai lần</string>
+    <string name="pinch_cal_step_pinch_hint">Chạm ngón cái và ngón trỏ vào nhau hai lần.</string>
+    <string name="pinch_cal_step_wait">Thư giãn</string>
+    <string name="pinch_cal_step_wait_hint">Lần thử tiếp theo sắp tới.</string>
+    <string name="pinch_cal_step_prepare">Gần xong</string>
+    <string name="pinch_cal_step_prepare_hint">Tiếp theo: cử động tay mà không chụm.</string>
+    <string name="pinch_cal_step_move">Cử động tay</string>
+    <string name="pinch_cal_step_move_hint">Xoay và vung tay tự nhiên, màn hình hướng về bạn. Đừng chụm.</string>
+
+    <string name="pinch_cal_testing">Thử nghiệm</string>
+    <string name="pinch_cal_detections">Lần phát hiện</string>
+    <string name="pinch_cal_test_hint">Còn %1$d giây · không thao tác</string>
+
+    <string name="pinch_cal_ready">Đã hiệu chỉnh. Thử trước khi lưu: chụm vài lần rồi cử động tay bình thường.</string>
+    <string name="pinch_cal_test_done">%1$d lần phát hiện. Nếu khớp với các lần chụm đôi của bạn, hãy lưu. Nếu cử động tay bị tính, hãy hiệu chỉnh lại hoặc giảm độ nhạy trên điện thoại.</string>
+    <string name="pinch_cal_failed_incomplete">Bản ghi bị ngắt. Giữ màn hình sáng và hướng về bạn trong suốt bài thử rồi bắt đầu lại.</string>
+    <string name="pinch_cal_failed_weak">Các lần chụm của bạn không nổi bật so với cổ tay đứng yên. Siết dây chặt hơn một chút và chụm mạnh hơn.</string>
+    <string name="pinch_cal_failed_unrecognized">Hầu hết các lần thử không được nhận là chụm đôi. Ở mỗi lần thử, chụm hai lần thật rõ và giữ tay yên.</string>
+    <string name="pinch_cal_failed_movement">Cử động tay của bạn trông giống các lần chụm. Giữ cổ tay vững hơn trong các lần thử rồi bắt đầu lại.</string>
+    <string name="pinch_cal_failed_kept">Đã giữ hiệu chỉnh trước đó.</string>
+    <string name="pinch_cal_interrupted">Đã dừng vì màn hình tắt. Bắt đầu lại khi màn hình sáng.</string>
+    <string name="pinch_cal_unavailable">Cảm biến chuyển động không khả dụng. Mở lại màn hình này và thử lại.</string>
+
+    <string name="pinch_cal_sending">Đang lưu trên điện thoại…</string>
+    <string name="pinch_cal_saved">Đã lưu hiệu chỉnh. Trên điện thoại, chọn Thử nghiệm trong cài đặt chụm và lưu.</string>
+    <string name="pinch_cal_saved_active">Đã lưu hiệu chỉnh. Bộ phát hiện thử nghiệm hoạt động khi trình phát đang mở.</string>
+    <string name="pinch_cal_send_failed">Không xác nhận được việc lưu trên điện thoại. Kiểm tra kết nối và chạm lại Lưu hiệu chỉnh.</string>
+    <string name="pinch_cal_legend_motion">Chuyển động</string>
+    <string name="pinch_cal_legend_rotation">Xoay</string>
+    <string name="pinch_cal_legend_target">Ngưỡng</string>
+    <string name="pinch_cal_no_signal">Không có dữ liệu cảm biến</string>
+    <string name="pinch_cal_detail">Nhận diện %1$d/%2$d · lần chạm mỗi lần thử: %3$s</string>
+</resources>

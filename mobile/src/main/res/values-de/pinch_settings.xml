@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Pinch-Einstellungen</string>
+    <string name="pinch_settings_intro">Wie soll die Uhr deine Geste erkennen?</string>
+    <string name="pinch_mode_native">Uhren-Erkennung</string>
+    <string name="pinch_mode_experimental">Experimentelle Erkennung</string>
+    <string name="pinch_native_description">Nutzt die integrierte Erkennung der Uhr. Keine Kalibrierung oder Empfindlichkeitsregler.</string>
+    <string name="pinch_experimental_description">Erkennt Handgelenkbewegungen mit deiner Kalibrierung. Kann versehentlich auslösen und verbraucht mehr Akku, solange der Player geöffnet ist.</string>
+    <string name="pinch_profile_missing">Noch nicht kalibriert. Du kannst diesen Modus jetzt speichern: Die Uhr nutzt weiter ihre eigene Erkennung, bis dort eine Kalibrierung gespeichert wird, und wechselt dann automatisch.</string>
+    <string name="pinch_profile_saved">Kalibrierung gespeichert. Einsatzbereit.</string>
+    <string name="pinch_calibration_step">1. Geste kalibrieren</string>
+    <string name="pinch_tuning_step">2. Erkennung anpassen</string>
+    <string name="pinch_calibrate_watch">Auf der Uhr kalibrieren</string>
+    <string name="pinch_recalibrate_watch">Erneut kalibrieren</string>
+    <string name="pinch_open_instruction">Öffne Svartifoss auf der Uhr. Folge dort dem Test und speichere deine Kalibrierung.</string>
+    <string name="pinch_open_sending">Verbindung zur Uhr wird hergestellt …</string>
+    <string name="pinch_open_sent">Mach auf der Uhr weiter. Falls der Test nicht startet, öffne Svartifoss dort erneut und versuche es noch einmal.</string>
+    <string name="pinch_open_failed">Uhr nicht erreichbar. Prüfe die Verbindung, aktualisiere beide Apps und versuche es erneut.</string>
+    <string name="pinch_sensitivity_label">Empfindlichkeit</string>
+    <string name="pinch_sensitivity_help">Erhöhen, wenn Pinches nicht erkannt werden. Verringern, wenn andere Bewegungen Aktionen auslösen.</string>
+    <string name="pinch_gap_label">Zeit zwischen den Pinches</string>
+    <string name="pinch_gap_help">Maximale Zeit vom ersten zum zweiten Pinch. Erhöhe sie für eine langsamere Geste.</string>
+    <string name="pinch_cooldown_label">Pause zwischen Befehlen</string>
+    <string name="pinch_cooldown_help">Wie lange nach einer Aktion gewartet wird, bevor eine weitere Geste akzeptiert wird.</string>
+    <string name="pinch_value_percent">%1$d %%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Weitere Einstellungen</string>
+    <string name="pinch_advanced_hide">Weniger Einstellungen</string>
+    <string name="pinch_shared_settings">Diese Einstellungen gelten, während Musik wiedergegeben wird oder pausiert ist.</string>
+    <string name="pinch_settings_save">Speichern</string>
+    <string name="pinch_gesture_note">Berühre Daumen und Zeigefinger zweimal aneinander – bei geöffnetem Player und eingeschaltetem Uhrendisplay.</string>
+    <string name="pinch_controls_uncalibrated">Experimentelle Erkennung gewählt, noch nicht kalibriert. Bis zur Kalibrierung nutzt die Uhr ihre eigene Erkennung.</string>
+    <string name="pinch_controls_calibrated">Experimentelle Erkennung kalibriert. Mache zweimal einen Pinch, während der Svartifoss-Player geöffnet ist.</string>
+</resources>

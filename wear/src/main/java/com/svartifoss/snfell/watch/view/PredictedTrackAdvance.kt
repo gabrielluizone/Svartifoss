@@ -129,6 +129,52 @@ object PredictedTrackAdvance {
     }
 
     /**
+     * How far into a track a previous-track press stops meaning the previous track.
+     *
+     * Players almost universally treat that command as *restart this one* once playback has moved
+     * past a few seconds - three is the value Media3 ships as its own default - so a press made
+     * late in a track produces the track that is already on screen. Predicting the row before it
+     * would then show a song that is not going to play, which is the one outcome this object
+     * exists to avoid; resetting the position and leaving the metadata alone is already the right
+     * answer for that case.
+     */
+    const val PREVIOUS_RESTARTS_AFTER_MS = 3_000L
+
+    /**
+     * Whether an explicit skip may be predicted from the queue at all.
+     *
+     * Only shuffle disqualifies it, for the reason spelled out on [canPredict]: the queue the
+     * phone published is not necessarily the order playback will follow. Repeat-one deliberately
+     * does **not**, unlike at a natural boundary - it governs what happens when a track *ends*,
+     * while a press moves on regardless, so refusing here would decline to predict at exactly the
+     * moment the user's intent is least ambiguous.
+     */
+    fun canPredictManualSkip(shuffleEnabled: Boolean): Boolean = !shuffleEnabled
+
+    /** Whether a previous-track press will restart the current track instead of leaving it. */
+    fun previousRestartsTrack(positionMs: Long): Boolean = positionMs >= PREVIOUS_RESTARTS_AFTER_MS
+
+    /**
+     * The row before the playing one, or -1 when there is nothing to predict.
+     *
+     * Never wraps round to the end, the mirror image of [nextIndex]'s reason: the queue the watch
+     * holds is a *page* (see `QueuePaging`), so its first row is only the start of the playlist
+     * when the whole thing happened to fit, and its last row is almost never what precedes it.
+     */
+    fun previousIndex(
+            entryIds: List<String>,
+            titles: List<String>,
+            activeEntryId: String?,
+            currentTitle: String?,
+    ): Int {
+        val active = activeIndex(entryIds, titles, activeEntryId, currentTitle)
+        if (active <= 0) {
+            return -1
+        }
+        return active - 1
+    }
+
+    /**
      * Whether the phone's answer is the track that was predicted.
      *
      * Compared by title, because that is the only field the queue and the media session are

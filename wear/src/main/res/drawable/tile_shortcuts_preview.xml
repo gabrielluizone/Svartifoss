@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Static picker preview for the Shortcuts Tile. Saved items are deliberately represented as
+     rows instead of reusing the media Tile's play-button cover. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <path
+        android:fillColor="#000000"
+        android:pathData="M0,0H200V200H0Z" />
+
+    <!-- Header. -->
+    <path
+        android:fillColor="#F4F4F4"
+        android:pathData="M67,28H133V38H67Z" />
+
+    <!-- Two readable shortcut rows. -->
+    <path
+        android:fillColor="#202023"
+        android:pathData="M34,51H166A22,22 0,0 1,188,73A22,22 0,0 1,166,95H34A22,22 0,0 1,12,73A22,22 0,0 1,34,51" />
+    <path
+        android:fillColor="#87A89F"
+        android:pathData="M31,63H45V83H31ZM49,63L64,73L49,83Z" />
+    <path
+        android:fillColor="#F4F4F4"
+        android:pathData="M76,64H150V72H76Z" />
+    <path
+        android:fillColor="#88898E"
+        android:pathData="M76,78H128V84H76Z" />
+
+    <path
+        android:fillColor="#202023"
+        android:pathData="M34,103H166A22,22 0,0 1,188,125A22,22 0,0 1,166,147H34A22,22 0,0 1,12,125A22,22 0,0 1,34,103" />
+    <path
+        android:fillColor="#87A89F"
+        android:pathData="M31,115H45V135H31ZM49,115L64,125L49,135Z" />
+    <path
+        android:fillColor="#F4F4F4"
+        android:pathData="M76,116H143V124H76Z" />
+    <path
+        android:fillColor="#88898E"
+        android:pathData="M76,130H119V136H76Z" />
+
+    <!-- Accent overflow action. -->
+    <path
+        android:fillColor="#87A89F"
+        android:pathData="M68,160H132A14,14 0,0 1,146,174A14,14 0,0 1,132,188H68A14,14 0,0 1,54,174A14,14 0,0 1,68,160" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M80,171H115V177H80ZM119,168L127,174L119,180Z" />
+</vector>

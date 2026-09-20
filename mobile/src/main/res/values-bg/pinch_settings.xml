@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Настройки на щипването</string>
+    <string name="pinch_settings_intro">Как часовникът да разпознава жеста ви?</string>
+    <string name="pinch_mode_native">Детектор на часовника</string>
+    <string name="pinch_mode_experimental">Експериментален детектор</string>
+    <string name="pinch_native_description">Използва вграденото разпознаване на часовника. Без калибриране и настройки за чувствителност.</string>
+    <string name="pinch_experimental_description">Разпознава движенията на китката по вашето калибриране. Може да се задейства случайно и изразходва повече батерия, докато плейърът е отворен.</string>
+    <string name="pinch_profile_missing">Още не е калибриран. Можете да запазите този режим още сега: часовникът продължава да ползва своя детектор, докато в него не се запази калибриране, след което превключва сам.</string>
+    <string name="pinch_profile_saved">Калибрирането е запазено. Готово за употреба.</string>
+    <string name="pinch_calibration_step">1. Калибрирайте жеста</string>
+    <string name="pinch_tuning_step">2. Настройте разпознаването</string>
+    <string name="pinch_calibrate_watch">Калибриране на часовника</string>
+    <string name="pinch_recalibrate_watch">Калибриране отново</string>
+    <string name="pinch_open_instruction">Отворете Svartifoss на часовника. Следвайте теста там и запазете калибрирането.</string>
+    <string name="pinch_open_sending">Свързване с часовника…</string>
+    <string name="pinch_open_sent">Продължете на часовника. Ако тестът не се отвори, отворете отново Svartifoss там и опитайте пак.</string>
+    <string name="pinch_open_failed">Часовникът не е достъпен. Проверете връзката и обновете двете приложения, после опитайте отново.</string>
+    <string name="pinch_sensitivity_label">Чувствителност</string>
+    <string name="pinch_sensitivity_help">Увеличете, ако щипванията не се разпознават. Намалете, ако други движения задействат действия.</string>
+    <string name="pinch_gap_label">Време между щипванията</string>
+    <string name="pinch_gap_help">Най-дълго време от първото до второто щипване. Увеличете за по-бавен жест.</string>
+    <string name="pinch_cooldown_label">Пауза между командите</string>
+    <string name="pinch_cooldown_help">Колко да се изчаква след действие, преди да се приеме нов жест.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d мс</string>
+    <string name="pinch_advanced_show">Още настройки</string>
+    <string name="pinch_advanced_hide">По-малко настройки</string>
+    <string name="pinch_shared_settings">Тези настройки важат, докато музиката се възпроизвежда или е на пауза.</string>
+    <string name="pinch_settings_save">Запази</string>
+    <string name="pinch_gesture_note">Докоснете два пъти палеца и показалеца, при отворен плейър и включен екран на часовника.</string>
+    <string name="pinch_controls_uncalibrated">Избран е експериментален детектор, още некалибриран. Докато не калибрирате, се използва детекторът на самия часовник.</string>
+    <string name="pinch_controls_calibrated">Експерименталният детектор е калибриран. Съберете пръстите два пъти, докато плейърът Svartifoss е отворен.</string>
+</resources>

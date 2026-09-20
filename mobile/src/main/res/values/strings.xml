@@ -169,11 +169,11 @@
     <string name="action_shuffle">Shuffle</string>
     <string name="action_repeat">Repeat</string>
     <string name="action_repeat_one">Repeat one</string>
-    <string name="action_set_shuffle_on">Turn shuffle on</string>
-    <string name="action_set_shuffle_off">Turn shuffle off</string>
-    <string name="action_set_repeat_off">Turn repeat off</string>
-    <string name="action_set_repeat_all">Repeat all</string>
-    <string name="action_set_repeat_one">Repeat one</string>
+    <string name="action_set_shuffle_on">Set shuffle: on</string>
+    <string name="action_set_shuffle_off">Set shuffle: off</string>
+    <string name="action_set_repeat_off">Set repeat: off</string>
+    <string name="action_set_repeat_all">Set repeat: all</string>
+    <string name="action_set_repeat_one">Set repeat: one track</string>
     <string name="action_search">Search music</string>
     <string name="action_open_lyrics">Lyrics</string>
     <string name="group_playback_controls">Playback controls</string>
@@ -199,7 +199,7 @@
     <string name="playing_controls">Controls while playing</string>
     <string name="stopped_controls">Controls with no playback</string>
     <string name="actions_menu">Actions menu</string>
-    <string name="actions_intro">Configure both action surfaces on your watch with playback controls, apps, or saved tracks, albums and playlists. The quick panel stays compact; the menu below can hold a longer ordered list.</string>
+    <string name="actions_intro">Everything here appears on your watch, in the order you set: in the menu, and again as rows under the quick panel’s buttons. Add playlists, albums and tracks by pasting a link, or add any other action.</string>
     <string name="actions_quick_panel_section">Quick panel</string>
     <string name="actions_watch_menu_section">Menu on watch</string>
     <plurals name="actions_list_summary">
@@ -210,8 +210,31 @@
     <string name="actions_move_up">Move up</string>
     <string name="actions_move_down">Move down</string>
     <string name="actions_moved_to_position">%1$s moved to position %2$d of %3$d.</string>
-    <string name="actions_empty">No actions yet. Use the add button to create the first one.</string>
-    <string name="actions_add">Add action</string>
+    <string name="actions_empty">Nothing here yet. Tap + to add a playlist, album or track by its link, or any other action.</string>
+    <string name="actions_add">Add to menu</string>
+    <string name="add_menu_title">Add to watch menu</string>
+    <string name="add_menu_subtitle">Choose an action, or paste a playlist, album or track link.</string>
+    <string name="add_menu_link_hint">Link (Spotify, YouTube Music, Deezer…)</string>
+    <string name="add_menu_paste">Paste</string>
+    <string name="add_menu_get_name">Get name from link</string>
+    <string name="add_menu_looking_up">Looking up the name…</string>
+    <string name="add_menu_lookup_failed">Couldn’t find a name for this link. Type one instead.</string>
+    <string name="add_menu_lookup_unsupported">This service doesn’t share names. Type one instead.</string>
+    <string name="add_menu_add">Add to menu</string>
+    <string name="add_menu_added">Added “%1$s” to the menu</string>
+    <string name="add_menu_already">“%1$s” is already in the menu</string>
+    <string name="add_menu_saved_title">Saved shortcuts</string>
+    <string name="add_menu_actions_title">Choose an action</string>
+    <string name="add_menu_actions_desc">Playback, volume, watch screens, apps, Tasker…</string>
+    <string name="add_menu_or_link">Or add a link</string>
+    <string name="add_link_title">Add a link</string>
+    <string name="add_link_subtitle">Paste a playlist, album or track link. It is saved in Streaming shortcuts and used right away.</string>
+    <string name="add_link_use">Use this link</string>
+    <plurals name="add_menu_add_selected">
+        <item quantity="one">Add %1$d to menu</item>
+        <item quantity="other">Add %1$d to menu</item>
+    </plurals>
+    <string name="add_menu_in_menu">In menu</string>
     <string name="on_screen_buttons">TOUCH ZONES</string>
     <string name="physical_buttons">PHYSICAL BUTTONS</string>
     <string name="physical_buttons_disconnected">Connect and open Svartifoss on your watch to configure its physical buttons. Touch zones, swipes and mini buttons are available now.</string>
@@ -383,20 +406,20 @@
     <string name="watch_element_queue">Queue</string>
     <string name="watch_element_lyrics">Lyrics</string>
 
-    <!-- Chip labels for the Player editor. A chip that is on already says "shown", so it
-         carries the element's name rather than the row's sentence; the full preference
-         title still reaches screen readers through the chip content description. -->
+    <!-- Still the Always-on editor's heading for its element chips. The Player page no longer
+         uses it: it groups by subject now, under the aliases below. -->
     <string name="player_section_on_screen">On screen</string>
-    <string name="player_element_app_icon">App icon</string>
-    <string name="player_element_controls">Player controls</string>
-    <string name="player_element_tap_flash">Tap flash</string>
-    <string name="player_element_inner_progress">Inner progress</string>
-    <string name="player_element_edge_arc">Edge arc</string>
-    <string name="player_element_edge_seek">Edge seek</string>
-    <string name="player_element_clock">Clock</string>
-    <!-- Shared by Note/Chat/Metadata's cover-art toggle: only one is ever visible at a time, since
-         each is gated to its own face. -->
-    <string name="player_element_cover_art">Cover art</string>
+    <!-- The Player page's subject cards. Aliases rather than new strings, the same way
+         player_cover_hidden is, so every locale shows a word it already has translated - a card
+         heading costs no translation. -->
+    <string name="player_section_layout" translatable="false">@string/category_wf_layout_actions</string>
+    <string name="player_section_track_info" translatable="false">@string/aod_element_track_info</string>
+    <string name="player_section_progress" translatable="false">@string/watch_element_progress</string>
+    <string name="player_section_controls" translatable="false">@string/controls_header</string>
+    <string name="player_section_clock" translatable="false">@string/category_wf_clock</string>
+    <!-- The "no cover" entry of a Cover shape picker. An alias rather than a new string so every
+         locale shows the already translated word for a hidden appearance option. -->
+    <string name="player_cover_hidden" translatable="false">@string/wear_screen_theme_hidden</string>
     <string name="category_wf_colors_title">Title colors</string>
     <string name="category_wf_colors_artist">Artist colors</string>
     <string name="category_wf_colors_clock">Clock colors</string>
@@ -596,12 +619,11 @@
     <string name="setting_screen_buttons_opacity">Mini buttons opacity</string>
     <string name="setting_screen_buttons_opacity_description">Opacity of the entire mini-button group (0–100%%). Currently <![CDATA[<b>%1$s%%</b>]]>.</string>
     <string name="quick_panel_row_title">Quick actions panel</string>
-    <string name="quick_panel_link_summary">Double-tap the centre of the watch screen to open it. Tap here to set up its four slots in Actions.</string>
+    <string name="quick_panel_link_summary">Double-tap the centre of the watch screen to open it. Tap here to set up its buttons in Actions.</string>
     <string name="quick_panel_config_hint">These are the buttons on the panel opened by double-tapping the center of the watch screen. Tap a row to choose its action (\"None\" hides it); long-press to restore the default.</string>
     <string name="quick_panel_slot_1">Button 1</string>
     <string name="quick_panel_slot_2">Button 2</string>
     <string name="quick_panel_slot_3">Button 3</string>
-    <string name="quick_panel_slot_long">Long button</string>
     <string name="quick_panel_slot_default">%1$s (default)</string>
     <string name="quick_panel_slot_hidden">Hidden</string>
     <string name="quick_panel_default_like">Like</string>
@@ -632,7 +654,7 @@
     <string name="setting_wear_player_controls_visible">Show player controls</string>
     <string name="setting_wear_player_controls_visible_description">Show or hide built-in buttons in Classic, Poster, Studio and other configurable layouts without disabling their touch targets</string>
     <string name="setting_wear_quadrant_tap_flash">Flash icon on tap</string>
-    <string name="setting_wear_quadrant_tap_flash_description">When a corner zone\'s action fires, briefly flash its icon to full brightness - especially useful on the Hidden screen theme, where the icon is otherwise invisible and gives no confirmation of which action just ran.</string>
+    <string name="setting_wear_quadrant_tap_flash_description">When a corner zone\'s action fires, show that action\'s icon inside the tap ripple, right where you touched - so you can turn the corner icons off to keep the cover art clean and still see which action just ran.</string>
     <string name="setting_wear_internal_progress_visible">Layout progress indicator</string>
     <string name="setting_wear_internal_progress_visible_description">Show the extra progress indicator designed into this layout. The Expressive and Material play-button rings are part of their controls and stay available.</string>
     <string name="setting_wear_edge_progress_visible">Show edge progress arc</string>
@@ -1964,7 +1986,6 @@
     <string name="setting_wear_note_show_cover">Cover art</string>
     <string name="setting_wear_title_centered">Center the title</string>
     <string name="setting_wear_title_centered_description">Anchor the title to the middle of the screen instead of the whole text block</string>
-    <string name="player_element_title_centered">Centered title</string>
 
     <!-- Short element names for the Always-on editor. Every ambient row is titled
          "... on always-on display", which is the right sentence for a settings list and six
@@ -1982,9 +2003,11 @@
     <string name="aod_control_art_treatment">Treatment</string>
     <string name="aod_control_art_opacity">Opacity</string>
 
+    <!-- The Mini buttons editor's Appearance card heading. An alias for the same reason as the
+         Player page's player_section_* headings: every locale already translates the word. -->
+    <string name="mini_button_section_appearance" translatable="false">@string/category_appearance</string>
     <!-- Short names for the Mini buttons editor rows, for the same reason: four of their titles
          begin "Mini buttons" on a page already called Mini buttons. -->
-    <string name="mini_button_control_visibility">Show</string>
     <string name="mini_button_control_arrangement">Arrangement</string>
     <string name="mini_button_control_shape">Shape</string>
     <string name="mini_button_control_background">Background</string>
@@ -2549,16 +2572,22 @@
     <string name="action_play_soundcloud_likes">Play liked tracks (SoundCloud)</string>
     <string name="action_play_deezer_flow" translatable="false">Deezer Flow</string>
     <string name="action_my_playlists">Streaming shortcuts</string>
-    <string name="action_play_specific_playlist">Open streaming shortcut</string>
-    <string name="action_choose_or_add_streaming_shortcut">Choose or add a streaming shortcut</string>
     <string name="action_show_streaming_library">Show all saved shortcuts</string>
-    <string name="playlist_shortcut_pick_title">Choose shortcut</string>
-    <string name="playlist_shortcut_pick_empty">No streaming shortcuts saved yet — add one below, then tap it to pick it</string>
+    <string name="picker_section_apps">Apps &amp; automation</string>
+    <string name="picker_chip_playback">Playback</string>
+    <string name="picker_chip_volume">Volume</string>
+    <string name="picker_chip_screens">Screens</string>
+    <string name="picker_chip_find">Find music</string>
+    <string name="picker_chip_streaming">Streaming</string>
+    <string name="picker_chip_apps">Apps</string>
+    <string name="picker_play_with_app">Play with an app</string>
+    <string name="picker_add_link">Add a link</string>
+    <string name="picker_add_link_desc">Paste a playlist, album or track</string>
     <string name="playlist_shortcuts_empty">No streaming shortcuts yet — add them in the phone app settings</string>
     <string name="setting_playlist_shortcuts">Streaming shortcuts</string>
     <string name="setting_playlist_shortcuts_description">Open share links from the watch in YouTube Music, Spotify and other streaming apps</string>
-    <string name="setting_shortcut_artwork">Fetch shortcut artwork online</string>
-    <string name="setting_shortcut_artwork_description">Download a thumbnail when the service exposes public preview artwork, shown on the phone list, the watch menu and assigned buttons. Each available thumbnail is fetched once; only the public share link is sent. Off by default.</string>
+    <string name="setting_shortcut_artwork">Fetch shortcut names and artwork online</string>
+    <string name="setting_shortcut_artwork_description">Look up each saved link’s name and thumbnail from the service’s public preview data. The name fills in when you add a link to the menu; the thumbnail is shown on the phone list, the watch menu and assigned buttons. Each is fetched once, and only the public share link is sent. Off by default: with it off, “Get name from link” makes the same request only when you tap it.</string>
     <string name="setting_queue_local_artwork">Queue covers from your library</string>
     <string name="setting_queue_local_artwork_description">Local music players publish queue covers as library references. Grant media access so they can be shown on the watch queue. No internet access is involved.</string>
     <string name="setting_queue_local_artwork_granted">Media access granted — local queue covers will be shown</string>
@@ -2608,6 +2637,9 @@
     <string name="playlist_shortcuts_help">Share a playlist, album or track directly to Svartifoss, paste a copied link, or add one manually. The watch asks the phone to open it; no service login is required.</string>
     <string name="back">Back</string>
     <string name="playlist_shortcuts_beta_badge">BETA</string>
+    <!-- The same pill wherever a feature is marked unfinished; an alias so every locale keeps the
+         translation it already has. -->
+    <string name="beta_badge" translatable="false">@string/playlist_shortcuts_beta_badge</string>
     <string name="playlist_shortcuts_intro_title">Your music, one tap away</string>
     <string name="playlist_shortcuts_yours">Your shortcuts</string>
     <string name="playlist_shortcuts_empty_hint">Add a shared track, album or playlist link to make it available on your watch.</string>

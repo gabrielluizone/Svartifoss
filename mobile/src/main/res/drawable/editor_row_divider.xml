@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The hairline between the rows of an editor card, drawn by the container's own
+     showDividers="middle" so a row built at bind time never has to know whether it is first. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <size android:height="1dp" />
+    <solid android:color="@color/lyra_divider" />
+</shape>

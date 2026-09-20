@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.android.gms.wearable.Node
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.common.HandGestureAvailability
+import com.svartifoss.snfell.common.WearPlatform
 import com.svartifoss.snfell.config.WatchInfoWithIcons
 import com.svartifoss.snfell.util.WearableAvailability
 import kotlinx.coroutines.tasks.await
@@ -61,6 +62,16 @@ internal suspend fun buildDataLayerReport(
             appendLine("  Watch app version: " +
                     if (info.hasAppVersionCode()) {
                         "${info.appVersionName} (${info.appVersionCode})"
+                    } else {
+                        "unknown (watch build predates this field)"
+                    })
+            // The answer to "my always-on player is replaced by the watch face": on Wear OS 4 and
+            // below the system returns to the watch face on its own timeout and an ongoing
+            // activity does not hold it, which is why the same build behaves differently on two
+            // watches. Neither side could previously say which one it was looking at.
+            appendLine("  Watch platform: " +
+                    if (info.hasPlatformApiLevel()) {
+                        WearPlatform.describe(info.platformApiLevel)
                     } else {
                         "unknown (watch build predates this field)"
                     })

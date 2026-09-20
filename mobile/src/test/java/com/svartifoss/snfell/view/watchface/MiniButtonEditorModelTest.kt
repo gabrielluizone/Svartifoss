@@ -86,24 +86,102 @@ class MiniButtonEditorModelTest {
     }
 
     @Test
-    fun `the gestures switch shares the page but not the row card`() {
+    fun `the gestures setting shares the page but not the buttons' cards`() {
         assertEquals(
                 listOf(MiscPreferences.WEAR_GESTURES_MODE.key),
                 MiniButtonEditorModel.specsFor(MiniButtonSlot.GESTURES).map { it.key })
-        assertFalse(
-                MiscPreferences.WEAR_GESTURES_MODE.key in
-                        MiniButtonEditorModel.specsFor(MiniButtonSlot.ROW).map { it.key })
+        listOf(MiniButtonSlot.BUTTONS, MiniButtonSlot.APPEARANCE).forEach { slot ->
+            assertFalse(
+                    MiscPreferences.WEAR_GESTURES_MODE.key in
+                            MiniButtonEditorModel.specsFor(slot).map { it.key })
+        }
+    }
+
+    /**
+     * The first card used to hold four different things under one heading: the way out to the
+     * Controls tab, when the row appears, and how it looks. Only the last is style.
+     */
+    @Test
+    fun `the cards are the buttons, their appearance and the gestures, in that order`() {
+        assertEquals(
+                listOf(MiniButtonSlot.BUTTONS, MiniButtonSlot.APPEARANCE, MiniButtonSlot.GESTURES),
+                MiniButtonSlot.entries)
+
+        assertEquals(
+                listOf(MiniButtonControl.ASSIGN, MiniButtonControl.MODE),
+                MiniButtonEditorModel.specsFor(MiniButtonSlot.BUTTONS).map { it.control })
+        assertEquals(
+                listOf(
+                        MiniButtonControl.ARRANGEMENT,
+                        MiniButtonControl.SHAPE,
+                        MiniButtonControl.BACKGROUND,
+                        MiniButtonControl.OPACITY),
+                MiniButtonEditorModel.specsFor(MiniButtonSlot.APPEARANCE).map { it.control })
     }
 
     @Test
-    fun `every row card control has a short label`() {
-        // Four of the five preference titles begin "Mini buttons", on a page already called Mini
-        // buttons. The gesture row is the exception: its card heading already names it.
-        MiniButtonEditorModel.specsFor(MiniButtonSlot.ROW).forEach { spec ->
+    fun `only the gestures card goes without a heading, because its row names itself`() {
+        assertNotNull(MiniButtonSlot.BUTTONS.headingRes)
+        assertNotNull(MiniButtonSlot.APPEARANCE.headingRes)
+        // A heading above a card holding one row titled the same thing would say it twice.
+        assertNull(MiniButtonSlot.GESTURES.headingRes)
+    }
+
+    @Test
+    fun `every control lives in exactly one card`() {
+        val controls = MiniButtonEditorModel.specs.map { it.control }
+        assertEquals("Each control should be declared once", controls.toSet().size, controls.size)
+        assertEquals(
+                "Every control should have a spec",
+                MiniButtonControl.entries.toSet(),
+                controls.toSet())
+    }
+
+    @Test
+    fun `the way out to the Controls tab is the first thing on the page`() {
+        // Assigning what a mini button does happens there, not here, and that is the first
+        // question anybody arriving on this page has.
+        assertEquals(
+                MiniButtonControl.ASSIGN,
+                MiniButtonEditorModel.specsFor(MiniButtonSlot.BUTTONS).first().control)
+    }
+
+    @Test
+    fun `the appearance rows carry a short label and the others use their own title`() {
+        // Four of the five preference titles begin "Mini buttons", on a card already headed
+        // Appearance. "Show mini buttons" and "Screen gestures" are the exceptions: each is a
+        // whole phrase with no such prefix, and "Show" alone would have no subject.
+        MiniButtonEditorModel.specsFor(MiniButtonSlot.APPEARANCE).forEach { spec ->
             assertNotNull("${spec.key} needs a short row label", spec.labelRes)
         }
-        assertNull(
-                MiniButtonEditorModel.specFor(MiscPreferences.WEAR_GESTURES_MODE.key)?.labelRes)
+        assertNull(MiniButtonEditorModel.specFor(MiscPreferences.WEAR_MINI_BUTTONS_MODE.key)?.labelRes)
+        assertNull(MiniButtonEditorModel.specFor(MiscPreferences.WEAR_GESTURES_MODE.key)?.labelRes)
+    }
+
+    /**
+     * Two rows cannot be understood from their title and value: the link, which has no value at
+     * all, and the gestures, whose title does not say which ones. The style rows are named by their
+     * own value and are deliberately left without a sentence.
+     */
+    @Test
+    fun `only the link and the gestures carry a description`() {
+        val described = MiniButtonEditorModel.specs
+                .filter { it.descriptionRes != null }
+                .map { it.control }
+                .toSet()
+        assertEquals(setOf(MiniButtonControl.ASSIGN, MiniButtonControl.GESTURES_MODE), described)
+    }
+
+    @Test
+    fun `a hosting face loses the arrangement and the shape but keeps the rest of the appearance card`() {
+        val hosting = "chat"
+        val offered = MiniButtonEditorModel.visibleIn(MiniButtonSlot.APPEARANCE, hosting)
+                .map { it.control }
+        assertEquals(listOf(MiniButtonControl.BACKGROUND, MiniButtonControl.OPACITY), offered)
+        // ...and every other face is offered all four.
+        assertEquals(
+                4,
+                MiniButtonEditorModel.visibleIn(MiniButtonSlot.APPEARANCE, "classic").size)
     }
 
     @Test

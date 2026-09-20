@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Legutóbb lejátszottak megnyitása</string>
 
     <string name="no_phone">Nincs csatlakoztatott telefon</string>
+    <string name="phone_unavailable">Oldd fel a telefont a lejátszás vezérléséhez</string>
     <string name="playback_stopped">Leállítva</string>
     <string name="error">HIBA</string>
     <string name="error_play_services">Play Services-hiba</string>

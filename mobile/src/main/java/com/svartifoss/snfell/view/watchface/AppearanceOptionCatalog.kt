@@ -24,7 +24,15 @@ internal object AppearanceOptionCatalog {
             Extension("wear_accent_floor", R.array.wear_accent_floor_extra_entries,
                     R.array.wear_accent_floor_extra_values),
             Extension("wear_up_next_pill_style", R.array.wear_up_next_pill_extra_entries,
-                    R.array.wear_up_next_pill_extra_values))
+                    R.array.wear_up_next_pill_extra_values)) +
+            // All four cover pickers, not only the two that asked: they share one vocabulary and
+            // one public value set, so a theme carrying a new shape on any of them has to read as
+            // a named choice there rather than as its raw stored value.
+            listOf("wear_carousel_card_shape", "wear_note_cover_shape", "wear_chat_cover_shape",
+                    "wear_metadata_cover_shape").map { key ->
+                Extension(key, R.array.wear_cover_shape_extra_entries,
+                        R.array.wear_cover_shape_extra_values)
+            }
 
     fun apply(resources: Resources, preferenceFor: (String) -> ListPreference?) {
         extensions.forEach { extension ->

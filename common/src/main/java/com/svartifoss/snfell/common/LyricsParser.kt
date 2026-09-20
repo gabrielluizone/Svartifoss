@@ -1,7 +1,19 @@
 package com.svartifoss.snfell.common
 
-/** One timed line of a synced lyric. [timeMs] is the offset from the start of the track. */
-data class LyricLine(val timeMs: Long, val text: String)
+/** One timed word inside an enhanced-LRC line. [timeMs] is on the same clock as [LyricLine.timeMs]
+ *  - absolute from the start of the track, offset already applied. */
+data class LyricWord(val timeMs: Long, val text: String)
+
+/**
+ * One timed line of a synced lyric. [timeMs] is the offset from the start of the track.
+ *
+ * [words] is empty for the overwhelming majority of lines - line-level LRC (what LRCLIB serves)
+ * carries no per-word timing at all - and is populated only when the source text embedded the
+ * "enhanced" `<mm:ss.xx>` tags *and* the line has exactly one leading timestamp (see
+ * [LyricsParser.parseSynced]). A reader that ignores it renders exactly the line-level lyric it
+ * always has, since [text] is the same cleaned string either way.
+ */
+data class LyricLine(val timeMs: Long, val text: String, val words: List<LyricWord> = emptyList())
 
 /**
  * Turns the LRC text the phone fetched into timed lines the watch screen can follow.
@@ -48,11 +60,13 @@ object LyricsParser {
      *
      * Angle brackets, not square ones, so the line-level parser above does not see them - they sit
      * inside what it takes to be the lyric text and would be rendered literally, turning a verse
-     * into a wall of visible markup. Stripped rather than used: this screen highlights a line at a
-     * time, so word timings have nothing to drive yet, and showing them raw is the one outcome
-     * that is definitely wrong.
+     * into a wall of visible markup. [text] always comes out with these stripped, exactly as
+     * before; [parseSynced] separately walks the same tags into [LyricLine.words] when it can.
+     *
+     * Captures the same three groups as [TIMESTAMP], in the same order, so [toMillis] reads a
+     * match of either regex identically.
      */
-    private val WORD_TIMESTAMP = Regex("""<\d{1,3}:\d{1,2}(?:[.:]\d{1,3})?>""")
+    private val WORD_TIMESTAMP = Regex("""<(\d{1,3}):(\d{1,2})(?:[.:](\d{1,3}))?>""")
 
     fun parseSynced(lrc: String): List<LyricLine> {
         val lines = mutableListOf<LyricLine>()
@@ -71,21 +85,52 @@ object LyricsParser {
             }
             if (prefixes.isEmpty()) continue
 
+            val body = raw.substring(cursor)
             // Collapse the whitespace the stripped word tags leave behind, so a karaoke-timed
             // line does not come out double-spaced between every word.
-            val text = WORD_TIMESTAMP.replace(raw.substring(cursor), "")
+            val text = WORD_TIMESTAMP.replace(body, "")
                     .replace(WHITESPACE_RUN, " ")
                     .trim()
+
+            // Word times are absolute, tied to the one occurrence of the line they were written
+            // against - reusing them for a `[00:12][01:30]same words` repeat would put the second
+            // occurrence's highlight wherever the first one's words happened to fall. A line that
+            // repeats via multiple leading timestamps is therefore never given word timing, only
+            // the line-level one every repeat already gets.
+            val words = if (prefixes.size == 1) wordsIn(body, offsetMs) else emptyList()
+
             for (stamp in prefixes) {
                 // Clamped at zero: a large positive offset on a track whose first line is already
                 // near the start would otherwise produce negative times, which indexAt reads as
                 // "before the first line" and would leave the opening verse unreachable.
                 val timeMs = (toMillis(stamp) - offsetMs).coerceAtLeast(0L)
-                lines += LyricLine(timeMs = timeMs, text = text)
+                lines += LyricLine(timeMs = timeMs, text = text, words = words)
             }
         }
 
         return lines.sortedBy { it.timeMs }
+    }
+
+    /**
+     * Walks a line's own `<mm:ss.xx>word` tags into [LyricWord]s.
+     *
+     * Each word runs from its own tag to the *next* tag (or the end of the line) - there is no
+     * separate end-of-word marker in the format, the same "gap to the next one" shape
+     * [lineProgress] uses for whole lines. A tag with no text after it (a dangling `<...>` at the
+     * end of a line, or two tags back to back) yields no word rather than an empty one - an empty
+     * [LyricLine.text] already carries the instrumental-gap meaning, and an empty word would only
+     * ever be a highlight target nothing is drawn for.
+     */
+    private fun wordsIn(body: String, offsetMs: Long): List<LyricWord> {
+        val tags = WORD_TIMESTAMP.findAll(body).toList()
+        if (tags.isEmpty()) return emptyList()
+        return tags.mapIndexedNotNull { i, tag ->
+            val start = tag.range.last + 1
+            val end = tags.getOrNull(i + 1)?.range?.first ?: body.length
+            val word = body.substring(start, end).trim()
+            if (word.isEmpty()) return@mapIndexedNotNull null
+            LyricWord(timeMs = (toMillis(tag) - offsetMs).coerceAtLeast(0L), text = word)
+        }
     }
 
     private val WHITESPACE_RUN = Regex("""\s{2,}""")
@@ -127,12 +172,21 @@ object LyricsParser {
             durationMs: Long,
     ): Float {
         val line = lines.getOrNull(index) ?: return 0f
-        val end = lines.getOrNull(index + 1)?.timeMs
-                ?: durationMs.takeIf { it > line.timeMs }
-                ?: return 0f
+        val end = lineEnd(lines, index, durationMs) ?: return 0f
         val span = end - line.timeMs
         if (span <= 0L) return 0f
         return ((positionMs - line.timeMs).toFloat() / span).coerceIn(0f, 1f)
+    }
+
+    /**
+     * The same end-of-line boundary [lineProgress] resolves - the next line's timestamp, or the
+     * track's duration, or null when neither exists. Exposed so a word-level caller (see
+     * [wordProgress]) shares exactly the boundary the line's own progress bar uses for its last
+     * word, rather than a second guess at where the line ends.
+     */
+    fun lineEnd(lines: List<LyricLine>, index: Int, durationMs: Long): Long? {
+        val line = lines.getOrNull(index) ?: return null
+        return lines.getOrNull(index + 1)?.timeMs ?: durationMs.takeIf { it > line.timeMs }
     }
 
     /**
@@ -159,5 +213,39 @@ object LyricsParser {
             }
         }
         return answer
+    }
+
+    /**
+     * Index of the word active at [positionMs] within one line's [words], or -1 before the first
+     * one. Same question as [indexAt], one level deeper - which word of the *current* line is
+     * being sung right now.
+     *
+     * A plain scan rather than a binary search: a line's words number in the low tens at most,
+     * where [indexAt] justifies the binary search by a lyric running to hundreds of *lines*.
+     */
+    fun wordIndexAt(words: List<LyricWord>, positionMs: Long): Int {
+        var answer = -1
+        for (i in words.indices) {
+            if (words[i].timeMs <= positionMs) answer = i else break
+        }
+        return answer
+    }
+
+    /**
+     * How far through the word at [index] playback has reached, 0f..1f. Same shape as
+     * [lineProgress], scoped to one line's [words]: a word's span is the gap to the *next* word in
+     * the same line, and the last word has no next, so the caller supplies [lineEndMs] - the same
+     * end-of-line boundary [lineProgress] itself resolves (the next line's timestamp, or the
+     * track's duration), so the last word runs out exactly when the line's own progress bar does.
+     *
+     * Returns 0 for an [index] outside the list and for a degenerate zero-length span, the same
+     * two guards [lineProgress] applies at line granularity.
+     */
+    fun wordProgress(words: List<LyricWord>, index: Int, positionMs: Long, lineEndMs: Long): Float {
+        val word = words.getOrNull(index) ?: return 0f
+        val end = words.getOrNull(index + 1)?.timeMs ?: lineEndMs
+        val span = end - word.timeMs
+        if (span <= 0L) return 0f
+        return ((positionMs - word.timeMs).toFloat() / span).coerceIn(0f, 1f)
     }
 }

@@ -170,8 +170,14 @@ data class NowPlayingFaceState(
          *  actions stay active when false; this is a visual preference, not an input remap. */
         val showControls: Boolean = true,
         val playing: Boolean = false,
-        /** True when there is no track at all - the face renders nothing and the shared idle
-         *  ("nothing playing") group shows through instead. A *paused* track is not idle. */
+        /** True when there is no track at all. A *paused* track is not idle.
+         *
+         *  A Compose face **owns its own "nothing playing" screen** and must keep drawing: the
+         *  host puts the shared idle group away for every face in `composeFaces`, so returning
+         *  early here leaves a black screen with nothing on it but the chrome layered above. This
+         *  said the opposite for two releases, and Expressive believed it - which is what was
+         *  reported as "when the phone is connected and nothing is playing it just shows black".
+         *  Carousel and the curated set carry the same note at their own early-return sites. */
         val idle: Boolean = true,
         /** Playback progress fraction (0f..1f) of [positionMs] / [durationMs]. */
         val progress: Float = 0f,
@@ -464,9 +470,16 @@ data class NowPlayingFaceState(
          *  radius, rather than pre-converted to Dp so every consumer applies the same density
          *  conversion the platform blur itself expects. */
         val albumArtBlurRadiusPx: Float = 35f,
-        /** Mirrors MiscPreferences.WEAR_ALBUM_ART_FADE. Shared full-screen artwork crossfades in
-         *  the host; Vinyl/Halo's composition-owned mini covers use AlbumArtwork's crossfade. */
+        /** Mirrors MiscPreferences.WEAR_ALBUM_ART_FADE, and gates the whole cover transition -
+         *  the host's full-screen artwork and every composition-owned cover alike, all of which
+         *  go through FaceCoverImage. */
         val albumArtFade: Boolean = true,
+        /** Where an incoming cover starts, as a fraction of its own width; positive enters from
+         *  the right. Resolved once by the host from the direction the user last moved in
+         *  (com.svartifoss.snfell.common.AlbumArtMotion) so every surface drifts the same way,
+         *  and published with the artwork itself so a face never animates a new cover along the
+         *  previous change's direction. */
+        val coverShiftFraction: Float = 0f,
         /** Master switch for the user-selected layer between artwork and player chrome. */
         val backdropDimEnabled: Boolean = true,
         /** Named soft/balanced/strong level resolved to a shared 0f..1f multiplier. */

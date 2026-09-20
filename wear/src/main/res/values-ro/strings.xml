@@ -31,6 +31,7 @@
     <string name="idle_action_queue">Deschide redate recent</string>
 
     <string name="no_phone">Niciun telefon conectat</string>
+    <string name="phone_unavailable">Deblochează telefonul pentru a controla redarea</string>
     <string name="playback_stopped">Oprit</string>
     <string name="error">EROARE</string>
     <string name="error_play_services">Eroare Play Services</string>

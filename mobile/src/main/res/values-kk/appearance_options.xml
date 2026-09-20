@@ -96,4 +96,12 @@
         <item>Альбомның үшінші түсі</item>
         <item>Неон контуры</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Жапырақ</item>
+        <item>Тамшы</item>
+        <item>Доға</item>
+        <item>Малтатас</item>
+        <item>Қалқан</item>
+    </string-array>
 </resources>

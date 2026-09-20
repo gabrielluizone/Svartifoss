@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Sıkıştırmayı kalibre et</string>
+    <string name="pinch_cal_intro">Kayışı iyice sıkın ve bileğinizi yukarıda tutun. Yaklaşık 45 saniye: dinlenme, altı çift sıkıştırma, ardından kol hareketi. Hiçbir müzik komutu gönderilmez.</string>
+    <string name="pinch_cal_start">Başlat</string>
+    <string name="pinch_cal_restart">Yeniden başlat</string>
+    <string name="pinch_cal_test">Eylemsiz test</string>
+    <string name="pinch_cal_save">Kalibrasyonu kaydet</string>
+    <string name="pinch_cal_close">Kapat</string>
+
+    <string name="pinch_cal_step_ready">Hazırlanın</string>
+    <string name="pinch_cal_step_ready_hint">Bileğinizi yukarıda tutun, ekran size dönük.</string>
+    <string name="pinch_cal_step_rest">Kıpırdamayın</string>
+    <string name="pinch_cal_step_rest_hint">Sıkıştırmayın.</string>
+    <string name="pinch_cal_step_attempt">Deneme %1$d / %2$d</string>
+    <string name="pinch_cal_step_pinch">Çift sıkıştırma</string>
+    <string name="pinch_cal_step_pinch_hint">Baş ve işaret parmağınıza iki kez dokunun.</string>
+    <string name="pinch_cal_step_wait">Gevşeyin</string>
+    <string name="pinch_cal_step_wait_hint">Sıradaki deneme geliyor.</string>
+    <string name="pinch_cal_step_prepare">Neredeyse bitti</string>
+    <string name="pinch_cal_step_prepare_hint">Sonra: kolunuzu sıkıştırmadan hareket ettirin.</string>
+    <string name="pinch_cal_step_move">Kolunuzu hareket ettirin</string>
+    <string name="pinch_cal_step_move_hint">Doğal biçimde çevirin ve sallayın, ekran size dönük. Sıkıştırmayın.</string>
+
+    <string name="pinch_cal_testing">Test</string>
+    <string name="pinch_cal_detections">Algılamalar</string>
+    <string name="pinch_cal_test_hint">%1$d sn kaldı · eylem yok</string>
+
+    <string name="pinch_cal_ready">Kalibre edildi. Kaydetmeden önce deneyin: birkaç kez sıkıştırın, sonra kolunuzu normal hareket ettirin.</string>
+    <string name="pinch_cal_test_done">%1$d algılama. Bu, çift sıkıştırmalarınızla uyuşuyorsa kaydedin. Kol hareketleri sayıldıysa yeniden kalibre edin veya telefonda hassasiyeti düşürün.</string>
+    <string name="pinch_cal_failed_incomplete">Kayıt yarıda kaldı. Ekranı tüm test boyunca açık ve size dönük tutun, sonra yeniden başlayın.</string>
+    <string name="pinch_cal_failed_weak">Sıkıştırmalarınız hareketsiz bilekten ayırt edilemedi. Kayışı biraz sıkın ve daha güçlü sıkıştırın.</string>
+    <string name="pinch_cal_failed_unrecognized">Denemelerin çoğu çift sıkıştırma olarak tanınmadı. Her denemede net biçimde iki kez sıkıştırın ve kolunuzu sabit tutun.</string>
+    <string name="pinch_cal_failed_movement">Kol hareketiniz sıkıştırmaya benziyordu. Denemeler sırasında bileğinizi daha sabit tutun, sonra yeniden başlayın.</string>
+    <string name="pinch_cal_failed_kept">Önceki kalibrasyon korundu.</string>
+    <string name="pinch_cal_interrupted">Ekran kapandığı için durduruldu. Ekran açıkken yeniden başlayın.</string>
+    <string name="pinch_cal_unavailable">Hareket sensörleri kullanılamıyor. Bu ekranı yeniden açıp tekrar deneyin.</string>
+
+    <string name="pinch_cal_sending">Telefona kaydediliyor…</string>
+    <string name="pinch_cal_saved">Kalibrasyon kaydedildi. Telefonda sıkıştırma ayarlarından Deneysel\'i seçip kaydedin.</string>
+    <string name="pinch_cal_saved_active">Kalibrasyon kaydedildi. Oynatıcı açıkken deneysel algılayıcı etkin.</string>
+    <string name="pinch_cal_send_failed">Telefona kaydedildiği doğrulanamadı. Bağlantıyı kontrol edin ve Kalibrasyonu kaydet\'e yeniden dokunun.</string>
+    <string name="pinch_cal_legend_motion">Hareket</string>
+    <string name="pinch_cal_legend_rotation">Dönüş</string>
+    <string name="pinch_cal_legend_target">Eşik</string>
+    <string name="pinch_cal_no_signal">Sensör verisi yok</string>
+    <string name="pinch_cal_detail">%2$d denemeden %1$d tanındı · deneme başına dokunma: %3$s</string>
+</resources>

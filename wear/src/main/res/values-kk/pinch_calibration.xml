@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Шымшуды калибрлеу</string>
+    <string name="pinch_cal_intro">Бауды тығыз тартып, білекті көтеріп ұстаңыз. Шамамен 45 секунд: тыныштық, алты қос шымшу, содан кейін қол қозғалысы. Музыка пәрмендері жіберілмейді.</string>
+    <string name="pinch_cal_start">Бастау</string>
+    <string name="pinch_cal_restart">Қайта бастау</string>
+    <string name="pinch_cal_test">Әрекетсіз тест</string>
+    <string name="pinch_cal_save">Калибрлеуді сақтау</string>
+    <string name="pinch_cal_close">Жабу</string>
+
+    <string name="pinch_cal_step_ready">Дайындалыңыз</string>
+    <string name="pinch_cal_step_ready_hint">Білекті көтеріп, экранды өзіңізге қаратып ұстаңыз.</string>
+    <string name="pinch_cal_step_rest">Қозғалмаңыз</string>
+    <string name="pinch_cal_step_rest_hint">Шымшымаңыз.</string>
+    <string name="pinch_cal_step_attempt">%1$d-әрекет / %2$d</string>
+    <string name="pinch_cal_step_pinch">Қос шымшу</string>
+    <string name="pinch_cal_step_pinch_hint">Бас бармақ пен сұқ саусақты екі рет түйістіріңіз.</string>
+    <string name="pinch_cal_step_wait">Босаңсыңыз</string>
+    <string name="pinch_cal_step_wait_hint">Келесі әрекет жақында.</string>
+    <string name="pinch_cal_step_prepare">Дерлік дайын</string>
+    <string name="pinch_cal_step_prepare_hint">Одан кейін: қолды шымшымай қозғалтыңыз.</string>
+    <string name="pinch_cal_step_move">Қолды қозғалтыңыз</string>
+    <string name="pinch_cal_step_move_hint">Оны табиғи бұрып, сермеңіз, экран өзіңізге қараған күйде. Шымшымаңыз.</string>
+
+    <string name="pinch_cal_testing">Тест</string>
+    <string name="pinch_cal_detections">Анықтаулар</string>
+    <string name="pinch_cal_test_hint">%1$d с қалды · әрекетсіз</string>
+
+    <string name="pinch_cal_ready">Калибрленді. Сақтамас бұрын тексеріңіз: бірнеше рет шымшып, содан кейін қолды әдеттегідей қозғалтыңыз.</string>
+    <string name="pinch_cal_test_done">Анықтаулар: %1$d. Егер бұл қос шымшуларыңызға сәйкес келсе, сақтаңыз. Қол қозғалысы есептелсе, қайта калибрлеңіз немесе телефонда сезімталдықты азайтыңыз.</string>
+    <string name="pinch_cal_failed_incomplete">Жазу үзілді. Тест бойы экранды қосулы және өзіңізге қаратып ұстап, қайта бастаңыз.</string>
+    <string name="pinch_cal_failed_weak">Шымшуларыңыз қозғалмайтын білектен ерекшеленбеді. Бауды сәл тартып, күштірек шымшыңыз.</string>
+    <string name="pinch_cal_failed_unrecognized">Әрекеттердің көпшілігі қос шымшу ретінде танылмады. Әр әрекетте анық екі рет шымшып, қолды қозғалтпаңыз.</string>
+    <string name="pinch_cal_failed_movement">Қол қозғалысы шымшуға ұқсады. Әрекеттер кезінде білекті тұрақтырақ ұстап, қайта бастаңыз.</string>
+    <string name="pinch_cal_failed_kept">Алдыңғы калибрлеу сақталды.</string>
+    <string name="pinch_cal_interrupted">Экран өшкендіктен тоқтатылды. Экран қосулы кезде қайта бастаңыз.</string>
+    <string name="pinch_cal_unavailable">Қозғалыс сенсорлары қолжетімсіз. Бұл экранды қайта ашып, әрекетті қайталаңыз.</string>
+
+    <string name="pinch_cal_sending">Телефонға сақталуда…</string>
+    <string name="pinch_cal_saved">Калибрлеу сақталды. Телефонда шымшу параметрлерінен Эксперименттік режимін таңдап, сақтаңыз.</string>
+    <string name="pinch_cal_saved_active">Калибрлеу сақталды. Ойнатқыш ашық кезде эксперименттік детектор жұмыс істейді.</string>
+    <string name="pinch_cal_send_failed">Телефонға сақталғаны расталмады. Байланысты тексеріп, Калибрлеуді сақтау түймесін қайта басыңыз.</string>
+    <string name="pinch_cal_legend_motion">Қозғалыс</string>
+    <string name="pinch_cal_legend_rotation">Айналу</string>
+    <string name="pinch_cal_legend_target">Шек</string>
+    <string name="pinch_cal_no_signal">Сенсор деректері жоқ</string>
+    <string name="pinch_cal_detail">%1$d / %2$d танылды · әрекетке шаққанда түрту: %3$s</string>
+</resources>

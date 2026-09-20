@@ -7,6 +7,31 @@ import org.junit.Test
 
 class PlaybackPresetPolicyTest {
     @Test
+    fun repeatOneKeepsItsNumberedIconWhenTransferredToTheWatch() {
+        assertEquals(com.svartifoss.snfell.common.R.drawable.action_repeat_one,
+                repeatModeIcon(PlaybackStateCompat.REPEAT_MODE_ONE))
+        assertEquals(com.svartifoss.snfell.common.R.drawable.action_repeat,
+                repeatModeIcon(PlaybackStateCompat.REPEAT_MODE_ALL))
+        assertEquals(com.svartifoss.snfell.common.R.drawable.action_repeat,
+                repeatModeIcon(PlaybackStateCompat.REPEAT_MODE_NONE))
+        // The watch holds one vector per action key, so the bitmap only has to travel for the mode
+        // whose icon is not that vector. Asking by key alone used to answer "never local" for all
+        // three, which sent two identical copies of the drawable the watch already had - and made
+        // the resend check ask every launch for assets that were correctly absent.
+        val key = com.svartifoss.snfell.common.actions.StandardActions.ACTION_SET_REPEAT_MODE
+        val icons = com.svartifoss.snfell.common.actions.StandardIcons
+        org.junit.Assert.assertFalse("repeat-one must travel: its glyph is not the key's vector",
+                icons.canUseLocalIcon(key, repeatModeIcon(PlaybackStateCompat.REPEAT_MODE_ONE)))
+        org.junit.Assert.assertTrue(
+                icons.canUseLocalIcon(key, repeatModeIcon(PlaybackStateCompat.REPEAT_MODE_ALL)))
+        org.junit.Assert.assertTrue(
+                icons.canUseLocalIcon(key, repeatModeIcon(PlaybackStateCompat.REPEAT_MODE_NONE)))
+        // An action with no opinion keeps the optimisation it always had.
+        org.junit.Assert.assertTrue(icons.canUseLocalIcon(
+                com.svartifoss.snfell.common.actions.StandardActions.ACTION_PLAY))
+    }
+
+    @Test
     fun playbackSpeedIsFiniteAndClampedToSupportedPickerRange() {
         assertEquals(0.5f, normalizePlaybackSpeed(-4f))
         assertEquals(2f, normalizePlaybackSpeed(8f))

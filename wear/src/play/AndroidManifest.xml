@@ -3,6 +3,16 @@
   `play` flavor. Belt-and-suspenders: strip REQUEST_INSTALL_PACKAGES if any transitive dependency
   declares it. The watch self-update components are simply absent from this flavor (src/github/).
   See docs/play-store-migration-plan.md.
+
+  The watch's log sender is absent here too. wearutils' LogTransmitter is the app's only dataSync
+  foreground service, and Play makes that type a declared permission backed by a demonstration
+  video, which is a lot to ask for a support diagnostic. The three pieces below go together: the
+  permission, the service, and the receiver that starts it. Dropping only the permission would
+  bring back the MissingForegroundServiceTypeException the service throws on Wear OS 5+, because
+  it calls startForeground() with no type. Without the receiver the watch never answers
+  /SendLogs, so on the phone LogRetrievalTask gives up after its 5 s wait and reports that the
+  logs could not be retrieved (Get support has no phone-only fallback). The `github` flavor keeps
+  all three.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
@@ -10,5 +20,19 @@
     <uses-permission
         android:name="android.permission.REQUEST_INSTALL_PACKAGES"
         tools:node="remove" />
+
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"
+        tools:node="remove" />
+
+    <application>
+        <service
+            android:name="com.matejdro.wearutils.logging.LogTransmitter"
+            tools:node="remove" />
+
+        <service
+            android:name="com.svartifoss.snfell.watch.communication.MusicCenterLogRequestReceiver"
+            tools:node="remove" />
+    </application>
 
 </manifest>

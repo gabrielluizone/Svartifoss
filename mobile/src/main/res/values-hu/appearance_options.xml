@@ -96,4 +96,12 @@
         <item>Album harmadlagos színe</item>
         <item>Neonkörvonal</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Levél</item>
+        <item>Csepp</item>
+        <item>Ív</item>
+        <item>Kavics</item>
+        <item>Pajzs</item>
+    </string-array>
 </resources>

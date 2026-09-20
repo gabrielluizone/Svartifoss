@@ -37,6 +37,7 @@
     <string name="idle_action_queue">فتح ما تم تشغيله مؤخرًا</string>
 
     <string name="no_phone">لا يوجد هاتف متصل</string>
+    <string name="phone_unavailable">افتح قفل هاتفك للتحكم في التشغيل</string>
     <string name="playback_stopped">متوقف</string>
     <string name="error">خطأ</string>
     <string name="error_play_services">خطأ في خدمات Play</string>

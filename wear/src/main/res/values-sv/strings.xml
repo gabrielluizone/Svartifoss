@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Öppna nyligen spelat</string>
 
     <string name="no_phone">Ingen telefon ansluten</string>
+    <string name="phone_unavailable">Lås upp telefonen för att styra uppspelningen</string>
     <string name="playback_stopped">Stoppad</string>
     <string name="error">FEL</string>
     <string name="error_play_services">Fel i Play Services</string>

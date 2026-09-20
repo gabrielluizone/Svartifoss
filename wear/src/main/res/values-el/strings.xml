@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Άνοιγμα πρόσφατης αναπαραγωγής</string>
 
     <string name="no_phone">Δεν έχει συνδεθεί τηλέφωνο</string>
+    <string name="phone_unavailable">Ξεκλειδώστε το τηλέφωνο για έλεγχο της αναπαραγωγής</string>
     <string name="playback_stopped">Σταμάτησε</string>
     <string name="error">ΣΦΑΛΜΑ</string>
     <string name="error_play_services">Σφάλμα Play Services</string>

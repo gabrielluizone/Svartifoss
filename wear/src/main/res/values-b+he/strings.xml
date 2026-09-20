@@ -37,6 +37,7 @@
     <string name="idle_action_queue">פתיחת פריטים שהושמעו לאחרונה</string>
 
     <string name="no_phone">הטלפון לא מחובר</string>
+    <string name="phone_unavailable">בטל את נעילת הטלפון כדי לשלוט בהשמעה</string>
     <string name="playback_stopped">נעצר</string>
     <string name="error">שגיאה</string>
     <string name="error_play_services">שגיאת שירותי Google Play</string>

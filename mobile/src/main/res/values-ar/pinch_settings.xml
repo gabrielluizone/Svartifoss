@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">إعدادات القرص</string>
+    <string name="pinch_settings_intro">كيف يجب أن تكتشف الساعة إيماءتك؟</string>
+    <string name="pinch_mode_native">كاشف الساعة</string>
+    <string name="pinch_mode_experimental">كاشف تجريبي</string>
+    <string name="pinch_native_description">يستخدم التعرّف المدمج في الساعة. بلا معايرة أو عناصر ضبط للحساسية.</string>
+    <string name="pinch_experimental_description">يكتشف حركات المعصم بحسب معايرتك. قد يعمل بالخطأ ويستهلك مزيدًا من البطارية أثناء فتح المشغّل.</string>
+    <string name="pinch_profile_missing">لم تتم المعايرة بعد. يمكنك حفظ هذا الوضع الآن: تواصل الساعة استخدام كاشفها الخاص إلى أن تُحفظ معايرة فيها، ثم تنتقل تلقائيًا.</string>
+    <string name="pinch_profile_saved">تم حفظ المعايرة. جاهز للاستخدام.</string>
+    <string name="pinch_calibration_step">1. عايِر إيماءتك</string>
+    <string name="pinch_tuning_step">2. اضبط التعرّف</string>
+    <string name="pinch_calibrate_watch">المعايرة على الساعة</string>
+    <string name="pinch_recalibrate_watch">إعادة المعايرة</string>
+    <string name="pinch_open_instruction">افتح Svartifoss على الساعة. اتبع الاختبار هناك واحفظ المعايرة.</string>
+    <string name="pinch_open_sending">جارٍ الاتصال بالساعة…</string>
+    <string name="pinch_open_sent">تابع على الساعة. إذا لم يُفتح الاختبار، أعد فتح Svartifoss هناك وحاول مرة أخرى.</string>
+    <string name="pinch_open_failed">الساعة غير متاحة. تحقق من الاتصال وحدّث التطبيقين ثم حاول مرة أخرى.</string>
+    <string name="pinch_sensitivity_label">الحساسية</string>
+    <string name="pinch_sensitivity_help">زِدها إذا فاتت بعض الضغطات. قلّلها إذا كانت حركات أخرى تشغّل إجراءات.</string>
+    <string name="pinch_gap_label">الوقت بين الضغطتين</string>
+    <string name="pinch_gap_help">أقصى وقت من الضغطة الأولى إلى الثانية. زِده لإيماءة أبطأ.</string>
+    <string name="pinch_cooldown_label">مهلة بين الأوامر</string>
+    <string name="pinch_cooldown_help">مدة الانتظار بعد إجراء قبل قبول إيماءة أخرى.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">مزيد من الإعدادات</string>
+    <string name="pinch_advanced_hide">إعدادات أقل</string>
+    <string name="pinch_shared_settings">تسري هذه الإعدادات أثناء تشغيل الموسيقى أو إيقافها مؤقتًا.</string>
+    <string name="pinch_settings_save">حفظ</string>
+    <string name="pinch_gesture_note">المس الإبهام والسبابة معًا مرتين، مع فتح المشغّل وتشغيل شاشة الساعة.</string>
+    <string name="pinch_controls_uncalibrated">تم اختيار الكاشف التجريبي ولم تتم معايرته بعد. يُستخدم كاشف الساعة نفسها إلى أن تُعايِر.</string>
+    <string name="pinch_controls_calibrated">تمت معايرة الكاشف التجريبي. اضغط بإصبعين مرتين أثناء فتح مشغّل Svartifoss.</string>
+</resources>

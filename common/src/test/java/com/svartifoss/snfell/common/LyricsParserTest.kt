@@ -143,6 +143,102 @@ class LyricsParserTest {
     fun `a line that is only word timings becomes an empty gap, not markup`() {
         val lines = LyricsParser.parseSynced("[00:05.00]<00:05.00>")
         assertEquals("", lines[0].text)
+        assertTrue(lines[0].words.isEmpty())
+    }
+
+    // ---- word timing ----
+
+    @Test
+    fun `enhanced LRC also captures each tag's own absolute time`() {
+        val words = LyricsParser.parseSynced("[00:12.00]<00:12.00>Hello <00:12.40>world")[0].words
+        assertEquals(listOf(12_000L, 12_400L), words.map { it.timeMs })
+        assertEquals(listOf("Hello", "world"), words.map { it.text })
+    }
+
+    @Test
+    fun `a line with no word tags carries no words`() {
+        assertTrue(LyricsParser.parseSynced("[00:10.00]plain line")[0].words.isEmpty())
+    }
+
+    @Test
+    fun `a repeated line gets no word timing, only the line timing every repeat gets`() {
+        // Word times are absolute, tied to the one occurrence they were written against - reusing
+        // them for the second [01:30.00] occurrence would misplace the highlight entirely.
+        val lines = LyricsParser.parseSynced(
+                "[00:12.00][01:30.00]<00:12.00>Hello <00:12.40>world")
+        assertEquals(2, lines.size)
+        assertTrue(lines.all { it.words.isEmpty() })
+        assertEquals("Hello world", lines[0].text)
+    }
+
+    @Test
+    fun `an offset tag shifts word times the same way it shifts the line`() {
+        val words = LyricsParser.parseSynced(
+                "[offset:+500]\n[00:12.00]<00:12.00>Hello <00:12.40>world")[0].words
+        assertEquals(listOf(11_500L, 11_900L), words.map { it.timeMs })
+    }
+
+    @Test
+    fun `a dangling word tag with nothing after it yields no word`() {
+        val words = LyricsParser.parseSynced("[00:05.00]<00:05.00>Hello <00:05.50>")[0].words
+        assertEquals(listOf("Hello"), words.map { it.text })
+    }
+
+    @Test
+    fun `two word tags back to back yield no empty word between them`() {
+        val words = LyricsParser.parseSynced("[00:01.00]<00:01.00><00:01.10>word")[0].words
+        assertEquals(listOf("word"), words.map { it.text })
+        assertEquals(listOf(1_100L), words.map { it.timeMs })
+    }
+
+    private val karaokeLine =
+            LyricsParser.parseSynced("[00:10.00]<00:10.00>one <00:10.40>two <00:11.00>three")[0]
+
+    @Test
+    fun `wordIndexAt reports -1 before the first word`() {
+        assertEquals(-1, LyricsParser.wordIndexAt(karaokeLine.words, 9_999L))
+    }
+
+    @Test
+    fun `wordIndexAt holds a word until the next one starts`() {
+        assertEquals(0, LyricsParser.wordIndexAt(karaokeLine.words, 10_000L))
+        assertEquals(0, LyricsParser.wordIndexAt(karaokeLine.words, 10_399L))
+        assertEquals(1, LyricsParser.wordIndexAt(karaokeLine.words, 10_400L))
+        assertEquals(2, LyricsParser.wordIndexAt(karaokeLine.words, 999_999L))
+    }
+
+    @Test
+    fun `wordIndexAt on an empty list is -1 rather than a crash`() {
+        assertEquals(-1, LyricsParser.wordIndexAt(emptyList(), 1_000L))
+    }
+
+    @Test
+    fun `a word's progress is measured against the gap to the next word`() {
+        val words = karaokeLine.words
+        assertEquals(0f, LyricsParser.wordProgress(words, 0, 10_000L, 20_000L), 0.001f)
+        assertEquals(0.5f, LyricsParser.wordProgress(words, 0, 10_200L, 20_000L), 0.001f)
+        assertEquals(1f, LyricsParser.wordProgress(words, 0, 10_400L, 20_000L), 0.001f)
+    }
+
+    @Test
+    fun `the last word runs to the caller's lineEndMs`() {
+        val words = karaokeLine.words
+        assertEquals(0.5f, LyricsParser.wordProgress(words, 2, 11_500L, 12_000L), 0.001f)
+    }
+
+    @Test
+    fun `an out-of-range word index reports zero`() {
+        assertEquals(0f, LyricsParser.wordProgress(karaokeLine.words, -1, 10_000L, 20_000L), 0.001f)
+        assertEquals(0f, LyricsParser.wordProgress(karaokeLine.words, 9, 10_000L, 20_000L), 0.001f)
+    }
+
+    @Test
+    fun `lineEnd matches what lineProgress already uses`() {
+        // threeLines is declared below, in the lineProgress section - safe to reference here since
+        // Kotlin initializes every property before any @Test method runs.
+        assertEquals(20_000L, LyricsParser.lineEnd(threeLines, 0, 200_000L))
+        assertEquals(200_000L, LyricsParser.lineEnd(threeLines, 2, 200_000L))
+        assertEquals(null, LyricsParser.lineEnd(threeLines, 2, 0L))
     }
 
     @Test

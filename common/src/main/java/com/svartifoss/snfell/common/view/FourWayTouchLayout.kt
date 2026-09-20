@@ -67,6 +67,16 @@ class FourWayTouchLayout : FrameLayout,
         tapPulse.accentColor = color
     }
 
+    /**
+     * Show the icon of the action a quadrant tap just ran, inside this layout's own pulse.
+     *
+     * The host owns the mapping from quadrant to action, so it hands the glyph down rather than
+     * this layout reaching for one - it has no idea what any quadrant is configured to do.
+     */
+    fun revealTapIcon(icon: android.graphics.drawable.Drawable?) {
+        tapPulse.revealIcon(icon)
+    }
+
     override fun onShowPress(e: MotionEvent) {
     }
 

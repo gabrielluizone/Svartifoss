@@ -9,7 +9,6 @@ import android.content.res.ColorStateList
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.NinePatchDrawable
 import android.net.Uri
 import android.os.Bundle
@@ -55,6 +54,7 @@ import com.svartifoss.snfell.music.StreamingService
 import com.svartifoss.snfell.music.StreamingContentType
 import com.svartifoss.snfell.music.StreamingShortcutLinks
 import com.svartifoss.snfell.view.LyraAccent
+import com.svartifoss.snfell.view.styleAsBetaBadge
 
 /**
  * Manages the streaming shortcuts shown by the watch: name + deep link pairs persisted via
@@ -62,22 +62,12 @@ import com.svartifoss.snfell.view.LyraAccent
  * shows). The watch only ever *reads* this list (via OpenPlaylistShortcutsAction) - all editing
  * happens here on the phone, once.
  *
- * Also doubles as the chooser for the "Open specific playlist" action: launched with
- * [EXTRA_PICK_MODE], tapping a shortcut returns it as the activity result instead of opening
- * the edit dialog (adding/deleting/reordering still work, so a missing playlist can be created
- * on the spot and picked right away) - see [PlaylistShortcutPickerAction].
+ * It used to double as the chooser Pick action opened to assign a saved shortcut to a button, in a
+ * pick mode that returned the tapped row. That is gone: Pick action now lists the saved shortcuts
+ * itself and adds a link from a sheet on the same page, so choosing one no longer leaves for a
+ * second window and comes back.
  */
 class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManager.OnItemDragEventListener {
-
-    companion object {
-        const val EXTRA_PICK_MODE = "PickMode"
-        const val EXTRA_PICKED_NAME = "PickedName"
-        const val EXTRA_PICKED_LINK = "PickedLink"
-
-        fun createPickIntent(context: Context): Intent =
-                Intent(context, PlaylistShortcutsActivity::class.java)
-                        .putExtra(EXTRA_PICK_MODE, true)
-    }
 
     private lateinit var shortcuts: MutableList<PlaylistShortcut>
     private lateinit var listAdapter: ShortcutsAdapter
@@ -87,7 +77,6 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
     private lateinit var emptyLabel: TextView
     private lateinit var emptyContainer: View
     private lateinit var listSummary: TextView
-    private var pickMode = false
 
     @javax.inject.Inject
     @com.svartifoss.snfell.di.GlobalConfig
@@ -99,15 +88,8 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         setContentView(R.layout.activity_playlist_shortcuts)
 
         vibrator = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        pickMode = intent.getBooleanExtra(EXTRA_PICK_MODE, false)
-        title = getString(
-                if (pickMode) R.string.playlist_shortcut_pick_title
-                else R.string.setting_playlist_shortcuts
-        )
-        findViewById<TextView>(R.id.page_title).setText(
-                if (pickMode) R.string.playlist_shortcut_pick_title
-                else R.string.setting_playlist_shortcuts
-        )
+        title = getString(R.string.setting_playlist_shortcuts)
+        findViewById<TextView>(R.id.page_title).setText(R.string.setting_playlist_shortcuts)
 
         shortcuts = PlaylistShortcutStorage.load(this).toMutableList()
         // Migrates existing installs to the dedicated watch-side cache even before the user
@@ -142,15 +124,7 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         val onAccent = bestOnAccentColor(accent)
         findViewById<ImageView>(R.id.intro_icon).imageTintList =
                 ColorStateList.valueOf(accentForeground)
-        findViewById<TextView>(R.id.beta_badge).apply {
-            setTextColor(accentForeground)
-            background = GradientDrawable().apply {
-                shape = GradientDrawable.RECTANGLE
-                cornerRadius = 16f * resources.displayMetrics.density
-                setColor(ColorUtils.setAlphaComponent(accent, 24))
-                setStroke((resources.displayMetrics.density + 0.5f).toInt(), accentForeground)
-            }
-        }
+        findViewById<TextView>(R.id.beta_badge).styleAsBetaBadge()
         findViewById<View>(R.id.button_back).setOnClickListener { finish() }
         findViewById<View>(R.id.button_reload_covers).setOnClickListener { reloadAllArtwork() }
         findViewById<MaterialButton>(R.id.button_paste).apply {
@@ -183,11 +157,6 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         super.onNewIntent(intent)
         setIntent(intent)
         if (intent.action == Intent.ACTION_SEND) {
-            pickMode = false
-            title = getString(R.string.setting_playlist_shortcuts)
-            findViewById<TextView>(R.id.page_title)
-                    .setText(R.string.setting_playlist_shortcuts)
-            updateEmptyState()
             handleIncomingShare(intent)
         }
     }
@@ -705,10 +674,7 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         val empty = shortcuts.isEmpty()
         emptyContainer.visibility = if (empty) View.VISIBLE else View.GONE
         listSummary.visibility = if (empty) TextView.GONE else TextView.VISIBLE
-        emptyLabel.setText(
-                if (pickMode) R.string.playlist_shortcut_pick_empty
-                else R.string.playlist_shortcuts_none
-        )
+        emptyLabel.setText(R.string.playlist_shortcuts_none)
         if (!empty) {
             listSummary.text = resources.getQuantityString(
                     R.plurals.playlist_shortcuts_summary, shortcuts.size, shortcuts.size)
@@ -810,15 +776,7 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
                     return@setOnClickListener
                 }
 
-                if (pickMode) {
-                    val picked = shortcuts[index]
-                    setResult(RESULT_OK, Intent()
-                            .putExtra(EXTRA_PICKED_NAME, picked.name)
-                            .putExtra(EXTRA_PICKED_LINK, picked.link))
-                    finish()
-                } else {
-                    showShortcutDialog(index)
-                }
+                showShortcutDialog(index)
             }
         }
 

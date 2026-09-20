@@ -159,7 +159,8 @@
         <activity
             android:name=".view.buttonconfig.ActionPickerActivity"
             android:label="@string/pick_action"
-            android:theme="@style/AppTheme.Dialog"/>
+            android:theme="@style/AppTheme.Dialog"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
 
         <activity
             android:name=".view.actionlist.ActionEditorActivity"

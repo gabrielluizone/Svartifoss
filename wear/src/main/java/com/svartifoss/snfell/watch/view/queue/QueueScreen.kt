@@ -74,6 +74,7 @@ import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.SwipeToDismissBox
 import com.svartifoss.snfell.watch.view.panel.PanelBackdropLayer
+import com.svartifoss.snfell.watch.view.face.marqueeFade
 import com.svartifoss.snfell.watch.view.panel.ScreenBackdrop
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
@@ -1018,9 +1019,15 @@ private fun QueueHeader(title: String?, artist: String?, marquee: Boolean) {
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
+                    // The fade is tied to the scroll rather than applied always: a heading
+                    // short enough to sit still is fully legible and has no ends to dissolve.
                     modifier = Modifier.fillMaxWidth().then(
-                            if (marquee) Modifier.basicMarquee(iterations = Int.MAX_VALUE)
-                            else Modifier
+                            if (marquee) {
+                                Modifier.marqueeFade()
+                                        .basicMarquee(iterations = Int.MAX_VALUE)
+                            } else {
+                                Modifier
+                            }
                     )
             )
         }
@@ -1145,7 +1152,8 @@ private fun QueueRow(
                     // itself is at rest ([marquee]). Marquee on EVERY row (or during a scroll)
                     // re-lays the list out each frame and made scrolling visibly stutter.
                     modifier = if (item.isPlaying && marquee) {
-                        Modifier.basicMarquee(iterations = Int.MAX_VALUE)
+                        Modifier.marqueeFade()
+                                .basicMarquee(iterations = Int.MAX_VALUE)
                     } else {
                         Modifier
                     }

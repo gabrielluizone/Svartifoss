@@ -1,6 +1,21 @@
 package com.svartifoss.snfell.watch.view.face
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.togetherWith
+import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -19,15 +34,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.snapshotFlow
+import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -51,6 +72,10 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.graphics.CompositingStrategy
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -70,7 +95,9 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import com.svartifoss.snfell.common.AlbumArtMotion
 import com.svartifoss.snfell.common.BitmapBlur
+import com.svartifoss.snfell.common.CoverMotion
 import com.svartifoss.snfell.common.OverlayBackdropPatterns
 import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.TitleTextMode
@@ -94,8 +121,14 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.runtime.LaunchedEffect
+import kotlin.math.abs
+import kotlin.math.roundToInt
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.AnimationVector1D
 
 /**
  * Small building blocks shared by the Beta Compose faces ([VinylFace], [PosterFace]).
@@ -110,6 +143,110 @@ internal fun faceTonal(accent: Int, lightness: Float, minSat: Float = 0.25f, max
     hsl[1] = hsl[1].coerceIn(minSat, maxSat)
     hsl[2] = lightness
     return ColorUtils.HSLToColor(hsl)
+}
+
+/**
+ * The playing track's cover, drawn with the one transition every surface shares.
+ *
+ * Every face that draws a cover of its own has to come through here, and the reason is the reason
+ * this project keeps rediscovering: a call site that draws a bare `Image` opts out of the setting
+ * without erroring. `wear_album_art_fade` reached the host's full-screen artwork and Vinyl's mini
+ * disc, and did nothing on Split, Note, Chat, Metadata, Ribbon, Frame or Depth - so the same track
+ * change eased on some faces, snapped on others, and the switch on the phone appeared to work
+ * because the face the author happened to be testing on was one of the two it reached.
+ *
+ * The motion itself is the [AlbumArtMotion] one: the incoming picture fades in over the outgoing
+ * one while settling out of a slight overscale, and drifts in from whichever side the user last
+ * moved. The outgoing cover is deliberately **not** faded out underneath it - two half-transparent
+ * copies over a black backdrop dip in luminance halfway through, which reads as a blink rather
+ * than as a replacement - so it holds at full opacity and is simply covered.
+ *
+ * [fallback] is drawn in the cover's place when there is none, and travels through the same
+ * transition: a cover disappearing (artwork hidden, a track with no art) is a change like any
+ * other, and snapping to a palette gradient while the last one eased in is the same mismatch one
+ * level down.
+ */
+@Composable
+internal fun FaceCoverImage(
+        state: NowPlayingFaceState,
+        art: ImageBitmap?,
+        modifier: Modifier = Modifier,
+        contentScale: ContentScale = ContentScale.Crop,
+        colorFilter: ColorFilter? = null,
+        alpha: Float = 1f,
+        fallback: @Composable () -> Unit = {}
+) {
+    val motion = rememberCoverMotion(state)
+    AnimatedContent(
+            targetState = art,
+            transitionSpec = { coverTransition(motion) },
+            contentAlignment = Alignment.Center,
+            modifier = modifier,
+            label = "faceCoverArt"
+    ) { frame ->
+        if (frame != null) {
+            Image(
+                    bitmap = frame,
+                    contentDescription = null,
+                    contentScale = contentScale,
+                    colorFilter = colorFilter,
+                    alpha = alpha,
+                    modifier = Modifier.fillMaxSize()
+            )
+        } else {
+            fallback()
+        }
+    }
+}
+
+/**
+ * The motion this face's covers travel with, or [CoverMotion.NONE] when the user turned the
+ * transition off.
+ *
+ * Both inputs are published by the host alongside the artwork, so the shift describes *this*
+ * change rather than the previous one - see [NowPlayingFaceState.coverShiftFraction].
+ */
+@Composable
+private fun rememberCoverMotion(state: NowPlayingFaceState): CoverMotion =
+        remember(state.albumArtFade, state.coverShiftFraction) {
+            if (state.albumArtFade) {
+                CoverMotion(
+                        durationMs = AlbumArtMotion.DURATION_MS,
+                        enterScale = AlbumArtMotion.ENTER_SCALE,
+                        enterShiftFraction = state.coverShiftFraction)
+            } else {
+                CoverMotion.NONE
+            }
+        }
+
+/** Material 3's emphasized decelerate, from the control points [AlbumArtMotion] shares with the
+ *  View face's `PathInterpolator` and the phone preview. */
+private val CoverEasing = CubicBezierEasing(
+        AlbumArtMotion.EASE_X1, AlbumArtMotion.EASE_Y1,
+        AlbumArtMotion.EASE_X2, AlbumArtMotion.EASE_Y2)
+
+/**
+ * Enter over a held outgoing frame.
+ *
+ * The exit is a one-millisecond fade scheduled *after* the enter has finished rather than a real
+ * fade out: what has to happen is that the old cover stays fully opaque for the whole transition
+ * and then stops being composed. `ExitTransition.None` would not do - it holds the outgoing
+ * content forever - and any genuine fade reintroduces the luminance dip [FaceCoverImage]
+ * describes.
+ */
+private fun coverTransition(motion: CoverMotion): ContentTransform {
+    if (!motion.animates) {
+        return (fadeIn(snap()) togetherWith fadeOut(snap())).apply { targetContentZIndex = 1f }
+    }
+    return (fadeIn(tween(motion.durationMs, easing = CoverEasing)) +
+            scaleIn(
+                    animationSpec = tween(motion.durationMs, easing = CoverEasing),
+                    initialScale = motion.enterScale) +
+            slideInHorizontally(tween(motion.durationMs, easing = CoverEasing)) { fullWidth ->
+                (fullWidth * motion.enterShiftFraction).roundToInt()
+            })
+            .togetherWith(fadeOut(tween(durationMillis = 1, delayMillis = motion.durationMs)))
+            .apply { targetContentZIndex = 1f }
 }
 
 /**
@@ -1365,13 +1502,20 @@ internal fun ChronoAmbientFace(state: NowPlayingFaceState) {
 /**
  * Resolves the shared [CoverShape] vocabulary into a Compose [Shape] for artwork of [size].
  *
- * Here rather than in one face because two draw a cover the user can reshape - Carousel's rail
- * cards and Note's disc - and the corner is a *fraction* of the size, so the two must derive it the
- * same way or the same choice reads as a different shape on each.
+ * Here rather than in one face because four draw a cover the user can reshape - Carousel's rail
+ * cards, Note's disc, Chat's avatar and Metadata's thumbnail - and each corner is a *fraction* of
+ * the size, so they must derive it the same way or the same choice reads as a different shape on
+ * each. Absolute corners, matching the phone preview's Canvas - see [CoverShape].
  */
-internal fun CoverShape.toComposeShape(size: Dp): Shape =
-        if (this == CoverShape.CIRCLE) CircleShape
-        else RoundedCornerShape(size * cornerFraction)
+internal fun CoverShape.toComposeShape(size: Dp): Shape = when {
+    this == CoverShape.CIRCLE -> CircleShape
+    isUniform -> RoundedCornerShape(size * topLeft)
+    else -> AbsoluteRoundedCornerShape(
+            topLeft = size * topLeft,
+            topRight = size * topRight,
+            bottomRight = size * bottomRight,
+            bottomLeft = size * bottomLeft)
+}
 
 /** The "⋮" overflow glyph, drawn directly so no icon resource is needed. */
 @Composable
@@ -1535,6 +1679,19 @@ internal fun AdaptiveTitleText(
         // intermediate measurement, or the caller would chase sizes that are about to change.
         onLineCount: ((Int) -> Unit)? = null
 ) {
+    // The track-change slide, outermost on purpose: the effect passes below re-enter this
+    // function, and each would otherwise start a slide of its own from the text the pass above it
+    // had already swapped.
+    if (!LocalTrackTextSlideActive.current) {
+        val slide = rememberTrackTextSlide(text, enabled = !state.ambient)
+        CompositionLocalProvider(LocalTrackTextSlideActive provides true) {
+            AdaptiveTitleText(
+                    slide.text, mode, state, fontSize, color, modifier.then(slide.modifier),
+                    fontWeight, fontStyle, fontFamily, letterSpacing, lineHeight, textAlign,
+                    minFontSize, typography, maxLines, shadow, outline, backdrop, onLineCount)
+        }
+        return
+    }
     // Resolved once, here, rather than at each of the four rendering branches below - two of which
     // are private composables that never receive the state. Every title path in the app delegates
     // into this overload, so this is the single point at which the user's alignment override can
@@ -1627,22 +1784,93 @@ internal fun AdaptiveTitleText(
                 text, fontSize, minFontSize, color, fontWeight, fontStyle, fontFamily,
                 letterSpacing, lineHeight, textAlign, modifier, maxLines, onLineCount
         )
-        else -> Text( // "marquee", and the fallback for any value this build doesn't know yet.
-                text = text,
-                color = color,
-                fontSize = fontSize,
-                fontWeight = fontWeight,
-                fontStyle = fontStyle,
-                fontFamily = fontFamily,
-                letterSpacing = letterSpacing,
-                textAlign = textAlign,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = modifier.basicMarquee(),
-                onTextLayout = { onLineCount?.invoke(1) }
-        )
+        // "marquee", and the fallback for any value this build doesn't know yet.
+        else -> {
+            // Whether the line is actually longer than the room it has, which is the only state
+            // the fade below belongs in. Measured rather than assumed: `basicMarquee` hands its
+            // child unbounded width, so the text reports its natural size while the node reports
+            // the room - and a short line in this mode simply sits still, where fading its ends
+            // would eat the first and last letters of a title that is perfectly legible.
+            var roomWidth by remember { mutableIntStateOf(0) }
+            var lineWidth by remember(text) { mutableIntStateOf(0) }
+            Text(
+                    text = text,
+                    color = color,
+                    fontSize = fontSize,
+                    fontWeight = fontWeight,
+                    fontStyle = fontStyle,
+                    fontFamily = fontFamily,
+                    letterSpacing = letterSpacing,
+                    textAlign = textAlign,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = modifier
+                            .onSizeChanged { roomWidth = it.width }
+                            .marqueeFade(enabled = roomWidth in 1 until lineWidth)
+                            // Int.MAX_VALUE, not the default. `basicMarquee` ships with
+                            // `iterations = 3`: the title scrolled three times and then stopped
+                            // dead, and the only thing that appeared to bring it back was a
+                            // pause/resume - which restarts the animation by recomposing, not by
+                            // scrolling again. From the wrist that is indistinguishable from the
+                            // scroll breaking whenever the screen had been off for a while.
+                            .basicMarquee(iterations = Int.MAX_VALUE),
+                    onTextLayout = {
+                        lineWidth = it.size.width
+                        onLineCount?.invoke(1)
+                    }
+            )
+        }
     }
 }
+
+/**
+ * How much of each end a scrolling line dissolves over.
+ *
+ * Wide enough that a glyph visibly thins out rather than being chopped, narrow enough that a short
+ * word is never swallowed whole while it crosses. Shared by all three renderers, so the watch, the
+ * queue and the phone's miniature dissolve over the same distance.
+ */
+internal val MARQUEE_FADE_WIDTH = 18.dp
+
+/**
+ * Dissolves a scrolling line at both ends instead of letting it appear and vanish at a hard edge.
+ *
+ * A marquee clipped to its box reads as text passing behind two invisible walls - every glyph is
+ * fully opaque right up to the moment it is cut in half. Fading the ends makes the same movement
+ * read as text coming into and out of view, which is what it actually is.
+ *
+ * Done as an **alpha mask** (`BlendMode.DstIn` over an offscreen layer) rather than by painting the
+ * background colour over the ends, because on every face here the ground is album artwork: a solid
+ * wash at the edges would be a pair of smudges over the cover. The offscreen layer is what makes
+ * DstIn address the text's own pixels rather than everything drawn beneath it, and it is the one
+ * real cost - a layer per scrolling line, on a line that is already animating every frame.
+ *
+ * [enabled] is a parameter rather than something inferred here because this modifier cannot see
+ * whether the text overflows; the caller measures that, and passing false has to cost nothing.
+ */
+internal fun Modifier.marqueeFade(
+        enabled: Boolean = true,
+        edge: Dp = MARQUEE_FADE_WIDTH
+): Modifier = if (!enabled) this else this
+        .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
+        .drawWithContent {
+            drawContent()
+            // Never more than a third of the width each: on a narrow line a fixed 18dp from both
+            // ends would leave the middle as the only fully-opaque part, which reads as the text
+            // being dimmed rather than as it entering and leaving.
+            val edgePx = edge.toPx().coerceAtMost(size.width / 3f)
+            if (edgePx <= 0f || size.width <= 0f) {
+                return@drawWithContent
+            }
+            val stop = edgePx / size.width
+            drawRect(
+                    brush = Brush.horizontalGradient(
+                            0f to Color.Transparent,
+                            stop to Color.Black,
+                            1f - stop to Color.Black,
+                            1f to Color.Transparent),
+                    blendMode = BlendMode.DstIn)
+        }
 
 /** Single line, font size stepped down until it fits - no wrap, no scroll. */
 @Composable
@@ -2192,6 +2420,15 @@ internal fun ArtistLineText(
          *  resolved, published and read by nothing. */
         mode: String = state.artistTextMode
 ) {
+    if (!LocalTrackTextSlideActive.current) {
+        val slide = rememberTrackTextSlide(text, enabled = !state.ambient)
+        CompositionLocalProvider(LocalTrackTextSlideActive provides true) {
+            ArtistLineText(
+                    slide.text, state, color, fontSize, modifier.then(slide.modifier), fontWeight,
+                    lineHeight, letterSpacing, textAlign, mode)
+        }
+        return
+    }
     if (mode != STATIC_TEXT_MODE) {
         // Every other mode is a measure-and-settle cascade that already exists once, for the
         // title. Reusing it is what keeps "marquee" meaning the same thing on both lines rather
@@ -2316,6 +2553,15 @@ internal fun TitleLineText(
         textAlign: TextAlign? = null,
         maxLines: Int = 1
 ) {
+    if (!LocalTrackTextSlideActive.current) {
+        val slide = rememberTrackTextSlide(text, enabled = !state.ambient)
+        CompositionLocalProvider(LocalTrackTextSlideActive provides true) {
+            TitleLineText(
+                    slide.text, state, color, fontSize, modifier.then(slide.modifier), fontWeight,
+                    fontFamily, lineHeight, letterSpacing, textAlign, maxLines)
+        }
+        return
+    }
     val spec = state.titleTypography
     state.titleOutline?.let { outline ->
         val strokeWidth = with(LocalDensity.current) {
@@ -2610,3 +2856,286 @@ internal fun rememberBlurredCover(art: ImageBitmap, radiusPx: Float): ImageBitma
                 BitmapBlur.blur(art.asAndroidBitmap(), radiusPx).asImageBitmap()
             }.getOrDefault(art)
         }
+
+// --- Motion ------------------------------------------------------------------------------
+
+/**
+ * The two springs a transport press runs on, and the point it turns around at.
+ *
+ * Taken from the Material 3 Expressive motion scheme rather than invented here, and from the
+ * halves of it the platform's own button group uses for this exact gesture: a fast spatial spring
+ * going down, because that one has to keep up with the finger, and a slow one coming back, because
+ * the return is the part that is actually watched. The down spring is barely damped enough to stop
+ * it overshooting; the up spring is not, and the small overshoot as a button settles back is the
+ * whole character of the gesture.
+ *
+ * They are springs rather than durations on purpose. A press has no natural length - it ends when
+ * the finger lifts - so an interruption at any point has to look deliberate, which a tween cannot
+ * do and a spring does by construction.
+ */
+private val TRANSPORT_PRESS_DOWN = spring<Float>(dampingRatio = .7f, stiffness = 800f)
+private val TRANSPORT_PRESS_UP = spring<Float>(dampingRatio = .8f, stiffness = 200f)
+
+/**
+ * How far a press must have risen before a release may turn it around.
+ *
+ * A tap is usually over long before the down spring has arrived, and without this the size of the
+ * gesture depended on how long a finger happened to rest - a quick tap got a nudge and a
+ * deliberate press got the whole thing. The platform's button group solves it the same way and at
+ * the same three quarters: the press goes on rising after the finger has gone, and turns around
+ * once it is nearly there.
+ */
+private const val TRANSPORT_PRESS_TURNAROUND = .75f
+
+/**
+ * How much a side button flattens as it widens.
+ *
+ * Small, and only on the side buttons. The width they gain is real layout, so this is not the
+ * gesture - it is the squash that stops a capsule growing sideways from reading as a capsule that
+ * has simply been re-measured. The centre has none: it swells in both directions at once (its
+ * progress ring swells with it), and flattening something that is growing taller would fight it.
+ */
+internal const val TRANSPORT_PRESS_FLATTEN = .05f
+
+/**
+ * The press state of a transport row that behaves as one group.
+ *
+ * One object for the whole row rather than one per button, because the interesting part of this
+ * gesture is not what the pressed button does - it is what the one beside it does about it. A
+ * slot's width is a function of *every* slot's press, so all three have to be readable from one
+ * place; see [TransportPressLayout] for the rule itself.
+ *
+ * Every value is read straight out of an [Animatable], so a caller reading one in composition
+ * recomposes for the length of a press. That is deliberate here: these widths are layout, and a
+ * `graphicsLayer` read - which is what the rest of this file's motion uses - cannot move a
+ * neighbour.
+ */
+@Stable
+internal class TransportPressGroup internal constructor(
+        private val press: List<Animatable<Float, AnimationVector1D>>,
+        private val base: List<Float>
+) {
+    /** [slot]'s press, 0f at rest and 1f held down. */
+    fun progress(slot: Int): Float = press[slot].value
+
+    /** The dp [slot]'s width gains, or gives up to whichever of its neighbours is being held. */
+    fun widthDelta(slot: Int): Float = TransportPressLayout.deltas(
+            FloatArray(press.size) { press[it].value }, base.toFloatArray())[slot]
+
+    /** Runs one slot's half of the gesture - see [TransportPressEffect], its only caller. */
+    internal suspend fun animate(slot: Int, pressed: Boolean) {
+        val animatable = press[slot]
+        if (pressed) {
+            animatable.animateTo(1f, TRANSPORT_PRESS_DOWN)
+            return
+        }
+        if (animatable.value <= 0f) return
+        if (animatable.value < TRANSPORT_PRESS_TURNAROUND) {
+            // The rise is relaunched rather than resumed because the release cancelled it. Letting
+            // it run and cutting it off at the turnaround keeps the spring's own acceleration,
+            // where animating *to* the turnaround would decelerate into it and read as hesitation.
+            coroutineScope {
+                val rise = launch { animatable.animateTo(1f, TRANSPORT_PRESS_DOWN) }
+                snapshotFlow { animatable.value }.first { it >= TRANSPORT_PRESS_TURNAROUND }
+                rise.cancel()
+            }
+        }
+        animatable.animateTo(0f, TRANSPORT_PRESS_UP)
+    }
+}
+
+/** The press state for a row of [base] resting widths, in dp. */
+@Composable
+internal fun rememberTransportPressGroup(base: List<Float>): TransportPressGroup {
+    val press = remember(base.size) { List(base.size) { Animatable(0f) } }
+    return remember(press, base) { TransportPressGroup(press, base) }
+}
+
+/**
+ * Runs slot [slot]'s half of [group]'s press gesture from [pressed].
+ *
+ * Separate from the group so each button drives its own slot from whatever it already has - an
+ * interaction source for the side buttons, a tap detector's own press flag for the centre - rather
+ * than the row having to own three interaction sources it does not otherwise need.
+ */
+@Composable
+internal fun TransportPressEffect(group: TransportPressGroup, slot: Int, pressed: Boolean) {
+    LaunchedEffect(group, slot, pressed) { group.animate(slot, pressed) }
+}
+
+/** How long the play glyph takes to become the pause glyph. */
+private const val PLAY_PAUSE_MORPH_MS = 280
+
+/** How far each glyph turns as it goes, and how small it gets on the way. Together they read as
+ *  one mark rotating into the other rather than as two pictures being swapped. */
+private const val PLAY_PAUSE_MORPH_DEGREES = 30f
+private const val PLAY_PAUSE_MORPH_SHRINK = .35f
+
+/**
+ * The play/pause glyph, crossing over rather than being swapped.
+ *
+ * The state the button is in is the one thing on a media control everybody looks at, and an
+ * instant swap gives no answer to the tap that caused it: the icon is simply a different icon the
+ * next frame, which is indistinguishable from the face having redrawn for some other reason. The
+ * outgoing mark turns and shrinks away while the incoming one turns and grows into place, so the
+ * change reads as the button having done something.
+ *
+ * Both glyphs stay composed and read the animation inside their `graphicsLayer` blocks, so the
+ * transition costs layer updates rather than a recomposition per frame on the busiest control of
+ * the face.
+ *
+ * Deliberately awake-only: the ambient variants draw their own static glyph, because AOD is styled
+ * by `WEAR_AOD_*` and lights no pixels it does not have to.
+ */
+@Composable
+internal fun PlayPauseIcon(
+        playing: Boolean,
+        tint: Color,
+        size: Dp,
+        modifier: Modifier = Modifier,
+        /** The pause mark is a solid pair of bars where play is a triangle, so a face that gave
+         *  the two different optical sizes keeps doing so. */
+        pauseSize: Dp = size,
+        /** The same for a face that nudges the triangle off-centre to balance its own control. */
+        playOffsetX: Dp = 0.dp,
+        playIcon: Int = commonR.drawable.action_play_filled,
+        pauseIcon: Int = commonR.drawable.action_pause_filled
+) {
+    val progress = animateFloatAsState(
+            targetValue = if (playing) 1f else 0f,
+            animationSpec = tween(PLAY_PAUSE_MORPH_MS, easing = FastOutSlowInEasing),
+            label = "playPauseMorph")
+    Box(modifier = modifier, contentAlignment = Alignment.Center) {
+        Icon(
+                painter = painterResource(playIcon),
+                contentDescription = null,
+                tint = tint,
+                modifier = Modifier
+                        .size(size)
+                        .offset(x = playOffsetX)
+                        .graphicsLayer {
+                            val p = progress.value
+                            alpha = 1f - p
+                            val shrink = 1f - PLAY_PAUSE_MORPH_SHRINK * p
+                            scaleX = shrink
+                            scaleY = shrink
+                            rotationZ = -PLAY_PAUSE_MORPH_DEGREES * p
+                        }
+        )
+        Icon(
+                painter = painterResource(pauseIcon),
+                contentDescription = null,
+                tint = tint,
+                modifier = Modifier
+                        .size(pauseSize)
+                        .graphicsLayer {
+                            val p = progress.value
+                            alpha = p
+                            val shrink = 1f - PLAY_PAUSE_MORPH_SHRINK * (1f - p)
+                            scaleX = shrink
+                            scaleY = shrink
+                            rotationZ = PLAY_PAUSE_MORPH_DEGREES * (1f - p)
+                        }
+        )
+    }
+}
+
+/**
+ * The slide a line of track text makes when the track changes: the old text leaves to the left
+ * and the new one arrives from the right.
+ *
+ * It travels a fraction of the line's own width, capped by [TRACK_TEXT_SLIDE_MAX_DP] - the point
+ * is that the text leaves *its own area*, not that it crosses the watch. Everything is done with
+ * draw-time translation and alpha, so no layout runs and no face's geometry moves.
+ *
+ * Internal rather than private because there are two renderers, as there are for every other
+ * shared decision here: the Compose faces below and the View faces (Classic, Matejdro), which run
+ * the same numbers through `MainActivity.slideClassicTrackText`. One line moving differently from
+ * the other twenty is exactly the per-face drift these helpers exist to end.
+ */
+internal const val TRACK_TEXT_SLIDE_WIDTH_FRACTION = .22f
+internal const val TRACK_TEXT_SLIDE_MAX_DP = 24f
+
+/** The arrival is a shorter move than the exit: text that flies in from as far as it left reads
+ *  as a carousel, where this is one line being replaced. */
+internal const val TRACK_TEXT_SLIDE_IN_RATIO = .6f
+internal const val TRACK_TEXT_SLIDE_OUT_MS = 170
+internal const val TRACK_TEXT_SLIDE_IN_MS = 230
+
+/**
+ * True while an enclosing text helper is already carrying the slide.
+ *
+ * Every one of the three helpers re-enters itself or another one - the title path recurses once
+ * per effect (backdrop, outline, shadow) and the artist line delegates into the title cascade for
+ * every non-static mode - so without this the same change would be animated two or three times
+ * over, each nested copy starting its own slide from the text the one above had already swapped.
+ */
+private val LocalTrackTextSlideActive = compositionLocalOf { false }
+
+/** The text to draw right now, and the modifier that carries it through the change. */
+@Stable
+internal class TrackTextSlideState<T> internal constructor(val text: T, val modifier: Modifier)
+
+/**
+ * The track-change slide for a line a face draws itself.
+ *
+ * Every line that goes through [AdaptiveTitleText], [ArtistLineText] or [TitleLineText] already
+ * has it. Two genuinely cannot use those helpers - Chat's artist sits start-aligned inside a
+ * bubble it does not size and applies its spec inline - and they change with the track like any
+ * other, so the slide is available on its own rather than being something only the helpers get.
+ *
+ * [content] receives the text to draw and the modifier that carries it; a caller that is already
+ * inside one of the helpers is handed its own text back untouched.
+ */
+@Composable
+internal fun TrackTextSlide(
+        text: String,
+        state: NowPlayingFaceState,
+        content: @Composable (text: String, modifier: Modifier) -> Unit
+) {
+    if (LocalTrackTextSlideActive.current) {
+        content(text, Modifier)
+        return
+    }
+    val slide = rememberTrackTextSlide(text, enabled = !state.ambient)
+    CompositionLocalProvider(LocalTrackTextSlideActive provides true) {
+        content(slide.text, slide.modifier)
+    }
+}
+
+/**
+ * Holds [text] back for the length of the exit, then swaps it and brings it in.
+ *
+ * Nothing animates on the first composition: the remembered value starts as the text itself, so a
+ * face that is simply being built draws its title where it belongs. [enabled] is false in ambient,
+ * where motion is exactly what must not happen.
+ */
+@Composable
+private fun <T> rememberTrackTextSlide(text: T, enabled: Boolean): TrackTextSlideState<T> {
+    var shown by remember { mutableStateOf(text) }
+    val progress = remember { Animatable(0f) }
+    val maxShiftPx = with(LocalDensity.current) { TRACK_TEXT_SLIDE_MAX_DP.dp.toPx() }
+    LaunchedEffect(text, enabled) {
+        if (text == shown) return@LaunchedEffect
+        if (!enabled) {
+            shown = text
+            progress.snapTo(0f)
+            return@LaunchedEffect
+        }
+        // A change landing mid-slide is not restarted from zero: the exit continues from wherever
+        // the line already is, which keeps it travelling leftwards instead of stepping back.
+        progress.animateTo(1f, tween(TRACK_TEXT_SLIDE_OUT_MS, easing = FastOutLinearInEasing))
+        shown = text
+        progress.snapTo(-1f)
+        progress.animateTo(0f, tween(TRACK_TEXT_SLIDE_IN_MS, easing = LinearOutSlowInEasing))
+    }
+    val modifier = remember(progress, maxShiftPx) {
+        Modifier.graphicsLayer {
+            val p = progress.value
+            val distance = minOf(size.width * TRACK_TEXT_SLIDE_WIDTH_FRACTION, maxShiftPx)
+            translationX = -distance * p * (if (p < 0f) TRACK_TEXT_SLIDE_IN_RATIO else 1f)
+            alpha = 1f - abs(p)
+        }
+    }
+    return TrackTextSlideState(shown, modifier)
+}

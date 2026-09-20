@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">معايرة القرص</string>
+    <string name="pinch_cal_intro">اشدد السوار جيدًا وارفع معصمك. نحو 45 ثانية: سكون، ست ضغطات مزدوجة، ثم حركة الذراع. لا تُرسل أي أوامر موسيقى.</string>
+    <string name="pinch_cal_start">ابدأ</string>
+    <string name="pinch_cal_restart">ابدأ من جديد</string>
+    <string name="pinch_cal_test">اختبار بلا إجراءات</string>
+    <string name="pinch_cal_save">حفظ المعايرة</string>
+    <string name="pinch_cal_close">إغلاق</string>
+
+    <string name="pinch_cal_step_ready">استعد</string>
+    <string name="pinch_cal_step_ready_hint">ارفع معصمك وليكن وجه الشاشة نحوك.</string>
+    <string name="pinch_cal_step_rest">لا تتحرك</string>
+    <string name="pinch_cal_step_rest_hint">لا تضغط بإصبعيك.</string>
+    <string name="pinch_cal_step_attempt">المحاولة %1$d من %2$d</string>
+    <string name="pinch_cal_step_pinch">قرص مزدوج</string>
+    <string name="pinch_cal_step_pinch_hint">المس الإبهام والسبابة معًا مرتين.</string>
+    <string name="pinch_cal_step_wait">استرخِ</string>
+    <string name="pinch_cal_step_wait_hint">المحاولة التالية قادمة.</string>
+    <string name="pinch_cal_step_prepare">أوشكنا على الانتهاء</string>
+    <string name="pinch_cal_step_prepare_hint">بعد ذلك: حرّك ذراعك دون ضغط.</string>
+    <string name="pinch_cal_step_move">حرّك ذراعك</string>
+    <string name="pinch_cal_step_move_hint">أدِرها وحرّكها بشكل طبيعي وليكن وجه الشاشة نحوك. لا تضغط بإصبعيك.</string>
+
+    <string name="pinch_cal_testing">اختبار</string>
+    <string name="pinch_cal_detections">حالات الكشف</string>
+    <string name="pinch_cal_test_hint">متبقٍ %1$d ث · بلا إجراءات</string>
+
+    <string name="pinch_cal_ready">تمت المعايرة. جرّب قبل الحفظ: اضغط بإصبعيك عدة مرات ثم حرّك ذراعك بشكل عادي.</string>
+    <string name="pinch_cal_test_done">%1$d حالة كشف. إذا كان ذلك يطابق ضغطاتك المزدوجة فاحفظ. إذا احتُسبت حركات الذراع فأعد المعايرة أو خفّض الحساسية على الهاتف.</string>
+    <string name="pinch_cal_failed_incomplete">انقطع التسجيل. أبقِ الشاشة مضاءة ومواجهة لك طوال الاختبار ثم ابدأ من جديد.</string>
+    <string name="pinch_cal_failed_weak">لم تتميّز ضغطاتك عن معصم ثابت. شُدّ السوار قليلًا واضغط بقوة أكبر.</string>
+    <string name="pinch_cal_failed_unrecognized">لم يُتعرَّف على معظم المحاولات كقرص مزدوج. اضغط بوضوح مرتين في كل محاولة وأبقِ ذراعك ثابتة.</string>
+    <string name="pinch_cal_failed_movement">بدت حركة ذراعك كضغطات. أبقِ معصمك أكثر ثباتًا أثناء المحاولات ثم ابدأ من جديد.</string>
+    <string name="pinch_cal_failed_kept">تم الاحتفاظ بالمعايرة السابقة.</string>
+    <string name="pinch_cal_interrupted">توقف لأن الشاشة انطفأت. ابدأ من جديد والشاشة مضاءة.</string>
+    <string name="pinch_cal_unavailable">مستشعرات الحركة غير متاحة. أعد فتح هذه الشاشة وحاول مرة أخرى.</string>
+
+    <string name="pinch_cal_sending">جارٍ الحفظ على الهاتف…</string>
+    <string name="pinch_cal_saved">تم حفظ المعايرة. على هاتفك اختر تجريبي في إعدادات القرص واحفظ.</string>
+    <string name="pinch_cal_saved_active">تم حفظ المعايرة. الكاشف التجريبي يعمل أثناء فتح المشغّل.</string>
+    <string name="pinch_cal_send_failed">تعذّر تأكيد الحفظ على الهاتف. تحقق من الاتصال واضغط على حفظ المعايرة مرة أخرى.</string>
+    <string name="pinch_cal_legend_motion">الحركة</string>
+    <string name="pinch_cal_legend_rotation">الدوران</string>
+    <string name="pinch_cal_legend_target">العتبة</string>
+    <string name="pinch_cal_no_signal">لا توجد بيانات من المستشعر</string>
+    <string name="pinch_cal_detail">تم التعرّف على %1$d من %2$d · لمسات في كل محاولة: %3$s</string>
+</resources>

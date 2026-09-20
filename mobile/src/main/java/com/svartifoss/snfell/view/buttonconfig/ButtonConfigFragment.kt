@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.view.buttonconfig
 
+import android.content.SharedPreferences
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
@@ -19,6 +20,9 @@ import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.common.CenterButton
 import com.svartifoss.snfell.common.DoublePinchGesture
 import com.svartifoss.snfell.common.HandGestureAvailability
+import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.PinchCalibration
+import com.matejdro.wearutils.preferences.definition.Preferences
 import com.svartifoss.snfell.common.ScreenButtons
 import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.SwipeGesture
@@ -41,6 +45,7 @@ import dagger.Provides
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 import javax.inject.Named
+import com.svartifoss.snfell.view.styleAsBetaBadge
 
 class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
     companion object {
@@ -83,13 +88,35 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
 
     override fun onResume() {
         super.onResume()
-        // The developer switch lives on another screen, so re-check it every time this one comes
-        // back rather than only at inflation.
-        applyHandGestureVisibility()
+        updateHandGestureHint()
+        // The accent can change while this screen is away.
+        binding.handGesturesBeta.styleAsBetaBadge()
+    }
+
+    /**
+     * The mode and the calibration both change off this screen - in the pinch settings dialog,
+     * which is a window over it and does not pause it, and on the watch, whose calibration arrives
+     * through preference sync - so the hint listens instead of waiting for the next resume.
+     * Held as a field: SharedPreferences keeps its listeners weakly.
+     */
+    private val handGesturePreferenceListener =
+            SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+                if (key == MiscPreferences.WEAR_HAND_GESTURE_MODE.key ||
+                        key == MiscPreferences.WEAR_PINCH_CALIBRATION.key) {
+                    activity?.runOnUiThread { if (isAdded && view != null) updateHandGestureHint() }
+                }
+            }
+
+    override fun onStop() {
+        PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .unregisterOnSharedPreferenceChangeListener(handGesturePreferenceListener)
+        super.onStop()
     }
 
     override fun onStart() {
         super.onStart()
+        PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .registerOnSharedPreferenceChangeListener(handGesturePreferenceListener)
         if (parentFragmentManager.findFragmentById(R.id.fragment_container) !== this) return
 
         val activity = activity
@@ -124,7 +151,7 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         // has, so it sits after the rows every watch does have rather than between them.
         setupDoublePinchRow()
         updateHandGestureHint()
-        applyHandGestureVisibility()
+        binding.handGesturesBeta.styleAsBetaBadge()
         binding.quickPanelLink.setOnClickListener {
             (activity as? MainActivity)?.openActionsMenu()
         }
@@ -227,22 +254,10 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         doublePinchTile = IconTile(tileBinding, R.drawable.ic_plus, label, label)
     }
 
-    /**
-     * The hand gesture is archived: Wear OS routes it as the semantic primary action, but only a
-     * couple of Pixel watches supply one, the user has to switch it on in the watch's own
-     * settings, and every failure looks identical from the wrist - so the whole section is hidden
-     * behind the same "Show archived options" developer switch the retired faces and fonts use,
-     * rather than offering every other user a row that can only ever be inert. Nothing about the
-     * watch-side subscription changes: an assignment made while it was visible keeps working.
-     */
-    private fun applyHandGestureVisibility() {
-        val visible = PreferenceManager.getDefaultSharedPreferences(requireContext())
-                .getBoolean("dev_show_archived", false)
-        val visibility = if (visible) View.VISIBLE else View.GONE
-        binding.handGesturesCaption.visibility = visibility
-        binding.handGesturesHint.visibility = visibility
-        binding.handGestureContainer?.visibility = visibility
-    }
+    // The section is offered to everyone, marked BETA (hand_gestures_beta). It used to sit behind
+    // the "Show archived options" developer switch while the only inputs were the few watches
+    // with a native detector; the calibrated experimental detector makes it usable on any watch
+    // with motion sensors, and the hint below says which state this watch is in.
 
     /**
      * What the watch last reported about the primary hand gesture, or `null` while the phone has
@@ -269,13 +284,20 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
 
     /** The section caption's summary: one line, naming the state this watch is actually in. */
     private fun updateHandGestureHint() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        if (Preferences.getString(prefs, MiscPreferences.WEAR_HAND_GESTURE_MODE) == "experimental") {
+            val profile = PinchCalibration.decode(Preferences.getString(prefs, MiscPreferences.WEAR_PINCH_CALIBRATION))
+            // Uncalibrated, the watch keeps using its own detector (DoublePinchGestureController
+            // falls back to it), so the hint says that rather than implying the gesture is off.
+            binding.handGesturesHint.setText(if (profile == null) R.string.pinch_controls_uncalibrated
+                    else R.string.pinch_controls_calibrated)
+            return
+        }
         binding.handGesturesHint.setText(handGestureStateString())
     }
 
-    /** The verdict first, then the mechanics - a watch that cannot do this at all should not
-     *  have to be read past three paragraphs of instructions to find that out. */
-    private fun handGestureNote(): CharSequence = getString(handGestureStateString()) +
-            "\n\n" + getString(R.string.hand_gesture_how_it_works)
+    /** Keep the action window brief; availability is shown beside the Controls section. */
+    private fun handGestureNote(): CharSequence = getString(R.string.pinch_gesture_note)
 
     /** Populates the "Mini buttons" section: 3 fixed tiles, one per [ScreenButtons] slot, in
      *  the same left-to-right order the watch renders them under the track time. Unlike swipes

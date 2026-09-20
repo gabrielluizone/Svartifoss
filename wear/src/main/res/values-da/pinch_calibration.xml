@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Kalibrer knib</string>
+    <string name="pinch_cal_intro">Spænd urremmen godt og hold håndleddet oppe. Cirka 45 sekunder: hvile, seks dobbelte knib og derefter armbevægelse. Der sendes ingen musikkommandoer.</string>
+    <string name="pinch_cal_start">Start</string>
+    <string name="pinch_cal_restart">Start forfra</string>
+    <string name="pinch_cal_test">Test uden handlinger</string>
+    <string name="pinch_cal_save">Gem kalibrering</string>
+    <string name="pinch_cal_close">Luk</string>
+
+    <string name="pinch_cal_step_ready">Gør dig klar</string>
+    <string name="pinch_cal_step_ready_hint">Hold håndleddet oppe med skærmen mod dig.</string>
+    <string name="pinch_cal_step_rest">Hold dig i ro</string>
+    <string name="pinch_cal_step_rest_hint">Knib ikke.</string>
+    <string name="pinch_cal_step_attempt">Forsøg %1$d af %2$d</string>
+    <string name="pinch_cal_step_pinch">Dobbelt knib</string>
+    <string name="pinch_cal_step_pinch_hint">Rør tommelfingeren og pegefingeren to gange.</string>
+    <string name="pinch_cal_step_wait">Slap af</string>
+    <string name="pinch_cal_step_wait_hint">Næste forsøg kommer snart.</string>
+    <string name="pinch_cal_step_prepare">Næsten færdig</string>
+    <string name="pinch_cal_step_prepare_hint">Derefter: bevæg armen uden at knibe.</string>
+    <string name="pinch_cal_step_move">Bevæg armen</string>
+    <string name="pinch_cal_step_move_hint">Drej og sving den naturligt med skærmen mod dig. Knib ikke.</string>
+
+    <string name="pinch_cal_testing">Test</string>
+    <string name="pinch_cal_detections">Registreringer</string>
+    <string name="pinch_cal_test_hint">%1$d s tilbage · ingen handlinger</string>
+
+    <string name="pinch_cal_ready">Kalibreret. Test, før du gemmer: knib et par gange, og bevæg derefter armen som normalt.</string>
+    <string name="pinch_cal_test_done">%1$d registreringer. Passer det med dine dobbelte knib, så gem. Hvis armbevægelser blev talt med, så kalibrer igen eller sænk følsomheden på telefonen.</string>
+    <string name="pinch_cal_failed_incomplete">Optagelsen blev afbrudt. Hold skærmen tændt og vendt mod dig under hele testen, og start forfra.</string>
+    <string name="pinch_cal_failed_weak">Dine knib skilte sig ikke ud fra et roligt håndled. Spænd remmen lidt og knib hårdere.</string>
+    <string name="pinch_cal_failed_unrecognized">De fleste forsøg blev ikke genkendt som et dobbelt knib. Knib tydeligt to gange i hvert forsøg, og hold armen i ro.</string>
+    <string name="pinch_cal_failed_movement">Din armbevægelse lignede knib. Hold håndleddet mere roligt under forsøgene, og start forfra.</string>
+    <string name="pinch_cal_failed_kept">Den tidligere kalibrering blev beholdt.</string>
+    <string name="pinch_cal_interrupted">Stoppet, fordi skærmen slukkede. Start forfra med tændt skærm.</string>
+    <string name="pinch_cal_unavailable">Bevægelsessensorerne er ikke tilgængelige. Åbn denne visning igen, og prøv igen.</string>
+
+    <string name="pinch_cal_sending">Gemmer på telefonen …</string>
+    <string name="pinch_cal_saved">Kalibreringen er gemt. Vælg Eksperimentel i indstillingerne for knib på telefonen, og gem.</string>
+    <string name="pinch_cal_saved_active">Kalibreringen er gemt. Den eksperimentelle detektor er aktiv, mens afspilleren er åben.</string>
+    <string name="pinch_cal_send_failed">Det kunne ikke bekræftes, at kalibreringen blev gemt på telefonen. Tjek forbindelsen, og tryk på Gem kalibrering igen.</string>
+    <string name="pinch_cal_legend_motion">Bevægelse</string>
+    <string name="pinch_cal_legend_rotation">Rotation</string>
+    <string name="pinch_cal_legend_target">Tærskel</string>
+    <string name="pinch_cal_no_signal">Ingen sensordata</string>
+    <string name="pinch_cal_detail">%1$d af %2$d genkendt · berøringer pr. forsøg: %3$s</string>
+</resources>

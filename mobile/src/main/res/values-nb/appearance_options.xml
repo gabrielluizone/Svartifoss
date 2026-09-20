@@ -96,4 +96,12 @@
         <item>Tertiær albumfarge</item>
         <item>Neonomriss</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Blad</item>
+        <item>Dråpe</item>
+        <item>Bue</item>
+        <item>Småstein</item>
+        <item>Skjold</item>
+    </string-array>
 </resources>

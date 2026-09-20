@@ -96,4 +96,12 @@
         <item>Терцијарна боја албума</item>
         <item>Неонски обрис</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Лист</item>
+        <item>Кап</item>
+        <item>Лук</item>
+        <item>Облутак</item>
+        <item>Штит</item>
+    </string-array>
 </resources>

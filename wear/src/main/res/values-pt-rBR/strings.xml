@@ -36,6 +36,7 @@
     <string name="idle_action_queue">Abrir tocados recentemente</string>
 
     <string name="no_phone">Nenhum celular conectado</string>
+    <string name="phone_unavailable">Desbloqueie o celular para controlar a reprodução</string>
     <string name="playback_stopped">Parado</string>
     <string name="error">ERRO</string>
     <string name="error_play_services">Erro no Play Services</string>

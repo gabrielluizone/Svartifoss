@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">校准捏合</string>
+    <string name="pinch_cal_intro">戴紧表带并抬起手腕。约 45 秒：静止、六次双捏合，然后活动手臂。不会发送任何音乐命令。</string>
+    <string name="pinch_cal_start">开始</string>
+    <string name="pinch_cal_restart">重新开始</string>
+    <string name="pinch_cal_test">无操作测试</string>
+    <string name="pinch_cal_save">保存校准</string>
+    <string name="pinch_cal_close">关闭</string>
+
+    <string name="pinch_cal_step_ready">准备</string>
+    <string name="pinch_cal_step_ready_hint">抬起手腕，屏幕朝向自己。</string>
+    <string name="pinch_cal_step_rest">保持不动</string>
+    <string name="pinch_cal_step_rest_hint">不要捏合。</string>
+    <string name="pinch_cal_step_attempt">第 %1$d 次，共 %2$d 次</string>
+    <string name="pinch_cal_step_pinch">双捏合</string>
+    <string name="pinch_cal_step_pinch_hint">将拇指和食指并拢两次。</string>
+    <string name="pinch_cal_step_wait">放松</string>
+    <string name="pinch_cal_step_wait_hint">下一次尝试即将开始。</string>
+    <string name="pinch_cal_step_prepare">快好了</string>
+    <string name="pinch_cal_step_prepare_hint">接下来：活动手臂，不要捏合。</string>
+    <string name="pinch_cal_step_move">活动手臂</string>
+    <string name="pinch_cal_step_move_hint">自然地转动和摆动，屏幕保持朝向自己。不要捏合。</string>
+
+    <string name="pinch_cal_testing">测试</string>
+    <string name="pinch_cal_detections">检测次数</string>
+    <string name="pinch_cal_test_hint">剩余 %1$d 秒 · 不执行操作</string>
+
+    <string name="pinch_cal_ready">已校准。保存前先试一试：捏合几次，然后正常活动手臂。</string>
+    <string name="pinch_cal_test_done">检测到 %1$d 次。如果与您的双捏合次数一致，请保存。如果手臂动作也被计入，请重新校准或在手机上降低灵敏度。</string>
+    <string name="pinch_cal_failed_incomplete">录制被中断。请在整个测试期间保持屏幕亮起并朝向自己，然后重新开始。</string>
+    <string name="pinch_cal_failed_weak">您的捏合与静止的手腕没有明显区别。请把表带再收紧一点，并更用力地捏合。</string>
+    <string name="pinch_cal_failed_unrecognized">大多数尝试没有被识别为双捏合。每次尝试请清晰地捏合两次，并保持手臂不动。</string>
+    <string name="pinch_cal_failed_movement">您的手臂动作看起来像捏合。尝试期间请让手腕更稳定，然后重新开始。</string>
+    <string name="pinch_cal_failed_kept">已保留之前的校准。</string>
+    <string name="pinch_cal_interrupted">因屏幕熄灭而停止。请在屏幕亮起时重新开始。</string>
+    <string name="pinch_cal_unavailable">运动传感器不可用。请重新打开此屏幕后再试。</string>
+
+    <string name="pinch_cal_sending">正在保存到手机…</string>
+    <string name="pinch_cal_saved">校准已保存。请在手机的捏合设置中选择实验性并保存。</string>
+    <string name="pinch_cal_saved_active">校准已保存。播放器打开期间，实验性检测器会保持启用。</string>
+    <string name="pinch_cal_send_failed">无法确认已保存到手机。请检查连接，然后再次点按保存校准。</string>
+    <string name="pinch_cal_legend_motion">动作</string>
+    <string name="pinch_cal_legend_rotation">旋转</string>
+    <string name="pinch_cal_legend_target">阈值</string>
+    <string name="pinch_cal_no_signal">无传感器数据</string>
+    <string name="pinch_cal_detail">识别 %1$d / %2$d · 每次尝试的点按数：%3$s</string>
+</resources>

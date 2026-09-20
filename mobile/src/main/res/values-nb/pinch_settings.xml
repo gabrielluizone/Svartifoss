@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Knipeinnstillinger</string>
+    <string name="pinch_settings_intro">Hvordan skal klokken registrere bevegelsen din?</string>
+    <string name="pinch_mode_native">Klokkens detektor</string>
+    <string name="pinch_mode_experimental">Eksperimentell detektor</string>
+    <string name="pinch_native_description">Bruker klokkens innebygde gjenkjenning. Ingen kalibrering eller følsomhetsinnstillinger.</string>
+    <string name="pinch_experimental_description">Registrerer håndleddsbevegelser med kalibreringen din. Den kan utløses ved en feil og bruker mer batteri mens spilleren er åpen.</string>
+    <string name="pinch_profile_missing">Ikke kalibrert ennå. Du kan lagre denne modusen nå: klokken bruker sin egen detektor til en kalibrering er lagret der, og bytter så av seg selv.</string>
+    <string name="pinch_profile_saved">Kalibreringen er lagret. Klar til bruk.</string>
+    <string name="pinch_calibration_step">1. Kalibrer bevegelsen din</string>
+    <string name="pinch_tuning_step">2. Juster gjenkjenningen</string>
+    <string name="pinch_calibrate_watch">Kalibrer på klokken</string>
+    <string name="pinch_recalibrate_watch">Kalibrer på nytt</string>
+    <string name="pinch_open_instruction">Åpne Svartifoss på klokken. Følg testen der og lagre kalibreringen.</string>
+    <string name="pinch_open_sending">Kobler til klokken …</string>
+    <string name="pinch_open_sent">Fortsett på klokken. Hvis testen ikke åpnes, åpne Svartifoss der på nytt og prøv igjen.</string>
+    <string name="pinch_open_failed">Klokken er utilgjengelig. Sjekk tilkoblingen og oppdater begge appene, og prøv så igjen.</string>
+    <string name="pinch_sensitivity_label">Følsomhet</string>
+    <string name="pinch_sensitivity_help">Øk hvis knip ikke registreres. Reduser hvis andre bevegelser utløser handlinger.</string>
+    <string name="pinch_gap_label">Tid mellom knip</string>
+    <string name="pinch_gap_help">Lengste tid fra første til andre knip. Øk for en tregere bevegelse.</string>
+    <string name="pinch_cooldown_label">Pause mellom kommandoer</string>
+    <string name="pinch_cooldown_help">Hvor lenge det ventes etter en handling før neste bevegelse godtas.</string>
+    <string name="pinch_value_percent">%1$d %%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Flere justeringer</string>
+    <string name="pinch_advanced_hide">Færre justeringer</string>
+    <string name="pinch_shared_settings">Disse innstillingene gjelder mens musikk spilles eller er satt på pause.</string>
+    <string name="pinch_settings_save">Lagre</string>
+    <string name="pinch_gesture_note">Berør tommelen og pekefingeren mot hverandre to ganger, med spilleren åpen og klokkens skjerm på.</string>
+    <string name="pinch_controls_uncalibrated">Eksperimentell detektor valgt, ikke kalibrert ennå. Klokkens egen detektor brukes til du kalibrerer.</string>
+    <string name="pinch_controls_calibrated">Eksperimentell detektor kalibrert. Knip to ganger mens Svartifoss-spilleren er åpen.</string>
+</resources>

@@ -96,4 +96,12 @@
         <item>สีลำดับสามของอัลบั้ม</item>
         <item>เส้นขอบนีออน</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>ใบไม้</item>
+        <item>หยดน้ำ</item>
+        <item>ส่วนโค้ง</item>
+        <item>ก้อนกรวด</item>
+        <item>โล่</item>
+    </string-array>
 </resources>

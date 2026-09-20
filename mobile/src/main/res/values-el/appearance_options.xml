@@ -96,4 +96,12 @@
         <item>Τριτεύον χρώμα άλμπουμ</item>
         <item>Νέον περίγραμμα</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Φύλλο</item>
+        <item>Σταγόνα</item>
+        <item>Τόξο</item>
+        <item>Βότσαλο</item>
+        <item>Ασπίδα</item>
+    </string-array>
 </resources>

@@ -13,6 +13,12 @@
          the phone connection alive while music plays / the UI is open and shows a transport
          OngoingActivity, so mediaPlayback is the closest-fitting type. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <!-- The other foreground service, wearutils' LogTransmitter: it streams this watch's log
+         files to the phone over a Data Layer channel, which is what dataSync describes. It
+         declares no type of its own (the library predates the requirement) and calls
+         startForeground() in onCreate, so without this the "send logs" diagnostic died with
+         MissingForegroundServiceTypeException the moment the phone asked for logs. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <!-- targetSdk 33+ (Android 13): notifications, including the foreground service's
          OngoingActivity, require this permission. Requested once at runtime in MainActivity so
          the notification keeps showing as it did pre-33. -->
@@ -33,12 +39,27 @@
             android:name="com.google.android.wearable"
             android:required="true" />
         <!--
-               Set to true if your app is Standalone, that is, it does not require the handheld
-               app to run.
+             This flag governs *distribution*, not function: it tells Play whether the watch half
+             may be installed on a watch on its own. It is not a claim that the app is useful
+             without the phone - it plainly is not, and nothing about that changed.
+
+             It was `false`, which is the honest reading of the sentence Google writes next to it,
+             and it made the watch app unreachable. A non-standalone watch app is not listed
+             independently on the watch's Play Store - it does not come up in search there - and
+             modern Wear OS does not push the companion onto the watch when the phone half is
+             installed, the way the old model did. So for anyone who did not already have the app
+             in their Play library there was no route to install it at all: no button under the
+             phone listing, nothing in the watch's search. Reproduced on a clean account that had
+             joined the group and accepted the test invitation, 2026-09-11.
+
+             Nobody is stranded by the watch half arriving first. MainActivity extends
+             `WearCompanionWatchActivity`, which shows `PhoneAppNoticeActivity` when the phone app
+             is not present, and the `play` flavour's `no_phone_app_description` already sends the
+             user to this same listing on their phone.
         -->
         <meta-data
             android:name="com.google.android.wearable.standalone"
-            android:value="false" />
+            android:value="true" />
 
         <activity
             android:name=".watch.view.MainActivity"
@@ -53,6 +74,9 @@
         </activity>
 
         <activity android:name="com.matejdro.wearutils.companionnotice.PhoneAppNoticeActivity" />
+        <activity android:name=".watch.input.PinchCalibrationActivity"
+            android:launchMode="singleTask"
+            android:exported="false" />
 
         <!-- Invisible bridge launched by a ShortcutsTileService chip: opens the shortcut on the
              phone and asks it to play, then finishes. Exported because the Tile framework (a
@@ -180,7 +204,12 @@
              self-update path) are registered by the `github` flavor only
              (src/github/AndroidManifest.xml). -->
 
-        <service android:name="com.matejdro.wearutils.logging.LogTransmitter" />
+        <!-- The type has to be declared here rather than in wearutils: the library's own manifest
+             carries no entry at all (@SuppressLint("Registered") - it is optional there), so this
+             declaration is the only one the merger sees. See FOREGROUND_SERVICE_DATA_SYNC above. -->
+        <service
+            android:name="com.matejdro.wearutils.logging.LogTransmitter"
+            android:foregroundServiceType="dataSync" />
 
         <service
             android:name="pl.tajchert.exceptionwear.ExceptionService"
@@ -195,9 +224,9 @@
         <service
             android:name=".watch.tile.MediaTileService"
             android:exported="true"
-            android:label="@string/tile_label"
+            android:label="@string/queue_now_playing"
             android:description="@string/tile_description"
-            android:icon="@drawable/ic_complication_picker"
+            android:icon="@drawable/ic_tile_now_playing"
             android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
             <intent-filter>
                 <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />
@@ -205,16 +234,16 @@
 
             <meta-data
                 android:name="androidx.wear.tiles.PREVIEW"
-                android:resource="@drawable/tile_preview" />
+                android:resource="@drawable/tile_media_preview" />
         </service>
 
         <!-- Browse Tile: the user's streaming shortcuts, one tap away -->
         <service
             android:name=".watch.tile.ShortcutsTileService"
             android:exported="true"
-            android:label="@string/shortcuts_tile_label"
+            android:label="@string/shortcuts_tile_title"
             android:description="@string/shortcuts_tile_description"
-            android:icon="@drawable/ic_complication_picker"
+            android:icon="@drawable/ic_tile_shortcuts"
             android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
             <intent-filter>
                 <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />
@@ -222,7 +251,7 @@
 
             <meta-data
                 android:name="androidx.wear.tiles.PREVIEW"
-                android:resource="@drawable/tile_preview" />
+                android:resource="@drawable/tile_shortcuts_preview" />
         </service>
 
         <!-- Watch-face complication: current album cover, tap to open the player -->

@@ -60,6 +60,20 @@ object StandardIcons {
             getButtonKey(SpecialButtonCodes.TURN_ROTARY_CCW) to R.drawable.button_turn_ccw
     )
 
+    /**
+     * Whether the watch can draw this action's icon from its own copy of the vector.
+     *
+     * [iconRes] is the resource the phone would otherwise rasterize and send; null means the action
+     * has no opinion, which is the ordinary case. When it is declared and differs from the entry
+     * this map holds for the key, the key no longer implies the drawable and the bitmap has to
+     * travel - the numbered repeat-one glyph is the case that forced this. Deliberately a
+     * comparison rather than a list of excluded keys: the two repeat modes whose icon *is* the
+     * local vector keep skipping the transfer, and the next parameterised action needs no entry
+     * here at all.
+     */
+    fun canUseLocalIcon(key: String, iconRes: Int? = null): Boolean =
+            hasIcon(key) && (iconRes == null || iconRes == getIcon(key))
+
     fun hasIcon(key: String): Boolean = iconMap.containsKey(key)
     fun getIcon(key: String): Int = iconMap[key] ?: 0
 

@@ -96,4 +96,12 @@
         <item>Culoare terțiară album</item>
         <item>Contur neon</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Frunză</item>
+        <item>Picătură</item>
+        <item>Arc</item>
+        <item>Pietricică</item>
+        <item>Scut</item>
+    </string-array>
 </resources>

@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Calibrar pellizco</string>
+    <string name="pinch_cal_intro">Ajusta bien la correa y mantén la muñeca en alto. Unos 45 segundos: reposo, seis pellizcos dobles y después movimiento del brazo. No se envía ningún comando de música.</string>
+    <string name="pinch_cal_start">Iniciar</string>
+    <string name="pinch_cal_restart">Reiniciar</string>
+    <string name="pinch_cal_test">Probar sin acciones</string>
+    <string name="pinch_cal_save">Guardar calibración</string>
+    <string name="pinch_cal_close">Cerrar</string>
+
+    <string name="pinch_cal_step_ready">Prepárate</string>
+    <string name="pinch_cal_step_ready_hint">Muñeca en alto, con la pantalla hacia ti.</string>
+    <string name="pinch_cal_step_rest">Quieto</string>
+    <string name="pinch_cal_step_rest_hint">No pellizques.</string>
+    <string name="pinch_cal_step_attempt">Intento %1$d de %2$d</string>
+    <string name="pinch_cal_step_pinch">Doble pellizco</string>
+    <string name="pinch_cal_step_pinch_hint">Toca dos veces con el pulgar y el índice.</string>
+    <string name="pinch_cal_step_wait">Relájate</string>
+    <string name="pinch_cal_step_wait_hint">Viene el siguiente intento.</string>
+    <string name="pinch_cal_step_prepare">Casi listo</string>
+    <string name="pinch_cal_step_prepare_hint">Ahora: mueve el brazo sin pellizcar.</string>
+    <string name="pinch_cal_step_move">Mueve el brazo</string>
+    <string name="pinch_cal_step_move_hint">Gíralo y muévelo con naturalidad, con la pantalla hacia ti. No pellizques.</string>
+
+    <string name="pinch_cal_testing">Prueba</string>
+    <string name="pinch_cal_detections">Detecciones</string>
+    <string name="pinch_cal_test_hint">Quedan %1$d s · sin acciones</string>
+
+    <string name="pinch_cal_ready">Calibrado. Pruébalo antes de guardar: haz varios pellizcos y luego mueve el brazo con normalidad.</string>
+    <string name="pinch_cal_test_done">%1$d detecciones. Si coincide con tus pellizcos dobles, guarda. Si se contaron movimientos del brazo, calibra de nuevo o baja la sensibilidad en el teléfono.</string>
+    <string name="pinch_cal_failed_incomplete">La grabación se cortó. Mantén la pantalla encendida y hacia ti durante toda la prueba y empieza de nuevo.</string>
+    <string name="pinch_cal_failed_weak">Tus pellizcos no se distinguían de una muñeca quieta. Aprieta un poco más la correa y pellizca con más fuerza.</string>
+    <string name="pinch_cal_failed_unrecognized">La mayoría de los intentos no se reconocieron como un doble pellizco. Pellizca dos veces, con claridad, en cada intento y mantén el brazo quieto.</string>
+    <string name="pinch_cal_failed_movement">El movimiento de tu brazo parecía pellizcos. Mantén la muñeca más firme durante los intentos y empieza de nuevo.</string>
+    <string name="pinch_cal_failed_kept">Se conservó la calibración anterior.</string>
+    <string name="pinch_cal_interrupted">Detenido porque la pantalla se apagó. Empieza de nuevo con la pantalla encendida.</string>
+    <string name="pinch_cal_unavailable">Sensores de movimiento no disponibles. Vuelve a abrir esta pantalla e inténtalo de nuevo.</string>
+
+    <string name="pinch_cal_sending">Guardando en el teléfono…</string>
+    <string name="pinch_cal_saved">Calibración guardada. En el teléfono, elige Experimental en los ajustes del pellizco y guarda.</string>
+    <string name="pinch_cal_saved_active">Calibración guardada. El detector experimental está activo mientras el reproductor esté abierto.</string>
+    <string name="pinch_cal_send_failed">No se pudo confirmar el guardado en el teléfono. Comprueba la conexión y toca Guardar calibración otra vez.</string>
+    <string name="pinch_cal_legend_motion">Movimiento</string>
+    <string name="pinch_cal_legend_rotation">Giro</string>
+    <string name="pinch_cal_legend_target">Objetivo</string>
+    <string name="pinch_cal_no_signal">Sin datos del sensor</string>
+    <string name="pinch_cal_detail">%1$d de %2$d reconocidos · toques por intento: %3$s</string>
+</resources>

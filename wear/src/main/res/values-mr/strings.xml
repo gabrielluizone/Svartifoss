@@ -41,6 +41,7 @@
     <string name="idle_action_search">शोध</string>
     <string name="idle_action_queue">अलीकडे प्ले केलेले उघडा</string>
     <string name="no_phone">फोन कनेक्ट नाही</string>
+    <string name="phone_unavailable">प्लेबॅक नियंत्रित करण्यासाठी फोन अनलॉक करा</string>
     <string name="playback_stopped">थांबलेले</string>
     <string name="error">त्रुटी</string>
     <string name="error_play_services">Play Services त्रुटी</string>

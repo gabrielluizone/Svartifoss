@@ -98,6 +98,26 @@ class WatchSearchTargetResolverTest {
                 booleans = mapOf("wear_show_track_title" to true)).redirected)
     }
 
+    /**
+     * The tap confirmation is no longer Classic's.
+     *
+     * It used to brighten the persistent quadrant hint, which only Classic drew, so a search for it
+     * from any other face was sent to the face picker. It now draws the action's glyph inside the
+     * tap ripple, which the host paints above every face - and its whole point is working when the
+     * hints are switched off. Redirecting it would send a user looking for exactly that to a row
+     * that has nothing to do with it.
+     */
+    @Test
+    fun `the tap confirmation is reachable from every face`() {
+        for (face in listOf("classic", "expressive", "material", "chat", "note", "artist")) {
+            val target = resolve(
+                    key = "wear_quadrant_tap_flash",
+                    strings = mapOf("wear_screen_face" to face))
+            assertEquals("wear_quadrant_tap_flash", target.key)
+            assertFalse("$face must not be redirected away from it", target.redirected)
+        }
+    }
+
     @Test
     fun `face specific rows lead to the face picker when unavailable`() {
         val unavailable = listOf(
@@ -105,8 +125,8 @@ class WatchSearchTargetResolverTest {
                 "wear_expressive_seek_mode" to "classic",
                 "wear_carousel_card_shape" to "classic",
                 "wear_split_panel" to "classic",
-                "wear_quadrant_tap_flash" to "expressive",
                 "wear_classic_icons_visible" to "material",
+                "wear_classic_icons_visible" to "note",
                 "wear_internal_progress_visible" to "classic",
                 // Two rows, two allow-lists: a face that offers one of them must not send a
                 // search for the *other* to the same place, so both directions are pinned.
@@ -134,6 +154,7 @@ class WatchSearchTargetResolverTest {
                 "wear_split_panel" to "split",
                 "wear_quadrant_tap_flash" to "classic",
                 "wear_classic_icons_visible" to "classic",
+                "wear_classic_icons_visible" to "poster",
                 "wear_internal_progress_visible" to "vinyl",
                 "wear_internal_progress_visible" to "depth",
                 "wear_internal_progress_visible" to "verse",
@@ -240,7 +261,8 @@ class WatchSearchTargetResolverTest {
                 resolve(
                         key = "wear_progress_gradient",
                         strings = mapOf("wear_progress_style" to "segmented")),
-                WatchFacePrefsFragment.SECTION_PANELS,
+                // Style, not Panels: the ring's controls live on the page where it is drawn.
+                WatchFacePrefsFragment.SECTION_STYLE,
                 "wear_progress_style")
         assertFalse(resolve(
                 key = "wear_progress_gradient",

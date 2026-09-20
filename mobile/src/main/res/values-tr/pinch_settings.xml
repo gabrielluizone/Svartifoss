@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Sıkıştırma ayarları</string>
+    <string name="pinch_settings_intro">Saat hareketinizi nasıl algılasın?</string>
+    <string name="pinch_mode_native">Saatin algılayıcısı</string>
+    <string name="pinch_mode_experimental">Deneysel algılayıcı</string>
+    <string name="pinch_native_description">Saatin yerleşik tanımasını kullanır. Kalibrasyon veya hassasiyet ayarı yok.</string>
+    <string name="pinch_experimental_description">Bileğin hareketlerini kalibrasyonunuza göre algılar. Yanlışlıkla tetiklenebilir ve oynatıcı açıkken daha fazla pil kullanır.</string>
+    <string name="pinch_profile_missing">Henüz kalibre edilmedi. Bu modu şimdi kaydedebilirsiniz: saat, içine bir kalibrasyon kaydedilene kadar kendi algılayıcısını kullanır, sonra kendiliğinden geçer.</string>
+    <string name="pinch_profile_saved">Kalibrasyon kaydedildi. Kullanıma hazır.</string>
+    <string name="pinch_calibration_step">1. Hareketinizi kalibre edin</string>
+    <string name="pinch_tuning_step">2. Tanımayı ayarlayın</string>
+    <string name="pinch_calibrate_watch">Saatte kalibre et</string>
+    <string name="pinch_recalibrate_watch">Yeniden kalibre et</string>
+    <string name="pinch_open_instruction">Svartifoss\'u saatte açın. Testi orada uygulayın ve kalibrasyonu kaydedin.</string>
+    <string name="pinch_open_sending">Saate bağlanılıyor…</string>
+    <string name="pinch_open_sent">Saatte devam edin. Test açılmazsa Svartifoss\'u orada yeniden açıp tekrar deneyin.</string>
+    <string name="pinch_open_failed">Saate ulaşılamıyor. Bağlantıyı kontrol edin, iki uygulamayı da güncelleyin ve tekrar deneyin.</string>
+    <string name="pinch_sensitivity_label">Hassasiyet</string>
+    <string name="pinch_sensitivity_help">Sıkıştırmalar kaçırılıyorsa artırın. Başka hareketler eylemleri tetikliyorsa azaltın.</string>
+    <string name="pinch_gap_label">Sıkıştırmalar arası süre</string>
+    <string name="pinch_gap_help">İlk sıkıştırmadan ikincisine en uzun süre. Daha yavaş bir hareket için artırın.</string>
+    <string name="pinch_cooldown_label">Komutlar arası duraklama</string>
+    <string name="pinch_cooldown_help">Bir eylemden sonra başka hareket kabul edilmeden önce ne kadar beklendiği.</string>
+    <string name="pinch_value_percent">%%%1$d</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Daha fazla ayar</string>
+    <string name="pinch_advanced_hide">Daha az ayar</string>
+    <string name="pinch_shared_settings">Bu ayarlar müzik çalarken veya duraklatılmışken geçerlidir.</string>
+    <string name="pinch_settings_save">Kaydet</string>
+    <string name="pinch_gesture_note">Oynatıcı açıkken ve saat ekranı yanıkken baş ve işaret parmağınıza iki kez dokunun.</string>
+    <string name="pinch_controls_uncalibrated">Deneysel algılayıcı seçildi, henüz kalibre edilmedi. Kalibre edene kadar saatin kendi algılayıcısı kullanılır.</string>
+    <string name="pinch_controls_calibrated">Deneysel algılayıcı kalibre edildi. Svartifoss oynatıcısı açıkken iki kez sıkıştırın.</string>
+</resources>

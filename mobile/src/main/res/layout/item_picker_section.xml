@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The heading over one section of Pick action. Not clickable: the shortcut strip is what
+     navigates. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="20dp"
+    android:paddingTop="18dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="4dp">
+
+    <ImageView
+        android:id="@+id/section_icon"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:contentDescription="@null"
+        android:tint="@color/lyra_text_secondary"
+        tools:ignore="UseAppTint"
+        tools:src="@drawable/ic_apps" />
+
+    <TextView
+        android:id="@+id/section_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:accessibilityHeading="true"
+        android:fontFamily="@font/google_sans"
+        android:includeFontPadding="false"
+        android:letterSpacing="0.1"
+        android:textAllCaps="true"
+        android:textColor="@color/lyra_accent"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        tools:text="Playback controls" />
+
+</LinearLayout>

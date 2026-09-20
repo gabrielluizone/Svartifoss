@@ -3,8 +3,6 @@ package com.svartifoss.snfell.actions.playback
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
-import android.support.v4.media.session.MediaControllerCompat
-import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.R
@@ -47,11 +45,10 @@ class SetShuffleModeAction : SelectableAction {
     class Handler @Inject constructor(private val service: MusicService) :
             ActionHandler<SetShuffleModeAction> {
         override suspend fun handleAction(action: SetShuffleModeAction) {
-            val controller = service.currentMediaController ?: return
-            val compatController = MediaControllerCompat(
-                    service,
-                    MediaSessionCompat.Token.fromToken(controller.sessionToken))
-            compatController.transportControls.setShuffleMode(
+            // Names its target outright, so it reads nothing - but it shares the service's
+            // controller anyway rather than starting another session handshake per press.
+            val controller = service.currentCompatController ?: return
+            controller.transportControls.setShuffleMode(
                     if (action.enabled) PlaybackStateCompat.SHUFFLE_MODE_ALL
                     else PlaybackStateCompat.SHUFFLE_MODE_NONE)
         }

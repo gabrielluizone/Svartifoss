@@ -96,4 +96,12 @@
         <item>アルバム第3色</item>
         <item>ネオン輪郭</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>リーフ</item>
+        <item>ドロップ</item>
+        <item>アーチ</item>
+        <item>ペブル</item>
+        <item>シールド</item>
+    </string-array>
 </resources>

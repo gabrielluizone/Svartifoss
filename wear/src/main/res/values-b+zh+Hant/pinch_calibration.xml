@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">校準捏合</string>
+    <string name="pinch_cal_intro">戴緊錶帶並抬起手腕。約 45 秒：靜止、六次雙捏合，然後活動手臂。不會傳送任何音樂指令。</string>
+    <string name="pinch_cal_start">開始</string>
+    <string name="pinch_cal_restart">重新開始</string>
+    <string name="pinch_cal_test">無操作測試</string>
+    <string name="pinch_cal_save">儲存校準</string>
+    <string name="pinch_cal_close">關閉</string>
+
+    <string name="pinch_cal_step_ready">準備</string>
+    <string name="pinch_cal_step_ready_hint">抬起手腕，螢幕朝向自己。</string>
+    <string name="pinch_cal_step_rest">保持不動</string>
+    <string name="pinch_cal_step_rest_hint">不要捏合。</string>
+    <string name="pinch_cal_step_attempt">第 %1$d 次，共 %2$d 次</string>
+    <string name="pinch_cal_step_pinch">雙捏合</string>
+    <string name="pinch_cal_step_pinch_hint">將拇指和食指併攏兩次。</string>
+    <string name="pinch_cal_step_wait">放鬆</string>
+    <string name="pinch_cal_step_wait_hint">下一次嘗試即將開始。</string>
+    <string name="pinch_cal_step_prepare">快好了</string>
+    <string name="pinch_cal_step_prepare_hint">接下來：活動手臂，不要捏合。</string>
+    <string name="pinch_cal_step_move">活動手臂</string>
+    <string name="pinch_cal_step_move_hint">自然地轉動和擺動，螢幕保持朝向自己。不要捏合。</string>
+
+    <string name="pinch_cal_testing">測試</string>
+    <string name="pinch_cal_detections">偵測次數</string>
+    <string name="pinch_cal_test_hint">剩餘 %1$d 秒 · 不執行操作</string>
+
+    <string name="pinch_cal_ready">已校準。儲存前先試一試：捏合幾次，然後正常活動手臂。</string>
+    <string name="pinch_cal_test_done">偵測到 %1$d 次。如果與您的雙捏合次數一致，請儲存。如果手臂動作也被計入，請重新校準或在手機上降低靈敏度。</string>
+    <string name="pinch_cal_failed_incomplete">錄製被中斷。請在整個測試期間保持螢幕亮起並朝向自己，然後重新開始。</string>
+    <string name="pinch_cal_failed_weak">您的捏合與靜止的手腕沒有明顯差別。請把錶帶再收緊一點，並更用力地捏合。</string>
+    <string name="pinch_cal_failed_unrecognized">大多數嘗試沒有被辨識為雙捏合。每次嘗試請清晰地捏合兩次，並保持手臂不動。</string>
+    <string name="pinch_cal_failed_movement">您的手臂動作看起來像捏合。嘗試期間請讓手腕更穩定，然後重新開始。</string>
+    <string name="pinch_cal_failed_kept">已保留先前的校準。</string>
+    <string name="pinch_cal_interrupted">因螢幕熄滅而停止。請在螢幕亮起時重新開始。</string>
+    <string name="pinch_cal_unavailable">動作感應器無法使用。請重新開啟此畫面後再試。</string>
+
+    <string name="pinch_cal_sending">正在儲存到手機…</string>
+    <string name="pinch_cal_saved">校準已儲存。請在手機的捏合設定中選擇實驗性並儲存。</string>
+    <string name="pinch_cal_saved_active">校準已儲存。播放器開啟期間，實驗性偵測器會保持啟用。</string>
+    <string name="pinch_cal_send_failed">無法確認已儲存到手機。請檢查連線，然後再次點按儲存校準。</string>
+    <string name="pinch_cal_legend_motion">動作</string>
+    <string name="pinch_cal_legend_rotation">旋轉</string>
+    <string name="pinch_cal_legend_target">閾值</string>
+    <string name="pinch_cal_no_signal">無感應器資料</string>
+    <string name="pinch_cal_detail">辨識 %1$d / %2$d · 每次嘗試的點按數：%3$s</string>
+</resources>

@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Nypinställningar</string>
+    <string name="pinch_settings_intro">Hur ska klockan känna av din gest?</string>
+    <string name="pinch_mode_native">Klockans detektor</string>
+    <string name="pinch_mode_experimental">Experimentell detektor</string>
+    <string name="pinch_native_description">Använder klockans inbyggda igenkänning. Inga kalibrerings- eller känslighetsinställningar.</string>
+    <string name="pinch_experimental_description">Känner av handledens rörelser med din kalibrering. Den kan utlösas av misstag och använder mer batteri medan spelaren är öppen.</string>
+    <string name="pinch_profile_missing">Inte kalibrerad än. Du kan spara det här läget nu: klockan fortsätter använda sin egen detektor tills en kalibrering har sparats där, och byter sedan av sig själv.</string>
+    <string name="pinch_profile_saved">Kalibreringen är sparad. Redo att användas.</string>
+    <string name="pinch_calibration_step">1. Kalibrera din gest</string>
+    <string name="pinch_tuning_step">2. Justera igenkänningen</string>
+    <string name="pinch_calibrate_watch">Kalibrera på klockan</string>
+    <string name="pinch_recalibrate_watch">Kalibrera igen</string>
+    <string name="pinch_open_instruction">Öppna Svartifoss på klockan. Följ testet där och spara din kalibrering.</string>
+    <string name="pinch_open_sending">Ansluter till klockan …</string>
+    <string name="pinch_open_sent">Fortsätt på klockan. Om testet inte öppnas, öppna Svartifoss där igen och försök på nytt.</string>
+    <string name="pinch_open_failed">Klockan är inte tillgänglig. Kontrollera anslutningen och uppdatera båda apparna, försök sedan igen.</string>
+    <string name="pinch_sensitivity_label">Känslighet</string>
+    <string name="pinch_sensitivity_help">Öka om nypningar missas. Minska om andra rörelser utlöser åtgärder.</string>
+    <string name="pinch_gap_label">Tid mellan nypningar</string>
+    <string name="pinch_gap_help">Längsta tid från den första nypningen till den andra. Öka för en långsammare gest.</string>
+    <string name="pinch_cooldown_label">Paus mellan kommandon</string>
+    <string name="pinch_cooldown_help">Hur länge det väntas efter en åtgärd innan nästa gest accepteras.</string>
+    <string name="pinch_value_percent">%1$d %%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Fler justeringar</string>
+    <string name="pinch_advanced_hide">Färre justeringar</string>
+    <string name="pinch_shared_settings">De här inställningarna gäller medan musik spelas eller är pausad.</string>
+    <string name="pinch_settings_save">Spara</string>
+    <string name="pinch_gesture_note">Nudda tummen och pekfingret mot varandra två gånger, med spelaren öppen och klockans skärm tänd.</string>
+    <string name="pinch_controls_uncalibrated">Experimentell detektor vald, inte kalibrerad än. Klockans egen detektor används tills du kalibrerar.</string>
+    <string name="pinch_controls_calibrated">Experimentell detektor kalibrerad. Nyp två gånger medan Svartifoss-spelaren är öppen.</string>
+</resources>

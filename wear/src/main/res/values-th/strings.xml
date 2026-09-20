@@ -37,6 +37,7 @@
     <string name="idle_action_queue">เปิดรายการที่เล่นล่าสุด</string>
 
     <string name="no_phone">ไม่ได้เชื่อมต่อโทรศัพท์</string>
+    <string name="phone_unavailable">ปลดล็อกโทรศัพท์เพื่อควบคุมการเล่น</string>
     <string name="playback_stopped">หยุดแล้ว</string>
     <string name="error">ข้อผิดพลาด</string>
     <string name="error_play_services">ข้อผิดพลาดของบริการ Google Play</string>

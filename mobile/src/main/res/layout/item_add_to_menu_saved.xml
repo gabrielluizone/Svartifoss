@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One saved streaming shortcut in the "Add to watch menu" sheet. The whole row is the tap
+     target; the checkbox only shows the state, and is checked and dimmed for a shortcut the menu
+     already carries. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="60dp"
+    android:orientation="horizontal"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp">
+
+    <ImageView
+        android:id="@+id/saved_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/circle_icon_bg"
+        android:contentDescription="@null"
+        android:padding="9dp"
+        android:src="@drawable/ic_music_note"
+        tools:ignore="UseAppTint" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/saved_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:lineHeight="21sp"
+            android:maxLines="1"
+            android:textColor="@color/lyra_on_surface"
+            android:textSize="15sp"
+            tools:text="Discover Weekly" />
+
+        <TextView
+            android:id="@+id/saved_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:lineHeight="18sp"
+            android:maxLines="1"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="12sp"
+            tools:text="Spotify • Playlist" />
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/saved_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:importantForAccessibility="no" />
+
+</LinearLayout>

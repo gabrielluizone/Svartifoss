@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Tetapan cubitan</string>
+    <string name="pinch_settings_intro">Bagaimanakah jam tangan patut mengesan gerak isyarat anda?</string>
+    <string name="pinch_mode_native">Pengesan jam tangan</string>
+    <string name="pinch_mode_experimental">Pengesan eksperimen</string>
+    <string name="pinch_native_description">Menggunakan pengecaman terbina dalam jam tangan. Tiada kawalan penentukuran atau kepekaan.</string>
+    <string name="pinch_experimental_description">Mengesan pergerakan pergelangan tangan dengan penentukuran anda. Ia mungkin aktif secara tidak sengaja dan menggunakan lebih banyak bateri semasa pemain dibuka.</string>
+    <string name="pinch_profile_missing">Belum ditentukur. Anda boleh menyimpan mod ini sekarang: jam tangan terus menggunakan pengesannya sendiri sehingga penentukuran disimpan padanya, kemudian bertukar dengan sendirinya.</string>
+    <string name="pinch_profile_saved">Penentukuran disimpan. Sedia digunakan.</string>
+    <string name="pinch_calibration_step">1. Tentukur gerak isyarat anda</string>
+    <string name="pinch_tuning_step">2. Laraskan pengecaman</string>
+    <string name="pinch_calibrate_watch">Tentukur pada jam tangan</string>
+    <string name="pinch_recalibrate_watch">Tentukur semula</string>
+    <string name="pinch_open_instruction">Buka Svartifoss pada jam tangan. Ikuti ujian di sana dan simpan penentukuran anda.</string>
+    <string name="pinch_open_sending">Menyambung ke jam tangan…</string>
+    <string name="pinch_open_sent">Teruskan pada jam tangan. Jika ujian tidak dibuka, buka Svartifoss di sana sekali lagi dan cuba semula.</string>
+    <string name="pinch_open_failed">Jam tangan tidak tersedia. Semak sambungan dan kemas kini kedua-dua aplikasi, kemudian cuba lagi.</string>
+    <string name="pinch_sensitivity_label">Kepekaan</string>
+    <string name="pinch_sensitivity_help">Tingkatkan jika cubitan terlepas. Kurangkan jika pergerakan lain mencetuskan tindakan.</string>
+    <string name="pinch_gap_label">Masa antara cubitan</string>
+    <string name="pinch_gap_help">Masa maksimum dari cubitan pertama ke kedua. Tingkatkan untuk gerak isyarat yang lebih perlahan.</string>
+    <string name="pinch_cooldown_label">Jeda antara arahan</string>
+    <string name="pinch_cooldown_help">Berapa lama menunggu selepas tindakan sebelum menerima gerak isyarat lain.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Lebih banyak pelarasan</string>
+    <string name="pinch_advanced_hide">Kurang pelarasan</string>
+    <string name="pinch_shared_settings">Tetapan ini digunakan semasa muzik dimainkan atau dijeda.</string>
+    <string name="pinch_settings_save">Simpan</string>
+    <string name="pinch_gesture_note">Sentuh ibu jari dan jari telunjuk bersama dua kali, dengan pemain dibuka dan skrin jam tangan menyala.</string>
+    <string name="pinch_controls_uncalibrated">Pengesan eksperimen dipilih, belum ditentukur. Pengesan jam tangan sendiri digunakan sehingga anda menentukur.</string>
+    <string name="pinch_controls_calibrated">Pengesan eksperimen telah ditentukur. Cubit dua kali semasa pemain Svartifoss dibuka.</string>
+</resources>

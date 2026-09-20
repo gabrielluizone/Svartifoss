@@ -14,6 +14,15 @@ class IdleMessageListener : WearableListenerService() {
             CommPaths.MESSAGE_OPEN_APP -> {
                 launchMainActivity()
             }
+            CommPaths.MESSAGE_OPEN_PINCH_CALIBRATION -> {
+                try {
+                    startActivity(Intent(this,
+                            com.svartifoss.snfell.watch.input.PinchCalibrationActivity::class.java)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP))
+                } catch (e: RuntimeException) {
+                    Timber.w(e, "Could not open pinch calibration")
+                }
+            }
             CommPaths.MESSAGE_START_SERVICE -> {
                 // WatchMusicService is a foreground service that calls startForeground() right
                 // away, so it must be started with startForegroundService() - a bare startService()

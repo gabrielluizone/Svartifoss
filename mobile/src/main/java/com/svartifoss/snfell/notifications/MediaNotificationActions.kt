@@ -377,11 +377,12 @@ object MediaNotificationActions {
      *  from its like/save notification action's own label. This is the only signal available for
      *  apps - SoundCloud among them - that expose "like" solely as a `Notification.Action` rather
      *  than a MediaSession custom action, so [MusicService][com.svartifoss.snfell.music.MusicService]
-     *  falls back to it only when no custom action was found. False (not "unknown") when no like
-     *  action was found at all, matching
-     *  [LikeAction.isCurrentlyLiked][com.svartifoss.snfell.actions.playback.LikeAction.isCurrentlyLiked]'s
-     *  own default. */
-    fun likedStateForSession(packageName: String, sessionToken: MediaSession.Token?): Boolean {
+     *  falls back to it only when no custom action was found.
+     *
+     *  **Null when there is no such action at all**, which is a different thing from a notification
+     *  whose label says the track is not liked yet - the caller has one more source below this one
+     *  (the session's own user rating) and a flat false here would have hidden it. */
+    fun likedStateForSession(packageName: String, sessionToken: MediaSession.Token?): Boolean? {
         val action = synchronized(this) {
             notifications.values.asSequence()
                     .filter { notification ->
@@ -392,7 +393,7 @@ object MediaNotificationActions {
                     .mapNotNull { it.likeAction }
                     .firstOrNull()
         }
-        return action?.liked ?: false
+        return action?.liked
     }
 
     /** First notification action (across the full list, not just the compact set) classified as a

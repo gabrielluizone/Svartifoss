@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Calibrer le pincement</string>
+    <string name="pinch_cal_intro">Serrez bien le bracelet et gardez le poignet levé. Environ 45 secondes : repos, six doubles pincements, puis mouvement du bras. Aucune commande musicale n’est envoyée.</string>
+    <string name="pinch_cal_start">Démarrer</string>
+    <string name="pinch_cal_restart">Recommencer</string>
+    <string name="pinch_cal_test">Tester sans actions</string>
+    <string name="pinch_cal_save">Enregistrer le calibrage</string>
+    <string name="pinch_cal_close">Fermer</string>
+
+    <string name="pinch_cal_step_ready">Préparez-vous</string>
+    <string name="pinch_cal_step_ready_hint">Poignet levé, écran face à vous.</string>
+    <string name="pinch_cal_step_rest">Ne bougez pas</string>
+    <string name="pinch_cal_step_rest_hint">Ne pincez pas.</string>
+    <string name="pinch_cal_step_attempt">Essai %1$d sur %2$d</string>
+    <string name="pinch_cal_step_pinch">Double pincement</string>
+    <string name="pinch_cal_step_pinch_hint">Touchez deux fois le pouce et l’index.</string>
+    <string name="pinch_cal_step_wait">Détendez-vous</string>
+    <string name="pinch_cal_step_wait_hint">L’essai suivant arrive.</string>
+    <string name="pinch_cal_step_prepare">Presque fini</string>
+    <string name="pinch_cal_step_prepare_hint">Ensuite : bougez le bras sans pincer.</string>
+    <string name="pinch_cal_step_move">Bougez le bras</string>
+    <string name="pinch_cal_step_move_hint">Tournez-le et balancez-le naturellement, écran face à vous. Ne pincez pas.</string>
+
+    <string name="pinch_cal_testing">Test</string>
+    <string name="pinch_cal_detections">Détections</string>
+    <string name="pinch_cal_test_hint">%1$d s restantes · aucune action</string>
+
+    <string name="pinch_cal_ready">Calibré. Testez avant d’enregistrer : pincez plusieurs fois, puis bougez le bras normalement.</string>
+    <string name="pinch_cal_test_done">%1$d détections. Si cela correspond à vos doubles pincements, enregistrez. Si des mouvements du bras ont été comptés, recalibrez ou baissez la sensibilité sur le téléphone.</string>
+    <string name="pinch_cal_failed_incomplete">L’enregistrement a été interrompu. Gardez l’écran allumé et face à vous pendant tout le test, puis recommencez.</string>
+    <string name="pinch_cal_failed_weak">Vos pincements ne se distinguaient pas d’un poignet immobile. Serrez un peu le bracelet et pincez plus fermement.</string>
+    <string name="pinch_cal_failed_unrecognized">La plupart des essais n’ont pas été reconnus comme un double pincement. Pincez deux fois, nettement, pendant chaque essai, en gardant le bras immobile.</string>
+    <string name="pinch_cal_failed_movement">Le mouvement de votre bras ressemblait à des pincements. Gardez le poignet plus stable pendant les essais, puis recommencez.</string>
+    <string name="pinch_cal_failed_kept">Le calibrage précédent a été conservé.</string>
+    <string name="pinch_cal_interrupted">Arrêté car l’écran s’est éteint. Recommencez avec l’écran allumé.</string>
+    <string name="pinch_cal_unavailable">Capteurs de mouvement indisponibles. Rouvrez cet écran et réessayez.</string>
+
+    <string name="pinch_cal_sending">Enregistrement sur le téléphone…</string>
+    <string name="pinch_cal_saved">Calibrage enregistré. Sur votre téléphone, choisissez Expérimental dans les réglages du pincement et enregistrez.</string>
+    <string name="pinch_cal_saved_active">Calibrage enregistré. Le détecteur expérimental est actif tant que le lecteur est ouvert.</string>
+    <string name="pinch_cal_send_failed">Impossible de confirmer l’enregistrement sur le téléphone. Vérifiez la connexion et touchez de nouveau Enregistrer le calibrage.</string>
+    <string name="pinch_cal_legend_motion">Mouvement</string>
+    <string name="pinch_cal_legend_rotation">Rotation</string>
+    <string name="pinch_cal_legend_target">Cible</string>
+    <string name="pinch_cal_no_signal">Aucune donnée du capteur</string>
+    <string name="pinch_cal_detail">%1$d reconnus sur %2$d · impulsions par essai : %3$s</string>
+</resources>

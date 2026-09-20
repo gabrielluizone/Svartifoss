@@ -4,64 +4,60 @@ import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.svartifoss.snfell.actions.PickerActionGroup
+import com.svartifoss.snfell.actions.NullAction
 import com.svartifoss.snfell.actions.PhoneAction
-import com.svartifoss.snfell.actions.RootActionList
 import com.svartifoss.snfell.common.actions.StandardActions
 import com.svartifoss.snfell.view.ActivityResultReceiver
 import com.matejdro.wearutils.lifecycle.SingleLiveEvent
-import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 
+/**
+ * Drives Pick action, which is a single page (see [ActionPickerLayout]): sections of rows, groups
+ * that open where they stand, and a search that replaces the sections with a flat ranked list.
+ * There is no back stack because there is nothing to go back to.
+ */
 class ActionPickerViewModel @Inject constructor(
         @Named(ARG_SHOW_NONE) showNone: Boolean,
         @Named(ARG_SURFACE) private val surface: ActionPickerSurface,
         context: Context
 ) : ViewModel() {
-    val displayedActions = MutableLiveData<List<PhoneAction>>()
-    val pageTitle = MutableLiveData<String?>()
+    /** What to draw. Re-emitted whenever a group opens or closes and whenever the query changes. */
+    internal val screen = MutableLiveData<PickerScreen>()
     val selectedAction = SingleLiveEvent<PhoneAction>()
     val activityStarter = SingleLiveEvent<Intent?>()
 
-    private data class Page(val title: String?, val actions: List<PhoneAction>)
-    private val backStack = Stack<Page>()
+    /** The "Add a link" row was tapped; the Activity owns the sheet it opens. */
+    val addLinkRequested = SingleLiveEvent<Unit>()
+
+    private val sections = ActionPickerCatalogue.sections(context, surface)
+    private val none: PhoneAction? = if (showNone) NullAction(context) else null
+    private val expanded = HashSet<String>()
+    private var query = ""
     private var activityResultReceiver: ActivityResultReceiver? = null
-    private val root = RootActionList(context, showNone)
-    private var searchCatalogue: List<ActionPickerRow>? = null
 
     init {
-        displayedActions.value = allowed(root.pickerChildren())
+        publish()
     }
 
-    fun updateDisplayedActionsWithBackStack(title: String, actions: List<PhoneAction>) {
-        if (displayedActions.value != null) {
-            backStack.push(Page(pageTitle.value, displayedActions.value!!))
+    fun setQuery(newQuery: String) {
+        if (newQuery == query) return
+        query = newQuery
+        publish()
+    }
+
+    fun toggleGroup(groupId: String) {
+        if (!expanded.add(groupId)) expanded.remove(groupId)
+        publish()
+    }
+
+    internal fun onRowTapped(row: PickerRow<PhoneAction>) {
+        when (row) {
+            is PickerRow.Choice -> row.action.onActionPicked(this)
+            is PickerRow.Group -> toggleGroup(row.id)
+            is PickerRow.AddLink -> addLinkRequested.value = Unit
+            is PickerRow.Header -> Unit
         }
-
-        pageTitle.value = title
-        displayedActions.value = allowed(actions)
-    }
-
-    fun tryGoBack() : Boolean {
-        if (backStack.isEmpty()) {
-            return false
-        }
-
-        val page = backStack.pop()
-        pageTitle.value = page.title
-        displayedActions.value = page.actions
-
-        return true
-    }
-
-    fun startActivityForResult(intent: Intent, receiver: ActivityResultReceiver) {
-        activityResultReceiver = receiver
-        activityStarter.value = intent
-    }
-
-    fun onActionTapped(action: PhoneAction) {
-        action.onActionPicked(this)
     }
 
     /**
@@ -72,56 +68,33 @@ class ActionPickerViewModel @Inject constructor(
         selectedAction.value = if (surface == ActionPickerSurface.QUICK_PANEL) noAction else null
     }
 
+    /** For the rows that hand off to an external chooser (Tasker), which answers by result. */
+    fun startActivityForResult(intent: Intent, receiver: ActivityResultReceiver) {
+        activityResultReceiver = receiver
+        activityStarter.value = intent
+    }
+
     fun onActivityResultReceived(requestCode: Int, resultCode: Int, data: Intent?) {
         activityStarter.value = null
 
         activityResultReceiver?.onActivityResult(requestCode, resultCode, data)
         activityResultReceiver = null
-        searchCatalogue = null
-        // A picker may have added a streaming shortcut while a global search is visible. Emit the
-        // current page again so Activity re-runs that unchanged query against the fresh catalogue.
-        displayedActions.value = displayedActions.value
     }
 
-    fun rowsFor(query: String): List<ActionPickerRow> {
+    private fun publish() {
+        val info = sections.map { PickerSectionInfo(it.id, it.title, it.chipLabel, it.iconRes) }
         if (query.isBlank()) {
-            return displayedActions.value.orEmpty().map { ActionPickerRow(it, null) }
+            val layout = ActionPickerLayout.flatten(
+                    sections, expanded, leading = listOfNotNull(none))
+            screen.value = PickerScreen(layout, info, searching = false)
+        } else {
+            val results = ActionPickerLayout.searchRows(
+                    sections, { it.title }, query, leading = listOfNotNull(none))
+            screen.value = PickerScreen(
+                    PickerLayout(results, sectionStarts = emptyList(), sectionIds = emptyList()),
+                    info,
+                    searching = true)
         }
-
-        val rows = searchCatalogue ?: buildSearchCatalogue().also { searchCatalogue = it }
-        val candidates = rows.mapIndexed { index, row ->
-            ActionSearchCandidate(
-                    value = row,
-                    title = row.action.title,
-                    breadcrumb = row.breadcrumb.orEmpty(),
-                    sourceOrder = index)
-        }
-        return ActionPickerSearch.rank(candidates, query).map { it.value }
-    }
-
-    private fun buildSearchCatalogue(): List<ActionPickerRow> {
-        val rows = ArrayList<ActionPickerRow>()
-
-        fun append(actions: List<PhoneAction>, parents: List<String>) {
-            actions.forEach { action ->
-                if (action is PickerActionGroup) {
-                    append(action.pickerChildren(), parents + action.title)
-                } else if (ActionPickerSurfacePolicy.allows(surface, action.javaClass.name)) {
-                    rows.add(ActionPickerRow(
-                            action = action,
-                            breadcrumb = parents.takeIf { it.isNotEmpty() }
-                                    ?.joinToString(BREADCRUMB_SEPARATOR)))
-                }
-            }
-        }
-
-        append(root.pickerChildren(), emptyList())
-        return rows
-    }
-
-    private fun allowed(actions: List<PhoneAction>): List<PhoneAction> = actions.filter { action ->
-        action is PickerActionGroup ||
-                ActionPickerSurfacePolicy.allows(surface, action.javaClass.name)
     }
 
     companion object {
@@ -130,12 +103,20 @@ class ActionPickerViewModel @Inject constructor(
     }
 }
 
-data class ActionPickerRow(
-        val action: PhoneAction,
-        val breadcrumb: String?
+/** Heading and shortcut for one section, as the list and the shortcut strip draw them. */
+internal data class PickerSectionInfo(
+        val id: String,
+        val title: String,
+        val chipLabel: String,
+        val iconRes: Int
 )
 
-private const val BREADCRUMB_SEPARATOR = " › "
+internal data class PickerScreen(
+        val layout: PickerLayout<PhoneAction>,
+        val sections: List<PickerSectionInfo>,
+        /** True while a query is showing results instead of the sections. */
+        val searching: Boolean
+)
 
 enum class ActionPickerSurface {
     BUTTON,

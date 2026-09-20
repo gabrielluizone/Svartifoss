@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Ρυθμίσεις τσιμπήματος</string>
+    <string name="pinch_settings_intro">Πώς πρέπει το ρολόι να εντοπίζει την κίνησή σας;</string>
+    <string name="pinch_mode_native">Ανιχνευτής ρολογιού</string>
+    <string name="pinch_mode_experimental">Πειραματικός ανιχνευτής</string>
+    <string name="pinch_native_description">Χρησιμοποιεί την ενσωματωμένη αναγνώριση του ρολογιού. Χωρίς βαθμονόμηση ή ρυθμίσεις ευαισθησίας.</string>
+    <string name="pinch_experimental_description">Εντοπίζει κινήσεις του καρπού με τη βαθμονόμησή σας. Μπορεί να ενεργοποιηθεί κατά λάθος και καταναλώνει περισσότερη μπαταρία όσο το player είναι ανοιχτό.</string>
+    <string name="pinch_profile_missing">Δεν έχει βαθμονομηθεί ακόμη. Μπορείτε να αποθηκεύσετε αυτή τη λειτουργία τώρα: το ρολόι συνεχίζει να χρησιμοποιεί τον δικό του ανιχνευτή μέχρι να αποθηκευτεί εκεί βαθμονόμηση και έπειτα αλλάζει μόνο του.</string>
+    <string name="pinch_profile_saved">Η βαθμονόμηση αποθηκεύτηκε. Έτοιμο για χρήση.</string>
+    <string name="pinch_calibration_step">1. Βαθμονομήστε την κίνηση</string>
+    <string name="pinch_tuning_step">2. Προσαρμόστε την αναγνώριση</string>
+    <string name="pinch_calibrate_watch">Βαθμονόμηση στο ρολόι</string>
+    <string name="pinch_recalibrate_watch">Νέα βαθμονόμηση</string>
+    <string name="pinch_open_instruction">Ανοίξτε το Svartifoss στο ρολόι. Ακολουθήστε εκεί το τεστ και αποθηκεύστε τη βαθμονόμηση.</string>
+    <string name="pinch_open_sending">Σύνδεση με το ρολόι…</string>
+    <string name="pinch_open_sent">Συνεχίστε στο ρολόι. Αν το τεστ δεν ανοίξει, ανοίξτε ξανά εκεί το Svartifoss και δοκιμάστε πάλι.</string>
+    <string name="pinch_open_failed">Το ρολόι δεν είναι διαθέσιμο. Ελέγξτε τη σύνδεση, ενημερώστε και τις δύο εφαρμογές και δοκιμάστε ξανά.</string>
+    <string name="pinch_sensitivity_label">Ευαισθησία</string>
+    <string name="pinch_sensitivity_help">Αυξήστε την αν χάνονται τσιμπήματα. Μειώστε την αν άλλες κινήσεις ενεργοποιούν ενέργειες.</string>
+    <string name="pinch_gap_label">Χρόνος μεταξύ τσιμπημάτων</string>
+    <string name="pinch_gap_help">Ο μέγιστος χρόνος από το πρώτο ως το δεύτερο τσίμπημα. Αυξήστε τον για πιο αργή κίνηση.</string>
+    <string name="pinch_cooldown_label">Παύση μεταξύ εντολών</string>
+    <string name="pinch_cooldown_help">Πόση ώρα να περιμένει μετά από μια ενέργεια πριν δεχτεί άλλη κίνηση.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Περισσότερες ρυθμίσεις</string>
+    <string name="pinch_advanced_hide">Λιγότερες ρυθμίσεις</string>
+    <string name="pinch_shared_settings">Αυτές οι ρυθμίσεις ισχύουν όσο παίζει ή είναι σε παύση η μουσική.</string>
+    <string name="pinch_settings_save">Αποθήκευση</string>
+    <string name="pinch_gesture_note">Αγγίξτε δύο φορές τον αντίχειρα και τον δείκτη, με το player ανοιχτό και την οθόνη του ρολογιού αναμμένη.</string>
+    <string name="pinch_controls_uncalibrated">Επιλέχθηκε ο πειραματικός ανιχνευτής, χωρίς βαθμονόμηση ακόμη. Μέχρι να βαθμονομήσετε, χρησιμοποιείται ο ανιχνευτής του ίδιου του ρολογιού.</string>
+    <string name="pinch_controls_calibrated">Ο πειραματικός ανιχνευτής βαθμονομήθηκε. Κάντε διπλό τσίμπημα ενώ το player του Svartifoss είναι ανοιχτό.</string>
+</resources>

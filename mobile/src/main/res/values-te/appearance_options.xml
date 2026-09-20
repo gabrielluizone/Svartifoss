@@ -96,4 +96,12 @@
         <item>టెర్షియరీ ఆల్బమ్ రంగు</item>
         <item>నియాన్ అవుట్‌లైన్</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>ఆకు</item>
+        <item>చుక్క</item>
+        <item>ఆర్క్</item>
+        <item>పెబుల్</item>
+        <item>షీల్డ్</item>
+    </string-array>
 </resources>

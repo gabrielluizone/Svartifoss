@@ -1,6 +1,5 @@
 package com.svartifoss.snfell.watch.view.face
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -195,14 +193,7 @@ private fun CoverDisc(
                     .background(Color(state.accentColor).copy(alpha = if (art == null) .5f else 1f)),
             contentAlignment = Alignment.Center
     ) {
-        if (art != null) {
-            Image(
-                    bitmap = art,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-            )
-        }
+        FaceCoverImage(state = state, art = art, modifier = Modifier.fillMaxSize())
     }
 }
 

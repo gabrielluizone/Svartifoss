@@ -31,6 +31,7 @@
     <string name="idle_action_queue">Opna nýlega spilað</string>
 
     <string name="no_phone">Enginn sími tengdur</string>
+    <string name="phone_unavailable">Taktu símann úr lás til að stjórna spilun</string>
     <string name="playback_stopped">Stöðvað</string>
     <string name="error">VILLA</string>
     <string name="error_play_services">Villa í Play Services</string>

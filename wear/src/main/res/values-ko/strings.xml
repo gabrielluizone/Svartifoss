@@ -37,6 +37,7 @@
     <string name="idle_action_queue">최근 재생 항목 열기</string>
 
     <string name="no_phone">휴대전화가 연결되지 않음</string>
+    <string name="phone_unavailable">재생을 제어하려면 휴대전화 잠금을 해제하세요</string>
     <string name="playback_stopped">중지됨</string>
     <string name="error">오류</string>
     <string name="error_play_services">Play 서비스 오류</string>

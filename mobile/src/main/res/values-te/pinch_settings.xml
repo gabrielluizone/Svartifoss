@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">పించ్ సెట్టింగ్‌లు</string>
+    <string name="pinch_settings_intro">వాచ్ మీ సంజ్ఞను ఎలా గుర్తించాలి?</string>
+    <string name="pinch_mode_native">వాచ్ డిటెక్టర్</string>
+    <string name="pinch_mode_experimental">ప్రయోగాత్మక డిటెక్టర్</string>
+    <string name="pinch_native_description">వాచ్ అంతర్నిర్మిత గుర్తింపును ఉపయోగిస్తుంది. క్యాలిబ్రేషన్ లేదా సున్నితత్వ నియంత్రణలు లేవు.</string>
+    <string name="pinch_experimental_description">మీ క్యాలిబ్రేషన్‌తో మణికట్టు కదలికలను గుర్తిస్తుంది. పొరపాటున యాక్టివేట్ కావచ్చు మరియు ప్లేయర్ తెరిచి ఉన్నప్పుడు ఎక్కువ బ్యాటరీని వాడుతుంది.</string>
+    <string name="pinch_profile_missing">ఇంకా క్యాలిబ్రేట్ చేయలేదు. మీరు ఈ మోడ్‌ను ఇప్పుడే సేవ్ చేయవచ్చు: వాచ్‌లో క్యాలిబ్రేషన్ సేవ్ అయ్యే వరకు అది తన డిటెక్టర్‌నే వాడుతుంది, తర్వాత దానంతట అదే మారుతుంది.</string>
+    <string name="pinch_profile_saved">క్యాలిబ్రేషన్ సేవ్ అయింది. వాడుకకు సిద్ధం.</string>
+    <string name="pinch_calibration_step">1. మీ సంజ్ఞను క్యాలిబ్రేట్ చేయండి</string>
+    <string name="pinch_tuning_step">2. గుర్తింపును సర్దుబాటు చేయండి</string>
+    <string name="pinch_calibrate_watch">వాచ్‌లో క్యాలిబ్రేట్ చేయండి</string>
+    <string name="pinch_recalibrate_watch">మళ్లీ క్యాలిబ్రేట్ చేయండి</string>
+    <string name="pinch_open_instruction">వాచ్‌లో Svartifoss తెరవండి. అక్కడ పరీక్షను అనుసరించి క్యాలిబ్రేషన్‌ను సేవ్ చేయండి.</string>
+    <string name="pinch_open_sending">వాచ్‌కు కనెక్ట్ అవుతోంది…</string>
+    <string name="pinch_open_sent">వాచ్‌లో కొనసాగించండి. పరీక్ష తెరుచుకోకపోతే, అక్కడ Svartifoss ను మళ్లీ తెరిచి మళ్లీ ప్రయత్నించండి.</string>
+    <string name="pinch_open_failed">వాచ్ అందుబాటులో లేదు. కనెక్షన్‌ను తనిఖీ చేసి రెండు యాప్‌లను అప్‌డేట్ చేసి, మళ్లీ ప్రయత్నించండి.</string>
+    <string name="pinch_sensitivity_label">సున్నితత్వం</string>
+    <string name="pinch_sensitivity_help">పించ్‌లు మిస్ అయితే పెంచండి. ఇతర కదలికలు చర్యలను ప్రేరేపిస్తే తగ్గించండి.</string>
+    <string name="pinch_gap_label">పించ్‌ల మధ్య సమయం</string>
+    <string name="pinch_gap_help">మొదటి పించ్ నుండి రెండవదానికి గరిష్ట సమయం. నెమ్మదైన సంజ్ఞ కోసం పెంచండి.</string>
+    <string name="pinch_cooldown_label">ఆదేశాల మధ్య విరామం</string>
+    <string name="pinch_cooldown_help">ఒక చర్య తర్వాత మరో సంజ్ఞను అంగీకరించే ముందు ఎంతసేపు వేచి ఉండాలి.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">మరిన్ని సర్దుబాట్లు</string>
+    <string name="pinch_advanced_hide">తక్కువ సర్దుబాట్లు</string>
+    <string name="pinch_shared_settings">సంగీతం ప్లే అవుతున్నప్పుడు లేదా పాజ్‌లో ఉన్నప్పుడు ఈ సెట్టింగ్‌లు వర్తిస్తాయి.</string>
+    <string name="pinch_settings_save">సేవ్ చేయండి</string>
+    <string name="pinch_gesture_note">ప్లేయర్ తెరిచి ఉండగా, వాచ్ స్క్రీన్ ఆన్‌లో ఉండగా, బొటనవేలు మరియు చూపుడు వేలును రెండుసార్లు కలపండి.</string>
+    <string name="pinch_controls_uncalibrated">ప్రయోగాత్మక డిటెక్టర్ ఎంచుకున్నారు, ఇంకా క్యాలిబ్రేట్ చేయలేదు. మీరు క్యాలిబ్రేట్ చేసే వరకు వాచ్ సొంత డిటెక్టర్ వాడబడుతుంది.</string>
+    <string name="pinch_controls_calibrated">ప్రయోగాత్మక డిటెక్టర్ క్యాలిబ్రేట్ అయింది. Svartifoss ప్లేయర్ తెరిచి ఉన్నప్పుడు రెండుసార్లు పించ్ చేయండి.</string>
+</resources>

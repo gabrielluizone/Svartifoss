@@ -22,6 +22,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.preference.PreferenceManager
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,8 +36,11 @@ import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemView
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.actions.NullAction
 import com.svartifoss.snfell.actions.PhoneAction
+import com.svartifoss.snfell.actions.PlayPlaylistShortcutAction
 import com.svartifoss.snfell.actions.appplay.AppPlayAction
+import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.QuickPanelButtons
+import com.svartifoss.snfell.common.QuickPanelSource
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_SINGLE_TAP
 import com.svartifoss.snfell.config.ActionConfig
@@ -45,6 +49,7 @@ import com.svartifoss.snfell.di.LocalActivityConfig
 import com.svartifoss.snfell.view.buttonconfig.ActionPickerActivity
 import com.svartifoss.snfell.databinding.FragmentActionListBinding
 import com.svartifoss.snfell.di.InjectableViewModelFactory
+import com.svartifoss.snfell.music.PlaylistShortcut
 import com.svartifoss.snfell.util.IdentifiedItem
 import com.svartifoss.snfell.view.FabFragment
 import com.svartifoss.snfell.view.TitledActivity
@@ -156,16 +161,23 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
         setupQuickPanelToggles()
     }
 
-    /** The quick-actions-panel entry row above the list: opens a dialog with the four panel
-     *  slots (three buttons + the long row), mirroring the watch panel opened by
-     *  double-tapping the center of the now-playing screen. Tapping a slot row opens the
-     *  action picker; long-press restores the slot's classic default. Slot assignments are
-     *  written into BOTH the playing and stopped button configs so the panel behaves the same
-     *  regardless of playback state. */
+    /** The quick-actions-panel entry row above the list: opens a dialog with the panel's three
+     *  buttons, mirroring the watch panel opened by double-tapping the center of the now-playing
+     *  screen. Tapping a slot row opens the action picker; long-press restores the slot's classic
+     *  default. Slot assignments are written into BOTH the playing and stopped button configs so
+     *  the panel behaves the same regardless of playback state. The wide row beneath the buttons
+     *  is not a slot: it is always Up Next. */
     private fun setupQuickPanelToggles() {
         binding.quickPanelRow.setOnClickListener { showQuickPanelDialog() }
         refreshQuickPanelSummary()
     }
+
+    /** False while the panel takes its buttons from the playing app: the slots this section edits
+     *  are then never read, and offering them would be a control that does nothing. */
+    private fun quickPanelUsesConfiguredButtons(): Boolean =
+            QuickPanelSource.usesConfiguredButtons(Preferences.getString(
+                    PreferenceManager.getDefaultSharedPreferences(requireContext()),
+                    MiscPreferences.WEAR_QUICK_PANEL_SOURCE))
 
     override fun onResume() {
         super.onResume()
@@ -175,12 +187,7 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
         refreshQuickPanelSummary()
     }
 
-    private val quickSlotCodes = intArrayOf(
-            QuickPanelButtons.SLOT_1,
-            QuickPanelButtons.SLOT_2,
-            QuickPanelButtons.SLOT_3,
-            QuickPanelButtons.SLOT_LONG
-    )
+    private val quickSlotCodes = QuickPanelButtons.ALL_SLOTS
 
     private fun assignedQuickAction(index: Int): PhoneAction? =
             actionConfig.getPlayingConfig().getScreenAction(
@@ -189,8 +196,7 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
     private fun quickSlotDefaultName(index: Int): String = getString(when (index) {
         0 -> R.string.quick_panel_default_like
         1 -> R.string.quick_panel_default_shuffle
-        2 -> R.string.quick_panel_default_repeat
-        else -> R.string.quick_panel_default_up_next
+        else -> R.string.quick_panel_default_repeat
     })
 
     private fun quickSlotSummary(index: Int): String {
@@ -206,6 +212,8 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
         if (!::binding.isInitialized) {
             return
         }
+        binding.quickPanelSection.visibility =
+                if (quickPanelUsesConfiguredButtons()) View.VISIBLE else View.GONE
         binding.quickPanelRowSummary.text = (0 until quickSlotCodes.size)
                 .joinToString(" · ") { index ->
                     val assigned = assignedQuickAction(index)
@@ -245,14 +253,12 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
         val slotTitles = intArrayOf(
                 R.string.quick_panel_slot_1,
                 R.string.quick_panel_slot_2,
-                R.string.quick_panel_slot_3,
-                R.string.quick_panel_slot_long
+                R.string.quick_panel_slot_3
         )
         val defaultIcons = intArrayOf(
                 com.svartifoss.snfell.common.R.drawable.action_like,
                 com.svartifoss.snfell.common.R.drawable.action_shuffle,
-                com.svartifoss.snfell.common.R.drawable.action_repeat,
-                R.drawable.ic_playlist_play
+                com.svartifoss.snfell.common.R.drawable.action_repeat
         )
 
         lateinit var dialog: androidx.appcompat.app.AlertDialog
@@ -330,8 +336,37 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
     }
 
     override fun onFabClicked() {
-        val intent = Intent(context, ActionEditorActivity::class.java)
-        startActivityForResult(intent, REQUEST_CODE_EDIT_WINDOW)
+        StreamingLinkSheet(requireContext(), addToMenuHost).show()
+    }
+
+    /** What the add sheet needs from this screen. The sheet owns the streaming-link flow; this is
+     *  only where its results land in the menu, and the way out to the full action picker. */
+    private val addToMenuHost = object : StreamingLinkSheet.Host {
+        override fun menuShortcutLinks(): List<String> =
+                viewModel.actions.value.orEmpty()
+                        .mapNotNull { (it.item as? PlayPlaylistShortcutAction)?.link }
+
+        override fun addShortcutsToMenu(shortcuts: List<PlaylistShortcut>) {
+            viewModel.addActions(shortcuts.map {
+                PlayPlaylistShortcutAction(requireContext(), it.name, it.link)
+            })
+            // The new rows land at the end; show them rather than leaving them below the fold.
+            if (actions.isNotEmpty()) binding.recycler.scrollToPosition(actions.lastIndex)
+        }
+
+        override fun openFullPicker() {
+            lastEditedActionPosition = -1
+            startActivityForResult(
+                    Intent(context, ActionEditorActivity::class.java),
+                    REQUEST_CODE_EDIT_WINDOW)
+        }
+
+        override fun onArtworkCached() {
+            if (!isAdded || !::listItemAdapter.isInitialized) return
+            // The rows were sent to the watch before their covers existed; send them again.
+            actionConfig.getActionList().retransmit()
+            listItemAdapter.notifyDataSetChanged()
+        }
     }
 
     override fun prepareFab(fab: FloatingActionButton) {

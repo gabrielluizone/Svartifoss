@@ -24,6 +24,11 @@ enum class TextSizingMode { SMART, MARQUEE, WRAP, SHRINK }
 /**
  * TextView that can be displayed either as a filled text or as an outline.
  */
+/** Matches `FaceChrome.MARQUEE_FADE_WIDTH`, which the Compose faces and the phone's miniature
+ *  both use - the same line should dissolve over the same distance whichever renderer drew it.
+ *  Restated in dp rather than imported because this file is Android Views and that one is Compose. */
+private const val MARQUEE_FADE_WIDTH_DP = 18f
+
 class OutlineTextView : AppCompatTextView {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -324,6 +329,14 @@ class OutlineTextView : AppCompatTextView {
             ellipsize = TextUtils.TruncateAt.MARQUEE
             marqueeRepeatLimit = -1
             isSelected = true
+            // Dissolve the ends rather than cutting them. TextView already knows how to fade a
+            // marquee - its own edge-strength calculation follows the scroll offset, so the lead
+            // end stays sharp until there is something behind it - and this is the switch that
+            // asks for it. Turned on with the scroll and off with it, because on a line that is
+            // not scrolling the framework would still fade whichever end is clipped.
+            isHorizontalFadingEdgeEnabled = true
+            setFadingEdgeLength(
+                    (MARQUEE_FADE_WIDTH_DP * resources.displayMetrics.density).toInt())
         }
         setTextSize(TypedValue.COMPLEX_UNIT_PX, sizePx)
     }
@@ -335,6 +348,7 @@ class OutlineTextView : AppCompatTextView {
             maxLines = wrapMaxLines
             ellipsize = TextUtils.TruncateAt.END
             isSelected = false
+            isHorizontalFadingEdgeEnabled = false
         }
     }
 

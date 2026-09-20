@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelog — Svartifoss</title>
+<meta name="description" content="See what is new, improved and fixed in every Svartifoss release.">
+<link rel="canonical" href="https://gabrielluizone.github.io/Svartifoss/changelog.html">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Changelog — Svartifoss">
+<meta property="og:description" content="New features, improvements and fixes in every Svartifoss release.">
+<meta property="og:image" content="https://gabrielluizone.github.io/Svartifoss/images/banner.png">
+<meta name="theme-color" content="#0a0a0a">
+<meta name="color-scheme" content="dark">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" href="images/favicon-light.png" media="(prefers-color-scheme: light)">
+<link rel="icon" type="image/png" href="images/favicon-dark.png" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="images/app-icon-512.png">
+
+<style>
+  @font-face {
+    font-family: "Google Sans";
+    src: url("fonts/google_sans_regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Google Sans";
+    src: url("fonts/google_sans_bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --void: #0a0a0a;
+    --shadow: #141414;
+    --carbon: #1e1e1e;
+    --carbon-soft: #272727;
+    --snow: #f0f0f0;
+    --ash: #b0b7b4;
+    --ash-dim: #969e9b;
+    --sage: #87a89f;
+    --sage-dark: #6b9088;
+    --sage-wash: rgba(135, 168, 159, 0.1);
+    --sage-glow: rgba(135, 168, 159, 0.18);
+
+    --face: "Google Sans", "Product Sans", Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --r-lg: 16px;
+    --r-md: 12px;
+    --r-sm: 10px;
+    --edge: min(6vw, 72px);
+    --col-w: 1180px;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; color-scheme: dark; }
+  body {
+    margin: 0;
+    background: var(--void);
+    color: var(--snow);
+    font-family: var(--face);
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--sage); }
+  ::selection { background: var(--sage); color: var(--void); }
+  :focus-visible { outline: 2px solid var(--sage); outline-offset: 3px; }
+  svg.icon { width: 1em; height: 1em; fill: currentColor; flex: none; }
+
+  .wrap {
+    width: min(100%, var(--col-w));
+    margin: 0 auto;
+    padding-left: var(--edge);
+    padding-right: var(--edge);
+  }
+  .skip-link {
+    position: fixed;
+    top: 8px;
+    left: 16px;
+    z-index: 100;
+    padding: 12px 18px;
+    background: var(--sage);
+    color: var(--void);
+    border-radius: var(--r-sm);
+    transform: translateY(-150%);
+    font-weight: 700;
+  }
+  .skip-link:focus { transform: translateY(0); }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ================= NAV ================= */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background: rgba(10, 10, 10, 0.94);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--carbon-soft);
+  }
+  .nav .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    min-height: 72px;
+  }
+  .nav-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    color: var(--snow);
+    font-size: 19px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .nav-brand img { width: 26px; height: 26px; border-radius: 7px; }
+  .nav-links { display: flex; align-items: center; gap: 24px; }
+  .nav-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    color: var(--ash);
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .nav-links a:hover { color: var(--snow); }
+  .nav-links a[aria-current="page"] {
+    color: var(--snow);
+    text-decoration: underline;
+    text-decoration-color: var(--sage);
+    text-underline-offset: 8px;
+  }
+
+  /* ================= HERO ================= */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: 76px 0 68px;
+    border-bottom: 1px solid var(--carbon);
+    background: radial-gradient(ellipse at 72% 44%, rgba(135, 168, 159, 0.1), transparent 52%);
+  }
+  .columns-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+  .columns-bg span {
+    position: absolute;
+    top: -10%;
+    bottom: -10%;
+    width: 1px;
+    background: linear-gradient(180deg, transparent 0%, var(--carbon-soft) 18%, var(--carbon-soft) 82%, transparent 100%);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .columns-bg span { animation: cascade 9s ease-in-out infinite; }
+  }
+  @keyframes cascade { 0%, 100% { opacity: 0.35; } 50% { opacity: 1; } }
+  .hero .wrap { position: relative; z-index: 1; }
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--sage);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .eyebrow .dot { font-size: 8px; }
+  h1, h2, h3 { margin: 0; color: var(--snow); font-weight: 700; letter-spacing: -0.01em; }
+  .hero h1 {
+    margin: 16px 0 18px;
+    font-size: clamp(48px, 7vw, 80px);
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+  .hero-lede {
+    max-width: 650px;
+    margin: 0;
+    color: var(--ash);
+    font-size: clamp(17px, 2vw, 20px);
+    line-height: 1.55;
+  }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 48px;
+    padding: 12px 20px;
+    border: 1px solid var(--sage);
+    border-radius: var(--r-sm);
+    color: var(--void);
+    background: var(--sage);
+    font-size: 14px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .btn:hover { border-color: var(--sage-dark); background: var(--sage-dark); }
+  .btn.secondary { border-color: var(--carbon-soft); color: var(--snow); background: transparent; }
+  .btn.secondary:hover { border-color: var(--sage); color: var(--sage); }
+  .source-note {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 24px 0 0;
+    color: var(--ash-dim);
+    font-size: 12px;
+  }
+  .live-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--sage);
+    box-shadow: 0 0 0 5px var(--sage-glow);
+  }
+
+  /* ================= CHANGELOG ================= */
+  .changelog-shell {
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr);
+    gap: clamp(42px, 7vw, 92px);
+    align-items: start;
+    padding-top: 64px;
+    padding-bottom: 88px;
+  }
+  .release-index {
+    position: sticky;
+    top: 104px;
+    max-height: calc(100vh - 128px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--carbon-soft) transparent;
+  }
+  .release-index h2 {
+    margin-bottom: 14px;
+    color: var(--ash-dim);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .release-index nav { display: grid; gap: 3px; }
+  .release-index a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 11px;
+    border-left: 2px solid var(--carbon-soft);
+    color: var(--ash);
+    font-size: 13px;
+    line-height: 1.35;
+    text-decoration: none;
+  }
+  .release-index a:hover,
+  .release-index a[aria-current="location"] {
+    border-left-color: var(--sage);
+    color: var(--snow);
+    background: linear-gradient(90deg, var(--sage-wash), transparent);
+  }
+  .index-stage {
+    flex: none;
+    padding: 2px 6px;
+    border: 1px solid #3a4642;
+    border-radius: 5px;
+    color: #b9d1ca;
+    background: #1c2421;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 9px;
+    line-height: 1.35;
+  }
+  .release-index .source-link { margin-top: 18px; color: var(--sage); font-size: 12px; }
+  .release-index .source-link svg { width: 12px; height: 12px; margin-left: 4px; }
+
+  .changelog-content { min-width: 0; max-width: 790px; }
+  .loading {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 160px;
+    color: var(--ash);
+  }
+  .loading-mark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--carbon-soft);
+    border-top-color: var(--sage);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .load-error {
+    padding: 28px;
+    border: 1px solid var(--carbon-soft);
+    border-radius: var(--r-md);
+    background: var(--shadow);
+  }
+  .load-error h2 { margin-bottom: 8px; font-size: 22px; }
+  .load-error p { margin: 0; color: var(--ash); }
+
+  .release { scroll-margin-top: 94px; }
+  .release + .release {
+    margin-top: 76px;
+    padding-top: 76px;
+    border-top: 1px solid var(--carbon-soft);
+  }
+  .release-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .release-header h2 {
+    font-size: clamp(34px, 5vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+  .release-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 28px;
+    padding: 4px 10px;
+    border: 1px solid var(--sage-dark);
+    border-radius: 999px;
+    color: var(--sage);
+    background: var(--sage-wash);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .version-stage {
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 4px 10px;
+    border: 1px solid #3a4642;
+    border-radius: 6px;
+    color: #b9d1ca;
+    background: #1c2421;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1;
+  }
+  .release > p {
+    margin: -10px 0 34px;
+    color: var(--ash);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  .release-section + .release-section { margin-top: 46px; }
+  .release-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    color: var(--sage);
+    font-size: 14px;
+    line-height: 1.3;
+    letter-spacing: 0.075em;
+    text-transform: uppercase;
+  }
+  .release-section h3::after { content: ""; flex: 1; height: 1px; background: var(--carbon-soft); }
+  .change-list { display: grid; gap: 22px; margin: 0; padding: 0; list-style: none; }
+  .change-entry {
+    position: relative;
+    padding-left: 24px;
+    color: var(--ash);
+  }
+  .change-entry::before {
+    content: "";
+    position: absolute;
+    top: 0.72em;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    border: 2px solid var(--sage);
+    border-radius: 50%;
+    background: var(--void);
+  }
+  .change-entry > p { margin: 0; }
+  .change-entry > p + p { margin-top: 12px; }
+  .change-entry strong { color: var(--snow); font-weight: 700; }
+  .change-entry em { color: #c8cecc; }
+  .change-entry code,
+  .release > p code {
+    padding: 2px 6px;
+    border: 1px solid var(--carbon-soft);
+    border-radius: 5px;
+    color: #cbd9d5;
+    background: var(--shadow);
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    font-size: 0.86em;
+  }
+  .change-entry a,
+  .release > p a { text-underline-offset: 3px; }
+  .change-entry ul {
+    display: grid;
+    gap: 8px;
+    margin: 12px 0 0;
+    padding-left: 20px;
+    color: var(--ash);
+  }
+  .change-entry ul li { padding-left: 3px; }
+  .change-entry ul li::marker { color: var(--sage); }
+  .change-entry ul li > p { margin: 0; }
+  .back-to-top {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-top: 68px;
+    color: var(--ash);
+    font-size: 13px;
+    text-decoration: none;
+  }
+  .back-to-top:hover { color: var(--sage); }
+
+  /* ================= FOOTER ================= */
+  footer { padding: 56px 0 64px; border-top: 1px solid var(--carbon); }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 32px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--carbon);
+    margin-bottom: 24px;
+  }
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--snow);
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .footer-brand img { width: 22px; height: 22px; border-radius: 6px; }
+  .footer-links { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 26px; }
+  .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    color: var(--ash);
+    font-size: 14px;
+    text-decoration: none;
+  }
+  .footer-links a:hover { color: var(--sage); }
+  .footer-links a svg { width: 14px; height: 14px; opacity: 0.7; }
+  .footer-meta {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--ash-dim);
+    font-size: 12.5px;
+  }
+
+  @media (max-width: 820px) {
+    .hero { padding: 54px 0 52px; }
+    .changelog-shell { grid-template-columns: 1fr; gap: 42px; padding-top: 44px; }
+    .release-index {
+      position: static;
+      max-height: none;
+      overflow: visible;
+      padding: 18px;
+      border: 1px solid var(--carbon-soft);
+      border-radius: var(--r-md);
+      background: var(--shadow);
+    }
+    .release-index nav { display: flex; flex-wrap: wrap; gap: 6px; }
+    .release-index a {
+      padding: 7px 10px;
+      border: 1px solid var(--carbon-soft);
+      border-radius: 999px;
+      background: var(--void);
+    }
+    .release-index a:hover,
+    .release-index a[aria-current="location"] { border-color: var(--sage); background: var(--sage-wash); }
+    .release-index .source-link { display: inline-flex; margin-top: 14px; border: 0; background: transparent; }
+  }
+  @media (max-width: 580px) {
+    :root { --edge: 20px; }
+    .nav .wrap { min-height: 64px; gap: 12px; }
+    .nav-brand { font-size: 16px; gap: 7px; }
+    .nav-links { gap: 12px; }
+    .nav-links a { font-size: 13px; }
+    .nav-links a:nth-child(3) { display: none; }
+    .hero { padding: 42px 0 44px; }
+    .hero h1 { font-size: 48px; }
+    .hero-actions { display: grid; grid-template-columns: 1fr; }
+    .release + .release { margin-top: 56px; padding-top: 56px; }
+    .release-header h2 { font-size: 36px; }
+    .change-entry { padding-left: 20px; font-size: 15px; }
+    .footer-links { gap: 4px 18px; }
+  }
+  @media (max-width: 370px) {
+    :root { --edge: 14px; }
+    .nav-links { gap: 8px; }
+    .nav-links a:nth-child(2) { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+</style>
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-open-new" viewBox="0 0 24 24"><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 -960 960 960"><path d="m280-400 200-200 200 200-56 56-104-103v287h-80v-287L336-344l-56-56Z"/></symbol>
+  </defs>
+</svg>
+
+<nav class="nav" aria-label="Main navigation">
+  <div class="wrap">
+    <a class="nav-brand" href="index.html">
+      <img src="images/app-icon-512.png" width="26" height="26" alt="">
+      Svartifoss
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="changelog.html" aria-current="page">Changelog</a>
+      <a href="https://github.com/gabrielluizone/Svartifoss">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="columns-bg" aria-hidden="true">
+    <span style="left:6%; animation-delay:.2s;"></span>
+    <span style="left:18%; animation-delay:1.4s;"></span>
+    <span style="left:32%; animation-delay:.6s;"></span>
+    <span style="left:48%; animation-delay:2s;"></span>
+    <span style="left:64%; animation-delay:1s;"></span>
+    <span style="left:80%; animation-delay:1.8s;"></span>
+    <span style="left:94%; animation-delay:.4s;"></span>
+  </div>
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot">●</span> Release notes</div>
+    <h1>Changelog</h1>
+    <p class="hero-lede">Follow every new feature, improvement and fix shipped in Svartifoss — from the work in progress to the earliest documented releases.</p>
+    <div class="hero-actions">
+      <a class="btn" href="https://github.com/gabrielluizone/Svartifoss/releases/latest">Latest release <svg class="icon" aria-hidden="true"><use href="#i-open-new"/></svg></a>
+      <a class="btn secondary" href="https://github.com/gabrielluizone/Svartifoss/blob/master/CHANGELOG.md">View source <svg class="icon" aria-hidden="true"><use href="#i-open-new"/></svg></a>
+    </div>
+    <p class="source-note"><span class="live-dot" aria-hidden="true"></span>Synced directly from the project's CHANGELOG.md</p>
+  </div>
+</header>
+
+<main class="wrap changelog-shell" id="main">
+  <aside class="release-index" aria-label="Release index">
+    <h2>On this page</h2>
+    <nav id="release-links" aria-label="Releases">
+      <span class="sr-only">Release links load with the changelog.</span>
+    </nav>
+    <a class="source-link" href="https://github.com/gabrielluizone/Svartifoss/blob/master/CHANGELOG.md">Source file <svg class="icon" aria-hidden="true"><use href="#i-open-new"/></svg></a>
+  </aside>
+
+  <div class="changelog-content" id="changelog-content" aria-live="polite" aria-busy="true">
+    <div class="loading" role="status">
+      <span class="loading-mark" aria-hidden="true"></span>
+      Loading release notes…
+    </div>
+    <noscript>
+      <div class="load-error">
+        <h2>JavaScript is required</h2>
+        <p>Read the complete <a href="https://github.com/gabrielluizone/Svartifoss/blob/master/CHANGELOG.md">changelog on GitHub</a>.</p>
+      </div>
+    </noscript>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <a class="footer-brand" href="index.html">
+        <img src="images/app-icon-512.png" width="22" height="22" alt="">
+        Svartifoss
+      </a>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="https://github.com/gabrielluizone/Svartifoss">GitHub <svg class="icon" aria-hidden="true"><use href="#i-open-new"/></svg></a>
+        <a href="https://github.com/gabrielluizone/Svartifoss/releases">Releases <svg class="icon" aria-hidden="true"><use href="#i-open-new"/></svg></a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <span>com.svartifoss.snfell · GPL-3.0</span>
+      <span>Open source music control for Wear OS</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var GITHUB_SOURCE = 'https://raw.githubusercontent.com/gabrielluizone/Svartifoss/master/CHANGELOG.md';
+  var localHosts = ['localhost', '127.0.0.1', '0.0.0.0'];
+  var source = localHosts.indexOf(window.location.hostname) !== -1 ? '../CHANGELOG.md' : GITHUB_SOURCE;
+  var content = document.getElementById('changelog-content');
+  var releaseLinks = document.getElementById('release-links');
+
+  function slugify(value) {
+    return 'release-' + value.toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  function releaseDisplay(releaseName) {
+    var prerelease = releaseName.match(/^(\d+(?:\.\d+)*?)-(beta|alpha|rc)(\d*)$/i);
+    var version = prerelease ? prerelease[1] : releaseName;
+    var major = version.match(/^(\d+)\.0$/);
+    var title = major ? 'Svartifoss ' + major[1] : version;
+    var stage = '';
+
+    if (prerelease) {
+      var stageName = prerelease[2].toLowerCase() === 'rc'
+        ? 'RC'
+        : prerelease[2].charAt(0).toUpperCase() + prerelease[2].slice(1).toLowerCase();
+      stage = stageName + (prerelease[3] ? ' ' + prerelease[3] : '');
+    }
+
+    return { title: title, stage: stage };
+  }
+
+  function appendInline(parent, text) {
+    var token = /(\*\*([\s\S]+?)\*\*|`([^`]+)`|\[([^\]]+)\]\(([^)\s]+)\)|\*([^*]+)\*)/g;
+    var cursor = 0;
+    var match;
+
+    while ((match = token.exec(text)) !== null) {
+      if (match.index > cursor) parent.appendChild(document.createTextNode(text.slice(cursor, match.index)));
+
+      var element;
+      if (match[2] !== undefined) {
+        element = document.createElement('strong');
+        appendInline(element, match[2]);
+      } else if (match[3] !== undefined) {
+        element = document.createElement('code');
+        element.textContent = match[3];
+      } else if (match[4] !== undefined) {
+        element = document.createElement('a');
+        appendInline(element, match[4]);
+        if (/^https?:\/\//i.test(match[5])) {
+          element.href = match[5];
+          element.rel = 'noopener noreferrer';
+        } else {
+          element.href = '#';
+        }
+      } else {
+        element = document.createElement('em');
+        appendInline(element, match[6]);
+      }
+      parent.appendChild(element);
+      cursor = token.lastIndex;
+    }
+
+    if (cursor < text.length) parent.appendChild(document.createTextNode(text.slice(cursor)));
+  }
+
+  function paragraph(text) {
+    var p = document.createElement('p');
+    appendInline(p, text.trim());
+    return p;
+  }
+
+  function render(markdown) {
+    if (!/^# Changelog\s*$/m.test(markdown)) throw new Error('Unexpected changelog format');
+
+    var lines = markdown.replace(/\r\n?/g, '\n').split('\n');
+    var fragment = document.createDocumentFragment();
+    var indexFragment = document.createDocumentFragment();
+    var article = null;
+    var section = null;
+    var list = null;
+    var listItem = null;
+    var activeItem = null;
+    var paragraphLines = [];
+    var paragraphOwner = null;
+    var blankLine = true;
+    var releaseIds = Object.create(null);
+    var releaseCount = 0;
+
+    function flushParagraph() {
+      if (paragraphOwner && paragraphLines.length) {
+        paragraphOwner.appendChild(paragraph(paragraphLines.join(' ')));
+      }
+      paragraphLines = [];
+      paragraphOwner = null;
+    }
+
+    lines.forEach(function (line) {
+      var releaseMatch = line.match(/^##\s+(.+)$/);
+      var sectionMatch = line.match(/^###\s+(.+)$/);
+      var nestedItemMatch = line.match(/^\s{2,}-\s+(.+)$/);
+      var itemMatch = line.match(/^-\s+(.+)$/);
+
+      if (/^#\s+/.test(line) && !releaseMatch && !sectionMatch) return;
+
+      if (releaseMatch) {
+        flushParagraph();
+        var releaseName = releaseMatch[1].trim();
+        var display = releaseDisplay(releaseName);
+        var baseId = slugify(releaseName);
+        var id = baseId;
+        var suffix = 2;
+        while (releaseIds[id]) id = baseId + '-' + suffix++;
+        releaseIds[id] = true;
+
+        article = document.createElement('article');
+        article.className = 'release';
+        article.id = id;
+
+        var header = document.createElement('header');
+        header.className = 'release-header';
+        var heading = document.createElement('h2');
+        heading.textContent = display.title;
+        header.appendChild(heading);
+        if (releaseName.toLowerCase() === 'unreleased') {
+          var badge = document.createElement('span');
+          badge.className = 'release-badge';
+          badge.textContent = 'In development';
+          header.appendChild(badge);
+        }
+        if (display.stage) {
+          var stage = document.createElement('code');
+          stage.className = 'version-stage';
+          stage.textContent = display.stage;
+          header.appendChild(stage);
+        }
+        article.appendChild(header);
+        fragment.appendChild(article);
+
+        var indexLink = document.createElement('a');
+        indexLink.href = '#' + id;
+        indexLink.appendChild(document.createTextNode(display.title));
+        if (display.stage) {
+          var indexStage = document.createElement('span');
+          indexStage.className = 'index-stage';
+          indexStage.textContent = display.stage;
+          indexLink.appendChild(indexStage);
+        }
+        indexFragment.appendChild(indexLink);
+
+        section = null;
+        list = null;
+        listItem = null;
+        activeItem = null;
+        blankLine = false;
+        releaseCount += 1;
+        return;
+      }
+
+      if (sectionMatch && article) {
+        flushParagraph();
+        section = document.createElement('section');
+        section.className = 'release-section';
+        var sectionHeading = document.createElement('h3');
+        sectionHeading.textContent = sectionMatch[1].trim();
+        section.appendChild(sectionHeading);
+        article.appendChild(section);
+        list = null;
+        listItem = null;
+        activeItem = null;
+        blankLine = false;
+        return;
+      }
+
+      if (nestedItemMatch && listItem) {
+        flushParagraph();
+        var nestedList = listItem.querySelector(':scope > ul');
+        if (!nestedList) {
+          nestedList = document.createElement('ul');
+          listItem.appendChild(nestedList);
+        }
+        var nestedItem = document.createElement('li');
+        nestedList.appendChild(nestedItem);
+        activeItem = nestedItem;
+        paragraphOwner = nestedItem;
+        paragraphLines = [nestedItemMatch[1].trim()];
+        blankLine = false;
+        return;
+      }
+
+      if (itemMatch && article) {
+        flushParagraph();
+        var listParent = section || article;
+        if (!list || list.parentNode !== listParent) {
+          list = document.createElement('ul');
+          list.className = 'change-list';
+          listParent.appendChild(list);
+        }
+        listItem = document.createElement('li');
+        listItem.className = 'change-entry';
+        list.appendChild(listItem);
+        activeItem = listItem;
+        paragraphOwner = listItem;
+        paragraphLines = [itemMatch[1].trim()];
+        blankLine = false;
+        return;
+      }
+
+      if (/^\s*$/.test(line)) {
+        flushParagraph();
+        blankLine = true;
+        return;
+      }
+
+      if (article) {
+        var indented = /^\s{2,}\S/.test(line);
+        var continuesListItem = activeItem && (!blankLine || indented);
+        var owner = continuesListItem ? activeItem : (section || article);
+
+        if (paragraphOwner === owner && paragraphLines.length) {
+          paragraphLines.push(line.trim());
+        } else {
+          flushParagraph();
+          paragraphOwner = owner;
+          paragraphLines = [line.trim()];
+        }
+
+        if (!continuesListItem) {
+          list = null;
+          listItem = null;
+          activeItem = null;
+        }
+        blankLine = false;
+      }
+    });
+
+    flushParagraph();
+
+    if (!releaseCount) throw new Error('No releases found');
+
+    var topLink = document.createElement('a');
+    topLink.className = 'back-to-top';
+    topLink.href = '#top';
+    var upIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    upIcon.setAttribute('class', 'icon');
+    upIcon.setAttribute('aria-hidden', 'true');
+    var use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+    use.setAttribute('href', '#i-arrow-up');
+    upIcon.appendChild(use);
+    topLink.appendChild(upIcon);
+    topLink.appendChild(document.createTextNode(' Back to top'));
+    fragment.appendChild(topLink);
+
+    content.replaceChildren(fragment);
+    releaseLinks.replaceChildren(indexFragment);
+    content.removeAttribute('aria-live');
+    content.setAttribute('aria-busy', 'false');
+    observeReleases();
+
+    if (window.location.hash) {
+      var target = document.getElementById(window.location.hash.slice(1));
+      if (target) window.requestAnimationFrame(function () { target.scrollIntoView(); });
+    }
+  }
+
+  function observeReleases() {
+    if (!('IntersectionObserver' in window)) return;
+    var links = Array.prototype.slice.call(releaseLinks.querySelectorAll('a'));
+    var linkById = Object.create(null);
+    links.forEach(function (link) { linkById[link.getAttribute('href').slice(1)] = link; });
+
+    var observer = new IntersectionObserver(function (entries) {
+      var visible = entries.filter(function (entry) { return entry.isIntersecting; })
+        .sort(function (a, b) { return a.boundingClientRect.top - b.boundingClientRect.top; });
+      if (!visible.length) return;
+      links.forEach(function (link) { link.removeAttribute('aria-current'); });
+      var current = linkById[visible[0].target.id];
+      if (current) current.setAttribute('aria-current', 'location');
+    }, { rootMargin: '-96px 0px -65% 0px', threshold: 0 });
+
+    document.querySelectorAll('.release').forEach(function (release) { observer.observe(release); });
+  }
+
+  function showError() {
+    content.setAttribute('aria-busy', 'false');
+    var box = document.createElement('div');
+    box.className = 'load-error';
+    var title = document.createElement('h2');
+    title.textContent = 'The changelog could not be loaded';
+    var message = document.createElement('p');
+    message.appendChild(document.createTextNode('You can still read the complete '));
+    var link = document.createElement('a');
+    link.href = 'https://github.com/gabrielluizone/Svartifoss/blob/master/CHANGELOG.md';
+    link.textContent = 'CHANGELOG.md on GitHub';
+    message.appendChild(link);
+    message.appendChild(document.createTextNode('.'));
+    box.appendChild(title);
+    box.appendChild(message);
+    content.replaceChildren(box);
+  }
+
+  fetch(source, { headers: { Accept: 'text/plain' } })
+    .then(function (response) {
+      if (!response.ok) throw new Error('Changelog unavailable');
+      return response.text();
+    })
+    .then(render)
+    .catch(function () {
+      if (source === GITHUB_SOURCE) {
+        showError();
+        return;
+      }
+      fetch(GITHUB_SOURCE, { headers: { Accept: 'text/plain' } })
+        .then(function (response) {
+          if (!response.ok) throw new Error('Changelog unavailable');
+          return response.text();
+        })
+        .then(render)
+        .catch(showError);
+    });
+})();
+</script>
+
+</body>
+</html>

@@ -153,8 +153,7 @@ internal object WatchSearchTargetResolver {
                 // wear_metadata_cover_shape / wear_metadata_show_cover need no entry here: the
                 // "wear_metadata_" prefix check above already redirects both.
                 key == "wear_split_panel" && face != "split" ||
-                key == "wear_quadrant_tap_flash" && face != "classic" ||
-                key == "wear_classic_icons_visible" && face in setOf("expressive", "material") ||
+                key == "wear_classic_icons_visible" && face !in PlayerEditorModel.PLAYER_CONTROLS_FACES ||
                 key == "wear_internal_progress_visible" && face !in PlayerEditorModel.INTERNAL_PROGRESS_FACES ||
                 key in setOf("screen_buttons_curve_style", "screen_buttons_shape") &&
                     MiniButtonPlacement.isHostedByFace(face)) {
@@ -193,7 +192,9 @@ internal object WatchSearchTargetResolver {
         }
         if (key == "wear_progress_gradient" &&
                 readString("wear_progress_style", "solid") != "solid") {
-            return redirect(WatchFacePrefsFragment.SECTION_PANELS, "wear_progress_style")
+            // On Style, not Panels: the ring's three controls moved to the page where the ring is
+            // drawn. Redirecting to the Panels page would land on a tab that no longer holds it.
+            return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_progress_style")
         }
 
         // Most OverlayBackdrop treatments are solid fields or authored gradients this radius has

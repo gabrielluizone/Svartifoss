@@ -96,4 +96,12 @@
         <item>Màu album bậc ba</item>
         <item>Viền neon</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Lá</item>
+        <item>Giọt nước</item>
+        <item>Vòm</item>
+        <item>Sỏi</item>
+        <item>Khiên</item>
+    </string-array>
 </resources>

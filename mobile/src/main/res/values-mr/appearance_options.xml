@@ -96,4 +96,12 @@
         <item>तृतीय अल्बम रंग</item>
         <item>निऑन बाह्यरेषा</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>पान</item>
+        <item>थेंब</item>
+        <item>कमान</item>
+        <item>गारगोटी</item>
+        <item>ढाल</item>
+    </string-array>
 </resources>

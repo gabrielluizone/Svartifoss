@@ -31,6 +31,7 @@
     <string name="idle_action_queue">Открыть недавно воспроизведённое</string>
 
     <string name="no_phone">Телефон не подключён</string>
+    <string name="phone_unavailable">Разблокируйте телефон, чтобы управлять воспроизведением</string>
     <string name="playback_stopped">Остановлено</string>
     <string name="error">ОШИБКА</string>
     <string name="error_play_services">Ошибка Play Services</string>

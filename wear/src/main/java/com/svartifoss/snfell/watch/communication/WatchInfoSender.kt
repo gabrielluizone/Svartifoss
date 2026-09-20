@@ -43,6 +43,10 @@ class WatchInfoSender(private val context: Context, private val urgent: Boolean)
         // them apart, so it answers here and the phone renders the answer rather than offering
         // the assignment with the same confidence it offers a screen tap.
         builder.handGesture = DoublePinchGestureController.availability(context).code
+        // Which Wear OS this is. The phone cannot read it - the two devices run separate builds on
+        // separate platforms - and it is what decides whether the always-on player can be held past
+        // the system's watch-face timeout at all. See WearPlatform.
+        builder.platformApiLevel = Build.VERSION.SDK_INT
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // These labels are rendered by the *phone*, in the Controls screen, so they have to be

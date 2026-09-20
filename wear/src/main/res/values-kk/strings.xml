@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Жуырда ойнатылғандарды ашу</string>
 
     <string name="no_phone">Телефон қосылмаған</string>
+    <string name="phone_unavailable">Ойнатуды басқару үшін телефонды құлыптан шығарыңыз</string>
     <string name="playback_stopped">Тоқтатылды</string>
     <string name="error">ҚАТЕ</string>
     <string name="error_play_services">Play Services қатесі</string>

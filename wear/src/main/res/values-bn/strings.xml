@@ -37,6 +37,7 @@
     <string name="idle_action_queue">সম্প্রতি চালানো খুলুন</string>
 
     <string name="no_phone">ফোন সংযুক্ত নেই</string>
+    <string name="phone_unavailable">প্লেব্যাক নিয়ন্ত্রণ করতে ফোন আনলক করুন</string>
     <string name="playback_stopped">বন্ধ</string>
     <string name="error">ত্রুটি</string>
     <string name="error_play_services">Google Play Services ত্রুটি</string>

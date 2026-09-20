@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">捏合設定</string>
+    <string name="pinch_settings_intro">手錶應如何偵測您的手勢？</string>
+    <string name="pinch_mode_native">手錶偵測器</string>
+    <string name="pinch_mode_experimental">實驗性偵測器</string>
+    <string name="pinch_native_description">使用手錶內建的辨識功能。沒有校準或靈敏度選項。</string>
+    <string name="pinch_experimental_description">根據您的校準偵測手腕動作。可能會誤觸發，且在播放器開啟時較耗電。</string>
+    <string name="pinch_profile_missing">尚未校準。您現在就可以儲存此模式：在手錶上儲存校準之前，手錶會繼續使用自己的偵測器，之後自動切換。</string>
+    <string name="pinch_profile_saved">校準已儲存。可以使用了。</string>
+    <string name="pinch_calibration_step">1. 校準您的手勢</string>
+    <string name="pinch_tuning_step">2. 調整辨識</string>
+    <string name="pinch_calibrate_watch">在手錶上校準</string>
+    <string name="pinch_recalibrate_watch">重新校準</string>
+    <string name="pinch_open_instruction">在手錶上開啟 Svartifoss。在那裡完成測試並儲存校準。</string>
+    <string name="pinch_open_sending">正在連線到手錶…</string>
+    <string name="pinch_open_sent">請在手錶上繼續。如果測試沒有開啟，請在手錶上重新開啟 Svartifoss 後再試一次。</string>
+    <string name="pinch_open_failed">無法使用手錶。請檢查連線並更新兩個應用程式，然後重試。</string>
+    <string name="pinch_sensitivity_label">靈敏度</string>
+    <string name="pinch_sensitivity_help">如果漏偵測捏合，請調高。如果其他動作觸發了操作，請調低。</string>
+    <string name="pinch_gap_label">兩次捏合的間隔</string>
+    <string name="pinch_gap_help">從第一次捏合到第二次捏合的最長時間。手勢較慢時請調大。</string>
+    <string name="pinch_cooldown_label">指令之間的暫停</string>
+    <string name="pinch_cooldown_help">執行一次操作後，等待多久才接受下一個手勢。</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d 毫秒</string>
+    <string name="pinch_advanced_show">更多調整</string>
+    <string name="pinch_advanced_hide">收合調整</string>
+    <string name="pinch_shared_settings">這些設定在音樂播放或暫停時生效。</string>
+    <string name="pinch_settings_save">儲存</string>
+    <string name="pinch_gesture_note">在播放器開啟且手錶螢幕亮起時，將拇指和食指併攏兩次。</string>
+    <string name="pinch_controls_uncalibrated">已選擇實驗性偵測器，但尚未校準。校準之前將使用手錶本身的偵測器。</string>
+    <string name="pinch_controls_calibrated">實驗性偵測器已校準。在 Svartifoss 播放器開啟時捏合兩次即可。</string>
+</resources>

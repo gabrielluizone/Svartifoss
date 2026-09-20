@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">הגדרות צביטה</string>
+    <string name="pinch_settings_intro">איך השעון צריך לזהות את המחווה שלך?</string>
+    <string name="pinch_mode_native">גלאי השעון</string>
+    <string name="pinch_mode_experimental">גלאי ניסיוני</string>
+    <string name="pinch_native_description">משתמש בזיהוי המובנה של השעון. ללא כיול או בקרות רגישות.</string>
+    <string name="pinch_experimental_description">מזהה תנועות פרק כף היד לפי הכיול שלך. עלול להיפעל בטעות וצורך יותר סוללה כשהנגן פתוח.</string>
+    <string name="pinch_profile_missing">עדיין לא בוצע כיול. אפשר לשמור מצב זה עכשיו: השעון ימשיך להשתמש בגלאי שלו עד שיישמר בו כיול, ואז יעבור מעצמו.</string>
+    <string name="pinch_profile_saved">הכיול נשמר. מוכן לשימוש.</string>
+    <string name="pinch_calibration_step">1. כייל את המחווה</string>
+    <string name="pinch_tuning_step">2. כוון את הזיהוי</string>
+    <string name="pinch_calibrate_watch">כיול בשעון</string>
+    <string name="pinch_recalibrate_watch">כיול מחדש</string>
+    <string name="pinch_open_instruction">פתח את Svartifoss בשעון. בצע שם את הבדיקה ושמור את הכיול.</string>
+    <string name="pinch_open_sending">מתחבר לשעון…</string>
+    <string name="pinch_open_sent">המשך בשעון. אם הבדיקה לא נפתחת, פתח שם את Svartifoss שוב ונסה שוב.</string>
+    <string name="pinch_open_failed">השעון אינו זמין. בדוק את החיבור, עדכן את שתי האפליקציות ונסה שוב.</string>
+    <string name="pinch_sensitivity_label">רגישות</string>
+    <string name="pinch_sensitivity_help">הגבר אם צביטות מוחמצות. הפחת אם תנועות אחרות מפעילות פעולות.</string>
+    <string name="pinch_gap_label">זמן בין צביטות</string>
+    <string name="pinch_gap_help">הזמן המרבי מהצביטה הראשונה לשנייה. הגדל למחווה איטית יותר.</string>
+    <string name="pinch_cooldown_label">השהיה בין פקודות</string>
+    <string name="pinch_cooldown_help">כמה זמן להמתין אחרי פעולה לפני קבלת מחווה נוספת.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">עוד התאמות</string>
+    <string name="pinch_advanced_hide">פחות התאמות</string>
+    <string name="pinch_shared_settings">הגדרות אלה חלות בזמן שמוזיקה מתנגנת או מושהית.</string>
+    <string name="pinch_settings_save">שמור</string>
+    <string name="pinch_gesture_note">געת באגודל ובאצבע ביחד פעמיים, כשהנגן פתוח ומסך השעון דלוק.</string>
+    <string name="pinch_controls_uncalibrated">נבחר הגלאי הניסיוני, עדיין ללא כיול. עד שתכייל נעשה שימוש בגלאי של השעון עצמו.</string>
+    <string name="pinch_controls_calibrated">הגלאי הניסיוני כויל. צבוט פעמיים כשנגן Svartifoss פתוח.</string>
+</resources>

@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Kalibracja uszczypnięcia</string>
+    <string name="pinch_cal_intro">Dopnij pasek i trzymaj nadgarstek w górze. Około 45 sekund: spoczynek, sześć podwójnych uszczypnięć, a potem ruch ręką. Nie są wysyłane żadne polecenia muzyczne.</string>
+    <string name="pinch_cal_start">Start</string>
+    <string name="pinch_cal_restart">Zacznij od nowa</string>
+    <string name="pinch_cal_test">Test bez akcji</string>
+    <string name="pinch_cal_save">Zapisz kalibrację</string>
+    <string name="pinch_cal_close">Zamknij</string>
+
+    <string name="pinch_cal_step_ready">Przygotuj się</string>
+    <string name="pinch_cal_step_ready_hint">Trzymaj nadgarstek w górze, ekranem do siebie.</string>
+    <string name="pinch_cal_step_rest">Nie ruszaj się</string>
+    <string name="pinch_cal_step_rest_hint">Nie szczypij.</string>
+    <string name="pinch_cal_step_attempt">Próba %1$d z %2$d</string>
+    <string name="pinch_cal_step_pinch">Podwójne uszczypnięcie</string>
+    <string name="pinch_cal_step_pinch_hint">Dotknij dwa razy kciukiem i palcem wskazującym.</string>
+    <string name="pinch_cal_step_wait">Rozluźnij się</string>
+    <string name="pinch_cal_step_wait_hint">Zaraz kolejna próba.</string>
+    <string name="pinch_cal_step_prepare">Prawie gotowe</string>
+    <string name="pinch_cal_step_prepare_hint">Teraz: poruszaj ręką bez szczypania.</string>
+    <string name="pinch_cal_step_move">Poruszaj ręką</string>
+    <string name="pinch_cal_step_move_hint">Obracaj nią i machaj naturalnie, ekranem do siebie. Nie szczypij.</string>
+
+    <string name="pinch_cal_testing">Test</string>
+    <string name="pinch_cal_detections">Wykrycia</string>
+    <string name="pinch_cal_test_hint">Pozostało %1$d s · bez akcji</string>
+
+    <string name="pinch_cal_ready">Skalibrowano. Przetestuj przed zapisem: uszczypnij kilka razy, a potem poruszaj ręką normalnie.</string>
+    <string name="pinch_cal_test_done">Wykrycia: %1$d. Jeśli liczba pasuje do Twoich podwójnych uszczypnięć, zapisz. Jeśli policzono ruchy ręki, skalibruj ponownie lub zmniejsz czułość w telefonie.</string>
+    <string name="pinch_cal_failed_incomplete">Nagrywanie zostało przerwane. Utrzymuj włączony ekran skierowany do siebie przez cały test i zacznij od nowa.</string>
+    <string name="pinch_cal_failed_weak">Uszczypnięcia nie wyróżniały się na tle nieruchomego nadgarstka. Dopnij nieco pasek i uszczypnij mocniej.</string>
+    <string name="pinch_cal_failed_unrecognized">Większość prób nie została rozpoznana jako podwójne uszczypnięcie. W każdej próbie uszczypnij wyraźnie dwa razy i trzymaj rękę nieruchomo.</string>
+    <string name="pinch_cal_failed_movement">Ruch ręki przypominał uszczypnięcia. Trzymaj nadgarstek stabilniej podczas prób i zacznij od nowa.</string>
+    <string name="pinch_cal_failed_kept">Zachowano poprzednią kalibrację.</string>
+    <string name="pinch_cal_interrupted">Zatrzymano, bo ekran się wyłączył. Zacznij od nowa przy włączonym ekranie.</string>
+    <string name="pinch_cal_unavailable">Czujniki ruchu są niedostępne. Otwórz ten ekran ponownie i spróbuj jeszcze raz.</string>
+
+    <string name="pinch_cal_sending">Zapisywanie w telefonie…</string>
+    <string name="pinch_cal_saved">Kalibracja zapisana. W telefonie wybierz Eksperymentalne w ustawieniach uszczypnięcia i zapisz.</string>
+    <string name="pinch_cal_saved_active">Kalibracja zapisana. Wykrywanie eksperymentalne działa, gdy odtwarzacz jest otwarty.</string>
+    <string name="pinch_cal_send_failed">Nie udało się potwierdzić zapisu w telefonie. Sprawdź połączenie i ponownie dotknij Zapisz kalibrację.</string>
+    <string name="pinch_cal_legend_motion">Ruch</string>
+    <string name="pinch_cal_legend_rotation">Obrót</string>
+    <string name="pinch_cal_legend_target">Próg</string>
+    <string name="pinch_cal_no_signal">Brak danych z czujnika</string>
+    <string name="pinch_cal_detail">Rozpoznano %1$d z %2$d · dotknięcia na próbę: %3$s</string>
+</resources>

@@ -111,14 +111,6 @@
     <string name="watch_element_queue">रांग</string>
     <string name="watch_element_lyrics">गीताचे बोल</string>
     <string name="player_section_on_screen">स्क्रीनवर</string>
-    <string name="player_element_app_icon">अॅप आयकॉन</string>
-    <string name="player_element_controls">प्लेअर नियंत्रणे</string>
-    <string name="player_element_tap_flash">टॅप फ्लॅश</string>
-    <string name="player_element_inner_progress">आतील प्रगती</string>
-    <string name="player_element_edge_arc">काठाची कमान</string>
-    <string name="player_element_edge_seek">काठावरील सीक</string>
-    <string name="player_element_clock">घड्याळ</string>
-    <string name="player_element_cover_art">कव्हर आर्ट</string>
     <string name="setting_album_art_filter">अल्बम आर्ट फिल्टर</string>
     <string name="setting_album_art_filter_description">कोणत्याही अल्बम आर्ट शैलीवर स्वतंत्र रंग प्रक्रिया लागू करा.</string>
     <string name="wear_font_roboto_thin">Roboto Thin</string>
@@ -349,7 +341,6 @@
     <string name="aod_control_brightness">ब्राइटनेस</string>
     <string name="aod_control_art_treatment">प्रक्रिया</string>
     <string name="aod_control_art_opacity">अपारदर्शकता</string>
-    <string name="mini_button_control_visibility">दाखवा</string>
     <string name="mini_button_control_arrangement">मांडणी</string>
     <string name="mini_button_control_shape">आकार</string>
     <string name="mini_button_control_background">पार्श्वभूमी</string>
@@ -616,6 +607,29 @@
     <string name="actions_moved_to_position">%1$s ला %3$d पैकी %2$d व्या स्थानावर हलवले.</string>
     <string name="actions_empty">अजून कोणत्याही क्रिया नाहीत. पहिली तयार करण्यासाठी जोडा बटण वापरा.</string>
     <string name="actions_add">क्रिया जोडा</string>
+    <string name="add_menu_title">घड्याळाच्या मेनूमध्ये जोडा</string>
+    <string name="add_menu_subtitle">एखादी क्रिया निवडा, किंवा प्लेलिस्ट, अल्बम किंवा ट्रॅकची लिंक पेस्ट करा.</string>
+    <string name="add_menu_link_hint">लिंक (Spotify, YouTube Music, Deezer…)</string>
+    <string name="add_menu_paste">पेस्ट करा</string>
+    <string name="add_menu_get_name">लिंकवरून नाव मिळवा</string>
+    <string name="add_menu_looking_up">नाव शोधत आहे…</string>
+    <string name="add_menu_lookup_failed">या लिंकसाठी नाव सापडले नाही. त्याऐवजी एक टाइप करा.</string>
+    <string name="add_menu_lookup_unsupported">ही सेवा नावे शेअर करत नाही. त्याऐवजी एक टाइप करा.</string>
+    <string name="add_menu_add">मेनूमध्ये जोडा</string>
+    <string name="add_menu_added">“%1$s” मेनूमध्ये जोडले</string>
+    <string name="add_menu_already">“%1$s” आधीच मेनूमध्ये आहे</string>
+    <string name="add_menu_saved_title">जतन केलेले शॉर्टकट</string>
+    <string name="add_menu_actions_title">एखादी क्रिया निवडा</string>
+    <string name="add_menu_actions_desc">प्लेबॅक, आवाज, घड्याळाचे स्क्रीन, अॅप्स, Tasker…</string>
+    <string name="add_menu_or_link">किंवा लिंक जोडा</string>
+    <string name="add_link_title">लिंक जोडा</string>
+    <string name="add_link_subtitle">प्लेलिस्ट, अल्बम किंवा ट्रॅकची लिंक पेस्ट करा. ती स्ट्रीमिंग शॉर्टकटमध्ये जतन होऊन लगेच वापरली जाते.</string>
+    <string name="add_link_use">ही लिंक वापरा</string>
+    <plurals name="add_menu_add_selected">
+        <item quantity="one">मेनूमध्ये %1$d जोडा</item>
+        <item quantity="other">मेनूमध्ये %1$d जोडा</item>
+    </plurals>
+    <string name="add_menu_in_menu">मेनूमध्ये</string>
     <string name="on_screen_buttons">स्पर्श क्षेत्रे</string>
     <string name="physical_buttons">भौतिक बटणे</string>
     <string name="physical_buttons_disconnected">भौतिक बटणे कॉन्फिगर करण्यासाठी घड्याळावर Svartifoss कनेक्ट करून उघडा. स्पर्श क्षेत्रे, स्वाइप्स आणि मिनी बटणे आत्ताच उपलब्ध आहेत.</string>
@@ -864,7 +878,6 @@
     <string name="quick_panel_slot_1">बटण 1</string>
     <string name="quick_panel_slot_2">बटण 2</string>
     <string name="quick_panel_slot_3">बटण 3</string>
-    <string name="quick_panel_slot_long">लांब बटण</string>
     <string name="quick_panel_slot_default">%1$s (डीफॉल्ट)</string>
     <string name="quick_panel_slot_hidden">लपवलेले</string>
     <string name="quick_panel_default_like">आवडले</string>
@@ -1715,7 +1728,6 @@
     <string name="setting_wear_note_cover_shape">नोट कव्हरचा आकार</string>
     <string name="setting_wear_title_centered">शीर्षक मध्यभागी ठेवा</string>
     <string name="setting_wear_title_centered_description">संपूर्ण मजकूर ब्लॉकऐवजी शीर्षक स्क्रीनच्या मध्यभागी अँकर करा</string>
-    <string name="player_element_title_centered">मध्यभागी शीर्षक</string>
     <string-array name="wear_cover_shape_entries">
         <item>गोलाकार</item>
         <item>चौरस</item>
@@ -1959,6 +1971,7 @@
     <string name="drawer_support_heading">समर्थन</string>
     <string name="drawer_support_summary">Svartifoss विनामूल्य आणि open source आहे - तुम्हाला उपयोगी वाटत असेल तर मला एक coffee घेऊन द्या :D</string>
     <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">कव्हर आर्ट डाउनलोड करा</string>
     <string name="album_art_saved">कव्हर आर्ट गॅलरीत जतन केले</string>
     <string name="album_art_save_error">कव्हर आर्ट जतन करता आले नाही</string>
@@ -1966,11 +1979,17 @@
     <string name="action_play_spotify_liked_songs">आवडलेली गाणी प्ले करा (Spotify)</string>
     <string name="action_play_soundcloud_likes">आवडलेले ट्रॅक प्ले करा (SoundCloud)</string>
     <string name="action_my_playlists">स्ट्रीमिंग शॉर्टकट्स</string>
-    <string name="action_play_specific_playlist">स्ट्रीमिंग शॉर्टकट उघडा</string>
-    <string name="action_choose_or_add_streaming_shortcut">स्ट्रीमिंग शॉर्टकट निवडा किंवा जोडा</string>
     <string name="action_show_streaming_library">जतन केलेले सर्व शॉर्टकट दाखवा</string>
-    <string name="playlist_shortcut_pick_title">शॉर्टकट निवडा</string>
-    <string name="playlist_shortcut_pick_empty">अजून कोणतेही streaming shortcuts जतन केलेले नाहीत — खाली एक जोडा, नंतर निवडण्यासाठी त्यावर टॅप करा</string>
+    <string name="picker_section_apps">अॅप्स आणि ऑटोमेशन</string>
+    <string name="picker_chip_playback">प्लेबॅक</string>
+    <string name="picker_chip_volume">आवाज</string>
+    <string name="picker_chip_screens">स्क्रीन</string>
+    <string name="picker_chip_find">संगीत शोधा</string>
+    <string name="picker_chip_streaming">स्ट्रीमिंग</string>
+    <string name="picker_chip_apps">अॅप्स</string>
+    <string name="picker_play_with_app">अॅपने प्ले करा</string>
+    <string name="picker_add_link">लिंक जोडा</string>
+    <string name="picker_add_link_desc">प्लेलिस्ट, अल्बम किंवा ट्रॅक पेस्ट करा</string>
     <string name="playlist_shortcuts_empty">अजून streaming shortcuts नाहीत — फोन अॅपच्या सेटिंग्जमध्ये जोडा</string>
     <string name="setting_playlist_shortcuts">स्ट्रीमिंग शॉर्टकट्स</string>
     <string name="setting_playlist_shortcuts_description">घड्याळावरून share links YouTube Music, Spotify आणि इतर streaming apps मध्ये उघडा</string>

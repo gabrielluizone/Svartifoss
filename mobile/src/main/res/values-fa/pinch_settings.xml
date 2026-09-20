@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">تنظیمات نیشگون</string>
+    <string name="pinch_settings_intro">ساعت چطور باید ژست شما را تشخیص دهد؟</string>
+    <string name="pinch_mode_native">آشکارساز ساعت</string>
+    <string name="pinch_mode_experimental">آشکارساز آزمایشی</string>
+    <string name="pinch_native_description">از تشخیص داخلی ساعت استفاده می‌کند. بدون کالیبراسیون یا تنظیمات حساسیت.</string>
+    <string name="pinch_experimental_description">حرکت‌های مچ را با کالیبراسیون شما تشخیص می‌دهد. ممکن است سهواً فعال شود و تا وقتی پخش‌کننده باز است باتری بیشتری مصرف می‌کند.</string>
+    <string name="pinch_profile_missing">هنوز کالیبره نشده است. می‌توانید همین حالا این حالت را ذخیره کنید: ساعت تا زمانی که کالیبراسیونی در آن ذخیره نشود از آشکارساز خودش استفاده می‌کند و سپس خودش تغییر می‌کند.</string>
+    <string name="pinch_profile_saved">کالیبراسیون ذخیره شد. آماده استفاده.</string>
+    <string name="pinch_calibration_step">۱. ژست خود را کالیبره کنید</string>
+    <string name="pinch_tuning_step">۲. تشخیص را تنظیم کنید</string>
+    <string name="pinch_calibrate_watch">کالیبره کردن روی ساعت</string>
+    <string name="pinch_recalibrate_watch">کالیبره کردن دوباره</string>
+    <string name="pinch_open_instruction">Svartifoss را روی ساعت باز کنید. آزمایش را همان‌جا دنبال کنید و کالیبراسیون را ذخیره کنید.</string>
+    <string name="pinch_open_sending">در حال اتصال به ساعت…</string>
+    <string name="pinch_open_sent">روی ساعت ادامه دهید. اگر آزمایش باز نشد، Svartifoss را همان‌جا دوباره باز کنید و دوباره تلاش کنید.</string>
+    <string name="pinch_open_failed">ساعت در دسترس نیست. اتصال را بررسی کنید و هر دو برنامه را به‌روزرسانی کنید، سپس دوباره تلاش کنید.</string>
+    <string name="pinch_sensitivity_label">حساسیت</string>
+    <string name="pinch_sensitivity_help">اگر نیشگون‌ها از دست می‌روند افزایش دهید. اگر حرکت‌های دیگر کارها را فعال می‌کنند کاهش دهید.</string>
+    <string name="pinch_gap_label">فاصله زمانی بین نیشگون‌ها</string>
+    <string name="pinch_gap_help">بیشترین زمان از نیشگون اول تا دوم. برای ژست آهسته‌تر افزایش دهید.</string>
+    <string name="pinch_cooldown_label">مکث بین فرمان‌ها</string>
+    <string name="pinch_cooldown_help">پس از یک کار، چقدر صبر شود تا ژست بعدی پذیرفته شود.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">تنظیمات بیشتر</string>
+    <string name="pinch_advanced_hide">تنظیمات کمتر</string>
+    <string name="pinch_shared_settings">این تنظیمات در حین پخش یا توقف موقت موسیقی اعمال می‌شوند.</string>
+    <string name="pinch_settings_save">ذخیره</string>
+    <string name="pinch_gesture_note">با پخش‌کننده باز و صفحه ساعت روشن، شست و انگشت اشاره را دو بار به هم بزنید.</string>
+    <string name="pinch_controls_uncalibrated">آشکارساز آزمایشی انتخاب شد ولی هنوز کالیبره نشده است. تا زمان کالیبراسیون از آشکارساز خود ساعت استفاده می‌شود.</string>
+    <string name="pinch_controls_calibrated">آشکارساز آزمایشی کالیبره شد. وقتی پخش‌کننده Svartifoss باز است دو بار نیشگون بگیرید.</string>
+</resources>

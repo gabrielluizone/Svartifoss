@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">I-calibrate ang pinch</string>
+    <string name="pinch_cal_intro">Higpitan ang strap at itaas ang pulso. Mga 45 segundo: pahinga, anim na dobleng pinch, saka galaw ng braso. Walang music command na ipinapadala.</string>
+    <string name="pinch_cal_start">Simulan</string>
+    <string name="pinch_cal_restart">Ulitin</string>
+    <string name="pinch_cal_test">Test nang walang aksyon</string>
+    <string name="pinch_cal_save">I-save ang calibration</string>
+    <string name="pinch_cal_close">Isara</string>
+
+    <string name="pinch_cal_step_ready">Maghanda</string>
+    <string name="pinch_cal_step_ready_hint">Itaas ang pulso, nakaharap sa iyo ang screen.</string>
+    <string name="pinch_cal_step_rest">Huwag gumalaw</string>
+    <string name="pinch_cal_step_rest_hint">Huwag mag-pinch.</string>
+    <string name="pinch_cal_step_attempt">Pagsubok %1$d sa %2$d</string>
+    <string name="pinch_cal_step_pinch">Dobleng pinch</string>
+    <string name="pinch_cal_step_pinch_hint">Pagdikitin nang dalawang beses ang hinlalaki at hintuturo.</string>
+    <string name="pinch_cal_step_wait">Magrelaks</string>
+    <string name="pinch_cal_step_wait_hint">Paparating na ang susunod na pagsubok.</string>
+    <string name="pinch_cal_step_prepare">Malapit na</string>
+    <string name="pinch_cal_step_prepare_hint">Susunod: igalaw ang braso nang hindi nagpi-pinch.</string>
+    <string name="pinch_cal_step_move">Igalaw ang braso</string>
+    <string name="pinch_cal_step_move_hint">Paikutin at ugain ito nang natural, nakaharap sa iyo ang screen. Huwag mag-pinch.</string>
+
+    <string name="pinch_cal_testing">Test</string>
+    <string name="pinch_cal_detections">Mga natukoy</string>
+    <string name="pinch_cal_test_hint">%1$d s na lang · walang aksyon</string>
+
+    <string name="pinch_cal_ready">Na-calibrate na. Subukan bago i-save: mag-pinch nang ilang beses, saka igalaw ang braso gaya ng dati.</string>
+    <string name="pinch_cal_test_done">%1$d natukoy. Kung tugma ito sa mga dobleng pinch mo, i-save. Kung nabilang ang galaw ng braso, mag-calibrate ulit o bawasan ang sensitivity sa phone.</string>
+    <string name="pinch_cal_failed_incomplete">Naputol ang recording. Panatilihing bukas at nakaharap sa iyo ang screen sa buong test, saka magsimulang muli.</string>
+    <string name="pinch_cal_failed_weak">Hindi naiiba ang mga pinch mo sa nakatigil na pulso. Higpitan nang bahagya ang strap at mag-pinch nang mas madiin.</string>
+    <string name="pinch_cal_failed_unrecognized">Karamihan sa mga pagsubok ay hindi nakilala bilang dobleng pinch. Sa bawat pagsubok, mag-pinch nang dalawang beses nang malinaw at panatilihing nakatigil ang braso.</string>
+    <string name="pinch_cal_failed_movement">Mukhang mga pinch ang galaw ng braso mo. Panatilihing mas matatag ang pulso sa mga pagsubok, saka magsimulang muli.</string>
+    <string name="pinch_cal_failed_kept">Nanatili ang nakaraang calibration.</string>
+    <string name="pinch_cal_interrupted">Huminto dahil namatay ang screen. Magsimulang muli habang bukas ang screen.</string>
+    <string name="pinch_cal_unavailable">Hindi available ang mga motion sensor. Buksan ulit ang screen na ito at subukan muli.</string>
+
+    <string name="pinch_cal_sending">Sine-save sa phone…</string>
+    <string name="pinch_cal_saved">Na-save ang calibration. Sa phone, piliin ang Eksperimental sa mga setting ng pinch at i-save.</string>
+    <string name="pinch_cal_saved_active">Na-save ang calibration. Gumagana ang eksperimental na detector habang bukas ang player.</string>
+    <string name="pinch_cal_send_failed">Hindi makumpirma ang pag-save sa phone. Suriin ang koneksyon at i-tap muli ang I-save ang calibration.</string>
+    <string name="pinch_cal_legend_motion">Galaw</string>
+    <string name="pinch_cal_legend_rotation">Pag-ikot</string>
+    <string name="pinch_cal_legend_target">Threshold</string>
+    <string name="pinch_cal_no_signal">Walang data ng sensor</string>
+    <string name="pinch_cal_detail">%1$d sa %2$d ang nakilala · mga tap kada pagsubok: %3$s</string>
+</resources>

@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Βαθμονόμηση τσιμπήματος</string>
+    <string name="pinch_cal_intro">Σφίξτε καλά το λουράκι και κρατήστε τον καρπό ψηλά. Περίπου 45 δευτερόλεπτα: ηρεμία, έξι διπλά τσιμπήματα και μετά κίνηση του χεριού. Δεν στέλνονται εντολές μουσικής.</string>
+    <string name="pinch_cal_start">Έναρξη</string>
+    <string name="pinch_cal_restart">Έναρξη ξανά</string>
+    <string name="pinch_cal_test">Τεστ χωρίς ενέργειες</string>
+    <string name="pinch_cal_save">Αποθήκευση βαθμονόμησης</string>
+    <string name="pinch_cal_close">Κλείσιμο</string>
+
+    <string name="pinch_cal_step_ready">Ετοιμαστείτε</string>
+    <string name="pinch_cal_step_ready_hint">Κρατήστε τον καρπό ψηλά, με την οθόνη προς εσάς.</string>
+    <string name="pinch_cal_step_rest">Μείνετε ακίνητοι</string>
+    <string name="pinch_cal_step_rest_hint">Μην τσιμπάτε.</string>
+    <string name="pinch_cal_step_attempt">Προσπάθεια %1$d από %2$d</string>
+    <string name="pinch_cal_step_pinch">Διπλό τσίμπημα</string>
+    <string name="pinch_cal_step_pinch_hint">Αγγίξτε δύο φορές τον αντίχειρα και τον δείκτη.</string>
+    <string name="pinch_cal_step_wait">Χαλαρώστε</string>
+    <string name="pinch_cal_step_wait_hint">Έρχεται η επόμενη προσπάθεια.</string>
+    <string name="pinch_cal_step_prepare">Σχεδόν έτοιμο</string>
+    <string name="pinch_cal_step_prepare_hint">Έπειτα: κινήστε το χέρι χωρίς να τσιμπάτε.</string>
+    <string name="pinch_cal_step_move">Κινήστε το χέρι</string>
+    <string name="pinch_cal_step_move_hint">Γυρίστε το και κουνήστε το φυσικά, με την οθόνη προς εσάς. Μην τσιμπάτε.</string>
+
+    <string name="pinch_cal_testing">Τεστ</string>
+    <string name="pinch_cal_detections">Ανιχνεύσεις</string>
+    <string name="pinch_cal_test_hint">Απομένουν %1$d δ · χωρίς ενέργειες</string>
+
+    <string name="pinch_cal_ready">Βαθμονομήθηκε. Δοκιμάστε πριν αποθηκεύσετε: τσιμπήστε μερικές φορές και μετά κινήστε το χέρι κανονικά.</string>
+    <string name="pinch_cal_test_done">Ανιχνεύσεις: %1$d. Αν αυτό ταιριάζει με τα διπλά τσιμπήματά σας, αποθηκεύστε. Αν μετρήθηκαν κινήσεις του χεριού, βαθμονομήστε ξανά ή μειώστε την ευαισθησία στο τηλέφωνο.</string>
+    <string name="pinch_cal_failed_incomplete">Η καταγραφή διακόπηκε. Κρατήστε την οθόνη αναμμένη και στραμμένη προς εσάς σε όλη τη δοκιμή και ξεκινήστε ξανά.</string>
+    <string name="pinch_cal_failed_weak">Τα τσιμπήματά σας δεν ξεχώριζαν από έναν ακίνητο καρπό. Σφίξτε λίγο το λουράκι και τσιμπήστε πιο δυνατά.</string>
+    <string name="pinch_cal_failed_unrecognized">Οι περισσότερες προσπάθειες δεν αναγνωρίστηκαν ως διπλό τσίμπημα. Σε κάθε προσπάθεια τσιμπήστε καθαρά δύο φορές και κρατήστε το χέρι ακίνητο.</string>
+    <string name="pinch_cal_failed_movement">Η κίνηση του χεριού έμοιαζε με τσιμπήματα. Κρατήστε τον καρπό πιο σταθερό στις προσπάθειες και ξεκινήστε ξανά.</string>
+    <string name="pinch_cal_failed_kept">Διατηρήθηκε η προηγούμενη βαθμονόμηση.</string>
+    <string name="pinch_cal_interrupted">Σταμάτησε επειδή έσβησε η οθόνη. Ξεκινήστε ξανά με αναμμένη οθόνη.</string>
+    <string name="pinch_cal_unavailable">Οι αισθητήρες κίνησης δεν είναι διαθέσιμοι. Ανοίξτε ξανά αυτή την οθόνη και δοκιμάστε πάλι.</string>
+
+    <string name="pinch_cal_sending">Αποθήκευση στο τηλέφωνο…</string>
+    <string name="pinch_cal_saved">Η βαθμονόμηση αποθηκεύτηκε. Στο τηλέφωνο επιλέξτε Πειραματικό στις ρυθμίσεις τσιμπήματος και αποθηκεύστε.</string>
+    <string name="pinch_cal_saved_active">Η βαθμονόμηση αποθηκεύτηκε. Ο πειραματικός ανιχνευτής είναι ενεργός όσο το player είναι ανοιχτό.</string>
+    <string name="pinch_cal_send_failed">Δεν επιβεβαιώθηκε η αποθήκευση στο τηλέφωνο. Ελέγξτε τη σύνδεση και πατήστε ξανά Αποθήκευση βαθμονόμησης.</string>
+    <string name="pinch_cal_legend_motion">Κίνηση</string>
+    <string name="pinch_cal_legend_rotation">Περιστροφή</string>
+    <string name="pinch_cal_legend_target">Όριο</string>
+    <string name="pinch_cal_no_signal">Χωρίς δεδομένα αισθητήρα</string>
+    <string name="pinch_cal_detail">Αναγνωρίστηκαν %1$d από %2$d · αγγίγματα ανά προσπάθεια: %3$s</string>
+</resources>

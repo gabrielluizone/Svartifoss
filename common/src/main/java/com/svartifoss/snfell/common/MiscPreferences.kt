@@ -47,6 +47,19 @@ object MiscPreferences {
 
     val HAPTIC_FEEDBACK: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("haptic_feedback", true)
 
+    // Global input settings, owned by the phone. Calibration is explicit; choosing the
+    // experimental mode without a valid profile must never start an uncalibrated detector.
+    val WEAR_HAND_GESTURE_MODE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_hand_gesture_mode", "native")
+    val WEAR_PINCH_SENSITIVITY: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_pinch_sensitivity", 100)
+    val WEAR_PINCH_MAX_GAP: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_pinch_max_gap", 800)
+    val WEAR_PINCH_COOLDOWN: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_pinch_cooldown", 1000)
+    val WEAR_PINCH_CALIBRATION: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_pinch_calibration", "")
+
     /**
      * UI language as a BCP-47 tag ("en", "pt-BR"), or [AppLocales.SYSTEM] to follow the device.
      *
@@ -579,14 +592,18 @@ object MiscPreferences {
      *  independent appearance settings. */
     val WEAR_SCREEN_THEME: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_screen_theme", "default")
 
-    /** Classic face only (Compose faces never show quadrant hint icons at all): when a quadrant's
-     *  tap/double-tap/long-press fires its action, briefly flashes that icon to full opacity and
-     *  back down to the current Screen Theme's resting alpha - most useful on Hidden, where the
-     *  icon is otherwise invisible and gives no confirmation of which action just fired, but
-     *  available on every theme. Independent of the existing scale-bounce pulse, which keeps
-     *  running unconditionally regardless of this toggle. */
+    /** When a corner zone's single tap fires its action, shows that action's own icon inside the
+     *  tap ripple, at the fingertip, on every face and whether or not the corner icons are drawn
+     *  (see `MainActivity.revealQuadrantActionIcon`). A double tap or a long press runs a
+     *  different action and does not use it. On Compose faces it also makes the ripple bigger,
+     *  brighter and longer-lived, to leave room for the glyph. Independent of the scale-bounce
+     *  pulse, which keeps running unconditionally regardless of this toggle.
+     *
+     *  On by default: it is the only thing that says which action just ran on a face with its
+     *  corner icons hidden, which is every Compose face, and the person who lacks it is the one
+     *  who has never opened this setting. */
     val WEAR_QUADRANT_TAP_FLASH: PreferenceDefinition<Boolean> =
-            SimplePreferenceDefinition("wear_quadrant_tap_flash", false)
+            SimplePreferenceDefinition("wear_quadrant_tap_flash", true)
 
     /** Default typeface for title/artist text on every player layout. An element can opt into a
      *  different catalog family through [WEAR_TITLE_FONT] or [WEAR_ARTIST_FONT]; their default is
@@ -1537,6 +1554,8 @@ object MiscPreferences {
     val EXPORTABLE: List<PreferenceDefinition<*>> = listOf(
             ALWAYS_SHOW_TIME, PAUSE_ON_SWIPE_EXIT, ROTATING_CROWN_OFF_PERIOD, ROTATING_CROWN_SENSITIVITY,
             ROTARY_SEEK, WEAR_ROTARY_ACTION, HAPTIC_FEEDBACK, APP_LANGUAGE,
+            WEAR_HAND_GESTURE_MODE, WEAR_PINCH_SENSITIVITY, WEAR_PINCH_MAX_GAP,
+            WEAR_PINCH_COOLDOWN, WEAR_PINCH_CALIBRATION,
             DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT, AUTO_START_MODE,
             AUTO_START_APP_BLACKLIST, CLOSE_TIMEOUT, WEAR_CLOSE_ON_IDLE,
             WEAR_PAUSED_HOLD, WEAR_IDLE_BUTTON_ACTION, WEAR_IDLE_AUTO_OPEN,

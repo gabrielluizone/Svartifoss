@@ -37,6 +37,7 @@
     <string name="idle_action_queue">हाल में चलाए गए आइटम खोलें</string>
 
     <string name="no_phone">कोई फ़ोन कनेक्ट नहीं है</string>
+    <string name="phone_unavailable">प्लेबैक नियंत्रित करने के लिए फ़ोन अनलॉक करें</string>
     <string name="playback_stopped">रुका हुआ</string>
     <string name="error">त्रुटि</string>
     <string name="error_play_services">Play Services त्रुटि</string>

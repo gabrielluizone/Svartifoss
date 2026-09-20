@@ -119,3 +119,43 @@ message PlaybackSync {
   optional string title = 8;
   optional string artist = 9;
 }
+
+// Phone -> watch, on its own DataItem (CommPaths.DATA_ADJACENT_ALBUM_ART).
+//
+// The covers of the tracks around the one playing, sent while it is still playing.
+//
+// The watch can already name the track a skip will land on - it holds the queue, so
+// PredictedTrackAdvance answers that with no round trip - but the only picture it holds for that
+// track is the queue's own thumbnail, which is 96px (320px for the Cover queue style) because a
+// queue carries up to twenty of them across Bluetooth. Drawn full-screen on a 450px watch the
+// small one is visibly soft, so a skip showed a pixelated cover and then snapped to a sharp one
+// several hundred milliseconds later when the phone's own asset landed.
+//
+// These are that asset, sent early, for a few tracks in both directions - see
+// MusicService.ADJACENT_ARTWORK_RADIUS. Skipping forward is much the commoner press, but a
+// Previous that fell back to the thumbnail while Next did not would read as the feature working
+// intermittently, and a second press landing a track further out would do the same. All of them
+// are the size and encoding the playing track's cover uses, so the picture the prediction draws is
+// the picture the phone was going to send.
+//
+// A repeated entry rather than fixed fields because the radius is a tuning decision, not a wire
+// one: widening it must not mean a schema change on both devices. Each entry names the asset that
+// carries its bytes, so the watch never derives an asset key.
+//
+// The titles are what make them usable: the watch matches them against the track it is predicting
+// and ignores the artwork otherwise, exactly as the lyrics and metadata replies do. A named track
+// with no assetKey is a real answer - the phone looked and found no cover - and is distinct from
+// the track not being listed at all.
+message PrefetchedArtwork {
+  repeated PrefetchedTrack tracks = 1;
+}
+
+message PrefetchedTrack {
+  optional string title = 1;
+  optional string artist = 2;
+  // Which asset on this DataItem carries the cover. Absent when none could be resolved.
+  optional string assetKey = 3;
+  // Where the track sits relative to the one playing (-2, -1, 1, 2). Diagnostic only: the watch
+  // matches on the title, because a queue can shift under both devices between publish and press.
+  optional int32 offset = 4;
+}

@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Kalibroi nipistys</string>
+    <string name="pinch_cal_intro">Kiristä ranneke tiukalle ja pidä ranne koholla. Noin 45 sekuntia: lepo, kuusi kaksoisnipistystä ja sitten käsivarren liike. Musiikkikomentoja ei lähetetä.</string>
+    <string name="pinch_cal_start">Aloita</string>
+    <string name="pinch_cal_restart">Aloita alusta</string>
+    <string name="pinch_cal_test">Testaa ilman toimintoja</string>
+    <string name="pinch_cal_save">Tallenna kalibrointi</string>
+    <string name="pinch_cal_close">Sulje</string>
+
+    <string name="pinch_cal_step_ready">Valmistaudu</string>
+    <string name="pinch_cal_step_ready_hint">Pidä ranne koholla, näyttö itseesi päin.</string>
+    <string name="pinch_cal_step_rest">Pysy paikallasi</string>
+    <string name="pinch_cal_step_rest_hint">Älä nipistä.</string>
+    <string name="pinch_cal_step_attempt">Yritys %1$d/%2$d</string>
+    <string name="pinch_cal_step_pinch">Kaksoisnipistys</string>
+    <string name="pinch_cal_step_pinch_hint">Kosketa peukaloa ja etusormea kahdesti yhteen.</string>
+    <string name="pinch_cal_step_wait">Rentoudu</string>
+    <string name="pinch_cal_step_wait_hint">Seuraava yritys tulee pian.</string>
+    <string name="pinch_cal_step_prepare">Melkein valmis</string>
+    <string name="pinch_cal_step_prepare_hint">Seuraavaksi: liikuta kättä nipistämättä.</string>
+    <string name="pinch_cal_step_move">Liikuta kättä</string>
+    <string name="pinch_cal_step_move_hint">Käännä ja heilauta sitä luontevasti, näyttö itseesi päin. Älä nipistä.</string>
+
+    <string name="pinch_cal_testing">Testi</string>
+    <string name="pinch_cal_detections">Tunnistukset</string>
+    <string name="pinch_cal_test_hint">%1$d s jäljellä · ei toimintoja</string>
+
+    <string name="pinch_cal_ready">Kalibroitu. Testaa ennen tallennusta: nipistä muutaman kerran ja liikuta sitten kättä normaalisti.</string>
+    <string name="pinch_cal_test_done">%1$d tunnistusta. Jos määrä vastaa kaksoisnipistyksiäsi, tallenna. Jos käsivarren liikkeitä laskettiin mukaan, kalibroi uudelleen tai pienennä herkkyyttä puhelimessa.</string>
+    <string name="pinch_cal_failed_incomplete">Tallennus keskeytyi. Pidä näyttö päällä ja itseesi päin koko testin ajan ja aloita alusta.</string>
+    <string name="pinch_cal_failed_weak">Nipistyksesi eivät erottuneet liikkumattomasta ranteesta. Kiristä rannekettä hieman ja nipistä napakammin.</string>
+    <string name="pinch_cal_failed_unrecognized">Useimpia yrityksiä ei tunnistettu kaksoisnipistykseksi. Nipistä selvästi kahdesti jokaisella yrityksellä ja pidä käsi paikallaan.</string>
+    <string name="pinch_cal_failed_movement">Käsivarren liike muistutti nipistyksiä. Pidä ranne vakaampana yritysten aikana ja aloita alusta.</string>
+    <string name="pinch_cal_failed_kept">Edellinen kalibrointi säilytettiin.</string>
+    <string name="pinch_cal_interrupted">Pysäytetty, koska näyttö sammui. Aloita alusta näyttö päällä.</string>
+    <string name="pinch_cal_unavailable">Liikeanturit eivät ole käytettävissä. Avaa tämä näkymä uudelleen ja yritä uudestaan.</string>
+
+    <string name="pinch_cal_sending">Tallennetaan puhelimeen…</string>
+    <string name="pinch_cal_saved">Kalibrointi tallennettu. Valitse puhelimessa nipistysasetuksista Kokeellinen ja tallenna.</string>
+    <string name="pinch_cal_saved_active">Kalibrointi tallennettu. Kokeellinen tunnistus on käytössä, kun soitin on auki.</string>
+    <string name="pinch_cal_send_failed">Tallennusta puhelimeen ei voitu vahvistaa. Tarkista yhteys ja napauta Tallenna kalibrointi uudelleen.</string>
+    <string name="pinch_cal_legend_motion">Liike</string>
+    <string name="pinch_cal_legend_rotation">Kierto</string>
+    <string name="pinch_cal_legend_target">Kynnys</string>
+    <string name="pinch_cal_no_signal">Ei anturitietoja</string>
+    <string name="pinch_cal_detail">%1$d/%2$d tunnistettu · kosketuksia yritystä kohden: %3$s</string>
+</resources>

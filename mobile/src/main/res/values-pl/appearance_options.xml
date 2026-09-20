@@ -96,4 +96,12 @@
         <item>Trzeci kolor albumu</item>
         <item>Neonowy obrys</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Liść</item>
+        <item>Kropla</item>
+        <item>Łuk</item>
+        <item>Otoczak</item>
+        <item>Tarcza</item>
+    </string-array>
 </resources>

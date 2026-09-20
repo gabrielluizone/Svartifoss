@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Definições da pinça</string>
+    <string name="pinch_settings_intro">Como deve o relógio detetar o teu gesto?</string>
+    <string name="pinch_mode_native">Detetor do relógio</string>
+    <string name="pinch_mode_experimental">Detetor experimental</string>
+    <string name="pinch_native_description">Usa o reconhecimento integrado do relógio. Sem controlos de calibração nem de sensibilidade.</string>
+    <string name="pinch_experimental_description">Deteta os movimentos do pulso com a tua calibração. Pode disparar por engano e gasta mais bateria enquanto o leitor está aberto.</string>
+    <string name="pinch_profile_missing">Ainda não calibrado. Já podes guardar este modo: o relógio continua a usar o seu próprio detetor até ser guardada uma calibração nele e depois muda sozinho.</string>
+    <string name="pinch_profile_saved">Calibração guardada. Pronto a usar.</string>
+    <string name="pinch_calibration_step">1. Calibra o teu gesto</string>
+    <string name="pinch_tuning_step">2. Ajusta o reconhecimento</string>
+    <string name="pinch_calibrate_watch">Calibrar no relógio</string>
+    <string name="pinch_recalibrate_watch">Calibrar novamente</string>
+    <string name="pinch_open_instruction">Abre o Svartifoss no relógio. Segue lá o teste e guarda a calibração.</string>
+    <string name="pinch_open_sending">A ligar ao relógio…</string>
+    <string name="pinch_open_sent">Continua no relógio. Se o teste não abrir, volta a abrir lá o Svartifoss e tenta novamente.</string>
+    <string name="pinch_open_failed">Relógio indisponível. Verifica a ligação e atualiza as duas aplicações; depois tenta novamente.</string>
+    <string name="pinch_sensitivity_label">Sensibilidade</string>
+    <string name="pinch_sensitivity_help">Aumenta se as pinças não forem detetadas. Diminui se outros movimentos acionarem ações.</string>
+    <string name="pinch_gap_label">Tempo entre pinças</string>
+    <string name="pinch_gap_help">Tempo máximo entre a primeira e a segunda pinça. Aumenta para um gesto mais lento.</string>
+    <string name="pinch_cooldown_label">Pausa entre comandos</string>
+    <string name="pinch_cooldown_help">Quanto tempo esperar após uma ação antes de aceitar outro gesto.</string>
+    <string name="pinch_value_percent">%1$d%%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Mais ajustes</string>
+    <string name="pinch_advanced_hide">Menos ajustes</string>
+    <string name="pinch_shared_settings">Estas definições aplicam-se enquanto a música está a tocar ou em pausa.</string>
+    <string name="pinch_settings_save">Guardar</string>
+    <string name="pinch_gesture_note">Toca duas vezes com o polegar e o indicador, com o leitor aberto e o ecrã do relógio ligado.</string>
+    <string name="pinch_controls_uncalibrated">Detetor experimental escolhido, ainda não calibrado. Usa-se o detetor do próprio relógio até calibrares.</string>
+    <string name="pinch_controls_calibrated">Detetor experimental calibrado. Faz a pinça duas vezes com o leitor do Svartifoss aberto.</string>
+</resources>

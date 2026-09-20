@@ -29,6 +29,7 @@ import com.svartifoss.snfell.proto.CustomListItemAction
 import com.svartifoss.snfell.proto.LyricsRequest
 import com.svartifoss.snfell.proto.LyricsResponse
 import com.svartifoss.snfell.proto.MusicState
+import com.svartifoss.snfell.proto.PrefetchedArtwork
 import com.svartifoss.snfell.proto.PlaybackSync
 import com.svartifoss.snfell.proto.TrackMetadata
 import com.svartifoss.snfell.proto.Notification
@@ -276,6 +277,11 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             // phone around the stored state is stale and the error above is the truthful UI.
             if (capabilities.nodes.any { it.isNearby }) {
                 loadCurrentMusicState()
+                // And the covers the phone sent ahead for the tracks either side, for the same
+                // reason: the listener fires on future changes only, and the phone publishes those
+                // once per track change - so opening the app mid-track would otherwise leave the
+                // very first skip of a session falling back to the queue thumbnail.
+                loadPrefetchedNeighbourArtwork()
             }
 
             // Independent of any screen: the correction has to be running before a lyrics surface
@@ -565,6 +571,16 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                         customList.postValue(decodeCustomList(it.freeze()))
                     CommPaths.DATA_STREAMING_SHORTCUTS ->
                         streamingShortcuts.postValue(decodeCustomList(it.freeze()))
+                    CommPaths.DATA_ADJACENT_ALBUM_ART -> try {
+                        receiveAdjacentArtwork(it.freeze())
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        // This scope reports a failure as an error *state*, which would replace a
+                        // perfectly good player with an error screen over a cover for a track
+                        // nobody has asked for yet.
+                        Timber.w(e, "Could not take delivery of the neighbouring covers")
+                    }
                 }
             }
         }
@@ -776,6 +792,22 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             return
         }
 
+        // A cover the phone sent ahead for this track, already decoded and already on screen
+        // behind the prediction. The Data Layer addresses assets by content hash and the phone
+        // encodes every cover through one function, so an id match here means the very same bytes -
+        // publishing the held Bitmap skips a channel read and a decode, and hands the identical
+        // object back, which is what keeps the crossfade, the palette cache and the media-session
+        // metadata from all re-running on a picture that never changed.
+        prefetchedNeighbourArtwork.firstOrNull {
+            it.cover != null && it.assetId == asset.id
+        }?.let { prefetched ->
+            publishMusicAsset(state) {
+                lastAlbumArtAssetId = asset.id
+                albumArt.postValue(prefetched.cover)
+            }
+            return
+        }
+
         val albumArtData = dataClient.getByteArrayAsset(asset)
         val receivedAlbumArt = albumArtData?.let { bytes ->
             withContext(Dispatchers.Default) { BitmapUtils.deserialize(bytes) }
@@ -793,6 +825,66 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                 albumArt.postValue(null)
             }
         }
+    }
+
+    /**
+     * The covers the phone sent ahead for the tracks around the playing one.
+     *
+     * A plain field rather than `LiveData`, deliberately: nothing observes it and nothing should.
+     * It is read exactly once, by `MusicViewModel` at the instant a skip is predicted, and an
+     * observer would mean every arrival repainting a screen that is still showing the *current*
+     * track's cover - which is the picture that belongs there until the press happens.
+     *
+     * Each entry is a decoded full-screen bitmap, which is what makes the press instant and is
+     * also the reason the phone's radius stays small: these are held for as long as the track is.
+     */
+    @Volatile
+    var prefetchedNeighbourArtwork: List<PrefetchedCover> = emptyList()
+        private set
+
+    /** One entry of [prefetchedNeighbourArtwork]: the decoded cover, the track it belongs to, and
+     *  the content id the Data Layer addressed it by - see [deliverAlbumArt] for what that is for. */
+    data class PrefetchedCover(
+            val title: String,
+            val artist: String,
+            val cover: Bitmap?,
+            val assetId: String?
+    )
+
+    /**
+     * Takes delivery of [CommPaths.DATA_ADJACENT_ALBUM_ART].
+     *
+     * A named track whose cover is missing is kept rather than dropped: it means the phone looked
+     * and found none for it, which is what lets the watch fall back to the queue thumbnail at once
+     * instead of holding a blank space for bytes that are not coming.
+     *
+     * The asset key comes from the payload and is never derived here. The phone decides how many
+     * neighbours to send, so a key built from an assumed radius would quietly stop matching the
+     * day that number changed.
+     */
+    private suspend fun receiveAdjacentArtwork(dataItem: DataItem) {
+        val announcement = try {
+            PrefetchedArtwork.parseFrom(dataItem.data)
+        } catch (e: Exception) {
+            Timber.w(e, "Could not parse the neighbouring artwork announcement")
+            return
+        }
+
+        val received = announcement.tracksList.mapNotNull { track ->
+            val title = track.title
+            if (title.isNullOrBlank()) {
+                return@mapNotNull null
+            }
+            val asset = track.assetKey?.takeIf { it.isNotEmpty() }?.let { dataItem.assets[it] }
+            val bytes = asset?.let { dataClient.getByteArrayAsset(it) }
+            val cover = bytes?.let {
+                withContext(Dispatchers.Default) { BitmapUtils.deserialize(it) }
+            }
+            PrefetchedCover(title, track.artist.orEmpty(), cover, asset?.id)
+        }
+        prefetchedNeighbourArtwork = received
+        Timber.d("Holding %d of %d neighbouring cover(s) ready: %s",
+                received.count { it.cover != null }, received.size, received.map { it.title })
     }
 
     /** Decodes the optional source-app icon asset. It only changes when the playing app changes
@@ -859,6 +951,27 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                 backdropArt.postValue(null)
             }
         }
+    }
+
+    private suspend fun loadPrefetchedNeighbourArtwork() {
+        val dataItems = try {
+            dataClient.getDataItems(
+                    Uri.parse("wear://*${CommPaths.DATA_ADJACENT_ALBUM_ART}"),
+                    DataClient.FILTER_LITERAL)
+                    .await()
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Timber.d(e, "Could not read the stored neighbouring covers")
+            return
+        }
+
+        val dataItem = try {
+            dataItems.firstOrNull()?.freeze() ?: return
+        } finally {
+            dataItems.release()
+        }
+        receiveAdjacentArtwork(dataItem)
     }
 
     private suspend fun loadCurrentMusicState() {
@@ -1088,6 +1201,19 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                 }
             } catch (e: Exception) {
                 Timber.w(e, "Could not parse the playback sync reply")
+            }
+
+            CommPaths.MESSAGE_COMMAND_NOT_EXECUTED -> {
+                // The phone received the press and could not act on it (see
+                // CommPaths.MESSAGE_COMMAND_NOT_EXECUTED). Everything local says it worked - the
+                // send succeeded, and the optimistic feedback has already drawn the skip or the
+                // pause - so this is the one chance to stop showing an outcome that did not
+                // happen. Posting the error replaces that optimistic state wholesale, and the
+                // next real state from the phone puts the player straight back.
+                Timber.i("The phone could not carry out the last command")
+                musicState.postValue(Resource.error(
+                        WatchLanguage.localized(context).getString(R.string.phone_unavailable),
+                        null))
             }
 
             CommPaths.MESSAGE_MUSIC_STATE -> try {

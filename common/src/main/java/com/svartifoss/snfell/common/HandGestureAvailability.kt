@@ -1,7 +1,7 @@
 package com.svartifoss.snfell.common
 
 /**
- * What the watch can actually do with Wear OS's primary one-handed gesture ([DoublePinchGesture]).
+ * Availability of a supported input for the primary one-handed gesture ([DoublePinchGesture]).
  *
  * Every way this input can fail looks identical from the wrist - the hand moves and nothing
  * happens - and three of the four causes are outside the app entirely: the watch has no gesture
@@ -19,13 +19,13 @@ enum class HandGestureAvailability(val code: Int) {
     /** No answer: a watch build from before this field, or a probe that threw. */
     UNKNOWN(0),
 
-    /** The watch exposes no gesture-detection API, or its hardware reports no primary action. */
+    /** Neither the public gesture API nor a supported vendor gesture sensor is available. */
     UNSUPPORTED(1),
 
     /** Supported, but turned off in the watch's own Settings. Nothing is emitted while it is. */
     DISABLED(2),
 
-    /** Supported and switched on: the assignment will run while the player is open and awake. */
+    /** Input available while the player is open and awake; does not guarantee recognition. */
     READY(3);
 
     companion object {

@@ -35,7 +35,7 @@
     "buttonBackground": ["glass", "uniform_glass", "uniform_glass_light", "translucent_album", "translucent_album_exp", "glow_album", "glow_exp", "solid_album", "solid_exp_album", "outline", "outline_exp_album", "transparent", "icon_exp"],
     "buttonCurve": ["flat", "arc", "curved_gentle", "curved_soft", "curved_medium", "curved", "curved_extreme", "spread", "side_left", "side_right", "side_split"],
     "buttonShape": ["pill", "circle", "square", "rounded_square_soft", "rounded_square_medium", "squircle", "leaf", "drop", "leaf_reverse", "drop_reverse", "pebble", "arch", "shield", "arch_reverse", "shield_reverse", "pill_wide_small", "pill_wide_medium", "rounded_rect_small"],
-    "coverShape": ["rounded", "square", "squircle", "circle", "samsung"],
+    "coverShape": ["rounded", "square", "squircle", "circle", "samsung", "leaf", "drop", "arch", "pebble", "shield"],
     "clockColorMode": ["white", "dynamic", "album", "custom"],
     "colorModifier": ["none", "vibrant", "pastel", "warm", "cool"],
     "elementColorModifier": ["follow", "none", "vibrant", "pastel", "warm", "cool"],

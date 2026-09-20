@@ -21,6 +21,12 @@ message WatchInfo {
   // Absent on watch builds from before the field, which the phone reads back as UNKNOWN - the
   // watch is the only side that can answer, and every failure of that input is otherwise silent.
   optional int32 handGesture = 9;
+  // Build.VERSION.SDK_INT on the watch. Two Wear OS inactivity timeouts govern the always-on
+  // screen and only the platform version decides whether the app can hold past the second one
+  // (see WearPlatform), so the watch is the only side that can explain "my always-on player is
+  // replaced by the watch face". Absent on builds from before the field. Deliberately the API
+  // level alone - model and fingerprint would identify the device.
+  optional int32 platformApiLevel = 10;
 
   message WatchButton {
     required string label = 1;

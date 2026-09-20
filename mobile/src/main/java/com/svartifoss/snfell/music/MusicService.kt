@@ -17,6 +17,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.MediaMetadata
 import android.media.session.MediaController
+import android.media.session.MediaSession
 import android.media.session.PlaybackState
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.MediaSessionCompat
@@ -56,6 +57,8 @@ import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.actions.playback.LikeAction
 import com.svartifoss.snfell.actions.playback.RepeatAction
 import com.svartifoss.snfell.actions.playback.ShuffleAction
+import com.svartifoss.snfell.actions.playback.isShuffleOn
+import com.svartifoss.snfell.actions.playback.repeatModeCode
 import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
@@ -68,6 +71,7 @@ import com.svartifoss.snfell.common.PlaybackPositionEstimate
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.common.actions.StandardActions
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.util.FloatPacker
 import com.svartifoss.snfell.config.ActionConfig
@@ -83,6 +87,8 @@ import com.svartifoss.snfell.notifications.customActionSnapshotId
 import com.svartifoss.snfell.notifications.inferMediaActionSemantic
 import com.svartifoss.snfell.notifications.isCustomActionSnapshotId
 import com.svartifoss.snfell.proto.LyricsRequest
+import com.svartifoss.snfell.proto.PrefetchedArtwork
+import com.svartifoss.snfell.proto.PrefetchedTrack
 import com.svartifoss.snfell.proto.LyricsResponse
 import com.svartifoss.snfell.proto.CustomList
 import com.svartifoss.snfell.proto.CustomListItemAction
@@ -104,6 +110,8 @@ import dagger.android.AndroidInjection
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.NonCancellable
@@ -114,6 +122,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.lang.ref.WeakReference
@@ -135,6 +144,22 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         private val ACK_TIMEOUT_MS = TimeUnit.MINUTES.toMillis(3)
         private const val SEEK_DETECTION_THRESHOLD_MS = 1500L
         private const val QUEUE_REFRESH_DEBOUNCE_MS = 600L
+
+        /** Cap on resolving one neighbouring cover. Shorter than the queue's own, because this
+         *  one is speculative: art that needs ten seconds of network is not going to beat the
+         *  press it is for. */
+        private const val ADJACENT_ARTWORK_RESOLVE_TIMEOUT_MS = 6_000L
+
+        /**
+         * How many tracks each way [publishAdjacentTrackArtwork] sends covers for.
+         *
+         * Two rather than one because pressing skip twice before the first has settled is ordinary
+         * behaviour, and the second press would otherwise drop back to the queue thumbnail. Not
+         * more than two because every entry is a decoded full-screen bitmap held in the watch's
+         * memory, and the returns fall off fast: past the second press nobody is looking at the
+         * cover, they are looking for a track.
+         */
+        private const val ADJACENT_ARTWORK_RADIUS = 2
 
         /**
          * Grace between cancelling the notification and killing the process on "Force stop".
@@ -361,7 +386,77 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         get() = previousAlbumArt
 
     var currentMediaController: MediaController? = null
+        set(value) {
+            field = value
+            // Eagerly, so the compat handshake below has the whole life of the session to finish
+            // rather than the few microseconds between a button press and its first read.
+            compatControllerFor(value)
+        }
+
+    private var compatControllerToken: MediaSession.Token? = null
+    private var compatController: MediaControllerCompat? = null
+
+    /**
+     * A [MediaControllerCompat] for the current session, built once per session and kept.
+     *
+     * Shuffle and repeat do not exist on the framework `MediaController` at all. They live only on
+     * the AndroidX compat layer, which reads them through an "extra binder" that
+     * `MediaControllerCompat`'s constructor *asks* the session for and receives on a later loop
+     * turn. Until it arrives, `getRepeatMode()` and `getShuffleMode()` both answer -1.
+     *
+     * Building a controller inside a button handler and reading it in the next statement therefore
+     * never got an answer - the request had not even left. That was the whole of "the repeat button
+     * doesn't work": the cycle read -1, fell to its last branch and set repeat *off* on every
+     * press, while the two presets that name their target mode outright kept working and made the
+     * fault look like it belonged to the cycle's icon. Shuffle had it too, silently: it read -1 as
+     * "not NONE", concluded shuffle was on and switched it off every time. And the state sent to
+     * the watch was built from a third throwaway controller, so both readouts were permanently off.
+     *
+     * One controller per session fixes all three, because by the time anyone presses anything the
+     * binder has long since arrived. A session never built on `MediaSessionCompat` still answers
+     * -1 forever, and `setRepeatMode`/`setShuffleMode` are still swallowed there as unrecognised
+     * custom actions - nothing available here can change that, so see [nextRepeatMode] for what a
+     * press does when the mode cannot be known.
+     */
+    val currentCompatController: MediaControllerCompat?
+        get() = compatControllerFor(currentMediaController)
+
+    /** [currentCompatController] for a specific controller, rebuilt only when the session changed. */
+    private fun compatControllerFor(controller: MediaController?): MediaControllerCompat? {
+        val token = controller?.sessionToken
+        if (token != compatControllerToken || (token != null && compatController == null)) {
+            compatControllerToken = token
+            compatController = token?.let {
+                try {
+                    MediaControllerCompat(this, MediaSessionCompat.Token.fromToken(it))
+                } catch (e: RuntimeException) {
+                    // A session that died between being handed over and being wrapped. Reported
+                    // as "no compat controller", which every caller already handles.
+                    Timber.w(e, "Could not wrap the current session for shuffle/repeat")
+                    null
+                }
+            }
+        }
+        return compatController
+    }
+
     private var startedFromWatch = false
+
+    /**
+     * Set when the watch app closed while a session was still playing, so this service outlives
+     * it until the music itself stops.
+     *
+     * This service exists to serve the watch and normally stops the moment the watch app closes.
+     * The cost of that showed up as "the watch controls do nothing until I unlock my phone":
+     * getting it back requires a *foreground*-service start, which Android 12+ refuses from a
+     * fully backgrounded app - the ordinary state of a locked phone - and the command that
+     * triggered the start is then dropped rather than run late. Staying alive for as long as
+     * there is music to control means the press has somewhere to land.
+     *
+     * Deliberately tied to playback rather than simply not stopping: a service that only the
+     * watch can dismiss would keep its notification up until the user noticed and stopped it.
+     */
+    private var heldForPlaybackAfterWatchClosed = false
 
     // Reference-keyed cache of the last art serialized for the watch. State-only changes
     // (volume, seek, play/pause) reuse the bytes instead of re-encoding the same cover on
@@ -452,6 +547,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             resolveQueueSource()?.items
 
     private var currentVolume = 0
+
+    /** Resolving and sending the neighbouring covers - see [publishAdjacentTrackArtwork].
+     *  Cancelled on each track change so a burst of skips cannot leave several of them racing. */
+    private var adjacentArtworkJob: Job? = null
+
+    /** The pair [publishAdjacentTrackArtwork] last sent covers for, so an unrelated state change
+     *  does not re-send the same bytes. */
+    private var lastPublishedAdjacentKey: String? = null
 
     @SuppressLint("LaunchActivityFromNotification")
     override fun onCreate() {
@@ -818,6 +921,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         previousMediaController.setVolumeTo(newAbsoluteVolume, 0)
     }
 
+    /** Applies one native session step so commands from stale, repeatable surfaces stay additive. */
+    private fun adjustVolume(direction: Int) {
+        if (direction != AudioManager.ADJUST_LOWER && direction != AudioManager.ADJUST_RAISE) return
+        currentMediaController?.adjustVolume(direction, 0)
+    }
+
     private fun seekTo(positionMs: Long) {
         currentMediaController?.transportControls?.seekTo(positionMs)
     }
@@ -826,14 +935,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      *  not implement ACTION_SET_PLAYBACK_SPEED reports the same speed back on its next state,
      *  which is a harmless no-op rather than a reason to withhold the command. */
     private fun setPlaybackSpeed(multiplier: Float) {
-        val controller = currentMediaController ?: return
         // The framework method exists only from API 29 while this app supports API 23.
         // MediaControllerCompat carries the same command through its support protocol on older
         // phones, which also keeps this direct-message path aligned with SetPlaybackSpeedAction.
-        MediaControllerCompat(
-                this,
-                MediaSessionCompat.Token.fromToken(controller.sessionToken)
-        ).transportControls.setPlaybackSpeed(multiplier)
+        val controller = currentCompatController ?: return
+        controller.transportControls.setPlaybackSpeed(multiplier)
     }
 
     /** Seeks by [deltaMs] relative to the session's LIVE position. Senders like the Tile only
@@ -971,7 +1077,37 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             scheduleStateRefresh()
             return true
         }
+        if (toggleUserRating(controller)) {
+            scheduleStateRefresh()
+            return true
+        }
         return false
+    }
+
+    /**
+     * The last rung of the like ladder: the session's own user rating.
+     *
+     * The two rungs above match an app-defined button by what its id and label look like, so they
+     * reach the players whose wording is recognised and nobody else - which is what "the like
+     * button doesn't work outside the apps you made it work for" describes. `setRating` is the one
+     * like the framework standardises, so this is the rung that does not depend on recognising
+     * anybody's wording.
+     *
+     * Issued only when the session's rating style can carry a like at all, and the rating sent is
+     * the opposite of the one it is publishing - the button is a toggle on every other rung, and a
+     * heart that can only ever be set would leave no way to take it back. A session that declares a
+     * style and ignores the command is the ordinary unsupported-transport-command no-op; false is
+     * reported only when there was nothing to send, so the caller can still say nothing happened.
+     */
+    private fun toggleUserRating(controller: MediaController): Boolean {
+        val ratingType = controller.ratingType
+        val liked = LikeAction.ratingLikedState(
+                ratingType,
+                controller.metadata?.getRating(MediaMetadata.METADATA_KEY_USER_RATING))
+                ?: return false
+        val next = LikeAction.likeRating(ratingType, !liked) ?: return false
+        controller.transportControls.setRating(next)
+        return true
     }
 
     private fun executeAction(buttonInfo: ButtonInfo) {
@@ -1002,7 +1138,20 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         lifecycleScope.launchWithPlayServicesErrorHandling(this) {
             @Suppress("UNCHECKED_CAST")
             val handler = actionHandlers[action.javaClass] as ActionHandler<PhoneAction>?
-                    ?: throw IllegalStateException("Action handler for $action missing")
+
+            if (handler == null) {
+                // A watch-local action arriving here is an older watch build talking to a newer
+                // phone: the interception that keeps these on the wrist is younger than the config
+                // this phone pushed to it. There is nothing to execute - the effect is a screen on
+                // the other device - so dropping it leaves that watch exactly as it already is,
+                // where throwing reported a crash on every press of a button it cannot honour.
+                check(action.javaClass.name in StandardActions.WATCH_LOCAL) {
+                    "Action handler for $action missing"
+                }
+
+                Timber.d("Dropped %s: the watch runs it locally", action.javaClass.simpleName)
+                return@launchWithPlayServicesErrorHandling
+            }
 
             handler.handleAction(action)
         }
@@ -1118,14 +1267,18 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
                 musicStateBuilder.playbackSpeed = playbackState.playbackSpeed
                 musicStateBuilder.seekable = (playbackState.actions and PlaybackState.ACTION_SEEK_TO) != 0L
-                // A custom action is authoritative when present; only apps with none at all (e.g.
-                // SoundCloud, whose "like" is solely a notification action) fall back to the
-                // notification-label guess - see MediaNotificationActions.likedStateForSession.
+                // Read in the same order executeLikeCommand writes, so the heart on the watch is
+                // always reporting the route a tap would actually take: the app's own custom
+                // action, then its notification action, then the session's user rating.
                 musicStateBuilder.liked = if (LikeAction.findLikeCustomAction(playbackState) != null) {
                     LikeAction.isCurrentlyLiked(playbackState)
                 } else {
                     MediaNotificationActions.likedStateForSession(
                             mediaController.packageName, mediaController.sessionToken)
+                            ?: LikeAction.ratingLikedState(
+                                    mediaController.ratingType,
+                                    meta?.getRating(MediaMetadata.METADATA_KEY_USER_RATING))
+                            ?: false
                 }
                 if (usesSessionQuickActions()) {
                     val notificationActions = MediaNotificationActions.actionsForSession(
@@ -1176,22 +1329,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
 
             // Shuffle/repeat only exist on the AndroidX media-compat layer, not the framework
-            // MediaController API - see ShuffleAction/RepeatAction for why this wrapping works.
-            val compatController = MediaControllerCompat(
-                    this,
-                    MediaSessionCompat.Token.fromToken(mediaController.sessionToken)
-            )
-            // Only treat shuffle as ON when explicitly set to ALL or GROUP.
-            // SHUFFLE_MODE_INVALID (-1) is returned by apps that never set shuffle mode, and
-            // (-1 != NONE) would have made the button always appear selected. :contentReference[oaicite:0]{index=0}
-            musicStateBuilder.shuffleEnabled =
-                    compatController.shuffleMode == PlaybackStateCompat.SHUFFLE_MODE_ALL ||
-                    compatController.shuffleMode == PlaybackStateCompat.SHUFFLE_MODE_GROUP
-            musicStateBuilder.repeatMode = when (compatController.repeatMode) {
-                PlaybackStateCompat.REPEAT_MODE_ALL, PlaybackStateCompat.REPEAT_MODE_GROUP -> 1
-                PlaybackStateCompat.REPEAT_MODE_ONE -> 2
-                else -> 0
-            }
+            // MediaController API - see currentCompatController for why this one is cached rather
+            // than built here, and why building it here reported both as permanently off.
+            val compatController = compatControllerFor(mediaController)
+            musicStateBuilder.shuffleEnabled = isShuffleOn(
+                    compatController?.shuffleMode ?: PlaybackStateCompat.SHUFFLE_MODE_INVALID)
+            musicStateBuilder.repeatMode = repeatModeCode(
+                    compatController?.repeatMode ?: PlaybackStateCompat.REPEAT_MODE_INVALID)
 
             currentVolume = mediaController.playbackInfo?.currentVolume ?: 0
 
@@ -1251,6 +1395,26 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         if (trackChanged) {
             scheduleQueueRefresh()
         }
+
+        stopIfIdleAfterWatchClosed(musicState.playing)
+    }
+
+    /**
+     * Ends the hold taken when the watch app closed mid-playback, once the music it was held for
+     * has stopped.
+     *
+     * Read from the state that was just transmitted rather than from a callback of its own: that
+     * value is the single answer this service already agrees with the watch on, so the hold cannot
+     * outlive a "playback stopped" the watch has been told about.
+     */
+    private fun stopIfIdleAfterWatchClosed(playing: Boolean) {
+        if (!heldForPlaybackAfterWatchClosed || playing) {
+            return
+        }
+
+        Timber.d("Playback ended with the watch app closed; stopping")
+        heldForPlaybackAfterWatchClosed = false
+        stopSelf()
     }
 
     /**
@@ -1265,7 +1429,164 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // every track change, so sending a default-sized list here would silently truncate a
             // queue the user had just paged through - the rows would vanish under them mid-scroll.
             openPlaybackQueueOnWatch(lastRequestedQueueLimit)
+            // Behind the same debounce, and for the same reason: both read which queue row is
+            // playing, and a player that has published new metadata but not yet moved
+            // activeQueueItemId would have them both pointing one track back.
+            publishAdjacentTrackArtwork()
         }, QUEUE_REFRESH_DEBOUNCE_MS)
+    }
+
+    /**
+     * Which row of [queue] is the track currently playing, or -1 when it cannot be identified.
+     *
+     * Queue id first, title second, in that order for the reason `QueueScrollPolicy.activeRowIndex`
+     * documents: the id is exact where it exists, and the title is the only thing left for the many
+     * players that never publish one.
+     */
+    fun activeQueueIndex(queue: List<android.media.session.MediaSession.QueueItem>): Int {
+        val byId = currentMediaController?.playbackState?.activeQueueItemId
+                ?.takeIf { it != android.media.session.MediaSession.QueueItem.UNKNOWN_ID.toLong() }
+                ?.let { id -> queue.indexOfFirst { it.queueId == id } }
+                ?: -1
+        if (byId >= 0) {
+            return byId
+        }
+        val title = currentMediaController?.metadata
+                ?.getString(MediaMetadata.METADATA_KEY_TITLE)
+                ?.trim()
+                ?.takeIf { it.isNotEmpty() }
+                ?: return -1
+        return queue.indexOfFirst { entry ->
+            entry.description.title?.toString()?.trim().equals(title, ignoreCase = true)
+        }
+    }
+
+    /**
+     * Sends the covers of the tracks around the playing one to the watch, ahead of the presses
+     * that would ask for them.
+     *
+     * The watch can name the track a skip will land on the instant it is pressed - it holds the
+     * queue - but the only picture it held for that track was the queue's own thumbnail, 96px
+     * because a queue carries twenty of them. Full-screen that is visibly soft, so a skip drew a
+     * pixelated cover and then snapped to a sharp one when the phone's asset arrived several
+     * hundred milliseconds later. This removes both halves of that: the sharp cover is already on
+     * the wrist when the press happens.
+     *
+     * [ADJACENT_ARTWORK_RADIUS] tracks each way, not one, because a second press while the first
+     * is still settling is an ordinary thing to do and would otherwise drop straight back to the
+     * thumbnail - which reads as the feature working only sometimes. Backwards as well as
+     * forwards for the same reason.
+     *
+     * It costs one item per track change, resolved and sent during steady playback where the link
+     * is otherwise idle - as opposed to during the skip, which is the one moment it is not. Four
+     * things keep that cost honest. The Data Layer addresses assets by content hash, so stepping
+     * one track along re-sends only the one cover that entered the window; everything else is
+     * bytes the watch already holds. Covers are resolved concurrently, since each can be a network
+     * fetch and doing four in turn would spend seconds of wall clock for no reason. It rides the
+     * queue refresh's debounce, so a burst of skips resolves once and against a settled
+     * `activeQueueItemId`. And it is skipped under **shuffle**, because the watch refuses to
+     * predict then (`PredictedTrackAdvance`) and the bytes would be sent for a press that can
+     * never use them.
+     */
+    private fun publishAdjacentTrackArtwork() {
+        adjacentArtworkJob?.cancel()
+        adjacentArtworkJob = lifecycleScope.launch {
+            try {
+                val controller = currentMediaController ?: return@launch
+                if (isShuffleOn(compatControllerFor(controller)?.shuffleMode
+                                ?: PlaybackStateCompat.SHUFFLE_MODE_INVALID)) {
+                    return@launch
+                }
+
+                val queue = resolvePlaybackQueue() ?: return@launch
+                val active = activeQueueIndex(queue)
+                if (active < 0) {
+                    return@launch
+                }
+
+                val neighbours = (-ADJACENT_ARTWORK_RADIUS..ADJACENT_ARTWORK_RADIUS)
+                        .filter { it != 0 }
+                        .mapNotNull { offset ->
+                            val description = queue.getOrNull(active + offset)?.description
+                                    ?: return@mapNotNull null
+                            val title = description.title?.toString().orEmpty()
+                            if (title.isBlank()) null else Triple(offset, title, description)
+                        }
+                if (neighbours.isEmpty()) {
+                    return@launch
+                }
+
+                val key = neighbours.joinToString("|") { (offset, title, _) -> "$offset:$title" }
+                if (key == lastPublishedAdjacentKey) {
+                    return@launch
+                }
+
+                val covers = coroutineScope {
+                    neighbours.map { (_, _, description) ->
+                        async { encodeAdjacentCover(description) }
+                    }.map { it.await() }
+                }
+
+                val request = PutDataRequest.create(CommPaths.DATA_ADJACENT_ALBUM_ART)
+                val payload = PrefetchedArtwork.newBuilder()
+                neighbours.forEachIndexed { index, (offset, title, description) ->
+                    val entry = PrefetchedTrack.newBuilder()
+                            .setTitle(title)
+                            .setArtist(description.subtitle?.toString().orEmpty())
+                            .setOffset(offset)
+                    // A named track with no asset is a real answer - "there is no cover I could
+                    // find" - and the watch reads it as one, falling back to the queue thumbnail
+                    // rather than waiting for bytes that are not coming.
+                    covers[index]?.let { bytes ->
+                        val assetKey = "${CommPaths.ASSET_ADJACENT_ART_PREFIX}$offset"
+                        entry.assetKey = assetKey
+                        request.putAsset(assetKey, Asset.createFromBytes(bytes))
+                    }
+                    payload.addTracks(entry)
+                }
+                request.data = payload.build().toByteArray()
+
+                // Deliberately *not* urgent, unlike every other put here: this is for a press that
+                // has not happened yet, and the same link is carrying the playing track's own state
+                // and cover, which are for one that has.
+                //
+                // NonCancellable for the reason the config queue documents: cancelling an await
+                // does not retract a Task the Data Layer has already accepted, so a cancel landing
+                // here would leave a put in flight with its replacement starting beside it. A
+                // burst of skips can still land two of these out of order, which is harmless
+                // rather than merely unlikely - the watch matches the announced titles against the
+                // track it is predicting and ignores anything else.
+                withContext(NonCancellable) { dataClient.putDataItem(request).await() }
+                lastPublishedAdjacentKey = key
+                Timber.d("Sent %d neighbouring cover(s) ahead of time: %s",
+                        covers.count { it != null },
+                        neighbours.joinToString { (offset, title, _) -> "$offset:$title" })
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                // Decoration for a press that may never come: it must never take playback,
+                // the queue or the state transmission down with it.
+                Timber.w(e, "Could not publish the neighbouring covers")
+            }
+        }
+    }
+
+    /** One neighbour's cover, resolved and encoded exactly as the playing track's is, or null when
+     *  nothing could be resolved for it in time. */
+    private suspend fun encodeAdjacentCover(
+            description: android.media.MediaDescription
+    ): ByteArray? {
+        val targetPx = watchInfoProvider.value?.watchInfo?.displayWidth
+                ?.takeIf { it > 0 }
+                ?: QueueArtworkResolver.DEFAULT_TARGET_PX
+        val cover = withTimeoutOrNull(ADJACENT_ARTWORK_RESOLVE_TIMEOUT_MS) {
+            QueueArtworkResolver.resolve(
+                    this@MusicService,
+                    description,
+                    QueueArtworkResolver.remoteArtworkEnabled(this@MusicService),
+                    targetPx = targetPx)
+        } ?: return null
+        return withContext(Dispatchers.Default) { encodeArtworkForWatch(cover) }
     }
 
     /** PNG bytes of the source-icon face element. Prefers the *media notification's* small icon -
@@ -1489,6 +1810,50 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
     }
 
+    /**
+     * One album cover, sized and encoded exactly as the watch expects to receive it.
+     *
+     * Off the main thread (this used to PNG-encode on main for every transmit) and as JPEG: album
+     * art has no alpha, encodes much faster, and comes out several times smaller than PNG -
+     * directly cutting the Bluetooth transfer that delays the cover on the watch.
+     *
+     * Shared with [publishAdjacentTrackArtwork], and it has to be: that one sends the neighbouring
+     * tracks' covers ahead of time so a skip can draw one instantly, and a cover framed even slightly
+     * differently from the one that follows it would make the picture jump the moment the real
+     * state landed - which is the artefact the prefetch exists to remove, reintroduced one frame
+     * later.
+     */
+    private fun encodeArtworkForWatch(source: Bitmap): ByteArray? = try {
+        var albumArt = source
+        val watchInfo = watchInfoProvider.value?.watchInfo
+        if (watchInfo != null) {
+            // Square styles show the cover uncropped, letterboxed inside a square inset - the
+            // watch already renders that correctly, but only if the bitmap it receives still has
+            // its original aspect ratio. Center-cropping it to the watch's (square) display here,
+            // like every other style wants, would destroy exactly what Square is supposed to
+            // preserve before the watch ever sees it - shrinkPreservingRatio keeps the whole image
+            // instead, just scaled down for the transfer.
+            albumArt = if (isSquareAlbumArtStyle()) {
+                BitmapUtils.shrinkPreservingRatio(albumArt,
+                        watchInfo.displayWidth,
+                        watchInfo.displayHeight)
+            } else {
+                BitmapUtils.resizeAndCrop(albumArt,
+                        watchInfo.displayWidth,
+                        watchInfo.displayHeight,
+                        true)
+            }
+        }
+
+        ByteArrayOutputStream().use { stream ->
+            albumArt.compress(Bitmap.CompressFormat.JPEG, 85, stream)
+            stream.toByteArray()
+        }
+    } catch (e: RuntimeException) {
+        Timber.w(e, "Could not encode album art for the watch")
+        null
+    }
+
     private fun transmitToWear(
             musicState: MusicState,
             originalAlbumArt: Bitmap?,
@@ -1541,38 +1906,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             val artBytes = when {
                 originalAlbumArt == null -> null
                 !artChanged -> lastSerializedArt
-                else -> withContext(Dispatchers.Default) {
-                    // Off the main thread (this used to PNG-encode on main for every transmit)
-                    // and as JPEG: album art has no alpha, encodes much faster, and comes out
-                    // several times smaller than PNG - directly cutting the Bluetooth transfer
-                    // that delays the cover on the watch.
-                    var albumArt = originalAlbumArt
-                    val watchInfo = watchInfoProvider.value?.watchInfo
-                    if (watchInfo != null) {
-                        // Square styles show the cover uncropped, letterboxed inside a square
-                        // inset - the watch already renders that correctly, but only if the
-                        // bitmap it receives still has its original aspect ratio. Center-cropping
-                        // it to the watch's (square) display here, like every other style wants,
-                        // would destroy exactly what Square is supposed to preserve before the
-                        // watch ever sees it - shrinkPreservingRatio keeps the whole image instead,
-                        // just scaled down for the transfer.
-                        albumArt = if (isSquareAlbumArtStyle()) {
-                            BitmapUtils.shrinkPreservingRatio(albumArt,
-                                    watchInfo.displayWidth,
-                                    watchInfo.displayHeight)
-                        } else {
-                            BitmapUtils.resizeAndCrop(albumArt,
-                                    watchInfo.displayWidth,
-                                    watchInfo.displayHeight,
-                                    true)
-                        }
-                    }
-
-                    ByteArrayOutputStream().use { stream ->
-                        albumArt.compress(Bitmap.CompressFormat.JPEG, 85, stream)
-                        stream.toByteArray()
-                    }
-                }
+                else -> withContext(Dispatchers.Default) { encodeArtworkForWatch(originalAlbumArt) }
             }
 
             // While this coroutine was suspended encoding art, a newer state may already have
@@ -2958,15 +3292,32 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private fun executeWatchCommand(event: WatchCommand) {
         Timber.d("Message %s", event.path)
 
+        if (event.path != CommPaths.MESSAGE_WATCH_CLOSED) {
+            // Anything else arriving is the watch app alive again, so the pending "stop when the
+            // music does" no longer applies - the watch owns this service's lifetime once more.
+            heldForPlaybackAfterWatchClosed = false
+        }
+
         when (event.path) {
             CommPaths.MESSAGE_WATCH_CLOSED -> {
-                stopSelf()
+                // Outlive the watch app while there is still music to control - see
+                // heldForPlaybackAfterWatchClosed. stopIfIdleAfterWatchClosed() takes over and
+                // stops this the moment playback does.
+                if (currentMediaController?.isPlaying() == true) {
+                    Timber.d("Watch closed while playing; holding the service until the music ends")
+                    heldForPlaybackAfterWatchClosed = true
+                } else {
+                    stopSelf()
+                }
             }
             CommPaths.MESSAGE_ACK -> {
                 ackTimeoutHandler.removeMessages(MESSAGE_STOP_SELF)
             }
             CommPaths.MESSAGE_CHANGE_VOLUME -> {
                 updateVolume(FloatPacker.unpackFloat(event.data))
+            }
+            CommPaths.MESSAGE_ADJUST_VOLUME -> {
+                adjustVolume(ByteBuffer.wrap(event.data).int)
             }
             CommPaths.MESSAGE_SEEK_TO -> {
                 seekTo(ByteBuffer.wrap(event.data).long)

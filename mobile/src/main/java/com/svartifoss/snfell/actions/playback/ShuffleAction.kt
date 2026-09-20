@@ -3,9 +3,6 @@ package com.svartifoss.snfell.actions.playback
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
-import android.support.v4.media.session.MediaControllerCompat
-import android.support.v4.media.session.MediaSessionCompat
-import android.support.v4.media.session.PlaybackStateCompat
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.actions.ActionHandler
@@ -17,9 +14,13 @@ import javax.inject.Inject
  * Toggles shuffle on/off. Shuffle/repeat were never added to the bare framework
  * `android.media.session` API - they only exist on the AndroidX media-compat layer
  * (`MediaControllerCompat`/`PlaybackStateCompat`), which nearly every modern player app
- * (including YouTube Music) builds its session on internally. Wrapping the framework
- * `MediaSession.Token` we already have via [MediaSessionCompat.Token.fromToken] gets us a
- * [MediaControllerCompat] for the *same* session without needing a different session lookup path.
+ * (including YouTube Music) builds its session on internally. The wrapping of the framework token
+ * we already hold lives in `MusicService.currentCompatController`, which also explains why this
+ * has to use the service's controller rather than making one here.
+ *
+ * Reading a fresh controller answered -1, which this took for "shuffle is on" - so the button
+ * switched shuffle off on every press and could never switch it on. Nobody reported it; the
+ * identical fault in the repeat button is what led here. [isShuffleOn] holds the reading now.
  */
 class ShuffleAction : SelectableAction {
     constructor(context: Context) : super(context)
@@ -31,20 +32,11 @@ class ShuffleAction : SelectableAction {
 
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<ShuffleAction> {
         override suspend fun handleAction(action: ShuffleAction) {
-            val controller = service.currentMediaController ?: return
-            val compatController = MediaControllerCompat(
-                    service,
-                    MediaSessionCompat.Token.fromToken(controller.sessionToken)
-            )
-
-            val isShuffling = compatController.shuffleMode != PlaybackStateCompat.SHUFFLE_MODE_NONE
-            val newMode = if (isShuffling) {
-                PlaybackStateCompat.SHUFFLE_MODE_NONE
-            } else {
-                PlaybackStateCompat.SHUFFLE_MODE_ALL
-            }
-
-            compatController.transportControls.setShuffleMode(newMode)
+            // The service's own controller - a fresh one reads -1 for the mode, which this used to
+            // read as "shuffle is on" and answer by switching it off, every press.
+            // See MusicService.currentCompatController.
+            val controller = service.currentCompatController ?: return
+            controller.transportControls.setShuffleMode(nextShuffleMode(controller.shuffleMode))
         }
     }
 }

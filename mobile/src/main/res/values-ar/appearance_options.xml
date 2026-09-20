@@ -96,4 +96,12 @@
         <item>لون الألبوم الثالث</item>
         <item>حدود نيون</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>ورقة</item>
+        <item>قطرة</item>
+        <item>قوس</item>
+        <item>حصاة</item>
+        <item>درع</item>
+    </string-array>
 </resources>

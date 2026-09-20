@@ -37,6 +37,12 @@
     <string name="idle_action_queue">Open recently played</string>
 
     <string name="no_phone">No phone connected</string>
+    <!-- Shown when the phone answered that it could not carry the command out at all, which is
+         almost always a phone that has been locked long enough for Android to stop letting the
+         app start its service. Deliberately distinct from no_phone: the phone IS connected and
+         did reply, so telling someone to check the connection would send them looking in the
+         wrong place. Names the one thing that reliably fixes it. -->
+    <string name="phone_unavailable">Unlock your phone to control playback</string>
     <string name="playback_stopped">Stopped</string>
     <string name="error">ERROR</string>
     <string name="error_play_services">Play Services error</string>

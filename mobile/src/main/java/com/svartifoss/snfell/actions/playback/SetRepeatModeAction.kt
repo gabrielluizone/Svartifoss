@@ -3,8 +3,6 @@ package com.svartifoss.snfell.actions.playback
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
-import android.support.v4.media.session.MediaControllerCompat
-import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.R
@@ -20,6 +18,13 @@ internal fun normalizeRepeatMode(value: Int): Int = when (value) {
     PlaybackStateCompat.REPEAT_MODE_ONE -> value
     else -> PlaybackStateCompat.REPEAT_MODE_NONE
 }
+
+internal fun repeatModeIcon(mode: Int): Int =
+        if (normalizeRepeatMode(mode) == PlaybackStateCompat.REPEAT_MODE_ONE) {
+            com.svartifoss.snfell.common.R.drawable.action_repeat_one
+        } else {
+            com.svartifoss.snfell.common.R.drawable.action_repeat
+        }
 
 /** Sets repeat off/all/one directly, without depending on the current cycle position. */
 class SetRepeatModeAction : SelectableAction {
@@ -41,9 +46,11 @@ class SetRepeatModeAction : SelectableAction {
     })
 
     override val defaultIcon: Drawable
-        get() = AppCompatResources.getDrawable(
-                context,
-                com.svartifoss.snfell.common.R.drawable.action_repeat)!!
+        get() = AppCompatResources.getDrawable(context, repeatModeIcon(mode))!!
+
+    /** Declared because it varies by [mode]: see `needsTransmittedIcon`. */
+    override val defaultIconRes: Int
+        get() = repeatModeIcon(mode)
 
     override fun writeToBundle(bundle: PersistableBundle) {
         super.writeToBundle(bundle)
@@ -58,11 +65,10 @@ class SetRepeatModeAction : SelectableAction {
     class Handler @Inject constructor(private val service: MusicService) :
             ActionHandler<SetRepeatModeAction> {
         override suspend fun handleAction(action: SetRepeatModeAction) {
-            val controller = service.currentMediaController ?: return
-            val compatController = MediaControllerCompat(
-                    service,
-                    MediaSessionCompat.Token.fromToken(controller.sessionToken))
-            compatController.transportControls.setRepeatMode(action.mode)
+            // This one names its target outright, so it never needed to read the current mode -
+            // which is why it kept working while the cycling button did not.
+            val controller = service.currentCompatController ?: return
+            controller.transportControls.setRepeatMode(action.mode)
         }
     }
 

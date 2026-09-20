@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Відкрити нещодавно відтворене</string>
 
     <string name="no_phone">Телефон не підключено</string>
+    <string name="phone_unavailable">Розблокуйте телефон, щоб керувати відтворенням</string>
     <string name="playback_stopped">Зупинено</string>
     <string name="error">ПОМИЛКА</string>
     <string name="error_play_services">Помилка сервісів Google Play</string>

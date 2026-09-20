@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Nastavení sevření</string>
+    <string name="pinch_settings_intro">Jak mají hodinky rozpoznávat vaše gesto?</string>
+    <string name="pinch_mode_native">Detektor hodinek</string>
+    <string name="pinch_mode_experimental">Experimentální detektor</string>
+    <string name="pinch_native_description">Používá vestavěné rozpoznávání hodinek. Bez kalibrace a nastavení citlivosti.</string>
+    <string name="pinch_experimental_description">Rozpoznává pohyby zápěstí podle vaší kalibrace. Může se spustit omylem a při otevřeném přehrávači spotřebuje více baterie.</string>
+    <string name="pinch_profile_missing">Zatím nekalibrováno. Tento režim můžete uložit už teď: hodinky používají vlastní detektor, dokud se v nich neuloží kalibrace, a pak se přepnou samy.</string>
+    <string name="pinch_profile_saved">Kalibrace uložena. Připraveno k použití.</string>
+    <string name="pinch_calibration_step">1. Zkalibrujte gesto</string>
+    <string name="pinch_tuning_step">2. Upravte rozpoznávání</string>
+    <string name="pinch_calibrate_watch">Kalibrovat na hodinkách</string>
+    <string name="pinch_recalibrate_watch">Kalibrovat znovu</string>
+    <string name="pinch_open_instruction">Otevřete Svartifoss na hodinkách. Postupujte podle testu a uložte kalibraci.</string>
+    <string name="pinch_open_sending">Připojování k hodinkám…</string>
+    <string name="pinch_open_sent">Pokračujte na hodinkách. Pokud se test neotevře, otevřete tam Svartifoss znovu a zkuste to ještě jednou.</string>
+    <string name="pinch_open_failed">Hodinky nejsou dostupné. Zkontrolujte připojení, aktualizujte obě aplikace a zkuste to znovu.</string>
+    <string name="pinch_sensitivity_label">Citlivost</string>
+    <string name="pinch_sensitivity_help">Zvyšte, pokud se sevření nerozpoznávají. Snižte, pokud jiné pohyby spouštějí akce.</string>
+    <string name="pinch_gap_label">Doba mezi sevřeními</string>
+    <string name="pinch_gap_help">Nejdelší doba od prvního sevření k druhému. Pro pomalejší gesto ji zvyšte.</string>
+    <string name="pinch_cooldown_label">Pauza mezi příkazy</string>
+    <string name="pinch_cooldown_help">Jak dlouho se po akci čeká, než se přijme další gesto.</string>
+    <string name="pinch_value_percent">%1$d %%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Další úpravy</string>
+    <string name="pinch_advanced_hide">Méně úprav</string>
+    <string name="pinch_shared_settings">Tato nastavení platí, když hudba hraje nebo je pozastavená.</string>
+    <string name="pinch_settings_save">Uložit</string>
+    <string name="pinch_gesture_note">Dvakrát se dotkněte palcem a ukazovákem, při otevřeném přehrávači a rozsvíceném displeji hodinek.</string>
+    <string name="pinch_controls_uncalibrated">Vybrán experimentální detektor, zatím nekalibrovaný. Do kalibrace se používá detektor samotných hodinek.</string>
+    <string name="pinch_controls_calibrated">Experimentální detektor zkalibrován. Dvakrát sevřete prsty, když je přehrávač Svartifoss otevřený.</string>
+</resources>

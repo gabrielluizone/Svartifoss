@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Calibrează ciupirea</string>
+    <string name="pinch_cal_intro">Strânge bine cureaua și ține încheietura ridicată. Circa 45 de secunde: repaus, șase ciupiri duble, apoi mișcarea brațului. Nu se trimite nicio comandă muzicală.</string>
+    <string name="pinch_cal_start">Pornește</string>
+    <string name="pinch_cal_restart">Reia</string>
+    <string name="pinch_cal_test">Test fără acțiuni</string>
+    <string name="pinch_cal_save">Salvează calibrarea</string>
+    <string name="pinch_cal_close">Închide</string>
+
+    <string name="pinch_cal_step_ready">Pregătește-te</string>
+    <string name="pinch_cal_step_ready_hint">Ține încheietura ridicată, cu ecranul spre tine.</string>
+    <string name="pinch_cal_step_rest">Stai nemișcat</string>
+    <string name="pinch_cal_step_rest_hint">Nu ciupi.</string>
+    <string name="pinch_cal_step_attempt">Încercarea %1$d din %2$d</string>
+    <string name="pinch_cal_step_pinch">Ciupire dublă</string>
+    <string name="pinch_cal_step_pinch_hint">Atinge de două ori degetul mare și arătătorul.</string>
+    <string name="pinch_cal_step_wait">Relaxează-te</string>
+    <string name="pinch_cal_step_wait_hint">Urmează următoarea încercare.</string>
+    <string name="pinch_cal_step_prepare">Aproape gata</string>
+    <string name="pinch_cal_step_prepare_hint">Apoi: mișcă brațul fără să ciupești.</string>
+    <string name="pinch_cal_step_move">Mișcă brațul</string>
+    <string name="pinch_cal_step_move_hint">Rotește-l și balansează-l natural, cu ecranul spre tine. Nu ciupi.</string>
+
+    <string name="pinch_cal_testing">Test</string>
+    <string name="pinch_cal_detections">Detectări</string>
+    <string name="pinch_cal_test_hint">Mai sunt %1$d s · fără acțiuni</string>
+
+    <string name="pinch_cal_ready">Calibrat. Testează înainte de salvare: ciupește de câteva ori, apoi mișcă brațul normal.</string>
+    <string name="pinch_cal_test_done">%1$d detectări. Dacă se potrivește cu ciupirile tale duble, salvează. Dacă s-au numărat mișcări ale brațului, calibrează din nou sau scade sensibilitatea pe telefon.</string>
+    <string name="pinch_cal_failed_incomplete">Înregistrarea a fost întreruptă. Ține ecranul aprins și îndreptat spre tine pe tot parcursul testului și reia.</string>
+    <string name="pinch_cal_failed_weak">Ciupirile tale nu s-au deosebit de o încheietură nemișcată. Strânge puțin cureaua și ciupește mai ferm.</string>
+    <string name="pinch_cal_failed_unrecognized">Cele mai multe încercări nu au fost recunoscute ca ciupire dublă. La fiecare încercare ciupește clar de două ori și ține brațul nemișcat.</string>
+    <string name="pinch_cal_failed_movement">Mișcarea brațului semăna cu ciupirile. Ține încheietura mai stabilă în timpul încercărilor și reia.</string>
+    <string name="pinch_cal_failed_kept">Calibrarea anterioară a fost păstrată.</string>
+    <string name="pinch_cal_interrupted">Oprit pentru că ecranul s-a stins. Reia cu ecranul aprins.</string>
+    <string name="pinch_cal_unavailable">Senzorii de mișcare nu sunt disponibili. Redeschide acest ecran și încearcă din nou.</string>
+
+    <string name="pinch_cal_sending">Se salvează pe telefon…</string>
+    <string name="pinch_cal_saved">Calibrare salvată. Pe telefon, alege Experimental în setările pentru ciupire și salvează.</string>
+    <string name="pinch_cal_saved_active">Calibrare salvată. Detectorul experimental este activ cât timp playerul este deschis.</string>
+    <string name="pinch_cal_send_failed">Nu s-a putut confirma salvarea pe telefon. Verifică conexiunea și atinge din nou Salvează calibrarea.</string>
+    <string name="pinch_cal_legend_motion">Mișcare</string>
+    <string name="pinch_cal_legend_rotation">Rotație</string>
+    <string name="pinch_cal_legend_target">Prag</string>
+    <string name="pinch_cal_no_signal">Fără date de la senzor</string>
+    <string name="pinch_cal_detail">%1$d din %2$d recunoscute · atingeri pe încercare: %3$s</string>
+</resources>

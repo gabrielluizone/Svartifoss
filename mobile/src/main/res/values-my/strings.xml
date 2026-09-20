@@ -111,14 +111,6 @@
     <string name="watch_element_queue">တန်းစီစာရင်း</string>
     <string name="watch_element_lyrics">သီချင်းစာသား</string>
     <string name="player_section_on_screen">မျက်နှာပြင်ပေါ်တွင်</string>
-    <string name="player_element_app_icon">အက်ပ်အိုင်ကွန်</string>
-    <string name="player_element_controls">ပလေယာ ထိန်းချုပ်မှုများ</string>
-    <string name="player_element_tap_flash">ထိချက်လင်းခြင်း</string>
-    <string name="player_element_inner_progress">အတွင်းတိုးတက်မှု</string>
-    <string name="player_element_edge_arc">အစွန်း ကွေး</string>
-    <string name="player_element_edge_seek">အစွန်း seek</string>
-    <string name="player_element_clock">နာရီ</string>
-    <string name="player_element_cover_art">အဖုံးအနုပညာ</string>
     <string name="setting_album_art_filter">အယ်လ်ဘမ်အနုပညာ filter</string>
     <string name="setting_album_art_filter_description">မည်သည့် အယ်လ်ဘမ်အနုပညာပုံစံပေါ်မဆို သီးခြားအရောင် treatment တစ်ခု အသုံးပြုမည်။</string>
     <string name="wear_font_roboto_thin">Roboto Thin</string>
@@ -349,7 +341,6 @@
     <string name="aod_control_brightness">အလင်းတောက်ပမှု</string>
     <string name="aod_control_art_treatment">Treatment</string>
     <string name="aod_control_art_opacity">မထင်ရှားမှု</string>
-    <string name="mini_button_control_visibility">ပြမည်</string>
     <string name="mini_button_control_arrangement">စီစဉ်ပုံ</string>
     <string name="mini_button_control_shape">ပုံသဏ္ဌာန်</string>
     <string name="mini_button_control_background">နောက်ခံ</string>
@@ -616,6 +607,29 @@
     <string name="actions_moved_to_position">%1$s ကို %3$d ခုအနက် အမှတ် %2$d နေရာသို့ ရွှေ့ပြီးပါပြီ။</string>
     <string name="actions_empty">လုပ်ဆောင်ချက် မရှိသေးပါ။ ပထမတစ်ခု ဖန်တီးရန် add ခလုတ်ကို သုံးပါ။</string>
     <string name="actions_add">လုပ်ဆောင်ချက် ထည့်ရန်</string>
+    <string name="add_menu_title">နာရီ menu သို့ ထည့်ရန်</string>
+    <string name="add_menu_subtitle">လုပ်ဆောင်ချက်တစ်ခု ရွေးပါ၊ သို့မဟုတ် playlist၊ album သို့မဟုတ် track link ကို paste လုပ်ပါ။</string>
+    <string name="add_menu_link_hint">Link (Spotify, YouTube Music, Deezer…)</string>
+    <string name="add_menu_paste">Paste</string>
+    <string name="add_menu_get_name">Link မှ အမည်ရယူရန်</string>
+    <string name="add_menu_looking_up">အမည်ကို ရှာနေသည်…</string>
+    <string name="add_menu_lookup_failed">ဤ link အတွက် အမည် မတွေ့ပါ။ ယင်းအစား တစ်ခု ရိုက်ထည့်ပါ။</string>
+    <string name="add_menu_lookup_unsupported">ဤ ဝန်ဆောင်မှုသည် အမည်များကို မမျှဝေပါ။ ယင်းအစား တစ်ခု ရိုက်ထည့်ပါ။</string>
+    <string name="add_menu_add">Menu သို့ ထည့်ရန်</string>
+    <string name="add_menu_added">“%1$s” ကို menu သို့ ထည့်ပြီးပါပြီ</string>
+    <string name="add_menu_already">“%1$s” သည် menu တွင် ရှိပြီးသားဖြစ်သည်</string>
+    <string name="add_menu_saved_title">သိမ်းထားသော shortcut များ</string>
+    <string name="add_menu_actions_title">လုပ်ဆောင်ချက်တစ်ခု ရွေးပါ</string>
+    <string name="add_menu_actions_desc">Playback၊ အသံ၊ နာရီ screen များ၊ app များ၊ Tasker…</string>
+    <string name="add_menu_or_link">သို့မဟုတ် link တစ်ခု ထည့်ပါ</string>
+    <string name="add_link_title">Link ထည့်ရန်</string>
+    <string name="add_link_subtitle">playlist၊ album သို့မဟုတ် track link ကို paste လုပ်ပါ။ ၎င်းကို streaming shortcut များတွင် သိမ်းဆည်းပြီး ချက်ချင်း အသုံးပြုမည်။</string>
+    <string name="add_link_use">ဤ link ကို သုံးရန်</string>
+    <plurals name="add_menu_add_selected">
+        <item quantity="one">Menu သို့ %1$d ထည့်ရန်</item>
+        <item quantity="other">Menu သို့ %1$d ထည့်ရန်</item>
+    </plurals>
+    <string name="add_menu_in_menu">Menu တွင်ရှိသည်</string>
     <string name="on_screen_buttons">ထိတွေ့ဧရိယာများ</string>
     <string name="physical_buttons">ရုပ်ပိုင်းဆိုင်ရာ ခလုတ်များ</string>
     <string name="physical_buttons_disconnected">ရုပ်ပိုင်းဆိုင်ရာခလုတ်များကို ပြင်ဆင်ရန် နာရီပေါ်တွင် Svartifoss ကို ချိတ်ဆက်ပြီး ဖွင့်ပါ။ Touch zones၊ swipes နှင့် mini ခလုတ်များကို ယခုအသုံးပြုနိုင်သည်။</string>
@@ -864,7 +878,6 @@
     <string name="quick_panel_slot_1">ခလုတ် 1</string>
     <string name="quick_panel_slot_2">ခလုတ် 2</string>
     <string name="quick_panel_slot_3">ခလုတ် 3</string>
-    <string name="quick_panel_slot_long">ခလုတ်ရှည်</string>
     <string name="quick_panel_slot_default">%1$s (default)</string>
     <string name="quick_panel_slot_hidden">ဖျောက်ထားသည်</string>
     <string name="quick_panel_default_like">ကြိုက်နှစ်သက်ရန်</string>
@@ -1715,7 +1728,6 @@
     <string name="setting_wear_note_cover_shape">Note cover ပုံသဏ္ဍာန်</string>
     <string name="setting_wear_title_centered">ခေါင်းစဉ်ကို အလယ်ထားပါ</string>
     <string name="setting_wear_title_centered_description">စာသား block တစ်ခုလုံးအစား ခေါင်းစဉ်ကို မျက်နှာပြင်အလယ်တွင် တည်နေရာချပါ</string>
-    <string name="player_element_title_centered">အလယ်ထားသော ခေါင်းစဉ်</string>
     <string-array name="wear_cover_shape_entries">
         <item>ဝိုင်းသော</item>
         <item>စတုရန်း</item>
@@ -1959,6 +1971,7 @@
     <string name="drawer_support_heading">ပံ့ပိုးမှု</string>
     <string name="drawer_support_summary">Svartifoss သည် အခမဲ့နှင့် open source ဖြစ်သည် - အသုံးဝင်ပါက coffee တစ်ခွက် ဝယ်ပေးပါ :D</string>
     <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Cover art ကို download လုပ်ပါ</string>
     <string name="album_art_saved">Cover art ကို gallery တွင် သိမ်းပြီးပါပြီ</string>
     <string name="album_art_save_error">Cover art သိမ်းမရပါ</string>
@@ -1966,11 +1979,17 @@
     <string name="action_play_spotify_liked_songs">Like လုပ်ထားသော သီချင်းများကို ဖွင့်ပါ (Spotify)</string>
     <string name="action_play_soundcloud_likes">Like လုပ်ထားသော track များကို ဖွင့်ပါ (SoundCloud)</string>
     <string name="action_my_playlists">Streaming shortcut များ</string>
-    <string name="action_play_specific_playlist">Streaming shortcut ကိုဖွင့်ပါ</string>
-    <string name="action_choose_or_add_streaming_shortcut">Streaming shortcut ရွေးပါ သို့မဟုတ် ထည့်ပါ</string>
     <string name="action_show_streaming_library">သိမ်းထားသော shortcut အားလုံးပြပါ</string>
-    <string name="playlist_shortcut_pick_title">Shortcut ရွေးပါ</string>
-    <string name="playlist_shortcut_pick_empty">Streaming shortcut မသိမ်းရသေးပါ — အောက်တွင် တစ်ခုထည့်ပြီး ရွေးရန် နှိပ်ပါ</string>
+    <string name="picker_section_apps">Apps &amp; အလိုအလျောက်စနစ်</string>
+    <string name="picker_chip_playback">Playback</string>
+    <string name="picker_chip_volume">အသံ</string>
+    <string name="picker_chip_screens">Screen များ</string>
+    <string name="picker_chip_find">သီချင်းရှာရန်</string>
+    <string name="picker_chip_streaming">Streaming</string>
+    <string name="picker_chip_apps">Apps</string>
+    <string name="picker_play_with_app">App တစ်ခုဖြင့် ဖွင့်ရန်</string>
+    <string name="picker_add_link">Link ထည့်ရန်</string>
+    <string name="picker_add_link_desc">playlist၊ album သို့မဟုတ် track ကို paste လုပ်ပါ</string>
     <string name="playlist_shortcuts_empty">Streaming shortcut မရှိသေးပါ — phone app settings တွင် ထည့်ပါ</string>
     <string name="setting_playlist_shortcuts">Streaming shortcut များ</string>
     <string name="setting_playlist_shortcuts_description">နာရီမှ share link များကို YouTube Music, Spotify နှင့် အခြား streaming apps တွင် ဖွင့်ပါ</string>

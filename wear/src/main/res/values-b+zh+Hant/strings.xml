@@ -37,6 +37,7 @@
     <string name="idle_action_queue">開啟最近播放</string>
 
     <string name="no_phone">手機未連線</string>
+    <string name="phone_unavailable">請解鎖手機以控制播放</string>
     <string name="playback_stopped">已停止</string>
     <string name="error">錯誤</string>
     <string name="error_play_services">Google Play 服務錯誤</string>

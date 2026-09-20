@@ -96,4 +96,12 @@
         <item>टर्शियरी एल्बम रंग</item>
         <item>नियॉन आउटलाइन</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>पत्ता</item>
+        <item>बूँद</item>
+        <item>आर्च</item>
+        <item>कंकड़</item>
+        <item>शील्ड</item>
+    </string-array>
 </resources>

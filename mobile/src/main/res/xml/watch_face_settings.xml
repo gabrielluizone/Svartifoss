@@ -210,7 +210,7 @@
             android:layout="@layout/pref_switch_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="wear_quadrant_tap_flash"
             android:icon="@drawable/ic_transport_controls"
             android:title="@string/setting_wear_quadrant_tap_flash"
@@ -246,6 +246,37 @@
             android:icon="@drawable/ic_progress_style"
             android:title="@string/setting_wear_edge_seek_enabled"
             android:summary="@string/setting_wear_edge_seek_enabled_description"
+            android:layout="@layout/pref_switch_item" />
+
+        <ListPreference
+            android:defaultValue="solid"
+            android:key="wear_progress_style"
+            android:icon="@drawable/ic_progress_style"
+            android:title="@string/setting_wear_progress_style"
+            android:summary="%s"
+            android:entries="@array/wear_progress_style_entries"
+            android:entryValues="@array/wear_progress_style_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:defaultValue="edge"
+            android:key="wear_progress_layout"
+            android:icon="@drawable/ic_progress_ring"
+            android:title="@string/setting_wear_progress_layout"
+            android:summary="%s"
+            android:entries="@array/wear_progress_layout_entries"
+            android:entryValues="@array/wear_progress_layout_values"
+            android:layout="@layout/pref_item" />
+
+        <!-- Only the Solid ring blends the companion colours, so this is shown/hidden with it by
+             WatchFacePrefsFragment.updateProgressGradientVisibility, and the Player editor
+             applies the same rule to its chip. -->
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_progress_gradient"
+            android:icon="@drawable/ic_progress_ring"
+            android:title="@string/setting_wear_progress_gradient"
+            android:summary="@string/setting_wear_progress_gradient_description"
             android:layout="@layout/pref_switch_item" />
 
         <ListPreference
@@ -1692,36 +1723,6 @@
         android:key="cat_wf_panel_seek"
         android:title="@string/category_wf_panel_seek"
         android:layout="@layout/pref_category_header">
-
-        <ListPreference
-            android:defaultValue="solid"
-            android:key="wear_progress_style"
-            android:icon="@drawable/ic_progress_style"
-            android:title="@string/setting_wear_progress_style"
-            android:summary="%s"
-            android:entries="@array/wear_progress_style_entries"
-            android:entryValues="@array/wear_progress_style_values"
-            android:layout="@layout/pref_item" />
-
-        <ListPreference
-            android:defaultValue="edge"
-            android:key="wear_progress_layout"
-            android:icon="@drawable/ic_progress_ring"
-            android:title="@string/setting_wear_progress_layout"
-            android:summary="%s"
-            android:entries="@array/wear_progress_layout_entries"
-            android:entryValues="@array/wear_progress_layout_values"
-            android:layout="@layout/pref_item" />
-
-        <!-- Only the Solid ring blends the companion colours, so this is shown/hidden with it by
-             WatchFacePrefsFragment.updateProgressGradientVisibility. -->
-        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="true"
-            android:key="wear_progress_gradient"
-            android:icon="@drawable/ic_progress_ring"
-            android:title="@string/setting_wear_progress_gradient"
-            android:summary="@string/setting_wear_progress_gradient_description"
-            android:layout="@layout/pref_switch_item" />
 
         <ListPreference
             android:key="wear_seek_style"

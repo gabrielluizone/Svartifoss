@@ -96,4 +96,12 @@
         <item>တတိယ အယ်လ်ဘမ်အရောင်</item>
         <item>Neon အနားသတ်</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>အရွက်</item>
+        <item>ရေစက်</item>
+        <item>ကွေး</item>
+        <item>ကျောက်စရစ်</item>
+        <item>ဒိုင်း</item>
+    </string-array>
 </resources>

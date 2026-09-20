@@ -22,6 +22,7 @@ import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.SpecialButtonCodes
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.proto.TrackMetadata
+import com.svartifoss.snfell.watch.communication.CustomListItemWithIcon
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.PhoneConnection
 import com.svartifoss.snfell.watch.communication.PhoneUriOpener
@@ -496,7 +497,7 @@ class MusicViewModel @Inject constructor(
      *  - **duration** is deliberately *kept*. The queue carries none, and showing `0:00 / 0:00`
      *    with a dead ring for the moment before the phone answers is a worse lie than a ring that
      *    restarts against a length that is about to be corrected. This is the same trade
-     *    [applyOptimisticTrackStart] already makes for a manual skip.
+     *    [applyOptimisticTrackChange] already makes for a manual skip.
      *  - **mediaActions** are kept: they describe the playing app's notification buttons, not the
      *    track, so dropping them would flicker the quick panel for no gain.
      */
@@ -513,37 +514,72 @@ class MusicViewModel @Inject constructor(
             return false
         }
 
-        val queue = customList.value ?: return false
-        // History is backward-looking - it is what the watch falls back to when the player exposes
-        // no queue at all - so it cannot say what comes next. Search results and shortcut lists
-        // share the same DataItem and are not a play order either.
-        if (queue.listId != CustomLists.PLAYLIST) {
-            return false
-        }
-        val items = queue.items.filter { it.listItem.entryId != CustomLists.SPECIAL_ITEM_ERROR }
+        val queue = playbackQueue() ?: return false
+        val items = queue.second
         val nextIndex = PredictedTrackAdvance.nextIndex(
                 entryIds = items.map { it.listItem.entryId },
                 titles = items.map { it.listItem.entryTitle },
-                activeEntryId = queue.activeEntryId,
+                activeEntryId = queue.first,
                 currentTitle = state.title)
-        if (nextIndex < 0) {
+        val next = items.getOrNull(nextIndex) ?: return false
+        if (next.listItem.entryTitle.isBlank()) {
             return false
         }
-        val next = items[nextIndex]
-        val nextTitle = next.listItem.entryTitle.takeIf { it.isNotBlank() } ?: return false
 
-        Timber.d("Predicting the track change to %s from the queue", nextTitle)
-        predictedTitle = nextTitle
+        // A boundary the player reaches on its own produces the same transitional states a press
+        // does - it is the same source swap - so it gets the same cover. canPredict has already
+        // established that playback was running.
+        beginTrackChangeHold(state.title)
+        applyPredictedTrack(state, next)
+        return true
+    }
+
+    /**
+     * The live playback queue, paired with the phone's idea of which row is playing, or null when
+     * what the watch is holding cannot answer "what comes next".
+     *
+     * History is backward-looking - it is what the watch falls back to when the player exposes no
+     * queue at all - so it cannot say what follows. Search results and shortcut lists share the
+     * same DataItem and are not a play order either.
+     */
+    private fun playbackQueue(): Pair<String?, List<CustomListItemWithIcon>>? {
+        val queue = customList.value ?: return null
+        if (queue.listId != CustomLists.PLAYLIST) {
+            return null
+        }
+        val items = queue.items.filter { it.listItem.entryId != CustomLists.SPECIAL_ITEM_ERROR }
+        if (items.isEmpty()) {
+            return null
+        }
+        return queue.activeEntryId to items
+    }
+
+    /**
+     * Puts [entry] on screen as the track now playing, ahead of the phone saying so.
+     *
+     * Shared by the two moments the watch can answer that question on its own - a track that has
+     * run out ([tryPredictNextTrack]) and a skip the user just pressed
+     * ([applyOptimisticTrackChange]) - because what is known in either case is identical: the
+     * queue row, which is the phone's own data round-tripped, and that playback restarts at zero.
+     *
+     * [MusicState.getPlaying] is carried over rather than forced: skipping while paused changes
+     * the track and leaves it paused on nearly every player, so claiming otherwise would be a
+     * guess about the one field this device has no business guessing.
+     */
+    private fun applyPredictedTrack(state: MusicState, entry: CustomListItemWithIcon) {
+        val title = entry.listItem.entryTitle
+        Timber.d("Predicting the track change to %s from the queue", title)
+        predictedTitle = title
         predictedAtRealtimeMs = SystemClock.elapsedRealtime()
 
-        next.icon?.let { thumbnail ->
-            predictedArt = thumbnail
-            _albumArt.value = thumbnail
+        predictedCoverFor(title, entry)?.let { cover ->
+            predictedArt = cover
+            _albumArt.value = cover
         }
 
         val predicted = state.toBuilder()
-                .setTitle(nextTitle)
-                .setArtist(next.listItem.entrySubtitle.orEmpty())
+                .setTitle(title)
+                .setArtist(entry.listItem.entrySubtitle.orEmpty())
                 .setPositionMs(0L)
                 .setPositionUpdateTime(System.currentTimeMillis())
                 // Worked out here, right now, so it is not stale at all.
@@ -551,13 +587,47 @@ class MusicViewModel @Inject constructor(
                 .setLiked(false)
                 .build()
 
-        anchorPositionNow(0L, playing = true)
+        anchorPositionNow(0L, state.playing)
         // Through the regular listener, exactly as the optimistic play/pause and skip paths do, so
         // every side effect (config swap, close timeout, position anchoring) behaves the same way
         // it will when the phone confirms.
         nextStateIsLocallyAnchored = true
         musicStateListener.onChanged(Resource.success(predicted))
-        return true
+    }
+
+    /**
+     * The best picture this device holds for the track it is about to show.
+     *
+     * Two sources, and the order matters. The phone sends the neighbouring tracks' covers ahead of
+     * time at full display resolution (`CommPaths.DATA_ADJACENT_ALBUM_ART`), so when the press
+     * lands on one of them, the prediction draws the same picture the phone was going to send
+     * anyway - no wait and nothing to re-draw sharper afterwards. Failing that, the queue's own
+     * thumbnail: 96px, which reads soft full-screen, but a soft copy of the right cover beats the
+     * previous track's cover for the length of an asset transfer, which is the alternative.
+     *
+     * The match is by title, the same comparison `PredictedTrackAdvance.isSameTrack` makes for the
+     * phone's confirmation, and for the same reason - a prefetch that crossed a queue change in
+     * flight describes a track nobody is about to see. A *present* announcement carrying no cover
+     * is an answer ("there is none"), and falling through to the thumbnail is the right response to
+     * it, so it is not distinguished here.
+     */
+    private fun predictedCoverFor(title: String, entry: CustomListItemWithIcon): Bitmap? {
+        val prefetched = phoneConnection.prefetchedNeighbourArtwork.firstOrNull {
+            it.cover != null && PredictedTrackAdvance.isSameTrack(it.title, title)
+        }
+        if (prefetched?.cover != null) {
+            Timber.d("Predicted cover for '%s': the phone's own, sent ahead", title)
+            return prefetched.cover
+        }
+        // One line answering "why did the cover lag behind the title", which is otherwise three
+        // separate silent possibilities: no prefetch arrived, it named a different track, or the
+        // queue row itself carries no thumbnail.
+        Timber.d("Predicted cover for '%s': %s (%d prefetched, %s)",
+                title,
+                if (entry.icon != null) "the queue thumbnail" else "NONE",
+                phoneConnection.prefetchedNeighbourArtwork.size,
+                phoneConnection.prefetchedNeighbourArtwork.joinToString { it.title })
+        return entry.icon
     }
 
     /**
@@ -623,6 +693,96 @@ class MusicViewModel @Inject constructor(
         _albumArt.value = phoneConnection.albumArt.value
     }
 
+    /**
+     * When the window opened by the last skip made here closes, on this device's monotonic clock.
+     *
+     * See [TrackChangeHold]: for as long as it is open, a phone state that reports the inside of
+     * the transition rather than its outcome is kept off the screen.
+     */
+    private var trackChangeHoldUntilRealtimeMs = 0L
+
+    /** When the window currently open was first opened - the base [TrackChangeHold.MAX_HOLD_MS]
+     *  is measured from, so extending it cannot run on forever. */
+    private var trackChangeHoldStartedRealtimeMs = 0L
+
+    /** The tracks the skips in the current window moved away from - see [TrackChangeHold.decide]. */
+    private val titlesLeftBehind = LinkedHashSet<String>()
+
+    /** The last state the window held back, kept so closing the window can still report it. */
+    private var heldMusicState: Resource<MusicState>? = null
+
+    private val trackChangeHoldRunnable = Runnable { endTrackChangeHold(applyHeld = true) }
+
+    private fun isTrackChangeHoldActive(): Boolean =
+            trackChangeHoldUntilRealtimeMs > SystemClock.elapsedRealtime()
+
+    /**
+     * Opens (or re-opens) the window, recording the track being left behind.
+     *
+     * Re-opening rather than extending is what lets a burst of skips work: each press restarts the
+     * clock, and every title passed through stays recognisable, so the paused echo of the third
+     * track back is still known for what it is when it finally lands.
+     */
+    private fun beginTrackChangeHold(leftBehind: String?) {
+        if (!isTrackChangeHoldActive()) {
+            trackChangeHoldStartedRealtimeMs = SystemClock.elapsedRealtime()
+        }
+        if (!leftBehind.isNullOrBlank()) {
+            titlesLeftBehind.add(leftBehind)
+            while (titlesLeftBehind.size > TrackChangeHold.MAX_TITLES_LEFT_BEHIND) {
+                titlesLeftBehind.remove(titlesLeftBehind.first())
+            }
+        }
+        extendTrackChangeHold()
+    }
+
+    /**
+     * Pushes the window out from *now*, up to [TrackChangeHold.MAX_HOLD_MS] from when it opened.
+     *
+     * Called for every transitional state the phone sends, which is what makes the window measure
+     * the transition rather than guess its length in advance. A source swap is a sequence - pause,
+     * new metadata still paused, resume - and how long it runs is the player's business (a
+     * streaming client buffering the next track takes as long as it takes). Timed from the press
+     * alone the window regularly expired inside that sequence and published the pause it was
+     * holding, which is the flicker it exists to remove. A *real* pause extends nothing, because
+     * nothing follows it.
+     */
+    private fun extendTrackChangeHold() {
+        val now = SystemClock.elapsedRealtime()
+        val ceiling = trackChangeHoldStartedRealtimeMs + TrackChangeHold.MAX_HOLD_MS
+        val until = minOf(now + TrackChangeHold.HOLD_MS, ceiling)
+        if (until <= trackChangeHoldUntilRealtimeMs) {
+            // Already scheduled at least that far out, or the ceiling is reached: leave the
+            // expiry where it is rather than bringing it forward.
+            return
+        }
+        trackChangeHoldUntilRealtimeMs = until
+        handler.removeCallbacks(trackChangeHoldRunnable)
+        handler.postDelayed(trackChangeHoldRunnable, until - now)
+    }
+
+    /**
+     * Closes the window.
+     *
+     * [applyHeld] is true only when it closed by running out - nothing arrived to say the skip
+     * took effect, so whatever was held back is the most recent thing the phone has actually said
+     * and is now reported as-is. Every other caller closes it *because* something better has
+     * arrived (or because the user has asked for something else), and applying a stale transitional
+     * state on the way out would undo exactly that.
+     */
+    private fun endTrackChangeHold(applyHeld: Boolean) {
+        handler.removeCallbacks(trackChangeHoldRunnable)
+        trackChangeHoldUntilRealtimeMs = 0L
+        trackChangeHoldStartedRealtimeMs = 0L
+        titlesLeftBehind.clear()
+        val held = heldMusicState
+        heldMusicState = null
+        if (applyHeld && held != null) {
+            Timber.d("The skip window closed without an answer; reporting the held state")
+            applyMusicState(held)
+        }
+    }
+
     fun sendManualCloseMessage() {
         viewModelScope.launchWithErrorHandling(application, musicState) {
             phoneConnection.sendManualCloseMessage()
@@ -670,31 +830,77 @@ class MusicViewModel @Inject constructor(
             StandardActions.ACTION_PLAY -> applyOptimisticPlayingState(true)
             StandardActions.ACTION_PAUSE, StandardActions.ACTION_STOP ->
                 applyOptimisticPlayingState(false)
-            StandardActions.ACTION_SKIP_TO_NEXT,
-            StandardActions.ACTION_SKIP_TO_PREV,
-            StandardActions.ACTION_RESTART -> applyOptimisticTrackStart()
+            StandardActions.ACTION_SKIP_TO_NEXT -> applyOptimisticTrackChange(SkipDirection.NEXT)
+            StandardActions.ACTION_SKIP_TO_PREV -> applyOptimisticTrackChange(SkipDirection.PREVIOUS)
+            StandardActions.ACTION_RESTART -> applyOptimisticTrackChange(SkipDirection.RESTART)
         }
     }
 
+    /** Which way a track change the user just asked for is going - see [applyOptimisticTrackChange]. */
+    private enum class SkipDirection { NEXT, PREVIOUS, RESTART }
+
     /**
-     * Snaps the displayed position to the start of a track, without waiting to be told.
+     * Whether the last track change the user asked for was a step *backwards*, and when.
      *
-     * Asking for the next track and then asking the phone where playback is answers a question
-     * whose answer is already known: it is at the beginning. Until the phone's state came back the
-     * watch kept extrapolating the *previous* track's position, so the clock carried on climbing
-     * through the track the user had just left - and against the new track's length it kept
-     * climbing rather than stopping at the old one's end.
+     * Read by `MainActivity` when a cover lands, so the new artwork travels the way the user just
+     * moved - see [com.svartifoss.snfell.common.AlbumArtMotion.directionFor], which owns how long
+     * a press keeps owning the direction and what to do when there has not been one.
      *
-     * "Previous" resets to zero as well, and correctly: players almost universally treat it as
-     * "restart this track unless you are within a few seconds of the start", so both outcomes begin
-     * at zero.
-     *
-     * The title and artist are deliberately left alone - the next track's name is genuinely not
-     * known here, and guessing it is what an optimistic update must not do. Only the part that is
-     * certain moves.
+     * Plain properties rather than a `LiveData`: this is not state anything renders, it is a fact
+     * about a press that is asked for once, at the moment an unrelated update (the artwork)
+     * arrives. An observable would replay it and invite a second consumer to treat it as the
+     * current direction of travel, which it is not - it expires.
      */
-    private fun applyOptimisticTrackStart() {
+    var lastSkipWasBackward: Boolean = false
+        private set
+
+    /** The watch's own monotonic clock, never the phone's - see [lastSkipWasBackward]. */
+    var lastSkipRealtimeMs: Long = 0L
+        private set
+
+    /**
+     * Answers a track change the user just asked for, here, instead of waiting to be told.
+     *
+     * Three things are known the instant the press lands, and each is drawn without a round trip:
+     *
+     *  - **the position is zero.** Asking for another track and then asking the phone where
+     *    playback is answers a question whose answer is already known. Until the phone's state came
+     *    back the watch kept extrapolating the *previous* track's position, so the clock carried on
+     *    climbing through the track the user had just left - and against the new track's length it
+     *    kept climbing rather than stopping at the old one's end.
+     *  - **which track it is**, whenever the watch is holding the live queue: the row after (or
+     *    before) the playing one, with its title, artist and thumbnail. This is the part that used
+     *    to be impossible - the old comment here said the next track's name was "genuinely not
+     *    known", which was true of the media session and never true of the queue the phone has
+     *    already sent. [PredictedTrackAdvance] owns every reason to refuse.
+     *  - **that the transition is not a pause.** The player will drop out of the playing state
+     *    while it swaps source, and the phone will report that faithfully; [TrackChangeHold] keeps
+     *    it off the screen for the moment it lasts.
+     *
+     * The hold is armed only when playback was actually running. Skipping while paused has no
+     * transition to cover - the player is already stopped and the screen already says so - and
+     * assuming otherwise would turn a paused session into a playing one for two and a half seconds.
+     *
+     * "Restart" moves only the position: it stays on this track by definition, so there is nothing
+     * to predict, and the same holds for a "previous" pressed late enough that the player will
+     * treat it as a restart ([PredictedTrackAdvance.previousRestartsTrack]).
+     */
+    private fun applyOptimisticTrackChange(direction: SkipDirection) {
+        // Recorded before the early return: a press made while no state has arrived yet is still
+        // the direction the user asked for, and the cover it eventually produces should honour it.
+        lastSkipWasBackward = direction == SkipDirection.PREVIOUS
+        lastSkipRealtimeMs = SystemClock.elapsedRealtime()
+
         val state = latestMusicState ?: return
+
+        if (state.playing) {
+            beginTrackChangeHold(state.title)
+        }
+
+        predictedSkipTarget(state, direction)?.let { target ->
+            applyPredictedTrack(state, target)
+            return
+        }
 
         val optimisticState = state.toBuilder()
                 .setPositionMs(0L)
@@ -708,11 +914,48 @@ class MusicViewModel @Inject constructor(
         musicStateListener.onChanged(Resource.success(optimisticState))
     }
 
+    /**
+     * The queue row a skip is about to land on, or null when this device cannot know.
+     *
+     * Deliberately *not* gated on an outstanding prediction, unlike [tryPredictNextTrack]: that
+     * guard stops an unanswered guess from walking down the queue on its own, and here every step
+     * is a press. A burst of skips has to be able to keep up, or the second press of a double
+     * would move the position and leave the first press's track on screen.
+     */
+    private fun predictedSkipTarget(state: MusicState, direction: SkipDirection): CustomListItemWithIcon? {
+        if (direction == SkipDirection.RESTART) {
+            return null
+        }
+        if (!PredictedTrackAdvance.canPredictManualSkip(state.shuffleEnabled)) {
+            return null
+        }
+        if (direction == SkipDirection.PREVIOUS &&
+                PredictedTrackAdvance.previousRestartsTrack(phoneConnection.playbackClock.positionNowMs())) {
+            return null
+        }
+
+        val queue = playbackQueue() ?: return null
+        val items = queue.second
+        val entryIds = items.map { it.listItem.entryId }
+        val titles = items.map { it.listItem.entryTitle }
+        val index = if (direction == SkipDirection.NEXT) {
+            PredictedTrackAdvance.nextIndex(entryIds, titles, queue.first, state.title)
+        } else {
+            PredictedTrackAdvance.previousIndex(entryIds, titles, queue.first, state.title)
+        }
+        return items.getOrNull(index)?.takeIf { it.listItem.entryTitle.isNotBlank() }
+    }
+
     private fun applyOptimisticPlayingState(nowPlaying: Boolean) {
         val state = latestMusicState ?: return
         if (state.playing == nowPlaying) {
             return
         }
+
+        // A deliberate play/pause outranks a skip that is still settling: whatever the window was
+        // holding back describes a track change the user has already moved on from, and drawing it
+        // now would fight the press that just happened.
+        endTrackChangeHold(applyHeld = false)
 
         // Where playback has actually reached, taken before the anchor moves: pausing must freeze
         // the display where the song is, not where its last sample was, and resuming must carry on
@@ -740,7 +983,7 @@ class MusicViewModel @Inject constructor(
      *  the expressive face's transport buttons, over the same Data Layer path
      *  WatchMediaSession's transport controls use. */
     fun skipNext() {
-        applyOptimisticTrackStart()
+        applyOptimisticTrackChange(SkipDirection.NEXT)
         viewModelScope.launchWithErrorHandling(application, musicState) {
             phoneConnection.sendSkipNext()
         }
@@ -748,7 +991,7 @@ class MusicViewModel @Inject constructor(
 
     /** Skips to the previous track directly - see [skipNext]. */
     fun skipPrevious() {
-        applyOptimisticTrackStart()
+        applyOptimisticTrackChange(SkipDirection.PREVIOUS)
         viewModelScope.launchWithErrorHandling(application, musicState) {
             phoneConnection.sendSkipPrevious()
         }
@@ -766,7 +1009,61 @@ class MusicViewModel @Inject constructor(
         currentButtonConfig.value = it
     }
 
-    private val musicStateListener = Observer<Resource<MusicState>?> {
+    private val musicStateListener = Observer<Resource<MusicState>?> { incoming ->
+        if (nextStateIsLocallyAnchored) {
+            applyMusicState(incoming)
+        } else {
+            applyPhoneMusicState(incoming)
+        }
+    }
+
+    /**
+     * Runs every state the phone sends past [TrackChangeHold] before it is allowed on screen.
+     *
+     * Only states the phone sent: one built here is this device answering itself, and holding it
+     * back would hold back the very thing the hold exists to show.
+     */
+    private fun applyPhoneMusicState(incoming: Resource<MusicState>?) {
+        val state = incoming?.takeIf { it.status == Resource.Status.SUCCESS }?.data
+        if (state == null) {
+            // An error (including the phone reporting that it could not carry the command out at
+            // all) and a loading state are never held. Both are answers about the connection
+            // rather than about the transition, and the second is what ends an optimistic skip
+            // that is not going to happen.
+            endTrackChangeHold(applyHeld = false)
+            applyMusicState(incoming)
+            return
+        }
+
+        when (TrackChangeHold.decide(
+                holdActive = isTrackChangeHoldActive(),
+                incomingTitle = state.title,
+                incomingPlaying = state.playing,
+                incomingPositionMs = state.positionMs,
+                titlesLeftBehind = titlesLeftBehind)) {
+            TrackChangeHold.Decision.APPLY -> {
+                endTrackChangeHold(applyHeld = false)
+                applyMusicState(incoming)
+            }
+            TrackChangeHold.Decision.DEFER -> {
+                Timber.d("Holding a transitional state back: '%s'", state.title)
+                heldMusicState = incoming
+                extendTrackChangeHold()
+            }
+            TrackChangeHold.Decision.ASSUME_PLAYING -> {
+                Timber.d("Drawing '%s' as playing while the skip settles", state.title)
+                heldMusicState = incoming
+                extendTrackChangeHold()
+                // The clock recorded this sample as stopped as it arrived, so without re-anchoring
+                // the progress ring would stand still behind a control that says it is playing.
+                val position = phoneConnection.playbackClock.positionNowMs()
+                anchorPositionNow(position, playing = true)
+                applyMusicState(Resource.success(state.toBuilder().setPlaying(true).build()))
+            }
+        }
+    }
+
+    private fun applyMusicState(it: Resource<MusicState>?) {
         Timber.d("Received MusicState %s", it?.data)
 
         // A state that was not built here came from the phone, which is the authority: it settles
@@ -815,7 +1112,12 @@ class MusicViewModel @Inject constructor(
         val newConfig = if (playing) playbackConfig else stoppedConfig
         swapConfig(newConfig)
 
-        musicState.value = it
+        // The mediator is declared non-null and PhoneConnection only ever posts a loading, error or
+        // success Resource, so a null never arrives; it is left unpublished rather than passed on to
+        // observers written against the non-null type. Everything else here already reads `it?.`.
+        if (it != null) {
+            musicState.value = it
+        }
 
         latestMusicState = newMusicState
         // The anchor itself is no longer kept here. A state from the phone was recorded into
@@ -854,6 +1156,16 @@ class MusicViewModel @Inject constructor(
         // The phone's cover always wins, and its arrival is exactly the moment a predicted
         // stand-in has done its job.
         _albumArt.addSource(phoneConnection.albumArt) { art ->
+            // Except while a skip is settling - or a prediction is still unconfirmed - and the
+            // phone is reporting *no* cover. That is the gap between two tracks rather than a
+            // track without artwork, and clearing on it drops the stand-in for the cover that is
+            // on its way, which is the blank this whole path exists to remove. A phone that goes
+            // briefly session-less mid-swap publishes exactly that empty state, so both conditions
+            // are needed: the window can close while the prediction is still outstanding.
+            if (art == null && predictedArt != null &&
+                    (predictedTitle != null || isTrackChangeHoldActive())) {
+                return@addSource
+            }
             predictedArt = null
             _albumArt.value = art
         }
@@ -873,6 +1185,7 @@ class MusicViewModel @Inject constructor(
         metadataFeed.release()
         super.onCleared()
         handler.removeCallbacks(positionTickRunnable)
+        handler.removeCallbacks(trackChangeHoldRunnable)
         // Detach the observeForever hooks these providers hold on PhoneConnection's (@Singleton)
         // LiveData, otherwise each recreated MusicViewModel leaks its three config providers.
         playbackConfig.destroy()

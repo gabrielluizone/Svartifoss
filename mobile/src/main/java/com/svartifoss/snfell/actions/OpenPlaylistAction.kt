@@ -73,27 +73,7 @@ class OpenPlaylistAction : SelectableAction {
             // Queue id first, title second, and in that order for the reason
             // QueueScrollPolicy.activeRowIndex documents: the id is exact where it exists, and the
             // title is the only thing left for the many players that never publish one.
-            val activeIndex = fullQueue?.let { queue ->
-                val byId = playingQueueId
-                        ?.takeIf { it != MediaSession.QueueItem.UNKNOWN_ID.toLong() }
-                        ?.let { id -> queue.indexOfFirst { it.queueId == id } }
-                        ?: -1
-                if (byId >= 0) {
-                    byId
-                } else {
-                    service.currentMediaController?.metadata
-                            ?.getString(MediaMetadata.METADATA_KEY_TITLE)
-                            ?.trim()
-                            ?.takeIf { it.isNotEmpty() }
-                            ?.let { title ->
-                                queue.indexOfFirst { entry ->
-                                    entry.description.title?.toString()?.trim()
-                                            .equals(title, ignoreCase = true)
-                                }
-                            }
-                            ?: -1
-                }
-            } ?: -1
+            val activeIndex = fullQueue?.let(service::activeQueueIndex) ?: -1
 
             val limit = QueuePaging.limitCoveringUpcoming(action.entryLimit, activeIndex)
             val playlist = fullQueue?.take(limit)

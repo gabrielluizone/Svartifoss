@@ -96,4 +96,12 @@
         <item>Terciární barva alba</item>
         <item>Neonový obrys</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>List</item>
+        <item>Kapka</item>
+        <item>Oblouk</item>
+        <item>Oblázek</item>
+        <item>Štít</item>
+    </string-array>
 </resources>

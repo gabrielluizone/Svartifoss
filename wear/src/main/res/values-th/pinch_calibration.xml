@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">ปรับเทียบการบีบ</string>
+    <string name="pinch_cal_intro">รัดสายให้กระชับและยกข้อมือขึ้น ประมาณ 45 วินาที: พัก บีบสองครั้งหกรอบ แล้วขยับแขน ไม่มีการส่งคำสั่งเพลง</string>
+    <string name="pinch_cal_start">เริ่ม</string>
+    <string name="pinch_cal_restart">เริ่มใหม่</string>
+    <string name="pinch_cal_test">ทดสอบโดยไม่ทำงาน</string>
+    <string name="pinch_cal_save">บันทึกการปรับเทียบ</string>
+    <string name="pinch_cal_close">ปิด</string>
+
+    <string name="pinch_cal_step_ready">เตรียมตัว</string>
+    <string name="pinch_cal_step_ready_hint">ยกข้อมือขึ้น หันหน้าจอเข้าหาตัว</string>
+    <string name="pinch_cal_step_rest">อยู่นิ่งๆ</string>
+    <string name="pinch_cal_step_rest_hint">อย่าบีบ</string>
+    <string name="pinch_cal_step_attempt">ครั้งที่ %1$d จาก %2$d</string>
+    <string name="pinch_cal_step_pinch">บีบสองครั้ง</string>
+    <string name="pinch_cal_step_pinch_hint">แตะนิ้วโป้งกับนิ้วชี้เข้าหากันสองครั้ง</string>
+    <string name="pinch_cal_step_wait">ผ่อนคลาย</string>
+    <string name="pinch_cal_step_wait_hint">ครั้งถัดไปกำลังมา</string>
+    <string name="pinch_cal_step_prepare">เกือบเสร็จแล้ว</string>
+    <string name="pinch_cal_step_prepare_hint">ต่อไป: ขยับแขนโดยไม่บีบ</string>
+    <string name="pinch_cal_step_move">ขยับแขน</string>
+    <string name="pinch_cal_step_move_hint">หมุนและแกว่งตามธรรมชาติ โดยหันหน้าจอเข้าหาตัว อย่าบีบ</string>
+
+    <string name="pinch_cal_testing">ทดสอบ</string>
+    <string name="pinch_cal_detections">การตรวจจับ</string>
+    <string name="pinch_cal_test_hint">เหลือ %1$d วิ · ไม่ทำงานใดๆ</string>
+
+    <string name="pinch_cal_ready">ปรับเทียบแล้ว ลองก่อนบันทึก: บีบสองสามครั้ง แล้วขยับแขนตามปกติ</string>
+    <string name="pinch_cal_test_done">ตรวจจับได้ %1$d ครั้ง หากตรงกับการบีบสองครั้งของคุณ ให้บันทึก หากนับการขยับแขนด้วย ให้ปรับเทียบใหม่หรือลดความไวบนโทรศัพท์</string>
+    <string name="pinch_cal_failed_incomplete">การบันทึกถูกตัดกลางคัน เปิดหน้าจอไว้และหันเข้าหาตัวตลอดการทดสอบ แล้วเริ่มใหม่</string>
+    <string name="pinch_cal_failed_weak">การบีบของคุณไม่แตกต่างจากข้อมือที่นิ่ง รัดสายให้แน่นขึ้นเล็กน้อยและบีบให้แรงขึ้น</string>
+    <string name="pinch_cal_failed_unrecognized">ความพยายามส่วนใหญ่ไม่ถูกจดจำว่าเป็นการบีบสองครั้ง ในแต่ละครั้งให้บีบสองครั้งให้ชัดเจนและอย่าขยับแขน</string>
+    <string name="pinch_cal_failed_movement">การขยับแขนของคุณคล้ายการบีบ ระหว่างการลองให้ข้อมือนิ่งขึ้น แล้วเริ่มใหม่</string>
+    <string name="pinch_cal_failed_kept">คงการปรับเทียบก่อนหน้าไว้แล้ว</string>
+    <string name="pinch_cal_interrupted">หยุดเพราะหน้าจอดับ เริ่มใหม่โดยเปิดหน้าจอไว้</string>
+    <string name="pinch_cal_unavailable">เซ็นเซอร์การเคลื่อนไหวไม่พร้อมใช้งาน เปิดหน้าจอนี้ใหม่แล้วลองอีกครั้ง</string>
+
+    <string name="pinch_cal_sending">กำลังบันทึกบนโทรศัพท์…</string>
+    <string name="pinch_cal_saved">บันทึกการปรับเทียบแล้ว บนโทรศัพท์ให้เลือกแบบทดลองในการตั้งค่าการบีบแล้วบันทึก</string>
+    <string name="pinch_cal_saved_active">บันทึกการปรับเทียบแล้ว ตัวตรวจจับแบบทดลองทำงานขณะเปิดเครื่องเล่น</string>
+    <string name="pinch_cal_send_failed">ยืนยันการบันทึกบนโทรศัพท์ไม่ได้ ตรวจสอบการเชื่อมต่อแล้วแตะบันทึกการปรับเทียบอีกครั้ง</string>
+    <string name="pinch_cal_legend_motion">การเคลื่อนไหว</string>
+    <string name="pinch_cal_legend_rotation">การหมุน</string>
+    <string name="pinch_cal_legend_target">เกณฑ์</string>
+    <string name="pinch_cal_no_signal">ไม่มีข้อมูลเซ็นเซอร์</string>
+    <string name="pinch_cal_detail">จดจำได้ %1$d จาก %2$d · การแตะต่อครั้ง: %3$s</string>
+</resources>

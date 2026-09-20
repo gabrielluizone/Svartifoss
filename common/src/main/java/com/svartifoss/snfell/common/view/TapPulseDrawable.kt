@@ -35,10 +35,23 @@ class TapPulseDrawable(accentColor: Int) : Drawable() {
         strokeWidth = 1.5f * Resources.getSystem().displayMetrics.density
     }
 
+    private val groundPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.FILL }
+
     private val density = Resources.getSystem().displayMetrics.density
 
     private var centerX = 0f
     private var centerY = 0f
+
+    /** False until a touch has placed the pulse; (0, 0) is the screen corner, not a tap point. */
+    private var placed = false
+
+    // The action's own icon, shown inside the ring once the action has actually run - see
+    // revealIcon. Its own timeline, deliberately not the ring's: the ring fires on touch-down and
+    // this fires when the gesture has been classified, so restarting the ring to carry it would
+    // stutter a pulse the user is already watching.
+    private var icon: Drawable? = null
+    private var iconProgress = 1f
+    private var iconAnimator: ValueAnimator? = null
 
     // 1f = finished/invisible (also the initial state); the timeline runs 0 -> 1 once per tap.
     private var progress = 1f
@@ -57,6 +70,7 @@ class TapPulseDrawable(accentColor: Int) : Drawable() {
     fun press(x: Float, y: Float, boosted: Boolean = false) {
         centerX = x
         centerY = y
+        placed = true
         radiusPx = BASE_RADIUS_DP * density * (if (boosted) BOOST_RADIUS_MULTIPLIER else 1f)
         peakAlpha = if (boosted) BOOST_PEAK_ALPHA else PEAK_ALPHA
 
@@ -72,6 +86,35 @@ class TapPulseDrawable(accentColor: Int) : Drawable() {
         }
     }
 
+    /**
+     * Show [icon] inside the ring, naming the action that just ran.
+     *
+     * The ring says "I felt that"; this says "and *this* is what it did". They are separate because
+     * the two facts are known at different moments - the touch point on the way down, the action
+     * only once the gesture has been classified - and because the second one is the whole point:
+     * a quadrant's icon can be switched off, or hidden by the control style, and then nothing on
+     * screen ever confirmed which of four actions fired. Sizing and placing it here rather than
+     * animating the persistent hint is what makes it independent of whether that hint exists.
+     *
+     * [icon] must be a drawable this may keep and mutate - callers hand over their own copy, since
+     * the hint view is still using the original.
+     */
+    fun revealIcon(icon: Drawable?) {
+        // Nothing has told this where the finger was, so there is no honest place to draw it -
+        // (0, 0) would put the glyph in the corner of the screen.
+        if (!placed) return
+        this.icon = icon ?: return
+        iconAnimator?.cancel()
+        iconAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+            duration = ICON_IN_MS + ICON_HOLD_MS + ICON_OUT_MS
+            addUpdateListener {
+                iconProgress = it.animatedValue as Float
+                invalidateSelf()
+            }
+            start()
+        }
+    }
+
     /** No-op - the pulse is one self-contained timeline (see [press]). Kept so callers reacting
      *  to touch-up don't need to special-case this drawable. */
     fun release() = Unit
@@ -81,6 +124,9 @@ class TapPulseDrawable(accentColor: Int) : Drawable() {
         // scales up, so it's brightest at the moment of impact and dissolves as it grows.
         val alpha = (1f - progress) * peakAlpha
         if (alpha <= 0.01f) {
+            // The ring is done, but the glyph outlives it: it starts when the action fires, which
+            // is after the ring began, so returning here would cut the confirmation short.
+            drawIcon(canvas)
             return
         }
 
@@ -91,6 +137,48 @@ class TapPulseDrawable(accentColor: Int) : Drawable() {
 
         canvas.drawCircle(centerX, centerY, radius, fillPaint)
         canvas.drawCircle(centerX, centerY, radius, strokePaint)
+        drawIcon(canvas)
+    }
+
+    /**
+     * The action glyph, on its own ground.
+     *
+     * The ground is not decoration: these icons are monochrome templates, the thing behind them is
+     * whatever the album cover happens to be, and a white glyph on a pale sleeve is invisible
+     * exactly when the user most needs to read it. The same reasoning the centre-tap confirmation
+     * already carries its own backing for.
+     */
+    private fun drawIcon(canvas: Canvas) {
+        val glyph = icon ?: return
+        val alpha = iconAlphaAt(iconProgress)
+        if (alpha <= 0.01f) return
+
+        val half = ICON_SIZE_DP * density / 2f
+        // Settles rather than pops: full size the instant it appears reads as a flicker in the
+        // composition rather than as an answer.
+        val scale = ICON_START_SCALE + (1f - ICON_START_SCALE) * minOf(1f, iconProgress * 4f)
+
+        groundPaint.color = ColorUtils.setAlphaComponent(
+                GROUND_COLOR, (alpha * GROUND_ALPHA_FRACTION * 255).toInt())
+        canvas.drawCircle(centerX, centerY, half * scale * GROUND_RADIUS_MULTIPLIER, groundPaint)
+
+        val size = half * scale
+        glyph.setBounds(
+                (centerX - size).toInt(), (centerY - size).toInt(),
+                (centerX + size).toInt(), (centerY + size).toInt())
+        glyph.alpha = (alpha * 255).toInt().coerceIn(0, 255)
+        glyph.draw(canvas)
+    }
+
+    /** Fast in, hold, fade - the envelope the quadrant hint's own flash has always used. */
+    private fun iconAlphaAt(progress: Float): Float {
+        val total = (ICON_IN_MS + ICON_HOLD_MS + ICON_OUT_MS).toFloat()
+        val elapsed = progress * total
+        return when {
+            elapsed <= ICON_IN_MS -> elapsed / ICON_IN_MS
+            elapsed <= ICON_IN_MS + ICON_HOLD_MS -> 1f
+            else -> 1f - (elapsed - ICON_IN_MS - ICON_HOLD_MS) / ICON_OUT_MS
+        }.coerceIn(0f, 1f)
     }
 
     /** The outline pops brighter than the fill (mirroring the white-on-translucent look of
@@ -129,5 +217,16 @@ class TapPulseDrawable(accentColor: Int) : Drawable() {
         private const val BOOST_DURATION_MS = 550L
         private const val BOOST_RADIUS_MULTIPLIER = 1.3f
         private const val BOOST_PEAK_ALPHA = 1f
+
+        // The action glyph inside the ring. Sized against the boosted ring it normally appears in
+        // (30dp * 1.3 radius), so it reads as filling the pulse rather than floating in it.
+        private const val ICON_SIZE_DP = 26f
+        private const val ICON_START_SCALE = 0.86f
+        private const val ICON_IN_MS = 90L
+        private const val ICON_HOLD_MS = 260L
+        private const val ICON_OUT_MS = 240L
+        private const val GROUND_COLOR = 0xFF000000.toInt()
+        private const val GROUND_ALPHA_FRACTION = 0.42f
+        private const val GROUND_RADIUS_MULTIPLIER = 1.25f
     }
 }

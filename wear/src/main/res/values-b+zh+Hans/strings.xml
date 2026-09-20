@@ -31,6 +31,7 @@
     <string name="idle_action_queue">打开最近播放</string>
 
     <string name="no_phone">未连接手机</string>
+    <string name="phone_unavailable">请解锁手机以控制播放</string>
     <string name="playback_stopped">已停止</string>
     <string name="error">错误</string>
     <string name="error_play_services">Play 服务错误</string>

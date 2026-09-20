@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Csippentés kalibrálása</string>
+    <string name="pinch_cal_intro">Húzd meg jól a szíjat, és tartsd magasan a csuklódat. Kb. 45 másodperc: nyugalom, hat dupla csippentés, majd karmozgás. Nem küld zenei parancsot.</string>
+    <string name="pinch_cal_start">Indítás</string>
+    <string name="pinch_cal_restart">Újrakezdés</string>
+    <string name="pinch_cal_test">Teszt műveletek nélkül</string>
+    <string name="pinch_cal_save">Kalibrálás mentése</string>
+    <string name="pinch_cal_close">Bezárás</string>
+
+    <string name="pinch_cal_step_ready">Készülj fel</string>
+    <string name="pinch_cal_step_ready_hint">Tartsd magasan a csuklódat, a kijelző feléd nézzen.</string>
+    <string name="pinch_cal_step_rest">Maradj mozdulatlan</string>
+    <string name="pinch_cal_step_rest_hint">Ne csippents.</string>
+    <string name="pinch_cal_step_attempt">%1$d. kísérlet / %2$d</string>
+    <string name="pinch_cal_step_pinch">Dupla csippentés</string>
+    <string name="pinch_cal_step_pinch_hint">Érintsd össze kétszer a hüvelykujjadat és a mutatóujjadat.</string>
+    <string name="pinch_cal_step_wait">Lazíts</string>
+    <string name="pinch_cal_step_wait_hint">Mindjárt jön a következő kísérlet.</string>
+    <string name="pinch_cal_step_prepare">Mindjárt kész</string>
+    <string name="pinch_cal_step_prepare_hint">Következik: mozgasd a karodat csippentés nélkül.</string>
+    <string name="pinch_cal_step_move">Mozgasd a karodat</string>
+    <string name="pinch_cal_step_move_hint">Forgasd és lendítsd természetesen, a kijelző feléd nézzen. Ne csippents.</string>
+
+    <string name="pinch_cal_testing">Teszt</string>
+    <string name="pinch_cal_detections">Észlelések</string>
+    <string name="pinch_cal_test_hint">Még %1$d mp · nincs művelet</string>
+
+    <string name="pinch_cal_ready">Kalibrálva. Mentés előtt próbáld ki: csippents párszor, majd mozgasd a karodat normálisan.</string>
+    <string name="pinch_cal_test_done">%1$d észlelés. Ha ez egyezik a dupla csippentéseiddel, mentsd. Ha karmozgásokat is számolt, kalibrálj újra, vagy csökkentsd az érzékenységet a telefonon.</string>
+    <string name="pinch_cal_failed_incomplete">A felvétel megszakadt. Tartsd bekapcsolva és magad felé fordítva a kijelzőt a teszt végéig, majd kezdd újra.</string>
+    <string name="pinch_cal_failed_weak">A csippentéseid nem váltak el a mozdulatlan csuklótól. Húzd meg kicsit a szíjat, és csippents határozottabban.</string>
+    <string name="pinch_cal_failed_unrecognized">A kísérletek többségét nem ismerte fel dupla csippentésként. Minden kísérletnél csippents jól láthatóan kétszer, és tartsd mozdulatlanul a karodat.</string>
+    <string name="pinch_cal_failed_movement">A karmozgásod csippentésnek tűnt. Tartsd stabilabban a csuklódat a kísérletek alatt, majd kezdd újra.</string>
+    <string name="pinch_cal_failed_kept">Az előző kalibrálás megmaradt.</string>
+    <string name="pinch_cal_interrupted">Leállt, mert a kijelző kikapcsolt. Kezdd újra bekapcsolt kijelzővel.</string>
+    <string name="pinch_cal_unavailable">A mozgásérzékelők nem érhetők el. Nyisd meg újra ezt a képernyőt, és próbáld újra.</string>
+
+    <string name="pinch_cal_sending">Mentés a telefonra…</string>
+    <string name="pinch_cal_saved">Kalibrálás mentve. A telefonon válaszd a Kísérleti lehetőséget a csippentés beállításaiban, és mentsd.</string>
+    <string name="pinch_cal_saved_active">Kalibrálás mentve. A kísérleti érzékelő aktív, amíg a lejátszó nyitva van.</string>
+    <string name="pinch_cal_send_failed">A telefonra mentést nem sikerült megerősíteni. Ellenőrizd a kapcsolatot, és koppints újra a Kalibrálás mentése gombra.</string>
+    <string name="pinch_cal_legend_motion">Mozgás</string>
+    <string name="pinch_cal_legend_rotation">Forgás</string>
+    <string name="pinch_cal_legend_target">Küszöb</string>
+    <string name="pinch_cal_no_signal">Nincs szenzoradat</string>
+    <string name="pinch_cal_detail">%1$d felismerve %2$d-ból · érintés kísérletenként: %3$s</string>
+</resources>

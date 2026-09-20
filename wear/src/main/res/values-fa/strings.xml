@@ -31,6 +31,7 @@
     <string name="idle_action_queue">باز کردن پخش‌شده‌های اخیر</string>
 
     <string name="no_phone">هیچ گوشی‌ای متصل نیست</string>
+    <string name="phone_unavailable">برای کنترل پخش، قفل گوشی را باز کنید</string>
     <string name="playback_stopped">متوقف</string>
     <string name="error">خطا</string>
     <string name="error_play_services">خطای Play Services</string>

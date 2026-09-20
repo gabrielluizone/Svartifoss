@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Réglages du pincement</string>
+    <string name="pinch_settings_intro">Comment la montre doit-elle détecter votre geste ?</string>
+    <string name="pinch_mode_native">Détecteur de la montre</string>
+    <string name="pinch_mode_experimental">Détecteur expérimental</string>
+    <string name="pinch_native_description">Utilise la reconnaissance intégrée de la montre. Aucun réglage de calibrage ni de sensibilité.</string>
+    <string name="pinch_experimental_description">Détecte les mouvements du poignet grâce à votre calibrage. Il peut se déclencher par erreur et consomme davantage de batterie tant que le lecteur est ouvert.</string>
+    <string name="pinch_profile_missing">Pas encore calibré. Vous pouvez déjà enregistrer ce mode : la montre continue d’utiliser son propre détecteur jusqu’à l’enregistrement d’un calibrage, puis bascule d’elle-même.</string>
+    <string name="pinch_profile_saved">Calibrage enregistré. Prêt à l’emploi.</string>
+    <string name="pinch_calibration_step">1. Calibrez votre geste</string>
+    <string name="pinch_tuning_step">2. Ajustez la reconnaissance</string>
+    <string name="pinch_calibrate_watch">Calibrer sur la montre</string>
+    <string name="pinch_recalibrate_watch">Calibrer à nouveau</string>
+    <string name="pinch_open_instruction">Ouvrez Svartifoss sur la montre. Suivez-y le test et enregistrez votre calibrage.</string>
+    <string name="pinch_open_sending">Connexion à la montre…</string>
+    <string name="pinch_open_sent">Continuez sur la montre. Si le test ne s’ouvre pas, rouvrez-y Svartifoss et réessayez.</string>
+    <string name="pinch_open_failed">Montre indisponible. Vérifiez la connexion et mettez à jour les deux applications, puis réessayez.</string>
+    <string name="pinch_sensitivity_label">Sensibilité</string>
+    <string name="pinch_sensitivity_help">Augmentez-la si des pincements ne sont pas détectés. Diminuez-la si d’autres mouvements déclenchent des actions.</string>
+    <string name="pinch_gap_label">Délai entre les pincements</string>
+    <string name="pinch_gap_help">Durée maximale entre le premier et le second pincement. Augmentez-la pour un geste plus lent.</string>
+    <string name="pinch_cooldown_label">Pause entre les commandes</string>
+    <string name="pinch_cooldown_help">Temps d’attente après une action avant d’accepter un autre geste.</string>
+    <string name="pinch_value_percent">%1$d %%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Plus de réglages</string>
+    <string name="pinch_advanced_hide">Moins de réglages</string>
+    <string name="pinch_shared_settings">Ces réglages s’appliquent quand la musique est en lecture ou en pause.</string>
+    <string name="pinch_settings_save">Enregistrer</string>
+    <string name="pinch_gesture_note">Touchez le pouce et l’index l’un contre l’autre deux fois, lecteur ouvert et écran de la montre allumé.</string>
+    <string name="pinch_controls_uncalibrated">Détecteur expérimental choisi, pas encore calibré. Le détecteur de la montre est utilisé jusqu’au calibrage.</string>
+    <string name="pinch_controls_calibrated">Détecteur expérimental calibré. Pincez deux fois pendant que le lecteur Svartifoss est ouvert.</string>
+</resources>

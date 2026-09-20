@@ -96,4 +96,12 @@
         <item>Tertiär albumfärg</item>
         <item>Neonkontur</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>Löv</item>
+        <item>Droppe</item>
+        <item>Båge</item>
+        <item>Småsten</item>
+        <item>Sköld</item>
+    </string-array>
 </resources>

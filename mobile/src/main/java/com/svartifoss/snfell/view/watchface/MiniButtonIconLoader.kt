@@ -84,8 +84,7 @@ object MiniButtonIconLoader {
                         ?.let { ButtonInfo(it) } ?: continue
                 val isPreviewSlot = info.buttonCode in ScreenButtons.ALL_SLOTS ||
                         info.buttonCode in ScreenQuadrant.LEFT..ScreenQuadrant.BOTTOM ||
-                        info.buttonCode in QuickPanelButtons.ALL_SLOTS ||
-                        info.buttonCode == QuickPanelButtons.SLOT_LONG
+                        info.buttonCode in QuickPanelButtons.ALL_SLOTS
                 if (info.physicalButton || !isPreviewSlot) {
                     continue
                 }
@@ -130,7 +129,7 @@ object MiniButtonIconLoader {
             decode(actionBundle)?.let { quadrants[quadrant] = it }
         }
         val quickPanel = HashMap<Int, PreviewActionIcon>(4)
-        for (slot in QuickPanelButtons.ALL_SLOTS + QuickPanelButtons.SLOT_LONG) {
+        for (slot in QuickPanelButtons.ALL_SLOTS) {
             val actionBundle = singleTapActions[slot] ?: continue
             decode(actionBundle)?.let { quickPanel[slot] = it }
         }

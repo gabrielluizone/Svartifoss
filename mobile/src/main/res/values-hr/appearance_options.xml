@@ -96,4 +96,12 @@
         <item>Tercijarna boja albuma</item>
         <item>Neonski obris</item>
     </string-array>
+
+    <string-array name="wear_cover_shape_extra_entries">
+        <item>List</item>
+        <item>Kap</item>
+        <item>Luk</item>
+        <item>Oblutak</item>
+        <item>Štit</item>
+    </string-array>
 </resources>

@@ -31,6 +31,7 @@
     <string name="idle_action_queue">Apri riprodotti di recente</string>
 
     <string name="no_phone">Nessun telefono connesso</string>
+    <string name="phone_unavailable">Sblocca il telefono per controllare la riproduzione</string>
     <string name="playback_stopped">Interrotta</string>
     <string name="error">ERRORE</string>
     <string name="error_play_services">Errore di Play Services</string>

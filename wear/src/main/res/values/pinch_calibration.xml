@@ -1,0 +1,47 @@
+<resources>
+    <string name="pinch_cal_title">Calibrate pinch</string>
+    <string name="pinch_cal_intro">Fit the strap snugly and hold your wrist up. About 45 seconds: rest, six double pinches, then arm movement. No music commands are sent.</string>
+    <string name="pinch_cal_start">Start</string>
+    <string name="pinch_cal_restart">Start again</string>
+    <string name="pinch_cal_test">Test without actions</string>
+    <string name="pinch_cal_save">Save calibration</string>
+    <string name="pinch_cal_close">Close</string>
+
+    <string name="pinch_cal_step_ready">Get ready</string>
+    <string name="pinch_cal_step_ready_hint">Hold your wrist up, screen facing you.</string>
+    <string name="pinch_cal_step_rest">Keep still</string>
+    <string name="pinch_cal_step_rest_hint">Don\'t pinch.</string>
+    <string name="pinch_cal_step_attempt">Attempt %1$d of %2$d</string>
+    <string name="pinch_cal_step_pinch">Double pinch</string>
+    <string name="pinch_cal_step_pinch_hint">Tap thumb and index finger twice.</string>
+    <string name="pinch_cal_step_wait">Relax</string>
+    <string name="pinch_cal_step_wait_hint">Next attempt coming.</string>
+    <string name="pinch_cal_step_prepare">Almost done</string>
+    <string name="pinch_cal_step_prepare_hint">Next: move your arm without pinching.</string>
+    <string name="pinch_cal_step_move">Move your arm</string>
+    <string name="pinch_cal_step_move_hint">Turn and swing it naturally. Keep the screen facing you. Don\'t pinch.</string>
+
+    <string name="pinch_cal_testing">Test</string>
+    <string name="pinch_cal_detections">Detections</string>
+    <string name="pinch_cal_test_hint">%1$d s left · no actions run</string>
+
+    <string name="pinch_cal_ready">Calibrated. Test it before saving: pinch a few times, then move your arm normally.</string>
+    <string name="pinch_cal_test_done">%1$d detections. If that matches your double pinches, save. If arm movements were counted, calibrate again or lower the sensitivity on the phone.</string>
+    <string name="pinch_cal_failed_incomplete">The recording was cut short. Keep the screen on and facing you for the whole test, then start again.</string>
+    <string name="pinch_cal_failed_weak">Your pinches didn\'t stand out from a still wrist. Tighten the strap a little and pinch more firmly.</string>
+    <string name="pinch_cal_failed_unrecognized">Most attempts didn\'t read as one double pinch. Pinch twice, clearly, during each attempt, and keep your arm still while you do.</string>
+    <string name="pinch_cal_failed_movement">Your arm movement looked like pinches. Keep the wrist steadier during the attempts, then start again.</string>
+    <string name="pinch_cal_failed_kept">The previous calibration was kept.</string>
+    <string name="pinch_cal_interrupted">Stopped because the screen turned off. Start again with the screen awake.</string>
+    <string name="pinch_cal_unavailable">Motion sensors unavailable. Reopen this screen and try again.</string>
+
+    <string name="pinch_cal_sending">Saving on phone…</string>
+    <string name="pinch_cal_saved">Calibration saved. On your phone, choose Experimental in Pinch settings and save.</string>
+    <string name="pinch_cal_saved_active">Calibration saved. The experimental detector is on while the player is open.</string>
+    <string name="pinch_cal_send_failed">Could not confirm saving on the phone. Check the connection and tap Save calibration again.</string>
+    <string name="pinch_cal_legend_motion">Motion</string>
+    <string name="pinch_cal_legend_rotation">Rotation</string>
+    <string name="pinch_cal_legend_target">Target</string>
+    <string name="pinch_cal_no_signal">No sensor data</string>
+    <string name="pinch_cal_detail">Recognised %1$d of %2$d · taps per attempt: %3$s</string>
+</resources>

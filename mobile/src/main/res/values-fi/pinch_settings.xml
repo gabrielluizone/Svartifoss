@@ -1,0 +1,33 @@
+<resources>
+    <string name="pinch_settings_title">Nipistysasetukset</string>
+    <string name="pinch_settings_intro">Miten kellon pitäisi tunnistaa ele?</string>
+    <string name="pinch_mode_native">Kellon tunnistus</string>
+    <string name="pinch_mode_experimental">Kokeellinen tunnistus</string>
+    <string name="pinch_native_description">Käyttää kellon omaa tunnistusta. Ei kalibrointia eikä herkkyyssäätöjä.</string>
+    <string name="pinch_experimental_description">Tunnistaa ranteen liikkeet kalibroinnin avulla. Se voi laueta vahingossa ja kuluttaa enemmän akkua, kun soitin on auki.</string>
+    <string name="pinch_profile_missing">Ei vielä kalibroitu. Voit tallentaa tämän tilan nyt: kello käyttää omaa tunnistustaan, kunnes siihen on tallennettu kalibrointi, ja vaihtaa sitten itsestään.</string>
+    <string name="pinch_profile_saved">Kalibrointi tallennettu. Valmis käyttöön.</string>
+    <string name="pinch_calibration_step">1. Kalibroi ele</string>
+    <string name="pinch_tuning_step">2. Säädä tunnistusta</string>
+    <string name="pinch_calibrate_watch">Kalibroi kellossa</string>
+    <string name="pinch_recalibrate_watch">Kalibroi uudelleen</string>
+    <string name="pinch_open_instruction">Avaa Svartifoss kellossa. Seuraa siellä testiä ja tallenna kalibrointi.</string>
+    <string name="pinch_open_sending">Yhdistetään kelloon…</string>
+    <string name="pinch_open_sent">Jatka kellossa. Jos testi ei aukea, avaa Svartifoss siellä uudelleen ja yritä uudestaan.</string>
+    <string name="pinch_open_failed">Kello ei ole saatavilla. Tarkista yhteys ja päivitä molemmat sovellukset, ja yritä sitten uudelleen.</string>
+    <string name="pinch_sensitivity_label">Herkkyys</string>
+    <string name="pinch_sensitivity_help">Lisää, jos nipistyksiä jää huomaamatta. Vähennä, jos muut liikkeet käynnistävät toimintoja.</string>
+    <string name="pinch_gap_label">Nipistysten väli</string>
+    <string name="pinch_gap_help">Pisin aika ensimmäisestä nipistyksestä toiseen. Lisää hitaampaa elettä varten.</string>
+    <string name="pinch_cooldown_label">Tauko komentojen välillä</string>
+    <string name="pinch_cooldown_help">Kuinka kauan toiminnon jälkeen odotetaan ennen seuraavan eleen hyväksymistä.</string>
+    <string name="pinch_value_percent">%1$d %%</string>
+    <string name="pinch_value_ms">%1$d ms</string>
+    <string name="pinch_advanced_show">Lisää säätöjä</string>
+    <string name="pinch_advanced_hide">Vähemmän säätöjä</string>
+    <string name="pinch_shared_settings">Nämä asetukset koskevat musiikin toiston ja tauon aikaa.</string>
+    <string name="pinch_settings_save">Tallenna</string>
+    <string name="pinch_gesture_note">Kosketa peukaloa ja etusormea yhteen kahdesti, kun soitin on auki ja kellon näyttö päällä.</string>
+    <string name="pinch_controls_uncalibrated">Kokeellinen tunnistus valittu, ei vielä kalibroitu. Kellon oma tunnistus on käytössä, kunnes kalibroit.</string>
+    <string name="pinch_controls_calibrated">Kokeellinen tunnistus kalibroitu. Nipistä kahdesti, kun Svartifoss-soitin on auki.</string>
+</resources>
