@@ -1112,7 +1112,12 @@ class MusicViewModel @Inject constructor(
         val newConfig = if (playing) playbackConfig else stoppedConfig
         swapConfig(newConfig)
 
-        musicState.value = it
+        // The mediator is declared non-null and PhoneConnection only ever posts a loading, error or
+        // success Resource, so a null never arrives; it is left unpublished rather than passed on to
+        // observers written against the non-null type. Everything else here already reads `it?.`.
+        if (it != null) {
+            musicState.value = it
+        }
 
         latestMusicState = newMusicState
         // The anchor itself is no longer kept here. A state from the phone was recorded into
