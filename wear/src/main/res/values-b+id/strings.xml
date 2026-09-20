@@ -31,6 +31,7 @@
     <string name="idle_action_queue">Buka yang baru diputar</string>
 
     <string name="no_phone">Tidak ada ponsel terhubung</string>
+    <string name="phone_unavailable">Buka kunci ponsel untuk mengontrol pemutaran</string>
     <string name="playback_stopped">Dihentikan</string>
     <string name="error">KESALAHAN</string>
     <string name="error_play_services">Kesalahan Play Services</string>

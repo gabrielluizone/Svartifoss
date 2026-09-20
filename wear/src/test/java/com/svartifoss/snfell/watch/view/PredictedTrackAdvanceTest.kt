@@ -150,6 +150,56 @@ class PredictedTrackAdvanceTest {
                 emptyList(), emptyList(), null, "First"))
     }
 
+    // ---- manual skips -----------------------------------------------------
+
+    @Test
+    fun `a press may be predicted under repeat-one, unlike a boundary`() {
+        assertTrue(PredictedTrackAdvance.canPredictManualSkip(shuffleEnabled = false))
+    }
+
+    @Test
+    fun `shuffle still refuses, because the queue is not the play order`() {
+        assertFalse(PredictedTrackAdvance.canPredictManualSkip(shuffleEnabled = true))
+    }
+
+    @Test
+    fun `previous early in a track leaves it`() {
+        assertFalse(PredictedTrackAdvance.previousRestartsTrack(0L))
+        assertFalse(PredictedTrackAdvance.previousRestartsTrack(
+                PredictedTrackAdvance.PREVIOUS_RESTARTS_AFTER_MS - 1))
+    }
+
+    @Test
+    fun `previous later in a track restarts it instead`() {
+        assertTrue(PredictedTrackAdvance.previousRestartsTrack(
+                PredictedTrackAdvance.PREVIOUS_RESTARTS_AFTER_MS))
+        assertTrue(PredictedTrackAdvance.previousRestartsTrack(90_000L))
+    }
+
+    // ---- previousIndex ----------------------------------------------------
+
+    @Test
+    fun `the row before the playing one is the previous track`() {
+        assertEquals(0, PredictedTrackAdvance.previousIndex(ids, titles, null, "Second"))
+        assertEquals(1, PredictedTrackAdvance.previousIndex(ids, titles, null, "Third"))
+    }
+
+    @Test
+    fun `the first row has no predictable predecessor`() {
+        assertEquals(-1, PredictedTrackAdvance.previousIndex(ids, titles, null, "First"))
+    }
+
+    @Test
+    fun `an unidentifiable current track has no predictable predecessor`() {
+        assertEquals(-1, PredictedTrackAdvance.previousIndex(ids, titles, null, "Not In The Queue"))
+        assertEquals(-1, PredictedTrackAdvance.previousIndex(ids, titles, null, null))
+    }
+
+    @Test
+    fun `previous falls back to the active entry id like next does`() {
+        assertEquals(1, PredictedTrackAdvance.previousIndex(ids, titles, "12|c", "Some Other Song"))
+    }
+
     // ---- isSameTrack ------------------------------------------------------
 
     @Test

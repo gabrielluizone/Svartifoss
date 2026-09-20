@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Buka yang dimainkan baru-baru ini</string>
 
     <string name="no_phone">Telefon tidak disambungkan</string>
+    <string name="phone_unavailable">Buka kunci telefon untuk mengawal main balik</string>
     <string name="playback_stopped">Dihentikan</string>
     <string name="error">RALAT</string>
     <string name="error_play_services">Ralat Perkhidmatan Google Play</string>

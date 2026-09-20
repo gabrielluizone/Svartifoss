@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.view.watchface
 
+import androidx.annotation.StringRes
 import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.MiscPreferences
@@ -7,25 +8,47 @@ import com.svartifoss.snfell.common.TextBlockPlacementSupport
 import com.svartifoss.snfell.common.TrackMetadataFields
 
 /**
- * Where a control renders, which on this page is also *what kind of thing it is*.
+ * Which card a control lives in, and the order the cards run down the page.
  *
  * The Player page deliberately does not use the target rail its three siblings do. Text, Color and
  * Panel each apply one repeated set of controls to parallel things - Title and Artist, Volume and
  * Queue - so a rail that swaps the subject is the natural shape. Player has no such parallel: it
- * describes one screen, and its controls divide by *kind* rather than by subject. A rail here would
- * have been two tabs holding unrelated lists, which is a section header wearing a tab's clothes.
+ * describes one screen, so its controls are grouped by *what they are about* instead, each group a
+ * card of its own. A rail here would have been tabs holding unrelated lists.
+ *
+ * It grouped by *kind of widget* before: existence toggles as one field of chips, every multi-way
+ * choice as a row underneath. That put the ring's switches beside the clock and the tap flash while
+ * the ring's own style, layout and position mark sat several rows away with Track time between
+ * them, and the chips had no room for the sentence each preference has always carried to say what
+ * it does. A person tuning the progress ring now finds all of it in one place.
+ *
+ * [headingRes] is null for the cards that are not subjects - the identity card and the two at the
+ * bottom - which the layout declares itself. The headings are aliases of strings every locale
+ * already translates (see `player_section_*`), so a group costs no new translation.
  */
-internal enum class PlayerSlot {
+internal enum class PlayerSlot(@StringRes val headingRes: Int? = null) {
     /** The face and the control style: what is being edited, above everything it affects. */
     IDENTITY,
 
-    /** Does this element exist on the screen. Rendered as a field of checkable chips. */
-    ELEMENT,
+    /**
+     * How this particular face is composed: cover shapes, the Split panel. Every control here
+     * belongs to exactly one face, so on most faces the whole card is absent.
+     */
+    LAYOUT(R.string.player_section_layout),
 
-    /** A genuine multi-way choice, which a chip cannot express. Rendered as a row. */
-    CHOICE,
+    /** The title and artist block and the app icon beside it. */
+    TRACK_INFO(R.string.player_section_track_info),
 
-    /** The Metadata face's blocks - existence toggles too, kept in their own field. */
+    /** The ring, seeking, the position mark and the track time. */
+    PROGRESS(R.string.player_section_progress),
+
+    /** What can be touched and how a touch is confirmed. */
+    CONTROLS(R.string.player_section_controls),
+
+    /** The wall clock, which is not part of the track at all. */
+    CLOCK(R.string.player_section_clock),
+
+    /** The Metadata face's blocks - existence toggles, kept in a field of chips of their own. */
     DETAIL,
 
     /** Not part of the composition: how the screen behaves while it is up. */
@@ -81,16 +104,34 @@ internal data class PlayerSettingSpec(
         val control: PlayerControl,
         val value: PlayerValueSpec,
         /**
-         * Short noun for a chip, where the preference title is a sentence.
+         * The sentence under the row's title, for a picker whose Preference cannot supply one.
          *
-         * A chip that is on already says "shown", so carrying "Show the app icon" into one would
-         * repeat the verb five times down a field whose whole point is to be read at a glance. The
-         * full title still reaches screen readers through the chip's content description, and the
-         * search index is unaffected - it reads the XML, not this.
+         * A picker declared with `summary="%s"` reports only its current value, which the row
+         * already shows on the right, so there is nothing to draw underneath. Four of them - Text
+         * alignment, Text position, Split panel and Expressive seek - have a written, translated
+         * description that no screen ever showed, because the value took the summary's place. The
+         * rest either describe themselves through their summary already (Position mark, Track time
+         * display) or are named by their own value ("Bezel edge"), and are listed in the test that
+         * pins this rather than given a sentence they do not need.
          */
-        val chipLabelRes: Int? = null
+        @StringRes val descriptionRes: Int? = null
 ) {
     val persisted: Boolean get() = value !is PlayerValueSpec.Action
+}
+
+/**
+ * What the two ring switches and the ring's style currently say - everything the ring's gates read.
+ *
+ * Kept as a value rather than read from preferences inside the model so [PlayerEditorModel.isRevealed]
+ * stays pure and the gates, which used to live inline in the fragment, can be pinned by a JVM test.
+ */
+internal data class RingState(
+        val edgeArcOn: Boolean,
+        val edgeSeekOn: Boolean,
+        val solid: Boolean
+) {
+    /** A drag reveals the ring whether or not it rests on screen, so either switch reaches it. */
+    val reachable: Boolean get() = edgeArcOn || edgeSeekOn
 }
 
 /**
@@ -198,6 +239,15 @@ internal object PlayerEditorModel {
     val TEXT_BLOCK_ALIGN_FACES: Set<String> = TextBlockPlacementSupport.ALIGN_FACES
     val TEXT_BLOCK_POSITION_FACES: Set<String> = TextBlockPlacementSupport.POSITION_FACES
 
+    /**
+     * Every row, in the order it renders *within its card*: the list is read top to bottom by
+     * [specsFor], so where a row sits here is where it sits on the page.
+     *
+     * The order inside [PlayerSlot.PROGRESS] is deliberate. The two switches that put the ring on
+     * screen come first and the rows that only mean something once it is there ([RING_DEPENDENTS])
+     * follow directly beneath them, so what appears when a switch is turned on appears under it
+     * rather than somewhere else on the page.
+     */
     val specs: List<PlayerSettingSpec> = listOf(
             // The face leads because it is the page's subject rather than one setting among many:
             // it decides which of the controls below apply at all.
@@ -207,89 +257,50 @@ internal object PlayerEditorModel {
                     PlayerSlot.IDENTITY,
                     PlayerControl.SCREEN_THEME),
 
-            element(
-                    MiscPreferences.WEAR_SHOW_SOURCE_ICON,
-                    PlayerControl.SOURCE_ICON,
-                    R.string.player_element_app_icon),
-            element(
-                    MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE,
-                    PlayerControl.PLAYER_CONTROLS,
-                    R.string.player_element_controls),
-            element(
-                    MiscPreferences.WEAR_INTERNAL_PROGRESS_VISIBLE,
-                    PlayerControl.INTERNAL_PROGRESS,
-                    R.string.player_element_inner_progress),
-            element(
-                    MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE,
-                    PlayerControl.EDGE_PROGRESS,
-                    R.string.player_element_edge_arc),
-            element(
-                    MiscPreferences.WEAR_EDGE_SEEK_ENABLED,
-                    PlayerControl.EDGE_SEEK,
-                    R.string.player_element_edge_seek),
-            element(
-                    MiscPreferences.ALWAYS_SHOW_TIME,
-                    PlayerControl.ALWAYS_SHOW_TIME,
-                    R.string.player_element_clock),
-            element(
-                    MiscPreferences.WEAR_QUADRANT_TAP_FLASH,
-                    PlayerControl.QUADRANT_FLASH,
-                    R.string.player_element_tap_flash),
-            /*
-             * The ring's own paint, gated the same way [SEEK_MARKER] below is: it is drawn on the
-             * shared edge ring, so switching that ring off leaves it nothing to act on.
-             *
-             * These three lived on the Panels page's Seek tab until they were moved here. That tab
-             * holds the *seek overlay*, a different surface, and the preview of these three
-             * correctly showed the player instead - so three of its five controls jumped to another
-             * screen, which reads as a broken preview rather than as a tab holding two subjects.
-             * They now sit beside the switch that turns their ring on.
-             */
-            element(
-                    MiscPreferences.WEAR_PROGRESS_GRADIENT,
-                    PlayerControl.RING_GRADIENT,
-                    R.string.player_element_ring_gradient),
-
-            choice(
-                    MiscPreferences.WEAR_PROGRESS_STYLE,
-                    PlayerSlot.CHOICE,
-                    PlayerControl.RING_STYLE),
-            choice(
-                    MiscPreferences.WEAR_PROGRESS_LAYOUT,
-                    PlayerSlot.CHOICE,
-                    PlayerControl.RING_LAYOUT),
-            choice(
-                    MiscPreferences.WEAR_TRACK_TIME_MODE,
-                    PlayerSlot.CHOICE,
-                    PlayerControl.TRACK_TIME_MODE),
-            /*
-             * Applies to every face, and is deliberately *not* in [appliesToFace].
-             *
-             * The tick is drawn on the shared edge ring rather than by a face's own composition,
-             * so no face is inapplicable — but the ring itself can be switched off, and on Split,
-             * Verse, Note and Chat it is off by default. That is a preference gate, not a face
-             * gate, so `WatchFacePrefsFragment.renderPlayerEditor` filters this row on
-             * `wear_edge_progress_visible` where it can actually read a value, and
-             * `WatchSearchTargetResolver` redirects a search for it to that switch. Keeping the
-             * distinction is what stops this function from needing to read preferences and stop
-             * being pure.
-             */
-            choice(
-                    MiscPreferences.WEAR_SEEK_MARKER,
-                    PlayerSlot.CHOICE,
-                    PlayerControl.SEEK_MARKER),
+            // How this one face is composed. Each control belongs to a single face, so this card
+            // is absent everywhere else.
             choice(
                     MiscPreferences.WEAR_CAROUSEL_CARD_SHAPE,
-                    PlayerSlot.CHOICE,
+                    PlayerSlot.LAYOUT,
                     PlayerControl.CAROUSEL_SHAPE),
             choice(
                     MiscPreferences.WEAR_NOTE_COVER_SHAPE,
-                    PlayerSlot.CHOICE,
+                    PlayerSlot.LAYOUT,
                     PlayerControl.NOTE_COVER_SHAPE),
-            element(
+            toggle(
+                    MiscPreferences.WEAR_NOTE_SHOW_COVER,
+                    PlayerSlot.LAYOUT,
+                    PlayerControl.NOTE_SHOW_COVER),
+            choice(
+                    MiscPreferences.WEAR_CHAT_COVER_SHAPE,
+                    PlayerSlot.LAYOUT,
+                    PlayerControl.CHAT_COVER_SHAPE),
+            toggle(
+                    MiscPreferences.WEAR_CHAT_SHOW_COVER,
+                    PlayerSlot.LAYOUT,
+                    PlayerControl.CHAT_SHOW_COVER),
+            choice(
+                    MiscPreferences.WEAR_METADATA_COVER_SHAPE,
+                    PlayerSlot.LAYOUT,
+                    PlayerControl.METADATA_COVER_SHAPE),
+            toggle(
+                    MiscPreferences.WEAR_METADATA_SHOW_COVER,
+                    PlayerSlot.LAYOUT,
+                    PlayerControl.METADATA_SHOW_COVER),
+            choice(
+                    MiscPreferences.WEAR_SPLIT_PANEL,
+                    PlayerSlot.LAYOUT,
+                    PlayerControl.SPLIT_PANEL,
+                    R.string.setting_split_panel_description),
+
+            toggle(
+                    MiscPreferences.WEAR_SHOW_SOURCE_ICON,
+                    PlayerSlot.TRACK_INFO,
+                    PlayerControl.SOURCE_ICON),
+            toggle(
                     MiscPreferences.WEAR_TITLE_CENTERED,
-                    PlayerControl.TITLE_CENTERED,
-                    R.string.player_element_title_centered),
+                    PlayerSlot.TRACK_INFO,
+                    PlayerControl.TITLE_CENTERED),
             /*
              * Applies to the faces that can honour each axis - see [TextBlockPlacementSupport].
              * `follow` still protects every supported face from visual change until the user
@@ -297,40 +308,84 @@ internal object PlayerEditorModel {
              */
             choice(
                     MiscPreferences.WEAR_TEXT_BLOCK_ALIGN,
-                    PlayerSlot.CHOICE,
-                    PlayerControl.TEXT_BLOCK_ALIGN),
+                    PlayerSlot.TRACK_INFO,
+                    PlayerControl.TEXT_BLOCK_ALIGN,
+                    R.string.setting_wear_text_block_align_description),
             choice(
                     MiscPreferences.WEAR_TEXT_BLOCK_POSITION,
-                    PlayerSlot.CHOICE,
-                    PlayerControl.TEXT_BLOCK_POSITION),
-            element(
-                    MiscPreferences.WEAR_NOTE_SHOW_COVER,
-                    PlayerControl.NOTE_SHOW_COVER,
-                    R.string.player_element_cover_art),
+                    PlayerSlot.TRACK_INFO,
+                    PlayerControl.TEXT_BLOCK_POSITION,
+                    R.string.setting_wear_text_block_position_description),
+
+            toggle(
+                    MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE,
+                    PlayerSlot.PROGRESS,
+                    PlayerControl.EDGE_PROGRESS),
+            toggle(
+                    MiscPreferences.WEAR_EDGE_SEEK_ENABLED,
+                    PlayerSlot.PROGRESS,
+                    PlayerControl.EDGE_SEEK),
+            /*
+             * The ring's own paint, gated on the ring - see [isRevealed]. These four are drawn on
+             * the shared edge ring, so switching that ring off leaves them nothing to act on.
+             *
+             * Three of them lived on the Panels page's Seek tab until they were moved here. That
+             * tab holds the *seek overlay*, a different surface, and the preview of these
+             * correctly showed the player instead - so three of its five controls jumped to
+             * another screen, which reads as a broken preview rather than as a tab holding two
+             * subjects. They now sit beside the switches that turn their ring on.
+             *
+             * Applies to every face, and is deliberately *not* in [appliesToFace]: the ring is
+             * drawn by the host rather than by a face's own composition, so no face is
+             * inapplicable - but the ring itself can be switched off, and on Split, Verse, Note
+             * and Chat it is off by default. That is a preference gate, not a face gate, which is
+             * why [isRevealed] takes a [RingState] and `WatchSearchTargetResolver` redirects a
+             * search for these rows to the switch instead. Keeping the distinction is what stops
+             * [appliesToFace] from needing to read preferences and stop being pure.
+             */
             choice(
-                    MiscPreferences.WEAR_CHAT_COVER_SHAPE,
-                    PlayerSlot.CHOICE,
-                    PlayerControl.CHAT_COVER_SHAPE),
-            element(
-                    MiscPreferences.WEAR_CHAT_SHOW_COVER,
-                    PlayerControl.CHAT_SHOW_COVER,
-                    R.string.player_element_cover_art),
+                    MiscPreferences.WEAR_PROGRESS_STYLE,
+                    PlayerSlot.PROGRESS,
+                    PlayerControl.RING_STYLE),
             choice(
-                    MiscPreferences.WEAR_METADATA_COVER_SHAPE,
-                    PlayerSlot.CHOICE,
-                    PlayerControl.METADATA_COVER_SHAPE),
-            element(
-                    MiscPreferences.WEAR_METADATA_SHOW_COVER,
-                    PlayerControl.METADATA_SHOW_COVER,
-                    R.string.player_element_cover_art),
+                    MiscPreferences.WEAR_PROGRESS_LAYOUT,
+                    PlayerSlot.PROGRESS,
+                    PlayerControl.RING_LAYOUT),
+            toggle(
+                    MiscPreferences.WEAR_PROGRESS_GRADIENT,
+                    PlayerSlot.PROGRESS,
+                    PlayerControl.RING_GRADIENT),
             choice(
-                    MiscPreferences.WEAR_SPLIT_PANEL,
-                    PlayerSlot.CHOICE,
-                    PlayerControl.SPLIT_PANEL),
+                    MiscPreferences.WEAR_SEEK_MARKER,
+                    PlayerSlot.PROGRESS,
+                    PlayerControl.SEEK_MARKER),
+            toggle(
+                    MiscPreferences.WEAR_INTERNAL_PROGRESS_VISIBLE,
+                    PlayerSlot.PROGRESS,
+                    PlayerControl.INTERNAL_PROGRESS),
             choice(
                     MiscPreferences.WEAR_EXPRESSIVE_SEEK_MODE,
-                    PlayerSlot.CHOICE,
-                    PlayerControl.EXPRESSIVE_SEEK),
+                    PlayerSlot.PROGRESS,
+                    PlayerControl.EXPRESSIVE_SEEK,
+                    R.string.setting_wear_expressive_seek_mode_description),
+            choice(
+                    MiscPreferences.WEAR_TRACK_TIME_MODE,
+                    PlayerSlot.PROGRESS,
+                    PlayerControl.TRACK_TIME_MODE),
+
+            toggle(
+                    MiscPreferences.WEAR_PLAYER_CONTROLS_VISIBLE,
+                    PlayerSlot.CONTROLS,
+                    PlayerControl.PLAYER_CONTROLS),
+            toggle(
+                    MiscPreferences.WEAR_QUADRANT_TAP_FLASH,
+                    PlayerSlot.CONTROLS,
+                    PlayerControl.QUADRANT_FLASH),
+
+            toggle(
+                    MiscPreferences.ALWAYS_SHOW_TIME,
+                    PlayerSlot.CLOCK,
+                    PlayerControl.ALWAYS_SHOW_TIME),
 
             toggle(
                     MiscPreferences.WEAR_KEEP_SCREEN_ON,
@@ -348,6 +403,40 @@ internal object PlayerEditorModel {
                 PlayerSlot.DETAIL,
                 PlayerControl.METADATA_GROUPS,
                 PlayerValueSpec.Toggle(group.defaultVisible))
+    }
+
+    /** The subject cards, in the order they run down the page. */
+    val GROUPS: List<PlayerSlot> = PlayerSlot.entries.filter { it.headingRes != null }
+
+    /**
+     * The rows that only mean something once the progress ring is on screen.
+     *
+     * The single copy: [isRevealed] gates exactly these, and the spec list places them directly
+     * beneath the ring's switches, so what turning a switch on reveals appears under it. Both are
+     * pinned by a test. They are deliberately *not* indented: an indent with nothing connecting it
+     * to the switch above read as a misalignment rather than as grouping.
+     */
+    val RING_DEPENDENTS: Set<PlayerControl> = setOf(
+            PlayerControl.RING_STYLE,
+            PlayerControl.RING_LAYOUT,
+            PlayerControl.RING_GRADIENT,
+            PlayerControl.SEEK_MARKER)
+
+    /**
+     * Whether [control] is worth showing given what the ring is currently doing.
+     *
+     * The gates differ and both are mirrored in `WatchSearchTargetResolver`, which must move with
+     * them. The position mark needs the *resting* ring, since that is what it marks. The ring's
+     * own style and layout survive on edge seek alone, because a drag reveals the ring whether or
+     * not it rests on screen. And the gradient needs the solid ring on top of that: it is the one
+     * style that blends the companion colours. A picker that changes nothing reads as broken, the
+     * same reason the per-face rows are hidden rather than merely inert.
+     */
+    fun isRevealed(control: PlayerControl, ring: RingState): Boolean = when (control) {
+        PlayerControl.SEEK_MARKER -> ring.edgeArcOn
+        PlayerControl.RING_STYLE, PlayerControl.RING_LAYOUT -> ring.reachable
+        PlayerControl.RING_GRADIENT -> ring.reachable && ring.solid
+        else -> true
     }
 
     private val specsByKey: Map<String, PlayerSettingSpec> =
@@ -394,6 +483,10 @@ internal object PlayerEditorModel {
                 appliesToFace(it.control, face) && it.key !in COVER_VISIBILITY_BY_SHAPE.values
             }
 
+    /** [visibleIn], minus what the ring's current state leaves with nothing to act on. */
+    fun revealedIn(slot: PlayerSlot, face: String, ring: RingState): List<PlayerSettingSpec> =
+            visibleIn(slot, face).filter { isRevealed(it.control, ring) }
+
     /**
      * Whether [control] applies to [face], mirroring
      * `WatchFacePrefsFragment.updatePlayerCapabilityVisibility` and
@@ -427,12 +520,14 @@ internal object PlayerEditorModel {
     private fun choice(
             definition: PreferenceDefinition<String>,
             slot: PlayerSlot,
-            control: PlayerControl
+            control: PlayerControl,
+            @StringRes descriptionRes: Int? = null
     ) = PlayerSettingSpec(
             definition.key,
             slot,
             control,
-            PlayerValueSpec.Choice(definition.defaultValue))
+            PlayerValueSpec.Choice(definition.defaultValue),
+            descriptionRes)
 
     private fun toggle(
             definition: PreferenceDefinition<Boolean>,
@@ -443,15 +538,4 @@ internal object PlayerEditorModel {
             slot,
             control,
             PlayerValueSpec.Toggle(definition.defaultValue))
-
-    private fun element(
-            definition: PreferenceDefinition<Boolean>,
-            control: PlayerControl,
-            chipLabelRes: Int
-    ) = PlayerSettingSpec(
-            definition.key,
-            PlayerSlot.ELEMENT,
-            control,
-            PlayerValueSpec.Toggle(definition.defaultValue),
-            chipLabelRes)
 }

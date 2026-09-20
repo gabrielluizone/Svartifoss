@@ -70,31 +70,148 @@ class PlayerEditorModelTest {
     }
 
     @Test
-    fun `every element chip carries a short label and every other row does not`() {
-        // A chip shows a noun; a row shows its own title. Getting this backwards is what would put
-        // "Show the app icon" into a chip field five sentences wide.
-        PlayerEditorModel.specsFor(PlayerSlot.ELEMENT).forEach {
-            assertNotNull("${it.key} needs a chip label", it.chipLabelRes)
-        }
-        PlayerSlot.entries.filterNot { it == PlayerSlot.ELEMENT }.forEach { slot ->
-            PlayerEditorModel.specsFor(slot).forEach {
-                assertNull("${it.key} should not carry a chip label", it.chipLabelRes)
-            }
+    fun `only the subject cards carry a heading`() {
+        // The headings are aliases of strings every locale already translates, so a card costs no
+        // translation - but only the cards built from the model have one to show. The identity
+        // card and the two at the bottom are declared in the layout with headings of their own.
+        val subjects = listOf(
+                PlayerSlot.LAYOUT,
+                PlayerSlot.TRACK_INFO,
+                PlayerSlot.PROGRESS,
+                PlayerSlot.CONTROLS,
+                PlayerSlot.CLOCK)
+        assertEquals(subjects, PlayerEditorModel.GROUPS)
+        PlayerSlot.entries.filterNot { it in subjects }.forEach {
+            assertNull("$it is not a subject card and has no heading", it.headingRes)
         }
     }
 
     @Test
-    fun `every element is a toggle and every choice row is a choice`() {
-        // A chip can only answer yes or no, so a multi-way value in that slot would render as a
-        // checkbox over a value it cannot express.
-        PlayerEditorModel.specsFor(PlayerSlot.ELEMENT).forEach {
-            assertTrue("${it.key}", it.value is PlayerValueSpec.Toggle)
+    fun `every subject card holds settings and nothing else`() {
+        // A subject card draws a toggle row or a picker row per spec. An action has no value to
+        // show, so it belongs to the fixed button at the bottom and would render as nothing.
+        PlayerEditorModel.GROUPS.forEach { slot ->
+            val specs = PlayerEditorModel.specsFor(slot)
+            assertTrue("$slot should not be empty", specs.isNotEmpty())
+            specs.forEach {
+                assertTrue("${it.key} in $slot", it.value !is PlayerValueSpec.Action)
+            }
         }
         PlayerEditorModel.specsFor(PlayerSlot.DETAIL).forEach {
             assertTrue("${it.key}", it.value is PlayerValueSpec.Toggle)
         }
-        PlayerEditorModel.specsFor(PlayerSlot.CHOICE).forEach {
-            assertTrue("${it.key}", it.value is PlayerValueSpec.Choice)
+        PlayerEditorModel.specsFor(PlayerSlot.BEHAVIOUR).forEach {
+            assertTrue("${it.key}", it.value is PlayerValueSpec.Toggle)
+        }
+        PlayerEditorModel.specsFor(PlayerSlot.ACTION).forEach {
+            assertTrue("${it.key}", it.value is PlayerValueSpec.Action)
+        }
+    }
+
+    @Test
+    fun `every control lives in exactly one card`() {
+        // A control declared twice would render twice, and one declared in no card would be
+        // reachable only by search.
+        val controls = PlayerEditorModel.specs.map { it.control }
+        assertEquals(
+                "Each control should be declared once, except the generated metadata blocks",
+                controls.filterNot { it == PlayerControl.METADATA_GROUPS }.toSet().size,
+                controls.filterNot { it == PlayerControl.METADATA_GROUPS }.size)
+        assertEquals(
+                "Every control should have a spec",
+                PlayerControl.entries.toSet(),
+                controls.toSet())
+    }
+
+    /**
+     * The point of grouping by subject: everything a person needs to tune the ring is in one card,
+     * and what a switch reveals sits directly beneath the switches that reveal it.
+     */
+    @Test
+    fun `the ring's rows share a card and follow the switches that reveal them`() {
+        val progress = PlayerEditorModel.specsFor(PlayerSlot.PROGRESS).map { it.control }
+
+        PlayerEditorModel.RING_DEPENDENTS.forEach {
+            assertTrue("$it should be in the Progress card", it in progress)
+        }
+        val lastSwitch = maxOf(
+                progress.indexOf(PlayerControl.EDGE_PROGRESS),
+                progress.indexOf(PlayerControl.EDGE_SEEK))
+        val firstDependent = PlayerEditorModel.RING_DEPENDENTS.minOf { progress.indexOf(it) }
+        val lastDependent = PlayerEditorModel.RING_DEPENDENTS.maxOf { progress.indexOf(it) }
+        assertTrue("The ring's switches should come first", lastSwitch < firstDependent)
+        // Nothing unrelated between them: Track time used to sit in the middle of the ring's rows.
+        assertEquals(
+                "The ring's dependent rows should be contiguous",
+                PlayerEditorModel.RING_DEPENDENTS.size - 1,
+                lastDependent - firstDependent)
+        assertTrue(
+                "Track time belongs after the ring, not inside it",
+                progress.indexOf(PlayerControl.TRACK_TIME_MODE) > lastDependent)
+    }
+
+    @Test
+    fun `the ring's rows are revealed by exactly the state each one needs`() {
+        fun revealed(control: PlayerControl, arc: Boolean, seek: Boolean, solid: Boolean) =
+                PlayerEditorModel.isRevealed(control, RingState(arc, seek, solid))
+
+        // Neither switch on: the ring is never on screen, so none of it has anything to act on.
+        PlayerEditorModel.RING_DEPENDENTS.forEach {
+            assertFalse("$it with the ring unreachable",
+                    revealed(it, arc = false, seek = false, solid = true))
+        }
+
+        // The resting arc alone reaches everything.
+        PlayerEditorModel.RING_DEPENDENTS.forEach {
+            assertTrue("$it with the arc on and a solid ring",
+                    revealed(it, arc = true, seek = false, solid = true))
+        }
+
+        // Edge seek alone reveals the ring on a drag, so its style and layout still apply - but
+        // the position mark marks the *resting* ring, which is not there.
+        assertTrue(revealed(PlayerControl.RING_STYLE, arc = false, seek = true, solid = true))
+        assertTrue(revealed(PlayerControl.RING_LAYOUT, arc = false, seek = true, solid = true))
+        assertTrue(revealed(PlayerControl.RING_GRADIENT, arc = false, seek = true, solid = true))
+        assertFalse(revealed(PlayerControl.SEEK_MARKER, arc = false, seek = true, solid = true))
+
+        // Only the solid ring blends the companion colours.
+        assertFalse(revealed(PlayerControl.RING_GRADIENT, arc = true, seek = true, solid = false))
+        assertTrue(revealed(PlayerControl.RING_STYLE, arc = true, seek = true, solid = false))
+    }
+
+    @Test
+    fun `no control outside the ring is gated on it`() {
+        val ring = RingState(edgeArcOn = false, edgeSeekOn = false, solid = false)
+        PlayerControl.entries.filterNot { it in PlayerEditorModel.RING_DEPENDENTS }.forEach {
+            assertTrue("$it should not depend on the ring", PlayerEditorModel.isRevealed(it, ring))
+        }
+    }
+
+    @Test
+    fun `revealedIn drops the ring rows the ring cannot use`() {
+        fun progressKeys(ring: RingState) = PlayerEditorModel
+                .revealedIn(PlayerSlot.PROGRESS, "classic", ring)
+                .map { it.control }
+
+        val off = progressKeys(RingState(edgeArcOn = false, edgeSeekOn = false, solid = true))
+        assertTrue(off.none { it in PlayerEditorModel.RING_DEPENDENTS })
+        // The switches that reveal them, and what is not about the ring, are never gated.
+        assertTrue(PlayerControl.EDGE_PROGRESS in off)
+        assertTrue(PlayerControl.EDGE_SEEK in off)
+        assertTrue(PlayerControl.TRACK_TIME_MODE in off)
+
+        val on = progressKeys(RingState(edgeArcOn = true, edgeSeekOn = true, solid = true))
+        assertTrue(on.containsAll(PlayerEditorModel.RING_DEPENDENTS))
+    }
+
+    @Test
+    fun `only the faces that own a layout control have a layout card`() {
+        val owners = setOf("carousel", "note", "chat", "metadata", "split")
+        ThemeAppearance.ALLOWED_BASE_FACES.forEach { face ->
+            assertEquals(
+                    "Layout card for $face",
+                    face in owners,
+                    PlayerEditorModel.visibleIn(PlayerSlot.LAYOUT, face).isNotEmpty())
         }
     }
 
@@ -125,13 +242,15 @@ class PlayerEditorModelTest {
 
     @Test
     fun `every face keeps something to edit`() {
-        // Several elements apply everywhere, so no face can land on the page with an empty
+        // Several settings apply everywhere, so no face can land on the page with an empty
         // surface. The face selector is the one identity row every face keeps; Control style
         // joins it only on the faces in CONTROL_STYLE_FACES - see that set's own doc for why.
         ThemeAppearance.ALLOWED_BASE_FACES.forEach { face ->
             assertTrue(
-                    "Elements for $face",
-                    PlayerEditorModel.visibleIn(PlayerSlot.ELEMENT, face).size >= 3)
+                    "Settings for $face",
+                    PlayerEditorModel.GROUPS.sumOf {
+                        PlayerEditorModel.visibleIn(it, face).size
+                    } >= 3)
             val expectedIdentityRows = if (face in PlayerEditorModel.CONTROL_STYLE_FACES) 2 else 1
             assertEquals(
                     "Identity rows for $face",
@@ -189,7 +308,7 @@ class PlayerEditorModelTest {
     fun `the tap confirmation is offered on every face`() {
         ThemeAppearance.ALLOWED_BASE_FACES.forEach {
             assertTrue(it, PlayerEditorModel.appliesToFace(PlayerControl.QUADRANT_FLASH, it))
-            assertTrue(it, PlayerEditorModel.visibleIn(PlayerSlot.ELEMENT, it)
+            assertTrue(it, PlayerEditorModel.visibleIn(PlayerSlot.CONTROLS, it)
                     .any { spec -> spec.control == PlayerControl.QUADRANT_FLASH })
         }
     }
@@ -205,23 +324,24 @@ class PlayerEditorModelTest {
             val visibility = PlayerEditorModel.specFor(visibilityKey)
             assertNotNull(shapeKey, shape)
             assertNotNull(visibilityKey, visibility)
-            assertEquals(PlayerSlot.CHOICE, shape!!.slot)
+            assertEquals(PlayerSlot.LAYOUT, shape!!.slot)
             assertTrue(visibility!!.value is PlayerValueSpec.Toggle)
             ThemeAppearance.ALLOWED_BASE_FACES.forEach { face ->
                 assertEquals("$shapeKey and $visibilityKey must belong to the same face ($face)",
                         PlayerEditorModel.appliesToFace(shape.control, face),
                         PlayerEditorModel.appliesToFace(visibility.control, face))
                 assertFalse("$visibilityKey is drawn twice on $face",
-                        PlayerEditorModel.visibleIn(PlayerSlot.ELEMENT, face)
+                        PlayerEditorModel.GROUPS
+                                .flatMap { PlayerEditorModel.visibleIn(it, face) }
                                 .any { it.key == visibilityKey })
             }
             assertEquals(shapeKey, PlayerEditorModel.editorKeyFor(visibilityKey))
         }
         assertEquals(setOf("wear_note_cover_shape", "wear_metadata_cover_shape"),
                 PlayerEditorModel.COVER_VISIBILITY_BY_SHAPE.keys)
-        // Every other key answers for itself - Chat keeps its own chip.
+        // Every other key answers for itself - Chat keeps its own row.
         assertEquals("wear_chat_show_cover", PlayerEditorModel.editorKeyFor("wear_chat_show_cover"))
-        assertTrue(PlayerEditorModel.visibleIn(PlayerSlot.ELEMENT, "chat")
+        assertTrue(PlayerEditorModel.visibleIn(PlayerSlot.LAYOUT, "chat")
                 .any { it.key == "wear_chat_show_cover" })
     }
 
@@ -382,11 +502,74 @@ class PlayerEditorModelTest {
         }
     }
 
+    /**
+     * Pickers whose value is the whole answer, so their row needs no sentence under it. Each is
+     * declared `summary="%s"`, and none has a written description to show.
+     */
+    private val namedByTheirValue = mapOf(
+            "wear_progress_style" to "Dashed, Comet, Needle: the value names what it draws",
+            "wear_progress_layout" to "Bezel edge, Open at bottom: the value names the geometry",
+            "wear_carousel_card_shape" to "a shape is its own name",
+            "wear_note_cover_shape" to "a shape is its own name",
+            "wear_chat_cover_shape" to "a shape is its own name",
+            "wear_metadata_cover_shape" to "a shape is its own name")
+
+    /**
+     * A picker declared `summary="%s"` reports only its current value, which its row already shows
+     * on the right - so without a description of its own the row says what it is set to and never
+     * what it does. Four of them had a written, translated description that no screen displayed,
+     * because the value took the summary's place. Every such picker now either declares one or is
+     * named above with the reason it needs none, so the next picker added fails here instead of
+     * shipping as a title and a value.
+     */
+    @Test
+    fun `a picker that only reports its value has a description or a reason not to`() {
+        val cardPickers = PlayerEditorModel.GROUPS
+                .flatMap { PlayerEditorModel.specsFor(it) }
+                .filter { it.value is PlayerValueSpec.Choice }
+                .map { it.key }
+                .toSet()
+        val valueOnly = valueOnlyPickersInXml().intersect(cardPickers)
+
+        val undescribed = valueOnly.filter {
+            PlayerEditorModel.specFor(it)?.descriptionRes == null && it !in namedByTheirValue
+        }
+        assertTrue(
+                "These pickers show only their value on the Player page, so a person sees what " +
+                        "they are set to and never what they do. Give each a descriptionRes, or " +
+                        "name it in namedByTheirValue with the reason it needs none: $undescribed",
+                undescribed.isEmpty())
+
+        // The exemptions cannot go stale in either direction.
+        namedByTheirValue.keys.forEach {
+            assertTrue("$it is no longer a value-only picker; drop it from the list", it in valueOnly)
+            assertNull(
+                    "$it declares a description, so it needs no exemption",
+                    PlayerEditorModel.specFor(it)?.descriptionRes)
+        }
+    }
+
+    private fun watchFaceSettingsXml(): File =
+            File("src/main/res/xml/watch_face_settings.xml").takeIf { it.exists() }
+                    ?: File("mobile/src/main/res/xml/watch_face_settings.xml")
+
+    /** Keys of the ListPreferences whose summary is the `%s` template, i.e. only the value. */
+    private fun valueOnlyPickersInXml(): Set<String> =
+            Regex("""<[\w.]*ListPreference\b(.*?)/>""", RegexOption.DOT_MATCHES_ALL)
+                    .findAll(watchFaceSettingsXml().readText())
+                    .mapNotNull { match ->
+                        val attributes = match.groupValues[1]
+                        val key = Regex("""android:key="([^"]+)"""").find(attributes)
+                                ?.groupValues?.get(1) ?: return@mapNotNull null
+                        val summary = Regex("""android:summary="([^"]*)"""").find(attributes)
+                                ?.groupValues?.get(1)
+                        key.takeIf { summary == "%s" }
+                    }
+                    .toSet()
+
     /** The rows inside the five categories the Player page owns, read straight from the XML. */
     private fun playerRowsInXml(): Set<String> {
-        val xml = File("src/main/res/xml/watch_face_settings.xml").takeIf { it.exists() }
-                ?: File("mobile/src/main/res/xml/watch_face_settings.xml")
-        val text = xml.readText()
+        val text = watchFaceSettingsXml().readText()
         val owned = setOf(
                 "cat_wf_screen_behavior",
                 "cat_wf_player_layout",

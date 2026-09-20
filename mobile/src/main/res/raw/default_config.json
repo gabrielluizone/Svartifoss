@@ -1346,7 +1346,7 @@
     },
     "wear_quadrant_tap_flash@depth": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_title_text_case@chat": {
       "type": "string",
@@ -1358,7 +1358,7 @@
     },
     "wear_quadrant_tap_flash@material": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_font_flex_roundness@depth": {
       "type": "string",
@@ -1686,7 +1686,7 @@
     },
     "wear_quadrant_tap_flash@chat": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_aod_intensity@matejdro": {
       "type": "string",
@@ -2050,7 +2050,7 @@
     },
     "wear_quadrant_tap_flash@note": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_keep_screen_on@verse": {
       "type": "boolean",
@@ -2474,7 +2474,7 @@
     },
     "wear_quadrant_tap_flash@aurora": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_track_time_font_flex_width@spectrum": {
       "type": "string",
@@ -2562,7 +2562,7 @@
     },
     "wear_quadrant_tap_flash@metadata": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_source_icon_scale@matejdro": {
       "type": "string",
@@ -2954,7 +2954,7 @@
     },
     "wear_quadrant_tap_flash@spectrum": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_lyrics_color_mode@note": {
       "type": "string",
@@ -5450,7 +5450,7 @@
     },
     "wear_quadrant_tap_flash@ribbon": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_clock_font@carousel": {
       "type": "string",
@@ -6282,7 +6282,7 @@
     },
     "wear_quadrant_tap_flash@immersive": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_quick_panel_shortcut_cover@material": {
       "type": "boolean",
@@ -6438,7 +6438,7 @@
     },
     "wear_quadrant_tap_flash@eclipse": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_note_show_cover@ribbon": {
       "type": "boolean",
@@ -7098,7 +7098,7 @@
     },
     "wear_quadrant_tap_flash@studio": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_player_shading_style@poster": {
       "type": "string",
@@ -7886,7 +7886,7 @@
     },
     "wear_quadrant_tap_flash@verse": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_seek_style@material": {
       "type": "string",
@@ -8446,7 +8446,7 @@
     },
     "wear_quadrant_tap_flash@vinyl": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_metadata_show_playback@verse": {
       "type": "boolean",
@@ -8490,7 +8490,7 @@
     },
     "wear_quadrant_tap_flash@classic": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_volume_color_mode@ribbon": {
       "type": "string",
@@ -8790,7 +8790,7 @@
     },
     "wear_quadrant_tap_flash@carousel": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_track_time_font_scale@custom_active": {
       "type": "string",
@@ -9050,7 +9050,7 @@
     },
     "wear_quadrant_tap_flash@split": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_volume_color_mode@material": {
       "type": "string",
@@ -9454,7 +9454,7 @@
     },
     "wear_quadrant_tap_flash@halo": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_artist_font_flex_roundness@custom_active": {
       "type": "string",
@@ -10242,7 +10242,7 @@
     },
     "wear_quadrant_tap_flash@custom_active": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_progress_gradient@artist": {
       "type": "boolean",
@@ -10938,7 +10938,7 @@
     },
     "wear_quadrant_tap_flash@expressive": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_keep_screen_on@frame": {
       "type": "boolean",
@@ -11766,7 +11766,7 @@
     },
     "wear_quadrant_tap_flash@artist": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_title_shadow_strength@eclipse": {
       "type": "string",
@@ -13834,7 +13834,7 @@
     },
     "wear_quadrant_tap_flash@poster": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_title_outline_color_mode@studio": {
       "type": "string",
@@ -14790,7 +14790,7 @@
     },
     "wear_quadrant_tap_flash@frame": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_clock_opacity@carousel": {
       "type": "string",
@@ -15234,7 +15234,7 @@
     },
     "wear_quadrant_tap_flash@matejdro": {
       "type": "boolean",
-      "value": false
+      "value": true
     },
     "wear_artist_outline_color_mode@note": {
       "type": "string",
@@ -15771,7 +15771,7 @@
           },
           "wear_quadrant_tap_flash": {
             "type": "boolean",
-            "value": false
+            "value": true
           },
           "wear_font": {
             "type": "string",

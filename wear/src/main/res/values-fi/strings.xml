@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Avaa viimeksi toistetut</string>
 
     <string name="no_phone">Puhelinta ei ole yhdistetty</string>
+    <string name="phone_unavailable">Avaa puhelimen lukitus hallitaksesi toistoa</string>
     <string name="playback_stopped">Pysäytetty</string>
     <string name="error">VIRHE</string>
     <string name="error_play_services">Google Play Palvelut -virhe</string>

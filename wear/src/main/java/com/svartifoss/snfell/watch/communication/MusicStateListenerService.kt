@@ -59,7 +59,7 @@ class MusicStateListenerService : WearableListenerService() {
         // load and throws "Service not registered" from its own background thread, where no
         // try/catch of ours can reach it - so the only lever we have is asking far less often.
         val fingerprint = latestState?.let {
-            "${it.title}|${it.artist}|${it.playing}|${it.error}"
+            "${it.title}|${it.artist}|${it.playing}|${it.error}|${it.albumArtPending}"
         }
         if (fingerprint != lastGlanceableFingerprint) {
             lastGlanceableFingerprint = fingerprint

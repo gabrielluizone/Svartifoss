@@ -4,85 +4,75 @@
 
 ### Added
 
+- **Adding a playlist, album or track to the watch menu is one step, and its name comes with the link.** The add button on the Actions tab opened the full action picker, and getting a link onto the menu meant walking it: Streaming shortcuts, *Choose or add a streaming shortcut*, the saved list, then its own editor for the link and a name typed by hand (a YouTube Music link carries none) - and back to the start for the next one. It now opens an **Add to watch menu** sheet. Paste a link and its service and kind are shown as it lands, its name is looked up from the service's public preview record (Spotify, YouTube Music, SoundCloud and Deezer publish one; for the rest you type it), and one tap saves it in Streaming shortcuts *and* puts it on the menu. The sheet stays open so the next link can follow, links you already saved can be ticked and added together, and a link that is already on the menu says so instead of being added twice. The sheet's first row, **Choose an action**, opens the full action picker (playback controls, volume, watch screens, apps, Tasker), and the keyboard stays down until you tap the link field instead of opening on its own. The name lookup is a network request, so it keeps the app's opt-in stance: it runs by itself only with **Fetch shortcut names and artwork online** turned on (the existing artwork switch, which now covers names too - same request, same hosts, nothing new leaves the phone), and otherwise waits for a tap on **Get name from link**.
+
 - **A corner tap now shows you which action it ran.** Tapping a corner zone has always drawn a coloured ripple where you touched, but nothing in it said *what happened*. The corner icons that could answer are only drawn on Classic, and even there plenty of people would rather turn them off to keep the cover clean. The action's own icon now appears inside the ripple, at your fingertip, for a moment - on every watch face, whether or not the corner icons are shown. Turn it on and off with **Flash icon on tap**, which is now offered on every watch face instead of only Classic.
 
-  Only the single tap does this. A double tap or a long press on the same corner runs a *different*
-  action, and showing the single-tap icon for either would be telling you the wrong thing.
+  Only the single tap does this. A double tap or a long press on the same corner runs a *different* action, and showing the single-tap icon for either would be telling you the wrong thing.
 
 - **Double pinch is available to everyone, marked Beta.** The Hand gestures section in Controls no longer needs **Show archived options**, and carries a BETA tag - as does its Pinch settings window - because recognition is not yet dependable on every watch. It now works three ways: the watch's own detector on Pixel Watches that support the gesture and on TicWatches with Mobvoi's pinch sensor, and on any other watch with motion sensors through the experimental detector you calibrate yourself. Choosing Experimental before calibrating keeps the watch's own detector working until a calibration is saved, instead of switching the gesture off. Two things can no longer set it off by accident: reopening the player (the watch's sensor re-reports its last gesture when the player starts listening, which could run the action on its own), and, with the experimental detector, tapping the screen - a double tap to open the quick actions shakes the wrist exactly like a double pinch. The section's hint also updates as soon as you change the mode or a calibration arrives from the watch. The Pinch settings window and the watch's calibration screen are translated into every language the app ships in, and long translations shrink to fit the round screen instead of being cut off.
 
 - **Five more cover shapes, and a way to hide the cover from the same picker.** Leaf, Drop, Arch, Pebble and Shield join Rounded, Square, Squircle, Samsung style and Circle - the same silhouettes the mini buttons already offer, now for artwork. They are offered for Note's and Metadata's covers and for Carousel's cards and Chat's avatar, which share the one vocabulary. On Note and Metadata the Cover shape picker now starts with **Hidden**: that switch used to be a separate "Cover art" chip among the element toggles, where it was easy to miss. Picking a shape brings the cover back with it, and a hidden cover remembers the shape it returns with. Community themes can carry the new shapes.
 
-- **The watch now reports which Wear OS it is running**, shown in Settings → Developer → the Data
-  Layer report beside the watch app's version. It is there to answer one question that could not be
-  answered before: why the always-on player is sometimes replaced by the watch face after a moment.
-  Wear OS has two inactivity timeouts - the first hands the screen to the app's own always-on
-  display, the second hides the app and returns to the watch face - and whether an app can be held
-  past the second one is decided by the platform version, not by the app. Svartifoss already does
-  the one thing that holds it, and that works from Wear OS 5 onwards; below it the watch face comes
-  back and nothing in the app can prevent it. The report now says which of the two a given watch is,
-  instead of the two behaviours being indistinguishable from a bug. Only the API level is sent - not
-  the model, and nothing that identifies the watch.
+- **The watch now reports which Wear OS it is running**, shown in Settings → Developer → the Data Layer report beside the watch app's version. It is there to answer one question that could not be answered before: why the always-on player is sometimes replaced by the watch face after a moment. Wear OS has two inactivity timeouts - the first hands the screen to the app's own always-on display, the second hides the app and returns to the watch face - and whether an app can be held past the second one is decided by the platform version, not by the app. Svartifoss already does the one thing that holds it, and that works from Wear OS 5 onwards; below it the watch face comes back and nothing in the app can prevent it. The report now says which of the two a given watch is, instead of the two behaviours being indistinguishable from a bug. Only the API level is sent - not the model, and nothing that identifies the watch.
 
-- **The current lyric line can light up word by word.** When a track's synced lyric carries
-  "enhanced" per-word timing (a rarer format than the line-level sync LRCLIB serves for most
-  tracks), the Lyrics screen and the Verse face now colour each word in as its own timestamp
-  arrives, easing from the dim to the sung colour across the word's own span rather than the
-  whole line changing at once. A line with no word-level timing - which is still most lines, even
-  on a synced track - renders exactly as before, and neither surface fetches anything new: the
-  timing was always present in the text LRCLIB returns, only discarded until now.
+- **The Expressive controls answer the finger, and its cookie turns while the music plays.** The three transport controls behave as one group now: pressing one widens it and squeezes the control next to it by exactly that much, where the whole row used to shrink away from the touch. Hold a skip button and the play button is visibly pressed against it, while the other skip button does not move at all; press play/pause and it widens into both of them. The play button only ever changes sideways - its height never moves - so what you see is the button being compressed or stretched rather than the progress ring around it growing and shrinking. It springs back on release, and a quick tap gets the same gesture as a held press instead of a nudge that depended on how long you rested there. The play mark and the pause mark cross over into one another - each turning and growing into place rather than being swapped between two frames - on Expressive and on Material. And Expressive's scalloped button and the ring around it turn slowly anti-clockwise while a track plays, against the clockwise progress sweep, so the control reads as the gear it is shaped like; it holds where it is when the music pauses and carries on from there.
+
+- **The track text changes over instead of jumping.** On every watch face, the title and the artist now leave to the left and the next track's arrive from the right, travelling inside their own band rather than across the screen. The always-on display is deliberately left out of it: AOD draws no motion at all.
+
+- **The current lyric line can light up word by word.** When a track's synced lyric carries "enhanced" per-word timing (a rarer format than the line-level sync LRCLIB serves for most tracks), the Lyrics screen and the Verse face now colour each word in as its own timestamp arrives, easing from the dim to the sung colour across the word's own span rather than the whole line changing at once. A line with no word-level timing - which is still most lines, even on a synced track - renders exactly as before, and neither surface fetches anything new: the timing was always present in the text LRCLIB returns, only discarded until now.
+
+### Changed
+
+- **Album covers change over with a settle, on every watch face.** A track change used to dissolve the cover at a flat rate over a third of a second on Classic and on the faces that draw a small cover of their own - and simply swap it outright on the rest. Split, Note, Chat, Metadata, Ribbon, Frame and Depth all changed picture instantly while the background behind them eased, so **Album art fade transition** reached some faces and not others depending on which one you were looking at. The incoming cover now arrives slightly oversized and settles into place while it fades in over the outgoing one, easing to a stop rather than moving at a constant rate, and it drifts in from the right - or from the left when you pressed Previous, so the picture travels the way you just moved. Every face now uses the one transition, so the switch means the same thing everywhere, and turning it off still swaps the cover with no animation at all. The always-on display is deliberately left out of it, as it is for every other motion in the app.
+
+- **Flash icon on tap now starts switched on.** It exists so a corner tap can say which action it ran even when the corner icons are hidden - which they are on every Compose face - but it started off, so only someone who went looking for it under Watch face → Player got the benefit. A new install, or one whose data has been cleared, now has it on, and so does the Minimal theme that ships with the app. An install that has never stored a value picks the new default up on update; anything already stored is left as it is, and the switch can still be turned off per face.
+
+- **The two Wear OS Tiles are distinct before and after they are added.** The system picker no longer shows two copies of **Svartifoss** with the same image: they are now named **Now playing** and **Shortcuts** in the selected language, each with its own icon and preview. The playback Tile gives the track and primary transport more room, with compact volume controls as its secondary actions; its title asks the system renderer for Google Sans where the watch exposes it, and app-opening controls on both Tiles now keep the current or most recent album accent instead of reverting to green. The shortcuts Tile keeps two readable rows and an explicit way to open the rest instead of squeezing four full-size chips beyond smaller round screens.
+
+- **A scrolling title now dissolves at both ends, and no longer stops scrolling on its own.** A long title that does not fit scrolls sideways, and it used to pass behind two invisible walls: every letter stayed fully solid right up to the moment it was cut in half at the edge. Both ends now fade out over a short distance, so the line reads as text coming into and out of view rather than as text being chopped. On the watch faces, in the queue, and in the phone's own watch preview, which mirrors it.
+
+  The scroll also used to stop after a while. It was set to loop three times and then stand still, so a title you came back to after the screen had been off was usually frozen - and the only thing that appeared to restart it was pausing and resuming, which restarts the animation for an unrelated reason. It now loops for as long as the track is on screen. On the always-on display it is deliberately the opposite: the Classic and Matejdro faces now freeze their scrolling title while the wrist is down, which they should always have done - continuous animation on an always-on panel is both a burn-in risk and a wakeup every frame - and pick it back up when the screen comes back.
+
+- **Changing track no longer flickers through a stop, and the new cover is there at once.** Skipping to the next or previous track showed the player stopping first: the artist line read *Stopped*, the play/pause control turned over and back, and the cover blanked, all before the track you asked for appeared. None of that was the player's answer - it was the inside of the transition. A player asked for another track drops out of the playing state while it swaps source: it publishes the old track's details as paused, then the new details, then resumes, and the watch drew every step of it because it had no way to tell that sequence apart from a real pause. YouTube Music is the pronounced case, since it genuinely pauses and resumes around every skip where most local players do not.
+
+  The watch now answers the press itself. While it is holding the playback queue - which it refreshes on every track change - the next (or previous) track's title, artist and cover appear the instant you press, taken from the queue the phone already sent, and the phone's real answer replaces them the moment it arrives, agreeing or not. The paused states in between are held back, and the window measures the transition rather than guessing its length: every further thing the phone says about it pushes the window out, so a streaming client that takes its time buffering is covered, while a real pause - which nothing follows - ends it. If the phone stops answering, whatever was held is shown after all, so a skip that silently failed still reports itself rather than leaving the watch claiming playback that is not happening. A pause you make on the phone more than a couple of seconds into the new track is taken at its word, and so is a skip made with shuffle on, or a Previous pressed more than three seconds into a track, which players treat as *restart this one*. A track ending on its own is covered the same way.
+
+  The cover is the other half. The queue's thumbnails are 96 pixels, because a queue carries up to twenty of them across Bluetooth, so a skip used to draw a visibly pixelated cover and then snap to the sharp one once the phone's own artwork arrived. The phone now sends the covers of the tracks *around* the one playing ahead of time - two each way - at full watch resolution and encoded exactly like the playing track's, while the current one is still playing and the link is otherwise idle. So the picture a skip draws is already the final one, the state that follows reuses it instead of transferring and decoding it again, going back is as quick as going forward, and a second press before the first has settled is covered too. Only the cover that newly comes into range is actually transferred on each track change; the rest are bytes the watch already holds. It is skipped with shuffle on, where the watch cannot know what comes next anyway, and falls back to the queue's own thumbnail whenever a neighbour's cover could not be resolved in time - which under the Cover queue style is a full-size picture in its own right.
+
+- **Pick action is one page instead of a stack of them.** Choosing an action meant knowing which of six categories held it, opening that category as a page of its own, sometimes opening a third (playback speed, the installed music apps), and, for a streaming shortcut, going through *Choose or add a streaming shortcut* into a whole other window - so it was easy to lose your place, and the same kind of action could be one tap or four away depending on where it lived. Everything is now on one scrolling list, in sections: Playback, Volume, Watch screens, Find music, Streaming shortcuts, and Apps & automation. A row of shortcuts under the search box jumps to a section and lights up as you scroll, the few sub-lists (playback speed, volume levels, the music apps) open where they stand instead of on a new page, and there is no back button because there is nowhere to go back to. Streaming shortcuts lists the ones you saved with **Add a link** at the top: paste a link and it is saved and chosen in one go, from a sheet over the same page. Search still finds everything, including what is inside those sub-lists, and the keyboard no longer opens by itself when the picker does.
+
+- **The Actions tab stops offering what does nothing.** The Quick panel row is gone while Quick actions is set to *From current media app*: the panel then takes its three buttons from the playing app and never reads the ones assigned here. And the wide row under the buttons is always **Up Next** - it used to be assignable to another action, or hideable, as a fourth "Long button", a choice the row that carries the queue does not need - so the dialog lists only Button 1 to 3. Something an older version assigned to that row is ignored on the watch, rather than kept as an override you could no longer see or change.
+
+- **The Player page groups its settings by what they are about, and every setting says what it does again.** The "On screen" card was one field of chips (Edge arc, Edge seek, Clock, Tap flash…) with every picker listed underneath, so the progress ring's switches sat nowhere near the ring's own style, layout and position mark - and Track time display was wedged between them. It is now one card per subject: Layout (only on the faces that have controls of their own), Track info, Progress, Controls and Clock. Each setting is a row with its name, what it is currently set to on the right, and the sentence explaining it underneath, which the chips had dropped. The rows that only matter once the ring is on screen - its style, layout, gradient and position mark - sit directly under the switches that reveal them, so turning the ring on shows them right where you turned it on. Text alignment, Text position, Split panel and Expressive seek also show their descriptions for the first time; they had been written and translated but never displayed, because the current value took their place. The Metadata face's block toggles stay as chips.
+
+- **The Mini buttons page uses the same rows, split into what each setting is about.** It was one card holding the link to Assign actions, when the row appears and how it looks, all as outlined "Label · value" buttons under a note, plus a second card whose single button read "Always" with nothing saying what it was the value of. It is now three cards: Mini buttons (Assign actions - a row that says where it goes, with its description - and Show mini buttons), Appearance (arrangement, shape, background and opacity, each with what it is set to on the right) and Screen gestures, which now shows the setting's name, its value and the note about which swipes it covers. Arrangement and Shape are still left out on a face that places its own buttons, such as Chat.
 
 ### Fixed
 
-- **The album art no longer snaps in ahead of the rest of the screen when the app opens.** Every
-  cover *after* the first faded into the one before it, but the first had nothing to fade from and
-  was simply drawn at full opacity - and it is ready before the mini buttons and corner hints are,
-  since those wait for the button configuration and its icons. So a cold open was the cover landing,
-  then the controls landing, which read as the app stuttering into place. The first cover now fades
-  up out of the backdrop over the same time a track change takes, so it settles in while the rest of
-  the screen is still arriving. It is not held back: delaying it would only change which half won
-  the race. Turning off **Fade album art** still turns off both.
+- **The watch controls a phone that has been locked for a while, instead of appearing to.** If the watch app had closed since you last used it - which it does on its own - the next press had to start the phone's side back up, and Android refuses to let an app do that once the phone has been locked long enough. The press was then dropped, and nothing anywhere said so: the watch had already drawn the skip or the pause, so it looked like it had worked while the phone carried on playing the same track. Two changes. The phone's side now stays running for as long as music is actually playing, rather than stopping the moment the watch app closes, so there is something for the press to reach. And when the phone genuinely cannot act on a command, it now says so, and the watch shows **Unlock your phone to control playback** instead of an outcome that did not happen - returning to the player by itself as soon as the phone is reachable again. A press made while playback is *paused* and the watch app has closed can still be refused this way; that case now tells you why.
 
-- **The quick actions panel opens with an animation instead of appearing all at once.** The dimmed
-  background behind it always faded in, and so does the volume ring, but the panel itself was placed
-  at full size and full opacity in one frame - on a scrim that had not finished arriving. It now
-  settles in over it, which is the same short fade-and-scale the tap confirmation uses. Closing is
-  unchanged.
+- **Editing an action no longer closes the app on some phones.** The action editor and the action picker open as dialog windows, and the way the app asked for that window took one path only: the one for a dialog that floats over the screen behind it. Phones that open such a window full width instead - desktop and PC modes do exactly that - left the request unanswerable, and the app closed the moment either screen opened, before anything was drawn. Both now ask in a way that does not depend on how the phone chooses to frame them. Nothing about either screen looks different where they already worked.
 
-- **The progress ring is now edited on the Player page, where it is drawn.** Its style, layout and
-  "blend palette into the ring" sat on the Panels page's Seek tab, which is about the overlay that
-  appears while you drag. The ring is not that overlay - it is on the player - so touching any of
-  the three moved the preview to the player, and three of that tab's five controls led somewhere
-  else. They now sit with the switches that turn the ring and edge seek on. Nothing was renamed and
-  no value changed; searching for any of them still finds them.
+- **The watch app no longer closes when a screen opens after a long idle.** Opening the player, the queue, the menu or any other Svartifoss screen also asks the background connection to keep running after that screen is closed. Once the app has been idle for long enough the watch refuses that request outright, and the refusal closed the app instead of being taken as the answer it is. The screen now opens normally; the connection simply lasts as long as the screen does, which is what was wanted anyway.
 
-- **The Panels preview stays on the panel you are editing.** The two controls above the tab rail -
-  the shared background and its blur - belong to every tab, and the preview was routing them to the
-  volume overlay whatever tab was open. So changing the background while looking at the Queue tab
-  dropped the preview onto a panel you were not editing, and the change you had just made appeared
-  to have gone somewhere else. They now preview the tab you are on.
+- **Sending the watch's logs works again on Wear OS 5 and newer.** Settings → Developer → *Send watch logs* asks the watch to stream its log files across, and the watch app closed itself the moment the request arrived - so the one tool for diagnosing a watch-side problem was the one thing that could not be used. It also no longer closes when the request arrives at a moment the system will not let the watch start the transfer at all; it is now reported in the log instead.
 
-- **The repeat button cycles again, and the shuffle button can switch shuffle on.** Both were
-  reading the current mode from a connection that had not finished opening, so both were answered
-  "unknown" every single time - and both treated unknown as a mode rather than as no answer. Repeat
-  read it as "repeat is on" and switched it off, on every press, which is why the two presets that
-  name a mode outright kept working while the cycling button appeared to do nothing. Shuffle read
-  the same non-answer as "shuffle is on" and switched it off, every press, so it could only ever be
-  turned off from the watch - and the watch drew both buttons as permanently off, for the same
-  reason. Repeat one had the quieter half of it: it turned repeat-one on and could never turn it
-  back off.
+- **An older watch app paired with an updated phone no longer reports an error on buttons it handles itself.** Some actions happen entirely on the watch - opening the menu, the quick actions panel, the volume or progress screen, the face picker, or closing the app - and the watch runs them without asking the phone. A watch app older than one of those actions does not know that yet and asks anyway, and the phone treated the request as a fault and logged a crash report for every press. The phone now recognises what the watch is asking for and lets the watch get on with it. Updating the watch app remains the real fix: the older watch still cannot perform an action it does not have.
 
-  A press made while the mode genuinely cannot be read now switches repeat or shuffle **on**, which
-  is what the button's own icon promises. Some players never expose these modes at all, and there
-  the commands still go nowhere - nothing on the phone can change that.
+- **The album art no longer snaps in ahead of the rest of the screen when the app opens.** Every cover *after* the first faded into the one before it, but the first had nothing to fade from and was simply drawn at full opacity - and it is ready before the mini buttons and corner hints are, since those wait for the button configuration and its icons. So a cold open was the cover landing, then the controls landing, which read as the app stuttering into place. The first cover now fades up out of the backdrop over the same time a track change takes, so it settles in while the rest of the screen is still arriving. It is not held back: delaying it would only change which half won the race. Turning off **Fade album art** still turns off both.
 
-- **The Like button reaches players it used to ignore.** It looked for a like control the app had
-  published under a name it recognised, in its media session or its notification, and did nothing
-  at all on a player that names its own button something else. It now falls back to the one like
-  the media framework itself defines - a heart or a thumbs-up sent to the session - so a player
-  that offers that is likeable from the watch without its wording having to be recognised first.
-  The heart shown on the watch reads the same three sources in the same order, so it reports the
-  route a tap would really take.
+- **The quick actions panel opens with an animation instead of appearing all at once.** The dimmed background behind it always faded in, and so does the volume ring, but the panel itself was placed at full size and full opacity in one frame - on a scrim that had not finished arriving. It now settles in over it, which is the same short fade-and-scale the tap confirmation uses. Closing is unchanged.
+
+- **The progress ring is now edited on the Player page, where it is drawn.** Its style, layout and "blend palette into the ring" sat on the Panels page's Seek tab, which is about the overlay that appears while you drag. The ring is not that overlay - it is on the player - so touching any of the three moved the preview to the player, and three of that tab's five controls led somewhere else. They now sit with the switches that turn the ring and edge seek on. Nothing was renamed and no value changed; searching for any of them still finds them.
+
+- **The Panels preview stays on the panel you are editing.** The two controls above the tab rail - the shared background and its blur - belong to every tab, and the preview was routing them to the volume overlay whatever tab was open. So changing the background while looking at the Queue tab dropped the preview onto a panel you were not editing, and the change you had just made appeared to have gone somewhere else. They now preview the tab you are on.
+
+- **The repeat button cycles again, and the shuffle button can switch shuffle on.** Both were reading the current mode from a connection that had not finished opening, so both were answered "unknown" every single time - and both treated unknown as a mode rather than as no answer. Repeat read it as "repeat is on" and switched it off, on every press, which is why the two presets that name a mode outright kept working while the cycling button appeared to do nothing. Shuffle read the same non-answer as "shuffle is on" and switched it off, every press, so it could only ever be turned off from the watch - and the watch drew both buttons as permanently off, for the same reason. Repeat one had the quieter half of it: it turned repeat-one on and could never turn it back off.
+
+  A press made while the mode genuinely cannot be read now switches repeat or shuffle **on**, which is what the button's own icon promises. Some players never expose these modes at all, and there the commands still go nowhere - nothing on the phone can change that.
+
+- **The Like button reaches players it used to ignore.** It looked for a like control the app had published under a name it recognised, in its media session or its notification, and did nothing at all on a player that names its own button something else. It now falls back to the one like the media framework itself defines - a heart or a thumbs-up sent to the session - so a player that offers that is likeable from the watch without its wording having to be recognised first. The heart shown on the watch reads the same three sources in the same order, so it reports the route a tap would really take.
 
 - **Pinch calibration on the watch can succeed.** Three things kept a real double pinch from ever being recognised. A tap makes the sensor ring for a few tens of milliseconds, and that ringing was read as a new pulse that cancelled the first tap - so the second tap was left without a partner. The line a pinch had to reach was set from the largest movement in each attempt, which was often the arm rather than the fingers, so it could sit above both taps. And the last step, moving your arm, refused the whole recording if a single instant of it looked strong enough to be a pinch, which ordinary movement does all the time. Ringing now belongs to the tap it follows; the calibration tries lower lines and a few wrist-rotation limits and keeps the one that recognises the most attempts without firing while you rest or move; and only a pinch-shaped *pair* in the movement counts against it. One missed attempt in six no longer fails it, a brief sensor hiccup no longer throws away the recording, and if the screen turns off during the movement step - which that step tends to cause - what was already recorded is used. When it does fail, the watch says why and shows how many attempts were recognised and how many taps each one contained.
 
@@ -90,256 +80,87 @@
 
 - **Pinch settings on the phone scroll, and Save works in Experimental mode.** With Experimental chosen the dialog grew past the bottom of the screen without scrolling, so the extra adjustments could not be reached. And without a calibration, Save quietly refused and tried to scroll to a note that could not be scrolled to, so it looked like it did nothing. It now saves: the watch starts no detector until a calibration exists, and starts it by itself as soon as one is saved there.
 
-- **Pinch settings no longer crash calibration tests or subsequent app launches.** Both apps
-  accept the integer values saved by earlier calibration builds; saving now uses the standard
-  text preference format. Existing settings and calibration can be kept without clearing data.
+- **Pinch settings no longer crash calibration tests or subsequent app launches.** Both apps accept the integer values saved by earlier calibration builds; saving now uses the standard text preference format. Existing settings and calibration can be kept without clearing data.
 
 - **Expressive no longer shows a black screen when nothing is playing.** With the phone connected and no track loaded, the face drew nothing at all - it was waiting for a shared "nothing playing" screen that the watch had stopped showing for faces like it. It now shows its own stopped state, as every other face already did.
 
 - **Show player controls is only offered on faces it changes.** On Immersive, Depth, Carousel, Split, Note, Verse and Metadata the switch sat on the Player page and did nothing, because those faces draw no playback control for it to hide. It no longer appears there. On the faces that keep it, it does what it always did: the corner icons on Classic, and the face's own play/pause on the others. A value you had already set is kept and applies again if you switch back to such a face.
 
-- **"Repeat once" now looks the same wherever you assign it — and the two actions with that name
-  are no longer both called that.** The icon really was wrong: the preset that sets repeat to one
-  track drew the plain repeat glyph, because the watch keeps one icon per action and the phone was
-  not telling it that this one depends on which mode was chosen. It now sends the numbered glyph,
-  and existing configurations are republished automatically.
+- **"Repeat once" now looks the same wherever you assign it — and the two actions with that name are no longer both called that.** The icon really was wrong: the preset that sets repeat to one track drew the plain repeat glyph, because the watch keeps one icon per action and the phone was not telling it that this one depends on which mode was chosen. It now sends the numbered glyph, and existing configurations are republished automatically.
 
-  Fixing that exposed the reason the two Controls tabs ended up holding different settings in the
-  first place: two separate actions were both named "Repeat one" — one that *toggles* repeat-one on
-  and off, and one that always *sets* it. Picking the wrong one was unavoidable. The setters are now
-  named "Set repeat: off / all / one track" and "Set shuffle: on / off", matching "Set speed to…"
-  and "Set volume to…". Anything you already assigned keeps working; only the label changed.
+  Fixing that exposed the reason the two Controls tabs ended up holding different settings in the first place: two separate actions were both named "Repeat one" — one that *toggles* repeat-one on and off, and one that always *sets* it. Picking the wrong one was unavoidable. The setters are now named "Set repeat: off / all / one track" and "Set shuffle: on / off", matching "Set speed to…" and "Set volume to…". Anything you already assigned keeps working; only the label changed.
 
-  The new names are English for now. The other languages still carry translations of the old names,
-  so in some of them the two entries continue to read alike until they are translated.
+  The new names are English for now. The other languages still carry translations of the old names, so in some of them the two entries continue to read alike until they are translated.
 
-- **“Breakcore” no longer changes the title and artist to Special Elite.** The automatic font
-  override is now limited to `iwakura`, `lain`, `wired` and `serial experiments`, matched without
-  regard to case in either the title or artist name.
+- **“Breakcore” no longer changes the title and artist to Special Elite.** The automatic font override is now limited to `iwakura`, `lain`, `wired` and `serial experiments`, matched without regard to case in either the title or artist name.
 
-- **The watch app could not be installed from Google Play.** It was declared as a non-standalone
-  watch app, which tells Play it may only be installed alongside the phone app. A watch app
-  declared that way is not listed on its own in the watch's Play Store — it does not come up in
-  search there — and modern Wear OS no longer pushes the companion onto the watch when the phone
-  half is installed. Between the two, an account that did not already have the app in its Play
-  library had no route to the watch at all: no install button under the phone listing, and nothing
-  on the watch. It now installs on the watch on its own.
+- **The watch app could not be installed from Google Play.** It was declared as a non-standalone watch app, which tells Play it may only be installed alongside the phone app. A watch app declared that way is not listed on its own in the watch's Play Store — it does not come up in search there — and modern Wear OS no longer pushes the companion onto the watch when the phone half is installed. Between the two, an account that did not already have the app in its Play library had no route to the watch at all: no install button under the phone listing, and nothing on the watch. It now installs on the watch on its own.
 
-  Nothing about needing the phone app changed — it is still required, and a watch that has the app
-  without its phone half still says so and offers to open the listing on the phone.
+  Nothing about needing the phone app changed — it is still required, and a watch that has the app without its phone half still says so and offers to open the listing on the phone.
 
 ## 4.0
 
 ### Added
 
-- **Title, Artist and Clock each have a Tone of their own.** The tone filter — *None, Vibrant,
-  Pastel, Warm, Cool* — existed only as one watch-wide control on the **Colors from the music**
-  card. All three elements now carry their own, right under their colour mode, so a pastel clock
-  over a vibrant title stopped being unreachable despite the two colours already being
-  independently configurable.
+- **Title, Artist and Clock each have a Tone of their own.** The tone filter — *None, Vibrant, Pastel, Warm, Cool* — existed only as one watch-wide control on the **Colors from the music** card. All three elements now carry their own, right under their colour mode, so a pastel clock over a vibrant title stopped being unreachable despite the two colours already being independently configurable.
 
-  All three ship as **Follow watch tone**, which is what makes the addition safe: no face, saved
-  theme, backup or published theme changes appearance until somebody picks a tone. An empty or
-  unrecognised value — from an imported backup, a gallery theme, or a newer build — resolves the
-  same way, because quietly stripping the watch-wide tone off one element is the more surprising
-  of the two answers.
+  All three ship as **Follow watch tone**, which is what makes the addition safe: no face, saved theme, backup or published theme changes appearance until somebody picks a tone. An empty or unrecognised value — from an imported backup, a gallery theme, or a newer build — resolves the same way, because quietly stripping the watch-wide tone off one element is the more surprising of the two answers.
 
-  The clock resolves its tone against the raw album colour rather than the face-wide accent, so
-  choosing a tone here substitutes for the global one instead of stacking two filters on top of
-  each other. The Watch tab preview follows all three.
+  The clock resolves its tone against the raw album colour rather than the face-wide accent, so choosing a tone here substitutes for the global one instead of stacking two filters on top of each other. The Watch tab preview follows all three.
 
-- **Five more languages: Burmese, Tamil, Telugu, Marathi and Central Kurdish.** The phone and the
-  watch are fully translated into all five, and each appears in the in-app language picker and the
-  Android 13+ per-app language setting. Central Kurdish is right-to-left. That brings the app to 45
-  languages.
+- **Five more languages: Burmese, Tamil, Telugu, Marathi and Central Kurdish.** The phone and the watch are fully translated into all five, and each appears in the in-app language picker and the Android 13+ per-app language setting. Central Kurdish is right-to-left. That brings the app to 45 languages.
 
-- **Every panel surface can have a background of its own.** *Panel background* was one watch-wide
-  choice, so the five surfaces that paint one could only ever agree. Volume, Progress, Quick
-  actions, Queue and Lyrics each get their own picker on the Panels page: keep following the
-  shared choice, or name a background for that window alone.
+- **Every panel surface can have a background of its own.** *Panel background* was one watch-wide choice, so the five surfaces that paint one could only ever agree. Volume, Progress, Quick actions, Queue and Lyrics each get their own picker on the Panels page: keep following the shared choice, or name a background for that window alone.
 
-  All five ship as **Follow shared panel appearance**, so nothing changes until one is given a
-  background of its own — and an unrecognised value, from an imported backup or a newer build,
-  defers the same way rather than being read as some other background.
+  All five ship as **Follow shared panel appearance**, so nothing changes until one is given a background of its own — and an unrecognised value, from an imported backup or a newer build, defers the same way rather than being read as some other background.
 
-  The Panels page gained a **Lyrics** tab for it, which it never had: the lyrics screen is a full
-  screen like the queue, and until now there was nothing on that page to give it.
+  The Panels page gained a **Lyrics** tab for it, which it never had: the lyrics screen is a full screen like the queue, and until now there was nothing on that page to give it.
 
-- **The Queue and the Lyrics screen draw your background, like every other screen.** Those two
-  were the only surfaces in the app painting a flat black field. The player draws the whole
-  background stack; the volume, progress and quick-action panels draw that stack with the *Shared
-  panel appearance* background over it — so one theme produced three kinds of screen, and the two
-  odd ones out were the two you spend the longest looking at.
+- **The Queue and the Lyrics screen draw your background, like every other screen.** Those two were the only surfaces in the app painting a flat black field. The player draws the whole background stack; the volume, progress and quick-action panels draw that stack with the *Shared panel appearance* background over it — so one theme produced three kinds of screen, and the two odd ones out were the two you spend the longest looking at.
 
-  It is also what the queue's own default row style has always promised and never delivered:
-  "glass" is *frosted panels over the blur backdrop*, and frosted glass over black is just dark
-  grey.
+  It is also what the queue's own default row style has always promised and never delivered: "glass" is *frosted panels over the blur backdrop*, and frosted glass over black is just dark grey.
 
-  **This changes how the queue looks by default.** With *Shared panel appearance* left on Follow
-  style, the queue now follows its row style the same way the panels follow theirs — so a default
-  install goes from black to the blurred cover. Setting the queue's style to Minimal, or naming
-  Black under Shared panel appearance, restores the flat field. The lyrics screen has no row style
-  of its own, so Follow resolves to solid black there: it keeps exactly the ground it was designed
-  on unless you name a backdrop, and always-on display keeps it regardless, since an AOD panel
-  must not light artwork.
+  **This changes how the queue looks by default.** With *Shared panel appearance* left on Follow style, the queue now follows its row style the same way the panels follow theirs — so a default install goes from black to the blurred cover. Setting the queue's style to Minimal, or naming Black under Shared panel appearance, restores the flat field. The lyrics screen has no row style of its own, so Follow resolves to solid black there: it keeps exactly the ground it was designed on unless you name a backdrop, and always-on display keeps it regardless, since an AOD panel must not light artwork.
 
-- **The Lyrics screen and the Queue can be coloured, like every other surface.** The Colors page
-  offered Title, Artist, Clock, Progress, Volume and Quick actions; the two full screens that were
-  missing from that list now sit beside them, each with its own treatment and its own custom
-  colour.
+- **The Lyrics screen and the Queue can be coloured, like every other surface.** The Colors page offered Title, Artist, Clock, Progress, Volume and Quick actions; the two full screens that were missing from that list now sit beside them, each with its own treatment and its own custom colour.
 
-  Adding the two controls also closed a gap underneath them. Both screens derived their accent
-  straight from the cover, which meant the global palette — the colour treatment, the modifier,
-  the hue shift and the picked Normal colour — reached every other surface in the app and stopped
-  at those two: a hue-shifted, monochrome or hand-picked theme left the lyrics and the queue
-  showing the raw album colour and there was nothing anywhere to say why. Both now resolve through
-  the same shared resolver the volume and progress panels use, so they follow the palette by
-  default and depart from it only where you ask.
+  Adding the two controls also closed a gap underneath them. Both screens derived their accent straight from the cover, which meant the global palette — the colour treatment, the modifier, the hue shift and the picked Normal colour — reached every other surface in the app and stopped at those two: a hue-shifted, monochrome or hand-picked theme left the lyrics and the queue showing the raw album colour and there was nothing anywhere to say why. Both now resolve through the same shared resolver the volume and progress panels use, so they follow the palette by default and depart from it only where you ask.
 
-  The queue also picked its colour by a rule of its own — the first named swatch it found —
-  instead of the **Album accent source** setting, so a cover whose brightest patch is a lens flare
-  could send the queue red while the player stayed blue. It now asks the same question everything
-  else does.
+  The queue also picked its colour by a rule of its own — the first named swatch it found — instead of the **Album accent source** setting, so a cover whose brightest patch is a lens flare could send the queue red while the player stayed blue. It now asks the same question everything else does.
 
-  The Watch tab previews both: the queue miniature is coloured by the new setting, and the Lyrics
-  screen gets a miniature it never had, showing the line before, the line playing and the line
-  after with the accent where the watch puts it.
+  The Watch tab previews both: the queue miniature is coloured by the new setting, and the Lyrics screen gets a miniature it never had, showing the line before, the line playing and the line after with the accent where the watch puts it.
 
-- **Your own font, and your own pictures behind the player — both archived.** Two features were
-  built and did not work well enough in practice, so they are hidden behind the developer
-  **Show archived options** switch rather than removed: importing a `.ttf`/`.otf` of your own for
-  the track typefaces, and setting Album art source to a picture or a folder from your gallery.
-  Nothing is offered on an ordinary install. Turn the switch on and both come back — the font as
-  **My own font** in every typeface list, the two sources beside *Artist picture* and *Looked up
-  online*.
+- **Your own font, and your own pictures behind the player — both archived.** Two features were built and did not work well enough in practice, so they are hidden behind the developer **Show archived options** switch rather than removed: importing a `.ttf`/`.otf` of your own for the track typefaces, and setting Album art source to a picture or a folder from your gallery. Nothing is offered on an ordinary install. Turn the switch on and both come back — the font as **My own font** in every typeface list, the two sources beside *Artist picture* and *Looked up online*.
 
-  Archived rather than deleted so nothing already configured breaks: the stored values still
-  resolve, a face still set to one keeps rendering it, saved themes keep working, and the rows that
-  manage them stay reachable while they are in use, so an imported font can always be removed.
+  Archived rather than deleted so nothing already configured breaks: the stored values still resolve, a face still set to one keeps rendering it, saved themes keep working, and the rows that manage them stay reachable while they are in use, so an imported font can always be removed.
 
-  Themes built on either can never be published — both name a file only your phone has, and a
-  published theme carries settings rather than megabytes, so a gallery copy would install cleanly
-  and then render in a typeface, or over a photograph, the recipient has never had. Submitting one
-  is refused up front, before any sign-in, with a message naming the setting responsible and saying
-  the limit is deliberate rather than something to go and change.
+  Themes built on either can never be published — both name a file only your phone has, and a published theme carries settings rather than megabytes, so a gallery copy would install cleanly and then render in a typeface, or over a photograph, the recipient has never had. Submitting one is refused up front, before any sign-in, with a message naming the setting responsible and saying the limit is deliberate rather than something to go and change.
 
-- **A face built around the artist, not the album: Artist.** The twenty-second face puts a
-  picture of the performer behind the track and leads with their name — the playing app's mark,
-  then the artist at title size, then the track a step below it. Every other face here is built
-  around the record sleeve and treats the credit line as a caption; this one inverts that.
+- **A face built around the artist, not the album: Artist.** The twenty-second face puts a picture of the performer behind the track and leads with their name — the playing app's mark, then the artist at title size, then the track a step below it. Every other face here is built around the record sleeve and treats the credit line as a caption; this one inverts that.
 
-  Android carries no artist pictures anywhere — MediaStore has never stored them, the playing app
-  publishes no field for one, and a player that shows them keeps them in private storage no other
-  app can read — so the phone looks the name up in Deezer's public catalogue, the same free,
-  keyless source music players use for this. Nothing is looked up unless you select this face,
-  each artist costs one request, and an artist Deezer does not list is remembered as such for a
-  week. Where there is no picture the album cover arrives instead and the face is simply a
-  different treatment of the same screen. **Artist pictures** (Settings → Apps) switches the
-  lookup off; the privacy policy describes exactly what is sent.
+  Android carries no artist pictures anywhere — MediaStore has never stored them, the playing app publishes no field for one, and a player that shows them keeps them in private storage no other app can read — so the phone looks the name up in Deezer's public catalogue, the same free, keyless source music players use for this. Nothing is looked up unless you select this face, each artist costs one request, and an artist Deezer does not list is remembered as such for a week. Where there is no picture the album cover arrives instead and the face is simply a different treatment of the same screen. **Artist pictures** (Settings → Apps) switches the lookup off; the privacy policy describes exactly what is sent.
 
-  The picture is not painted by the face — it replaces the cover in the one artwork pipeline —
-  so the background styles, the artwork filters, the shading stack and the accent floor all
-  apply to it, and every colour on the face, the clock included, is drawn from the picture
-  actually on screen rather than from a sleeve nobody can see, and every Album art style, filter
-  and shading layer applies to it exactly as it would to a cover.
+  The picture is not painted by the face — it replaces the cover in the one artwork pipeline — so the background styles, the artwork filters, the shading stack and the accent floor all apply to it, and every colour on the face, the clock included, is drawn from the picture actually on screen rather than from a sleeve nobody can see, and every Album art style, filter and shading layer applies to it exactly as it would to a cover.
 
-- **The cross-fade between two covers can no longer freeze half way.** Swapping the artwork
-  animates a `TransitionDrawable`, which only advances while it is being drawn — so if drawing
-  stopped mid-fade (the wrist dropping, the watch going always-on) it stayed frozen at whatever
-  opacity it had reached, leaving two covers blended on top of each other until something else
-  re-rendered. The callback that puts the finished frame in place was only ever scheduled on one
-  of the two fade paths; it is now on both. This was reachable before, but only when consecutive
-  covers happened to share a shape — which artist pictures, being uniformly square, always do.
+- **The cross-fade between two covers can no longer freeze half way.** Swapping the artwork animates a `TransitionDrawable`, which only advances while it is being drawn — so if drawing stopped mid-fade (the wrist dropping, the watch going always-on) it stayed frozen at whatever opacity it had reached, leaving two covers blended on top of each other until something else re-rendered. The callback that puts the finished frame in place was only ever scheduled on one of the two fade paths; it is now on both. This was reachable before, but only when consecutive covers happened to share a shape — which artist pictures, being uniformly square, always do.
 
-- **Album art source: choose which picture goes behind the player.** A new row on the Watch tab,
-  beside Album art style, and the two are deliberately different questions: the source decides
-  *which* picture, the style decides *how* it is treated. **From the music app** is the default
-  and is what the app has always done. **Artist picture** puts the performer there instead — on
-  any face, not only the Artist one. **Looked up online** fetches an album cover for the players
-  that publish none.
+- **Album art source: choose which picture goes behind the player.** A new row on the Watch tab, beside Album art style, and the two are deliberately different questions: the source decides *which* picture, the style decides *how* it is treated. **From the music app** is the default and is what the app has always done. **Artist picture** puts the performer there instead — on any face, not only the Artist one. **Looked up online** fetches an album cover for the players that publish none.
 
-  The two lookups share one keyless request to Deezer's public catalogue, which returns the cover
-  and the artist picture together, and the phone makes it — a watch on Bluetooth has no internet
-  of its own. Each artist (or track, for a cover) is fetched once and cached, a record Deezer does
-  not list is remembered as such for a week, and **Online artwork** (Settings → Apps) refuses the
-  lookup outright. It is saved per face and travels in a theme like any other appearance setting.
-  The privacy policy describes exactly what is sent.
+  The two lookups share one keyless request to Deezer's public catalogue, which returns the cover and the artist picture together, and the phone makes it — a watch on Bluetooth has no internet of its own. Each artist (or track, for a cover) is fetched once and cached, a record Deezer does not list is remembered as such for a week, and **Online artwork** (Settings → Apps) refuses the lookup outright. It is saved per face and travels in a theme like any other appearance setting. The privacy policy describes exactly what is sent.
 
-- **The artist line gained a Text behavior of its own.** The title has had one since it shipped;
-  the artist never did, so a long credit was simply cut on every layout with no way to ask for
-  anything else. Text → Artist now offers the three single-line answers — keep it, scroll it, or
-  shrink it to fit — on all twenty-two faces. The wrap tiers are deliberately not offered: every
-  face reserves exactly one line for this credit, so wrapping it would push it into whatever the
-  layout puts below. It defaults to **Static**, which is the single ellipsized line every face
-  already drew, so nothing changes until you pick something.
+- **The artist line gained a Text behavior of its own.** The title has had one since it shipped; the artist never did, so a long credit was simply cut on every layout with no way to ask for anything else. Text → Artist now offers the three single-line answers — keep it, scroll it, or shrink it to fit — on all twenty-two faces. The wrap tiers are deliberately not offered: every face reserves exactly one line for this credit, so wrapping it would push it into whatever the layout puts below. It defaults to **Static**, which is the single ellipsized line every face already drew, so nothing changes until you pick something.
 
-- **Text alignment and text position, on every face.** Two new rows on the Watch tab's Player
-  page move a face's block of track text: to the leading edge, the centre or the trailing edge,
-  and to the top, middle or bottom of the screen. Both default to **Follow face**, which keeps
-  the arrangement each face was designed with — so nothing you have saved changes appearance,
-  and every face is adjustable rather than only the ones somebody thought to add a switch for.
-  Both are saved per face and travel in custom and community themes like any other appearance
-  setting.
+- **Text alignment and text position, on every face.** Two new rows on the Watch tab's Player page move a face's block of track text: to the leading edge, the centre or the trailing edge, and to the top, middle or bottom of the screen. Both default to **Follow face**, which keeps the arrangement each face was designed with — so nothing you have saved changes appearance, and every face is adjustable rather than only the ones somebody thought to add a switch for. Both are saved per face and travel in custom and community themes like any other appearance setting.
 
-- **Export as app defaults (developer mode).** Svartifoss ships with the author's own setup as its
-  starting point rather than a generic first run — a fresh install reads a bundled
-  `default_config.json` — but until now there was no way to *produce* that file from a phone, so
-  keeping it current meant hand-editing a backup. Settings → Developer now writes it directly.
-  It is deliberately not the same document the ordinary backup makes: this one is compiled into
-  the app and applied to strangers, so it carries the buttons, actions, settings, the whole watch
-  appearance and theme library, the saved playlist shortcuts and their icons — and leaves out the
-  search and listening history, the crash-reporting and announcement choices (yours to make, not
-  to inherit), everything recording what this phone has already done, and the app language, which
-  would otherwise open the app in one person's language on everybody's device. The saved file
-  reports its own size, since those icons travel inside the release.
+- **Export as app defaults (developer mode).** Svartifoss ships with the author's own setup as its starting point rather than a generic first run — a fresh install reads a bundled `default_config.json` — but until now there was no way to *produce* that file from a phone, so keeping it current meant hand-editing a backup. Settings → Developer now writes it directly. It is deliberately not the same document the ordinary backup makes: this one is compiled into the app and applied to strangers, so it carries the buttons, actions, settings, the whole watch appearance and theme library, the saved playlist shortcuts and their icons — and leaves out the search and listening history, the crash-reporting and announcement choices (yours to make, not to inherit), everything recording what this phone has already done, and the app language, which would otherwise open the app in one person's language on everybody's device. The saved file reports its own size, since those icons travel inside the release.
 
-- **A tribute face: MatejDro, the original app's screen.** Svartifoss is a fork of
-  [WearMusicCenter](https://github.com/matejdro/WearMusicCenter), and this face is that app's own
-  now-playing screen brought back as it was in 2017 — the artist over a big bold title, the two
-  filling the whole display in proportional bands rather than sitting as a centred block, over an
-  evenly darkened cover, with the four quadrant hint icons and nothing else: no progress ring, no
-  mini-button row, no source badge. It is set in the watch's own system typeface, which is what
-  the original used; nothing extra is bundled and no new licence applies. Everything about it
-  beyond the two text bands is an ordinary setting, so it can be recoloured, re-fonted or given
-  its progress ring back. It is a period piece rather than a face for every day, so it lives with
-  the other archived layouts: turn on **Show archived options** in Settings → Developer to find it
-  in the face picker. Being archived, it is also not a base others can publish a community theme
-  on.
+- **A tribute face: MatejDro, the original app's screen.** Svartifoss is a fork of [WearMusicCenter](https://github.com/matejdro/WearMusicCenter), and this face is that app's own now-playing screen brought back as it was in 2017 — the artist over a big bold title, the two filling the whole display in proportional bands rather than sitting as a centred block, over an evenly darkened cover, with the four quadrant hint icons and nothing else: no progress ring, no mini-button row, no source badge. It is set in the watch's own system typeface, which is what the original used; nothing extra is bundled and no new licence applies. Everything about it beyond the two text bands is an ordinary setting, so it can be recoloured, re-fonted or given its progress ring back. It is a period piece rather than a face for every day, so it lives with the other archived layouts: turn on **Show archived options** in Settings → Developer to find it in the face picker. Being archived, it is also not a base others can publish a community theme on.
 
-- **Streaming shortcuts now recognize five more services.** Qobuz, Bandcamp, Audiomack,
-  Mixcloud and Pandora share links get their own service label and can be sent directly to the
-  official Android app when it is installed, bringing the recognized set from seven to twelve.
-  The action picker also gains Deezer Flow, the one stable account-wide Deezer destination that
-  does not depend on discovering a user-specific playlist ID. As with every streaming shortcut,
-  Svartifoss tries background playback first and visibly opens the link when the target app does
-  not accept that contract.
+- **Streaming shortcuts now recognize five more services.** Qobuz, Bandcamp, Audiomack, Mixcloud and Pandora share links get their own service label and can be sent directly to the official Android app when it is installed, bringing the recognized set from seven to twelve. The action picker also gains Deezer Flow, the one stable account-wide Deezer destination that does not depend on discovering a user-specific playlist ID. As with every streaming shortcut, Svartifoss tries background playback first and visibly opens the link when the target app does not accept that contract.
 
-- **A double pinch can now run a different action while music is playing or paused.** Controls
-  gains a Hand gestures section in both **Music playing** and **No playback** — archived, so it
-  appears only with **Show archived options** switched on in Settings, since barely any watch can
-  perform the gesture: assign Skip next in the first and a saved playlist in the second, or choose
-  any other action. It uses Wear OS's
-  official primary one-handed gesture, which is double pinch on supported Pixel Watches, and is
-  active only while Svartifoss is open and that state has an assignment. Unsupported watches keep
-  their existing controls unchanged. Because every way this input can fail is the same silence —
-  the hand moves and nothing happens — the section now says which state your watch is actually in
-  rather than leaving you to guess: whether it supports hand gestures at all, whether they are
-  switched off in the watch's own Settings, or that it is ready. Picking the action also explains
-  how the gesture is made, when it counts (only with the player open and the screen on, and never
-  from the watch face or the always-on display) and that the action taken is the one set for
-  whichever state playback is in. Turning the gesture on in the watch's Settings now takes effect
-  immediately, instead of waiting for the player to be closed and reopened.
+- **A double pinch can now run a different action while music is playing or paused.** Controls gains a Hand gestures section in both **Music playing** and **No playback** — archived, so it appears only with **Show archived options** switched on in Settings, since barely any watch can perform the gesture: assign Skip next in the first and a saved playlist in the second, or choose any other action. It uses Wear OS's official primary one-handed gesture, which is double pinch on supported Pixel Watches, and is active only while Svartifoss is open and that state has an assignment. Unsupported watches keep their existing controls unchanged. Because every way this input can fail is the same silence — the hand moves and nothing happens — the section now says which state your watch is actually in rather than leaving you to guess: whether it supports hand gestures at all, whether they are switched off in the watch's own Settings, or that it is ready. Picking the action also explains how the gesture is made, when it counts (only with the player open and the screen on, and never from the watch face or the always-on display) and that the action taken is the one set for whichever state playback is in. Turning the gesture on in the watch's Settings now takes effect immediately, instead of waiting for the player to be closed and reopened.
 
-- **Pick action is now a real action catalogue instead of a flat, easy-to-miss list.** Its five
-  top-level groups separate playback, volume, watch screens, finding music and streaming
-  shortcuts; the search field now searches across every group and shows where each result lives.
-  Playback gains fast forward, rewind, fixed 25/50/75% track destinations, fixed 0.5x–2x speed,
-  and explicit shuffle/repeat modes; Volume gains exact 0/25/50/75/100% levels. Watch buttons,
-  gestures and Quick-action slots can also open the face picker or close only the watch UI, while
-  the existing queue, lyrics, volume and progress destinations are collected in one place.
-  Assigning a shortcut to a watch menu or Quick panel never offers the action that reopens that
-  same surface, so a configuration cannot trap itself. “None” still removes an ordinary button
-  assignment but deliberately hides a Quick-panel slot, preserving its distinct meaning there.
+- **Pick action is now a real action catalogue instead of a flat, easy-to-miss list.** Its five top-level groups separate playback, volume, watch screens, finding music and streaming shortcuts; the search field now searches across every group and shows where each result lives. Playback gains fast forward, rewind, fixed 25/50/75% track destinations, fixed 0.5x–2x speed, and explicit shuffle/repeat modes; Volume gains exact 0/25/50/75/100% levels. Watch buttons, gestures and Quick-action slots can also open the face picker or close only the watch UI, while the existing queue, lyrics, volume and progress destinations are collected in one place. Assigning a shortcut to a watch menu or Quick panel never offers the action that reopens that same surface, so a configuration cannot trap itself. “None” still removes an ordinary button assignment but deliberately hides a Quick-panel slot, preserving its distinct meaning there.
 
 - **And twenty-seven Panel background treatments now work behind the player.** Gradient, Duotone, Bands, Vignette, Graphite, Cinema, Acrylic, Mesh, Nebula, Bioluminescence, Iridescent, Orbit, Ink wash, Blossom, Fjord, Dot matrix, Scanlines, Radar, Contour, Faceted, Glass, Midnight, Smoke, Tideline and three flat album fills were only ever available on the Volume, Progress and Quick-actions surfaces; they can now be chosen as an Album background too, and — like every other Album background — used as a layer in a background stack. The adaptation runs the opposite way to the port above: a panel backdrop is an opaque surface, so on the player the same composition is carried at the transparency an artwork treatment works by, and the cover still reads through it.
 
@@ -355,13 +176,7 @@
 
 - **The little line on the progress ring can now stay put.** Dragging the watch's edge ring has always drawn a short mark across the band showing where the track actually is — the reference point you are leaving from, since the arc itself follows your finger. Player → On screen gains **Position mark**, which decides when that mark is on screen: always, only while seeking (what it has always done, and still the default), while seeking and whenever playback is paused, or only while paused. At rest it sits on the current position and reads as a playhead, which is easier to find at a glance than the end of a smooth arc over a busy cover. It is saved per face like the rest of the look, so a saved theme carries it, and the row is hidden on a face whose edge arc is switched off — with nothing to draw it on, the picker would change nothing.
 
-- **An author's name is now a link in the Community gallery.** Tap the byline on a theme's card, or
-  the one under its name on the detail page, and the gallery narrows to everything that author has
-  published, with a chip carrying their name that you tap again to clear. It is an exact match on
-  the author rather than a search for their name, so someone whose pseudonym happens to be a common
-  theme word gets their own work back and not every theme merely called that. Tapping it on the
-  detail page takes you back to the gallery rather than opening a second copy of it, so Back still
-  leads where you expect.
+- **An author's name is now a link in the Community gallery.** Tap the byline on a theme's card, or the one under its name on the detail page, and the gallery narrows to everything that author has published, with a chip carrying their name that you tap again to clear. It is an exact match on the author rather than a search for their name, so someone whose pseudonym happens to be a common theme word gets their own work back and not every theme merely called that. Tapping it on the detail page takes you back to the gallery rather than opening a second copy of it, so Back still leads where you expect.
 
 - **You can now report a Community theme, and every theme shows how many people installed it.** Reporting is on each theme's detail page: pick what is wrong with it — offensive content, passed off as someone else's, not what the listing shows, unusable on the watch, spam, or something else — and add a note if you want to. It never asks you to sign in, for the same reason liking does not: having to identify yourself before you can flag something offensive puts the cost on the wrong person. Your report is private. Nothing about it is ever published, the author is never told who filed one, and only the project's moderators can read the queue — where reports now have their own tab beside the review queue, so a flagged theme can be corrected or taken down. Alongside that, cards and detail pages now show a download count next to the heart, and the gallery can be sorted by it. Likes and downloads answer different questions — one is what people chose to praise, the other is what they actually put on their watch — so both orders are offered rather than being merged into one "popular". The number counts installs, not page views: a static catalogue never sees a download, so what is counted is an install actually succeeding on a phone, recorded once per account and totalled by the same publisher run that totals likes. Removing a theme does not take a download back, and neither number can be affected by anything an app sends.
 
@@ -383,18 +198,8 @@
 
 - **The streaming-shortcut playback ladder now narrates its own three steps to the phone log** (playFromUri, MediaBrowserService, the visible open) instead of only logging the cases it already had a reason to - so "View phone log" in Developer settings shows which step a shortcut actually took the next time one runs.
 
-- **Panel Background gets twelve original treatments.** Nebula, Ember, Tideline, Bioluminescence,
-  Iridescent, Graphite, Cinema, Orbit, Horizon, Ink wash, Blossom and Fjord add distinct cloud,
-  glow, material and cinematic compositions instead of repeating the same gradient. They follow
-  the album palette where it helps, keep panel text readable, and render consistently on the watch,
-  the phone preview and dedicated Volume/Progress screens. They are also accepted by Community
-  themes, with Brazilian Portuguese labels included.
-- **Fifty more bundled typefaces.** Lato, Source Sans 3, IBM Plex, Red Hat,
-  Cormorant, Noto, Recursive and 43 other new families expand the picker from
-  88 to 138 choices. Every new font is an unmodified Google Fonts release
-  under the SIL Open Font License 1.1, with its upstream link and copyright
-  notice in the in-app license dialog and a full copy of the license under
-  `licenses/<font>/OFL.txt`.
+- **Panel Background gets twelve original treatments.** Nebula, Ember, Tideline, Bioluminescence, Iridescent, Graphite, Cinema, Orbit, Horizon, Ink wash, Blossom and Fjord add distinct cloud, glow, material and cinematic compositions instead of repeating the same gradient. They follow the album palette where it helps, keep panel text readable, and render consistently on the watch, the phone preview and dedicated Volume/Progress screens. They are also accepted by Community themes, with Brazilian Portuguese labels included.
+- **Fifty more bundled typefaces.** Lato, Source Sans 3, IBM Plex, Red Hat, Cormorant, Noto, Recursive and 43 other new families expand the picker from 88 to 138 choices. Every new font is an unmodified Google Fonts release under the SIL Open Font License 1.1, with its upstream link and copyright notice in the in-app license dialog and a full copy of the license under `licenses/<font>/OFL.txt`.
 - **The Background page is now a stack of layers you arrange yourself.** It used to be three fixed slots in a fixed order — one artwork treatment, one shading, one accent floor, always drawn in that sequence — so "Bottom corner **and** Bottom fade", or an accent floor *under* a wash instead of over it, were not awkward to reach, they were unreachable, and no number of new styles in those three pickers would have reached them. The page now shows the treatments as an ordered list you can add to, reorder, duplicate and remove: up to eight layers, each one a background wash, a shading or an accent floor, each with its own strength and — for the two that take one — its own colour, including a picked one. The layer at the top of the list is drawn over everything else, the one at the bottom sits closest to the artwork, and the arrows on each row move it through the stack. Two shadings at once is exactly the sort of thing it is for. The artwork itself stays underneath as the base, because a photograph is opaque and there is nothing meaningful to put beneath it — but the *wash* half of an authored background (Poster's gradients, Aurora's ribbon, Ocean's rise) is a layer like any other, so it can be moved above a floor or under a second shading. It opens on the arrangement you already have, described as layers, so adopting it changes nothing on screen until you move something; **Restore** puts it back to the shading and accent floor set on their own rows. Everything is per layout and per theme like every other appearance setting, it renders identically on the watch, in the phone's live preview and on the dedicated Volume and Progress screens, and it is carried by backups and by Community themes. A watch still on an older build keeps rendering the previous single-treatment look rather than nothing at all.
 - **Backgrounds and controls gain 23 more authored choices, and Accent floor gets its own colour.** Album art adds Ocean, Sunset, Spotlight, Glass veil, Velvet and Noir; shading adds five directional/spotlight treatments; mini buttons add five asymmetric silhouettes; Up Next adds four album-driven surfaces; and Accent floor adds Whisper, Radiant and Flood strengths. Its colour can now independently follow the album's primary, secondary or tertiary tone, or use a custom picked colour. The watch and phone preview render the same choices, and every value remains face-scoped and Community-theme safe.
 - **The appearance editor gains another 28 authored variants.** Sunrise and Deep ocean panel backdrops, Ice and Rose artwork, new shading bands, Candy/Ghost volume rails, floating volume halos, Alternating/Spark progress rings, side-open progress layouts, two seek readouts and layouts, two quick-panel skins and arrangements, tertiary/neon Up Next pills, reversed mini-button silhouettes, and two more Accent floor strengths all render on both the watch and phone preview.
@@ -421,106 +226,33 @@
 
 ### Changed
 
-- **Text alignment and Text position are now offered per face, and each of the two is asked
-  separately.** Both rows appeared on twenty of the twenty-two faces, and on more than half of them
-  choosing anything but *Follow face* produced one of three failures: the text left the round
-  screen, it landed on the face's own furniture, or something that is not track text moved with it.
+- **Text alignment and Text position are now offered per face, and each of the two is asked separately.** Both rows appeared on twenty of the twenty-two faces, and on more than half of them choosing anything but *Follow face* produced one of three failures: the text left the round screen, it landed on the face's own furniture, or something that is not track text moved with it.
 
-  Which faces offer which row is now decided per axis, because nine faces can honour one and not
-  the other. **Carousel, Split, Matejdro, Vinyl, Halo, Spectrum and Material** keep *Text
-  alignment* and lose *Text position* — Carousel's artist is pinned above the cover rail and its
-  title below it, Split's seam is the face, Matejdro's two bands already fill the whole text area,
-  and the other four keep a record label, a pair of rings, a bar field or a transport row in the
-  band a grounded block would land on. **Chat and Note** keep *Text position* and lose *Text
-  alignment* — a bubble's side is who is speaking rather than a preference, and aligning Note's
-  sentence drags the cover disc that centres with it. **Verse and Metadata** lose both: the running
-  head has nowhere to go but onto the lyric reel, and a right-aligned table is not a table. Frame
-  and Ribbon were already excluded.
+  Which faces offer which row is now decided per axis, because nine faces can honour one and not the other. **Carousel, Split, Matejdro, Vinyl, Halo, Spectrum and Material** keep *Text alignment* and lose *Text position* — Carousel's artist is pinned above the cover rail and its title below it, Split's seam is the face, Matejdro's two bands already fill the whole text area, and the other four keep a record label, a pair of rings, a bar field or a transport row in the band a grounded block would land on. **Chat and Note** keep *Text position* and lose *Text alignment* — a bubble's side is who is speaking rather than a preference, and aligning Note's sentence drags the cover disc that centres with it. **Verse and Metadata** lose both: the running head has nowhere to go but onto the lyric reel, and a right-aligned table is not a table. Frame and Ribbon were already excluded.
 
-  The gate is applied where each side *reads* the setting, not only where the picker is drawn, so a
-  value arriving from an imported backup, a published community theme or an older build cannot move
-  a face that has no way to honour it. Nothing already saved changes: both keys still default to
-  *Follow face*, and a stored value on a face that no longer offers the row is simply not acted on.
+  The gate is applied where each side *reads* the setting, not only where the picker is drawn, so a value arriving from an imported backup, a published community theme or an older build cannot move a face that has no way to honour it. Nothing already saved changes: both keys still default to *Follow face*, and a stored value on a face that no longer offers the row is simply not acted on.
 
-- **Six more built-in faces can now be submitted to and installed from the community gallery.**
-  Vinyl, Halo, Aurora, Eclipse, Spectrum and the Matejdro tribute face were unsubmittable for the
-  same reason they are archived — hidden from the on-device face picker — even though archiving a
-  face was always meant to be a picker decision, not a gallery one. They now travel like any
-  current face. **Depth stays out of the gallery**, the one archived face held back on purpose
-  because its own rendering is still a known problem. Making Matejdro submittable also surfaced two
-  latent gaps in the public vocabulary its own defaults had never been checked against: the tribute
-  face's artist-colour default was quietly written under a historical value name ("custom" instead
-  of the equivalent, current "normal") that the gallery never recognised, and its artist band's
-  "smart" auto-size mode had never been added to the artist text-mode vocabulary at all. Both are
-  fixed; neither changes how the face looks.
+- **Six more built-in faces can now be submitted to and installed from the community gallery.** Vinyl, Halo, Aurora, Eclipse, Spectrum and the Matejdro tribute face were unsubmittable for the same reason they are archived — hidden from the on-device face picker — even though archiving a face was always meant to be a picker decision, not a gallery one. They now travel like any current face. **Depth stays out of the gallery**, the one archived face held back on purpose because its own rendering is still a known problem. Making Matejdro submittable also surfaced two latent gaps in the public vocabulary its own defaults had never been checked against: the tribute face's artist-colour default was quietly written under a historical value name ("custom" instead of the equivalent, current "normal") that the gallery never recognised, and its artist band's "smart" auto-size mode had never been added to the artist text-mode vocabulary at all. Both are fixed; neither changes how the face looks.
 
-- **"Free" in the privacy policy now says which "free" it means.** The Open source section read
-  "free/open-source software (GPLv3)", which a paid store listing would make sound like a
-  contradiction. It now spells out that "free" is freedom, not price — the source stays available
-  to build and run at no cost — and that any listing price only pays for a pre-built,
-  auto-updating binary. The English page, its hand-kept HTML twin and the pt-BR/es translation
-  layer all carry the new wording; a new `LICENSING.md` sets out how the app's proprietary Google
-  dependencies (the Wearable Data Layer API, Firebase) sit under the GPLv3, including a section 7
-  additional permission for the project's own changes.
+- **"Free" in the privacy policy now says which "free" it means.** The Open source section read "free/open-source software (GPLv3)", which a paid store listing would make sound like a contradiction. It now spells out that "free" is freedom, not price — the source stays available to build and run at no cost — and that any listing price only pays for a pre-built, auto-updating binary. The English page, its hand-kept HTML twin and the pt-BR/es translation layer all carry the new wording; a new `LICENSING.md` sets out how the app's proprietary Google dependencies (the Wearable Data Layer API, Firebase) sit under the GPLv3, including a section 7 additional permission for the project's own changes.
 
-- **The build now has two distribution flavors, `github` and `play`.** `github` is the default and
-  unchanged — it keeps the in-app self-updater that pulls new APKs from GitHub Releases. `play`
-  omits the updater and the `REQUEST_INSTALL_PACKAGES` permission entirely, because Google Play
-  forbids an app updating itself outside Play; the code moved to a `github`-only source set and
-  `src/main` talks to it through a small `UpdateGateway` seam. No change to a sideloaded install.
-  Groundwork for a paid Play Store listing — see `docs/play-store-migration-plan.md`.
+- **The build now has two distribution flavors, `github` and `play`.** `github` is the default and unchanged — it keeps the in-app self-updater that pulls new APKs from GitHub Releases. `play` omits the updater and the `REQUEST_INSTALL_PACKAGES` permission entirely, because Google Play forbids an app updating itself outside Play; the code moved to a `github`-only source set and `src/main` talks to it through a small `UpdateGateway` seam. No change to a sideloaded install. Groundwork for a paid Play Store listing — see `docs/play-store-migration-plan.md`.
 
-- **Every translated language is caught up.** A large backlog of untranslated strings had built
-  up across every non-English locale — the whole appearance and typography surface, the community
-  gallery, the watch-theme screens, the newer watch faces and their settings. All of it is now
-  translated in all 44 non-English languages, including three phone-settings files
-  (`appearance_options`, `panel_options`, `community_theme_detail_strings`) that most locales had
-  never carried at all. Picker `*_values` arrays stay untranslated, as the index contract requires.
+- **Every translated language is caught up.** A large backlog of untranslated strings had built up across every non-English locale — the whole appearance and typography surface, the community gallery, the watch-theme screens, the newer watch faces and their settings. All of it is now translated in all 44 non-English languages, including three phone-settings files (`appearance_options`, `panel_options`, `community_theme_detail_strings`) that most locales had never carried at all. Picker `*_values` arrays stay untranslated, as the index contract requires.
 
-- **The About drawer's support line now says free/libre and open source (GPLv3), and that no
-  feature is gated behind a payment**, matching the README, and a **Ko-fi** button sits next to
-  Buy Me a Coffee.
+- **The About drawer's support line now says free/libre and open source (GPLv3), and that no feature is gated behind a payment**, matching the README, and a **Ko-fi** button sits next to Buy Me a Coffee.
 
-- **A fresh install starts from the current setup.** The bundled defaults a new install (or one
-  whose data was cleared) arrives wearing had drifted several schema versions behind the app -
-  before face scoping, the theme library and most of the appearance work. They have been replaced
-  with an up-to-date export: the button and action configuration, every watch-appearance and
-  behaviour setting, the saved theme library and the custom action icons. Developer mode ships
-  off. The author's language, search and play history, colour-picker history, and this-device-only
-  bits (the Firebase install id, a chosen `content://` album-art path, one-shot migration markers)
-  are left out, so nobody inherits a stranger's reference to a file that isn't there. Crash
-  reporting and developer announcements are unchanged: on by default as before, turned off in
-  Settings → Data & support → Privacy.
+- **A fresh install starts from the current setup.** The bundled defaults a new install (or one whose data was cleared) arrives wearing had drifted several schema versions behind the app - before face scoping, the theme library and most of the appearance work. They have been replaced with an up-to-date export: the button and action configuration, every watch-appearance and behaviour setting, the saved theme library and the custom action icons. Developer mode ships off. The author's language, search and play history, colour-picker history, and this-device-only bits (the Firebase install id, a chosen `content://` album-art path, one-shot migration markers) are left out, so nobody inherits a stranger's reference to a file that isn't there. Crash reporting and developer announcements are unchanged: on by default as before, turned off in Settings → Data & support → Privacy.
 
-- **`ConfigBackup` counts the Matejdro auto-size repair marker as device state.** It was mapped to
-  the general settings section, so *Export as app defaults* baked a "migration already ran" flag
-  into the shipped defaults; it now sits with the other one-shot repair markers and stays out of
-  both that export and a "clean first run" restore.
+- **`ConfigBackup` counts the Matejdro auto-size repair marker as device state.** It was mapped to the general settings section, so *Export as app defaults* baked a "migration already ran" flag into the shipped defaults; it now sits with the other one-shot repair markers and stays out of both that export and a "clean first run" restore.
 
-- **The Immersive face's text sits on the floor of the screen again.** Its title, artist and
-  playback time stopped a full eighth of the screen short of the bottom edge, which on a face whose
-  whole composition is the cover plus one grounded block left an empty band under the text and made
-  the block read as floating in the middle of the picture. It now rests close to the margin the
-  clock keeps at the top, so the two read as a matched pair. The Watch tab's preview follows.
+- **The Immersive face's text sits on the floor of the screen again.** Its title, artist and playback time stopped a full eighth of the screen short of the bottom edge, which on a face whose whole composition is the cover plus one grounded block left an empty band under the text and made the block read as floating in the middle of the picture. It now rests close to the margin the clock keeps at the top, so the two read as a matched pair. The Watch tab's preview follows.
 
-- **The watch's now-playing screen loads with the three bars, not a spinning arc.** Opening the
-  app while it works out what is playing (and returning from the always-on display before that
-  finishes) showed a generic circular spinner - the one platform shape left in a screen whose
-  every other waiting state, on the queue, the menu and the lyrics screen, is already the pulsing
-  three-bar music indicator. It now uses that everywhere.
+- **The watch's now-playing screen loads with the three bars, not a spinning arc.** Opening the app while it works out what is playing (and returning from the always-on display before that finishes) showed a generic circular spinner - the one platform shape left in a screen whose every other waiting state, on the queue, the menu and the lyrics screen, is already the pulsing three-bar music indicator. It now uses that everywhere.
 
-- **About the developer now has a face on it.** The row in Settings → Data & support carries the
-  developer's own photo instead of a generic person glyph, and the dialog it opens leads with the
-  same picture beside the name. The image is bundled with the app - nothing is fetched from GitHub,
-  so it is there offline and costs no request.
+- **About the developer now has a face on it.** The row in Settings → Data & support carries the developer's own photo instead of a generic person glyph, and the dialog it opens leads with the same picture beside the name. The image is bundled with the app - nothing is fetched from GitHub, so it is there offline and costs no request.
 
-- **The Licenses screen (Settings → Data & support) now credits every bundled font, not just
-  half of them.** Roughly seventy typefaces - Poppins, Montserrat, Inter, Roboto Mono, Orbitron
-  and the rest of the original catalog - had their upstream license text sitting in this
-  repository's `licenses/` folder but never quoted in the dialog itself, so the app was
-  redistributing them without crediting them anywhere a person would actually see. Google Sans and
-  Google Sans Flex, the app's default typeface, had the same gap. All of it is credited now, and a
-  new test fails the build if a future bundled font is ever added without reaching this dialog.
+- **The Licenses screen (Settings → Data & support) now credits every bundled font, not just half of them.** Roughly seventy typefaces - Poppins, Montserrat, Inter, Roboto Mono, Orbitron and the rest of the original catalog - had their upstream license text sitting in this repository's `licenses/` folder but never quoted in the dialog itself, so the app was redistributing them without crediting them anywhere a person would actually see. Google Sans and Google Sans Flex, the app's default typeface, had the same gap. All of it is credited now, and a new test fails the build if a future bundled font is ever added without reaching this dialog.
 
 - **Numeric settings now say what they accept, and hold you to it.** Every number on the Watch appearance tab — blur radii, opacities, font weights, the overlay blur — was a free-typing field that took any value at all, while the watch quietly clamped whatever it read. So an out-of-range number looked accepted and drew exactly as intended, and the only thing that ever objected was the community gallery, much later, with a message naming a setting that had never complained when the number was typed. Each field now states its range in the dialog and keeps what you enter inside it. A theme saved before this is repaired the moment you submit it, to the value the watch was already drawing — so it looks identical and simply stops being refused.
 - **"My themes" now credits your Community author name instead of a generic label.** A locally-built theme has no author of its own — that only exists once you submit one — so once you've reserved a Community author name it now labels every local theme with it (e.g. "Gabriel · Expressive") instead of the generic "Custom theme · Expressive layout". Anyone who hasn't reserved a name yet still sees the old text.
@@ -551,14 +283,7 @@
 
 ### Removed
 
-- **The "Typewriter" font choice is gone, and Special Elite now stands in for it.** The bundled
-  file behind it, Mom's Typewriter, was never covered by a license this project could point to -
-  unlike every other bundled typeface, which ships under the SIL Open Font License or Apache 2.0
-  with its text kept in `licenses/`. It has been removed rather than fixed, since there was never a
-  right to redistribute it in the first place. The picker no longer offers it at all, not even with
-  developer archived options on; a saved config or a downloaded theme still holding the old value
-  now renders in Special Elite - the collection's other distressed-typewriter face - instead of
-  silently falling back to Google Sans.
+- **The "Typewriter" font choice is gone, and Special Elite now stands in for it.** The bundled file behind it, Mom's Typewriter, was never covered by a license this project could point to - unlike every other bundled typeface, which ships under the SIL Open Font License or Apache 2.0 with its text kept in `licenses/`. It has been removed rather than fixed, since there was never a right to redistribute it in the first place. The picker no longer offers it at all, not even with developer archived options on; a saved config or a downloaded theme still holding the old value now renders in Special Elite - the collection's other distressed-typewriter face - instead of silently falling back to Google Sans.
 
 ### Fixed
 
@@ -570,143 +295,49 @@
 
   The session is now also labelled with whether the platform really has the API level it reports, so the several other crashes such a device produces inside Android's own UI libraries arrive saying so instead of looking like app faults. Nothing about those is repairable from the app; the labelling only makes them identifiable.
 
-- **The "watch app is missing" dialog sent people outside Google Play.** It read "Svartifoss isn't
-  on the Play Store — the watch app is sideloaded separately" and offered a GitHub releases link,
-  which is exactly the wrong instruction to give someone who installed the phone app from Play —
-  and the first thing a reviewer testing only the phone app would see. The wording and the button's
-  destination are now split by how the app was distributed: the GitHub build still sends people to
-  the releases page to fetch the watch APK by hand, while the Play build opens the shared Play
-  Store listing on the watch instead, since phone and watch are one listing sharing an
-  `applicationId` and Play delivers the watch half on its own. The watch's matching "phone app
-  missing" notice is corrected the same way.
+- **The "watch app is missing" dialog sent people outside Google Play.** It read "Svartifoss isn't on the Play Store — the watch app is sideloaded separately" and offered a GitHub releases link, which is exactly the wrong instruction to give someone who installed the phone app from Play — and the first thing a reviewer testing only the phone app would see. The wording and the button's destination are now split by how the app was distributed: the GitHub build still sends people to the releases page to fetch the watch APK by hand, while the Play build opens the shared Play Store listing on the watch instead, since phone and watch are one listing sharing an `applicationId` and Play delivers the watch half on its own. The watch's matching "phone app missing" notice is corrected the same way.
 
-- **"Reset this layout" restored a look the app has never shipped.** This is the worst kind of bug
-  a reset can have: it did something, it looked deliberate, and it could not be undone.
+- **"Reset this layout" restored a look the app has never shipped.** This is the worst kind of bug a reset can have: it did something, it looked deliberate, and it could not be undone.
 
-  A fresh install does not start from the defaults written next to each row — it starts from a
-  saved setup bundled into the app, which since 3.0 has carried an explicit value for every
-  appearance setting on Classic, Expressive, Poster, Studio, Material and Immersive (and, in this
-  release, on all twenty-two faces). Those are the defaults anyone has ever actually seen. Reset
-  did not restore them; it **deleted** them, and the app then fell back to whatever lay
-  underneath — a built-in per-face default, a leftover setting from before per-face styling
-  existed in 3.0, or the bare value declared in the row. The result was a face nobody had chosen
-  and nobody had ever been shown, from a button whose description promises "its original
-  defaults".
+  A fresh install does not start from the defaults written next to each row — it starts from a saved setup bundled into the app, which since 3.0 has carried an explicit value for every appearance setting on Classic, Expressive, Poster, Studio, Material and Immersive (and, in this release, on all twenty-two faces). Those are the defaults anyone has ever actually seen. Reset did not restore them; it **deleted** them, and the app then fell back to whatever lay underneath — a built-in per-face default, a leftover setting from before per-face styling existed in 3.0, or the bare value declared in the row. The result was a face nobody had chosen and nobody had ever been shown, from a button whose description promises "its original defaults".
 
-  It was also one-way. Since the only copy of the shipped look was the one reset had just erased,
-  there was no way back to it short of reinstalling the app or importing a backup made before the
-  tap. Reset now writes the shipped values back and removes only the settings the shipped setup
-  never carried, so the button returns the face to how it arrived, in both directions. **Reset all
-  faces to default** — the one-time prompt offered after upgrading from 2.x — is corrected the same
-  way.
+  It was also one-way. Since the only copy of the shipped look was the one reset had just erased, there was no way back to it short of reinstalling the app or importing a backup made before the tap. Reset now writes the shipped values back and removes only the settings the shipped setup never carried, so the button returns the face to how it arrived, in both directions. **Reset all faces to default** — the one-time prompt offered after upgrading from 2.x — is corrected the same way.
 
-  Resetting while one of your own saved themes is active deliberately still clears rather than
-  restores: the bundled setup's theme snapshot is the author's own theme, not a default for
-  anybody else's, so restoring it there would replace your theme with a stranger's instead of
-  resetting it. Cleared, it falls back to its base face's defaults, which is what resetting a
-  theme means.
+  Resetting while one of your own saved themes is active deliberately still clears rather than restores: the bundled setup's theme snapshot is the author's own theme, not a default for anybody else's, so restoring it there would replace your theme with a stranger's instead of resetting it. Cleared, it falls back to its base face's defaults, which is what resetting a theme means.
 
-- **Colours set on one saved theme followed you onto another.** Changing the layout from the watch
-  left the *previous* theme marked as the one in use: the wrist wrote the newly chosen layout's base
-  face but kept pointing at the theme you had switched away from. A theme's appearance is read from
-  one shared snapshot, so the new layout was drawn wearing the old theme's colours, typography and
-  panel styling. Set a colour on the phone, pick a different theme on the watch, and the colour
-  appeared to come across with it — which is indistinguishable from the colours not belonging to
-  each theme at all.
+- **Colours set on one saved theme followed you onto another.** Changing the layout from the watch left the *previous* theme marked as the one in use: the wrist wrote the newly chosen layout's base face but kept pointing at the theme you had switched away from. A theme's appearance is read from one shared snapshot, so the new layout was drawn wearing the old theme's colours, typography and panel styling. Set a colour on the phone, pick a different theme on the watch, and the colour appeared to come across with it — which is indistinguishable from the colours not belonging to each theme at all.
 
-  The same switch also threw the change away. Edits to a theme live in that shared snapshot until
-  something writes them back into the theme they belong to, and every route on the phone does
-  that: leaving the Watch tab, opening the themes screen, making a backup, submitting to the
-  gallery. Switching from the wrist was the one route that did not — and it is the only one that
-  can happen while the phone's editor is still open, so nothing else was there to save the work
-  first. The colour you had just picked was gone from the theme you picked it on.
+  The same switch also threw the change away. Edits to a theme live in that shared snapshot until something writes them back into the theme they belong to, and every route on the phone does that: leaving the Watch tab, opening the themes screen, making a backup, submitting to the gallery. Switching from the wrist was the one route that did not — and it is the only one that can happen while the phone's editor is still open, so nothing else was there to save the work first. The colour you had just picked was gone from the theme you picked it on.
 
-  Both halves are fixed. A layout chosen on the watch no longer leaves another theme active: it
-  shows that layout's own styling for the moment it takes the phone to send the real theme, the
-  same brief wait choosing a built-in layout has always had. And pending edits are written back
-  before the switch, whether it comes from the watch or from installing a theme out of the gallery.
+  Both halves are fixed. A layout chosen on the watch no longer leaves another theme active: it shows that layout's own styling for the moment it takes the phone to send the real theme, the same brief wait choosing a built-in layout has always had. And pending edits are written back before the switch, whether it comes from the watch or from installing a theme out of the gallery.
 
-- **Moving a face's text sideways sent it under the bezel.** The round-screen guard that keeps a
-  moved block on the glass only ran when *Text position* had been changed, so choosing a *Text
-  alignment* on its own — the commonest thing to do here, and the first row offered — got no
-  protection at all. Every face's own side padding was tuned for a block its author *centred*, and
-  a centred block never reaches the edge of a circle. On the faces whose text is grounded low by
-  design the artist line, sitting one line below the title, was the first thing cut off.
+- **Moving a face's text sideways sent it under the bezel.** The round-screen guard that keeps a moved block on the glass only ran when *Text position* had been changed, so choosing a *Text alignment* on its own — the commonest thing to do here, and the first row offered — got no protection at all. Every face's own side padding was tuned for a block its author *centred*, and a centred block never reaches the edge of a circle. On the faces whose text is grounded low by design the artist line, sitting one line below the title, was the first thing cut off.
 
-- **The whole block moved to one margin instead of each line finding its own.** Title, artist and
-  elapsed time shared a single inset, which on a round screen can only ever be right for one of the
-  three: each line sits at a different depth, and the chord narrows with every one of them. Each
-  element is now measured where it actually is, so an edge-aligned block steps inwards as it
-  descends — the title reaching furthest, the artist a little less, the elapsed readout less again
-  — with every line stopping at the glass rather than on a margin borrowed from its neighbour.
+- **The whole block moved to one margin instead of each line finding its own.** Title, artist and elapsed time shared a single inset, which on a round screen can only ever be right for one of the three: each line sits at a different depth, and the chord narrows with every one of them. Each element is now measured where it actually is, so an edge-aligned block steps inwards as it descends — the title reaching furthest, the artist a little less, the elapsed readout less again — with every line stopping at the glass rather than on a margin borrowed from its neighbour.
 
-- **On five faces the guard was applied and did nothing.** Vinyl, Halo, Eclipse, Spectrum and
-  Material lay their metadata out in a column of fixed width, and the inset was added *around* that
-  column instead of taken out of it — so the column stayed exactly as wide as before and the
-  surplus simply hung off the far edge of the screen. The same mistake was in the shared curated
-  always-on display and in Chrono's. **Poster and Studio** were missing the vertical keep-out
-  entirely, so a block grounded there sat below the round screen's usable band and under the
-  mini-button row.
+- **On five faces the guard was applied and did nothing.** Vinyl, Halo, Eclipse, Spectrum and Material lay their metadata out in a column of fixed width, and the inset was added *around* that column instead of taken out of it — so the column stayed exactly as wide as before and the surplus simply hung off the far edge of the screen. The same mistake was in the shared curated always-on display and in Chrono's. **Poster and Studio** were missing the vertical keep-out entirely, so a block grounded there sat below the round screen's usable band and under the mini-button row.
 
-- **Aurora ignored both rows completely.** It was the one awake face wired to none of the shared
-  placement machinery, so its block stayed glued to the aurora card whatever was chosen and only
-  the lines inside it re-aligned. A control that appears inert is worse than one that is absent.
+- **Aurora ignored both rows completely.** It was the one awake face wired to none of the shared placement machinery, so its block stayed glued to the aurora card whatever was chosen and only the lines inside it re-aligned. A control that appears inert is worse than one that is absent.
 
-- **Classic and the Matejdro tribute had no round-screen protection at all**, and the phone's
-  preview showed nothing for either. Both are drawn with Android Views, where the placement was
-  applied as plain gravity inside the inscribed square — whose corners lie exactly *on* the glass,
-  so a block lined up against an edge put its lowest line outside the circle while the layout
-  believed everything was in bounds. Each of the three rows is now inset by the chord at its own
-  measured depth, and the Watch tab's miniature honours both rows on both faces for the first time.
+- **Classic and the Matejdro tribute had no round-screen protection at all**, and the phone's preview showed nothing for either. Both are drawn with Android Views, where the placement was applied as plain gravity inside the inscribed square — whose corners lie exactly *on* the glass, so a block lined up against an edge put its lowest line outside the circle while the layout believed everything was in bounds. Each of the three rows is now inset by the chord at its own measured depth, and the Watch tab's miniature honours both rows on both faces for the first time.
 
-- **The Watch tab preview did not clamp a moved block anywhere.** It is the one screen built to
-  show what a setting does, and on this setting it was drawing text outside the glass that the
-  watch was drawing inside it — or, on Classic, Matejdro and Note, drawing nothing different at
-  all. All of it now runs through the same chord arithmetic the watch uses.
+- **The Watch tab preview did not clamp a moved block anywhere.** It is the one screen built to show what a setting does, and on this setting it was drawing text outside the glass that the watch was drawing inside it — or, on Classic, Matejdro and Note, drawing nothing different at all. All of it now runs through the same chord arithmetic the watch uses.
 
-- **Chat, Note and Frame's centre tap regions ate into the quadrant taps beside them.** Each
-  face's centre play/pause region is a square centred on the screen, and `FourWayTouchLayout`'s
-  left/right/top/bottom quadrants converge at that same centre point, so a large enough square
-  reaches past the middle and swallows a quadrant tap aimed near it before the quadrant layout
-  ever sees the touch. Chat (.62, the largest outside Frame's opaque card) and Note (.60) are
-  reduced to .52, matching Verse; Frame, already once reduced from .68 to .46, is tightened again
-  to .40 - its card spans 77% of the screen width, so even .46 left a tap meant for the card's own
-  corner exposed to being swallowed instead.
+- **Chat, Note and Frame's centre tap regions ate into the quadrant taps beside them.** Each face's centre play/pause region is a square centred on the screen, and `FourWayTouchLayout`'s left/right/top/bottom quadrants converge at that same centre point, so a large enough square reaches past the middle and swallows a quadrant tap aimed near it before the quadrant layout ever sees the touch. Chat (.62, the largest outside Frame's opaque card) and Note (.60) are reduced to .52, matching Verse; Frame, already once reduced from .68 to .46, is tightened again to .40 - its card spans 77% of the screen width, so even .46 left a tap meant for the card's own corner exposed to being swallowed instead.
 
-- **Several Watch tab editor buttons and the drawer's "Buy Me a Coffee" row showed an invisible
-  white icon on the light theme.** `LyraGestureButton` sets `iconTint=@null` so rows that hand-tint
-  their own icon (a colour swatch, a picked accent) aren't fought by a style default — but every
-  row listed here never did that, so each button's drawable kept its own flat white fill,
-  invisible against a light surface. Affected rows: the Typography, Colors, Panels and Player
-  contextual editors' font/behaviour/shadow/outline/backdrop/layout/reset buttons, and the drawer's
-  support button.
+- **Several Watch tab editor buttons and the drawer's "Buy Me a Coffee" row showed an invisible white icon on the light theme.** `LyraGestureButton` sets `iconTint=@null` so rows that hand-tint their own icon (a colour swatch, a picked accent) aren't fought by a style default — but every row listed here never did that, so each button's drawable kept its own flat white fill, invisible against a light surface. Affected rows: the Typography, Colors, Panels and Player contextual editors' font/behaviour/shadow/outline/backdrop/layout/reset buttons, and the drawer's support button.
 
 - **The icon picker's search box showed the static theme colour, not your accent.** `BuiltInIconPicker`'s dialog is built with `setView()`, so its `EditText` was never reached by the runtime accent styling every other custom-content dialog gets — its cursor and selection handles drew from the theme's fixed sage green regardless of the chosen accent. The field's search icon was also vertically misaligned against the hint text, and the default Material underline spanned the full width while the (icon-indented) text started well to its right, so the bar never lined up under it either. The underline is now dropped entirely, matching the Settings search field's own search box, and the accent styling now reaches this dialog like it does every other one.
 
-- **Rapid theme and settings changes no longer accumulate an avoidable backlog.** Pending updates
-  now keep the latest selection, and immediate delivery can proceed while a previous durable sync
-  finishes. Both delivery paths share the same ordering, so a delayed older update cannot bring
-  back a previous theme or setting. Duplicate copies also avoid refreshing the appearance again.
-  Resets and synchronization after reconnecting remain supported. Update both the phone and watch
-  apps to enable the shared ordering protection.
+- **Rapid theme and settings changes no longer accumulate an avoidable backlog.** Pending updates now keep the latest selection, and immediate delivery can proceed while a previous durable sync finishes. Both delivery paths share the same ordering, so a delayed older update cannot bring back a previous theme or setting. Duplicate copies also avoid refreshing the appearance again. Resets and synchronization after reconnecting remain supported. Update both the phone and watch apps to enable the shared ordering protection.
 
-- **The first watch command is no longer lost while the phone service starts.** The command is
-  retained until the service is ready, and commands reaching an already running service execute
-  without another service start. Duplicate listener deliveries are handled once; intentional
-  repeated skips and play/pause taps remain separate commands.
+- **The first watch command is no longer lost while the phone service starts.** The command is retained until the service is ready, and commands reaching an already running service execute without another service start. Duplicate listener deliveries are handled once; intentional repeated skips and play/pause taps remain separate commands.
 
-- **Overlapping action-menu edits no longer cause endless retransmission.** Edits, icon refreshes
-  and startup repairs now share one synchronization queue, keeping the latest pending configuration
-  and preserving requested saves. A failed transmission no longer strands subsequent edits.
+- **Overlapping action-menu edits no longer cause endless retransmission.** Edits, icon refreshes and startup repairs now share one synchronization queue, keeping the latest pending configuration and preserving requested saves. A failed transmission no longer strands subsequent edits.
 
-- **Late artwork and button-icon loads no longer replace newer results.** Music updates can reach
-  the watch independently of artwork loading, and obsolete decoding is cancelled. Existing button
-  assignments remain usable until their complete replacement is ready, instead of disappearing
-  while its icons load.
+- **Late artwork and button-icon loads no longer replace newer results.** Music updates can reach the watch independently of artwork loading, and obsolete decoding is cancelled. Existing button assignments remain usable until their complete replacement is ready, instead of disappearing while its icons load.
 
-- **Developer “Sync watch settings” now uses the same delivery path as ordinary edits.** It sends
-  the selected watch settings through both transports, instead of bypassing filtering and ordering
-  by pushing the phone's entire preference file.
+- **Developer “Sync watch settings” now uses the same delivery path as ordinary edits.** It sends the selected watch settings through both transports, instead of bypassing filtering and ordering by pushing the phone's entire preference file.
 
 - **The Matejdro face's cover was never dimmed to its tribute level.** `FaceScopedPreferences.getInt`'s built-in-face branch never consulted a per-face default at all - only the custom-theme branch did - so `album_art_dim_strength` (the only `Int`-typed key with one) silently fell back to the ordinary global dim instead of the level `MATEJDRO_DEFAULTS` set for it. The exact gap [getBoolean] had already closed twice, just never noticed for `Int` because no other numeric setting had a per-face default yet. Anyone on the plain built-in face now sees the intended dim; a saved custom theme built from it already did.
 
@@ -714,99 +345,29 @@
 
 - **Verse sat too high, leaving an empty strip along the bottom of the screen.** The running head, the lyric reel and the elapsed time have all moved down, and the time now sits closer to the floor than the band of nothing it was floating above. The reel keeps its three lines; because a round screen narrows as it deepens, each line carries a little less text than before.
 
-- **Streaming shortcuts picked from the watch menu and Shortcuts Tile reach the playback ladder
-  again.** Their cached row deliberately includes the target package for the watch's visible-open
-  fallback, but the phone was passing that whole `package|link` envelope to the URI validator as
-  though it were the link. It now unwraps a syntactically valid package prefix before playback,
-  while still leaving ordinary and unsafe input subject to the existing validation.
+- **Streaming shortcuts picked from the watch menu and Shortcuts Tile reach the playback ladder again.** Their cached row deliberately includes the target package for the watch's visible-open fallback, but the phone was passing that whole `package|link` envelope to the URI validator as though it were the link. It now unwraps a syntactically valid package prefix before playback, while still leaving ordinary and unsafe input subject to the existing validation.
 
 - **Two rows on the Player page sat slightly high in their own box.** “Track time display” and “Position mark” are built in code rather than from the shared button style, and they were the only rows in the editor missing the font-metric correction that style carries — so their labels rode a few pixels above the middle of the row while every row around them was centred. They are centred now.
 
 - **The “Change icon” chip ignored your accent colour.** Opening a gesture or button to give it an icon, the chip that starts that was painted with the app's original sage green rather than the accent you are actually using — so under a picked colour, or one pulled from the album art, it was the one green thing on the screen. Its label and its glyph now follow the accent like everything else, lifted for contrast against the panel behind them so a very light album colour stays readable. The photo controls on the Community theme submission screen were left out of the same pass and are corrected with it.
 
-- **Downloading a theme could be refused because of settings the watch never receives.** Installing
-  a community theme reported "This theme would make your watch settings too large to sync. Reset
-  unused face settings and try again", and there was no reasonable way out of it: the only fix
-  offered was to delete your own work on faces that had nothing to do with the theme. The cause was
-  in what the phone sent. Every appearance setting is saved separately for each of the twenty faces,
-  and the phone was shipping all twenty to the watch on every sync — around 295 KB against a
-  transport that accepts 100 KB — even though the watch can only ever read the face it is currently
-  showing. So customising four or five faces filled the payload with settings nothing on the wrist
-  could reach, and the theme you were installing was refused on their behalf. The phone now always
-  sends the face on your wrist in full, whatever else you have saved, and packs the other faces in
-  behind it while there is room. Themes install regardless of how much of the app you have
-  customised, and however many you have saved. One small consequence, on a library large enough that
-  some faces do not fit: changing to one of those from the watch's own face picker shows it with its
-  default look for a moment before your settings arrive, which they do on their own.
+- **Downloading a theme could be refused because of settings the watch never receives.** Installing a community theme reported "This theme would make your watch settings too large to sync. Reset unused face settings and try again", and there was no reasonable way out of it: the only fix offered was to delete your own work on faces that had nothing to do with the theme. The cause was in what the phone sent. Every appearance setting is saved separately for each of the twenty faces, and the phone was shipping all twenty to the watch on every sync — around 295 KB against a transport that accepts 100 KB — even though the watch can only ever read the face it is currently showing. So customising four or five faces filled the payload with settings nothing on the wrist could reach, and the theme you were installing was refused on their behalf. The phone now always sends the face on your wrist in full, whatever else you have saved, and packs the other faces in behind it while there is room. Themes install regardless of how much of the app you have customised, and however many you have saved. One small consequence, on a library large enough that some faces do not fit: changing to one of those from the watch's own face picker shows it with its default look for a moment before your settings arrive, which they do on their own.
 
-- **The Chat and Metadata faces ignored some of the Text tab's title controls.** Both styled their
-  title by hand rather than through the shared helper, so each read whichever properties it happened
-  to name and silently dropped the rest: on Chat the weight was pinned to Bold and the opacity had
-  no effect, and on Metadata the size, tracking, case and opacity did nothing at all. Both looked
-  entirely wired up, because the family, colour and slant did work. They now go through the same
-  helper the artist line already used, so every title control reaches all twenty faces — and a test
-  now fails if a face styles a title itself without saying why.
+- **The Chat and Metadata faces ignored some of the Text tab's title controls.** Both styled their title by hand rather than through the shared helper, so each read whichever properties it happened to name and silently dropped the rest: on Chat the weight was pinned to Bold and the opacity had no effect, and on Metadata the size, tracking, case and opacity did nothing at all. Both looked entirely wired up, because the family, colour and slant did work. They now go through the same helper the artist line already used, so every title control reaches all twenty faces — and a test now fails if a face styles a title itself without saying why.
 
-- **Community theme like counts had stopped moving.** Every heart tap was being recorded correctly
-  the whole time, but the published figure on the cards is only rewritten by the daily job that
-  maintains the gallery, and that job was holding a changed count back for a full week before
-  committing it. The wait existed so a popularity number would not write a commit a day into the
-  app's own history; at a week it did the opposite of its job, because a count that visibly never
-  moves is indistinguishable from likes that are not being counted. It now publishes on the next
-  daily run, which is at most a day behind and usually less. Your own like still shows immediately
-  on the theme you tapped, as it always did. Download counts ride the same schedule, so they follow
-  the same day.
+- **Community theme like counts had stopped moving.** Every heart tap was being recorded correctly the whole time, but the published figure on the cards is only rewritten by the daily job that maintains the gallery, and that job was holding a changed count back for a full week before committing it. The wait existed so a popularity number would not write a commit a day into the app's own history; at a week it did the opposite of its job, because a count that visibly never moves is indistinguishable from likes that are not being counted. It now publishes on the next daily run, which is at most a day behind and usually less. Your own like still shows immediately on the theme you tapped, as it always did. Download counts ride the same schedule, so they follow the same day.
 
-- **The like and download figures on a gallery card were laid out badly.** Their icons were drawn at
-  full 24dp beside a 12sp number — half again the height of the figure they label — and the two used
-  different icon families, one a heavy filled arrow and the other a fine outlined heart, so the pair
-  read as two mismatched controls rather than one line of statistics. Worse, both counters shared a
-  line with the author's name, which on the two-column phone layout left the name roughly twenty dp
-  of room: every author was rendered as a single letter and an ellipsis. The byline now has a line
-  of its own, the two figures sit on a line beneath it, and their glyphs are drawn at the size of
-  the numbers beside them.
+- **The like and download figures on a gallery card were laid out badly.** Their icons were drawn at full 24dp beside a 12sp number — half again the height of the figure they label — and the two used different icon families, one a heavy filled arrow and the other a fine outlined heart, so the pair read as two mismatched controls rather than one line of statistics. Worse, both counters shared a line with the author's name, which on the two-column phone layout left the name roughly twenty dp of room: every author was rendered as a single letter and an ellipsis. The byline now has a line of its own, the two figures sit on a line beneath it, and their glyphs are drawn at the size of the numbers beside them.
 
-- **A theme's details put too much space between some labels and their values.** The Minimum version
-  and Visual settings rows reserved a second line for their labels so that the two columns would
-  stay aligned when a translation needed one — which held those rows open in every language that did
-  not, leaving the value floating well below the label it belongs to while the rows above and below
-  it were tight. Both columns now start under whichever of their two labels is taller, so the gap
-  between a label and its value is the same on every row, in every language, and the columns line up
-  whether or not a label wraps.
+- **A theme's details put too much space between some labels and their values.** The Minimum version and Visual settings rows reserved a second line for their labels so that the two columns would stay aligned when a translation needed one — which held those rows open in every language that did not, leaving the value floating well below the label it belongs to while the rows above and below it were tight. Both columns now start under whichever of their two labels is taller, so the gap between a label and its value is the same on every row, in every language, and the columns line up whether or not a label wraps.
 
-- **The always-on artwork settings did nothing on the Carousel face.** Carousel is the one always-on
-  style that keeps the cover on screen — a single card, where the awake face has a rail of them —
-  and it was drawing that card from the *awake* artwork instead of the always-on one. So "Show
-  artwork" left it there after switching it off, the always-on treatment (blurred, plain or black
-  and white) never reached it while the photo filter from the interactive player did, and the
-  always-on artwork opacity slider moved everything except it. All three now apply to the card
-  exactly as they apply to every other style's backdrop. The card was authored at the opacity
-  slider's own default, so nothing looks different until you move something.
+- **The always-on artwork settings did nothing on the Carousel face.** Carousel is the one always-on style that keeps the cover on screen — a single card, where the awake face has a rail of them — and it was drawing that card from the *awake* artwork instead of the always-on one. So "Show artwork" left it there after switching it off, the always-on treatment (blurred, plain or black and white) never reached it while the photo filter from the interactive player did, and the always-on artwork opacity slider moved everything except it. All three now apply to the card exactly as they apply to every other style's backdrop. The card was authored at the opacity slider's own default, so nothing looks different until you move something.
 
-- **"Show track info" did nothing on the Metadata always-on style.** Turning it off clears the text
-  from the other ten always-on styles; on Metadata the title and its first rows stayed exactly where
-  they were, which is the one screen where they take up the whole display. It now clears like the
-  rest, and the title also follows the Title switch — the rows below it are the album, the track
-  position and so on, so hiding the title leaves the table rather than emptying the screen.
+- **"Show track info" did nothing on the Metadata always-on style.** Turning it off clears the text from the other ten always-on styles; on Metadata the title and its first rows stayed exactly where they were, which is the one screen where they take up the whole display. It now clears like the rest, and the title also follows the Title switch — the rows below it are the album, the track position and so on, so hiding the title leaves the table rather than emptying the screen.
 
-- **The Ribbon and Frame always-on previews showed album art the watch does not draw.** Both of
-  those always-on styles are outlines and nothing else on the wrist — five empty card windows for
-  Ribbon, an empty image well for Frame — while the phone filled them with covers, which made the
-  preview look like the richer of the two screens. The preview now draws them as the watch does.
-  Nothing changed on the watch, and there is now a check that fails if either side starts drawing an
-  always-on cover the other one does not.
+- **The Ribbon and Frame always-on previews showed album art the watch does not draw.** Both of those always-on styles are outlines and nothing else on the wrist — five empty card windows for Ribbon, an empty image well for Frame — while the phone filled them with covers, which made the preview look like the richer of the two screens. The preview now draws them as the watch does. Nothing changed on the watch, and there is now a check that fails if either side starts drawing an always-on cover the other one does not.
 
-- **Six always-on styles all previewed as the same screen.** Carousel, Chat, Split, Note, Verse and
-  Metadata each have their own always-on layout on the watch, but the Watch tab's preview drew all
-  six — and Eclipse and Immersive besides — as one generic curated always-on screen, complete with
-  an Up Next row none of them actually shows. Picking between them in Always-on → Style changed
-  nothing you could see on the phone. Each now previews what the wrist draws: Carousel's single card
-  with the text at the foot, Chat's one outlined bubble, Split's hairline seam with the text below
-  it, Note's centred sentence, Verse's running head over the current lyric, and Metadata's identity
-  with its first two rows. Four of them paint their own black canvas on the watch, so the preview no
-  longer shows an always-on backdrop behind them that the watch covers up. Nothing changed on the
-  watch; the numbers both sides lay these out from now live in one place, so they cannot drift apart
-  again.
+- **Six always-on styles all previewed as the same screen.** Carousel, Chat, Split, Note, Verse and Metadata each have their own always-on layout on the watch, but the Watch tab's preview drew all six — and Eclipse and Immersive besides — as one generic curated always-on screen, complete with an Up Next row none of them actually shows. Picking between them in Always-on → Style changed nothing you could see on the phone. Each now previews what the wrist draws: Carousel's single card with the text at the foot, Chat's one outlined bubble, Split's hairline seam with the text below it, Note's centred sentence, Verse's running head over the current lyric, and Metadata's identity with its first two rows. Four of them paint their own black canvas on the watch, so the preview no longer shows an always-on backdrop behind them that the watch covers up. Nothing changed on the watch; the numbers both sides lay these out from now live in one place, so they cannot drift apart again.
 
 - **Every glow in the panel-background preview was drawn at half the size the watch renders it.** Nebula's clouds, Orbit's orbits and Bioluminescence's blooms are positioned as a fraction of the screen width on the watch, and the phone preview was applying those same fractions to half the width — so on the phone they sat as contained circles in the middle of the panel while on the wrist they filled it. The preview now converts once, in the one place that draws them, instead of leaving each caller to remember which measurement it was quoting. Nothing changed on the watch; the preview stopped disagreeing with it.
 

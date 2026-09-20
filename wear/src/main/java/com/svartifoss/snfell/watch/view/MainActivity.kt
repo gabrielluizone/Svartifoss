@@ -40,19 +40,23 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Looper
 import android.os.Message
+import android.os.SystemClock
 import android.os.Vibrator
 import android.view.GestureDetector
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewPropertyAnimator
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.view.ViewConfiguration
+import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
+import android.view.animation.PathInterpolator
 import android.app.ActivityManager
 import android.app.RemoteInput
 import androidx.activity.OnBackPressedCallback
@@ -133,6 +137,7 @@ import com.svartifoss.snfell.common.resolveLayers
 import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.AlbumArtFilter
+import com.svartifoss.snfell.common.AlbumArtMotion
 import com.svartifoss.snfell.common.SwatchInfo
 import com.svartifoss.snfell.common.selectPrimaryAccent
 import com.svartifoss.snfell.common.ColorModifier
@@ -143,6 +148,7 @@ import com.svartifoss.snfell.common.TrackMetadataFields
 import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.SpecialEliteKeywordPolicy
 import com.svartifoss.snfell.common.AlbumArtSource
+import com.svartifoss.snfell.common.CoverMotion
 import com.svartifoss.snfell.common.TextBlockAlign
 import com.svartifoss.snfell.common.RoundScreenText
 import com.svartifoss.snfell.common.TextBlockPlacementSupport
@@ -216,6 +222,11 @@ import com.svartifoss.snfell.watch.view.face.FaceMiniButton
 import com.svartifoss.snfell.watch.view.face.NowPlayingFaceListener
 import com.svartifoss.snfell.watch.view.face.MetadataFace
 import com.svartifoss.snfell.watch.view.face.NowPlayingFaceState
+import com.svartifoss.snfell.watch.view.face.TRACK_TEXT_SLIDE_IN_MS
+import com.svartifoss.snfell.watch.view.face.TRACK_TEXT_SLIDE_IN_RATIO
+import com.svartifoss.snfell.watch.view.face.TRACK_TEXT_SLIDE_MAX_DP
+import com.svartifoss.snfell.watch.view.face.TRACK_TEXT_SLIDE_OUT_MS
+import com.svartifoss.snfell.watch.view.face.TRACK_TEXT_SLIDE_WIDTH_FRACTION
 import com.svartifoss.snfell.watch.view.face.TextOutlinePaint
 import com.svartifoss.snfell.watch.view.face.ScreenTheme
 import com.svartifoss.snfell.watch.view.face.resolveMetadataVisibility
@@ -357,7 +368,19 @@ class MainActivity : WearCompanionWatchActivity(),
         /** See [enterQuickActionsPanel]: longer than the backdrop's fade, so the panel lands on it. */
         private const val QUICK_PANEL_ENTER_MS = 160L
         private const val QUICK_PANEL_ENTER_SCALE = 0.96f
-        private const val ALBUM_ART_CROSSFADE_MS = 300
+        /**
+         * The cover transition's length, shared with every Compose face through [AlbumArtMotion].
+         *
+         * Not a local number any more: the host's full-screen artwork and the faces that draw a
+         * cover of their own were each tuned separately, so retuning one left the other behind.
+         */
+        private const val ALBUM_ART_CROSSFADE_MS = AlbumArtMotion.DURATION_MS
+
+        /** Material 3's emphasized decelerate, from the control points [AlbumArtMotion] shares
+         *  with the Compose faces' `CubicBezierEasing` and the phone preview. */
+        private val ALBUM_ART_MOTION_INTERPOLATOR = PathInterpolator(
+                AlbumArtMotion.EASE_X1, AlbumArtMotion.EASE_Y1,
+                AlbumArtMotion.EASE_X2, AlbumArtMotion.EASE_Y2)
 
         /** How far two covers' aspect ratios may differ and still cross-fade directly - see
          *  [sameAspectRatio]. Wide enough to absorb a rounding difference of a pixel or two, far
@@ -519,9 +542,10 @@ class MainActivity : WearCompanionWatchActivity(),
     private var wearDynamicAccentEnabled = true
     private var albumArtFadeEnabled = true
     private var screenTheme: ScreenTheme = ScreenTheme.DEFAULT
-    /** Classic-only: whether a quadrant's icon flashes to full opacity and back on its own tap -
-     *  see [pulseQuadrantIcon]. */
-    private var quadrantTapFlashEnabled: Boolean = false
+    /** Whether a corner tap shows its action's icon inside the ripple - see
+     *  [revealQuadrantActionIcon]. Starts at the preference's own default so a tap that lands
+     *  before the first appearance read behaves like every one after it. */
+    private var quadrantTapFlashEnabled: Boolean = MiscPreferences.WEAR_QUADRANT_TAP_FLASH.defaultValue
 
     /** Selected now-playing face (see [MiscPreferences.WEAR_SCREEN_FACE] and NowPlayingFace.kt):
      *  "classic" is the original View presentation, "expressive" the Compose face. */
@@ -809,11 +833,12 @@ class MainActivity : WearCompanionWatchActivity(),
     private val sessionQuickIconBitmaps = HashMap<String, CachedSessionQuickIcon>()
     private var quickPanelSlots: Array<ButtonAction?> = arrayOfNulls(QuickPanelButtons.ALL_SLOTS.size)
 
-    /** The panel's long row (see [QuickPanelButtons.SLOT_LONG]): default Up Next when unset,
-     *  hidden on NullAction, otherwise a full-width trigger for the assigned action. */
-    private enum class QuickLongMode { UP_NEXT, CUSTOM, SESSION, HIDDEN }
+    /** The panel's long row is always Up Next (queue preview, opens the queue) - it used to be
+     *  assignable to another action or hideable through [QuickPanelButtons.SLOT_LONG], and an
+     *  entry an older phone build left there is now deliberately ignored. [HIDDEN] is not a
+     *  choice either: it is what the row becomes while the panel has nothing to show. */
+    private enum class QuickLongMode { UP_NEXT, SESSION, HIDDEN }
 
-    private var quickPanelLongSlot: ButtonAction? = null
     private var quickPanelLongMode = QuickLongMode.UP_NEXT
     /** The phone's configurable Actions-menu entries, repeated as large rows below Up Next. */
     private var quickPanelExtraActions: List<ButtonAction> = emptyList()
@@ -1140,12 +1165,6 @@ class MainActivity : WearCompanionWatchActivity(),
                     // QueueActivity requests the queue itself, so no need to prime the old
                     // drawer list here.
                     startActivity(Intent(this, QueueActivity::class.java))
-                }
-                QuickLongMode.CUSTOM -> {
-                    buzz()
-                    hideOverlay()
-                    viewModel.executeAction(
-                            ButtonInfo(false, QuickPanelButtons.SLOT_LONG, GESTURE_SINGLE_TAP))
                 }
                 QuickLongMode.SESSION -> sessionQuickActions.getOrNull(3)?.let {
                     buzz()
@@ -1565,7 +1584,7 @@ class MainActivity : WearCompanionWatchActivity(),
                 // Restores the dynamic (palette-extracted) color after a stopped/error message
                 // may have forced it to plain white below.
                 binding.textArtist.setTextColor(resolvedArtistTextColor())
-                binding.textArtist.text = it.data?.artist
+                setClassicArtist(it.data?.artist)
             } else {
                 setStatusMessageOnArtistLine(getString(R.string.playback_stopped))
             }
@@ -1575,7 +1594,7 @@ class MainActivity : WearCompanionWatchActivity(),
             // ran before this and left the glyph the wrong colour.)
             applyClassicSourceIcon()
 
-            binding.textTitle.text = it.data?.title
+            setClassicTitle(it.data?.title)
             updateRecentsLabel((it.data as MusicState).title)
 
             shuffleEnabled = it.data?.shuffleEnabled == true
@@ -1585,7 +1604,7 @@ class MainActivity : WearCompanionWatchActivity(),
         } else if (it.status == Resource.Status.ERROR) {
             titleLineIsStatus = true
             setStatusMessageOnArtistLine(getString(R.string.error))
-            binding.textTitle.text = it.message
+            setClassicTitle(it.message)
             updateRecentsLabel(null)
 
             val errorData = it.errorData
@@ -1594,8 +1613,8 @@ class MainActivity : WearCompanionWatchActivity(),
             }
         } else {
             titleLineIsStatus = false
-            binding.textArtist.text = ""
-            binding.textTitle.text = ""
+            setClassicArtist("")
+            setClassicTitle("")
             updateRecentsLabel(null)
         }
 
@@ -1621,8 +1640,8 @@ class MainActivity : WearCompanionWatchActivity(),
 
     /** Applies the independent title/artist choices without suppressing playback/error status. */
     private fun applyMetadataVisibility(idle: Boolean = faceState.value.idle) {
-        val title = binding.textTitle.text?.toString().orEmpty()
-        val artist = binding.textArtist.text?.toString().orEmpty()
+        val title = classicTitleText
+        val artist = classicArtistText
         val artistLineIsStatus = !isMusicPlaying && artist.isNotEmpty()
         val visibility = resolveMetadataVisibility(
                 title = title,
@@ -1661,8 +1680,7 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Mirrors [NowPlayingFaceState.titleFont]/artistFont for the View-based classic face. */
     private fun applyClassicFont() {
         val specialEliteTriggered = SpecialEliteKeywordPolicy.matches(
-                binding.textTitle.text?.toString().orEmpty(),
-                binding.textArtist.text?.toString().orEmpty())
+                classicTitleText, classicArtistText)
         val titleKey = if (specialEliteTriggered) {
             "love_letter"
         } else {
@@ -1722,9 +1740,7 @@ class MainActivity : WearCompanionWatchActivity(),
      */
     /** Null means "leave the layout's own typeface", i.e. the switch is off. */
     private fun quickPanelTypeface(): android.graphics.Typeface? =
-            if (SpecialEliteKeywordPolicy.matches(
-                    binding.textTitle.text?.toString().orEmpty(),
-                    binding.textArtist.text?.toString().orEmpty())) {
+            if (SpecialEliteKeywordPolicy.matches(classicTitleText, classicArtistText)) {
                 watchFontTypeface(this, "love_letter")
             } else if (faceBool(MiscPreferences.WEAR_FONT_ALL_SCREENS)) {
                 watchFontTypeface(this, wearFontKey)
@@ -2002,7 +2018,7 @@ class MainActivity : WearCompanionWatchActivity(),
         val iconView = binding.sourceIconClassic
         val icon = latestSourceIcon
         val artistVisible = binding.textArtist.visibility == View.VISIBLE &&
-                !binding.textArtist.text.isNullOrBlank()
+                classicArtistText.isNotBlank()
         if (!shouldShowClassicSourceIcon(
                         hasSourceIcon = icon != null,
                         artistVisible = artistVisible,
@@ -2061,6 +2077,22 @@ class MainActivity : WearCompanionWatchActivity(),
     private var phoneBackdropArt: Bitmap? = null
 
     /**
+     * The lateral travel published with the artwork - see [NowPlayingFaceState.coverShiftFraction].
+     *
+     * Held as a field rather than recomputed where the face state is built because that happens
+     * again after Palette has finished, by which time the press that set the direction may have
+     * aged out of its window.
+     */
+    private var currentCoverShiftFraction = 0f
+
+    /** The motion a cover delivered right now travels with - see [AlbumArtMotion]. */
+    private fun resolveCoverMotion(): CoverMotion = AlbumArtMotion.resolve(
+            fadeEnabled = albumArtFadeEnabled,
+            direction = AlbumArtMotion.directionFor(
+                    lastSkipWasBackward = viewModel.lastSkipWasBackward,
+                    msSinceSkip = SystemClock.elapsedRealtime() - viewModel.lastSkipRealtimeMs))
+
+    /**
      * Which picture belongs behind the current face.
      *
      * Driven by [MiscPreferences.WEAR_ALBUM_ART_SOURCE], not by the face: the source is an
@@ -2117,14 +2149,28 @@ class MainActivity : WearCompanionWatchActivity(),
         // Two different animations, because they are two different situations: replacing a cover
         // cross-fades between them, while the first cover of the session has nothing to cross-fade
         // *from* and has to arrive out of the backdrop instead. See artworkTransition.
-        when (artworkTransition(
+        val transition = artworkTransition(
                 fadeEnabled = albumArtFadeEnabled,
                 ambient = ambient,
                 hasArtwork = bitmap != null,
                 hadArtwork = previous != null,
-                samePixels = samePixels)) {
-            ArtworkTransition.REVEAL -> revealFirstAlbumArt(bitmap!!)
-            ArtworkTransition.CROSSFADE -> revealNextAlbumArt(bitmap)
+                samePixels = samePixels)
+        // Resolved here, once, and carried to both renderers - the ImageView below and, through
+        // face state, every Compose face. The direction belongs to the press that produced *this*
+        // cover: a palette callback republishes the face state a moment later, and asking again
+        // then would read a press that has since expired, so the same cover would be described as
+        // travelling one way while it was drawn travelling the other.
+        val motion = when (transition) {
+            ArtworkTransition.IMMEDIATE -> CoverMotion.NONE
+            // Nothing was skipped past to get here, so nothing should drift: the session's first
+            // cover arrives out of the backdrop rather than from a side.
+            ArtworkTransition.REVEAL -> resolveCoverMotion().settleOnly()
+            ArtworkTransition.CROSSFADE -> resolveCoverMotion()
+        }
+        currentCoverShiftFraction = motion.enterShiftFraction
+        when (transition) {
+            ArtworkTransition.REVEAL -> revealFirstAlbumArt(bitmap!!, motion)
+            ArtworkTransition.CROSSFADE -> revealNextAlbumArt(bitmap, motion)
             ArtworkTransition.IMMEDIATE -> {
                 // A reveal interrupted by the wrist dropping would otherwise freeze part-way and
                 // hand the always-on screen a half-transparent cover.
@@ -2456,7 +2502,9 @@ class MainActivity : WearCompanionWatchActivity(),
             // cover - frosting the rim must not shift the accent the whole screen is tinted with.
             // Both call sites share one cache, keyed on bitmap identity.
             if (publishArt) {
-                base.copy(albumArt = filteredArtworkForFace(art)?.asImageBitmap())
+                base.copy(
+                        albumArt = faceArtwork(art),
+                        coverShiftFraction = currentCoverShiftFraction)
             } else {
                 base
             }
@@ -2521,12 +2569,121 @@ class MainActivity : WearCompanionWatchActivity(),
             ?: albumToneFallback(resolvedQuickPanelAccent(), .68f)
 
     /**
+     * What the classic face's two track lines are showing, or are about to.
+     *
+     * The TextViews stopped being the source of truth the moment [slideClassicTrackText] began
+     * holding a new value back for the length of its exit: everything that reads the current track
+     * off this screen - the face state every Compose face renders from, the quick panel's header,
+     * the metadata visibility pass, the Special Elite keyword check - would otherwise read the
+     * *previous* track for those few frames.
+     */
+    private var classicTitleText: String = ""
+    private var classicArtistText: String = ""
+
+    /** The deferred half of an in-flight slide, per line, so a second track change replaces the
+     *  first instead of both landing. */
+    private val classicSlideArrivals = mutableMapOf<TextView, Runnable>()
+
+    /** Sets the classic face's title, sliding the old one out and the new one in. */
+    private fun setClassicTitle(text: CharSequence?) {
+        classicTitleText = text?.toString().orEmpty()
+        slideClassicTrackText(binding.textTitle, titleTypography.alpha) { classicTitleText }
+    }
+
+    /** Sets the classic face's artist line - see [setClassicTitle]. */
+    private fun setClassicArtist(text: CharSequence?) {
+        classicArtistText = text?.toString().orEmpty()
+        slideClassicTrackText(binding.textArtist, artistTypography.alpha) { classicArtistText }
+    }
+
+    /**
+     * The track-change slide for a View face: the old text leaves to the left, the new one arrives
+     * from the right.
+     *
+     * The Compose faces get this from `FaceChrome`'s text helpers and this runs the same numbers,
+     * because Classic and Matejdro draw their lines as TextViews. It is all draw-time translation
+     * and alpha, so no layout runs and the line travels inside its own band exactly as it does on
+     * every other face.
+     *
+     * Three details are load-bearing. The arrival reads [current] rather than a value captured
+     * when it was scheduled, so whichever arrival ends up running applies the newest text rather
+     * than the one that started first. The resting opacity is passed in because it is the
+     * typography one - [applyClassicTypography] puts WEAR_*_OPACITY on the View's own alpha, and
+     * fading back to a flat 1f would quietly undo it. And ambient never animates, checked again at
+     * the arrival because a track can change while the watch dozes off mid-slide.
+     */
+    private fun slideClassicTrackText(
+            view: TextView,
+            restingAlpha: Float,
+            current: () -> String
+    ) {
+        if (view.text?.toString() == current()) return
+        classicSlideArrivals.remove(view)?.let(view::removeCallbacks)
+        view.animate().cancel()
+        val settle = {
+            view.translationX = 0f
+            view.alpha = restingAlpha
+            view.text = current()
+        }
+        if (inAmbient || !view.isShown || view.width == 0) {
+            settle()
+            return
+        }
+        val distance = minOf(
+                view.width * TRACK_TEXT_SLIDE_WIDTH_FRACTION,
+                TRACK_TEXT_SLIDE_MAX_DP * resources.displayMetrics.density)
+        val arrive = Runnable {
+            classicSlideArrivals.remove(view)
+            if (inAmbient) {
+                // The alpha is ambient's to own from here (applyAmbientPresentation), so this
+                // lands the text and the position and leaves it alone.
+                view.translationX = 0f
+                view.text = current()
+                return@Runnable
+            }
+            view.text = current()
+            view.translationX = distance * TRACK_TEXT_SLIDE_IN_RATIO
+            view.alpha = 0f
+            view.animate()
+                    .translationX(0f)
+                    .alpha(restingAlpha)
+                    .setDuration(TRACK_TEXT_SLIDE_IN_MS.toLong())
+                    .setInterpolator(DecelerateInterpolator())
+                    .start()
+        }
+        if (view.text.isNullOrEmpty()) {
+            // Nothing to show out: the first track after an idle screen only arrives.
+            arrive.run()
+            return
+        }
+        classicSlideArrivals[view] = arrive
+        view.postDelayed(arrive, TRACK_TEXT_SLIDE_OUT_MS.toLong())
+        view.animate()
+                .translationX(-distance)
+                .alpha(0f)
+                .setDuration(TRACK_TEXT_SLIDE_OUT_MS.toLong())
+                .setInterpolator(AccelerateInterpolator())
+                .start()
+    }
+
+    /** Lands both lines' pending slides at once, wherever they had got to. */
+    private fun finishClassicTextSlides() {
+        listOf(binding.textTitle, binding.textArtist).forEach { view ->
+            classicSlideArrivals.remove(view)?.let(view::removeCallbacks)
+            view.animate().cancel()
+            view.translationX = 0f
+        }
+        binding.textTitle.text = classicTitleText
+        binding.textArtist.text = classicArtistText
+    }
+
+    /**
      * "Playback Stopped"/"Error" reuse the artist line, but they're status messages, not an
      * artist name - they should always read in plain white, never the dynamic accent color.
      */
     private fun setStatusMessageOnArtistLine(message: String) {
         binding.textArtist.setTextColor(getColor(android.R.color.white))
-        binding.textArtist.text = message
+        setClassicArtist(message)
     }
 
     /** Pending "settle back to the plain cover drawable" callback from the last [fadeToAlbumArt]
@@ -2551,7 +2708,7 @@ class MainActivity : WearCompanionWatchActivity(),
      * fast watch and still behind them on a slow one - a race with a different winner, not a
      * smoother one - and would cost that time on every open.
      */
-    private fun revealFirstAlbumArt(bitmap: Bitmap) {
+    private fun revealFirstAlbumArt(bitmap: Bitmap, motion: CoverMotion) {
         cancelArtworkReveal()
         albumArtSettleRunnable?.let { binding.albumArt.removeCallbacks(it) }
         albumArtSettleRunnable = null
@@ -2565,25 +2722,75 @@ class MainActivity : WearCompanionWatchActivity(),
         // the same pass - fading one without the other would replace the pop with a mismatch.
         artworkViews().forEach { view ->
             view.alpha = 0f
+            beginArtworkMotion(view, motion)
             view.animate()
                     .alpha(1f)
                     .setDuration(ALBUM_ART_CROSSFADE_MS.toLong())
+                    .setInterpolator(ALBUM_ART_MOTION_INTERPOLATOR)
+                    .also { settleArtworkMotion(it, motion) }
                     .start()
         }
     }
 
-    private fun revealNextAlbumArt(bitmap: Bitmap?) {
+    private fun revealNextAlbumArt(bitmap: Bitmap?, motion: CoverMotion) {
         // A first reveal may still be running - the cover can be replaced within its own fade.
         // Cancelling leaves the views at whatever alpha they reached, so restore them before the
         // cross-fade, which works on drawables and assumes an opaque view.
         cancelArtworkReveal()
         fadeToAlbumArt(bitmap)
+        animateArtworkSettle(motion)
     }
 
-    /** Stops any running first-cover reveal and returns the artwork views to full opacity. */
+    /**
+     * Settles the artwork out of a slight overscale, drifting in from whichever side the user last
+     * moved, while [fadeToAlbumArt]'s cross-fade runs underneath it.
+     *
+     * The transform is applied to the *view*, which carries the outgoing cover as well as the
+     * incoming one - they are the two layers of one `TransitionDrawable` and there is no way to
+     * move only the top one. That is the intended reading rather than a limitation: what settles
+     * is the picture behind the player, and a drift applied to the incoming cover alone would show
+     * the outgoing one standing still behind it, which looks like two pictures rather than one
+     * changing. The whole point of the overscale is that nothing ever exposes an edge while it
+     * moves - see [AlbumArtMotion.ENTER_SCALE].
+     */
+    private fun animateArtworkSettle(motion: CoverMotion) {
+        if (!motion.animates) return
+        artworkViews().forEach { view ->
+            if (view.visibility != View.VISIBLE || view.width == 0 || view.drawable == null) {
+                return@forEach
+            }
+            beginArtworkMotion(view, motion)
+            view.animate()
+                    .setDuration(motion.durationMs.toLong())
+                    .setInterpolator(ALBUM_ART_MOTION_INTERPOLATOR)
+                    .also { settleArtworkMotion(it, motion) }
+                    .start()
+        }
+    }
+
+    /** Puts [view] at the start of [motion]: overscaled, and offset by its own share of the width. */
+    private fun beginArtworkMotion(view: View, motion: CoverMotion) {
+        if (!motion.animates) return
+        view.scaleX = motion.enterScale
+        view.scaleY = motion.enterScale
+        view.translationX = motion.enterShiftFraction * view.width
+    }
+
+    /** Adds the return to rest to an already-configured animation, or leaves it alone. */
+    private fun settleArtworkMotion(animator: ViewPropertyAnimator, motion: CoverMotion) {
+        if (!motion.animates) return
+        animator.scaleX(1f).scaleY(1f).translationX(0f)
+    }
+
+    /** Stops any running artwork animation and returns the views to rest - opaque, unscaled and
+     *  centred. Every path that re-renders the artwork outside a track change goes through here
+     *  first, so a transform can never outlive the transition that set it. */
     private fun cancelArtworkReveal() = artworkViews().forEach { view ->
         view.animate().cancel()
         view.alpha = 1f
+        view.scaleX = 1f
+        view.scaleY = 1f
+        view.translationX = 0f
     }
 
     /** The two views the cover is drawn on: the backdrop, and the Square style's sharp inset. */
@@ -2664,6 +2871,14 @@ class MainActivity : WearCompanionWatchActivity(),
         val settle = Runnable {
             if (binding.albumArt.drawable === transition) {
                 binding.albumArt.setImageDrawable(settled)
+            }
+            // The transform's own animator stops being driven if the watch stops drawing - the
+            // same trap this settle exists for on the drawable side - so rest is asserted here
+            // rather than left to the animation to reach.
+            artworkViews().forEach { view ->
+                view.scaleX = 1f
+                view.scaleY = 1f
+                view.translationX = 0f
             }
             albumArtSettleRunnable = null
         }
@@ -2780,6 +2995,36 @@ class MainActivity : WearCompanionWatchActivity(),
         cachedFrostedSource = source
         cachedFrostedArt = frosted
         return frosted
+    }
+
+    /**
+     * The face-state cover, wrapped once per bitmap.
+     *
+     * `asImageBitmap()` allocates a fresh wrapper on every call, so publishing the face state
+     * twice for one cover - which is the ordinary case, since Palette answers after the artwork
+     * has already been applied - handed the faces two objects that are equal in every way except
+     * identity. Compose compares by identity, so every face re-read its cover and, now that a
+     * cover change is a movement rather than a dissolve, would have replayed the whole settle
+     * against the picture it was already showing.
+     *
+     * Keyed on the *filtered* bitmap rather than the source: [filteredArtworkForFace] already
+     * caches on identity, so an unchanged cover comes back as the same object through both caches.
+     */
+    private var cachedFaceArtSource: Bitmap? = null
+    private var cachedFaceArt: androidx.compose.ui.graphics.ImageBitmap? = null
+
+    private fun faceArtwork(source: Bitmap?): androidx.compose.ui.graphics.ImageBitmap? {
+        val filtered = filteredArtworkForFace(source)
+        if (filtered == null) {
+            cachedFaceArtSource = null
+            cachedFaceArt = null
+            return null
+        }
+        cachedFaceArt?.let { if (cachedFaceArtSource === filtered) return it }
+        return filtered.asImageBitmap().also {
+            cachedFaceArtSource = filtered
+            cachedFaceArt = it
+        }
     }
 
     /** Bakes the chosen filter once for cover windows drawn inside Compose faces. */
@@ -3199,8 +3444,6 @@ class MainActivity : WearCompanionWatchActivity(),
         quickPanelSlots = Array(QuickPanelButtons.ALL_SLOTS.size) {
             config.getAction(ButtonInfo(false, QuickPanelButtons.ALL_SLOTS[it], GESTURE_SINGLE_TAP))
         }
-        quickPanelLongSlot =
-                config.getAction(ButtonInfo(false, QuickPanelButtons.SLOT_LONG, GESTURE_SINGLE_TAP))
         if (isQuickActionsPanelShowing()) {
             configureQuickPanelButtons()
         }
@@ -3299,66 +3542,17 @@ class MainActivity : WearCompanionWatchActivity(),
             }
         }
 
-        val longKey = quickPanelLongSlot?.key.orEmpty()
-        quickPanelLongMode = when {
-            quickPanelLongSlot == null -> QuickLongMode.UP_NEXT
-            longKey.endsWith(".NullAction") -> QuickLongMode.HIDDEN
-            else -> QuickLongMode.CUSTOM
-        }
-        // Stop the equalizer before it's potentially replaced below - repeatCount="infinite"
-        // means it never stops on its own once started, so leaving UP_NEXT mode without this
-        // would keep it ticking (and holding the drawable alive) in the background indefinitely.
-        if (quickPanelLongMode != QuickLongMode.UP_NEXT) {
-            (binding.quickActionUpNextIcon.drawable as? Animatable)?.stop()
-        }
-        when (quickPanelLongMode) {
-            QuickLongMode.UP_NEXT -> {
-                binding.quickActionUpNext.visibility = View.VISIBLE
-                binding.quickActionUpNextIcon.setImageResource(
-                        commonR.drawable.ic_equalizer_bars_animated)
-                quickActionUpNextUsesRealIcon = false
-                syncUpNextEqualizerAnimation()
-                binding.quickActionUpNextLabel.setText(R.string.quick_action_up_next)
-                binding.quickActionUpNext.contentDescription = getString(R.string.quick_action_up_next)
-                viewModel.customList.value?.let { updateUpNextPreview(it) }
-            }
-            QuickLongMode.CUSTOM -> {
-                binding.quickActionUpNext.visibility = View.VISIBLE
-                val icon = quickPanelLongSlot?.icon
-                if (icon != null) {
-                    binding.quickActionUpNextIcon.setImageDrawable(icon)
-                    quickActionUpNextUsesRealIcon = !(quickPanelLongSlot?.iconTintable ?: true)
-                } else {
-                    binding.quickActionUpNextIcon.setImageResource(
-                            com.svartifoss.snfell.common.R.drawable.action_custom)
-                    quickActionUpNextUsesRealIcon = false
-                }
-                binding.quickActionUpNextLabel.text =
-                        quickPanelLongSlot?.title
-                                ?: StandardActionTitles.get(this, longKey)
-                                ?: getString(R.string.action_name_custom)
-                binding.quickActionUpNext.contentDescription = binding.quickActionUpNextLabel.text
-                binding.quickActionUpNextTrack.visibility = View.GONE
-            }
-            QuickLongMode.SESSION -> {
-                val action = sessionQuickActions.getOrNull(3)
-                if (action == null) {
-                    binding.quickActionUpNext.visibility = View.GONE
-                    quickActionUpNextUsesRealIcon = false
-                } else {
-                    binding.quickActionUpNext.visibility = View.VISIBLE
-                    quickActionUpNextUsesRealIcon = applySessionQuickIcon(binding.quickActionUpNextIcon, action)
-                    binding.quickActionUpNextLabel.text = sessionActionDescription(action)
-                    binding.quickActionUpNext.contentDescription = binding.quickActionUpNextLabel.text
-                    binding.quickActionUpNextTrack.visibility = View.GONE
-                }
-            }
-            QuickLongMode.HIDDEN -> {
-                binding.quickActionUpNext.visibility = View.GONE
-                quickActionUpNextUsesRealIcon = false
-                binding.quickActionUpNext.contentDescription = null
-            }
-        }
+        // The wide row is always Up Next here. (Switching to the session layout stops the
+        // equalizer itself, in configureUnavailableSessionQuickPanel.)
+        quickPanelLongMode = QuickLongMode.UP_NEXT
+        binding.quickActionUpNext.visibility = View.VISIBLE
+        binding.quickActionUpNextIcon.setImageResource(
+                commonR.drawable.ic_equalizer_bars_animated)
+        quickActionUpNextUsesRealIcon = false
+        syncUpNextEqualizerAnimation()
+        binding.quickActionUpNextLabel.setText(R.string.quick_action_up_next)
+        binding.quickActionUpNext.contentDescription = getString(R.string.quick_action_up_next)
+        viewModel.customList.value?.let { updateUpNextPreview(it) }
 
         updateQuickActionButtonStates()
     }
@@ -6414,10 +6608,23 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.ambientClock.visibility =
                 if (aodShowClock && style != "chrono") View.VISIBLE else View.GONE
 
+        // A cover transition interrupted by the wrist dropping would otherwise freeze part-way
+        // and hand the always-on screen an overscaled, off-centre cover - animations stop being
+        // driven in ambient, so it would never come back on its own.
+        cancelArtworkReveal()
         applyAmbientAlbumArt()
         // Ambient has its own artwork contract and Compose treatment; never leak the interactive
         // Classic background layer into AOD.
         binding.playerBackground.visibility = View.GONE
+
+        // Freeze the View faces' scrolling title and artist. OutlineTextView has had
+        // setMarqueePaused since it was written - for exactly this - and nothing ever called it,
+        // so a long title went on scrolling all night on an always-on panel: continuous animation
+        // is both the burn-in risk the pixel jiggle exists to limit and a wakeup every frame. The
+        // pause is the reason it survives the round trip; it keeps the marquee *mode*, so
+        // onExitAmbient resumes rather than re-deriving whether the line ever needed to scroll.
+        binding.textTitle.setMarqueePaused(true)
+        binding.textArtist.setMarqueePaused(true)
 
         // Chrono is Compose-rendered like the face AODs, just not one of the interactive faces.
         val composeAod = style in composeFaces || style == "chrono"
@@ -6477,6 +6684,10 @@ class MainActivity : WearCompanionWatchActivity(),
                     // centred artist because it rides as a start compound drawable on a
                     // match_parent view) - applyClassicSourceIcon now reads this instead.
                     inAmbient = true
+                    // Before applyAmbientPresentation below writes the AOD alphas: a slide still
+                    // running would go on driving the same property towards zero behind it, and
+                    // its deferred arrival would put the interactive opacity back.
+                    finishClassicTextSlides()
                     updateDoublePinchInteractivity()
                     // Order matters: disable first so the refresh below is a true one-shot rather
                     // than restarting the 500ms loop we are trying to stop.
@@ -6588,6 +6799,9 @@ class MainActivity : WearCompanionWatchActivity(),
                     }
                     // Restores the source-icon glyph the ambient pass cleared.
                     applyClassicSourceIcon()
+                    // The counterpart to the freeze in applyAmbientPresentation.
+                    binding.textTitle.setMarqueePaused(false)
+                    binding.textArtist.setMarqueePaused(false)
                     binding.classicTextBlock.alpha = 1f
                     binding.ambientClock.alpha = 1f
                     // Restore the user's awake-clock colour/font, not the raw layout default -
@@ -6650,7 +6864,7 @@ class MainActivity : WearCompanionWatchActivity(),
                     // which each keep their own literal.
                     binding.textTitle.setTextColor(resolvedTitleTextColor() ?: Color.WHITE)
                     binding.textArtist.setTextColor(
-                            if (!isMusicPlaying && binding.textArtist.text?.isNotEmpty() == true) {
+                            if (!isMusicPlaying && classicArtistText.isNotEmpty()) {
                                 Color.WHITE
                             } else {
                                 resolvedArtistTextColor()
@@ -7069,8 +7283,8 @@ class MainActivity : WearCompanionWatchActivity(),
             binding.quickActionUpNextIcon.setColorFilter(upNextTint)
         }
 
-        binding.quickActionPanelTitle.text = binding.textTitle.text
-        binding.quickActionPanelArtist.text = binding.textArtist.text
+        binding.quickActionPanelTitle.text = classicTitleText
+        binding.quickActionPanelArtist.text = classicArtistText
         // Unlike the Up Next row and the round buttons, the title/artist sit directly on the
         // overlay BACKDROP (dark blur/tonal/black), not on a per-style capsule - so their colour
         // must contrast with the backdrop. quickPanelInactiveTint() is the capsule chrome colour,
@@ -8231,8 +8445,9 @@ class MainActivity : WearCompanionWatchActivity(),
             )
         }
 
-        // A custom long-row action shows its own title instead of queue data. The AOD state above
-        // still gets refreshed because its Up Next pill is a separate, display-only surface.
+        // The panel's Up Next row only shows queue data while it is that row: the session layout
+        // and its unavailable state repurpose it. The AOD state above still gets refreshed because
+        // its Up Next pill is a separate, display-only surface.
         if (quickPanelLongMode != QuickLongMode.UP_NEXT) return
 
         val artwork = nextItem?.icon

@@ -7,6 +7,7 @@ import android.os.Looper
 import androidx.annotation.MainThread
 import androidx.core.content.ContextCompat
 import com.google.android.gms.wearable.MessageEvent
+import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.common.CommPaths
 import timber.log.Timber
 
@@ -53,8 +54,25 @@ internal object WatchCommandDelivery {
                 // Android may reject an FGS start while fully backgrounded. MessageClient does
                 // not replay the command, and replaying a discrete action ourselves is unsafe.
                 Timber.w(e, "Could not start MusicService for %s", command.path)
+                reportNotExecuted(context, command)
                 false
             }
         }
+    }
+
+    /**
+     * Tells the watch that the command it just sent was dropped.
+     *
+     * Without this the refusal above is invisible from the other device - the send succeeded, so
+     * the watch shows the skip or the pause it optimistically applied and goes on predicting from
+     * it, which is the "the watch thinks it is working but the phone does nothing until I unlock
+     * it" report. Best-effort by nature: if the reply cannot be delivered either, the watch is
+     * left exactly where it was, which is no worse than before.
+     */
+    private fun reportNotExecuted(context: Context, command: WatchCommand) {
+        Wearable.getMessageClient(context)
+                .sendMessage(command.sourceNodeId, CommPaths.MESSAGE_COMMAND_NOT_EXECUTED,
+                        ByteArray(0))
+                .addOnFailureListener { Timber.w(it, "Could not tell the watch about the drop") }
     }
 }

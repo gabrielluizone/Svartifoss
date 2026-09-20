@@ -13,6 +13,12 @@
          the phone connection alive while music plays / the UI is open and shows a transport
          OngoingActivity, so mediaPlayback is the closest-fitting type. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
+    <!-- The other foreground service, wearutils' LogTransmitter: it streams this watch's log
+         files to the phone over a Data Layer channel, which is what dataSync describes. It
+         declares no type of its own (the library predates the requirement) and calls
+         startForeground() in onCreate, so without this the "send logs" diagnostic died with
+         MissingForegroundServiceTypeException the moment the phone asked for logs. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
     <!-- targetSdk 33+ (Android 13): notifications, including the foreground service's
          OngoingActivity, require this permission. Requested once at runtime in MainActivity so
          the notification keeps showing as it did pre-33. -->
@@ -198,7 +204,12 @@
              self-update path) are registered by the `github` flavor only
              (src/github/AndroidManifest.xml). -->
 
-        <service android:name="com.matejdro.wearutils.logging.LogTransmitter" />
+        <!-- The type has to be declared here rather than in wearutils: the library's own manifest
+             carries no entry at all (@SuppressLint("Registered") - it is optional there), so this
+             declaration is the only one the merger sees. See FOREGROUND_SERVICE_DATA_SYNC above. -->
+        <service
+            android:name="com.matejdro.wearutils.logging.LogTransmitter"
+            android:foregroundServiceType="dataSync" />
 
         <service
             android:name="pl.tajchert.exceptionwear.ExceptionService"
@@ -213,9 +224,9 @@
         <service
             android:name=".watch.tile.MediaTileService"
             android:exported="true"
-            android:label="@string/tile_label"
+            android:label="@string/queue_now_playing"
             android:description="@string/tile_description"
-            android:icon="@drawable/ic_complication_picker"
+            android:icon="@drawable/ic_tile_now_playing"
             android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
             <intent-filter>
                 <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />
@@ -223,16 +234,16 @@
 
             <meta-data
                 android:name="androidx.wear.tiles.PREVIEW"
-                android:resource="@drawable/tile_preview" />
+                android:resource="@drawable/tile_media_preview" />
         </service>
 
         <!-- Browse Tile: the user's streaming shortcuts, one tap away -->
         <service
             android:name=".watch.tile.ShortcutsTileService"
             android:exported="true"
-            android:label="@string/shortcuts_tile_label"
+            android:label="@string/shortcuts_tile_title"
             android:description="@string/shortcuts_tile_description"
-            android:icon="@drawable/ic_complication_picker"
+            android:icon="@drawable/ic_tile_shortcuts"
             android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
             <intent-filter>
                 <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />
@@ -240,7 +251,7 @@
 
             <meta-data
                 android:name="androidx.wear.tiles.PREVIEW"
-                android:resource="@drawable/tile_preview" />
+                android:resource="@drawable/tile_shortcuts_preview" />
         </service>
 
         <!-- Watch-face complication: current album cover, tap to open the player -->

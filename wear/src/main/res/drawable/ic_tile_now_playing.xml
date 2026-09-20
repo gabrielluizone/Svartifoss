@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picker icon for the Now playing Tile. Kept separate from the complication provider so the
+     two system surfaces do not collapse into one indistinguishable Svartifoss entry. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M12,2A10,10 0,1 0,12,22A10,10 0,1 0,12,2"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M10,7.7L17,12L10,16.3Z" />
+</vector>

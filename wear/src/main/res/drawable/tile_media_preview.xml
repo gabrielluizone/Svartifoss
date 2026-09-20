@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Static picker preview for the Now playing Tile. The hierarchy mirrors the live surface:
+     playback context, track identity, primary transport, then compact volume actions. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="200dp"
+    android:viewportWidth="200"
+    android:viewportHeight="200">
+    <path
+        android:fillColor="#000000"
+        android:pathData="M0,0H200V200H0Z" />
+
+    <!-- Now-playing eyebrow and track placeholders. -->
+    <path
+        android:fillColor="#87A89F"
+        android:pathData="M76,35H124V40H76Z" />
+    <path
+        android:fillColor="#F4F4F4"
+        android:pathData="M49,49H151V59H49Z" />
+    <path
+        android:fillColor="#8F8F94"
+        android:pathData="M70,66H130V72H70Z" />
+
+    <!-- Previous / play / next. -->
+    <path
+        android:fillColor="#202023"
+        android:pathData="M50,91A24,24 0,1 0,50,139A24,24 0,1 0,50,91" />
+    <path
+        android:fillColor="#F4F4F4"
+        android:pathData="M54,104V126L38,115ZM35,104H39V126H35Z" />
+    <path
+        android:fillColor="#87A89F"
+        android:pathData="M100,82A33,33 0,1 0,100,148A33,33 0,1 0,100,82" />
+    <path
+        android:fillColor="#000000"
+        android:pathData="M93,99L119,115L93,131Z" />
+    <path
+        android:fillColor="#202023"
+        android:pathData="M150,91A24,24 0,1 0,150,139A24,24 0,1 0,150,91" />
+    <path
+        android:fillColor="#F4F4F4"
+        android:pathData="M146,104V126L162,115ZM161,104H165V126H161Z" />
+
+    <!-- Compact volume row. -->
+    <path
+        android:fillColor="#202023"
+        android:pathData="M46,158H74A14,14 0,0 1,88,172A14,14 0,0 1,74,186H46A14,14 0,0 1,32,172A14,14 0,0 1,46,158" />
+    <path
+        android:fillColor="#BFC0C3"
+        android:pathData="M44,168H51L59,162V182L51,176H44ZM62,167C66,169 68,170 68,172C68,175 66,177 62,179V176C64,175 65,174 65,172C65,170 64,169 62,168Z" />
+    <path
+        android:fillColor="#202023"
+        android:pathData="M126,158H154A14,14 0,0 1,168,172A14,14 0,0 1,154,186H126A14,14 0,0 1,112,172A14,14 0,0 1,126,158" />
+    <path
+        android:fillColor="#BFC0C3"
+        android:pathData="M124,168H131L139,162V182L131,176H124ZM142,167C146,169 148,170 148,172C148,175 146,177 142,179V176C144,175 145,174 145,172C145,170 144,169 142,168ZM148,162C153,165 156,168 156,172C156,177 153,180 148,182V179C151,177 153,175 153,172C153,169 151,167 148,165Z" />
+</vector>

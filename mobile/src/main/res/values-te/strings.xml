@@ -111,14 +111,6 @@
     <string name="watch_element_queue">క్యూ</string>
     <string name="watch_element_lyrics">పాట సాహిత్యం</string>
     <string name="player_section_on_screen">స్క్రీన్‌పై</string>
-    <string name="player_element_app_icon">యాప్ ఐకాన్</string>
-    <string name="player_element_controls">ప్లేయర్ కంట్రోల్స్</string>
-    <string name="player_element_tap_flash">ట్యాప్ ఫ్లాష్</string>
-    <string name="player_element_inner_progress">ఇన్నర్ ప్రోగ్రెస్</string>
-    <string name="player_element_edge_arc">ఎడ్జ్ ఆర్క్</string>
-    <string name="player_element_edge_seek">ఎడ్జ్ సీక్</string>
-    <string name="player_element_clock">గడియారం</string>
-    <string name="player_element_cover_art">కవర్ ఆర్ట్</string>
     <string name="setting_album_art_filter">ఆల్బమ్ ఆర్ట్ ఫిల్టర్</string>
     <string name="setting_album_art_filter_description">ఏ ఆల్బమ్ ఆర్ట్ స్టైల్‌పైనైనా స్వతంత్ర రంగు ట్రీట్‌మెంట్‌ను వర్తింపజేయండి.</string>
     <string name="wear_font_roboto_thin">Roboto Thin</string>
@@ -349,7 +341,6 @@
     <string name="aod_control_brightness">బ్రైట్‌నెస్</string>
     <string name="aod_control_art_treatment">ట్రీట్‌మెంట్</string>
     <string name="aod_control_art_opacity">అపాసిటీ</string>
-    <string name="mini_button_control_visibility">చూపించు</string>
     <string name="mini_button_control_arrangement">అమరిక</string>
     <string name="mini_button_control_shape">ఆకారం</string>
     <string name="mini_button_control_background">బ్యాక్‌గ్రౌండ్</string>
@@ -616,6 +607,29 @@
     <string name="actions_moved_to_position">%1$s ను %3$d లో %2$d స్థానానికి తరలించారు.</string>
     <string name="actions_empty">ఇంకా చర్యలు లేవు. మొదటిదాన్ని సృష్టించడానికి జోడించు బటన్‌ను ఉపయోగించండి.</string>
     <string name="actions_add">చర్యను జోడించు</string>
+    <string name="add_menu_title">గడియారం మెనూకి జోడించు</string>
+    <string name="add_menu_subtitle">ఒక చర్యను ఎంచుకోండి, లేదా playlist, ఆల్బమ్ లేదా track లింక్‌ను పేస్ట్ చేయండి.</string>
+    <string name="add_menu_link_hint">లింక్ (Spotify, YouTube Music, Deezer…)</string>
+    <string name="add_menu_paste">పేస్ట్ చేయండి</string>
+    <string name="add_menu_get_name">లింక్ నుండి పేరును పొందండి</string>
+    <string name="add_menu_looking_up">పేరు కోసం వెతుకుతోంది…</string>
+    <string name="add_menu_lookup_failed">ఈ లింక్‌కు పేరు కనుగొనబడలేదు. బదులుగా ఒకటి టైప్ చేయండి.</string>
+    <string name="add_menu_lookup_unsupported">ఈ సేవ పేర్లను షేర్ చేయదు. బదులుగా ఒకటి టైప్ చేయండి.</string>
+    <string name="add_menu_add">మెనూకి జోడించు</string>
+    <string name="add_menu_added">“%1$s” మెనూకి జోడించబడింది</string>
+    <string name="add_menu_already">“%1$s” ఇప్పటికే మెనూలో ఉంది</string>
+    <string name="add_menu_saved_title">సేవ్ చేసిన shortcuts</string>
+    <string name="add_menu_actions_title">ఒక చర్యను ఎంచుకోండి</string>
+    <string name="add_menu_actions_desc">playback, వాల్యూమ్, గడియారం స్క్రీన్‌లు, apps, Tasker…</string>
+    <string name="add_menu_or_link">లేదా ఒక లింక్‌ను జోడించండి</string>
+    <string name="add_link_title">లింక్‌ను జోడించు</string>
+    <string name="add_link_subtitle">playlist, ఆల్బమ్ లేదా track లింక్‌ను పేస్ట్ చేయండి. ఇది streaming shortcuts‌లో సేవ్ అయి వెంటనే ఉపయోగించబడుతుంది.</string>
+    <string name="add_link_use">ఈ లింక్‌ను ఉపయోగించు</string>
+    <plurals name="add_menu_add_selected">
+        <item quantity="one">మెనూకి %1$d జోడించు</item>
+        <item quantity="other">మెనూకి %1$d జోడించు</item>
+    </plurals>
+    <string name="add_menu_in_menu">మెనూలో ఉంది</string>
     <string name="on_screen_buttons">టచ్ జోన్‌లు</string>
     <string name="physical_buttons">భౌతిక బటన్‌లు</string>
     <string name="physical_buttons_disconnected">భౌతిక బటన్‌లను కాన్ఫిగర్ చేయడానికి గడియారంలో Svartifoss ను కనెక్ట్ చేసి తెరవండి. టచ్ జోన్‌లు, swipes మరియు మినీ బటన్‌లు ఇప్పుడే అందుబాటులో ఉన్నాయి.</string>
@@ -864,7 +878,6 @@
     <string name="quick_panel_slot_1">బటన్ 1</string>
     <string name="quick_panel_slot_2">బటన్ 2</string>
     <string name="quick_panel_slot_3">బటన్ 3</string>
-    <string name="quick_panel_slot_long">పొడవైన బటన్</string>
     <string name="quick_panel_slot_default">%1$s (డిఫాల్ట్)</string>
     <string name="quick_panel_slot_hidden">దాచబడింది</string>
     <string name="quick_panel_default_like">ఇష్టం</string>
@@ -1715,7 +1728,6 @@
     <string name="setting_wear_note_cover_shape">నోట్ కవర్ ఆకారం</string>
     <string name="setting_wear_title_centered">శీర్షికను మధ్యలో ఉంచండి</string>
     <string name="setting_wear_title_centered_description">మొత్తం టెక్స్ట్ బ్లాక్‌కు బదులుగా శీర్షికను స్క్రీన్ మధ్యలో స్థిరపరచండి</string>
-    <string name="player_element_title_centered">మధ్యలో శీర్షిక</string>
     <string-array name="wear_cover_shape_entries">
         <item>గుండ్రని</item>
         <item>చతురస్రం</item>
@@ -1959,6 +1971,7 @@
     <string name="drawer_support_heading">మద్దతు</string>
     <string name="drawer_support_summary">Svartifoss ఉచితం మరియు open source - మీకు ఉపయోగకరంగా ఉంటే నాకు ఒక coffee కొనిపెట్టండి :D</string>
     <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">కవర్ ఆర్ట్ డౌన్‌లోడ్ చేయండి</string>
     <string name="album_art_saved">కవర్ ఆర్ట్ గ్యాలరీలో సేవ్ అయింది</string>
     <string name="album_art_save_error">కవర్ ఆర్ట్ సేవ్ చేయడం విఫలమైంది</string>
@@ -1966,11 +1979,17 @@
     <string name="action_play_spotify_liked_songs">లైక్ చేసిన పాటలను ప్లే చేయండి (Spotify)</string>
     <string name="action_play_soundcloud_likes">లైక్ చేసిన ట్రాక్‌లను ప్లే చేయండి (SoundCloud)</string>
     <string name="action_my_playlists">స్ట్రీమింగ్ షార్ట్‌కట్‌లు</string>
-    <string name="action_play_specific_playlist">స్ట్రీమింగ్ షార్ట్‌కట్ తెరవండి</string>
-    <string name="action_choose_or_add_streaming_shortcut">స్ట్రీమింగ్ షార్ట్‌కట్‌ను ఎంచుకోండి లేదా జోడించండి</string>
     <string name="action_show_streaming_library">సేవ్ చేసిన అన్ని షార్ట్‌కట్‌లను చూపించండి</string>
-    <string name="playlist_shortcut_pick_title">షార్ట్‌కట్ ఎంచుకోండి</string>
-    <string name="playlist_shortcut_pick_empty">ఇంకా streaming shortcuts సేవ్ చేయలేదు — కింద ఒకదాన్ని జోడించి, ఎంచుకోవడానికి దానిపై ట్యాప్ చేయండి</string>
+    <string name="picker_section_apps">Apps &amp; ఆటోమేషన్</string>
+    <string name="picker_chip_playback">Playback</string>
+    <string name="picker_chip_volume">వాల్యూమ్</string>
+    <string name="picker_chip_screens">స్క్రీన్‌లు</string>
+    <string name="picker_chip_find">సంగీతాన్ని కనుగొను</string>
+    <string name="picker_chip_streaming">Streaming</string>
+    <string name="picker_chip_apps">Apps</string>
+    <string name="picker_play_with_app">ఒక app‌తో ప్లే చేయి</string>
+    <string name="picker_add_link">లింక్‌ను జోడించు</string>
+    <string name="picker_add_link_desc">playlist, ఆల్బమ్ లేదా track పేస్ట్ చేయండి</string>
     <string name="playlist_shortcuts_empty">ఇంకా streaming shortcuts లేవు — ఫోన్ యాప్ సెట్టింగ్స్‌లో జోడించండి</string>
     <string name="setting_playlist_shortcuts">స్ట్రీమింగ్ షార్ట్‌కట్‌లు</string>
     <string name="setting_playlist_shortcuts_description">వాచ్ నుండి share links‌ను YouTube Music, Spotify మరియు ఇతర streaming apps‌లో తెరవండి</string>

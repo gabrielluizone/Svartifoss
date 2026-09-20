@@ -329,6 +329,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/screen_button_container" />
 
+        <!-- Aligned on the caption's baseline rather than centred on its box. The caption keeps
+             the default font padding, and Google Sans' bounding box sits much further below the
+             letters than above them, so the box's centre is about 2dp under the centre of the
+             capitals - centring on it put the pill visibly lower than the text beside it. -->
         <TextView
             android:id="@+id/hand_gestures_beta"
             android:layout_width="wrap_content"
@@ -343,9 +347,8 @@
             android:textColor="@color/lyra_accent"
             android:textSize="9sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/hand_gestures_caption"
-            app:layout_constraintStart_toEndOf="@+id/hand_gestures_caption"
-            app:layout_constraintTop_toTopOf="@+id/hand_gestures_caption" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/hand_gestures_caption"
+            app:layout_constraintStart_toEndOf="@+id/hand_gestures_caption" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/hand_gestures_heading_bottom"

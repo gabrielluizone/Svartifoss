@@ -54,6 +54,14 @@ class ActionListViewModel @Inject constructor(@param:LocalActivityConfig val act
         saveActions()
     }
 
+    /** Adds several actions with one save, so a bulk add is one write and one send to the watch
+     *  rather than one per row. */
+    fun addActions(newActions: List<PhoneAction>) {
+        if (newActions.isEmpty()) return
+        newActions.forEach { actionStore.add(itemFromPhoneAction(it)) }
+        saveActions()
+    }
+
     /**
      * Rebuilds the list from the shared config so external edits are picked up - e.g. renaming or
      * repointing a saved streaming shortcut updates its assigned copies (see

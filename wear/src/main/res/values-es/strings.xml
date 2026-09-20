@@ -32,6 +32,7 @@
     <string name="idle_action_queue">Abrir lo reproducido recientemente</string>
 
     <string name="no_phone">No hay teléfono conectado</string>
+    <string name="phone_unavailable">Desbloquea el teléfono para controlar la reproducción</string>
     <string name="playback_stopped">Detenido</string>
     <string name="error">ERROR</string>
     <string name="error_play_services">Error de Play Services</string>

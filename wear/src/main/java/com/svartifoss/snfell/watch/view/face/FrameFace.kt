@@ -4,7 +4,6 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -32,8 +31,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -236,20 +233,17 @@ private fun BoxScope.FrameArtwork(state: NowPlayingFaceState, screen: Dp, conten
     ) {
         // Frame's artwork is authored inside its card, just as Note's cover disc is. HIDDEN is
         // the default *backdrop* for this face, not an instruction to remove the card's subject.
-        val art = state.albumArt
-        if (art != null) {
-            val grayscale = if (state.albumArtGrayscale) {
-                ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
-            } else {
-                null
-            }
-            Image(
-                    painter = BitmapPainter(art),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    colorFilter = grayscale,
-                    modifier = Modifier.fillMaxSize())
+        val grayscale = if (state.albumArtGrayscale) {
+            ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
         } else {
+            null
+        }
+        FaceCoverImage(
+                state = state,
+                art = state.albumArt,
+                modifier = Modifier.fillMaxSize(),
+                colorFilter = grayscale
+        ) {
             Canvas(Modifier.fillMaxSize()) {
                 drawRect(Brush.linearGradient(listOf(
                         Color(state.secondaryAccentColor).copy(alpha = .72f),

@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Mở danh sách vừa phát</string>
 
     <string name="no_phone">Chưa kết nối điện thoại</string>
+    <string name="phone_unavailable">Mở khóa điện thoại để điều khiển phát nhạc</string>
     <string name="playback_stopped">Đã dừng</string>
     <string name="error">LỖI</string>
     <string name="error_play_services">Lỗi Play Services</string>

@@ -18,6 +18,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.ColorUtils
 import androidx.core.view.isVisible
@@ -2419,48 +2420,36 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // The controls gated by another preference rather than by the face. All of them belong to
         // the shared edge ring, so switching that ring off leaves them with nothing to act on, and
         // a picker that changes nothing reads as broken - the same reason the control-style and
-        // per-face rows above are hidden rather than merely inert.
-        //
-        // The two gates differ and both are mirrored in WatchSearchTargetResolver, which must move
-        // with them. The position mark needs the *resting* ring, since that is what it marks. The
-        // ring's own style, layout and gradient survive on edge seek alone, because a drag reveals
-        // the ring whether or not it rests on screen. And the gradient needs the solid ring on top
-        // of that: it is the one style that blends the companion colours.
-        val edgeArcOn = store.getBoolean(
-                MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key,
-                MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.defaultValue)
-        val ringReachable = edgeArcOn || store.getBoolean(
-                MiscPreferences.WEAR_EDGE_SEEK_ENABLED.key,
-                MiscPreferences.WEAR_EDGE_SEEK_ENABLED.defaultValue)
-        val solidRing = readStringPreference(
-                MiscPreferences.WEAR_PROGRESS_STYLE.key,
-                MiscPreferences.WEAR_PROGRESS_STYLE.defaultValue) == "solid"
+        // per-face rows above are hidden rather than merely inert. The gates themselves live in
+        // PlayerEditorModel.isRevealed, where they are pinned by a test; the two that mirror them
+        // in WatchSearchTargetResolver must move with them.
+        val ring = RingState(
+                edgeArcOn = store.getBoolean(
+                        MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.key,
+                        MiscPreferences.WEAR_EDGE_PROGRESS_VISIBLE.defaultValue),
+                edgeSeekOn = store.getBoolean(
+                        MiscPreferences.WEAR_EDGE_SEEK_ENABLED.key,
+                        MiscPreferences.WEAR_EDGE_SEEK_ENABLED.defaultValue),
+                solid = readStringPreference(
+                        MiscPreferences.WEAR_PROGRESS_STYLE.key,
+                        MiscPreferences.WEAR_PROGRESS_STYLE.defaultValue) == "solid")
 
-        renderPlayerChips(
-                root.findViewById(R.id.player_editor_element_chips),
-                PlayerEditorModel.visibleIn(PlayerSlot.ELEMENT, face).filter { spec ->
-                    spec.control != PlayerControl.RING_GRADIENT || (ringReachable && solidRing)
-                })
-        renderPlayerChoiceRows(
-                root.findViewById(R.id.player_editor_choice_rows),
-                PlayerEditorModel.visibleIn(PlayerSlot.CHOICE, face).filter { spec ->
-                    when (spec.control) {
-                        PlayerControl.SEEK_MARKER -> edgeArcOn
-                        PlayerControl.RING_STYLE, PlayerControl.RING_LAYOUT -> ringReachable
-                        else -> true
-                    }
-                })
+        // One palette for the whole render: the accent follows the album art, and rows tinted from
+        // separate lookups could land a frame apart.
+        val palette = editorPalette()
+        val rowColors = editorRowColors(palette)
+
+        renderPlayerGroups(
+                root.findViewById(R.id.player_editor_groups), face, ring, palette, rowColors)
 
         val details = PlayerEditorModel.visibleIn(PlayerSlot.DETAIL, face)
         root.findViewById<View>(R.id.player_editor_details_card).isVisible = details.isNotEmpty()
         renderPlayerChips(root.findViewById(R.id.player_editor_detail_chips), details)
 
-        val keepScreenOn = root.findViewById<SwitchMaterial>(
-                R.id.player_editor_keep_screen_on_switch)
-        bindPlayerSwitch(
-                keepScreenOn,
-                MiscPreferences.WEAR_KEEP_SCREEN_ON.key,
-                MiscPreferences.WEAR_KEEP_SCREEN_ON.defaultValue)
+        renderPlayerRows(
+                root.findViewById(R.id.player_editor_behaviour_rows),
+                PlayerEditorModel.visibleIn(PlayerSlot.BEHAVIOUR, face),
+                rowColors)
 
         PlayerEditorModel.keyFor(PlayerControl.RESET_FACE)?.let { key ->
             val button = root.findViewById<MaterialButton>(R.id.player_editor_reset_button)
@@ -2476,7 +2465,11 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     }
 
     /**
-     * Rebuilds a chip field from [specs].
+     * Rebuilds the Metadata face's block chips from [specs].
+     *
+     * Chips survive here and nowhere else on the page, because these really are the one question
+     * asked several times over - "is this block in the table?" - with a noun each and nothing to
+     * explain. Every other setting is a row, which has room for a description.
      *
      * Cleared first: this runs on every rebind, and appending without clearing would stack another
      * full set of chips each time the editor refreshed - which, since toggling a chip refreshes it,
@@ -2491,42 +2484,128 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             group.addView(
                     newEditorChip(
                             key = spec.key,
-                            // The short noun where one exists; the sentence otherwise. See
-                            // PlayerSettingSpec.
-                            label = spec.chipLabelRes?.let(::getString) ?: title,
+                            label = title,
                             description = title,
                             checked = store.getBoolean(spec.key, toggle.defaultValue),
                             onToggle = { checked -> commitPlayerBoolean(spec.key, checked) }))
         }
     }
 
-    /** Rebuilds the multi-way pickers. Cleared first, for the reason [renderPlayerChips] gives. */
-    private fun renderPlayerChoiceRows(container: LinearLayout, specs: List<PlayerSettingSpec>) {
+    /**
+     * Rebuilds the subject cards, one per [PlayerSlot] group the face has rows for.
+     *
+     * Cleared first, for the reason [renderPlayerChips] gives: this runs on every rebind, and
+     * toggling a setting rebinds. A group with nothing to show is not drawn at all rather than
+     * drawn empty - on most faces the whole Layout card is absent.
+     */
+    private fun renderPlayerGroups(
+            container: LinearLayout,
+            face: String,
+            ring: RingState,
+            palette: EditorPalette,
+            rowColors: EditorRowColors
+    ) {
         container.removeAllViews()
-        container.isVisible = specs.isNotEmpty()
-        specs.forEach { spec ->
-            val visibilityKey = PlayerEditorModel.COVER_VISIBILITY_BY_SHAPE[spec.key]
-            val button = newEditorChoiceRow(spec.key) {
-                if (visibilityKey != null) showCoverShapeDialog(spec.key, visibilityKey)
-                else openPreferenceDialog(spec.key)
-            }
-            bindPlayerChoiceRow(button, spec.key)
-            container.addView(button)
+        PlayerEditorModel.GROUPS.forEach { slot ->
+            val specs = PlayerEditorModel.revealedIn(slot, face, ring)
+            if (specs.isEmpty()) return@forEach
+            renderPlayerRows(
+                    inflateEditorGroupCard(container, slot.headingRes, palette),
+                    specs,
+                    rowColors)
         }
     }
 
-    /** A picker row reads "<what it is> · <what it is set to>": the label alone would not say. */
-    private fun bindPlayerChoiceRow(button: MaterialButton, key: String) {
-        val default = (PlayerEditorModel.specFor(key)?.value as? PlayerValueSpec.Choice)
-                ?.defaultValue ?: ""
-        val title = findPreference<Preference>(key)?.title ?: key
-        val label = if (coverHiddenFor(key)) {
-            getString(R.string.player_cover_hidden)
-        } else {
-            choiceLabel(key, readStringPreference(key, default))
+    /** Rebuilds the rows of one card. Cleared first, for the reason [renderPlayerChips] gives. */
+    private fun renderPlayerRows(
+            container: LinearLayout,
+            specs: List<PlayerSettingSpec>,
+            colors: EditorRowColors
+    ) {
+        container.removeAllViews()
+        container.isVisible = specs.isNotEmpty()
+        specs.forEach { spec -> bindPlayerRow(container, spec, colors)?.let(container::addView) }
+    }
+
+    /**
+     * One row for [spec], titled and described by the real Preference it is a view over.
+     *
+     * The title and the description are the ones the legacy row has always carried, so the words
+     * are already translated and cannot drift from what search shows for the same setting. A
+     * picker adds what it is currently set to; a toggle adds its switch.
+     */
+    private fun bindPlayerRow(
+            parent: ViewGroup,
+            spec: PlayerSettingSpec,
+            colors: EditorRowColors
+    ): View? {
+        val preference = findPreference<Preference>(spec.key)
+        val title = preference?.title ?: spec.key
+        val row = EditorSettingRow.inflate(parent, colors)
+        when (val value = spec.value) {
+            is PlayerValueSpec.Toggle -> {
+                val checked = store.getBoolean(spec.key, value.defaultValue)
+                row.bindToggle(
+                        key = spec.key,
+                        titleText = title,
+                        descriptionText = describePlayerSetting(spec, preference, checked),
+                        checked = checked,
+                        onToggle = { on -> commitPlayerBoolean(spec.key, on) })
+            }
+            is PlayerValueSpec.Choice -> {
+                val visibilityKey = PlayerEditorModel.COVER_VISIBILITY_BY_SHAPE[spec.key]
+                row.bindChoice(
+                        key = spec.key,
+                        titleText = title,
+                        valueText = playerChoiceValue(spec.key, value),
+                        descriptionText = describePlayerSetting(spec, preference, null),
+                        onClick = {
+                            if (visibilityKey != null) showCoverShapeDialog(spec.key, visibilityKey)
+                            else openPreferenceDialog(spec.key)
+                        })
+            }
+            // A confirmation button rather than a value: it has its own fixed control.
+            PlayerValueSpec.Action -> return null
         }
-        button.text = "$title · $label"
-        button.contentDescription = buildPreferenceDescription(key, label)
+        return row.view
+    }
+
+    /** What a picker is currently set to, or "Hidden" when its face is drawing no cover at all. */
+    private fun playerChoiceValue(key: String, spec: PlayerValueSpec.Choice): CharSequence =
+            if (coverHiddenFor(key)) {
+                getString(R.string.player_cover_hidden)
+            } else {
+                choiceLabel(key, readStringPreference(key, spec.defaultValue))
+            }
+
+    /**
+     * The sentence under a row's title, or null when there is nothing to say beyond the title.
+     *
+     * In order of preference: the description the spec declares, which exists for the pickers whose
+     * summary is only their current value; the switch's own on/off summary, which is what tells
+     * someone what "Always show time" does *right now*; and the Preference's plain summary, unless
+     * that summary is just the current value again.
+     *
+     * A ListPreference declared with `summary="%s"` reports the label of its selected entry, which
+     * the row already shows on the right, so repeating it underneath would read as help text.
+     * Comparing against the *entries* rather than the stored value is deliberate: the Preference
+     * object can be a step behind the face-scoped store, and a stale value must not leak into the
+     * page as if it were a description.
+     */
+    private fun describePlayerSetting(
+            spec: PlayerSettingSpec,
+            preference: Preference?,
+            checked: Boolean?
+    ): CharSequence? {
+        spec.descriptionRes?.let { return getString(it) }
+        val stateSummary = (preference as? TwoStatePreference)?.let {
+            if (checked == true) it.summaryOn else it.summaryOff
+        }
+        val summary = (stateSummary ?: preference?.summary)?.takeIf { it.isNotBlank() }
+                ?: return null
+        val entries = (preference as? ListPreference)?.entries
+        if (entries != null && entries.any { it.toString() == summary.toString() }) return null
+        return summary
     }
 
     /** Whether [shapeKey] is a cover picker whose face currently draws no cover at all. */
@@ -2587,16 +2666,6 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         button.tag = key
     }
 
-    private fun bindPlayerSwitch(switch: SwitchMaterial, key: String, defaultValue: Boolean) {
-        switch.setOnCheckedChangeListener(null)
-        switch.text = findPreference<Preference>(key)?.title ?: switch.text
-        switch.isChecked = store.getBoolean(key, defaultValue)
-        // SwitchMaterial already announces its checked state in the active locale.
-        switch.contentDescription = switch.text
-        switch.tag = key
-        switch.setOnCheckedChangeListener { _, checked -> commitPlayerBoolean(key, checked) }
-    }
-
     private fun commitPlayerBoolean(key: String, value: Boolean) {
         val preference = findPreference<TwoStatePreference>(key)
         if (preference != null && preference.callChangeListener(value)) {
@@ -2608,86 +2677,27 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     }
 
     private fun tintPlayerEditor(root: View) {
-        val surface = ContextCompat.getColor(requireContext(), R.color.lyra_surface)
-        val rawAccent = lyraRuntimeAccent()
-        val accent = LyraAccent.contrastSafe(rawAccent, surface, minimumContrast = 3.0)
-        val textAccent = LyraAccent.contrastSafe(rawAccent, surface, minimumContrast = 4.5)
-        val onSurface = ContextCompat.getColor(requireContext(), R.color.lyra_on_surface)
-        val secondary = ContextCompat.getColor(requireContext(), R.color.lyra_text_secondary)
-        val divider = ContextCompat.getColor(requireContext(), R.color.lyra_divider)
+        val palette = editorPalette()
 
+        // The subject cards tint their own heading and rows as they are built, from the palette
+        // renderPlayerEditor resolved for the same pass, so only what the layout declares is
+        // tinted here.
         listOf(
                 R.id.player_editor_face_heading,
-                R.id.player_editor_elements_heading,
                 R.id.player_editor_details_heading
-        ).forEach { root.findViewById<TextView>(it)?.setTextColor(textAccent) }
+        ).forEach { root.findViewById<TextView>(it)?.setTextColor(palette.textAccent) }
 
-        // A checked chip is filled with a blend rather than the raw accent, and its content is
-        // contrast-corrected against that blend - the treatment the Community gallery's filters
-        // already use, so a selected chip means the same thing in both places.
-        val selectedContainer = ColorUtils.blendARGB(surface, accent, 0.16f)
-        val selectedContent = LyraAccent.contrastSafe(
-                accent, selectedContainer, minimumContrast = 4.5)
-        listOf(R.id.player_editor_element_chips, R.id.player_editor_detail_chips).forEach { id ->
-            val group = root.findViewById<ChipGroup>(id) ?: return@forEach
-            for (index in 0 until group.childCount) {
-                val chip = group.getChildAt(index) as? Chip ?: continue
-                val selected = chip.isChecked
-                chip.chipBackgroundColor = ColorStateList.valueOf(
-                        if (selected) selectedContainer else surface)
-                chip.chipStrokeColor = ColorStateList.valueOf(
-                        if (selected) selectedContent else divider)
-                chip.setTextColor(if (selected) selectedContent else onSurface)
-                chip.rippleColor = ColorStateList.valueOf(
-                        ContextCompat.getColor(requireContext(), R.color.lyra_ripple))
-            }
-        }
-
-        val neutralStates = arrayOf(
-                intArrayOf(-android.R.attr.state_enabled),
-                intArrayOf())
-        val neutralForegrounds = ColorStateList(neutralStates, intArrayOf(secondary, onSurface))
-        val neutralFills = ColorStateList(
-                neutralStates,
-                intArrayOf(Color.TRANSPARENT, Color.TRANSPARENT))
-        val neutralStrokes = ColorStateList(neutralStates, intArrayOf(divider, divider))
-        val choiceRows = root.findViewById<LinearLayout>(R.id.player_editor_choice_rows)
-        (0 until choiceRows.childCount)
-                .mapNotNull { choiceRows.getChildAt(it) as? MaterialButton }
-                .forEach {
-                    it.backgroundTintList = neutralFills
-                    it.setTextColor(neutralForegrounds)
-                    it.iconTint = neutralForegrounds
-                    it.strokeColor = neutralStrokes
-                }
+        tintEditorChipGroup(root.findViewById(R.id.player_editor_detail_chips), palette)
 
         // Same trap as tintTypographyEditor: LyraGestureButton's iconTint=@null leaves these
         // rows' static glyphs at the drawable's own white fill, invisible on the light theme.
+        val states = arrayOf(intArrayOf(-android.R.attr.state_enabled), intArrayOf())
+        val foregrounds = ColorStateList(states, intArrayOf(palette.secondary, palette.onSurface))
         listOf(
                 R.id.player_editor_face_button,
                 R.id.player_editor_screen_theme_button,
                 R.id.player_editor_reset_button
-        ).forEach { id -> root.findViewById<MaterialButton>(id)?.iconTint = neutralForegrounds }
-
-        val switchStates = arrayOf(
-                intArrayOf(-android.R.attr.state_enabled),
-                intArrayOf(android.R.attr.state_checked),
-                intArrayOf())
-        root.findViewById<SwitchMaterial>(R.id.player_editor_keep_screen_on_switch)?.apply {
-            thumbTintList = ColorStateList(
-                    switchStates,
-                    intArrayOf(
-                            divider,
-                            accent,
-                            ContextCompat.getColor(requireContext(), R.color.lyra_stone)))
-            trackTintList = ColorStateList(
-                    switchStates,
-                    intArrayOf(
-                            ColorUtils.setAlphaComponent(divider, 0x60),
-                            ColorUtils.setAlphaComponent(accent, 0x80),
-                            divider))
-            jumpDrawablesToCurrentState()
-        }
+        ).forEach { id -> root.findViewById<MaterialButton>(id)?.iconTint = foregrounds }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -3828,23 +3838,6 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private fun bindMiniButtonEditor(root: View) {
         root.setTag(R.id.tag_handles_accent_locally, true)
         root.disableScrollbarsInSubtree()
-
-        // What a mini button *does* is assigned on the Controls tab; this row runs the hint
-        // preference's own listener rather than carrying a second route there.
-        root.findViewById<MaterialButton>(R.id.mini_button_editor_assign_button)
-                .setOnClickListener {
-                    val key = MiniButtonEditorModel.keyFor(MiniButtonControl.ASSIGN)
-                            ?: return@setOnClickListener
-                    findPreference<Preference>(key)?.let { preference ->
-                        preference.onPreferenceClickListener?.onPreferenceClick(preference)
-                    }
-                }
-        root.findViewById<MaterialButton>(R.id.mini_button_editor_gestures_button)
-                .setOnClickListener {
-                    MiniButtonEditorModel.keyFor(MiniButtonControl.GESTURES_MODE)
-                            ?.let(::openPreferenceDialog)
-                }
-
         renderMiniButtonEditor(root)
     }
 
@@ -3852,68 +3845,69 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val face = readStringPreference(
                 MiscPreferences.WEAR_SCREEN_FACE.key,
                 MiscPreferences.WEAR_SCREEN_FACE.defaultValue)
+        val palette = editorPalette()
+        val rowColors = editorRowColors(palette)
 
-        MiniButtonEditorModel.keyFor(MiniButtonControl.ASSIGN)?.let { key ->
-            val preference = findPreference<Preference>(key)
-            val button = root.findViewById<MaterialButton>(R.id.mini_button_editor_assign_button)
-            button.text = getString(R.string.mini_button_assign_action)
-            button.contentDescription = "${preference?.title}. ${preference?.summary}"
-            button.tag = key
-            root.findViewById<TextView>(R.id.mini_button_editor_assign_note).text =
-                    preference?.summary
+        // Cleared first, for the reason renderPlayerGroups gives: this runs on every rebind.
+        val container = root.findViewById<LinearLayout>(R.id.mini_button_editor_groups)
+        container.removeAllViews()
+        MiniButtonSlot.entries.forEach { slot ->
+            val specs = MiniButtonEditorModel.visibleIn(slot, face)
+            if (specs.isEmpty()) return@forEach
+            val rows = inflateEditorGroupCard(container, slot.headingRes, palette)
+            specs.forEach { spec ->
+                bindMiniButtonRow(rows, spec, rowColors)?.let(rows::addView)
+            }
         }
 
-        renderMiniButtonRows(
-                root.findViewById(R.id.mini_button_editor_row_controls),
-                MiniButtonEditorModel.visibleIn(MiniButtonSlot.ROW, face))
-
-        bindMiniButtonRow(
-                root.findViewById(R.id.mini_button_editor_gestures_button),
-                MiscPreferences.WEAR_GESTURES_MODE.key,
-                withLabel = false)
-
-        tintMiniButtonEditor(root)
         // Must run after the rows are built - they are created here on every refresh.
         root.disableScrollbarsInSubtree()
     }
 
-    /** Rebuilds the style rows. Cleared first, for the reason [renderPlayerChips] gives. */
-    private fun renderMiniButtonRows(
-            container: LinearLayout,
-            specs: List<MiniButtonSettingSpec>
-    ) {
-        container.removeAllViews()
-        container.isVisible = specs.isNotEmpty()
-        specs.forEach { spec ->
-            val row = newEditorChoiceRow(spec.key) {
-                when (spec.value) {
-                    is MiniButtonValueSpec.Number -> showMiniButtonSlider(spec.key)
-                    else -> openPreferenceDialog(spec.key)
-                }
-            }
-            bindMiniButtonRow(row, spec.key)
-            container.addView(row)
-        }
-    }
-
-    @SuppressLint("SetTextI18n") // "Label · value" is the editor's own notation, not prose.
+    /**
+     * One row for [spec], titled by its short label where it has one and by the real Preference's
+     * own title otherwise.
+     *
+     * A picker shows what it is currently set to on the right and a slider shows its percentage;
+     * the link to Controls shows neither, only where it goes. None of them holds a value of its
+     * own: the row is a view over an existing Preference and opens that Preference's own dialog.
+     */
     private fun bindMiniButtonRow(
-            button: MaterialButton,
-            key: String,
-            withLabel: Boolean = true
-    ) {
-        val spec = MiniButtonEditorModel.specFor(key) ?: return
-        val label = when (val value = spec.value) {
-            is MiniButtonValueSpec.Number ->
-                "${store.getInt(key, value.defaultValue).coerceIn(value.range)}%"
-            is MiniButtonValueSpec.Choice -> choiceLabel(key, readStringPreference(key, value.defaultValue))
-            MiniButtonValueSpec.Action -> return
+            parent: ViewGroup,
+            spec: MiniButtonSettingSpec,
+            colors: EditorRowColors
+    ): View? {
+        val preference = findPreference<Preference>(spec.key)
+        val fullTitle = preference?.title ?: spec.key
+        val title = spec.labelRes?.let(::getString) ?: fullTitle
+        val description = spec.descriptionRes?.let(::getString)
+        val row = EditorSettingRow.inflate(parent, colors)
+        when (val value = spec.value) {
+            is MiniButtonValueSpec.Number -> row.bindChoice(
+                    key = spec.key,
+                    titleText = title,
+                    valueText = "${store.getInt(spec.key, value.defaultValue).coerceIn(value.range)}%",
+                    descriptionText = description,
+                    spokenTitle = fullTitle,
+                    onClick = { showMiniButtonSlider(spec.key) })
+            is MiniButtonValueSpec.Choice -> row.bindChoice(
+                    key = spec.key,
+                    titleText = title,
+                    valueText = choiceLabel(spec.key, readStringPreference(spec.key, value.defaultValue)),
+                    descriptionText = description,
+                    spokenTitle = fullTitle,
+                    onClick = { openPreferenceDialog(spec.key) })
+            // What a mini button *does* is assigned on the Controls tab; the row runs the hint
+            // preference's own listener rather than carrying a second route there.
+            MiniButtonValueSpec.Action -> row.bindLink(
+                    key = spec.key,
+                    titleText = title,
+                    descriptionText = description,
+                    onClick = {
+                        preference?.onPreferenceClickListener?.onPreferenceClick(preference)
+                    })
         }
-        val prefix = spec.labelRes?.takeIf { withLabel }?.let(::getString)
-                ?: findPreference<Preference>(key)?.title?.takeIf { withLabel }
-        button.text = if (prefix != null) "$prefix · $label" else label
-        button.contentDescription = buildPreferenceDescription(key, label)
-        button.tag = key
+        return row.view
     }
 
     private fun showMiniButtonSlider(key: String) {
@@ -3936,22 +3930,6 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             preference.text = candidate
             refreshMiniButtonEditor()
         }
-    }
-
-    private fun tintMiniButtonEditor(root: View) {
-        val palette = editorPalette()
-
-        listOf(
-                R.id.mini_button_editor_row_heading,
-                R.id.mini_button_editor_gestures_heading
-        ).forEach { root.findViewById<TextView>(it)?.setTextColor(palette.textAccent) }
-
-        tintEditorRow(root.findViewById(R.id.mini_button_editor_assign_button), palette)
-        tintEditorRow(root.findViewById(R.id.mini_button_editor_gestures_button), palette)
-        val rows = root.findViewById<LinearLayout>(R.id.mini_button_editor_row_controls)
-        (0 until rows.childCount)
-                .mapNotNull { rows.getChildAt(it) as? MaterialButton }
-                .forEach { tintEditorRow(it, palette) }
     }
 
     // ------------------------------------------------------- shared editor building blocks
@@ -3980,6 +3958,43 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 onSurface = ContextCompat.getColor(requireContext(), R.color.lyra_on_surface),
                 secondary = ContextCompat.getColor(requireContext(), R.color.lyra_text_secondary),
                 divider = ContextCompat.getColor(requireContext(), R.color.lyra_divider))
+    }
+
+    /** The colours a settings row tints itself from, taken from the palette of the same render. */
+    private fun editorRowColors(palette: EditorPalette) = EditorRowColors(
+            onSurface = palette.onSurface,
+            secondary = palette.secondary,
+            value = palette.textAccent,
+            accent = palette.accent,
+            divider = palette.divider)
+
+    /**
+     * Inflates one subject card into [container] and returns the layout its rows go in.
+     *
+     * [headingRes] null means a card that names itself - its single row's own title is the
+     * heading - so the heading and the gap that would sit above it are removed rather than left
+     * as empty space on top of the row's own padding.
+     */
+    private fun inflateEditorGroupCard(
+            container: LinearLayout,
+            @StringRes headingRes: Int?,
+            palette: EditorPalette
+    ): LinearLayout {
+        val card = LayoutInflater.from(container.context)
+                .inflate(R.layout.editor_group_card, container, false)
+        val heading = card.findViewById<TextView>(R.id.editor_group_heading)
+        val rows = card.findViewById<LinearLayout>(R.id.editor_group_rows)
+        if (headingRes != null) {
+            heading.setText(headingRes)
+            heading.setTextColor(palette.textAccent)
+        } else {
+            heading.isVisible = false
+            val body = card.findViewById<View>(R.id.editor_group_body)
+            body.setPadding(body.paddingLeft, 0, body.paddingRight, body.paddingBottom)
+            (rows.layoutParams as ViewGroup.MarginLayoutParams).topMargin = 0
+        }
+        container.addView(card)
+        return rows
     }
 
     /**

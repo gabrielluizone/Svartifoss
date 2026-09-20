@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 06-09-2026**
+**Last updated: 19-09-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -409,13 +409,20 @@ those requests are handled manually.
 
 ## Streaming shortcut artwork (optional)
 
-If you save a playlist/track shortcut and turn on **Fetch shortcut artwork
-online** (Settings → Apps → Music apps & services — **off by default**),
-Svartifoss sends that shortcut's public share link to the corresponding
-streaming service's own public **oEmbed** endpoint (Spotify, YouTube,
-SoundCloud, or Deezer) to download a cover thumbnail, shown on the phone,
-the watch menu, and any button you assign it to. Each thumbnail is fetched
-once and cached on-device.
+If you save a playlist/track shortcut and turn on **Fetch shortcut names and
+artwork online** (Settings → Apps → Music apps & services — **off by
+default**), Svartifoss sends that shortcut's public share link to the
+corresponding streaming service's own public **oEmbed** endpoint (Spotify,
+YouTube, SoundCloud, or Deezer). The answer carries the item's public title
+and cover thumbnail: the title fills in the shortcut's name when you add a
+link to the Actions menu, and the thumbnail is shown on the phone, the watch
+menu, and any button you assign it to. Each thumbnail is fetched once and
+cached on-device; a title is used once, to fill in the name you then save.
+
+With the setting off, nothing is fetched on its own. The **Get name from
+link** button in the Add to watch menu sheet makes the same single request —
+the link, to that service's oEmbed endpoint, with no thumbnail download —
+only when you tap it.
 
 Only the link itself — already a public share URL you chose to save — is
 sent; no account, API key, or other personal data is attached. This request

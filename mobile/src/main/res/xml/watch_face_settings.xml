@@ -210,7 +210,7 @@
             android:layout="@layout/pref_switch_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="wear_quadrant_tap_flash"
             android:icon="@drawable/ic_transport_controls"
             android:title="@string/setting_wear_quadrant_tap_flash"

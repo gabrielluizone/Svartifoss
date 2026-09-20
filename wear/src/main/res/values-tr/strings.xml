@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Son çalınanları aç</string>
 
     <string name="no_phone">Telefon bağlı değil</string>
+    <string name="phone_unavailable">Oynatmayı kontrol etmek için telefonun kilidini aç</string>
     <string name="playback_stopped">Durduruldu</string>
     <string name="error">HATA</string>
     <string name="error_play_services">Play Hizmetleri hatası</string>

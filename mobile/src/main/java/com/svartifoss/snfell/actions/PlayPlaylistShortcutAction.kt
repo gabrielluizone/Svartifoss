@@ -20,7 +20,8 @@ import javax.inject.Inject
  * link are baked into the action bundle, Tasker-task style), it can be assigned to anything:
  * a quadrant, a swipe, a stem button, an on-screen mini button, or the actions menu.
  *
- * Created by [PlaylistShortcutPickerAction]; never appears in the picker list itself.
+ * Built by [StreamingShortcutActionList] from the saved library, or by the picker's "Add a link"
+ * sheet from a link just pasted.
  */
 class PlayPlaylistShortcutAction : SelectableAction {
     companion object {

@@ -56,7 +56,17 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <!-- windowNoTitle is not cosmetic here, it is what keeps a dialog *activity* from crashing.
+         AppCompat's createSubDecor() picks its layout in one ordered chain: no-title first, then
+         floating, then action bar - and if none of the three matches it throws
+         "AppCompat does not support the current theme features". This theme's parent supplies only
+         the floating branch (android:windowIsFloating), so a device that forces a dialog activity
+         non-floating - desktop/PC modes do exactly that - fell through all three and took
+         ActionEditorActivity down on launch. Claiming the no-title branch never reaches that
+         question. The title strip it gives up is one neither dialog activity ever set. -->
     <style name="LyraDialogBase" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
         <item name="colorPrimary">@color/lyra_accent</item>
         <item name="colorPrimaryDark">@color/lyra_sage_dark</item>
         <item name="colorAccent">@color/lyra_accent</item>

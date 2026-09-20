@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Buksan ang mga pinatugtog kamakailan</string>
 
     <string name="no_phone">Walang nakakonektang phone</string>
+    <string name="phone_unavailable">I-unlock ang iyong phone para makontrol ang pag-playback</string>
     <string name="playback_stopped">Huminto</string>
     <string name="error">ERROR</string>
     <string name="error_play_services">Error sa Play Services</string>

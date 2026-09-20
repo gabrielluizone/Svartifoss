@@ -592,14 +592,18 @@ object MiscPreferences {
      *  independent appearance settings. */
     val WEAR_SCREEN_THEME: PreferenceDefinition<String> = SimplePreferenceDefinition("wear_screen_theme", "default")
 
-    /** Classic face only (Compose faces never show quadrant hint icons at all): when a quadrant's
-     *  tap/double-tap/long-press fires its action, briefly flashes that icon to full opacity and
-     *  back down to the current Screen Theme's resting alpha - most useful on Hidden, where the
-     *  icon is otherwise invisible and gives no confirmation of which action just fired, but
-     *  available on every theme. Independent of the existing scale-bounce pulse, which keeps
-     *  running unconditionally regardless of this toggle. */
+    /** When a corner zone's single tap fires its action, shows that action's own icon inside the
+     *  tap ripple, at the fingertip, on every face and whether or not the corner icons are drawn
+     *  (see `MainActivity.revealQuadrantActionIcon`). A double tap or a long press runs a
+     *  different action and does not use it. On Compose faces it also makes the ripple bigger,
+     *  brighter and longer-lived, to leave room for the glyph. Independent of the scale-bounce
+     *  pulse, which keeps running unconditionally regardless of this toggle.
+     *
+     *  On by default: it is the only thing that says which action just ran on a face with its
+     *  corner icons hidden, which is every Compose face, and the person who lacks it is the one
+     *  who has never opened this setting. */
     val WEAR_QUADRANT_TAP_FLASH: PreferenceDefinition<Boolean> =
-            SimplePreferenceDefinition("wear_quadrant_tap_flash", false)
+            SimplePreferenceDefinition("wear_quadrant_tap_flash", true)
 
     /** Default typeface for title/artist text on every player layout. An element can opt into a
      *  different catalog family through [WEAR_TITLE_FONT] or [WEAR_ARTIST_FONT]; their default is

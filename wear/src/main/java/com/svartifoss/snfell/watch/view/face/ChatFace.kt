@@ -48,7 +48,6 @@ import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -284,21 +283,28 @@ private fun CurrentMessageBubble(state: NowPlayingFaceState, color: Color) {
                     // weight, tracking and opacity were not, so three of the six controls moved
                     // this line and three silently did nothing.
                     val artistSpec = state.artistTypography
-                    Text(
-                            text = artistSpec.case.apply(state.artist),
-                            // Same: the artist colour mode reaches every other face and was
-                            // dropped here. The face's own .70f alpha is preserved.
-                            color = Color(state.artistColor)
-                                    .copy(alpha = .70f * artistSpec.alpha),
-                            fontFamily = state.artistFont,
-                            fontStyle = state.artistFontStyle,
-                            fontWeight = state.artistFontWeight,
-                            letterSpacing = state.artistLetterSpacing,
-                            fontSize = artistSpec.scaled(
-                                    FaceGeometry.Chat.CURRENT_BUBBLE_ARTIST_SP).sp,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                    )
+                    // The track-change slide the helpers carry for every other face's artist
+                    // line, asked for directly: this one cannot go through ArtistLineText (see
+                    // above), and a bubble whose title slid while the name under it swapped
+                    // would read as the animation being broken here.
+                    TrackTextSlide(state.artist, state) { artist, slide ->
+                        Text(
+                                text = artistSpec.case.apply(artist),
+                                // Same: the artist colour mode reaches every other face and was
+                                // dropped here. The face's own .70f alpha is preserved.
+                                color = Color(state.artistColor)
+                                        .copy(alpha = .70f * artistSpec.alpha),
+                                fontFamily = state.artistFont,
+                                fontStyle = state.artistFontStyle,
+                                fontWeight = state.artistFontWeight,
+                                letterSpacing = state.artistLetterSpacing,
+                                fontSize = artistSpec.scaled(
+                                        FaceGeometry.Chat.CURRENT_BUBBLE_ARTIST_SP).sp,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = slide
+                        )
+                    }
                 }
             }
         }
@@ -385,8 +391,9 @@ private fun VoiceBubble(
                 // nothing else here has to change to make room for it.
                 if (showCover) {
                     Avatar(
-                            state.albumArt,
-                            accent,
+                            state = state,
+                            art = state.albumArt,
+                            accent = accent,
                             shape = coverShape,
                             size = FaceGeometry.Chat.AVATAR_SIZE_DP.dp)
                     Spacer(Modifier.width(FaceGeometry.Chat.AVATAR_TO_WAVE_GAP_DP.dp))
@@ -442,7 +449,13 @@ private fun VoiceBubble(
  *  Cut to the user's chosen [shape] - the same [CoverShape] vocabulary Note's disc and Carousel's
  *  rail already offer, since a circle is only this face's default, not a rule. */
 @Composable
-private fun Avatar(art: ImageBitmap?, accent: Color, shape: CoverShape, size: Dp) {
+private fun Avatar(
+        state: NowPlayingFaceState,
+        art: ImageBitmap?,
+        accent: Color,
+        shape: CoverShape,
+        size: Dp
+) {
     Box(
             modifier = Modifier
                     .size(size)
@@ -450,14 +463,7 @@ private fun Avatar(art: ImageBitmap?, accent: Color, shape: CoverShape, size: Dp
                     .background(accent.copy(alpha = .55f)),
             contentAlignment = Alignment.Center
     ) {
-        if (art != null) {
-            Image(
-                    bitmap = art,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.fillMaxSize()
-            )
-        }
+        FaceCoverImage(state = state, art = art, modifier = Modifier.fillMaxSize())
     }
 }
 

@@ -41,7 +41,32 @@ interface CommPaths {
         const val MESSAGE_WATCH_CLOSED = "/Messages/WatchClosed"
         const val MESSAGE_WATCH_CLOSED_MANUALLY = "/Messages/WatchClosedManually"
         const val MESSAGE_ACK = "/Messages/ACK"
+
+        /**
+         * Phone -> watch: this command was received and could not be carried out, because the
+         * phone could not start [MusicService].
+         *
+         * Android 12+ refuses a foreground-service start from a fully backgrounded app, which is
+         * the ordinary state of a phone that has been locked for a while, and a dropped transport
+         * command is not something the watch can otherwise detect: `sendMessage` succeeded - Play
+         * Services took the message - so every local signal says the press landed, and the
+         * optimistic feedback then shows a skip or a pause that never happened. This is the only
+         * thing that can tell it apart from a command that worked.
+         *
+         * `/Messages`, not `/IdleMessages`: this is only ever a reply to a command the watch just
+         * sent, so its UI is running by definition, and the prefix that exists to wake a sleeping
+         * watch would only spin the process up to deliver news about a press nobody made.
+         *
+         * Carries no payload. Which command failed does not change the answer, and the watch
+         * localises what it shows (see the metadata codes-not-labels rule).
+         */
+        const val MESSAGE_COMMAND_NOT_EXECUTED = "/Messages/CommandNotExecuted"
         const val MESSAGE_CHANGE_VOLUME = "/Messages/SetVolume"
+        // Watch -> phone: change the live media session by one native volume step. The signed
+        // direction is a big-endian int (AudioManager.ADJUST_LOWER/ADJUST_RAISE). A relative
+        // command is required for surfaces such as Tiles whose MusicState can be stale: two quick
+        // taps must apply twice instead of both setting the same old absolute value.
+        const val MESSAGE_ADJUST_VOLUME = "/Messages/AdjustVolume"
         const val MESSAGE_SEEK_TO = "/Messages/SeekTo"
         // Watch -> phone: seek by a signed delta (ms, as a big-endian long payload) relative to
         // the session's LIVE position - senders like the Tile only hold a stale snapshot, so
@@ -241,6 +266,32 @@ interface CommPaths {
         const val CHANNEL_WEAR_APK = "/Channel/WearApk"
 
         const val ASSET_ALBUM_ART = "AlbumArt"
+
+        /**
+         * Phone -> watch: the covers of the tracks either side of the one playing, published while
+         * it is still playing. Payload is a `PrefetchedArtwork`; see its comment in `music.proto`
+         * for why the queue's own thumbnails could not do this job.
+         *
+         * Its own DataItem rather than more assets on [DATA_MUSIC_STATE], because the two have
+         * opposite lifetimes: that item is replaced on every pause, seek and volume nudge, and the
+         * neighbouring covers change only when the track does. Keeping them apart also keeps this
+         * entirely out of the two-phase artwork delivery and the sequence gating that item needs.
+         *
+         * Deliberately **not** under the `/Music/State` prefix the manifest listener claims: a
+         * watch with no player open has no use for these, and waking its process to decode them
+         * would spend battery to prepare for a press nobody is making.
+         */
+        const val DATA_ADJACENT_ALBUM_ART = "/Music/AdjacentArt"
+
+        /**
+         * Start of the asset key each entry of [DATA_ADJACENT_ALBUM_ART] names, completed by that
+         * track's offset from the playing one ("AdjacentArt-1", "AdjacentArt2", …).
+         *
+         * The phone builds the key and puts it in the payload; the watch only ever *reads* it. A
+         * key derived independently on both sides is a contract nothing checks, and widening the
+         * radius would silently break the half that guessed wrong.
+         */
+        const val ASSET_ADJACENT_ART_PREFIX = "AdjacentArt"
 
         /** Icon of the app currently playing, rasterized on the phone and attached to the music
          *  state so faces can show it next to the artist (the Data Layer dedupes it while the

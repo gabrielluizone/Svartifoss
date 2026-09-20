@@ -15,6 +15,7 @@ import androidx.wear.protolayout.ResourceBuilders
 import androidx.wear.protolayout.TimelineBuilders
 import androidx.wear.protolayout.material.Chip
 import androidx.wear.protolayout.material.ChipColors
+import androidx.wear.protolayout.material.CompactChip
 import androidx.wear.protolayout.material.Text
 import androidx.wear.protolayout.material.Typography
 import androidx.wear.protolayout.ColorBuilders.argb
@@ -34,7 +35,9 @@ import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.guava.future
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
@@ -63,13 +66,21 @@ class ShortcutsTileService : TileService() {
     override fun onTileRequest(
         requestParams: RequestBuilders.TileRequest
     ): ListenableFuture<TileBuilders.Tile> = scope.future {
-        val shortcuts = readShortcuts()
+        // The shortcut list and current album colour are independent Data Layer reads.
+        val (shortcuts, albumAccent) = coroutineScope {
+            val shortcutsRequest = async { readShortcuts() }
+            val accentRequest = async {
+                TileAlbumAccent.readCurrentOrLast(this@ShortcutsTileService)
+            }
+            shortcutsRequest.await() to accentRequest.await()
+        }
         // Localized once here so every label built below resolves in the app language rather
         // than the watch's own system locale - a TileService gets no attachBaseContext.
         val layout = buildLayout(
                 WatchLanguage.localized(this@ShortcutsTileService),
                 shortcuts,
-                requestParams.deviceConfiguration)
+                requestParams.deviceConfiguration,
+                albumAccent)
 
         TileBuilders.Tile.Builder()
             .setResourcesVersion(RESOURCES_VERSION)
@@ -124,19 +135,21 @@ class ShortcutsTileService : TileService() {
     private fun buildLayout(
         context: Context,
         shortcuts: List<ShortcutEntry>,
-        deviceParameters: DeviceParameters
+        deviceParameters: DeviceParameters,
+        albumAccent: Int?
     ): LayoutElementBuilders.LayoutElement {
+        val accent = TileAlbumAccent.displayColor(albumAccent)
         val column = Column.Builder()
-            .setWidth(expand())
+            .setWidth(dp(shortcutChipWidth(deviceParameters.screenWidthDp)))
             .setHorizontalAlignment(HORIZONTAL_ALIGN_CENTER)
             .addContent(
                 Text.Builder(context, context.getString(com.svartifoss.snfell.R.string.shortcuts_tile_title))
-                    .setTypography(Typography.TYPOGRAPHY_CAPTION1)
-                    .setColor(argb(WatchTheme.TEXT_SECONDARY))
+                    .setTypography(Typography.TYPOGRAPHY_TITLE3)
+                    .setColor(argb(WatchTheme.ON_SURFACE))
                     .setMaxLines(1)
                     .build()
             )
-            .addContent(Spacer.Builder().setHeight(dp(6f)).build())
+            .addContent(Spacer.Builder().setHeight(dp(8f)).build())
 
         if (shortcuts.isEmpty()) {
             column.addContent(
@@ -146,20 +159,42 @@ class ShortcutsTileService : TileService() {
                     .setMaxLines(2)
                     .build()
             )
-            column.addContent(Spacer.Builder().setHeight(dp(8f)).build())
-            column.addContent(openAppChip(context, deviceParameters))
+            column.addContent(Spacer.Builder().setHeight(dp(10f)).build())
+            column.addContent(
+                openAppChip(
+                    context,
+                    deviceParameters,
+                    context.getString(com.svartifoss.snfell.R.string.tile_open_app),
+                    accent
+                )
+            )
         } else {
-            // Keep the last slot for "More in app" when the library doesn't fully fit, so nothing
-            // is silently unreachable from the Tile.
-            val truncated = shortcuts.size > MAX_VISIBLE
-            val visible = shortcuts.take(if (truncated) MAX_VISIBLE - 1 else MAX_VISIBLE)
+            // Two generous, two-line rows remain readable on the smallest supported round screens.
+            // A compact final action makes the rest explicitly reachable instead of squeezing a
+            // third or fourth full-size Chip beyond the circular safe area.
+            val truncated = shortcuts.size > MAX_DIRECT_SHORTCUTS
+            val visible = shortcuts.take(MAX_DIRECT_SHORTCUTS)
             visible.forEachIndexed { index, shortcut ->
-                if (index > 0) column.addContent(Spacer.Builder().setHeight(dp(6f)).build())
-                column.addContent(shortcutChip(context, shortcut, deviceParameters))
+                if (index > 0) column.addContent(Spacer.Builder().setHeight(dp(5f)).build())
+                column.addContent(
+                    shortcutChip(
+                        context,
+                        shortcut,
+                        deviceParameters,
+                        shortcutChipWidth(deviceParameters.screenWidthDp)
+                    )
+                )
             }
             if (truncated) {
-                column.addContent(Spacer.Builder().setHeight(dp(6f)).build())
-                column.addContent(openAppChip(context, deviceParameters))
+                column.addContent(Spacer.Builder().setHeight(dp(7f)).build())
+                column.addContent(
+                    openAppChip(
+                        context,
+                        deviceParameters,
+                        context.getString(com.svartifoss.snfell.R.string.shortcuts_tile_more),
+                        accent
+                    )
+                )
             }
         }
 
@@ -184,7 +219,8 @@ class ShortcutsTileService : TileService() {
     private fun shortcutChip(
         context: Context,
         shortcut: ShortcutEntry,
-        deviceParameters: DeviceParameters
+        deviceParameters: DeviceParameters,
+        widthDp: Float
     ): Chip {
         val clickable = Clickable.Builder()
             .setId(shortcut.entryId)
@@ -209,7 +245,12 @@ class ShortcutsTileService : TileService() {
         val builder = Chip.Builder(context, clickable, deviceParameters)
             .setPrimaryLabelContent(shortcut.title)
             .setIconContent(ICON_SHORTCUT)
-            .setWidth(expand())
+            .setWidth(widthDp)
+            .setContentDescription(
+                listOf(shortcut.title, shortcut.subtitle)
+                    .filter { it.isNotBlank() }
+                    .joinToString(", ")
+            )
             .setChipColors(
                 ChipColors(
                     WatchTheme.SURFACE_DARK,
@@ -224,7 +265,12 @@ class ShortcutsTileService : TileService() {
         return builder.build()
     }
 
-    private fun openAppChip(context: Context, deviceParameters: DeviceParameters): Chip {
+    private fun openAppChip(
+        context: Context,
+        deviceParameters: DeviceParameters,
+        label: String,
+        accent: Int
+    ): CompactChip {
         val clickable = Clickable.Builder()
             .setId(ID_OPEN_APP)
             .setOnClick(
@@ -239,20 +285,23 @@ class ShortcutsTileService : TileService() {
             )
             .build()
 
-        return Chip.Builder(context, clickable, deviceParameters)
-            .setPrimaryLabelContent(context.getString(com.svartifoss.snfell.R.string.shortcuts_tile_more))
+        return CompactChip.Builder(context, label, clickable, deviceParameters)
             .setIconContent(ICON_OPEN_APP)
-            .setWidth(expand())
+            .setContentDescription(label)
             .setChipColors(
                 ChipColors(
-                    WatchTheme.SURFACE_DARK,
-                    WatchTheme.ACCENT_DEFAULT,
-                    WatchTheme.ON_SURFACE,
-                    WatchTheme.TEXT_SECONDARY
+                    accent,
+                    TileAlbumAccent.contentColor(accent),
+                    TileAlbumAccent.contentColor(accent),
+                    TileAlbumAccent.contentColor(accent)
                 )
             )
             .build()
     }
+
+    /** Keeps full-width chips inside the usable chord of a round display. */
+    private fun shortcutChipWidth(screenWidthDp: Int): Float =
+        (screenWidthDp * CHIP_WIDTH_FRACTION).coerceIn(MIN_CHIP_WIDTH_DP, MAX_CHIP_WIDTH_DP)
 
     private fun resourceById(resId: Int): ResourceBuilders.ImageResource {
         return ResourceBuilders.ImageResource.Builder()
@@ -270,8 +319,12 @@ class ShortcutsTileService : TileService() {
         // interval keeps it from going stale if it stays on screen after an edit on the phone.
         private const val REFRESH_INTERVAL_MS = 60_000L
 
-        // ProtoLayout Tiles don't scroll - cap what we render so the column always fits the screen.
-        private const val MAX_VISIBLE = 4
+        // ProtoLayout Tiles don't scroll. Two full rows plus a compact overflow action stay inside
+        // a 192dp round screen; three or four full Chips do not.
+        private const val MAX_DIRECT_SHORTCUTS = 2
+        private const val CHIP_WIDTH_FRACTION = 0.82f
+        private const val MIN_CHIP_WIDTH_DP = 148f
+        private const val MAX_CHIP_WIDTH_DP = 172f
 
         private const val ID_OPEN_APP = "shortcuts_open_app"
         private const val ICON_SHORTCUT = "ic_shortcut"

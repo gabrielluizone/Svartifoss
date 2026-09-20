@@ -153,20 +153,17 @@ private fun BoxWithConstraintsScope.RibbonArtwork(state: NowPlayingFaceState, sc
     ) {
         // This is a composition-owned cover, like Note's disc. The default backdrop is HIDDEN,
         // and applying that background choice to this hero would make Ribbon ship without music.
-        val art = state.albumArt
-        if (art != null) {
-            val grayscale = if (state.albumArtGrayscale) {
-                ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
-            } else {
-                null
-            }
-            Image(
-                    painter = BitmapPainter(art),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    colorFilter = grayscale,
-                    modifier = Modifier.fillMaxSize())
+        val grayscale = if (state.albumArtGrayscale) {
+            ColorFilter.colorMatrix(ColorMatrix().apply { setToSaturation(0f) })
         } else {
+            null
+        }
+        FaceCoverImage(
+                state = state,
+                art = state.albumArt,
+                modifier = Modifier.fillMaxSize(),
+                colorFilter = grayscale
+        ) {
             Canvas(Modifier.fillMaxSize()) {
                 drawRect(Brush.verticalGradient(listOf(
                         Color(state.accentColor).copy(alpha = .72f),

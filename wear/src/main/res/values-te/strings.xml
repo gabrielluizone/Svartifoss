@@ -41,6 +41,7 @@
     <string name="idle_action_search">శోధన</string>
     <string name="idle_action_queue">ఇటీవల ప్లే చేసినవి తెరవండి</string>
     <string name="no_phone">ఫోన్ కనెక్ట్ కాలేదు</string>
+    <string name="phone_unavailable">ప్లేబ్యాక్‌ను నియంత్రించడానికి ఫోన్‌ను అన్‌లాక్ చేయండి</string>
     <string name="playback_stopped">ఆగింది</string>
     <string name="error">లోపం</string>
     <string name="error_play_services">Play Services లోపం</string>

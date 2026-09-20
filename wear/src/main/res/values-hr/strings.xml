@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Otvori nedavno reproducirano</string>
 
     <string name="no_phone">Telefon nije povezan</string>
+    <string name="phone_unavailable">Otključajte telefon za upravljanje reprodukcijom</string>
     <string name="playback_stopped">Zaustavljeno</string>
     <string name="error">POGREŠKA</string>
     <string name="error_play_services">Pogreška Google Play usluga</string>

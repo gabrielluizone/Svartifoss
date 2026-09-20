@@ -41,6 +41,7 @@
     <string name="idle_action_search">ရှာဖွေမှု</string>
     <string name="idle_action_queue">မကြာသေးမီက ဖွင့်ထားတာများကိုဖွင့်ပါ</string>
     <string name="no_phone">ဖုန်းမချိတ်ထားပါ</string>
+    <string name="phone_unavailable">ဖွင့်ခြင်းကို ထိန်းချုပ်ရန် ဖုန်းကို လော့ခ်ဖွင့်ပါ</string>
     <string name="playback_stopped">ရပ်ထားသည်</string>
     <string name="error">အမှား</string>
     <string name="error_play_services">Play Services အမှား</string>

@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.BitmapBorderTrim
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
 import java.net.HttpURLConnection
@@ -21,6 +20,9 @@ import java.net.URLEncoder
  * **opt-in**: nothing here runs unless [isEnabled] (Settings toggle) is on. No account, API key or
  * personal data is involved - only the already-public share link is sent to the service's oEmbed
  * endpoint.
+ *
+ * The same oEmbed answer carries the item's title, which is what fills in a shortcut's name when
+ * a link is added to the watch menu ([lookupInfo]); a YouTube Music link has no name of its own.
  */
 object ShortcutArtworkFetcher {
     const val ENABLED_KEY = "streaming_shortcut_artwork"
@@ -70,14 +72,25 @@ object ShortcutArtworkFetcher {
     }
 
     /** Reads the service's oEmbed JSON and returns its `thumbnail_url`, or null when unsupported. */
-    private fun resolveThumbnailUrl(link: String): String? {
+    private fun resolveThumbnailUrl(link: String): String? = lookupInfo(link)?.thumbnailUrl
+
+    /** Whether the link's service publishes an oEmbed record at all, i.e. whether [lookupInfo]
+     *  can ever answer. Apple Music, Amazon Music and Tidal cannot, and neither can a bare link. */
+    fun supportsLookup(link: String): Boolean = oembedEndpoint(link) != null
+
+    /**
+     * The name and cover URL the service publishes for [link], from one request to its oEmbed
+     * endpoint - the same request, to the same host, that fetching a thumbnail already makes, so
+     * reading the title adds nothing to what leaves the phone. Blocking; never throws.
+     *
+     * Deliberately **not** gated on [isEnabled]: the switch decides whether covers are fetched
+     * unprompted, whereas this is also what the "Get name" button in the add-to-menu sheet calls,
+     * and a person tapping that has asked for exactly this one request. The caller is the gate.
+     */
+    fun lookupInfo(link: String): OembedInfo? {
         val oembed = oembedEndpoint(link) ?: return null
         val json = downloadText(oembed) ?: return null
-        return try {
-            JSONObject(json).optString("thumbnail_url").takeIf { it.isNotBlank() }
-        } catch (_: Exception) {
-            null
-        }
+        return OembedParser.parse(json)
     }
 
     private fun oembedEndpoint(link: String): String? {

@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Otevřít nedávno přehrávané</string>
 
     <string name="no_phone">Telefon není připojen</string>
+    <string name="phone_unavailable">Odemkněte telefon pro ovládání přehrávání</string>
     <string name="playback_stopped">Zastaveno</string>
     <string name="error">CHYBA</string>
     <string name="error_play_services">Chyba Služeb Play</string>

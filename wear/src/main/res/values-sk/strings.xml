@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Otvoriť nedávno prehrávané</string>
 
     <string name="no_phone">Telefón nie je pripojený</string>
+    <string name="phone_unavailable">Odomknite telefón na ovládanie prehrávania</string>
     <string name="playback_stopped">Zastavené</string>
     <string name="error">CHYBA</string>
     <string name="error_play_services">Chyba služieb Google Play</string>

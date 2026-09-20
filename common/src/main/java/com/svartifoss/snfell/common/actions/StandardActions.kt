@@ -67,4 +67,30 @@ object StandardActions {
 
     /** Closes only the watch UI; playback and the phone service keep running. */
     const val ACTION_CLOSE_WATCH_APP = "com.svartifoss.snfell.actions.CloseWatchAppAction"
+
+    /**
+     * The actions whose whole effect is on the watch, leaving the phone nothing to run.
+     *
+     * Every one is intercepted by `MusicViewModel.executeActionOnWatch` before it can be sent, so
+     * a current watch never asks the phone to execute one - which is why none of them has an
+     * `ActionHandler` bound in `ActionHandlersModule`, and why none can have: the effect is a
+     * screen on the other device. An *older* watch build still sends them, because the config it
+     * runs is pushed from the phone and can therefore name an action that watch predates, and the
+     * phone answered every press by throwing "Action handler for ... missing".
+     *
+     * The keys are the action class names, the same strings [PhoneAction] serializes itself under.
+     *
+     * Note which watch-local actions are deliberately absent: lyrics, search, the queue and the
+     * streaming shortcuts all reach the phone on purpose - the watch opens its screen locally and
+     * still round-trips, for data only the phone can fetch - so each of those does have a handler.
+     */
+    val WATCH_LOCAL: Set<String> = setOf(
+            ACTION_VOLUME_UP,
+            ACTION_VOLUME_DOWN,
+            ACTION_OPEN_MENU,
+            ACTION_OPEN_QUICK_ACTIONS_PANEL,
+            ACTION_OPEN_VOLUME_SCREEN,
+            ACTION_OPEN_PROGRESS_SCREEN,
+            ACTION_OPEN_FACE_PICKER,
+            ACTION_CLOSE_WATCH_APP)
 }

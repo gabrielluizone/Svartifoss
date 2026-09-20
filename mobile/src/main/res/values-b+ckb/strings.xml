@@ -111,14 +111,6 @@
     <string name="watch_element_queue">ڕیز</string>
     <string name="watch_element_lyrics">دەقی گۆرانی</string>
     <string name="player_section_on_screen">لەسەر شاشە</string>
-    <string name="player_element_app_icon">ئایکۆنی ئەپ</string>
-    <string name="player_element_controls">کۆنترۆڵەکانی پڵەیەر</string>
-    <string name="player_element_tap_flash">فلاش لە کاتی تاپ</string>
-    <string name="player_element_inner_progress">پێشکەوتنی ناوەوە</string>
-    <string name="player_element_edge_arc">کەوانەی لێوار</string>
-    <string name="player_element_edge_seek">Seek ی لێوار</string>
-    <string name="player_element_clock">کاتژمێر</string>
-    <string name="player_element_cover_art">وێنەی بەرگ</string>
     <string name="setting_album_art_filter">فلتەری وێنەی ئالبوم</string>
     <string name="setting_album_art_filter_description">چارەسەری ڕەنگی سەربەخۆ لەسەر هەر شێوازێکی وێنەی ئالبوم جێبەجێ بکە.</string>
     <string name="wear_font_roboto_thin">Roboto Thin</string>
@@ -349,7 +341,6 @@
     <string name="aod_control_brightness">ڕووناکی</string>
     <string name="aod_control_art_treatment">Treatment</string>
     <string name="aod_control_art_opacity">ناشەفافی</string>
-    <string name="mini_button_control_visibility">پیشان بدە</string>
     <string name="mini_button_control_arrangement">ڕێکخستن</string>
     <string name="mini_button_control_shape">شێوە</string>
     <string name="mini_button_control_background">پاشبنەما</string>
@@ -616,6 +607,29 @@
     <string name="actions_moved_to_position">%1$s گوازرایەوە بۆ شوێنی %2$d لە %3$d.</string>
     <string name="actions_empty">هێشتا هیچ کردارێک نییە. بۆ دروستکردنی یەکەم، دوگمەی زیادکردن بەکاربهێنە.</string>
     <string name="actions_add">کردار زیاد بکە</string>
+    <string name="add_menu_title">زیادکردن بۆ مێنیوی کاتژمێر</string>
+    <string name="add_menu_subtitle">کردارێک هەڵبژێرە، یان لینکی playlist، ئەلبوم یان track بلکێنە.</string>
+    <string name="add_menu_link_hint">لینک (Spotify، YouTube Music، Deezer…)</string>
+    <string name="add_menu_paste">لکاندن</string>
+    <string name="add_menu_get_name">ناو لە لینکەوە وەربگرە</string>
+    <string name="add_menu_looking_up">بەدوای ناودا دەگەڕێت…</string>
+    <string name="add_menu_lookup_failed">ناو بۆ ئەم لینکە نەدۆزرایەوە. لەبری ئەوە یەکێک بنووسە.</string>
+    <string name="add_menu_lookup_unsupported">ئەم خزمەتگوزارییە ناو هاوبەش ناکات. لەبری ئەوە یەکێک بنووسە.</string>
+    <string name="add_menu_add">زیادکردن بۆ مێنیو</string>
+    <string name="add_menu_added">“%1$s” زیادکرا بۆ مێنیو</string>
+    <string name="add_menu_already">“%1$s” پێشتر لە مێنیودایە</string>
+    <string name="add_menu_saved_title">shortcut ـە پاشەکەوتکراوەکان</string>
+    <string name="add_menu_actions_title">کردارێک هەڵبژێرە</string>
+    <string name="add_menu_actions_desc">پخش، دەنگ، شاشەکانی کاتژمێر، ئەپەکان، Tasker…</string>
+    <string name="add_menu_or_link">یان لینکێک زیاد بکە</string>
+    <string name="add_link_title">زیادکردنی لینک</string>
+    <string name="add_link_subtitle">لینکی playlist، ئەلبوم یان track بلکێنە. لە streaming shortcut ـەکاندا پاشەکەوت دەکرێت و دەستبەجێ بەکاردێت.</string>
+    <string name="add_link_use">ئەم لینکە بەکاربهێنە</string>
+    <plurals name="add_menu_add_selected">
+        <item quantity="one">زیادکردنی %1$d بۆ مێنیو</item>
+        <item quantity="other">زیادکردنی %1$d بۆ مێنیو</item>
+    </plurals>
+    <string name="add_menu_in_menu">لە مێنیودایە</string>
     <string name="on_screen_buttons">ناوچەکانی دەستدان</string>
     <string name="physical_buttons">دوگمە فیزیکییەکان</string>
     <string name="physical_buttons_disconnected">بۆ ڕێکخستنی دوگمە فیزیکییەکان، Svartifoss لەسەر کاتژمێرەکەت پەیوەست و بکەرەوە. ناوچەکانی دەستدان، swipe و دوگمە بچووکەکان هەر ئێستا بەردەستن.</string>
@@ -864,7 +878,6 @@
     <string name="quick_panel_slot_1">دوگمە 1</string>
     <string name="quick_panel_slot_2">دوگمە 2</string>
     <string name="quick_panel_slot_3">دوگمە 3</string>
-    <string name="quick_panel_slot_long">دوگمەی درێژ</string>
     <string name="quick_panel_slot_default">%1$s (بنەڕەت)</string>
     <string name="quick_panel_slot_hidden">شاراوە</string>
     <string name="quick_panel_default_like">دڵخواز</string>
@@ -1715,7 +1728,6 @@
     <string name="setting_wear_note_cover_shape">شێوەی بەرگی Note</string>
     <string name="setting_wear_title_centered">ناونیشان بخەرە ناوەڕاست</string>
     <string name="setting_wear_title_centered_description">لەبری هەموو بلۆکی دەق، ناونیشان لە ناوەڕاستی شاشە جێگیر بکە</string>
-    <string name="player_element_title_centered">ناونیشانی ناوەڕاست</string>
     <string-array name="wear_cover_shape_entries">
         <item>خڕ</item>
         <item>چوارگۆشە</item>
@@ -1959,6 +1971,7 @@
     <string name="drawer_support_heading">پشتگیری</string>
     <string name="drawer_support_summary">Svartifoss بەخۆڕایی و open source ـە - ئەگەر بەسوودە بۆت، coffee ـێکم بۆ بکڕە :D</string>
     <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">cover art دابگرە</string>
     <string name="album_art_saved">cover art لە gallery پاشەکەوت کرا</string>
     <string name="album_art_save_error">پاشەکەوتکردنی cover art سەرکەوتوو نەبوو</string>
@@ -1966,11 +1979,17 @@
     <string name="action_play_spotify_liked_songs">گۆرانییە حەزپێکراوەکان پخش بکە (Spotify)</string>
     <string name="action_play_soundcloud_likes">track ـە حەزپێکراوەکان پخش بکە (SoundCloud)</string>
     <string name="action_my_playlists">Shortcut ـەکانی streaming</string>
-    <string name="action_play_specific_playlist">streaming shortcut بکەرەوە</string>
-    <string name="action_choose_or_add_streaming_shortcut">streaming shortcut هەڵبژێرە یان زیاد بکە</string>
     <string name="action_show_streaming_library">هەموو shortcut ـە پاشەکەوتکراوەکان پیشان بدە</string>
-    <string name="playlist_shortcut_pick_title">shortcut هەڵبژێرە</string>
-    <string name="playlist_shortcut_pick_empty">هێشتا هیچ streaming shortcut ـێک پاشەکەوت نەکراوە — یەکێک لە خوارەوە زیاد بکە، پاشان بۆ هەڵبژاردن لێی بدە</string>
+    <string name="picker_section_apps">ئەپەکان &amp; ئۆتۆماتیک</string>
+    <string name="picker_chip_playback">پخش</string>
+    <string name="picker_chip_volume">دەنگ</string>
+    <string name="picker_chip_screens">شاشەکان</string>
+    <string name="picker_chip_find">گەڕان بۆ مۆسیقا</string>
+    <string name="picker_chip_streaming">streaming</string>
+    <string name="picker_chip_apps">ئەپەکان</string>
+    <string name="picker_play_with_app">بە ئەپێک لێبدە</string>
+    <string name="picker_add_link">زیادکردنی لینک</string>
+    <string name="picker_add_link_desc">playlist، ئەلبوم یان track بلکێنە</string>
     <string name="playlist_shortcuts_empty">هێشتا streaming shortcut نییە — لە ڕێکخستنەکانی phone app زیاد بکە</string>
     <string name="setting_playlist_shortcuts">Shortcut ـەکانی streaming</string>
     <string name="setting_playlist_shortcuts_description">share link ـەکان لە کاتژمێرەوە لە YouTube Music و Spotify و streaming app ـەکانی تر بکەرەوە</string>

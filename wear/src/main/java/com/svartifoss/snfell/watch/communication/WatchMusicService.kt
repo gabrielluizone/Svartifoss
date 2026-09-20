@@ -104,7 +104,8 @@ class WatchMusicService : LifecycleService() {
             // step and seek too; update requests are rate-limited by the system, so spamming one
             // per state change could get the request that carries a new track/cover dropped.
             val fingerprint =
-                    "${state?.title}|${state?.artist}|${state?.playing}|${resource?.status}"
+                    "${state?.title}|${state?.artist}|${state?.playing}|" +
+                            "${state?.albumArtPending}|${resource?.status}"
             if (fingerprint != lastGlanceableFingerprint) {
                 lastGlanceableFingerprint = fingerprint
                 GlanceableSurfaces.requestUpdate(this)
@@ -321,7 +322,18 @@ class WatchMusicService : LifecycleService() {
     override fun onBind(intent: Intent): IBinder {
         super.onBind(intent)
 
-        startService(Intent(this, WatchMusicService::class.java))
+        // Promotes the bind into a *started* service, so it outlives the screen that bound it
+        // rather than dying with the last unbind. That start is refused with
+        // BackgroundServiceStartNotAllowedException when the process is already background-idle
+        // (Android 12+), and a throw from onBind takes the whole process down - the system
+        // reports it as "Unable to bind to service ... with Intent". Nothing here is worth a
+        // crash: refused only means this instance lives exactly as long as its binding, which
+        // is the correct lifetime for the screen that asked for it.
+        try {
+            startService(Intent(this, WatchMusicService::class.java))
+        } catch (e: IllegalStateException) {
+            Timber.w(e, "Could not keep the service started past its binding")
+        }
 
         return Binder(this)
     }

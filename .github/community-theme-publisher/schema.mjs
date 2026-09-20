@@ -801,7 +801,7 @@ const DEFAULT_VALUES = Object.freeze({
     wear_progress_gradient: true,
     wear_progress_layout: "edge",
     wear_progress_style: "solid",
-    wear_quadrant_tap_flash: false,
+    wear_quadrant_tap_flash: true,
     wear_queue_color_mode: "follow",
     wear_queue_custom_color: "",
     wear_queue_style: "glass",

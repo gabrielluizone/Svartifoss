@@ -37,6 +37,7 @@
     <string name="idle_action_queue">最近再生した項目を開く</string>
 
     <string name="no_phone">スマートフォンが接続されていません</string>
+    <string name="phone_unavailable">スマートフォンのロックを解除して操作してください</string>
     <string name="playback_stopped">停止中</string>
     <string name="error">エラー</string>
     <string name="error_play_services">Play 開発者サービスのエラー</string>

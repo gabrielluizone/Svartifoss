@@ -8,10 +8,15 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
 
 /**
- * Action-picker category backed by the same library as Streaming shortcuts. Saved tracks,
- * albums, mixes and playlists are exposed directly as assignable actions; no second list or
+ * The streaming category of Pick action, backed by the same library as Streaming shortcuts. Saved
+ * tracks, albums, mixes and playlists are exposed directly as assignable actions; no second list or
  * preference is created for the Actions tab. The built-in account-library shortcuts live here
- * too, so the root picker has one streaming entry instead of a growing row per service.
+ * too, so the picker has one streaming section instead of a growing row per service.
+ *
+ * Making a *new* shortcut is not an action in this list: it is the "Add a link" row the picker draws
+ * at the top of the section (see [com.svartifoss.snfell.view.buttonconfig.ActionPickerCatalogue]),
+ * which opens the link sheet in place and returns the new shortcut as the choice. It used to be a
+ * "Choose or add" entry that opened the whole Streaming shortcuts screen as a second window.
  */
 class StreamingShortcutActionList : PickerActionGroup {
     constructor(context: Context) : super(context)
@@ -19,7 +24,7 @@ class StreamingShortcutActionList : PickerActionGroup {
 
     override fun pickerChildren(): List<PhoneAction> {
         val shortcuts = PlaylistShortcutStorage.load(context)
-        val actions = ArrayList<PhoneAction>(shortcuts.size + BUILT_IN_SHORTCUT_COUNT + 2)
+        val actions = ArrayList<PhoneAction>(shortcuts.size + BUILT_IN_SHORTCUT_COUNT + 1)
 
         // These are fixed account-library links rather than user-saved links, but they are
         // still streaming shortcuts. Keeping them inside this category prevents every newly
@@ -32,29 +37,11 @@ class StreamingShortcutActionList : PickerActionGroup {
             PlaySoundCloudLikesAction(context)
         ))
 
-        // Pick mode uses PlaylistShortcutStorage itself and also lets an empty/new library be
-        // populated without leaving the action assignment flow - the short path that saves the
-        // user a round trip through Settings > Apps > Streaming shortcuts and back.
-        val addEntry = PlaylistShortcutPickerAction(context).apply {
-            customTitle = context.getString(R.string.action_choose_or_add_streaming_shortcut)
-        }
-
-        // Position depends on whether there is a library at all. With saved shortcuts the list
-        // itself is what the user came for, so "add another" belongs under it, as in any
-        // list-with-add-affordance. With an empty library every row below would be nothing but
-        // this one, and putting it last framed the category as a dead end - the whole feature is
-        // reachable only through this entry, so on an empty library it leads.
-        if (shortcuts.isEmpty()) {
-            actions.add(addEntry)
-        }
-
         actions.addAll(shortcuts.map { shortcut ->
             PlayPlaylistShortcutAction(context, shortcut.name, shortcut.link)
         })
 
         if (shortcuts.isNotEmpty()) {
-            actions.add(addEntry)
-
             // This assigns the action that opens the complete saved library on the watch, useful
             // when one Quick Action should provide access to more than a single link.
             actions.add(OpenPlaylistShortcutsAction(context).apply {

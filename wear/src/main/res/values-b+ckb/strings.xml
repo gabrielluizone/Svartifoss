@@ -41,6 +41,7 @@
     <string name="idle_action_search">گەڕان</string>
     <string name="idle_action_queue">پخشکراوە دواییەکان بکەرەوە</string>
     <string name="no_phone">مۆبایل پەیوەست نییە</string>
+    <string name="phone_unavailable">مۆبایلەکەت بکەرەوە بۆ کۆنترۆڵکردنی لێدان</string>
     <string name="playback_stopped">وەستاوە</string>
     <string name="error">هەڵە</string>
     <string name="error_play_services">hەڵەی Play Services</string>

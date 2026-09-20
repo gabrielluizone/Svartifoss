@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Ouvrir les titres récents</string>
 
     <string name="no_phone">Aucun téléphone connecté</string>
+    <string name="phone_unavailable">Déverrouillez votre téléphone pour contrôler la lecture</string>
     <string name="playback_stopped">Arrêtée</string>
     <string name="error">ERREUR</string>
     <string name="error_play_services">Erreur Play Services</string>

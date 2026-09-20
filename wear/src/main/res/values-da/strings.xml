@@ -37,6 +37,7 @@
     <string name="idle_action_queue">Åbn nyligt afspillet</string>
 
     <string name="no_phone">Telefonen er ikke tilsluttet</string>
+    <string name="phone_unavailable">Lås telefonen op for at styre afspilningen</string>
     <string name="playback_stopped">Stoppet</string>
     <string name="error">FEJL</string>
     <string name="error_play_services">Fejl i Google Play-tjenester</string>

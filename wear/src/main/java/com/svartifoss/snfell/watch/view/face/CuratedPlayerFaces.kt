@@ -1,12 +1,10 @@
 package com.svartifoss.snfell.watch.view.face
 
-import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -56,9 +54,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalConfiguration
@@ -477,14 +473,10 @@ private fun BoxScope.DepthComposition(
     ) {
         // The cover, plain and full-bleed. No over-scaling: with nothing moving there is no edge
         // to hide, and cropping further would throw away artwork for no reason.
-        state.albumArt?.let { art ->
-            Image(
-                    painter = BitmapPainter(art),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier.matchParentSize()
-            )
-        }
+        FaceCoverImage(
+                state = state,
+                art = state.albumArt,
+                modifier = Modifier.matchParentSize())
 
         // The two album-coloured hazes, anchored to opposite corners at different radii. Being
         // off-axis (rather than centred) is what stops them reading as one flat wash over the art.
@@ -1576,21 +1568,18 @@ private fun AlbumArtwork(state: NowPlayingFaceState, shape: Shape, p: CuratedPal
         } else {
             Modifier
         }
-        // Same crossfade the classic host ImageView applies (fadeToAlbumArt): track changes on
-        // faces that draw a mini cover themselves used to swap instantly.
-        Crossfade(
-                targetState = state.albumArt.takeUnless { state.albumArtHidden },
-                animationSpec = tween(if (state.albumArtFade) 300 else 0),
-                label = "curatedArtFade"
-        ) { art ->
-            if (art != null) {
-                Image(BitmapPainter(art), null, contentScale = ContentScale.Crop,
-                        colorFilter = grayscaleFilter,
-                        modifier = Modifier.fillMaxSize().then(blurModifier))
-            } else {
-                Canvas(Modifier.fillMaxSize()) {
-                    drawRect(brush = Brush.linearGradient(listOf(p.primary, p.secondary, p.tertiary)))
-                }
+        // The shared transition, not a local one: this used to be a plain 300 ms Crossfade of its
+        // own, which meant the mini cover and the full-screen backdrop behind it eased at
+        // different rates the moment either was retuned. The blur rides the container rather than
+        // the Image so both frames and the fallback gradient are blurred by one pass.
+        FaceCoverImage(
+                state = state,
+                art = state.albumArt.takeUnless { state.albumArtHidden },
+                modifier = Modifier.fillMaxSize().then(blurModifier),
+                colorFilter = grayscaleFilter
+        ) {
+            Canvas(Modifier.fillMaxSize()) {
+                drawRect(brush = Brush.linearGradient(listOf(p.primary, p.secondary, p.tertiary)))
             }
         }
     }
@@ -2010,21 +1999,15 @@ private fun BoxScope.MaterialComposition(
 
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 if (state.showControls) {
-                    Icon(
-                            painter = painterResource(
-                                    if (state.playing) commonR.drawable.action_pause_filled
-                                    else commonR.drawable.action_play_filled
-                            ),
-                            contentDescription = null,
+                    // The narrower play triangle keeps the small optical increase and offset it
+                    // always had; the shared helper carries both through the crossing, so neither
+                    // glyph resizes as it turns into the other.
+                    PlayPauseIcon(
+                            playing = state.playing,
                             tint = Color.White.copy(alpha = state.screenTheme.tokens.iconAlpha),
-                            // The narrower play triangle gets a small optical increase and offset;
-                            // only the glyph grows, while the surrounding control stays unchanged.
-                            modifier = Modifier
-                                    .size(
-                                            (if (state.playing) 34.dp else 38.dp) *
-                                                    state.screenTheme.tokens.iconScale
-                                    )
-                                    .offset(x = if (state.playing) 0.dp else 1.dp)
+                            size = 38.dp * state.screenTheme.tokens.iconScale,
+                            pauseSize = 34.dp * state.screenTheme.tokens.iconScale,
+                            playOffsetX = 1.dp
                     )
                 }
             }

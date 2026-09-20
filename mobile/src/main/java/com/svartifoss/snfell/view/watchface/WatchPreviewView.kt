@@ -9,6 +9,7 @@ import android.graphics.DashPathEffect
 import android.graphics.LinearGradient
 import android.graphics.Matrix
 import android.graphics.Paint
+import android.graphics.PorterDuffXfermode
 import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
@@ -116,6 +117,10 @@ import com.svartifoss.snfell.view.NEUTRAL_WATCH_ACCENT
  * switches to the real round/square shape, aspect ratio and dp extent. Geometry mirrors the real
  * classic View face and Compose faces in `wear/`. Purely decorative - not interactive.
  */
+/** Matches `FaceChrome.MARQUEE_FADE_WIDTH` and `OutlineTextView`'s own copy: the same line
+ *  dissolves over the same distance whichever of the three renderers drew it. */
+private const val MARQUEE_FADE_WIDTH_DP = 18f
+
 class WatchPreviewView @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null
@@ -340,6 +345,12 @@ class WatchPreviewView @JvmOverloads constructor(
     private val fillPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val strokePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { style = Paint.Style.STROKE }
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { textAlign = Paint.Align.CENTER }
+
+    /** The alpha mask that dissolves a scrolling line's ends - see [drawMarqueeFade]. Its
+     *  xfermode is permanent; only the shader changes per line. */
+    private val marqueeFadePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_IN)
+    }
     private val bitmapPaint = Paint(Paint.ANTI_ALIAS_FLAG or Paint.FILTER_BITMAP_FLAG)
     private val iconDst = RectF()
 
@@ -2258,9 +2269,12 @@ class WatchPreviewView @JvmOverloads constructor(
         val phase = (previewAnimationTimeMillis() % 3_600_000L) / 1000f * speedPxPerSecond % period
 
         val left = cx - availWidth / 2f
-        canvas.save()
-        canvas.clipRect(left, baseline - textPaint.textSize * 1.2f,
-                left + availWidth, baseline + textPaint.textSize * 0.45f)
+        val top = baseline - textPaint.textSize * 1.2f
+        val bottom = baseline + textPaint.textSize * 0.45f
+        // A layer rather than a plain clip, because the ends are dissolved below with DST_IN and
+        // that has to address the text's own pixels - applied straight to the canvas it would
+        // punch a hole through the artwork behind the line as well.
+        val layer = canvas.saveLayer(left, top, left + availWidth, bottom, null)
         textPaint.textAlign = Paint.Align.LEFT
         // Drawn twice, a period apart, so the tail of one copy meets the head of the next.
         for (copy in 0..1) {
@@ -2272,9 +2286,39 @@ class WatchPreviewView @JvmOverloads constructor(
             }
         }
         textPaint.textAlign = Paint.Align.CENTER
-        canvas.restore()
+        drawMarqueeFade(canvas, left, top, availWidth, bottom - top)
+        canvas.restoreToCount(layer)
 
         marqueeActive = true
+    }
+
+    /**
+     * Dissolves the ends of a scrolling line, mirroring the watch.
+     *
+     * The wrist does this two different ways - `FaceChrome.marqueeFade` on the Compose faces,
+     * TextView's own fading edges on the View ones - and neither is reachable from here, so the
+     * miniature draws the same gradient itself. It is the same distance
+     * (`MARQUEE_FADE_WIDTH` / `MARQUEE_FADE_WIDTH_DP`, 18dp) scaled to the preview.
+     */
+    private fun drawMarqueeFade(
+            canvas: Canvas,
+            left: Float,
+            top: Float,
+            width: Float,
+            height: Float
+    ) {
+        val edge = (MARQUEE_FADE_WIDTH_DP * (frameGeometry?.dpScale ?: 1f))
+                .coerceAtMost(width / 3f)
+        if (edge <= 0f || width <= 0f) {
+            return
+        }
+        marqueeFadePaint.shader = LinearGradient(
+                left, 0f, left + width, 0f,
+                intArrayOf(Color.TRANSPARENT, Color.BLACK, Color.BLACK, Color.TRANSPARENT),
+                floatArrayOf(0f, edge / width, 1f - edge / width, 1f),
+                Shader.TileMode.CLAMP)
+        canvas.drawRect(left, top, left + width, top + height, marqueeFadePaint)
+        marqueeFadePaint.shader = null
     }
 
     /** Largest size in [maxSize]..[floorSize] at which [text] fits [availWidth], or null. */
@@ -7981,13 +8025,9 @@ class WatchPreviewView @JvmOverloads constructor(
             }
         }
 
-        val longAction = if (quickPanelSource == "session") {
-            null
-        } else {
-            quickPanelIcons[QuickPanelButtons.SLOT_LONG]
-        }
-        val longRowHidden = longAction?.actionKey.orEmpty().endsWith(".NullAction")
-        if (!longRowHidden) {
+        // The wide row is always Up Next: it is not assignable, and an entry an older build left
+        // for it is ignored on the watch, so the miniature must not read one either.
+        run {
             val rowWidth = geometry.bounds.width() * .88f
             val rowHeight = dp(54f)
             val rowY = when (quickPanelLayout) {
@@ -8004,9 +8044,8 @@ class WatchPreviewView @JvmOverloads constructor(
             drawSkin(canvas, rowRect, rowSkin, dp)
             drawActionIcon(
                     canvas,
-                    longAction,
-                    if (quickPanelSource == "session") R.drawable.ic_playlist_play
-                    else R.drawable.ic_playlist_play,
+                    null,
+                    R.drawable.ic_playlist_play,
                     rowRect.left + dp(21f),
                     rowY,
                     dp(20f),
@@ -8016,11 +8055,10 @@ class WatchPreviewView @JvmOverloads constructor(
             textPaint.typeface = watchUiTypeface(bold = true)
             textPaint.textSize = dp(12f)
             textPaint.color = rowSkin.onColor
-            val rowTitle = when {
-                quickPanelSource == "session" ->
-                    context.getString(R.string.quick_panel_default_up_next)
-                !longAction?.title.isNullOrBlank() -> longAction.title
-                else -> context.getString(R.string.preview_sample_title)
+            val rowTitle = if (quickPanelSource == "session") {
+                context.getString(R.string.quick_panel_default_up_next)
+            } else {
+                context.getString(R.string.preview_sample_title)
             }
             canvas.drawText(ellipsize(rowTitle,
                     rowWidth - dp(56f)), rowRect.left + dp(37f), rowY - dp(2f), textPaint)

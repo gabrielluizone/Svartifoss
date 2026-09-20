@@ -1,7 +1,9 @@
 package com.svartifoss.snfell.watch.view.face
 
 import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -25,6 +27,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,6 +50,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -73,12 +77,14 @@ import com.svartifoss.snfell.common.R as commonR
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.min
+import kotlin.math.roundToInt
 import kotlin.math.sin
 import kotlin.math.tanh
 
 /**
  * The "expressive" now-playing face, mirroring the Material 3 Expressive Wear OS system media
- * controls: a soft 12-lobe "cookie" play/pause button (morphs to a plain circle while paused)
+ * controls: a soft scalloped "cookie" play/pause button ([COOKIE_LOBES] lobes, morphing to a
+ * plain circle while paused)
  * wrapped in a progress ring that follows the cookie's scalloped contour, flanked by large
  * round prev/next buttons in the album accent's light container tone, over the album art
  * darkened by an accent tint and a radial black vignette. Queue/volume/menu access is left
@@ -102,6 +108,11 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
     BoxWithConstraints(Modifier.fillMaxSize()) {
         val screen = maxWidth
         val metrics = expressiveMetrics(screen)
+        // The transport row is one group rather than three controls: a press widens the button
+        // under the finger and the one beside it gives up exactly that width, so the row's total
+        // never changes and the far control cannot move. See TransportPressLayout.
+        val pressGroup = rememberTransportPressGroup(
+                listOf(metrics.side.value, metrics.cookieBox.value, metrics.side.value))
         // The ring's bottom edge below screen center - the transport row is centered and the ring
         // fills the cookie box, so half the box height. Layout clamps (title height, track-time
         // offset) hang off this instead of a magic fraction, so they track the real button size.
@@ -229,6 +240,8 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                     iconScale = themeTokens.iconScale,
                     iconOverride = state.leftActionIcon,
                     iconOverrideTintable = state.leftActionIconTintable,
+                    group = pressGroup,
+                    slot = TransportPressLayout.PREVIOUS,
                     onClick = listener::onSkipPreviousTap
             )
             CookiePlayButton(
@@ -242,6 +255,7 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                     iconAlpha = expressiveIconAlpha,
                     iconScale = themeTokens.iconScale,
                     listener = listener,
+                    group = pressGroup,
                     scrubFraction = scrubFraction,
                     onScrub = { scrubFraction = it },
                     onScrubCommit = {
@@ -264,6 +278,8 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                     iconScale = themeTokens.iconScale,
                     iconOverride = state.rightActionIcon,
                     iconOverrideTintable = state.rightActionIconTintable,
+                    group = pressGroup,
+                    slot = TransportPressLayout.NEXT,
                     onClick = listener::onSkipNextTap
             )
         }
@@ -577,6 +593,8 @@ private fun RoundTransportButton(
         content: Color,
         borderColor: Color,
         visible: Boolean,
+        group: TransportPressGroup,
+        slot: Int,
         onClick: () -> Unit,
         iconAlpha: Float = 1f,
         iconScale: Float = 1f,
@@ -587,24 +605,26 @@ private fun RoundTransportButton(
 ) {
     val interaction = remember { MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
-    val scale by animateFloatAsState(if (pressed) 0.9f else 1f, label = "transportPressScale")
+    TransportPressEffect(group, slot, pressed)
+    // Real width, not a scale: growing the measured button is what takes the room away from the
+    // control beside it, which is the whole gesture. The capsule lengthens as it goes, because
+    // CircleShape rounds by half the shorter side and that stays the height.
+    val pressedWidth = (width.value + group.widthDelta(slot)).dp
+    val flatten = 1f - TRANSPORT_PRESS_FLATTEN * group.progress(slot)
 
     // CircleShape on the non-square box renders as a gently flattened capsule (see
     // ExpressiveMetrics.sideHeight), not a full circle.
     Box(
             modifier = Modifier
-                    .size(width, height)
-                    .graphicsLayer {
-                        scaleX = scale
-                        scaleY = scale
-                    }
+                    .size(pressedWidth, height)
+                    .graphicsLayer { scaleY = flatten }
                     .clip(CircleShape)
                     .clickable(interactionSource = interaction, indication = null, onClick = onClick),
             contentAlignment = Alignment.Center
     ) {
         Box(
                 modifier = Modifier
-                        .size(width, height)
+                        .fillMaxSize()
                         .alpha(if (visible) 1f else 0f)
                         .clip(CircleShape)
                         .background(container)
@@ -688,31 +708,57 @@ private const val COOKIE_MODULATION = FaceGeometry.Expressive.COOKIE_MODULATION
 /** The ring undulates noticeably less than the cookie it wraps, as in the reference. */
 private const val RING_MODULATION = FaceGeometry.Expressive.RING_MODULATION
 
+/** One anti-clockwise turn of the cookie and its ring while the music plays. Slow enough that a
+ *  lobe takes a second and a half to reach where its neighbour was, which is what makes it read
+ *  as turning rather than as animating. */
+private const val COOKIE_SPIN_PERIOD_MS = 18_000
+
 /** Gap (degrees) the ring leaves around the progress thumb and the 12 o'clock start. */
 private const val RING_GAP_DEGREES = FaceGeometry.Expressive.RING_GAP_DEGREES
 
 /** Radius multiplier for the given polar [angleRad]: 1f ± [modulation]. The phase term anchors a
  *  lobe crest at 12 o'clock for any lobe count ([angleRad] is measured from 3 o'clock, so the
  *  +π/2 shift re-references the cosine to the top of the dial). */
-private fun cookieProfile(angleRad: Float, modulation: Float): Float {
-    val angleFromTop = angleRad + (Math.PI / 2.0).toFloat()
+private fun cookieProfile(angleRad: Float, modulation: Float, phaseRad: Float = 0f): Float {
+    val angleFromTop = angleRad + (Math.PI / 2.0).toFloat() + phaseRad
     val wave = tanh(COOKIE_SOFTNESS * cos(COOKIE_LOBES * angleFromTop)) / tanh(COOKIE_SOFTNESS)
     return 1f + modulation * wave
 }
 
-/** Point on the cookie contour at [degreesFromTop] (clockwise), for a base [radius]. */
-private fun contourPoint(center: Offset, radius: Float, modulation: Float, degreesFromTop: Float): Offset {
+/**
+ * Point on the cookie contour at [degreesFromTop] (clockwise), for a base [radius].
+ *
+ * [phaseDeg] turns the scalloping anti-clockwise without moving the angle the point sits at -
+ * which is the whole reason the ring's spin is a phase rather than a rotation of the canvas: the
+ * played arc has to keep starting at 12 o'clock and ending at the true playhead while the lobes
+ * travel underneath it.
+ */
+private fun contourPoint(
+        center: Offset,
+        radius: Float,
+        modulation: Float,
+        degreesFromTop: Float,
+        phaseDeg: Float = 0f
+): Offset {
     val angleRad = Math.toRadians((degreesFromTop - 90f).toDouble()).toFloat()
-    val r = radius * cookieProfile(angleRad, modulation)
+    val r = radius * cookieProfile(
+            angleRad, modulation, Math.toRadians(phaseDeg.toDouble()).toFloat())
     return Offset(center.x + r * cos(angleRad), center.y + r * sin(angleRad))
 }
 
-private fun contourPath(center: Offset, radius: Float, modulation: Float, fromDeg: Float, toDeg: Float): Path {
+private fun contourPath(
+        center: Offset,
+        radius: Float,
+        modulation: Float,
+        fromDeg: Float,
+        toDeg: Float,
+        phaseDeg: Float = 0f
+): Path {
     val path = Path()
     var degrees = fromDeg
     var first = true
     while (degrees <= toDeg) {
-        val point = contourPoint(center, radius, modulation, degrees)
+        val point = contourPoint(center, radius, modulation, degrees, phaseDeg)
         if (first) {
             path.moveTo(point.x, point.y)
             first = false
@@ -724,9 +770,10 @@ private fun contourPath(center: Offset, radius: Float, modulation: Float, fromDe
     return path
 }
 
-/** A 12-lobe soft scallop ("cookie"); [amplitudeFraction] 0f is a plain circle, so animating
- *  it morphs between the paused (circle) and playing (cookie) shapes. Always drawn upright -
- *  no rotation, one lobe centered at 12 o'clock. */
+/** A soft scallop ("cookie") of [COOKIE_LOBES] lobes; [amplitudeFraction] 0f is a plain circle,
+ *  so animating it morphs between the paused (circle) and playing (cookie) shapes. Authored
+ *  upright, one lobe centred at 12 o'clock; the slow anti-clockwise turn while playing is a layer
+ *  rotation applied by the caller, not part of this shape. */
 private class CookieShape(private val amplitudeFraction: Float) : Shape {
     override fun createOutline(size: Size, layoutDirection: LayoutDirection, density: Density): Outline {
         val center = Offset(size.width / 2f, size.height / 2f)
@@ -750,6 +797,7 @@ private fun CookiePlayButton(
         content: Color,
         borderColor: Color,
         listener: NowPlayingFaceListener,
+        group: TransportPressGroup,
         scrubFraction: Float?,
         onScrub: (Float) -> Unit,
         onScrubCommit: () -> Unit,
@@ -774,7 +822,35 @@ private fun CookiePlayButton(
     )
 
     var pressed by remember { mutableStateOf(false) }
-    val pressScale by animateFloatAsState(if (pressed) 0.9f else 1f, label = "cookiePressScale")
+    TransportPressEffect(group, TransportPressLayout.CENTRE, pressed)
+    // One axis, both directions: its own press widens it, and a skip button's press squeezes it,
+    // because this is the control that pays for that growth. The height is untouched either way,
+    // so the ring keeps its vertical radius and this reads as the button being compressed rather
+    // than as the progress readout getting smaller - which is exactly what resizing the box in
+    // both directions looked like. The ring travels with the cookie rather than staying put
+    // around it, because the cookie has about two dp of air inside that ring and moving within
+    // that alone would barely register. It deliberately does *not* take the side buttons' small
+    // vertical flatten as well: on a capsule that reads as squash, and on a circle carrying the
+    // progress readout it would only pull the ring further out of round than one axis already
+    // does.
+    val stretch = TransportPressLayout.horizontalStretch(
+            boxSize.value, group.widthDelta(TransportPressLayout.CENTRE))
+
+    // The cookie and its ring turn slowly anti-clockwise while the music plays, against the
+    // clockwise progress sweep - the gear this control reads as, actually turning. It stops while
+    // paused (where the morph has flattened both into plain circles and there would be nothing to
+    // see anyway) and resumes from wherever it stopped rather than snapping back to 12 o'clock.
+    // The repeat runs one full turn at a time, which is invisible: the contour is 360-periodic,
+    // so the restart lands exactly where the previous turn ended.
+    val spin = remember { Animatable(0f) }
+    LaunchedEffect(state.playing) {
+        if (state.playing) {
+            spin.animateTo(
+                    targetValue = spin.value + 360f,
+                    animationSpec = infiniteRepeatable(
+                            animation = tween(COOKIE_SPIN_PERIOD_MS, easing = LinearEasing)))
+        }
+    }
     val actionDescription = stringResource(R.string.action_name_play_pause)
 
     val ringDragModifier = if (scrubEnabled) {
@@ -783,12 +859,15 @@ private fun CookiePlayButton(
         // the classic CircularProgressSeekBar. A tap on the cookie is consumed by its own gesture
         // detector, so it never reaches this drag detector.
         Modifier.pointerInput(Unit) {
-            val ringCenter = Offset(size.width / 2f, size.height / 2f)
+            // This box is measured at its resting size whatever the press is doing - the widening
+            // is a layer transform outside it, and Compose maps pointer input back through that -
+            // so these are the coordinates the ring was drawn in either way.
+            fun ringCenter() = Offset(size.width / 2f, size.height / 2f)
             detectDragGestures(
-                    onDragStart = { pos -> onScrub(ringFractionAt(pos, ringCenter)) },
+                    onDragStart = { pos -> onScrub(ringFractionAt(pos, ringCenter())) },
                     onDrag = { change, _ ->
                         change.consume()
-                        onScrub(ringFractionAt(change.position, ringCenter))
+                        onScrub(ringFractionAt(change.position, ringCenter()))
                     },
                     onDragEnd = { onScrubCommit() },
                     onDragCancel = { onScrubCommit() }
@@ -798,7 +877,13 @@ private fun CookiePlayButton(
         Modifier
     }
 
-    Box(Modifier.size(boxSize).then(ringDragModifier), contentAlignment = Alignment.Center) {
+    Box(
+            modifier = Modifier
+                    .transportStretch(stretch)
+                    .size(boxSize)
+                    .then(ringDragModifier),
+            contentAlignment = Alignment.Center
+    ) {
         // Animated values are read inside the draw lambda, so ring motion only re-draws. While the
         // user is scrubbing, the sweep follows the finger directly instead of the animated value.
             Canvas(Modifier.fillMaxSize()) {
@@ -813,9 +898,12 @@ private fun CookiePlayButton(
                 // in the ring is the single M3-style gap straddling the playhead - the start of the
                 // ring is the played bar itself, not empty space.
                 val trackFrom = sweep + halfGap
+                // The spin is a phase on the contour, never a rotation of the sweep: the lobes
+                // travel anti-clockwise while both arcs stay anchored where the position says.
+                val phase = spin.value % 360f
                 if (trackFrom < 360f) {
                     drawContourStroke(center, baseRadius, ringModulation, trackFrom, 360f,
-                            Color.White.copy(alpha = 0.30f), stroke)
+                            Color.White.copy(alpha = 0.30f), stroke, phaseDeg = phase)
                 }
 
                 // Played portion: 12 o'clock to just before the playhead, in the progress colour.
@@ -823,18 +911,13 @@ private fun CookiePlayButton(
                 // scrub still works via the sweep + time readout).
                 if (sweep > halfGap) {
                     drawContourStroke(center, baseRadius, ringModulation, 0f, sweep - halfGap,
-                            Color(state.progressColor), stroke)
+                            Color(state.progressColor), stroke, phaseDeg = phase)
                 }
             }
 
         Box(
                 modifier = Modifier
                         .size(cookieSize)
-                        .graphicsLayer {
-                            scaleX = pressScale
-                            scaleY = pressScale
-                        }
-                        .clip(CookieShape(morph))
                         .pointerInput(Unit) {
                             detectTapGestures(
                                     onPress = {
@@ -857,10 +940,16 @@ private fun CookiePlayButton(
                         },
                 contentAlignment = Alignment.Center
         ) {
+            // The fill turns; the glyph inside it does not. A rigid rotation of a shape with
+            // twelve-fold symmetry is exactly a phase shift of its profile, and costs one layer
+            // transform per frame instead of rebuilding a 240-point outline. The clip that used to
+            // sit on the box above went with it: a static outline of the same shape would have cut
+            // the crests off the rotating one inside it.
             Box(
                     modifier = Modifier
                             .size(cookieSize)
                             .alpha(if (state.showControls) 1f else 0f)
+                            .graphicsLayer { rotationZ = -(spin.value % 360f) }
                             .clip(CookieShape(morph))
                             .background(container)
                             .then(
@@ -869,22 +958,47 @@ private fun CookiePlayButton(
                                     } else {
                                         Modifier
                                     }
-                            ),
-                    contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                        painter = painterResource(
-                                if (state.playing) commonR.drawable.action_pause_expressive
-                                else commonR.drawable.action_play_filled
-                        ),
-                        contentDescription = null,
-                        tint = content.copy(alpha = iconAlpha),
-                        modifier = Modifier.size(cookieSize * 0.48f * iconScale)
-                )
-            }
+                            )
+            )
+            PlayPauseIcon(
+                    playing = state.playing,
+                    tint = content.copy(alpha = iconAlpha),
+                    size = cookieSize * 0.48f * iconScale,
+                    modifier = Modifier
+                            .alpha(if (state.showControls) 1f else 0f)
+                            // Undoes the scale for the glyph alone, in both directions. The side
+                            // buttons' icons keep their shape while the capsule changes around
+                            // them, and a pause bar drawn out of proportion would be the one part
+                            // of this that looked like a mistake rather than a press.
+                            .graphicsLayer { scaleX = 1f / stretch },
+                    pauseIcon = commonR.drawable.action_pause_expressive
+            )
         }
     }
 }
+
+/**
+ * Sets this control's width for the row's layout while its content draws scaled to fill it.
+ *
+ * Two halves that have to happen together, and neither is enough alone: the reported width is what
+ * the buttons beside it are laid out against, and the horizontal scale is what makes the ring and
+ * the cookie actually look wider - or narrower - instead of sitting unchanged inside a box that
+ * changed around them.
+ *
+ * The content is measured at its resting size and scaled afterwards rather than being laid out at
+ * the new one, which keeps the ring's geometry - and the scrub angles read off it - in the
+ * coordinates it was authored in, and keeps the change to one axis. Compose maps pointer input
+ * back through the layer, so a seek drag still lands where it looks like it should.
+ */
+private fun Modifier.transportStretch(stretch: Float): Modifier = this
+        .layout { measurable, constraints ->
+            val placeable = measurable.measure(constraints)
+            val width = (placeable.width * stretch).roundToInt()
+            layout(width, placeable.height) {
+                placeable.place((width - placeable.width) / 2, 0)
+            }
+        }
+        .graphicsLayer { scaleX = stretch }
 
 private fun DrawScope.drawContourStroke(
         center: Offset,
@@ -894,10 +1008,11 @@ private fun DrawScope.drawContourStroke(
         toDeg: Float,
         color: Color,
         strokeWidth: Float,
-        strokeStyle: Stroke? = null
+        strokeStyle: Stroke? = null,
+        phaseDeg: Float = 0f
 ) {
     drawPath(
-            path = contourPath(center, radius, modulation, fromDeg, toDeg),
+            path = contourPath(center, radius, modulation, fromDeg, toDeg, phaseDeg),
             color = color,
             style = strokeStyle ?: Stroke(width = strokeWidth, cap = StrokeCap.Round)
     )

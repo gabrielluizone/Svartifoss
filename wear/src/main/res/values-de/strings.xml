@@ -21,6 +21,7 @@
     <string name="idle_hint">Spiele etwas auf deinem Telefon ab</string>
 
     <string name="no_phone">Kein Telefon verbunden</string>
+    <string name="phone_unavailable">Entsperre dein Telefon, um die Wiedergabe zu steuern</string>
     <string name="playback_stopped">Gestoppt</string>
     <string name="error">FEHLER</string>
     <string name="error_play_services">Play-Services-Fehler</string>
