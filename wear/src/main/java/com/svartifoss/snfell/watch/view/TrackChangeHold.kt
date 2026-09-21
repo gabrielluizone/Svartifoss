@@ -106,6 +106,59 @@ object TrackChangeHold {
         titlesLeftBehind.removeAll { PredictedTrackAdvance.isSameTrack(it, arrivedTitle) }
     }
 
+    /** What the player does with a cover arriving from the phone - see [decideArtwork]. */
+    enum class ArtworkDecision {
+        /** Put it on screen, and let go of any stand-in. */
+        DRAW,
+
+        /** Leave what is showing where it is. */
+        KEEP,
+    }
+
+    /**
+     * Whether a cover the phone has just delivered belongs on screen yet.
+     *
+     * The artwork travels on its own path - it is a Data Layer asset, decoded well after the state
+     * it came with - so it needs the window's decision restated here rather than inheriting it. Two
+     * separate things would otherwise overwrite the stand-in the prediction put up:
+     *
+     *  - **A cover that is simply absent.** The phone ships a track change as two puts, state first
+     *    and cover second, and publishes *no* cover in between. That gap is not a track without
+     *    artwork, so a stand-in outlives it.
+     *  - **A cover belonging to a state the window is holding back.** This is the burst again, one
+     *    layer down: the intermediate tracks a player passes through each carry a real cover, and
+     *    the seq gate cannot drop them because they are genuinely newer than the last state applied.
+     *    Held only for the text, the title went straight to the track the user asked for while the
+     *    cover walked through every track on the way and settled last - which is precisely "the
+     *    title is right but the cover takes a while".
+     *
+     * A cover that follows a state the window let through is the real one for what is on screen, so
+     * it is drawn at once. That is the whole point of the stand-in: it is a placeholder for exactly
+     * this picture, at the queue's resolution, and it steps aside the moment the sharp one lands.
+     */
+    fun decideArtwork(
+            holdActive: Boolean,
+            predictionOutstanding: Boolean,
+            haveStandIn: Boolean,
+            artworkFollowsHeldState: Boolean,
+            incomingIsNull: Boolean,
+    ): ArtworkDecision {
+        if (incomingIsNull) {
+            // Both conditions are needed: the window can close while the prediction is still
+            // outstanding, and a phone that goes briefly session-less mid-swap publishes an empty
+            // state either way.
+            return if (haveStandIn && (predictionOutstanding || holdActive)) {
+                ArtworkDecision.KEEP
+            } else {
+                ArtworkDecision.DRAW
+            }
+        }
+        if (holdActive && artworkFollowsHeldState) {
+            return ArtworkDecision.KEEP
+        }
+        return ArtworkDecision.DRAW
+    }
+
     enum class Decision {
         /** Draw it, and end the window - the phone has moved past the transition. */
         APPLY,

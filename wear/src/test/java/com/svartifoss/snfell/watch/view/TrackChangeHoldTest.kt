@@ -113,6 +113,59 @@ class TrackChangeHoldTest {
                 decide(title = "First", positionMs = 200_000L))
     }
 
+    private fun artwork(
+            holdActive: Boolean = true,
+            predictionOutstanding: Boolean = true,
+            haveStandIn: Boolean = true,
+            artworkFollowsHeldState: Boolean = false,
+            incomingIsNull: Boolean = false,
+    ) = TrackChangeHold.decideArtwork(holdActive, predictionOutstanding, haveStandIn,
+            artworkFollowsHeldState, incomingIsNull)
+
+    @Test
+    fun `the phone's cover for the track on screen replaces the stand-in at once`() {
+        assertEquals(TrackChangeHold.ArtworkDecision.DRAW, artwork())
+        assertEquals(TrackChangeHold.ArtworkDecision.DRAW, artwork(holdActive = false))
+    }
+
+    /**
+     * The intermediate tracks of a burst each carry a real cover, and the sequence gate cannot
+     * drop them - they are genuinely newer than the last state applied. Held for the text only,
+     * the title jumped straight to the track asked for while the cover walked through every one
+     * on the way.
+     */
+    @Test
+    fun `a cover belonging to a held state stays off screen`() {
+        assertEquals(TrackChangeHold.ArtworkDecision.KEEP,
+                artwork(artworkFollowsHeldState = true))
+        // With no stand-in up, the previous track's cover is still the better of the two.
+        assertEquals(TrackChangeHold.ArtworkDecision.KEEP,
+                artwork(artworkFollowsHeldState = true, haveStandIn = false))
+    }
+
+    @Test
+    fun `a cover held for a closed window is drawn`() {
+        assertEquals(TrackChangeHold.ArtworkDecision.DRAW,
+                artwork(holdActive = false, artworkFollowsHeldState = true))
+    }
+
+    @Test
+    fun `the gap between the phone's two puts does not clear the stand-in`() {
+        assertEquals(TrackChangeHold.ArtworkDecision.KEEP, artwork(incomingIsNull = true))
+        assertEquals(TrackChangeHold.ArtworkDecision.KEEP,
+                artwork(incomingIsNull = true, predictionOutstanding = false))
+        assertEquals(TrackChangeHold.ArtworkDecision.KEEP,
+                artwork(incomingIsNull = true, holdActive = false))
+    }
+
+    @Test
+    fun `a track that genuinely has no cover clears it`() {
+        assertEquals(TrackChangeHold.ArtworkDecision.DRAW,
+                artwork(incomingIsNull = true, haveStandIn = false))
+        assertEquals(TrackChangeHold.ArtworkDecision.DRAW,
+                artwork(incomingIsNull = true, holdActive = false, predictionOutstanding = false))
+    }
+
     @Test
     fun `a track skipped back onto stops counting as left behind`() {
         val burst = mutableListOf("First", "Second", "Third")
