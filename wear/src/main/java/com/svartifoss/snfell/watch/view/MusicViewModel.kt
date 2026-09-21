@@ -569,6 +569,10 @@ class MusicViewModel @Inject constructor(
     private fun applyPredictedTrack(state: MusicState, entry: CustomListItemWithIcon) {
         val title = entry.listItem.entryTitle
         Timber.d("Predicting the track change to %s from the queue", title)
+        // Before anything is drawn: this is where the user has arrived, so it is no longer
+        // somewhere they have been, and a paused state naming it is the phone answering about the
+        // screen rather than echoing a track nobody is looking at. See the method's own comment.
+        TrackChangeHold.forgetArrivedTrack(titlesLeftBehind, title)
         predictedTitle = title
         predictedAtRealtimeMs = SystemClock.elapsedRealtime()
 
@@ -711,6 +715,15 @@ class MusicViewModel @Inject constructor(
     /** The last state the window held back, kept so closing the window can still report it. */
     private var heldMusicState: Resource<MusicState>? = null
 
+    /**
+     * Whether the covers now arriving from the phone belong to a state the window is holding back.
+     *
+     * The artwork is a Data Layer asset decoded after the state it travelled with, so by the time
+     * it reaches the mediator below the decision that was made about its state is gone. This
+     * carries it across - see [TrackChangeHold.decideArtwork].
+     */
+    private var artworkFollowsHeldState = false
+
     private val trackChangeHoldRunnable = Runnable { endTrackChangeHold(applyHeld = true) }
 
     private fun isTrackChangeHoldActive(): Boolean =
@@ -775,11 +788,17 @@ class MusicViewModel @Inject constructor(
         trackChangeHoldUntilRealtimeMs = 0L
         trackChangeHoldStartedRealtimeMs = 0L
         titlesLeftBehind.clear()
+        artworkFollowsHeldState = false
         val held = heldMusicState
         heldMusicState = null
         if (applyHeld && held != null) {
             Timber.d("The skip window closed without an answer; reporting the held state")
             applyMusicState(held)
+            // Its cover was kept off screen while it was being held, and no further one is coming:
+            // the phone has already said everything it is going to about this track. Drop the
+            // stand-in so what shows is the artwork the phone actually delivered for it, rather
+            // than the queue thumbnail of a track the skip never reached.
+            clearPredictedArt()
         }
     }
 
@@ -948,14 +967,21 @@ class MusicViewModel @Inject constructor(
 
     private fun applyOptimisticPlayingState(nowPlaying: Boolean) {
         val state = latestMusicState ?: return
-        if (state.playing == nowPlaying) {
-            return
-        }
 
         // A deliberate play/pause outranks a skip that is still settling: whatever the window was
         // holding back describes a track change the user has already moved on from, and drawing it
         // now would fight the press that just happened.
+        //
+        // Before the "nothing to draw" return below, not after it. The press is a decision about
+        // playback whether or not the screen already shows its outcome, and a window left open by
+        // it goes on reading the phone's answer to *this* press as the inside of the earlier
+        // transition - so the pause the user asked for arrived up to TrackChangeHold.MAX_HOLD_MS
+        // later, together with everything the phone had said in between.
         endTrackChangeHold(applyHeld = false)
+
+        if (state.playing == nowPlaying) {
+            return
+        }
 
         // Where playback has actually reached, taken before the anchor moves: pausing must freeze
         // the display where the song is, not where its last sample was, and resuming must carry on
@@ -1030,6 +1056,7 @@ class MusicViewModel @Inject constructor(
             // all) and a loading state are never held. Both are answers about the connection
             // rather than about the transition, and the second is what ends an optimistic skip
             // that is not going to happen.
+            artworkFollowsHeldState = false
             endTrackChangeHold(applyHeld = false)
             applyMusicState(incoming)
             return
@@ -1042,16 +1069,22 @@ class MusicViewModel @Inject constructor(
                 incomingPositionMs = state.positionMs,
                 titlesLeftBehind = titlesLeftBehind)) {
             TrackChangeHold.Decision.APPLY -> {
+                artworkFollowsHeldState = false
                 endTrackChangeHold(applyHeld = false)
                 applyMusicState(incoming)
             }
             TrackChangeHold.Decision.DEFER -> {
                 Timber.d("Holding a transitional state back: '%s'", state.title)
+                // Its cover is on the way behind it and describes the same held track.
+                artworkFollowsHeldState = true
                 heldMusicState = incoming
                 extendTrackChangeHold()
             }
             TrackChangeHold.Decision.ASSUME_PLAYING -> {
                 Timber.d("Drawing '%s' as playing while the skip settles", state.title)
+                // The track is the one on screen, so its cover is wanted as soon as it lands -
+                // only the play/pause control is being covered up here, not the artwork.
+                artworkFollowsHeldState = false
                 heldMusicState = incoming
                 extendTrackChangeHold()
                 // The clock recorded this sample as stopped as it arrived, so without re-anchoring
@@ -1156,14 +1189,16 @@ class MusicViewModel @Inject constructor(
         // The phone's cover always wins, and its arrival is exactly the moment a predicted
         // stand-in has done its job.
         _albumArt.addSource(phoneConnection.albumArt) { art ->
-            // Except while a skip is settling - or a prediction is still unconfirmed - and the
-            // phone is reporting *no* cover. That is the gap between two tracks rather than a
-            // track without artwork, and clearing on it drops the stand-in for the cover that is
-            // on its way, which is the blank this whole path exists to remove. A phone that goes
-            // briefly session-less mid-swap publishes exactly that empty state, so both conditions
-            // are needed: the window can close while the prediction is still outstanding.
-            if (art == null && predictedArt != null &&
-                    (predictedTitle != null || isTrackChangeHoldActive())) {
+            // Except while a skip is settling, where two kinds of cover are not about the track on
+            // screen: an absent one, which is the gap between the phone's two puts, and one
+            // belonging to a state the window is holding back. TrackChangeHold.decideArtwork owns
+            // both, so the artwork and the text cannot disagree about the same transition.
+            if (TrackChangeHold.decideArtwork(
+                            holdActive = isTrackChangeHoldActive(),
+                            predictionOutstanding = predictedTitle != null,
+                            haveStandIn = predictedArt != null,
+                            artworkFollowsHeldState = artworkFollowsHeldState,
+                            incomingIsNull = art == null) == TrackChangeHold.ArtworkDecision.KEEP) {
                 return@addSource
             }
             predictedArt = null

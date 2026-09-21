@@ -20,9 +20,39 @@ class TrackChangeHoldTest {
     }
 
     @Test
-    fun `a playing state always ends the window`() {
-        assertEquals(TrackChangeHold.Decision.APPLY, decide(playing = true, title = "First"))
+    fun `a playing state on a track not passed through ends the window`() {
         assertEquals(TrackChangeHold.Decision.APPLY, decide(playing = true, title = "Second"))
+        assertEquals(TrackChangeHold.Decision.APPLY, decide(playing = true, title = "Fourth"))
+    }
+
+    /**
+     * The player is working through a burst one press at a time and really does play each track it
+     * passes on the way. Drawn as they land, those states walk the screen backwards through tracks
+     * the user has already gone past while the one they asked for is on screen and waiting.
+     */
+    @Test
+    fun `a track the user pressed past is held even while it plays`() {
+        assertEquals(TrackChangeHold.Decision.DEFER, decide(playing = true, title = "First"))
+    }
+
+    @Test
+    fun `the whole of a burst is held while the player catches up`() {
+        val burst = listOf("First", "Second", "Third")
+        assertEquals(TrackChangeHold.Decision.DEFER,
+                decide(playing = true, title = "First", leftBehind = burst))
+        assertEquals(TrackChangeHold.Decision.DEFER,
+                decide(playing = true, title = "Second", leftBehind = burst))
+        assertEquals(TrackChangeHold.Decision.DEFER,
+                decide(playing = true, title = "Third", leftBehind = burst))
+        // The one the presses were aimed at is not in the memo, so it lands at once.
+        assertEquals(TrackChangeHold.Decision.APPLY,
+                decide(playing = true, title = "Fourth", leftBehind = burst))
+    }
+
+    @Test
+    fun `a blank left-behind entry never swallows a playing state`() {
+        assertEquals(TrackChangeHold.Decision.APPLY,
+                decide(playing = true, title = "Second", leftBehind = listOf("")))
     }
 
     @Test
@@ -81,5 +111,110 @@ class TrackChangeHoldTest {
     fun `a left-behind track is held however far into it the sample reads`() {
         assertEquals(TrackChangeHold.Decision.DEFER,
                 decide(title = "First", positionMs = 200_000L))
+    }
+
+    private fun artwork(
+            holdActive: Boolean = true,
+            predictionOutstanding: Boolean = true,
+            haveStandIn: Boolean = true,
+            artworkFollowsHeldState: Boolean = false,
+            incomingIsNull: Boolean = false,
+    ) = TrackChangeHold.decideArtwork(holdActive, predictionOutstanding, haveStandIn,
+            artworkFollowsHeldState, incomingIsNull)
+
+    @Test
+    fun `the phone's cover for the track on screen replaces the stand-in at once`() {
+        assertEquals(TrackChangeHold.ArtworkDecision.DRAW, artwork())
+        assertEquals(TrackChangeHold.ArtworkDecision.DRAW, artwork(holdActive = false))
+    }
+
+    /**
+     * The intermediate tracks of a burst each carry a real cover, and the sequence gate cannot
+     * drop them - they are genuinely newer than the last state applied. Held for the text only,
+     * the title jumped straight to the track asked for while the cover walked through every one
+     * on the way.
+     */
+    @Test
+    fun `a cover belonging to a held state stays off screen`() {
+        assertEquals(TrackChangeHold.ArtworkDecision.KEEP,
+                artwork(artworkFollowsHeldState = true))
+        // With no stand-in up, the previous track's cover is still the better of the two.
+        assertEquals(TrackChangeHold.ArtworkDecision.KEEP,
+                artwork(artworkFollowsHeldState = true, haveStandIn = false))
+    }
+
+    @Test
+    fun `a cover held for a closed window is drawn`() {
+        assertEquals(TrackChangeHold.ArtworkDecision.DRAW,
+                artwork(holdActive = false, artworkFollowsHeldState = true))
+    }
+
+    @Test
+    fun `the gap between the phone's two puts does not clear the stand-in`() {
+        assertEquals(TrackChangeHold.ArtworkDecision.KEEP, artwork(incomingIsNull = true))
+        assertEquals(TrackChangeHold.ArtworkDecision.KEEP,
+                artwork(incomingIsNull = true, predictionOutstanding = false))
+        assertEquals(TrackChangeHold.ArtworkDecision.KEEP,
+                artwork(incomingIsNull = true, holdActive = false))
+    }
+
+    @Test
+    fun `a track that genuinely has no cover clears it`() {
+        assertEquals(TrackChangeHold.ArtworkDecision.DRAW,
+                artwork(incomingIsNull = true, haveStandIn = false))
+        assertEquals(TrackChangeHold.ArtworkDecision.DRAW,
+                artwork(incomingIsNull = true, holdActive = false, predictionOutstanding = false))
+    }
+
+    @Test
+    fun `a track skipped back onto stops counting as left behind`() {
+        val burst = mutableListOf("First", "Second", "Third")
+        TrackChangeHold.forgetArrivedTrack(burst, "Second")
+        assertEquals(listOf("First", "Third"), burst)
+    }
+
+    @Test
+    fun `forgetting matches the way the echo is recognised`() {
+        val burst = mutableListOf("First", "  second  ")
+        TrackChangeHold.forgetArrivedTrack(burst, "SECOND")
+        assertEquals(listOf("First"), burst)
+    }
+
+    @Test
+    fun `no arrival title forgets nothing`() {
+        val burst = mutableListOf("First", "Second")
+        TrackChangeHold.forgetArrivedTrack(burst, null)
+        TrackChangeHold.forgetArrivedTrack(burst, "   ")
+        assertEquals(listOf("First", "Second"), burst)
+    }
+
+    /**
+     * The user skipped forward and back, so the track they are looking at is one this window
+     * also left behind. Once it is forgotten, the phone's real pause on it is a pause and not an
+     * echo - which is what stopped it being drawn seconds late, behind the rest of the burst.
+     */
+    @Test
+    fun `the pause on a track skipped back onto is drawn at once`() {
+        val burst = mutableListOf("First", "Second")
+        assertEquals(TrackChangeHold.Decision.DEFER,
+                decide(title = "First", positionMs = 47_000L, leftBehind = burst))
+
+        TrackChangeHold.forgetArrivedTrack(burst, "First")
+
+        assertEquals(TrackChangeHold.Decision.APPLY,
+                decide(title = "First", positionMs = 47_000L, leftBehind = burst))
+        assertEquals(TrackChangeHold.Decision.APPLY,
+                decide(playing = true, title = "First", leftBehind = burst))
+    }
+
+    /** Forgetting it does not make the swap itself visible: at the start of the track it is still
+     *  the player reloading, which is the case ASSUME_PLAYING covers. */
+    @Test
+    fun `the start of a track skipped back onto is still the transition`() {
+        val burst = mutableListOf("First", "Second")
+        TrackChangeHold.forgetArrivedTrack(burst, "First")
+
+        assertEquals(TrackChangeHold.Decision.ASSUME_PLAYING,
+                decide(title = "First", positionMs = 0L, leftBehind = burst))
     }
 }

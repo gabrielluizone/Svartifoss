@@ -16,8 +16,15 @@ package com.svartifoss.snfell.watch.view
  *
  * None of that is information. It is the inside of a transition, and it is only visible because the
  * watch has no way to tell it apart from a real pause. This object is that way: while a skip is
- * settling, a state that says *not playing* and names either nothing or a track the user has
- * already left is held back rather than drawn.
+ * settling, a state that names a track the user has already pressed past, or names nothing at all,
+ * or says *not playing* about a track that has barely started, is held back rather than drawn.
+ *
+ * The first of those covers a *burst*, which is the same problem one size larger. A player given
+ * four presses takes them one at a time and genuinely plays each track it passes through, so the
+ * catching-up arrives as ordinary playing states about real playback. Drawn as they land, they
+ * walk the screen backwards through every track the user has already gone past - at the player's
+ * pace, with the track they asked for already on screen and waiting - so the press looks answered
+ * and then undone, three times over.
  *
  * **Held, never discarded.** The phone dedupes its own transmissions (`equalsIgnoringTime`), so a
  * state thrown away here could be the only copy that is ever sent - a skip that silently failed
@@ -75,6 +82,83 @@ object TrackChangeHold {
      */
     const val MAX_TITLES_LEFT_BEHIND = 8
 
+    /**
+     * Forgets a track the user has skipped back *onto*.
+     *
+     * [titlesLeftBehind] is a memo of where the skips in this window came from, and its whole job
+     * is to make a late paused state about one of them recognisable as an echo of somewhere nobody
+     * is looking any more. A burst that reverses - next and then previous, which is the ordinary
+     * way of checking what you have just skipped past - ends on a track that is in that memo *and*
+     * on screen at the same time, and there the memo says the opposite of what it means: the
+     * phone's real answer about the track the user is actually looking at is read as an echo and
+     * held back. A pause made right after such a burst was then drawn up to [MAX_HOLD_MS] later,
+     * arriving as a pause nobody had just asked for - and with every state the phone had sent in
+     * between still to come, which is the whole burst replaying itself on the wrist.
+     *
+     * Called with the track a skip has arrived on, so only the direction that can reverse is
+     * affected: a skip forward never lands on a track the same window left behind, because
+     * [PredictedTrackAdvance.nextIndex] does not wrap.
+     */
+    fun forgetArrivedTrack(titlesLeftBehind: MutableCollection<String>, arrivedTitle: String?) {
+        if (arrivedTitle.isNullOrBlank()) {
+            return
+        }
+        titlesLeftBehind.removeAll { PredictedTrackAdvance.isSameTrack(it, arrivedTitle) }
+    }
+
+    /** What the player does with a cover arriving from the phone - see [decideArtwork]. */
+    enum class ArtworkDecision {
+        /** Put it on screen, and let go of any stand-in. */
+        DRAW,
+
+        /** Leave what is showing where it is. */
+        KEEP,
+    }
+
+    /**
+     * Whether a cover the phone has just delivered belongs on screen yet.
+     *
+     * The artwork travels on its own path - it is a Data Layer asset, decoded well after the state
+     * it came with - so it needs the window's decision restated here rather than inheriting it. Two
+     * separate things would otherwise overwrite the stand-in the prediction put up:
+     *
+     *  - **A cover that is simply absent.** The phone ships a track change as two puts, state first
+     *    and cover second, and publishes *no* cover in between. That gap is not a track without
+     *    artwork, so a stand-in outlives it.
+     *  - **A cover belonging to a state the window is holding back.** This is the burst again, one
+     *    layer down: the intermediate tracks a player passes through each carry a real cover, and
+     *    the seq gate cannot drop them because they are genuinely newer than the last state applied.
+     *    Held only for the text, the title went straight to the track the user asked for while the
+     *    cover walked through every track on the way and settled last - which is precisely "the
+     *    title is right but the cover takes a while".
+     *
+     * A cover that follows a state the window let through is the real one for what is on screen, so
+     * it is drawn at once. That is the whole point of the stand-in: it is a placeholder for exactly
+     * this picture, at the queue's resolution, and it steps aside the moment the sharp one lands.
+     */
+    fun decideArtwork(
+            holdActive: Boolean,
+            predictionOutstanding: Boolean,
+            haveStandIn: Boolean,
+            artworkFollowsHeldState: Boolean,
+            incomingIsNull: Boolean,
+    ): ArtworkDecision {
+        if (incomingIsNull) {
+            // Both conditions are needed: the window can close while the prediction is still
+            // outstanding, and a phone that goes briefly session-less mid-swap publishes an empty
+            // state either way.
+            return if (haveStandIn && (predictionOutstanding || holdActive)) {
+                ArtworkDecision.KEEP
+            } else {
+                ArtworkDecision.DRAW
+            }
+        }
+        if (holdActive && artworkFollowsHeldState) {
+            return ArtworkDecision.KEEP
+        }
+        return ArtworkDecision.DRAW
+    }
+
     enum class Decision {
         /** Draw it, and end the window - the phone has moved past the transition. */
         APPLY,
@@ -97,7 +181,9 @@ object TrackChangeHold {
     /**
      * @param holdActive whether a skip made here is still within its window.
      * @param titlesLeftBehind the tracks that were on screen when the skips in this window were
-     *   made - the ones whose paused echoes are meaningless by the time they arrive.
+     *   made - the ones whose echoes are meaningless by the time they arrive, whether they report
+     *   playback as stopped or as running. [forgetArrivedTrack] takes one back out when a skip
+     *   lands on it again.
      * @param incomingPositionMs where the incoming state says playback is. Only consulted for a
      *   track the window has not seen before - see [TRANSITION_POSITION_MS].
      */
@@ -111,8 +197,26 @@ object TrackChangeHold {
         if (!holdActive) {
             return Decision.APPLY
         }
-        // Playing is never held: it is the phone reporting that the transition is over, which is
-        // both true and the exact thing the window is waiting for.
+        // A track the user has pressed past is checked first, ahead of even the playing rule, and
+        // that order is the whole answer to a *burst* of skips.
+        //
+        // A player works through four presses one at a time, and it really does play each track it
+        // lands on along the way - so those arrive as ordinary playing states about real playback.
+        // Taken at face value they drag the screen backwards through every track the user has
+        // already gone past, at the player's pace, while the track they actually asked for is
+        // already drawn and waiting. That is the press being answered instantly and then undone
+        // three times over, which reads as the watch being slow rather than as the phone catching
+        // up. The queue says where the presses were aimed, so a state about somewhere they have
+        // been is en route, whatever it says about playback, and the window holds it.
+        //
+        // Deferred whatever the position says, too: playback did reach the end of a track the user
+        // has left, so a late sample from it describes nothing anybody is looking at.
+        if (!incomingTitle.isNullOrBlank() &&
+                titlesLeftBehind.any { PredictedTrackAdvance.isSameTrack(it, incomingTitle) }) {
+            return Decision.DEFER
+        }
+        // Playing is otherwise never held: it is the phone reporting that the transition is over,
+        // which is both true and the exact thing the window is waiting for.
         if (incomingPlaying) {
             return Decision.APPLY
         }
@@ -120,11 +224,6 @@ object TrackChangeHold {
         // It is also what an idle phone looks like, which is why it is deferred rather than
         // dropped - if playback really did end, the window closing says so.
         if (incomingTitle.isNullOrBlank()) {
-            return Decision.DEFER
-        }
-        // Deferred whatever the position says: playback did reach the end of a track the user has
-        // left, so a late sample from it describes nothing anybody is looking at.
-        if (titlesLeftBehind.any { PredictedTrackAdvance.isSameTrack(it, incomingTitle) }) {
             return Decision.DEFER
         }
         if (incomingPositionMs > TRANSITION_POSITION_MS) {
