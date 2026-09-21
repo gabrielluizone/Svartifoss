@@ -176,3 +176,47 @@ tasks.withType(Test).configureEach {
             .withPropertyName("communityThemePublisherForScreenshotContract")
             .withPathSensitivity(PathSensitivity.RELATIVE)
 }
+
+// Publishing to Google Play from the command line, so a release does not mean carrying a bundle to
+// the Console by hand. Opt-in per machine, exactly like the release signing above it: with no
+// `play-publisher.json` at the repo root the plugin is never applied and this build is byte for
+// byte the one everybody else runs - a fresh clone and any CI keep working with no credentials and
+// no extra configuration. The file is a Google Play service account key, gitignored beside
+// `keystore.properties`, and it can publish to the live listing, so it is treated as one.
+//
+// Only the `play` flavor is ever publishable: `github` is the sideload build and carries the
+// self-updater Google Play forbids, so its variants are disabled outright rather than left as
+// tasks that would be a mistake to run.
+//
+//   ./gradlew :mobile:publishPlayReleaseBundle                 // build and upload
+//   ./gradlew :mobile:publishPlayReleaseBundle -PplayTrack=beta
+//   ./gradlew :mobile:publishPlayReleaseBundle -PplayStatus=completed
+//
+// Defaults are deliberately the two safe ones. `internal` is the internal-testing track, which
+// reaches a named list and nobody else, and DRAFT means the upload appears in the Console and
+// waits for a human to roll it out - so a mistyped command cannot put anything in front of a user,
+// which matters here because Play burns a versionCode permanently and a release cannot be recalled.
+def playCredentials = rootProject.file('play-publisher.json')
+if (playCredentials.exists()) {
+    apply plugin: 'com.github.triplet.play'
+
+    android {
+        playConfigs {
+            github {
+                enabled.set(false)
+            }
+        }
+    }
+
+    play {
+        serviceAccountCredentials.set(playCredentials)
+        // The Play listing takes bundles, not APKs; the github flavor's APKs go to GitHub releases.
+        defaultToAppBundles.set(true)
+        track.set((project.findProperty('playTrack') ?: 'internal').toString())
+        releaseStatus.set(com.github.triplet.gradle.androidpublisher.ReleaseStatus.valueOf(
+                (project.findProperty('playStatus') ?: 'draft').toString().toUpperCase()))
+        // Refuse rather than quietly do nothing when the versionCode is already on Play. That is
+        // the one failure this cannot recover from, so it should stop the command, not the release.
+        resolutionStrategy.set(com.github.triplet.gradle.androidpublisher.ResolutionStrategy.FAIL)
+    }
+}

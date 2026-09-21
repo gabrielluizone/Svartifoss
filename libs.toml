@@ -4,6 +4,7 @@ kotlin-coroutines = "1.10.2"
 
 android-gradle = "8.13.1"
 versionsPlugin-gradle = "0.52.0"
+playPublisher-gradle = "3.12.1"
 kotlinova = "3.6.0"
 
 androidx-appCompat = "1.7.1"
@@ -62,6 +63,7 @@ kotlin-composeCompiler-gradle = { module = "org.jetbrains.kotlin:compose-compile
 
 android-gradle = { module = "com.android.tools.build:gradle", version.ref = "android-gradle" }
 versionsPlugin-gradle = { module = "com.github.ben-manes:gradle-versions-plugin", version.ref = "versionsPlugin-gradle" }
+playPublisher-gradle = { module = "com.github.triplet.gradle:play-publisher", version.ref = "playPublisher-gradle" }
 kotlinova-gradle = { module = "si.inova.kotlinova:gradle", version.ref = "kotlinova" }
 
 androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appCompat" }

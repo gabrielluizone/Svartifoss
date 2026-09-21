@@ -6,6 +6,7 @@
 .kotlin/
 local.properties
 keystore.properties
+play-publisher.json
 out/
 build/
 

@@ -14,6 +14,7 @@ buildscript {
         classpath libs.versionsPlugin.gradle
         classpath libs.unmock.gradle
         classpath libs.androidx.hilt.gradle
+        classpath libs.playPublisher.gradle
     }
 }
 
