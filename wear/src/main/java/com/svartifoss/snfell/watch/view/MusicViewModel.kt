@@ -569,6 +569,10 @@ class MusicViewModel @Inject constructor(
     private fun applyPredictedTrack(state: MusicState, entry: CustomListItemWithIcon) {
         val title = entry.listItem.entryTitle
         Timber.d("Predicting the track change to %s from the queue", title)
+        // Before anything is drawn: this is where the user has arrived, so it is no longer
+        // somewhere they have been, and a paused state naming it is the phone answering about the
+        // screen rather than echoing a track nobody is looking at. See the method's own comment.
+        TrackChangeHold.forgetArrivedTrack(titlesLeftBehind, title)
         predictedTitle = title
         predictedAtRealtimeMs = SystemClock.elapsedRealtime()
 
@@ -948,14 +952,21 @@ class MusicViewModel @Inject constructor(
 
     private fun applyOptimisticPlayingState(nowPlaying: Boolean) {
         val state = latestMusicState ?: return
-        if (state.playing == nowPlaying) {
-            return
-        }
 
         // A deliberate play/pause outranks a skip that is still settling: whatever the window was
         // holding back describes a track change the user has already moved on from, and drawing it
         // now would fight the press that just happened.
+        //
+        // Before the "nothing to draw" return below, not after it. The press is a decision about
+        // playback whether or not the screen already shows its outcome, and a window left open by
+        // it goes on reading the phone's answer to *this* press as the inside of the earlier
+        // transition - so the pause the user asked for arrived up to TrackChangeHold.MAX_HOLD_MS
+        // later, together with everything the phone had said in between.
         endTrackChangeHold(applyHeld = false)
+
+        if (state.playing == nowPlaying) {
+            return
+        }
 
         // Where playback has actually reached, taken before the anchor moves: pausing must freeze
         // the display where the song is, not where its last sample was, and resuming must carry on

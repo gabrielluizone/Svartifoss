@@ -75,6 +75,30 @@ object TrackChangeHold {
      */
     const val MAX_TITLES_LEFT_BEHIND = 8
 
+    /**
+     * Forgets a track the user has skipped back *onto*.
+     *
+     * [titlesLeftBehind] is a memo of where the skips in this window came from, and its whole job
+     * is to make a late paused state about one of them recognisable as an echo of somewhere nobody
+     * is looking any more. A burst that reverses - next and then previous, which is the ordinary
+     * way of checking what you have just skipped past - ends on a track that is in that memo *and*
+     * on screen at the same time, and there the memo says the opposite of what it means: the
+     * phone's real answer about the track the user is actually looking at is read as an echo and
+     * held back. A pause made right after such a burst was then drawn up to [MAX_HOLD_MS] later,
+     * arriving as a pause nobody had just asked for - and with every state the phone had sent in
+     * between still to come, which is the whole burst replaying itself on the wrist.
+     *
+     * Called with the track a skip has arrived on, so only the direction that can reverse is
+     * affected: a skip forward never lands on a track the same window left behind, because
+     * [PredictedTrackAdvance.nextIndex] does not wrap.
+     */
+    fun forgetArrivedTrack(titlesLeftBehind: MutableCollection<String>, arrivedTitle: String?) {
+        if (arrivedTitle.isNullOrBlank()) {
+            return
+        }
+        titlesLeftBehind.removeAll { PredictedTrackAdvance.isSameTrack(it, arrivedTitle) }
+    }
+
     enum class Decision {
         /** Draw it, and end the window - the phone has moved past the transition. */
         APPLY,

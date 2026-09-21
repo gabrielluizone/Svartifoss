@@ -82,4 +82,54 @@ class TrackChangeHoldTest {
         assertEquals(TrackChangeHold.Decision.DEFER,
                 decide(title = "First", positionMs = 200_000L))
     }
+
+    @Test
+    fun `a track skipped back onto stops counting as left behind`() {
+        val burst = mutableListOf("First", "Second", "Third")
+        TrackChangeHold.forgetArrivedTrack(burst, "Second")
+        assertEquals(listOf("First", "Third"), burst)
+    }
+
+    @Test
+    fun `forgetting matches the way the echo is recognised`() {
+        val burst = mutableListOf("First", "  second  ")
+        TrackChangeHold.forgetArrivedTrack(burst, "SECOND")
+        assertEquals(listOf("First"), burst)
+    }
+
+    @Test
+    fun `no arrival title forgets nothing`() {
+        val burst = mutableListOf("First", "Second")
+        TrackChangeHold.forgetArrivedTrack(burst, null)
+        TrackChangeHold.forgetArrivedTrack(burst, "   ")
+        assertEquals(listOf("First", "Second"), burst)
+    }
+
+    /**
+     * The user skipped forward and back, so the track they are looking at is one this window
+     * also left behind. Once it is forgotten, the phone's real pause on it is a pause and not an
+     * echo - which is what stopped it being drawn seconds late, behind the rest of the burst.
+     */
+    @Test
+    fun `the pause on a track skipped back onto is drawn at once`() {
+        val burst = mutableListOf("First", "Second")
+        assertEquals(TrackChangeHold.Decision.DEFER,
+                decide(title = "First", positionMs = 47_000L, leftBehind = burst))
+
+        TrackChangeHold.forgetArrivedTrack(burst, "First")
+
+        assertEquals(TrackChangeHold.Decision.APPLY,
+                decide(title = "First", positionMs = 47_000L, leftBehind = burst))
+    }
+
+    /** Forgetting it does not make the swap itself visible: at the start of the track it is still
+     *  the player reloading, which is the case ASSUME_PLAYING covers. */
+    @Test
+    fun `the start of a track skipped back onto is still the transition`() {
+        val burst = mutableListOf("First", "Second")
+        TrackChangeHold.forgetArrivedTrack(burst, "First")
+
+        assertEquals(TrackChangeHold.Decision.ASSUME_PLAYING,
+                decide(title = "First", positionMs = 0L, leftBehind = burst))
+    }
 }
