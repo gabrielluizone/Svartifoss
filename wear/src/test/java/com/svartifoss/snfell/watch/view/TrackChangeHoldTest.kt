@@ -20,9 +20,39 @@ class TrackChangeHoldTest {
     }
 
     @Test
-    fun `a playing state always ends the window`() {
-        assertEquals(TrackChangeHold.Decision.APPLY, decide(playing = true, title = "First"))
+    fun `a playing state on a track not passed through ends the window`() {
         assertEquals(TrackChangeHold.Decision.APPLY, decide(playing = true, title = "Second"))
+        assertEquals(TrackChangeHold.Decision.APPLY, decide(playing = true, title = "Fourth"))
+    }
+
+    /**
+     * The player is working through a burst one press at a time and really does play each track it
+     * passes on the way. Drawn as they land, those states walk the screen backwards through tracks
+     * the user has already gone past while the one they asked for is on screen and waiting.
+     */
+    @Test
+    fun `a track the user pressed past is held even while it plays`() {
+        assertEquals(TrackChangeHold.Decision.DEFER, decide(playing = true, title = "First"))
+    }
+
+    @Test
+    fun `the whole of a burst is held while the player catches up`() {
+        val burst = listOf("First", "Second", "Third")
+        assertEquals(TrackChangeHold.Decision.DEFER,
+                decide(playing = true, title = "First", leftBehind = burst))
+        assertEquals(TrackChangeHold.Decision.DEFER,
+                decide(playing = true, title = "Second", leftBehind = burst))
+        assertEquals(TrackChangeHold.Decision.DEFER,
+                decide(playing = true, title = "Third", leftBehind = burst))
+        // The one the presses were aimed at is not in the memo, so it lands at once.
+        assertEquals(TrackChangeHold.Decision.APPLY,
+                decide(playing = true, title = "Fourth", leftBehind = burst))
+    }
+
+    @Test
+    fun `a blank left-behind entry never swallows a playing state`() {
+        assertEquals(TrackChangeHold.Decision.APPLY,
+                decide(playing = true, title = "Second", leftBehind = listOf("")))
     }
 
     @Test
@@ -120,6 +150,8 @@ class TrackChangeHoldTest {
 
         assertEquals(TrackChangeHold.Decision.APPLY,
                 decide(title = "First", positionMs = 47_000L, leftBehind = burst))
+        assertEquals(TrackChangeHold.Decision.APPLY,
+                decide(playing = true, title = "First", leftBehind = burst))
     }
 
     /** Forgetting it does not make the swap itself visible: at the start of the track it is still
