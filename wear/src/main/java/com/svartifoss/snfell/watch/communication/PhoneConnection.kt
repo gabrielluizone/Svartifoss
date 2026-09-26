@@ -50,6 +50,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -218,6 +219,16 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
     private var running = AtomicBoolean(false)
 
+    /**
+     * Where the "watch closed" message is sent from - outside any session's [scope], which is
+     * cancelled the moment [stop] runs, so the message it sends cannot be cut short by that.
+     * Never cancelled: it only ever holds that one short send.
+     */
+    private val closeMessageScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+
+    /** The close message in flight, which the next session's "opened" waits for - see [stop]. */
+    private var closeMessageJob: Job? = null
+
     init {
         lifecycleObserver.addLiveData(musicState)
         lifecycleObserver.addLiveData(albumArt)
@@ -299,22 +310,38 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         playbackSyncJob = null
         playbackSyncSentAtMs = null
 
-        scope?.launchWithErrorHandling(context, musicState) {
-            try {
-                dataClient.removeListener(this)
-                // start() registers both listeners; stop() only ever removed the data one, so the
-                // capability listener leaked (and kept firing onCapabilityChanged after close).
-                capabilityClient.removeListener(this)
-                messageClient.removeListener(this)
+        // Here, synchronously, rather than from a coroutine: a start() that follows closely adds
+        // this same object back as the listener, and nothing about the ordering of two coroutines
+        // on the main dispatcher should decide whether that registration survives.
+        dataClient.removeListener(this)
+        // start() registers both listeners; stop() only ever removed the data one, so the
+        // capability listener leaked (and kept firing onCapabilityChanged after close).
+        capabilityClient.removeListener(this)
+        messageClient.removeListener(this)
 
+        // The session's scope is detached from the field and cancelled before anything suspends.
+        // It used to be cancelled from the close message's own `finally`, by reading the field
+        // again - and if the app had reopened while that message was in flight, the field by then
+        // held the *new* session's scope. That cancelled the reopened connection mid-start: no
+        // listeners, and every later send a silent no-op, until the connection happened to be
+        // closed and reopened again - which, with music playing, is not before the music stops.
+        scope?.cancel()
+        scope = null
+
+        closeMessageJob = closeMessageScope.launch {
+            try {
                 val phoneNode = nodeClient.getNearestNodeId()
                 if (phoneNode != null) {
                     messageClient.sendMessage(phoneNode, CommPaths.MESSAGE_WATCH_CLOSED, null).await()
                 }
-            } finally {
-                scope?.cancel()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                // Logged rather than posted to musicState: nobody is observing a connection that is
+                // closing, and an error left in that LiveData is what a reopened screen would be
+                // handed first. The phone's own hold rules cover a close it never heard about.
+                Timber.w(e, "Could not tell the phone the watch app closed")
             }
-
         }
     }
 
@@ -324,6 +351,10 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
         if (firstNode != null) {
             scope?.launchWithErrorHandling(context, musicState) {
+                // A reopen can land while the previous session's close is still being sent. Wait
+                // for it, so the phone is never told "opened" and then "closed" - which would let
+                // its service stop while the watch app is on screen.
+                closeMessageJob?.join()
                 // Must target the same nearby node we cached above. nodes.first() is just the
                 // first entry in the set, which - when more than one node is reachable (e.g. a
                 // cloud node alongside the watch) - can be a different, non-nearby node, so the

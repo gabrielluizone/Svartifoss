@@ -12,6 +12,8 @@
 
 - **The watch app no longer crashes when the phone drops out of range at the moment you use it.** Picking an entry in the queue or the menu, deleting a search from the menu, loading more of the queue, or pressing play, pause or skip on the watch's system media controls (or a Bluetooth headset connected to the watch) sends a message to the phone. If the phone had just gone out of range, that send failed, and nothing caught the failure: the app closed, and from the media controls it took the watch's whole Svartifoss process with it, so the ongoing-activity chip disappeared from the watch face too. Those sends now fail quietly, like the rest already did, and **Load more** stops spinning at once instead of after twelve seconds.
 
+- **Reopening the watch app just as it closes no longer leaves it unresponsive.** The watch app lets go of its connection to the phone a few seconds after its last screen closes, and tells the phone it has closed. If the app came back while that message was still being sent, the closing step shut down the connection that had just been opened in its place: the player stayed on its loading state, and nothing you pressed reached the phone, until the app had been closed long enough for the connection to reset - and with music playing, which keeps that connection open in the background, that could mean until the music stopped. The two no longer overlap, and the "opened" message now waits for any "closed" still in flight, so the phone cannot hear them in the wrong order.
+
 ## 4.1
 
 ### Added
