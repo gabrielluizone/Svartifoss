@@ -28,6 +28,9 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
 
     private val idlePlayers: ArrayList<OwnedPlaybackCallback>
 
+    /** What the playing session last published about its playback - see [PlaybackReportPolicy]. */
+    private var lastPlayback: PlaybackReportPolicy.Snapshot? = null
+
     private fun findPlayingMediaController() {
         val activeSessions = getActiveSessions()
         // Package names only. Each session's playback state and info are a binder call apiece, and
@@ -57,6 +60,9 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
         removeCurrentController()
         currentController = newController
         lastReportedController = reportedController
+        // Seeded here because reporting the resolved session below is what publishes this state;
+        // the playing session's own callback then compares each update against it.
+        lastPlayback = newController?.playbackState?.let(::snapshotOf)
 
         idlePlayers.forEach(OwnedPlaybackCallback::unregister)
         idlePlayers.clear()
@@ -160,10 +166,14 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
         idlePlayers.clear()
     }
 
-    fun updateControllerIfNeeded() {
+    /** Re-resolves the reported session when the playing one is gone or has stopped playing.
+     *  Returns whether it did, in which case the new resolution has already been reported. */
+    fun updateControllerIfNeeded(): Boolean {
         if (!isCurrentControllerActive() || currentController?.isPlaying() != true) {
             findPlayingMediaController()
+            return true
         }
+        return false
     }
 
     private fun isCurrentControllerActive(): Boolean {
@@ -175,7 +185,17 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
     private fun removeCurrentController() {
         currentController?.unregisterCallback(mediaCallback)
         currentController = null
+        lastPlayback = null
     }
+
+    private fun snapshotOf(state: PlaybackState) = PlaybackReportPolicy.Snapshot(
+            playing = state.isPlaying(),
+            positionMs = state.position,
+            positionUpdateTimeMs = state.lastPositionUpdateTime,
+            speed = state.playbackSpeed,
+            actions = state.actions,
+            activeQueueItemId = state.activeQueueItemId,
+            customActions = state.customActions.orEmpty().map { "${it.action}|${it.name}|${it.icon}" })
 
     private val mediaCallback: MediaController.Callback
 
@@ -241,7 +261,15 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
         this.idlePlayers = ArrayList()
         this.mediaCallback = object : MediaController.Callback() {
             override fun onPlaybackStateChanged(state: PlaybackState?) {
-                updateControllerIfNeeded()
+                if (updateControllerIfNeeded()) return
+                // Still the session playing. This used to end here, so nothing that changed
+                // *while* playing - a seek or a like on the phone, a speed change - reached the
+                // watch until something unrelated caused a retransmission. Reported now, but only
+                // when it says something new: see PlaybackReportPolicy for why not every update.
+                val snapshot = state?.let(::snapshotOf) ?: return
+                val worthReporting = PlaybackReportPolicy.worthReporting(lastPlayback, snapshot)
+                lastPlayback = snapshot
+                if (worthReporting) reportResolvedSession()
             }
 
             override fun onMetadataChanged(metadata: android.media.MediaMetadata?) {

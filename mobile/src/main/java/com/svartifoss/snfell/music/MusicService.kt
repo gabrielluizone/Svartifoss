@@ -201,7 +201,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
          * Overshooting only costs a re-play of the track the user asked for anyway.
          */
         private const val QUEUE_SKIP_VERIFY_MS = 1200L
+
+        /** Smallest side a cover read from a content URI is decoded at - see [loadBitmapFromUri]. */
+        private const val URI_ART_MIN_DECODE_PX = 512
         private const val MAX_TRACK_HISTORY_SIZE = 20
+
+        /** See [scheduleTrackHistorySave]. */
+        private val TRACK_HISTORY_SAVE_INTERVAL_MS = TimeUnit.MINUTES.toMillis(20)
 
         /** How long [pressPlayAfterNavigating] keeps watching for the app to finish loading the
          *  content a deep link opened. Generous: this runs only after the URI retries have already
@@ -426,6 +432,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private fun compatControllerFor(controller: MediaController?): MediaControllerCompat? {
         val token = controller?.sessionToken
         if (token != compatControllerToken || (token != null && compatController == null)) {
+            compatController?.unregisterCallback(compatModeCallback)
             compatControllerToken = token
             compatController = token?.let {
                 try {
@@ -436,9 +443,32 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                     Timber.w(e, "Could not wrap the current session for shuffle/repeat")
                     null
                 }
-            }
+            }?.also { it.registerCallback(compatModeCallback) }
         }
         return compatController
+    }
+
+    /**
+     * Rebuilds the state when the player changes its shuffle or repeat mode.
+     *
+     * Those modes exist only on the compat layer, so a change to one arrives through nothing the
+     * framework session reports - no playback-state or metadata callback fires for it. Toggled in
+     * the player's own UI, it used to reach the watch only with the next track: the quick panel's
+     * rings showed the old mode, and a watch still believing shuffle was off went on predicting
+     * the next track from a queue order the player had already abandoned.
+     *
+     * Shuffle also rewrites the order of the queue itself in most players, so it republishes the
+     * queue as well.
+     */
+    private val compatModeCallback = object : MediaControllerCompat.Callback() {
+        override fun onShuffleModeChanged(shuffleMode: Int) {
+            buildMusicStateAndTransmit(currentMediaController)
+            scheduleQueueRefresh()
+        }
+
+        override fun onRepeatModeChanged(repeatMode: Int) {
+            buildMusicStateAndTransmit(currentMediaController)
+        }
     }
 
     private var startedFromWatch = false
@@ -860,8 +890,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         ackTimeoutHandler.removeCallbacksAndMessages(null)
         queueRefreshHandler.removeCallbacksAndMessages(null)
+        trackHistorySaveHandler.removeCallbacks(saveTrackHistory)
+        persistTrackHistory()
         MediaNotificationActions.removeListener(notificationActionsChanged)
         AppGlyphStore.removeListener(appGlyphLearned)
+        compatController?.unregisterCallback(compatModeCallback)
         preferences.unregisterOnSharedPreferenceChangeListener(quickActionsPreferenceChanged)
         contentResolver.unregisterContentObserver(volumeContentObserver)
 
@@ -2230,8 +2263,20 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         if (uriString.isNullOrEmpty()) return null
         val uri = Uri.parse(uriString)
         if (uri.scheme == "http" || uri.scheme == "https") return null
+        // Decoded near the size it is sent to the watch at, rather than at whatever the provider
+        // stores - art embedded in a local file is routinely several megapixels, and this runs on
+        // the main thread inside the state build. Never below the watch's own width, so the cover
+        // that goes out is as sharp as it was.
+        val targetPx = maxOf(
+                watchInfoProvider.value?.watchInfo?.displayWidth ?: 0, URI_ART_MIN_DECODE_PX)
         return try {
-            contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it) }
+            val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, bounds) }
+            val options = BitmapFactory.Options().apply {
+                inSampleSize = QueueArtworkResolver.sampleSizeFor(
+                        bounds.outWidth, bounds.outHeight, targetPx)
+            }
+            contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, options) }
         } catch (e: Exception) {
             Timber.w(e, "Could not load album art from URI: %s", uriString)
             null
@@ -2437,12 +2482,48 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             while (recentTrackHistory.size > MAX_TRACK_HISTORY_SIZE) {
                 recentTrackHistory.removeLast()
             }
-            TrackHistoryStorage.save(this, recentTrackHistory)
+            scheduleTrackHistorySave()
         }
 
         lastTrackArtist = newArtist
         lastTrackTitle = newTitle
     }
+
+    /**
+     * Persists [recentTrackHistory] at most once per [TRACK_HISTORY_SAVE_INTERVAL_MS], and in
+     * [onDestroy].
+     *
+     * The history is stored in the default preference file, and SharedPreferences rewrites the whole
+     * file on every change - some three and a half thousand entries (every setting scoped to every
+     * watch face), a quarter of a megabyte of XML serialised and written out on every single track
+     * change. What is lost by waiting is at most the last few tracks of a twenty-entry fallback
+     * list, and only when the process is killed outright: an ordinary stop saves on the way out.
+     * Kept in that file rather than moved out of it because backups carry it from there.
+     */
+    private fun scheduleTrackHistorySave() {
+        trackHistoryDirty = true
+        trackHistorySaveHandler.removeCallbacks(saveTrackHistory)
+        val sinceLastSave = android.os.SystemClock.elapsedRealtime() - trackHistorySavedAtMs
+        trackHistorySaveHandler.postDelayed(saveTrackHistory,
+                (TRACK_HISTORY_SAVE_INTERVAL_MS - sinceLastSave).coerceAtLeast(0L))
+    }
+
+    private fun persistTrackHistory() {
+        if (!trackHistoryDirty) return
+        trackHistoryDirty = false
+        trackHistorySavedAtMs = android.os.SystemClock.elapsedRealtime()
+        TrackHistoryStorage.save(this, recentTrackHistory)
+    }
+
+    private var trackHistoryDirty = false
+
+    /** When the history was last written - far in the past to begin with, so the first change of
+     *  a run is saved at once. */
+    private var trackHistorySavedAtMs = Long.MIN_VALUE / 2
+
+    /** Its own handler: [queueRefreshHandler] is cleared wholesale by every queue refresh. */
+    private val trackHistorySaveHandler = Handler(Looper.getMainLooper())
+    private val saveTrackHistory = Runnable { persistTrackHistory() }
 
     /**
      * How many queue entries the watch last asked for.
@@ -2765,8 +2846,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private fun sendTrackMetadataToWatch(request: TrackMetadata) {
         lifecycleScope.launch {
             val probeFile = QueueArtworkResolver.hasMediaPermission(this@MusicService)
-            val local = TrackMetadataReader.read(
-                    this@MusicService, currentMediaController, probeFile)
+            // On IO: probing the file opens it with a metadata retriever and an extractor, which
+            // is disk work that used to run on the main thread, shared with the app's UI.
+            val local = withContext(Dispatchers.IO) {
+                TrackMetadataReader.read(this@MusicService, currentMediaController, probeFile)
+            }
 
             // Only answer for the track that was asked about. Reading the session directly means
             // this can already have moved on, and the watch would have no way to tell.
@@ -2782,8 +2866,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             val facts = MusicBrainzMetadata.lookup(local.title, local.artist) ?: return@launch
             // The track can have changed while the lookup was out - the same discard the first
             // reply makes, applied again at the point the second one would be sent.
-            if (!TrackMetadataReader.read(this@MusicService, currentMediaController, probeFile = false)
-                            .describesSameTrackAs(request)) {
+            val stillCurrent = withContext(Dispatchers.IO) {
+                TrackMetadataReader.read(this@MusicService, currentMediaController, probeFile = false)
+            }.describesSameTrackAs(request)
+            if (!stillCurrent) {
                 return@launch
             }
             sendTrackMetadata(local.toBuilder()
@@ -3459,6 +3545,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 other.shuffleEnabled != shuffleEnabled ||
                 other.repeatMode != repeatMode ||
                 other.liked != liked ||
+                // The watch extrapolates the position at this rate between samples, so a speed
+                // changed on the phone has to reach it rather than wait for a seek-sized drift.
+                other.playbackSpeed != playbackSpeed ||
                 // The Artist face draws its backdrop from these, and the lookup behind them
                 // completes *after* the state that announced the track - so a resolution that
                 // changes nothing else must still reach the watch, exactly as a late shuffle or
