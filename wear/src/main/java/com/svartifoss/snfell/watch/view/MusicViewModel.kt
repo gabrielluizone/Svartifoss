@@ -1218,10 +1218,20 @@ class MusicViewModel @Inject constructor(
 
     override fun onCleared() {
         phoneConnection.notification.removeObserver(notificationRelay)
+        // Both feeds, not just the one: each holds observeForever hooks on PhoneConnection's
+        // musicState, and that LiveData is one of the ones whose activity decides whether the
+        // connection is open. The lyrics feed was left behind when the app closed on the Verse
+        // face, which kept the connection alive for the rest of the process - the phone was never
+        // told the watch had closed, so its service stayed in the foreground doing per-track work
+        // (and looking lyrics up online) for a screen that no longer existed.
+        lyricsFeed.release()
         metadataFeed.release()
         super.onCleared()
         handler.removeCallbacks(positionTickRunnable)
         handler.removeCallbacks(trackChangeHoldRunnable)
+        // Posted with the close timeout, which can be minutes; left in the queue it would keep
+        // this cleared ViewModel reachable until it fired into a SingleLiveEvent nobody observes.
+        handler.removeCallbacks(closeRunnable)
         // Detach the observeForever hooks these providers hold on PhoneConnection's (@Singleton)
         // LiveData, otherwise each recreated MusicViewModel leaks its three config providers.
         playbackConfig.destroy()

@@ -6,6 +6,8 @@
 
 - **Logging costs less on both devices, and the support log keeps what matters.** Every playback change was written to the diagnostic log as the whole message, including the image data of each playback-action icon spelled out as text - tens of kilobytes per change on each device, which also pushed the lines that explain a problem out of the log files **Get support** sends. They are now one short line each. And a release build no longer formats the lines it discards: every message used to be formatted, and its source looked up, once per destination before any of them decided to throw it away.
 
+- **Closing the watch app on the Verse face now lets the phone stop too.** The part of the watch app that fetches the lyrics for Verse was not let go when the app closed, and it kept the watch's connection to the phone open for as long as the app's process lived. The phone was therefore never told the watch had closed, so its **Music control active** notification stayed up and it went on doing its per-track work - including looking up lyrics online - for a screen that no longer existed. Reopening the app on Verse also doubled those lookups. Closing the app now closes the connection on every face.
+
 ## 4.1
 
 ### Added
