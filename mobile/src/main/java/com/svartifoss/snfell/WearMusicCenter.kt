@@ -9,6 +9,7 @@ import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.MatejdroArtistAutosizeMigration
+import com.svartifoss.snfell.common.logging.ReleaseLogcatTree
 import com.svartifoss.snfell.di.DaggerAppComponent
 import com.svartifoss.snfell.logging.CrashlyticsExceptionWearHandler
 import com.svartifoss.snfell.logging.CrashReporting
@@ -49,7 +50,9 @@ class WearMusicCenter : Application(), HasAndroidInjector {
         Timber.setAppTag("WearMusicCenter")
 
         val isDebuggable = applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
-        Timber.plant(Timber.AndroidDebugTree(isDebuggable))
+        // In release, logcat keeps warnings and errors only - and ReleaseLogcatTree skips the work
+        // of formatting the rest, which the plain AndroidDebugTree(false) did before dropping it.
+        Timber.plant(if (isDebuggable) Timber.AndroidDebugTree(true) else ReleaseLogcatTree())
 
         if (!isDebuggable) {
             Timber.plant(TimberCrashlytics())

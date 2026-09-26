@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.logging.logSummary
 import com.svartifoss.snfell.watch.view.lyrics.LyricsFeed
 import com.svartifoss.snfell.watch.view.metadata.MetadataFeed
 import com.svartifoss.snfell.watch.view.lyrics.LyricsUiState
@@ -1097,7 +1098,7 @@ class MusicViewModel @Inject constructor(
     }
 
     private fun applyMusicState(it: Resource<MusicState>?) {
-        Timber.d("Received MusicState %s", it?.data)
+        Timber.d("Received MusicState %s", it?.data.logSummary())
 
         // A state that was not built here came from the phone, which is the authority: it settles
         // whatever the heuristic guessed before it is applied below. Read the flag rather than

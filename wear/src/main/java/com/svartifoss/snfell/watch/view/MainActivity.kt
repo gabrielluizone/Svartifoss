@@ -89,6 +89,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.wearable.input.RotaryEncoderHelper
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.logging.logSummary
 import com.svartifoss.snfell.common.AlbumFillSlot
 import com.svartifoss.snfell.common.CenterButton
 import com.svartifoss.snfell.common.DoublePinchGesture
@@ -1534,7 +1535,7 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private val musicStateObserver = Observer<Resource<MusicState>?> {
         val previousFaceTitle = faceState.value.title
-        Timber.d("GUI Music State %s %s", it?.status, it?.data)
+        Timber.d("GUI Music State %s %s", it?.status, it?.data.logSummary())
         if (it == null || it.status == Resource.Status.LOADING) {
             binding.loadingIndicator.visibility = View.VISIBLE
             return@Observer

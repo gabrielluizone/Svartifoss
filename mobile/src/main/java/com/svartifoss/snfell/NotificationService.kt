@@ -210,9 +210,12 @@ class NotificationService : NotificationListenerService() {
     }
 
     private val mediaObserver = Observer<Resource<MediaController>?> {
-        Timber.d("Playback update %b %s", MusicService.active, it?.data?.playbackState?.state)
+        // Read once: each playbackState read is a binder call, and this used to make one for the
+        // log line and a second for the check below.
+        val playbackState = it?.data?.playbackState
+        Timber.d("Playback update %b %s", MusicService.active, playbackState?.state)
 
-        if (!MusicService.active && it?.data?.playbackState?.isPlaying() == true) {
+        if (!MusicService.active && playbackState?.isPlaying() == true) {
             val autoStartBlacklist = Preferences.getStringSet(preferences, MiscPreferences.AUTO_START_APP_BLACKLIST)
             if (!autoStartBlacklist.contains(it.data?.packageName)) {
                 startAppOnWatch()

@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- **Logging costs less on both devices, and the support log keeps what matters.** Every playback change was written to the diagnostic log as the whole message, including the image data of each playback-action icon spelled out as text - tens of kilobytes per change on each device, which also pushed the lines that explain a problem out of the log files **Get support** sends. They are now one short line each. And a release build no longer formats the lines it discards: every message used to be formatted, and its source looked up, once per destination before any of them decided to throw it away.
+
 ## 4.1
 
 ### Added

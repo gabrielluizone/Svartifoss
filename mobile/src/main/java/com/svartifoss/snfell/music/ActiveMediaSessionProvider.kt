@@ -30,7 +30,10 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
 
     private fun findPlayingMediaController() {
         val activeSessions = getActiveSessions()
-        Timber.d("Active Sessions %s", activeSessions.map { "${it.packageName} ${it.playbackState} ${it.playbackInfo}" })
+        // Package names only. Each session's playback state and info are a binder call apiece, and
+        // the log line used to make two per session just to be formatted - before the logger had
+        // even decided whether to keep it.
+        Timber.d("Active Sessions %s", activeSessions.map { it.packageName })
 
         val newController = activeSessions.firstOrNull { it.isPlaying() }
 
@@ -66,7 +69,7 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
             currentController?.registerCallback(mediaCallback)
         }
 
-        Timber.d("Reported session %s", activeSessions.map { "${reportedController?.packageName} ${reportedController?.playbackState} ${reportedController?.playbackInfo}" })
+        Timber.d("Reported session %s", reportedController?.packageName)
         setReportedController(reportedController)
     }
 
@@ -138,7 +141,7 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
     }
 
     override fun onActiveSessionsChanged(controllers: MutableList<MediaController>?) {
-        Timber.d("ActiveSessions changed %s", controllers?.map { it.packageName + " " + it.isPlaying() })
+        Timber.d("ActiveSessions changed %s", controllers?.map { it.packageName })
         updateControllerIfNeeded()
     }
 

@@ -6,7 +6,8 @@ import com.svartifoss.snfell.common.MatejdroArtistAutosizeMigration
 import com.svartifoss.snfell.watch.config.PreferencesBus
 import com.svartifoss.snfell.watch.theme.UserFont
 import com.matejdro.wearutils.logging.FileLogger
-import com.matejdro.wearutils.logging.TimberExceptionWear
+import com.svartifoss.snfell.common.logging.ReleaseLogcatTree
+import com.svartifoss.snfell.watch.util.ErrorsOnlyExceptionWearTree
 import dagger.hilt.android.HiltAndroidApp
 import pl.tajchert.exceptionwear.ExceptionWear
 import timber.log.Timber
@@ -20,11 +21,13 @@ class WearMusicCenter : android.app.Application() {
 
         val isDebuggable = applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE != 0
         Timber.setAppTag("WearMusicCenter")
-        Timber.plant(Timber.AndroidDebugTree(isDebuggable))
+        // In release, logcat keeps warnings and errors only - and ReleaseLogcatTree skips the work
+        // of formatting the rest, which the plain AndroidDebugTree(false) did before dropping it.
+        Timber.plant(if (isDebuggable) Timber.AndroidDebugTree(true) else ReleaseLogcatTree())
 
         if (!isDebuggable) {
             ExceptionWear.initialize(this)
-            Timber.plant(TimberExceptionWear(this))
+            Timber.plant(ErrorsOnlyExceptionWearTree(this))
         }
 
         val fileLogger = FileLogger.getInstance(this)

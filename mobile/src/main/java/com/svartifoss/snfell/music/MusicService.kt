@@ -71,6 +71,7 @@ import com.svartifoss.snfell.common.PlaybackPositionEstimate
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.common.logging.logSummary
 import com.svartifoss.snfell.common.actions.StandardActions
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.util.FloatPacker
@@ -1379,7 +1380,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             return
         }
 
-        Timber.d("TransmittingToWear %s", musicState)
+        Timber.d("TransmittingToWear %s", musicState.logSummary())
         val trackChanged = previousMusicState?.title != musicState.title ||
                 previousMusicState?.artist != musicState.artist
         previousMusicState = musicState
