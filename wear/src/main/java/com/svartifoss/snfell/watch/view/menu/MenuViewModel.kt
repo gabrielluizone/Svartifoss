@@ -13,7 +13,9 @@ import com.svartifoss.snfell.watch.config.ButtonAction
 import com.svartifoss.snfell.watch.config.PreferencesBus
 import com.svartifoss.snfell.watch.config.WatchActionMenuProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -52,7 +54,7 @@ class MenuViewModel @Inject constructor(
     /** Deletes one entry from a watch-managed deletable custom list (currently just search
      *  history) - the phone re-pushes the updated list afterwards, updating [customList]. */
     fun deleteCustomListEntry(listId: String, entryId: String) {
-        viewModelScope.launch { phoneConnection.deleteCustomListItem(listId, entryId) }
+        launchSilently { phoneConnection.deleteCustomListItem(listId, entryId) }
     }
 
     /**
@@ -61,7 +63,28 @@ class MenuViewModel @Inject constructor(
      * page, which lands in [customList] and swaps the content in place.
      */
     fun selectCustomListEntry(listId: String, entryId: String) {
-        viewModelScope.launch { phoneConnection.executeCustomMenuAction(listId, entryId) }
+        launchSilently { phoneConnection.executeCustomMenuAction(listId, entryId) }
+    }
+
+    /**
+     * Sends to the phone without letting a failed send take the app down.
+     *
+     * The phone's node id is cached, so a send issued in the moment between the phone going out
+     * of range and the connection noticing is a message to a node that is no longer there, and it
+     * fails with an ApiException. Uncaught in viewModelScope that is a crash; the menu has nothing
+     * better to do with the failure than log it, the same stance the progress and volume screens
+     * take.
+     */
+    private fun launchSilently(block: suspend () -> Unit) {
+        viewModelScope.launch {
+            try {
+                block()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.w(e, "Menu command could not reach the phone")
+            }
+        }
     }
 
     override fun onCleared() {

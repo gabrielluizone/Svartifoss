@@ -10,6 +10,8 @@
 
 - **The phone no longer gets woken by unrelated system settings after its watch service has stopped.** The service that talks to the watch listens for volume changes, and it signed up for them again every time it was started without ever signing off more than once. While it ran, every change to a system setting was handled several times over; after it stopped, the leftovers kept waking the app on each such change for as long as its process survived. It now signs up once per run and signs off completely.
 
+- **The watch app no longer crashes when the phone drops out of range at the moment you use it.** Picking an entry in the queue or the menu, deleting a search from the menu, loading more of the queue, or pressing play, pause or skip on the watch's system media controls (or a Bluetooth headset connected to the watch) sends a message to the phone. If the phone had just gone out of range, that send failed, and nothing caught the failure: the app closed, and from the media controls it took the watch's whole Svartifoss process with it, so the ongoing-activity chip disappeared from the watch face too. Those sends now fail quietly, like the rest already did, and **Load more** stops spinning at once instead of after twelve seconds.
+
 ## 4.1
 
 ### Added

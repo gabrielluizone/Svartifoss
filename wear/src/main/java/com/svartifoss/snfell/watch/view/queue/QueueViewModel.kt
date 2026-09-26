@@ -25,9 +25,11 @@ import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
 import com.svartifoss.snfell.watch.view.panel.PanelTriad
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 /** Fallback accent used until the album art produces one - the app-wide default accent. */
@@ -260,7 +262,8 @@ class QueueViewModel @Inject constructor(
     /** Asks the phone to send the current playback queue. */
     fun requestQueue() {
         requestedLimit = QueuePaging.PAGE_SIZE
-        viewModelScope.launch { phoneConnection.openPlaybackQueue(requestedLimit) }
+        val limit = requestedLimit
+        viewModelScope.launch { reachedPhone { phoneConnection.openPlaybackQueue(limit) } }
     }
 
     /** Asks for one more page. No-op when everything is already on screen. */
@@ -268,9 +271,15 @@ class QueueViewModel @Inject constructor(
         if (loadingMore.value == true || !hasMorePages()) return
         val loaded = latestList?.items?.size ?: return
         requestedLimit = QueuePaging.nextLimit(loaded)
+        val limit = requestedLimit
         loadingMore.value = true
         viewModelScope.launch {
-            phoneConnection.openPlaybackQueue(requestedLimit)
+            if (!reachedPhone { phoneConnection.openPlaybackQueue(limit) }) {
+                // Nothing is coming back from a request that never left, so there is no reason to
+                // keep the row spinning for the full timeout before a retry is possible.
+                loadingMore.value = false
+                return@launch
+            }
             // The arriving list is what normally clears this, but nothing arrives at all if the
             // phone is out of range or the request is dropped. Without a floor the row would keep
             // spinning forever and, because a request in flight suppresses taps, there would be no
@@ -285,6 +294,24 @@ class QueueViewModel @Inject constructor(
         val listId = latestList?.listId ?: return
         // executeCustomMenuAction is uncancellable inside, which is what lets the caller close this
         // screen in the same gesture without dropping the selection - see PhoneConnection.
-        viewModelScope.launch { phoneConnection.executeCustomMenuAction(listId, entryId) }
+        viewModelScope.launch { reachedPhone { phoneConnection.executeCustomMenuAction(listId, entryId) } }
+    }
+
+    /**
+     * Runs one send to the phone and reports whether it went out, instead of throwing.
+     *
+     * The phone's node id is cached, so a send issued in the moment between the phone going out
+     * of range and the connection noticing is a message to a node that is no longer there, and it
+     * fails with an ApiException. Uncaught in viewModelScope that took the whole app down - on the
+     * screen that is opened, above all, to reach the phone.
+     */
+    private suspend fun reachedPhone(send: suspend () -> Unit): Boolean = try {
+        send()
+        true
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: Exception) {
+        Timber.w(e, "Queue request could not reach the phone")
+        false
     }
 }

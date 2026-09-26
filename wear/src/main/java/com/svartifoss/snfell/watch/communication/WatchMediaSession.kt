@@ -10,8 +10,10 @@ import android.support.v4.media.session.PlaybackStateCompat
 import androidx.media.VolumeProviderCompat
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.watch.view.MainActivity
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 private const val VOLUME_MAX = 100
 private const val VOLUME_ADJUST_STEP = 5
@@ -162,7 +164,25 @@ class WatchMediaSession(
         session.release()
     }
 
+    /**
+     * Sends one transport command to the phone without letting a failed send escape.
+     *
+     * These arrive from the system - the Wear OS media controls, a Bluetooth headset's button -
+     * with the app's own UI nowhere in sight, and [scope] is the service's. A send to a phone that
+     * has just gone out of range fails with an ApiException (the node id is cached until the
+     * connection notices), and uncaught here it crashed the whole watch process, taking the
+     * ongoing-activity chip and this session with it. There is no screen to report the failure on,
+     * so it is logged; the next state from the phone is what the surfaces show either way.
+     */
     private fun forward(block: suspend () -> Unit) {
-        scope.launch { block() }
+        scope.launch {
+            try {
+                block()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.w(e, "Media session command could not reach the phone")
+            }
+        }
     }
 }
