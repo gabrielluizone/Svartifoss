@@ -47,4 +47,36 @@ class BitmapBorderTrimTest {
         line[1] = pixel(255, 255, 255)
         assertTrue(BitmapBorderTrim.isUniformLine(0, line.lastIndex) { line[it] })
     }
+
+    // ---- shape rule --------------------------------------------------------------
+
+    /** The case the trim exists for: a 4:3 thumbnail with bars around a square cover. */
+    @Test
+    fun `a pillarboxed thumbnail is cropped to its square cover`() {
+        assertTrue(BitmapBorderTrim.shouldCrop(480, 360, 360, 360))
+    }
+
+    /**
+     * The case that went wrong: a square sleeve with a plain field around a small logo. Its
+     * margin is its design, and it must not be cropped down to the logo - so a square picture is
+     * never trimmed at all.
+     */
+    @Test
+    fun `a square cover is left whole, flat margin and all`() {
+        assertTrue(BitmapBorderTrim.isSquare(500, 500))
+        assertTrue(BitmapBorderTrim.isSquare(500, 490))
+        assertFalse(BitmapBorderTrim.isSquare(480, 360))
+    }
+
+    /** A landscape photo with a flat sky gets wider when its top is cut, not squarer. */
+    @Test
+    fun `a crop that moves away from square is refused`() {
+        assertFalse(BitmapBorderTrim.shouldCrop(480, 360, 480, 300))
+    }
+
+    @Test
+    fun `a degenerate or empty crop is refused`() {
+        assertFalse(BitmapBorderTrim.shouldCrop(480, 360, 480, 360))
+        assertFalse(BitmapBorderTrim.shouldCrop(480, 360, 10, 10))
+    }
 }

@@ -30,6 +30,8 @@
 
 - **Scrolling the queue and the menu in the Cover blur style is smooth again.** Each row's blurred cover was made on the watch's main thread, in the middle of the scroll, as the row came into view - and again every time it came back. It is now made in the background and kept for the rows scrolled back to.
 
+- **Album covers with a plain border are no longer zoomed in on the watch's lists.** The step that removes the black bars some streaming apps put around a cover also removed any flat margin at all, so a square cover designed with a white or black frame was cropped into its artwork. It now only trims a cover that is not square to begin with, and only when what it removes brings it closer to square.
+
 - **The phone does less work on each track, and less in the background.** Details the Metadata face asks for about a local file were read on the app's main thread, where they could hold the app up; they are now read in the background. A cover a player provides only as a link to an image was decoded at full size - often several megapixels - only to be shrunk for the watch; it is now decoded at the size it is sent. The track history (the list shown for apps that hide their queue) rewrote the phone's whole settings file on every track; it is now saved every twenty minutes and when the service stops, so a phone that is shut down abruptly can lose the last few entries. The subscription to developer announcements is no longer renewed with Firebase every time the app starts, only when you change it or once a week. And the waterfall animation on the update screen stops while that screen is in the background.
 
 ## 4.1

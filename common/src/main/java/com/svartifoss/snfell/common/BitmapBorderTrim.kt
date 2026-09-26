@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.common
 
 import android.graphics.Bitmap
+import kotlin.math.abs
 
 /**
  * Crops away outer rows/columns whose pixels are all within a small colour range - a flat
@@ -13,8 +14,14 @@ import android.graphics.Bitmap
  * Lives in `common` because trimming has to happen on **both** sides. The phone applies it to the
  * covers it resolves itself, but a queue thumbnail can also arrive already bordered from a source
  * the phone never re-encodes, and the watch is the only place that sees every cover it draws - so
- * the watch trims again at decode time. Trimming twice is free: an already-trimmed cover has varied
- * edges and comes back unchanged.
+ * the watch trims again at decode time. Trimming twice is free: an already-trimmed cover is square
+ * and comes back unchanged.
+ *
+ * Only a picture that is **not already square** is trimmed, and only when the crop brings it closer
+ * to square - which is exactly what removing a letterbox or pillarbox around a square cover does.
+ * Without that rule it cut away any flat margin at all, so a minimalist sleeve - a small logo on a
+ * plain field, a common design - was cropped down to the logo and shown on the watch as a close-up
+ * of it. A square picture's margin is part of its design, and scanning it at all was wasted work.
  */
 object BitmapBorderTrim {
     private const val BORDER_UNIFORMITY_THRESHOLD = 26
@@ -24,6 +31,7 @@ object BitmapBorderTrim {
         val width = source.width
         val height = source.height
         if (width < 16 || height < 16) return source
+        if (isSquare(width, height)) return source
         var top = 0
         var bottom = height - 1
         var left = 0
@@ -34,13 +42,33 @@ object BitmapBorderTrim {
         while (right > left && isUniformColumn(source, right, top, bottom)) right--
         val cropWidth = right - left + 1
         val cropHeight = bottom - top + 1
-        // Ignore a degenerate result (e.g. an almost entirely flat image) and require an actual trim.
-        return if ((cropWidth < width || cropHeight < height) && cropWidth >= 16 && cropHeight >= 16) {
+        return if (shouldCrop(width, height, cropWidth, cropHeight)) {
             Bitmap.createBitmap(source, left, top, cropWidth, cropHeight)
         } else {
             source
         }
     }
+
+    /** How far a picture may be from square and still count as square - see the class doc. */
+    private const val SQUARE_TOLERANCE = 0.03f
+
+    /** Whether a [width] x [height] picture is square, within [SQUARE_TOLERANCE]. */
+    internal fun isSquare(width: Int, height: Int): Boolean =
+            abs(width - height) <= maxOf(width, height) * SQUARE_TOLERANCE
+
+    /**
+     * Whether cropping a [width] x [height] picture to [cropWidth] x [cropHeight] is a border
+     * worth removing: an actual trim, not a degenerate one (an almost entirely flat image), and one
+     * that leaves the picture closer to square than it was.
+     */
+    internal fun shouldCrop(width: Int, height: Int, cropWidth: Int, cropHeight: Int): Boolean {
+        if (cropWidth >= width && cropHeight >= height) return false
+        if (cropWidth < 16 || cropHeight < 16) return false
+        return squareness(cropWidth, cropHeight) > squareness(width, height)
+    }
+
+    private fun squareness(width: Int, height: Int): Float =
+            minOf(width, height).toFloat() / maxOf(width, height)
 
     private fun isUniformRow(bitmap: Bitmap, y: Int, x0: Int, x1: Int): Boolean =
             isUniformLine(x0, x1) { x -> bitmap.getPixel(x, y) }
