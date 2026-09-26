@@ -601,6 +601,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         applyNotificationPopupObserver()
 
+        // Once per service, here, and deliberately not inside promoteToForeground(): that runs on
+        // every onStartCommand too, and the content service neither deduplicates a registration
+        // nor removes more than one per unregister. Registered there, each start added another
+        // entry that onDestroy's single unregister left behind - so every system-setting change
+        // fired this N times while the service lived, and afterwards kept calling into the
+        // process through the dead entries for as long as it survived.
+        contentResolver.registerContentObserver(Settings.System.CONTENT_URI, true, volumeContentObserver)
+
         if (!promoteToForeground()) {
             return
         }
@@ -665,9 +673,6 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // everywhere else outside MainActivity (LyraAccent is the single source of truth
                 // there too), rather than mixing in a separate hardcoded value here.
                 .setColor(LyraAccent.resolve(this))
-
-        contentResolver.registerContentObserver(Settings.System.CONTENT_URI, true, volumeContentObserver)
-
 
         // This is still needed for Pre-O versions, so it must be used, even if it is deprecated.
         @Suppress("DEPRECATION")

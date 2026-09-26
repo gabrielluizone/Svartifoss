@@ -8,6 +8,8 @@
 
 - **Closing the watch app on the Verse face now lets the phone stop too.** The part of the watch app that fetches the lyrics for Verse was not let go when the app closed, and it kept the watch's connection to the phone open for as long as the app's process lived. The phone was therefore never told the watch had closed, so its **Music control active** notification stayed up and it went on doing its per-track work - including looking up lyrics online - for a screen that no longer existed. Reopening the app on Verse also doubled those lookups. Closing the app now closes the connection on every face.
 
+- **The phone no longer gets woken by unrelated system settings after its watch service has stopped.** The service that talks to the watch listens for volume changes, and it signed up for them again every time it was started without ever signing off more than once. While it ran, every change to a system setting was handled several times over; after it stopped, the leftovers kept waking the app on each such change for as long as its process survived. It now signs up once per run and signs off completely.
+
 ## 4.1
 
 ### Added
