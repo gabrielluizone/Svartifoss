@@ -193,9 +193,7 @@ class MediaTileService : TileService() {
         // the accent here lets the Tile tint its transport controls with the album colour instead
         // of a fixed green; a missing/unreadable cover retains the last successful album accent.
         val accent = try {
-            val asset = item.assets[CommPaths.ASSET_ALBUM_ART]
-            val bytes = asset?.let { dataClient.getByteArrayAsset(it) }
-            TileAlbumAccent.fromCoverOrLast(this, BitmapUtils.deserialize(bytes))
+            TileAlbumAccent.fromAssetOrLast(this, dataClient, item.assets[CommPaths.ASSET_ALBUM_ART])
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {

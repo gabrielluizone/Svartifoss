@@ -59,6 +59,15 @@ class ProgressViewModel @Inject constructor(
      *  other position readout in the app extrapolates from rather than each keeping its own. */
     fun livePositionMs(): Long = phoneConnection.playbackClock.positionNowMs()
 
+    /** Tells the connection whether this screen is on display - it pauses the position checks and
+     *  the neighbouring-cover decoding while no screen showing the position is. */
+    fun setShowingPosition(showing: Boolean) = phoneConnection.setPositionViewer(this, showing)
+
+    override fun onCleared() {
+        phoneConnection.setPositionViewer(this, false)
+        super.onCleared()
+    }
+
     /**
      * Moves the shared watch clock before starting the Bluetooth round trip. The dedicated screen,
      * main player, lyrics and system media surface therefore all see the same new position on the

@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.watch.view.face
 
+import com.svartifoss.snfell.watch.view.rememberDrawnProgress
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -189,10 +190,7 @@ private fun BoxWithConstraintsScope.RibbonProgress(state: NowPlayingFaceState, s
     val width = screen * FaceGeometry.Ribbon.PROGRESS_WIDTH_FRACTION
     // Eased rather than snapped, matching the curated faces' own progress animation: a hairline
     // this short would otherwise step visibly once a second.
-    val animated by animateFloatAsState(
-            targetValue = state.progress.coerceIn(0f, 1f),
-            animationSpec = tween(600, easing = LinearEasing),
-            label = "ribbonProgress")
+    val animated by rememberDrawnProgress(state.progress, label = "ribbonProgress")
     Canvas(
             modifier = Modifier
                     .align(Alignment.TopCenter)

@@ -68,12 +68,17 @@ class AlbumArtComplicationDataSourceService : SuspendingComplicationDataSourceSe
                 // The album-art asset can lag behind the state DataItem; when it is not readable
                 // (yet), reuse the last cover we successfully rendered instead of flashing the
                 // placeholder. Fresh art overwrites the cache.
-                albumArt = result.albumArt?.also { cacheAlbumArt(it) } ?: readCachedAlbumArt()
+                // Written only when the cover is new: the file is a fallback for an unreadable
+                // asset, and rewriting the same JPEG on every request only cost an encode and a
+                // disk write each time.
+                albumArt = result.albumArt?.also { if (result.newCover) cacheAlbumArt(it) }
+                        ?: readCachedAlbumArt()
             }
             is NowPlayingResult.NoMusic -> {
                 state = null
                 albumArt = null
                 clearCachedAlbumArt()
+                lastCover = null
             }
             is NowPlayingResult.Unavailable -> {
                 state = null
@@ -86,7 +91,12 @@ class AlbumArtComplicationDataSourceService : SuspendingComplicationDataSourceSe
 
     private sealed class NowPlayingResult {
         /** The phone published a valid, non-error music state. */
-        class Playing(val state: MusicState, val albumArt: Bitmap?) : NowPlayingResult()
+        class Playing(
+                val state: MusicState,
+                val albumArt: Bitmap?,
+                /** Whether [albumArt] differs from the cover the previous request rendered. */
+                val newCover: Boolean
+        ) : NowPlayingResult()
 
         /** Definitive: the phone says there is no music (error state) or never published state. */
         object NoMusic : NowPlayingResult()
@@ -147,7 +157,8 @@ class AlbumArtComplicationDataSourceService : SuspendingComplicationDataSourceSe
         val tapAction = openAppPendingIntent()
 
         val imageIcon = when {
-            albumArt != null -> Icon.createWithBitmap(albumArt)
+            albumArt != null -> Icon.createWithBitmap(
+                    if (type == ComplicationType.PHOTO_IMAGE) albumArt else smallImageOf(albumArt))
             else -> Icon.createWithResource(this, R.drawable.ic_complication_media)
         }
 
@@ -240,19 +251,59 @@ class AlbumArtComplicationDataSourceService : SuspendingComplicationDataSourceSe
 
         // The asset fetch gets its own failure domain: a valid state whose cover cannot be read
         // right now must not degrade into "no music" - the caller falls back to the cached cover.
+        val albumArtAsset = item.assets[CommPaths.ASSET_ALBUM_ART]
+        if (albumArtAsset == null) {
+            Timber.d("Complication: music state has no %s asset attached", CommPaths.ASSET_ALBUM_ART)
+            return NowPlayingResult.Playing(state, null, newCover = false)
+        }
+        // The same cover as last time - the ordinary case, since the watch face asks on every
+        // state change the phone publishes - is answered from memory. The Data Layer addresses
+        // assets by content, so an unchanged id is an unchanged picture.
+        lastCover?.takeIf { it.assetId == albumArtAsset.id }?.let { cover ->
+            return NowPlayingResult.Playing(state, cover.bitmap, newCover = false)
+        }
         val albumArt = try {
-            val albumArtAsset = item.assets[CommPaths.ASSET_ALBUM_ART]
-            if (albumArtAsset == null) {
-                Timber.d("Complication: music state has no %s asset attached", CommPaths.ASSET_ALBUM_ART)
-            }
-            val albumArtBytes = albumArtAsset?.let { dataClient.getByteArrayAsset(it) }
-            BitmapUtils.deserialize(albumArtBytes)
+            BitmapUtils.deserialize(dataClient.getByteArrayAsset(albumArtAsset))
         } catch (e: Exception) {
             Timber.w(e, "Complication: failed fetching the album-art asset")
             null
         }
+        albumArt?.let { lastCover = DecodedCover(albumArtAsset.id, it) }
 
-        return NowPlayingResult.Playing(state, albumArt)
+        return NowPlayingResult.Playing(state, albumArt, newCover = albumArt != null)
+    }
+
+    /**
+     * [cover] reduced for a small slot.
+     *
+     * A small image and a long-text icon are drawn at a few dozen pixels, yet each was handed the
+     * full-screen cover - which crosses the binder into the watch face's process with every update
+     * and is held there. Only a photo complication, which a face may draw across the whole dial,
+     * keeps the full size. Cached with the decoded cover so it is made once per cover.
+     */
+    private fun smallImageOf(cover: Bitmap): Bitmap {
+        val cached = lastCover
+        if (cached != null && cached.bitmap === cover) {
+            cached.small?.let { return it }
+            return BitmapUtils.shrinkPreservingRatio(cover, SMALL_IMAGE_PX, SMALL_IMAGE_PX, true)
+                    .also { cached.small = it }
+        }
+        return BitmapUtils.shrinkPreservingRatio(cover, SMALL_IMAGE_PX, SMALL_IMAGE_PX, true)
+    }
+
+    /** One decoded cover and the asset it came from, plus its small version once made. */
+    private class DecodedCover(val assetId: String, val bitmap: Bitmap) {
+        @Volatile
+        var small: Bitmap? = null
+    }
+
+    private companion object {
+        /** Kept for the process: each request is served by a short-lived service instance. */
+        @Volatile
+        var lastCover: DecodedCover? = null
+
+        /** Side of the cover handed to a small-image slot - generous for any watch face's icon. */
+        const val SMALL_IMAGE_PX = 192
     }
 
     private fun previewMusicState(): MusicState {

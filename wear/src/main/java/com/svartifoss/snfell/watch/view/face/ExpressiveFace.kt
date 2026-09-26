@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.watch.view.face
 
+import com.svartifoss.snfell.watch.view.rememberDrawnProgress
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.animateFloatAsState
@@ -815,11 +816,9 @@ private fun CookiePlayButton(
     )
     // Smooths the 500ms position ticks into continuous ring motion (the classic
     // CircularProgressSeekBar does the same with a ValueAnimator).
-    val progress = animateFloatAsState(
-            targetValue = state.progress.coerceIn(0f, 1f),
-            animationSpec = tween(600, easing = LinearEasing),
-            label = "ringProgress"
-    )
+    // Snapped to what can visibly move - see DrawnProgress. It matters less here than on the other
+    // faces while the cookie spins, but it is what lets the ring rest whenever the spin does.
+    val progress = rememberDrawnProgress(state.progress, label = "ringProgress")
 
     var pressed by remember { mutableStateOf(false) }
     TransportPressEffect(group, TransportPressLayout.CENTRE, pressed)

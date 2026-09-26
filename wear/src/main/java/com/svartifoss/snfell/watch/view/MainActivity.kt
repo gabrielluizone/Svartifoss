@@ -1406,6 +1406,8 @@ class MainActivity : WearCompanionWatchActivity(),
         hideNotificationIfOverdue()
 
         bindService(Intent(this, WatchMusicService::class.java), serviceConnection, BIND_AUTO_CREATE)
+        // Started covers the always-on display too, which draws the position once a minute.
+        viewModel.setShowingPosition(true)
     }
 
     override fun onResume() {
@@ -1434,6 +1436,7 @@ class MainActivity : WearCompanionWatchActivity(),
         super.onStop()
 
         handler.removeMessages(MESSAGE_UPDATE_CLOCK)
+        viewModel.setShowingPosition(false)
         unbindService(serviceConnection)
     }
 
@@ -1471,6 +1474,10 @@ class MainActivity : WearCompanionWatchActivity(),
 
         viewModel.musicState.removeObserver(musicStateObserver)
     }
+
+    /** Time left until the wall clock next turns a minute, so a minute clock can refresh exactly
+     *  when its reading changes. */
+    private fun millisUntilNextMinute(): Long = 60_000L - System.currentTimeMillis() % 60_000L
 
     /** Follows the system 12/24h setting, but never appends AM/PM - the suffix just adds
      *  clutter without information on a watch-sized clock. */
@@ -5645,6 +5652,7 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.playerBackground.visibility = if (composeFace) View.GONE else View.VISIBLE
         applyPlayerBackground()
         binding.classicTextBlock.visibility = if (composeFace) View.GONE else View.VISIBLE
+        renderPlaybackTimeText()
         // Both View faces share that block, so which of the two is showing decides its geometry.
         if (!composeFace) applyClassicBandGeometry()
         // Keep the bezel View/hit target present when only the arc is hidden. onTouchEvent passes
@@ -5767,12 +5775,28 @@ class MainActivity : WearCompanionWatchActivity(),
 
         hasPlaybackPosition = true
         updatePlaybackTimeVisibility()
-        binding.textPlaybackTime.text = getString(
-                R.string.playback_time_format,
-                formatPlaybackTime(position.positionMs),
-                formatPlaybackTime(position.durationMs)
-        )
+        renderPlaybackTimeText()
         updateDeveloperOverlay()
+    }
+
+    /**
+     * Writes the Classic track-time line - only while it is on screen, and only when it reads
+     * differently.
+     *
+     * The position ticks twice a second and this line was rewritten on every tick, visible or not:
+     * on every Compose face it sits in a hidden block, and each write still asked the whole View
+     * hierarchy for a layout pass. It changes once a second at most, and whoever shows it again
+     * (a face switch, the time mode, the wrist coming up) calls this so it never shows a stale time.
+     */
+    private fun renderPlaybackTimeText() {
+        if (!hasPlaybackPosition || !binding.textPlaybackTime.isShown) return
+        val text = getString(
+                R.string.playback_time_format,
+                formatPlaybackTime(lastKnownPositionMs),
+                formatPlaybackTime(lastKnownDurationMs))
+        if (binding.textPlaybackTime.text?.toString() != text) {
+            binding.textPlaybackTime.text = text
+        }
     }
 
     /** Applies [MiscPreferences.WEAR_TRACK_TIME_MODE] on top of the base requirement that a
@@ -5791,6 +5815,7 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.textPlaybackTime.visibility =
                 if (hasPlaybackPosition && allowedByMode) View.VISIBLE else View.GONE
         updateFaceState { it.copy(showTrackTime = hasPlaybackPosition && allowedByMode) }
+        renderPlaybackTimeText()
     }
 
     private fun formatPlaybackTime(timeMs: Long): String {
@@ -9026,7 +9051,9 @@ class MainActivity : WearCompanionWatchActivity(),
                             (activity.isQuickActionsPanelShowing() ||
                                     activity.alwaysDisplayClock)
                     ) {
-                        sendEmptyMessageDelayed(MESSAGE_UPDATE_CLOCK, 60_000)
+                        // To the next turn of the minute rather than a minute from now: a fixed
+                        // 60 s from whenever the clock was first drawn kept it up to 59 s behind.
+                        sendEmptyMessageDelayed(MESSAGE_UPDATE_CLOCK, activity.millisUntilNextMinute())
                     }
                 }
                 MESSAGE_DISMISS_NOTIFICATION -> {

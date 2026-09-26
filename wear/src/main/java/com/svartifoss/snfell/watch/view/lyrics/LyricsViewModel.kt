@@ -197,6 +197,10 @@ class LyricsViewModel @Inject constructor(
      *  change rather than up to a tick late. Called from the Activity's onUpdateAmbient. */
     fun refreshPosition() = tick()
 
+    /** Tells the connection whether this screen is on display - it pauses the position checks and
+     *  the neighbouring-cover decoding while no screen showing the position is. */
+    fun setShowingPosition(showing: Boolean) = phoneConnection.setPositionViewer(this, showing)
+
     /**
      * Where the song has got to, read from the shared clock.
      *
@@ -370,6 +374,7 @@ class LyricsViewModel @Inject constructor(
 
     override fun onCleared() {
         super.onCleared()
+        phoneConnection.setPositionViewer(this, false)
         feed.release()
         phoneConnection.musicState.removeObserver(stateObserver)
         phoneConnection.albumArt.removeObserver(artObserver)

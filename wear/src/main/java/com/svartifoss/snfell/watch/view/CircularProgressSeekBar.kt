@@ -481,12 +481,26 @@ class CircularProgressSeekBar : View {
             return
         }
 
+        // Nothing on screen to animate for - the ring is hidden on most faces that draw their own
+        // progress. Jump straight there, so showing it again starts from the right place.
+        if (!isShown) {
+            displayProgress = target
+            return
+        }
+
         progressAnimator = ValueAnimator.ofFloat(displayProgress, target).apply {
             duration = PROGRESS_ANIMATION_DURATION_MS
             interpolator = LinearInterpolator()
             addUpdateListener {
-                displayProgress = it.animatedValue as Float
-                invalidate()
+                val next = it.animatedValue as Float
+                // Every frame of this animation used to redraw the ring, and with a new position
+                // every half second and a 600 ms ease it never stops while a track plays. Only a
+                // move that crosses a visible step is drawn - see DrawnProgress. The final frame
+                // always lands, so the ring rests exactly where the position says.
+                val visible = DrawnProgress.visiblyMoved(displayProgress, next) ||
+                        next == target
+                displayProgress = next
+                if (visible) invalidate()
             }
             start()
         }

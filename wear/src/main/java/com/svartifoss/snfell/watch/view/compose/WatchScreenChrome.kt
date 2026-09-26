@@ -59,9 +59,12 @@ import kotlin.math.sin
  */
 
 /**
- * Wall-clock time refreshed every 15s while the composable is on screen. Follows the system
- * 12/24h setting but never appends AM/PM - the suffix adds clutter without information on a
+ * Wall-clock time, refreshed as each minute turns while the composable is on screen. Follows the
+ * system 12/24h setting but never appends AM/PM - the suffix adds clutter without information on a
  * watch-sized clock.
+ *
+ * It used to refresh every fifteen seconds, which woke the screen four times a minute to redraw
+ * a clock that changes once - and could still show the old minute for up to fifteen seconds.
  */
 @Composable
 internal fun rememberWallClockTime(): String {
@@ -70,7 +73,7 @@ internal fun rememberWallClockTime(): String {
     val time by produceState(initialValue = currentTime(pattern), pattern) {
         while (true) {
             value = currentTime(pattern)
-            delay(15_000L)
+            delay(60_000L - System.currentTimeMillis() % 60_000L)
         }
     }
     return time

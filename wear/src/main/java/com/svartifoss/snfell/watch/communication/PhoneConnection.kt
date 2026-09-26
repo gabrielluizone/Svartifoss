@@ -535,10 +535,6 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     }
 
 
-    private suspend fun sendAck() {
-        messageClient.sendMessageToNearestClient(nodeClient, CommPaths.MESSAGE_ACK)
-    }
-
     override fun onDataChanged(data: DataEventBuffer) {
         val frozenData = data.use { _ ->
             data.map { it.freeze() }
@@ -577,25 +573,18 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                         // Assets are only worth decoding for a state that was actually applied -
                         // a revision the seq gate dropped, or an error, has nothing to attach.
                         if (applyMusicState(receivedMusicState)) {
-                            // Asset loading and the ACK must not hold unrelated config updates
-                            // behind a radio round trip. New music DataItems replace this decode.
+                            // Asset loading must not hold unrelated config updates behind a radio
+                            // round trip. New music DataItems replace this decode.
+                            //
+                            // No acknowledgement goes back any more. It fed a phone-side timeout
+                            // that was switched off in 2022, so every state change cost a message
+                            // to the phone that nothing there acted on.
                             scheduleMusicAssets(dataItem, receivedMusicState)
-                            scope?.launch {
-                                try {
-                                    sendToPhone(CommPaths.MESSAGE_ACK)
-                                } catch (e: CancellationException) {
-                                    throw e
-                                } catch (e: Exception) {
-                                    Timber.d(e, "Could not acknowledge music state")
-                                }
-                            }
                         }
                     }
                     CommPaths.DATA_NOTIFICATION -> {
                         val dataItem = it.freeze()
                         val receivedNotification = Notification.parseFrom(dataItem.data)
-
-                        sendAck()
 
                         val pictureData = dataItem.assets[CommPaths.ASSET_NOTIFICATION_BACKGROUND]
                                 ?.let { asset -> dataClient.getByteArrayAsset(asset) }
@@ -632,16 +621,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                     } catch (e: Exception) {
                         Timber.w(e, "Could not read the streaming shortcuts the phone sent")
                     }
-                    CommPaths.DATA_ADJACENT_ALBUM_ART -> try {
-                        receiveAdjacentArtwork(it.freeze())
-                    } catch (e: CancellationException) {
-                        throw e
-                    } catch (e: Exception) {
-                        // This scope reports a failure as an error *state*, which would replace a
-                        // perfectly good player with an error screen over a cover for a track
-                        // nobody has asked for yet.
-                        Timber.w(e, "Could not take delivery of the neighbouring covers")
-                    }
+                    CommPaths.DATA_ADJACENT_ALBUM_ART -> takeAdjacentArtwork(it.freeze())
                 }
             }
         }
@@ -786,7 +766,9 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             var wait = initialDelayMs ?: playbackClock.syncIntervalMs
             while (isActive) {
                 delay(wait)
-                if (playbackClock.isPlaying()) {
+                // Only while a screen shows the position - see positionViewers. The loop keeps its
+                // cadence meanwhile; a viewer arriving forces a check straight away.
+                if (playbackClock.isPlaying() && positionViewers.isNotEmpty()) {
                     if (playbackSyncSentAtMs != null) {
                         // The previous request was never answered - the phone is out of range, or
                         // its MusicService was not up to hear it. Treat that exactly as a quiet
@@ -1014,6 +996,54 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         }
     }
 
+    /**
+     * Screens on display that draw something moving with the playback position - the player (awake
+     * or always-on), the lyrics, the progress screen - keyed by whoever registered them.
+     *
+     * Two pieces of upkeep exist for those screens alone: the position check against the phone
+     * ([scheduleNextPlaybackSync]) and the decoding of the covers sent ahead for the neighbouring
+     * tracks. This connection stays open for the whole of a listening session, screen off
+     * included, so both used to run for hours with nothing on the wrist to show for them - five
+     * or six Bluetooth round trips and four full-screen decodes per track. With no viewer the
+     * checks pause and the covers wait, undecoded, for someone to look.
+     */
+    private val positionViewers = HashSet<Any>()
+
+    /** The neighbouring covers that arrived while no screen could use them - see [positionViewers]. */
+    private var pendingAdjacentArtwork: DataItem? = null
+
+    /** Registers [viewer] as showing (or no longer showing) something that moves with the position. */
+    fun setPositionViewer(viewer: Any, showing: Boolean) {
+        val hadViewers = positionViewers.isNotEmpty()
+        if (showing) positionViewers.add(viewer) else positionViewers.remove(viewer)
+        if (hadViewers || positionViewers.isEmpty()) return
+
+        // Someone is looking again. Whatever the estimate did meanwhile went unchecked, so verify
+        // it soon, and decode the covers that arrived in the dark.
+        requestPlaybackResync()
+        pendingAdjacentArtwork?.let { item ->
+            pendingAdjacentArtwork = null
+            scope?.launch { takeAdjacentArtwork(item) }
+        }
+    }
+
+    /** Takes delivery of the neighbouring covers now, or holds them until a screen can use them. */
+    private suspend fun takeAdjacentArtwork(dataItem: DataItem) {
+        if (positionViewers.isEmpty()) {
+            pendingAdjacentArtwork = dataItem
+            return
+        }
+        try {
+            receiveAdjacentArtwork(dataItem)
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            // This scope reports a failure as an error *state*, which would replace a perfectly
+            // good player with an error screen over a cover for a track nobody has asked for yet.
+            Timber.w(e, "Could not take delivery of the neighbouring covers")
+        }
+    }
+
     private suspend fun loadPrefetchedNeighbourArtwork() {
         val dataItems = try {
             dataClient.getDataItems(
@@ -1032,7 +1062,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         } finally {
             dataItems.release()
         }
-        receiveAdjacentArtwork(dataItem)
+        takeAdjacentArtwork(dataItem)
     }
 
     private suspend fun loadCurrentMusicState() {

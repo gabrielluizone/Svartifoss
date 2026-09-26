@@ -114,10 +114,12 @@ class ProgressActivity : ComponentActivity() {
     override fun onStart() {
         super.onStart()
         bindService(Intent(this, WatchMusicService::class.java), serviceConnection, BIND_AUTO_CREATE)
+        viewModel.setShowingPosition(true)
     }
 
     override fun onStop() {
         super.onStop()
+        viewModel.setShowingPosition(false)
         unbindService(serviceConnection)
     }
 

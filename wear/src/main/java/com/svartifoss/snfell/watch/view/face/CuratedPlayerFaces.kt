@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.watch.view.face
 
+import com.svartifoss.snfell.watch.view.rememberDrawnProgress
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -153,15 +154,12 @@ private fun CuratedPlayerFace(
                     state.tertiaryAccentColor
             )
         }
-        val animatedProgress = animateFloatAsState(
-                targetValue = state.progress.coerceIn(0f, 1f),
-                animationSpec = tween(600, easing = LinearEasing),
-                label = "curatedProgress"
-        )
+        // Eased between position ticks and snapped to what can visibly move - see DrawnProgress.
+        val animatedProgress = rememberDrawnProgress(state.progress, label = "curatedProgress")
         // Read the animation only in Canvas draw phases. This avoids recomposing album art,
         // typography and layout on every animation frame on the watch.
         val progress = remember(animatedProgress) {
-            { animatedProgress.value.coerceIn(0f, 1f) }
+            { animatedProgress.value }
         }
 
         PlayerBackgroundTreatment(state)

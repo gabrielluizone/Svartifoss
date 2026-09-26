@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.watch.view.face
 
+import com.svartifoss.snfell.watch.view.rememberDrawnProgress
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -266,10 +267,8 @@ private fun BoxScope.FrameArtwork(state: NowPlayingFaceState, screen: Dp, conten
 @Composable
 private fun BoxScope.FrameProgress(state: NowPlayingFaceState) {
     if (!state.showInternalProgress) return
-    val animated by animateFloatAsState(
-            targetValue = state.progress.coerceIn(0f, 1f),
-            animationSpec = tween(600, easing = LinearEasing),
-            label = "frameProgress")
+    // Eased between position ticks and snapped to what can visibly move - see DrawnProgress.
+    val animated by rememberDrawnProgress(state.progress, label = "frameProgress")
     Canvas(
             modifier = Modifier
                     .align(Alignment.BottomCenter)

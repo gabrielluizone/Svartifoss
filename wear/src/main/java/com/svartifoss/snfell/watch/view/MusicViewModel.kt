@@ -210,6 +210,10 @@ class MusicViewModel @Inject constructor(
      */
     fun refreshPositionOnce() = tickPlaybackPosition()
 
+    /** Tells the connection whether this screen is on display - it pauses the position checks and
+     *  the neighbouring-cover decoding while no screen showing the position is. */
+    fun setShowingPosition(showing: Boolean) = phoneConnection.setPositionViewer(this, showing)
+
     fun updateTimers() {
         if (closeDeadline < System.currentTimeMillis()) {
             closeApp.call()
@@ -342,11 +346,10 @@ class MusicViewModel @Inject constructor(
                 true
             }
             StandardActions.ACTION_OPEN_PLAYLIST_MENU -> {
-                // Same phone-side request QueueActivity itself makes (asks the phone to run
-                // OpenPlaylistAction and push fresh queue data) - just also opens the screen
-                // locally instead of only reacting to whatever list shows up.
+                // Opens the screen locally instead of only reacting to whatever list shows up.
+                // The screen asks the phone for a fresh queue itself as it opens, so this no longer
+                // asks as well - that made every open publish the whole queue twice.
                 openPlaybackQueueScreen.call()
-                openPlaybackQueue()
                 true
             }
             StandardActions.ACTION_OPEN_VOLUME_SCREEN -> {
@@ -1226,6 +1229,7 @@ class MusicViewModel @Inject constructor(
         // (and looking lyrics up online) for a screen that no longer existed.
         lyricsFeed.release()
         metadataFeed.release()
+        phoneConnection.setPositionViewer(this, false)
         super.onCleared()
         handler.removeCallbacks(positionTickRunnable)
         handler.removeCallbacks(trackChangeHoldRunnable)

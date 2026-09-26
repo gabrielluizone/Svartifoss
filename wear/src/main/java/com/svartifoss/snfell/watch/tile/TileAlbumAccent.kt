@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import com.google.android.gms.wearable.DataClient
+import com.google.android.gms.wearable.DataItemAsset
 import com.google.android.gms.wearable.Wearable
 import com.matejdro.wearutils.messages.getByteArrayAsset
 import com.matejdro.wearutils.miscutils.BitmapUtils
@@ -48,31 +49,48 @@ internal object TileAlbumAccent {
             return lastKnown(context)
         }
         if (item == null) return lastKnown(context)
+        return fromAssetOrLast(context, dataClient, item.assets[CommPaths.ASSET_ALBUM_ART])
+    }
 
+    /**
+     * The accent of the cover [asset], falling back to the previous album colour.
+     *
+     * Both Tiles ask on every render - the media Tile refreshes at least once a minute and on each
+     * track change, the shortcuts Tile alongside it - and each ask used to read the cover out of
+     * the Data Layer, decode it, run a Palette pass over it and write the result to disk, for a
+     * cover that had not changed since the last ask. The Data Layer addresses assets by content,
+     * so an asset id already seen (under the same accent source) is answered from memory, and the
+     * colour is only written when it differs from the one stored.
+     */
+    suspend fun fromAssetOrLast(context: Context, dataClient: DataClient, asset: DataItemAsset?): Int? {
+        if (asset == null) return lastKnown(context)
+        val source = accentSource(context)
+        lastExtracted?.takeIf { it.assetId == asset.id && it.source == source }?.let { cached ->
+            return cached.accent ?: lastKnown(context)
+        }
         val bitmap = try {
-            val asset = item.assets[CommPaths.ASSET_ALBUM_ART]
-            val bytes = asset?.let { dataClient.getByteArrayAsset(it) }
-            BitmapUtils.deserialize(bytes)
+            BitmapUtils.deserialize(dataClient.getByteArrayAsset(asset))
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
-            null
+            // Not remembered: an asset that could not be read now may well be readable next time.
+            return lastKnown(context)
         }
-        return fromCoverOrLast(context, bitmap)
+        val fresh = extract(bitmap, source)
+        lastExtracted = Extracted(asset.id, source, fresh)
+        if (fresh == null) return lastKnown(context)
+        val preferences = context.getSharedPreferences(CACHE_PREFERENCES, Context.MODE_PRIVATE)
+        if (!preferences.contains(KEY_LAST_ACCENT) || preferences.getInt(KEY_LAST_ACCENT, 0) != fresh) {
+            preferences.edit().putInt(KEY_LAST_ACCENT, fresh).apply()
+        }
+        return fresh
     }
 
-    /** Extracts and remembers a new cover colour, falling back to the previous album colour. */
-    fun fromCoverOrLast(context: Context, bitmap: Bitmap?): Int? {
-        val fresh = extract(context, bitmap)
-        if (fresh != null) {
-            context.getSharedPreferences(CACHE_PREFERENCES, Context.MODE_PRIVATE)
-                .edit()
-                .putInt(KEY_LAST_ACCENT, fresh)
-                .apply()
-            return fresh
-        }
-        return lastKnown(context)
-    }
+    /** The accent last extracted and what it was extracted from - see [fromAssetOrLast]. */
+    private class Extracted(val assetId: String, val source: AlbumAccentSource, val accent: Int?)
+
+    @Volatile
+    private var lastExtracted: Extracted? = null
 
     fun lastKnown(context: Context): Int? {
         val preferences = context.getSharedPreferences(CACHE_PREFERENCES, Context.MODE_PRIVATE)
@@ -101,7 +119,7 @@ internal object TileAlbumAccent {
         return if (luminance > 0.6) WatchTheme.BACKGROUND_BLACK else WatchTheme.COLOR_WHITE
     }
 
-    private fun extract(context: Context, bitmap: Bitmap?): Int? {
+    private fun extract(bitmap: Bitmap?, source: AlbumAccentSource): Int? {
         if (bitmap == null) return null
         return try {
             val palette = Palette.from(bitmap).generate()
@@ -109,7 +127,7 @@ internal object TileAlbumAccent {
             selectPrimaryAccent(
                 palette.getVibrantSwatch()?.let { SwatchInfo(it.rgb, it.population) },
                 swatches,
-                accentSource(context)
+                source
             )?.let(ColorHarmony::promoteNeutralAccent)
         } catch (e: Exception) {
             null
