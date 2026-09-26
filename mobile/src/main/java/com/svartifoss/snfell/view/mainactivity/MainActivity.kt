@@ -85,6 +85,19 @@ class MainActivity : WearCompanionPhoneActivity(),
         /** Fallback refresh for a player that moves the active entry without publishing a new
          *  PlaybackState. The controller callback normally beats this. */
         const val QUEUE_SELECTION_SETTLE_MS = 300L
+
+        /** How often the mini player's progress bar is advanced while a track plays. */
+        const val PROGRESS_TICK_MS = 500L
+
+        /**
+         * When the artwork is read again after a metadata change, in case the player publishes the
+         * cover a moment after the text of the same track.
+         *
+         * Two bounded looks rather than the poll that used to cover this: that one re-read the
+         * session's metadata on every progress tick, for as long as music played, and a metadata
+         * read hands back the cover as a brand-new Bitmap every time.
+         */
+        val LATE_ARTWORK_CHECKS_MS = longArrayOf(1_500L, 4_000L)
     }
 
 
@@ -134,6 +147,37 @@ class MainActivity : WearCompanionPhoneActivity(),
     private var lastPaletteDescription: String? = null
     private var lastAppliedAccentColor: Int? = null
 
+    /**
+     * Whether this screen is started - the only time the mini player has anyone to show anything
+     * to. Everything it does per tick or per callback is gated on it: the progress ticker used to
+     * be stopped only in onDestroy, so with the app merely in the background it kept running for
+     * as long as music played, which can be hours.
+     */
+    private var miniPlayerStarted = false
+
+    /**
+     * What the progress tick extrapolates from, cached from the controller's own callbacks so the
+     * tick makes no binder calls. It used to ask the session for its playback state *and* its
+     * metadata twice a second, and the metadata read carries the cover bitmap across the binder.
+     */
+    private var miniPlayerState: PlaybackState? = null
+    private var miniPlayerDurationMs = -1L
+
+    /** The cover the mini player is showing, so a late re-read can tell new artwork from old. */
+    private var displayedMiniArt: Bitmap? = null
+
+    /** The active queue entry the queue sheet last drew, so a playback state that did not move it
+     *  does not read the whole queue again. */
+    private var queueSheetActiveId: Long? = null
+
+    private val lateArtworkCheck = Runnable {
+        val metadata = miniPlayerController?.metadata ?: return@Runnable
+        val art = artOf(metadata) ?: return@Runnable
+        if (!isSameArtwork(art, displayedMiniArt)) {
+            applyMiniPlayerArt(art, albumArtDescription(metadata))
+        }
+    }
+
     @Inject
     lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
 
@@ -145,16 +189,32 @@ class MainActivity : WearCompanionPhoneActivity(),
     private val miniPlayerCallback = object : MediaController.Callback() {
         override fun onMetadataChanged(metadata: MediaMetadata?) {
             updateMiniPlayerMetadata(metadata)
+            scheduleLateArtworkChecks()
         }
 
         override fun onPlaybackStateChanged(state: PlaybackState?) {
             updateMiniPlayerPlayState(state)
             if (state?.isPlaying() == true) startProgressUpdates() else stopProgressUpdates()
+            // The queue sheet marks the playing entry, and a jump within the queue can move it
+            // without any metadata change. This used to be refreshed only as a side effect of the
+            // accent being re-applied on every progress tick.
+            if (mediaDetailsDialog?.isShowing == true &&
+                    state?.activeQueueItemId != queueSheetActiveId) {
+                updateQueueList()
+            }
+        }
+
+        override fun onQueueChanged(queue: MutableList<android.media.session.MediaSession.QueueItem>?) {
+            if (mediaDetailsDialog?.isShowing == true) updateQueueList()
         }
     }
 
     private val preferenceChangeListener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == "dynamic_accent_color" || key == "desaturated_color" || key == "custom_accent_color") {
+            // Same artwork, a different rule for turning it into a colour: forget the last
+            // extraction so it runs again instead of being recognised as already done.
+            lastPaletteArt = null
+            lastPaletteDescription = null
             updateMiniPlayerMetadata(miniPlayerController?.metadata)
         }
         if (key == MiscPreferences.MINI_PLAYER_ENABLED.key) {
@@ -348,7 +408,10 @@ class MainActivity : WearCompanionPhoneActivity(),
                 updateMiniPlayerMetadata(controller.metadata)
                 updateMiniPlayerPlayState(controller.playbackState)
                 setMiniPlayerVisible(miniPlayerPreferenceEnabled())
+                scheduleLateArtworkChecks()
             } else {
+                miniPlayerState = null
+                miniPlayerDurationMs = -1L
                 setMiniPlayerVisible(false)
             }
         }
@@ -468,11 +531,36 @@ class MainActivity : WearCompanionPhoneActivity(),
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onStart() {
+        super.onStart()
+        miniPlayerStarted = true
+        // Caught up here rather than kept current in the background: nothing below is visible
+        // while the screen is stopped, and a playing session can be left like that for hours.
+        miniPlayerController?.let { controller ->
+            controller.registerCallback(miniPlayerCallback)
+            updateMiniPlayerMetadata(controller.metadata)
+            updateMiniPlayerPlayState(controller.playbackState)
+            if (binding.miniPlayer.visibility == View.VISIBLE) startProgressUpdates()
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         showNotificationServiceWarning()
         applyAccentColor(dynamicAccentColor ?: resolveDefaultAccent())
         invalidateOptionsMenu()
+    }
+
+    override fun onStop() {
+        miniPlayerStarted = false
+        // Every callback of this controller used to keep arriving while the app sat in the
+        // background, and its playback-state callback restarted the progress ticker each time -
+        // so a single play/pause brought the whole twice-a-second loop back for a screen nobody
+        // could see. onStart registers it again and catches the views up.
+        miniPlayerController?.unregisterCallback(miniPlayerCallback)
+        stopProgressUpdates()
+        progressHandler.removeCallbacks(lateArtworkCheck)
+        super.onStop()
     }
 
     override fun onDestroy() {
@@ -539,22 +627,36 @@ class MainActivity : WearCompanionPhoneActivity(),
 
         binding.miniTitle.text = title
         binding.miniArtist.text = artist
-
-        val art = metadata?.getBitmap(MediaMetadata.METADATA_KEY_ART)
-            ?: metadata?.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART)
-        if (art != null) {
-            binding.miniAlbumArt.scaleType = android.widget.ImageView.ScaleType.CENTER_CROP
-            binding.miniAlbumArt.setImageBitmap(art)
-            updateDynamicAccentFromArt(art, albumArtDescription(metadata))
-        } else {
-            binding.miniAlbumArt.scaleType = android.widget.ImageView.ScaleType.CENTER
-            binding.miniAlbumArt.setImageResource(R.drawable.ic_music_note)
-            updateDynamicAccentFromArt(null, null)
-        }
+        miniPlayerDurationMs = metadata?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: -1L
 
         if (mediaDetailsDialog?.isShowing == true) {
             detailTitle?.text = title
             detailArtist?.text = artist
+        }
+
+        val art = artOf(metadata)
+        applyMiniPlayerArt(art, if (art != null) albumArtDescription(metadata) else null)
+
+        if (mediaDetailsDialog?.isShowing == true) {
+            updateQueueList()
+        }
+    }
+
+    private fun artOf(metadata: MediaMetadata?): Bitmap? =
+            metadata?.getBitmap(MediaMetadata.METADATA_KEY_ART)
+                    ?: metadata?.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART)
+
+    /** Puts [art] on the mini player (and the open details sheet) and derives the accent from it. */
+    private fun applyMiniPlayerArt(art: Bitmap?, description: String?) {
+        displayedMiniArt = art
+        if (art != null) {
+            binding.miniAlbumArt.scaleType = android.widget.ImageView.ScaleType.CENTER_CROP
+            binding.miniAlbumArt.setImageBitmap(art)
+        } else {
+            binding.miniAlbumArt.scaleType = android.widget.ImageView.ScaleType.CENTER
+            binding.miniAlbumArt.setImageResource(R.drawable.ic_music_note)
+        }
+        if (mediaDetailsDialog?.isShowing == true) {
             if (art != null) {
                 detailAlbumArt?.scaleType = android.widget.ImageView.ScaleType.CENTER_CROP
                 detailAlbumArt?.setImageBitmap(art)
@@ -562,8 +664,33 @@ class MainActivity : WearCompanionPhoneActivity(),
                 detailAlbumArt?.scaleType = android.widget.ImageView.ScaleType.CENTER
                 detailAlbumArt?.setImageResource(R.drawable.ic_music_note)
             }
-            updateQueueList()
         }
+        updateDynamicAccentFromArt(art, description)
+    }
+
+    /**
+     * Whether two covers are the same picture.
+     *
+     * By content, not by reference: every metadata read from a session unparcels the cover into a
+     * new Bitmap, so two reads of an unchanged cover are never the same object. The reference check
+     * this replaces was therefore never true, and the accent was extracted again - and every view
+     * re-tinted - on each progress tick.
+     */
+    private fun isSameArtwork(a: Bitmap?, b: Bitmap?): Boolean = when {
+        a === b -> true
+        a == null || b == null -> false
+        else -> try {
+            !a.isRecycled && !b.isRecycled && a.sameAs(b)
+        } catch (e: RuntimeException) {
+            false
+        }
+    }
+
+    /** Reads the cover again shortly after a metadata change - see [LATE_ARTWORK_CHECKS_MS]. */
+    private fun scheduleLateArtworkChecks() {
+        progressHandler.removeCallbacks(lateArtworkCheck)
+        if (!miniPlayerStarted) return
+        LATE_ARTWORK_CHECKS_MS.forEach { progressHandler.postDelayed(lateArtworkCheck, it) }
     }
 
     private fun updatePlayFabVisibility(state: PlaybackState?) {
@@ -640,6 +767,8 @@ class MainActivity : WearCompanionPhoneActivity(),
 
     private fun startProgressUpdates() {
         progressHandler.removeCallbacks(progressRunnable)
+        // Nothing draws the bar while the screen is stopped; onStart starts it again.
+        if (!miniPlayerStarted) return
         updateMiniPlayerProgress()
     }
 
@@ -647,10 +776,18 @@ class MainActivity : WearCompanionPhoneActivity(),
         progressHandler.removeCallbacks(progressRunnable)
     }
 
+    /**
+     * Advances the progress bar one tick and schedules the next.
+     *
+     * Works entirely from [miniPlayerState] and [miniPlayerDurationMs], which the controller's
+     * callbacks keep current, so a tick makes no binder call at all. And it removes any pending
+     * tick before posting its own: a caller that ran it directly while a chain was already going
+     * (opening the details sheet did) otherwise started a second chain alongside the first.
+     */
     private fun updateMiniPlayerProgress() {
-        val controller = miniPlayerController ?: return
-        val state = controller.playbackState ?: return
-        val duration = controller.metadata?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: -1L
+        progressHandler.removeCallbacks(progressRunnable)
+        val state = miniPlayerState ?: return
+        val duration = miniPlayerDurationMs
         if (duration > 0) {
             val elapsed = SystemClock.elapsedRealtime() - state.lastPositionUpdateTime
             val pos = (state.position + (elapsed * state.playbackSpeed).toLong()).coerceAtLeast(0L)
@@ -667,18 +804,8 @@ class MainActivity : WearCompanionPhoneActivity(),
                 detailTimeTotal?.text = formatTime(duration)
             }
         }
-        if (controller.isPlaying()) {
-            progressHandler.postDelayed(progressRunnable, 500)
-        }
-
-        // Some media apps publish metadata in two steps (text, then artwork moments later) without
-        // firing another onMetadataChanged — poll while playing so the accent tracks new art.
-        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-        if (prefs.getBoolean("dynamic_accent_color", true)) {
-            val metadata = controller.metadata
-            val art = metadata?.getBitmap(MediaMetadata.METADATA_KEY_ART)
-                ?: metadata?.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART)
-            updateDynamicAccentFromArt(art, albumArtDescription(metadata))
+        if (miniPlayerStarted && state.isPlaying()) {
+            progressHandler.postDelayed(progressRunnable, PROGRESS_TICK_MS)
         }
     }
 
@@ -702,7 +829,8 @@ class MainActivity : WearCompanionPhoneActivity(),
             return
         }
 
-        if (art === lastPaletteArt && description == lastPaletteDescription && dynamicAccentColor != null) {
+        if (dynamicAccentColor != null && description == lastPaletteDescription &&
+                isSameArtwork(art, lastPaletteArt)) {
             return
         }
         lastPaletteArt = art
@@ -725,8 +853,11 @@ class MainActivity : WearCompanionPhoneActivity(),
                 extracted = adjustColorForContrast(extracted, isDarkThemeActive())
             }
 
+            // A new cover often lands on the colour already showing (the next track of the same
+            // album). Re-tinting walks every view in the activity, so it waits for a real change.
+            val alreadyShowing = extracted == dynamicAccentColor && extracted == lastAppliedAccentColor
             dynamicAccentColor = extracted
-            applyAccentColor(extracted)
+            if (!alreadyShowing) applyAccentColor(extracted)
         }
     }
 
@@ -746,6 +877,7 @@ class MainActivity : WearCompanionPhoneActivity(),
     }
 
     private fun updateMiniPlayerPlayState(state: PlaybackState?) {
+        miniPlayerState = state
         val playing = state?.isPlaying() == true
         val icon = if (playing) R.drawable.ic_nav_stopped else R.drawable.ic_nav_playing
         // The label has to move with the icon, not just accompany it: a button that reads
@@ -782,6 +914,8 @@ class MainActivity : WearCompanionPhoneActivity(),
         val adapter = queueAdapter ?: return
         val list = detailQueueList ?: return
         val queue = miniPlayerController?.queue
+        val activeQueueId = miniPlayerController?.playbackState?.activeQueueItemId ?: -1L
+        queueSheetActiveId = activeQueueId
 
         val empty = queue.isNullOrEmpty()
         detailQueueEmpty?.visibility = if (empty) View.VISIBLE else View.GONE
@@ -799,7 +933,6 @@ class MainActivity : WearCompanionPhoneActivity(),
             return
         }
 
-        val activeQueueId = miniPlayerController?.playbackState?.activeQueueItemId ?: -1L
         // Resolved once per rebuild rather than per row: the switch is one preference read, and a
         // toggle landing mid-build would otherwise give a half-remote list.
         adapter.setAllowRemoteArtwork(QueueArtworkResolver.remoteArtworkEnabled(this))
@@ -912,6 +1045,7 @@ class MainActivity : WearCompanionPhoneActivity(),
 
         dialog.setOnDismissListener {
             mediaDetailsDialog = null
+            queueSheetActiveId = null
             detailAlbumArt = null
             detailTitle = null
             detailArtist = null
@@ -968,7 +1102,9 @@ class MainActivity : WearCompanionPhoneActivity(),
         detailPlayPause?.imageTintList = accentCsl
 
         updateMiniPlayerPlayState(miniPlayerController?.playbackState)
-        updateMiniPlayerProgress()
+        // Through startProgressUpdates rather than a direct tick, which would have begun a second
+        // chain of ticks beside the one already running - one more for every time the sheet opened.
+        startProgressUpdates()
         updateQueueList()
     }
 
