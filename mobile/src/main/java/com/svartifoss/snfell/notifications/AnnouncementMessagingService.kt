@@ -54,9 +54,10 @@ class AnnouncementMessagingService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        // No backend to register the token with - delivery is entirely topic-based (see
-        // AnnouncementNotifications). Nothing to do; overridden only so the default (a no-op) is
-        // an explicit, documented choice rather than an oversight.
+        // No backend to register the token with - delivery is entirely topic-based. But topic
+        // subscriptions belong to the token, so a new one starts with none: re-apply the choice,
+        // which AnnouncementNotifications otherwise only resends when it changes.
+        AnnouncementNotifications.onTokenChanged(this)
     }
 
     private fun showNotification(title: String, body: String, url: String?) {

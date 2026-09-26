@@ -71,6 +71,7 @@ class SvartifossWaterfallView @JvmOverloads constructor(
     private val poolShimmerPaint = Paint(Paint.ANTI_ALIAS_FLAG)
 
     private val clipPath = Path()
+    private val clipBounds = RectF()
     private val veilPath = Path()
     private val strandPath = Path()
     private val flowMatrix = Matrix()
@@ -216,13 +217,29 @@ class SvartifossWaterfallView @JvmOverloads constructor(
         super.onDetachedFromWindow()
     }
 
+    /**
+     * Stays attached while its screen is in the background - the update screen is typically left
+     * behind by the installer it opens - and a running animator keeps waking the process every
+     * frame whether anything is drawn or not. Before Android 14 the platform does not pause it on
+     * its own. Pausing keeps the timeline continuous, so the motion picks up where it stopped.
+     */
+    override fun onWindowVisibilityChanged(visibility: Int) {
+        super.onWindowVisibilityChanged(visibility)
+        if (visibility == VISIBLE) {
+            if (animator.isPaused) animator.resume() else if (!animator.isStarted && isAttachedToWindow) animator.start()
+        } else if (animator.isRunning) {
+            animator.pause()
+        }
+    }
+
     override fun onDraw(canvas: Canvas) {
         val w = width.toFloat()
         val h = height.toFloat()
         if (w <= 0f || h <= 0f) return
 
         clipPath.reset()
-        clipPath.addRoundRect(RectF(0f, 0f, w, h), CORNER_RADIUS_DP * density, CORNER_RADIUS_DP * density, Path.Direction.CW)
+        clipBounds.set(0f, 0f, w, h)
+        clipPath.addRoundRect(clipBounds, CORNER_RADIUS_DP * density, CORNER_RADIUS_DP * density, Path.Direction.CW)
         canvas.save()
         canvas.clipPath(clipPath)
 
