@@ -1625,11 +1625,12 @@ class MainActivity : WearCompanionWatchActivity(),
         val trackChanged = !idle && faceState.value.title != previousFaceTitle
         if (trackChanged) {
             // Advance immediately from the cached queue (the title matcher handles players whose
-            // activeQueueItemId lags behind), then refresh in the background. Queue data is now
-            // warm before either AOD or Quick Actions is opened instead of being fetched only as
-            // a side effect of showing that panel.
+            // activeQueueItemId lags behind). The fresh queue is already on its way: the phone
+            // republishes it by itself on every track change (MusicService.scheduleQueueRefresh),
+            // so it is warm before AOD or Quick Actions is opened. This used to ask for one as
+            // well, which made every track change publish the whole queue twice - every cover
+            // resolved and encoded on the phone, transferred, and decoded here, two times over.
             viewModel.customList.value?.let(::updateUpNextPreview)
-            viewModel.refreshPlaybackQueueSilently()
         }
         if (ambientObserver.isAmbient) {
             // Playback/status updates can write the interactive white/artist colors above while
@@ -5622,7 +5623,16 @@ class MainActivity : WearCompanionWatchActivity(),
         // if an app exposes no playback queue.
         if (screenFace in ThemeAppearance.QUEUE_ART_FACES) {
             viewModel.customList.value?.let(::updateUpNextPreview)
-            viewModel.refreshPlaybackQueueSilently()
+            // Asked for once when such a face is chosen - it wants the larger thumbnails a list
+            // does not, so the queue already held may be too small to draw. Not again on every
+            // wake: onExitAmbient re-applies the face each time the wrist comes up, and a queue
+            // republished on each of those was a full publication per glance.
+            if (queueRequestedForFace != screenFace) {
+                queueRequestedForFace = screenFace
+                viewModel.refreshPlaybackQueueSilently()
+            }
+        } else {
+            queueRequestedForFace = null
         }
         // Changing the face - or the artwork source with it - changes *which* picture is the
         // backdrop, and nothing else would notice: both LiveData already delivered whatever they
@@ -6715,10 +6725,14 @@ class MainActivity : WearCompanionWatchActivity(),
                     // whatever queue data happened to be lying around, or none. Now that any face
                     // can be chosen as the AOD, that gap would be visible on nine more of them.
                     if (effectiveAodStyle() in composeFaces || effectiveAodStyle() == "chrono") {
-                        // Keep the cached row visible while refreshing. Clearing it here made AOD
-                        // look empty until Quick Actions happened to request the queue later.
+                        // Keep the cached row visible. Clearing it here made AOD look empty until
+                        // Quick Actions happened to request the queue later.
                         viewModel.customList.value?.let(::updateUpNextPreview)
-                        viewModel.refreshPlaybackQueueSilently()
+                        // Asked for only when there is nothing to show yet. It used to be asked
+                        // for every time the wrist went down - a full publication of the queue,
+                        // covers and all, per glance - while the phone already republishes it on
+                        // every track change, which is the only thing that moves Up Next on.
+                        if (!hasQueueSnapshot) viewModel.refreshPlaybackQueueSilently()
                     }
 
                     binding.volumeBar.visibility = View.GONE
@@ -8384,12 +8398,20 @@ class MainActivity : WearCompanionWatchActivity(),
         false
     }
 
+    /** Whether a queue (or its history fallback) has reached this screen at all - the one case the
+     *  always-on display still asks the phone for one. */
+    private var hasQueueSnapshot = false
+
+    /** The queue-drawing face the queue was last requested for - see [applyScreenFaceNow]. */
+    private var queueRequestedForFace: String? = null
+
     private fun updateUpNextPreview(data: CustomListWithBitmaps) {
         // Search results and streaming-shortcut lists reuse the same DataItem. They must not wipe a
         // still-valid queue preview while the phone is preparing a fresh PLAYLIST response.
         if (data.listId != CustomLists.PLAYLIST && data.listId != CustomLists.HISTORY) {
             return
         }
+        hasQueueSnapshot = true
 
         // History (the fallback shown when the playing app exposes no real queue) is backward
         // looking - there's no "next" track to preview in that case.

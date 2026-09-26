@@ -2454,6 +2454,17 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      */
     private var lastRequestedQueueLimit = DEFAULT_QUEUE_PAGE_SIZE
 
+    /**
+     * Numbers each queue publication as it starts, so one that is overtaken while it resolves its
+     * covers can tell - see [OpenPlaylistAction]. Only the most recently started publication is
+     * sent; an older one finishing afterwards would put a stale queue back on the watch.
+     */
+    private val queuePublication = AtomicLong()
+
+    fun beginQueuePublication(): Long = queuePublication.incrementAndGet()
+
+    fun isLatestQueuePublication(publication: Long): Boolean = queuePublication.get() == publication
+
     private fun openPlaybackQueueOnWatch(entryLimit: Int = DEFAULT_QUEUE_PAGE_SIZE) {
         lastRequestedQueueLimit = entryLimit
         executeAction(OpenPlaylistAction(this).apply { this.entryLimit = entryLimit })

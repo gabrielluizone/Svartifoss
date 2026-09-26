@@ -107,8 +107,9 @@ object QueueEntry {
  *
  * The queue is paged at all because every entry carries its own thumbnail asset across Bluetooth -
  * sending a 200-track queue eagerly is a long wait for a list most people never scroll to the end
- * of. Requests are cumulative (each asks for a larger prefix, replacing the previous list) rather
- * than incremental, because the phone publishes the queue as one DataItem it replaces wholesale.
+ * of. Requests are cumulative (each asks for a larger [window], replacing the previous list)
+ * rather than incremental, because the phone publishes the queue as one DataItem it replaces
+ * wholesale.
  */
 object QueuePaging {
     /** Entries in the first page, and the step each "load more" adds. */
@@ -122,35 +123,55 @@ object QueuePaging {
     fun nextLimit(loaded: Int): Int = (loaded + PAGE_SIZE).coerceAtMost(MAX_ENTRIES)
 
     /**
-     * [requestedLimit], stretched far enough to reach the entry at [activeIndex] **and a page of
-     * what follows it**.
+     * Already-played entries kept above the playing one in a [window].
      *
-     * A page is a prefix of the queue, which is right for reading forwards and wrong for the one
-     * row the watch most needs: the track playing right now. Ask for twenty entries while listening
-     * to the eightieth and the playing track is simply not in the payload, so the watch cannot
-     * centre on it and the user pages down by hand until it appears.
-     *
-     * The trailing [PAGE_SIZE] is the part that took a correction and is the whole point of the
-     * screen. Stretching to exactly `activeIndex + 1` does put the playing track in the list - as
-     * its **last row**, with nothing after it. A queue whose entire subject is what comes next then
-     * shows what came before and stops, and the user is back to tapping "load more" for the one
-     * thing they opened it to see.
-     *
-     * Stretching costs a larger first payload when you are deep in a playlist, and that is the
-     * trade being made deliberately: every entry carries its own thumbnail across Bluetooth, but
-     * reaching the same row through repeated "load more" requests sends *more* than this does, and
-     * makes the user drive it.
-     *
-     * [MAX_ENTRIES] still caps it, so this can only spend the budget that already existed. A
-     * negative [activeIndex] means the playing row could not be located and the request is left
-     * exactly as asked.
+     * Enough to step back a few tracks from the queue screen and for the faces that draw the
+     * neighbouring covers (Carousel, Ribbon, the predicted "previous" skip) - and no more, because
+     * every entry is a thumbnail that crosses Bluetooth and is decoded on the watch each time the
+     * queue is published.
      */
-    fun limitCoveringUpcoming(requestedLimit: Int, activeIndex: Int): Int {
+    const val ENTRIES_BEFORE_ACTIVE = 5
+
+    /**
+     * One published slice of a queue: [start] until [endExclusive], plus the [totalEntryCount] to
+     * report alongside it.
+     *
+     * [totalEntryCount] counts from [start], not from the head of the queue, and that is what keeps
+     * the wire format unchanged: a watch decides whether "load more" can fetch anything by comparing
+     * how many rows it holds against that total, and asks for the next page by growing the size it
+     * requests. Measured from the window's own start, both keep working for a watch that has never
+     * heard of windows, while the rows it holds simply stop being the head of the queue.
+     */
+    data class Window(val start: Int, val endExclusive: Int, val totalEntryCount: Int) {
+        val size: Int get() = endExclusive - start
+    }
+
+    /**
+     * The part of a [queueSize]-entry queue to publish for a request of [requestedLimit] rows while
+     * the entry at [activeIndex] plays (-1 when it cannot be located).
+     *
+     * It used to be a *prefix* stretched to reach a page past the playing entry, capped at
+     * [MAX_ENTRIES]. Deep in a long playlist that meant every publication carried up to two hundred
+     * covers of tracks already played - on every track change - and past the two hundredth track
+     * the playing one was not in the payload at all. A window starts [ENTRIES_BEFORE_ACTIVE] above
+     * the playing entry instead, so what is sent is always the playing track and what follows it.
+     *
+     * The first page still reaches [PAGE_SIZE] entries past the playing one, a larger request grows
+     * the window downwards from the same start (which is what "load more" asks for), and the ceiling
+     * still caps a single publication. An unlocatable playing entry falls back to the head of the
+     * queue, exactly as the prefix did.
+     */
+    fun window(requestedLimit: Int, activeIndex: Int, queueSize: Int): Window {
+        if (queueSize <= 0) return Window(0, 0, 0)
         val requested = requestedLimit.coerceIn(1, MAX_ENTRIES)
-        if (activeIndex < 0) {
-            return requested
-        }
-        val throughUpcoming = (activeIndex + 1 + PAGE_SIZE).coerceAtMost(MAX_ENTRIES)
-        return maxOf(requested, throughUpcoming)
+        val active = activeIndex.takeIf { it in 0 until queueSize }
+        val start = if (active == null) 0 else (active - ENTRIES_BEFORE_ACTIVE).coerceAtLeast(0)
+        // Rows needed from the start to reach a full page past the playing entry.
+        val throughUpcoming = if (active == null) 0 else active + 1 + PAGE_SIZE - start
+        val count = maxOf(requested, throughUpcoming).coerceAtMost(MAX_ENTRIES)
+        return Window(
+                start = start,
+                endExclusive = minOf(queueSize, start + count),
+                totalEntryCount = minOf(queueSize - start, MAX_ENTRIES))
     }
 }

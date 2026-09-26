@@ -2,7 +2,13 @@
 
 ## Unreleased
 
+### Changed
+
+- **The watch's queue now starts a few tracks before the one playing.** It used to be sent from the top of the playlist and stretched down to the track playing, so deep into a long playlist the watch received up to two hundred tracks you had already heard - and past the two hundredth, the one playing was not among them at all. It now holds the playing track, the five before it and the ones after it, and **Load more** keeps adding further tracks below as before. The whole playlist is still on the phone's own queue sheet.
+
 ### Fixed
+
+- **Changing track costs far less on both the phone and the watch.** The queue (Up Next) was rebuilt and sent from scratch several times for every track: once by the phone, once more because the watch asked for it on every track change, again every time the wrist went down on most watch faces, and on Carousel and Ribbon every time it came back up. Each time, every row's cover was found, resized and encoded on the phone, then read and decoded again on the watch - with the screen off as much as on. Now the phone sends it once per track, and only the covers that are new to the list are processed on either side. The phone does that work away from the app's main thread, where it could stall the app and hold back commands arriving from the watch for a moment on each track change, and no longer loads covers stored with a track at full size just to shrink them into thumbnails - with a long local-library queue that could briefly take hundreds of megabytes. Two queues being built at once can no longer finish out of order and leave the older one on the watch. A list or a cover the watch cannot read no longer replaces the player with an error screen, and a problem reading the watch's saved queue as it opens no longer stops it connecting to the phone.
 
 - **Logging costs less on both devices, and the support log keeps what matters.** Every playback change was written to the diagnostic log as the whole message, including the image data of each playback-action icon spelled out as text - tens of kilobytes per change on each device, which also pushed the lines that explain a problem out of the log files **Get support** sends. They are now one short line each. And a release build no longer formats the lines it discards: every message used to be formatted, and its source looked up, once per destination before any of them decided to throw it away.
 

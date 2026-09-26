@@ -38,79 +38,100 @@ class QueuePagingTest {
         assertEquals(QueuePaging.MAX_ENTRIES, QueuePaging.nextLimit(QueuePaging.MAX_ENTRIES - 1))
     }
 
-    // ---- limitCoveringUpcoming --------------------------------------------
+    // ---- window -----------------------------------------------------------
+
+    private val page = QueuePaging.PAGE_SIZE
+    private val before = QueuePaging.ENTRIES_BEFORE_ACTIVE
 
     /**
-     * The gap this closes: a page is a prefix, so listening to the eightieth track of a playlist
-     * meant the watch was sent tracks 1-20 and could not show the one playing at all - the user
-     * paged down by hand until it appeared.
+     * The gap the window closes. The published slice used to be a prefix, so deep in a long queue
+     * it was mostly tracks already played - and past the ceiling the playing one was not in it at
+     * all. The window always holds the playing entry, a few before it and a page after it.
      */
     @Test
-    fun `the page stretches to reach a distant playing track`() {
-        assertEquals(81 + QueuePaging.PAGE_SIZE,
-                QueuePaging.limitCoveringUpcoming(QueuePaging.PAGE_SIZE, activeIndex = 80))
+    fun `a distant playing track is published with a page of what follows it`() {
+        val window = QueuePaging.window(page, activeIndex = 80, queueSize = 500)
+
+        assertEquals(80 - before, window.start)
+        assertEquals(80 + 1 + page, window.endExclusive)
+    }
+
+    @Test
+    fun `the playing track is included however deep in the queue it sits`() {
+        val window = QueuePaging.window(page, activeIndex = 4_321, queueSize = 5_000)
+
+        assertTrue("active entry outside $window", 4_321 in window.start until window.endExclusive)
+        assertTrue("window of ${window.size} rows", window.size <= QueuePaging.MAX_ENTRIES)
     }
 
     /**
-     * The correction this exists for. Stretching to exactly the playing track does put it in the
-     * list - as the last row, with nothing after it - so a screen whose entire subject is what
-     * comes next showed only what came before.
+     * What keeps the change invisible to a watch that predates it: "load more" is offered while the
+     * rows held are fewer than the total, and asks for [QueuePaging.nextLimit] of them. Measured from
+     * the window's start, that grows the same window downwards until it runs out.
      */
     @Test
-    fun `the stretch reaches past the playing track, not up to it`() {
-        val activeIndex = 80
-        val limit = QueuePaging.limitCoveringUpcoming(QueuePaging.PAGE_SIZE, activeIndex)
-        assertTrue(
-                "the playing track must not be the last row (limit=$limit)",
-                limit > activeIndex + 1)
-        assertEquals(QueuePaging.PAGE_SIZE, limit - (activeIndex + 1))
+    fun `load more grows the window from the same start`() {
+        val first = QueuePaging.window(page, activeIndex = 80, queueSize = 500)
+        assertTrue("an old watch would offer no more rows", first.size < first.totalEntryCount)
+
+        val second = QueuePaging.window(QueuePaging.nextLimit(first.size), 80, 500)
+        assertEquals(first.start, second.start)
+        assertEquals(first.size + page, second.size)
     }
 
     @Test
-    fun `a playing track near the top still gets a page of what follows`() {
-        assertEquals(6 + QueuePaging.PAGE_SIZE,
-                QueuePaging.limitCoveringUpcoming(QueuePaging.PAGE_SIZE, activeIndex = 5))
+    fun `the total counts from the start of the window`() {
+        val window = QueuePaging.window(page, activeIndex = 80, queueSize = 120)
+
+        assertEquals(120 - window.start, window.totalEntryCount)
     }
 
-    /** Stretching can only spend the budget that already existed. */
     @Test
-    fun `stretching never exceeds the transfer ceiling`() {
-        assertEquals(QueuePaging.MAX_ENTRIES,
-                QueuePaging.limitCoveringUpcoming(QueuePaging.PAGE_SIZE, activeIndex = 5_000))
+    fun `a playing track near the top keeps the head of the queue`() {
+        val window = QueuePaging.window(page, activeIndex = 2, queueSize = 500)
+
+        assertEquals(0, window.start)
+        assertEquals(2 + 1 + page, window.endExclusive)
     }
 
-    /** An unlocatable playing row must not quietly change the size that was asked for. */
+    /** An unlocatable playing row must not move the request - it is published from the head. */
     @Test
-    fun `an unknown playing row leaves the request exactly as asked`() {
-        assertEquals(QueuePaging.PAGE_SIZE,
-                QueuePaging.limitCoveringUpcoming(QueuePaging.PAGE_SIZE, activeIndex = -1))
+    fun `an unknown playing row publishes the head of the queue as asked`() {
+        assertEquals(QueuePaging.Window(0, page, QueuePaging.MAX_ENTRIES),
+                QueuePaging.window(page, activeIndex = -1, queueSize = 500))
+        // An index past the end of the queue is as unlocatable as a negative one.
+        assertEquals(QueuePaging.Window(0, page, 150),
+                QueuePaging.window(page, activeIndex = 150, queueSize = 150))
     }
 
-    /** A page already paged past the playing track keeps its size - "load more" must not shrink. */
     @Test
-    fun `a larger request is never shrunk to the playing row`() {
-        assertEquals(120, QueuePaging.limitCoveringUpcoming(120, activeIndex = 3))
+    fun `a short queue is published whole`() {
+        assertEquals(QueuePaging.Window(0, 7, 7), QueuePaging.window(page, activeIndex = 3, queueSize = 7))
+        assertEquals(QueuePaging.Window(0, 0, 0), QueuePaging.window(page, activeIndex = 0, queueSize = 0))
     }
 
-    /** Whatever the position, the playing row always has somewhere to be other than the end. */
+    /** Whatever the position, one publication never exceeds the transfer ceiling. */
     @Test
-    fun `the playing row is never the last one unless the ceiling forces it`() {
-        (0..QueuePaging.MAX_ENTRIES + 50 step 7).forEach { activeIndex ->
-            val limit = QueuePaging.limitCoveringUpcoming(QueuePaging.PAGE_SIZE, activeIndex)
-            if (activeIndex + 1 < QueuePaging.MAX_ENTRIES) {
-                assertTrue(
-                        "active=$activeIndex limit=$limit leaves nothing after the playing row",
-                        limit > activeIndex + 1)
+    fun `the window never exceeds the ceiling and always follows the playing row`() {
+        (0..1_000 step 13).forEach { activeIndex ->
+            listOf(page, 60, QueuePaging.MAX_ENTRIES, 9_999).forEach { limit ->
+                val window = QueuePaging.window(limit, activeIndex, queueSize = 1_000)
+                assertTrue("active=$activeIndex limit=$limit overshot: $window",
+                        window.size <= QueuePaging.MAX_ENTRIES)
+                assertTrue("active=$activeIndex limit=$limit missed the playing row: $window",
+                        activeIndex in window.start until window.endExclusive)
+                if (activeIndex + 1 < 1_000) {
+                    assertTrue("active=$activeIndex limit=$limit left nothing after it: $window",
+                            window.endExclusive > activeIndex + 1)
+                }
             }
-            assertTrue("active=$activeIndex overshot the ceiling",
-                    limit <= QueuePaging.MAX_ENTRIES)
         }
     }
 
     @Test
     fun `a nonsensical request is clamped into range`() {
-        assertEquals(1, QueuePaging.limitCoveringUpcoming(0, activeIndex = -1))
+        assertEquals(1, QueuePaging.window(0, activeIndex = -1, queueSize = 500).size)
         assertEquals(QueuePaging.MAX_ENTRIES,
-                QueuePaging.limitCoveringUpcoming(9_999, activeIndex = -1))
+                QueuePaging.window(9_999, activeIndex = -1, queueSize = 500).size)
     }
 }

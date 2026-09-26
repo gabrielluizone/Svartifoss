@@ -13,6 +13,7 @@ import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.DataEvent
 import com.google.android.gms.wearable.DataEventBuffer
 import com.google.android.gms.wearable.DataItem
+import com.google.android.gms.wearable.DataItemAsset
 import com.google.android.gms.wearable.MessageClient
 import com.google.android.gms.wearable.MessageEvent
 import com.google.android.gms.wearable.Wearable
@@ -255,11 +256,16 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             // This is a local Data Layer read, deliberately before capability discovery. Opening
             // Streaming shortcuts must never wait for a Bluetooth/phone round trip just to draw
             // rows the watch already cached.
-            loadCurrentStreamingShortcuts()
+            //
+            // Both seeds are best effort and must stay that way. They run before the listeners
+            // below are registered, so one that threw used to abandon the whole start: no
+            // listeners, an error on screen, and - since the connection still counted as running -
+            // no second attempt until it had been closed and reopened.
+            seedFromCache("streaming shortcuts") { loadCurrentStreamingShortcuts() }
             // Up Next uses the transient custom-list path. Seed a persisted queue before the
             // phone lookup as well; otherwise a process restart left AOD empty until opening
             // Quick Actions happened to request a fresh queue.
-            loadCurrentPlaybackQueue()
+            seedFromCache("playback queue") { loadCurrentPlaybackQueue() }
 
             val capabilities = capabilityClient.getCapability(
                     CommPaths.PHONE_APP_CAPABILITY,
@@ -298,6 +304,17 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             // Independent of any screen: the correction has to be running before a lyrics surface
             // opens, or opening one is once again the only thing that ever synchronises it.
             scheduleNextPlaybackSync()
+        }
+    }
+
+    /** Runs one cache seed for [start], logging rather than propagating a failure - see there. */
+    private suspend fun seedFromCache(what: String, seed: suspend () -> Unit) {
+        try {
+            seed()
+        } catch (e: CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            Timber.w(e, "Could not seed the %s from the Data Layer cache", what)
         }
     }
 
@@ -598,10 +615,23 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                     CommPaths.DATA_PLAYING_ACTION_CONFIG -> rawPlaybackConfig.postValue(it.freeze())
                     CommPaths.DATA_STOPPING_ACTION_CONFIG -> rawStoppedConfig.postValue(it.freeze())
                     CommPaths.DATA_LIST_ITEMS -> rawActionMenuConfig.postValue(it.freeze())
-                    CommPaths.DATA_CUSTOM_LIST ->
+                    // Caught here for the reason the neighbouring covers below are: this scope reports
+                    // a failure as an error *state*, and a list that cannot be read is no reason to
+                    // replace a working player with an error screen.
+                    CommPaths.DATA_CUSTOM_LIST -> try {
                         customList.postValue(decodeCustomList(it.freeze()))
-                    CommPaths.DATA_STREAMING_SHORTCUTS ->
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        Timber.w(e, "Could not read the custom list the phone sent")
+                    }
+                    CommPaths.DATA_STREAMING_SHORTCUTS -> try {
                         streamingShortcuts.postValue(decodeCustomList(it.freeze()))
+                    } catch (e: CancellationException) {
+                        throw e
+                    } catch (e: Exception) {
+                        Timber.w(e, "Could not read the streaming shortcuts the phone sent")
+                    }
                     CommPaths.DATA_ADJACENT_ALBUM_ART -> try {
                         receiveAdjacentArtwork(it.freeze())
                     } catch (e: CancellationException) {
@@ -1088,25 +1118,32 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         }
     }
 
+    /**
+     * The covers of the list last decoded from each DataItem path, by the content id of the asset
+     * each one came from.
+     *
+     * The phone publishes the queue again on every track change, and nearly every cover in the new
+     * list is one the previous list already carried - the window has only moved by one. The Data
+     * Layer addresses assets by content, so an id seen before is the same picture, and reusing its
+     * decoded bitmap skips an asset read and a decode per row. Without it every publication read and
+     * decoded every thumbnail again, screen on or off.
+     *
+     * Only the latest list's covers are kept, so this never holds more than that list already does.
+     */
+    private val decodedListCovers = HashMap<String, Map<String, Bitmap>>()
+
     private suspend fun decodeCustomList(dataItem: DataItem): CustomListWithBitmaps {
         val received = CustomList.parseFrom(dataItem.data)
+        val path = dataItem.uri.path.orEmpty()
+        val previous = decodedListCovers[path].orEmpty()
+        val decoded = HashMap<String, Bitmap>()
         val listItems = received.actionsList.mapIndexed { index, rawEntry ->
-            val pictureData = dataItem.assets[index.toString()]
-                    ?.let { asset -> dataClient.getByteArrayAsset(asset) }
-            // Album thumbnails, when present, are decoded away from the main dispatcher.
-            //
-            // Trimmed here rather than only on the phone because this is the one point every cover
-            // the watch draws passes through, whatever produced it - a resolver step, a reused
-            // now-playing bitmap, or an older phone build that never trimmed at all. Without it a
-            // YouTube Music "art track" thumbnail keeps its letterbox bars, and the row renders as
-            // a small cover inside a flat rectangle instead of filling its slot.
-            val picture = pictureData?.let { bytes ->
-                withContext(Dispatchers.Default) {
-                    BitmapUtils.deserialize(bytes)?.let(BitmapBorderTrim::trim)
-                }
-            }
+            val asset = dataItem.assets[index.toString()]
+            val picture = asset?.let { previous[it.id] ?: decoded[it.id] ?: decodeListCover(it) }
+            if (asset != null && picture != null) decoded[asset.id] = picture
             CustomListItemWithIcon(rawEntry, picture)
         }
+        decodedListCovers[path] = decoded
         return CustomListWithBitmaps(
                 received.listTimestamp,
                 received.listId,
@@ -1115,6 +1152,32 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                 // A phone that predates paging reports no total; what arrived is then all there is.
                 if (received.hasTotalEntryCount()) received.totalEntryCount else listItems.size
         )
+    }
+
+    /**
+     * Reads and decodes one list cover, or null when it cannot be had.
+     *
+     * Decoded away from the main dispatcher. Trimmed here rather than only on the phone because
+     * this is the one point every cover the watch draws passes through, whatever produced it - a
+     * resolver step, a reused now-playing bitmap, or an older phone build that never trimmed at
+     * all. Without it a YouTube Music "art track" thumbnail keeps its letterbox bars, and the row
+     * renders as a small cover inside a flat rectangle instead of filling its slot.
+     *
+     * A failure costs its own row a thumbnail and nothing else. It used to escape into the list's
+     * decode, which runs under launchWithErrorHandling - so one unreadable cover threw away the
+     * whole list and put an error screen over the player.
+     */
+    private suspend fun decodeListCover(asset: DataItemAsset): Bitmap? = try {
+        dataClient.getByteArrayAsset(asset)?.let { bytes ->
+            withContext(Dispatchers.Default) {
+                BitmapUtils.deserialize(bytes)?.let(BitmapBorderTrim::trim)
+            }
+        }
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: Exception) {
+        Timber.w(e, "Could not read a list cover")
+        null
     }
 
     override fun onInactive() {

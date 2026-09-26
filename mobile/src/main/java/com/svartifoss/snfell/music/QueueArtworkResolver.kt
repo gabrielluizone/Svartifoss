@@ -15,10 +15,14 @@ import android.util.Size
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.BitmapBorderTrim
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Semaphore
+import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.Locale
@@ -150,13 +154,13 @@ object QueueArtworkResolver {
 
         for (uri in candidates) {
             if (isRemote(uri)) continue
-            loadLocalUri(context, uri)?.let {
+            loadLocalUri(context, uri, targetPx)?.let {
                 Timber.v("Queue cover for '%s': local URI %s", description.title, uri)
                 return it
             }
         }
 
-        mediaStoreArtwork(context, description)?.let {
+        mediaStoreArtwork(context, description, targetPx)?.let {
             Timber.v("Queue cover for '%s': MediaStore", description.title)
             return it
         }
@@ -330,17 +334,73 @@ object QueueArtworkResolver {
     /** Ordered small-to-large; only the ones smaller than what we may ask for need listing. */
     private val YTIMG_NAMES = listOf("default", "mqdefault", "hqdefault")
 
-    /** Decodes a content/file/resource URI already readable by this process. */
-    private suspend fun loadLocalUri(context: Context, uri: Uri): Bitmap? =
+    /** Decodes a content/file/resource URI already readable by this process, at no more than
+     *  roughly twice [targetPx] - see [decodeSampled]. */
+    private suspend fun loadLocalUri(context: Context, uri: Uri, targetPx: Int): Bitmap? =
             withContext(Dispatchers.IO) {
                 try {
-                    context.contentResolver.openInputStream(uri)?.use { BitmapFactory.decodeStream(it) }
+                    decodeSampled(targetPx) { context.contentResolver.openInputStream(uri) }
+                } catch (e: CancellationException) {
+                    throw e
                 } catch (_: Exception) {
                     // A MediaStore album-art URI throws SecurityException without the media
                     // permission, and FileNotFoundException for an album with no stored cover.
                     // Both mean "no art from here", not "the queue is broken".
                     null
                 }
+            }
+
+    /**
+     * Most covers decoded at the same time.
+     *
+     * A queue resolves all of its rows concurrently, which is right for the network steps - each is
+     * mostly waiting - and wrong for the decodes, since every one of them is a bitmap held in memory
+     * until its row is encoded. Unbounded, a long local-library queue decoded every row's cover at
+     * once. The gate is process-wide because the queue and the neighbouring covers
+     * ([MusicService.publishAdjacentTrackArtwork]) resolve through here at the same moment.
+     */
+    private const val DECODE_CONCURRENCY = 4
+    private val decodeGate = Semaphore(DECODE_CONCURRENCY)
+
+    /**
+     * The `inSampleSize` that shrinks a [width] x [height] image the most while keeping both sides
+     * at or above [targetPx] - the largest power of two that does not undershoot.
+     *
+     * Album art stored with a track is routinely a thousand pixels or more; decoded whole, every
+     * row of a queue that ends up as a 96px thumbnail cost several megabytes for a moment. Sampling
+     * never goes below the target, so what the thumbnail is shrunk from is still at least its size.
+     */
+    internal fun sampleSizeFor(width: Int, height: Int, targetPx: Int): Int {
+        if (width <= 0 || height <= 0 || targetPx <= 0) return 1
+        var sample = 1
+        while (width / (sample * 2) >= targetPx && height / (sample * 2) >= targetPx) {
+            sample *= 2
+        }
+        return sample
+    }
+
+    /** Decodes the stream [open] returns at [sampleSizeFor] [targetPx], reading the bounds first
+     *  from a stream of its own. */
+    private suspend fun decodeSampled(targetPx: Int, open: () -> InputStream?): Bitmap? =
+            decodeGate.withPermit {
+                val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+                val probe = open() ?: return@withPermit null
+                probe.use { BitmapFactory.decodeStream(it, null, bounds) }
+                val options = BitmapFactory.Options().apply {
+                    inSampleSize = sampleSizeFor(bounds.outWidth, bounds.outHeight, targetPx)
+                }
+                open()?.use { BitmapFactory.decodeStream(it, null, options) }
+            }
+
+    /** [decodeSampled] for bytes already in memory. */
+    private suspend fun decodeSampled(bytes: ByteArray, targetPx: Int): Bitmap? =
+            decodeGate.withPermit {
+                val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+                BitmapFactory.decodeByteArray(bytes, 0, bytes.size, bounds)
+                val options = BitmapFactory.Options().apply {
+                    inSampleSize = sampleSizeFor(bounds.outWidth, bounds.outHeight, targetPx)
+                }
+                BitmapFactory.decodeByteArray(bytes, 0, bytes.size, options)
             }
 
     /**
@@ -351,16 +411,28 @@ object QueueArtworkResolver {
      * `albumart` URI already on the description. On API 29+ the track's own embedded artwork is
      * preferred via `loadThumbnail`, which works for tracks whose album has no separate cover row.
      */
-    private suspend fun mediaStoreArtwork(context: Context, description: MediaDescription): Bitmap? {
+    private suspend fun mediaStoreArtwork(
+            context: Context,
+            description: MediaDescription,
+            targetPx: Int
+    ): Bitmap? {
         if (!hasMediaPermission(context)) return null
         val trackId = description.mediaId?.toLongOrNull() ?: return null
         return withContext(Dispatchers.IO) {
             val trackUri = ContentUris.withAppendedId(
                     MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, trackId)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                // Asked for at the size the caller needs rather than a fixed 512: a list-style
+                // queue shrinks every one of these to 96px, and loadThumbnail hands back roughly
+                // what it is asked for.
+                val requestPx = targetPx.coerceIn(MIN_THUMBNAIL_REQUEST_PX, THUMBNAIL_REQUEST_PX)
                 try {
-                    return@withContext context.contentResolver.loadThumbnail(
-                            trackUri, Size(THUMBNAIL_REQUEST_PX, THUMBNAIL_REQUEST_PX), null)
+                    return@withContext decodeGate.withPermit {
+                        context.contentResolver.loadThumbnail(
+                                trackUri, Size(requestPx, requestPx), null)
+                    }
+                } catch (e: CancellationException) {
+                    throw e
                 } catch (_: Exception) {
                     // Falls through to the album-art table below.
                 }
@@ -373,20 +445,24 @@ object QueueArtworkResolver {
                 )?.use { cursor ->
                     if (!cursor.moveToFirst()) return@use null
                     val albumId = cursor.getLong(0)
-                    val albumArtUri = ContentUris.withAppendedId(
+                    ContentUris.withAppendedId(
                             Uri.parse("content://media/external/audio/albumart"), albumId)
-                    context.contentResolver.openInputStream(albumArtUri)?.use {
-                        BitmapFactory.decodeStream(it)
-                    }
+                }?.let { albumArtUri ->
+                    decodeSampled(targetPx) { context.contentResolver.openInputStream(albumArtUri) }
                 }
+            } catch (e: CancellationException) {
+                throw e
             } catch (_: Exception) {
                 null
             }
         }
     }
 
-    /** Size asked of `loadThumbnail`; the caller shrinks further to the queue's own thumbnail size. */
+    /** Largest size asked of `loadThumbnail`; the caller shrinks further to its own size. */
     private const val THUMBNAIL_REQUEST_PX = 512
+
+    /** Smallest size asked of `loadThumbnail`, so a tiny target still gets a usable picture. */
+    private const val MIN_THUMBNAIL_REQUEST_PX = 96
 
     /**
      * Downloads a remote cover once and reuses it from disk afterwards, through
@@ -398,13 +474,14 @@ object QueueArtworkResolver {
         // The rewritten URL is also the cache key, so a queue that later asks for a larger size
         // fetches it rather than reusing the smaller cached copy under the original address.
         val key = sizedArtworkUrl(uri.toString(), targetPx)
-        RemoteArtworkCache.get(context, key)?.let { cached ->
-            BitmapFactory.decodeByteArray(cached, 0, cached.size)?.let { return it }
-        }
+        // The cache read and its decode are file and CPU work too, and they used to run on the
+        // caller's dispatcher - the main thread, for a queue - once per row on every publication.
         return withContext(Dispatchers.IO) {
+            RemoteArtworkCache.get(context, key)?.let { cached ->
+                decodeSampled(cached, targetPx)?.let { return@withContext it }
+            }
             val bytes = download(key) ?: return@withContext null
-            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                    ?: return@withContext null
+            val bitmap = decodeSampled(bytes, targetPx) ?: return@withContext null
             RemoteArtworkCache.put(context, key, bytes)
             bitmap
         }
