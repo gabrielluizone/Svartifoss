@@ -60,7 +60,7 @@ import com.svartifoss.snfell.watch.view.queue.QUEUE_ARTWORK_INSET
 import com.svartifoss.snfell.watch.view.queue.QueueStyle
 import com.svartifoss.snfell.watch.view.queue.listRowArtworkSize
 import com.svartifoss.snfell.watch.view.queue.coverFill
-import com.svartifoss.snfell.watch.view.queue.blurredCover
+import com.svartifoss.snfell.watch.view.queue.rememberCoverImage
 import com.svartifoss.snfell.watch.view.queue.coverScrimFor
 import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.draw.paint
@@ -284,10 +284,7 @@ private fun CustomEntryRow(
     // Only a row that actually has a thumbnail can be cover-filled; the rest keep the plain pill,
     // which matters because shortcut artwork is opt-in and most entries have none.
     val cover = if (coverStyle.isCover) icon else null
-    val coverImage = remember(cover, coverStyle) {
-        cover?.let { if (coverStyle == QueueStyle.COVER_BLUR) blurredCover(it) else it }
-                ?.asImageBitmap()
-    }
+    val coverImage = rememberCoverImage(cover, coverStyle)
     val showsThumbnail = icon != null && (coverImage == null || coverStyle.coverKeepsThumbnail)
     Row(
             modifier = Modifier

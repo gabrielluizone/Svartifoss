@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.watch.view.queue
 
 import android.graphics.Bitmap
+import android.util.LruCache
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
@@ -30,6 +31,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
@@ -85,8 +87,10 @@ import com.svartifoss.snfell.watch.view.compose.CurvedClock
 import com.svartifoss.snfell.watch.view.compose.CurvedScrollIndicator
 import com.svartifoss.snfell.watch.view.compose.EqualizerBars
 import com.svartifoss.snfell.watch.view.compose.LoadingBars
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.withContext
 
 /** View model for one queue row. [isPlaying] marks the entry the phone reports as currently active. */
 data class QueueItemUi(
@@ -662,9 +666,52 @@ internal fun Modifier.coverFill(image: ImageBitmap, shape: Shape, scrim: Brush):
  * Backdrop blur for [QueueStyle.COVER_BLUR], using the same multi-pass blur as the player
  * background so the two read as the same effect. A single hard downscale (what this used to do)
  * left visible pixel blocks rather than a blur.
+ *
+ * Several full-size bitmap passes, so it is not free: a list row reaches it through
+ * [rememberCoverImage], which runs it off the main thread.
  */
 internal fun blurredCover(source: Bitmap): Bitmap =
-        BitmapBlur.blur(source, COVER_BLUR_RADIUS_PX)
+        blurredCovers.get(source)
+                ?: BitmapBlur.blur(source, COVER_BLUR_RADIUS_PX).also { blurredCovers.put(source, it) }
+
+/**
+ * The image a cover-style row paints behind its text: the cover itself, or its blur for
+ * [QueueStyle.COVER_BLUR]. Null while there is nothing to paint yet.
+ *
+ * The blur used to be made inside `remember` during composition - on the main thread, in the
+ * middle of a scroll, once for every row entering the screen, and again whenever a row came back
+ * into view (a lazy list disposes the rows it scrolls past, and `remember` goes with them). It is now
+ * made on a background thread and kept in [blurredCovers], so a row scrolled back to finds it done.
+ * Until the first blur lands the row is the plain pill - a frame or two, and usually before the row
+ * is on screen at all, since the list composes the next rows ahead of the scroll. Never the sharp
+ * cover in the meantime: a photograph turning into a blur reads as a glitch, a pill gaining its
+ * backdrop does not.
+ */
+@Composable
+internal fun rememberCoverImage(cover: Bitmap?, style: QueueStyle): ImageBitmap? {
+    if (cover == null) return null
+    if (style != QueueStyle.COVER_BLUR) return remember(cover) { cover.asImageBitmap() }
+    // Looked up during composition, so a row scrolled back to draws its blur on its first frame.
+    val made = remember(cover) { blurredCovers.get(cover)?.asImageBitmap() }
+    if (made != null) return made
+    val blurred by produceState<ImageBitmap?>(null, cover) {
+        value = withContext(Dispatchers.Default) { blurredCover(cover) }.asImageBitmap()
+    }
+    return blurred
+}
+
+/**
+ * The blurred covers made most recently, by the cover they were made from (by identity - the
+ * watch keeps one decoded bitmap per cover asset across queue publications, so an unchanged cover
+ * comes back as the same key). Bounded by bytes rather than entries because a blur keeps its
+ * source's size: a Cover-style queue thumbnail is 320 px, several hundred kilobytes each.
+ */
+private val blurredCovers = object : LruCache<Bitmap, Bitmap>(BLURRED_COVER_CACHE_BYTES) {
+    override fun sizeOf(key: Bitmap, value: Bitmap): Int = value.allocationByteCount
+}
+
+/** A little over a screenful of Cover-style rows. */
+private const val BLURRED_COVER_CACHE_BYTES = 3 * 1024 * 1024
 
 /** Tuned for a pill-sized backdrop: enough to abstract the artwork without erasing its shapes. */
 private const val COVER_BLUR_RADIUS_PX = 28f
@@ -1074,10 +1121,7 @@ private fun QueueRow(
     // Cover style: the entry's own art fills the pill. Null for every other style, and for a
     // cover-style row whose entry has no artwork - which then renders as a plain Glass pill.
     val coverArt = if (style.isCover) item.artwork else null
-    val coverImage = remember(coverArt, style) {
-        coverArt?.let { if (style == QueueStyle.COVER_BLUR) blurredCover(it) else it }
-                ?.asImageBitmap()
-    }
+    val coverImage = rememberCoverImage(coverArt, style)
     val showsThumbnail = item.artwork != null && (coverImage == null || style.coverKeepsThumbnail)
     Row(
             modifier = Modifier
