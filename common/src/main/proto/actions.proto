@@ -24,6 +24,11 @@ message WatchActions {
     // URI that must be opened on the paired phone through Wear RemoteIntent. Keeping this in the
     // action payload avoids Android's background-activity launch restriction on phone services.
     optional string remoteUri = 7;
+    // Signed milliseconds the action moves playback by (the skip/reverse-by-seconds actions), so
+    // the watch can draw the new position on the press instead of after the phone has run it.
+    // Absent for every action that does not move it by a known amount; older phones never send
+    // it, and older watches ignore it.
+    optional sint64 seekOffsetMs = 8;
   }
 }
 
@@ -39,5 +44,7 @@ message WatchList {
     // True only for genuine fetched cover art (e.g. a streaming shortcut's cached thumbnail) -
     // never a generic app-launcher icon - eligible to fill a whole quick-panel pill's background.
     optional bool iconIsCoverArt = 5;
+    // See ProtoButtonInfo.seekOffsetMs.
+    optional sint64 seekOffsetMs = 6;
   }
 }

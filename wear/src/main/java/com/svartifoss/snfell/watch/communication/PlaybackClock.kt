@@ -80,6 +80,16 @@ class PlaybackClock {
     /** Identity of the track the anchor describes, so a reply that crossed a skip is discarded. */
     private var trackKey: String? = null
 
+    /**
+     * When this device last moved the anchor itself ([anchorLocally]), on its own monotonic clock;
+     * null until it first does.
+     *
+     * A local change is a command the phone has not answered yet, and for a moment afterwards what
+     * arrives from the phone can still describe playback as it stood before it - see
+     * [PlaybackSyncPolicy.keepsLocalPosition] and [PlaybackSyncPolicy.predatesLocalChange].
+     */
+    private var localChangeRealtimeMs: Long? = null
+
     /** Current wait between checks, grown and reset by [PlaybackSyncPolicy.nextIntervalMs]. */
     var syncIntervalMs: Long = PlaybackSyncPolicy.MIN_INTERVAL_MS
         private set
@@ -135,21 +145,31 @@ class PlaybackClock {
      * "now" here would restart the clock on a sample that is already old - the bug that made the
      * lyrics screen re-anchor, wrongly, every time it was opened.
      *
+     * Everything but the position is taken from it unconditionally. The position is not, for a
+     * moment after this device moved playback itself, when the same track in the same play/pause
+     * state is the phone confirming an earlier command - see [PlaybackSyncPolicy.keepsLocalPosition].
+     *
      * @return whether this state is a different track from the one held, which the caller uses to
      *   decide that the estimate needs watching closely again.
      */
     fun onMusicState(state: MusicState, arrivalRealtimeMs: Long): Boolean {
         val incomingKey = trackKeyOf(state.title, state.artist)
         val trackChanged = incomingKey != trackKey
+        val keepLocalPosition = PlaybackSyncPolicy.keepsLocalPosition(
+                sinceLocalChangeMs = localChangeRealtimeMs?.let { arrivalRealtimeMs - it },
+                sameTrack = !trackChanged,
+                samePlayingState = state.playing == playing)
 
         trackKey = incomingKey
-        positionMs = state.positionMs
         durationMs = state.durationMs
         playing = state.playing
         playbackSpeed = state.playbackSpeed
-        ageAtAnchorMs = state.positionAgeMs
-        positionUpdateTime = state.positionUpdateTime
-        anchorRealtimeMs = arrivalRealtimeMs
+        if (!keepLocalPosition) {
+            positionMs = state.positionMs
+            ageAtAnchorMs = state.positionAgeMs
+            positionUpdateTime = state.positionUpdateTime
+            anchorRealtimeMs = arrivalRealtimeMs
+        }
 
         if (trackChanged) {
             syncIntervalMs = PlaybackSyncPolicy.MIN_INTERVAL_MS
@@ -171,6 +191,7 @@ class PlaybackClock {
         this.playing = playing
         ageAtAnchorMs = 0L
         anchorRealtimeMs = SystemClock.elapsedRealtime()
+        localChangeRealtimeMs = anchorRealtimeMs
         positionUpdateTime = System.currentTimeMillis()
         syncIntervalMs = PlaybackSyncPolicy.MIN_INTERVAL_MS
     }
@@ -178,12 +199,14 @@ class PlaybackClock {
     /**
      * Applies a sync reply, correcting the anchor by however much the estimate had drifted.
      *
-     * The reply is refused outright in three cases, each of which would make things worse rather
+     * The reply is refused outright in four cases, each of which would make things worse rather
      * than better:
      *
      *  - **no session on the phone** - there is nothing to be at a position *in*;
      *  - **a different track** - the reply crossed a skip in flight, and correcting a lyric to a
      *    song the watch has already left would drag it backwards;
+     *  - **asked before the latest local change** - it describes playback before a seek or a
+     *    play/pause made here since; see [PlaybackSyncPolicy.predatesLocalChange];
      *  - **a round trip too long to halve credibly** - see
      *    [PlaybackSyncPolicy.isUsableRoundTrip]. One wasted message; the next check is moments
      *    away.
@@ -205,6 +228,12 @@ class PlaybackClock {
             Timber.v("Discarding a playback sync for a track that is no longer showing")
             diagRepliesRefused++
             diagLastRefusalReason = "reply was for a different track"
+            return false
+        }
+        if (PlaybackSyncPolicy.predatesLocalChange(sentAtRealtimeMs, localChangeRealtimeMs)) {
+            Timber.v("Discarding a playback sync asked before the latest local change")
+            diagRepliesRefused++
+            diagLastRefusalReason = "asked before the latest local change"
             return false
         }
 

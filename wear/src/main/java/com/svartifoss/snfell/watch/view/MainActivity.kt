@@ -194,6 +194,7 @@ import com.svartifoss.snfell.watch.theme.selectAlbumCompanionColors
 import com.svartifoss.snfell.common.AppLocales
 import com.svartifoss.snfell.watch.util.StandardActionTitles
 import com.svartifoss.snfell.watch.util.applyKeepScreenOnPreference
+import com.svartifoss.snfell.watch.util.applyRecentsVisibilityPreference
 import com.svartifoss.snfell.watch.util.WatchLanguage
 import com.svartifoss.snfell.watch.view.face.ArtistFace
 import com.svartifoss.snfell.watch.view.face.AuroraFace
@@ -1391,6 +1392,7 @@ class MainActivity : WearCompanionWatchActivity(),
         super.onStart()
 
         applyKeepScreenOnPreference()
+        applyRecentsVisibilityPreference()
 
         if (faceBool(MiscPreferences.ALWAYS_SHOW_TIME)) {
             handler.sendEmptyMessage(MESSAGE_UPDATE_CLOCK)
@@ -4992,10 +4994,11 @@ class MainActivity : WearCompanionWatchActivity(),
                 MiscPreferences.DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT
         )
 
-        // Re-applied here as well as in onStart: this preference is phone-owned, so it can flip
-        // while the player is already on screen and would otherwise only take effect on the next
-        // open.
+        // Re-applied here as well as in onStart: these preferences are phone-owned, so they can
+        // flip while the player is already on screen and would otherwise only take effect on the
+        // next open.
         applyKeepScreenOnPreference()
+        applyRecentsVisibilityPreference()
 
         // Only restyles a screen that is already up; deliberately does not run the auto-open side
         // of the idle config, which would yank the user into another screen just because a

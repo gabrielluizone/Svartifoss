@@ -3,6 +3,7 @@ package com.svartifoss.snfell.watch.view.progress
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.svartifoss.snfell.common.PlaybackPositionEstimate
 import com.svartifoss.snfell.watch.communication.PhoneConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
@@ -20,16 +21,6 @@ data class ProgressUiState(
 private const val PROGRESS_SPEED_STEP = 0.25f
 private const val PROGRESS_MIN_SPEED = 0.5f
 private const val PROGRESS_MAX_SPEED = 2.0f
-
-/** Computes the watch's immediate visual destination for a signed relative seek. */
-internal fun relativeSeekTarget(currentMs: Long, deltaMs: Long, durationMs: Long): Long {
-    val unbounded = currentMs + deltaMs
-    return if (durationMs > 0L) {
-        unbounded.coerceIn(0L, durationMs)
-    } else {
-        unbounded.coerceAtLeast(0L)
-    }
-}
 
 /**
  * Drives [ProgressActivity]. Reads position, duration, playback state and speed from
@@ -77,7 +68,7 @@ class ProgressViewModel @Inject constructor(
     fun skipBy(deltaMs: Long) {
         val currentState = state.value ?: return
         val duration = currentState.durationMs
-        val target = relativeSeekTarget(
+        val target = PlaybackPositionEstimate.relativeSeekTargetMs(
                 phoneConnection.playbackClock.positionNowMs(), deltaMs, duration)
         anchorPositionNow(target, currentState)
         launchSilently { phoneConnection.sendSeekRelative(deltaMs) }

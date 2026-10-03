@@ -455,6 +455,14 @@
             android:entryValues="@array/wear_paused_hold_values"
             android:layout="@layout/pref_item" />
 
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_hide_from_recents"
+            android:icon="@drawable/ic_web_stories"
+            android:title="@string/setting_wear_hide_from_recents"
+            android:summary="@string/setting_wear_hide_from_recents_description"
+            android:layout="@layout/pref_switch_item" />
+
     </PreferenceCategory>
 
     <!-- What the watch offers when there is no session at all. Behaviour rather than looks, so it

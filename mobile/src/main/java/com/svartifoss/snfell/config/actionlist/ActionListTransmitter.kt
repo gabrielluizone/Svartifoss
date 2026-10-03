@@ -16,6 +16,7 @@ import com.svartifoss.snfell.actions.PlayPlaylistShortcutAction
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.config.CustomIconStorage
 import com.svartifoss.snfell.config.actionKeyOf
+import com.svartifoss.snfell.config.lacksSeekOffset
 import com.svartifoss.snfell.config.needsTransmittedIcon
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.buttons.ConfigConstants
@@ -55,7 +56,8 @@ class ActionListTransmitter(actionList: ActionList,
                     WatchList.parseFrom(item.data).actionsList.any { action ->
                         !action.hasIconTintable() ||
                                 (action.actionKey == PlayPlaylistShortcutAction::class.java.canonicalName &&
-                                        (!action.hasRemoteUri() || !action.hasIconIsCoverArt()))
+                                        (!action.hasRemoteUri() || !action.hasIconIsCoverArt())) ||
+                                lacksSeekOffset(action.actionKey, action.hasSeekOffsetMs())
                     } || expectedAssets.any { !item.assets.containsKey(it) }
                 } catch (_: Exception) {
                     true
@@ -94,6 +96,7 @@ class ActionListTransmitter(actionList: ActionList,
             actionProto.iconTintable = action.iconTintable
             actionProto.iconIsCoverArt = action.isCoverArt
             action.remoteUri?.takeIf(String::isNotBlank)?.let { actionProto.remoteUri = it }
+            action.seekOffsetMs?.let { actionProto.seekOffsetMs = it }
             protoBuilder.addActions(actionProto.build())
 
             if (!needsTransmittedIcon(action, actionProto.actionKey)) {

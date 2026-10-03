@@ -93,6 +93,40 @@ object PlaybackSyncPolicy {
      */
     const val COMMAND_SETTLE_MS = 900L
 
+    /**
+     * Whether a state from the phone, landing [sinceLocalChangeMs] after this device last moved
+     * playback itself, should leave the position this device drew where it is.
+     *
+     * For [COMMAND_SETTLE_MS] after a local change, a report about the same track in the same
+     * play/pause state is the phone describing playback as it stood *before* the newest command -
+     * the answer to an earlier one still in flight. That is the ordinary case for a burst: skip back
+     * by ten seconds three times on the crown and the phone's confirmations of the first two arrive
+     * after the third has been drawn, and applying them walked the clock back and forth on its way
+     * to the right place. A different track, or a different play/pause state, is news and always
+     * applies; anything that really disagrees with what was drawn is caught by the check the local
+     * change schedules for when this window ends.
+     *
+     * @param sinceLocalChangeMs null when this device has never moved playback itself.
+     */
+    fun keepsLocalPosition(
+            sinceLocalChangeMs: Long?,
+            sameTrack: Boolean,
+            samePlayingState: Boolean,
+    ): Boolean = sinceLocalChangeMs != null && sameTrack && samePlayingState &&
+            sinceLocalChangeMs in 0L..COMMAND_SETTLE_MS
+
+    /**
+     * Whether a sync reply answers a question asked before this device last moved playback itself.
+     *
+     * The phone answered with where playback stood when it was asked, which is before the change,
+     * so applying it would correct the estimate back to the state the user just left. The local
+     * change has already scheduled a check of its own, asked afterwards, which is the one to use.
+     *
+     * @param localChangeAtMs null when this device has never moved playback itself.
+     */
+    fun predatesLocalChange(requestSentAtMs: Long, localChangeAtMs: Long?): Boolean =
+            localChangeAtMs != null && requestSentAtMs < localChangeAtMs
+
     /** Whether a reply that took [roundTripMs] to come back can be trusted to describe its own
      *  delay. See [MAX_USABLE_ROUND_TRIP_MS]. */
     fun isUsableRoundTrip(roundTripMs: Long): Boolean =

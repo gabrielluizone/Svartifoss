@@ -87,6 +87,91 @@ object PlaybackPositionEstimate {
             sampleRealtimeMs > 0L && sampleRealtimeMs >= trackFirstSeenRealtimeMs
 
     /**
+     * Longest a [PendingSeek] stands in for a player that has said nothing since.
+     *
+     * Players answer a seek by publishing a new state, most of them within milliseconds - but not
+     * all: some publish on a cadence of their own, seconds apart, and the seek waits for the next
+     * one. This has to outlast that. The bound exists for the player that ignored the seek and
+     * then published nothing at all, which would otherwise be reported at a position it never
+     * moved to for as long as it stayed quiet.
+     */
+    const val PENDING_SEEK_MAX_AGE_MS = 10_000L
+
+    /**
+     * A seek the phone has issued and the player has not yet answered.
+     *
+     * @param targetMs where the seek was sent to.
+     * @param issuedAtRealtimeMs the phone's monotonic reading when it was sent - taken *before* the
+     *   command went out, so any sample the player publishes in answer is at or after it.
+     */
+    data class PendingSeek(val targetMs: Long, val issuedAtRealtimeMs: Long)
+
+    /** A position and the monotonic reading it describes, ready to extrapolate from. */
+    data class PositionSample(val positionMs: Long, val sampledAtRealtimeMs: Long)
+
+    /**
+     * The position sample the phone should report, given what the player last published.
+     *
+     * `PlaybackState.getPosition()` is where playback was at `getLastPositionUpdateTime()`, and
+     * that is only the right thing to report when the player has said nothing since that this
+     * service knows to be newer. Two things can be newer, checked in this order:
+     *
+     *  - **A seek this service issued.** Until the player answers it, its last sample describes
+     *    where playback was *before* the seek, and reporting that would put the watch back on the
+     *    old position - after the watch had already drawn the new one on the press. The seek's own
+     *    target is reported instead, measured from when it was sent. This is what an androidx
+     *    Media3 controller does after a seek too (it masks the position until the session answers),
+     *    and for the same reason. Any sample published since stands down the mask, whatever it says,
+     *    since a player that ignored the seek reports exactly that; so does [PENDING_SEEK_MAX_AGE_MS].
+     *  - **The track itself.** A sample older than [trackFirstSeenRealtimeMs] belongs to the
+     *    previous track - see [sampleBelongsToTrack]. It is reported as position zero *when the
+     *    track was first seen*, which is when it started as near as this side can tell; extrapolated
+     *    from there it keeps advancing correctly however long the player then stays quiet. A zero
+     *    stamped "now" instead went back to the start of the track every time the state was rebuilt.
+     *
+     * @param trackFirstSeenRealtimeMs zero when there is no track boundary to protect (see the
+     *   caller), in which case every sample the player published counts as this track's.
+     */
+    fun reportableSample(
+            positionMs: Long,
+            sampleRealtimeMs: Long,
+            trackFirstSeenRealtimeMs: Long,
+            pendingSeek: PendingSeek?,
+            nowRealtimeMs: Long,
+    ): PositionSample {
+        if (pendingSeek != null &&
+                sampleRealtimeMs < pendingSeek.issuedAtRealtimeMs &&
+                (nowRealtimeMs - pendingSeek.issuedAtRealtimeMs) in 0L..PENDING_SEEK_MAX_AGE_MS) {
+            return PositionSample(pendingSeek.targetMs, pendingSeek.issuedAtRealtimeMs)
+        }
+        if (sampleBelongsToTrack(sampleRealtimeMs, trackFirstSeenRealtimeMs)) {
+            return PositionSample(positionMs, sampleRealtimeMs)
+        }
+        val startedAt = trackFirstSeenRealtimeMs.takeIf { it in 1L..nowRealtimeMs } ?: nowRealtimeMs
+        return PositionSample(0L, startedAt)
+    }
+
+    /**
+     * Where a relative seek of [deltaMs] from [currentMs] lands: never before the start, and never
+     * past the end when the end is known.
+     *
+     * One function for every relative seek on both devices - the phone resolving the actual target,
+     * and the watch drawing it on the press - so the two cannot land the same press in different
+     * places. The bounds are the ones androidx Media3's own seek-back/forward apply.
+     *
+     * @param durationMs 0 when unknown (a live stream, or a player that has not said yet), in which
+     *   case nothing but the start bounds it.
+     */
+    fun relativeSeekTargetMs(currentMs: Long, deltaMs: Long, durationMs: Long): Long {
+        val unbounded = currentMs + deltaMs
+        return if (durationMs > 0L) {
+            unbounded.coerceIn(0L, durationMs)
+        } else {
+            unbounded.coerceAtLeast(0L)
+        }
+    }
+
+    /**
      * The position to display, clamped to the track.
      *
      * A paused track predicts nothing: the sample the sender took *is* the answer, because playback

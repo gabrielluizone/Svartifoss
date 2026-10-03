@@ -1340,6 +1340,8 @@
     <string name="setting_close_timeout_description">O Svartifoss fecha-se automaticamente quando não há música a tocar durante <![CDATA[<b>%1$s segundos</b>]]>. A funcionalidade fica desativada quando o tempo limite é definido como 0 segundos. Nota que, para poupar bateria, esta opção pode ser por vezes pouco precisa e pode atrasar o fecho até um minuto.</string>
     <string name="setting_wear_close_on_idle">Fechar em \"Nada em reprodução\"</string>
     <string name="setting_wear_close_on_idle_description">Fecha automaticamente a aplicação do relógio cerca de um minuto depois de chegar ao ecrã inativo \"Nada em reprodução\", para nunca ficar ali parada. Independente do tempo limite de fecho acima, que cobre uma faixa em pausa.</string>
+    <string name="setting_wear_hide_from_recents">Ocultar das aplicações recentes</string>
+    <string name="setting_wear_hide_from_recents_description">Retira a aplicação do relógio da lista de aplicações recentes quando a fecha ou usa outra aplicação. Útil se a abre a partir do mostrador ou da Now Bar. Continua acessível como antes, e a música e a ligação em segundo plano não são afetadas.</string>
     <string name="category_notifications">Balão de notificação</string>
     <string name="setting_enable_notifications">Mostrar balão de notificação</string>
     <string name="setting_enable_notifications_description">Esta funcionalidade requer outra aplicação para gerir as notificações (Vibration Center for Wear).\n\nSempre que o Vibration Center faz o relógio vibrar, o Svartifoss mostra um balão com o texto da notificação, permitindo-te espreitá-la rapidamente sem sair do Svartifoss.</string>

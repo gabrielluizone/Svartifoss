@@ -74,6 +74,17 @@ abstract class PhoneAction : Bundlable {
     open val remoteUri: String?
         get() = null
 
+    /**
+     * Signed milliseconds this action moves playback by, for the actions that move it by a known
+     * amount; null for every other action.
+     *
+     * Sent to the watch with the action so it can draw the new position the moment the button is
+     * pressed, the way it already draws a play/pause or a seek on the ring - instead of waiting
+     * for the phone to run it and the player to publish where it went.
+     */
+    open val seekOffsetMs: Long?
+        get() = null
+
     val iconTintable: Boolean
         get() = customIconUri?.let {
             it.scheme == ContentResolver.SCHEME_ANDROID_RESOURCE

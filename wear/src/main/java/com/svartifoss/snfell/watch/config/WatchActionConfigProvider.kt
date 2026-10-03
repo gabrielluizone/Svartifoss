@@ -85,9 +85,11 @@ class WatchActionConfigProvider(context: Context, scope: CoroutineScope, private
                     null
                 }
                 val remoteUri = action.remoteUri.takeIf { action.hasRemoteUri() && it.isNotBlank() }
+                val seekOffsetMs = action.seekOffsetMs.takeIf { action.hasSeekOffsetMs() }
                 newConfigMap.put(
                         buttonInfo,
-                        ButtonAction(key, icon, title, iconTintable, remoteUri)
+                        ButtonAction(key, icon, title, iconTintable, remoteUri,
+                                seekOffsetMs = seekOffsetMs)
                 )
             }
 

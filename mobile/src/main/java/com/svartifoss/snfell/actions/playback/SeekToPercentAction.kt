@@ -55,7 +55,7 @@ class SeekToPercentAction : SelectableAction {
             val controller = service.currentMediaController ?: return
             val duration = controller.metadata?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: 0L
             val target = seekPositionForPercent(duration, action.percent) ?: return
-            controller.transportControls.seekTo(target)
+            service.issueSeek(controller, target)
         }
     }
 

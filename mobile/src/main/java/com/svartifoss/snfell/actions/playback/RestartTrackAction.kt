@@ -21,7 +21,8 @@ class RestartTrackAction : SelectableAction {
 
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<RestartTrackAction> {
         override suspend fun handleAction(action: RestartTrackAction) {
-            service.currentMediaController?.transportControls?.seekTo(0)
+            val controller = service.currentMediaController ?: return
+            service.issueSeek(controller, 0L)
         }
     }
 }

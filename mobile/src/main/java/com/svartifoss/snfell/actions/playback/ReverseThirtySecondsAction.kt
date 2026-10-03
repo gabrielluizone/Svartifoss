@@ -38,6 +38,9 @@ class ReverseThirtySecondsAction : SelectableAction {
     override val configFragment: Class<out ActionConfigFragment<out PhoneAction>>
         get() = ReverseSecondsConfigFragment::class.java
 
+    override val seekOffsetMs: Long
+        get() = -secondsToReverse * 1_000L
+
     override fun writeToBundle(bundle: PersistableBundle) {
         super.writeToBundle(bundle)
 
@@ -46,10 +49,7 @@ class ReverseThirtySecondsAction : SelectableAction {
 
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<ReverseThirtySecondsAction> {
         override suspend fun handleAction(action: ReverseThirtySecondsAction) {
-            val currentPos = service.currentMediaController?.playbackState?.position ?: return
-            service.currentMediaController?.transportControls?.seekTo(
-                    (currentPos - action.secondsToReverse * 1_000).coerceAtLeast(0)
-            )
+            service.seekRelative(action.seekOffsetMs)
         }
     }
 }

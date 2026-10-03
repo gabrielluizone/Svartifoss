@@ -143,4 +143,71 @@ class PlaybackSyncPolicyTest {
         }
         assertEquals(PlaybackSyncPolicy.MAX_INTERVAL_MS, interval)
     }
+
+    // ---- keepsLocalPosition / predatesLocalChange ----
+
+    /**
+     * The burst the rule exists for: three presses of "back 10 seconds" on the crown, with the
+     * phone's confirmation of an earlier press landing after a later one has been drawn.
+     */
+    @Test
+    fun `a confirmation landing just after a local change leaves the drawn position alone`() {
+        assertTrue(PlaybackSyncPolicy.keepsLocalPosition(
+                sinceLocalChangeMs = 120L, sameTrack = true, samePlayingState = true))
+    }
+
+    @Test
+    fun `the hold ends when the check the local change scheduled is due`() {
+        assertTrue(PlaybackSyncPolicy.keepsLocalPosition(
+                sinceLocalChangeMs = PlaybackSyncPolicy.COMMAND_SETTLE_MS,
+                sameTrack = true, samePlayingState = true))
+        assertFalse(PlaybackSyncPolicy.keepsLocalPosition(
+                sinceLocalChangeMs = PlaybackSyncPolicy.COMMAND_SETTLE_MS + 1L,
+                sameTrack = true, samePlayingState = true))
+    }
+
+    @Test
+    fun `a different track is news and always applies`() {
+        assertFalse(PlaybackSyncPolicy.keepsLocalPosition(
+                sinceLocalChangeMs = 50L, sameTrack = false, samePlayingState = true))
+    }
+
+    @Test
+    fun `a change of play or pause is news and always applies`() {
+        assertFalse(PlaybackSyncPolicy.keepsLocalPosition(
+                sinceLocalChangeMs = 50L, sameTrack = true, samePlayingState = false))
+    }
+
+    @Test
+    fun `nothing is held before this device has ever moved playback`() {
+        assertFalse(PlaybackSyncPolicy.keepsLocalPosition(
+                sinceLocalChangeMs = null, sameTrack = true, samePlayingState = true))
+    }
+
+    @Test
+    fun `a state stamped before the local change is not held by it`() {
+        // A negative gap means the state arrived first; it is not an answer to this change.
+        assertFalse(PlaybackSyncPolicy.keepsLocalPosition(
+                sinceLocalChangeMs = -5L, sameTrack = true, samePlayingState = true))
+    }
+
+    @Test
+    fun `a reply to a question asked before the local change is refused`() {
+        assertTrue(PlaybackSyncPolicy.predatesLocalChange(
+                requestSentAtMs = 1_000L, localChangeAtMs = 1_200L))
+    }
+
+    @Test
+    fun `a reply to a question asked after the local change is used`() {
+        assertFalse(PlaybackSyncPolicy.predatesLocalChange(
+                requestSentAtMs = 2_100L, localChangeAtMs = 1_200L))
+        assertFalse(PlaybackSyncPolicy.predatesLocalChange(
+                requestSentAtMs = 1_200L, localChangeAtMs = 1_200L))
+    }
+
+    @Test
+    fun `with no local change every reply is used`() {
+        assertFalse(PlaybackSyncPolicy.predatesLocalChange(
+                requestSentAtMs = 1_000L, localChangeAtMs = null))
+    }
 }

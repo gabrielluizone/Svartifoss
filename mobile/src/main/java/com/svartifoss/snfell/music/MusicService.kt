@@ -266,11 +266,22 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
     private val watchCommandReceiver: (WatchCommand) -> Unit = ::executeWatchCommand
 
-    /** Identity of the track last read from metadata, and when it was first seen on this device's
-     *  monotonic clock. Together they let a stale position sample be spotted - see
-     *  [PlaybackPositionEstimate.sampleBelongsToTrack]. */
+    /** Identity of the track last read from metadata, the session it came from, and when it was
+     *  first seen on this device's monotonic clock. Together they let a stale position sample be
+     *  spotted - see [PlaybackPositionEstimate.sampleBelongsToTrack] and the block that sets them
+     *  in [buildMusicStateAndTransmit]. */
     private var lastSeenTrackKey: String? = null
+    private var lastSeenTrackSession: MediaSession.Token? = null
     private var trackFirstSeenRealtimeMs: Long = 0L
+
+    /**
+     * The last seek this service issued, until the player answers it - see [issueSeek] and
+     * [PlaybackPositionEstimate.reportableSample]. Tied to the session and the track it was made
+     * on, so it can never stand in for a position in anything else.
+     */
+    private var pendingSeek: PlaybackPositionEstimate.PendingSeek? = null
+    private var pendingSeekSession: MediaSession.Token? = null
+    private var pendingSeekTrackKey: String? = null
 
     @Inject
     lateinit var mediaSessionProvider: ActiveMediaSessionProvider
@@ -967,8 +978,113 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     }
 
     private fun seekTo(positionMs: Long) {
-        currentMediaController?.transportControls?.seekTo(positionMs)
+        val controller = currentMediaController ?: return
+        issueSeek(controller, positionMs)
     }
+
+    /**
+     * Seeks [controller] to [targetMs] - every seek this service makes goes through here.
+     *
+     * Two things happen beside the command itself, and both are about the moment between the
+     * command and the player's answer. Players answer a seek by publishing a new state, and not all
+     * of them do it at once: some publish on a cadence of their own, seconds apart. Until then the
+     * player's last sample still describes the position *before* the seek, so anything reported in
+     * between - a playback-sync reply, a state rebuilt for some unrelated reason - would put the
+     * watch back on the old position, after it had already drawn the new one on the press. Hence
+     * [pendingSeek], which [PlaybackPositionEstimate.reportableSample] reports instead until the
+     * player says anything newer.
+     *
+     * And the watch is told now rather than when the player gets round to it. A current watch has
+     * already drawn the seek it asked for and receives this as a confirmation; everything else that
+     * seeks - the Tile, the watch's system media controls, an older watch - had no other way to see
+     * the new position before the player's answer.
+     *
+     * The time is taken *before* the command goes out, so that any sample the player publishes in
+     * answer is at or after it.
+     *
+     * Both apply only to a session that advertises seeking. The command itself is sent regardless
+     * - the bit is routinely missing from sessions that seek perfectly well, and an ignored seek is
+     * a harmless no-op - but standing in for the player's answer is a bet that the seek will take,
+     * and a session that does not claim to seek is the one most likely to ignore it, leaving the
+     * watch on a position the player never moved to until the stand-in expired. The watch withholds
+     * its own drawing of the press for the same sessions (`MusicViewModel.applyOptimisticSeek`), so
+     * the two agree.
+     */
+    fun issueSeek(controller: MediaController, targetMs: Long) {
+        val target = targetMs.coerceAtLeast(0L)
+        val advertisesSeek =
+                ((controller.playbackState?.actions ?: 0L) and PlaybackState.ACTION_SEEK_TO) != 0L
+        if (!advertisesSeek) {
+            pendingSeek = null
+            controller.transportControls.seekTo(target)
+            return
+        }
+
+        pendingSeek = PlaybackPositionEstimate.PendingSeek(
+                targetMs = target, issuedAtRealtimeMs = android.os.SystemClock.elapsedRealtime())
+        pendingSeekSession = controller.sessionToken
+        pendingSeekTrackKey = trackKeyOf(controller.metadata)
+        controller.transportControls.seekTo(target)
+
+        if (controller.sessionToken == currentMediaController?.sessionToken) {
+            buildMusicStateAndTransmit(currentMediaController)
+        }
+    }
+
+    /**
+     * Where playback is *now*, by this device's clock.
+     *
+     * Never `PlaybackState.getPosition()` on its own: that is where playback was when the player
+     * last published, and players publish on events, not continuously - after a minute of
+     * uninterrupted playback it can still say zero. Seeking relative to it is what sent a "back 10
+     * seconds" to wherever the player last happened to publish: a few seconds off for a player that
+     * publishes often, and to the very start for one that had said nothing since it began - which
+     * is how a live stream was restarted from the beginning. Extrapolated exactly as the watch
+     * extrapolates the position it draws, so a relative seek lands relative to what the wrist shows.
+     */
+    private fun livePositionMs(controller: MediaController): Long? {
+        val playbackState = controller.playbackState ?: return null
+        val now = android.os.SystemClock.elapsedRealtime()
+        val sample = positionSampleFor(controller, playbackState, now)
+        return PlaybackPositionEstimate.positionAtMs(
+                positionMs = sample.positionMs,
+                durationMs = durationOf(controller),
+                playing = playbackState.isPlaying(),
+                playbackSpeed = playbackState.playbackSpeed,
+                elapsedSinceSampleMs = now - sample.sampledAtRealtimeMs)
+    }
+
+    /** The position sample to report or extrapolate from - see
+     *  [PlaybackPositionEstimate.reportableSample] for the two corrections it applies. */
+    private fun positionSampleFor(
+            controller: MediaController,
+            playbackState: PlaybackState,
+            nowRealtimeMs: Long
+    ): PlaybackPositionEstimate.PositionSample = PlaybackPositionEstimate.reportableSample(
+            positionMs = playbackState.position,
+            sampleRealtimeMs = playbackState.lastPositionUpdateTime,
+            trackFirstSeenRealtimeMs = trackFirstSeenRealtimeMs,
+            pendingSeek = pendingSeekFor(controller),
+            nowRealtimeMs = nowRealtimeMs)
+
+    /** [pendingSeek], only while [controller] is still the session and on the track it was made on. */
+    private fun pendingSeekFor(controller: MediaController): PlaybackPositionEstimate.PendingSeek? {
+        val seek = pendingSeek ?: return null
+        if (pendingSeekSession != controller.sessionToken ||
+                pendingSeekTrackKey != trackKeyOf(controller.metadata)) {
+            return null
+        }
+        return seek
+    }
+
+    /** Artist and title only, the identity [lastSeenTrackKey] uses - see the note there on why the
+     *  duration is left out. */
+    private fun trackKeyOf(meta: MediaMetadata?): String =
+            "${meta?.getString(MediaMetadata.METADATA_KEY_ARTIST).orEmpty()}|" +
+                    meta?.getString(MediaMetadata.METADATA_KEY_TITLE).orEmpty()
+
+    private fun durationOf(controller: MediaController): Long =
+            controller.metadata?.getLong(MediaMetadata.METADATA_KEY_DURATION)?.takeIf { it > 0L } ?: 0L
 
     /** Issued unconditionally, like every transport command in this switch - a session that does
      *  not implement ACTION_SET_PLAYBACK_SPEED reports the same speed back on its next state,
@@ -981,16 +1097,18 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         controller.transportControls.setPlaybackSpeed(multiplier)
     }
 
-    /** Seeks by [deltaMs] relative to the session's LIVE position. Senders like the Tile only
-     *  hold a snapshot that may be many seconds stale (30s refresh), so the phone - not the
-     *  sender - resolves the actual target position. */
-    private fun seekRelative(deltaMs: Long) {
+    /**
+     * Seeks by [deltaMs] relative to the session's live position - see [livePositionMs].
+     *
+     * Every relative seek resolves here: the skip/reverse-by-seconds actions, the watch's progress
+     * screen and the Tile. Senders like the Tile only hold a snapshot that may be many seconds
+     * stale (30s refresh), so the phone - not the sender - resolves the actual target position.
+     */
+    fun seekRelative(deltaMs: Long) {
         val controller = currentMediaController ?: return
-        val position = controller.playbackState?.position ?: return
-        val duration = controller.metadata?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: 0L
-        val target = (position + deltaMs).coerceAtLeast(0L)
-                .let { if (duration > 0) it.coerceAtMost(duration) else it }
-        controller.transportControls.seekTo(target)
+        val position = livePositionMs(controller) ?: return
+        issueSeek(controller, PlaybackPositionEstimate.relativeSeekTargetMs(
+                position, deltaMs, durationOf(controller)))
     }
 
     private var preMuteVolume = 0
@@ -1230,10 +1348,27 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // routinely publish metadata with a duration of 0 and fill it in a moment later,
                 // which would read as a second track change and reset the marker below a second
                 // time - rejecting a position sample that was perfectly valid.
-                val trackKey = "$newArtist|$newTitle"
-                if (trackKey != lastSeenTrackKey) {
+                //
+                // Only a change this service *watched* - one track to the next within the same
+                // session - can leave a sample from the previous track behind. The first track it
+                // ever reads (it has just started, usually because the watch app was opened
+                // mid-song) and the first track of another session (the user switched apps) have no
+                // previous track there to leak from, while the player's last sample is routinely
+                // older than the moment it was first read, since players publish on events. Treating
+                // those as a change reported a song minutes in as starting at zero, and went on
+                // doing so until the player next published. Zero turns the check off.
+                val trackKey = trackKeyOf(meta)
+                val session = mediaController.sessionToken
+                if (trackKey != lastSeenTrackKey || session != lastSeenTrackSession) {
+                    val watchedTheChange =
+                            lastSeenTrackKey != null && session == lastSeenTrackSession
                     lastSeenTrackKey = trackKey
-                    trackFirstSeenRealtimeMs = android.os.SystemClock.elapsedRealtime()
+                    lastSeenTrackSession = session
+                    trackFirstSeenRealtimeMs = if (watchedTheChange) {
+                        android.os.SystemClock.elapsedRealtime()
+                    } else {
+                        0L
+                    }
                 }
 
                 val artUriString = meta.getString(MediaMetadata.METADATA_KEY_ALBUM_ART_URI)
@@ -1267,12 +1402,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // no guaranteed order, so right after a track change the new track's title and
                 // duration are readable while the position still describes the one that just
                 // ended. Attaching them to each other is what made a 2:30 track ending into a 4:00
-                // one leave the watch counting 2:31 upwards to 4:00.
-                val sampleIsThisTrack = PlaybackPositionEstimate.sampleBelongsToTrack(
-                        playbackState.lastPositionUpdateTime, trackFirstSeenRealtimeMs)
+                // one leave the watch counting 2:31 upwards to 4:00. Right after a seek this
+                // service issued, the sample can likewise still describe where playback was before
+                // it. positionSampleFor answers both - see PlaybackPositionEstimate.reportableSample.
+                val sample = positionSampleFor(mediaController, playbackState, elapsedRealtimeNow)
+                val sampleAgeMs = (elapsedRealtimeNow - sample.sampledAtRealtimeMs).coerceAtLeast(0L)
 
-                musicStateBuilder.positionMs =
-                        if (sampleIsThisTrack) playbackState.position else 0L
+                musicStateBuilder.positionMs = sample.positionMs
 
                 // PlaybackState.lastPositionUpdateTime is in SystemClock.elapsedRealtime() time,
                 // not wall-clock time, and the watch has no way to relate its own elapsedRealtime
@@ -1283,11 +1419,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // skew bug positionAgeMs exists to end (see music.proto and
                 // PlaybackPositionEstimate). It is still sent so an older watch keeps behaving as
                 // it always has rather than losing its progress display entirely.
-                musicStateBuilder.positionUpdateTime = if (sampleIsThisTrack) {
-                    System.currentTimeMillis() - (elapsedRealtimeNow - playbackState.lastPositionUpdateTime)
-                } else {
-                    System.currentTimeMillis()
-                }
+                musicStateBuilder.positionUpdateTime = System.currentTimeMillis() - sampleAgeMs
 
                 // The same figure as a plain duration, which is what a current watch uses. Both
                 // ends of the subtraction come from this device's monotonic clock, so no foreign
@@ -1295,14 +1427,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 //
                 // A session that has never published a position update time reports 0, which would
                 // otherwise be read as "sampled at boot" and hand the watch an age of hours - the
-                // guard reports it as current instead, which is the only useful reading available.
-                // A rejected sample is reported as "position zero, measured just now" rather than
-                // as a very old zero, which the watch would otherwise extrapolate forward again.
-                musicStateBuilder.positionAgeMs = if (sampleIsThisTrack) {
-                    (elapsedRealtimeNow - playbackState.lastPositionUpdateTime).coerceAtLeast(0L)
-                } else {
-                    0L
-                }
+                // sample is rejected instead, and a rejected sample is reported as position zero
+                // when the track was first seen (or now, without one) rather than as a very old
+                // zero, which the watch would otherwise extrapolate forward again.
+                musicStateBuilder.positionAgeMs = sampleAgeMs
 
                 musicStateBuilder.playbackSpeed = playbackState.playbackSpeed
                 musicStateBuilder.seekable = (playbackState.actions and PlaybackState.ACTION_SEEK_TO) != 0L
@@ -2789,21 +2917,19 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val playbackState = controller?.playbackState
         if (controller != null && playbackState != null) {
             val elapsedRealtimeNow = android.os.SystemClock.elapsedRealtime()
-            // The same guard buildMusicStateAndTransmit applies: metadata and playback state arrive
-            // through separate callbacks, so right after a track change the position can still
-            // describe the track that just ended. Reporting zero is the honest answer; reporting
-            // the stale sample would have the watch correct itself to the previous song.
-            val sampleIsThisTrack = PlaybackPositionEstimate.sampleBelongsToTrack(
-                    playbackState.lastPositionUpdateTime, trackFirstSeenRealtimeMs)
+            // The same sample buildMusicStateAndTransmit reports. Metadata and playback state
+            // arrive through separate callbacks, so right after a track change the position can
+            // still describe the track that just ended, and reporting it would have the watch
+            // correct itself to the previous song. Right after a seek the player has not answered
+            // yet, it still describes where playback was before it - and this reply is exactly
+            // what the watch asks for a moment after every seek it makes, so reporting it would
+            // undo the seek it had just drawn.
+            val sample = positionSampleFor(controller, playbackState, elapsedRealtimeNow)
             val meta = controller.metadata
 
             builder.hasSession = true
-            builder.positionMs = if (sampleIsThisTrack) playbackState.position else 0L
-            builder.positionAgeMs = if (sampleIsThisTrack) {
-                (elapsedRealtimeNow - playbackState.lastPositionUpdateTime).coerceAtLeast(0L)
-            } else {
-                0L
-            }
+            builder.positionMs = sample.positionMs
+            builder.positionAgeMs = (elapsedRealtimeNow - sample.sampledAtRealtimeMs).coerceAtLeast(0L)
             builder.playing = playbackState.isPlaying()
             builder.playbackSpeed = playbackState.playbackSpeed
             meta?.getLong(MediaMetadata.METADATA_KEY_DURATION)

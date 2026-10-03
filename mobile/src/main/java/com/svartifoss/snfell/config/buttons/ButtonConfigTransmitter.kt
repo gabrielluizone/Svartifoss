@@ -14,6 +14,7 @@ import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.config.CustomIconStorage
 import com.svartifoss.snfell.config.actionKeyOf
+import com.svartifoss.snfell.config.lacksSeekOffset
 import com.svartifoss.snfell.config.needsTransmittedIcon
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.proto.WatchActions
@@ -54,8 +55,9 @@ class ButtonConfigTransmitter(buttonConfig: ButtonConfig,
             val missingMetadata = dataOnWatch.any { item ->
                 try {
                     WatchActions.parseFrom(item.data).actionsList.any { action ->
-                        action.actionKey == PlayPlaylistShortcutAction::class.java.canonicalName &&
-                                !action.hasRemoteUri()
+                        (action.actionKey == PlayPlaylistShortcutAction::class.java.canonicalName &&
+                                !action.hasRemoteUri()) ||
+                                lacksSeekOffset(action.actionKey, action.hasSeekOffsetMs())
                     } || expectedAssets.any { !item.assets.containsKey(it) }
                 } catch (_: Exception) {
                     true
@@ -84,6 +86,7 @@ class ButtonConfigTransmitter(buttonConfig: ButtonConfig,
             buttonInfoProto.actionTitle = action.title
             buttonInfoProto.iconTintable = action.iconTintable
             action.remoteUri?.takeIf(String::isNotBlank)?.let { buttonInfoProto.remoteUri = it }
+            action.seekOffsetMs?.let { buttonInfoProto.seekOffsetMs = it }
             protoBuilder.addActions(buttonInfoProto.build())
 
             if (buttonInfo.physicalButton) {

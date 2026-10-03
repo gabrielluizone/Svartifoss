@@ -39,6 +39,9 @@ class SkipThirtySecondsAction : SelectableAction {
     override val configFragment: Class<out ActionConfigFragment<out PhoneAction>>
         get() = SkipSecondsConfigFragment::class.java
 
+    override val seekOffsetMs: Long
+        get() = secondsToSkip * 1_000L
+
     override fun writeToBundle(bundle: PersistableBundle) {
         super.writeToBundle(bundle)
 
@@ -47,8 +50,7 @@ class SkipThirtySecondsAction : SelectableAction {
 
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<SkipThirtySecondsAction> {
         override suspend fun handleAction(action: SkipThirtySecondsAction) {
-            val currentPos = service.currentMediaController?.playbackState?.position ?: return
-            service.currentMediaController?.transportControls?.seekTo(currentPos + action.secondsToSkip * 1_000)
+            service.seekRelative(action.seekOffsetMs)
         }
     }
 

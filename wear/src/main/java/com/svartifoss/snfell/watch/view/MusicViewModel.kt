@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.PlaybackPositionEstimate
 import com.svartifoss.snfell.common.logging.logSummary
 import com.svartifoss.snfell.watch.view.lyrics.LyricsFeed
 import com.svartifoss.snfell.watch.view.metadata.MetadataFeed
@@ -847,6 +848,10 @@ class MusicViewModel @Inject constructor(
      * real state overwrites this within a moment; if the command didn't take, the UI snaps back.
      */
     private fun applyOptimisticFeedback(action: ButtonAction) {
+        action.seekOffsetMs?.let { offsetMs ->
+            applyOptimisticSeek(offsetMs)
+            return
+        }
         when (action.key) {
             StandardActions.ACTION_PLAY_PAUSE ->
                 latestMusicState?.let { applyOptimisticPlayingState(!it.playing) }
@@ -856,7 +861,59 @@ class MusicViewModel @Inject constructor(
             StandardActions.ACTION_SKIP_TO_NEXT -> applyOptimisticTrackChange(SkipDirection.NEXT)
             StandardActions.ACTION_SKIP_TO_PREV -> applyOptimisticTrackChange(SkipDirection.PREVIOUS)
             StandardActions.ACTION_RESTART -> applyOptimisticTrackChange(SkipDirection.RESTART)
+            // Move the position by an amount this device cannot know: the player's own fast
+            // forward and rewind, a seek to a percentage, and a skip-by-seconds from a phone build
+            // that does not send its offset yet. Nothing to draw, but checked a moment after the
+            // command instead of whenever the backed-off cadence next comes round.
+            StandardActions.ACTION_SKIP_30_SECONDS, StandardActions.ACTION_REVERSE_30_SECONDS,
+            StandardActions.ACTION_SEEK_TO_PERCENT, StandardActions.ACTION_FAST_FORWARD,
+            StandardActions.ACTION_REWIND -> phoneConnection.requestPlaybackResync()
         }
+    }
+
+    /**
+     * Draws a relative seek the user just asked for - the skip/reverse-by-seconds actions - on the
+     * press, the way [seekTo] already draws a seek on the ring and the progress screen draws its
+     * own skip buttons.
+     *
+     * Before this the press was sent and nothing moved until the phone had run it and the player
+     * had published where it went - which some players only do on a cadence of their own, so the
+     * clock and the ring carried on through the part of the song the user had just skipped back
+     * over, for seconds, before jumping. The target comes from the same function the phone uses,
+     * applied to the position on screen, so the two land the press in the same place; the check
+     * [anchorPositionNow] schedules corrects whatever the player did differently (a seek it
+     * clamped, or ignored).
+     *
+     * Only for a session that advertises seeking, as the ring's own seek already is. What is
+     * withheld otherwise is the drawing alone - the press still goes to the phone, which issues the
+     * seek regardless of the bit - because a session that does not claim to seek is the one most
+     * likely to ignore it, and the phone does not stand in for the player's answer for those
+     * sessions either (`MusicService.issueSeek`): a drawn seek would then sit at a position the
+     * player never moved to until a later check. Such a press is verified a moment later instead,
+     * like the other position changes this device cannot draw.
+     */
+    private fun applyOptimisticSeek(offsetMs: Long) {
+        val state = latestMusicState ?: return
+        if (state.error) {
+            return
+        }
+        if (!state.seekable) {
+            phoneConnection.requestPlaybackResync()
+            return
+        }
+
+        val target = PlaybackPositionEstimate.relativeSeekTargetMs(
+                phoneConnection.playbackClock.positionNowMs(), offsetMs, state.durationMs)
+
+        // The local snapshot as well as the clock, for the reason seekTo() gives.
+        latestMusicState = state.toBuilder()
+                .setPositionMs(target)
+                .setPositionUpdateTime(System.currentTimeMillis())
+                .setPositionAgeMs(0L)
+                .build()
+        anchorPositionNow(target, state.playing)
+
+        playbackPosition.value = PlaybackPosition(target, state.durationMs, state.seekable)
     }
 
     /** Which way a track change the user just asked for is going - see [applyOptimisticTrackChange]. */

@@ -13,10 +13,16 @@ class ButtonAction(
         /** True only for genuine fetched cover art (e.g. a streaming shortcut's cached
          *  thumbnail) - never a generic app-launcher icon - eligible to fill a whole
          *  quick-panel pill's background. */
-        val isCoverArt: Boolean = false
+        val isCoverArt: Boolean = false,
+        /** Signed milliseconds this action moves playback by, when the phone said - the
+         *  skip/reverse-by-seconds actions. Lets the press be drawn at once; see
+         *  `MusicViewModel.applyOptimisticSeek`. Null for everything else, and for any action
+         *  from a phone build that predates it. */
+        val seekOffsetMs: Long? = null
 ) {
     override fun toString(): String {
         return "ButtonAction(key='$key', icon=$icon, title=$title, " +
-                "iconTintable=$iconTintable, remoteUri=$remoteUri, isCoverArt=$isCoverArt)"
+                "iconTintable=$iconTintable, remoteUri=$remoteUri, isCoverArt=$isCoverArt, " +
+                "seekOffsetMs=$seekOffsetMs)"
     }
 }

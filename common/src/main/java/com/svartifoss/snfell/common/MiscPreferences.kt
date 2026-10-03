@@ -93,6 +93,20 @@ object MiscPreferences {
             SimplePreferenceDefinition("wear_paused_hold", PausedHoldPolicy.DEFAULT_VALUE)
 
     /**
+     * Keep the watch app out of the watch's recent-apps list.
+     *
+     * For people who reach the app from the watch face - the ongoing-activity chip, or the Now Bar
+     * on One UI Watch - and never from recents, where it only takes a slot. Hiding it changes
+     * nothing else: the app is reachable exactly as before, and closing it from recents never
+     * stopped playback or the background service anyway.
+     *
+     * Applied by the watch to its own task (`RecentsVisibility.kt`), so it follows the switch both
+     * ways; off by default, which is the platform's ordinary behaviour.
+     */
+    val WEAR_HIDE_FROM_RECENTS: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_hide_from_recents", false)
+
+    /**
      * Hold the watch's screen on while a Svartifoss screen is in the foreground, instead of letting
      * it blank on the system's inactivity timeout.
      *
@@ -1558,7 +1572,7 @@ object MiscPreferences {
             WEAR_PINCH_COOLDOWN, WEAR_PINCH_CALIBRATION,
             DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT, AUTO_START_MODE,
             AUTO_START_APP_BLACKLIST, CLOSE_TIMEOUT, WEAR_CLOSE_ON_IDLE,
-            WEAR_PAUSED_HOLD, WEAR_IDLE_BUTTON_ACTION, WEAR_IDLE_AUTO_OPEN,
+            WEAR_PAUSED_HOLD, WEAR_HIDE_FROM_RECENTS, WEAR_IDLE_BUTTON_ACTION, WEAR_IDLE_AUTO_OPEN,
             WEAR_KEEP_SCREEN_ON, LYRICS_ENABLED,
             ENABLE_NOTIFICATION_POPUP, NOTIFICATION_TIMEOUT,
             ALWAYS_SELECT_CENTER_ACTION, DIM_ALBUM_ART, ALBUM_ART_STYLE, ALBUM_ART_FILTER,
