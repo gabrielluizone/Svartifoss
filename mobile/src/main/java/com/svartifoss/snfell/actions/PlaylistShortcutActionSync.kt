@@ -83,5 +83,6 @@ object PlaylistShortcutActionSync {
     ): PlayPlaylistShortcutAction = PlayPlaylistShortcutAction(context, newName, newLink).also {
         it.customTitle = action.customTitle
         it.customIconUri = action.customIconUri
+        it.inQuickPanel = action.inQuickPanel
     }
 }

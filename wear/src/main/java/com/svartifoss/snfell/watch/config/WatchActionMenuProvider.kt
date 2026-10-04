@@ -32,10 +32,12 @@ class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, 
 
             val actions = listProto.actionsList.withIndex().map {
                 val iconKey = CommPaths.ASSET_BUTTON_ICON_PREFIX + it.index
+                val coverArtwork = it.value.hasIconIsCoverArt() && it.value.iconIsCoverArt
                 val icon = dataClient.getIcon(
                         dataItem,
                         iconKey,
-                        it.value.actionKey
+                        it.value.actionKey,
+                        trimCoverArt = coverArtwork
                 )
 
                 // getIcon() always falls back to a local monochrome vector when an asset is
@@ -60,8 +62,7 @@ class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, 
                         },
                         // A corrupt/undecodable asset already fell back to the local template
                         // above - that fallback glyph is never cover art either.
-                        isCoverArt = !usesLocalTemplate &&
-                                it.value.hasIconIsCoverArt() && it.value.iconIsCoverArt,
+                        isCoverArt = !usesLocalTemplate && coverArtwork,
                         seekOffsetMs = it.value.seekOffsetMs.takeIf { _ ->
                             it.value.hasSeekOffsetMs()
                         },
@@ -69,7 +70,8 @@ class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, 
                             it.value.hasShortcutSubtitle()
                         },
                         shortcutShuffleable = it.value.hasShortcutShuffleable() &&
-                                it.value.shortcutShuffleable)
+                                it.value.shortcutShuffleable,
+                        inQuickPanel = it.value.hasInQuickPanel() && it.value.inQuickPanel)
             }.toList()
 
             ensureActive()

@@ -51,7 +51,12 @@ import com.svartifoss.snfell.common.PlayerShadingIntensity
 import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.common.SHADING_MAX_PERCENT
+import com.svartifoss.snfell.common.FavoritesMode
+import com.svartifoss.snfell.common.QuickPanelBlock
+import com.svartifoss.snfell.common.QuickPanelBlockType
 import com.svartifoss.snfell.common.QuickPanelButtons
+import com.svartifoss.snfell.common.QuickPanelStack
+import com.svartifoss.snfell.common.QuickPanelTool
 import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.SeekMarkerVisibility
 import com.svartifoss.snfell.common.TextBackdropSpec
@@ -605,6 +610,13 @@ class WatchPreviewView @JvmOverloads constructor(
 
     private var quickPanelSource = "manual"
     private var quickPanelShortcutCover = false
+
+    /** The quick panel's encoded block list (`wear_quick_panel_blocks`); empty while nobody has
+     *  composed one, which draws the original arrangement. See [QuickPanelStack]. */
+    private var quickPanelBlocksRaw = ""
+
+    /** The actions menu, for the blocks that list it (favourites and the full list). */
+    private var menuEntries: List<PreviewMenuEntry> = emptyList()
     private var previewVolumeArcStart = 130f
     private var previewVolumeArcSweep = 100f
     /** Set while the current frame drew a scrolling title - schedules the next frame. */
@@ -1316,7 +1328,7 @@ class WatchPreviewView @JvmOverloads constructor(
         key == "wear_quick_panel_style" || key == "wear_quick_panel_layout" ||
                 key == "wear_quick_panel_source" || key == "wear_quick_panel_color_mode" ||
                 key == "wear_quick_panel_custom_color" || key == "wear_up_next_pill_style" ||
-                key == "wear_quick_panel_shortcut_cover" ->
+                key == "wear_quick_panel_shortcut_cover" || key == "wear_quick_panel_blocks" ->
             PreviewSurface.QUICK_PANEL
         // queue_remote_artwork is declared on both settings screens and is not per-face, but on
         // the Watch tab it sits in the queue category beside the two rows above - editing it there
@@ -1615,6 +1627,7 @@ class WatchPreviewView @JvmOverloads constructor(
         seekStyle = readString("wear_seek_style", "plain")
         seekLayout = readString("wear_seek_layout", "edge")
         quickPanelSource = readString("wear_quick_panel_source", "manual")
+        quickPanelBlocksRaw = readString("wear_quick_panel_blocks", "")
         quickPanelShortcutCover = readBoolean("wear_quick_panel_shortcut_cover", false)
         quickPanelStyle = readString("wear_quick_panel_style", "glass")
         upNextPillStyle = readString("wear_up_next_pill_style", "follow")
@@ -1692,6 +1705,12 @@ class WatchPreviewView @JvmOverloads constructor(
                 surface == PreviewSurface.AOD) {
             invalidate()
         }
+    }
+
+    /** The actions menu, as the favourites and full-list blocks would list it. */
+    internal fun setMenuEntries(entries: List<PreviewMenuEntry>) {
+        menuEntries = entries
+        invalidate()
     }
 
     /** Real mini-button and quadrant icons from the currently active action config. */
@@ -7904,6 +7923,42 @@ class WatchPreviewView @JvmOverloads constructor(
             val keylineColor: Int = Color.TRANSPARENT
     )
 
+    /**
+     * The round buttons the panel's button row shows, as (icon, fallback glyph, active): the
+     * playing app's own two sample actions in session mode, otherwise the three assignable slots
+     * with hidden ones left out.
+     */
+    private fun quickPanelPreviewButtons(): List<Triple<PreviewActionIcon?, Int, Boolean>> {
+        val defaultIcons = intArrayOf(
+                commonR.drawable.action_like,
+                commonR.drawable.action_shuffle,
+                commonR.drawable.action_repeat
+        )
+        return if (quickPanelSource == "session") {
+            // Two buttons deliberately exercise the same collapse/re-centering used by Spotify.
+            listOf(
+                    Triple<PreviewActionIcon?, Int, Boolean>(
+                            null, commonR.drawable.action_replay_10, false),
+                    Triple(null, commonR.drawable.action_forward_10, false)
+            )
+        } else {
+            val buttons = ArrayList<Triple<PreviewActionIcon?, Int, Boolean>>(3)
+            for (index in QuickPanelButtons.ALL_SLOTS.indices) {
+                val slot = QuickPanelButtons.ALL_SLOTS[index]
+                val action = quickPanelIcons[slot]
+                val key = action?.actionKey.orEmpty()
+                if (!key.endsWith(".NullAction")) {
+                    buttons.add(Triple(
+                            action,
+                            defaultIcons[index],
+                            key.endsWith(".ShuffleAction") || (action == null && index == 1)
+                    ))
+                }
+            }
+            buttons
+        }
+    }
+
     private fun drawQuickPanelSurface(
             canvas: Canvas,
             geometry: PreviewGeometry,
@@ -7914,6 +7969,11 @@ class WatchPreviewView @JvmOverloads constructor(
                 canvas, geometry, quickPanelStyle,
                 accent, quickPanelSecondaryAccent(), quickPanelTertiaryAccent(),
                 quickPanelBackdropStyle)
+        // A composed panel is drawn block by block; without one, everything below is the original.
+        QuickPanelStack.parse(quickPanelBlocksRaw)?.let { blocks ->
+            drawQuickPanelBlocks(canvas, geometry, dp, blocks)
+            return
+        }
         val metadataColor = when (quickPanelStyle) {
             "light" -> 0xFF111111.toInt()
             "terminal" -> TERMINAL_GREEN
@@ -7971,35 +8031,7 @@ class WatchPreviewView @JvmOverloads constructor(
         val buttonHeight = dp(50f)
         val gap = dp(6f)
         val centerY = geometry.cy + dp(12f) + controlsShift
-        val defaultIcons = intArrayOf(
-                commonR.drawable.action_like,
-                commonR.drawable.action_shuffle,
-                commonR.drawable.action_repeat
-        )
-        val previewButtons: List<Triple<PreviewActionIcon?, Int, Boolean>> =
-                if (quickPanelSource == "session") {
-            // Two buttons deliberately exercise the same collapse/re-centering used by Spotify.
-            listOf(
-                    Triple<PreviewActionIcon?, Int, Boolean>(
-                            null, commonR.drawable.action_replay_10, false),
-                    Triple(null, commonR.drawable.action_forward_10, false)
-            )
-        } else {
-            val buttons = ArrayList<Triple<PreviewActionIcon?, Int, Boolean>>(3)
-            for (index in QuickPanelButtons.ALL_SLOTS.indices) {
-                val slot = QuickPanelButtons.ALL_SLOTS[index]
-                val action = quickPanelIcons[slot]
-                val key = action?.actionKey.orEmpty()
-                if (!key.endsWith(".NullAction")) {
-                    buttons.add(Triple(
-                            action,
-                            defaultIcons[index],
-                            key.endsWith(".ShuffleAction") || (action == null && index == 1)
-                    ))
-                }
-            }
-            buttons
-        }
+        val previewButtons = quickPanelPreviewButtons()
         // Slot geometry per layout, mirroring QuickActionsRowLayout.Arrangement and
         // applyHeroSlotEmphasis on the watch. "rows" draws no round slots at all - it renders the
         // same actions as labelled full-width rows further below.
@@ -8040,35 +8072,441 @@ class WatchPreviewView @JvmOverloads constructor(
                     geometry.cx + rowWidth / 2f,
                     rowY + rowHeight / 2f
             )
-            val rowSkin = upNextRowSkin(accent)
-            drawSkin(canvas, rowRect, rowSkin, dp)
-            drawActionIcon(
-                    canvas,
-                    null,
-                    R.drawable.ic_playlist_play,
-                    rowRect.left + dp(21f),
-                    rowY,
-                    dp(20f),
-                    rowSkin.onColor
-            )
+            drawQuickPanelUpNextRow(canvas, rowRect, dp, accent)
+        }
+        textPaint.textAlign = Paint.Align.CENTER
+    }
+
+    // --- A panel composed of blocks ---------------------------------------------------------------
+    //
+    // Mirrors MainActivity.applyQuickPanelLayout and QuickPanelBlockViews on the watch: the same
+    // order, nominal heights and surfaces. The column starts 17% down, as the watch's does, and is
+    // clipped by the round screen; whatever falls below the bottom is not drawn, which is also what
+    // the wrist shows before the panel is scrolled.
+
+    private fun drawQuickPanelBlocks(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float,
+            blocks: List<QuickPanelBlock>
+    ) {
+        val accent = quickPanelAccent()
+        val left = geometry.bounds.left + dp(8f)
+        val right = geometry.bounds.right - dp(8f)
+        val gap = dp(6f)
+        var y = geometry.bounds.top + geometry.bounds.height() * 0.17f
+        for (block in QuickPanelStack.visibleFor(blocks, isPlayingShown())) {
+            if (y >= geometry.bounds.bottom) break
+            y = when (block.type) {
+                QuickPanelBlockType.HEADER -> drawPanelBlockHeader(canvas, geometry, dp, y)
+                QuickPanelBlockType.BUTTONS -> drawPanelBlockButtons(canvas, geometry, dp, y, accent)
+                QuickPanelBlockType.UP_NEXT -> {
+                    val rect = RectF(left, y + gap, right, y + gap + dp(54f))
+                    drawQuickPanelUpNextRow(canvas, rect, dp, accent)
+                    rect.bottom
+                }
+                QuickPanelBlockType.VOLUME ->
+                    drawPanelBlockVolume(canvas, dp, y + gap, left, right, accent)
+                QuickPanelBlockType.SEEK ->
+                    drawPanelBlockSeek(canvas, dp, y + gap, left, right, block, accent)
+                QuickPanelBlockType.TOOLS ->
+                    drawPanelBlockTools(canvas, dp, y, left, right, block, accent)
+                QuickPanelBlockType.FAVORITES ->
+                    drawPanelBlockFavorites(canvas, geometry, dp, y, left, right, block, accent)
+                QuickPanelBlockType.ACTIONS -> drawPanelRows(
+                        canvas, geometry, dp, y, left, right,
+                        menuEntries.let { if (block.maxEntries > 0) it.take(block.maxEntries) else it },
+                        accent)
+                QuickPanelBlockType.MENU_LINK ->
+                    drawPanelBlockMenuLink(canvas, dp, y + gap, left, right, accent)
+            }
+        }
+        textPaint.textAlign = Paint.Align.CENTER
+    }
+
+    private fun drawPanelBlockHeader(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float,
+            top: Float
+    ): Float {
+        // The same rules as the watch: dense layouts drop the metadata, and the one-line layouts
+        // drop the artist.
+        val metadataVisible = quickPanelLayout !in setOf(
+                "grid", "orbit", "diamond", "triangle", "stair")
+        val showTitle = showTrackTitle && metadataVisible
+        val showArtist = showTrackArtist && metadataVisible &&
+                quickPanelLayout !in setOf("hero", "column", "split")
+        val color = when (quickPanelStyle) {
+            "light" -> 0xFF111111.toInt()
+            "terminal" -> TERMINAL_GREEN
+            else -> Color.WHITE
+        }
+        textPaint.style = Paint.Style.FILL
+        textPaint.textAlign = Paint.Align.CENTER
+        var y = top
+        if (showTitle) {
+            textPaint.typeface = watchUiTypeface(bold = true)
+            textPaint.textSize = dp(18f)
+            textPaint.color = color
+            canvas.drawText(
+                    ellipsize(displayTitle(), geometry.radius * 1.55f),
+                    geometry.cx, y + dp(17f), textPaint)
+            y += dp(23f)
+        }
+        if (showArtist) {
+            textPaint.typeface = watchUiTypeface(bold = true)
+            textPaint.textSize = dp(13f)
+            textPaint.color = ColorUtils.setAlphaComponent(color, 0xB3)
+            canvas.drawText(
+                    ellipsize(displayArtist(), geometry.radius * 1.55f),
+                    geometry.cx, y + dp(11f), textPaint)
+            y += dp(19f)
+        }
+        return y + if (showTitle || showArtist) dp(8f) else 0f
+    }
+
+    private fun drawPanelBlockButtons(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float,
+            top: Float,
+            accent: Int
+    ): Float {
+        val buttons = quickPanelPreviewButtons()
+        if (buttons.isEmpty()) return top
+        if (quickPanelLayout == "rows") {
+            val rowHeight = dp(44f)
+            val spacing = dp(6f)
+            val total = buttons.size * rowHeight + (buttons.size - 1) * spacing
+            drawPreviewQuickPanelRows(canvas, geometry, dp, buttons, top + total / 2f, accent)
+            return top + total + dp(6f)
+        }
+        val buttonWidth = dp(54f)
+        val buttonHeight = dp(50f)
+        val centerY = top + buttonHeight / 2f
+        for ((index, button) in buttons.withIndex()) {
+            val (action, fallbackIcon, active) = button
+            val slotRect = previewQuickSlotRect(
+                    index, buttons.size, geometry, centerY,
+                    buttonWidth, buttonHeight, dp(6f), dp)
+            val skin = quickSkin(quickPanelStyle, active, row = false, accent = accent)
+            drawSkin(canvas, slotRect, skin, dp)
+            if (!active) drawReducedSlotMark(canvas, slotRect, dp, accent)
+            drawActionIcon(canvas, action, fallbackIcon,
+                    slotRect.centerX(), slotRect.centerY(), dp(20f), skin.onColor)
+        }
+        return top + buttonHeight + dp(8f)
+    }
+
+    private fun drawPanelBlockVolume(
+            canvas: Canvas,
+            dp: (Float) -> Float,
+            top: Float,
+            left: Float,
+            right: Float,
+            accent: Int
+    ): Float {
+        val height = dp(52f)
+        val skin = quickSkin(quickPanelStyle, active = false, row = false, accent = accent)
+        val down = RectF(left, top, left + dp(56f), top + height)
+        val up = RectF(right - dp(56f), top, right, top + height)
+        drawSkin(canvas, down, skin, dp)
+        drawSkin(canvas, up, skin, dp)
+        drawActionIcon(canvas, null, commonR.drawable.action_volume_down,
+                down.centerX(), down.centerY(), dp(22f), skin.onColor)
+        drawActionIcon(canvas, null, commonR.drawable.action_volume_up,
+                up.centerX(), up.centerY(), dp(22f), skin.onColor)
+        textPaint.textAlign = Paint.Align.CENTER
+        textPaint.typeface = watchUiTypeface(bold = true)
+        textPaint.textSize = dp(12f)
+        textPaint.color = skin.onColor
+        canvas.drawText("65%", (down.right + up.left) / 2f, top + height / 2f - dp(1f), textPaint)
+        val bar = RectF(
+                down.right + dp(10f), top + height / 2f + dp(5f),
+                up.left - dp(10f), top + height / 2f + dp(13f))
+        drawPanelLevelBar(canvas, bar, 0.65f, skin.onColor, accent)
+        return top + height
+    }
+
+    private fun drawPanelBlockSeek(
+            canvas: Canvas,
+            dp: (Float) -> Float,
+            top: Float,
+            left: Float,
+            right: Float,
+            block: QuickPanelBlock,
+            accent: Int
+    ): Float {
+        val skin = quickSkin(quickPanelStyle, active = false, row = false, accent = accent)
+        var y = top
+        textPaint.textAlign = Paint.Align.CENTER
+        if (block.seekShowsBar) {
+            textPaint.typeface = watchUiTypeface(bold = true)
+            textPaint.textSize = dp(12f)
+            textPaint.color = ColorUtils.setAlphaComponent(skin.onColor, 0xCC)
+            val position = if (liveDurationMs > 0) livePositionMs else 103_000L
+            val duration = if (liveDurationMs > 0) liveDurationMs else 237_000L
+            canvas.drawText(
+                    "${previewTime(position)} / ${previewTime(duration)}",
+                    (left + right) / 2f, y + dp(11f), textPaint)
+            val bar = RectF(left + dp(6f), y + dp(16f), right - dp(6f), y + dp(22f))
+            drawPanelLevelBar(canvas, bar, position.toFloat() / duration, skin.onColor, accent)
+            y += dp(29f)
+        }
+        val steps = block.seekSteps
+        val offsets = steps.reversed().map { -it } + steps
+        val chipWidth = (right - left) / 4f
+        var x = (left + right) / 2f - chipWidth * offsets.size / 2f
+        offsets.forEach { seconds ->
+            val rect = RectF(x + dp(3f), y, x + chipWidth - dp(3f), y + dp(48f))
+            drawSkin(canvas, rect, skin, dp)
+            textPaint.typeface = watchUiTypeface(bold = true)
+            textPaint.textSize = dp(14f)
+            textPaint.color = skin.onColor
+            canvas.drawText(
+                    if (seconds < 0) "\u2212${-seconds}" else "+$seconds",
+                    rect.centerX(), rect.centerY() + dp(5f), textPaint)
+            x += chipWidth
+        }
+        return y + dp(48f)
+    }
+
+    private fun drawPanelBlockTools(
+            canvas: Canvas,
+            dp: (Float) -> Float,
+            top: Float,
+            left: Float,
+            right: Float,
+            block: QuickPanelBlock,
+            accent: Int
+    ): Float {
+        val skin = quickSkin(quickPanelStyle, active = false, row = false, accent = accent)
+        val tools = block.tools
+        // Fixed share per chip, so a short last line keeps the size of the others and sits in the
+        // middle instead of stretching across the screen.
+        val chipWidth = (right - left) / maxOf(minOf(tools.size, 4), 3)
+        var y = top + dp(2f)
+        textPaint.textAlign = Paint.Align.CENTER
+        tools.chunked(4).forEach { line ->
+            y += dp(6f)
+            var x = (left + right) / 2f - chipWidth * line.size / 2f
+            line.forEach { tool ->
+                val rect = RectF(x + dp(3f), y, x + chipWidth - dp(3f), y + dp(56f))
+                drawSkin(canvas, rect, skin, dp)
+                drawActionIcon(canvas, null, toolIcon(tool),
+                        rect.centerX(), rect.top + dp(20f), dp(20f), skin.onColor)
+                textPaint.typeface = watchUiTypeface(bold = true)
+                textPaint.textSize = dp(10f)
+                textPaint.color = skin.onColor
+                canvas.drawText(
+                        ellipsize(toolLabel(tool), rect.width() - dp(4f)),
+                        rect.centerX(), rect.bottom - dp(9f), textPaint)
+                x += chipWidth
+            }
+            y += dp(56f)
+        }
+        return y
+    }
+
+    private fun drawPanelBlockFavorites(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float,
+            top: Float,
+            left: Float,
+            right: Float,
+            block: QuickPanelBlock,
+            accent: Int
+    ): Float {
+        val entries = menuEntries.filter { it.inQuickPanel }
+                .let { if (block.maxEntries > 0) it.take(block.maxEntries) else it }
+        // Nothing starred draws nothing, as on the watch; the editor is where that is explained.
+        if (entries.isEmpty()) return top
+        if (block.favoritesMode == FavoritesMode.ROWS) {
+            return drawPanelRows(canvas, geometry, dp, top, left, right, entries, accent)
+        }
+        val skin = quickSkin(quickPanelStyle, active = false, row = false, accent = accent)
+        val columns = 3
+        val cell = (right - left) / columns
+        var y = top
+        textPaint.textAlign = Paint.Align.CENTER
+        entries.chunked(columns).forEach { line ->
+            if (y >= geometry.bounds.bottom) return@forEach
+            y += dp(6f)
+            var x = (left + right) / 2f - cell * line.size / 2f
+            line.forEach { entry ->
+                val art = RectF(
+                        x + cell / 2f - dp(27f), y, x + cell / 2f + dp(27f), y + dp(54f))
+                if (entry.icon.coverArt) {
+                    val saved = canvas.save()
+                    canvas.clipPath(Path().apply { addOval(art, Path.Direction.CW) })
+                    canvas.drawBitmap(entry.icon.bitmap, null, art, bitmapPaint)
+                    canvas.restoreToCount(saved)
+                } else {
+                    drawSkin(canvas, art, skin, dp)
+                    drawActionIcon(canvas, entry.icon, R.drawable.ic_playlist_play,
+                            art.centerX(), art.centerY(), dp(26f), skin.onColor)
+                }
+                textPaint.typeface = watchUiTypeface(bold = true)
+                textPaint.textSize = dp(10f)
+                textPaint.color = skin.onColor
+                canvas.drawText(
+                        ellipsize(entry.icon.title, cell - dp(4f)),
+                        art.centerX(), art.bottom + dp(12f), textPaint)
+                x += cell
+            }
+            y += dp(54f + 3f + 12f)
+        }
+        return y
+    }
+
+    /** Full-width rows for [entries] - the favourites in rows mode, and the full actions list. */
+    private fun drawPanelRows(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float,
+            top: Float,
+            left: Float,
+            right: Float,
+            entries: List<PreviewMenuEntry>,
+            accent: Int
+    ): Float {
+        var y = top
+        val rowHeight = dp(54f)
+        val gap = dp(6f)
+        for (entry in entries) {
+            if (y >= geometry.bounds.bottom) break
+            val rect = RectF(left, y + gap, right, y + gap + rowHeight)
+            val cover = coverPillFor(entry.icon)
+            val onColor: Int
+            if (cover != null) {
+                drawCoverPill(canvas, rect, cover, dp)
+                onColor = Color.WHITE
+            } else {
+                val skin = quickSkin(quickPanelStyle, active = false, row = true, accent = accent)
+                drawSkin(canvas, rect, skin, dp)
+                drawActionIcon(canvas, entry.icon, R.drawable.ic_playlist_play,
+                        rect.left + dp(30f), rect.centerY(), dp(24f), skin.onColor)
+                onColor = skin.onColor
+            }
             textPaint.textAlign = Paint.Align.LEFT
             textPaint.typeface = watchUiTypeface(bold = true)
             textPaint.textSize = dp(12f)
-            textPaint.color = rowSkin.onColor
-            val rowTitle = if (quickPanelSource == "session") {
-                context.getString(R.string.quick_panel_default_up_next)
-            } else {
-                context.getString(R.string.preview_sample_title)
-            }
-            canvas.drawText(ellipsize(rowTitle,
-                    rowWidth - dp(56f)), rowRect.left + dp(37f), rowY - dp(2f), textPaint)
-            textPaint.typeface = watchUiTypeface(bold = false)
-            textPaint.textSize = dp(9f)
-            textPaint.color = ColorUtils.setAlphaComponent(rowSkin.onColor, 0xB3)
-            val rowSubtitle = displayTitle()
-            canvas.drawText(ellipsize(rowSubtitle, rowWidth - dp(56f)),
-                    rowRect.left + dp(37f), rowY + dp(11f), textPaint)
+            textPaint.color = onColor
+            canvas.drawText(
+                    ellipsize(entry.icon.title, rect.width() - dp(66f)),
+                    rect.left + dp(52f), rect.centerY() + dp(4f), textPaint)
+            y = rect.bottom
         }
+        textPaint.textAlign = Paint.Align.CENTER
+        return y
+    }
+
+    private fun drawPanelBlockMenuLink(
+            canvas: Canvas,
+            dp: (Float) -> Float,
+            top: Float,
+            left: Float,
+            right: Float,
+            accent: Int
+    ): Float {
+        val rect = RectF(left, top, right, top + dp(54f))
+        val skin = quickSkin(quickPanelStyle, active = false, row = true, accent = accent)
+        drawSkin(canvas, rect, skin, dp)
+        drawActionIcon(canvas, null, commonR.drawable.action_open_menu,
+                rect.left + dp(30f), rect.centerY(), dp(24f), skin.onColor)
+        textPaint.textAlign = Paint.Align.LEFT
+        textPaint.typeface = watchUiTypeface(bold = true)
+        textPaint.textSize = dp(13f)
+        textPaint.color = skin.onColor
+        canvas.drawText(
+                ellipsize(context.getString(R.string.quick_block_all_actions), rect.width() - dp(66f)),
+                rect.left + dp(52f), rect.centerY() + dp(4f), textPaint)
+        textPaint.textAlign = Paint.Align.CENTER
+        return rect.bottom
+    }
+
+    /** A pill-shaped level: a faint track and a rounded fill never narrower than the bar is tall. */
+    private fun drawPanelLevelBar(canvas: Canvas, rect: RectF, fraction: Float, base: Int, fill: Int) {
+        val radius = rect.height() / 2f
+        fillPaint.style = Paint.Style.FILL
+        fillPaint.shader = null
+        fillPaint.color = ColorUtils.setAlphaComponent(base, 0x38)
+        canvas.drawRoundRect(rect, radius, radius, fillPaint)
+        if (fraction > 0f) {
+            fillPaint.color = fill
+            val width = maxOf(rect.height(), rect.width() * fraction.coerceIn(0f, 1f))
+            canvas.drawRoundRect(
+                    RectF(rect.left, rect.top, minOf(rect.right, rect.left + width), rect.bottom),
+                    radius, radius, fillPaint)
+        }
+    }
+
+    private fun previewTime(ms: Long): String {
+        val seconds = (ms / 1000L).coerceAtLeast(0L)
+        return "%d:%02d".format(seconds / 60, seconds % 60)
+    }
+
+    private fun toolIcon(tool: QuickPanelTool): Int = when (tool) {
+        QuickPanelTool.SPEED -> commonR.drawable.action_speed
+        QuickPanelTool.LYRICS -> commonR.drawable.action_lyrics
+        QuickPanelTool.QUEUE -> R.drawable.ic_queue_music
+        QuickPanelTool.VOLUME -> commonR.drawable.action_volume_up
+        QuickPanelTool.PROGRESS -> commonR.drawable.action_progress
+        QuickPanelTool.FACES -> commonR.drawable.action_face_picker
+        QuickPanelTool.SEARCH -> commonR.drawable.action_search
+        QuickPanelTool.MENU -> commonR.drawable.action_open_menu
+    }
+
+    private fun toolLabel(tool: QuickPanelTool): String = when (tool) {
+        QuickPanelTool.SPEED -> "1\u00D7"
+        QuickPanelTool.LYRICS -> context.getString(R.string.quick_tool_lyrics)
+        QuickPanelTool.QUEUE -> context.getString(R.string.quick_tool_queue)
+        QuickPanelTool.VOLUME -> context.getString(R.string.quick_tool_volume)
+        QuickPanelTool.PROGRESS -> context.getString(R.string.quick_tool_progress)
+        QuickPanelTool.FACES -> context.getString(R.string.quick_tool_faces)
+        QuickPanelTool.SEARCH -> context.getString(R.string.quick_tool_search)
+        QuickPanelTool.MENU -> context.getString(R.string.quick_tool_menu)
+    }
+
+    /** The Up Next row: glyph, label and the sample (or playing) track beneath it. */
+    private fun drawQuickPanelUpNextRow(
+            canvas: Canvas,
+            rowRect: RectF,
+            dp: (Float) -> Float,
+            accent: Int
+    ) {
+        val rowWidth = rowRect.width()
+        val rowY = rowRect.centerY()
+        val rowSkin = upNextRowSkin(accent)
+        drawSkin(canvas, rowRect, rowSkin, dp)
+        drawActionIcon(
+                canvas,
+                null,
+                R.drawable.ic_playlist_play,
+                rowRect.left + dp(21f),
+                rowY,
+                dp(20f),
+                rowSkin.onColor
+        )
+        textPaint.textAlign = Paint.Align.LEFT
+        textPaint.typeface = watchUiTypeface(bold = true)
+        textPaint.textSize = dp(12f)
+        textPaint.color = rowSkin.onColor
+        val rowTitle = if (quickPanelSource == "session") {
+            context.getString(R.string.quick_panel_default_up_next)
+        } else {
+            context.getString(R.string.preview_sample_title)
+        }
+        canvas.drawText(ellipsize(rowTitle,
+                rowWidth - dp(56f)), rowRect.left + dp(37f), rowY - dp(2f), textPaint)
+        textPaint.typeface = watchUiTypeface(bold = false)
+        textPaint.textSize = dp(9f)
+        textPaint.color = ColorUtils.setAlphaComponent(rowSkin.onColor, 0xB3)
+        val rowSubtitle = displayTitle()
+        canvas.drawText(ellipsize(rowSubtitle, rowWidth - dp(56f)),
+                rowRect.left + dp(37f), rowY + dp(11f), textPaint)
         textPaint.textAlign = Paint.Align.CENTER
     }
 

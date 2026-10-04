@@ -175,6 +175,8 @@
     <string name="actions_intro">Tudo aqui aparece no relógio, na ordem que você definir: no menu e também como linhas abaixo dos botões do painel rápido. Adicione playlists, álbuns e faixas colando o link, ou qualquer outra ação.</string>
     <string name="actions_quick_panel_section">Painel rápido</string>
     <string name="actions_watch_menu_section">Menu no relógio</string>
+    <string name="actions_quick_pin_add">Mostrar no painel rápido</string>
+    <string name="actions_quick_pin_remove">Remover do painel rápido</string>
     <plurals name="actions_list_summary">
         <item quantity="one">%1$d ação · Toque para editar · Segure e arraste para reordenar</item>
         <item quantity="other">%1$d ações · Toque para editar · Segure e arraste para reordenar</item>
@@ -484,6 +486,91 @@
     <string name="quick_panel_default_shuffle">Aleatório</string>
     <string name="quick_panel_default_repeat">Repetir</string>
     <string name="quick_panel_default_up_next">A seguir</string>
+    <!-- Quick panel editor -->
+    <string name="quick_panel_editor_title">Painel de ações rápidas</string>
+    <string name="quick_panel_editor_intro">Monte o painel que abre com um toque duplo no centro do relógio. Segure e arraste um bloco para mudar de lugar, toque para ajustar.</string>
+    <string name="quick_panel_editor_add_block">Adicionar bloco</string>
+    <string name="quick_panel_editor_restore">Restaurar o painel original</string>
+    <string name="quick_panel_editor_restore_title">Restaurar o painel original?</string>
+    <string name="quick_panel_editor_restore_message">Sua disposição é removida e o painel volta a ser como era. Os botões escolhidos e as ações que você marcou são mantidos.</string>
+    <string name="quick_panel_editor_restore_confirm">Restaurar</string>
+    <string name="quick_panel_editor_fold">Fim da primeira tela (aproximado)</string>
+    <string name="quick_panel_editor_last_block">O painel precisa de pelo menos um bloco</string>
+    <string name="quick_panel_editor_removed">%1$s removido</string>
+    <string name="quick_panel_editor_undo">Desfazer</string>
+    <string name="quick_panel_editor_move_up">Mover para cima</string>
+    <string name="quick_panel_editor_move_down">Mover para baixo</string>
+    <string name="quick_panel_editor_more">Mais opções</string>
+    <string name="quick_panel_editor_nothing_to_add">Todos os blocos já estão no painel</string>
+
+    <string name="quick_block_header">Faixa</string>
+    <string name="quick_block_buttons">Botões redondos</string>
+    <string name="quick_block_upnext">A seguir</string>
+    <string name="quick_block_volume">Volume</string>
+    <string name="quick_block_seek">Avançar e posição</string>
+    <string name="quick_block_tools">Ferramentas</string>
+    <string name="quick_block_favorites">Favoritos</string>
+    <string name="quick_block_actions">Lista de ações</string>
+    <string name="quick_block_menu">Atalho do menu</string>
+    <string name="quick_block_all_actions">Todas as ações</string>
+
+    <string name="quick_block_header_description">O título e o artista do que está tocando.</string>
+    <string name="quick_block_buttons_description">Botões redondos para as ações que você mais usa, ou os que o app tocando oferece.</string>
+    <string name="quick_block_upnext_description">A próxima faixa. Toque nela para abrir a fila.</string>
+    <string name="quick_block_volume_description">Diminua e aumente o volume sem sair do painel.</string>
+    <string name="quick_block_seek_description">Onde você está na faixa, e botões para voltar e avançar.</string>
+    <string name="quick_block_tools_description">Atalhos pequenos: velocidade, letra, fila e mais.</string>
+    <string name="quick_block_favorites_description">As ações que você marcou na aba Ações, como capas ou linhas.</string>
+    <string name="quick_block_actions_description">Todas as ações do menu do relógio, uma linha para cada.</string>
+    <string name="quick_block_menu_description">Uma linha que abre o menu de ações completo.</string>
+
+    <string name="quick_summary_header">Título e artista</string>
+    <string name="quick_summary_buttons_session">Do app tocando</string>
+    <string name="quick_summary_buttons_empty">Nenhum botão escolhido</string>
+    <string name="quick_summary_upnext">Próxima faixa · abre a fila</string>
+    <string name="quick_summary_volume">Passos de %1$d%%</string>
+    <string name="quick_summary_seek">%1$s segundos</string>
+    <string name="quick_summary_seek_bar">%1$s segundos · tempo e barra</string>
+    <string name="quick_summary_favorites_none">Nenhum marcado ainda</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d marcada · %2$s</item>
+        <item quantity="other">%1$d marcadas · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Todas as %1$d ações</string>
+    <string name="quick_summary_actions_first">As primeiras %1$d ações</string>
+    <string name="quick_summary_menu">Abre o menu de ações</string>
+    <string name="quick_summary_only_playing">só tocando</string>
+    <string name="quick_summary_only_not_playing">só sem reprodução</string>
+    <string name="quick_mode_grid">Grade</string>
+    <string name="quick_mode_rows">Linhas</string>
+
+    <string name="quick_sheet_show">Mostrar</string>
+    <string name="quick_sheet_always">Sempre</string>
+    <string name="quick_sheet_while_playing">Tocando</string>
+    <string name="quick_sheet_while_not_playing">Sem reprodução</string>
+    <string name="quick_sheet_step">Passo</string>
+    <string name="quick_sheet_jump">Pular de</string>
+    <string name="quick_sheet_seek_bar">Mostrar tempo e barra de progresso</string>
+    <string name="quick_sheet_tools">Ferramentas</string>
+    <string name="quick_sheet_layout">Disposição</string>
+    <string name="quick_sheet_how_many">Quantas</string>
+    <string name="quick_sheet_all">Todas</string>
+    <string name="quick_sheet_buttons_source">Botões de</string>
+    <string name="quick_sheet_source_configured">Minhas escolhas</string>
+    <string name="quick_sheet_source_session">App tocando</string>
+    <string name="quick_sheet_buttons_hint">Toque num botão para escolher a ação. Segure para voltar ao padrão.</string>
+    <string name="quick_sheet_favorites_hint">Marque ações com o raio na aba Ações. Só as marcadas aparecem aqui.</string>
+    <string name="quick_sheet_remove">Remover este bloco</string>
+    <string name="quick_sheet_done">Pronto</string>
+
+    <string name="quick_tool_speed">Velocidade</string>
+    <string name="quick_tool_lyrics">Letra</string>
+    <string name="quick_tool_queue">Fila</string>
+    <string name="quick_tool_volume">Volume</string>
+    <string name="quick_tool_progress">Progresso</string>
+    <string name="quick_tool_faces">Mostrador</string>
+    <string name="quick_tool_search">Buscar</string>
+    <string name="quick_tool_menu">Menu</string>
     <string name="setting_wear_center_long_press_queue">Toque longo no centro para a fila</string>
     <string name="setting_wear_center_long_press_queue_description">Toque e segure o centro da tela de reprodução para abrir a fila de reprodução.</string>
     <string name="setting_wear_screen_face">Layout-base</string>
@@ -1731,7 +1818,7 @@
     <string name="face_reset_migration_reset_button">Resetar todos os temas</string>
     <string name="face_reset_migration_clear_data_button">Limpar dados do app</string>
 
-    <string name="quick_panel_link_summary">Toque duas vezes no centro da tela do relógio para abri-lo. Toque aqui para configurar os botões dele em Ações.</string>
+    <string name="quick_panel_link_summary">Toque duas vezes no centro da tela do relógio para abri-lo. Toque aqui para escolher o que ele tem e em que ordem.</string>
 
     <string name="wear_font_google_sans_flex">Google Sans Flex</string>
     <string name="wear_font_google_sans_flex_description">Versão variável do Google Sans com largura, tamanho óptico, grade e arredondamento ajustáveis — libera os controles de eixo abaixo.</string>

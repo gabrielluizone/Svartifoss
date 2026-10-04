@@ -1520,6 +1520,19 @@ object MiscPreferences {
     val WEAR_QUICK_PANEL_SOURCE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_quick_panel_source", "manual")
 
+    /**
+     * What the quick panel contains, as an ordered list of blocks - see [QuickPanelStack] for the
+     * grammar. Empty (the default) means nobody has composed a panel, and the watch keeps drawing
+     * the original arrangement from the original keys.
+     *
+     * Global rather than face-scoped, like [WEAR_QUICK_PANEL_SOURCE]: what a panel *holds* is a
+     * property of the person and not of the face being worn, and it names things (favourites, the
+     * tools, the buttons' actions) that a published community theme could never carry. The look of
+     * the panel stays per face, in the keys above.
+     */
+    val WEAR_QUICK_PANEL_BLOCKS: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_quick_panel_blocks", "")
+
     /** Visual style of the playback queue screen. */
     /** Every list-style value that fills a pill with the entry's own artwork. The phone checks
      *  this to decide whether to send higher-resolution covers, and the preview to draw them;
@@ -1679,7 +1692,8 @@ object MiscPreferences {
             WEAR_VOLUME_STYLE, WEAR_VOLUME_LAYOUT,
             WEAR_QUICK_PANEL_STYLE, WEAR_QUICK_PANEL_LAYOUT, WEAR_UP_NEXT_PILL_STYLE,
             WEAR_SHOW_UP_NEXT_PILL,
-            WEAR_QUICK_PANEL_SOURCE, WEAR_QUEUE_STYLE, WEAR_QUICK_PANEL_SHORTCUT_COVER,
+            WEAR_QUICK_PANEL_SOURCE, WEAR_QUICK_PANEL_BLOCKS, WEAR_QUEUE_STYLE,
+            WEAR_QUICK_PANEL_SHORTCUT_COVER,
             WEAR_LIST_ROW_SIZE,
             WEAR_PROGRESS_STYLE, WEAR_PROGRESS_LAYOUT, WEAR_SEEK_STYLE, WEAR_SEEK_LAYOUT,
             WEAR_TITLE_TEXT_MODE, WEAR_ARTIST_COLOR_MODE, WEAR_ARTIST_CUSTOM_COLOR, WEAR_ARTIST_DESATURATED,

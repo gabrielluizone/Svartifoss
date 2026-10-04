@@ -122,7 +122,12 @@ import com.svartifoss.snfell.common.TextShadowSpec
 import com.svartifoss.snfell.common.SeekMarkerVisibility
 import com.svartifoss.snfell.common.ScreenSwipeDirection
 import com.svartifoss.snfell.common.ScreenSwipeResolver
+import com.svartifoss.snfell.common.FavoritesMode
+import com.svartifoss.snfell.common.QuickPanelBlock
+import com.svartifoss.snfell.common.QuickPanelBlockType
 import com.svartifoss.snfell.common.QuickPanelButtons
+import com.svartifoss.snfell.common.QuickPanelStack
+import com.svartifoss.snfell.common.QuickPanelTool
 import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.IdleScreenAction
 import com.svartifoss.snfell.common.R as commonR
@@ -183,6 +188,10 @@ import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
 import com.svartifoss.snfell.watch.theme.watchUiTypeface
 import com.svartifoss.snfell.watch.view.panel.PanelReadout
 import com.svartifoss.snfell.watch.view.panel.PanelTriad
+import com.svartifoss.snfell.watch.view.panel.QuickPanelBlockViews
+import com.svartifoss.snfell.watch.view.panel.QuickPanelFavorite
+import com.svartifoss.snfell.watch.view.panel.QuickPanelHost
+import com.svartifoss.snfell.watch.view.panel.QuickPanelSkin
 import com.svartifoss.snfell.watch.view.progress.ProgressActivity
 import com.svartifoss.snfell.watch.view.volume.VolumeActivity
 import com.svartifoss.snfell.watch.view.lyrics.LyricsActivity
@@ -858,6 +867,20 @@ class MainActivity : WearCompanionWatchActivity(),
     /** The phone's configurable Actions-menu entries, repeated as large rows below Up Next. */
     private var quickPanelExtraActions: List<ButtonAction> = emptyList()
 
+    /**
+     * The panel's explicit block list ([MiscPreferences.WEAR_QUICK_PANEL_BLOCKS]), or null while
+     * nobody has composed one - in which case the original arrangement is drawn from the original
+     * keys, exactly as before the blocks existed.
+     */
+    private var quickPanelBlocks: List<QuickPanelBlock>? = null
+
+    /** Views for the blocks the original panel did not have; created the first time one is needed. */
+    private var panelBlockViews: QuickPanelBlockViews? = null
+
+    /** Which blocks the panel was last laid out with, so a play/pause flip that changes the visible
+     *  set re-lays it out and every other state update does not. */
+    private var appliedBlockKey: String = ""
+
     private val serviceConnection = UiOpenServiceConnection(lifecycle)
 
     private fun updateFaceState(transform: (NowPlayingFaceState) -> NowPlayingFaceState) {
@@ -1271,7 +1294,11 @@ class MainActivity : WearCompanionWatchActivity(),
         viewModel.playbackPosition.observe(this, playbackPositionObserver)
         viewModel.actionsMenuConfig.config.observe(this) { actions ->
             quickPanelExtraActions = actions.orEmpty()
-            if (isQuickActionsPanelShowing()) renderQuickPanelExtraActions()
+            if (isQuickActionsPanelShowing()) {
+                renderQuickPanelExtraActions()
+                // The favourites block is made of the same entries.
+                if (quickPanelBlocks != null) applyQuickPanelLayout()
+            }
         }
 
         onBackPressedDispatcher.addCallback(this, backButtonOverrideCallback)
@@ -1580,6 +1607,7 @@ class MainActivity : WearCompanionWatchActivity(),
         if (isQuickActionsPanelShowing()) {
             configureQuickPanelButtons()
         }
+        relayoutPanelBlocksIfNeeded()
         updatePlaybackTimeVisibility()
         syncUpNextEqualizerAnimation()
 
@@ -1599,6 +1627,7 @@ class MainActivity : WearCompanionWatchActivity(),
             if (state.playbackSpeed != latestPlaybackSpeed) {
                 latestPlaybackSpeed = state.playbackSpeed
                 updateFaceState { face -> face.copy(playbackSpeed = state.playbackSpeed) }
+                panelBlockViews?.onSpeed(state.playbackSpeed)
             }
         }
 
@@ -2492,6 +2521,8 @@ class MainActivity : WearCompanionWatchActivity(),
             binding.quickActionUpNext.background = upNextPillBackground()
             renderQuickPanelExtraActions()
             updateQuickActionButtonStates()
+            // Rebinding is cheap and repaints every block, favourites rows included.
+            if (quickPanelBlocks != null) applyQuickPanelLayout()
         }
 
         updateFaceState {
@@ -5253,6 +5284,10 @@ class MainActivity : WearCompanionWatchActivity(),
         // not part of a saved appearance snapshot (see FaceScopedPreferences.SCOPED_KEYS).
         quickPanelSource = Preferences.getString(
                 preferences, MiscPreferences.WEAR_QUICK_PANEL_SOURCE)
+        // The block list is global for the same reason: what the panel holds belongs to the person,
+        // not to the face being worn.
+        quickPanelBlocks = QuickPanelStack.parse(
+                Preferences.getString(preferences, MiscPreferences.WEAR_QUICK_PANEL_BLOCKS))
         if (isQuickActionsPanelShowing()) {
             configureQuickPanelButtons()
             renderQuickPanelExtraActions()
@@ -5763,6 +5798,7 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private val phoneVolumeListener = Observer<Float> {
         binding.volumeBar.volume = it
+        panelBlockViews?.onVolume(it)
     }
 
     private val playbackPositionObserver = Observer<PlaybackPosition?> { position ->
@@ -5783,6 +5819,7 @@ class MainActivity : WearCompanionWatchActivity(),
             updateFaceState { it.copy(seekable = false) }
             lastKnownPositionMs = 0L
             lastKnownDurationMs = 0L
+            panelBlockViews?.onPosition(0L, 0L, false)
             updateDeveloperOverlay()
             return@Observer
         }
@@ -5790,6 +5827,7 @@ class MainActivity : WearCompanionWatchActivity(),
         lastKnownPositionMs = position.positionMs
         lastKnownDurationMs = position.durationMs
         playbackSeekable = position.seekable
+        panelBlockViews?.onPosition(position.positionMs, position.durationMs, position.seekable)
         // Duration is enough to draw progress; session seek capability only gates interaction.
         binding.seekBar.seekable = true
         updateEdgeSeekTouchState()
@@ -7404,7 +7442,7 @@ class MainActivity : WearCompanionWatchActivity(),
         // Show whatever was cached from a previous fetch immediately, then ask the phone for a
         // fresh queue snapshot in the background - customListListener() will update the preview
         // text in place without yanking the user into the full drawer while this panel is open.
-        if (quickPanelLongMode == QuickLongMode.UP_NEXT) {
+        if (quickPanelLongMode == QuickLongMode.UP_NEXT && panelShows(QuickPanelBlockType.UP_NEXT)) {
             viewModel.customList.value?.let { updateUpNextPreview(it) }
             viewModel.openPlaybackQueue()
         }
@@ -7456,14 +7494,38 @@ class MainActivity : WearCompanionWatchActivity(),
      * appear here automatically in the same order the user already chose. */
     private fun renderQuickPanelExtraActions() {
         val container = binding.quickActionExtraList
+        // With an explicit block list, the full list is a block like any other: absent means it is
+        // not on the panel at all, and it may be cut to its first few rows.
+        val stack = quickPanelBlocks
+        val actionsBlock = stack?.firstOrNull { it.type == QuickPanelBlockType.ACTIONS }
+        if (stack != null && actionsBlock == null) {
+            container.removeAllViews()
+            container.visibility = View.GONE
+            return
+        }
+        val limit = actionsBlock?.maxEntries ?: 0
+        val entries = quickPanelExtraActions.withIndex().toList()
+                .let { if (limit > 0) it.take(limit) else it }
+        renderActionRows(container, entries)
+    }
+
+    /**
+     * Fills [container] with one full-width row per entry. The entry's index is its place in the
+     * actions menu, which is what running it needs - so a row means the same thing whether it is
+     * in the full list or among the favourites.
+     */
+    private fun renderActionRows(
+            container: LinearLayout,
+            entries: List<IndexedValue<ButtonAction>>
+    ) {
         container.removeAllViews()
-        if (quickPanelExtraActions.isEmpty()) {
+        if (entries.isEmpty()) {
             container.visibility = View.GONE
             return
         }
 
         val tint = quickPanelInactiveTint()
-        quickPanelExtraActions.forEachIndexed { sourceIndex, action ->
+        entries.forEach { (sourceIndex, action) ->
             val row = layoutInflater.inflate(
                     R.layout.item_quick_action_row,
                     container,
@@ -7563,6 +7625,149 @@ class MainActivity : WearCompanionWatchActivity(),
         container.visibility = View.VISIBLE
     }
 
+    // --- Quick panel blocks ---------------------------------------------------------------------
+    //
+    // The panel can be built from a user-ordered list of blocks (MiscPreferences
+    // .WEAR_QUICK_PANEL_BLOCKS, see QuickPanelStack). The four parts the original panel had keep
+    // their existing views; the rest are QuickPanelBlockViews. Nothing here runs while no list has
+    // been composed.
+
+    /** Surfaces and colours for the block views, taken from the same factories the round buttons and
+     *  rows use so a block can never disagree with them about what the chosen style looks like. */
+    private val quickPanelSkin = object : QuickPanelSkin {
+        override fun rowBackground() = quickPanelRowBackground()
+        override fun roundBackground() = inactiveQuickButtonBackground()
+        override fun activeRoundBackground() = activeQuickButtonBackground()
+        override fun tint() = quickPanelInactiveTint()
+        override fun activeTint() = if (quickPanelStyle in setOf("prism", "chrome", "holo", "sunset")) {
+            Color.WHITE
+        } else {
+            contrastingIconColor(activeQuickFillColor())
+        }
+        override fun accent() = resolvedQuickPanelAccent()
+        override fun typeface() = quickPanelTypeface()
+        override fun rowHeightPx() = listRowHeightPx()
+    }
+
+    private val quickPanelHost = object : QuickPanelHost {
+        override fun volume(): Float = viewModel.volume.value ?: 0f
+        override fun setVolume(volume: Float) = viewModel.updateVolume(volume)
+        override fun skipBy(deltaMs: Long) = viewModel.skipBy(deltaMs)
+        override fun cycleSpeed() {
+            panelBlockViews?.onSpeed(viewModel.cycleSpeed())
+        }
+        override fun openTool(tool: QuickPanelTool) = runQuickPanelTool(tool)
+        override fun runMenuAction(index: Int) {
+            hideOverlay()
+            viewModel.executeActionFromMenu(index)
+        }
+        override fun buzz() = this@MainActivity.buzz()
+    }
+
+    /** What a tools-block chip does. Everything that opens another screen closes the panel first,
+     *  as the Up Next row does; speed is handled where it is pressed because it stays open. */
+    private fun runQuickPanelTool(tool: QuickPanelTool) {
+        hideOverlay()
+        when (tool) {
+            QuickPanelTool.SPEED -> Unit
+            QuickPanelTool.LYRICS -> viewModel.openLyricsScreen.call()
+            QuickPanelTool.QUEUE -> viewModel.openPlaybackQueueScreen.call()
+            QuickPanelTool.VOLUME -> viewModel.openVolumeScreen.call()
+            QuickPanelTool.PROGRESS -> viewModel.openProgressScreen.call()
+            QuickPanelTool.FACES -> viewModel.openFacePicker.call()
+            QuickPanelTool.SEARCH -> viewModel.openVoiceSearch.call()
+            QuickPanelTool.MENU -> viewModel.openActionsMenu.call()
+        }
+    }
+
+    /** Identifies the set and order of blocks on screen, so a play/pause flip that changes which of
+     *  them are visible re-lays the panel out and every other state update does not. */
+    private fun blockKey(blocks: List<QuickPanelBlock>?): String =
+            blocks?.joinToString(",") { it.type.token }.orEmpty()
+
+    /** Whether the panel currently draws a block of [type] - for the original panel, the four parts
+     *  it has always had. Used to skip work for a part that is not on screen. */
+    private fun panelShows(type: QuickPanelBlockType): Boolean =
+            QuickPanelStack.visibleFor(
+                    quickPanelBlocks ?: QuickPanelStack.implicitStack(), isMusicPlaying)
+                    .any { it.type == type }
+
+    /** Re-lays the panel out if play/pause changed which of its blocks are visible. */
+    private fun relayoutPanelBlocksIfNeeded() {
+        val stack = quickPanelBlocks ?: return
+        if (!isQuickActionsPanelShowing()) return
+        if (blockKey(QuickPanelStack.visibleFor(stack, isMusicPlaying)) != appliedBlockKey) {
+            applyQuickPanelLayout()
+        }
+    }
+
+    /**
+     * The views of [blocks], in order. The parts the original panel had are the views it already
+     * owns; the rest come from [QuickPanelBlockViews], bound to the current configuration.
+     */
+    private fun blockViewOrder(
+            blocks: List<QuickPanelBlock>,
+            title: View,
+            artist: View,
+            actions: View,
+            primaryList: View,
+            upNext: View,
+            extras: View
+    ): List<View> {
+        val blockViews = panelBlockViews ?: QuickPanelBlockViews(
+                this, quickPanelSkin, quickPanelHost).also { panelBlockViews = it }
+        val order = ArrayList<View>()
+        for (block in blocks) {
+            when (block.type) {
+                QuickPanelBlockType.HEADER -> {
+                    order += title
+                    order += artist
+                }
+                QuickPanelBlockType.BUTTONS -> {
+                    order += actions
+                    order += primaryList
+                }
+                QuickPanelBlockType.UP_NEXT -> order += upNext
+                QuickPanelBlockType.ACTIONS -> order += extras
+                QuickPanelBlockType.VOLUME -> order += blockViews.bindVolume(block)
+                QuickPanelBlockType.SEEK -> order += blockViews.bindSeek(block)
+                QuickPanelBlockType.TOOLS -> order += blockViews.bindTools(block)
+                QuickPanelBlockType.FAVORITES -> order += bindFavorites(block, blockViews)
+                QuickPanelBlockType.MENU_LINK -> order += blockViews.bindMenuLink()
+            }
+        }
+        // Bound blocks start from whatever they last drew; bring them up to what is true now.
+        blockViews.onVolume(viewModel.volume.value ?: 0f)
+        blockViews.onPosition(lastKnownPositionMs, lastKnownDurationMs, playbackSeekable)
+        blockViews.onSpeed(latestPlaybackSpeed)
+        return order
+    }
+
+    /**
+     * The favourites block: the actions starred for the panel, in the order they sit in the actions
+     * menu, as a grid of covers or as rows. An empty block takes no room - the phone's editor is
+     * where someone is told that nothing is starred yet, not a gap in the panel.
+     */
+    private fun bindFavorites(block: QuickPanelBlock, views: QuickPanelBlockViews): View {
+        val limit = block.maxEntries
+        val entries = quickPanelExtraActions.withIndex()
+                .filter { it.value.inQuickPanel }
+                .let { if (limit > 0) it.take(limit) else it }
+        val container = views.favoritesContainer()
+        when {
+            entries.isEmpty() -> {
+                container.removeAllViews()
+                container.visibility = View.GONE
+            }
+            block.favoritesMode == FavoritesMode.GRID -> {
+                views.bindFavoritesGrid(entries.map { QuickPanelFavorite(it.index, it.value) })
+                container.visibility = View.VISIBLE
+            }
+            else -> renderActionRows(container, entries)
+        }
+        return container
+    }
+
     /** Changes the panel's actual information hierarchy independently from its surface paint.
      * Hidden app actions collapse before sizing, so two Spotify actions remain full-size and are
      * centered while three-action players occupy a balanced row. */
@@ -7615,16 +7820,21 @@ class MainActivity : WearCompanionWatchActivity(),
         // arrangement of the slots instead. The old "actions first" / "compact deck" options were
         // only reorderings of this same stack, which is why they never looked meaningfully
         // different from it.
-        val desiredOrder = if (quickPanelLayout == "dock") {
-            listOf(title, artist, upNext, actions, primaryList)
+        //
+        // With an explicit block list the order is the user's, and blocks the original panel never
+        // had join the column; without one, nothing below differs from the original panel.
+        val blocks = quickPanelBlocks?.let { QuickPanelStack.visibleFor(it, isMusicPlaying) }
+        appliedBlockKey = blockKey(blocks)
+        val desiredOrder: List<View> = if (blocks != null) {
+            blockViewOrder(blocks, title, artist, actions, primaryList, upNext, extras)
+        } else if (quickPanelLayout == "dock") {
+            listOf(title, artist, upNext, actions, primaryList, extras)
         } else {
-            listOf(title, artist, actions, primaryList, upNext)
+            listOf(title, artist, actions, primaryList, upNext, extras)
         }
         val params = desiredOrder.associateWith { it.layoutParams }
-        desiredOrder.forEach(panel::removeView)
-        panel.removeView(extras)
+        panel.removeAllViews()
         desiredOrder.forEach { panel.addView(it, params.getValue(it)) }
-        panel.addView(extras)
 
         val panelParams = panelRoot.layoutParams as FrameLayout.LayoutParams
         panelParams.marginStart = 0

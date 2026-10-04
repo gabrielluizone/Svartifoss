@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PlaybackPositionEstimate
+import com.svartifoss.snfell.common.PlaybackSpeeds
 import com.svartifoss.snfell.common.logging.logSummary
 import com.svartifoss.snfell.watch.view.lyrics.LyricsFeed
 import com.svartifoss.snfell.watch.view.metadata.MetadataFeed
@@ -404,6 +405,30 @@ class MusicViewModel @Inject constructor(
     fun updateVolume(newVolume: Float) {
         volume.value = newVolume
         phoneConnection.sendVolume(newVolume)
+    }
+
+    /**
+     * Skips playback by [deltaMs] (negative goes back) from a control that is not an assigned
+     * action - the quick panel's seek chips. Drawn on the press and then sent, in the order every
+     * other relative seek here uses; see [applyOptimisticSeek].
+     */
+    fun skipBy(deltaMs: Long) {
+        applyOptimisticSeek(deltaMs)
+        viewModelScope.launchWithErrorHandling(application, musicState) {
+            phoneConnection.sendSeekRelative(deltaMs)
+        }
+    }
+
+    /**
+     * Steps the playback speed to the next rung of [PlaybackSpeeds] and returns it, so the control
+     * that asked can show the new speed before the phone has confirmed it.
+     */
+    fun cycleSpeed(): Float {
+        val next = PlaybackSpeeds.next(latestMusicState?.playbackSpeed ?: 1f)
+        viewModelScope.launchWithErrorHandling(application, musicState) {
+            phoneConnection.sendPlaybackSpeed(next)
+        }
+        return next
     }
 
     /** Seeks to [fraction] (0f..1f) of the current track's duration. No-op if not seekable. */

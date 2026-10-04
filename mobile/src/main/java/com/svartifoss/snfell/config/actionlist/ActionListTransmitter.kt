@@ -112,6 +112,8 @@ class ActionListTransmitter(private val actionList: ActionList,
             actionProto.iconIsCoverArt = listCover != null || action.isCoverArt
             action.remoteUri?.takeIf(String::isNotBlank)?.let { actionProto.remoteUri = it }
             action.seekOffsetMs?.let { actionProto.seekOffsetMs = it }
+            // Only the starred ones say so; an unstarred entry carries nothing, as before.
+            if (action.inQuickPanel) actionProto.inQuickPanel = true
             action.streamingShortcut?.let { description ->
                 actionProto.shortcutSubtitle = description.subtitle
                 actionProto.shortcutShuffleable = description.shuffleable

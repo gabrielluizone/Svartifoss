@@ -26,6 +26,14 @@ abstract class PhoneAction : Bundlable {
     var customIconUri: Uri? = null
     var customTitle: String? = null
 
+    /**
+     * Whether the user starred this entry of the watch's actions menu to show in the quick panel's
+     * favourites block. Only read for entries of the actions menu - on a button or a panel slot it
+     * means nothing - but it lives here because the menu is a list of plain actions, and keeping
+     * it on the action means it is saved, restored and copied with everything else about the entry.
+     */
+    var inQuickPanel: Boolean = false
+
     constructor(context: Context) : super() {
         this.context = context
     }
@@ -38,6 +46,7 @@ abstract class PhoneAction : Bundlable {
         }
 
         customTitle = bundle.getString(KEY_CUSTOM_TITLE)
+        inQuickPanel = bundle.getBoolean(KEY_IN_QUICK_PANEL, false)
     }
 
     abstract fun onActionPicked(actionPicker: ActionPickerViewModel)
@@ -135,6 +144,9 @@ abstract class PhoneAction : Bundlable {
 
         bundle.putString(KEY_CUSTOM_ICON_URI, customIconUri?.toString())
         bundle.putString(KEY_CUSTOM_TITLE, customTitle)
+        // Written only when set, so a list nobody has starred anything in stays byte-identical to
+        // what earlier builds saved - and reads back false on a build that never heard of it.
+        if (inQuickPanel) bundle.putBoolean(KEY_IN_QUICK_PANEL, true)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -152,12 +164,14 @@ abstract class PhoneAction : Bundlable {
     @CallSuper
     protected open fun isEqualToAction(other: PhoneAction): Boolean {
         return customIconUri == other.customIconUri &&
-                customTitle == other.customTitle
+                customTitle == other.customTitle &&
+                inQuickPanel == other.inQuickPanel
     }
 
     companion object {
         const val KEY_CUSTOM_ICON_URI = "CUSTOM_ICON_URI"
         const val KEY_CUSTOM_TITLE = "CUSTOM_TITLE"
+        const val KEY_IN_QUICK_PANEL = "IN_QUICK_PANEL"
 
         @Suppress("UNCHECKED_CAST")
         fun <T : PhoneAction> deserialize(context: Context, bundle: PersistableBundle?): T? {

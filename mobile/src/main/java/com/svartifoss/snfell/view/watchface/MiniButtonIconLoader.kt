@@ -44,6 +44,13 @@ internal data class PreviewButtonIcons(
         val quickPanel: Map<Int, PreviewActionIcon>
 )
 
+/** One entry of the watch's actions menu as the quick panel's preview needs it: the icon it is
+ *  listed with, and whether the user starred it for the favourites block. */
+internal data class PreviewMenuEntry(
+        val icon: PreviewActionIcon,
+        val inQuickPanel: Boolean
+)
+
 /**
  * Reads the currently active playing/stopped button config off disk and renders the real action
  * icons for both mini buttons and screen quadrants, so the Watch tab's preview shows the same
@@ -134,6 +141,44 @@ object MiniButtonIconLoader {
             decode(actionBundle)?.let { quickPanel[slot] = it }
         }
         return PreviewButtonIcons(icons, quadrants, quickPanel)
+    }
+
+    /**
+     * The actions menu, in order, as the quick panel's rows and favourites would list it. Mirrors
+     * the on-disk format of `DiskActionListStorage` for the same reason [loadConfiguredIcons]
+     * mirrors the button config's: the preview needs icons and titles, not the DI graph.
+     */
+    @WorkerThread
+    internal fun loadMenuEntries(context: Context): List<PreviewMenuEntry> {
+        val bundle = try {
+            BundleFileSerialization.readFromFile(File(context.filesDir, "actions_list"))
+        } catch (e: Exception) {
+            Timber.w(e, "Could not read the actions menu for preview")
+            null
+        } ?: return emptyList()
+
+        return try {
+            val count = bundle.getInt(ConfigConstants.NUM_ACTIONS, 0)
+            (0 until count).mapNotNull { index ->
+                val actionBundle = bundle.getPersistableBundle(index.toString()) ?: return@mapNotNull null
+                val action = PhoneAction.deserialize<PhoneAction>(context, actionBundle)
+                        ?: return@mapNotNull null
+                // A streaming destination is listed with its cover, as on the watch.
+                val listCover = action.listCover.takeIf { action.customIconUri == null }
+                val tintable = listCover == null && action.iconTintable
+                PreviewMenuEntry(
+                        icon = PreviewActionIcon(
+                                bitmap = renderIcon(listCover ?: loadActionIcon(context, action), tintable),
+                                tintable = tintable,
+                                actionKey = action.javaClass.canonicalName ?: action.javaClass.name,
+                                title = action.title,
+                                coverArt = listCover != null || action.isCoverArt),
+                        inQuickPanel = action.inQuickPanel)
+            }
+        } catch (e: RuntimeException) {
+            Timber.w(e, "Could not parse the actions menu for preview")
+            emptyList()
+        }
     }
 
     /** Mirrors CustomIconStorage's private on-disk mapping without pulling the whole DI graph

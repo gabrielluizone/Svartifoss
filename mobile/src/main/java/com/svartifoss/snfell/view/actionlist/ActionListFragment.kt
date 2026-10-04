@@ -34,15 +34,13 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder
 import com.svartifoss.snfell.R
-import com.svartifoss.snfell.actions.NullAction
 import com.svartifoss.snfell.actions.PhoneAction
 import com.svartifoss.snfell.actions.PlayPlaylistShortcutAction
 import com.svartifoss.snfell.actions.appplay.AppPlayAction
 import com.svartifoss.snfell.common.MiscPreferences
-import com.svartifoss.snfell.common.QuickPanelButtons
-import com.svartifoss.snfell.common.QuickPanelSource
-import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
-import com.svartifoss.snfell.common.buttonconfig.GESTURE_SINGLE_TAP
+import com.svartifoss.snfell.common.QuickPanelStack
+import com.svartifoss.snfell.view.watchface.QuickPanelBlockText
+import com.svartifoss.snfell.view.watchface.QuickPanelEditorActivity
 import com.svartifoss.snfell.config.ActionConfig
 import com.svartifoss.snfell.config.CustomIconStorage
 import com.svartifoss.snfell.di.LocalActivityConfig
@@ -64,8 +62,6 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
     companion object {
         const val REQUEST_CODE_EDIT_WINDOW = 1031
 
-        // One request code per quick-panel slot (BASE + slot index 0..2).
-        private const val REQUEST_CODE_QUICK_SLOT_BASE = 1040
 
         private const val STATE_LAST_EDITED_ACTION_POSITION = "LastEditedActionPosition"
     }
@@ -161,23 +157,17 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
         setupQuickPanelToggles()
     }
 
-    /** The quick-actions-panel entry row above the list: opens a dialog with the panel's three
-     *  buttons, mirroring the watch panel opened by double-tapping the center of the now-playing
-     *  screen. Tapping a slot row opens the action picker; long-press restores the slot's classic
-     *  default. Slot assignments are written into BOTH the playing and stopped button configs so
-     *  the panel behaves the same regardless of playback state. The wide row beneath the buttons
-     *  is not a slot: it is always Up Next. */
+    /** The quick-actions-panel entry row above the list: opens the panel editor, which holds
+     *  everything the panel is made of - the order of its blocks, its buttons, its tools and the
+     *  favourites starred below. It used to open a dialog with the panel's three buttons, and the
+     *  whole section vanished while those buttons came from the playing app; the editor is there
+     *  whichever the source is, because the buttons are one block among several now. */
     private fun setupQuickPanelToggles() {
-        binding.quickPanelRow.setOnClickListener { showQuickPanelDialog() }
+        binding.quickPanelRow.setOnClickListener {
+            startActivity(QuickPanelEditorActivity.createIntent(requireContext()))
+        }
         refreshQuickPanelSummary()
     }
-
-    /** False while the panel takes its buttons from the playing app: the slots this section edits
-     *  are then never read, and offering them would be a control that does nothing. */
-    private fun quickPanelUsesConfiguredButtons(): Boolean =
-            QuickPanelSource.usesConfiguredButtons(Preferences.getString(
-                    PreferenceManager.getDefaultSharedPreferences(requireContext()),
-                    MiscPreferences.WEAR_QUICK_PANEL_SOURCE))
 
     override fun onResume() {
         super.onResume()
@@ -187,138 +177,17 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
         refreshQuickPanelSummary()
     }
 
-    private val quickSlotCodes = QuickPanelButtons.ALL_SLOTS
-
-    private fun assignedQuickAction(index: Int): PhoneAction? =
-            actionConfig.getPlayingConfig().getScreenAction(
-                    ButtonInfo(false, quickSlotCodes[index], GESTURE_SINGLE_TAP))
-
-    private fun quickSlotDefaultName(index: Int): String = getString(when (index) {
-        0 -> R.string.quick_panel_default_like
-        1 -> R.string.quick_panel_default_shuffle
-        else -> R.string.quick_panel_default_repeat
-    })
-
-    private fun quickSlotSummary(index: Int): String {
-        val assigned = assignedQuickAction(index)
-        return when {
-            assigned == null -> getString(R.string.quick_panel_slot_default, quickSlotDefaultName(index))
-            assigned is NullAction -> getString(R.string.quick_panel_slot_hidden)
-            else -> assigned.title
-        }
-    }
-
+    /** The panel's blocks, in order, as the row's summary. */
     private fun refreshQuickPanelSummary() {
         if (!::binding.isInitialized) {
             return
         }
-        binding.quickPanelSection.visibility =
-                if (quickPanelUsesConfiguredButtons()) View.VISIBLE else View.GONE
-        binding.quickPanelRowSummary.text = (0 until quickSlotCodes.size)
-                .joinToString(" · ") { index ->
-                    val assigned = assignedQuickAction(index)
-                    when {
-                        assigned == null -> quickSlotDefaultName(index)
-                        assigned is NullAction -> getString(R.string.quick_panel_slot_hidden)
-                        else -> assigned.title
-                    }
-                }
-    }
-
-    private fun saveQuickPanelSlot(index: Int, action: PhoneAction?) {
-        val buttonInfo = ButtonInfo(false, quickSlotCodes[index], GESTURE_SINGLE_TAP)
-        for (config in listOf(actionConfig.getPlayingConfig(), actionConfig.getStoppedConfig())) {
-            config.saveButtonAction(buttonInfo, action)
-            config.commit()
-        }
-        refreshQuickPanelSummary()
-    }
-
-    private fun showQuickPanelDialog() {
-        val inflater = LayoutInflater.from(requireContext())
-        val container = android.widget.LinearLayout(requireContext()).apply {
-            orientation = android.widget.LinearLayout.VERTICAL
-        }
-
-        val hint = TextView(requireContext()).apply {
-            text = getString(R.string.quick_panel_config_hint)
-            textSize = 13f
-            setTextColor(ContextCompat.getColor(requireContext(), R.color.lyra_pref_summary))
-            typeface = ResourcesCompat.getFont(requireContext(), R.font.google_sans)
-            val pad = (20 * resources.displayMetrics.density).toInt()
-            setPadding(pad, pad / 2, pad, (8 * resources.displayMetrics.density).toInt())
-        }
-        container.addView(hint)
-
-        val slotTitles = intArrayOf(
-                R.string.quick_panel_slot_1,
-                R.string.quick_panel_slot_2,
-                R.string.quick_panel_slot_3
-        )
-        val defaultIcons = intArrayOf(
-                com.svartifoss.snfell.common.R.drawable.action_like,
-                com.svartifoss.snfell.common.R.drawable.action_shuffle,
-                com.svartifoss.snfell.common.R.drawable.action_repeat
-        )
-
-        lateinit var dialog: androidx.appcompat.app.AlertDialog
-
-        for (index in quickSlotCodes.indices) {
-            val row = inflater.inflate(R.layout.item_quick_panel_slot, container, false)
-            val iconView = row.findViewById<ImageView>(R.id.slot_icon)
-            val titleView = row.findViewById<TextView>(R.id.slot_title)
-            val summaryView = row.findViewById<TextView>(R.id.slot_summary)
-
-            fun bindRow() {
-                titleView.setText(slotTitles[index])
-                summaryView.text = quickSlotSummary(index)
-
-                val assigned = assignedQuickAction(index)
-                val icon = if (assigned != null && assigned !is NullAction) {
-                    customIconStorage[assigned]
-                } else {
-                    ContextCompat.getDrawable(requireContext(), defaultIcons[index])
-                }
-                if (assigned?.iconTintable != false) {
-                    iconView.setColorFilter(
-                            ContextCompat.getColor(requireContext(), R.color.lyra_on_surface))
-                } else {
-                    iconView.clearColorFilter()
-                }
-                iconView.setImageDrawable(icon)
-                iconView.alpha = if (assigned is NullAction) 0.4f else 1f
-            }
-            bindRow()
-
-            row.setOnClickListener {
-                dialog.dismiss()
-                startActivityForResult(
-                        Intent(context, ActionPickerActivity::class.java).putExtra(
-                                ActionPickerActivity.EXTRA_SURFACE,
-                                com.svartifoss.snfell.view.buttonconfig.ActionPickerSurface
-                                        .QUICK_PANEL.name),
-                        REQUEST_CODE_QUICK_SLOT_BASE + index
-                )
-            }
-            row.setOnLongClickListener {
-                saveQuickPanelSlot(index, null)
-                bindRow()
-                true
-            }
-
-            container.addView(row)
-        }
-
-        dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
-                .setTitle(R.string.quick_panel_row_title)
-                .setView(android.widget.ScrollView(requireContext()).apply { addView(container) })
-                .setPositiveButton(android.R.string.ok, null)
-                .show()
-
-        val accent = (activity as? com.svartifoss.snfell.view.mainactivity.MainActivity)
-                ?.currentAccentColor()
-                ?: com.svartifoss.snfell.view.LyraAccent.resolve(requireContext())
-        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)?.setTextColor(accent)
+        binding.quickPanelSection.visibility = View.VISIBLE
+        val raw = Preferences.getString(
+                PreferenceManager.getDefaultSharedPreferences(requireContext()),
+                MiscPreferences.WEAR_QUICK_PANEL_BLOCKS)
+        binding.quickPanelRowSummary.text = QuickPanelStack.resolve(raw)
+                .joinToString(" · ") { getString(QuickPanelBlockText.title(it.type)) }
     }
 
     @Deprecated("Deprecated in Java")
@@ -471,6 +340,7 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
             val phoneAction = actions[position].item
 
             holder.text.text = phoneAction.title
+            bindQuickPin(holder, phoneAction.inQuickPanel)
 
             // A streaming destination is listed with its cover, as the watch's menu lists it -
             // this screen *is* that menu, edited from the phone.
@@ -517,6 +387,21 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
             return ListItemHolder(view)
         }
 
+        /** The star that puts this entry on the quick panel's favourites block. */
+        private fun bindQuickPin(holder: ListItemHolder, pinned: Boolean) {
+            val context = requireContext()
+            val tint = if (pinned) {
+                com.svartifoss.snfell.view.LyraAccent.contrastSafe(
+                        context, com.svartifoss.snfell.view.LyraAccent.resolve(context))
+            } else {
+                ContextCompat.getColor(context, R.color.lyra_text_secondary)
+            }
+            holder.quickPin.setColorFilter(tint)
+            holder.quickPin.alpha = if (pinned) 1f else 0.5f
+            holder.quickPin.contentDescription = getString(
+                    if (pinned) R.string.actions_quick_pin_remove else R.string.actions_quick_pin_add)
+        }
+
         override fun getItemCount(): Int = actions.size
 
         override fun getItemId(position: Int): Long = actions[position].id.toLong()
@@ -542,10 +427,18 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
     private inner class ListItemHolder(itemView: View) : AbstractDraggableItemViewHolder(itemView) {
         val icon: ImageView = itemView.findViewById(R.id.icon)
         val text: TextView = itemView.findViewById(R.id.text)
+        val quickPin: ImageView = itemView.findViewById(R.id.quick_pin)
 
         init {
             itemView.setOnClickListener {
                 viewModel.editAction(adapterPosition)
+            }
+            quickPin.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    buzz()
+                    viewModel.setInQuickPanel(position, !actions[position].item.inQuickPanel)
+                }
             }
 
             ViewCompat.setAccessibilityDelegate(itemView, object : AccessibilityDelegateCompat() {
@@ -606,18 +499,6 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode in REQUEST_CODE_QUICK_SLOT_BASE until REQUEST_CODE_QUICK_SLOT_BASE + quickSlotCodes.size) {
-            if (resultCode == Activity.RESULT_OK && data != null) {
-                val actionBundle = data.getParcelableExtra<PersistableBundle>(
-                        ActionPickerActivity.EXTRA_ACTION_BUNDLE)
-                val action = PhoneAction.deserialize<PhoneAction>(requireContext(), actionBundle)
-                if (action != null) {
-                    saveQuickPanelSlot(requestCode - REQUEST_CODE_QUICK_SLOT_BASE, action)
-                }
-            }
-            return
-        }
-
         if (requestCode == REQUEST_CODE_EDIT_WINDOW &&
                 resultCode == Activity.RESULT_OK &&
                 data != null) {
