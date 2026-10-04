@@ -10,6 +10,10 @@ import java.io.ByteArrayOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Fetches a thumbnail for a saved streaming shortcut from the service's public **oEmbed** endpoint
@@ -48,6 +52,10 @@ object ShortcutArtworkFetcher {
      */
     fun ensureCached(context: Context, link: String, force: Boolean = false): Boolean {
         if (!isEnabled(context)) return false
+        // A liked-songs collection has no oEmbed record (it is not a public item), but two
+        // services publish its artwork - fetched once per collection, whichever spelling of it
+        // was saved.
+        StreamingCollection.forLink(link)?.let { return ensureCollectionCached(context, it, force) }
         if (!force && ShortcutArtworkStore.has(context, link)) return false
         val bytes = fetchThumbnailPng(context, link) ?: return false
         ShortcutArtworkStore.put(context, link, bytes)
@@ -63,6 +71,63 @@ object ShortcutArtworkFetcher {
             if (ensureCached(context, shortcut.link, force)) changed = true
         }
         return changed
+    }
+
+    /**
+     * Fetches [collection]'s official artwork ([StreamingCollection.officialArtworkUrl]) into the
+     * store under its [StreamingCollection.storeKey], under the same switch and the same rules as
+     * a playlist cover. True when new bytes were stored. Blocking; never throws.
+     *
+     * The address is the service's own public image, not an API: if it ever moves, the request
+     * fails and the drawn cover simply stays.
+     */
+    fun ensureCollectionCached(
+            context: Context,
+            collection: StreamingCollection,
+            force: Boolean = false
+    ): Boolean {
+        val url = collection.officialArtworkUrl ?: return false
+        if (!isEnabled(context)) return false
+        if (!force && ShortcutArtworkStore.has(context, collection.storeKey)) return false
+        val png = downloadBytes(url)?.let(::reencodeThumbnail) ?: return false
+        ShortcutArtworkStore.put(context, collection.storeKey, png)
+        return true
+    }
+
+    /** Collections already tried in this process, so a failed download is not retried on every
+     *  config push - the next process start tries again. */
+    private val collectionsTried = mutableSetOf<StreamingCollection>()
+
+    /**
+     * Fetches, in the background, the official artwork of whichever of [collections] lacks it, then
+     * runs [onFetched] on the main thread if anything arrived - so a config that was just sent with
+     * the drawn cover can be sent again with the real one. Each collection is tried at most once per
+     * process. Does nothing with the switch off.
+     */
+    fun fetchMissingCollections(
+            context: Context,
+            collections: Collection<StreamingCollection>,
+            onFetched: () -> Unit
+    ) {
+        if (!isEnabled(context)) return
+        val appContext = context.applicationContext
+        val pending = synchronized(collectionsTried) {
+            collections.filter { collection ->
+                collection.officialArtworkUrl != null &&
+                        !ShortcutArtworkStore.has(appContext, collection.storeKey) &&
+                        collectionsTried.add(collection)
+            }
+        }
+        if (pending.isEmpty()) return
+        GlobalScope.launch(Dispatchers.IO) {
+            var changed = false
+            for (collection in pending) {
+                if (ensureCollectionCached(appContext, collection)) changed = true
+            }
+            if (changed) {
+                withContext(Dispatchers.Main) { onFetched() }
+            }
+        }
     }
 
     private fun fetchThumbnailPng(context: Context, link: String): ByteArray? {
@@ -119,11 +184,13 @@ object ShortcutArtworkFetcher {
     private fun encode(value: String): String = URLEncoder.encode(value, "UTF-8")
 
     private fun downloadText(url: String): String? = openConnection(url) { connection ->
-        connection.inputStream.bufferedReader().use { it.readText() }
+        connection.inputStream.use {
+            ShortcutImageLimits.read(it, ShortcutImageLimits.MAX_METADATA_BYTES).toString(Charsets.UTF_8)
+        }
     }
 
     private fun downloadBytes(url: String): ByteArray? = openConnection(url) { connection ->
-        connection.inputStream.use { it.readBytes() }
+        connection.inputStream.use { ShortcutImageLimits.read(it, ShortcutImageLimits.MAX_IMAGE_BYTES) }
     }
 
     private fun <T> openConnection(url: String, block: (HttpURLConnection) -> T): T? {
@@ -152,24 +219,37 @@ object ShortcutArtworkFetcher {
      * square source to work from.
      */
     private fun reencodeThumbnail(raw: ByteArray): ByteArray? {
-        val decoded = BitmapFactory.decodeByteArray(raw, 0, raw.size) ?: return null
-        // Trim solid letterbox/pillarbox borders first. YouTube Music "art track" thumbnails wrap
-        // the real square cover in bars (black, or a flat album colour); without this the square
-        // crop keeps those bars and the cover ends up as a small square inside the circle.
-        val trimmed = BitmapBorderTrim.trim(decoded)
-        val side = minOf(trimmed.width, trimmed.height)
-        if (side <= 0) return null
-        val left = (trimmed.width - side) / 2
-        val top = (trimmed.height - side) / 2
-        val square = Bitmap.createBitmap(trimmed, left, top, side, side)
-        val scaled = if (side > MAX_THUMBNAIL_PX) {
-            Bitmap.createScaledBitmap(square, MAX_THUMBNAIL_PX, MAX_THUMBNAIL_PX, true)
-        } else {
-            square
-        }
-        return ByteArrayOutputStream().use { stream ->
-            scaled.compress(Bitmap.CompressFormat.PNG, 100, stream)
-            stream.toByteArray()
+        val bounds = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeByteArray(raw, 0, raw.size, bounds)
+        val sample = ShortcutImageLimits.sampleSize(bounds.outWidth, bounds.outHeight) ?: return null
+        val decoded = BitmapFactory.decodeByteArray(raw, 0, raw.size,
+                BitmapFactory.Options().apply { inSampleSize = sample }) ?: return null
+        // All these bitmaps are private to this conversion. Some operations return their input,
+        // so recycle distinct instances only, including on a failed conversion.
+        val owned = java.util.Collections.newSetFromMap(java.util.IdentityHashMap<Bitmap, Boolean>())
+        owned.add(decoded)
+        try {
+            // Trim solid letterbox/pillarbox borders first. YouTube Music "art track" thumbnails wrap
+            // the real square cover in bars (black, or a flat album colour); without this the square
+            // crop keeps those bars and the cover ends up as a small square inside the circle.
+            val trimmed = BitmapBorderTrim.trim(decoded).also { owned.add(it) }
+            val side = minOf(trimmed.width, trimmed.height)
+            if (side <= 0) return null
+            val left = (trimmed.width - side) / 2
+            val top = (trimmed.height - side) / 2
+            val square = Bitmap.createBitmap(trimmed, left, top, side, side).also { owned.add(it) }
+            val scaled = if (side > MAX_THUMBNAIL_PX) {
+                Bitmap.createScaledBitmap(square, MAX_THUMBNAIL_PX, MAX_THUMBNAIL_PX, true)
+            } else {
+                square
+            }
+            owned.add(scaled)
+            return ByteArrayOutputStream().use { stream ->
+                scaled.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                stream.toByteArray()
+            }
+        } finally {
+            owned.forEach { it.recycle() }
         }
     }
 

@@ -64,7 +64,12 @@ class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, 
                                 it.value.hasIconIsCoverArt() && it.value.iconIsCoverArt,
                         seekOffsetMs = it.value.seekOffsetMs.takeIf { _ ->
                             it.value.hasSeekOffsetMs()
-                        })
+                        },
+                        shortcutSubtitle = it.value.shortcutSubtitle.takeIf { _ ->
+                            it.value.hasShortcutSubtitle()
+                        },
+                        shortcutShuffleable = it.value.hasShortcutShuffleable() &&
+                                it.value.shortcutShuffleable)
             }.toList()
 
             ensureActive()

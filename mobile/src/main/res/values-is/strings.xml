@@ -2064,7 +2064,7 @@
     <string name="playlist_shortcut_detected_format">Greint: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Nafn</string>
     <string name="playlist_shortcut_link_hint">Deilingartengill eða app-vistfang</string>
-    <string name="playlist_shortcut_shuffle">Spila stokkað (aðeins YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Þú velur Spila eða Stokka á úrinu í hvert sinn sem þú byrjar.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2842,4 +2842,6 @@
     <string name="setting_wear_text_block_position_description">Hvar lagatextinn situr á skjánum. Fylgja úrskífu heldur þeirri staðsetningu sem hver úrskífa var hönnuð fyrir.</string>
     <string name="setting_online_artwork">Myndefni af netinu</string>
     <string name="setting_online_artwork_description">Leyfðu úrskífunni að sýna mynd sem er fundin á netinu \u2014 flytjandann sem er að spila eða plötuumslag þegar spilarinn birtir ekkert. Síminn leitar í opinberri Deezer-skrá og vistar niðurstöðuna í skyndiminni; aðeins heiti lags og flytjanda eru send og ekkert er leitað upp nema úrskífa sé stillt á eina af þessum uppsprettum. Þegar slökkt er á þessu er eigið myndefni spilarans notað.</string>
+    <string name="setting_wear_shortcut_details">Spila eða stokka á úrinu</string>
+    <string name="setting_wear_shortcut_details_description">Þegar þú velur vistaðan tengil á úrinu, af flýtileiðalistanum, flýtileiðaflísinni eða aðgerðavalmyndinni, birtist umslagið fyrst með Spila og Stokka. Slökktu til að hefja spilun strax í staðinn. Hnappar og bendingar sem tengdar eru einum tengli hefja hann alltaf strax.</string>
 </resources>

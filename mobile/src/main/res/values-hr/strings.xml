@@ -2115,7 +2115,7 @@
     <string name="playlist_shortcut_detected_format">Otkriveno: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Naziv</string>
     <string name="playlist_shortcut_link_hint">Poveznica za dijeljenje ili URI aplikacije</string>
-    <string name="playlist_shortcut_shuffle">Reproduciraj nasumično (samo YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Svaki put kad je pokrenete, na satu birate Reproduciraj ili Nasumično.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2853,4 +2853,6 @@
     <string name="setting_wear_text_block_position_description">Mjesto teksta pjesme na zaslonu. „Prati lice” zadržava položaj za koji je svako lice dizajnirano.</string>
     <string name="setting_online_artwork">Slika s mreže</string>
     <string name="setting_online_artwork_description">Dopustite brojčaniku sata da prikazuje sliku pronađenu na mreži \u2014 izvođača pjesme ili naslovnicu albuma za reproduktor koji je ne objavljuje. Telefon pretražuje javni katalog Deezera i sprema rezultat u predmemoriju; šalju se samo nazivi pjesme i izvođača, a ništa se ne pretražuje osim ako je lice postavljeno na jedan od tih izvora. Kada je isključeno, koristi se vlastita slika reproduktora.</string>
+    <string name="setting_wear_shortcut_details">Reprodukcija ili nasumično na satu</string>
+    <string name="setting_wear_shortcut_details_description">Odabir spremljene poveznice na satu, s popisa prečaca, Tilea s prečacima ili iz izbornika radnji, najprije prikazuje njezin omot s gumbima Reproduciraj i Nasumično. Isključite da bi odmah počela. Gumbi i pokreti dodijeljeni jednoj poveznici uvijek je odmah pokreću.</string>
 </resources>

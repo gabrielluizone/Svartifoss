@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">最近播放</string>
     <string name="queue_history_fallback_reason">此應用程式未分享播放佇列</string>
+    <string name="menu_header_actions">動作</string>
+    <string name="menu_header_search_results">搜尋結果</string>
+    <string name="menu_header_search_history">最近的搜尋</string>
+    <string name="menu_header_library">媒體庫</string>
+    <string name="shortcut_open_on_phone">在手機上開啟</string>
+    <string name="shortcut_continue_on_phone">請在手機上繼續</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">今天</string>
 

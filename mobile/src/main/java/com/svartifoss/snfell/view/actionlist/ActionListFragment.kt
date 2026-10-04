@@ -472,6 +472,20 @@ class ActionListFragment : Fragment(), FabFragment, RecyclerViewDragDropManager.
 
             holder.text.text = phoneAction.title
 
+            // A streaming destination is listed with its cover, as the watch's menu lists it -
+            // this screen *is* that menu, edited from the phone.
+            val listCover = phoneAction.listCover.takeIf { phoneAction.customIconUri == null }
+            if (listCover != null) {
+                holder.icon.clearColorFilter()
+                holder.icon.setImageDrawable(listCover)
+                holder.icon.setBackgroundResource(R.drawable.circle_icon_bg)
+                holder.icon.setPadding(0, 0, 0, 0)
+                holder.icon.scaleType = ImageView.ScaleType.CENTER_CROP
+                holder.icon.clipToOutline = true
+                return
+            }
+            holder.icon.scaleType = ImageView.ScaleType.FIT_CENTER
+            holder.icon.clipToOutline = false
 
             val icon = customIconStorage[phoneAction]
             if (phoneAction.iconTintable) {

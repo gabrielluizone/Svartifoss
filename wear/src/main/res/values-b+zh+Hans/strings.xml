@@ -54,6 +54,12 @@
     <string name="queue_load_more">加载更多</string>
     <string name="queue_history_fallback">最近播放</string>
     <string name="queue_history_fallback_reason">此应用不共享播放队列</string>
+    <string name="menu_header_actions">操作</string>
+    <string name="menu_header_search_results">搜索结果</string>
+    <string name="menu_header_search_history">最近搜索</string>
+    <string name="menu_header_library">媒体库</string>
+    <string name="shortcut_open_on_phone">在手机上打开</string>
+    <string name="shortcut_continue_on_phone">请在手机上继续</string>
     <string name="chat_face_today">今天</string>
 
     <string name="hint_title">使用方法</string>

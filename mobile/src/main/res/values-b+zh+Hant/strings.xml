@@ -2107,7 +2107,7 @@
     <string name="playlist_shortcut_detected_format">已偵測：%1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">名稱</string>
     <string name="playlist_shortcut_link_hint">分享連結或應用程式 URI</string>
-    <string name="playlist_shortcut_shuffle">隨機播放（僅限 YouTube Music）</string>
+    <string name="playlist_shortcut_play_choice">每次開始播放時，都在手錶上選擇「播放」或「隨機播放」。</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2843,4 +2843,6 @@
     <string name="setting_wear_text_block_position_description">曲目文字在螢幕上的位置。「跟隨錶面」會保留每個錶面原本設計的位置。</string>
     <string name="setting_online_artwork">線上封面圖</string>
     <string name="setting_online_artwork_description">讓錶面顯示在線上查詢的圖片 \u2014 可以是正在演出的藝人，也可以是在播放器未提供圖片時顯示專輯封面。手機會在 Deezer 的公開目錄中查詢並快取結果；只會傳送曲目名稱和藝人名稱，且只有當某個錶面設定為使用其中一個來源時才會進行查詢。關閉後，將使用播放器本身的封面圖。</string>
+    <string name="setting_wear_shortcut_details">在手錶上選擇播放或隨機播放</string>
+    <string name="setting_wear_shortcut_details_description">在手錶上從捷徑清單、捷徑 Tile 或動作選單中選擇已儲存的連結時，會先顯示封面以及「播放」和「隨機播放」。關閉後會直接開始播放。指派給單一連結的按鈕和手勢一律直接開始播放。</string>
 </resources>

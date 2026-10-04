@@ -59,6 +59,12 @@
     <string name="queue_load_more">Carregar mais</string>
     <string name="queue_history_fallback">Tocadas recentemente</string>
     <string name="queue_history_fallback_reason">Este app não compartilha a fila</string>
+    <string name="menu_header_actions">Ações</string>
+    <string name="menu_header_search_results">Resultados da busca</string>
+    <string name="menu_header_search_history">Buscas recentes</string>
+    <string name="menu_header_library">Biblioteca</string>
+    <string name="shortcut_open_on_phone">Abrir no celular</string>
+    <string name="shortcut_continue_on_phone">Continue no seu celular</string>
     <string name="chat_face_today">Hoje</string>
 
     <string name="face_picker_title">Mostrador do relógio</string>

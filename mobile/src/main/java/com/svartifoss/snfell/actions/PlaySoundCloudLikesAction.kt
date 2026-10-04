@@ -1,11 +1,16 @@
 package com.svartifoss.snfell.actions
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.music.MusicService
+import com.svartifoss.snfell.music.PlaylistShortcutStorage
+import com.svartifoss.snfell.music.ShortcutCovers
+import com.svartifoss.snfell.music.StreamingCollection
+import com.svartifoss.snfell.music.StreamingShortcutDescription
 import javax.inject.Inject
 
 /**
@@ -35,6 +40,18 @@ class PlaySoundCloudLikesAction : SelectableAction {
                 context, com.svartifoss.snfell.common.R.drawable.action_liked_songs)!!
     override val remoteUri: String
         get() = PlayPlaylistShortcutAction(context, title, LIKES_LINK).remoteUri
+
+    /** A playlist like any saved one, so picked from a list it opens with Play and Shuffle. */
+    override val streamingShortcut: StreamingShortcutDescription
+        get() = PlaylistShortcutStorage.describeForWatch(context, title, LIKES_LINK)
+
+    /** Listed with its collection's cover rather than the glyph its buttons keep. */
+    override val listCover: Drawable
+        get() = BitmapDrawable(context.resources,
+                ShortcutCovers.forCollection(context, StreamingCollection.SOUNDCLOUD_LIKES))
+
+    override val streamingCollection: StreamingCollection
+        get() = StreamingCollection.SOUNDCLOUD_LIKES
 
     class Handler @Inject constructor(private val service: MusicService) :
             ActionHandler<PlaySoundCloudLikesAction> {

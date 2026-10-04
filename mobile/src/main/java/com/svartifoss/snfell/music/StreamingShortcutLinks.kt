@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.music
 
+import com.svartifoss.snfell.proto.ShortcutPlayMode
 import java.net.URI
 import java.net.URISyntaxException
 import java.util.Locale
@@ -39,6 +40,20 @@ enum class StreamingContentType {
     val isPlayable: Boolean
         get() = this == TRACK || this == PLAYLIST || this == ALBUM || this == ARTIST ||
                 this == SHOW || this == EPISODE || this == MIX
+
+    /**
+     * Whether the watch offers Shuffle beside Play for a shortcut of this kind.
+     *
+     * Only for a collection whose order the listener could reasonably want scrambled. A single
+     * track or episode has nothing to shuffle; a show is a series heard in order; a mix (a radio,
+     * Deezer Flow) is already an endless stream the service orders itself, where a shuffle request
+     * is at best ignored. [UNKNOWN] is offered it: a provider's short redirect link classifies as
+     * unknown until it is opened, and those are as often playlists as anything else - the button
+     * costs nothing where the player declines it, while withholding it takes the choice away from
+     * exactly the playlist someone saved through a share sheet.
+     */
+    val offersShuffle: Boolean
+        get() = this == PLAYLIST || this == ALBUM || this == ARTIST || this == UNKNOWN
 }
 
 data class StreamingLinkInfo(
@@ -46,6 +61,14 @@ data class StreamingLinkInfo(
         val contentType: StreamingContentType,
         val canonicalLink: String
 )
+
+/**
+ * What [StreamingShortcutLinks.planFor] decided for one shortcut start.
+ *
+ * [sessionShuffle] is tri-state on purpose: null means "leave the player's shuffle mode exactly as
+ * it is", which is not the same request as switching it off.
+ */
+data class ShortcutPlayPlan(val link: String, val sessionShuffle: Boolean?)
 
 /**
  * Pure link handling shared by the editor, its descriptions and [MusicService]. These are link
@@ -210,6 +233,42 @@ object StreamingShortcutLinks {
         else "?${keptParameters.joinToString("&")}$fragment"
     }
 
+    /**
+     * How a shortcut starts when the watch names a [ShortcutPlayMode], as the link to hand to the
+     * playback ladder plus what - if anything - to ask the player's shuffle mode to be.
+     *
+     * Two mechanisms, chosen per link rather than tried together. A YouTube Music playlist carries
+     * shuffle in the link itself (`&shuffle=true`, the parameter YT Music's own Shuffle button
+     * appends), which is the one route known to work there: that app does not reliably honour a
+     * shuffle mode set from outside on a queue it builds from a link, so for those links the
+     * session is left alone entirely - a second, competing instruction could only undo the first.
+     * Everything else is asked through the session's shuffle mode, which most players implement
+     * and which is a harmless no-op on one that does not.
+     *
+     * [ShortcutPlayMode.IN_ORDER] actively switches shuffle *off* rather than merely not asking for
+     * it: most players keep the mode across queues, so after one Shuffle every later Play would
+     * have shuffled too, and the two buttons would have done the same thing. And
+     * [ShortcutPlayMode.AS_SAVED] - every button, gesture and menu entry, and every older watch -
+     * changes nothing at all, so a link that was saved with the YouTube Music flag still shuffles
+     * from the button it was assigned to.
+     */
+    fun planFor(rawLink: String, mode: ShortcutPlayMode): ShortcutPlayPlan {
+        val linkShuffles = supportsShuffle(rawLink)
+        return when (mode) {
+            ShortcutPlayMode.AS_SAVED -> ShortcutPlayPlan(rawLink, sessionShuffle = null)
+            ShortcutPlayMode.IN_ORDER -> if (linkShuffles) {
+                ShortcutPlayPlan(stripShuffle(rawLink), sessionShuffle = null)
+            } else {
+                ShortcutPlayPlan(rawLink, sessionShuffle = false)
+            }
+            ShortcutPlayMode.SHUFFLE -> if (linkShuffles) {
+                ShortcutPlayPlan(withYoutubeShuffle(rawLink), sessionShuffle = null)
+            } else {
+                ShortcutPlayPlan(rawLink, sessionShuffle = true)
+            }
+        }
+    }
+
     /** Shuffle is deliberately only encoded for YouTube Music, where this parameter is known. */
     fun withYoutubeShuffle(rawLink: String): String {
         val link = stripShuffle(rawLink)
@@ -230,6 +289,9 @@ object StreamingShortcutLinks {
     /** Browser/chooser-safe fallback. A user-entered Spotify app URI is converted back to web. */
     fun forBrowser(rawLink: String): String {
         val link = normalizeYoutubePlaylist(canonicalize(rawLink))
+        if (link.equals("spotify:collection:tracks", ignoreCase = true)) {
+            return "https://open.spotify.com/collection/tracks"
+        }
         return spotifyWebUrl(link) ?: link
     }
 
@@ -254,8 +316,8 @@ object StreamingShortcutLinks {
      *  (youtu.be short links, plain youtube.com, `/playlist`) into the `music.youtube.com/watch`
      *  form, which is the shape that reliably *starts playback* rather than only opening a page -
      *  the same distinction that makes the Liked Music `watch?list=LM` deep link work. */
-    fun forPlayback(rawLink: String): String {
-        val link = forInstalledApp(rawLink)
+    fun forPlayback(rawLink: String, officialAppTarget: Boolean = true): String {
+        val link = if (officialAppTarget) forInstalledApp(rawLink) else forBrowser(rawLink)
         return if (detect(link) == StreamingService.YOUTUBE_MUSIC) {
             youtubeMusicPlaybackUri(link)
         } else {

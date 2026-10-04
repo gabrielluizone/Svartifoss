@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Lu récemment</string>
     <string name="queue_history_fallback_reason">Cette appli ne partage pas sa file d’attente</string>
+    <string name="menu_header_actions">Actions</string>
+    <string name="menu_header_search_results">Résultats de recherche</string>
+    <string name="menu_header_search_history">Recherches récentes</string>
+    <string name="menu_header_library">Bibliothèque</string>
+    <string name="shortcut_open_on_phone">Ouvrir sur le téléphone</string>
+    <string name="shortcut_continue_on_phone">Continuez sur votre téléphone</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Aujourd’hui</string>
 

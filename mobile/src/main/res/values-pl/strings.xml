@@ -2119,7 +2119,7 @@
     <string name="playlist_shortcut_detected_format">Wykryto: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Nazwa</string>
     <string name="playlist_shortcut_link_hint">Link udostępniania lub URI aplikacji</string>
-    <string name="playlist_shortcut_shuffle">Odtwarzaj losowo (tylko YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Za każdym razem wybierasz na zegarku Odtwórz lub Losowo.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2858,4 +2858,6 @@
     <string name="setting_wear_text_block_position_description">Miejsce tekstu utworu na ekranie. Opcja „Zgodnie z tarczą” zachowuje pozycję zaprojektowaną dla każdej tarczy.</string>
     <string name="setting_online_artwork">Grafika online</string>
     <string name="setting_online_artwork_description">Pozwól tarczy zegarka wyświetlać obraz znaleziony online \u2014 wykonawcę utworu albo okładkę albumu dla odtwarzacza, który jej nie udostępnia. Telefon wyszukuje obraz w publicznym katalogu Deezer i zapisuje wynik w pamięci podręcznej; wysyłane są tylko nazwy utworu i wykonawcy, a wyszukiwanie odbywa się wyłącznie wtedy, gdy tarcza korzysta z jednego z tych źródeł. Gdy opcja jest wyłączona, używana jest grafika udostępniana przez odtwarzacz.</string>
+    <string name="setting_wear_shortcut_details">Odtwarzaj lub losowo na zegarku</string>
+    <string name="setting_wear_shortcut_details_description">Wybranie zapisanego linku na zegarku – z listy skrótów, kafelka Skróty lub menu akcji – najpierw pokazuje jego okładkę z przyciskami Odtwórz i Losowo. Wyłącz, aby od razu go uruchamiać. Przyciski i gesty przypisane do jednego linku zawsze uruchamiają go od razu.</string>
 </resources>

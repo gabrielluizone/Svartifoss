@@ -27,6 +27,7 @@ import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.util.FloatPacker
 import com.svartifoss.snfell.proto.CustomList
 import com.svartifoss.snfell.proto.CustomListItemAction
+import com.svartifoss.snfell.proto.ShortcutPlayMode
 import com.svartifoss.snfell.proto.LyricsRequest
 import com.svartifoss.snfell.proto.LyricsResponse
 import com.svartifoss.snfell.proto.MusicState
@@ -508,15 +509,18 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
      * The send is not one call but a node lookup followed by a message, so a cancel landing between
      * the two dropped the selection entirely - the queue tap that appeared to do nothing.
      */
-    suspend fun executeCustomMenuAction(listId: String, entryId: String) {
+    suspend fun executeCustomMenuAction(
+            listId: String,
+            entryId: String,
+            /** How a streaming shortcut should start - Play or Shuffle from its own screen. Left
+             *  unset for [ShortcutPlayMode.AS_SAVED], so the payload is byte-for-byte what it was
+             *  for every other selection. */
+            playMode: ShortcutPlayMode = ShortcutPlayMode.AS_SAVED
+    ) {
         withContext(NonCancellable) {
             sendToPhone(
                     CommPaths.MESSAGE_CUSTOM_LIST_ITEM_SELECTED,
-                    CustomListItemAction.newBuilder()
-                            .setListId(listId)
-                            .setEntryId(entryId)
-                            .build()
-                            .toByteArray()
+                    customListItemPayload(listId, entryId, playMode)
             )
         }
     }

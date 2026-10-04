@@ -737,4 +737,5 @@
         layout="@layout/overlay_first_run_hints"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </FrameLayout>

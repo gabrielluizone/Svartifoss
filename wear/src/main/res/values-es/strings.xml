@@ -55,6 +55,12 @@
     <string name="queue_load_more">Cargar más</string>
     <string name="queue_history_fallback">Reproducido recientemente</string>
     <string name="queue_history_fallback_reason">Esta app no comparte su cola</string>
+    <string name="menu_header_actions">Acciones</string>
+    <string name="menu_header_search_results">Resultados de búsqueda</string>
+    <string name="menu_header_search_history">Búsquedas recientes</string>
+    <string name="menu_header_library">Biblioteca</string>
+    <string name="shortcut_open_on_phone">Abrir en el teléfono</string>
+    <string name="shortcut_continue_on_phone">Continúa en tu teléfono</string>
     <string name="chat_face_today">Hoy</string>
 
     <string name="face_picker_title">Esfera del reloj</string>

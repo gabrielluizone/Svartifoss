@@ -107,6 +107,22 @@ object MiscPreferences {
             SimplePreferenceDefinition("wear_hide_from_recents", false)
 
     /**
+     * Picking a streaming shortcut on the watch - from the shortcut list or the Shortcuts Tile -
+     * opens its own screen first: the cover, the name, and Play beside Shuffle.
+     *
+     * The choice between the two used to be made once, when the link was saved on the phone, and
+     * only for YouTube Music playlists. Asking at the moment of playing is what the music apps on
+     * the watch do, and it works for every service whose player accepts a shuffle request.
+     *
+     * On by default. Off restores the one-tap start for people who never shuffle and would rather
+     * not pay a second tap for a choice they do not use. Buttons, gestures and menu entries
+     * assigned to one particular shortcut are unaffected either way: they are already one
+     * deliberate press for one deliberate thing.
+     */
+    val WEAR_SHORTCUT_DETAILS: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_shortcut_details", true)
+
+    /**
      * Hold the watch's screen on while a Svartifoss screen is in the foreground, instead of letting
      * it blank on the system's inactivity timeout.
      *
@@ -1137,6 +1153,17 @@ object MiscPreferences {
     /** Extract accent color from album art on the watch (when off, uses the static theme accent). */
     val WEAR_DYNAMIC_ACCENT: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("wear_dynamic_accent", true)
 
+    /**
+     * Phone app's custom Accent color, projected into the watch snapshot as its static fallback.
+     *
+     * This is deliberately not part of [EXPORTABLE]: it is derived at sync time from the phone's
+     * own `custom_accent_color` preference, rather than being a second user-editable watch
+     * setting. Keeping the derived value out of backups and community themes also means a watch
+     * look never overwrites the phone app's colour choice.
+     */
+    val WEAR_PHONE_ACCENT_COLOR: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_phone_accent_color", "")
+
     /** One color policy for the complete interactive watch UI. "normal" uses the user's fixed
      * [WEAR_NORMAL_COLOR], "desaturated" derives a softened accent from the current cover and
      * "expressive" uses the full album palette (distinct primary/secondary/tertiary swatches).
@@ -1572,7 +1599,8 @@ object MiscPreferences {
             WEAR_PINCH_COOLDOWN, WEAR_PINCH_CALIBRATION,
             DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT, AUTO_START_MODE,
             AUTO_START_APP_BLACKLIST, CLOSE_TIMEOUT, WEAR_CLOSE_ON_IDLE,
-            WEAR_PAUSED_HOLD, WEAR_HIDE_FROM_RECENTS, WEAR_IDLE_BUTTON_ACTION, WEAR_IDLE_AUTO_OPEN,
+            WEAR_PAUSED_HOLD, WEAR_HIDE_FROM_RECENTS, WEAR_SHORTCUT_DETAILS,
+            WEAR_IDLE_BUTTON_ACTION, WEAR_IDLE_AUTO_OPEN,
             WEAR_KEEP_SCREEN_ON, LYRICS_ENABLED,
             ENABLE_NOTIFICATION_POPUP, NOTIFICATION_TIMEOUT,
             ALWAYS_SELECT_CENTER_ACTION, DIM_ALBUM_ART, ALBUM_ART_STYLE, ALBUM_ART_FILTER,

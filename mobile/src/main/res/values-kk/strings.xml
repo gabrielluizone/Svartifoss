@@ -2130,7 +2130,7 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
     <string name="playlist_shortcut_detected_format">Анықталды: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Атауы</string>
     <string name="playlist_shortcut_link_hint">Бөлісу сілтемесі немесе қолданба URI</string>
-    <string name="playlist_shortcut_shuffle">Араластырып ойнату (тек YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Әр бастаған сайын сағатта «Ойнату» не «Араластырып ойнату» таңдайсыз.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2866,4 +2866,6 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
     <string name="setting_wear_text_block_position_description">Трек мәтінінің экранда орналасатын орны. «Бетке сай» параметрі әр бет үшін жобаланған орынды сақтайды.</string>
     <string name="setting_online_artwork">Онлайн мұқаба</string>
     <string name="setting_online_artwork_description">Сағат бетіне интернеттен табылған суретті көрсетуге рұқсат етіңіз \u2014 орындаушының суретін немесе мұқаба жарияламайтын ойнатқыш үшін альбом мұқабасын. Телефоныңыз Deezer ашық каталогынан іздеп, нәтижені кэшке сақтайды; тек трек пен орындаушы атаулары жіберіледі және бет осы көздердің біріне орнатылмаса, ештеңе ізделмейді. Өшірілген кезде ойнатқыштың өз мұқабасы пайдаланылады.</string>
+    <string name="setting_wear_shortcut_details">Сағатта ойнату не араластыру</string>
+    <string name="setting_wear_shortcut_details_description">Сағатта сақталған сілтемені таңдағанда (жарлықтар тізімінен, жарлықтар Tile-ынан не әрекеттер мәзірінен) алдымен оның мұқабасы «Ойнату» және «Араластырып ойнату» түймелерімен көрсетіледі. Бірден бастау үшін өшіріңіз. Бір сілтемеге тағайындалған түймелер мен қимылдар оны әрқашан бірден бастайды.</string>
 </resources>

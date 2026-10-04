@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">हाल में चलाया गया</string>
     <string name="queue_history_fallback_reason">यह ऐप अपनी कतार साझा नहीं करता</string>
+    <string name="menu_header_actions">ऐक्शन</string>
+    <string name="menu_header_search_results">खोज परिणाम</string>
+    <string name="menu_header_search_history">हाल की खोजें</string>
+    <string name="menu_header_library">लाइब्रेरी</string>
+    <string name="shortcut_open_on_phone">फ़ोन पर खोलें</string>
+    <string name="shortcut_continue_on_phone">अपने फ़ोन पर जारी रखें</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">आज</string>
 

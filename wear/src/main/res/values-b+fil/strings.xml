@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Pinatugtog kamakailan</string>
     <string name="queue_history_fallback_reason">Hindi ibinabahagi ng app na ito ang queue nito</string>
+    <string name="menu_header_actions">Mga aksyon</string>
+    <string name="menu_header_search_results">Mga resulta ng paghahanap</string>
+    <string name="menu_header_search_history">Mga kamakailang paghahanap</string>
+    <string name="menu_header_library">Library</string>
+    <string name="shortcut_open_on_phone">Buksan sa phone</string>
+    <string name="shortcut_continue_on_phone">Ituloy sa phone mo</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Ngayon</string>
 

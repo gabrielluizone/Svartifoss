@@ -54,6 +54,12 @@
     <string name="queue_load_more">Carica altri</string>
     <string name="queue_history_fallback">Riprodotti di recente</string>
     <string name="queue_history_fallback_reason">Questa app non condivide la sua coda</string>
+    <string name="menu_header_actions">Azioni</string>
+    <string name="menu_header_search_results">Risultati della ricerca</string>
+    <string name="menu_header_search_history">Ricerche recenti</string>
+    <string name="menu_header_library">Raccolta</string>
+    <string name="shortcut_open_on_phone">Apri sul telefono</string>
+    <string name="shortcut_continue_on_phone">Continua sul telefono</string>
     <string name="chat_face_today">Oggi</string>
 
     <string name="face_picker_title">Quadrante orologio</string>

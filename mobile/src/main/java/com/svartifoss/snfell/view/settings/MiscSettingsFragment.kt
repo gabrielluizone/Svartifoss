@@ -34,6 +34,7 @@ import com.svartifoss.snfell.common.model.AutoStartMode
 import com.svartifoss.snfell.config.ConfigBackup
 import com.svartifoss.snfell.config.ConfigBackupSection
 import com.svartifoss.snfell.config.DefaultConfigExport
+import com.svartifoss.snfell.config.ActionConfig
 import com.svartifoss.snfell.update.UpdateGateway
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
@@ -42,6 +43,8 @@ import com.svartifoss.snfell.music.PlaylistShortcutStorage
 import com.svartifoss.snfell.music.QueueArtworkResolver
 import com.svartifoss.snfell.music.StreamingService
 import com.svartifoss.snfell.music.StreamingShortcutLinks
+import com.svartifoss.snfell.music.StreamingShortcutRoutes
+import com.svartifoss.snfell.di.GlobalConfig
 import com.svartifoss.snfell.util.WearableAvailability
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.svartifoss.snfell.view.TitledActivity
@@ -109,6 +112,10 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
 
     @Inject
     lateinit var watchInfoProvider: WatchInfoProvider
+
+    @Inject
+    @GlobalConfig
+    lateinit var actionConfig: ActionConfig
 
     private val importConfigLauncher = registerForActivityResult(
             ActivityResultContracts.OpenDocument()
@@ -375,6 +382,12 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                 true
             }
 
+        findPreference<Preference>("streaming_app_routes")?.onPreferenceClickListener =
+            Preference.OnPreferenceClickListener {
+                showStreamingAppRoutes()
+                true
+            }
+
         findPreference<Preference>("queue_media_permission")?.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 if (QueueArtworkResolver.hasMediaPermission(requireContext())) {
@@ -500,6 +513,23 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                         shortcutCount
                 )
 
+        val selectedRouteCount = StreamingService.values().count { service ->
+            service.packageName != null && StreamingShortcutRoutes.selectedPackage(
+                    preferenceManager.sharedPreferences ?: return@count false,
+                    service
+            ) != null
+        }
+        findPreference<Preference>("streaming_app_routes")?.summary =
+                if (selectedRouteCount == 0) {
+                    getString(R.string.setting_streaming_app_routes_description)
+                } else {
+                    resources.getQuantityString(
+                            R.plurals.setting_streaming_app_routes_selected,
+                            selectedRouteCount,
+                            selectedRouteCount
+                    )
+                }
+
         findPreference<Preference>("notification_access")?.setSummary(
                 if (NotificationService.isEnabled(requireContext())) {
                     R.string.setting_notification_access_enabled
@@ -507,6 +537,62 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                     R.string.setting_notification_access_disabled
                 }
         )
+    }
+
+    /** Lets each known provider be routed to a compatible installed client independently. */
+    private fun showStreamingAppRoutes() {
+        val context = requireContext()
+        val preferences = preferenceManager.sharedPreferences ?: return
+        val services = StreamingService.values().filter { it.packageName != null }
+        val labels = services.map { service ->
+            val selection = StreamingShortcutRoutes.selectedPackage(preferences, service)
+                    ?: getString(R.string.streaming_route_automatic)
+            "${streamingServiceName(service)} · $selection"
+        }.toTypedArray()
+        AlertDialog.Builder(context)
+                .setTitle(R.string.setting_streaming_app_routes)
+                .setItems(labels) { _, index -> showStreamingAppRoutePicker(services[index]) }
+                .show()
+    }
+
+    private fun showStreamingAppRoutePicker(service: StreamingService) {
+        val context = requireContext()
+        val preferences = preferenceManager.sharedPreferences ?: return
+        val apps = StreamingShortcutRoutes.availableApps(context, service)
+        val selectedPackage = StreamingShortcutRoutes.selectedPackage(preferences, service)
+        val options = listOf(
+                StreamingShortcutRoutes.App("", getString(R.string.streaming_route_automatic))
+        ) + apps
+        val checkedIndex = options.indexOfFirst { it.packageName == selectedPackage }
+                .takeIf { it >= 0 } ?: 0
+
+        AlertDialog.Builder(context)
+                .setTitle(streamingServiceName(service))
+                .setSingleChoiceItems(options.map { it.label }.toTypedArray(), checkedIndex) {
+                        dialog, index ->
+                    val packageName = options[index].packageName
+                    preferences.edit().apply {
+                        if (packageName.isEmpty()) remove(StreamingShortcutRoutes.preferenceKey(service))
+                        else putString(StreamingShortcutRoutes.preferenceKey(service), packageName)
+                    }.apply()
+                    retransmitShortcutDestinations()
+                    refreshAppsSection()
+                    dialog.dismiss()
+                }
+                .setNegativeButton(android.R.string.cancel, null)
+                .show()
+    }
+
+    /** Remote URIs are cached in the watch's action and shortcut-list DataItems. */
+    private fun retransmitShortcutDestinations() {
+        try {
+            actionConfig.getActionList().retransmit()
+            actionConfig.getPlayingConfig().retransmit()
+            actionConfig.getStoppedConfig().retransmit()
+            PlaylistShortcutStorage.syncToWatch(requireContext())
+        } catch (e: RuntimeException) {
+            Timber.w(e, "Could not update shortcut destinations on watch")
+        }
     }
 
     private fun streamingServiceName(service: StreamingService): String = getString(

@@ -330,12 +330,31 @@
             android:layout="@layout/pref_item" />
 
         <Preference
+            android:key="streaming_app_routes"
+            android:icon="@drawable/ic_apps"
+            android:title="@string/setting_streaming_app_routes"
+            android:summary="@string/setting_streaming_app_routes_description"
+            android:layout="@layout/pref_item"
+            android:widgetLayout="@layout/pref_widget_chevron" />
+
+        <Preference
             android:key="playlist_shortcuts"
             android:icon="@drawable/ic_playlist_add"
             android:title="@string/setting_playlist_shortcuts"
             android:summary="@string/setting_playlist_shortcuts_description"
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_chevron" />
+
+        <!-- Whether picking a shortcut on the watch (its list, the Shortcuts Tile, the actions
+             menu) opens its own screen with Play and Shuffle, or starts it at once as it used to.
+             Synced to the watch; buttons and gestures assigned to one shortcut always start it. -->
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="true"
+            android:key="wear_shortcut_details"
+            android:icon="@drawable/ic_shuffle"
+            android:title="@string/setting_wear_shortcut_details"
+            android:summary="@string/setting_wear_shortcut_details_description"
+            android:layout="@layout/pref_switch_item" />
 
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="false"

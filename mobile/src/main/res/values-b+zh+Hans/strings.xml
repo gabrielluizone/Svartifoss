@@ -1434,7 +1434,7 @@
     <string name="playlist_shortcut_detected_format">已检测到：%1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">名称</string>
     <string name="playlist_shortcut_link_hint">分享链接或应用 URI</string>
-    <string name="playlist_shortcut_shuffle">随机播放（仅限 YouTube Music）</string>
+    <string name="playlist_shortcut_play_choice">每次开始播放时，都在手表上选择“播放”或“随机播放”。</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2826,4 +2826,6 @@
     <string name="setting_wear_text_block_position_description">曲目文本在屏幕上的位置。“跟随表盘”会保留每个表盘设计时设定的位置。</string>
     <string name="setting_online_artwork">在线封面图</string>
     <string name="setting_online_artwork_description">让表盘显示在线查找的图片 \u2014 可以是正在演唱的艺术家，也可以是在播放器未提供图片时显示专辑封面。手机会在 Deezer 的公开目录中进行查找并缓存结果；只会发送曲目名和艺术家名，并且只有当某个表盘设置为使用这些来源之一时才会进行查找。关闭后，将使用播放器自身的封面图。</string>
+    <string name="setting_wear_shortcut_details">在手表上选择播放或随机播放</string>
+    <string name="setting_wear_shortcut_details_description">在手表上从快捷方式列表、快捷方式磁贴或操作菜单中选择已保存的链接时，会先显示其封面以及“播放”和“随机播放”。关闭后将直接开始播放。分配给某个链接的按钮和手势始终直接开始播放。</string>
 </resources>

@@ -2119,7 +2119,7 @@
     <string name="playlist_shortcut_detected_format">Виявлено: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Назва</string>
     <string name="playlist_shortcut_link_hint">Посилання для поширення або URI програми</string>
-    <string name="playlist_shortcut_shuffle">Відтворювати у випадковому порядку (лише YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Щоразу під час запуску ви обираєте на годиннику «Відтворити» або «Перемішати».</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2858,4 +2858,6 @@
     <string name="setting_wear_text_block_position_description">Місце тексту композиції на екрані. «Відповідно до оформлення» зберігає позицію, для якої було спроєктовано кожне оформлення.</string>
     <string name="setting_online_artwork">Онлайн-обкладинка</string>
     <string name="setting_online_artwork_description">Дозвольте оформленню годинника показувати зображення, знайдене онлайн \u2014 виконавця композиції або обкладинку альбому для програвача, який її не надає. Телефон виконує пошук у публічному каталозі Deezer і кешує результат; надсилаються лише назви композиції та виконавця, а пошук не виконується, якщо оформлення не налаштовано на одне з цих джерел. Коли вимкнено, використовується власна обкладинка програвача.</string>
+    <string name="setting_wear_shortcut_details">Відтворити або перемішати на годиннику</string>
+    <string name="setting_wear_shortcut_details_description">Якщо вибрати збережене посилання на годиннику — зі списку ярликів, Tile ярликів або меню дій, — спершу з’являється його обкладинка з кнопками «Відтворити» і «Перемішати». Вимкніть, щоб запускати одразу. Кнопки й жести, призначені одному посиланню, завжди запускають його одразу.</string>
 </resources>

@@ -54,6 +54,12 @@
     <string name="queue_load_more">Carregar mais</string>
     <string name="queue_history_fallback">Reproduzidas recentemente</string>
     <string name="queue_history_fallback_reason">Esta aplicação não partilha a fila</string>
+    <string name="menu_header_actions">Ações</string>
+    <string name="menu_header_search_results">Resultados da pesquisa</string>
+    <string name="menu_header_search_history">Pesquisas recentes</string>
+    <string name="menu_header_library">Biblioteca</string>
+    <string name="shortcut_open_on_phone">Abrir no telemóvel</string>
+    <string name="shortcut_continue_on_phone">Continue no telemóvel</string>
     <string name="chat_face_today">Hoje</string>
 
     <string name="hint_title">Como usar</string>

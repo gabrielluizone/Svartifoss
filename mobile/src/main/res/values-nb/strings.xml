@@ -2134,7 +2134,7 @@ Når Vibration Center får klokken til å vibrere, viser Svartifoss en popup med
     <string name="playlist_shortcut_detected_format">Oppdaget: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Navn</string>
     <string name="playlist_shortcut_link_hint">Delingslenke eller app-URI</string>
-    <string name="playlist_shortcut_shuffle">Spill tilfeldig (kun YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Du velger Spill av eller Tilfeldig rekkefølge på klokken hver gang du starter den.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2871,4 +2871,6 @@ Når Vibration Center får klokken til å vibrere, viser Svartifoss en popup med
     <string name="setting_wear_text_block_position_description">Hvor sporets tekst ligger på skjermen. Følg urskive beholder posisjonen hver urskive er utformet for.</string>
     <string name="setting_online_artwork">Nettbasert omslag</string>
     <string name="setting_online_artwork_description">La urskiven vise et bilde som slås opp på nettet \u2014 artisten som spiller, eller et albumomslag når en spiller ikke publiserer noe. Telefonen gjør oppslaget i Deezers offentlige katalog og cacher resultatet; bare spor- og artistnavn sendes, og ingenting slås opp med mindre en urskive er satt til en av disse kildene. Når funksjonen er av, brukes spillerens eget omslag.</string>
+    <string name="setting_wear_shortcut_details">Spill av eller tilfeldig på klokken</string>
+    <string name="setting_wear_shortcut_details_description">Når du velger en lagret lenke på klokken – fra snarveislisten, snarvei-flisen eller handlingsmenyen – vises omslaget først med Spill av og Tilfeldig rekkefølge. Slå av for å starte den med en gang i stedet. Knapper og bevegelser som er tilordnet én lenke, starter den alltid med en gang.</string>
 </resources>

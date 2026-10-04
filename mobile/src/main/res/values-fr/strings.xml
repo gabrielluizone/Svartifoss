@@ -2134,7 +2134,7 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
     <string name="playlist_shortcut_detected_format">Détecté : %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Nom</string>
     <string name="playlist_shortcut_link_hint">Lien de partage ou URI de l’application</string>
-    <string name="playlist_shortcut_shuffle">Lecture aléatoire (YouTube Music uniquement)</string>
+    <string name="playlist_shortcut_play_choice">Vous choisissez Lecture ou Aléatoire sur la montre à chaque lancement.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2871,4 +2871,6 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
     <string name="setting_wear_text_block_position_description">Emplacement du texte du morceau à l’écran. Suivre le cadran conserve la position pour laquelle chaque cadran a été conçu.</string>
     <string name="setting_online_artwork">Illustration en ligne</string>
     <string name="setting_online_artwork_description">Autorisez le cadran à afficher une image recherchée en ligne \u2014 l’artiste en cours de lecture, ou une pochette d’album si le lecteur n’en fournit aucune. Votre téléphone effectue la recherche dans le catalogue public de Deezer et met le résultat en cache ; seuls les noms du morceau et de l’artiste sont envoyés, et aucune recherche n’est faite à moins qu’un cadran soit réglé sur l’une de ces sources. Lorsque cette option est désactivée, l’illustration fournie par le lecteur est utilisée.</string>
+    <string name="setting_wear_shortcut_details">Lecture ou aléatoire sur la montre</string>
+    <string name="setting_wear_shortcut_details_description">Choisir un lien enregistré sur la montre, depuis la liste des raccourcis, la Tile Raccourcis ou le menu d’actions, affiche d’abord sa pochette avec Lecture et Aléatoire. Désactivez pour le lancer immédiatement à la place. Les boutons et gestes attribués à un lien le lancent toujours immédiatement.</string>
 </resources>

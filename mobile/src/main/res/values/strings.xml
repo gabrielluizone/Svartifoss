@@ -2507,6 +2507,8 @@
     <string name="setting_wear_close_on_idle_description">Automatically closes the watch app about a minute after it reaches the idle \"Nothing playing\" screen, so it never lingers there. Independent of the close timeout above, which covers a paused track.</string>
     <string name="setting_wear_hide_from_recents">Hide from recent apps</string>
     <string name="setting_wear_hide_from_recents_description">Keeps the watch app out of the watch\'s recent apps list once you close it or use another app. Useful if you open it from the watch face or the Now Bar instead. It stays reachable exactly as before, and music and the background connection are not affected.</string>
+    <string name="setting_wear_shortcut_details">Play or Shuffle on the watch</string>
+    <string name="setting_wear_shortcut_details_description">Picking a saved link on the watch, from its shortcut list, the Shortcuts Tile or the actions menu, first shows its cover with Play and Shuffle. Turn off to start it straight away instead. Buttons and gestures assigned to one link always start it straight away.</string>
     <string name="category_notifications">Notification popup</string>
     <string name="setting_enable_notifications">Show notification popup</string>
     <string name="setting_enable_notifications_description">This feature requires another app to manage notifications (Vibration Center for Wear).\n\nWhenever Vibration Center vibrates the watch, Svartifoss will display popup of the notification text, allowing you to glance at notification quickly without leaving Svartifoss.</string>
@@ -2617,6 +2619,14 @@
         <item>Android default</item>
         <item>Ask every time</item>
     </string-array>
+    <string name="setting_streaming_app_routes">Choose apps for streaming links</string>
+    <string name="setting_streaming_app_routes_description">Choose a compatible installed app separately for YouTube Music, Spotify and each other service. Used with “Detected streaming app”.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d service uses a selected app</item>
+        <item quantity="other">%1$d services use selected apps</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Apps that can open the link, plus installed media players, are shown.</string>
+    <string name="streaming_route_automatic">Automatic (detected app)</string>
     <string name="setting_persistent_notification">Manage the \"Svartifoss active\" notification</string>
     <string name="setting_persistent_notification_description">Opens this notification\'s Android settings — mute it, hide it from the lock screen, or otherwise adjust it. It can\'t be turned off entirely: Android requires an ongoing notification while the background service that talks to your watch is running.</string>
     <string name="setting_notification_access">Media notification access</string>
@@ -2658,7 +2668,7 @@
     <string name="playlist_shortcut_detected_format">Detected: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Name</string>
     <string name="playlist_shortcut_link_hint">Share link or app URI</string>
-    <string name="playlist_shortcut_shuffle">Play shuffled (YouTube Music only)</string>
+    <string name="playlist_shortcut_play_choice">You pick Play or Shuffle on the watch each time you start it.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>

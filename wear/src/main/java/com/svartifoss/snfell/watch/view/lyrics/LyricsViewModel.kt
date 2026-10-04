@@ -3,6 +3,7 @@ package com.svartifoss.snfell.watch.view.lyrics
 import android.content.Context
 import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,7 @@ import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.AdaptiveTextContrast
 import com.svartifoss.snfell.common.AlbumAccentSource
+import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.LyricLine
 import com.svartifoss.snfell.common.MiscPreferences
@@ -96,9 +98,6 @@ class LyricsViewModel @Inject constructor(
     private val _accentTriad = MutableLiveData<PanelTriad>()
     val accentTriad: LiveData<PanelTriad> = _accentTriad
 
-    /** The cover the ground is painted from - see ScreenBackdrop. */
-    val albumArt = phoneConnection.albumArt
-
     private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
 
     /**
@@ -112,6 +111,24 @@ class LyricsViewModel @Inject constructor(
                     prefs,
                     MiscPreferences.WEAR_ALBUM_ACCENT_SOURCE,
                     appearanceContext))
+
+    /**
+     * The same artwork MainActivity has selected for the active face.  Artist/online/custom
+     * sources arrive as `backdropArt`; using `albumArt` here made Lyrics re-extract a colour from
+     * the sleeve after opening with the player's correct accent.
+     */
+    val artwork = MediatorLiveData<Bitmap?>().apply {
+        val source = AlbumArtSource.fromPref(FaceScopedPreferences.getString(
+                prefs, MiscPreferences.WEAR_ALBUM_ART_SOURCE, appearanceContext))
+        fun refresh() {
+            value = source.effectiveArtwork(
+                    phoneConnection.albumArt.value, phoneConnection.backdropArt.value)
+        }
+        value = source.effectiveArtwork(
+                phoneConnection.albumArt.value, phoneConnection.backdropArt.value)
+        addSource(phoneConnection.albumArt) { refresh() }
+        addSource(phoneConnection.backdropArt) { refresh() }
+    }
 
     /** Stands in for a cover that carries no colour, or none at all. */
     private val fallbackTriad = PanelTriad(
@@ -147,7 +164,7 @@ class LyricsViewModel @Inject constructor(
 
     init {
         phoneConnection.musicState.observeForever(stateObserver)
-        phoneConnection.albumArt.observeForever(artObserver)
+        artwork.observeForever(artObserver)
 
         // Opening the screen is one of the events worth a check - not because the estimate is
         // untrustworthy by then (it is being corrected continuously), but because this is the
@@ -377,7 +394,7 @@ class LyricsViewModel @Inject constructor(
         phoneConnection.setPositionViewer(this, false)
         feed.release()
         phoneConnection.musicState.removeObserver(stateObserver)
-        phoneConnection.albumArt.removeObserver(artObserver)
+        artwork.removeObserver(artObserver)
     }
 
     private companion object {

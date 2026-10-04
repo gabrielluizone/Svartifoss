@@ -62,6 +62,12 @@
     <string name="queue_load_more">زیاتر بار بکە</string>
     <string name="queue_history_fallback">بەم دواییە پخشکراو</string>
     <string name="queue_history_fallback_reason">ئەم ئەپە queue ـەکەی share ناکات</string>
+    <string name="menu_header_actions">کردارەکان</string>
+    <string name="menu_header_search_results">ئەنجامەکانی گەڕان</string>
+    <string name="menu_header_search_history">گەڕانە تازەکان</string>
+    <string name="menu_header_library">کتێبخانە</string>
+    <string name="shortcut_open_on_phone">لە مۆبایل بیکەرەوە</string>
+    <string name="shortcut_continue_on_phone">لەسەر مۆبایلەکەت بەردەوام بە</string>
     <string name="chat_face_today">ئەمڕۆ</string>
     <string name="face_picker_title">ڕووخساری کاتژمێر</string>
     <string name="face_picker_offline">مۆبایل پەیوەست نییە — ئەم face ـە لە کاتژمێر جێبەجێ دەبێت، بەڵام مۆبایل ڕێکخستنەکە دەپارێزێت</string>

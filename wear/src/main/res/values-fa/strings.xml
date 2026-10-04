@@ -54,6 +54,12 @@
     <string name="queue_load_more">بارگذاری بیشتر</string>
     <string name="queue_history_fallback">اخیراً پخش‌شده</string>
     <string name="queue_history_fallback_reason">این برنامه صف پخش خود را به اشتراک نمی‌گذارد</string>
+    <string name="menu_header_actions">اقدامات</string>
+    <string name="menu_header_search_results">نتایج جستجو</string>
+    <string name="menu_header_search_history">جستجوهای اخیر</string>
+    <string name="menu_header_library">کتابخانه</string>
+    <string name="shortcut_open_on_phone">باز کردن در گوشی</string>
+    <string name="shortcut_continue_on_phone">در گوشی خود ادامه دهید</string>
     <string name="chat_face_today">امروز</string>
 
     <string name="face_picker_title">صفحهٔ ساعت</string>

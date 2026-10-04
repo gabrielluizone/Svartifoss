@@ -2115,7 +2115,7 @@
     <string name="playlist_shortcut_detected_format">Откривено: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Назив</string>
     <string name="playlist_shortcut_link_hint">Линк за дељење или URI апликације</string>
-    <string name="playlist_shortcut_shuffle">Пусти насумично (само YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Сваки пут када га покрећете, на сату бирате Пусти или Насумично.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2853,4 +2853,6 @@
     <string name="setting_wear_text_block_position_description">Место текста песме на екрану. „Прати лице” задржава положај за који је свако лице дизајнирано.</string>
     <string name="setting_online_artwork">Слика са мреже</string>
     <string name="setting_online_artwork_description">Дозволите бројчанику сата да приказује слику пронађену на мрежи \u2014 извођача песме или омот албума за плејер који га не објављује. Телефон претражује јавни каталог Deezer-а и кешира резултат; шаљу се само назив песме и име извођача, а ништа се не претражује осим ако је лице подешено на један од тих извора. Када је искључено, користи се слика коју објављује сам плејер.</string>
+    <string name="setting_wear_shortcut_details">Пусти или насумично на сату</string>
+    <string name="setting_wear_shortcut_details_description">Избор сачуваног линка на сату, са листе пречица, из Tile-а са пречицама или из менија радњи, прво приказује његов омот са дугмадима Пусти и Насумично. Искључите да би се одмах покретао. Дугмад и покрети додељени једном линку га увек одмах покрећу.</string>
 </resources>

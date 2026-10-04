@@ -2142,7 +2142,7 @@ Kdykoli Vibration Center zavibruje hodinkami, Svartifoss zobrazí vyskakovací o
     <string name="playlist_shortcut_detected_format">Zjištěno: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Název</string>
     <string name="playlist_shortcut_link_hint">Odkaz ke sdílení nebo URI aplikace</string>
-    <string name="playlist_shortcut_shuffle">Přehrát náhodně (pouze YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Pokaždé, když ho spouštíte, zvolíte na hodinkách Přehrát nebo Náhodně.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2881,4 +2881,6 @@ Kdykoli Vibration Center zavibruje hodinkami, Svartifoss zobrazí vyskakovací o
     <string name="setting_wear_text_block_position_description">Kde se na obrazovce nachází text skladby. Volba Podle ciferníku zachová pozici, pro kterou byl každý ciferník navržen.</string>
     <string name="setting_online_artwork">Online grafika</string>
     <string name="setting_online_artwork_description">Umožnit ciferníku zobrazit obrázek vyhledaný online \u2014 interpreta, který právě hraje, nebo obal alba pro přehrávač, který žádný obrázek nezveřejňuje. Telefon vyhledává ve veřejném katalogu Deezer a výsledek ukládá do mezipaměti; odesílá se pouze název skladby a interpreta a nic se nevyhledává, dokud není ciferník nastaven na jeden z těchto zdrojů. Při vypnutí se použije grafika poskytovaná přehrávačem.</string>
+    <string name="setting_wear_shortcut_details">Přehrát nebo náhodně na hodinkách</string>
+    <string name="setting_wear_shortcut_details_description">Výběr uloženého odkazu na hodinkách – ze seznamu zkratek, z Tile Zkratky nebo z nabídky akcí – nejprve zobrazí jeho obal s tlačítky Přehrát a Náhodně. Vypněte, aby se spustil hned. Tlačítka a gesta přiřazená jednomu odkazu ho vždy spouštějí hned.</string>
 </resources>

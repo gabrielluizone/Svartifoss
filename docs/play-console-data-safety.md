@@ -44,7 +44,7 @@ off-by-default setting (`streaming_shortcut_artwork`, see
 directly to that streaming service's own oEmbed endpoint (Spotify, YouTube,
 SoundCloud, Deezer) to fetch a cover thumbnail and the item's title (the same
 request also runs once per tap of "Get name from link" while the setting is
-off) - no Firebase/Google involvement in that request. An on-by-default setting (`lyrics_enabled`, see
+off) - no Firebase/Google involvement in that request. With the same setting on, the fixed public cover image of YouTube Music's Liked Music or Spotify's Liked Songs is downloaded once from that service's image server when the collection is in use - a request for an image that is the same for every account, carrying no user data. An on-by-default setting (`lyrics_enabled`, see
 `LyricsFetcher.kt`) sends the playing track's name, artist and length to
 LRCLIB when - and only when - the user opens the watch's lyrics screen or
 selects the lyric-following Verse watch face; again

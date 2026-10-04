@@ -2107,7 +2107,7 @@
     <string name="playlist_shortcut_detected_format">ตรวจพบ: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">ชื่อ</string>
     <string name="playlist_shortcut_link_hint">ลิงก์แชร์หรือ URI ของแอป</string>
-    <string name="playlist_shortcut_shuffle">เล่นแบบสุ่ม (YouTube Music เท่านั้น)</string>
+    <string name="playlist_shortcut_play_choice">คุณเลือกเล่นหรือสุ่มบนนาฬิกาทุกครั้งที่เริ่มเล่น</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2843,4 +2843,6 @@
     <string name="setting_wear_text_block_position_description">ตำแหน่งของข้อความแทร็กบนหน้าจอ “ตามหน้าปัด” จะคงตำแหน่งที่ออกแบบไว้สำหรับแต่ละหน้าปัด</string>
     <string name="setting_online_artwork">อาร์ตเวิร์กออนไลน์</string>
     <string name="setting_online_artwork_description">ให้หน้าปัดแสดงรูปภาพที่ค้นหาทางออนไลน์ \u2014 ศิลปินที่กำลังเล่น หรือปกอัลบั้มสำหรับเครื่องเล่นที่ไม่ได้เผยแพร่รูปภาพ โทรศัพท์ของคุณจะค้นหาในแค็ตตาล็อกสาธารณะของ Deezer และแคชผลลัพธ์ โดยส่งเฉพาะชื่อแทร็กและศิลปิน และจะไม่ค้นหาอะไรเว้นแต่หน้าปัดจะตั้งค่าให้ใช้แหล่งใดแหล่งหนึ่งดังกล่าว เมื่อปิด จะใช้อาร์ตเวิร์กจากเครื่องเล่นเอง</string>
+    <string name="setting_wear_shortcut_details">เล่นหรือสุ่มบนนาฬิกา</string>
+    <string name="setting_wear_shortcut_details_description">เมื่อเลือกลิงก์ที่บันทึกไว้บนนาฬิกา จากรายการทางลัด Tile ทางลัด หรือเมนูการทำงาน จะแสดงปกพร้อมปุ่มเล่นและสุ่มก่อน ปิดเพื่อให้เริ่มเล่นทันทีแทน ปุ่มและท่าทางที่กำหนดให้กับลิงก์เดียวจะเริ่มเล่นทันทีเสมอ</string>
 </resources>

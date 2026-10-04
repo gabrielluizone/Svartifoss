@@ -2111,7 +2111,7 @@
     <string name="playlist_shortcut_detected_format">Tunnistettu: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Nimi</string>
     <string name="playlist_shortcut_link_hint">Jakolinkki tai sovelluksen URI</string>
-    <string name="playlist_shortcut_shuffle">Toista satunnaisesti (vain YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Valitset kellossa Toista tai Sekoita joka kerta, kun aloitat sen.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2848,4 +2848,6 @@
     <string name="setting_wear_text_block_position_description">Missä kappaleen teksti sijaitsee näytöllä. Seuraa kellotaulua säilyttää sijainnin, jota varten kukin kellotaulu on suunniteltu.</string>
     <string name="setting_online_artwork">Verkkokansikuva</string>
     <string name="setting_online_artwork_description">Anna kellotaulun näyttää verkosta haettu kuva \u2014 soivan esittäjän kuva tai albumikansi silloin, kun soitin ei tarjoa sellaista. Puhelin tekee haun Deezerin julkisesta luettelosta ja tallentaa tuloksen välimuistiin; vain kappaleen ja esittäjän nimet lähetetään, eikä mitään haeta, ellei kellotaulua ole asetettu käyttämään jotakin näistä lähteistä. Kun asetus on pois päältä, käytetään soittimen omaa kansikuvaa.</string>
+    <string name="setting_wear_shortcut_details">Toista tai sekoita kellossa</string>
+    <string name="setting_wear_shortcut_details_description">Kun valitset kellossa tallennetun linkin pikakuvakeluettelosta, Pikakuvakkeet-Tilestä tai toimintovalikosta, sen kansikuva näytetään ensin Toista- ja Sekoita-painikkeiden kanssa. Poista käytöstä, jos haluat sen alkavan heti. Yhteen linkkiin määritetyt painikkeet ja eleet aloittavat sen aina heti.</string>
 </resources>

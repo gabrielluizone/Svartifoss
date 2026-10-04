@@ -2119,7 +2119,7 @@
     <string name="playlist_shortcut_detected_format">Zistené: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Názov</string>
     <string name="playlist_shortcut_link_hint">Odkaz na zdieľanie alebo URI aplikácie</string>
-    <string name="playlist_shortcut_shuffle">Prehrať náhodne (iba YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Zakaždým, keď ho spúšťate, vyberiete na hodinkách Prehrať alebo Náhodne.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2858,4 +2858,6 @@
     <string name="setting_wear_text_block_position_description">Kde sa na obrazovke nachádza text skladby. Voľba Podľa ciferníka zachová polohu, pre ktorú bol každý ciferník navrhnutý.</string>
     <string name="setting_online_artwork">Online grafika</string>
     <string name="setting_online_artwork_description">Umožniť ciferníku zobraziť obrázok vyhľadaný online \u2014 interpreta, ktorý práve hrá, alebo obal albumu pre prehrávač, ktorý žiadny obrázok nezverejňuje. Telefón vyhľadáva vo verejnom katalógu Deezer a výsledok ukladá do vyrovnávacej pamäte; odosiela sa iba názov skladby a interpreta a nič sa nevyhľadáva, kým nie je ciferník nastavený na jeden z týchto zdrojov. Pri vypnutí sa použije grafika poskytovaná prehrávačom.</string>
+    <string name="setting_wear_shortcut_details">Prehrať alebo náhodne na hodinkách</string>
+    <string name="setting_wear_shortcut_details_description">Výber uloženého odkazu na hodinkách – zo zoznamu skratiek, z Tile Skratky alebo z ponuky akcií – najprv zobrazí jeho obal s tlačidlami Prehrať a Náhodne. Vypnite, aby sa spustil hneď. Tlačidlá a gestá priradené jednému odkazu ho vždy spúšťajú hneď.</string>
 </resources>

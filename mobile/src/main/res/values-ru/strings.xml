@@ -1446,7 +1446,7 @@
     <string name="playlist_shortcut_detected_format">Обнаружено: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Название</string>
     <string name="playlist_shortcut_link_hint">Ссылка или URI приложения</string>
-    <string name="playlist_shortcut_shuffle">Воспроизвести вперемешку (только YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Каждый раз при запуске вы выбираете на часах «Воспроизвести» или «Перемешать».</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2841,4 +2841,6 @@
     <string name="setting_wear_text_block_position_description">Где на экране располагается текст композиции. «Следовать циферблату» сохраняет положение, для которого спроектирован каждый циферблат.</string>
     <string name="setting_online_artwork">Онлайн-обложка</string>
     <string name="setting_online_artwork_description">Разрешить циферблату показывать изображение, найденное в интернете \u2014 текущего исполнителя или обложку альбома, если проигрыватель её не предоставляет. Телефон выполняет поиск в открытом каталоге Deezer и кэширует результат; отправляются только названия композиции и исполнителя, а поиск выполняется лишь тогда, когда циферблат настроен на один из этих источников. Если функция отключена, используется собственная обложка проигрывателя.</string>
+    <string name="setting_wear_shortcut_details">Воспроизвести или перемешать на часах</string>
+    <string name="setting_wear_shortcut_details_description">При выборе сохранённой ссылки на часах — из списка ярлыков, плитки ярлыков или меню действий — сначала показывается её обложка с кнопками «Воспроизвести» и «Перемешать». Выключите, чтобы запускать сразу. Кнопки и жесты, назначенные одной ссылке, всегда запускают её сразу.</string>
 </resources>

@@ -1430,7 +1430,7 @@
     <string name="playlist_shortcut_detected_format">Detectado: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Nombre</string>
     <string name="playlist_shortcut_link_hint">Enlace compartido o URI de app</string>
-    <string name="playlist_shortcut_shuffle">Reproducir aleatorio (solo YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Eliges Reproducir o Aleatorio en el reloj cada vez que lo inicias.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2830,4 +2830,6 @@
     <string name="setting_wear_text_block_position_description">Dónde se sitúa el texto de la pista en la pantalla. Seguir esfera conserva la posición para la que se diseñó cada esfera.</string>
     <string name="setting_online_artwork">Carátula en línea</string>
     <string name="setting_online_artwork_description">Permite que la esfera muestre una imagen buscada en línea \u2014 el artista que está sonando o la portada de un álbum cuando un reproductor no publica ninguna. Tu teléfono hace la búsqueda en el catálogo público de Deezer y guarda el resultado en caché; solo se envían los nombres de la pista y del artista, y no se busca nada a menos que una esfera esté configurada con una de esas fuentes. Si está desactivado, se usa la propia carátula del reproductor.</string>
+    <string name="setting_wear_shortcut_details">Reproducir o aleatorio en el reloj</string>
+    <string name="setting_wear_shortcut_details_description">Al elegir un enlace guardado en el reloj, desde la lista de accesos directos, el Tile de accesos directos o el menú de acciones, primero se muestra su portada con Reproducir y Aleatorio. Desactívalo para que empiece al instante. Los botones y gestos asignados a un enlace siempre lo inician al instante.</string>
 </resources>

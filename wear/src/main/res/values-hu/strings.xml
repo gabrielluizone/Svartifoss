@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Legutóbb lejátszott</string>
     <string name="queue_history_fallback_reason">Ez az alkalmazás nem osztja meg a lejátszási sorát</string>
+    <string name="menu_header_actions">Műveletek</string>
+    <string name="menu_header_search_results">Keresési találatok</string>
+    <string name="menu_header_search_history">Legutóbbi keresések</string>
+    <string name="menu_header_library">Könyvtár</string>
+    <string name="shortcut_open_on_phone">Megnyitás a telefonon</string>
+    <string name="shortcut_continue_on_phone">Folytassa a telefonon</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Ma</string>
 

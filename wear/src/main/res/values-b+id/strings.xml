@@ -54,6 +54,12 @@
     <string name="queue_load_more">Muat lebih banyak</string>
     <string name="queue_history_fallback">Baru diputar</string>
     <string name="queue_history_fallback_reason">Aplikasi ini tidak membagikan antreannya</string>
+    <string name="menu_header_actions">Aksi</string>
+    <string name="menu_header_search_results">Hasil penelusuran</string>
+    <string name="menu_header_search_history">Penelusuran terbaru</string>
+    <string name="menu_header_library">Koleksi</string>
+    <string name="shortcut_open_on_phone">Buka di ponsel</string>
+    <string name="shortcut_continue_on_phone">Lanjutkan di ponsel Anda</string>
     <string name="chat_face_today">Hari ini</string>
 
     <string name="hint_title">Cara pakai</string>

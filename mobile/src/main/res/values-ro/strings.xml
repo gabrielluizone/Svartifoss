@@ -1442,7 +1442,7 @@
     <string name="playlist_shortcut_detected_format">Detectat: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Nume</string>
     <string name="playlist_shortcut_link_hint">Link de partajare sau URI de aplicație</string>
-    <string name="playlist_shortcut_shuffle">Redă aleatoriu (doar YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Alegi Redare sau Aleatoriu pe ceas de fiecare dată când îl pornești.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2836,4 +2836,6 @@
     <string name="setting_wear_text_block_position_description">Locul în care apare textul piesei pe ecran. Urmează cadranul păstrează poziția pentru care a fost proiectat fiecare cadran.</string>
     <string name="setting_online_artwork">Copertă online</string>
     <string name="setting_online_artwork_description">Permite cadranului să afișeze o imagine căutată online \u2014 artistul care cântă sau coperta unui album atunci când playerul nu furnizează niciuna. Telefonul face căutarea în catalogul public Deezer și păstrează rezultatul în cache; sunt trimise doar numele piesei și al artistului și nu se caută nimic decât dacă un cadran este setat să folosească una dintre aceste surse. Dacă opțiunea este oprită, se folosește coperta furnizată de player.</string>
+    <string name="setting_wear_shortcut_details">Redare sau aleatoriu pe ceas</string>
+    <string name="setting_wear_shortcut_details_description">Când alegi pe ceas un link salvat, din lista de comenzi rapide, din Tile-ul de comenzi rapide sau din meniul de acțiuni, mai întâi apare coperta cu Redare și Aleatoriu. Dezactivează ca să pornească imediat. Butoanele și gesturile atribuite unui link îl pornesc mereu imediat.</string>
 </resources>

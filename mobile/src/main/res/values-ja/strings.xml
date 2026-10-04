@@ -2107,7 +2107,7 @@
     <string name="playlist_shortcut_detected_format">検出: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">名前</string>
     <string name="playlist_shortcut_link_hint">共有リンクまたはアプリ URI</string>
-    <string name="playlist_shortcut_shuffle">シャッフル再生（YouTube Music のみ）</string>
+    <string name="playlist_shortcut_play_choice">再生を始めるたびに、ウォッチで「再生」か「シャッフル」を選びます。</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2843,4 +2843,6 @@
     <string name="setting_wear_text_block_position_description">画面上でトラックテキストが置かれる位置です。「フェイスに従う」では、各フェイスに設計された位置を保持します。</string>
     <string name="setting_online_artwork">オンラインアートワーク</string>
     <string name="setting_online_artwork_description">ウォッチフェイスにオンラインで検索した画像を表示します \u2014 再生中のアーティスト、または画像を公開していないプレーヤー向けのアルバムカバーです。スマートフォンが Deezer の公開カタログを検索して結果をキャッシュします。送信されるのはトラック名とアーティスト名だけで、フェイスがこれらのソースのいずれかに設定されている場合にのみ検索します。オフの場合は、プレーヤー自身のアートワークを使用します。</string>
+    <string name="setting_wear_shortcut_details">ウォッチで再生またはシャッフル</string>
+    <string name="setting_wear_shortcut_details_description">ウォッチで保存済みのリンクを選ぶと（ショートカットリスト、ショートカット Tile、アクションメニューのいずれからでも）、まずカバーと「再生」「シャッフル」が表示されます。オフにすると、すぐに再生を開始します。1 つのリンクに割り当てたボタンやジェスチャーは常にすぐ再生を開始します。</string>
 </resources>

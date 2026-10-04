@@ -62,6 +62,12 @@
     <string name="queue_load_more">மேலும் ஏற்று</string>
     <string name="queue_history_fallback">சமீபத்தில் இயங்கியது</string>
     <string name="queue_history_fallback_reason">இந்த app அதன் queue-ஐ பகிரவில்லை</string>
+    <string name="menu_header_actions">செயல்கள்</string>
+    <string name="menu_header_search_results">தேடல் முடிவுகள்</string>
+    <string name="menu_header_search_history">சமீபத்திய தேடல்கள்</string>
+    <string name="menu_header_library">நூலகம்</string>
+    <string name="shortcut_open_on_phone">phone-இல் திற</string>
+    <string name="shortcut_continue_on_phone">உங்கள் phone-இல் தொடரவும்</string>
     <string name="chat_face_today">இன்று</string>
     <string name="face_picker_title">கடிகார முகப்பு</string>
     <string name="face_picker_offline">தொலைபேசி இணைக்கப்படவில்லை — இந்த face watch-இல் பயன்படுத்தப்படும், ஆனால் phone setting-ஐ வைத்திருக்கும்</string>

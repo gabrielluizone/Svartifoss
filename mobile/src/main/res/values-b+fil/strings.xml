@@ -2134,7 +2134,7 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     <string name="playlist_shortcut_detected_format">Natukoy: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Pangalan</string>
     <string name="playlist_shortcut_link_hint">Share link o app URI</string>
-    <string name="playlist_shortcut_shuffle">I-play nang shuffled (YouTube Music lang)</string>
+    <string name="playlist_shortcut_play_choice">Pipili ka ng I-play o Shuffle sa relo tuwing sisimulan mo ito.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2871,4 +2871,6 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     <string name="setting_wear_text_block_position_description">Kung saan nakaposisyon ang track text sa screen. Pinapanatili ng Follow face ang posisyong idinisenyo para sa bawat face.</string>
     <string name="setting_online_artwork">Online artwork</string>
     <string name="setting_online_artwork_description">Hayaan ang watch face na magpakita ng larawang hinanap online \u2014 ang artist na tumutugtog, o album cover para sa player na walang inilalabas na larawan. Ang telepono mo ang naghahanap sa pampublikong catalog ng Deezer at nagca-cache ng resulta; pangalan lang ng track at artist ang ipinapadala, at walang hinahanap maliban kung nakatakda ang isang face sa isa sa mga source na iyon. Kapag naka-off, sariling artwork ng player ang ginagamit.</string>
+    <string name="setting_wear_shortcut_details">I-play o i-shuffle sa relo</string>
+    <string name="setting_wear_shortcut_details_description">Kapag pumili ka ng naka-save na link sa relo, mula sa listahan ng shortcut, sa Shortcuts Tile o sa actions menu, ipapakita muna ang cover nito kasama ang I-play at Shuffle. I-off para agad itong magsimula. Ang mga button at gesture na naka-assign sa isang link ay laging agad itong sinisimulan.</string>
 </resources>

@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Vừa phát</string>
     <string name="queue_history_fallback_reason">Ứng dụng này không chia sẻ danh sách phát của nó</string>
+    <string name="menu_header_actions">Hành động</string>
+    <string name="menu_header_search_results">Kết quả tìm kiếm</string>
+    <string name="menu_header_search_history">Tìm kiếm gần đây</string>
+    <string name="menu_header_library">Thư viện</string>
+    <string name="shortcut_open_on_phone">Mở trên điện thoại</string>
+    <string name="shortcut_continue_on_phone">Tiếp tục trên điện thoại</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Hôm nay</string>
 

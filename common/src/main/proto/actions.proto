@@ -46,5 +46,13 @@ message WatchList {
     optional bool iconIsCoverArt = 5;
     // See ProtoButtonInfo.seekOffsetMs.
     optional sint64 seekOffsetMs = 6;
+    // Set only for an entry that starts one particular streaming destination (a saved shortcut,
+    // the account's liked songs): its service and kind ("YouTube Music • Playlist"), shown under
+    // the name when the watch opens that shortcut's own screen with Play and Shuffle. Its presence
+    // is what marks the entry as one that may open that screen; older phones never send it, so on
+    // them every entry keeps starting at once.
+    optional string shortcutSubtitle = 7;
+    // Alongside shortcutSubtitle: whether that screen offers Shuffle beside Play.
+    optional bool shortcutShuffleable = 8;
   }
 }

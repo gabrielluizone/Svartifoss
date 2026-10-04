@@ -2111,7 +2111,7 @@
     <string name="playlist_shortcut_detected_format">Fundet: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Navn</string>
     <string name="playlist_shortcut_link_hint">Delingslink eller app-URI</string>
-    <string name="playlist_shortcut_shuffle">Afspil blandet (kun YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Du vælger Afspil eller Bland på uret, hver gang du starter det.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2848,4 +2848,6 @@
     <string name="setting_wear_text_block_position_description">Hvor nummerteksten ligger på skærmen. Følg urskive bevarer den position, som hver urskive er designet til.</string>
     <string name="setting_online_artwork">Onlinecover</string>
     <string name="setting_online_artwork_description">Lad urskiven vise et billede, der slås op online \u2014 kunstneren der spiller, eller et albumcover når en afspiller ikke leverer et. Din telefon foretager opslaget i Deezers offentlige katalog og gemmer resultatet i cache; kun nummer- og kunstnernavne sendes, og der slås ikke noget op, medmindre en urskive er indstillet til en af disse kilder. Når funktionen er slået fra, bruges afspillerens eget cover.</string>
+    <string name="setting_wear_shortcut_details">Afspil eller bland på uret</string>
+    <string name="setting_wear_shortcut_details_description">Når du vælger et gemt link på uret – fra genvejslisten, genvejs-Tile eller handlingsmenuen – vises dets cover først med Afspil og Bland. Slå fra for at starte det med det samme i stedet. Knapper og bevægelser, der er tildelt ét link, starter det altid med det samme.</string>
 </resources>

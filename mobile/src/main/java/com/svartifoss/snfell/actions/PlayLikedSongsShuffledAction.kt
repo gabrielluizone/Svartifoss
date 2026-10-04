@@ -1,11 +1,14 @@
 package com.svartifoss.snfell.actions
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.music.MusicService
+import com.svartifoss.snfell.music.ShortcutCovers
+import com.svartifoss.snfell.music.StreamingCollection
 import javax.inject.Inject
 
 /**
@@ -25,6 +28,14 @@ class PlayLikedSongsShuffledAction : SelectableAction {
         get() = AppCompatResources.getDrawable(context, com.svartifoss.snfell.common.R.drawable.action_liked_songs)!!
     override val remoteUri: String
         get() = PlayPlaylistShortcutAction(context, title, LIKED_SONGS_SHUFFLED_LINK).remoteUri
+
+    /** Listed with Liked Music's cover, like [PlayLikedSongsAction]; its title says it shuffles. */
+    override val listCover: Drawable
+        get() = BitmapDrawable(context.resources,
+                ShortcutCovers.forCollection(context, StreamingCollection.YOUTUBE_MUSIC_LIKED))
+
+    override val streamingCollection: StreamingCollection
+        get() = StreamingCollection.YOUTUBE_MUSIC_LIKED
 
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<PlayLikedSongsShuffledAction> {
         override suspend fun handleAction(action: PlayLikedSongsShuffledAction) {

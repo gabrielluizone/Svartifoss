@@ -17,6 +17,8 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
+import com.svartifoss.snfell.watch.theme.LocalWatchTrackTextStyles
+import com.svartifoss.snfell.watch.theme.watchTrackTextStyles
 import com.svartifoss.snfell.watch.theme.watchUiFontFamily
 import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
 import com.svartifoss.snfell.watch.view.panel.PanelTriad
@@ -94,6 +96,7 @@ class QueueActivity : ComponentActivity() {
                 ThemeAppearance.resolve(prefs)
         ))
 
+        val trackTextStyles = watchTrackTextStyles(prefs)
         setContent {
             // No default value: null means the phone hasn't answered the queue request yet, which
             // QueueScreen renders as a loading spinner instead of a bare black screen.
@@ -103,7 +106,7 @@ class QueueActivity : ComponentActivity() {
             val canLoadMore by viewModel.canLoadMore.observeAsState(false)
             val loadingMore by viewModel.loadingMore.observeAsState(false)
             val isHistoryFallback by viewModel.isHistoryFallback.observeAsState(false)
-            val albumArt by viewModel.albumArt.observeAsState()
+            val artwork by viewModel.artwork.observeAsState()
 
             // The configured ground is accent-dependent. QueueViewModel installs the current
             // cached palette synchronously, so this first loading frame is normally already in
@@ -112,7 +115,7 @@ class QueueActivity : ComponentActivity() {
                 rememberScreenBackdrop(
                         prefs = prefs,
                         appearanceContext = appearanceContext,
-                        albumArt = albumArt,
+                        albumArt = artwork,
                         accentSource = accentSource,
                         themeAccent = themeAccent,
                         triad = triad,
@@ -125,6 +128,7 @@ class QueueActivity : ComponentActivity() {
                     0xFFFFFFFF.toInt(), 0xFFFFFFFF.toInt(), 0xFFFFFFFF.toInt())
 
             CompositionLocalProvider(
+                    LocalWatchTrackTextStyles provides trackTextStyles,
                     LocalWatchUiFontFamily provides watchUiFontFamily(
                             PreferenceManager.getDefaultSharedPreferences(this))) {
             QueueScreen(

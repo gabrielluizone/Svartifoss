@@ -2134,7 +2134,7 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
     <string name="playlist_shortcut_detected_format">Észlelve: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Név</string>
     <string name="playlist_shortcut_link_hint">Megosztási hivatkozás vagy alkalmazás-URI</string>
-    <string name="playlist_shortcut_shuffle">Lejátszás véletlen sorrendben (csak YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Minden indításkor az órán választ a Lejátszás és a Véletlen sorrend között.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2871,4 +2871,6 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
     <string name="setting_wear_text_block_position_description">Ahol a szám szövege a képernyőn helyezkedik el. A „Számlap követése” megtartja azt a pozíciót, amelyre az adott számlapot tervezték.</string>
     <string name="setting_online_artwork">Online borítókép</string>
     <string name="setting_online_artwork_description">Engedd, hogy a számlap online keresett képet mutasson \u2014 az éppen játszott előadót, vagy album borítóját, ha a lejátszó nem biztosít ilyet. A telefon a Deezer nyilvános katalógusában keres, és gyorsítótárazza az eredményt; csak a szám és az előadó neve kerül elküldésre, és semmi sem lesz lekérdezve, hacsak egy számlap nincs e források egyikére állítva. Kikapcsolva a lejátszó saját borítóképe használatos.</string>
+    <string name="setting_wear_shortcut_details">Lejátszás vagy véletlen sorrend az órán</string>
+    <string name="setting_wear_shortcut_details_description">Ha az órán kiválaszt egy mentett linket – a parancsikonlistából, a Parancsikonok csempéből vagy a műveletmenüből –, először a borítója jelenik meg a Lejátszás és a Véletlen sorrend gombbal. Kapcsolja ki, ha inkább azonnal induljon. Az egy linkhez rendelt gombok és kézmozdulatok mindig azonnal elindítják.</string>
 </resources>

@@ -62,6 +62,12 @@
     <string name="queue_load_more">మరిన్ని లోడ్ చేయండి</string>
     <string name="queue_history_fallback">ఇటీవల ప్లే చేసినవి</string>
     <string name="queue_history_fallback_reason">ఈ యాప్ తన queue‌ను షేర్ చేయదు</string>
+    <string name="menu_header_actions">చర్యలు</string>
+    <string name="menu_header_search_results">శోధన ఫలితాలు</string>
+    <string name="menu_header_search_history">ఇటీవలి శోధనలు</string>
+    <string name="menu_header_library">లైబ్రరీ</string>
+    <string name="shortcut_open_on_phone">ఫోన్‌లో తెరువు</string>
+    <string name="shortcut_continue_on_phone">మీ ఫోన్‌లో కొనసాగించండి</string>
     <string name="chat_face_today">ఈ రోజు</string>
     <string name="face_picker_title">వాచ్ ఫేస్</string>
     <string name="face_picker_offline">ఫోన్ కనెక్ట్ కాలేదు — ఈ face వాచ్‌లో వర్తిస్తుంది, కానీ ఫోన్ సెట్టింగ్‌ను ఉంచుతుంది</string>

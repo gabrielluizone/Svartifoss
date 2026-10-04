@@ -2111,7 +2111,7 @@
     <string name="playlist_shortcut_detected_format">শনাক্ত: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">নাম</string>
     <string name="playlist_shortcut_link_hint">শেয়ার লিংক বা অ্যাপ URI</string>
-    <string name="playlist_shortcut_shuffle">শাফল করে চালান (শুধু YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">প্রতিবার শুরু করার সময় আপনি ঘড়িতে প্লে বা শাফল বেছে নেন।</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2848,4 +2848,6 @@
     <string name="setting_wear_text_block_position_description">স্ক্রিনে ট্র্যাক টেক্সট যেখানে থাকে। Follow face প্রতিটি ফেসের জন্য ডিজাইন করা অবস্থান বজায় রাখে।</string>
     <string name="setting_online_artwork">অনলাইন আর্টওয়ার্ক</string>
     <string name="setting_online_artwork_description">ওয়াচ ফেসকে অনলাইনে খোঁজা ছবি দেখাতে দিন \u2014 বাজতে থাকা শিল্পী, অথবা এমন প্লেয়ারের জন্য অ্যালবাম কভার যা কোনো ছবি প্রকাশ করে না। আপনার ফোন Deezer-এর পাবলিক ক্যাটালগে খোঁজ করে এবং ফলাফল ক্যাশ করে; শুধু ট্র্যাক ও শিল্পীর নাম পাঠানো হয়, এবং কোনো ফেসকে ওই উৎসগুলোর একটিতে সেট না করা পর্যন্ত কিছু খোঁজা হয় না। বন্ধ থাকলে প্লেয়ারের নিজস্ব আর্টওয়ার্ক ব্যবহার করা হয়।</string>
+    <string name="setting_wear_shortcut_details">ঘড়িতে প্লে বা শাফল</string>
+    <string name="setting_wear_shortcut_details_description">ঘড়িতে সংরক্ষিত কোনো লিঙ্ক বেছে নিলে, শর্টকাট তালিকা, শর্টকাট Tile বা অ্যাকশন মেনু থেকে, প্রথমে তার কভার প্লে ও শাফল সহ দেখায়। বন্ধ করলে সরাসরি শুরু হবে। একটি লিঙ্কে নির্ধারিত বোতাম ও জেসচার সবসময় সরাসরি শুরু করে।</string>
 </resources>

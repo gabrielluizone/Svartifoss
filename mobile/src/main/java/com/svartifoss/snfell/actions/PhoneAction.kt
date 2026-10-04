@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.PersistableBundle
 import androidx.annotation.CallSuper
+import com.svartifoss.snfell.music.StreamingCollection
+import com.svartifoss.snfell.music.StreamingShortcutDescription
 import com.svartifoss.snfell.view.actionconfigs.ActionConfigFragment
 import com.svartifoss.snfell.view.buttonconfig.ActionPickerViewModel
 import com.matejdro.wearutils.serialization.Bundlable
@@ -83,6 +85,36 @@ abstract class PhoneAction : Bundlable {
      * for the phone to run it and the player to publish where it went.
      */
     open val seekOffsetMs: Long?
+        get() = null
+
+    /**
+     * For an action that starts one particular streaming destination - a saved shortcut, the
+     * account's liked songs - what the watch shows on that destination's own screen when the
+     * action is picked from a list (the actions menu, the quick panel's rows): its service and
+     * kind, and whether Shuffle is offered beside Play. Null for every other action, which then
+     * runs at once as it always has.
+     */
+    open val streamingShortcut: StreamingShortcutDescription?
+        get() = null
+
+    /**
+     * The cover this action is *listed* with - in the watch's actions menu and the quick panel's
+     * rows, on the shortcut's own screen, and on the phone's Actions tab - for an action that
+     * starts a streaming destination. Null for every other action, which is listed with its icon.
+     *
+     * Separate from [defaultIcon] on purpose: buttons keep that one. A round mini button or quick
+     * panel slot holds a glyph, and a square cover shrunk into one reads as a sticker rather than
+     * as the action; a row has room for the picture. Ignored once the user picked an icon of their
+     * own, which replaces both. See `ShortcutCovers` for which picture it is.
+     */
+    open val listCover: Drawable?
+        get() = null
+
+    /**
+     * The per-account collection this action starts, for the ones that start one - so the phone
+     * can fetch that collection's official artwork (opt-in) only for collections actually in use.
+     */
+    open val streamingCollection: StreamingCollection?
         get() = null
 
     val iconTintable: Boolean

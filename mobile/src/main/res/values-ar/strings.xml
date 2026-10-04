@@ -2150,7 +2150,7 @@ Svartifoss — أعمدة بازلت سوداء
     <string name="playlist_shortcut_detected_format">تم الاكتشاف: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">الاسم</string>
     <string name="playlist_shortcut_link_hint">رابط مشاركة أو URI للتطبيق</string>
-    <string name="playlist_shortcut_shuffle">تشغيل عشوائي (YouTube Music فقط)</string>
+    <string name="playlist_shortcut_play_choice">تختار «تشغيل» أو «تشغيل عشوائي» على الساعة في كل مرة تبدأ فيها.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2891,4 +2891,6 @@ Svartifoss — أعمدة بازلت سوداء
     <string name="setting_wear_text_block_position_description">موضع نص المقطع على الشاشة. «اتباع الواجهة» يحافظ على الموضع الذي صُممت به كل واجهة.</string>
     <string name="setting_online_artwork">عمل فني عبر الإنترنت</string>
     <string name="setting_online_artwork_description">اسمح لواجهة الساعة بعرض صورة يتم البحث عنها عبر الإنترنت \u2014 الفنان المؤدي، أو غلاف ألبوم لمشغّل لا ينشر صورة. يجري هاتفك البحث في كتالوج Deezer العام ويخزّن النتيجة مؤقتًا؛ لا يتم إرسال سوى اسم المقطع والفنان، ولا يحدث أي بحث إلا إذا ضُبطت واجهة على أحد هذه المصادر. عند الإيقاف، يُستخدم العمل الفني الخاص بالمشغّل.</string>
+    <string name="setting_wear_shortcut_details">تشغيل أو تشغيل عشوائي على الساعة</string>
+    <string name="setting_wear_shortcut_details_description">اختيار رابط محفوظ على الساعة، من قائمة الاختصارات أو Tile الاختصارات أو قائمة الإجراءات، يعرض غلافه أولًا مع «تشغيل» و«تشغيل عشوائي». أوقف هذا الخيار لبدء التشغيل فورًا بدلًا من ذلك. الأزرار والإيماءات المخصصة لرابط واحد تبدأ تشغيله فورًا دائمًا.</string>
 </resources>

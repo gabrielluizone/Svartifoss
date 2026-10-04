@@ -16,6 +16,7 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.DeviceLocalAppearance
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
+import com.svartifoss.snfell.common.WatchTypography
 
 /**
  * Single source of truth for the watch UI's design constants, shared by all three UI stacks in
@@ -516,8 +517,17 @@ fun watchUiFontFamily(preferences: SharedPreferences?): FontFamily {
                     preferences, MiscPreferences.WEAR_FONT_ALL_SCREENS, appearanceContext)) {
         return GoogleSansFamily
     }
-    return watchFontFamily(FaceScopedPreferences.getString(
-            preferences, MiscPreferences.WEAR_FONT, appearanceContext))
+    val key = FaceScopedPreferences.getString(
+            preferences, MiscPreferences.WEAR_FONT, appearanceContext)
+    // A variable family includes its configured axes. Loading the static catalog entry here
+    // discarded the theme's roundness/width/grade on the queue and every other UI surface.
+    return if (WatchTypography.isFlexFont(key)) {
+        flexFontFamily(
+                WatchTypography.titleSpec(preferences, appearanceContext),
+                WatchTypography.flexAxes(preferences, appearanceContext))
+    } else {
+        watchFontFamily(key)
+    }
 }
 
 /**
@@ -539,8 +549,16 @@ fun watchUiTypeface(context: Context, preferences: SharedPreferences?): Typeface
                     preferences, MiscPreferences.WEAR_FONT_ALL_SCREENS, appearanceContext)) {
         return watchFontTypeface(context, null)
     }
-    return watchFontTypeface(context, FaceScopedPreferences.getString(
-            preferences, MiscPreferences.WEAR_FONT, appearanceContext))
+    val key = FaceScopedPreferences.getString(
+            preferences, MiscPreferences.WEAR_FONT, appearanceContext)
+    return if (WatchTypography.isFlexFont(key)) {
+        flexTypeface(
+                context,
+                WatchTypography.titleSpec(preferences, appearanceContext),
+                WatchTypography.flexAxes(preferences, appearanceContext))
+    } else {
+        watchFontTypeface(context, key)
+    }
 }
 
 /** [watchFontFamily]'s [Typeface] counterpart for the View-based classic face - keep the key set

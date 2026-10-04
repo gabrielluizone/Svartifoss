@@ -2130,7 +2130,7 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
     <string name="playlist_shortcut_detected_format">Đã nhận diện: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Tên</string>
     <string name="playlist_shortcut_link_hint">Liên kết chia sẻ hoặc URI ứng dụng</string>
-    <string name="playlist_shortcut_shuffle">Phát ngẫu nhiên (chỉ YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Mỗi lần bắt đầu, bạn chọn Phát hoặc Phát ngẫu nhiên trên đồng hồ.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2866,4 +2866,6 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
     <string name="setting_wear_text_block_position_description">Vị trí văn bản bài hát trên màn hình. Theo mặt đồng hồ sẽ giữ vị trí mà từng mặt được thiết kế sẵn.</string>
     <string name="setting_online_artwork">Ảnh minh họa trực tuyến</string>
     <string name="setting_online_artwork_description">Cho phép mặt đồng hồ hiển thị hình ảnh được tìm trực tuyến \u2014 nghệ sĩ đang biểu diễn hoặc bìa album cho trình phát không cung cấp ảnh. Điện thoại của bạn thực hiện tra cứu trong danh mục công khai của Deezer và lưu kết quả vào bộ nhớ đệm; chỉ tên bài hát và nghệ sĩ được gửi đi, và không có gì được tra cứu trừ khi một mặt đồng hồ được đặt dùng một trong các nguồn đó. Khi tắt, ảnh minh họa do chính trình phát cung cấp sẽ được dùng.</string>
+    <string name="setting_wear_shortcut_details">Phát hoặc phát ngẫu nhiên trên đồng hồ</string>
+    <string name="setting_wear_shortcut_details_description">Khi chọn một đường liên kết đã lưu trên đồng hồ, từ danh sách lối tắt, Tile lối tắt hoặc menu hành động, bìa của nó sẽ hiện trước cùng nút Phát và Phát ngẫu nhiên. Tắt để bắt đầu phát ngay. Các nút và cử chỉ được gán cho một đường liên kết luôn bắt đầu phát ngay.</string>
 </resources>

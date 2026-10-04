@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Πρόσφατη αναπαραγωγή</string>
     <string name="queue_history_fallback_reason">Αυτή η εφαρμογή δεν κοινοποιεί τη λίστα της</string>
+    <string name="menu_header_actions">Ενέργειες</string>
+    <string name="menu_header_search_results">Αποτελέσματα αναζήτησης</string>
+    <string name="menu_header_search_history">Πρόσφατες αναζητήσεις</string>
+    <string name="menu_header_library">Βιβλιοθήκη</string>
+    <string name="shortcut_open_on_phone">Άνοιγμα στο τηλέφωνο</string>
+    <string name="shortcut_continue_on_phone">Συνεχίστε στο τηλέφωνό σας</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Σήμερα</string>
 

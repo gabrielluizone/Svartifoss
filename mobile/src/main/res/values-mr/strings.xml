@@ -2060,7 +2060,7 @@
     <string name="playlist_shortcut_detected_format">आढळले: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">नाव</string>
     <string name="playlist_shortcut_link_hint">Share link किंवा app URI</string>
-    <string name="playlist_shortcut_shuffle">shuffle करून प्ले करा (फक्त YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">प्रत्येक वेळी सुरू करताना तुम्ही घड्याळावर वाजवा किंवा शफल निवडता.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2229,4 +2229,6 @@
         <item>माझ्या गॅलरीतील चित्र</item>
         <item>फोल्डरमधून यादृच्छिक</item>
     </string-array>
+    <string name="setting_wear_shortcut_details">घड्याळावर वाजवा किंवा शफल</string>
+    <string name="setting_wear_shortcut_details_description">घड्याळावर जतन केलेली लिंक निवडल्यावर, शॉर्टकट्स सूची, शॉर्टकट्स टाइल किंवा क्रिया मेनूमधून, आधी तिचे कव्हर वाजवा आणि शफलसह दिसते. थेट सुरू करण्यासाठी बंद करा. एका लिंकला दिलेली बटणे आणि जेश्चर ती नेहमी थेट सुरू करतात.</string>
 </resources>

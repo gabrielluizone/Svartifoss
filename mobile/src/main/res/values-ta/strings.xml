@@ -2060,7 +2060,7 @@
     <string name="playlist_shortcut_detected_format">கண்டறியப்பட்டது: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">பெயர்</string>
     <string name="playlist_shortcut_link_hint">Share link அல்லது app URI</string>
-    <string name="playlist_shortcut_shuffle">Shuffle செய்து இயக்கு (YouTube Music மட்டும்)</string>
+    <string name="playlist_shortcut_play_choice">ஒவ்வொரு முறை தொடங்கும்போதும் watch-இல் இயக்கு அல்லது கலக்கு என்பதைத் தேர்ந்தெடுக்கிறீர்கள்.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2229,4 +2229,6 @@
         <item>என் gallery-இலிருந்து படம்</item>
         <item>Folder-இலிருந்து சீரற்றது</item>
     </string-array>
+    <string name="setting_wear_shortcut_details">watch-இல் இயக்கு அல்லது கலக்கு</string>
+    <string name="setting_wear_shortcut_details_description">watch-இல் சேமித்த link ஒன்றைத் தேர்ந்தெடுக்கும்போது, shortcut பட்டியல், Shortcuts Tile அல்லது செயல்கள் மெனுவிலிருந்து, முதலில் அதன் cover இயக்கு மற்றும் கலக்கு உடன் காட்டப்படும். உடனே தொடங்க அணைக்கவும். ஒரு link-க்கு ஒதுக்கப்பட்ட பொத்தான்களும் சைகைகளும் அதை எப்போதும் உடனே தொடங்கும்.</string>
 </resources>

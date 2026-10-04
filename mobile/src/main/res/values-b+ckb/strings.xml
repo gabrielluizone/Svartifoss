@@ -2060,7 +2060,7 @@
     <string name="playlist_shortcut_detected_format">دۆزرایەوە: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">ناو</string>
     <string name="playlist_shortcut_link_hint">Share link یان app URI</string>
-    <string name="playlist_shortcut_shuffle">بە shuffle پخش بکە (تەنها YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">هەر جارێک دەستی پێدەکەیت، لەسەر کاتژمێر «پخش بکە» یان «Shuffle» هەڵدەبژێریت.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2229,4 +2229,6 @@
         <item>وێنە لە gallery ـی من</item>
         <item>هەڕەمەکی لە folder</item>
     </string-array>
+    <string name="setting_wear_shortcut_details">پخش یان Shuffle لەسەر کاتژمێر</string>
+    <string name="setting_wear_shortcut_details_description">کاتێک لینکێکی پاشەکەوتکراو لەسەر کاتژمێر هەڵدەبژێریت، لە لیستی shortcut ـەکان، Tile ـی shortcut ـەکان یان مێنیوی کردارەکان، سەرەتا بەرگەکەی لەگەڵ «پخش بکە» و «Shuffle» پیشان دەدرێت. بیکوژێنەرەوە بۆ ئەوەی ڕاستەوخۆ دەست پێبکات. دوگمە و جوڵەکانی بۆ یەک لینک دیاریکراون هەمیشە ڕاستەوخۆ دەستی پێدەکەن.</string>
 </resources>

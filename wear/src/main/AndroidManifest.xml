@@ -328,6 +328,16 @@
             android:theme="@style/QueueTheme"
             android:launchMode="singleTop" />
 
+        <!-- A streaming shortcut's own screen (cover, Play, Shuffle) for the places with no list
+             underneath it: the Shortcuts Tile and the quick panel's rows. The menu shows the same
+             screen inside itself instead. Transient like its siblings, so noHistory: it closes
+             with the screen rather than reappearing over the watch face later. -->
+        <activity
+            android:name=".watch.view.shortcut.ShortcutDetailActivity"
+            android:exported="false"
+            android:theme="@style/QueueTheme"
+            android:noHistory="true" />
+
         <!-- On-watch face picker (long press the centre of the player). Same noHistory/singleTop
              shape as the queue and menu: it is a transient chooser, not a place to come back to. -->
         <activity

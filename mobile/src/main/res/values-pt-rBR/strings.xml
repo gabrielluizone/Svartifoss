@@ -1416,6 +1416,8 @@
     <string name="setting_wear_close_on_idle_description">Fecha o app do relógio cerca de um minuto após ele chegar na tela ociosa \"Nada tocando\", para que ele não fique parado ali. Independente do tempo para fechar acima, que cobre uma faixa pausada.</string>
     <string name="setting_wear_hide_from_recents">Ocultar dos apps recentes</string>
     <string name="setting_wear_hide_from_recents_description">Tira o app do relógio da lista de apps recentes quando você o fecha ou usa outro app. Útil se você o abre pelo mostrador ou pela Now Bar. Ele continua acessível como antes, e a música e a conexão em segundo plano não são afetadas.</string>
+    <string name="setting_wear_shortcut_details">Reproduzir ou aleatório no relógio</string>
+    <string name="setting_wear_shortcut_details_description">Ao escolher um link salvo no relógio, na lista de atalhos, na Tile de atalhos ou no menu de ações, primeiro aparece a capa com Reproduzir e Aleatório. Desative para tocar direto. Botões e gestos atribuídos a um link sempre o tocam direto.</string>
     <string name="category_notifications">Popup de notificação</string>
     <string name="setting_enable_notifications">Mostrar popup de notificação</string>
     <string name="setting_enable_notifications_description">Este recurso exige outro app para gerenciar notificações (Vibration Center for Wear).\n\nSempre que o Vibration Center vibrar o relógio, o Svartifoss vai exibir um popup com o texto da notificação, permitindo que você dê uma olhada rápida na notificação sem sair do Svartifoss.</string>
@@ -1510,6 +1512,14 @@
         <item>Padrão do Android</item>
         <item>Perguntar sempre</item>
     </string-array>
+    <string name="setting_streaming_app_routes">Escolher apps para links de streaming</string>
+    <string name="setting_streaming_app_routes_description">Escolha separadamente um app compatível para YouTube Music, Spotify e cada outro serviço. Usado com “App de streaming detectado”.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d serviço usa um app escolhido</item>
+        <item quantity="other">%1$d serviços usam apps escolhidos</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Aparecem apps que podem abrir o link e também players de mídia instalados.</string>
+    <string name="streaming_route_automatic">Automático (app detectado)</string>
     <string name="setting_persistent_notification">Gerenciar a notificação "Svartifoss ativo"</string>
     <string name="setting_persistent_notification_description">Abre as configurações do Android para esta notificação — silencie-a, oculte-a da tela de bloqueio ou ajuste-a de outra forma. Ela não pode ser desativada por completo: o Android exige uma notificação contínua enquanto o serviço em segundo plano que se comunica com seu relógio estiver em execução.</string>
     <string name="setting_notification_access">Acesso às notificações de mídia</string>
@@ -1546,7 +1556,7 @@
     <string name="playlist_shortcut_detected_format">Identificado: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Nome</string>
     <string name="playlist_shortcut_link_hint">Link de compartilhamento ou URI do app</string>
-    <string name="playlist_shortcut_shuffle">Tocar aleatoriamente (somente YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Você escolhe Reproduzir ou Aleatório no relógio sempre que começar a tocar.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>

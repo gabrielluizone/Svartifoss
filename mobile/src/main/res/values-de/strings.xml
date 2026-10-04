@@ -1439,7 +1439,7 @@
     <string name="playlist_shortcut_detected_format">Erkannt: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Name</string>
     <string name="playlist_shortcut_link_hint">Freigabelink oder App-URI</string>
-    <string name="playlist_shortcut_shuffle">Zufällig abspielen (nur YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Du wählst auf der Uhr jedes Mal Wiedergabe oder Zufallswiedergabe, wenn du ihn startest.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2832,4 +2832,6 @@
     <string name="setting_wear_text_block_position_description">Wo der Titeltext auf dem Bildschirm sitzt. „Zifferblatt folgen“ behält die Position bei, für die jedes Zifferblatt entworfen wurde.</string>
     <string name="setting_online_artwork">Online-Cover</string>
     <string name="setting_online_artwork_description">Das Zifferblatt kann ein online gesuchtes Bild anzeigen \u2014 den gerade wiedergegebenen Künstler oder ein Albumcover für einen Player, der keines bereitstellt. Dein Smartphone sucht im öffentlichen Deezer-Katalog und speichert das Ergebnis im Cache; übertragen werden nur Titel- und Künstlername. Eine Suche findet nur statt, wenn ein Zifferblatt auf eine dieser Quellen eingestellt ist. Ist die Option aus, wird das Cover des Players verwendet.</string>
+    <string name="setting_wear_shortcut_details">Wiedergabe oder Zufall auf der Uhr</string>
+    <string name="setting_wear_shortcut_details_description">Wählst du auf der Uhr einen gespeicherten Link aus – in der Verknüpfungsliste, im Verknüpfungs-Tile oder im Aktionsmenü –, wird zuerst sein Cover mit Wiedergabe und Zufallswiedergabe angezeigt. Ausschalten, um ihn stattdessen sofort zu starten. Tasten und Gesten, die einem Link zugewiesen sind, starten ihn immer sofort.</string>
 </resources>

@@ -23,11 +23,12 @@ import com.svartifoss.snfell.common.actions.StandardActions
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.SpecialButtonCodes
 import com.svartifoss.snfell.proto.MusicState
+import com.svartifoss.snfell.proto.ShortcutPlayMode
 import com.svartifoss.snfell.proto.TrackMetadata
 import com.svartifoss.snfell.watch.communication.CustomListItemWithIcon
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.PhoneConnection
-import com.svartifoss.snfell.watch.communication.PhoneUriOpener
+import com.svartifoss.snfell.watch.communication.ShortcutPlayRequest
 import com.svartifoss.snfell.watch.communication.WatchInfoSender
 import com.svartifoss.snfell.watch.config.ButtonAction
 import com.svartifoss.snfell.watch.config.PreferencesBus
@@ -35,6 +36,9 @@ import com.svartifoss.snfell.watch.config.WatchActionConfigProvider
 import com.svartifoss.snfell.watch.config.WatchActionMenuProvider
 import com.svartifoss.snfell.watch.model.Notification
 import com.svartifoss.snfell.watch.util.launchWithErrorHandling
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailUi
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutScreenPolicy
+import com.svartifoss.snfell.watch.view.shortcut.toShortcutDetail
 import com.matejdro.wearutils.lifecycle.Resource
 import com.matejdro.wearutils.lifecycle.SingleLiveEvent
 import com.matejdro.wearutils.preferences.definition.Preferences
@@ -130,6 +134,9 @@ class MusicViewModel @Inject constructor(
     val openQuickActionsPanel = SingleLiveEvent<Unit>()
     val openPlaybackQueueScreen = SingleLiveEvent<Unit>()
     val openStreamingShortcutsMenu = SingleLiveEvent<Unit>()
+    /** A streaming shortcut picked from the quick panel's rows, to open on its own screen - see
+     *  [executeActionFromMenu]. */
+    val openShortcutScreen = SingleLiveEvent<ShortcutDetailUi>()
     val openVoiceSearch = SingleLiveEvent<Unit>()
 
     /** Opens the synced-lyrics screen. Purely local - nothing is asked of the phone until that
@@ -226,13 +233,22 @@ class MusicViewModel @Inject constructor(
 
         closeActionsMenu.postValue(Unit)
 
+        // A playlist picked from a list opens its own screen first, wherever the list is. The menu
+        // shows that screen inside itself and never hands such an entry back here while the
+        // setting is on, so what reaches this is the quick panel's rows - the same entries, laid
+        // out over the player.
+        val remoteUri = action.remoteUri
+        if (remoteUri != null && ShortcutScreenPolicy.opensForMenuAction(
+                        shortcutScreenEnabled(), remoteUri, action.shortcutSubtitle)) {
+            openShortcutScreen.value = action.toShortcutDetail(remoteUri)
+            return
+        }
+
         action.remoteUri?.takeIf(String::isNotBlank)?.let {
             // Registered, not opened. The phone reports back once its silent routes have
             // had their turn; opening here would foreground the app before they even ran.
-            PhoneUriOpener.requestOpenAfterPhoneTries(application, it)
-            viewModelScope.launchWithErrorHandling(application, musicState) {
-                phoneConnection.executeMenuAction(index)
-            }
+            ShortcutPlayRequest.start(
+                    application, it, ShortcutPlayMode.AS_SAVED, action.title)
             return
         }
 
@@ -256,16 +272,19 @@ class MusicViewModel @Inject constructor(
         }
     }
 
-    fun executeItemFromCustomMenu(listId: String, itemId: String) {
+    fun executeItemFromCustomMenu(
+            listId: String,
+            itemId: String,
+            /** Play or Shuffle, when the pick came from a shortcut's own screen. */
+            playMode: ShortcutPlayMode = ShortcutPlayMode.AS_SAVED
+    ) {
         closeActionsMenu.postValue(Unit)
 
         if (listId == CustomLists.PLAYLIST_SHORTCUTS) {
             // Registered, not opened. The phone reports back once its silent routes have
             // had their turn; opening here would foreground the app before they even ran.
-            PhoneUriOpener.requestOpenAfterPhoneTries(application, itemId)
-            viewModelScope.launchWithErrorHandling(application, musicState) {
-                phoneConnection.executeCustomMenuAction(listId, itemId)
-            }
+            ShortcutPlayRequest.start(
+                    application, itemId, playMode)
             return
         }
 
@@ -274,16 +293,19 @@ class MusicViewModel @Inject constructor(
         }
     }
 
+    /** [MiscPreferences.WEAR_SHORTCUT_DETAILS], read at the moment of the pick. */
+    private fun shortcutScreenEnabled(): Boolean = preferences.value?.let {
+        Preferences.getBoolean(it, MiscPreferences.WEAR_SHORTCUT_DETAILS)
+    } ?: MiscPreferences.WEAR_SHORTCUT_DETAILS.defaultValue
+
     fun executeAction(buttonInfo: ButtonInfo): Boolean {
         val action = currentButtonConfig.value?.getAction(buttonInfo) ?: return false
 
         action.remoteUri?.takeIf(String::isNotBlank)?.let {
             // Registered, not opened. The phone reports back once its silent routes have
             // had their turn; opening here would foreground the app before they even ran.
-            PhoneUriOpener.requestOpenAfterPhoneTries(application, it)
-            viewModelScope.launchWithErrorHandling(application, musicState) {
-                phoneConnection.executeButtonAction(buttonInfo)
-            }
+            ShortcutPlayRequest.start(
+                    application, it, ShortcutPlayMode.AS_SAVED, action.title)
             return true
         }
 

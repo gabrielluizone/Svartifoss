@@ -1438,7 +1438,7 @@
     <string name="playlist_shortcut_detected_format">شناسایی شد: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">نام</string>
     <string name="playlist_shortcut_link_hint">پیوند اشتراک‌گذاری یا URI برنامه</string>
-    <string name="playlist_shortcut_shuffle">پخش تصادفی (فقط YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">هر بار که آن را شروع می‌کنید، روی ساعت «پخش» یا «پخش تصادفی» را انتخاب می‌کنید.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2831,4 +2831,6 @@
     <string name="setting_wear_text_block_position_description">جای متن قطعه روی صفحه. «دنبال کردن صفحه» موقعیتی را که هر صفحه برای آن طراحی شده حفظ می‌کند.</string>
     <string name="setting_online_artwork">اثر هنری آنلاین</string>
     <string name="setting_online_artwork_description">اجازه دهید صفحه ساعت تصویری را که آنلاین پیدا می‌شود نمایش دهد \u2014 هنرمند در حال اجرا، یا جلد آلبوم برای پخش‌کننده‌ای که تصویری منتشر نمی‌کند. تلفن شما جست‌وجو را در فهرست عمومی Deezer انجام می‌دهد و نتیجه را کش می‌کند؛ فقط نام قطعه و هنرمند ارسال می‌شوند و تا وقتی صفحه‌ای روی یکی از این منابع تنظیم نشده باشد چیزی جست‌وجو نمی‌شود. در حالت خاموش، اثر هنری خود پخش‌کننده استفاده می‌شود.</string>
+    <string name="setting_wear_shortcut_details">پخش یا پخش تصادفی روی ساعت</string>
+    <string name="setting_wear_shortcut_details_description">انتخاب یک پیوند ذخیره‌شده روی ساعت، از فهرست میان‌برها، کاشی میان‌برها یا منوی اقدامات، ابتدا جلد آن را با «پخش» و «پخش تصادفی» نشان می‌دهد. برای شروع فوری خاموش کنید. دکمه‌ها و اشاره‌هایی که به یک پیوند اختصاص داده شده‌اند همیشه آن را فوراً شروع می‌کنند.</string>
 </resources>

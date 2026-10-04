@@ -2134,7 +2134,7 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
     <string name="playlist_shortcut_detected_format">मिला: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">नाम</string>
     <string name="playlist_shortcut_link_hint">शेयर लिंक या ऐप URI</string>
-    <string name="playlist_shortcut_shuffle">शफ़ल करके चलाएँ (केवल YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">हर बार शुरू करते समय आप घड़ी पर चलाएँ या शफ़ल चुनते हैं।</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2871,4 +2871,6 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
     <string name="setting_wear_text_block_position_description">स्क्रीन पर ट्रैक टेक्स्ट कहाँ बैठता है। Follow face हर फ़ेस के लिए डिज़ाइन की गई स्थिति को बनाए रखता है।</string>
     <string name="setting_online_artwork">ऑनलाइन आर्टवर्क</string>
     <string name="setting_online_artwork_description">वॉच फ़ेस को ऑनलाइन खोजी गई तस्वीर दिखाने दें \u2014 बज रहा आर्टिस्ट, या ऐसे प्लेयर के लिए एल्बम कवर जो कोई तस्वीर प्रकाशित नहीं करता। आपका फ़ोन Deezer की सार्वजनिक कैटलॉग में खोज करता है और परिणाम कैश करता है; केवल ट्रैक और आर्टिस्ट के नाम भेजे जाते हैं, और तब तक कुछ नहीं खोजा जाता जब तक किसी फ़ेस को इन स्रोतों में से किसी एक पर सेट न किया गया हो। बंद होने पर प्लेयर का अपना आर्टवर्क इस्तेमाल होता है।</string>
+    <string name="setting_wear_shortcut_details">घड़ी पर चलाएँ या शफ़ल</string>
+    <string name="setting_wear_shortcut_details_description">घड़ी पर सहेजा गया लिंक चुनने पर, चाहे शॉर्टकट सूची से, शॉर्टकट Tile से या ऐक्शन मेन्यू से, पहले उसका कवर चलाएँ और शफ़ल के साथ दिखता है। इसे तुरंत शुरू करने के लिए बंद करें। किसी एक लिंक को सौंपे गए बटन और जेस्चर उसे हमेशा तुरंत शुरू करते हैं।</string>
 </resources>

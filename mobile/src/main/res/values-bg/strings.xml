@@ -2111,7 +2111,7 @@
     <string name="playlist_shortcut_detected_format">Открито: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Име</string>
     <string name="playlist_shortcut_link_hint">Връзка за споделяне или URI на приложение</string>
-    <string name="playlist_shortcut_shuffle">Разбъркано възпроизвеждане (само YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Всеки път, когато я пускате, избирате „Пускане“ или „Разбъркване“ на часовника.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2848,4 +2848,6 @@
     <string name="setting_wear_text_block_position_description">Мястото на текста на песента върху екрана. „Следвай изгледа” запазва позицията, за която е проектиран всеки изглед.</string>
     <string name="setting_online_artwork">Онлайн обложка</string>
     <string name="setting_online_artwork_description">Позволете на циферблата да показва изображение, намерено онлайн \u2014 изпълнителя на песента или обложка на албум за плейър, който не предоставя такава. Телефонът търси в публичния каталог на Deezer и кешира резултата; изпращат се само имената на песента и изпълнителя и не се извършва търсене, освен ако даден изглед не е зададен към един от тези източници. Когато е изключено, се използва собствената обложка на плейъра.</string>
+    <string name="setting_wear_shortcut_details">Пускане или разбъркване на часовника</string>
+    <string name="setting_wear_shortcut_details_description">Изборът на запазена връзка на часовника – от списъка с преки пътища, Tile с преки пътища или менюто с действия – първо показва обложката ѝ с „Пускане“ и „Разбъркване“. Изключете, за да започва веднага. Бутоните и жестовете, зададени на една връзка, винаги я пускат веднага.</string>
 </resources>

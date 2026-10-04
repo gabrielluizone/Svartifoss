@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Nylig avspilt</string>
     <string name="queue_history_fallback_reason">Denne appen deler ikke køen sin</string>
+    <string name="menu_header_actions">Handlinger</string>
+    <string name="menu_header_search_results">Søkeresultater</string>
+    <string name="menu_header_search_history">Nylige søk</string>
+    <string name="menu_header_library">Bibliotek</string>
+    <string name="shortcut_open_on_phone">Åpne på telefonen</string>
+    <string name="shortcut_continue_on_phone">Fortsett på telefonen</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">I dag</string>
 

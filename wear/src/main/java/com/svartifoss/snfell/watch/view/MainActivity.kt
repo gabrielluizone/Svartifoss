@@ -175,6 +175,8 @@ import com.svartifoss.snfell.watch.communication.WatchInfoSender
 import com.svartifoss.snfell.watch.communication.WatchMusicService
 import com.svartifoss.snfell.watch.input.DoublePinchGestureController
 import com.svartifoss.snfell.watch.view.menu.MenuActivity
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailActivity
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailUi
 import com.svartifoss.snfell.watch.view.queue.QueueActivity
 import com.svartifoss.snfell.watch.view.panel.AlbumPaletteCache
 import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
@@ -307,6 +309,9 @@ class MainActivity : WearCompanionWatchActivity(),
          *  with `MenuScreen`'s APP_ICON_SIZE - the two surfaces list the same actions, so an app
          *  icon that differed between them would read as a bug in one of them. */
         private const val APP_ICON_DP = 26f
+
+        /** A quick-panel row's playlist subtitle, at the 65% the menu's subtitles use. */
+        private const val QUICK_ROW_SUBTITLE_ALPHA = 166
 
         /** What a rail reports as the top of the mini-button band: nothing, in practice. The
          *  bottom-row value is clamped to .95 at most, so this is "the whole screen is yours". */
@@ -742,7 +747,15 @@ class MainActivity : WearCompanionWatchActivity(),
     private var isMusicPlaying: Boolean = false
     private var hasPlaybackPosition: Boolean = false
 
-    private val defaultSeekBarColor by lazy { getColor(R.color.theme_accent) }
+    /**
+     * The static colour used before a cover palette exists. The phone supplies its custom Accent
+     * color in the preference snapshot, so the empty/idle player follows it too; malformed or
+     * absent values retain the historical sage fallback.
+     */
+    private val defaultSeekBarColor: Int
+        get() = parseHexColorOrNull(Preferences.getString(
+                preferences, MiscPreferences.WEAR_PHONE_ACCENT_COLOR))
+                ?: getColor(R.color.theme_accent)
 
     private lateinit var preferences: SharedPreferences
 
@@ -1250,6 +1263,7 @@ class MainActivity : WearCompanionWatchActivity(),
         viewModel.lyricsState.observe(this, lyricsStateObserver)
         viewModel.trackMetadata.observe(this, trackMetadataObserver)
         viewModel.openStreamingShortcutsMenu.observe(this, openStreamingShortcutsMenuListener)
+        viewModel.openShortcutScreen.observe(this, openShortcutScreenListener)
         viewModel.openVoiceSearch.observe(this, openVoiceSearchListener)
         viewModel.closeApp.observe(this, closeAppListener)
         viewModel.notification.observe(this, notificationObserver)
@@ -1746,25 +1760,31 @@ class MainActivity : WearCompanionWatchActivity(),
      *
      * The panel is a View overlay, not one of the Compose screens, so [LocalWatchUiFontFamily] never
      * reached it - which is why turning that switch on restyled the menu and the queue but left this
-     * one surface on Google Sans. Its labels carry no per-element typography of their own, so the
-     * plain family is applied without the title/artist weight and slant specs.
+     * one surface on Google Sans. Track metadata must also inherit each element's weight,
+     * slant and variable axes; a catalog-family lookup loses all of those.
      */
     /** Null means "leave the layout's own typeface", i.e. the switch is off. */
     private fun quickPanelTypeface(): android.graphics.Typeface? =
             if (SpecialEliteKeywordPolicy.matches(classicTitleText, classicArtistText)) {
                 watchFontTypeface(this, "love_letter")
             } else if (faceBool(MiscPreferences.WEAR_FONT_ALL_SCREENS)) {
-                watchFontTypeface(this, wearFontKey)
+                watchUiTypeface(this, preferences)
             } else {
                 null
             }
 
     private fun applyQuickPanelFont() {
         val typeface = quickPanelTypeface()
-        binding.quickActionPanelTitle.typeface = typeface
-        binding.quickActionPanelArtist.typeface = typeface
+        // applyClassicFont has already resolved these with the same settings as the active
+        // Compose face. Reuse the complete Typeface, including the Flex variation settings.
+        val followTrack = faceBool(MiscPreferences.WEAR_FONT_ALL_SCREENS) ||
+                SpecialEliteKeywordPolicy.matches(classicTitleText, classicArtistText)
+        binding.quickActionPanelTitle.typeface = if (followTrack) binding.textTitle.typeface else typeface
+        binding.quickActionPanelArtist.typeface = if (followTrack) binding.textArtist.typeface else typeface
+        binding.quickActionPanelTitle.letterSpacing = if (followTrack) titleTypography.trackingEm else 0f
+        binding.quickActionPanelArtist.letterSpacing = if (followTrack) artistTypography.trackingEm else 0f
         binding.quickActionUpNextLabel.typeface = typeface
-        binding.quickActionUpNextTrack.typeface = typeface
+        binding.quickActionUpNextTrack.typeface = if (followTrack) binding.textTitle.typeface else typeface
     }
 
     /**
@@ -2121,7 +2141,7 @@ class MainActivity : WearCompanionWatchActivity(),
      * asset, and asking about lookups discarded it on arrival.
      */
     private fun resolveBackdropArtwork(): Bitmap? =
-            if (albumArtSource.usesBackdropAsset) phoneBackdropArt ?: phoneAlbumArt else phoneAlbumArt
+            albumArtSource.effectiveArtwork(phoneAlbumArt, phoneBackdropArt)
 
     private val albumArtObserver = Observer<Bitmap?> { bitmap ->
         phoneAlbumArt = bitmap
@@ -2446,6 +2466,14 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.volumeBar.tertiaryColor = volumeTertiaryAccentColor
         binding.fourWayTouch.setTapFeedbackColor(currentAccentColor)
         composeTapPulse.accentColor = currentAccentColor
+        // This is the three-bar indicator shown while the app waits for its first music state.
+        // It is a separate View from the idle equalizer and otherwise kept its XML sage tint
+        // throughout startup, even after the phone custom accent had reached the watch.
+        binding.loadingIndicator.setBarsColor(currentAccentColor)
+        // The animated idle equalizer has an XML sage tint for its very first frame. Once the
+        // player palette is resolved it must follow it too; otherwise it is the lone green mark
+        // on a phone-custom-colour idle screen.
+        binding.idleStateIcon.imageTintList = ColorStateList.valueOf(currentAccentColor)
         // Artist name uses the same dark-theme-adapted (lightened) accent as the queue's now-playing row.
         binding.textArtist.setTextColor(resolvedArtistTextColor())
         // The "album" shadow colour is accent-derived, so it is recomputed here rather than beside
@@ -5905,6 +5933,28 @@ class MainActivity : WearCompanionWatchActivity(),
         )
     }
 
+    /**
+     * A playlist picked from the quick panel's rows, opened on its own screen. A picker like the
+     * menu: the choice comes back here and runs on this activity's view model, so a failure to
+     * reach the phone surfaces on the player the same way any other pick's does.
+     */
+    private val openShortcutScreenListener = Observer<ShortcutDetailUi?> { detail ->
+        if (detail == null) return@Observer
+        shortcutScreenLauncher.launch(ShortcutDetailActivity.intentFor(this, detail, execute = false))
+    }
+
+    private val shortcutScreenLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode != RESULT_OK) return@registerForActivityResult
+        val entryId = result.data?.getStringExtra(ShortcutDetailActivity.RESULT_EXTRA_ENTRY_ID)
+                ?: return@registerForActivityResult
+        viewModel.executeItemFromCustomMenu(
+                CustomLists.PLAYLIST_SHORTCUTS,
+                entryId,
+                ShortcutDetailActivity.playModeOf(result.data))
+    }
+
     private val closeAppListener = Observer<Unit?> {
         finish()
     }
@@ -5931,7 +5981,9 @@ class MainActivity : WearCompanionWatchActivity(),
         val listId = data.getStringExtra(MenuActivity.RESULT_EXTRA_LIST_ID)
         val entryId = data.getStringExtra(MenuActivity.RESULT_EXTRA_ENTRY_ID)
         if (listId != null && entryId != null) {
-            viewModel.executeItemFromCustomMenu(listId, entryId)
+            // Play or Shuffle when the menu showed the shortcut's own screen; as saved otherwise.
+            viewModel.executeItemFromCustomMenu(
+                    listId, entryId, ShortcutDetailActivity.playModeOf(data))
         }
     }
 
@@ -7482,13 +7534,25 @@ class MainActivity : WearCompanionWatchActivity(),
                     ?: getString(R.string.action_name_custom)
             // White over the scrim rather than the panel tint, which is picked to read against
             // the flat pill and can vanish against artwork.
-            title.setTextColor(if (coverBitmap != null) Color.WHITE else tint)
+            val titleColor = if (coverBitmap != null) Color.WHITE else tint
+            title.setTextColor(titleColor)
+            // A playlist says which service and what kind it is, as it does in the menu. Without it
+            // the panel gave no sign that tapping the pill now offers Play and Shuffle, so a pill
+            // per order still looked necessary.
+            val subtitle = row.findViewById<TextView>(R.id.quick_extra_subtitle)
+            val shortcutLine = action.shortcutSubtitle?.takeIf { it.isNotBlank() }
+            subtitle.visibility = if (shortcutLine != null) View.VISIBLE else View.GONE
+            if (shortcutLine != null) {
+                subtitle.text = shortcutLine
+                subtitle.typeface = quickPanelTypeface()
+                subtitle.setTextColor(ColorUtils.setAlphaComponent(titleColor, QUICK_ROW_SUBTITLE_ALPHA))
+            }
             if (coverBitmap != null) {
                 applyCoverPill(row, coverBitmap)
             } else {
                 row.background = quickPanelRowBackground()
             }
-            row.contentDescription = title.text
+            row.contentDescription = listOfNotNull(title.text, shortcutLine).joinToString(", ")
             row.setOnClickListener {
                 buzz()
                 hideOverlay()

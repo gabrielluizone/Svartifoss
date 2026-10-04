@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Dimainkan baru-baru ini</string>
     <string name="queue_history_fallback_reason">Aplikasi ini tidak berkongsi baris gilirnya</string>
+    <string name="menu_header_actions">Tindakan</string>
+    <string name="menu_header_search_results">Hasil carian</string>
+    <string name="menu_header_search_history">Carian terkini</string>
+    <string name="menu_header_library">Pustaka</string>
+    <string name="shortcut_open_on_phone">Buka pada telefon</string>
+    <string name="shortcut_continue_on_phone">Teruskan pada telefon anda</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Hari ini</string>
 

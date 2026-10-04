@@ -1438,7 +1438,7 @@
     <string name="playlist_shortcut_detected_format">Εντοπίστηκε: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Όνομα</string>
     <string name="playlist_shortcut_link_hint">Σύνδεσμος κοινοποίησης ή URI εφαρμογής</string>
-    <string name="playlist_shortcut_shuffle">Αναπαραγωγή τυχαία (μόνο YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Επιλέγετε Αναπαραγωγή ή Τυχαία σειρά στο ρολόι κάθε φορά που τον ξεκινάτε.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2831,4 +2831,6 @@
     <string name="setting_wear_text_block_position_description">Πού βρίσκεται το κείμενο κομματιού στην οθόνη. Η επιλογή «Ακολούθηση πρόσοψης» διατηρεί τη θέση για την οποία σχεδιάστηκε κάθε πρόσοψη.</string>
     <string name="setting_online_artwork">Online εξώφυλλο</string>
     <string name="setting_online_artwork_description">Επιτρέψτε στην πρόσοψη να εμφανίζει μια εικόνα που αναζητείται online \u2014 τον καλλιτέχνη που παίζει ή ένα εξώφυλλο άλμπουμ όταν ο player δεν παρέχει κανένα. Το τηλέφωνό σας κάνει την αναζήτηση στον δημόσιο κατάλογο του Deezer και αποθηκεύει το αποτέλεσμα στην κρυφή μνήμη· αποστέλλονται μόνο τα ονόματα του κομματιού και του καλλιτέχνη και δεν γίνεται καμία αναζήτηση εκτός αν μια πρόσοψη έχει οριστεί σε μία από αυτές τις πηγές. Όταν είναι απενεργοποιημένο, χρησιμοποιείται το εξώφυλλο του ίδιου του player.</string>
+    <string name="setting_wear_shortcut_details">Αναπαραγωγή ή τυχαία σειρά στο ρολόι</string>
+    <string name="setting_wear_shortcut_details_description">Όταν επιλέγετε έναν αποθηκευμένο σύνδεσμο στο ρολόι, από τη λίστα συντομεύσεων, το πλακίδιο συντομεύσεων ή το μενού ενεργειών, εμφανίζεται πρώτα το εξώφυλλό του με Αναπαραγωγή και Τυχαία σειρά. Απενεργοποιήστε το για να ξεκινά αμέσως. Τα κουμπιά και οι χειρονομίες που έχουν ανατεθεί σε έναν σύνδεσμο τον ξεκινούν πάντα αμέσως.</string>
 </resources>

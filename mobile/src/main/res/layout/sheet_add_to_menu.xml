@@ -280,16 +280,25 @@
 
         </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/sheet_shuffle"
+        <!-- Where the old "Play shuffled" checkbox stood. Shuffle is chosen on the watch now, at
+             the moment of playing, so this only says where the choice went. -->
+        <TextView
+            android:id="@+id/sheet_shuffle_hint"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="4dp"
+            android:drawablePadding="8dp"
             android:fontFamily="@font/google_sans"
+            android:gravity="center_vertical"
             android:includeFontPadding="false"
-            android:text="@string/playlist_shortcut_shuffle"
-            android:textColor="@color/lyra_on_surface"
-            android:textSize="13sp"
-            android:visibility="gone" />
+            android:lineHeight="18sp"
+            android:text="@string/playlist_shortcut_play_choice"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_shuffle"
+            app:drawableTint="@color/lyra_text_secondary" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sheet_add"

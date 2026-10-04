@@ -2107,7 +2107,7 @@
     <string name="playlist_shortcut_detected_format">감지됨: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">이름</string>
     <string name="playlist_shortcut_link_hint">공유 링크 또는 앱 URI</string>
-    <string name="playlist_shortcut_shuffle">셔플 재생(YouTube Music만)</string>
+    <string name="playlist_shortcut_play_choice">시작할 때마다 시계에서 재생 또는 셔플을 선택합니다.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2843,4 +2843,6 @@
     <string name="setting_wear_text_block_position_description">트랙 텍스트가 화면에 놓이는 위치입니다. 페이스 따르기는 각 페이스에 설계된 위치를 유지합니다.</string>
     <string name="setting_online_artwork">온라인 아트워크</string>
     <string name="setting_online_artwork_description">시계 화면에 온라인에서 찾은 이미지를 표시합니다 \u2014 재생 중인 아티스트 또는 이미지를 제공하지 않는 플레이어를 위한 앨범 커버입니다. 휴대전화가 Deezer 공개 카탈로그에서 검색하고 결과를 캐시합니다. 트랙 이름과 아티스트 이름만 전송되며, 페이스가 해당 소스 중 하나를 사용하도록 설정된 경우에만 검색합니다. 끄면 플레이어가 제공한 아트워크를 사용합니다.</string>
+    <string name="setting_wear_shortcut_details">시계에서 재생 또는 셔플</string>
+    <string name="setting_wear_shortcut_details_description">시계에서 저장된 링크를 선택하면(바로가기 목록, 바로가기 Tile, 동작 메뉴 어디에서든) 먼저 커버와 함께 재생 및 셔플 버튼이 표시됩니다. 끄면 바로 재생을 시작합니다. 링크 하나에 지정한 버튼과 제스처는 항상 바로 재생을 시작합니다.</string>
 </resources>

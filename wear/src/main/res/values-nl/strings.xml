@@ -54,6 +54,12 @@
     <string name="queue_load_more">Meer laden</string>
     <string name="queue_history_fallback">Onlangs afgespeeld</string>
     <string name="queue_history_fallback_reason">Deze app deelt zijn wachtrij niet</string>
+    <string name="menu_header_actions">Acties</string>
+    <string name="menu_header_search_results">Zoekresultaten</string>
+    <string name="menu_header_search_history">Recente zoekopdrachten</string>
+    <string name="menu_header_library">Bibliotheek</string>
+    <string name="shortcut_open_on_phone">Openen op telefoon</string>
+    <string name="shortcut_continue_on_phone">Ga verder op je telefoon</string>
     <string name="chat_face_today">Vandaag</string>
 
     <string name="hint_title">Zo werkt het</string>

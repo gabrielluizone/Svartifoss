@@ -20,17 +20,39 @@
         android:contentDescription="@null"
         android:scaleType="centerInside" />
 
-    <TextView
-        android:id="@+id/quick_extra_title"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:ellipsize="end"
-        android:fontFamily="@font/google_sans"
-        android:includeFontPadding="false"
-        android:maxLines="1"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/quick_extra_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- A streaming playlist's service and kind ("YouTube Music • Playlist"), as the menu shows
+             it under the same entry. Gone for every other row. -->
+        <TextView
+            android:id="@+id/quick_extra_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
 </LinearLayout>

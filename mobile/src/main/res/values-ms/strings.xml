@@ -2107,7 +2107,7 @@
     <string name="playlist_shortcut_detected_format">Dikesan: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Nama</string>
     <string name="playlist_shortcut_link_hint">Pautan kongsi atau URI aplikasi</string>
-    <string name="playlist_shortcut_shuffle">Main secara rawak (YouTube Music sahaja)</string>
+    <string name="playlist_shortcut_play_choice">Anda memilih Main atau Rawak pada jam setiap kali memulakannya.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2843,4 +2843,6 @@
     <string name="setting_wear_text_block_position_description">Kedudukan teks trek pada skrin. Ikut muka mengekalkan kedudukan yang direka untuk setiap muka jam.</string>
     <string name="setting_online_artwork">Ilustrasi dalam talian</string>
     <string name="setting_online_artwork_description">Benarkan muka jam memaparkan imej yang dicari dalam talian \u2014 artis yang sedang dimainkan, atau kulit album bagi pemain yang tidak menerbitkan imej. Telefon anda membuat carian dalam katalog awam Deezer dan menyimpan hasil dalam cache; hanya nama trek dan artis dihantar, dan tiada carian dibuat melainkan muka ditetapkan kepada salah satu sumber tersebut. Jika dimatikan, ilustrasi milik pemain digunakan.</string>
+    <string name="setting_wear_shortcut_details">Main atau rawak pada jam</string>
+    <string name="setting_wear_shortcut_details_description">Memilih pautan yang disimpan pada jam, daripada senarai pintasan, Tile pintasan atau menu tindakan, akan menunjukkan kulitnya dahulu dengan Main dan Rawak. Matikan untuk terus memulakannya. Butang dan gerak isyarat yang ditetapkan pada satu pautan sentiasa terus memulakannya.</string>
 </resources>

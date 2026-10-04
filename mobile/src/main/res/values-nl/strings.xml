@@ -1443,7 +1443,7 @@
     <string name="playlist_shortcut_detected_format">Gedetecteerd: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Naam</string>
     <string name="playlist_shortcut_link_hint">Deellink of app-URI</string>
-    <string name="playlist_shortcut_shuffle">Shuffle afspelen (alleen YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Je kiest elke keer dat je start Afspelen of Shuffle op het horloge.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2831,4 +2831,6 @@
     <string name="setting_wear_text_block_position_description">Waar de nummertekst op het scherm staat. Wijzerplaat volgen behoudt de positie waarvoor elke wijzerplaat is ontworpen.</string>
     <string name="setting_online_artwork">Online hoesafbeelding</string>
     <string name="setting_online_artwork_description">Laat de wijzerplaat een online opgezochte afbeelding tonen \u2014 de uitvoerende artiest of een albumhoes wanneer een speler er geen publiceert. Je telefoon zoekt in de openbare catalogus van Deezer en bewaart het resultaat in de cache; alleen de naam van het nummer en de artiest worden verzonden en er wordt niets opgezocht tenzij een wijzerplaat op een van die bronnen is ingesteld. Uitgeschakeld wordt de eigen hoesafbeelding van de speler gebruikt.</string>
+    <string name="setting_wear_shortcut_details">Afspelen of shuffle op het horloge</string>
+    <string name="setting_wear_shortcut_details_description">Als je op het horloge een opgeslagen link kiest, uit de lijst met snelkoppelingen, de Snelkoppelingen-Tile of het actiemenu, zie je eerst de cover met Afspelen en Shuffle. Zet uit om meteen te starten. Knoppen en gebaren die aan één link zijn toegewezen, starten die altijd meteen.</string>
 </resources>

@@ -46,6 +46,13 @@
         <package android:name="com.mixcloud.player" />
         <package android:name="com.pandora.android" />
 
+        <!-- Makes compatible alternative clients visible to the per-service shortcut router.
+             Candidates are checked with package-targeted content links before being offered. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+
         <intent>
             <action android:name="android.intent.action.MEDIA_BUTTON" />
         </intent>

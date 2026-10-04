@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">최근 재생</string>
     <string name="queue_history_fallback_reason">이 앱은 대기열을 공유하지 않습니다</string>
+    <string name="menu_header_actions">동작</string>
+    <string name="menu_header_search_results">검색 결과</string>
+    <string name="menu_header_search_history">최근 검색</string>
+    <string name="menu_header_library">보관함</string>
+    <string name="shortcut_open_on_phone">휴대전화에서 열기</string>
+    <string name="shortcut_continue_on_phone">휴대전화에서 계속하세요</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">오늘</string>
 

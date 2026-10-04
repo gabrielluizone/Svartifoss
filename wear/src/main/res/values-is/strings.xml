@@ -54,6 +54,12 @@
     <string name="queue_load_more">Hlaða meira</string>
     <string name="queue_history_fallback">Nýlega spilað</string>
     <string name="queue_history_fallback_reason">Þetta app deilir ekki biðröðinni sinni</string>
+    <string name="menu_header_actions">Aðgerðir</string>
+    <string name="menu_header_search_results">Leitarniðurstöður</string>
+    <string name="menu_header_search_history">Nýlegar leitir</string>
+    <string name="menu_header_library">Safn</string>
+    <string name="shortcut_open_on_phone">Opna í símanum</string>
+    <string name="shortcut_continue_on_phone">Haltu áfram í símanum</string>
     <string name="chat_face_today">Í dag</string>
 
     <string name="face_picker_title">Úraskífa</string>

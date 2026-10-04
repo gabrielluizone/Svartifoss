@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">เล่นล่าสุด</string>
     <string name="queue_history_fallback_reason">แอปนี้ไม่แชร์คิว</string>
+    <string name="menu_header_actions">การทำงาน</string>
+    <string name="menu_header_search_results">ผลการค้นหา</string>
+    <string name="menu_header_search_history">การค้นหาล่าสุด</string>
+    <string name="menu_header_library">คลังเพลง</string>
+    <string name="shortcut_open_on_phone">เปิดในโทรศัพท์</string>
+    <string name="shortcut_continue_on_phone">ดำเนินการต่อบนโทรศัพท์</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">วันนี้</string>
 

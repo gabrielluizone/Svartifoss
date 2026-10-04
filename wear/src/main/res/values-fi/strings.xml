@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Viimeksi toistetut</string>
     <string name="queue_history_fallback_reason">Tämä sovellus ei jaa jonoaan</string>
+    <string name="menu_header_actions">Toiminnot</string>
+    <string name="menu_header_search_results">Hakutulokset</string>
+    <string name="menu_header_search_history">Viimeisimmät haut</string>
+    <string name="menu_header_library">Kirjasto</string>
+    <string name="shortcut_open_on_phone">Avaa puhelimessa</string>
+    <string name="shortcut_continue_on_phone">Jatka puhelimella</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Tänään</string>
 

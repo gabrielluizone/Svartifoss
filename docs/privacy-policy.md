@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 19-09-2026**
+**Last updated: 04-10-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -429,7 +429,9 @@ sent; no account, API key, or other personal data is attached. This request
 goes directly to the streaming service, not through any server of ours, and
 is governed by that service's own privacy policy, not this one. Apple
 Music, Amazon Music, and Tidal have no public oEmbed endpoint, so shortcuts
-to those services always fall back to a generic app icon instead.
+to those services always fall back to a cover drawn on the phone instead.
+
+The same setting covers the liked-songs collections, which have no oEmbed record because they are personal rather than public. For YouTube Music's Liked Music and Spotify's Liked Songs — and only when one is in use, as a built-in action in the Actions menu or as a saved link — Svartifoss downloads that service's own public cover image for the collection once, from the service's image server (`www.gstatic.com` for YouTube Music, `misc.scdn.co` for Spotify), and caches it on-device. That request names a fixed image that is the same for every account; no link, account, or other personal data is sent with it. With the setting off, or if the download fails, these collections — like every shortcut without a fetched cover — are shown with a cover drawn on the phone itself, which involves no network access.
 
 ## Playback queue covers (optional)
 

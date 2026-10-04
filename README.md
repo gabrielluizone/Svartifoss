@@ -157,7 +157,7 @@ Information comes from the player and accessible local-file tags. Optional **Mus
 
 ### Keep favorite music one tap away
 
-Share or paste a streaming link on the phone to save a shortcut to a track, album, artist, playlist, show, episode or mix. Reorder shortcuts, inspect the destination and optionally fetch its cover art. The watch tries direct playback through the target app's supported interfaces; if that is unavailable, the phone opens the link visibly.
+Share or paste a streaming link on the phone to save a shortcut to a track, album, artist, playlist, show, episode or mix. Reorder shortcuts, inspect the destination and optionally fetch its cover art. Picked on the watch, a shortcut opens with its cover and a choice of **Play** or **Shuffle**, made each time rather than when the link is saved. The watch tries direct playback through the target app's supported interfaces; if that is unavailable, the phone opens the link visibly.
 
 A saved link also becomes an **assignable action**: put a favorite playlist on a physical button, gesture or quick-panel slot. The action catalogue additionally includes service-specific destinations such as liked music on YouTube Music, Spotify and SoundCloud, and Deezer Flow, subject to service support.
 

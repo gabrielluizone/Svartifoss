@@ -2060,7 +2060,7 @@
     <string name="playlist_shortcut_detected_format">గుర్తించబడింది: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">పేరు</string>
     <string name="playlist_shortcut_link_hint">Share link లేదా app URI</string>
-    <string name="playlist_shortcut_shuffle">షఫుల్ చేసి ప్లే చేయండి (YouTube Music మాత్రమే)</string>
+    <string name="playlist_shortcut_play_choice">ప్రతిసారి ప్రారంభించేటప్పుడు మీరు వాచ్‌లో ప్లే లేదా షఫుల్ ఎంచుకుంటారు.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2229,4 +2229,6 @@
         <item>నా గ్యాలరీ నుండి చిత్రం</item>
         <item>ఫోల్డర్ నుండి యాదృచ్ఛికం</item>
     </string-array>
+    <string name="setting_wear_shortcut_details">వాచ్‌లో ప్లే లేదా షఫుల్</string>
+    <string name="setting_wear_shortcut_details_description">వాచ్‌లో సేవ్ చేసిన లింక్‌ను షార్ట్‌కట్‌ల జాబితా, షార్ట్‌కట్‌ల Tile లేదా చర్యల మెనూ నుండి ఎంచుకున్నప్పుడు, ముందుగా దాని కవర్ ప్లే మరియు షఫుల్‌తో కనిపిస్తుంది. వెంటనే ప్రారంభించడానికి ఆఫ్ చేయండి. ఒక లింక్‌కు కేటాయించిన బటన్లు, సంజ్ఞలు దాన్ని ఎల్లప్పుడూ వెంటనే ప్రారంభిస్తాయి.</string>
 </resources>

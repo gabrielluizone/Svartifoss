@@ -105,8 +105,17 @@ class ShortcutsTileService : TileService() {
             .build()
     }
 
-    /** A shortcut ready to render: its display name and the launch target (remote-URI form). */
-    private class ShortcutEntry(val title: String, val subtitle: String, val entryId: String)
+    /**
+     * A shortcut ready to render: its display name and the launch target (remote-URI form), plus
+     * whether its own screen would offer Shuffle - null when the phone predates play modes, which
+     * is what keeps a tap one-touch there.
+     */
+    private class ShortcutEntry(
+            val title: String,
+            val subtitle: String,
+            val entryId: String,
+            val shuffleable: Boolean?
+    )
 
     private suspend fun readShortcuts(): List<ShortcutEntry> {
         return try {
@@ -123,7 +132,13 @@ class ShortcutsTileService : TileService() {
                 // The phone publishes a single SPECIAL_ITEM_ERROR placeholder when the library is
                 // empty; that is not a launchable shortcut.
                 .filter { it.entryId.isNotBlank() && it.entryId != CustomLists.SPECIAL_ITEM_ERROR }
-                .map { ShortcutEntry(it.entryTitle, it.entrySubtitle, it.entryId) }
+                .map {
+                    ShortcutEntry(
+                            it.entryTitle,
+                            it.entrySubtitle,
+                            it.entryId,
+                            it.shuffleable.takeIf { _ -> it.hasShuffleable() })
+                }
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {
@@ -236,6 +251,30 @@ class ShortcutsTileService : TileService() {
                                     .setValue(shortcut.entryId)
                                     .build()
                             )
+                            // What the shortcut's own screen shows before the saved list has been
+                            // read - the chip already knows it, so the screen opens complete.
+                            .addKeyToExtraMapping(
+                                ShortcutLaunchActivity.EXTRA_TITLE,
+                                ActionBuilders.AndroidStringExtra.Builder()
+                                    .setValue(shortcut.title)
+                                    .build()
+                            )
+                            .addKeyToExtraMapping(
+                                ShortcutLaunchActivity.EXTRA_SUBTITLE,
+                                ActionBuilders.AndroidStringExtra.Builder()
+                                    .setValue(shortcut.subtitle)
+                                    .build()
+                            )
+                            .apply {
+                                shortcut.shuffleable?.let { shuffleable ->
+                                    addKeyToExtraMapping(
+                                        ShortcutLaunchActivity.EXTRA_SHUFFLEABLE,
+                                        ActionBuilders.AndroidBooleanExtra.Builder()
+                                            .setValue(shuffleable)
+                                            .build()
+                                    )
+                                }
+                            }
                             .build()
                     )
                     .build()

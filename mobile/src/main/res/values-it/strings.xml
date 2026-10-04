@@ -1438,7 +1438,7 @@
     <string name="playlist_shortcut_detected_format">Rilevato: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Nome</string>
     <string name="playlist_shortcut_link_hint">Link di condivisione o URI dell\'app</string>
-    <string name="playlist_shortcut_shuffle">Riproduci in ordine casuale (solo YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Scegli Riproduci o Casuale sull’orologio ogni volta che lo avvii.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2831,4 +2831,6 @@
     <string name="setting_wear_text_block_position_description">Dove si trova il testo del brano sullo schermo. Segui quadrante mantiene la posizione per cui è stato progettato ogni quadrante.</string>
     <string name="setting_online_artwork">Copertina online</string>
     <string name="setting_online_artwork_description">Consenti al quadrante di mostrare un’immagine cercata online \u2014 l’artista in riproduzione oppure la copertina di un album quando il player non ne fornisce una. Il telefono esegue la ricerca nel catalogo pubblico di Deezer e memorizza il risultato nella cache; vengono inviati solo i nomi del brano e dell’artista e non viene cercato nulla a meno che un quadrante sia impostato su una di queste origini. Se disattivato, viene usata la copertina fornita dal player.</string>
+    <string name="setting_wear_shortcut_details">Riproduci o casuale sull’orologio</string>
+    <string name="setting_wear_shortcut_details_description">Scegliendo un link salvato sull’orologio, dall’elenco delle scorciatoie, dal Tile Scorciatoie o dal menu azioni, viene mostrata prima la copertina con Riproduci e Casuale. Disattiva per avviarlo subito. I pulsanti e i gesti assegnati a un link lo avviano sempre subito.</string>
 </resources>

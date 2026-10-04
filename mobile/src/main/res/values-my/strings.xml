@@ -2060,7 +2060,7 @@
     <string name="playlist_shortcut_detected_format">တွေ့ရှိသည်: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">အမည်</string>
     <string name="playlist_shortcut_link_hint">Share link သို့မဟုတ် app URI</string>
-    <string name="playlist_shortcut_shuffle">Shuffle ဖြင့်ဖွင့်ပါ (YouTube Music အတွက်သာ)</string>
+    <string name="playlist_shortcut_play_choice">စတင်တိုင်း နာရီပေါ်တွင် ဖွင့်ရန် သို့မဟုတ် ရောနှောရန်ကို ရွေးပါ။</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2229,4 +2229,6 @@
         <item>ကျွန်ုပ်၏ gallery မှပုံ</item>
         <item>Folder မှ ကျပန်း</item>
     </string-array>
+    <string name="setting_wear_shortcut_details">နာရီပေါ်တွင် ဖွင့်ရန် သို့မဟုတ် ရောနှောရန်</string>
+    <string name="setting_wear_shortcut_details_description">နာရီပေါ်တွင် သိမ်းထားသော link တစ်ခုကို shortcut စာရင်း၊ Shortcuts Tile သို့မဟုတ် လုပ်ဆောင်ချက် menu မှ ရွေးသောအခါ ၎င်း၏ cover ကို ဖွင့်ရန်နှင့် ရောနှောရန်တို့နှင့်အတူ ဦးစွာပြသည်။ ချက်ချင်းစတင်စေရန် ပိတ်ပါ။ link တစ်ခုအတွက် သတ်မှတ်ထားသော ခလုတ်များနှင့် လက်ဟန်များသည် ၎င်းကို အမြဲ ချက်ချင်းစတင်သည်။</string>
 </resources>

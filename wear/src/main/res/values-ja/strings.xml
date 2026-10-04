@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">最近再生した項目</string>
     <string name="queue_history_fallback_reason">このアプリはキューを共有していません</string>
+    <string name="menu_header_actions">アクション</string>
+    <string name="menu_header_search_results">検索結果</string>
+    <string name="menu_header_search_history">最近の検索</string>
+    <string name="menu_header_library">ライブラリ</string>
+    <string name="shortcut_open_on_phone">スマートフォンで開く</string>
+    <string name="shortcut_continue_on_phone">スマートフォンで続けてください</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">今日</string>
 

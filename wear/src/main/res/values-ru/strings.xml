@@ -54,6 +54,12 @@
     <string name="queue_load_more">Загрузить ещё</string>
     <string name="queue_history_fallback">Недавно прослушано</string>
     <string name="queue_history_fallback_reason">Это приложение не передаёт свою очередь</string>
+    <string name="menu_header_actions">Действия</string>
+    <string name="menu_header_search_results">Результаты поиска</string>
+    <string name="menu_header_search_history">Недавние запросы</string>
+    <string name="menu_header_library">Медиатека</string>
+    <string name="shortcut_open_on_phone">Открыть на телефоне</string>
+    <string name="shortcut_continue_on_phone">Продолжите на телефоне</string>
     <string name="chat_face_today">Сегодня</string>
 
     <string name="face_picker_title">Циферблат часов</string>

@@ -1434,7 +1434,7 @@
     <string name="playlist_shortcut_detected_format">Terdeteksi: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Nama</string>
     <string name="playlist_shortcut_link_hint">Tautan berbagi atau URI aplikasi</string>
-    <string name="playlist_shortcut_shuffle">Putar acak (hanya YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Anda memilih Putar atau Acak di jam tangan setiap kali memulainya.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2826,4 +2826,6 @@
     <string name="setting_wear_text_block_position_description">Posisi teks trek di layar. Ikuti tampilan jam mempertahankan posisi yang dirancang untuk masing-masing tampilan jam.</string>
     <string name="setting_online_artwork">Karya seni online</string>
     <string name="setting_online_artwork_description">Biarkan tampilan jam menunjukkan gambar yang dicari secara online \u2014 artis yang tampil, atau sampul album untuk pemutar yang tidak menyediakan gambar. Ponsel Anda melakukan pencarian di katalog publik Deezer dan menyimpan hasilnya dalam cache; hanya nama trek dan artis yang dikirim, dan tidak ada yang dicari kecuali sebuah tampilan jam diatur ke salah satu sumber tersebut. Jika dimatikan, karya seni milik pemutar digunakan.</string>
+    <string name="setting_wear_shortcut_details">Putar atau Acak di jam tangan</string>
+    <string name="setting_wear_shortcut_details_description">Memilih link tersimpan di jam tangan, dari daftar pintasan, Tile Pintasan, atau menu aksi, akan menampilkan sampulnya terlebih dahulu dengan Putar dan Acak. Nonaktifkan untuk langsung memulainya. Tombol dan gestur yang ditetapkan untuk satu link selalu langsung memulainya.</string>
 </resources>

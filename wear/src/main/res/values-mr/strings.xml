@@ -62,6 +62,12 @@
     <string name="queue_load_more">आणखी लोड करा</string>
     <string name="queue_history_fallback">अलीकडे वाजवलेले</string>
     <string name="queue_history_fallback_reason">हे अॅप त्याची queue share करत नाही</string>
+    <string name="menu_header_actions">क्रिया</string>
+    <string name="menu_header_search_results">शोध परिणाम</string>
+    <string name="menu_header_search_history">अलीकडील शोध</string>
+    <string name="menu_header_library">लायब्ररी</string>
+    <string name="shortcut_open_on_phone">फोनवर उघडा</string>
+    <string name="shortcut_continue_on_phone">तुमच्या फोनवर सुरू ठेवा</string>
     <string name="chat_face_today">आज</string>
     <string name="face_picker_title">घड्याळाचा चेहरा</string>
     <string name="face_picker_offline">फोन कनेक्ट नाही — हा face घड्याळावर लागू होईल, पण फोन सेटिंग जतन ठेवेल</string>

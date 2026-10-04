@@ -52,9 +52,14 @@ object ShortcutArtworkStore {
         }
     }
 
-    /** Drops cached files for links no longer present, so a deleted shortcut doesn't leak. */
+    /**
+     * Drops cached files for links no longer present, so a deleted shortcut doesn't leak.
+     *
+     * Always keeps the collections' official artwork ([StreamingCollection.storeKey]): the
+     * built-in liked-songs actions use it without any saved shortcut pointing at it.
+     */
     fun retainOnly(context: Context, links: Collection<String>) {
-        val keep = links.mapTo(HashSet()) { hashKey(it) + ".png" }
+        val keep = (links + StreamingCollection.storeKeys).mapTo(HashSet()) { hashKey(it) + ".png" }
         folder(context).listFiles()?.forEach { file ->
             if (file.name !in keep) file.delete()
         }

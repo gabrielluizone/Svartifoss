@@ -2115,7 +2115,7 @@
     <string name="playlist_shortcut_detected_format">זוהה: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">שם</string>
     <string name="playlist_shortcut_link_hint">קישור שיתוף או URI של אפליקציה</string>
-    <string name="playlist_shortcut_shuffle">נגן בסדר אקראי (YouTube Music בלבד)</string>
+    <string name="playlist_shortcut_play_choice">בכל פעם שמתחילים, בוחרים בשעון בין ״נגן״ ל״ערבוב״.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2853,4 +2853,6 @@
     <string name="setting_wear_text_block_position_description">המיקום של טקסט הרצועה על המסך. "לפי פני השעון" שומר את המיקום שעבורו תוכננו כל פני שעון.</string>
     <string name="setting_online_artwork">גרפיקה מקוונת</string>
     <string name="setting_online_artwork_description">אפשר לפני השעון להציג תמונה שנמצאה באינטרנט \u2014 האמן שמבצע, או עטיפת אלבום עבור נגן שאינו מפרסם תמונה. הטלפון שלך מבצע את החיפוש בקטלוג הציבורי של Deezer ושומר את התוצאה במטמון; רק שמות הרצועה והאמן נשלחים, ולא מתבצע חיפוש אלא אם פני שעון הוגדרו להשתמש באחד המקורות האלה. כשהאפשרות כבויה, נעשה שימוש בגרפיקה של הנגן עצמו.</string>
+    <string name="setting_wear_shortcut_details">נגן או ערבוב בשעון</string>
+    <string name="setting_wear_shortcut_details_description">בחירת קישור שמור בשעון, מרשימת קיצורי הדרך, מה-Tile של קיצורי הדרך או מתפריט הפעולות, מציגה קודם את העטיפה שלו עם ״נגן״ ו״ערבוב״. כבו כדי להתחיל לנגן מיד במקום זאת. כפתורים ומחוות שהוקצו לקישור אחד תמיד מתחילים אותו מיד.</string>
 </resources>

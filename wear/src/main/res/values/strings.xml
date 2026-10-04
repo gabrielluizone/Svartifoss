@@ -68,6 +68,19 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Recently played</string>
     <string name="queue_history_fallback_reason">This app doesn\'t share its queue</string>
+
+    <!-- Headings of the menu's lists. The shortcut list reuses shortcuts_tile_title and the
+         recently-played fallback reuses queue_history_fallback, so one list has one name. -->
+    <string name="menu_header_actions">Actions</string>
+    <string name="menu_header_search_results">Search results</string>
+    <string name="menu_header_search_history">Recent searches</string>
+    <string name="menu_header_library">Library</string>
+
+    <!-- A streaming shortcut's own screen (cover, Play, Shuffle). Play and Shuffle reuse
+         action_name_play and quick_action_shuffle. -->
+    <string name="shortcut_open_on_phone">Open on phone</string>
+    <!-- System confirmation shown after the shortcut was sent to the phone to open there. -->
+    <string name="shortcut_continue_on_phone">Continue on your phone</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Today</string>
 

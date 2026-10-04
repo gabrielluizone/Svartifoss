@@ -253,6 +253,8 @@ interface CommPaths {
          * what keeps a new watch working against a phone build from before this path existed.
          */
         const val MESSAGE_DEEP_LINK_VERDICT = "/IdleMessages/DeepLinkVerdict"
+        const val MESSAGE_STREAMING_SHORTCUT_VERDICT = "/IdleMessages/StreamingShortcutVerdict"
+        const val MESSAGE_RESOLVE_STREAMING_SHORTCUT = "/Messages/ResolveStreamingShortcut"
 
         /** Immediate MessageClient delivery of a preference snapshot (see WatchPreferenceMessage),
          *  complementing the durable /Settings DataItem. Own prefix so a dedicated manifest

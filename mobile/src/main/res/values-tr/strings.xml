@@ -2130,7 +2130,7 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     <string name="playlist_shortcut_detected_format">Algılandı: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Ad</string>
     <string name="playlist_shortcut_link_hint">Paylaşım bağlantısı veya uygulama URI’si</string>
-    <string name="playlist_shortcut_shuffle">Karışık çal (yalnızca YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Her başlattığında saatte Oynat veya Karıştır’ı seçersin.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2866,4 +2866,6 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     <string name="setting_wear_text_block_position_description">Parça metninin ekranda nerede durduğu. Kadranı izle, her kadranın tasarlandığı konumu korur.</string>
     <string name="setting_online_artwork">Çevrimiçi kapak görseli</string>
     <string name="setting_online_artwork_description">Saat yüzünün çevrimiçi bulunan bir resmi göstermesine izin verin \u2014 çalan sanatçı veya oynatıcının sağlamadığı durumlarda albüm kapağı. Telefonunuz Deezer’ın herkese açık kataloğunda arama yapar ve sonucu önbelleğe alır; yalnızca parça ve sanatçı adları gönderilir ve bir saat yüzü bu kaynaklardan birine ayarlanmadıkça hiçbir şey aranmaz. Kapalıyken oynatıcının kendi kapak görseli kullanılır.</string>
+    <string name="setting_wear_shortcut_details">Saatte oynat veya karıştır</string>
+    <string name="setting_wear_shortcut_details_description">Saatte kayıtlı bir bağlantıyı kısayol listesinden, Kısayollar Tile’ından veya eylemler menüsünden seçtiğinde önce kapağı Oynat ve Karıştır düğmeleriyle gösterilir. Hemen başlaması için kapat. Tek bir bağlantıya atanmış düğmeler ve hareketler onu her zaman hemen başlatır.</string>
 </resources>

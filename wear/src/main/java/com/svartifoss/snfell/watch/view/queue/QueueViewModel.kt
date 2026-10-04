@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.AlbumAccentSource
+import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
@@ -59,9 +60,6 @@ class QueueViewModel @Inject constructor(
     /** Read once: preferences are phone-owned and this screen lives for a single visit. */
     private val appearanceContext = ThemeAppearance.resolve(prefs)
 
-    /** The cover the ground is painted from - see ScreenBackdrop. */
-    val albumArt = phoneConnection.albumArt
-
     /** The album triad stands in for a cover that carries no colour, or none at all. */
     private val fallbackTriad = PanelTriad(
             DEFAULT_QUEUE_ACCENT,
@@ -75,12 +73,30 @@ class QueueViewModel @Inject constructor(
                     appearanceContext))
 
     /**
+     * The image selected by the active face, rather than unconditionally its source sleeve.
+     * Queue's tint and ScreenBackdrop must agree with the player when Artist, Online or a custom
+     * artwork source supplies a replacement picture.
+     */
+    val artwork = MediatorLiveData<Bitmap?>().apply {
+        val source = AlbumArtSource.fromPref(FaceScopedPreferences.getString(
+                prefs, MiscPreferences.WEAR_ALBUM_ART_SOURCE, appearanceContext))
+        fun refresh() {
+            value = source.effectiveArtwork(
+                    phoneConnection.albumArt.value, phoneConnection.backdropArt.value)
+        }
+        value = source.effectiveArtwork(
+                phoneConnection.albumArt.value, phoneConnection.backdropArt.value)
+        addSource(phoneConnection.albumArt) { refresh() }
+        addSource(phoneConnection.backdropArt) { refresh() }
+    }
+
+    /**
      * MainActivity has normally already extracted the current cover. Read that answer while this
      * ViewModel is constructed, before Compose draws its first loading frame, rather than waiting
      * for LiveData to dispatch the same Bitmap on the next main-loop turn.
      */
     private val cachedAccentTriad = AlbumPaletteCache
-            .get(phoneConnection.albumArt.value, albumAccentSource)
+            .get(artwork.value, albumAccentSource)
             ?.let(::resolveAccent)
 
     private var latestList: CustomListWithBitmaps? = null
@@ -134,7 +150,7 @@ class QueueViewModel @Inject constructor(
      */
     val accentTriad = MediatorLiveData<PanelTriad?>().apply {
         value = cachedAccentTriad
-        addSource(phoneConnection.albumArt) { bitmap ->
+        addSource(artwork) { bitmap ->
             if (bitmap == null) {
                 // Still through the resolver: a chosen queue colour is a choice about the queue,
                 // not about the cover, so it has to survive a track with no artwork - publishing

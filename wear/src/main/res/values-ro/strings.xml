@@ -54,6 +54,12 @@
     <string name="queue_load_more">Încarcă mai multe</string>
     <string name="queue_history_fallback">Redate recent</string>
     <string name="queue_history_fallback_reason">Această aplicație nu își partajează coada</string>
+    <string name="menu_header_actions">Acțiuni</string>
+    <string name="menu_header_search_results">Rezultatele căutării</string>
+    <string name="menu_header_search_history">Căutări recente</string>
+    <string name="menu_header_library">Bibliotecă</string>
+    <string name="shortcut_open_on_phone">Deschide pe telefon</string>
+    <string name="shortcut_continue_on_phone">Continuă pe telefon</string>
     <string name="chat_face_today">Azi</string>
 
     <string name="face_picker_title">Cadranul ceasului</string>

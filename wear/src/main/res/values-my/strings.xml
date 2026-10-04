@@ -62,6 +62,12 @@
     <string name="queue_load_more">နောက်ထပ်တင်ပါ</string>
     <string name="queue_history_fallback">မကြာသေးမီက ဖွင့်ထားသည်များ</string>
     <string name="queue_history_fallback_reason">ဤ app က ၎င်း၏ queue ကို share မလုပ်ပါ</string>
+    <string name="menu_header_actions">လုပ်ဆောင်ချက်များ</string>
+    <string name="menu_header_search_results">ရှာဖွေမှု ရလဒ်များ</string>
+    <string name="menu_header_search_history">မကြာသေးမီက ရှာဖွေမှုများ</string>
+    <string name="menu_header_library">စာကြည့်တိုက်</string>
+    <string name="shortcut_open_on_phone">ဖုန်းတွင် ဖွင့်ရန်</string>
+    <string name="shortcut_continue_on_phone">သင့်ဖုန်းတွင် ဆက်လုပ်ပါ</string>
     <string name="chat_face_today">ယနေ့</string>
     <string name="face_picker_title">Watch face</string>
     <string name="face_picker_offline">ဖုန်းမချိတ်ထားပါ — ဤ face ကို နာရီပေါ် အသုံးချမည်၊ သို့သော် ဖုန်းက setting ကို ဆက်သိမ်းထားမည်</string>

@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Nedávno prehrané</string>
     <string name="queue_history_fallback_reason">Táto aplikácia nezdieľa svoj rad</string>
+    <string name="menu_header_actions">Akcie</string>
+    <string name="menu_header_search_results">Výsledky vyhľadávania</string>
+    <string name="menu_header_search_history">Nedávne vyhľadávania</string>
+    <string name="menu_header_library">Knižnica</string>
+    <string name="shortcut_open_on_phone">Otvoriť v telefóne</string>
+    <string name="shortcut_continue_on_phone">Pokračujte v telefóne</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Dnes</string>
 

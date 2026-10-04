@@ -44,6 +44,12 @@
     <string name="queue_load_more">Mehr laden</string>
     <string name="queue_history_fallback">Zuletzt gespielt</string>
     <string name="queue_history_fallback_reason">Diese App teilt ihre Warteschlange nicht</string>
+    <string name="menu_header_actions">Aktionen</string>
+    <string name="menu_header_search_results">Suchergebnisse</string>
+    <string name="menu_header_search_history">Letzte Suchen</string>
+    <string name="menu_header_library">Mediathek</string>
+    <string name="shortcut_open_on_phone">Auf dem Telefon öffnen</string>
+    <string name="shortcut_continue_on_phone">Weiter auf deinem Telefon</string>
 
     <string name="hint_title">Bedienung</string>
     <string name="hint_edges">Oben, unten, links oder rechts tippen — jede Zone führt ihre Aktion aus</string>

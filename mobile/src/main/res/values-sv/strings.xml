@@ -2134,7 +2134,7 @@ När Vibration Center får klockan att vibrera visar Svartifoss en popup med avi
     <string name="playlist_shortcut_detected_format">Upptäckt: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Namn</string>
     <string name="playlist_shortcut_link_hint">Delningslänk eller app-URI</string>
-    <string name="playlist_shortcut_shuffle">Spela blandat (endast YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Du väljer Spela upp eller Blanda på klockan varje gång du startar.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2871,4 +2871,6 @@ När Vibration Center får klockan att vibrera visar Svartifoss en popup med avi
     <string name="setting_wear_text_block_position_description">Var spårtexten ligger på skärmen. Följ urtavlan behåller den position som varje urtavla är utformad för.</string>
     <string name="setting_online_artwork">Onlineomslag</string>
     <string name="setting_online_artwork_description">Låt urtavlan visa en bild som hämtas online \u2014 artisten som spelas, eller ett albumomslag när en spelare inte publicerar något. Telefonen gör sökningen i Deezers offentliga katalog och cachar resultatet; endast spår- och artistnamnen skickas, och inget söks upp om inte en urtavla är inställd på en av dessa källor. När funktionen är av används spelarens eget omslag.</string>
+    <string name="setting_wear_shortcut_details">Spela upp eller blanda på klockan</string>
+    <string name="setting_wear_shortcut_details_description">När du väljer en sparad länk på klockan – från genvägslistan, genvägspanelen eller åtgärdsmenyn – visas först dess omslag med Spela upp och Blanda. Stäng av för att starta direkt i stället. Knappar och gester som är tilldelade en länk startar den alltid direkt.</string>
 </resources>

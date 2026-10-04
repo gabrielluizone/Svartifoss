@@ -205,7 +205,7 @@ class LyricsActivity : ComponentActivity() {
             // Only the last line needs it: its span runs to the end of the track rather than to a
             // next line that does not exist.
             val track by viewModel.track.observeAsState()
-            val albumArt by viewModel.albumArt.observeAsState()
+            val artwork by viewModel.artwork.observeAsState()
             val accentTriad by viewModel.accentTriad.observeAsState()
 
             // The configured ground is accent-dependent. Keep the black Activity window visible
@@ -216,7 +216,7 @@ class LyricsActivity : ComponentActivity() {
                 rememberScreenBackdrop(
                         prefs = preferences,
                         appearanceContext = appearance,
-                        albumArt = albumArt,
+                        albumArt = artwork,
                         accentSource = accentSource,
                         themeAccent = themeAccent,
                         triad = triad,

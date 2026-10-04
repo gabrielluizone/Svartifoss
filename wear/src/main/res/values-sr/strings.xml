@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Недавно репродуковано</string>
     <string name="queue_history_fallback_reason">Ова апликација не дели свој ред</string>
+    <string name="menu_header_actions">Радње</string>
+    <string name="menu_header_search_results">Резултати претраге</string>
+    <string name="menu_header_search_history">Недавне претраге</string>
+    <string name="menu_header_library">Библиотека</string>
+    <string name="shortcut_open_on_phone">Отвори на телефону</string>
+    <string name="shortcut_continue_on_phone">Наставите на телефону</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Данас</string>
 

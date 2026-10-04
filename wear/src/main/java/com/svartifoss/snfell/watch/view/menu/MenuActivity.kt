@@ -2,6 +2,7 @@ package com.svartifoss.snfell.watch.view.menu
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
 import android.os.Vibrator
@@ -10,21 +11,36 @@ import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import com.svartifoss.snfell.watch.theme.watchUiFontFamily
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.Color
 import androidx.preference.PreferenceManager
 import androidx.wear.input.WearableButtons
+import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.LibraryEntry
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.proto.ShortcutPlayMode
+import com.svartifoss.snfell.watch.communication.ShortcutPlayRequest
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchMusicService
 import com.svartifoss.snfell.watch.util.WatchLanguage
+import com.svartifoss.snfell.watch.view.panel.AlbumPaletteCache
+import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailActivity
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailUi
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutScreenPolicy
+import com.svartifoss.snfell.watch.view.shortcut.showContinueOnPhone
+import com.svartifoss.snfell.watch.view.shortcut.toShortcutDetail
 import com.matejdro.wearutils.miscutils.VibratorCompat
 import com.matejdro.wearutils.preferences.definition.Preferences
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,6 +56,10 @@ import com.svartifoss.snfell.watch.view.queue.QueueStyle
  * A pure picker: the selection is returned as an activity result and executed by MainActivity's
  * MusicViewModel, so watch-executed actions (volume, open menu, search) keep raising their
  * events - volume popup, voice input - where MainActivity can actually show them.
+ *
+ * A streaming shortcut is the one pick that does not close the menu at once: it opens the
+ * shortcut's own screen inside the menu first, and the Play or Shuffle chosen there is what goes
+ * back - see [ShortcutScreenPolicy].
  *
  * Physical stem buttons mirror the old drawer: the button physically furthest from the wearer
  * closes the menu, any other stem button confirms the row currently in the center.
@@ -65,6 +85,8 @@ class MenuActivity : ComponentActivity() {
 
     private var showCustomList by mutableStateOf(false)
     private var requestedCustomListId by mutableStateOf<String?>(null)
+    /** The shortcut whose own screen is showing over the list, or null for the list itself. */
+    private var shortcutDetail by mutableStateOf<ShortcutDetailUi?>(null)
     private var centerItemIndex = 0
     private var closeKeycode = -1
     @Volatile private var finishCalled = false
@@ -96,6 +118,7 @@ class MenuActivity : ComponentActivity() {
             val customList by viewModel.customList.observeAsState()
             val streamingShortcuts by viewModel.streamingShortcuts.observeAsState()
             val preferences by viewModel.preferences.observeAsState()
+            val albumArt by viewModel.albumArt.observeAsState()
 
             val content = if (showCustomList) {
                 val requestedList = if (requestedCustomListId == CustomLists.PLAYLIST_SHORTCUTS) {
@@ -120,6 +143,10 @@ class MenuActivity : ComponentActivity() {
                         it, MiscPreferences.WEAR_QUEUE_STYLE, ThemeAppearance.resolve(it)
                 ))
             } ?: QueueStyle.GLASS
+            val accentSource = preferences?.let {
+                PanelAppearanceResolver.accentSource(it, ThemeAppearance.resolve(it))
+            } ?: AlbumAccentSource.BALANCED
+            val accent = rememberPlayingAccent(albumArt, accentSource)
 
             CompositionLocalProvider(
                     LocalWatchUiFontFamily provides watchUiFontFamily(preferences)) {
@@ -127,15 +154,43 @@ class MenuActivity : ComponentActivity() {
                     content = content,
                     alwaysPickCenter = alwaysPickCenter,
                     coverStyle = coverStyle,
+                    accentColor = accent,
+                    detail = shortcutDetail,
+                    accentSource = accentSource,
                     onActionClick = { index -> returnAction(index) },
                     onEntryClick = { listId, entryId -> returnCustomEntry(listId, entryId) },
                     onEntryLongClick = { listId, entryId -> deleteEntry(listId, entryId) },
                     onCenterItemChanged = { centerItemIndex = it },
                     onCenterConfirm = { confirmCenterItem() },
+                    onDetailPlay = { mode -> playShortcut(mode) },
+                    onDetailOpenOnPhone = { openShortcutOnPhone() },
+                    onDetailDismiss = { shortcutDetail = null },
                     onDismiss = { safeFinish() }
             )
             }
         }
+    }
+
+    /**
+     * The playing album's colour, seeded from [AlbumPaletteCache] so a menu opened over a cover the
+     * player has already read is in that colour from its first frame, as the panel screens are.
+     * Null only while an uncached cover is being read; with no cover, the app accent.
+     */
+    @Composable
+    private fun rememberPlayingAccent(art: Bitmap?, source: AlbumAccentSource): Color? {
+        val themeAccent = getColor(R.color.theme_accent)
+        val seed = AlbumPaletteCache.get(art, source)
+        var accent by remember(art, source) {
+            mutableStateOf(seed?.let { Color(it.primary) }
+                    ?: if (art == null) Color(themeAccent) else null)
+        }
+        LaunchedEffect(art, source) {
+            if (seed != null || art == null) return@LaunchedEffect
+            PanelAppearanceResolver.albumTriad(art, source, themeAccent) { triad ->
+                accent = Color(triad.primary)
+            }
+        }
+        return accent
     }
 
     /** singleTop: a custom list arriving while the actions menu is open swaps the content in
@@ -144,6 +199,8 @@ class MenuActivity : ComponentActivity() {
         super.onNewIntent(intent)
         showCustomList = intent.getBooleanExtra(EXTRA_SHOW_CUSTOM_LIST, false)
         requestedCustomListId = intent.getStringExtra(EXTRA_CUSTOM_LIST_ID)
+        // A different list was asked for: whatever shortcut was open belonged to the old one.
+        shortcutDetail = null
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
@@ -154,7 +211,8 @@ class MenuActivity : ComponentActivity() {
         }
 
         if (keyCode == closeKeycode) {
-            safeFinish()
+            // From a shortcut's screen, one step back to its list - the same thing a swipe does.
+            if (shortcutDetail != null) shortcutDetail = null else safeFinish()
         } else {
             confirmCenterItem()
         }
@@ -162,6 +220,11 @@ class MenuActivity : ComponentActivity() {
     }
 
     private fun confirmCenterItem() {
+        if (shortcutDetail != null) {
+            // The screen's primary action, as the stem confirms a list's centred row.
+            playShortcut(ShortcutPlayMode.IN_ORDER)
+            return
+        }
         if (showCustomList) {
             val list = if (requestedCustomListId == CustomLists.PLAYLIST_SHORTCUTS) {
                 viewModel.streamingShortcuts.value
@@ -179,14 +242,42 @@ class MenuActivity : ComponentActivity() {
         }
     }
 
+    private fun shortcutScreenEnabled(): Boolean {
+        val preferences = viewModel.preferences.value
+                ?: PreferenceManager.getDefaultSharedPreferences(this)
+        return Preferences.getBoolean(preferences, MiscPreferences.WEAR_SHORTCUT_DETAILS)
+    }
+
     private fun returnAction(index: Int) {
+        val action = viewModel.actions.value?.getOrNull(index)
+        val remoteUri = action?.remoteUri
+        if (action != null && remoteUri != null && ShortcutScreenPolicy.opensForMenuAction(
+                        shortcutScreenEnabled(), remoteUri, action.shortcutSubtitle)) {
+            buzz()
+            shortcutDetail = action.toShortcutDetail(remoteUri)
+            return
+        }
+
         buzz()
         setResult(RESULT_OK, Intent().putExtra(RESULT_EXTRA_ACTION_INDEX, index))
         safeFinish()
     }
 
     private fun returnCustomEntry(listId: String, entryId: String) {
+        // A list's own explanation ("No shortcuts yet") is not something to pick.
+        if (entryId == CustomLists.SPECIAL_ITEM_ERROR) return
         buzz()
+
+        if (listId == CustomLists.PLAYLIST_SHORTCUTS) {
+            val item = viewModel.streamingShortcuts.value?.items
+                    ?.firstOrNull { it.listItem.entryId == entryId }
+            if (item != null && ShortcutScreenPolicy.opensForListEntry(
+                            shortcutScreenEnabled(), listId, entryId,
+                            phoneKnowsPlayModes = item.listItem.hasShuffleable())) {
+                shortcutDetail = item.toShortcutDetail()
+                return
+            }
+        }
 
         // Walking into a library folder must not close the menu: the phone answers with the next
         // page as a fresh custom list, and MenuViewModel.customList swaps it in underneath the user
@@ -207,6 +298,32 @@ class MenuActivity : ComponentActivity() {
                         .putExtra(RESULT_EXTRA_LIST_ID, listId)
                         .putExtra(RESULT_EXTRA_ENTRY_ID, entryId)
         )
+        safeFinish()
+    }
+
+    /**
+     * Play or Shuffle on the open shortcut's screen: handed back like any other pick, through the
+     * shortcut path whatever list it came from - a menu entry's remote URI is played the same way
+     * as a row of the shortcut list, and that path is the one that carries a play mode.
+     */
+    private fun playShortcut(mode: ShortcutPlayMode) {
+        val detail = shortcutDetail ?: return
+        buzz()
+        setResult(
+                RESULT_OK,
+                Intent()
+                        .putExtra(RESULT_EXTRA_LIST_ID, CustomLists.PLAYLIST_SHORTCUTS)
+                        .putExtra(RESULT_EXTRA_ENTRY_ID, detail.entryId)
+                        .putExtra(ShortcutDetailActivity.RESULT_EXTRA_PLAY_MODE, mode.number)
+        )
+        safeFinish()
+    }
+
+    private fun openShortcutOnPhone() {
+        val detail = shortcutDetail ?: return
+        buzz()
+        ShortcutPlayRequest.openOnPhone(this, detail.entryId)
+        showContinueOnPhone(this)
         safeFinish()
     }
 
