@@ -19,7 +19,6 @@ internal object QuickPanelBlockText {
         QuickPanelBlockType.TOOLS -> R.string.quick_block_tools
         QuickPanelBlockType.FAVORITES -> R.string.quick_block_favorites
         QuickPanelBlockType.ACTIONS -> R.string.quick_block_actions
-        QuickPanelBlockType.MENU_LINK -> R.string.quick_block_menu
     }
 
     @StringRes
@@ -32,7 +31,6 @@ internal object QuickPanelBlockText {
         QuickPanelBlockType.TOOLS -> R.string.quick_block_tools_description
         QuickPanelBlockType.FAVORITES -> R.string.quick_block_favorites_description
         QuickPanelBlockType.ACTIONS -> R.string.quick_block_actions_description
-        QuickPanelBlockType.MENU_LINK -> R.string.quick_block_menu_description
     }
 
     @DrawableRes
@@ -45,6 +43,5 @@ internal object QuickPanelBlockText {
         QuickPanelBlockType.TOOLS -> R.drawable.ic_tune
         QuickPanelBlockType.FAVORITES -> R.drawable.ic_bolt
         QuickPanelBlockType.ACTIONS -> R.drawable.ic_actions_menu
-        QuickPanelBlockType.MENU_LINK -> R.drawable.ic_arrow_outward
     }
 }

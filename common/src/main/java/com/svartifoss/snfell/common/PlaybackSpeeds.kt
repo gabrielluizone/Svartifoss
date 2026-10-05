@@ -27,4 +27,42 @@ object PlaybackSpeeds {
         val stepped = rung + STEP
         return if (stepped > MAX + EPSILON) MIN else stepped.coerceIn(MIN, MAX)
     }
+
+    /**
+     * How long a press is remembered as the speed in force, which is longer than the phone takes
+     * to confirm one and shorter than anyone leaves a control alone before pressing it again.
+     */
+    const val TAP_MEMORY_MS = 3_000L
+
+    /**
+     * Steps from what the last press chose when that was recent, and from the speed the phone
+     * reports otherwise.
+     *
+     * The phone is the only source of the speed in force, and it answers a press after a Bluetooth
+     * round trip and the player's own delay - and a player that does not support the command never
+     * answers it at all. A control that always stepped from the *reported* speed therefore chose the
+     * same rung for every press in a quick run, so holding a finger on it looked like a button that
+     * did nothing past the first step. Remembering the last press for [TAP_MEMORY_MS] makes a run
+     * of presses walk up the ladder, and forgetting it afterwards makes the next press start from
+     * what is true - which for a player that ignored the command is where it began.
+     *
+     * [clock] is a monotonic millisecond clock, a parameter so this stays free of the framework.
+     */
+    class TapMemory(private val clock: () -> Long) {
+        private var lastTapped = 1f
+        private var lastTappedAt = 0L
+        private var hasTapped = false
+
+        /** The speed this press chooses, given what the phone [reported] last. */
+        fun next(reported: Float): Float {
+            val now = clock()
+            val elapsed = now - lastTappedAt
+            val base = if (hasTapped && elapsed in 0 until TAP_MEMORY_MS) lastTapped else reported
+            return PlaybackSpeeds.next(base).also {
+                lastTapped = it
+                lastTappedAt = now
+                hasTapped = true
+            }
+        }
+    }
 }

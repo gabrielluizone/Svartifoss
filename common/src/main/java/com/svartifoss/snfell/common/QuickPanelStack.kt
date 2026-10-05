@@ -50,9 +50,14 @@ object QuickPanelStack {
     private const val LIST_SEPARATOR = '+'
     private const val VISIBILITY_KEY = "v"
 
-    /** The seconds a seek block may offer, smallest first. Anything else would make a chip
-     *  whose label promises a jump the shared seek path was never tested at. */
-    val SEEK_STEP_VOCABULARY: List<Int> = listOf(5, 10, 15, 30, 60)
+    /**
+     * The seconds a seek block may offer, smallest first.
+     *
+     * The chips are glyphs, not text ([SeekGlyphs]), and Material draws a replay and a forward arrow
+     * for exactly these three. A fourth value would need a chip that is a number on a blank
+     * circle - the "+15" the glyphs replaced - so the vocabulary stops where the icons do.
+     */
+    val SEEK_STEP_VOCABULARY: List<Int> = listOf(5, 10, 30)
 
     /**
      * Two steps are four chips (back and forward for each), which is as many as fit across a round
@@ -60,7 +65,9 @@ object QuickPanelStack {
      * 33dp, too small to hit with a finger.
      */
     const val MAX_SEEK_STEPS = 2
-    const val MAX_TOOLS = 8
+
+    /** Every tool at most once, so the ceiling is the number of tools - and grows with them. */
+    val MAX_TOOLS: Int = QuickPanelTool.entries.size
 
     /**
      * The explicit stack [raw] encodes, or null when there is none.
@@ -240,6 +247,9 @@ object QuickPanelStack {
                 QuickPanelBlockType.ACTIONS to OPTION_MAX ->
                     value.takeIf { it in ACTIONS_LIMITS.map(Int::toString) }
 
+                QuickPanelBlockType.ACTIONS to OPTION_MODE ->
+                    value.takeIf { ActionsMode.fromToken(it) != null }
+
                 else -> null
             }
 
@@ -274,7 +284,7 @@ object QuickPanelStack {
     /** How many favourites to list; 0 is "all of them". */
     val FAVORITES_LIMITS: List<Int> = listOf(0, 3, 6, 9, 12)
 
-    /** How many of the menu's rows the full-list block repeats; 0 is "all of them". */
+    /** How many of the menu's rows the actions block repeats in list mode; 0 is "all of them". */
     val ACTIONS_LIMITS: List<Int> = listOf(0, 3, 5, 8)
 }
 
@@ -301,11 +311,13 @@ enum class QuickPanelBlockType(val token: String) {
     /** The actions the user starred for the panel, as a grid of covers or as rows. */
     FAVORITES("favorites"),
 
-    /** The whole actions menu repeated as rows - what the panel has always listed. */
-    ACTIONS("actions"),
-
-    /** One row that opens the full actions menu. */
-    MENU_LINK("menu");
+    /**
+     * The whole actions menu: repeated as rows in the panel - what it has always listed - or kept
+     * out of the way behind one pill that opens it ([ActionsMode]). One block with a choice rather
+     * than two blocks, because a panel never wants both, and "show them all" and "show a way to
+     * them" are the same question asked of the same menu.
+     */
+    ACTIONS("actions");
 
     /** The value of option [key] when the stack does not name one. */
     fun defaultOption(key: String): String? = when (this to key) {
@@ -316,6 +328,7 @@ enum class QuickPanelBlockType(val token: String) {
         FAVORITES to QuickPanelStack.OPTION_MODE -> FavoritesMode.GRID.token
         FAVORITES to QuickPanelStack.OPTION_MAX -> "6"
         ACTIONS to QuickPanelStack.OPTION_MAX -> "0"
+        ACTIONS to QuickPanelStack.OPTION_MODE -> ActionsMode.LIST.token
         else -> null
     }
 
@@ -359,6 +372,19 @@ enum class FavoritesMode(val token: String) {
     }
 }
 
+/** How the actions block puts the menu on the panel. */
+enum class ActionsMode(val token: String) {
+    /** Every action as a full-width row, in the order of the menu. */
+    LIST("list"),
+
+    /** One pill, "All actions", that opens the menu. */
+    BUTTON("button");
+
+    companion object {
+        fun fromToken(token: String?): ActionsMode? = entries.firstOrNull { it.token == token }
+    }
+}
+
 /**
  * The built-in tools a tools block may offer, in the order the editor lists them.
  *
@@ -368,6 +394,9 @@ enum class FavoritesMode(val token: String) {
 enum class QuickPanelTool(val token: String) {
     /** Cycles the playback speed. Shows the current one. */
     SPEED("speed"),
+
+    /** Steps the phone's sleep timer through its presets. Shows the time left. */
+    SLEEP("sleep"),
 
     /** Opens the synced-lyrics screen. */
     LYRICS("lyrics"),
@@ -439,6 +468,10 @@ data class QuickPanelBlock(
     val favoritesMode: FavoritesMode
         get() = FavoritesMode.fromToken(option(QuickPanelStack.OPTION_MODE)) ?: FavoritesMode.GRID
 
+    /** Whether an actions block lists the menu's rows or is one button that opens the menu. */
+    val actionsMode: ActionsMode
+        get() = ActionsMode.fromToken(option(QuickPanelStack.OPTION_MODE)) ?: ActionsMode.LIST
+
     /** How many entries a favourites or actions block lists; 0 means all of them. */
     val maxEntries: Int
         get() = option(QuickPanelStack.OPTION_MAX)?.toIntOrNull() ?: 0
@@ -451,6 +484,9 @@ data class QuickPanelBlock(
 
     fun withVisibility(visibility: QuickPanelVisibility): QuickPanelBlock =
             copy(visibility = visibility)
+
+    fun withActionsMode(mode: ActionsMode): QuickPanelBlock =
+            withOption(QuickPanelStack.OPTION_MODE, mode.token)
 
     fun withSeekSteps(steps: List<Int>): QuickPanelBlock =
             withOption(QuickPanelStack.OPTION_STEPS, steps.joinToString("+"))

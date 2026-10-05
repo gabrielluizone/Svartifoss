@@ -1,7 +1,9 @@
 package com.svartifoss.snfell.view.watchface
 
+import com.svartifoss.snfell.common.ActionsMode
 import com.svartifoss.snfell.common.QuickPanelBlock
 import com.svartifoss.snfell.common.QuickPanelBlockType
+import com.svartifoss.snfell.common.QuickPanelGeometry
 import com.svartifoss.snfell.common.QuickPanelStack
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -51,6 +53,37 @@ class QuickPanelFoldTest {
         assertTrue(heights[4] > heights[3])
         assertEquals(heights[4], heights[6], 0f)
         assertEquals(heights[6], heights[7], 0f)
+    }
+
+    @Test
+    fun `the actions block as a button is one row however long the menu is`() {
+        val list = QuickPanelBlock(QuickPanelBlockType.ACTIONS)
+        val button = list.withActionsMode(ActionsMode.BUTTON)
+        val long = QuickPanelFold.Counts(starredFavorites = 0, menuActions = 14)
+
+        assertEquals(14 * 60f, QuickPanelFold.heightDp(list, long), 0f)
+        assertEquals(60f, QuickPanelFold.heightDp(button, long), 0f)
+        // So a panel that only wants a way to the menu keeps the rest of it above the fold.
+        val panel = listOf(
+                QuickPanelBlock(QuickPanelBlockType.BUTTONS),
+                QuickPanelBlock(QuickPanelBlockType.VOLUME),
+                button)
+        assertEquals(2, QuickPanelFold.lastOnFirstScreen(panel, long))
+    }
+
+    @Test
+    fun `the blocks on one pill are as tall as the watch lays them out`() {
+        // The fold draws its line from the same sums the watch and the miniature are built from; a
+        // fold with numbers of its own would drift from both without anything failing.
+        assertEquals(QuickPanelGeometry.volumeBlockDp(),
+                QuickPanelFold.heightDp(QuickPanelBlock(QuickPanelBlockType.VOLUME), none), 0f)
+        assertEquals(QuickPanelGeometry.seekBlockDp(true),
+                QuickPanelFold.heightDp(QuickPanelBlock(QuickPanelBlockType.SEEK), none), 0f)
+        assertEquals(QuickPanelGeometry.seekBlockDp(false),
+                QuickPanelFold.heightDp(
+                        QuickPanelBlock(QuickPanelBlockType.SEEK).withOption("bar", "0"), none), 0f)
+        assertEquals(QuickPanelGeometry.toolsBlockDp(3),
+                QuickPanelFold.heightDp(QuickPanelBlock(QuickPanelBlockType.TOOLS), none), 0f)
     }
 
     @Test

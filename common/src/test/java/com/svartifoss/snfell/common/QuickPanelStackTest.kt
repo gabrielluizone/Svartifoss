@@ -53,12 +53,12 @@ class QuickPanelStackTest {
                         .withTools(listOf(QuickPanelTool.LYRICS, QuickPanelTool.SPEED)),
                 QuickPanelBlock(QuickPanelBlockType.FAVORITES, QuickPanelVisibility.NOT_PLAYING)
                         .withOption("mode", "rows"),
-                QuickPanelBlock(QuickPanelBlockType.MENU_LINK))
+                QuickPanelBlock(QuickPanelBlockType.ACTIONS).withActionsMode(ActionsMode.BUTTON))
         val encoded = QuickPanelStack.encode(blocks)
 
         assertEquals(
                 "1|header|buttons|volume.step:20|tools.list:lyrics+speed" +
-                        "|favorites.v:i.mode:rows|menu",
+                        "|favorites.v:i.mode:rows|actions.mode:button",
                 encoded)
         assertEquals(blocks, QuickPanelStack.parse(encoded))
     }
@@ -86,9 +86,9 @@ class QuickPanelStackTest {
         // Which is the default, so nothing is written.
         assertEquals("1|seek", QuickPanelStack.encode(listOf(block)))
 
-        val other = QuickPanelBlock(QuickPanelBlockType.SEEK).withSeekSteps(listOf(60, 15))
-        assertEquals("1|seek.steps:15+60", QuickPanelStack.encode(listOf(other)))
-        assertEquals(listOf(5, 15), QuickPanelStack.parse("1|seek.steps:15+5")!!.single().seekSteps)
+        val other = QuickPanelBlock(QuickPanelBlockType.SEEK).withSeekSteps(listOf(30, 5))
+        assertEquals("1|seek.steps:5+30", QuickPanelStack.encode(listOf(other)))
+        assertEquals(listOf(5, 30), QuickPanelStack.parse("1|seek.steps:30+5")!!.single().seekSteps)
     }
 
     @Test
@@ -101,12 +101,16 @@ class QuickPanelStackTest {
         assertNull(QuickPanelStack.parse("1|seek.steps:7"))
         assertNull(QuickPanelStack.parse("1|seek.steps:10+10"))
         // Three steps would be six chips on a screen that fits four touch targets across.
-        assertNull(QuickPanelStack.parse("1|seek.steps:5+10+15"))
+        assertNull(QuickPanelStack.parse("1|seek.steps:5+10+30"))
+        // The chips are Material's replay and forward arrows, which exist for 5, 10 and 30 only.
+        assertNull(QuickPanelStack.parse("1|seek.steps:15"))
+        assertNull(QuickPanelStack.parse("1|seek.steps:60"))
         assertNull(QuickPanelStack.parse("1|tools.list:speed+speed"))
         assertNull(QuickPanelStack.parse("1|tools.list:teleport"))
         assertNull(QuickPanelStack.parse("1|favorites.mode:carousel"))
         assertNull(QuickPanelStack.parse("1|favorites.max:7"))
         assertNull(QuickPanelStack.parse("1|actions.max:4"))
+        assertNull(QuickPanelStack.parse("1|actions.mode:carousel"))
     }
 
     @Test
@@ -162,6 +166,39 @@ class QuickPanelStackTest {
         assertEquals(6, QuickPanelBlock(QuickPanelBlockType.FAVORITES).maxEntries)
         // The full-list block has always listed everything, so that is what "unset" means there.
         assertEquals(0, QuickPanelBlock(QuickPanelBlockType.ACTIONS).maxEntries)
+        assertEquals(ActionsMode.LIST, QuickPanelBlock(QuickPanelBlockType.ACTIONS).actionsMode)
+    }
+
+    @Test
+    fun `the actions block is one block that is a list or a button`() {
+        val button = QuickPanelStack.parse("1|header|actions.mode:button")!!.last()
+        assertEquals(ActionsMode.BUTTON, button.actionsMode)
+
+        // Switching to the button keeps the row limit, so switching back finds it where it was.
+        val limited = QuickPanelBlock(QuickPanelBlockType.ACTIONS).withOption("max", "5")
+        val asButton = limited.withActionsMode(ActionsMode.BUTTON)
+        assertEquals(5, asButton.maxEntries)
+        assertEquals(ActionsMode.LIST, asButton.withActionsMode(ActionsMode.LIST).actionsMode)
+        // And a list is the spelling that needs no extra field, so an untouched block stays short.
+        assertEquals("1|actions", QuickPanelStack.encode(listOf(asButton.withActionsMode(ActionsMode.LIST)
+                .withOption("max", "0"))))
+
+        // The separate "menu link" block this replaced is gone: its token is an unknown type, and a
+        // value that still carries it fails closed instead of drawing a panel without it.
+        assertNull(QuickPanelStack.parse("1|header|menu"))
+    }
+
+    @Test
+    fun `every tool can be offered at once and round trips`() {
+        // The sleep timer made nine; the ceiling follows the enum instead of being a number to forget.
+        val all = QuickPanelTool.entries
+        assertTrue(all.size <= QuickPanelStack.MAX_TOOLS)
+        val block = QuickPanelBlock(QuickPanelBlockType.TOOLS).withTools(all)
+        assertEquals(all, block.tools)
+        val encoded = QuickPanelStack.encode(listOf(block))
+        assertEquals(all, QuickPanelStack.parse(encoded)!!.single().tools)
+        assertTrue(encoded.length <= QuickPanelStack.MAX_ENCODED_LENGTH)
+        assertEquals(QuickPanelTool.SLEEP, QuickPanelTool.fromToken("sleep"))
     }
 
     @Test

@@ -75,6 +75,10 @@
     <string name="quick_seek_back_description">Back %1$d seconds</string>
     <string name="quick_seek_forward_description">Forward %1$d seconds</string>
     <string name="quick_speed_description">Playback speed %1$s</string>
+    <string name="quick_tool_sleep">Sleep</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Sleep timer, %1$d minutes left. Tap to change</string>
+    <string name="quick_sleep_off_description">Sleep timer off. Tap to set</string>
     <string name="voice_search_prompt">Search music</string>
     <string name="queue_empty">No queue available</string>
     <string name="queue_now_playing">Now playing</string>

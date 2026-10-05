@@ -199,7 +199,7 @@
     <string name="playing_controls">Controls while playing</string>
     <string name="stopped_controls">Controls with no playback</string>
     <string name="actions_menu">Actions menu</string>
-    <string name="actions_intro">Everything here appears on your watch, in the order you set: in the menu, and again as rows under the quick panel’s buttons. Add playlists, albums and tracks by pasting a link, or add any other action.</string>
+    <string name="actions_intro">Everything here appears on your watch, in the order you set: in the menu and, unless you rearrange the quick panel, again as rows in it. Add playlists, albums and tracks by pasting a link, or add any other action.</string>
     <string name="actions_quick_panel_section">Quick panel</string>
     <string name="actions_watch_menu_section">Menu on watch</string>
     <string name="actions_quick_pin_add">Show in quick panel</string>
@@ -634,6 +634,7 @@
     <string name="quick_panel_default_up_next">Up Next</string>
     <!-- Quick panel editor -->
     <string name="quick_panel_editor_title">Quick actions panel</string>
+    <string name="quick_panel_editor_open">Edit panel content</string>
     <string name="quick_panel_editor_intro">Build the panel that opens when you double-tap the centre of the watch. Hold and drag a block to move it, tap one to adjust it.</string>
     <string name="quick_panel_editor_add_block">Add block</string>
     <string name="quick_panel_editor_restore">Restore the original panel</string>
@@ -656,8 +657,7 @@
     <string name="quick_block_seek">Skip and position</string>
     <string name="quick_block_tools">Tools</string>
     <string name="quick_block_favorites">Favorites</string>
-    <string name="quick_block_actions">Actions list</string>
-    <string name="quick_block_menu">Menu link</string>
+    <string name="quick_block_actions">All actions</string>
     <string name="quick_block_all_actions">All actions</string>
 
     <string name="quick_block_header_description">The title and artist of what is playing.</string>
@@ -667,8 +667,7 @@
     <string name="quick_block_seek_description">Where you are in the track, and buttons that skip back and forward.</string>
     <string name="quick_block_tools_description">Small shortcuts: playback speed, lyrics, the queue and more.</string>
     <string name="quick_block_favorites_description">The actions you starred on the Actions tab, as covers or rows.</string>
-    <string name="quick_block_actions_description">Every action of the watch menu, one row each.</string>
-    <string name="quick_block_menu_description">One row that opens the full actions menu.</string>
+    <string name="quick_block_actions_description">Every action of your watch menu, as rows in the panel or as one button that opens the menu.</string>
 
     <string name="quick_summary_header">Title and artist</string>
     <string name="quick_summary_buttons_session">From the playing app</string>
@@ -684,11 +683,13 @@
     </plurals>
     <string name="quick_summary_actions_all">All %1$d actions</string>
     <string name="quick_summary_actions_first">First %1$d actions</string>
-    <string name="quick_summary_menu">Opens the actions menu</string>
+    <string name="quick_summary_actions_button">One button · opens the actions menu</string>
     <string name="quick_summary_only_playing">only while playing</string>
     <string name="quick_summary_only_not_playing">only while not playing</string>
     <string name="quick_mode_grid">Grid</string>
     <string name="quick_mode_rows">Rows</string>
+    <string name="quick_mode_actions_list">List</string>
+    <string name="quick_mode_actions_button">Button</string>
 
     <string name="quick_sheet_show">Show</string>
     <string name="quick_sheet_always">Always</string>
@@ -706,10 +707,13 @@
     <string name="quick_sheet_source_session">The playing app</string>
     <string name="quick_sheet_buttons_hint">Tap a button to choose its action. Hold to restore its default.</string>
     <string name="quick_sheet_favorites_hint">Star actions with the lightning bolt on the Actions tab. Only starred ones appear here.</string>
+    <string name="quick_sheet_actions_mode">Show as</string>
+    <string name="quick_sheet_actions_hint">A list puts every action on the panel as a row. A button keeps the panel short: one pill that opens the full menu. To leave the menu out of the panel altogether, remove this block.</string>
     <string name="quick_sheet_remove">Remove this block</string>
     <string name="quick_sheet_done">Done</string>
 
     <string name="quick_tool_speed">Speed</string>
+    <string name="quick_tool_sleep">Sleep</string>
     <string name="quick_tool_lyrics">Lyrics</string>
     <string name="quick_tool_queue">Queue</string>
     <string name="quick_tool_volume">Volume</string>

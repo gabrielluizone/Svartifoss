@@ -50,6 +50,7 @@ import com.matejdro.wearutils.preferences.definition.Preferences
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.actions.NullAction
 import com.svartifoss.snfell.actions.PhoneAction
+import com.svartifoss.snfell.common.ActionsMode
 import com.svartifoss.snfell.common.FavoritesMode
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.QuickPanelBlock
@@ -353,6 +354,7 @@ class QuickPanelEditorActivity : AppCompatActivity(),
 
     private fun toolName(tool: QuickPanelTool): String = getString(when (tool) {
         QuickPanelTool.SPEED -> R.string.quick_tool_speed
+        QuickPanelTool.SLEEP -> R.string.quick_tool_sleep
         QuickPanelTool.LYRICS -> R.string.quick_tool_lyrics
         QuickPanelTool.QUEUE -> R.string.quick_tool_queue
         QuickPanelTool.VOLUME -> R.string.quick_tool_volume
@@ -375,13 +377,13 @@ class QuickPanelEditorActivity : AppCompatActivity(),
                     block.seekSteps.joinToString(" · ") { "±$it" })
             QuickPanelBlockType.TOOLS -> block.tools.joinToString(" · ", transform = ::toolName)
             QuickPanelBlockType.FAVORITES -> favoritesSummary(block)
-            QuickPanelBlockType.ACTIONS ->
-                if (block.maxEntries > 0) {
+            QuickPanelBlockType.ACTIONS -> when {
+                block.actionsMode == ActionsMode.BUTTON ->
+                    getString(R.string.quick_summary_actions_button)
+                block.maxEntries > 0 ->
                     getString(R.string.quick_summary_actions_first, block.maxEntries)
-                } else {
-                    getString(R.string.quick_summary_actions_all, counts.menuActions)
-                }
-            QuickPanelBlockType.MENU_LINK -> getString(R.string.quick_summary_menu)
+                else -> getString(R.string.quick_summary_actions_all, counts.menuActions)
+            }
         }
         val when_ = when (block.visibility) {
             QuickPanelVisibility.ALWAYS -> null
@@ -507,14 +509,29 @@ class QuickPanelEditorActivity : AppCompatActivity(),
                 addHint(content, R.string.quick_sheet_favorites_hint)
             }
 
-            QuickPanelBlockType.ACTIONS ->
-                addLimitRow(content, block, QuickPanelStack.ACTIONS_LIMITS, type)
+            QuickPanelBlockType.ACTIONS -> {
+                // Whether the menu is on the panel as rows or behind one button. Removing the
+                // block is the third answer, and it is on the sheet below.
+                addChoiceRow(content, R.string.quick_sheet_actions_mode,
+                        listOf(
+                                getString(R.string.quick_mode_actions_list),
+                                getString(R.string.quick_mode_actions_button)),
+                        selected = ActionsMode.entries.indexOf(block.actionsMode)
+                ) { index ->
+                    update(block.withActionsMode(ActionsMode.entries[index]))
+                    buildSheetContent(content, type)
+                }
+                // How many rows only means something while there are rows.
+                if (block.actionsMode == ActionsMode.LIST) {
+                    addLimitRow(content, block, QuickPanelStack.ACTIONS_LIMITS, type)
+                }
+                addHint(content, R.string.quick_sheet_actions_hint)
+            }
 
             QuickPanelBlockType.BUTTONS -> addButtonsSection(content, type)
 
             QuickPanelBlockType.HEADER,
-            QuickPanelBlockType.UP_NEXT,
-            QuickPanelBlockType.MENU_LINK -> Unit
+            QuickPanelBlockType.UP_NEXT -> Unit
         }
     }
 
@@ -825,9 +842,11 @@ class QuickPanelEditorActivity : AppCompatActivity(),
     companion object {
         private const val MENU_RESTORE = 1
 
-        /** The jump pairs the seek block offers. Each is a list the model accepts. */
+        /** The jump sets the seek block offers. Each is a list the model accepts, and between them
+         *  they cover every way of choosing one or two of the three jumps that have a glyph. */
         private val SEEK_PRESETS: List<List<Int>> = listOf(
-                listOf(10), listOf(30), listOf(10, 30), listOf(5, 15), listOf(15, 60))
+                listOf(5), listOf(10), listOf(30),
+                listOf(5, 10), listOf(5, 30), listOf(10, 30))
 
         fun createIntent(context: Context): Intent =
                 Intent(context, QuickPanelEditorActivity::class.java)

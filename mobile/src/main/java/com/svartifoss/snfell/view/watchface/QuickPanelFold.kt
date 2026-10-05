@@ -1,9 +1,10 @@
 package com.svartifoss.snfell.view.watchface
 
+import com.svartifoss.snfell.common.ActionsMode
 import com.svartifoss.snfell.common.FavoritesMode
 import com.svartifoss.snfell.common.QuickPanelBlock
 import com.svartifoss.snfell.common.QuickPanelBlockType
-import kotlin.math.ceil
+import com.svartifoss.snfell.common.QuickPanelGeometry
 
 /**
  * Where the first screen of the watch's quick panel ends.
@@ -32,20 +33,23 @@ internal object QuickPanelFold {
         QuickPanelBlockType.HEADER -> 50f
         QuickPanelBlockType.BUTTONS -> 58f
         QuickPanelBlockType.UP_NEXT -> 60f
-        QuickPanelBlockType.VOLUME -> 58f
-        QuickPanelBlockType.SEEK -> (if (block.seekShowsBar) 29f else 0f) + 54f
-        QuickPanelBlockType.TOOLS -> block.tools.chunked(TOOLS_PER_LINE).size * 62f + 2f
+        // The blocks made of several controls are the sums the watch lays out, from the numbers it
+        // lays them out with.
+        QuickPanelBlockType.VOLUME -> QuickPanelGeometry.volumeBlockDp()
+        QuickPanelBlockType.SEEK -> QuickPanelGeometry.seekBlockDp(block.seekShowsBar)
+        QuickPanelBlockType.TOOLS -> QuickPanelGeometry.toolsBlockDp(block.tools.size)
         QuickPanelBlockType.FAVORITES -> {
             val shown = limited(counts.starredFavorites, block.maxEntries)
             when {
                 shown == 0 -> 0f
                 block.favoritesMode == FavoritesMode.GRID ->
-                    ceil(shown / GRID_COLUMNS.toFloat()) * 75f
-                else -> shown * 60f
+                    QuickPanelGeometry.favoritesGridBlockDp(shown)
+                else -> shown * ROW_DP
             }
         }
-        QuickPanelBlockType.ACTIONS -> limited(counts.menuActions, block.maxEntries) * 60f
-        QuickPanelBlockType.MENU_LINK -> 60f
+        QuickPanelBlockType.ACTIONS ->
+            if (block.actionsMode == ActionsMode.BUTTON) ROW_DP
+            else limited(counts.menuActions, block.maxEntries) * ROW_DP
     }
 
     /**
@@ -77,6 +81,6 @@ internal object QuickPanelFold {
     private fun limited(available: Int, max: Int): Int =
             if (max > 0) minOf(available, max) else available
 
-    private const val TOOLS_PER_LINE = 4
-    private const val GRID_COLUMNS = 3
+    /** A full-width row with the space above it - what the actions list and the button are made of. */
+    private const val ROW_DP = 60f
 }

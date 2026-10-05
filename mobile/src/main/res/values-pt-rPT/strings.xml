@@ -170,7 +170,7 @@
     <string name="playing_controls">Controlos durante a reprodução</string>
     <string name="stopped_controls">Controlos sem reprodução</string>
     <string name="actions_menu">Menu de ações</string>
-    <string name="actions_intro">Tudo o que está aqui aparece no relógio, pela ordem que definires: no menu e também como linhas por baixo dos botões do painel rápido. Adiciona playlists, álbuns e faixas colando o link, ou qualquer outra ação.</string>
+    <string name="actions_intro">Tudo o que está aqui aparece no relógio, pela ordem que definires: no menu e, a menos que reorganizes o painel rápido, também como linhas nele. Adiciona playlists, álbuns e faixas colando o link, ou qualquer outra ação.</string>
     <string name="actions_quick_panel_section">Painel rápido</string>
     <string name="actions_watch_menu_section">Menu no relógio</string>
     <string name="actions_quick_pin_add">Mostrar no painel rápido</string>
@@ -457,6 +457,7 @@
     <string name="quick_panel_default_up_next">A seguir</string>
     <!-- Quick panel editor -->
     <string name="quick_panel_editor_title">Painel de ações rápidas</string>
+    <string name="quick_panel_editor_open">Editar o conteúdo do painel</string>
     <string name="quick_panel_editor_intro">Monta o painel que abre com um toque duplo no centro do relógio. Mantém e arrasta um bloco para o mudar de sítio, toca para ajustar.</string>
     <string name="quick_panel_editor_add_block">Adicionar bloco</string>
     <string name="quick_panel_editor_restore">Restaurar o painel original</string>
@@ -479,8 +480,7 @@
     <string name="quick_block_seek">Avançar e posição</string>
     <string name="quick_block_tools">Ferramentas</string>
     <string name="quick_block_favorites">Favoritos</string>
-    <string name="quick_block_actions">Lista de ações</string>
-    <string name="quick_block_menu">Atalho do menu</string>
+    <string name="quick_block_actions">Todas as ações</string>
     <string name="quick_block_all_actions">Todas as ações</string>
 
     <string name="quick_block_header_description">O título e o artista do que está tocando.</string>
@@ -490,8 +490,7 @@
     <string name="quick_block_seek_description">Onde estás na faixa, e botões para recuar e avançar.</string>
     <string name="quick_block_tools_description">Atalhos pequenos: velocidade, letra, fila e mais.</string>
     <string name="quick_block_favorites_description">As ações que marcaste no separador Ações, como capas ou linhas.</string>
-    <string name="quick_block_actions_description">Todas as ações do menu do relógio, uma linha para cada.</string>
-    <string name="quick_block_menu_description">Uma linha que abre o menu de ações completo.</string>
+    <string name="quick_block_actions_description">Todas as ações do menu do relógio, como linhas no painel ou como um botão que abre o menu.</string>
 
     <string name="quick_summary_header">Título e artista</string>
     <string name="quick_summary_buttons_session">Da aplicação em reprodução</string>
@@ -507,11 +506,13 @@
     </plurals>
     <string name="quick_summary_actions_all">Todas as %1$d ações</string>
     <string name="quick_summary_actions_first">As primeiras %1$d ações</string>
-    <string name="quick_summary_menu">Abre o menu de ações</string>
+    <string name="quick_summary_actions_button">Um botão · abre o menu de ações</string>
     <string name="quick_summary_only_playing">só tocando</string>
     <string name="quick_summary_only_not_playing">só sem reprodução</string>
     <string name="quick_mode_grid">Grade</string>
     <string name="quick_mode_rows">Linhas</string>
+    <string name="quick_mode_actions_list">Lista</string>
+    <string name="quick_mode_actions_button">Botão</string>
 
     <string name="quick_sheet_show">Mostrar</string>
     <string name="quick_sheet_always">Sempre</string>
@@ -529,10 +530,13 @@
     <string name="quick_sheet_source_session">Aplicação em reprodução</string>
     <string name="quick_sheet_buttons_hint">Toca num botão para escolher a ação. Mantém para voltar ao predefinido.</string>
     <string name="quick_sheet_favorites_hint">Marca ações com o raio no separador Ações. Só as marcadas aparecem aqui.</string>
+    <string name="quick_sheet_actions_mode">Mostrar como</string>
+    <string name="quick_sheet_actions_hint">A lista coloca cada ação no painel como uma linha. O botão deixa o painel curto: uma pílula que abre o menu completo. Para tirar o menu do painel de vez, remova este bloco.</string>
     <string name="quick_sheet_remove">Remover este bloco</string>
     <string name="quick_sheet_done">Pronto</string>
 
     <string name="quick_tool_speed">Velocidade</string>
+    <string name="quick_tool_sleep">Dormir</string>
     <string name="quick_tool_lyrics">Letra</string>
     <string name="quick_tool_queue">Fila</string>
     <string name="quick_tool_volume">Volume</string>

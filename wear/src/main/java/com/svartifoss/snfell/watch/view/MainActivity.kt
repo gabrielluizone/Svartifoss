@@ -89,6 +89,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.wearable.input.RotaryEncoderHelper
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.ActionsMode
 import com.svartifoss.snfell.common.logging.logSummary
 import com.svartifoss.snfell.common.AlbumFillSlot
 import com.svartifoss.snfell.common.CenterButton
@@ -109,6 +110,7 @@ import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.OverlayBackdrop
 import com.svartifoss.snfell.common.OverlayBackdropResolver
 import com.svartifoss.snfell.common.PaletteTransforms
+import com.svartifoss.snfell.common.PlaybackSpeeds
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.PlayerShadingIntensity
 import com.svartifoss.snfell.common.PlayerShadingStyle
@@ -384,6 +386,10 @@ class MainActivity : WearCompanionWatchActivity(),
         /** See [enterQuickActionsPanel]: longer than the backdrop's fade, so the panel lands on it. */
         private const val QUICK_PANEL_ENTER_MS = 160L
         private const val QUICK_PANEL_ENTER_SCALE = 0.96f
+
+        /** Past the tap memory by enough that the phone's answer, if one is coming, has landed. */
+        private const val SPEED_RESYNC_SLACK_MS = 300L
+
         /**
          * The cover transition's length, shared with every Compose face through [AlbumArtMotion].
          *
@@ -1275,6 +1281,7 @@ class MainActivity : WearCompanionWatchActivity(),
         // is explicitly removed in onDestroy, so it cannot retain a dead Activity.
         viewModel.preferences.observeForever(preferencesChangeObserver)
         viewModel.volume.observe(this, phoneVolumeListener)
+        viewModel.sleepTimerEndsAt.observe(this, sleepTimerListener)
         viewModel.popupVolumeBar.observe(this, volumeBarPopupListener)
         viewModel.openActionsMenu.observe(this, openActionsMenuListener)
         viewModel.openQuickActionsPanel.observe(this, openQuickActionsPanelListener)
@@ -5801,6 +5808,10 @@ class MainActivity : WearCompanionWatchActivity(),
         panelBlockViews?.onVolume(it)
     }
 
+    private val sleepTimerListener = Observer<Long> { endsAt ->
+        panelBlockViews?.onSleepTimer(endsAt)
+    }
+
     private val playbackPositionObserver = Observer<PlaybackPosition?> { position ->
         // Mid-rotary-scrub the ring shows the pending seek target - don't let the live position
         // ticker yank it back to the playing position between crown detents. The commit runnable
@@ -7436,6 +7447,9 @@ class MainActivity : WearCompanionWatchActivity(),
         renderQuickPanelExtraActions()
         applyQuickPanelLayout()
         binding.quickActionsPanel.scrollTo(0, 0)
+        // The phone keeps the sleep timer. If this app restarted while one was running, the chip
+        // would otherwise say "off" until the next time the timer changed.
+        if (panelOffersSleepTimer()) viewModel.requestSleepTimer()
 
         updateQuickActionButtonStates()
 
@@ -7498,7 +7512,8 @@ class MainActivity : WearCompanionWatchActivity(),
         // not on the panel at all, and it may be cut to its first few rows.
         val stack = quickPanelBlocks
         val actionsBlock = stack?.firstOrNull { it.type == QuickPanelBlockType.ACTIONS }
-        if (stack != null && actionsBlock == null) {
+        // As a button the rows are not on the panel at all - the button opens the menu they mirror.
+        if (stack != null && (actionsBlock == null || actionsBlock.actionsMode == ActionsMode.BUTTON)) {
             container.removeAllViews()
             container.visibility = View.GONE
             return
@@ -7649,13 +7664,21 @@ class MainActivity : WearCompanionWatchActivity(),
         override fun rowHeightPx() = listRowHeightPx()
     }
 
+    private val resyncSpeedChip = Runnable { panelBlockViews?.onSpeed(latestPlaybackSpeed) }
+
     private val quickPanelHost = object : QuickPanelHost {
         override fun volume(): Float = viewModel.volume.value ?: 0f
         override fun setVolume(volume: Float) = viewModel.updateVolume(volume)
         override fun skipBy(deltaMs: Long) = viewModel.skipBy(deltaMs)
         override fun cycleSpeed() {
+            // The chip shows the speed just chosen at once. Once the phone has had time to answer
+            // it shows the speed that is in force: a player that does not support the command
+            // never reports a change, and a chip that went on saying 1.5x would be claiming one.
             panelBlockViews?.onSpeed(viewModel.cycleSpeed())
+            binding.root.removeCallbacks(resyncSpeedChip)
+            binding.root.postDelayed(resyncSpeedChip, PlaybackSpeeds.TAP_MEMORY_MS + SPEED_RESYNC_SLACK_MS)
         }
+        override fun cycleSleepTimer() = viewModel.cycleSleepTimer()
         override fun openTool(tool: QuickPanelTool) = runQuickPanelTool(tool)
         override fun runMenuAction(index: Int) {
             hideOverlay()
@@ -7669,7 +7692,7 @@ class MainActivity : WearCompanionWatchActivity(),
     private fun runQuickPanelTool(tool: QuickPanelTool) {
         hideOverlay()
         when (tool) {
-            QuickPanelTool.SPEED -> Unit
+            QuickPanelTool.SPEED, QuickPanelTool.SLEEP -> Unit
             QuickPanelTool.LYRICS -> viewModel.openLyricsScreen.call()
             QuickPanelTool.QUEUE -> viewModel.openPlaybackQueueScreen.call()
             QuickPanelTool.VOLUME -> viewModel.openVolumeScreen.call()
@@ -7691,6 +7714,14 @@ class MainActivity : WearCompanionWatchActivity(),
             QuickPanelStack.visibleFor(
                     quickPanelBlocks ?: QuickPanelStack.implicitStack(), isMusicPlaying)
                     .any { it.type == type }
+
+    /** Whether the panel being shown has a tools block carrying the sleep timer chip. */
+    private fun panelOffersSleepTimer(): Boolean {
+        val blocks = quickPanelBlocks ?: return false
+        return QuickPanelStack.visibleFor(blocks, isMusicPlaying).any { block ->
+            block.type == QuickPanelBlockType.TOOLS && QuickPanelTool.SLEEP in block.tools
+        }
+    }
 
     /** Re-lays the panel out if play/pause changed which of its blocks are visible. */
     private fun relayoutPanelBlocksIfNeeded() {
@@ -7728,18 +7759,22 @@ class MainActivity : WearCompanionWatchActivity(),
                     order += primaryList
                 }
                 QuickPanelBlockType.UP_NEXT -> order += upNext
-                QuickPanelBlockType.ACTIONS -> order += extras
+                QuickPanelBlockType.ACTIONS -> order += if (block.actionsMode == ActionsMode.BUTTON) {
+                    blockViews.bindActionsButton()
+                } else {
+                    extras
+                }
                 QuickPanelBlockType.VOLUME -> order += blockViews.bindVolume(block)
                 QuickPanelBlockType.SEEK -> order += blockViews.bindSeek(block)
                 QuickPanelBlockType.TOOLS -> order += blockViews.bindTools(block)
                 QuickPanelBlockType.FAVORITES -> order += bindFavorites(block, blockViews)
-                QuickPanelBlockType.MENU_LINK -> order += blockViews.bindMenuLink()
             }
         }
         // Bound blocks start from whatever they last drew; bring them up to what is true now.
         blockViews.onVolume(viewModel.volume.value ?: 0f)
         blockViews.onPosition(lastKnownPositionMs, lastKnownDurationMs, playbackSeekable)
         blockViews.onSpeed(latestPlaybackSpeed)
+        blockViews.onSleepTimer(viewModel.sleepTimerEndsAt.value ?: 0L)
         return order
     }
 
@@ -7753,7 +7788,7 @@ class MainActivity : WearCompanionWatchActivity(),
         val entries = quickPanelExtraActions.withIndex()
                 .filter { it.value.inQuickPanel }
                 .let { if (limit > 0) it.take(limit) else it }
-        val container = views.favoritesContainer()
+        val container = views.favoritesContainer(asGrid = block.favoritesMode == FavoritesMode.GRID)
         when {
             entries.isEmpty() -> {
                 container.removeAllViews()

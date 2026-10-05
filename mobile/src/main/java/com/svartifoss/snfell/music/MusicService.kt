@@ -312,6 +312,15 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private lateinit var actionHandlers: Map<Class<*>, ActionHandler<*>>
 
     private var ackTimeoutHandler = AckTimeoutHandler(WeakReference(this))
+
+    /**
+     * The sleep timer set from the watch's quick panel. Held here rather than on the watch because
+     * this is the device that pauses the music, and the one that is certain to be running when
+     * someone is asleep. Its state travels back as a remaining duration, never a deadline.
+     */
+    private val sleepTimer = SleepTimer(
+            onEnded = ::pauseForSleepTimer,
+            onChanged = ::sendSleepTimerState)
     private val queueRefreshHandler = Handler(Looper.getMainLooper())
     private val notificationActionsChanged: () -> Unit = {
         queueRefreshHandler.post {
@@ -932,6 +941,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         ackTimeoutHandler.removeCallbacksAndMessages(null)
         queueRefreshHandler.removeCallbacksAndMessages(null)
+        // A timer with no service to act on it would fire into nothing.
+        sleepTimer.release()
         trackHistorySaveHandler.removeCallbacks(saveTrackHistory)
         persistTrackHistory()
         MediaNotificationActions.removeListener(notificationActionsChanged)
@@ -1120,6 +1131,37 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     /** Issued unconditionally, like every transport command in this switch - a session that does
      *  not implement ACTION_SET_PLAYBACK_SPEED reports the same speed back on its next state,
      *  which is a harmless no-op rather than a reason to withhold the command. */
+    /** The timer ran out: pause what is playing. A session that is already paused is left alone. */
+    private fun pauseForSleepTimer() {
+        val controller = currentMediaController
+        if (controller?.isPlaying() == true) {
+            Timber.i("Sleep timer ended; pausing playback")
+            controller.transportControls.pause()
+        } else {
+            Timber.i("Sleep timer ended with nothing playing")
+        }
+    }
+
+    /**
+     * Tells the watch how long the sleep timer has left, as a duration: it counts down on its own
+     * clock from here, so this goes out when the timer changes or is asked about and not every
+     * minute. 0 means none is running - which is also what ending sends.
+     */
+    private fun sendSleepTimerState() {
+        val remainingMs = sleepTimer.remainingMs()
+        lifecycleScope.launch {
+            try {
+                Wearable.getMessageClient(applicationContext).sendMessageToNearestClient(
+                        Wearable.getNodeClient(applicationContext),
+                        CommPaths.MESSAGE_SLEEP_TIMER_STATE,
+                        ByteBuffer.allocate(8).putLong(remainingMs).array())
+            } catch (e: Exception) {
+                // Out of range. The watch asks again when its panel next opens.
+                Timber.w(e, "Could not send the sleep timer state")
+            }
+        }
+    }
+
     private fun setPlaybackSpeed(multiplier: Float) {
         // The framework method exists only from API 29 while this app supports API 23.
         // MediaControllerCompat carries the same command through its support protocol on older
@@ -3716,6 +3758,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
             CommPaths.MESSAGE_SET_PLAYBACK_SPEED -> {
                 setPlaybackSpeed(FloatPacker.unpackFloat(event.data))
+            }
+            CommPaths.MESSAGE_SET_SLEEP_TIMER -> {
+                sleepTimer.set(ByteBuffer.wrap(event.data).long.toInt())
+            }
+            CommPaths.MESSAGE_REQUEST_SLEEP_TIMER -> {
+                sendSleepTimerState()
             }
             CommPaths.MESSAGE_TOGGLE_PLAY_PAUSE -> {
                 togglePlayPause()

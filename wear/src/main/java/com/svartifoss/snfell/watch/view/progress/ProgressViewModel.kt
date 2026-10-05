@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.watch.view.progress
 
+import android.os.SystemClock
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -81,9 +82,11 @@ class ProgressViewModel @Inject constructor(
         launchSilently { phoneConnection.togglePlayPause() }
     }
 
+    private val speedTaps = PlaybackSpeeds.TapMemory { SystemClock.elapsedRealtime() }
+
     /** Keeps playback speed available without competing with the six primary seek buttons. */
     fun cycleSpeed() {
-        val next = PlaybackSpeeds.next(state.value?.speed ?: 1f)
+        val next = speedTaps.next(state.value?.speed ?: 1f)
         launchSilently { phoneConnection.sendPlaybackSpeed(next) }
     }
 

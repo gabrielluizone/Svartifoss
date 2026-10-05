@@ -2159,6 +2159,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             shortcutsButton.contentDescription = "${preference?.title}. ${preference?.summary}"
         }
 
+        // The panel's content has its own editor; the Quick actions tab is where it is offered, next
+        // to the controls that style the same panel.
+        val contentButton = root.findViewById<MaterialButton>(R.id.panel_editor_content_button)
+        contentButton.isVisible = panelTarget == PanelTarget.QUICK_PANEL
+        contentButton.setOnClickListener {
+            startActivity(QuickPanelEditorActivity.createIntent(requireContext()))
+        }
+
         val noteKey = PanelEditorModel.keyFor(panelTarget, PanelControl.OPEN_NOTE)
         val note = root.findViewById<TextView>(R.id.panel_editor_note)
         note.isVisible = noteKey != null

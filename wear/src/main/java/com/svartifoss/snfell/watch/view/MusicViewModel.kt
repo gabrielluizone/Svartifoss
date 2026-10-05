@@ -15,6 +15,7 @@ import androidx.lifecycle.viewModelScope
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PlaybackPositionEstimate
 import com.svartifoss.snfell.common.PlaybackSpeeds
+import com.svartifoss.snfell.common.SleepTimerPolicy
 import com.svartifoss.snfell.common.logging.logSummary
 import com.svartifoss.snfell.watch.view.lyrics.LyricsFeed
 import com.svartifoss.snfell.watch.view.metadata.MetadataFeed
@@ -420,11 +421,13 @@ class MusicViewModel @Inject constructor(
     }
 
     /**
+    private val speedTaps = PlaybackSpeeds.TapMemory { SystemClock.elapsedRealtime() }
+
      * Steps the playback speed to the next rung of [PlaybackSpeeds] and returns it, so the control
      * that asked can show the new speed before the phone has confirmed it.
      */
     fun cycleSpeed(): Float {
-        val next = PlaybackSpeeds.next(latestMusicState?.playbackSpeed ?: 1f)
+        val next = speedTaps.next(latestMusicState?.playbackSpeed ?: 1f)
         viewModelScope.launchWithErrorHandling(application, musicState) {
             phoneConnection.sendPlaybackSpeed(next)
         }
@@ -432,6 +435,38 @@ class MusicViewModel @Inject constructor(
     }
 
     /** Seeks to [fraction] (0f..1f) of the current track's duration. No-op if not seekable. */
+    /** The phone's sleep timer, as the moment it ends on this watch's clock; 0 when none runs. */
+    val sleepTimerEndsAt: LiveData<Long> = phoneConnection.sleepTimerEndsAt
+
+    /**
+     * Steps the sleep timer to its next preset ([SleepTimerPolicy]) and shows it at once. The
+     * phone's reply follows within a moment and is what the chip then settles on.
+     */
+    fun cycleSleepTimer() {
+        val minutes = SleepTimerPolicy.nextMinutes(phoneConnection.sleepTimerRemainingMs())
+        phoneConnection.showSleepTimerLocally(minutes)
+        viewModelScope.launchWithErrorHandling(application, musicState) {
+            phoneConnection.sendSleepTimer(minutes)
+        }
+    }
+
+    /**
+     * Asks the phone whether a timer is running, so a panel opened after this app restarted shows
+     * the truth. Silent on failure: it is a refresh, and a phone that cannot answer is already
+     * reported by everything else on screen.
+     */
+    fun requestSleepTimer() {
+        viewModelScope.launch {
+            try {
+                phoneConnection.requestSleepTimer()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.d(e, "Could not ask the phone about the sleep timer")
+            }
+        }
+    }
+
     fun seekTo(fraction: Float) {
         val state = latestMusicState ?: return
         if (!state.seekable || state.durationMs <= 0) {

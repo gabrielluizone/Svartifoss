@@ -186,6 +186,20 @@
                 tools:text="Queue background · Follow shared panel appearance"
                 tools:visibility="visible" />
 
+            <!-- Opens the quick panel's editor: what the panel holds and in what order. Everything
+                 else on this card is how it looks. Only the Quick actions tab shows it. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_editor_content_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@string/quick_panel_editor_open"
+                android:visibility="gone"
+                app:icon="@drawable/ic_dashboard_customize"
+                tools:visibility="visible" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/panel_editor_style_button"
                 style="@style/LyraGestureButton"
