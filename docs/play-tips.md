@@ -29,12 +29,22 @@ Set the price in dollars and let Play convert it for every other country and cur
 - **The command line cannot create them.** `publishPlayReleaseProducts` (Gradle Play Publisher 3.12.1) calls the legacy `inappproducts` endpoint, which Play answers for this app with `403 PERMISSION_DENIED: Please migrate to the new publishing API` (checked on 2026-10-05 with `bootstrapPlayReleaseListing --products`, which also shows the service account itself is accepted). So the products are created in the Console, or through the newer `monetization.onetimeproducts` REST API, which the plugin does not use.
 - **Upload first, create the products after.** The Console normally refuses to create a product until a build that declares the `com.android.vending.BILLING` permission has been uploaded to some track, which is what the `play` flavor now does and the `github` flavor does not.
 
-Text to paste, the same on all four (each product's price is the only thing that differs):
+The form (Monetize with Play → Products → One-time products → Create one-time product). Everything is the same on all four except the product ID and the price:
 
-| | English (US) | Português (Brasil) |
-|---|---|---|
-| Name | Tip for the developer | Gorjeta para o desenvolvedor |
-| Description | A thank-you tip. It unlocks nothing; everything is already yours. | Uma gorjeta de agradecimento. Não libera nada: tudo já é seu. |
+| Field | Value |
+|---|---|
+| Product ID | `support_tip_1` to `support_tip_4` (permanent) |
+| Name | English only, one per tier (up to 55 characters; Play recommends 20 or fewer so it fits one line): `Tip for the developer` (1, as created), `Silver Splash tip` (2), `Golden Cascade tip` (3), `Diamond Falls tip` (4). The names play on Svartifoss, "Black Falls", and keep the word *tip* so a payment sheet or a bank statement says what was bought |
+| Description | English only, under 80 characters, no promise of a reward and no repeated disclaimer: (1) `A thank-you tip. It unlocks nothing; everything is already yours :D` as created; (2) `A little shine for the dev's day. Thanks for making waves!`; (3) `Golden thanks that keep the music flowing. You're awesome!`; (4) `Diamond-grade gratitude, straight from the heart. You're a legend!` |
+| Tags (optional) | `tip`; nothing in the app reads it |
+| Icon (optional) | 32-bit PNG, 512 x 512 px, up to 1 MB. Play's guidance asks for no text, promotion or branding; the icon in use is the app logo alone, centred on the accent colour (`#55776F`) at about a quarter of the tile, at the owner's choice. The tiers grow with the amount: `support_tip_1` is the plain accent colour, `support_tip_2` a silver plate, `support_tip_3` gold and `support_tip_4` a faceted diamond blue, each with the same logo and no text. If Play ever flags it as branding, a plain white heart on the same colour is the fallback |
+| Purchase option ID | `buy` on all four (a separate field from the product ID: lowercase letters, digits and hyphens only, **no underscores**, so `support_tip_2` is refused here; it only has to be unique within a product) |
+| Purchase type | Buy |
+| Advanced options → Quantities and limits | leave **off**: the app consumes one purchase per tap and ignores a quantity |
+| Advanced options → Classification (digital content or service) | pick the one the Console's own description fits best; it does not affect the app |
+| Price | the base price in US dollars from the table above, then convert the other regions; activate the product |
+
+There is nothing to fill in for age rating: the product page shows a read-only **Age rating (shown in applicable US states)** row, inherited from the app's own rating (App content → Content rating), which reads *All ages*. Adding purchases can make the questionnaire ask to be revisited; it is about the in-app purchases label, not the rating itself.
 
 ## Testing
 
