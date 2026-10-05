@@ -265,12 +265,6 @@
   add("Explore the layouts", "Explore os layouts", "Explora los diseños", "Skoðaðu útlitin");
   add("Android phone + Wear OS watch", "Telefone Android + relógio Wear OS", "Teléfono Android + reloj Wear OS", "Android sími + Wear OS úr");
   add("Installation options", "Opções de instalação", "Opciones de instalación", "Uppsetningarmöguleikar");
-  add("Closed test", "Teste fechado", "Prueba cerrada", "Lokað próf");
-  add("Test", "Teste", "Prueba", "Próf");
-  add("Join the closed test", "Participe do teste fechado", "Únete a la prueba cerrada", "Taktu þátt í lokaða prófinu");
-  add("Join the group before installing", "Entre no grupo antes de instalar", "Únete al grupo antes de instalar", "Skráðu þig í hópinn áður en þú setur upp");
-  add("Google account", "Conta Google", "Cuenta de Google", "Google-reikningur");
-  add("Required for test", "Necessária para o teste", "Necesaria para la prueba", "Nauðsynlegur fyrir prófið");
   add("Player layouts", "Layouts do player", "Diseños del reproductor", "Útlit spilarans");
   add("No account needed", "Sem precisar de conta", "Sin necesidad de cuenta", "Enginn aðgangur nauðsynlegur");
   add("Local", "Local", "Local", "Staðbundið");
@@ -283,21 +277,13 @@
   add("Get started", "Comece aqui", "Empieza aquí", "Byrjaðu núna");
   add("Your next track is a tap away.", "Sua próxima faixa está a um toque.", "Tu próxima canción está a un toque.", "Næsta lag er eina snertingu í burtu.");
   add("Install Svartifoss on both your Android phone and Wear OS watch, then open both apps to get connected.", "Instale o Svartifoss no telefone Android e no relógio Wear OS. Depois, abra os dois apps para conectar.", "Instala Svartifoss en tu teléfono Android y tu reloj Wear OS. Después, abre ambas apps para conectarlos.", "Settu upp Svartifoss bæði í Android símanum og Wear OS úrinu, opnaðu síðan bæði forritin til að tengjast.");
-  add("Help shape Svartifoss before launch.", "Ajude a preparar o Svartifoss antes do lançamento.", "Ayuda a dar forma a Svartifoss antes de su lanzamiento.", "Hjálpaðu til við að móta Svartifoss fyrir útgáfu.");
-  add("Svartifoss is in closed Google Play testing. Join the tester group, then accept the test invitation — it takes you straight to Google Play.", "O Svartifoss está em teste fechado na Google Play. Entre no grupo de testers e depois aceite o convite do teste — ele já leva você direto para a Google Play.", "Svartifoss está en pruebas cerradas de Google Play. Únete al grupo de testers y después acepta la invitación de prueba: te lleva directo a Google Play.", "Svartifoss er í lokuðu prófi á Google Play. Skráðu þig í prófunarhópinn og samþykktu síðan prófunarboðið — það fer beint með þig á Google Play.");
-  add("Accept the invitation and install", "Aceite o convite e instale", "Acepta la invitación e instala", "Samþykktu boðið og settu upp");
-  add("Open the invitation with the same account and choose to become a tester. That page then links straight to Google Play, where you install Svartifoss on your phone and Wear OS watch.", "Abra o convite com a mesma conta e escolha se tornar um tester. Essa página já leva direto para a Google Play, onde você instala o Svartifoss no telefone e no relógio Wear OS.", "Abre la invitación con la misma cuenta y elige convertirte en tester. Esa página enlaza directamente con Google Play, donde instalas Svartifoss en tu teléfono y tu reloj Wear OS.", "Opnaðu boðið með sama reikningi og veldu að gerast prófandi. Sú síða tengir beint á Google Play, þar sem þú setur Svartifoss upp í símann og Wear OS úrið.");
-  add("Join the tester group", "Entre no grupo de testers", "Únete al grupo de testers", "Skráðu þig í prófunarhópinn");
-  add("Join with the Google account you use on your phone — the same one signed in to the Play Store there. The test is tied to that account.", "Entre com a conta Google que você usa no telefone — a mesma que está conectada à Play Store nele. O teste fica vinculado a essa conta.", "Únete con la cuenta de Google que usas en tu teléfono: la misma que tiene la sesión iniciada en Play Store. La prueba queda vinculada a esa cuenta.", "Skráðu þig með Google-reikningnum sem þú notar í símanum — sama reikningi og er skráður inn í Play Store þar. Prófið er bundið við þann reikning.");
-  add("Join Google Group", "Entrar no Google Groups", "Unirse al grupo de Google", "Skrá sig í Google-hóp");
-  add("Install from Google Play", "Instalar pela Google Play", "Instalar desde Google Play", "Setja upp frá Google Play");
-  add("Google Play does not show the app yet? It can take a few minutes for your new group membership to sync.", "A Google Play ainda não mostra o app? A nova participação no grupo pode levar alguns minutos para sincronizar.", "¿Google Play todavía no muestra la app? La nueva membresía del grupo puede tardar unos minutos en sincronizarse.", "Sýnir Google Play ekki appið enn? Það getur tekið nokkrar mínútur fyrir nýja hópaðildina að samstillast.");
-  add("The GitHub edition will continue, and its next release will be published soon. Download both APKs for a manual installation, then open the phone app and allow notification access before opening the watch app.", "A edição do GitHub continuará, e a próxima versão será publicada em breve. Baixe os dois APKs para instalar manualmente; depois, abra o app do telefone e permita o acesso às notificações antes de abrir o app do relógio.", "La edición de GitHub continuará y su próxima versión se publicará pronto. Descarga los dos APK para una instalación manual; después, abre la app del teléfono y permite el acceso a las notificaciones antes de abrir la app del reloj.", "GitHub-útgáfan mun halda áfram og næsta útgáfa verður birt fljótlega. Sæktu báðar APK-skrárnar fyrir handvirka uppsetningu, opnaðu síðan símaforritið og leyfðu aðgang að tilkynningum áður en þú opnar úraforritið.");
   add("Recommended", "Recomendado", "Recomendado", "Mælt með");
   add("One listing. Both devices.", "Uma página. Dois dispositivos.", "Una ficha. Dos dispositivos.", "Ein færsla. Bæði tækin.");
   add("Get the phone and watch apps from Google Play. On your phone, allow notification access so Svartifoss can find your music player.", "Baixe os apps para telefone e relógio na Google Play. No telefone, permita o acesso às notificações para que o Svartifoss encontre seu player de música.", "Descarga las apps para teléfono y reloj desde Google Play. En el teléfono, permite el acceso a las notificaciones para que Svartifoss encuentre tu reproductor de música.", "Sæktu forritin fyrir síma og úr á Google Play. Leyfðu aðgang að tilkynningum í símanum svo Svartifoss finni tónlistarspilarann þinn.");
   add("Android 6.0+ · Wear OS 2 or newer", "Android 6.0+ · Wear OS 2 ou mais recente", "Android 6.0+ · Wear OS 2 o posterior", "Android 6.0+ · Wear OS 2 eða nýrra");
   add("Prefer APKs? Install from GitHub", "Prefere APKs? Instale pelo GitHub", "¿Prefieres APKs? Instala desde GitHub", "Viltu frekar APK-skrár? Settu upp af GitHub");
+  add("Download both APKs for a manual installation. Open the phone app and allow notification access, then open the watch app.", "Baixe os dois APKs para instalar manualmente. Abra o app do telefone e permita o acesso às notificações. Depois, abra o app do relógio.", "Descarga ambos APKs para una instalación manual. Abre la app del teléfono y permite el acceso a las notificaciones. Después, abre la app del reloj.", "Sæktu báðar APK-skrárnar fyrir handvirka uppsetningu. Opnaðu símaforritið og leyfðu aðgang að tilkynningum, opnaðu síðan úraforritið.");
+  add("On Google Play, Svartifoss is a paid app: one purchase covers your phone and watch and supports development. The source code and the free APKs stay on GitHub.", "Na Google Play, o Svartifoss é um app pago: uma única compra cobre o telefone e o relógio e apoia o desenvolvimento. O código-fonte e os APKs gratuitos continuam no GitHub.", "En Google Play, Svartifoss es una app de pago: una sola compra cubre el teléfono y el reloj y apoya el desarrollo. El código fuente y los APK gratuitos siguen en GitHub.", "Á Google Play er Svartifoss gjaldskylt forrit: ein kaup duga fyrir bæði símann og úrið og styðja við þróunina. Frumkóðinn og ókeypis APK-skrárnar eru áfram á GitHub.");
   add("Download both APKs for a manual installation. Open the phone app and allow notification access, then open the watch app.", "Baixe os dois APKs para instalar manualmente. Abra o app do telefone e permita o acesso às notificações. Depois, abra o app do relógio.", "Descarga ambos APKs para una instalación manual. Abre la app del teléfono y permite el acceso a las notificaciones. Después, abre la app del reloj.", "Sæktu báðar APK-skrárnar fyrir handvirka uppsetningu. Opnaðu símaforritið og leyfðu aðgang að tilkynningum, opnaðu síðan úraforritið.");
   add("Check your setup", "Prepare seus dispositivos", "Prepara tus dispositivos", "Athugaðu uppsetninguna þína");
   add("Previous images", "Imagens anteriores", "Imágenes anteriores", "Fyrri myndir");
@@ -318,9 +304,9 @@
 
   var htmlCopy = {
     'hero.badge': {
-      'pt-BR': '<span class="dot" aria-hidden="true">●</span> Teste fechado · Feito para Wear OS',
-      es: '<span class="dot" aria-hidden="true">●</span> Prueba cerrada · Hecho para Wear OS',
-      is: '<span class="dot" aria-hidden="true">●</span> Lokað próf · Gert fyrir Wear OS'
+      'pt-BR': '<span class="dot" aria-hidden="true">●</span> Código aberto · Feito para Wear OS',
+      es: '<span class="dot" aria-hidden="true">●</span> Código abierto · Hecho para Wear OS',
+      is: '<span class="dot" aria-hidden="true">●</span> Opinn hugbúnaður · Gert fyrir Wear OS'
     },
     'sync.title': {
       'pt-BR': 'Configure no telefone.<br>Ele aparece no relógio na hora.',
@@ -341,21 +327,6 @@
       'pt-BR': '<svg class="icon"><use href="#i-google-play"/></svg> Baixar na Google Play',
       es: '<svg class="icon"><use href="#i-google-play"/></svg> Consíguelo en Google Play',
       is: '<svg class="icon"><use href="#i-google-play"/></svg> Sæktu á Google Play'
-    },
-    'beta.install': {
-      'pt-BR': '<svg class="icon"><use href="#i-google-play"/></svg> Aceitar convite',
-      es: '<svg class="icon"><use href="#i-google-play"/></svg> Aceptar invitación',
-      is: '<svg class="icon"><use href="#i-google-play"/></svg> Samþykkja boð'
-    },
-    'beta.sync': {
-      'pt-BR': '<strong>A Google Play ainda não mostra o app?</strong> Confira se você aceitou o convite do teste no passo 2 — é quase sempre o que falta. Se já aceitou, aguarde alguns minutos para sincronizar.',
-      es: '<strong>¿Google Play todavía no muestra la app?</strong> Comprueba que aceptaste la invitación de prueba en el paso 2: casi siempre es lo que falta. Si ya la aceptaste, espera unos minutos a que se sincronice.',
-      is: '<strong>Sýnir Google Play ekki appið enn?</strong> Athugaðu hvort þú samþykktir prófunarboðið í skrefi 2 — það er nánast alltaf það sem vantar. Ef þú gerðir það skaltu gefa því nokkrar mínútur að samstillast.'
-    },
-    'beta.free': {
-      'pt-BR': '<strong>Grátis na Google Play até 22 de setembro de 2026.</strong>',
-      es: '<strong>Gratis en Google Play hasta el 22 de septiembre de 2026.</strong>',
-      is: '<strong>Ókeypis á Google Play til 22. september 2026.</strong>'
     },
     'download.phone': {
       'pt-BR': '<svg class="icon"><use href="#i-send-mobile"/></svg> Baixar APK do telefone',
