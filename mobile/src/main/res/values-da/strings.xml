@@ -304,7 +304,7 @@
     <string name="preview_sample_lyric_current">Linjen der spiller nu</string>
     <string name="preview_sample_lyric_next">Den næste linje</string>
     <string name="preview_sample_next_title">Næste sang</string>
-    <string name="preview_playback_stopped">Stoppet</string>
+    <string name="preview_playback_stopped">På pause</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -794,9 +794,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Baggrund for Næste-pille</string>
-    <string name="setting_wear_show_up_next_pill">Næste-pille på afspilleren</string>
-    <string name="setting_wear_show_up_next_pill_description">Vis en Næste-pille nederst på afspilningsskærmen. Den udfylder pladsen, som rækken med miniknapper ellers bruger, så den vises kun, når rækken ikke er synlig.</string>
+    <string name="setting_wear_up_next_pill">Baggrund for Næste-kapsel</string>
+    <string name="setting_wear_show_up_next_pill">Næste-kapsel i afspilleren</string>
+    <string name="setting_wear_show_up_next_pill_description">Vis en Næste-kapsel nederst på afspilningsskærmen. Den udfylder pladsen, som rækken med miniknapper ellers bruger, så den vises kun, når rækken ikke er synlig.</string>
     <string name="category_wf_clock">Ur</string>
     <string name="setting_wear_clock_color">Urfarve</string>
     <string name="setting_wear_clock_custom_color">Brugerdefineret urfarve</string>
@@ -812,7 +812,7 @@
     <string name="setting_wear_aod_show_progress">Fremdriftsring på altid aktiv skærm</string>
     <string name="setting_wear_aod_show_progress_description">Vis fremdriftsringen omkring afspilningsknappen i omgivelsestilstand — positionen opdateres kun cirka én gang i minuttet der</string>
     <string name="setting_wear_aod_show_pills">Næste på altid aktiv skærm</string>
-    <string name="setting_wear_aod_show_pills_description">Vis en statisk omridset Næste-pille nederst i de visuelle altid-aktive stilarter</string>
+    <string name="setting_wear_aod_show_pills_description">Vis en statisk omridset Næste-kapsel nederst i de visuelle altid-aktive stilarter</string>
     <string name="category_wf_gestures">Skærmbevægelser</string>
     <string name="setting_wear_mini_buttons_mode">Vis miniknapper</string>
     <string name="setting_wear_gestures_mode">Skærmbevægelser</string>
@@ -875,8 +875,8 @@
     <string name="preview_notification_controls">Ikon fra medienotifikation</string>
     <string name="setting_wear_queue_style">Køstil</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Brug genvejscovers som baggrund</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Når Køstil er en covervariant, udfylder en handlingsrække i hurtigpanelet med et hentet genvejscover (nummer, playliste, kunstner…) også sin pille med billedet, ligesom Næste. Genveje uden hentet cover (et almindeligt appikon) påvirkes ikke.</string>
-    <string name="setting_wear_list_row_size">Størrelse på listepille</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Når Køstil er en covervariant, udfylder en handlingsrække i hurtigpanelet med et hentet genvejscover (nummer, playliste, kunstner…) også sin kapsel med billedet, ligesom Næste. Genveje uden hentet cover (et almindeligt appikon) påvirkes ikke.</string>
+    <string name="setting_wear_list_row_size">Størrelse på listekapsel</string>
     <string name="setting_wear_list_row_size_description">Højden på rækker i fuld bredde i køen, menuer og hurtigpanelet.</string>
     <string name="setting_wear_progress_gradient">Bland paletten ind i ringen</string>
     <string name="setting_wear_progress_gradient_description">Med en flerfarvet farvebehandling (Komplementær, Triadisk, Analog, Duotone) fader den massive ring gennem alle tre farver. Slå fra for en ensfarvet ring, mens albumpaletten bevares alle andre steder.</string>
@@ -2019,9 +2019,6 @@
     <string name="drawer_sync_heading">Synkronisering</string>
     <string name="drawer_sync_summary">Urindstillinger konfigureres her på telefonen og synkroniseres automatisk til dit parrede ur.</string>
     <string name="drawer_support_heading">Support</string>
-    <string name="drawer_support_summary">Svartifoss er gratis og open source — køb mig en kop kaffe, hvis den er nyttig for dig :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Download cover</string>
     <string name="album_art_saved">Cover gemt i galleriet</string>
     <string name="album_art_save_error">Kunne ikke gemme cover</string>
@@ -2111,7 +2108,7 @@
     <string name="playlist_shortcut_detected_format">Fundet: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Navn</string>
     <string name="playlist_shortcut_link_hint">Delingslink eller app-URI</string>
-    <string name="playlist_shortcut_shuffle">Afspil blandet (kun YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Du vælger Afspil eller Bland på uret, hver gang du starter det.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2848,4 +2845,101 @@
     <string name="setting_wear_text_block_position_description">Hvor nummerteksten ligger på skærmen. Følg urskive bevarer den position, som hver urskive er designet til.</string>
     <string name="setting_online_artwork">Onlinecover</string>
     <string name="setting_online_artwork_description">Lad urskiven vise et billede, der slås op online \u2014 kunstneren der spiller, eller et albumcover når en afspiller ikke leverer et. Din telefon foretager opslaget i Deezers offentlige katalog og gemmer resultatet i cache; kun nummer- og kunstnernavne sendes, og der slås ikke noget op, medmindre en urskive er indstillet til en af disse kilder. Når funktionen er slået fra, bruges afspillerens eget cover.</string>
+    <string name="setting_wear_shortcut_details">Afspil eller bland på uret</string>
+    <string name="setting_wear_shortcut_details_description">Når du vælger et gemt link på uret – fra genvejslisten, genvejs-Tile eller handlingsmenuen – vises dets cover først med Afspil og Bland. Slå fra for at starte det med det samme i stedet. Knapper og bevægelser, der er tildelt ét link, starter det altid med det samme.</string>
+    <string name="actions_quick_pin_add">Vis i hurtig panel</string>
+    <string name="actions_quick_pin_remove">Fjern fra hurtigpanelet</string>
+    <string name="quick_panel_editor_title">Panel med hurtige handlinger</string>
+    <string name="quick_panel_editor_open">Rediger panelindhold</string>
+    <string name="quick_panel_editor_intro">Byg panelet, der åbner, når du dobbelttrykker på midten af uret. Hold og træk en blok for at flytte den, tryk på en for at justere den.</string>
+    <string name="quick_panel_editor_add_block">Tilføj blok</string>
+    <string name="quick_panel_editor_restore">Gendan det originale panel</string>
+    <string name="quick_panel_editor_restore_title">Vil du gendanne det originale panel?</string>
+    <string name="quick_panel_editor_restore_message">Dit arrangement er fjernet, og panelet vender tilbage til, hvordan det var. Dine knapvalg og de handlinger, du har stjernemarkeret, bevares.</string>
+    <string name="quick_panel_editor_restore_confirm">Gendan</string>
+    <string name="quick_panel_editor_fold">Slut på den første skærm (omtrentlig)</string>
+    <string name="quick_panel_editor_last_block">Et panel skal have mindst én blok</string>
+    <string name="quick_panel_editor_removed">Fjernet %1$s</string>
+    <string name="quick_panel_editor_undo">Fortryd</string>
+    <string name="quick_panel_editor_move_up">Flyt op</string>
+    <string name="quick_panel_editor_move_down">Flyt ned</string>
+    <string name="quick_panel_editor_more">Flere muligheder</string>
+    <string name="quick_panel_editor_nothing_to_add">Hver blok er allerede på panelet</string>
+    <string name="quick_block_header">Nummer</string>
+    <string name="quick_block_buttons">Runde knapper</string>
+    <string name="quick_block_upnext">Næste nummer</string>
+    <string name="quick_block_volume">Lydstyrke</string>
+    <string name="quick_block_seek">Spring og position</string>
+    <string name="quick_block_tools">Værktøjer</string>
+    <string name="quick_block_favorites">Favoritter</string>
+    <string name="quick_block_actions">Alle handlinger</string>
+    <string name="quick_block_all_actions">Alle handlinger</string>
+    <string name="quick_block_header_description">Titlen og kunstneren på det, der afspilles.</string>
+    <string name="quick_block_buttons_description">Runde knapper til de handlinger, du bruger mest, eller dem, som afspilningsappen tilbyder.</string>
+    <string name="quick_block_upnext_description">Det næste nummer. Tryk på den for at åbne køen.</string>
+    <string name="quick_block_volume_description">Sænk og hæv lydstyrken uden at forlade panelet.</string>
+    <string name="quick_block_seek_description">Hvor du er i sporet, og knapper, der springer frem og tilbage.</string>
+    <string name="quick_block_tools_description">Små genveje: afspilningshastighed, sangtekster, køen og mere.</string>
+    <string name="quick_block_favorites_description">De handlinger, du stjernemarkerede på fanen Handlinger, som forsider eller rækker.</string>
+    <string name="quick_block_actions_description">Hver handling i din urmenu, som rækker i panelet eller som én knap, der åbner menuen.</string>
+    <string name="quick_summary_header">Titel og kunstner</string>
+    <string name="quick_summary_buttons_session">Fra den app, der afspiller</string>
+    <string name="quick_summary_buttons_empty">Ingen knapper valgt</string>
+    <string name="quick_summary_upnext">Næste nummer · åbner køen</string>
+    <string name="quick_summary_volume">Lydstyrketrin på %1$d%%</string>
+    <string name="quick_summary_seek">%1$s sekunder</string>
+    <string name="quick_summary_seek_bar">%1$s sekunder · tid og bar</string>
+    <string name="quick_summary_favorites_none">Ingen stjernemarkeret endnu</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d med i hovedrollen · %2$s</item>
+        <item quantity="other">%1$d med i hovedrollen · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Alle %1$d-handlinger</string>
+    <string name="quick_summary_actions_first">Første %1$d-handlinger</string>
+    <string name="quick_summary_actions_button">Én knap · åbner handlingsmenuen</string>
+    <string name="quick_summary_only_playing">kun under afspilning</string>
+    <string name="quick_summary_only_not_playing">kun uden afspilning</string>
+    <string name="quick_mode_grid">Gitter</string>
+    <string name="quick_mode_rows">rækker</string>
+    <string name="quick_mode_actions_list">Liste</string>
+    <string name="quick_mode_actions_button">Knap</string>
+    <string name="quick_sheet_show">Vis</string>
+    <string name="quick_sheet_always">Altid</string>
+    <string name="quick_sheet_while_playing">kun under afspilning</string>
+    <string name="quick_sheet_while_not_playing">kun uden afspilning</string>
+    <string name="quick_sheet_step">Trin</string>
+    <string name="quick_sheet_jump">Spring med</string>
+    <string name="quick_sheet_seek_bar">Vis tid og statuslinje</string>
+    <string name="quick_sheet_tools">Værktøjer</string>
+    <string name="quick_sheet_layout">Layout</string>
+    <string name="quick_sheet_how_many">Hvor mange</string>
+    <string name="quick_sheet_all">Alle</string>
+    <string name="quick_sheet_buttons_source">Knapper fra</string>
+    <string name="quick_sheet_source_configured">Mine valg</string>
+    <string name="quick_sheet_source_session">Afspilningsappen</string>
+    <string name="quick_sheet_buttons_hint">Tryk på en knap for at vælge dens handling. Hold for at gendanne standarden.</string>
+    <string name="quick_sheet_favorites_hint">Stjerner handlinger med lynet på fanen Handlinger. Kun stjernemarkerede vises her.</string>
+    <string name="quick_sheet_actions_mode">Vis som</string>
+    <string name="quick_sheet_actions_hint">En liste sætter hver handling på panelet som en række. En knap holder panelet kort: en knap, der åbner den fulde menu. Fjern denne blok for at forlade menuen helt fra panelet.</string>
+    <string name="quick_sheet_remove">Fjern denne blok</string>
+    <string name="quick_sheet_done">Udført</string>
+    <string name="quick_tool_speed">Hastighed</string>
+    <string name="quick_tool_sleep">Sleep-timer</string>
+    <string name="quick_tool_lyrics">Sangtekster</string>
+    <string name="quick_tool_queue">Kø</string>
+    <string name="quick_tool_volume">Lydstyrke</string>
+    <string name="quick_tool_progress">Fremskridt</string>
+    <string name="quick_tool_faces">Urskiver</string>
+    <string name="quick_tool_search">Søg</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="setting_wear_hide_from_recents">Skjul fra de seneste apps</string>
+    <string name="setting_wear_hide_from_recents_description">Holder ur-appen ude af urets seneste apps-liste, når du lukker den eller bruger en anden app. Nyttigt, hvis du åbner det fra urskiven eller Now Bar i stedet. Den forbliver tilgængelig præcis som før, og musikken og baggrundsforbindelsen påvirkes ikke.</string>
+    <string name="setting_streaming_app_routes">Vælg apps til streaminglinks</string>
+    <string name="setting_streaming_app_routes_description">Vælg en kompatibel installeret app separat til YouTube Music, Spotify og hinandens tjenester. Brugt med "Opdaget streaming-app".</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d-tjenesten bruger en valgt app</item>
+        <item quantity="other">%1$d-tjenester bruger udvalgte apps</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Apps, der kan åbne linket, plus installerede medieafspillere, vises.</string>
+    <string name="streaming_route_automatic">Automatisk (registreret app)</string>
 </resources>

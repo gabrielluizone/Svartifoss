@@ -304,7 +304,7 @@
     <string name="preview_sample_lyric_current">এখন চলছে যে লাইন</string>
     <string name="preview_sample_lyric_next">পরের লাইন</string>
     <string name="preview_sample_next_title">পরের গান</string>
-    <string name="preview_playback_stopped">বন্ধ</string>
+    <string name="preview_playback_stopped">বিরতিতে</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -794,9 +794,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">আপ নেক্সট পিলের পটভূমি</string>
-    <string name="setting_wear_show_up_next_pill">প্লেয়ারে আপ নেক্সট পিল</string>
-    <string name="setting_wear_show_up_next_pill_description">নাও-প্লেয়িং স্ক্রিনের নিচে আপ নেক্সট পিল দেখান। এটি মিনি-বাটন সারির জায়গা নেয়, তাই ওই সারি না দেখালেই এটি দেখা যায়।</string>
+    <string name="setting_wear_up_next_pill">আপ নেক্সট ক্যাপসুলের পটভূমি</string>
+    <string name="setting_wear_show_up_next_pill">প্লেয়ারে আপ নেক্সট ক্যাপসুল</string>
+    <string name="setting_wear_show_up_next_pill_description">নাও-প্লেয়িং স্ক্রিনের নিচে আপ নেক্সট ক্যাপসুল দেখান। এটি মিনি-বাটন সারির জায়গা নেয়, তাই ওই সারি না দেখালেই এটি দেখা যায়।</string>
     <string name="category_wf_clock">ঘড়ি</string>
     <string name="setting_wear_clock_color">ঘড়ির রং</string>
     <string name="setting_wear_clock_custom_color">ঘড়ির কাস্টম রং</string>
@@ -812,7 +812,7 @@
     <string name="setting_wear_aod_show_progress">অলওয়েজ-অন ডিসপ্লেতে প্রগ্রেস রিং</string>
     <string name="setting_wear_aod_show_progress_description">অ্যাম্বিয়েন্ট মোডে প্লে বোতামের চারপাশে প্রগ্রেস রিং দেখান — সেখানে অবস্থান প্রায় মিনিটে একবারই আপডেট হয়</string>
     <string name="setting_wear_aod_show_pills">অলওয়েজ-অন ডিসপ্লেতে আপ নেক্সট</string>
-    <string name="setting_wear_aod_show_pills_description">ভিজ্যুয়াল অলওয়েজ-অন স্টাইলের নিচে স্থির আউটলাইন আপ নেক্সট পিল দেখান</string>
+    <string name="setting_wear_aod_show_pills_description">ভিজ্যুয়াল অলওয়েজ-অন স্টাইলের নিচে স্থির আউটলাইন আপ নেক্সট ক্যাপসুল দেখান</string>
     <string name="category_wf_gestures">স্ক্রিন জেসচার</string>
     <string name="setting_wear_mini_buttons_mode">মিনি বোতাম দেখান</string>
     <string name="setting_wear_gestures_mode">স্ক্রিন জেসচার</string>
@@ -875,8 +875,8 @@
     <string name="preview_notification_controls">মিডিয়া নোটিফিকেশনের আইকন</string>
     <string name="setting_wear_queue_style">কিউ স্টাইল</string>
     <string name="setting_wear_quick_panel_shortcut_cover">শর্টকাট কভারকে পটভূমি হিসেবে ব্যবহার করুন</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">কিউ স্টাইল কভার ভ্যারিয়েন্ট হলে, আনা শর্টকাট কভার (ট্র্যাক, প্লেলিস্ট, শিল্পী…) থাকা কুইক-প্যানেল অ্যাকশন সারিও আপ নেক্সটের মতো সেই আর্ট দিয়ে পিল ভরবে। আনা কভার না থাকা শর্টকাট (সাধারণ অ্যাপ আইকন) অপরিবর্তিত থাকবে।</string>
-    <string name="setting_wear_list_row_size">লিস্ট পিলের আকার</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">কিউ স্টাইল কভার ভ্যারিয়েন্ট হলে, আনা শর্টকাট কভার (ট্র্যাক, প্লেলিস্ট, শিল্পী…) থাকা কুইক-প্যানেল অ্যাকশন সারিও আপ নেক্সটের মতো সেই আর্ট দিয়ে ক্যাপসুল ভরবে। আনা কভার না থাকা শর্টকাট (সাধারণ অ্যাপ আইকন) অপরিবর্তিত থাকবে।</string>
+    <string name="setting_wear_list_row_size">তালিকার ক্যাপসুলের আকার</string>
     <string name="setting_wear_list_row_size_description">কিউ, মেনু ও কুইক প্যানেলের পূর্ণ-প্রস্থ সারিগুলোর উচ্চতা।</string>
     <string name="setting_wear_progress_gradient">প্যালেটকে রিংয়ে মিশিয়ে দিন</string>
     <string name="setting_wear_progress_gradient_description">বহু-রঙের কালার ট্রিটমেন্টে (কমপ্লিমেন্টারি, ট্রায়াডিক, অ্যানালগাস, ডুয়োটোন) সলিড রিং তিনটি রঙের মধ্য দিয়ে ফেড করে। অন্য সব জায়গায় অ্যালবাম প্যালেট রেখে শুধু রিং এক রঙে রাখতে এটি বন্ধ করুন।</string>
@@ -2019,9 +2019,6 @@
     <string name="drawer_sync_heading">সিঙ্ক</string>
     <string name="drawer_sync_summary">ঘড়ির সেটিংস ফোনে এখানে কনফিগার করা হয় এবং জোড়া ঘড়িতে স্বয়ংক্রিয়ভাবে সিঙ্ক হয়।</string>
     <string name="drawer_support_heading">সহায়তা</string>
-    <string name="drawer_support_summary">Svartifoss বিনামূল্যে ও ওপেন সোর্স — কাজে লাগলে আমাকে এক কাপ কফি কিনে দিতে পারেন :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">কভার আর্ট ডাউনলোড করুন</string>
     <string name="album_art_saved">কভার আর্ট গ্যালারিতে সংরক্ষিত হয়েছে</string>
     <string name="album_art_save_error">কভার আর্ট সংরক্ষণ করা যায়নি</string>
@@ -2111,7 +2108,7 @@
     <string name="playlist_shortcut_detected_format">শনাক্ত: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">নাম</string>
     <string name="playlist_shortcut_link_hint">শেয়ার লিংক বা অ্যাপ URI</string>
-    <string name="playlist_shortcut_shuffle">শাফল করে চালান (শুধু YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">প্রতিবার শুরু করার সময় আপনি ঘড়িতে প্লে বা শাফল বেছে নেন।</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2848,4 +2845,101 @@
     <string name="setting_wear_text_block_position_description">স্ক্রিনে ট্র্যাক টেক্সট যেখানে থাকে। Follow face প্রতিটি ফেসের জন্য ডিজাইন করা অবস্থান বজায় রাখে।</string>
     <string name="setting_online_artwork">অনলাইন আর্টওয়ার্ক</string>
     <string name="setting_online_artwork_description">ওয়াচ ফেসকে অনলাইনে খোঁজা ছবি দেখাতে দিন \u2014 বাজতে থাকা শিল্পী, অথবা এমন প্লেয়ারের জন্য অ্যালবাম কভার যা কোনো ছবি প্রকাশ করে না। আপনার ফোন Deezer-এর পাবলিক ক্যাটালগে খোঁজ করে এবং ফলাফল ক্যাশ করে; শুধু ট্র্যাক ও শিল্পীর নাম পাঠানো হয়, এবং কোনো ফেসকে ওই উৎসগুলোর একটিতে সেট না করা পর্যন্ত কিছু খোঁজা হয় না। বন্ধ থাকলে প্লেয়ারের নিজস্ব আর্টওয়ার্ক ব্যবহার করা হয়।</string>
+    <string name="setting_wear_shortcut_details">ঘড়িতে প্লে বা শাফল</string>
+    <string name="setting_wear_shortcut_details_description">ঘড়িতে সংরক্ষিত কোনো লিঙ্ক বেছে নিলে, শর্টকাট তালিকা, শর্টকাট Tile বা অ্যাকশন মেনু থেকে, প্রথমে তার কভার প্লে ও শাফল সহ দেখায়। বন্ধ করলে সরাসরি শুরু হবে। একটি লিঙ্কে নির্ধারিত বোতাম ও জেসচার সবসময় সরাসরি শুরু করে।</string>
+    <string name="actions_quick_pin_add">দ্রুত প্যানেলে দেখান</string>
+    <string name="actions_quick_pin_remove">দ্রুত প্যানেল থেকে সরান</string>
+    <string name="quick_panel_editor_title">দ্রুত অ্যাকশন প্যানেল</string>
+    <string name="quick_panel_editor_open">প্যানেলের সামগ্রী সম্পাদনা করুন</string>
+    <string name="quick_panel_editor_intro">এমন প্যানেল তৈরি করুন যা আপনি ঘড়ির কেন্দ্রে ডবল-ট্যাপ করলে খোলে। এটিকে সরাতে একটি ব্লক ধরে রাখুন এবং টেনে আনুন, এটি সামঞ্জস্য করতে একটিতে আলতো চাপুন৷</string>
+    <string name="quick_panel_editor_add_block">ব্লক যোগ করুন</string>
+    <string name="quick_panel_editor_restore">আসল প্যানেল পুনরুদ্ধার করুন</string>
+    <string name="quick_panel_editor_restore_title">মূল প্যানেল পুনরুদ্ধার করবেন?</string>
+    <string name="quick_panel_editor_restore_message">আপনার ব্যবস্থা সরানো হয়েছে এবং প্যানেলটি আগের মতই ফিরে যায়৷ আপনার বোতাম পছন্দ এবং আপনি তারকাচিহ্নিত কর্ম রাখা হয়.</string>
+    <string name="quick_panel_editor_restore_confirm">পুনরুদ্ধার করুন</string>
+    <string name="quick_panel_editor_fold">প্রথম স্ক্রিনের শেষ (আনুমানিক)</string>
+    <string name="quick_panel_editor_last_block">একটি প্যানেলের অন্তত একটি ব্লক প্রয়োজন</string>
+    <string name="quick_panel_editor_removed">%1$s সরানো হয়েছে</string>
+    <string name="quick_panel_editor_undo">পূর্বাবস্থায় ফেরান</string>
+    <string name="quick_panel_editor_move_up">উপরে সরান</string>
+    <string name="quick_panel_editor_move_down">নিচে সরান</string>
+    <string name="quick_panel_editor_more">আরও বিকল্প</string>
+    <string name="quick_panel_editor_nothing_to_add">প্রতিটি ব্লক ইতিমধ্যেই প্যানেলে রয়েছে</string>
+    <string name="quick_block_header">ট্র্যাক</string>
+    <string name="quick_block_buttons">বৃত্তাকার বোতাম</string>
+    <string name="quick_block_upnext">পরবর্তী ট্র্যাক</string>
+    <string name="quick_block_volume">ভলিউম</string>
+    <string name="quick_block_seek">এড়িয়ে যাওয়া ও অবস্থান</string>
+    <string name="quick_block_tools">টুল</string>
+    <string name="quick_block_favorites">প্রিয়</string>
+    <string name="quick_block_actions">সমস্ত কাজ</string>
+    <string name="quick_block_all_actions">সমস্ত কাজ</string>
+    <string name="quick_block_header_description">যা চলছে তার শিরোনাম এবং শিল্পী৷</string>
+    <string name="quick_block_buttons_description">রাউন্ড বোতামগুলি আপনি সবচেয়ে বেশি ব্যবহার করেন বা প্লে অ্যাপ্লিকেশান অফার করে এমন অ্যাকশনগুলির জন্য।</string>
+    <string name="quick_block_upnext_description">পরবর্তী ট্র্যাক। সারি খুলতে এটি আলতো চাপুন.</string>
+    <string name="quick_block_volume_description">প্যানেল না রেখে ভলিউম কম করুন এবং বাড়ান।</string>
+    <string name="quick_block_seek_description">যেখানে আপনি ট্র্যাকের মধ্যে আছেন, এবং বোতামগুলি যেগুলি পিছনে এবং এগিয়ে যায়৷</string>
+    <string name="quick_block_tools_description">ছোট শর্টকাট: প্লেব্যাকের গতি, গানের কথা, সারি এবং আরও অনেক কিছু।</string>
+    <string name="quick_block_favorites_description">আপনি কভার বা সারি হিসাবে অ্যাকশন ট্যাবে তারকাচিহ্নিত ক্রিয়াগুলি৷</string>
+    <string name="quick_block_actions_description">আপনার ঘড়ির মেনুর প্রতিটি ক্রিয়া, প্যানেলে সারি হিসাবে বা একটি বোতাম হিসাবে যা মেনুটি খোলে।</string>
+    <string name="quick_summary_header">শিরোনাম এবং শিল্পী</string>
+    <string name="quick_summary_buttons_session">যে অ্যাপটি চালাচ্ছে, সেখান থেকে</string>
+    <string name="quick_summary_buttons_empty">কোন বোতাম বেছে নেওয়া হয়নি</string>
+    <string name="quick_summary_upnext">পরবর্তী ট্র্যাক · সারিতে খোলে</string>
+    <string name="quick_summary_volume">ভলিউমের ধাপ %1$d%%</string>
+    <string name="quick_summary_seek">%1$s সেকেন্ড</string>
+    <string name="quick_summary_seek_bar">%1$s সেকেন্ড · সময় এবং বার</string>
+    <string name="quick_summary_favorites_none">এখনও কোনো অ্যাকশন তারকাচিহ্নিত করা হয়নি</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d তারকাচিহ্নিত · %2$s</item>
+        <item quantity="other">%1$d তারকাচিহ্নিত · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">সমস্ত %1$d অ্যাকশন</string>
+    <string name="quick_summary_actions_first">প্রথম %1$d অ্যাকশন</string>
+    <string name="quick_summary_actions_button">একটি বোতাম · অ্যাকশন মেনু</string>
+    <string name="quick_summary_only_playing">শুধুমাত্র প্লেব্যাক চলাকালে</string>
+    <string name="quick_summary_only_not_playing">শুধুমাত্র প্লেব্যাক না থাকলে</string>
+    <string name="quick_mode_grid">গ্রিড</string>
+    <string name="quick_mode_rows">সারি</string>
+    <string name="quick_mode_actions_list">তালিকা</string>
+    <string name="quick_mode_actions_button">বোতাম</string>
+    <string name="quick_sheet_show">দেখান</string>
+    <string name="quick_sheet_always">সর্বদা</string>
+    <string name="quick_sheet_while_playing">শুধুমাত্র প্লেব্যাক চলাকালে</string>
+    <string name="quick_sheet_while_not_playing">শুধুমাত্র প্লেব্যাক না থাকলে</string>
+    <string name="quick_sheet_step">ধাপ</string>
+    <string name="quick_sheet_jump">কতটা এগোবেন</string>
+    <string name="quick_sheet_seek_bar">সময় এবং অগ্রগতি বার দেখান</string>
+    <string name="quick_sheet_tools">টুল</string>
+    <string name="quick_sheet_layout">লেআউট</string>
+    <string name="quick_sheet_how_many">কত</string>
+    <string name="quick_sheet_all">সমস্ত</string>
+    <string name="quick_sheet_buttons_source">থেকে</string>
+    <string name="quick_sheet_source_configured">আমার পছন্দ</string>
+    <string name="quick_sheet_source_session">যে অ্যাপটি চালাচ্ছে</string>
+    <string name="quick_sheet_buttons_hint">এর ক্রিয়া বেছে নিতে একটি বোতামে আলতো চাপুন৷ এটির ডিফল্ট পুনরুদ্ধার করতে ধরে রাখুন।</string>
+    <string name="quick_sheet_favorites_hint">অ্যাকশন ট্যাবে বাজ বোল্ট সহ তারকা অ্যাকশন। শুধুমাত্র তারকাচিহ্নিতগুলি এখানে উপস্থিত হয়৷</string>
+    <string name="quick_sheet_actions_mode">হিসাবে দেখান</string>
+    <string name="quick_sheet_actions_hint">একটি তালিকা প্যানেলের প্রতিটি ক্রিয়াকে সারি হিসাবে রাখে৷ একটি বোতাম প্যানেল ছোট রাখে: একটি বোতাম যা সম্পূর্ণ মেনু খোলে। প্যানেল থেকে মেনুটি সম্পূর্ণভাবে ছেড়ে দিতে, এই ব্লকটি সরান।</string>
+    <string name="quick_sheet_remove">এই ব্লকটি সরান</string>
+    <string name="quick_sheet_done">হয়ে গেছে</string>
+    <string name="quick_tool_speed">গতি</string>
+    <string name="quick_tool_sleep">স্লিপ টাইমার</string>
+    <string name="quick_tool_lyrics">গানের কথা</string>
+    <string name="quick_tool_queue">সারি</string>
+    <string name="quick_tool_volume">ভলিউম</string>
+    <string name="quick_tool_progress">অগ্রগতি</string>
+    <string name="quick_tool_faces">ঘড়ির ডায়াল</string>
+    <string name="quick_tool_search">অনুসন্ধান</string>
+    <string name="quick_tool_menu">মেনু</string>
+    <string name="setting_wear_hide_from_recents">সাম্প্রতিক অ্যাপ্লিকেশানগুলি থেকে লুকান</string>
+    <string name="setting_wear_hide_from_recents_description">ঘড়ি অ্যাপটিকে ঘড়ির সাম্প্রতিক অ্যাপের তালিকা থেকে দূরে রাখে একবার আপনি এটি বন্ধ করে দেন বা অন্য অ্যাপ ব্যবহার করেন। যদি আপনি এটিকে ঘড়ির মুখ বা নাউ বার থেকে খোলেন তাহলে এটি দরকারী৷ এটি আগের মতোই পৌঁছানো যায় এবং সঙ্গীত এবং পটভূমি সংযোগ প্রভাবিত হয় না।</string>
+    <string name="setting_streaming_app_routes">স্ট্রিমিং লিঙ্কের জন্য অ্যাপগুলি বেছে নিন</string>
+    <string name="setting_streaming_app_routes_description">YouTube Music, Spotify এবং একে অপরের পরিষেবার জন্য আলাদাভাবে একটি সামঞ্জস্যপূর্ণ ইনস্টল করা অ্যাপ বেছে নিন। "ডিটেক্টেড স্ট্রিমিং অ্যাপ" এর সাথে ব্যবহার করা হয়েছে।</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d পরিষেবা একটি নির্বাচিত অ্যাপ ব্যবহার করে</item>
+        <item quantity="other">%1$d পরিষেবাগুলি নির্বাচিত অ্যাপ ব্যবহার করে</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">অ্যাপ্লিকেশানগুলি যেগুলি লিঙ্কটি খুলতে পারে, এছাড়াও ইনস্টল করা মিডিয়া প্লেয়ারগুলি দেখানো হয়েছে৷</string>
+    <string name="streaming_route_automatic">স্বয়ংক্রিয় (শনাক্ত করা অ্যাপ)</string>
 </resources>

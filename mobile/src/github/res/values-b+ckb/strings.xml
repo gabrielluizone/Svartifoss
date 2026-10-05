@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">وەشانەکان ببینە</string>
     <string name="update_watch_hint">\u201cکاتژمێر نوێ بکەرەوە\u201d ئەپی نوێی کاتژمێر دادەگرێت و بە Bluetooth دەنێرێت \u2014 تۆ لەسەر خودی کاتژمێر دامەزراندن پشتڕاست دەکەیتەوە؛ cable یان Wear Installer پێویست نییە.</string>
     <string name="update_no_wear_asset">ئەم release ـە watch APK ـێکی بۆ ناردن نییە.</string>
+    <string name="drawer_support_summary">Svartifoss بەخۆڕایی و open source ـە - ئەگەر بەسوودە بۆت، coffee ـێکم بۆ بکڕە :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

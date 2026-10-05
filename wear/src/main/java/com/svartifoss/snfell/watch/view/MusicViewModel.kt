@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PlaybackPositionEstimate
+import com.svartifoss.snfell.common.PlaybackSpeeds
+import com.svartifoss.snfell.common.SleepTimerPolicy
 import com.svartifoss.snfell.common.logging.logSummary
 import com.svartifoss.snfell.watch.view.lyrics.LyricsFeed
 import com.svartifoss.snfell.watch.view.metadata.MetadataFeed
@@ -23,11 +25,12 @@ import com.svartifoss.snfell.common.actions.StandardActions
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.SpecialButtonCodes
 import com.svartifoss.snfell.proto.MusicState
+import com.svartifoss.snfell.proto.ShortcutPlayMode
 import com.svartifoss.snfell.proto.TrackMetadata
 import com.svartifoss.snfell.watch.communication.CustomListItemWithIcon
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.PhoneConnection
-import com.svartifoss.snfell.watch.communication.PhoneUriOpener
+import com.svartifoss.snfell.watch.communication.ShortcutPlayRequest
 import com.svartifoss.snfell.watch.communication.WatchInfoSender
 import com.svartifoss.snfell.watch.config.ButtonAction
 import com.svartifoss.snfell.watch.config.PreferencesBus
@@ -35,6 +38,9 @@ import com.svartifoss.snfell.watch.config.WatchActionConfigProvider
 import com.svartifoss.snfell.watch.config.WatchActionMenuProvider
 import com.svartifoss.snfell.watch.model.Notification
 import com.svartifoss.snfell.watch.util.launchWithErrorHandling
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailUi
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutScreenPolicy
+import com.svartifoss.snfell.watch.view.shortcut.toShortcutDetail
 import com.matejdro.wearutils.lifecycle.Resource
 import com.matejdro.wearutils.lifecycle.SingleLiveEvent
 import com.matejdro.wearutils.preferences.definition.Preferences
@@ -130,6 +136,9 @@ class MusicViewModel @Inject constructor(
     val openQuickActionsPanel = SingleLiveEvent<Unit>()
     val openPlaybackQueueScreen = SingleLiveEvent<Unit>()
     val openStreamingShortcutsMenu = SingleLiveEvent<Unit>()
+    /** A streaming shortcut picked from the quick panel's rows, to open on its own screen - see
+     *  [executeActionFromMenu]. */
+    val openShortcutScreen = SingleLiveEvent<ShortcutDetailUi>()
     val openVoiceSearch = SingleLiveEvent<Unit>()
 
     /** Opens the synced-lyrics screen. Purely local - nothing is asked of the phone until that
@@ -226,13 +235,23 @@ class MusicViewModel @Inject constructor(
 
         closeActionsMenu.postValue(Unit)
 
+        // A playlist picked from a list opens its own screen first, wherever the list is. The menu
+        // shows that screen inside itself and never hands such an entry back here while the
+        // setting is on, so what reaches this is the quick panel's rows - the same entries, laid
+        // out over the player.
+        val remoteUri = action.remoteUri
+        if (remoteUri != null && ShortcutScreenPolicy.opensForMenuAction(
+                        shortcutScreenEnabled(), remoteUri, action.shortcutSubtitle,
+                        action.shortcutShuffleable)) {
+            openShortcutScreen.value = action.toShortcutDetail(remoteUri)
+            return
+        }
+
         action.remoteUri?.takeIf(String::isNotBlank)?.let {
             // Registered, not opened. The phone reports back once its silent routes have
             // had their turn; opening here would foreground the app before they even ran.
-            PhoneUriOpener.requestOpenAfterPhoneTries(application, it)
-            viewModelScope.launchWithErrorHandling(application, musicState) {
-                phoneConnection.executeMenuAction(index)
-            }
+            ShortcutPlayRequest.start(
+                    application, it, ShortcutPlayMode.AS_SAVED, action.title)
             return
         }
 
@@ -256,16 +275,19 @@ class MusicViewModel @Inject constructor(
         }
     }
 
-    fun executeItemFromCustomMenu(listId: String, itemId: String) {
+    fun executeItemFromCustomMenu(
+            listId: String,
+            itemId: String,
+            /** Play or Shuffle, when the pick came from a shortcut's own screen. */
+            playMode: ShortcutPlayMode = ShortcutPlayMode.AS_SAVED
+    ) {
         closeActionsMenu.postValue(Unit)
 
         if (listId == CustomLists.PLAYLIST_SHORTCUTS) {
             // Registered, not opened. The phone reports back once its silent routes have
             // had their turn; opening here would foreground the app before they even ran.
-            PhoneUriOpener.requestOpenAfterPhoneTries(application, itemId)
-            viewModelScope.launchWithErrorHandling(application, musicState) {
-                phoneConnection.executeCustomMenuAction(listId, itemId)
-            }
+            ShortcutPlayRequest.start(
+                    application, itemId, playMode)
             return
         }
 
@@ -274,16 +296,19 @@ class MusicViewModel @Inject constructor(
         }
     }
 
+    /** [MiscPreferences.WEAR_SHORTCUT_DETAILS], read at the moment of the pick. */
+    private fun shortcutScreenEnabled(): Boolean = preferences.value?.let {
+        Preferences.getBoolean(it, MiscPreferences.WEAR_SHORTCUT_DETAILS)
+    } ?: MiscPreferences.WEAR_SHORTCUT_DETAILS.defaultValue
+
     fun executeAction(buttonInfo: ButtonInfo): Boolean {
         val action = currentButtonConfig.value?.getAction(buttonInfo) ?: return false
 
         action.remoteUri?.takeIf(String::isNotBlank)?.let {
             // Registered, not opened. The phone reports back once its silent routes have
             // had their turn; opening here would foreground the app before they even ran.
-            PhoneUriOpener.requestOpenAfterPhoneTries(application, it)
-            viewModelScope.launchWithErrorHandling(application, musicState) {
-                phoneConnection.executeButtonAction(buttonInfo)
-            }
+            ShortcutPlayRequest.start(
+                    application, it, ShortcutPlayMode.AS_SAVED, action.title)
             return true
         }
 
@@ -382,6 +407,64 @@ class MusicViewModel @Inject constructor(
     fun updateVolume(newVolume: Float) {
         volume.value = newVolume
         phoneConnection.sendVolume(newVolume)
+    }
+
+    /**
+     * Skips playback by [deltaMs] (negative goes back) from a control that is not an assigned
+     * action - the quick panel's seek chips. Drawn on the press and then sent, in the order every
+     * other relative seek here uses; see [applyOptimisticSeek].
+     */
+    fun skipBy(deltaMs: Long) {
+        applyOptimisticSeek(deltaMs)
+        viewModelScope.launchWithErrorHandling(application, musicState) {
+            phoneConnection.sendSeekRelative(deltaMs)
+        }
+    }
+
+    private val speedTaps = PlaybackSpeeds.TapMemory { SystemClock.elapsedRealtime() }
+
+    /**
+     * Steps the playback speed to the next rung of [PlaybackSpeeds] and returns it, so the control
+     * that asked can show the new speed before the phone has confirmed it.
+     */
+    fun cycleSpeed(): Float {
+        val next = speedTaps.next(latestMusicState?.playbackSpeed ?: 1f)
+        viewModelScope.launchWithErrorHandling(application, musicState) {
+            phoneConnection.sendPlaybackSpeed(next)
+        }
+        return next
+    }
+
+    /** The phone's sleep timer, as the moment it ends on this watch's clock; 0 when none runs. */
+    val sleepTimerEndsAt: LiveData<Long> = phoneConnection.sleepTimerEndsAt
+
+    /**
+     * Steps the sleep timer to its next preset ([SleepTimerPolicy]) and shows it at once. The
+     * phone's reply follows within a moment and is what the chip then settles on.
+     */
+    fun cycleSleepTimer() {
+        val minutes = SleepTimerPolicy.nextMinutes(phoneConnection.sleepTimerRemainingMs())
+        phoneConnection.showSleepTimerLocally(minutes)
+        viewModelScope.launchWithErrorHandling(application, musicState) {
+            phoneConnection.sendSleepTimer(minutes)
+        }
+    }
+
+    /**
+     * Asks the phone whether a timer is running, so a panel opened after this app restarted shows
+     * the truth. Silent on failure: it is a refresh, and a phone that cannot answer is already
+     * reported by everything else on screen.
+     */
+    fun requestSleepTimer() {
+        viewModelScope.launch {
+            try {
+                phoneConnection.requestSleepTimer()
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
+                Timber.d(e, "Could not ask the phone about the sleep timer")
+            }
+        }
     }
 
     /** Seeks to [fraction] (0f..1f) of the current track's duration. No-op if not seekable. */

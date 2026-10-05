@@ -1,0 +1,1 @@
+Build your watch Quick Panel from customizable blocks, including Volume, Up Next, tools, and favorites. Adds a sleep timer, shortcut screens with Play and Shuffle, and richer playlist artwork. Improves translations, performance, battery use, playback synchronization, and phone-to-watch connection stability.

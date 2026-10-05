@@ -8,7 +8,14 @@ import org.json.JSONObject
  * would give the shortcut) and the [thumbnailUrl] of its cover. One request carries both, which is
  * why naming a link and fetching its cover cost the same single round trip.
  */
-data class OembedInfo(val title: String?, val thumbnailUrl: String?)
+data class OembedInfo(
+        val title: String?,
+        val thumbnailUrl: String?,
+        /** Often the playlist owner, channel or artist. Absent from providers that do not expose it. */
+        val creator: String? = null
+) {
+    fun toPublicMetadata() = PublicLinkMetadata(title, thumbnailUrl, creator)
+}
 
 /** Pure decoding of an oEmbed response, kept apart from the fetcher so it can be pinned by a JVM test. */
 object OembedParser {
@@ -20,7 +27,8 @@ object OembedParser {
         val root = JSONObject(json)
         OembedInfo(
                 title = cleanTitle(root.optString("title")),
-                thumbnailUrl = root.optString("thumbnail_url").takeIf { it.isNotBlank() }
+                thumbnailUrl = root.optString("thumbnail_url").takeIf { it.isNotBlank() },
+                creator = cleanTitle(root.optString("author_name"))
         )
     } catch (_: JSONException) {
         null

@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Lihat rilis</string>
     <string name="update_watch_hint">“Perbarui jam tangan” mengunduh aplikasi jam tangan baru dan mengirimkannya melalui Bluetooth — Anda mengonfirmasi instalasi di jam tangan itu sendiri, tanpa kabel atau Wear Installer yang diperlukan.</string>
     <string name="update_no_wear_asset">Rilis ini tidak memiliki APK jam tangan untuk dikirim.</string>
+    <string name="drawer_support_summary">Svartifoss gratis dan sumber terbuka - belikan saya kopi jika bermanfaat bagi Anda :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

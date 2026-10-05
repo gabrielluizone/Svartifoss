@@ -32,7 +32,7 @@
 
     <string name="no_phone">هیچ گوشی‌ای متصل نیست</string>
     <string name="phone_unavailable">برای کنترل پخش، قفل گوشی را باز کنید</string>
-    <string name="playback_stopped">متوقف</string>
+    <string name="playback_stopped">مکث‌شده</string>
     <string name="error">خطا</string>
     <string name="error_play_services">خطای Play Services</string>
     <string name="button">دکمه</string>
@@ -54,6 +54,12 @@
     <string name="queue_load_more">بارگذاری بیشتر</string>
     <string name="queue_history_fallback">اخیراً پخش‌شده</string>
     <string name="queue_history_fallback_reason">این برنامه صف پخش خود را به اشتراک نمی‌گذارد</string>
+    <string name="menu_header_actions">اقدامات</string>
+    <string name="menu_header_search_results">نتایج جستجو</string>
+    <string name="menu_header_search_history">جستجوهای اخیر</string>
+    <string name="menu_header_library">کتابخانه</string>
+    <string name="shortcut_open_on_phone">باز کردن در گوشی</string>
+    <string name="shortcut_continue_on_phone">در گوشی خود ادامه دهید</string>
     <string name="chat_face_today">امروز</string>
 
     <string name="face_picker_title">صفحهٔ ساعت</string>
@@ -63,7 +69,7 @@
     <string name="hint_edges">بالا، پایین، چپ یا راست را لمس کنید — هر بخش کنش تعیین‌شده را اجرا می‌کند</string>
     <string name="hint_center">مرکز — پخش/مکث\nدو بار لمس — کنش‌های سریع\nنگه‌داشتن — انتخاب‌گر واچ‌فیس (قابل تنظیم)</string>
     <string name="hint_swipe_up">بالا — منوی کنش‌ها\nپایین یا چپ — کنش‌های تعیین‌شده\nاز لبه به راست — خروج</string>
-    <string name="hint_crown">تاج — صدا یا موقعیت\nدکمه‌های کناری — کنش‌های تعیین‌شده\nهمه‌چیز را در «کنترل‌ها» و Watch روی گوشی تنظیم کنید</string>
+    <string name="hint_crown">تاج — صدا یا موقعیت\nدکمه‌های کناری — کنش‌های تعیین‌شده\nهمه‌چیز را در «کنترل‌ها» و ساعت روی گوشی تنظیم کنید</string>
     <string name="hint_next">بعدی</string>
     <string name="hint_dismiss">پایان</string>
 
@@ -143,7 +149,7 @@
     <string name="metadata_url">URL</string>
     <string name="metadata_about">درباره</string>
     <string name="metadata_source">در حال پخش در</string>
-    <string name="face_picker_section_builtin">صفحه‌های داخلی</string>
+    <string name="face_picker_section_builtin">صفحه‌های داخلی ساعت</string>
     <string name="face_picker_section_custom">طرح‌های من</string>
     <string name="face_picker_custom_base">بر پایهٔ %1$s</string>
     <string name="face_name_classic" translatable="false">Classic</string>
@@ -183,4 +189,23 @@
     <string name="progress_screen_cancel_seek">لغو جابه‌جایی</string>
     <string name="progress_screen_skip_back">%1$d ثانیه به عقب</string>
     <string name="progress_screen_skip_forward">%1$d ثانیه به جلو</string>
+    <string name="quick_block_all_actions">همه اقدامات</string>
+    <string name="quick_block_favorites">موارد دلخواه</string>
+    <string name="quick_tool_speed">سرعت</string>
+    <string name="quick_tool_lyrics">متن ترانه</string>
+    <string name="quick_tool_queue">صف</string>
+    <string name="quick_tool_volume">حجم صدا</string>
+    <string name="quick_tool_progress">پیشرفت</string>
+    <string name="quick_tool_faces">صفحه‌های ساعت</string>
+    <string name="quick_tool_search">جستجوی</string>
+    <string name="quick_tool_menu">منو</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">حجم صدا %1$d%%</string>
+    <string name="quick_seek_back_description">برگشت %1$d ثانیه</string>
+    <string name="quick_seek_forward_description">جلو %1$d ثانیه</string>
+    <string name="quick_speed_description">سرعت پخش %1$s</string>
+    <string name="quick_tool_sleep">تایمر خواب</string>
+    <string name="quick_sleep_minutes">%1$d دقیقه</string>
+    <string name="quick_sleep_description">تایمر خواب، %1$d دقیقه باقی مانده است. برای تغییر ضربه بزنید.</string>
+    <string name="quick_sleep_off_description">تایمر خواب خاموش است. برای تنظیم ضربه بزنید.</string>
 </resources>

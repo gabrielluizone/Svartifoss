@@ -317,7 +317,7 @@ Noen ikonpakker krever at apper har lagringstillatelse. Du må tillate dette for
     <string name="preview_sample_lyric_current">Linjen som spilles nå</string>
     <string name="preview_sample_lyric_next">Den neste linjen</string>
     <string name="preview_sample_next_title">Neste sang</string>
-    <string name="preview_playback_stopped">Stoppet</string>
+    <string name="preview_playback_stopped">Pauset</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -815,9 +815,9 @@ Hvis du opplever dette, kan du aktivere dette alternativet for å deaktivere dob
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Bakgrunn for Neste-pille</string>
-    <string name="setting_wear_show_up_next_pill">Neste-pille i spilleren</string>
-    <string name="setting_wear_show_up_next_pill_description">Vis en Neste-pille nederst på Spilles nå-skjermen. Den fyller plassen som miniknappraden ellers ville tatt, så den vises bare når den raden ikke vises.</string>
+    <string name="setting_wear_up_next_pill">Bakgrunn for Neste-kapsel</string>
+    <string name="setting_wear_show_up_next_pill">Neste-kapsel i spilleren</string>
+    <string name="setting_wear_show_up_next_pill_description">Vis en Neste-kapsel nederst på Spilles nå-skjermen. Den fyller plassen som miniknappraden ellers ville tatt, så den vises bare når den raden ikke vises.</string>
     <string name="category_wf_clock">Klokke</string>
     <string name="setting_wear_clock_color">Klokkefarge</string>
     <string name="setting_wear_clock_custom_color">Egendefinert klokkefarge</string>
@@ -833,7 +833,7 @@ Hvis du opplever dette, kan du aktivere dette alternativet for å deaktivere dob
     <string name="setting_wear_aod_show_progress">Fremdriftsring på alltid på-skjermen</string>
     <string name="setting_wear_aod_show_progress_description">Vis fremdriftsringen rundt avspillingsknappen i omgivelsesmodus — posisjonen oppdateres der bare omtrent én gang i minuttet</string>
     <string name="setting_wear_aod_show_pills">Neste på alltid på-skjermen</string>
-    <string name="setting_wear_aod_show_pills_description">Vis en statisk konturert Neste-pille nederst i de visuelle alltid på-stilene</string>
+    <string name="setting_wear_aod_show_pills_description">Vis en statisk konturert Neste-kapsel nederst i de visuelle alltid på-stilene</string>
     <string name="category_wf_gestures">Skjermbevegelser</string>
     <string name="setting_wear_mini_buttons_mode">Vis miniknapper</string>
     <string name="setting_wear_gestures_mode">Skjermbevegelser</string>
@@ -896,8 +896,8 @@ Hvis du opplever dette, kan du aktivere dette alternativet for å deaktivere dob
     <string name="preview_notification_controls">Ikon fra medievarsel</string>
     <string name="setting_wear_queue_style">Køstil</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Bruk snarveisomslag som bakgrunn</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Når Køstil er en omslagsvariant, fyller en handlingsrad i hurtigpanelet med et hentet snarveisomslag (spor, spilleliste, artist…) også pillen sin med bildet, slik Neste gjør. Snarveier uten et hentet omslag (bare et vanlig appikon) påvirkes ikke.</string>
-    <string name="setting_wear_list_row_size">Størrelse på listepille</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Når Køstil er en omslagsvariant, fyller en handlingsrad i hurtigpanelet med et hentet snarveisomslag (spor, skapselliste, artist…) også kapseln sin med bildet, slik Neste gjør. Snarveier uten et hentet omslag (bare et vanlig appikon) påvirkes ikke.</string>
+    <string name="setting_wear_list_row_size">Størrelse på listekapsel</string>
     <string name="setting_wear_list_row_size_description">Høyden på rader i full bredde i køen, menyer og hurtigpanelet.</string>
     <string name="setting_wear_progress_gradient">Bland paletten inn i ringen</string>
     <string name="setting_wear_progress_gradient_description">Med en flerfarget behandling (Komplementær, Triadisk, Analog, Duotone) toner den fylte ringen gjennom alle tre fargene. Slå dette av for en ring med én farge samtidig som albumpaletten beholdes alle andre steder.</string>
@@ -2042,9 +2042,6 @@ Når Vibration Center får klokken til å vibrere, viser Svartifoss en popup med
     <string name="drawer_sync_heading">Synkronisering</string>
     <string name="drawer_sync_summary">Klokkeinnstillingene konfigureres her på telefonen og synkroniseres automatisk til den parede klokken.</string>
     <string name="drawer_support_heading">Støtte</string>
-    <string name="drawer_support_summary">Svartifoss er gratis og åpen kildekode — kjøp meg en kaffe hvis du har nytte av appen :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Last ned omslag</string>
     <string name="album_art_saved">Omslaget er lagret i galleriet</string>
     <string name="album_art_save_error">Kunne ikke lagre omslaget</string>
@@ -2134,7 +2131,7 @@ Når Vibration Center får klokken til å vibrere, viser Svartifoss en popup med
     <string name="playlist_shortcut_detected_format">Oppdaget: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Navn</string>
     <string name="playlist_shortcut_link_hint">Delingslenke eller app-URI</string>
-    <string name="playlist_shortcut_shuffle">Spill tilfeldig (kun YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Du velger Spill av eller Tilfeldig rekkefølge på klokken hver gang du starter den.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2871,4 +2868,101 @@ Når Vibration Center får klokken til å vibrere, viser Svartifoss en popup med
     <string name="setting_wear_text_block_position_description">Hvor sporets tekst ligger på skjermen. Følg urskive beholder posisjonen hver urskive er utformet for.</string>
     <string name="setting_online_artwork">Nettbasert omslag</string>
     <string name="setting_online_artwork_description">La urskiven vise et bilde som slås opp på nettet \u2014 artisten som spiller, eller et albumomslag når en spiller ikke publiserer noe. Telefonen gjør oppslaget i Deezers offentlige katalog og cacher resultatet; bare spor- og artistnavn sendes, og ingenting slås opp med mindre en urskive er satt til en av disse kildene. Når funksjonen er av, brukes spillerens eget omslag.</string>
+    <string name="setting_wear_shortcut_details">Spill av eller tilfeldig på klokken</string>
+    <string name="setting_wear_shortcut_details_description">Når du velger en lagret lenke på klokken – fra snarveislisten, snarvei-flisen eller handlingsmenyen – vises omslaget først med Spill av og Tilfeldig rekkefølge. Slå av for å starte den med en gang i stedet. Knapper og bevegelser som er tilordnet én lenke, starter den alltid med en gang.</string>
+    <string name="actions_quick_pin_add">Vis i hurtigpanel</string>
+    <string name="actions_quick_pin_remove">Fjern fra hurtigpanelet</string>
+    <string name="quick_panel_editor_title">Hurtighandlingspanel</string>
+    <string name="quick_panel_editor_open">Rediger panelinnhold</string>
+    <string name="quick_panel_editor_intro">Bygg panelet som åpnes når du dobbelttrykker på midten av klokken. Hold og dra en blokk for å flytte den, trykk på en for å justere den.</string>
+    <string name="quick_panel_editor_add_block">Legg til blokk</string>
+    <string name="quick_panel_editor_restore">Gjenopprett det originale panelet</string>
+    <string name="quick_panel_editor_restore_title">Vil du gjenopprette det originale panelet?</string>
+    <string name="quick_panel_editor_restore_message">Arrangementet ditt er fjernet og panelet går tilbake til hvordan det var. Knappevalgene og handlingene du stjernemerket beholdes.</string>
+    <string name="quick_panel_editor_restore_confirm">Gjenopprett</string>
+    <string name="quick_panel_editor_fold">Slutt på den første skjermen (omtrentlig)</string>
+    <string name="quick_panel_editor_last_block">Et panel trenger minst én blokk</string>
+    <string name="quick_panel_editor_removed">Fjernet %1$s</string>
+    <string name="quick_panel_editor_undo">Angre</string>
+    <string name="quick_panel_editor_move_up">Flytt opp</string>
+    <string name="quick_panel_editor_move_down">Flytt ned</string>
+    <string name="quick_panel_editor_more">Flere alternativer</string>
+    <string name="quick_panel_editor_nothing_to_add">Hver blokk er allerede på panelet</string>
+    <string name="quick_block_header">Spor</string>
+    <string name="quick_block_buttons">Runde knapper</string>
+    <string name="quick_block_upnext">Neste spor</string>
+    <string name="quick_block_volume">Lydstyrke</string>
+    <string name="quick_block_seek">Hopp og posisjon</string>
+    <string name="quick_block_tools">Verktøy</string>
+    <string name="quick_block_favorites">Favoritter</string>
+    <string name="quick_block_actions">Alle handlinger</string>
+    <string name="quick_block_all_actions">Alle handlinger</string>
+    <string name="quick_block_header_description">Tittelen og artisten til det som spilles.</string>
+    <string name="quick_block_buttons_description">Runde knapper for handlingene du bruker mest, eller de som avspillingsappen tilbyr.</string>
+    <string name="quick_block_upnext_description">Neste spor. Trykk på den for å åpne køen.</string>
+    <string name="quick_block_volume_description">Senk og øk volumet uten å forlate panelet.</string>
+    <string name="quick_block_seek_description">Hvor du er i sporet, og knapper som hopper frem og tilbake.</string>
+    <string name="quick_block_tools_description">Små snarveier: avspillingshastighet, tekster, køen og mer.</string>
+    <string name="quick_block_favorites_description">Handlingene du stjernemerket på Handlinger-fanen, som omslag eller rader.</string>
+    <string name="quick_block_actions_description">Hver handling på klokkemenyen din, som rader i panelet eller som én knapp som åpner menyen.</string>
+    <string name="quick_summary_header">Tittel og artist</string>
+    <string name="quick_summary_buttons_session">Fra appen som spiller av</string>
+    <string name="quick_summary_buttons_empty">Ingen knapper valgt</string>
+    <string name="quick_summary_upnext">Neste spor · åpner køen</string>
+    <string name="quick_summary_volume">Lydstyrketrinn på %1$d%%</string>
+    <string name="quick_summary_seek">%1$s sekunder</string>
+    <string name="quick_summary_seek_bar">%1$s sekunder · tid og bar</string>
+    <string name="quick_summary_favorites_none">Ingen stjernemerket ennå</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d med stjerne · %2$s</item>
+        <item quantity="other">%1$d med stjerne · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Alle %1$d-handlinger</string>
+    <string name="quick_summary_actions_first">Første %1$d-handlinger</string>
+    <string name="quick_summary_actions_button">Én knapp · åpner handlingsmenyen</string>
+    <string name="quick_summary_only_playing">bare under avspilling</string>
+    <string name="quick_summary_only_not_playing">bare uten avspilling</string>
+    <string name="quick_mode_grid">Rutenett</string>
+    <string name="quick_mode_rows">rader</string>
+    <string name="quick_mode_actions_list">Liste</string>
+    <string name="quick_mode_actions_button">Knapp</string>
+    <string name="quick_sheet_show">Vis</string>
+    <string name="quick_sheet_always">Alltid</string>
+    <string name="quick_sheet_while_playing">bare under avspilling</string>
+    <string name="quick_sheet_while_not_playing">bare uten avspilling</string>
+    <string name="quick_sheet_step">Trinn</string>
+    <string name="quick_sheet_jump">Hopp med</string>
+    <string name="quick_sheet_seek_bar">Vis tid og fremdriftslinje</string>
+    <string name="quick_sheet_tools">Verktøy</string>
+    <string name="quick_sheet_layout">Oppsett</string>
+    <string name="quick_sheet_how_many">Hvor mange</string>
+    <string name="quick_sheet_all">Alle</string>
+    <string name="quick_sheet_buttons_source">Knapper fra</string>
+    <string name="quick_sheet_source_configured">Mine valg</string>
+    <string name="quick_sheet_source_session">Avspillingsappen</string>
+    <string name="quick_sheet_buttons_hint">Trykk på en knapp for å velge handlingen. Hold inne for å gjenopprette standarden.</string>
+    <string name="quick_sheet_favorites_hint">Stjerner handlinger med lynet på Handlinger-fanen. Bare stjernemerkede vises her.</string>
+    <string name="quick_sheet_actions_mode">Vis som</string>
+    <string name="quick_sheet_actions_hint">En liste setter hver handling på panelet som en rad. En knapp holder panelet kort: én knapp som åpner hele menyen. Fjern denne blokken for å forlate menyen helt fra panelet.</string>
+    <string name="quick_sheet_remove">Fjern denne blokken</string>
+    <string name="quick_sheet_done">Ferdig</string>
+    <string name="quick_tool_speed">Hastighet</string>
+    <string name="quick_tool_sleep">Sovetimer</string>
+    <string name="quick_tool_lyrics">Tekster</string>
+    <string name="quick_tool_queue">Kø</string>
+    <string name="quick_tool_volume">Lydstyrke</string>
+    <string name="quick_tool_progress">Fremgang</string>
+    <string name="quick_tool_faces">Urskiver</string>
+    <string name="quick_tool_search">Søk</string>
+    <string name="quick_tool_menu">Meny</string>
+    <string name="setting_wear_hide_from_recents">Skjul fra nylige apper</string>
+    <string name="setting_wear_hide_from_recents_description">Holder klokkeappen unna klokkens siste appliste når du lukker den eller bruker en annen app. Nyttig hvis du åpner den fra urskiven eller Now Bar i stedet. Den forblir tilgjengelig akkurat som før, og musikk og bakgrunnsforbindelsen påvirkes ikke.</string>
+    <string name="setting_streaming_app_routes">Velg apper for strømmekoblinger</string>
+    <string name="setting_streaming_app_routes_description">Velg en kompatibel installert app separat for YouTube Music, Spotify og hverandres tjenester. Brukes med "Oppdaget strømmeapp".</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d-tjenesten bruker en valgt app</item>
+        <item quantity="other">%1$d-tjenester bruker valgte apper</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Apper som kan åpne koblingen, pluss installerte mediespillere, vises.</string>
+    <string name="streaming_route_automatic">Automatisk (oppdaget app)</string>
 </resources>

@@ -38,7 +38,7 @@
 
     <string name="no_phone">Телефонът не е свързан</string>
     <string name="phone_unavailable">Отключете телефона, за да управлявате възпроизвеждането</string>
-    <string name="playback_stopped">Спряно</string>
+    <string name="playback_stopped">На пауза</string>
     <string name="error">ГРЕШКА</string>
     <string name="error_play_services">Грешка в услугите Google Play</string>
     <string name="button">Бутон</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Наскоро възпроизвеждани</string>
     <string name="queue_history_fallback_reason">Това приложение не споделя опашката си</string>
+    <string name="menu_header_actions">Действия</string>
+    <string name="menu_header_search_results">Резултати от търсенето</string>
+    <string name="menu_header_search_history">Скорошни търсения</string>
+    <string name="menu_header_library">Библиотека</string>
+    <string name="shortcut_open_on_phone">Отваряне на телефона</string>
+    <string name="shortcut_continue_on_phone">Продължете на телефона си</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Днес</string>
 
@@ -203,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Отказ на преместването</string>
     <string name="progress_screen_skip_back">Назад с %1$d секунди</string>
     <string name="progress_screen_skip_forward">Напред с %1$d секунди</string>
+    <string name="quick_block_all_actions">Всички действия</string>
+    <string name="quick_block_favorites">Любими</string>
+    <string name="quick_tool_speed">Скорост</string>
+    <string name="quick_tool_lyrics">Текстове</string>
+    <string name="quick_tool_queue">Опашка</string>
+    <string name="quick_tool_volume">Сила на звука</string>
+    <string name="quick_tool_progress">Напредък</string>
+    <string name="quick_tool_faces">Циферблати</string>
+    <string name="quick_tool_search">Търсене</string>
+    <string name="quick_tool_menu">Меню</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Сила на звука %1$d%%</string>
+    <string name="quick_seek_back_description">Назад %1$d секунди</string>
+    <string name="quick_seek_forward_description">Напред %1$d секунди</string>
+    <string name="quick_speed_description">Скорост на възпроизвеждане %1$s</string>
+    <string name="quick_tool_sleep">Таймер</string>
+    <string name="quick_sleep_minutes">%1$d минути</string>
+    <string name="quick_sleep_description">Таймер за заспиване, остават %1$d минути. Докоснете, за да промените</string>
+    <string name="quick_sleep_off_description">Таймерът за заспиване е изключен. Докоснете, за да зададете</string>
 </resources>

@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Zobacz wydania</string>
     <string name="update_watch_hint">„Aktualizuj zegarek” pobiera nową aplikację zegarka i wysyła ją przez Bluetooth — instalację potwierdzasz na samym zegarku, bez kabla i bez Wear Installer.</string>
     <string name="update_no_wear_asset">Ta wersja nie zawiera pliku APK zegarka do wysłania.</string>
+    <string name="drawer_support_summary">Svartifoss jest darmowy i open source — jeśli Ci się przydaje, postaw mi kawę :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

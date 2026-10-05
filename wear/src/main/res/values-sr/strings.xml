@@ -38,7 +38,7 @@
 
     <string name="no_phone">Телефон није повезан</string>
     <string name="phone_unavailable">Откључајте телефон да бисте управљали репродукцијом</string>
-    <string name="playback_stopped">Заустављено</string>
+    <string name="playback_stopped">Паузирано</string>
     <string name="error">ГРЕШКА</string>
     <string name="error_play_services">Грешка Google Play услуга</string>
     <string name="button">Дугме</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Недавно репродуковано</string>
     <string name="queue_history_fallback_reason">Ова апликација не дели свој ред</string>
+    <string name="menu_header_actions">Радње</string>
+    <string name="menu_header_search_results">Резултати претраге</string>
+    <string name="menu_header_search_history">Недавне претраге</string>
+    <string name="menu_header_library">Библиотека</string>
+    <string name="shortcut_open_on_phone">Отвори на телефону</string>
+    <string name="shortcut_continue_on_phone">Наставите на телефону</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Данас</string>
 
@@ -203,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Откажи премотавање</string>
     <string name="progress_screen_skip_back">Прескочи уназад %1$d секунди</string>
     <string name="progress_screen_skip_forward">Прескочи унапред %1$d секунди</string>
+    <string name="quick_block_all_actions">Све акције</string>
+    <string name="quick_block_favorites">Фаворитес</string>
+    <string name="quick_tool_speed">Брзина</string>
+    <string name="quick_tool_lyrics">Лирицс</string>
+    <string name="quick_tool_queue">Ред чекања</string>
+    <string name="quick_tool_volume">Јачина звука</string>
+    <string name="quick_tool_progress">Напредак</string>
+    <string name="quick_tool_faces">Бројчаници</string>
+    <string name="quick_tool_search">Тражи</string>
+    <string name="quick_tool_menu">Мени</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Јачина звука %1$d%%</string>
+    <string name="quick_seek_back_description">Назад %1$d секунди</string>
+    <string name="quick_seek_forward_description">Напред %1$d секунде</string>
+    <string name="quick_speed_description">Брзина репродукције %1$s</string>
+    <string name="quick_tool_sleep">Тајмер за спавање</string>
+    <string name="quick_sleep_minutes">%1$d мин</string>
+    <string name="quick_sleep_description">Тајмер за искључивање, преостало је %1$d минута. Додирните да бисте променили</string>
+    <string name="quick_sleep_off_description">Тајмер за спавање искључен. Додирните да бисте подесили</string>
 </resources>

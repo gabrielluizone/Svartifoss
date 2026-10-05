@@ -46,6 +46,13 @@
         <package android:name="com.mixcloud.player" />
         <package android:name="com.pandora.android" />
 
+        <!-- Makes compatible alternative clients visible to the per-service shortcut router.
+             Candidates are checked with package-targeted content links before being offered. -->
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="https" />
+        </intent>
+
         <intent>
             <action android:name="android.intent.action.MEDIA_BUTTON" />
         </intent>
@@ -165,6 +172,12 @@
         <activity
             android:name=".view.actionlist.ActionEditorActivity"
             android:theme="@style/AppTheme.Dialog" />
+
+        <activity
+            android:name=".view.watchface.QuickPanelEditorActivity"
+            android:exported="false"
+            android:label="@string/quick_panel_editor_title"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
             android:name=".view.watchface.theme.WatchThemesActivity"

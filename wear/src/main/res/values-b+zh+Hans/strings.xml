@@ -32,7 +32,7 @@
 
     <string name="no_phone">未连接手机</string>
     <string name="phone_unavailable">请解锁手机以控制播放</string>
-    <string name="playback_stopped">已停止</string>
+    <string name="playback_stopped">已暂停</string>
     <string name="error">错误</string>
     <string name="error_play_services">Play 服务错误</string>
     <string name="button">按钮</string>
@@ -54,13 +54,19 @@
     <string name="queue_load_more">加载更多</string>
     <string name="queue_history_fallback">最近播放</string>
     <string name="queue_history_fallback_reason">此应用不共享播放队列</string>
+    <string name="menu_header_actions">操作</string>
+    <string name="menu_header_search_results">搜索结果</string>
+    <string name="menu_header_search_history">最近搜索</string>
+    <string name="menu_header_library">媒体库</string>
+    <string name="shortcut_open_on_phone">在手机上打开</string>
+    <string name="shortcut_continue_on_phone">请在手机上继续</string>
     <string name="chat_face_today">今天</string>
 
     <string name="hint_title">使用方法</string>
     <string name="hint_edges">点按上、下、左或右侧 — 每个区域执行所分配的操作</string>
     <string name="hint_center">中心 — 播放/暂停\n双击 — 快捷操作\n长按 — 表盘选择器（可配置）</string>
     <string name="hint_swipe_up">向上 — 操作菜单\n向下或向左 — 已分配的操作\n从边缘向右 — 退出</string>
-    <string name="hint_crown">表冠 — 音量或进度\n侧键 — 已分配的操作\n在手机的“控制”和“Watch”中自定义所有内容</string>
+    <string name="hint_crown">表冠 — 音量或进度\n侧键 — 已分配的操作\n在手机的“控制”和“手表”中自定义所有内容</string>
     <string name="hint_next">下一步</string>
     <string name="hint_dismiss">完成</string>
 
@@ -182,4 +188,23 @@
     <string name="progress_screen_cancel_seek">取消跳转</string>
     <string name="progress_screen_skip_back">后退 %1$d 秒</string>
     <string name="progress_screen_skip_forward">前进 %1$d 秒</string>
+    <string name="quick_block_all_actions">所有动作</string>
+    <string name="quick_block_favorites">收藏夹</string>
+    <string name="quick_tool_speed">速度</string>
+    <string name="quick_tool_lyrics">歌词</string>
+    <string name="quick_tool_queue">队列</string>
+    <string name="quick_tool_volume">音量</string>
+    <string name="quick_tool_progress">进度</string>
+    <string name="quick_tool_faces">表盘</string>
+    <string name="quick_tool_search">搜索</string>
+    <string name="quick_tool_menu">菜单</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">音量 %1$d%%</string>
+    <string name="quick_seek_back_description">返回 %1$d 秒</string>
+    <string name="quick_seek_forward_description">前进 %1$d 秒</string>
+    <string name="quick_speed_description">播放速度 %1$s</string>
+    <string name="quick_tool_sleep">睡眠定时器</string>
+    <string name="quick_sleep_minutes">%1$d 分钟</string>
+    <string name="quick_sleep_description">睡眠计时器，还剩 %1$d 分钟。点击更改</string>
+    <string name="quick_sleep_off_description">睡眠定时器关闭。点击设置</string>
 </resources>

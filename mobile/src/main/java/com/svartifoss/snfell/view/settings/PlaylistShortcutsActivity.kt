@@ -19,7 +19,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.PopupMenu
@@ -47,7 +46,9 @@ import com.h6ah4i.android.widget.advrecyclerview.draggable.ItemDraggableRange
 import com.h6ah4i.android.widget.advrecyclerview.draggable.RecyclerViewDragDropManager
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractDraggableItemViewHolder
 import com.matejdro.wearutils.miscutils.VibratorCompat
+import com.matejdro.wearutils.preferences.definition.Preferences
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.music.PlaylistShortcut
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
 import com.svartifoss.snfell.music.StreamingService
@@ -275,8 +276,11 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
             setText(existing?.name ?: initialName)
             LyraAccent.applyToEditText(this)
         }
+        // Shown without a YouTube Music shuffle flag: shuffling is chosen on the watch now. A link
+        // saved with one keeps it unless the link itself is changed - see the save below.
+        val shownLink = StreamingShortcutLinks.stripShuffle(existing?.link ?: initialLink)
         val linkInput = editor.findViewById<TextInputEditText>(R.id.link_input).apply {
-            setText(StreamingShortcutLinks.stripShuffle(existing?.link ?: initialLink))
+            setText(shownLink)
             LyraAccent.applyToEditText(this)
         }
         editor.findViewById<TextView>(R.id.editor_title).setText(
@@ -293,25 +297,26 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         val detectedIcon = editor.findViewById<ImageView>(R.id.detected_icon)
         val detectedTitle = editor.findViewById<TextView>(R.id.detected_title)
         val detectedSubtitle = editor.findViewById<TextView>(R.id.detected_subtitle)
-        val shuffleCheckbox = editor.findViewById<CheckBox>(R.id.shuffle_checkbox).apply {
-            buttonTintList = ColorStateList(
-                    arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf()),
-                    intArrayOf(accent, secondary)
-            )
-            isChecked = (existing?.link ?: initialLink).let {
-                StreamingShortcutLinks.supportsShuffle(it) &&
-                        StreamingShortcutLinks.hasShuffle(it)
-            }
-        }
+        val shuffleHint = editor.findViewById<TextView>(R.id.shuffle_hint)
+        val askOnWatch = Preferences.getBoolean(
+                PreferenceManager.getDefaultSharedPreferences(this),
+                MiscPreferences.WEAR_SHORTCUT_DETAILS)
         fun normalizedCandidate(rawText: String): String =
                 StreamingShortcutLinks.extractSharedLink(rawText)
                         ?: StreamingShortcutLinks.canonicalize(rawText)
+        val unchangedCandidate = normalizedCandidate(shownLink)
 
         fun updateLinkFeedback(rawText: String) {
             val link = normalizedCandidate(rawText)
-            val supported = StreamingShortcutLinks.supportsShuffle(link)
-            shuffleCheckbox.visibility = if (supported) View.VISIBLE else View.GONE
-            if (!supported) shuffleCheckbox.isChecked = false
+            // Where the "Play shuffled" checkbox used to be: only says where the choice went, and
+            // only for a collection the watch will actually offer to shuffle.
+            shuffleHint.visibility = if (askOnWatch &&
+                    StreamingShortcutLinks.isSafeLink(link) &&
+                    StreamingShortcutLinks.detectContentType(link).offersShuffle) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
 
             if (!StreamingShortcutLinks.isSafeLink(link)) {
                 detectedIcon.imageTintList = ColorStateList.valueOf(secondary)
@@ -404,13 +409,24 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
                 }
                 if (!valid) return@setOnClickListener
 
-                var link = StreamingShortcutLinks.stripShuffle(candidate)
-                if (shuffleCheckbox.isChecked && StreamingShortcutLinks.supportsShuffle(link)) {
-                    link = StreamingShortcutLinks.withYoutubeShuffle(link)
+                // Renaming a shortcut keeps its link exactly as saved, so a YouTube Music link that
+                // was saved shuffled goes on shuffling from the buttons it is assigned to. A link
+                // that was changed (or a new one) is saved plain: the watch asks each time.
+                val link = if (existing != null && candidate == unchangedCandidate) {
+                    existing.link
+                } else {
+                    StreamingShortcutLinks.stripShuffle(candidate)
                 }
                 if (editIndex != null && editIndex in shortcuts.indices) {
-                    val previousLink = shortcuts[editIndex].link
-                    shortcuts[editIndex] = PlaylistShortcut(name, link)
+                    val previous = shortcuts[editIndex]
+                    val previousLink = previous.link
+                    // A rename is not a new public destination, so retain the answer already
+                    // fetched for it. A changed link deliberately starts with no cache at all.
+                    shortcuts[editIndex] = if (previousLink == link) {
+                        PlaylistShortcut(name, link, previous.publicMetadata, previous.metadataChecked)
+                    } else {
+                        PlaylistShortcut(name, link)
+                    }
                     persist()
                     listAdapter.notifyItemChanged(editIndex)
                     // Keep copies already bound to buttons/gestures/quick panel/action list in sync
@@ -486,14 +502,10 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
             }
         } else {
             val service = StreamingShortcutLinks.detect(shortcut.link)
-            val targetPackage = service.packageName?.takeIf {
-                openMode == StreamingShortcutLinks.OPEN_MODE_APP && isPackageInstalled(it)
-            }
-            val primaryLink = if (targetPackage != null) {
-                StreamingShortcutLinks.forInstalledApp(shortcut.link)
-            } else {
-                browserLink
-            }
+            val targetPackage = com.svartifoss.snfell.music.StreamingShortcutRoutes.targetPackage(
+                    this, preferences, service, openMode, shortcut.link)
+            val primaryLink = com.svartifoss.snfell.music.StreamingShortcutRoutes.linkForTarget(
+                    shortcut.link, service, targetPackage)
             if (startStreamingLink(primaryLink, targetPackage)) return
             if (targetPackage != null && startStreamingLink(browserLink, null)) return
         }
@@ -661,13 +673,60 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
             val changed = com.svartifoss.snfell.music.ShortcutArtworkFetcher.ensureCachedAll(
                     this@PlaylistShortcutsActivity, snapshot)
+            val metadata = fetchPublicMetadata(snapshot)
             if (changed) {
                 kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
                     listAdapter.notifyDataSetChanged()
                 }
                 PlaylistShortcutStorage.syncToWatch(this@PlaylistShortcutsActivity)
             }
+            if (metadata.isNotEmpty()) {
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                    if (applyPublicMetadata(metadata)) {
+                        // The fields are user-visible shortcut data, not a disposable cache: save
+                        // them so reopening the editor does not repeat a public-page request.
+                        persist()
+                        // An already-assigned shortcut is represented by an ActionList entry,
+                        // separate from the saved-shortcuts DataItem that persist() refreshes.
+                        // Re-send it too so Quick Panel rows gain the byline without requiring an
+                        // unrelated edit to the Actions tab.
+                        actionConfig.getActionList().retransmit()
+                        listAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
         }
+    }
+
+    /** Looks up each link at most once unless the explicit reload button asks for a refresh. */
+    private fun fetchPublicMetadata(
+            shortcuts: List<PlaylistShortcut>,
+            force: Boolean = false
+    ): Map<String, com.svartifoss.snfell.music.PublicLinkMetadata?> = shortcuts
+            .filter { force || !it.metadataChecked }
+            .associate { shortcut ->
+                shortcut.link to com.svartifoss.snfell.music.ShortcutArtworkFetcher
+                        .lookupPublicMetadata(shortcut.link)
+            }
+
+    /** Applies both positive answers and misses. A miss is remembered to avoid retrying providers
+     * that publish no public details; the reload button is the user-controlled retry. */
+    private fun applyPublicMetadata(
+            metadata: Map<String, com.svartifoss.snfell.music.PublicLinkMetadata?>
+    ): Boolean {
+        var changed = false
+        shortcuts.indices.forEach { index ->
+            val shortcut = shortcuts[index]
+            if (shortcut.link !in metadata) return@forEach
+            val updated = shortcut.copy(
+                    publicMetadata = metadata[shortcut.link]?.takeIf { it.hasDetails },
+                    metadataChecked = true)
+            if (updated != shortcut) {
+                shortcuts[index] = updated
+                changed = true
+            }
+        }
+        return changed
     }
 
     private fun updateEmptyState() {
@@ -697,15 +756,24 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
             val changed = com.svartifoss.snfell.music.ShortcutArtworkFetcher.ensureCachedAll(
                     this@PlaylistShortcutsActivity, snapshot, force = true)
-            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
-                if (changed) listAdapter.notifyDataSetChanged()
+            val metadata = fetchPublicMetadata(snapshot, force = true)
+            val metadataChanged = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                val metadataChanged = applyPublicMetadata(metadata)
+                if (metadataChanged) {
+                    persist()
+                    actionConfig.getActionList().retransmit()
+                }
+                if (changed || metadataChanged) listAdapter.notifyDataSetChanged()
                 Toast.makeText(
                         this@PlaylistShortcutsActivity,
                         R.string.playlist_shortcuts_covers_reloaded,
                         Toast.LENGTH_SHORT
                 ).show()
+                metadataChanged
             }
-            if (changed) PlaylistShortcutStorage.syncToWatch(this@PlaylistShortcutsActivity)
+            if (changed && !metadataChanged) {
+                PlaylistShortcutStorage.syncToWatch(this@PlaylistShortcutsActivity)
+            }
         }
     }
 
@@ -727,30 +795,18 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
             holder.subtitle.text = PlaylistShortcutStorage.describe(
                     this@PlaylistShortcutsActivity, shortcut)
             val service = StreamingShortcutLinks.detect(shortcut.link)
-            val thumbnailPng = com.svartifoss.snfell.music.ShortcutArtworkStore.get(
+            // The cover the watch shows for it: the fetched one (opt-in), else the drawn one in
+            // the service's colours with the player's mark - see ShortcutCovers.
+            val cover = com.svartifoss.snfell.music.ShortcutCovers.forLink(
                     this@PlaylistShortcutsActivity, shortcut.link)
-            val thumbnail = thumbnailPng?.let {
-                android.graphics.BitmapFactory.decodeByteArray(it, 0, it.size)
-            }
-            val installedIcon = service.packageName?.let { packageName ->
-                try {
-                    packageManager.getApplicationIcon(packageName)
-                } catch (_: android.content.pm.PackageManager.NameNotFoundException) {
-                    null
-                }
-            }
-            if (thumbnail != null) {
-                // Online cover art (opt-in): full colour, filling the circular slot (the oval
-                // background clips it via clipToOutline), never tinted or padded.
+            if (cover != null) {
+                // Full colour, filling the circular slot (the oval background clips it via
+                // clipToOutline), never tinted or padded.
                 holder.sourceIcon.imageTintList = null
                 holder.sourceIcon.setPadding(0, 0, 0, 0)
                 holder.sourceIcon.scaleType = ImageView.ScaleType.CENTER_CROP
                 holder.sourceIcon.clipToOutline = true
-                holder.sourceIcon.setImageBitmap(thumbnail)
-            } else if (installedIcon != null) {
-                restoreGlyphSlot(holder.sourceIcon)
-                holder.sourceIcon.imageTintList = null
-                holder.sourceIcon.setImageDrawable(installedIcon)
+                holder.sourceIcon.setImageBitmap(cover)
             } else {
                 restoreGlyphSlot(holder.sourceIcon)
                 holder.sourceIcon.imageTintList = ColorStateList.valueOf(

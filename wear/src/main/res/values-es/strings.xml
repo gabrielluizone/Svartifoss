@@ -33,7 +33,7 @@
 
     <string name="no_phone">No hay teléfono conectado</string>
     <string name="phone_unavailable">Desbloquea el teléfono para controlar la reproducción</string>
-    <string name="playback_stopped">Detenido</string>
+    <string name="playback_stopped">En pausa</string>
     <string name="error">ERROR</string>
     <string name="error_play_services">Error de Play Services</string>
     <string name="button">Botón</string>
@@ -55,6 +55,12 @@
     <string name="queue_load_more">Cargar más</string>
     <string name="queue_history_fallback">Reproducido recientemente</string>
     <string name="queue_history_fallback_reason">Esta app no comparte su cola</string>
+    <string name="menu_header_actions">Acciones</string>
+    <string name="menu_header_search_results">Resultados de búsqueda</string>
+    <string name="menu_header_search_history">Búsquedas recientes</string>
+    <string name="menu_header_library">Biblioteca</string>
+    <string name="shortcut_open_on_phone">Abrir en el teléfono</string>
+    <string name="shortcut_continue_on_phone">Continúa en tu teléfono</string>
     <string name="chat_face_today">Hoy</string>
 
     <string name="face_picker_title">Esfera del reloj</string>
@@ -84,7 +90,7 @@
     <string name="hint_edges">Toca arriba, abajo, a la izquierda o a la derecha — cada zona ejecuta su acción asignada</string>
     <string name="hint_center">Centro — reproducir/pausar\nToca dos veces — acciones rápidas\nMantén pulsado — selector de esfera (configurable)</string>
     <string name="hint_swipe_up">Arriba — menú de acciones\nAbajo o izquierda — acciones asignadas\nDesde el borde a la derecha — salir</string>
-    <string name="hint_crown">Corona — volumen o posición\nBotones laterales — acciones asignadas\nPersonaliza todo en Controles y Watch en el teléfono</string>
+    <string name="hint_crown">Corona — volumen o posición\nBotones laterales — acciones asignadas\nPersonaliza todo en Controles y Reloj en el teléfono</string>
     <string name="hint_next">Siguiente</string>
     <string name="hint_dismiss">Finalizar</string>
 
@@ -185,4 +191,23 @@
     <string name="progress_screen_cancel_seek">Cancelar desplazamiento</string>
     <string name="progress_screen_skip_back">Retroceder %1$d segundos</string>
     <string name="progress_screen_skip_forward">Avanzar %1$d segundos</string>
+    <string name="quick_block_all_actions">Todas las acciones</string>
+    <string name="quick_block_favorites">Favoritos</string>
+    <string name="quick_tool_speed">Velocidad</string>
+    <string name="quick_tool_lyrics">Letras</string>
+    <string name="quick_tool_queue">Cola</string>
+    <string name="quick_tool_volume">Volumen</string>
+    <string name="quick_tool_progress">Progreso</string>
+    <string name="quick_tool_faces">Esferas</string>
+    <string name="quick_tool_search">Buscar</string>
+    <string name="quick_tool_menu">Menú</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Volumen %1$d%%</string>
+    <string name="quick_seek_back_description">Atrás %1$d segundos</string>
+    <string name="quick_seek_forward_description">Adelante %1$d segundos</string>
+    <string name="quick_speed_description">Velocidad de reproducción %1$s</string>
+    <string name="quick_tool_sleep">Temporizador</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Temporizador de apagado, quedan %1$d minutos. Toca para cambiar.</string>
+    <string name="quick_sleep_off_description">Temporizador de sueño desactivado. Toca para configurarlo.</string>
 </resources>

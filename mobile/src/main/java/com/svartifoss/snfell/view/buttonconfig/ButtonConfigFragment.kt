@@ -36,6 +36,7 @@ import com.svartifoss.snfell.config.CustomIconStorage
 import com.svartifoss.snfell.config.WatchInfoWithIcons
 import com.svartifoss.snfell.config.buttons.ButtonConfig
 import com.svartifoss.snfell.view.mainactivity.MainActivity
+import com.svartifoss.snfell.view.watchface.QuickPanelEditorActivity
 import com.svartifoss.snfell.databinding.FragmentButtonConfigBinding
 import com.svartifoss.snfell.databinding.ItemSwipeGestureBinding
 import com.svartifoss.snfell.databinding.ItemWatchButtonBinding
@@ -153,7 +154,7 @@ class ButtonConfigFragment : Fragment(), FourWayTouchLayout.UserActionListener {
         updateHandGestureHint()
         binding.handGesturesBeta.styleAsBetaBadge()
         binding.quickPanelLink.setOnClickListener {
-            (activity as? MainActivity)?.openActionsMenu()
+            startActivity(QuickPanelEditorActivity.createIntent(requireContext()))
         }
     }
 

@@ -82,6 +82,20 @@ class AlbumArtSourceTest {
     }
 
     @Test
+    fun `effective artwork follows the selected source and falls back to the sleeve`() {
+        val sleeve = "sleeve"
+        val replacement = "artist picture"
+
+        assertEquals(sleeve, AlbumArtSource.LOCAL.effectiveArtwork(sleeve, replacement))
+        AlbumArtSource.entries.filter { it.usesBackdropAsset }.forEach { source ->
+            assertEquals("$source must use its requested picture", replacement,
+                    source.effectiveArtwork(sleeve, replacement))
+            assertEquals("$source must fall back when its picture is unavailable", sleeve,
+                    source.effectiveArtwork(sleeve, null))
+        }
+    }
+
+    @Test
     fun `no source both needs a lookup and is device-local`() {
         // The two properties gate opposite things - one the network switch, one publication - and
         // a value answering yes to both would be asking the phone to fetch a file it already has

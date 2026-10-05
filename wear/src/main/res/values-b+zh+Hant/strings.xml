@@ -38,7 +38,7 @@
 
     <string name="no_phone">手機未連線</string>
     <string name="phone_unavailable">請解鎖手機以控制播放</string>
-    <string name="playback_stopped">已停止</string>
+    <string name="playback_stopped">已暫停</string>
     <string name="error">錯誤</string>
     <string name="error_play_services">Google Play 服務錯誤</string>
     <string name="button">按鈕</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">最近播放</string>
     <string name="queue_history_fallback_reason">此應用程式未分享播放佇列</string>
+    <string name="menu_header_actions">動作</string>
+    <string name="menu_header_search_results">搜尋結果</string>
+    <string name="menu_header_search_history">最近的搜尋</string>
+    <string name="menu_header_library">媒體庫</string>
+    <string name="shortcut_open_on_phone">在手機上開啟</string>
+    <string name="shortcut_continue_on_phone">請在手機上繼續</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">今天</string>
 
@@ -203,4 +209,23 @@
     <string name="progress_screen_cancel_seek">取消跳轉</string>
     <string name="progress_screen_skip_back">後退 %1$d 秒</string>
     <string name="progress_screen_skip_forward">前進 %1$d 秒</string>
+    <string name="quick_block_all_actions">所有動作</string>
+    <string name="quick_block_favorites">收藏夹</string>
+    <string name="quick_tool_speed">速度</string>
+    <string name="quick_tool_lyrics">歌詞</string>
+    <string name="quick_tool_queue">佇列</string>
+    <string name="quick_tool_volume">音量</string>
+    <string name="quick_tool_progress">進度</string>
+    <string name="quick_tool_faces">錶盤</string>
+    <string name="quick_tool_search">搜索</string>
+    <string name="quick_tool_menu">菜单</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">音量 %1$d%%</string>
+    <string name="quick_seek_back_description">返回 %1$d 秒</string>
+    <string name="quick_seek_forward_description">前進 %1$d 秒</string>
+    <string name="quick_speed_description">播放速度 %1$s</string>
+    <string name="quick_tool_sleep">睡眠定時器</string>
+    <string name="quick_sleep_minutes">%1$d 分鐘</string>
+    <string name="quick_sleep_description">睡眠計時器，剩下 %1$d 分鐘。點選更改</string>
+    <string name="quick_sleep_off_description">睡眠定時器關閉。點選設定</string>
 </resources>

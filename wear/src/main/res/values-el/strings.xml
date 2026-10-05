@@ -38,7 +38,7 @@
 
     <string name="no_phone">Δεν έχει συνδεθεί τηλέφωνο</string>
     <string name="phone_unavailable">Ξεκλειδώστε το τηλέφωνο για έλεγχο της αναπαραγωγής</string>
-    <string name="playback_stopped">Σταμάτησε</string>
+    <string name="playback_stopped">Σε παύση</string>
     <string name="error">ΣΦΑΛΜΑ</string>
     <string name="error_play_services">Σφάλμα Play Services</string>
     <string name="button">Κουμπί</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Πρόσφατη αναπαραγωγή</string>
     <string name="queue_history_fallback_reason">Αυτή η εφαρμογή δεν κοινοποιεί τη λίστα της</string>
+    <string name="menu_header_actions">Ενέργειες</string>
+    <string name="menu_header_search_results">Αποτελέσματα αναζήτησης</string>
+    <string name="menu_header_search_history">Πρόσφατες αναζητήσεις</string>
+    <string name="menu_header_library">Βιβλιοθήκη</string>
+    <string name="shortcut_open_on_phone">Άνοιγμα στο τηλέφωνο</string>
+    <string name="shortcut_continue_on_phone">Συνεχίστε στο τηλέφωνό σας</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Σήμερα</string>
 
@@ -100,7 +106,7 @@
     <string name="hint_edges">Άγγιξε πάνω, κάτω, αριστερά ή δεξιά — κάθε ζώνη εκτελεί την ενέργειά της</string>
     <string name="hint_center">Κέντρο — αναπαραγωγή/παύση\nΔιπλό άγγιγμα — γρήγορες ενέργειες\nΠαρατεταμένο πάτημα — επιλογή πρόσοψης (διαμορφώνεται)</string>
     <string name="hint_swipe_up">Πάνω — μενού ενεργειών\nΚάτω ή αριστερά — αντιστοιχισμένες ενέργειες\nΑπό την άκρη δεξιά — έξοδος</string>
-    <string name="hint_crown">Κορώνα — ένταση ή θέση\nΠλευρικά κουμπιά — αντιστοιχισμένες ενέργειες\nΡύθμισε τα πάντα στα Στοιχεία ελέγχου και Watch στο τηλέφωνο</string>
+    <string name="hint_crown">Κορώνα — ένταση ή θέση\nΠλευρικά κουμπιά — αντιστοιχισμένες ενέργειες\nΡύθμισε τα πάντα στα Στοιχεία ελέγχου και Ρολόι στο τηλέφωνο</string>
     <string name="hint_next">Επόμενο</string>
     <string name="hint_dismiss">Τέλος</string>
 
@@ -203,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Ακύρωση μετακίνησης</string>
     <string name="progress_screen_skip_back">Μετάβαση πίσω %1$d δευτερόλεπτα</string>
     <string name="progress_screen_skip_forward">Μετάβαση μπροστά %1$d δευτερόλεπτα</string>
+    <string name="quick_block_all_actions">Όλες οι ενέργειες</string>
+    <string name="quick_block_favorites">Αγαπημένα</string>
+    <string name="quick_tool_speed">Ταχύτητα</string>
+    <string name="quick_tool_lyrics">Στίχοι</string>
+    <string name="quick_tool_queue">Ουρά</string>
+    <string name="quick_tool_volume">Ένταση</string>
+    <string name="quick_tool_progress">Πρόοδος</string>
+    <string name="quick_tool_faces">Καντράν</string>
+    <string name="quick_tool_search">Αναζήτηση</string>
+    <string name="quick_tool_menu">Μενού</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Ένταση %1$d%%</string>
+    <string name="quick_seek_back_description">Πίσω %1$d δευτερόλεπτα</string>
+    <string name="quick_seek_forward_description">Εμπρός %1$d δευτερόλεπτα</string>
+    <string name="quick_speed_description">Ταχύτητα αναπαραγωγής %1$s</string>
+    <string name="quick_tool_sleep">Χρονοδιακόπτης</string>
+    <string name="quick_sleep_minutes">%1$d λεπτά</string>
+    <string name="quick_sleep_description">Χρονόμετρο ύπνου, απομένουν %1$d λεπτά. Πατήστε για να αλλάξετε το</string>
+    <string name="quick_sleep_off_description">Ο χρονοδιακόπτης ύπνου είναι απενεργοποιημένος. Πατήστε για να τον ορίσετε.</string>
 </resources>

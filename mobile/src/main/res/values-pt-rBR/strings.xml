@@ -172,9 +172,11 @@
     <string name="playing_controls">Controles com música tocando</string>
     <string name="stopped_controls">Controles sem reprodução</string>
     <string name="actions_menu">Menu de ações</string>
-    <string name="actions_intro">Tudo aqui aparece no relógio, na ordem que você definir: no menu e também como linhas abaixo dos botões do painel rápido. Adicione playlists, álbuns e faixas colando o link, ou qualquer outra ação.</string>
+    <string name="actions_intro">Tudo aqui aparece no relógio, na ordem que você definir: no menu e, a menos que você reorganize o painel rápido, também como linhas nele. Adicione playlists, álbuns e faixas colando o link, ou qualquer outra ação.</string>
     <string name="actions_quick_panel_section">Painel rápido</string>
     <string name="actions_watch_menu_section">Menu no relógio</string>
+    <string name="actions_quick_pin_add">Mostrar no painel rápido</string>
+    <string name="actions_quick_pin_remove">Remover do painel rápido</string>
     <plurals name="actions_list_summary">
         <item quantity="one">%1$d ação · Toque para editar · Segure e arraste para reordenar</item>
         <item quantity="other">%1$d ações · Toque para editar · Segure e arraste para reordenar</item>
@@ -324,7 +326,7 @@
     <string name="preview_sample_lyric_current">A linha tocando agora</string>
     <string name="preview_sample_lyric_next">A linha seguinte</string>
     <string name="preview_sample_next_title">Próxima música</string>
-    <string name="preview_playback_stopped">Parado</string>
+    <string name="preview_playback_stopped">Pausado</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -484,6 +486,95 @@
     <string name="quick_panel_default_shuffle">Aleatório</string>
     <string name="quick_panel_default_repeat">Repetir</string>
     <string name="quick_panel_default_up_next">A seguir</string>
+    <!-- Quick panel editor -->
+    <string name="quick_panel_editor_title">Painel de ações rápidas</string>
+    <string name="quick_panel_editor_open">Editar o conteúdo do painel</string>
+    <string name="quick_panel_editor_intro">Monte o painel que abre com um toque duplo no centro do relógio. Segure e arraste um bloco para mudar de lugar, toque para ajustar.</string>
+    <string name="quick_panel_editor_add_block">Adicionar bloco</string>
+    <string name="quick_panel_editor_restore">Restaurar o painel original</string>
+    <string name="quick_panel_editor_restore_title">Restaurar o painel original?</string>
+    <string name="quick_panel_editor_restore_message">Sua disposição é removida e o painel volta a ser como era. Os botões escolhidos e as ações que você marcou são mantidos.</string>
+    <string name="quick_panel_editor_restore_confirm">Restaurar</string>
+    <string name="quick_panel_editor_fold">Fim da primeira tela (aproximado)</string>
+    <string name="quick_panel_editor_last_block">O painel precisa de pelo menos um bloco</string>
+    <string name="quick_panel_editor_removed">%1$s removido</string>
+    <string name="quick_panel_editor_undo">Desfazer</string>
+    <string name="quick_panel_editor_move_up">Mover para cima</string>
+    <string name="quick_panel_editor_move_down">Mover para baixo</string>
+    <string name="quick_panel_editor_more">Mais opções</string>
+    <string name="quick_panel_editor_nothing_to_add">Todos os blocos já estão no painel</string>
+
+    <string name="quick_block_header">Faixa</string>
+    <string name="quick_block_buttons">Botões redondos</string>
+    <string name="quick_block_upnext">Próxima faixa</string>
+    <string name="quick_block_volume">Volume</string>
+    <string name="quick_block_seek">Avanço e posição</string>
+    <string name="quick_block_tools">Ferramentas</string>
+    <string name="quick_block_favorites">Favoritos</string>
+    <string name="quick_block_actions">Todas as ações</string>
+    <string name="quick_block_all_actions">Todas as ações</string>
+
+    <string name="quick_block_header_description">O título e o artista do que está tocando.</string>
+    <string name="quick_block_buttons_description">Botões redondos para as ações que você mais usa, ou os que o app tocando oferece.</string>
+    <string name="quick_block_upnext_description">A próxima faixa. Toque nela para abrir a fila.</string>
+    <string name="quick_block_volume_description">Diminua e aumente o volume sem sair do painel.</string>
+    <string name="quick_block_seek_description">Onde você está na faixa, e botões para voltar e avançar.</string>
+    <string name="quick_block_tools_description">Atalhos pequenos: velocidade, letra, fila e mais.</string>
+    <string name="quick_block_favorites_description">As ações que você marcou na aba Ações, como capas ou linhas.</string>
+    <string name="quick_block_actions_description">Todas as ações do menu do relógio, como linhas no painel ou como um botão que abre o menu.</string>
+
+    <string name="quick_summary_header">Título e artista</string>
+    <string name="quick_summary_buttons_session">Do app em reprodução</string>
+    <string name="quick_summary_buttons_empty">Nenhum botão escolhido</string>
+    <string name="quick_summary_upnext">Próxima faixa · abre a fila</string>
+    <string name="quick_summary_volume">Incrementos de volume de %1$d%%</string>
+    <string name="quick_summary_seek">%1$s segundos</string>
+    <string name="quick_summary_seek_bar">%1$s segundos · tempo e barra</string>
+    <string name="quick_summary_favorites_none">Nenhum marcado ainda</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d marcada · %2$s</item>
+        <item quantity="other">%1$d marcadas · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Todas as %1$d ações</string>
+    <string name="quick_summary_actions_first">As primeiras %1$d ações</string>
+    <string name="quick_summary_actions_button">Um botão · abre o menu de ações</string>
+    <string name="quick_summary_only_playing">só durante a reprodução</string>
+    <string name="quick_summary_only_not_playing">só sem reprodução</string>
+    <string name="quick_mode_grid">Grade</string>
+    <string name="quick_mode_rows">Linhas</string>
+    <string name="quick_mode_actions_list">Lista</string>
+    <string name="quick_mode_actions_button">Botão</string>
+
+    <string name="quick_sheet_show">Mostrar</string>
+    <string name="quick_sheet_always">Sempre</string>
+    <string name="quick_sheet_while_playing">só durante a reprodução</string>
+    <string name="quick_sheet_while_not_playing">só sem reprodução</string>
+    <string name="quick_sheet_step">Passo</string>
+    <string name="quick_sheet_jump">Avançar em</string>
+    <string name="quick_sheet_seek_bar">Mostrar tempo e barra de progresso</string>
+    <string name="quick_sheet_tools">Ferramentas</string>
+    <string name="quick_sheet_layout">Disposição</string>
+    <string name="quick_sheet_how_many">Quantas</string>
+    <string name="quick_sheet_all">Todas</string>
+    <string name="quick_sheet_buttons_source">Botões de</string>
+    <string name="quick_sheet_source_configured">Minhas escolhas</string>
+    <string name="quick_sheet_source_session">App em reprodução</string>
+    <string name="quick_sheet_buttons_hint">Toque num botão para escolher a ação. Segure para voltar ao padrão.</string>
+    <string name="quick_sheet_favorites_hint">Marque ações com o raio na aba Ações. Só as marcadas aparecem aqui.</string>
+    <string name="quick_sheet_actions_mode">Mostrar como</string>
+    <string name="quick_sheet_actions_hint">A lista coloca cada ação no painel como uma linha. O botão deixa o painel curto: um botão que abre o menu completo. Para tirar o menu do painel de vez, remova este bloco.</string>
+    <string name="quick_sheet_remove">Remover este bloco</string>
+    <string name="quick_sheet_done">Pronto</string>
+
+    <string name="quick_tool_speed">Velocidade</string>
+    <string name="quick_tool_sleep">Temporizador</string>
+    <string name="quick_tool_lyrics">Letra</string>
+    <string name="quick_tool_queue">Fila</string>
+    <string name="quick_tool_volume">Volume</string>
+    <string name="quick_tool_progress">Progresso</string>
+    <string name="quick_tool_faces">Mostradores</string>
+    <string name="quick_tool_search">Buscar</string>
+    <string name="quick_tool_menu">Menu</string>
     <string name="setting_wear_center_long_press_queue">Toque longo no centro para a fila</string>
     <string name="setting_wear_center_long_press_queue_description">Toque e segure o centro da tela de reprodução para abrir a fila de reprodução.</string>
     <string name="setting_wear_screen_face">Layout-base</string>
@@ -781,9 +872,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Fundo da pill Up Next</string>
-    <string name="setting_wear_show_up_next_pill">Pill Up Next no player</string>
-    <string name="setting_wear_show_up_next_pill_description">Mostra uma pill Up Next na parte inferior da tela de reprodução. Ela preenche o espaço que a linha de mini botões ocuparia, então só aparece quando essa linha não está visível.</string>
+    <string name="setting_wear_up_next_pill">Fundo da cápsula Próxima faixa</string>
+    <string name="setting_wear_show_up_next_pill">Cápsula Próxima faixa no player</string>
+    <string name="setting_wear_show_up_next_pill_description">Mostra uma cápsula Próxima faixa na parte inferior da tela de reprodução. Ela preenche o espaço que a linha de mini botões ocuparia, então só aparece quando essa linha não está visível.</string>
     <string name="category_wf_clock">Relógio</string>
     <string name="setting_wear_clock_color">Cor do relógio</string>
     <string name="setting_wear_clock_custom_color">Cor personalizada do relógio</string>
@@ -799,7 +890,7 @@
     <string name="setting_wear_aod_show_progress">Anel de progresso na tela sempre ativa</string>
     <string name="setting_wear_aod_show_progress_description">Mostra o anel de progresso ao redor do botão play no modo ambiente — a posição só atualiza mais ou menos uma vez por minuto lá</string>
     <string name="setting_wear_aod_show_pills">A seguir na tela sempre ativa</string>
-    <string name="setting_wear_aod_show_pills_description">Mostra uma pill estática em contorno com a próxima música na parte inferior dos estilos visuais de tela sempre ativa</string>
+    <string name="setting_wear_aod_show_pills_description">Mostra uma cápsula estática em contorno com a próxima música na parte inferior dos estilos visuais de tela sempre ativa</string>
     <string name="category_wf_gestures">Gestos de tela</string>
     <string name="setting_wear_mini_buttons_mode">Mostrar mini botões</string>
     <string name="setting_wear_gestures_mode">Gestos de tela</string>
@@ -855,8 +946,8 @@
     <string name="preview_notification_controls">Ícone da notificação de mídia</string>
     <string name="setting_wear_queue_style">Estilo da fila</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Usar capa do atalho como fundo</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Quando o Estilo da fila for uma variação de Capa, uma linha de ação do painel rápido com uma capa de atalho já buscada (faixa, playlist, artista…) também preenche seu pill com essa imagem, como já acontece no Próxima na fila. Atalhos sem capa buscada (só o ícone do app) não são afetados.</string>
-    <string name="setting_wear_list_row_size">Tamanho das pills</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Quando o Estilo da fila for uma variação de Capa, uma linha de ação do painel rápido com uma capa de atalho já buscada (faixa, playlist, artista…) também preenche sua cápsula com essa imagem, como já acontece na Próxima faixa. Atalhos sem capa buscada (só o ícone do app) não são afetados.</string>
+    <string name="setting_wear_list_row_size">Tamanho das cápsulas</string>
     <string name="setting_wear_list_row_size_description">Altura das linhas de largura total na fila.</string>
     <string name="setting_wear_progress_style">Estilo do anel de progresso</string>
     <string name="setting_wear_seek_style">Estilo do tempo de seek e volume</string>
@@ -1416,6 +1507,8 @@
     <string name="setting_wear_close_on_idle_description">Fecha o app do relógio cerca de um minuto após ele chegar na tela ociosa \"Nada tocando\", para que ele não fique parado ali. Independente do tempo para fechar acima, que cobre uma faixa pausada.</string>
     <string name="setting_wear_hide_from_recents">Ocultar dos apps recentes</string>
     <string name="setting_wear_hide_from_recents_description">Tira o app do relógio da lista de apps recentes quando você o fecha ou usa outro app. Útil se você o abre pelo mostrador ou pela Now Bar. Ele continua acessível como antes, e a música e a conexão em segundo plano não são afetadas.</string>
+    <string name="setting_wear_shortcut_details">Reproduzir ou aleatório no relógio</string>
+    <string name="setting_wear_shortcut_details_description">Ao escolher um link salvo no relógio, na lista de atalhos, na Tile de atalhos ou no menu de ações, primeiro aparece a capa com Reproduzir e Aleatório. Desative para tocar direto. Botões e gestos atribuídos a um link sempre o tocam direto.</string>
     <string name="category_notifications">Popup de notificação</string>
     <string name="setting_enable_notifications">Mostrar popup de notificação</string>
     <string name="setting_enable_notifications_description">Este recurso exige outro app para gerenciar notificações (Vibration Center for Wear).\n\nSempre que o Vibration Center vibrar o relógio, o Svartifoss vai exibir um popup com o texto da notificação, permitindo que você dê uma olhada rápida na notificação sem sair do Svartifoss.</string>
@@ -1467,9 +1560,6 @@
     <string name="drawer_sync_heading">Sincronização</string>
     <string name="drawer_sync_summary">As configurações do relógio são definidas aqui no celular e sincronizadas automaticamente com o seu relógio pareado.</string>
     <string name="drawer_support_heading">Apoie o projeto</string>
-    <string name="drawer_support_summary">O Svartifoss é gratuito e de código aberto - me pague um café se ele for útil pra você :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Baixar capa do álbum</string>
     <string name="album_art_saved">Capa do álbum salva na galeria</string>
     <string name="album_art_save_error">Falha ao salvar a capa do álbum</string>
@@ -1493,7 +1583,7 @@
     <string name="setting_playlist_shortcuts">Atalhos de streaming</string>
     <string name="setting_playlist_shortcuts_description">Abra pelo relógio links do YouTube Music, Spotify e outros apps de streaming</string>
     <string name="setting_shortcut_artwork">Buscar nomes e miniaturas dos atalhos online</string>
-    <string name="setting_shortcut_artwork_description">Busca o nome e a miniatura de cada link salvo nos dados públicos de prévia do serviço. O nome é preenchido ao adicionar um link ao menu; a miniatura aparece na lista do celular, no menu do relógio e nos botões atribuídos. Cada um é buscado uma vez e só o link público de compartilhamento é enviado. Desligado por padrão: com ele desligado, “Buscar nome pelo link” faz a mesma consulta apenas quando você toca.</string>
+    <string name="setting_shortcut_artwork_description">Busca o nome, a capa e o autor ou descrição públicos de cada link salvo nos dados de prévia do serviço. Os detalhes aparecem na tela do atalho; a capa aparece na lista do celular, no menu do relógio e nos botões atribuídos. Cada um é buscado uma vez e só o link público de compartilhamento é enviado. Desligado por padrão: com ele desligado, “Buscar nome pelo link” faz a mesma consulta apenas quando você toca.</string>
     <string name="watch_streaming_shortcuts_empty">Adicione faixas, álbuns ou playlists para usar nas Ações rápidas e no menu do relógio</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d atalho salvo · Disponível nas Ações rápidas e no menu do relógio</item>
@@ -1510,6 +1600,14 @@
         <item>Padrão do Android</item>
         <item>Perguntar sempre</item>
     </string-array>
+    <string name="setting_streaming_app_routes">Escolher apps para links de streaming</string>
+    <string name="setting_streaming_app_routes_description">Escolha separadamente um app compatível para YouTube Music, Spotify e cada outro serviço. Usado com “App de streaming detectado”.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d serviço usa um app escolhido</item>
+        <item quantity="other">%1$d serviços usam apps escolhidos</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Aparecem apps que podem abrir o link e também players de mídia instalados.</string>
+    <string name="streaming_route_automatic">Automático (app detectado)</string>
     <string name="setting_persistent_notification">Gerenciar a notificação "Svartifoss ativo"</string>
     <string name="setting_persistent_notification_description">Abre as configurações do Android para esta notificação — silencie-a, oculte-a da tela de bloqueio ou ajuste-a de outra forma. Ela não pode ser desativada por completo: o Android exige uma notificação contínua enquanto o serviço em segundo plano que se comunica com seu relógio estiver em execução.</string>
     <string name="setting_notification_access">Acesso às notificações de mídia</string>
@@ -1546,7 +1644,7 @@
     <string name="playlist_shortcut_detected_format">Identificado: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Nome</string>
     <string name="playlist_shortcut_link_hint">Link de compartilhamento ou URI do app</string>
-    <string name="playlist_shortcut_shuffle">Tocar aleatoriamente (somente YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Você escolhe Reproduzir ou Aleatório no relógio sempre que começar a tocar.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -1721,7 +1819,7 @@
     <string name="face_reset_migration_reset_button">Resetar todos os temas</string>
     <string name="face_reset_migration_clear_data_button">Limpar dados do app</string>
 
-    <string name="quick_panel_link_summary">Toque duas vezes no centro da tela do relógio para abri-lo. Toque aqui para configurar os botões dele em Ações.</string>
+    <string name="quick_panel_link_summary">Toque duas vezes no centro da tela do relógio para abri-lo. Toque aqui para escolher o que ele tem e em que ordem.</string>
 
     <string name="wear_font_google_sans_flex">Google Sans Flex</string>
     <string name="wear_font_google_sans_flex_description">Versão variável do Google Sans com largura, tamanho óptico, grade e arredondamento ajustáveis — libera os controles de eixo abaixo.</string>

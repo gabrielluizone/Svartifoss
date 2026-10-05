@@ -38,7 +38,7 @@
 
     <string name="no_phone">ফোন সংযুক্ত নেই</string>
     <string name="phone_unavailable">প্লেব্যাক নিয়ন্ত্রণ করতে ফোন আনলক করুন</string>
-    <string name="playback_stopped">বন্ধ</string>
+    <string name="playback_stopped">বিরতিতে</string>
     <string name="error">ত্রুটি</string>
     <string name="error_play_services">Google Play Services ত্রুটি</string>
     <string name="button">বোতাম</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">সম্প্রতি চালানো</string>
     <string name="queue_history_fallback_reason">এই অ্যাপ তার কিউ শেয়ার করে না</string>
+    <string name="menu_header_actions">অ্যাকশন</string>
+    <string name="menu_header_search_results">অনুসন্ধানের ফলাফল</string>
+    <string name="menu_header_search_history">সাম্প্রতিক অনুসন্ধান</string>
+    <string name="menu_header_library">লাইব্রেরি</string>
+    <string name="shortcut_open_on_phone">ফোনে খুলুন</string>
+    <string name="shortcut_continue_on_phone">আপনার ফোনে চালিয়ে যান</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">আজ</string>
 
@@ -70,7 +76,7 @@
          and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
     <string name="face_picker_title">ওয়াচফেস</string>
     <string name="face_picker_offline">ফোন সংযুক্ত নেই — এই ওয়াচফেস ঘড়িতে প্রয়োগ হবে, তবে ফোন সেটিংটি ধরে রাখবে</string>
-    <string name="face_picker_section_builtin">বিল্ট-ইন ওয়াচফেস</string>
+    <string name="face_picker_section_builtin">অন্তর্নির্মিত ঘড়ির ডায়াল</string>
     <string name="face_picker_section_custom">আমার থিম</string>
     <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
     <string name="face_picker_custom_base">%1$s-এর ভিত্তিতে</string>
@@ -100,7 +106,7 @@
     <string name="hint_edges">উপরে, নিচে, বামে বা ডানে ট্যাপ করুন — প্রতিটি জোন তার নির্ধারিত অ্যাকশন চালায়</string>
     <string name="hint_center">মাঝখান — প্লে/পজ\nডাবল-ট্যাপ — কুইক অ্যাকশন\nদীর্ঘক্ষণ চাপ — ওয়াচফেস পিকার (কনফিগারযোগ্য)</string>
     <string name="hint_swipe_up">উপরে সোয়াইপ — অ্যাকশন মেনু\nনিচে বা বামে — নির্ধারিত অ্যাকশন\nপ্রান্ত থেকে ডানে — বের হন</string>
-    <string name="hint_crown">ক্রাউন — ভলিউম বা সিক\nপাশের বোতাম — নির্ধারিত অ্যাকশন\nফোনের Controls ও Watch থেকে সবকিছু কাস্টমাইজ করুন</string>
+    <string name="hint_crown">ক্রাউন — ভলিউম বা সিক\nপাশের বোতাম — নির্ধারিত অ্যাকশন\nফোনের নিয়ন্ত্রণ ও ঘড়ি থেকে সবকিছু কাস্টমাইজ করুন</string>
     <string name="hint_next">পরবর্তী</string>
     <string name="hint_dismiss">সম্পন্ন</string>
 
@@ -203,4 +209,23 @@
     <string name="progress_screen_cancel_seek">সিক বাতিল করুন</string>
     <string name="progress_screen_skip_back">%1$d সেকেন্ড পিছিয়ে যান</string>
     <string name="progress_screen_skip_forward">%1$d সেকেন্ড এগিয়ে যান</string>
+    <string name="quick_block_all_actions">সমস্ত কাজ</string>
+    <string name="quick_block_favorites">প্রিয়</string>
+    <string name="quick_tool_speed">গতি</string>
+    <string name="quick_tool_lyrics">গানের কথা</string>
+    <string name="quick_tool_queue">সারি</string>
+    <string name="quick_tool_volume">ভলিউম</string>
+    <string name="quick_tool_progress">অগ্রগতি</string>
+    <string name="quick_tool_faces">ঘড়ির ডায়াল</string>
+    <string name="quick_tool_search">অনুসন্ধান করুন</string>
+    <string name="quick_tool_menu">মেনু</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">ভলিউম %1$d%%</string>
+    <string name="quick_seek_back_description">পিছনে %1$d সেকেন্ড</string>
+    <string name="quick_seek_forward_description">সামনে %1$d সেকেন্ড</string>
+    <string name="quick_speed_description">প্লেব্যাক গতি %1$s</string>
+    <string name="quick_tool_sleep">স্লিপ টাইমার</string>
+    <string name="quick_sleep_minutes">%1$d মিনিট</string>
+    <string name="quick_sleep_description">স্লিপ টাইমার, %1$d মিনিট বাকি। পরিবর্তন করতে ট্যাপ করুন।</string>
+    <string name="quick_sleep_off_description">স্লিপ টাইমার বন্ধ। সেট করতে ট্যাপ করুন।</string>
 </resources>

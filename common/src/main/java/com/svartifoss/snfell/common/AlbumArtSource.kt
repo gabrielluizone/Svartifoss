@@ -104,6 +104,21 @@ enum class AlbumArtSource(val preferenceValue: String) {
      */
     val usesBackdropAsset: Boolean get() = this != LOCAL
 
+    /**
+     * The picture this source actually puts on screen.
+     *
+     * The phone keeps the player-provided sleeve and a requested replacement as separate assets:
+     * the latter can arrive later, or be absent when its lookup failed.  Every surface that needs
+     * an artwork-derived value (not only the player) must make this same choice; otherwise a
+     * non-local face can draw an artist picture while a panel beside it derives its palette from
+     * the unrelated sleeve.
+     *
+     * Generic on purpose: source selection is a pure policy and does not need to know whether the
+     * caller holds Bitmaps, decoded thumbnails, or a test token.
+     */
+    fun <T> effectiveArtwork(albumArt: T?, backdropArt: T?): T? =
+            if (usesBackdropAsset) backdropArt ?: albumArt else albumArt
+
     companion object {
 
         /**

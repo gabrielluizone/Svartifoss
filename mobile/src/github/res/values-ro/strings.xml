@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Vezi versiunile</string>
     <string name="update_watch_hint">„Actualizează ceasul” descarcă noua aplicație pentru ceas și o trimite prin Bluetooth — confirmați instalarea pe ceas însuși, fără cablu sau Wear Installer.</string>
     <string name="update_no_wear_asset">Această lansare nu are un APK de ceas de trimis.</string>
+    <string name="drawer_support_summary">Svartifoss este gratuit și cu sursă deschisă — cumpărați-mi o cafea dacă vă este util :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

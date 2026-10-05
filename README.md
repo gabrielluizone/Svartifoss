@@ -90,7 +90,7 @@ Appearance settings cover the player, its controls and the screens opened from i
 | Artwork and background | Full covers, square artwork, blur, grayscale, gradients and layered backgrounds. Choose the media app's artwork, an online cover lookup or an artist picture.                          |
 | Color                  | Live swatches for Normal, Desaturated, Expressive, Complementary, Triadic, Analogous, Monochrome and Duotone treatments, plus independent overrides for individual elements.           |
 | Typography             | 140+ built-in font choices. Choose typefaces for title, artist, lyrics, clock and track time, with additional size, weight, visibility and readability controls where supported.       |
-| Buttons and panels     | Shape the mini buttons and quick actions with curved arrangements, custom backgrounds and colors. The quick panel offers 14 layouts and 30 styles.                                     |
+| Buttons and panels     | Shape the mini buttons and quick actions with curved arrangements, custom backgrounds and colors. The quick panel offers 14 layouts and 30 styles, and its content is yours to arrange: volume, skip and position, tools (playback speed, lyrics, queue, a sleep timer), favorite actions and the full menu, as blocks you reorder, show only while playing or hide.                                     |
 | Volume, seek and queue | Choose from 26 volume styles, 31 seek styles and 26 queue styles, including rings, arcs, ticks, glow and artwork rows. An optional draggable edge ring lets you seek around the bezel. |
 | Always-on display      | Set the ambient presentation, artwork, dim level and visible elements separately from the interactive player.                                                                          |
 
@@ -157,7 +157,7 @@ Information comes from the player and accessible local-file tags. Optional **Mus
 
 ### Keep favorite music one tap away
 
-Share or paste a streaming link on the phone to save a shortcut to a track, album, artist, playlist, show, episode or mix. Reorder shortcuts, inspect the destination and optionally fetch its cover art. The watch tries direct playback through the target app's supported interfaces; if that is unavailable, the phone opens the link visibly.
+Share or paste a streaming link on the phone to save a shortcut to a track, album, artist, playlist, show, episode or mix. Reorder shortcuts, inspect the destination and optionally fetch its cover art. Picked on the watch, a shortcut opens with its cover and a choice of **Play** or **Shuffle**, made each time rather than when the link is saved. The watch tries direct playback through the target app's supported interfaces; if that is unavailable, the phone opens the link visibly.
 
 A saved link also becomes an **assignable action**: put a favorite playlist on a physical button, gesture or quick-panel slot. The action catalogue additionally includes service-specific destinations such as liked music on YouTube Music, Spotify and SoundCloud, and Deezer Flow, subject to service support.
 

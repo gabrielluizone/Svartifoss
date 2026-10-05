@@ -38,7 +38,7 @@
 
     <string name="no_phone">Chưa kết nối điện thoại</string>
     <string name="phone_unavailable">Mở khóa điện thoại để điều khiển phát nhạc</string>
-    <string name="playback_stopped">Đã dừng</string>
+    <string name="playback_stopped">Đã tạm dừng</string>
     <string name="error">LỖI</string>
     <string name="error_play_services">Lỗi Play Services</string>
     <string name="button">Nút</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Vừa phát</string>
     <string name="queue_history_fallback_reason">Ứng dụng này không chia sẻ danh sách phát của nó</string>
+    <string name="menu_header_actions">Hành động</string>
+    <string name="menu_header_search_results">Kết quả tìm kiếm</string>
+    <string name="menu_header_search_history">Tìm kiếm gần đây</string>
+    <string name="menu_header_library">Thư viện</string>
+    <string name="shortcut_open_on_phone">Mở trên điện thoại</string>
+    <string name="shortcut_continue_on_phone">Tiếp tục trên điện thoại</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Hôm nay</string>
 
@@ -203,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Hủy tua đến vị trí</string>
     <string name="progress_screen_skip_back">Lùi %1$d giây</string>
     <string name="progress_screen_skip_forward">Tiến %1$d giây</string>
+    <string name="quick_block_all_actions">Tất cả hành động</string>
+    <string name="quick_block_favorites">Yêu thích</string>
+    <string name="quick_tool_speed">Tốc độ</string>
+    <string name="quick_tool_lyrics">Lời bài hát</string>
+    <string name="quick_tool_queue">Hàng đợi</string>
+    <string name="quick_tool_volume">Âm lượng</string>
+    <string name="quick_tool_progress">Tiến triển</string>
+    <string name="quick_tool_faces">Mặt đồng hồ</string>
+    <string name="quick_tool_search">Tìm kiếm</string>
+    <string name="quick_tool_menu">Thực đơn</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Âm lượng %1$d%%</string>
+    <string name="quick_seek_back_description">Quay lại %1$d giây</string>
+    <string name="quick_seek_forward_description">Chuyển tiếp %1$d giây</string>
+    <string name="quick_speed_description">Tốc độ phát lại %1$s</string>
+    <string name="quick_tool_sleep">Hẹn giờ ngủ</string>
+    <string name="quick_sleep_minutes">%1$d phút</string>
+    <string name="quick_sleep_description">Hẹn giờ ngủ, còn %1$d phút. Nhấn để thay đổi.</string>
+    <string name="quick_sleep_off_description">Tắt hẹn giờ ngủ. Nhấn để đặt</string>
 </resources>

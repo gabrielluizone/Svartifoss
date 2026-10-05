@@ -267,7 +267,7 @@
     <string name="preview_sample_lyric_current">Η γραμμή που παίζει τώρα</string>
     <string name="preview_sample_lyric_next">Η επόμενη γραμμή</string>
     <string name="preview_sample_next_title">Επόμενο τραγούδι</string>
-    <string name="preview_playback_stopped">Σταμάτησε</string>
+    <string name="preview_playback_stopped">Σε παύση</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -711,9 +711,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Φόντο χαπιού Ακολουθεί</string>
-    <string name="setting_wear_show_up_next_pill">Χάπι Ακολουθεί στον player</string>
-    <string name="setting_wear_show_up_next_pill_description">Εμφάνιση χαπιού Ακολουθεί στο κάτω μέρος της οθόνης αναπαραγωγής. Καταλαμβάνει τον χώρο που θα καταλάμβανε η γραμμή μίνι κουμπιών, οπότε εμφανίζεται μόνο όσο αυτή η γραμμή δεν εμφανίζεται.</string>
+    <string name="setting_wear_up_next_pill">Φόντο κάψουλας Ακολουθεί</string>
+    <string name="setting_wear_show_up_next_pill">Κάψουλα Ακολουθεί στον player</string>
+    <string name="setting_wear_show_up_next_pill_description">Εμφάνιση κάψουλας Ακολουθεί στο κάτω μέρος της οθόνης αναπαραγωγής. Καταλαμβάνει τον χώρο που θα καταλάμβανε η γραμμή μίνι κουμπιών, οπότε εμφανίζεται μόνο όσο αυτή η γραμμή δεν εμφανίζεται.</string>
     <string name="category_wf_clock">Ρολόι</string>
     <string name="setting_wear_clock_color">Χρώμα ρολογιού</string>
     <string name="setting_wear_clock_custom_color">Προσαρμοσμένο χρώμα ρολογιού</string>
@@ -729,7 +729,7 @@
     <string name="setting_wear_aod_show_progress">Δακτύλιος προόδου στην οθόνη πάντα ενεργή</string>
     <string name="setting_wear_aod_show_progress_description">Εμφάνιση του δακτυλίου προόδου γύρω από το κουμπί αναπαραγωγής σε λειτουργία αδράνειας — η θέση ανανεώνεται εκεί περίπου μία φορά το λεπτό</string>
     <string name="setting_wear_aod_show_pills">Ακολουθεί στην οθόνη πάντα ενεργή</string>
-    <string name="setting_wear_aod_show_pills_description">Εμφάνιση στατικού χαπιού Ακολουθεί με περίγραμμα στο κάτω μέρος των οπτικών στυλ πάντα ενεργών</string>
+    <string name="setting_wear_aod_show_pills_description">Εμφάνιση στατικής κάψουλας Ακολουθεί με περίγραμμα στο κάτω μέρος των οπτικών στυλ πάντα ενεργών</string>
     <string name="category_wf_gestures">Χειρονομίες οθόνης</string>
     <string name="setting_wear_mini_buttons_mode">Εμφάνιση μίνι κουμπιών</string>
     <string name="setting_wear_gestures_mode">Χειρονομίες οθόνης</string>
@@ -785,8 +785,8 @@
     <string name="preview_notification_controls">Εικονίδιο από ειδοποίηση πολυμέσων</string>
     <string name="setting_wear_queue_style">Στυλ ουράς</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Χρήση εξωφύλλων συντόμευσης ως φόντο</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Όταν το Στυλ ουράς είναι μια παραλλαγή Εξωφύλλου, μια γραμμή ενέργειας του γρήγορου πάνελ με ένα ανακτημένο εξώφυλλο συντόμευσης (κομμάτι, λίστα αναπαραγωγής, καλλιτέχνης…) γεμίζει επίσης το χάπι της με αυτό το εξώφυλλο, όπως κάνει το Ακολουθεί. Συντομεύσεις χωρίς ανακτημένο εξώφυλλο (απλό εικονίδιο εφαρμογής) δεν επηρεάζονται.</string>
-    <string name="setting_wear_list_row_size">Μέγεθος χαπιού λίστας</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Όταν το Στυλ ουράς είναι μια παραλλαγή Εξωφύλλου, μια γραμμή ενέργειας του γρήγορου πάνελ με ένα ανακτημένο εξώφυλλο συντόμευσης (κομμάτι, λίστα αναπαραγωγής, καλλιτέχνης…) γεμίζει επίσης το κάψουλα της με αυτό το εξώφυλλο, όπως κάνει το Ακολουθεί. Συντομεύσεις χωρίς ανακτημένο εξώφυλλο (απλό εικονίδιο εφαρμογής) δεν επηρεάζονται.</string>
+    <string name="setting_wear_list_row_size">Μέγεθος κάψουλας λίστας</string>
     <string name="setting_wear_list_row_size_description">Ύψος των γραμμών πλήρους πλάτους στην ουρά, τα μενού και το γρήγορο πάνελ.</string>
     <string name="setting_wear_progress_style">Στυλ δακτυλίου προόδου</string>
     <string name="setting_wear_seek_style">Στυλ ένδειξης αναζήτησης &amp; έντασης</string>
@@ -1361,9 +1361,6 @@
     <string name="drawer_sync_heading">Συγχρονισμός</string>
     <string name="drawer_sync_summary">Οι ρυθμίσεις ρολογιού διαμορφώνονται εδώ στο τηλέφωνο και συγχρονίζονται αυτόματα με το συζευγμένο ρολόι σας.</string>
     <string name="drawer_support_heading">Υποστήριξη</string>
-    <string name="drawer_support_summary">Το Svartifoss είναι δωρεάν και ανοιχτού κώδικα — κεράστε με έναν καφέ αν σας φανεί χρήσιμο :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Λήψη εξωφύλλου</string>
     <string name="album_art_saved">Το εξώφυλλο αποθηκεύτηκε στη συλλογή</string>
     <string name="album_art_save_error">Αποτυχία αποθήκευσης εξωφύλλου</string>
@@ -1438,7 +1435,7 @@
     <string name="playlist_shortcut_detected_format">Εντοπίστηκε: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Όνομα</string>
     <string name="playlist_shortcut_link_hint">Σύνδεσμος κοινοποίησης ή URI εφαρμογής</string>
-    <string name="playlist_shortcut_shuffle">Αναπαραγωγή τυχαία (μόνο YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Επιλέγετε Αναπαραγωγή ή Τυχαία σειρά στο ρολόι κάθε φορά που τον ξεκινάτε.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2831,4 +2828,101 @@
     <string name="setting_wear_text_block_position_description">Πού βρίσκεται το κείμενο κομματιού στην οθόνη. Η επιλογή «Ακολούθηση πρόσοψης» διατηρεί τη θέση για την οποία σχεδιάστηκε κάθε πρόσοψη.</string>
     <string name="setting_online_artwork">Online εξώφυλλο</string>
     <string name="setting_online_artwork_description">Επιτρέψτε στην πρόσοψη να εμφανίζει μια εικόνα που αναζητείται online \u2014 τον καλλιτέχνη που παίζει ή ένα εξώφυλλο άλμπουμ όταν ο player δεν παρέχει κανένα. Το τηλέφωνό σας κάνει την αναζήτηση στον δημόσιο κατάλογο του Deezer και αποθηκεύει το αποτέλεσμα στην κρυφή μνήμη· αποστέλλονται μόνο τα ονόματα του κομματιού και του καλλιτέχνη και δεν γίνεται καμία αναζήτηση εκτός αν μια πρόσοψη έχει οριστεί σε μία από αυτές τις πηγές. Όταν είναι απενεργοποιημένο, χρησιμοποιείται το εξώφυλλο του ίδιου του player.</string>
+    <string name="setting_wear_shortcut_details">Αναπαραγωγή ή τυχαία σειρά στο ρολόι</string>
+    <string name="setting_wear_shortcut_details_description">Όταν επιλέγετε έναν αποθηκευμένο σύνδεσμο στο ρολόι, από τη λίστα συντομεύσεων, το πλακίδιο συντομεύσεων ή το μενού ενεργειών, εμφανίζεται πρώτα το εξώφυλλό του με Αναπαραγωγή και Τυχαία σειρά. Απενεργοποιήστε το για να ξεκινά αμέσως. Τα κουμπιά και οι χειρονομίες που έχουν ανατεθεί σε έναν σύνδεσμο τον ξεκινούν πάντα αμέσως.</string>
+    <string name="actions_quick_pin_add">Εμφάνιση στον γρήγορο πίνακα</string>
+    <string name="actions_quick_pin_remove">Κατάργηση από το γρήγορο πλαίσιο</string>
+    <string name="quick_panel_editor_title">Πλαίσιο γρήγορων ενεργειών</string>
+    <string name="quick_panel_editor_open">Επεξεργασία περιεχομένου πίνακα</string>
+    <string name="quick_panel_editor_intro">Δημιουργήστε το πλαίσιο που ανοίγει όταν πατάτε δύο φορές το κέντρο του ρολογιού. Κρατήστε και σύρετε ένα μπλοκ για να το μετακινήσετε, πατήστε ένα για να το προσαρμόσετε.</string>
+    <string name="quick_panel_editor_add_block">Προσθήκη μπλοκ</string>
+    <string name="quick_panel_editor_restore">Επαναφέρετε τον αρχικό πίνακα</string>
+    <string name="quick_panel_editor_restore_title">Επαναφορά του αρχικού πίνακα;</string>
+    <string name="quick_panel_editor_restore_message">Η διάταξή σας καταργήθηκε και ο πίνακας επιστρέφει όπως ήταν. Οι επιλογές κουμπιών και οι ενέργειες που επισημάνατε με αστέρι διατηρούνται.</string>
+    <string name="quick_panel_editor_restore_confirm">Επαναφορά</string>
+    <string name="quick_panel_editor_fold">Τέλος της πρώτης οθόνης (κατά προσέγγιση)</string>
+    <string name="quick_panel_editor_last_block">Ένας πίνακας χρειάζεται τουλάχιστον ένα μπλοκ</string>
+    <string name="quick_panel_editor_removed">Καταργήθηκε %1$s</string>
+    <string name="quick_panel_editor_undo">Αναίρεση</string>
+    <string name="quick_panel_editor_move_up">Μετακίνηση προς τα πάνω</string>
+    <string name="quick_panel_editor_move_down">Μετακίνηση προς τα κάτω</string>
+    <string name="quick_panel_editor_more">Περισσότερες επιλογές</string>
+    <string name="quick_panel_editor_nothing_to_add">Κάθε μπλοκ βρίσκεται ήδη στον πίνακα</string>
+    <string name="quick_block_header">Κομμάτι</string>
+    <string name="quick_block_buttons">Στρογγυλά κουμπιά</string>
+    <string name="quick_block_upnext">Επόμενο κομμάτι</string>
+    <string name="quick_block_volume">Ένταση</string>
+    <string name="quick_block_seek">Παράλειψη και θέση</string>
+    <string name="quick_block_tools">Εργαλεία</string>
+    <string name="quick_block_favorites">Αγαπημένα</string>
+    <string name="quick_block_actions">Όλες οι ενέργειες</string>
+    <string name="quick_block_all_actions">Όλες οι ενέργειες</string>
+    <string name="quick_block_header_description">Ο τίτλος και ο καλλιτέχνης αυτού που παίζει.</string>
+    <string name="quick_block_buttons_description">Στρογγυλά κουμπιά για τις ενέργειες που χρησιμοποιείτε περισσότερο ή για αυτές που προσφέρει η εφαρμογή αναπαραγωγής.</string>
+    <string name="quick_block_upnext_description">Το επόμενο κομμάτι. Πατήστε το για να ανοίξετε την ουρά.</string>
+    <string name="quick_block_volume_description">Χαμηλώστε και αυξήστε την ένταση χωρίς να βγείτε από τον πίνακα.</string>
+    <string name="quick_block_seek_description">Όπου βρίσκεστε στην πίστα και κουμπιά που μεταπηδούν πίσω και εμπρός.</string>
+    <string name="quick_block_tools_description">Μικρές συντομεύσεις: ταχύτητα αναπαραγωγής, στίχοι, ουρά και πολλά άλλα.</string>
+    <string name="quick_block_favorites_description">Οι ενέργειες που επισημάνατε με αστέρι στην καρτέλα Ενέργειες, ως εξώφυλλα ή σειρές.</string>
+    <string name="quick_block_actions_description">Κάθε ενέργεια του μενού του ρολογιού σας, ως σειρές στον πίνακα ή ως ένα κουμπί που ανοίγει το μενού.</string>
+    <string name="quick_summary_header">Τίτλος και καλλιτέχνης</string>
+    <string name="quick_summary_buttons_session">Από την εφαρμογή αναπαραγωγής</string>
+    <string name="quick_summary_buttons_empty">Δεν έχουν επιλεγεί κουμπιά</string>
+    <string name="quick_summary_upnext">Επόμενο κομμάτι · ανοίγει την ουρά</string>
+    <string name="quick_summary_volume">Βήματα έντασης %1$d%%</string>
+    <string name="quick_summary_seek">%1$s δευτερόλεπτα</string>
+    <string name="quick_summary_seek_bar">%1$s δευτερόλεπτα · ώρα και γραμμή</string>
+    <string name="quick_summary_favorites_none">Κανένα αστέρι δεν έχει ακόμη</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d με αστέρι · %2$s</item>
+        <item quantity="other">%1$d με αστέρι · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Όλες οι ενέργειες %1$d</string>
+    <string name="quick_summary_actions_first">Πρώτες ενέργειες %1$d</string>
+    <string name="quick_summary_actions_button">Ένα κουμπί · ανοίγει το μενού ενεργειών</string>
+    <string name="quick_summary_only_playing">μόνο κατά την αναπαραγωγή</string>
+    <string name="quick_summary_only_not_playing">μόνο χωρίς αναπαραγωγή</string>
+    <string name="quick_mode_grid">Πλέγμα</string>
+    <string name="quick_mode_rows">Σειρές</string>
+    <string name="quick_mode_actions_list">Λίστα</string>
+    <string name="quick_mode_actions_button">Κουμπί</string>
+    <string name="quick_sheet_show">Εμφάνιση</string>
+    <string name="quick_sheet_always">Πάντα</string>
+    <string name="quick_sheet_while_playing">μόνο κατά την αναπαραγωγή</string>
+    <string name="quick_sheet_while_not_playing">μόνο χωρίς αναπαραγωγή</string>
+    <string name="quick_sheet_step">Βήμα</string>
+    <string name="quick_sheet_jump">Μεταπήδηση κατά</string>
+    <string name="quick_sheet_seek_bar">Εμφάνιση γραμμής ώρας και προόδου</string>
+    <string name="quick_sheet_tools">Εργαλεία</string>
+    <string name="quick_sheet_layout">Διάταξη</string>
+    <string name="quick_sheet_how_many">Πόσα</string>
+    <string name="quick_sheet_all">Όλα</string>
+    <string name="quick_sheet_buttons_source">από</string>
+    <string name="quick_sheet_source_configured">Οι επιλογές μου</string>
+    <string name="quick_sheet_source_session">Η εφαρμογή αναπαραγωγής</string>
+    <string name="quick_sheet_buttons_hint">Πατήστε ένα κουμπί για να επιλέξετε τη δράση του. Κρατήστε πατημένο για να επαναφέρετε τις προεπιλογές του.</string>
+    <string name="quick_sheet_favorites_hint">Ενέργειες με αστέρι με τον κεραυνό στην καρτέλα Ενέργειες. Εδώ εμφανίζονται μόνο τα αστέρια.</string>
+    <string name="quick_sheet_actions_mode">Εμφάνιση ως</string>
+    <string name="quick_sheet_actions_hint">Μια λίστα τοποθετεί κάθε ενέργεια στον πίνακα ως μια σειρά. Ένα κουμπί κρατά τον πίνακα σύντομο: ένα κουμπί που ανοίγει το πλήρες μενού. Για να αφήσετε το μενού εντελώς έξω από τον πίνακα, αφαιρέστε αυτό το μπλοκ.</string>
+    <string name="quick_sheet_remove">Κατάργηση αυτού του μπλοκ</string>
+    <string name="quick_sheet_done">Ολοκληρώθηκε</string>
+    <string name="quick_tool_speed">Ταχύτητα</string>
+    <string name="quick_tool_sleep">Χρονοδιακόπτης</string>
+    <string name="quick_tool_lyrics">Στίχοι</string>
+    <string name="quick_tool_queue">Ουρά</string>
+    <string name="quick_tool_volume">Ένταση</string>
+    <string name="quick_tool_progress">Πρόοδος</string>
+    <string name="quick_tool_faces">Καντράν</string>
+    <string name="quick_tool_search">Αναζήτηση</string>
+    <string name="quick_tool_menu">Μενού</string>
+    <string name="setting_wear_hide_from_recents">Απόκρυψη από πρόσφατες εφαρμογές</string>
+    <string name="setting_wear_hide_from_recents_description">Διατηρεί την εφαρμογή ρολογιού εκτός της λίστας πρόσφατων εφαρμογών του ρολογιού μόλις την κλείσετε ή χρησιμοποιήσετε άλλη εφαρμογή. Χρήσιμο αν το ανοίξετε από την πρόσοψη του ρολογιού ή από τη γραμμή τώρα. Παραμένει προσβάσιμο ακριβώς όπως πριν και η μουσική και η σύνδεση φόντου δεν επηρεάζονται.</string>
+    <string name="setting_streaming_app_routes">Επιλέξτε εφαρμογές για συνδέσμους ροής</string>
+    <string name="setting_streaming_app_routes_description">Επιλέξτε μια συμβατή εγκατεστημένη εφαρμογή ξεχωριστά για το YouTube Music, το Spotify και κάθε άλλη υπηρεσία. Χρησιμοποιείται με την "Εντοπισμένη εφαρμογή ροής".</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">Η υπηρεσία %1$d χρησιμοποιεί μια επιλεγμένη εφαρμογή</item>
+        <item quantity="other">Οι υπηρεσίες %1$d χρησιμοποιούν επιλεγμένες εφαρμογές</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Οι εφαρμογές που μπορούν να ανοίξουν τον σύνδεσμο, καθώς και οι εγκατεστημένες συσκευές αναπαραγωγής πολυμέσων, εμφανίζονται.</string>
+    <string name="streaming_route_automatic">Αυτόματη (ανιχνευμένη εφαρμογή)</string>
 </resources>

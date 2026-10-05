@@ -4,7 +4,8 @@ import android.content.Context
 import android.net.Uri
 import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
-import kotlinx.coroutines.delay
+import android.support.v4.media.MediaMetadataCompat
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.withTimeoutOrNull
 import timber.log.Timber
 
@@ -114,6 +115,8 @@ object MediaBrowserPlayback {
 
         return try {
             block(MediaControllerCompat(context, browser.sessionToken))
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: RuntimeException) {
             // Dead token, remote crash mid-call, security rejection - all mean this route failed
             // and the caller should fall through, not that the app is broken.
@@ -152,6 +155,8 @@ object MediaBrowserPlayback {
         return try {
             val controller = MediaControllerCompat(context, browser.sessionToken)
             strategies.any { strategy -> awaitActivePlayback(controller, strategy) }
+        } catch (e: CancellationException) {
+            throw e
         } catch (e: RuntimeException) {
             // Dead session token, remote app crash mid-call, security rejection - all mean this
             // path is unavailable, not that the request itself was invalid.
@@ -188,28 +193,21 @@ object MediaBrowserPlayback {
     private suspend fun awaitActivePlayback(
             controller: MediaControllerCompat,
             strategy: Strategy
-    ): Boolean {
-        var waited = 0L
-        var nextCommandAt = 0L
-        while (waited < STRATEGY_TIMEOUT_MS) {
-            when (controller.playbackState?.state) {
-                PlaybackStateCompat.STATE_PLAYING,
-                PlaybackStateCompat.STATE_BUFFERING,
-                PlaybackStateCompat.STATE_CONNECTING -> return true
-                else -> Unit
-            }
-            if (waited >= nextCommandAt) {
-                strategy.issue(controller)
-                nextCommandAt = waited + COMMAND_RETRY_INTERVAL_MS
-            }
-            delay(PLAYBACK_POLL_MS)
-            waited += PLAYBACK_POLL_MS
-        }
-        return when (controller.playbackState?.state) {
-            PlaybackStateCompat.STATE_PLAYING,
-            PlaybackStateCompat.STATE_BUFFERING,
-            PlaybackStateCompat.STATE_CONNECTING -> true
-            else -> false
-        }
-    }
+    ): Boolean = awaitRequestedPlayback(
+            read = {
+                val state = controller.playbackState
+                val metadata = controller.metadata
+                PlaybackObservation(
+                        active = state?.state in setOf(PlaybackStateCompat.STATE_PLAYING,
+                                PlaybackStateCompat.STATE_BUFFERING, PlaybackStateCompat.STATE_CONNECTING),
+                        identity = listOf(state?.activeQueueItemId?.toString(),
+                                metadata?.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID),
+                                metadata?.getString(MediaMetadataCompat.METADATA_KEY_TITLE),
+                                metadata?.getString(MediaMetadataCompat.METADATA_KEY_ARTIST)),
+                        positionMs = state?.position ?: -1)
+            },
+            issue = { strategy.issue(controller) },
+            timeoutMs = STRATEGY_TIMEOUT_MS,
+            pollMs = PLAYBACK_POLL_MS,
+            retryMs = COMMAND_RETRY_INTERVAL_MS)
 }

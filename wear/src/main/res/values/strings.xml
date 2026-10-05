@@ -43,7 +43,7 @@
          did reply, so telling someone to check the connection would send them looking in the
          wrong place. Names the one thing that reliably fixes it. -->
     <string name="phone_unavailable">Unlock your phone to control playback</string>
-    <string name="playback_stopped">Stopped</string>
+    <string name="playback_stopped">Paused</string>
     <string name="error">ERROR</string>
     <string name="error_play_services">Play Services error</string>
     <string name="button">Button</string>
@@ -59,6 +59,27 @@
     <string name="quick_action_repeat_one">Repeat one</string>
     <string name="quick_action_up_next">Up Next</string>
     <string name="quick_actions_unavailable">Current app has no quick actions</string>
+    <!-- Quick panel blocks (volume, seek, tools, favourites). Tool labels sit under a 20dp glyph on a
+         chip about 50dp wide, so they are kept to one short word. -->
+    <string name="quick_block_all_actions">All actions</string>
+    <string name="quick_block_favorites">Favorites</string>
+    <string name="quick_tool_speed">Speed</string>
+    <string name="quick_tool_lyrics">Lyrics</string>
+    <string name="quick_tool_queue">Queue</string>
+    <string name="quick_tool_volume">Volume</string>
+    <string name="quick_tool_progress">Progress</string>
+    <string name="quick_tool_faces">Faces</string>
+    <string name="quick_tool_search">Search</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Volume %1$d%%</string>
+    <string name="quick_seek_back_description">Back %1$d seconds</string>
+    <string name="quick_seek_forward_description">Forward %1$d seconds</string>
+    <string name="quick_speed_description">Playback speed %1$s</string>
+    <string name="quick_tool_sleep">Sleep</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Sleep timer, %1$d minutes left. Tap to change</string>
+    <string name="quick_sleep_off_description">Sleep timer off. Tap to set</string>
     <string name="voice_search_prompt">Search music</string>
     <string name="queue_empty">No queue available</string>
     <string name="queue_now_playing">Now playing</string>
@@ -68,6 +89,19 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Recently played</string>
     <string name="queue_history_fallback_reason">This app doesn\'t share its queue</string>
+
+    <!-- Headings of the menu's lists. The shortcut list reuses shortcuts_tile_title and the
+         recently-played fallback reuses queue_history_fallback, so one list has one name. -->
+    <string name="menu_header_actions">Actions</string>
+    <string name="menu_header_search_results">Search results</string>
+    <string name="menu_header_search_history">Recent searches</string>
+    <string name="menu_header_library">Library</string>
+
+    <!-- A streaming shortcut's own screen (cover, Play, Shuffle). Play and Shuffle reuse
+         action_name_play and quick_action_shuffle. -->
+    <string name="shortcut_open_on_phone">Open on phone</string>
+    <!-- System confirmation shown after the shortcut was sent to the phone to open there. -->
+    <string name="shortcut_continue_on_phone">Continue on your phone</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Today</string>
 

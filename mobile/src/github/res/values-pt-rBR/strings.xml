@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Ver releases</string>
     <string name="update_watch_hint">\u201cAtualizar relógio\u201d baixa o novo app do relógio e envia por Bluetooth \u2014 você confirma a instalação no próprio relógio, sem cabo nem Wear Installer.</string>
     <string name="update_no_wear_asset">Esta release não tem APK do relógio para enviar.</string>
+    <string name="drawer_support_summary">O Svartifoss é gratuito e de código aberto - me pague um café se ele for útil pra você :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

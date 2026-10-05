@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">릴리스 보기</string>
     <string name="update_watch_hint">“시계 업데이트”는 새 시계 앱을 다운로드하여 Bluetooth로 전송합니다. 설치는 시계에서 직접 확인하며 케이블이나 Wear Installer가 필요하지 않습니다.</string>
     <string name="update_no_wear_asset">이 릴리스에는 전송할 시계 APK가 없습니다.</string>
+    <string name="drawer_support_summary">Svartifoss는 무료 오픈 소스입니다. 유용했다면 커피 한 잔 사주세요 :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

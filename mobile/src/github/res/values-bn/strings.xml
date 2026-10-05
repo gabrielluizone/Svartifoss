@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">রিলিজ দেখুন</string>
     <string name="update_watch_hint">“ঘড়ি আপডেট করুন” নতুন ঘড়ি অ্যাপ ডাউনলোড করে Bluetooth-এর মাধ্যমে পাঠায় — ইনস্টলেশন ঘড়িতেই নিশ্চিত করবেন, কোনো কেবল বা Wear Installer লাগবে না।</string>
     <string name="update_no_wear_asset">এই রিলিজে পাঠানোর মতো ঘড়ির APK নেই।</string>
+    <string name="drawer_support_summary">Svartifoss বিনামূল্যে ও ওপেন সোর্স — কাজে লাগলে আমাকে এক কাপ কফি কিনে দিতে পারেন :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

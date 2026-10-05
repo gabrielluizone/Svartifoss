@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.PersistableBundle
 import androidx.annotation.CallSuper
+import com.svartifoss.snfell.music.StreamingCollection
+import com.svartifoss.snfell.music.StreamingShortcutDescription
 import com.svartifoss.snfell.view.actionconfigs.ActionConfigFragment
 import com.svartifoss.snfell.view.buttonconfig.ActionPickerViewModel
 import com.matejdro.wearutils.serialization.Bundlable
@@ -24,6 +26,14 @@ abstract class PhoneAction : Bundlable {
     var customIconUri: Uri? = null
     var customTitle: String? = null
 
+    /**
+     * Whether the user starred this entry of the watch's actions menu to show in the quick panel's
+     * favourites block. Only read for entries of the actions menu - on a button or a panel slot it
+     * means nothing - but it lives here because the menu is a list of plain actions, and keeping
+     * it on the action means it is saved, restored and copied with everything else about the entry.
+     */
+    var inQuickPanel: Boolean = false
+
     constructor(context: Context) : super() {
         this.context = context
     }
@@ -36,6 +46,7 @@ abstract class PhoneAction : Bundlable {
         }
 
         customTitle = bundle.getString(KEY_CUSTOM_TITLE)
+        inQuickPanel = bundle.getBoolean(KEY_IN_QUICK_PANEL, false)
     }
 
     abstract fun onActionPicked(actionPicker: ActionPickerViewModel)
@@ -85,6 +96,36 @@ abstract class PhoneAction : Bundlable {
     open val seekOffsetMs: Long?
         get() = null
 
+    /**
+     * For an action that starts one particular streaming destination - a saved shortcut, the
+     * account's liked songs - what the watch shows on that destination's own screen when the
+     * action is picked from a list (the actions menu, the quick panel's rows): its service and
+     * kind, and whether Shuffle is offered beside Play. Null for every other action, which then
+     * runs at once as it always has.
+     */
+    open val streamingShortcut: StreamingShortcutDescription?
+        get() = null
+
+    /**
+     * The cover this action is *listed* with - in the watch's actions menu and the quick panel's
+     * rows, on the shortcut's own screen, and on the phone's Actions tab - for an action that
+     * starts a streaming destination. Null for every other action, which is listed with its icon.
+     *
+     * Separate from [defaultIcon] on purpose: buttons keep that one. A round mini button or quick
+     * panel slot holds a glyph, and a square cover shrunk into one reads as a sticker rather than
+     * as the action; a row has room for the picture. Ignored once the user picked an icon of their
+     * own, which replaces both. See `ShortcutCovers` for which picture it is.
+     */
+    open val listCover: Drawable?
+        get() = null
+
+    /**
+     * The per-account collection this action starts, for the ones that start one - so the phone
+     * can fetch that collection's official artwork (opt-in) only for collections actually in use.
+     */
+    open val streamingCollection: StreamingCollection?
+        get() = null
+
     val iconTintable: Boolean
         get() = customIconUri?.let {
             it.scheme == ContentResolver.SCHEME_ANDROID_RESOURCE
@@ -103,6 +144,9 @@ abstract class PhoneAction : Bundlable {
 
         bundle.putString(KEY_CUSTOM_ICON_URI, customIconUri?.toString())
         bundle.putString(KEY_CUSTOM_TITLE, customTitle)
+        // Written only when set, so a list nobody has starred anything in stays byte-identical to
+        // what earlier builds saved - and reads back false on a build that never heard of it.
+        if (inQuickPanel) bundle.putBoolean(KEY_IN_QUICK_PANEL, true)
     }
 
     override fun equals(other: Any?): Boolean {
@@ -120,12 +164,14 @@ abstract class PhoneAction : Bundlable {
     @CallSuper
     protected open fun isEqualToAction(other: PhoneAction): Boolean {
         return customIconUri == other.customIconUri &&
-                customTitle == other.customTitle
+                customTitle == other.customTitle &&
+                inQuickPanel == other.inQuickPanel
     }
 
     companion object {
         const val KEY_CUSTOM_ICON_URI = "CUSTOM_ICON_URI"
         const val KEY_CUSTOM_TITLE = "CUSTOM_TITLE"
+        const val KEY_IN_QUICK_PANEL = "IN_QUICK_PANEL"
 
         @Suppress("UNCHECKED_CAST")
         fun <T : PhoneAction> deserialize(context: Context, bundle: PersistableBundle?): T? {

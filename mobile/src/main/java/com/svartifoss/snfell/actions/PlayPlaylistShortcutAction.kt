@@ -1,15 +1,17 @@
 package com.svartifoss.snfell.actions
 
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.music.MusicService
+import com.svartifoss.snfell.music.PlaylistShortcutStorage
+import com.svartifoss.snfell.music.ShortcutAppMark
+import com.svartifoss.snfell.music.ShortcutCovers
+import com.svartifoss.snfell.music.StreamingCollection
+import com.svartifoss.snfell.music.StreamingShortcutDescription
 import com.svartifoss.snfell.music.StreamingShortcutLinks
-import com.svartifoss.snfell.notifications.AppGlyphStore
+import com.svartifoss.snfell.music.StreamingShortcutRoutes
 import javax.inject.Inject
 
 /**
@@ -57,29 +59,13 @@ class PlayPlaylistShortcutAction : SelectableAction {
      * every playlist/track look like the same generic playlist command.
      *
      * Supported services use their notification glyph where this phone has learned one and their
-     * launcher icon otherwise (see [AppGlyphStore]). For a custom scheme/provider, use Android's
+     * launcher icon otherwise (see [ShortcutAppMark]). For a custom scheme/provider, use Android's
      * default handler when one exists. The monochrome playlist glyph remains the safe fallback for
      * an app that is not installed or a link without a default handler.
      */
-    private val destinationAppIcon: AppMark? by lazy {
-        val service = StreamingShortcutLinks.detect(link)
-        val knownPackage = service.packageName
-        if (knownPackage != null) {
-            applicationIcon(knownPackage)
-        } else {
-            resolveCustomLinkHandlerIcon()
-        }
+    private val destinationAppIcon: ShortcutAppMark? by lazy {
+        ShortcutAppMark.forLink(context, link)
     }
-
-    /**
-     * An app's mark and whether it may be tinted, carried together.
-     *
-     * They were two independent conditions before, which was survivable while the answer was
-     * always "a launcher icon, never tint it". It stops being survivable the moment the same slot
-     * can hold a flat-white notification template: tint decided separately from image is how a
-     * glyph ends up drawn white-on-white.
-     */
-    private data class AppMark(val drawable: Drawable, val tintable: Boolean)
 
     /** Online thumbnail fetched for this shortcut (opt-in), if one was cached. Full-colour art,
      *  so it must never be tinted. */
@@ -106,6 +92,17 @@ class PlayPlaylistShortcutAction : SelectableAction {
                 com.svartifoss.snfell.common.R.drawable.action_open_playlist
         )!!
 
+    override val streamingShortcut: StreamingShortcutDescription
+        get() = PlaylistShortcutStorage.describeForWatch(context, playlistName, link)
+
+    /** The fetched cover, else the collection's or the service's drawn one - see [ShortcutCovers]. */
+    override val listCover: Drawable?
+        get() = ShortcutCovers.forLink(context, link)
+                ?.let { android.graphics.drawable.BitmapDrawable(context.resources, it) }
+
+    override val streamingCollection: StreamingCollection?
+        get() = StreamingCollection.forLink(link)
+
     override val remoteUri: String
         get() {
             val prefs = androidx.preference.PreferenceManager.getDefaultSharedPreferences(context)
@@ -119,15 +116,9 @@ class PlayPlaylistShortcutAction : SelectableAction {
                     }
 
             val service = StreamingShortcutLinks.detect(link)
-            val targetPackage = service.packageName?.takeIf { packageName ->
-                openMode == StreamingShortcutLinks.OPEN_MODE_APP && isPackageInstalled(packageName)
-            }
-
-            val primaryLink = if (targetPackage != null) {
-                StreamingShortcutLinks.forInstalledApp(link)
-            } else {
-                StreamingShortcutLinks.forBrowser(link)
-            }
+            val targetPackage = StreamingShortcutRoutes.targetPackage(
+                    context, prefs, service, openMode, link)
+            val primaryLink = StreamingShortcutRoutes.linkForTarget(link, service, targetPackage)
 
             return if (targetPackage != null) {
                 "$targetPackage|$primaryLink"
@@ -135,47 +126,6 @@ class PlayPlaylistShortcutAction : SelectableAction {
                 primaryLink
             }
         }
-
-    private fun isPackageInstalled(packageName: String): Boolean = try {
-        context.packageManager.getPackageInfo(packageName, 0)
-        true
-    } catch (_: PackageManager.NameNotFoundException) {
-        false
-    }
-
-    /**
-     * The target app's mark: its notification glyph where this phone has learned one, its launcher
-     * icon otherwise - see [AppGlyphStore].
-     *
-     * Only ever reached when the shortcut has no fetched cover of its own. A real thumbnail stays
-     * a real thumbnail; this is the fallback that used to be the one place a full-colour launcher
-     * icon appeared beside monochrome rows.
-     */
-    private fun applicationIcon(packageName: String): AppMark? {
-        AppGlyphStore.drawable(context, packageName)?.let { return AppMark(it, tintable = true) }
-        return try {
-            AppMark(context.packageManager.getApplicationIcon(packageName), tintable = false)
-        } catch (_: PackageManager.NameNotFoundException) {
-            null
-        } catch (_: SecurityException) {
-            null
-        }
-    }
-
-    private fun resolveCustomLinkHandlerIcon(): AppMark? {
-        val canonicalLink = StreamingShortcutLinks.canonicalize(link)
-        if (!StreamingShortcutLinks.isSafeLink(canonicalLink)) return null
-
-        val resolvedPackage = try {
-            context.packageManager.resolveActivity(
-                    Intent(Intent.ACTION_VIEW, Uri.parse(canonicalLink)),
-                    PackageManager.MATCH_DEFAULT_ONLY
-            )?.activityInfo?.packageName
-        } catch (_: RuntimeException) {
-            null
-        }
-        return resolvedPackage?.let(::applicationIcon)
-    }
 
     override fun isEqualToAction(other: PhoneAction): Boolean {
         other as PlayPlaylistShortcutAction

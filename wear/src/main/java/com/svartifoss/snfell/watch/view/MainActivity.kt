@@ -89,6 +89,7 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.GooglePlayServicesRepairableException
 import com.google.android.wearable.input.RotaryEncoderHelper
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.ActionsMode
 import com.svartifoss.snfell.common.logging.logSummary
 import com.svartifoss.snfell.common.AlbumFillSlot
 import com.svartifoss.snfell.common.CenterButton
@@ -109,6 +110,7 @@ import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.OverlayBackdrop
 import com.svartifoss.snfell.common.OverlayBackdropResolver
 import com.svartifoss.snfell.common.PaletteTransforms
+import com.svartifoss.snfell.common.PlaybackSpeeds
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.PlayerShadingIntensity
 import com.svartifoss.snfell.common.PlayerShadingStyle
@@ -122,7 +124,12 @@ import com.svartifoss.snfell.common.TextShadowSpec
 import com.svartifoss.snfell.common.SeekMarkerVisibility
 import com.svartifoss.snfell.common.ScreenSwipeDirection
 import com.svartifoss.snfell.common.ScreenSwipeResolver
+import com.svartifoss.snfell.common.FavoritesMode
+import com.svartifoss.snfell.common.QuickPanelBlock
+import com.svartifoss.snfell.common.QuickPanelBlockType
 import com.svartifoss.snfell.common.QuickPanelButtons
+import com.svartifoss.snfell.common.QuickPanelStack
+import com.svartifoss.snfell.common.QuickPanelTool
 import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.IdleScreenAction
 import com.svartifoss.snfell.common.R as commonR
@@ -175,12 +182,18 @@ import com.svartifoss.snfell.watch.communication.WatchInfoSender
 import com.svartifoss.snfell.watch.communication.WatchMusicService
 import com.svartifoss.snfell.watch.input.DoublePinchGestureController
 import com.svartifoss.snfell.watch.view.menu.MenuActivity
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailActivity
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailUi
 import com.svartifoss.snfell.watch.view.queue.QueueActivity
 import com.svartifoss.snfell.watch.view.panel.AlbumPaletteCache
 import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
 import com.svartifoss.snfell.watch.theme.watchUiTypeface
 import com.svartifoss.snfell.watch.view.panel.PanelReadout
 import com.svartifoss.snfell.watch.view.panel.PanelTriad
+import com.svartifoss.snfell.watch.view.panel.QuickPanelBlockViews
+import com.svartifoss.snfell.watch.view.panel.QuickPanelFavorite
+import com.svartifoss.snfell.watch.view.panel.QuickPanelHost
+import com.svartifoss.snfell.watch.view.panel.QuickPanelSkin
 import com.svartifoss.snfell.watch.view.progress.ProgressActivity
 import com.svartifoss.snfell.watch.view.volume.VolumeActivity
 import com.svartifoss.snfell.watch.view.lyrics.LyricsActivity
@@ -308,6 +321,9 @@ class MainActivity : WearCompanionWatchActivity(),
          *  icon that differed between them would read as a bug in one of them. */
         private const val APP_ICON_DP = 26f
 
+        /** A quick-panel row's playlist subtitle, at the 65% the menu's subtitles use. */
+        private const val QUICK_ROW_SUBTITLE_ALPHA = 166
+
         /** What a rail reports as the top of the mini-button band: nothing, in practice. The
          *  bottom-row value is clamped to .95 at most, so this is "the whole screen is yours". */
         private const val RAIL_TOP_FRACTION = .95f
@@ -370,6 +386,10 @@ class MainActivity : WearCompanionWatchActivity(),
         /** See [enterQuickActionsPanel]: longer than the backdrop's fade, so the panel lands on it. */
         private const val QUICK_PANEL_ENTER_MS = 160L
         private const val QUICK_PANEL_ENTER_SCALE = 0.96f
+
+        /** Past the tap memory by enough that the phone's answer, if one is coming, has landed. */
+        private const val SPEED_RESYNC_SLACK_MS = 300L
+
         /**
          * The cover transition's length, shared with every Compose face through [AlbumArtMotion].
          *
@@ -742,7 +762,15 @@ class MainActivity : WearCompanionWatchActivity(),
     private var isMusicPlaying: Boolean = false
     private var hasPlaybackPosition: Boolean = false
 
-    private val defaultSeekBarColor by lazy { getColor(R.color.theme_accent) }
+    /**
+     * The static colour used before a cover palette exists. The phone supplies its custom Accent
+     * color in the preference snapshot, so the empty/idle player follows it too; malformed or
+     * absent values retain the historical sage fallback.
+     */
+    private val defaultSeekBarColor: Int
+        get() = parseHexColorOrNull(Preferences.getString(
+                preferences, MiscPreferences.WEAR_PHONE_ACCENT_COLOR))
+                ?: getColor(R.color.theme_accent)
 
     private lateinit var preferences: SharedPreferences
 
@@ -844,6 +872,20 @@ class MainActivity : WearCompanionWatchActivity(),
     private var quickPanelLongMode = QuickLongMode.UP_NEXT
     /** The phone's configurable Actions-menu entries, repeated as large rows below Up Next. */
     private var quickPanelExtraActions: List<ButtonAction> = emptyList()
+
+    /**
+     * The panel's explicit block list ([MiscPreferences.WEAR_QUICK_PANEL_BLOCKS]), or null while
+     * nobody has composed one - in which case the original arrangement is drawn from the original
+     * keys, exactly as before the blocks existed.
+     */
+    private var quickPanelBlocks: List<QuickPanelBlock>? = null
+
+    /** Views for the blocks the original panel did not have; created the first time one is needed. */
+    private var panelBlockViews: QuickPanelBlockViews? = null
+
+    /** Which blocks the panel was last laid out with, so a play/pause flip that changes the visible
+     *  set re-lays it out and every other state update does not. */
+    private var appliedBlockKey: String = ""
 
     private val serviceConnection = UiOpenServiceConnection(lifecycle)
 
@@ -1239,6 +1281,7 @@ class MainActivity : WearCompanionWatchActivity(),
         // is explicitly removed in onDestroy, so it cannot retain a dead Activity.
         viewModel.preferences.observeForever(preferencesChangeObserver)
         viewModel.volume.observe(this, phoneVolumeListener)
+        viewModel.sleepTimerEndsAt.observe(this, sleepTimerListener)
         viewModel.popupVolumeBar.observe(this, volumeBarPopupListener)
         viewModel.openActionsMenu.observe(this, openActionsMenuListener)
         viewModel.openQuickActionsPanel.observe(this, openQuickActionsPanelListener)
@@ -1250,6 +1293,7 @@ class MainActivity : WearCompanionWatchActivity(),
         viewModel.lyricsState.observe(this, lyricsStateObserver)
         viewModel.trackMetadata.observe(this, trackMetadataObserver)
         viewModel.openStreamingShortcutsMenu.observe(this, openStreamingShortcutsMenuListener)
+        viewModel.openShortcutScreen.observe(this, openShortcutScreenListener)
         viewModel.openVoiceSearch.observe(this, openVoiceSearchListener)
         viewModel.closeApp.observe(this, closeAppListener)
         viewModel.notification.observe(this, notificationObserver)
@@ -1257,7 +1301,11 @@ class MainActivity : WearCompanionWatchActivity(),
         viewModel.playbackPosition.observe(this, playbackPositionObserver)
         viewModel.actionsMenuConfig.config.observe(this) { actions ->
             quickPanelExtraActions = actions.orEmpty()
-            if (isQuickActionsPanelShowing()) renderQuickPanelExtraActions()
+            if (isQuickActionsPanelShowing()) {
+                renderQuickPanelExtraActions()
+                // The favourites block is made of the same entries.
+                if (quickPanelBlocks != null) applyQuickPanelLayout()
+            }
         }
 
         onBackPressedDispatcher.addCallback(this, backButtonOverrideCallback)
@@ -1566,6 +1614,7 @@ class MainActivity : WearCompanionWatchActivity(),
         if (isQuickActionsPanelShowing()) {
             configureQuickPanelButtons()
         }
+        relayoutPanelBlocksIfNeeded()
         updatePlaybackTimeVisibility()
         syncUpNextEqualizerAnimation()
 
@@ -1585,6 +1634,7 @@ class MainActivity : WearCompanionWatchActivity(),
             if (state.playbackSpeed != latestPlaybackSpeed) {
                 latestPlaybackSpeed = state.playbackSpeed
                 updateFaceState { face -> face.copy(playbackSpeed = state.playbackSpeed) }
+                panelBlockViews?.onSpeed(state.playbackSpeed)
             }
         }
 
@@ -1746,25 +1796,31 @@ class MainActivity : WearCompanionWatchActivity(),
      *
      * The panel is a View overlay, not one of the Compose screens, so [LocalWatchUiFontFamily] never
      * reached it - which is why turning that switch on restyled the menu and the queue but left this
-     * one surface on Google Sans. Its labels carry no per-element typography of their own, so the
-     * plain family is applied without the title/artist weight and slant specs.
+     * one surface on Google Sans. Track metadata must also inherit each element's weight,
+     * slant and variable axes; a catalog-family lookup loses all of those.
      */
     /** Null means "leave the layout's own typeface", i.e. the switch is off. */
     private fun quickPanelTypeface(): android.graphics.Typeface? =
             if (SpecialEliteKeywordPolicy.matches(classicTitleText, classicArtistText)) {
                 watchFontTypeface(this, "love_letter")
             } else if (faceBool(MiscPreferences.WEAR_FONT_ALL_SCREENS)) {
-                watchFontTypeface(this, wearFontKey)
+                watchUiTypeface(this, preferences)
             } else {
                 null
             }
 
     private fun applyQuickPanelFont() {
         val typeface = quickPanelTypeface()
-        binding.quickActionPanelTitle.typeface = typeface
-        binding.quickActionPanelArtist.typeface = typeface
+        // applyClassicFont has already resolved these with the same settings as the active
+        // Compose face. Reuse the complete Typeface, including the Flex variation settings.
+        val followTrack = faceBool(MiscPreferences.WEAR_FONT_ALL_SCREENS) ||
+                SpecialEliteKeywordPolicy.matches(classicTitleText, classicArtistText)
+        binding.quickActionPanelTitle.typeface = if (followTrack) binding.textTitle.typeface else typeface
+        binding.quickActionPanelArtist.typeface = if (followTrack) binding.textArtist.typeface else typeface
+        binding.quickActionPanelTitle.letterSpacing = if (followTrack) titleTypography.trackingEm else 0f
+        binding.quickActionPanelArtist.letterSpacing = if (followTrack) artistTypography.trackingEm else 0f
         binding.quickActionUpNextLabel.typeface = typeface
-        binding.quickActionUpNextTrack.typeface = typeface
+        binding.quickActionUpNextTrack.typeface = if (followTrack) binding.textTitle.typeface else typeface
     }
 
     /**
@@ -2121,7 +2177,7 @@ class MainActivity : WearCompanionWatchActivity(),
      * asset, and asking about lookups discarded it on arrival.
      */
     private fun resolveBackdropArtwork(): Bitmap? =
-            if (albumArtSource.usesBackdropAsset) phoneBackdropArt ?: phoneAlbumArt else phoneAlbumArt
+            albumArtSource.effectiveArtwork(phoneAlbumArt, phoneBackdropArt)
 
     private val albumArtObserver = Observer<Bitmap?> { bitmap ->
         phoneAlbumArt = bitmap
@@ -2446,6 +2502,14 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.volumeBar.tertiaryColor = volumeTertiaryAccentColor
         binding.fourWayTouch.setTapFeedbackColor(currentAccentColor)
         composeTapPulse.accentColor = currentAccentColor
+        // This is the three-bar indicator shown while the app waits for its first music state.
+        // It is a separate View from the idle equalizer and otherwise kept its XML sage tint
+        // throughout startup, even after the phone custom accent had reached the watch.
+        binding.loadingIndicator.setBarsColor(currentAccentColor)
+        // The animated idle equalizer has an XML sage tint for its very first frame. Once the
+        // player palette is resolved it must follow it too; otherwise it is the lone green mark
+        // on a phone-custom-colour idle screen.
+        binding.idleStateIcon.imageTintList = ColorStateList.valueOf(currentAccentColor)
         // Artist name uses the same dark-theme-adapted (lightened) accent as the queue's now-playing row.
         binding.textArtist.setTextColor(resolvedArtistTextColor())
         // The "album" shadow colour is accent-derived, so it is recomputed here rather than beside
@@ -2464,6 +2528,8 @@ class MainActivity : WearCompanionWatchActivity(),
             binding.quickActionUpNext.background = upNextPillBackground()
             renderQuickPanelExtraActions()
             updateQuickActionButtonStates()
+            // Rebinding is cheap and repaints every block, favourites rows included.
+            if (quickPanelBlocks != null) applyQuickPanelLayout()
         }
 
         updateFaceState {
@@ -5225,6 +5291,10 @@ class MainActivity : WearCompanionWatchActivity(),
         // not part of a saved appearance snapshot (see FaceScopedPreferences.SCOPED_KEYS).
         quickPanelSource = Preferences.getString(
                 preferences, MiscPreferences.WEAR_QUICK_PANEL_SOURCE)
+        // The block list is global for the same reason: what the panel holds belongs to the person,
+        // not to the face being worn.
+        quickPanelBlocks = QuickPanelStack.parse(
+                Preferences.getString(preferences, MiscPreferences.WEAR_QUICK_PANEL_BLOCKS))
         if (isQuickActionsPanelShowing()) {
             configureQuickPanelButtons()
             renderQuickPanelExtraActions()
@@ -5735,6 +5805,11 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private val phoneVolumeListener = Observer<Float> {
         binding.volumeBar.volume = it
+        panelBlockViews?.onVolume(it)
+    }
+
+    private val sleepTimerListener = Observer<Long> { endsAt ->
+        panelBlockViews?.onSleepTimer(endsAt)
     }
 
     private val playbackPositionObserver = Observer<PlaybackPosition?> { position ->
@@ -5755,6 +5830,7 @@ class MainActivity : WearCompanionWatchActivity(),
             updateFaceState { it.copy(seekable = false) }
             lastKnownPositionMs = 0L
             lastKnownDurationMs = 0L
+            panelBlockViews?.onPosition(0L, 0L, false)
             updateDeveloperOverlay()
             return@Observer
         }
@@ -5762,6 +5838,7 @@ class MainActivity : WearCompanionWatchActivity(),
         lastKnownPositionMs = position.positionMs
         lastKnownDurationMs = position.durationMs
         playbackSeekable = position.seekable
+        panelBlockViews?.onPosition(position.positionMs, position.durationMs, position.seekable)
         // Duration is enough to draw progress; session seek capability only gates interaction.
         binding.seekBar.seekable = true
         updateEdgeSeekTouchState()
@@ -5905,6 +5982,28 @@ class MainActivity : WearCompanionWatchActivity(),
         )
     }
 
+    /**
+     * A playlist picked from the quick panel's rows, opened on its own screen. A picker like the
+     * menu: the choice comes back here and runs on this activity's view model, so a failure to
+     * reach the phone surfaces on the player the same way any other pick's does.
+     */
+    private val openShortcutScreenListener = Observer<ShortcutDetailUi?> { detail ->
+        if (detail == null) return@Observer
+        shortcutScreenLauncher.launch(ShortcutDetailActivity.intentFor(this, detail, execute = false))
+    }
+
+    private val shortcutScreenLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode != RESULT_OK) return@registerForActivityResult
+        val entryId = result.data?.getStringExtra(ShortcutDetailActivity.RESULT_EXTRA_ENTRY_ID)
+                ?: return@registerForActivityResult
+        viewModel.executeItemFromCustomMenu(
+                CustomLists.PLAYLIST_SHORTCUTS,
+                entryId,
+                ShortcutDetailActivity.playModeOf(result.data))
+    }
+
     private val closeAppListener = Observer<Unit?> {
         finish()
     }
@@ -5931,7 +6030,9 @@ class MainActivity : WearCompanionWatchActivity(),
         val listId = data.getStringExtra(MenuActivity.RESULT_EXTRA_LIST_ID)
         val entryId = data.getStringExtra(MenuActivity.RESULT_EXTRA_ENTRY_ID)
         if (listId != null && entryId != null) {
-            viewModel.executeItemFromCustomMenu(listId, entryId)
+            // Play or Shuffle when the menu showed the shortcut's own screen; as saved otherwise.
+            viewModel.executeItemFromCustomMenu(
+                    listId, entryId, ShortcutDetailActivity.playModeOf(data))
         }
     }
 
@@ -7346,13 +7447,16 @@ class MainActivity : WearCompanionWatchActivity(),
         renderQuickPanelExtraActions()
         applyQuickPanelLayout()
         binding.quickActionsPanel.scrollTo(0, 0)
+        // The phone keeps the sleep timer. If this app restarted while one was running, the chip
+        // would otherwise say "off" until the next time the timer changed.
+        if (panelOffersSleepTimer()) viewModel.requestSleepTimer()
 
         updateQuickActionButtonStates()
 
         // Show whatever was cached from a previous fetch immediately, then ask the phone for a
         // fresh queue snapshot in the background - customListListener() will update the preview
         // text in place without yanking the user into the full drawer while this panel is open.
-        if (quickPanelLongMode == QuickLongMode.UP_NEXT) {
+        if (quickPanelLongMode == QuickLongMode.UP_NEXT && panelShows(QuickPanelBlockType.UP_NEXT)) {
             viewModel.customList.value?.let { updateUpNextPreview(it) }
             viewModel.openPlaybackQueue()
         }
@@ -7404,14 +7508,39 @@ class MainActivity : WearCompanionWatchActivity(),
      * appear here automatically in the same order the user already chose. */
     private fun renderQuickPanelExtraActions() {
         val container = binding.quickActionExtraList
+        // With an explicit block list, the full list is a block like any other: absent means it is
+        // not on the panel at all, and it may be cut to its first few rows.
+        val stack = quickPanelBlocks
+        val actionsBlock = stack?.firstOrNull { it.type == QuickPanelBlockType.ACTIONS }
+        // As a button the rows are not on the panel at all - the button opens the menu they mirror.
+        if (stack != null && (actionsBlock == null || actionsBlock.actionsMode == ActionsMode.BUTTON)) {
+            container.removeAllViews()
+            container.visibility = View.GONE
+            return
+        }
+        val limit = actionsBlock?.maxEntries ?: 0
+        val entries = quickPanelExtraActions.withIndex().toList()
+                .let { if (limit > 0) it.take(limit) else it }
+        renderActionRows(container, entries)
+    }
+
+    /**
+     * Fills [container] with one full-width row per entry. The entry's index is its place in the
+     * actions menu, which is what running it needs - so a row means the same thing whether it is
+     * in the full list or among the favourites.
+     */
+    private fun renderActionRows(
+            container: LinearLayout,
+            entries: List<IndexedValue<ButtonAction>>
+    ) {
         container.removeAllViews()
-        if (quickPanelExtraActions.isEmpty()) {
+        if (entries.isEmpty()) {
             container.visibility = View.GONE
             return
         }
 
         val tint = quickPanelInactiveTint()
-        quickPanelExtraActions.forEachIndexed { sourceIndex, action ->
+        entries.forEach { (sourceIndex, action) ->
             val row = layoutInflater.inflate(
                     R.layout.item_quick_action_row,
                     container,
@@ -7482,13 +7611,25 @@ class MainActivity : WearCompanionWatchActivity(),
                     ?: getString(R.string.action_name_custom)
             // White over the scrim rather than the panel tint, which is picked to read against
             // the flat pill and can vanish against artwork.
-            title.setTextColor(if (coverBitmap != null) Color.WHITE else tint)
+            val titleColor = if (coverBitmap != null) Color.WHITE else tint
+            title.setTextColor(titleColor)
+            // A playlist says which service and what kind it is, as it does in the menu. Without it
+            // the panel gave no sign that tapping the pill now offers Play and Shuffle, so a pill
+            // per order still looked necessary.
+            val subtitle = row.findViewById<TextView>(R.id.quick_extra_subtitle)
+            val shortcutLine = action.shortcutSubtitle?.takeIf { it.isNotBlank() }
+            subtitle.visibility = if (shortcutLine != null) View.VISIBLE else View.GONE
+            if (shortcutLine != null) {
+                subtitle.text = shortcutLine
+                subtitle.typeface = quickPanelTypeface()
+                subtitle.setTextColor(ColorUtils.setAlphaComponent(titleColor, QUICK_ROW_SUBTITLE_ALPHA))
+            }
             if (coverBitmap != null) {
                 applyCoverPill(row, coverBitmap)
             } else {
                 row.background = quickPanelRowBackground()
             }
-            row.contentDescription = title.text
+            row.contentDescription = listOfNotNull(title.text, shortcutLine).joinToString(", ")
             row.setOnClickListener {
                 buzz()
                 hideOverlay()
@@ -7497,6 +7638,169 @@ class MainActivity : WearCompanionWatchActivity(),
             container.addView(row)
         }
         container.visibility = View.VISIBLE
+    }
+
+    // --- Quick panel blocks ---------------------------------------------------------------------
+    //
+    // The panel can be built from a user-ordered list of blocks (MiscPreferences
+    // .WEAR_QUICK_PANEL_BLOCKS, see QuickPanelStack). The four parts the original panel had keep
+    // their existing views; the rest are QuickPanelBlockViews. Nothing here runs while no list has
+    // been composed.
+
+    /** Surfaces and colours for the block views, taken from the same factories the round buttons and
+     *  rows use so a block can never disagree with them about what the chosen style looks like. */
+    private val quickPanelSkin = object : QuickPanelSkin {
+        override fun rowBackground() = quickPanelRowBackground()
+        override fun roundBackground() = inactiveQuickButtonBackground()
+        override fun activeRoundBackground() = activeQuickButtonBackground()
+        override fun tint() = quickPanelInactiveTint()
+        override fun activeTint() = if (quickPanelStyle in setOf("prism", "chrome", "holo", "sunset")) {
+            Color.WHITE
+        } else {
+            contrastingIconColor(activeQuickFillColor())
+        }
+        override fun accent() = resolvedQuickPanelAccent()
+        override fun typeface() = quickPanelTypeface()
+        override fun rowHeightPx() = listRowHeightPx()
+    }
+
+    private val resyncSpeedChip = Runnable { panelBlockViews?.onSpeed(latestPlaybackSpeed) }
+
+    private val quickPanelHost = object : QuickPanelHost {
+        override fun volume(): Float = viewModel.volume.value ?: 0f
+        override fun setVolume(volume: Float) = viewModel.updateVolume(volume)
+        override fun skipBy(deltaMs: Long) = viewModel.skipBy(deltaMs)
+        override fun cycleSpeed() {
+            // The chip shows the speed just chosen at once. Once the phone has had time to answer
+            // it shows the speed that is in force: a player that does not support the command
+            // never reports a change, and a chip that went on saying 1.5x would be claiming one.
+            panelBlockViews?.onSpeed(viewModel.cycleSpeed())
+            binding.root.removeCallbacks(resyncSpeedChip)
+            binding.root.postDelayed(resyncSpeedChip, PlaybackSpeeds.TAP_MEMORY_MS + SPEED_RESYNC_SLACK_MS)
+        }
+        override fun cycleSleepTimer() = viewModel.cycleSleepTimer()
+        override fun openTool(tool: QuickPanelTool) = runQuickPanelTool(tool)
+        override fun runMenuAction(index: Int) {
+            hideOverlay()
+            viewModel.executeActionFromMenu(index)
+        }
+        override fun buzz() = this@MainActivity.buzz()
+    }
+
+    /** What a tools-block chip does. Everything that opens another screen closes the panel first,
+     *  as the Up Next row does; speed is handled where it is pressed because it stays open. */
+    private fun runQuickPanelTool(tool: QuickPanelTool) {
+        hideOverlay()
+        when (tool) {
+            QuickPanelTool.SPEED, QuickPanelTool.SLEEP -> Unit
+            QuickPanelTool.LYRICS -> viewModel.openLyricsScreen.call()
+            QuickPanelTool.QUEUE -> viewModel.openPlaybackQueueScreen.call()
+            QuickPanelTool.VOLUME -> viewModel.openVolumeScreen.call()
+            QuickPanelTool.PROGRESS -> viewModel.openProgressScreen.call()
+            QuickPanelTool.FACES -> viewModel.openFacePicker.call()
+            QuickPanelTool.SEARCH -> viewModel.openVoiceSearch.call()
+            QuickPanelTool.MENU -> viewModel.openActionsMenu.call()
+        }
+    }
+
+    /** Identifies the set and order of blocks on screen, so a play/pause flip that changes which of
+     *  them are visible re-lays the panel out and every other state update does not. */
+    private fun blockKey(blocks: List<QuickPanelBlock>?): String =
+            blocks?.joinToString(",") { it.type.token }.orEmpty()
+
+    /** Whether the panel currently draws a block of [type] - for the original panel, the four parts
+     *  it has always had. Used to skip work for a part that is not on screen. */
+    private fun panelShows(type: QuickPanelBlockType): Boolean =
+            QuickPanelStack.visibleFor(
+                    quickPanelBlocks ?: QuickPanelStack.implicitStack(), isMusicPlaying)
+                    .any { it.type == type }
+
+    /** Whether the panel being shown has a tools block carrying the sleep timer chip. */
+    private fun panelOffersSleepTimer(): Boolean {
+        val blocks = quickPanelBlocks ?: return false
+        return QuickPanelStack.visibleFor(blocks, isMusicPlaying).any { block ->
+            block.type == QuickPanelBlockType.TOOLS && QuickPanelTool.SLEEP in block.tools
+        }
+    }
+
+    /** Re-lays the panel out if play/pause changed which of its blocks are visible. */
+    private fun relayoutPanelBlocksIfNeeded() {
+        val stack = quickPanelBlocks ?: return
+        if (!isQuickActionsPanelShowing()) return
+        if (blockKey(QuickPanelStack.visibleFor(stack, isMusicPlaying)) != appliedBlockKey) {
+            applyQuickPanelLayout()
+        }
+    }
+
+    /**
+     * The views of [blocks], in order. The parts the original panel had are the views it already
+     * owns; the rest come from [QuickPanelBlockViews], bound to the current configuration.
+     */
+    private fun blockViewOrder(
+            blocks: List<QuickPanelBlock>,
+            title: View,
+            artist: View,
+            actions: View,
+            primaryList: View,
+            upNext: View,
+            extras: View
+    ): List<View> {
+        val blockViews = panelBlockViews ?: QuickPanelBlockViews(
+                this, quickPanelSkin, quickPanelHost).also { panelBlockViews = it }
+        val order = ArrayList<View>()
+        for (block in blocks) {
+            when (block.type) {
+                QuickPanelBlockType.HEADER -> {
+                    order += title
+                    order += artist
+                }
+                QuickPanelBlockType.BUTTONS -> {
+                    order += actions
+                    order += primaryList
+                }
+                QuickPanelBlockType.UP_NEXT -> order += upNext
+                QuickPanelBlockType.ACTIONS -> order += if (block.actionsMode == ActionsMode.BUTTON) {
+                    blockViews.bindActionsButton()
+                } else {
+                    extras
+                }
+                QuickPanelBlockType.VOLUME -> order += blockViews.bindVolume(block)
+                QuickPanelBlockType.SEEK -> order += blockViews.bindSeek(block)
+                QuickPanelBlockType.TOOLS -> order += blockViews.bindTools(block)
+                QuickPanelBlockType.FAVORITES -> order += bindFavorites(block, blockViews)
+            }
+        }
+        // Bound blocks start from whatever they last drew; bring them up to what is true now.
+        blockViews.onVolume(viewModel.volume.value ?: 0f)
+        blockViews.onPosition(lastKnownPositionMs, lastKnownDurationMs, playbackSeekable)
+        blockViews.onSpeed(latestPlaybackSpeed)
+        blockViews.onSleepTimer(viewModel.sleepTimerEndsAt.value ?: 0L)
+        return order
+    }
+
+    /**
+     * The favourites block: the actions starred for the panel, in the order they sit in the actions
+     * menu, as a grid of covers or as rows. An empty block takes no room - the phone's editor is
+     * where someone is told that nothing is starred yet, not a gap in the panel.
+     */
+    private fun bindFavorites(block: QuickPanelBlock, views: QuickPanelBlockViews): View {
+        val limit = block.maxEntries
+        val entries = quickPanelExtraActions.withIndex()
+                .filter { it.value.inQuickPanel }
+                .let { if (limit > 0) it.take(limit) else it }
+        val container = views.favoritesContainer(asGrid = block.favoritesMode == FavoritesMode.GRID)
+        when {
+            entries.isEmpty() -> {
+                container.removeAllViews()
+                container.visibility = View.GONE
+            }
+            block.favoritesMode == FavoritesMode.GRID -> {
+                views.bindFavoritesGrid(entries.map { QuickPanelFavorite(it.index, it.value) })
+                container.visibility = View.VISIBLE
+            }
+            else -> renderActionRows(container, entries)
+        }
+        return container
     }
 
     /** Changes the panel's actual information hierarchy independently from its surface paint.
@@ -7551,16 +7855,21 @@ class MainActivity : WearCompanionWatchActivity(),
         // arrangement of the slots instead. The old "actions first" / "compact deck" options were
         // only reorderings of this same stack, which is why they never looked meaningfully
         // different from it.
-        val desiredOrder = if (quickPanelLayout == "dock") {
-            listOf(title, artist, upNext, actions, primaryList)
+        //
+        // With an explicit block list the order is the user's, and blocks the original panel never
+        // had join the column; without one, nothing below differs from the original panel.
+        val blocks = quickPanelBlocks?.let { QuickPanelStack.visibleFor(it, isMusicPlaying) }
+        appliedBlockKey = blockKey(blocks)
+        val desiredOrder: List<View> = if (blocks != null) {
+            blockViewOrder(blocks, title, artist, actions, primaryList, upNext, extras)
+        } else if (quickPanelLayout == "dock") {
+            listOf(title, artist, upNext, actions, primaryList, extras)
         } else {
-            listOf(title, artist, actions, primaryList, upNext)
+            listOf(title, artist, actions, primaryList, upNext, extras)
         }
         val params = desiredOrder.associateWith { it.layoutParams }
-        desiredOrder.forEach(panel::removeView)
-        panel.removeView(extras)
+        panel.removeAllViews()
         desiredOrder.forEach { panel.addView(it, params.getValue(it)) }
-        panel.addView(extras)
 
         val panelParams = panelRoot.layoutParams as FrameLayout.LayoutParams
         panelParams.marginStart = 0

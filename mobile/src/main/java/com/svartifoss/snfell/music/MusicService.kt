@@ -96,6 +96,7 @@ import com.svartifoss.snfell.proto.CustomListItemAction
 import com.svartifoss.snfell.proto.MediaAction
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.proto.PlaybackSync
+import com.svartifoss.snfell.proto.ShortcutPlayMode
 import com.svartifoss.snfell.proto.TrackMetadata
 import com.svartifoss.snfell.proto.WatchActions
 import com.google.protobuf.ByteString
@@ -222,6 +223,15 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         private const val DEEP_LINK_VERIFY_MS = 1800L
 
         /**
+         * How long a shuffle choice made on the watch waits for its app to start playing - see
+         * [requestShortcutShuffle]. Covers the whole playback ladder (verification, the browser
+         * route and the visible open with its retries, about sixteen seconds at worst) with room
+         * for a cold streaming app to buffer, and no more: a choice still pending after that
+         * belongs to a start that failed, and must not land on whatever the user plays next.
+         */
+        private const val SHORTCUT_SHUFFLE_WINDOW_MS = 30_000L
+
+        /**
          * Rows sent per library page. A browse node can legitimately hold thousands of items
          * (an "All songs" folder), and the whole list travels as one DataItem - the same size
          * pressure the queue transmission caps at 20. Deeper levels are how the user narrows down,
@@ -302,6 +312,15 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private lateinit var actionHandlers: Map<Class<*>, ActionHandler<*>>
 
     private var ackTimeoutHandler = AckTimeoutHandler(WeakReference(this))
+
+    /**
+     * The sleep timer set from the watch's quick panel. Held here rather than on the watch because
+     * this is the device that pauses the music, and the one that is certain to be running when
+     * someone is asleep. Its state travels back as a remaining duration, never a deadline.
+     */
+    private val sleepTimer = SleepTimer(
+            onEnded = ::pauseForSleepTimer,
+            onChanged = ::sendSleepTimerState)
     private val queueRefreshHandler = Handler(Looper.getMainLooper())
     private val notificationActionsChanged: () -> Unit = {
         queueRefreshHandler.post {
@@ -342,9 +361,29 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             config.getActionList().retransmit()
             config.getPlayingConfig().retransmit()
             config.getStoppedConfig().retransmit()
+            // A shortcut without a fetched cover is drawn with its player's mark (ShortcutCovers),
+            // so the shortcut list's pictures change with the glyph too.
+            PlaylistShortcutStorage.syncToWatch(this)
             AppGlyphStore.markRetransmitted(this)
         } catch (e: Exception) {
             Timber.w(e, "Could not re-transmit configs after learning an app glyph")
+        }
+    }
+
+    /**
+     * Fetches the official artwork (opt-in) of the liked-songs collections the actions menu or the
+     * saved shortcuts point at, then re-sends both lists with it. The transmitter asks the same on
+     * every push; this covers the switch having been turned on while nothing was being pushed.
+     */
+    private fun fetchMissingCollectionArtwork() {
+        val inMenu = config.getActionList().actions
+                .filter { it.customIconUri == null }
+                .mapNotNull { it.streamingCollection }
+        val saved = PlaylistShortcutStorage.load(this)
+                .mapNotNull { StreamingCollection.forLink(it.link) }
+        ShortcutArtworkFetcher.fetchMissingCollections(this, (inMenu + saved).toSet()) {
+            config.getActionList().retransmit()
+            PlaylistShortcutStorage.syncToWatch(this)
         }
     }
 
@@ -627,6 +666,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         if (AppGlyphStore.needsRetransmit(this)) {
             queueRefreshHandler.post { retransmitConfigsForGlyphs() }
         }
+        fetchMissingCollectionArtwork()
         NotificationService.updateQuickActionsBinding(this)
 
         try {
@@ -901,6 +941,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         ackTimeoutHandler.removeCallbacksAndMessages(null)
         queueRefreshHandler.removeCallbacksAndMessages(null)
+        // A timer with no service to act on it would fire into nothing.
+        sleepTimer.release()
         trackHistorySaveHandler.removeCallbacks(saveTrackHistory)
         persistTrackHistory()
         MediaNotificationActions.removeListener(notificationActionsChanged)
@@ -1089,6 +1131,37 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     /** Issued unconditionally, like every transport command in this switch - a session that does
      *  not implement ACTION_SET_PLAYBACK_SPEED reports the same speed back on its next state,
      *  which is a harmless no-op rather than a reason to withhold the command. */
+    /** The timer ran out: pause what is playing. A session that is already paused is left alone. */
+    private fun pauseForSleepTimer() {
+        val controller = currentMediaController
+        if (controller?.isPlaying() == true) {
+            Timber.i("Sleep timer ended; pausing playback")
+            controller.transportControls.pause()
+        } else {
+            Timber.i("Sleep timer ended with nothing playing")
+        }
+    }
+
+    /**
+     * Tells the watch how long the sleep timer has left, as a duration: it counts down on its own
+     * clock from here, so this goes out when the timer changes or is asked about and not every
+     * minute. 0 means none is running - which is also what ending sends.
+     */
+    private fun sendSleepTimerState() {
+        val remainingMs = sleepTimer.remainingMs()
+        lifecycleScope.launch {
+            try {
+                Wearable.getMessageClient(applicationContext).sendMessageToNearestClient(
+                        Wearable.getNodeClient(applicationContext),
+                        CommPaths.MESSAGE_SLEEP_TIMER_STATE,
+                        ByteBuffer.allocate(8).putLong(remainingMs).array())
+            } catch (e: Exception) {
+                // Out of range. The watch asks again when its panel next opens.
+                Timber.w(e, "Could not send the sleep timer state")
+            }
+        }
+    }
+
     private fun setPlaybackSpeed(multiplier: Float) {
         // The framework method exists only from API 29 while this app supports API 23.
         // MediaControllerCompat carries the same command through its support protocol on older
@@ -1315,6 +1388,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     }
 
     private fun buildMusicStateAndTransmit(mediaController: MediaController?) {
+        applyPendingShortcutShuffle(mediaController)
         val musicStateBuilder = MusicState.newBuilder()
         var albumArt: Bitmap? = null
 
@@ -2425,7 +2499,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }, delayMs)
     }
 
-    private fun onCustomMenuItemPresed(customListItemAction: CustomListItemAction) {
+    private fun onCustomMenuItemPresed(customListItemAction: CustomListItemAction,
+                                      sourceNode: String? = null, openOnly: Boolean = false) {
         if (customListItemAction.entryId == CustomLists.SPECIAL_ITEM_ERROR) {
             return
         }
@@ -2461,7 +2536,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                                     StreamingShortcutLinks.forBrowser(shortcut.link) == link
                         }
                         ?.name
-                playDeepLink(link, savedName)
+                // Play or Shuffle from the watch's shortcut screen; AS_SAVED from an older watch,
+                // which never sets the field and so keeps exactly the behaviour it had.
+                val artistName = customListItemAction.searchQuery.takeIf {
+                    it.isNotBlank() && StreamingShortcutLinks.detectContentType(link) == StreamingContentType.ARTIST
+                }
+                playDeepLink(link, savedName ?: artistName,
+                        customListItemAction.playMode,
+                        customListItemAction.requestId.takeIf { it.isNotBlank() }, sourceNode, openOnly)
             }
             CustomLists.HISTORY -> {
                 // Past-played entries have no mediaId to resume from - they're just remembered
@@ -2804,6 +2886,73 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
     }
 
+    /**
+     * A shuffle mode the watch asked a shortcut to start with, waiting to be applied once more
+     * when that app's player is actually playing - see [requestShortcutShuffle].
+     */
+    private class PendingShortcutShuffle(
+            val packageName: String,
+            val shuffle: Boolean,
+            val deadlineRealtime: Long
+    )
+
+    private var pendingShortcutShuffle: PendingShortcutShuffle? = null
+
+    /**
+     * Asks [packageName]'s player to start the shortcut shuffled ([shuffle] true) or in order
+     * (false); null asks nothing and clears any earlier request.
+     *
+     * Sent twice on purpose. Once now, to a session the app already has, because a player that
+     * builds its new queue in shuffle order then starts on a random track instead of on the first
+     * one with the rest scrambled behind it. And once again when that app is seen playing, because
+     * the app may have had no session to ask yet (a cold start through the browser route), and
+     * because some players reset the mode when a new queue replaces the old one. Setting a mode a
+     * player already has is a no-op, so the repeat costs nothing where the first one landed.
+     *
+     * Through [MediaControllerCompat] because shuffle does not exist on the framework controller;
+     * the request travels as the compat layer's custom action and needs none of the extra-binder
+     * handshake that *reading* the mode does (see [currentCompatController]), so a controller
+     * built for this one call is enough.
+     */
+    private fun requestShortcutShuffle(packageName: String?, shuffle: Boolean?) {
+        pendingShortcutShuffle = null
+        if (packageName == null || shuffle == null) return
+        mediaSessionProvider.controllerForPackage(packageName)?.let { applySessionShuffle(it, shuffle) }
+        pendingShortcutShuffle = PendingShortcutShuffle(
+                packageName,
+                shuffle,
+                android.os.SystemClock.elapsedRealtime() + SHORTCUT_SHUFFLE_WINDOW_MS)
+    }
+
+    /** The second half of [requestShortcutShuffle], run on every state the service builds. */
+    private fun applyPendingShortcutShuffle(controller: MediaController?) {
+        val pending = pendingShortcutShuffle ?: return
+        if (android.os.SystemClock.elapsedRealtime() > pending.deadlineRealtime) {
+            pendingShortcutShuffle = null
+            return
+        }
+        if (controller == null || controller.packageName != pending.packageName ||
+                !controller.isPlaying()) {
+            return
+        }
+        pendingShortcutShuffle = null
+        applySessionShuffle(controller, pending.shuffle)
+    }
+
+    private fun applySessionShuffle(controller: MediaController, shuffle: Boolean) {
+        try {
+            MediaControllerCompat(this, MediaSessionCompat.Token.fromToken(controller.sessionToken))
+                    .transportControls
+                    .setShuffleMode(
+                            if (shuffle) PlaybackStateCompat.SHUFFLE_MODE_ALL
+                            else PlaybackStateCompat.SHUFFLE_MODE_NONE)
+            Timber.d("Asked %s for shuffle=%s", controller.packageName, shuffle)
+        } catch (e: RuntimeException) {
+            // A session that died in between. Playback itself is unaffected; only the order is.
+            Timber.w(e, "Could not set the shuffle mode on %s", controller.packageName)
+        }
+    }
+
     /** Opens a user-configured streaming link on the phone. This intentionally remains a link
      * hand-off rather than pretending to be an account/API integration. When requested, a known
     * installed streaming app is targeted; every targeted launch has an ACTION_VIEW fallback. */
@@ -2825,19 +2974,27 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      * Harmless when the shortcut was started from the phone's own UI: a watch with nothing
      * outstanding ignores the verdict.
      */
-    private fun sendDeepLinkVerdict(openUri: String?) {
-        val payload = (openUri ?: "").toByteArray(Charsets.UTF_8)
-        lifecycleScope.launch {
-            try {
+    private suspend fun sendDeepLinkVerdict(openUri: String?, requestId: String?, sourceNode: String?) {
+        val path = if (requestId == null) CommPaths.MESSAGE_DEEP_LINK_VERDICT
+            else CommPaths.MESSAGE_STREAMING_SHORTCUT_VERDICT
+        val payload = if (requestId == null) (openUri ?: "").toByteArray(Charsets.UTF_8)
+            else com.svartifoss.snfell.proto.StreamingShortcutVerdict.newBuilder()
+                    .setRequestId(requestId).apply { openUri?.let { setOpenUri(it) } }.build().toByteArray()
+        try {
+            if (sourceNode != null) {
+                Wearable.getMessageClient(applicationContext).sendMessage(sourceNode, path, payload).await()
+            } else {
                 Wearable.getMessageClient(applicationContext).sendMessageToNearestClient(
                         Wearable.getNodeClient(applicationContext),
-                        CommPaths.MESSAGE_DEEP_LINK_VERDICT,
+                        path,
                         payload)
-            } catch (e: Exception) {
-                // No watch paired, out of range, or Play Services down. The watch's own backstop
-                // covers the case where it was waiting for this.
-                Timber.w(e, "Could not send the deep-link verdict to the watch")
             }
+        } catch (e: kotlinx.coroutines.CancellationException) {
+            throw e
+        } catch (e: Exception) {
+            // No watch paired, out of range, or Play Services down. The watch's own backstop
+            // covers the case where it was waiting for this.
+            Timber.w(e, "Could not send the deep-link verdict to the watch")
         }
     }
 
@@ -3042,7 +3199,54 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
     }
 
-    fun playDeepLink(link: String, searchQuery: String? = null) {
+    private var shortcutPlaybackJob: kotlinx.coroutines.Job? = null
+
+    fun playDeepLink(
+            savedLink: String,
+            searchQuery: String? = null,
+            playMode: ShortcutPlayMode = ShortcutPlayMode.AS_SAVED,
+            requestId: String? = null,
+            sourceNode: String? = null,
+            openOnly: Boolean = false
+    ) {
+        // A newer pick replaces the entire ladder, including browser bindings and playback nudges.
+        shortcutPlaybackJob?.cancel()
+        pendingShortcutShuffle = null
+        Timber.d("Streaming shortcut request %s openOnly=%s", requestId, openOnly)
+        shortcutPlaybackJob = lifecycleScope.launch {
+            var answered = false
+            val reply: suspend (String?) -> Unit = { uri ->
+                if (!answered) {
+                    answered = true
+                    sendDeepLinkVerdict(uri, requestId, sourceNode)
+                }
+            }
+            try {
+                playDeepLinkNow(savedLink, searchQuery, playMode, openOnly, reply)
+            } catch (e: kotlinx.coroutines.CancellationException) {
+                throw e
+            } catch (e: RuntimeException) {
+                Timber.w(e, "Could not play streaming shortcut")
+                reply(null)
+            }
+        }
+    }
+
+    private suspend fun playDeepLinkNow(
+            savedLink: String,
+            searchQuery: String?,
+            playMode: ShortcutPlayMode,
+            openOnly: Boolean,
+            reply: suspend (String?) -> Unit
+    ) {
+        // Planned before anything else so the whole ladder - every route and the verdict - works
+        // from the link that will actually be played: a YouTube Music playlist asked to shuffle
+        // carries the flag in the link, one asked to play in order has a saved flag taken out.
+        val plan = StreamingShortcutLinks.planFor(savedLink, playMode)
+        val link = plan.link
+        // Whatever the previous start asked of its player is void now, including when this one is
+        // refused below: a shuffle choice left pending would land on the next thing that app plays.
+        pendingShortcutShuffle = null
         if (!StreamingShortcutLinks.isSafeLink(link)) {
             Timber.e("Refusing unsafe or invalid streaming link")
             // Refusing is still a terminal outcome, so it owes the watch a verdict like every
@@ -3051,7 +3255,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // in turn, so the whole half-minute produced nothing. "Do not open" is the honest
             // answer here: this phone declined the link, so there is nothing for the watch to
             // salvage by opening it.
-            sendDeepLinkVerdict(null)
+            reply(null)
             return
         }
         val service = StreamingShortcutLinks.detect(link)
@@ -3067,35 +3271,47 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 } else {
                     StreamingShortcutLinks.OPEN_MODE_DEFAULT
                 }
-        val targetPackage = service.packageName?.takeIf { packageName ->
-            openMode == StreamingShortcutLinks.OPEN_MODE_APP && isPackageInstalled(packageName)
-        }
+        val targetPackage = StreamingShortcutRoutes.targetPackage(
+                this, preferences, service, openMode, link)
         val browserLink = StreamingShortcutLinks.forBrowser(link)
+        if (openOnly) {
+            val primaryLink = StreamingShortcutRoutes.linkForTarget(link, service, targetPackage)
+            reply(if (targetPackage != null) "$targetPackage|$primaryLink" else primaryLink)
+            return
+        }
         Timber.d("playDeepLink: service=%s contentType=%s openMode=%s targetPackage=%s " +
-                "preferSearch=%s", service.name, contentType, openMode, targetPackage, preferSearch)
+                "preferSearch=%s playMode=%s", service.name, contentType, openMode, targetPackage,
+                preferSearch, playMode)
+        // The app that will end up playing it: the targeted one, or - when the link is handed to
+        // the default handler or a chooser - the service's own app, which is where it lands for
+        // anyone who has it installed. A generic link names no app, so it gets no session request.
+        requestShortcutShuffle(targetPackage ?: service.packageName, plan.sessionShuffle)
         if (openMode == StreamingShortcutLinks.OPEN_MODE_CHOOSER &&
                 startStreamingLinkChooser(browserLink)) {
             // The chooser is already on screen; the watch must not open the link a second time.
             Timber.d("playDeepLink: showed the app chooser instead of playing directly")
-            sendDeepLinkVerdict(null)
+            reply(null)
             return
         }
 
         // Everything after the direct command, factored out so the verification below can fall
         // through to it instead of duplicating it.
-        val continueWithBrowserThenVisibleOpen = {
+        val continueWithBrowserThenVisibleOpen: suspend () -> Unit = {
             if (targetPackage != null && (contentType.isPlayable || preferSearch)) {
                 startBrowserThenVisibleOpen(
-                        link, service, targetPackage, browserLink, query, preferSearch)
+                        link, service, targetPackage, browserLink, query, preferSearch, reply)
             } else {
                 startStreamingLinkWithPlaybackNudge(
-                        link, service, targetPackage, browserLink, query, preferSearch)
+                        link, service, targetPackage, browserLink, query, preferSearch, reply)
             }
         }
 
         // ACTION_VIEW only navigates to Spotify content; it does not promise playback. If that
         // app already has a MediaSession, use the Android media contract first (playFromUri, or
         // playFromSearch for artists) so tracks, albums, playlists and artists actually start.
+        val controllerBefore = targetPackage?.let { mediaSessionProvider.controllerForPackage(it) }
+        val before = playbackIdentity(controllerBefore)
+        val wasPlayingBefore = controllerBefore?.isPlaying() == true
         if (targetPackage != null &&
                 requestStreamingPlayback(link, service, targetPackage, query, preferSearch)) {
             // "Accepted" is not "playing". That return value comes from the advertised
@@ -3104,27 +3320,22 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // collection one, which is why a saved playlist and the Likes button both looked dead:
             // this branch reported success, so neither the browser route nor the visible open ever
             // ran. Verify the same way a queue tap does rather than trusting the bitmask.
-            val controllerBefore = mediaSessionProvider.controllerForPackage(targetPackage)
-            val before = playbackIdentity(controllerBefore)
-            val wasPlayingBefore = controllerBefore?.isPlaying() == true
-            lifecycleScope.launch {
-                delay(DEEP_LINK_VERIFY_MS)
-                val after = mediaSessionProvider.controllerForPackage(targetPackage)
-                // Playing a *different* item, or playing at all where nothing was: either way the
-                // command landed. The one case that means it was swallowed is the app carrying on
-                // with exactly what it was already playing - which is what a collection URI does to
-                // SoundCloud. Note "same item but now playing" counts as success: a link pointing
-                // at the paused track is legitimately satisfied by resuming it.
-                val movedOn = playbackIdentity(after) != before
-                if (after?.isPlaying() == true && (movedOn || !wasPlayingBefore)) {
-                    Timber.d("playDeepLink: %s started playing via playFromUri (step 1, verified)",
-                            targetPackage)
-                    sendDeepLinkVerdict(null)
-                    return@launch
-                }
-                Timber.d("%s accepted the URI but did not start playing; continuing", targetPackage)
-                continueWithBrowserThenVisibleOpen()
+            delay(DEEP_LINK_VERIFY_MS)
+            val after = mediaSessionProvider.controllerForPackage(targetPackage)
+            // Playing a *different* item, or playing at all where nothing was: either way the
+            // command landed. The one case that means it was swallowed is the app carrying on
+            // with exactly what it was already playing - which is what a collection URI does to
+            // SoundCloud. Note "same item but now playing" counts as success: a link pointing
+            // at the paused track is legitimately satisfied by resuming it.
+            val movedOn = playbackIdentity(after) != before
+            if (after?.isPlaying() == true && (movedOn || !wasPlayingBefore)) {
+                Timber.d("playDeepLink: %s started playing via playFromUri (step 1, verified)",
+                        targetPackage)
+                reply(null)
+                return
             }
+            Timber.d("%s accepted the URI but did not start playing; continuing", targetPackage)
+            continueWithBrowserThenVisibleOpen()
             return
         }
 
@@ -3133,13 +3344,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     }
 
     /** The browser route, falling back to the visible deep-link open - see [playDeepLink]. */
-    private fun startBrowserThenVisibleOpen(
+    private suspend fun startBrowserThenVisibleOpen(
             link: String,
             service: StreamingService,
             targetPackage: String,
             browserLink: String,
             query: String?,
-            preferSearch: Boolean
+            preferSearch: Boolean,
+            reply: suspend (String?) -> Unit
     ) {
         // Ask the app's MediaBrowserService to play (the Android Auto/Assistant path). This
         // wakes the app in the background with no Activity launch, so it works with the
@@ -3147,46 +3359,44 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // e.g. YouTube Music only acts on once its UI reaches the foreground. Falls back to
         // the visible deep-link flow when the app has no browser service, rejects the
         // connection, or never starts playing.
-        lifecycleScope.launch {
-            val played = MediaBrowserPlayback.play(
-                    this@MusicService,
-                    targetPackage,
-                    StreamingShortcutLinks.forPlayback(link),
-                    query,
-                    preferSearch)
-            if (played) {
-                Timber.d("playDeepLink: %s played via MediaBrowserService (step 2)", targetPackage)
-                sendDeepLinkVerdict(null)
-                scheduleStateRefresh()
-            } else {
-                Timber.d("playDeepLink: step 2 (MediaBrowserService) did not play %s, moving to step 3",
-                        targetPackage)
-                startStreamingLinkWithPlaybackNudge(
-                        link, service, targetPackage, browserLink, query, preferSearch)
-            }
+        val played = MediaBrowserPlayback.play(
+                this@MusicService,
+                targetPackage,
+                StreamingShortcutLinks.forPlayback(
+                        link, officialAppTarget = targetPackage == service.packageName),
+                query,
+                preferSearch)
+        if (played) {
+            Timber.d("playDeepLink: %s played via MediaBrowserService (step 2)", targetPackage)
+            reply(null)
+            scheduleStateRefresh()
+        } else {
+            Timber.d("playDeepLink: step 2 (MediaBrowserService) did not play %s, moving to step 3",
+                    targetPackage)
+            startStreamingLinkWithPlaybackNudge(
+                    link, service, targetPackage, browserLink, query, preferSearch, reply)
         }
     }
 
     /** The visible fallback: resolve the deep link into the target app (or a browser), then keep
      *  nudging its media session for a few seconds because opening content does not start it. */
-    private fun startStreamingLinkWithPlaybackNudge(
+    private suspend fun startStreamingLinkWithPlaybackNudge(
             link: String,
             service: StreamingService,
             targetPackage: String?,
             browserLink: String,
             searchQuery: String? = null,
-            preferSearch: Boolean = false
+            preferSearch: Boolean = false,
+            reply: suspend (String?) -> Unit
     ) {
-        val primaryLink = if (targetPackage != null) {
-            StreamingShortcutLinks.forInstalledApp(link)
-        } else browserLink
+        val primaryLink = StreamingShortcutRoutes.linkForTarget(link, service, targetPackage)
         Timber.d("playDeepLink: step 3 (visible open) opening %s", primaryLink)
 
         // Every silent route is spent, so the link has to be opened visibly - and only the watch
         // can do that reliably, since startStreamingLink below is subject to the background
         // activity-start rules this whole ladder exists to work around. Same `targetPackage|uri`
         // form PlayPlaylistShortcutAction.remoteUri produces.
-        sendDeepLinkVerdict(
+        reply(
                 if (targetPackage != null) "$targetPackage|$primaryLink" else primaryLink)
 
         // Sampled before the link opens, so the press-play step below can tell "the app loaded the
@@ -3197,16 +3407,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         if (startStreamingLink(primaryLink, targetPackage)) {
             if (targetPackage != null) {
-                lifecycleScope.launch {
-                    for (i in 0..15) {
-                        kotlinx.coroutines.delay(200)
-                        if (requestStreamingPlayback(
-                                        link, service, targetPackage, searchQuery, preferSearch)) {
-                            return@launch
-                        }
+                for (i in 0..15) {
+                    kotlinx.coroutines.delay(200)
+                    if (requestStreamingPlayback(
+                                    link, service, targetPackage, searchQuery, preferSearch)) {
+                        return
                     }
-                    pressPlayAfterNavigating(targetPackage, identityBeforeOpen, hadTrackBeforeOpen)
                 }
+                pressPlayAfterNavigating(targetPackage, identityBeforeOpen, hadTrackBeforeOpen)
             }
             return
         }
@@ -3278,7 +3486,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val advertisesPlayFromUri = actions and PlaybackState.ACTION_PLAY_FROM_URI != 0L
         val advertisesPlayFromMediaId =
                 actions and PlaybackState.ACTION_PLAY_FROM_MEDIA_ID != 0L
-        val playbackLink = StreamingShortcutLinks.forPlayback(link)
+        val playbackLink = StreamingShortcutLinks.forPlayback(
+                link, officialAppTarget = targetPackage == service.packageName)
 
         return try {
             // Artists (and anything else where URI playback is not honored) play via a named
@@ -3349,13 +3558,6 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         } catch (_: SecurityException) {
             false
         }
-    }
-
-    private fun isPackageInstalled(packageName: String): Boolean = try {
-        packageManager.getPackageInfo(packageName, 0)
-        true
-    } catch (e: android.content.pm.PackageManager.NameNotFoundException) {
-        false
     }
 
     /**
@@ -3557,6 +3759,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             CommPaths.MESSAGE_SET_PLAYBACK_SPEED -> {
                 setPlaybackSpeed(FloatPacker.unpackFloat(event.data))
             }
+            CommPaths.MESSAGE_SET_SLEEP_TIMER -> {
+                sleepTimer.set(ByteBuffer.wrap(event.data).long.toInt())
+            }
+            CommPaths.MESSAGE_REQUEST_SLEEP_TIMER -> {
+                sendSleepTimerState()
+            }
             CommPaths.MESSAGE_TOGGLE_PLAY_PAUSE -> {
                 togglePlayPause()
             }
@@ -3584,7 +3792,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 onWatchSwipeExited()
             }
             CommPaths.MESSAGE_CUSTOM_LIST_ITEM_SELECTED -> {
-                onCustomMenuItemPresed(CustomListItemAction.parseFrom(event.data))
+                onCustomMenuItemPresed(CustomListItemAction.parseFrom(event.data), event.sourceNodeId)
+            }
+            CommPaths.MESSAGE_RESOLVE_STREAMING_SHORTCUT -> {
+                val request = CustomListItemAction.parseFrom(event.data)
+                if (request.listId == CustomLists.PLAYLIST_SHORTCUTS) {
+                    onCustomMenuItemPresed(request, event.sourceNodeId, openOnly = true)
+                }
             }
             CommPaths.MESSAGE_OPEN_PLAYBACK_QUEUE -> {
                 // Payload is the number of entries the watch wants, added for "load more". Older

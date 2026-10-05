@@ -38,7 +38,7 @@
 
     <string name="no_phone">Nincs csatlakoztatott telefon</string>
     <string name="phone_unavailable">Oldd fel a telefont a lejátszás vezérléséhez</string>
-    <string name="playback_stopped">Leállítva</string>
+    <string name="playback_stopped">Szüneteltetve</string>
     <string name="error">HIBA</string>
     <string name="error_play_services">Play Services-hiba</string>
     <string name="button">Gomb</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Legutóbb lejátszott</string>
     <string name="queue_history_fallback_reason">Ez az alkalmazás nem osztja meg a lejátszási sorát</string>
+    <string name="menu_header_actions">Műveletek</string>
+    <string name="menu_header_search_results">Keresési találatok</string>
+    <string name="menu_header_search_history">Legutóbbi keresések</string>
+    <string name="menu_header_library">Könyvtár</string>
+    <string name="shortcut_open_on_phone">Megnyitás a telefonon</string>
+    <string name="shortcut_continue_on_phone">Folytassa a telefonon</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Ma</string>
 
@@ -209,4 +215,23 @@ Mindent személyre szabhat a telefon Vezérlők és Óra részében</string>
     <string name="progress_screen_cancel_seek">Pozíciókeresés megszakítása</string>
     <string name="progress_screen_skip_back">Ugrás vissza %1$d másodpercet</string>
     <string name="progress_screen_skip_forward">Ugrás előre %1$d másodpercet</string>
+    <string name="quick_block_all_actions">Összes művelet</string>
+    <string name="quick_block_favorites">Kedvencek</string>
+    <string name="quick_tool_speed">Sebesség</string>
+    <string name="quick_tool_lyrics">Dalszöveg</string>
+    <string name="quick_tool_queue">Sor</string>
+    <string name="quick_tool_volume">Hangerő</string>
+    <string name="quick_tool_progress">Előrehalad</string>
+    <string name="quick_tool_faces">Óralapok</string>
+    <string name="quick_tool_search">Keresés</string>
+    <string name="quick_tool_menu">menü</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Hangerő %1$d%%</string>
+    <string name="quick_seek_back_description">Vissza %1$d másodperc</string>
+    <string name="quick_seek_forward_description">Előre %1$d másodperc</string>
+    <string name="quick_speed_description">Lejátszási sebesség %1$s</string>
+    <string name="quick_tool_sleep">Időzítő</string>
+    <string name="quick_sleep_minutes">%1$d perc</string>
+    <string name="quick_sleep_description">Elalváskapcsoló, még %1$d perc van hátra. Koppintson a módosításhoz.</string>
+    <string name="quick_sleep_off_description">Elalváskapcsoló kikapcsolva. Koppintson a beállításhoz.</string>
 </resources>

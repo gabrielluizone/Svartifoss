@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Releases bekijken</string>
     <string name="update_watch_hint">\"Horloge bijwerken\" downloadt de nieuwe horloge-app en stuurt hem via Bluetooth — je bevestigt de installatie op het horloge zelf, geen kabel of Wear Installer nodig.</string>
     <string name="update_no_wear_asset">Deze release heeft geen horloge-APK om te versturen.</string>
+    <string name="drawer_support_summary">Svartifoss is gratis en open source — trakteer me op een koffie als het nuttig voor je is :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

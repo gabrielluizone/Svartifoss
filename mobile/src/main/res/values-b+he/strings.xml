@@ -306,7 +306,7 @@
     <string name="preview_sample_lyric_current">השורה המתנגנת עכשיו</string>
     <string name="preview_sample_lyric_next">השורה הבאה</string>
     <string name="preview_sample_next_title">השיר הבא</string>
-    <string name="preview_playback_stopped">נעצר</string>
+    <string name="preview_playback_stopped">מושהה</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -796,9 +796,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">רקע גלולת הבא בתור</string>
-    <string name="setting_wear_show_up_next_pill">גלולת הבא בתור בנגן</string>
-    <string name="setting_wear_show_up_next_pill_description">הצג גלולת הבא בתור בתחתית מסך ההשמעה. היא ממלאת את המקום ששורת הכפתורים הקטנים הייתה תופסת, ולכן מופיעה רק כשהשורה אינה מוצגת.</string>
+    <string name="setting_wear_up_next_pill">רקע קפסולת הבא בתור</string>
+    <string name="setting_wear_show_up_next_pill">קפסולת הבא בתור בנגן</string>
+    <string name="setting_wear_show_up_next_pill_description">הצג קפסולת הבא בתור בתחתית מסך ההשמעה. היא ממלאת את המקום ששורת הכפתורים הקטנים הייתה תופסת, ולכן מופיעה רק כשהשורה אינה מוצגת.</string>
     <string name="category_wf_clock">שעון</string>
     <string name="setting_wear_clock_color">צבע השעון</string>
     <string name="setting_wear_clock_custom_color">צבע שעון מותאם אישית</string>
@@ -814,7 +814,7 @@
     <string name="setting_wear_aod_show_progress">טבעת התקדמות בתצוגה פעילה תמיד</string>
     <string name="setting_wear_aod_show_progress_description">הצג את טבעת ההתקדמות סביב כפתור ההפעלה במצב סביבה — המיקום מתרענן שם רק בערך פעם בדקה</string>
     <string name="setting_wear_aod_show_pills">הבא בתור בתצוגה פעילה תמיד</string>
-    <string name="setting_wear_aod_show_pills_description">הצג גלולת הבא בתור סטטית עם קו מתאר בתחתית הסגנונות החזותיים של תצוגה פעילה תמיד</string>
+    <string name="setting_wear_aod_show_pills_description">הצג קפסולת הבא בתור סטטית עם קו מתאר בתחתית הסגנונות החזותיים של תצוגה פעילה תמיד</string>
     <string name="category_wf_gestures">מחוות מסך</string>
     <string name="setting_wear_mini_buttons_mode">הצג כפתורים קטנים</string>
     <string name="setting_wear_gestures_mode">מחוות מסך</string>
@@ -877,8 +877,8 @@
     <string name="preview_notification_controls">סמל מהתראת מדיה</string>
     <string name="setting_wear_queue_style">סגנון תור</string>
     <string name="setting_wear_quick_panel_shortcut_cover">השתמש בעטיפות קיצורי דרך כרקע</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">כאשר סגנון התור הוא גרסת עטיפה, שורת פעולה בלוח המהיר עם עטיפת קיצור דרך שנשלפה (רצועה, רשימת השמעה, אמן…) ממלאת גם את הגלולה באותה תמונה, כמו הבא בתור. קיצורים ללא עטיפה שנשלפה (סמל אפליקציה רגיל) אינם מושפעים.</string>
-    <string name="setting_wear_list_row_size">גודל גלולת רשימה</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">כאשר סגנון התור הוא גרסת עטיפה, שורת פעולה בלוח המהיר עם עטיפת קיצור דרך שנשלפה (רצועה, רשימת השמעה, אמן…) ממלאת גם את הקפסולה באותה תמונה, כמו הבא בתור. קיצורים ללא עטיפה שנשלפה (סמל אפליקציה רגיל) אינם מושפעים.</string>
+    <string name="setting_wear_list_row_size">גודל קפסולת הרשימה</string>
     <string name="setting_wear_list_row_size_description">גובה השורות ברוחב מלא בתור, בתפריטים ובלוח המהיר.</string>
     <string name="setting_wear_progress_gradient">מזג את הפלטה לתוך הטבעת</string>
     <string name="setting_wear_progress_gradient_description">בעיבוד צבע רב־גוני (משלים, משולש, אנלוגי, דו־גוני) הטבעת המלאה עוברת בהדרגה דרך כל שלושת הצבעים. כבה כדי לקבל טבעת בצבע יחיד תוך שמירת פלטת האלבום בכל מקום אחר.</string>
@@ -2021,9 +2021,6 @@
     <string name="drawer_sync_heading">סנכרון</string>
     <string name="drawer_sync_summary">הגדרות השעון מוגדרות כאן בטלפון ומסונכרנות אוטומטית לשעון המותאם.</string>
     <string name="drawer_support_heading">תמיכה</string>
-    <string name="drawer_support_summary">Svartifoss חינמית וקוד פתוח — אם היא שימושית לך, אפשר להזמין אותי לקפה :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">הורד עטיפה</string>
     <string name="album_art_saved">העטיפה נשמרה בגלריה</string>
     <string name="album_art_save_error">שמירת העטיפה נכשלה</string>
@@ -2115,7 +2112,7 @@
     <string name="playlist_shortcut_detected_format">זוהה: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">שם</string>
     <string name="playlist_shortcut_link_hint">קישור שיתוף או URI של אפליקציה</string>
-    <string name="playlist_shortcut_shuffle">נגן בסדר אקראי (YouTube Music בלבד)</string>
+    <string name="playlist_shortcut_play_choice">בכל פעם שמתחילים, בוחרים בשעון בין ״נגן״ ל״ערבוב״.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2853,4 +2850,101 @@
     <string name="setting_wear_text_block_position_description">המיקום של טקסט הרצועה על המסך. "לפי פני השעון" שומר את המיקום שעבורו תוכננו כל פני שעון.</string>
     <string name="setting_online_artwork">גרפיקה מקוונת</string>
     <string name="setting_online_artwork_description">אפשר לפני השעון להציג תמונה שנמצאה באינטרנט \u2014 האמן שמבצע, או עטיפת אלבום עבור נגן שאינו מפרסם תמונה. הטלפון שלך מבצע את החיפוש בקטלוג הציבורי של Deezer ושומר את התוצאה במטמון; רק שמות הרצועה והאמן נשלחים, ולא מתבצע חיפוש אלא אם פני שעון הוגדרו להשתמש באחד המקורות האלה. כשהאפשרות כבויה, נעשה שימוש בגרפיקה של הנגן עצמו.</string>
+    <string name="setting_wear_shortcut_details">נגן או ערבוב בשעון</string>
+    <string name="setting_wear_shortcut_details_description">בחירת קישור שמור בשעון, מרשימת קיצורי הדרך, מה-Tile של קיצורי הדרך או מתפריט הפעולות, מציגה קודם את העטיפה שלו עם ״נגן״ ו״ערבוב״. כבו כדי להתחיל לנגן מיד במקום זאת. כפתורים ומחוות שהוקצו לקישור אחד תמיד מתחילים אותו מיד.</string>
+    <string name="actions_quick_pin_add">הצג בחלונית מהירה</string>
+    <string name="actions_quick_pin_remove">הסר מהחלונית המהירה</string>
+    <string name="quick_panel_editor_title">חלונית פעולות מהירות</string>
+    <string name="quick_panel_editor_open">עריכת תוכן הלוח</string>
+    <string name="quick_panel_editor_intro">בנה את הפאנל שנפתח כאשר אתה לוחץ פעמיים על מרכז השעון. החזק וגרור בלוק כדי להזיז אותו, הקש על אחד כדי להתאים אותו.</string>
+    <string name="quick_panel_editor_add_block">הוסף בלוק</string>
+    <string name="quick_panel_editor_restore">שחזור הלוח המקורי</string>
+    <string name="quick_panel_editor_restore_title">לשחזר את הלוח המקורי?</string>
+    <string name="quick_panel_editor_restore_message">הסידור שלך הוסר והפאנל חוזר למצב שהיה. אפשרויות הלחצנים שלך והפעולות שסימנת בכוכב נשמרים.</string>
+    <string name="quick_panel_editor_restore_confirm">שחזור</string>
+    <string name="quick_panel_editor_fold">סוף המסך הראשון (בערך)</string>
+    <string name="quick_panel_editor_last_block">פאנל צריך בלוק אחד לפחות</string>
+    <string name="quick_panel_editor_removed">הוסר %1$s</string>
+    <string name="quick_panel_editor_undo">בטל</string>
+    <string name="quick_panel_editor_move_up">עלה למעלה</string>
+    <string name="quick_panel_editor_move_down">זז למטה</string>
+    <string name="quick_panel_editor_more">אפשרויות נוספות</string>
+    <string name="quick_panel_editor_nothing_to_add">כל בלוק כבר נמצא בלוח</string>
+    <string name="quick_block_header">רצועה</string>
+    <string name="quick_block_buttons">כפתורים עגולים</string>
+    <string name="quick_block_upnext">הרצועה הבאה</string>
+    <string name="quick_block_volume">עוצמת קול</string>
+    <string name="quick_block_seek">דילוג ומיקום</string>
+    <string name="quick_block_tools">כלים</string>
+    <string name="quick_block_favorites">מועדפים</string>
+    <string name="quick_block_actions">כל הפעולות</string>
+    <string name="quick_block_all_actions">כל הפעולות</string>
+    <string name="quick_block_header_description">הכותרת והאמן של מה שמתנגן.</string>
+    <string name="quick_block_buttons_description">כפתורים עגולים עבור הפעולות שבהן אתה משתמש הכי הרבה, או אלה שהאפליקציה שמנגנת מציעה.</string>
+    <string name="quick_block_upnext_description">הרצועה הבאה. הקש עליו כדי לפתוח את התור.</string>
+    <string name="quick_block_volume_description">הנמיך והגבר את עוצמת הקול מבלי לעזוב את הפאנל.</string>
+    <string name="quick_block_seek_description">איפה אתה נמצא במסלול, וכפתורים שמדלגים קדימה וקדימה.</string>
+    <string name="quick_block_tools_description">קיצורי דרך קטנים: מהירות השמעה, מילים, התור ועוד.</string>
+    <string name="quick_block_favorites_description">הפעולות שסימנת בכוכב בכרטיסייה פעולות, ככריכות או שורות.</string>
+    <string name="quick_block_actions_description">כל פעולה בתפריט השעון שלך, כשורות בחלונית או כלחצן אחד שפותח את התפריט.</string>
+    <string name="quick_summary_header">כותר והאמן</string>
+    <string name="quick_summary_buttons_session">מהאפליקציה שמנגנת</string>
+    <string name="quick_summary_buttons_empty">לא נבחרו לחצנים</string>
+    <string name="quick_summary_upnext">הרצועה הבאה · פותחת את התור</string>
+    <string name="quick_summary_volume">מרווחי עוצמת קול של %1$d%%</string>
+    <string name="quick_summary_seek">%1$s שניות</string>
+    <string name="quick_summary_seek_bar">%1$s שניות · זמן ובר</string>
+    <string name="quick_summary_favorites_none">עדיין לא סומנה אף פעולה בכוכב</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d מככב · %2$s</item>
+        <item quantity="other">%1$d מככב · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">כל הפעולות %1$d</string>
+    <string name="quick_summary_actions_first">פעולות %1$d ראשונות</string>
+    <string name="quick_summary_actions_button">כפתור אחד · פותח את תפריט הפעולות</string>
+    <string name="quick_summary_only_playing">רק בזמן השמעה</string>
+    <string name="quick_summary_only_not_playing">רק כשאין השמעה</string>
+    <string name="quick_mode_grid">רֶשֶׁת</string>
+    <string name="quick_mode_rows">שורות</string>
+    <string name="quick_mode_actions_list">רְשִׁימָה</string>
+    <string name="quick_mode_actions_button">לַחְצָן</string>
+    <string name="quick_sheet_show">הצג את</string>
+    <string name="quick_sheet_always">תמיד</string>
+    <string name="quick_sheet_while_playing">רק בזמן השמעה</string>
+    <string name="quick_sheet_while_not_playing">רק כשאין השמעה</string>
+    <string name="quick_sheet_step">שלב</string>
+    <string name="quick_sheet_jump">דילוג לפי</string>
+    <string name="quick_sheet_seek_bar">הצג זמן וסרגל התקדמות</string>
+    <string name="quick_sheet_tools">כלים</string>
+    <string name="quick_sheet_layout">מַעֲרָך</string>
+    <string name="quick_sheet_how_many">כמה</string>
+    <string name="quick_sheet_all">כל</string>
+    <string name="quick_sheet_buttons_source">מ-</string>
+    <string name="quick_sheet_source_configured">הבחירות שלי</string>
+    <string name="quick_sheet_source_session">האפליקציה שמנגנת</string>
+    <string name="quick_sheet_buttons_hint">הקש על כפתור כדי לבחור את הפעולה שלו. החזק כדי לשחזר את ברירת המחדל שלו.</string>
+    <string name="quick_sheet_favorites_hint">כוכב פעולות עם ברק בכרטיסייה פעולות. רק כוכבים מופיעים כאן.</string>
+    <string name="quick_sheet_actions_mode">הצג בתור</string>
+    <string name="quick_sheet_actions_hint">רשימה מעמידה כל פעולה בלוח בתור שורה. כפתור שומר על הפאנל קצר: כפתור אחד שפותח את התפריט המלא. כדי להשאיר את התפריט מחוץ לחלונית לגמרי, הסר את החסימה הזו.</string>
+    <string name="quick_sheet_remove">הסר את החסימה הזו</string>
+    <string name="quick_sheet_done">בוצע</string>
+    <string name="quick_tool_speed">מהירות</string>
+    <string name="quick_tool_sleep">טיימר שינה</string>
+    <string name="quick_tool_lyrics">מילים</string>
+    <string name="quick_tool_queue">תור</string>
+    <string name="quick_tool_volume">עוצמת קול</string>
+    <string name="quick_tool_progress">התקדמות</string>
+    <string name="quick_tool_faces">לוחות שעון</string>
+    <string name="quick_tool_search">חיפוש</string>
+    <string name="quick_tool_menu">תַפרִיט</string>
+    <string name="setting_wear_hide_from_recents">הסתר מהאפליקציות האחרונות</string>
+    <string name="setting_wear_hide_from_recents_description">שומר את אפליקציית השעון מחוץ לרשימת האפליקציות האחרונות של השעון לאחר שתסגור אותה או תשתמש באפליקציה אחרת. שימושי אם אתה פותח אותו מלוח השעון או סרגל Now במקום זאת. זה נשאר נגיש בדיוק כמו קודם, והמוזיקה וחיבור הרקע לא מושפעים.</string>
+    <string name="setting_streaming_app_routes">בחר אפליקציות לקישורי סטרימינג</string>
+    <string name="setting_streaming_app_routes_description">בחר אפליקציה מותקנת תואמת בנפרד עבור YouTube Music, Spotify ושירות אחד אחר. בשימוש עם "אפליקציית סטרימינג מזוהה".</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">שירות %1$d משתמש באפליקציה שנבחרה</item>
+        <item quantity="other">שירותי %1$d משתמשים באפליקציות נבחרות</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">יוצגו אפליקציות שיכולות לפתוח את הקישור, בתוספת נגני מדיה מותקנים.</string>
+    <string name="streaming_route_automatic">אוטומטי (אפליקציה שזוהתה)</string>
 </resources>

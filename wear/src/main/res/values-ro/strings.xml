@@ -32,7 +32,7 @@
 
     <string name="no_phone">Niciun telefon conectat</string>
     <string name="phone_unavailable">Deblochează telefonul pentru a controla redarea</string>
-    <string name="playback_stopped">Oprit</string>
+    <string name="playback_stopped">În pauză</string>
     <string name="error">EROARE</string>
     <string name="error_play_services">Eroare Play Services</string>
     <string name="button">Buton</string>
@@ -54,6 +54,12 @@
     <string name="queue_load_more">Încarcă mai multe</string>
     <string name="queue_history_fallback">Redate recent</string>
     <string name="queue_history_fallback_reason">Această aplicație nu își partajează coada</string>
+    <string name="menu_header_actions">Acțiuni</string>
+    <string name="menu_header_search_results">Rezultatele căutării</string>
+    <string name="menu_header_search_history">Căutări recente</string>
+    <string name="menu_header_library">Bibliotecă</string>
+    <string name="shortcut_open_on_phone">Deschide pe telefon</string>
+    <string name="shortcut_continue_on_phone">Continuă pe telefon</string>
     <string name="chat_face_today">Azi</string>
 
     <string name="face_picker_title">Cadranul ceasului</string>
@@ -63,7 +69,7 @@
     <string name="hint_edges">Atinge sus, jos, stânga sau dreapta — fiecare zonă execută acțiunea atribuită</string>
     <string name="hint_center">Centru — redare/pauză\nAtinge de două ori — acțiuni rapide\nApasă lung — selector de cadran (configurabil)</string>
     <string name="hint_swipe_up">În sus — meniul de acțiuni\nÎn jos sau stânga — acțiuni atribuite\nDin margine spre dreapta — ieșire</string>
-    <string name="hint_crown">Coroană — volum sau poziție\nButoane laterale — acțiuni atribuite\nPersonalizează totul în Comenzi și Watch pe telefon</string>
+    <string name="hint_crown">Coroană — volum sau poziție\nButoane laterale — acțiuni atribuite\nPersonalizează totul în Comenzi și Ceas pe telefon</string>
     <string name="hint_next">Înainte</string>
     <string name="hint_dismiss">Finalizare</string>
 
@@ -183,4 +189,23 @@
     <string name="progress_screen_cancel_seek">Anulează căutarea poziției</string>
     <string name="progress_screen_skip_back">Sari înapoi %1$d secunde</string>
     <string name="progress_screen_skip_forward">Sari înainte %1$d secunde</string>
+    <string name="quick_block_all_actions">Toate acțiunile</string>
+    <string name="quick_block_favorites">Favorite</string>
+    <string name="quick_tool_speed">Viteză</string>
+    <string name="quick_tool_lyrics">Versuri</string>
+    <string name="quick_tool_queue">Coadă</string>
+    <string name="quick_tool_volume">Volum</string>
+    <string name="quick_tool_progress">Progres</string>
+    <string name="quick_tool_faces">Cadrane</string>
+    <string name="quick_tool_search">Căutare</string>
+    <string name="quick_tool_menu">Meniu</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Volum %1$d%%</string>
+    <string name="quick_seek_back_description">Înapoi %1$d secunde</string>
+    <string name="quick_seek_forward_description">Înainte %1$d secunde</string>
+    <string name="quick_speed_description">Viteza de redare %1$s</string>
+    <string name="quick_tool_sleep">Temporizator</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Temporizator de oprire, %1$d minute rămase. Atingeți pentru a schimba</string>
+    <string name="quick_sleep_off_description">Temporizator de repaus oprit. Atingeți pentru a seta</string>
 </resources>

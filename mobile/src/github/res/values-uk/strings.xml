@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Переглянути випуски</string>
     <string name="update_watch_hint">«Оновити годинник» завантажує новий застосунок для годинника й надсилає його через Bluetooth — установлення підтверджується на самому годиннику, без кабелю чи Wear Installer.</string>
     <string name="update_no_wear_asset">У цьому випуску немає APK годинника для надсилання.</string>
+    <string name="drawer_support_summary">Svartifoss безкоштовний і з відкритим кодом — якщо він вам корисний, пригостіть мене кавою :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

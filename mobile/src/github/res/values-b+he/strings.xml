@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">הצג גרסאות</string>
     <string name="update_watch_hint">„עדכון השעון” מוריד את אפליקציית השעון החדשה ושולח אותה דרך Bluetooth — את ההתקנה מאשרים בשעון עצמו, ללא כבל או Wear Installer.</string>
     <string name="update_no_wear_asset">אין בגרסה זו APK לשעון שניתן לשלוח.</string>
+    <string name="drawer_support_summary">Svartifoss חינמית וקוד פתוח — אם היא שימושית לך, אפשר להזמין אותי לקפה :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

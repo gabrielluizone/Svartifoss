@@ -306,7 +306,7 @@
     <string name="preview_sample_lyric_current">Ред који сада свира</string>
     <string name="preview_sample_lyric_next">Следећи ред</string>
     <string name="preview_sample_next_title">Следећа песма</string>
-    <string name="preview_playback_stopped">Заустављено</string>
+    <string name="preview_playback_stopped">Паузирано</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -796,9 +796,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Позадина пилуле Следеће</string>
-    <string name="setting_wear_show_up_next_pill">Пилула Следеће на плејеру</string>
-    <string name="setting_wear_show_up_next_pill_description">Прикажи пилулу Следеће на дну екрана за репродукцију. Она заузима простор реда мини дугмади, па се појављује само када тај ред није приказан.</string>
+    <string name="setting_wear_up_next_pill">Позадина капсуле Следеће</string>
+    <string name="setting_wear_show_up_next_pill">Капсула Следеће на плејеру</string>
+    <string name="setting_wear_show_up_next_pill_description">Прикажи капсулу Следеће на дну екрана за репродукцију. Она заузима простор реда мини дугмади, па се појављује само када тај ред није приказан.</string>
     <string name="category_wf_clock">Сат</string>
     <string name="setting_wear_clock_color">Боја сата</string>
     <string name="setting_wear_clock_custom_color">Прилагођена боја сата</string>
@@ -814,7 +814,7 @@
     <string name="setting_wear_aod_show_progress">Прстен напретка на увек укљученом екрану</string>
     <string name="setting_wear_aod_show_progress_description">Прикажи прстен напретка око дугмета за репродукцију у амбијенталном режиму — положај се тамо освежава само отприлике једном у минуту</string>
     <string name="setting_wear_aod_show_pills">Следеће на увек укљученом екрану</string>
-    <string name="setting_wear_aod_show_pills_description">Прикажи статичну контурну пилулу Следеће на дну визуелних стилова увек укљученог екрана</string>
+    <string name="setting_wear_aod_show_pills_description">Прикажи статичну контурну капсулу Следеће на дну визуелних стилова увек укљученог екрана</string>
     <string name="category_wf_gestures">Покрети на екрану</string>
     <string name="setting_wear_mini_buttons_mode">Прикажи мини дугмад</string>
     <string name="setting_wear_gestures_mode">Покрети на екрану</string>
@@ -877,8 +877,8 @@
     <string name="preview_notification_controls">Икона из медијског обавештења</string>
     <string name="setting_wear_queue_style">Стил реда</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Користи омоте пречица као позадину</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Када је Стил реда варијанта са омотом, ред радње у брзом панелу са преузетим омотом пречице (нумера, плејлиста, извођач…) такође попуњава своју пилулу тим омотом, као Следеће. Пречице без преузетог омота (обична икона апликације) нису погођене.</string>
-    <string name="setting_wear_list_row_size">Величина пилуле листе</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Када је Стил реда варијанта са омотом, ред радње у брзом панелу са преузетим омотом пречице (нумера, плејлиста, извођач…) такође попуњава своју капсулу тим омотом, као Следеће. Пречице без преузетог омота (обична икона апликације) нису погођене.</string>
+    <string name="setting_wear_list_row_size">Величина капсуле листе</string>
     <string name="setting_wear_list_row_size_description">Висина редова пуне ширине у реду, менијима и брзом панелу.</string>
     <string name="setting_wear_progress_gradient">Умешај палету у прстен</string>
     <string name="setting_wear_progress_gradient_description">Код вишебојне обраде (Комплементарна, Тријадна, Аналогна, Дуотон) пуни прстен прелази кроз све три боје. Искључите за једнобојни прстен, а палету албума задржите свуда другде.</string>
@@ -2021,9 +2021,6 @@
     <string name="drawer_sync_heading">Синхронизација</string>
     <string name="drawer_sync_summary">Подешавања сата се конфигуришу овде на телефону и аутоматски синхронизују са упареним сатом.</string>
     <string name="drawer_support_heading">Подршка</string>
-    <string name="drawer_support_summary">Svartifoss је бесплатан и отвореног кода — частите ме кафом ако вам је користан :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Преузми омот</string>
     <string name="album_art_saved">Омот је сачуван у галерији</string>
     <string name="album_art_save_error">Чување омота није успело</string>
@@ -2115,7 +2112,7 @@
     <string name="playlist_shortcut_detected_format">Откривено: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Назив</string>
     <string name="playlist_shortcut_link_hint">Линк за дељење или URI апликације</string>
-    <string name="playlist_shortcut_shuffle">Пусти насумично (само YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Сваки пут када га покрећете, на сату бирате Пусти или Насумично.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2853,4 +2850,101 @@
     <string name="setting_wear_text_block_position_description">Место текста песме на екрану. „Прати лице” задржава положај за који је свако лице дизајнирано.</string>
     <string name="setting_online_artwork">Слика са мреже</string>
     <string name="setting_online_artwork_description">Дозволите бројчанику сата да приказује слику пронађену на мрежи \u2014 извођача песме или омот албума за плејер који га не објављује. Телефон претражује јавни каталог Deezer-а и кешира резултат; шаљу се само назив песме и име извођача, а ништа се не претражује осим ако је лице подешено на један од тих извора. Када је искључено, користи се слика коју објављује сам плејер.</string>
+    <string name="setting_wear_shortcut_details">Пусти или насумично на сату</string>
+    <string name="setting_wear_shortcut_details_description">Избор сачуваног линка на сату, са листе пречица, из Tile-а са пречицама или из менија радњи, прво приказује његов омот са дугмадима Пусти и Насумично. Искључите да би се одмах покретао. Дугмад и покрети додељени једном линку га увек одмах покрећу.</string>
+    <string name="actions_quick_pin_add">Прикажи у брзој табли</string>
+    <string name="actions_quick_pin_remove">Уклоните са брзог панела</string>
+    <string name="quick_panel_editor_title">Панел за брзе радње</string>
+    <string name="quick_panel_editor_open">Уредите садржај панела</string>
+    <string name="quick_panel_editor_intro">Направите панел који се отвара када двапут додирнете центар сата. Држите и превуците блок да бисте га померили, додирните један да бисте га прилагодили.</string>
+    <string name="quick_panel_editor_add_block">Додај блок</string>
+    <string name="quick_panel_editor_restore">Вратите оригиналну плочу</string>
+    <string name="quick_panel_editor_restore_title">Желите ли да вратите оригинални панел?</string>
+    <string name="quick_panel_editor_restore_message">Ваш аранжман је уклоњен и панел се враћа како је био. Ваши избори дугмади и радње које сте означили се чувају.</string>
+    <string name="quick_panel_editor_restore_confirm">Ресторе</string>
+    <string name="quick_panel_editor_fold">Крај првог екрана (приближно)</string>
+    <string name="quick_panel_editor_last_block">За панел је потребан најмање један блок</string>
+    <string name="quick_panel_editor_removed">Уклоњен %1$s</string>
+    <string name="quick_panel_editor_undo">Поништи</string>
+    <string name="quick_panel_editor_move_up">Помери се горе</string>
+    <string name="quick_panel_editor_move_down">Помери се доле</string>
+    <string name="quick_panel_editor_more">Више опција</string>
+    <string name="quick_panel_editor_nothing_to_add">Сваки блок је већ на панелу</string>
+    <string name="quick_block_header">Нумера</string>
+    <string name="quick_block_buttons">Округла дугмад</string>
+    <string name="quick_block_upnext">Следећа нумера</string>
+    <string name="quick_block_volume">Јачина звука</string>
+    <string name="quick_block_seek">Прескакање и позиција</string>
+    <string name="quick_block_tools">Алати</string>
+    <string name="quick_block_favorites">Фаворитес</string>
+    <string name="quick_block_actions">Све акције</string>
+    <string name="quick_block_all_actions">Све акције</string>
+    <string name="quick_block_header_description">Наслов и уметник онога што свира.</string>
+    <string name="quick_block_buttons_description">Округла дугмад за радње које најчешће користите или оне које нуди апликација за репродукцију.</string>
+    <string name="quick_block_upnext_description">Следећа нумера. Додирните га да отворите ред.</string>
+    <string name="quick_block_volume_description">Смањите и повећајте јачину звука без напуштања панела.</string>
+    <string name="quick_block_seek_description">Где се налазите на стази и дугмад која прескачу напред и назад.</string>
+    <string name="quick_block_tools_description">Мале пречице: брзина репродукције, текстови, ред и још много тога.</string>
+    <string name="quick_block_favorites_description">Радње које сте означили звездицом на картици Радње, као насловнице или редови.</string>
+    <string name="quick_block_actions_description">Свака радња вашег менија сата, као редови на табли или као једно дугме које отвара мени.</string>
+    <string name="quick_summary_header">Наслов и уметник</string>
+    <string name="quick_summary_buttons_session">Из апликације која репродукује</string>
+    <string name="quick_summary_buttons_empty">Није изабрано ниједно дугме</string>
+    <string name="quick_summary_upnext">Следећа нумера · отвара ред за репродукцију</string>
+    <string name="quick_summary_volume">Кораци јачине звука од %1$d%%</string>
+    <string name="quick_summary_seek">%1$s секунди</string>
+    <string name="quick_summary_seek_bar">%1$s секунде · време и трака</string>
+    <string name="quick_summary_favorites_none">Још ниједна радња није означена звездицом</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d са звездицом · %2$s</item>
+        <item quantity="other">%1$d са звездицом · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Све %1$d акције</string>
+    <string name="quick_summary_actions_first">Прве %1$d акције</string>
+    <string name="quick_summary_actions_button">Једно дугме · отвара мени радњи</string>
+    <string name="quick_summary_only_playing">само током репродукције</string>
+    <string name="quick_summary_only_not_playing">само без репродукције</string>
+    <string name="quick_mode_grid">Грид</string>
+    <string name="quick_mode_rows">Редови</string>
+    <string name="quick_mode_actions_list">Лист</string>
+    <string name="quick_mode_actions_button">Дугме</string>
+    <string name="quick_sheet_show">Прикажи</string>
+    <string name="quick_sheet_always">Увек</string>
+    <string name="quick_sheet_while_playing">само током репродукције</string>
+    <string name="quick_sheet_while_not_playing">само без репродукције</string>
+    <string name="quick_sheet_step">Корак</string>
+    <string name="quick_sheet_jump">Скочи за</string>
+    <string name="quick_sheet_seek_bar">Прикажи време и траку напретка</string>
+    <string name="quick_sheet_tools">Алати</string>
+    <string name="quick_sheet_layout">Лаиоут</string>
+    <string name="quick_sheet_how_many">Колико</string>
+    <string name="quick_sheet_all">Све</string>
+    <string name="quick_sheet_buttons_source">Дугмад од</string>
+    <string name="quick_sheet_source_configured">Моји избори</string>
+    <string name="quick_sheet_source_session">Апликација која репродукује</string>
+    <string name="quick_sheet_buttons_hint">Додирните дугме да бисте изабрали његову радњу. Држите да бисте вратили подразумевану вредност.</string>
+    <string name="quick_sheet_favorites_hint">Звезда акција са муњом на картици Радње. Овде се појављују само оне са звездицом.</string>
+    <string name="quick_sheet_actions_mode">Прикажи као</string>
+    <string name="quick_sheet_actions_hint">Листа ставља сваку радњу на панел као ред. Дугме држи таблу кратком: једно дугме која отвара цео мени. Да бисте потпуно изоставили мени ван панела, уклоните овај блок.</string>
+    <string name="quick_sheet_remove">Уклоните овај блок</string>
+    <string name="quick_sheet_done">Готово</string>
+    <string name="quick_tool_speed">Брзина</string>
+    <string name="quick_tool_sleep">Тајмер за спавање</string>
+    <string name="quick_tool_lyrics">Текстови песама</string>
+    <string name="quick_tool_queue">Ред чекања</string>
+    <string name="quick_tool_volume">Јачина звука</string>
+    <string name="quick_tool_progress">Напредак</string>
+    <string name="quick_tool_faces">Бројчаници</string>
+    <string name="quick_tool_search">Тражи</string>
+    <string name="quick_tool_menu">Мени</string>
+    <string name="setting_wear_hide_from_recents">Сакриј од недавних апликација</string>
+    <string name="setting_wear_hide_from_recents_description">Држи апликацију за сат ван листе недавних апликација сата када је затворите или користите другу апликацију. Корисно ако га отворите са бројчаника сата или са траке за сада. Остаје доступно као и раније, а музика и позадинска веза нису погођени.</string>
+    <string name="setting_streaming_app_routes">Изаберите апликације за линкове за стримовање</string>
+    <string name="setting_streaming_app_routes_description">Изаберите компатибилну инсталирану апликацију засебно за ИоуТубе Мусиц, Спотифи и сваку другу услугу. Користи се са „Откривеном апликацијом за стриминг“.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">Услуга %1$d користи изабрану апликацију</item>
+        <item quantity="other">%1$d услуге користе одабране апликације</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Приказане су апликације које могу да отворе везу, плус инсталирани медијски плејери.</string>
+    <string name="streaming_route_automatic">Аутоматски (откривена апликација)</string>
 </resources>

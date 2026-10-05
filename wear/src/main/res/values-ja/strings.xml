@@ -38,7 +38,7 @@
 
     <string name="no_phone">スマートフォンが接続されていません</string>
     <string name="phone_unavailable">スマートフォンのロックを解除して操作してください</string>
-    <string name="playback_stopped">停止中</string>
+    <string name="playback_stopped">一時停止中</string>
     <string name="error">エラー</string>
     <string name="error_play_services">Play 開発者サービスのエラー</string>
     <string name="button">ボタン</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">最近再生した項目</string>
     <string name="queue_history_fallback_reason">このアプリはキューを共有していません</string>
+    <string name="menu_header_actions">アクション</string>
+    <string name="menu_header_search_results">検索結果</string>
+    <string name="menu_header_search_history">最近の検索</string>
+    <string name="menu_header_library">ライブラリ</string>
+    <string name="shortcut_open_on_phone">スマートフォンで開く</string>
+    <string name="shortcut_continue_on_phone">スマートフォンで続けてください</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">今日</string>
 
@@ -70,7 +76,7 @@
          and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
     <string name="face_picker_title">ウォッチフェイス</string>
     <string name="face_picker_offline">スマートフォン未接続 — このフェイスはウォッチに適用されますが、スマートフォン側の設定は保持されます</string>
-    <string name="face_picker_section_builtin">組み込みフェイス</string>
+    <string name="face_picker_section_builtin">組み込み文字盤</string>
     <string name="face_picker_section_custom">マイテーマ</string>
     <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
     <string name="face_picker_custom_base">%1$s ベース</string>
@@ -203,4 +209,23 @@
     <string name="progress_screen_cancel_seek">シークをキャンセル</string>
     <string name="progress_screen_skip_back">%1$d 秒戻る</string>
     <string name="progress_screen_skip_forward">%1$d 秒進む</string>
+    <string name="quick_block_all_actions">すべてのアクション</string>
+    <string name="quick_block_favorites">お気に入り</string>
+    <string name="quick_tool_speed">速度</string>
+    <string name="quick_tool_lyrics">歌詞</string>
+    <string name="quick_tool_queue">キュー</string>
+    <string name="quick_tool_volume">音量</string>
+    <string name="quick_tool_progress">進捗状況</string>
+    <string name="quick_tool_faces">文字盤</string>
+    <string name="quick_tool_search">検索</string>
+    <string name="quick_tool_menu">メニュー</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">音量 %1$d%%</string>
+    <string name="quick_seek_back_description">戻る %1$d 秒</string>
+    <string name="quick_seek_forward_description">%1$d 秒進む</string>
+    <string name="quick_speed_description">再生速度 %1$s</string>
+    <string name="quick_tool_sleep">スリープタイマー</string>
+    <string name="quick_sleep_minutes">%1$d 分</string>
+    <string name="quick_sleep_description">スリープ タイマー、残り %1$d 分です。タップして変更します</string>
+    <string name="quick_sleep_off_description">スリープタイマーがオフです。タップして設定</string>
 </resources>

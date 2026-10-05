@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The options of one quick-panel block, as a bottom sheet. The content container is filled by the
+     editor, since which options exist depends on the block. -->
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/lyra_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="16dp">
+
+        <View
+            android:layout_width="36dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp"
+            android:background="@color/lyra_divider" />
+
+        <TextView
+            android:id="@+id/sheet_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:lineHeight="25sp"
+            android:textColor="@color/lyra_on_surface"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sheet_subtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:lineHeight="18sp"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:id="@+id/sheet_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/sheet_remove"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/google_sans"
+            android:letterSpacing="0"
+            android:text="@string/quick_sheet_remove"
+            android:textAllCaps="false"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

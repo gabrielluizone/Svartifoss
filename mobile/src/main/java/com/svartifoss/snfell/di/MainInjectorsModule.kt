@@ -5,6 +5,7 @@ import com.svartifoss.snfell.view.actionlist.ActionEditorActivity
 import com.svartifoss.snfell.view.buttonconfig.ActionPickerActivity
 import com.svartifoss.snfell.view.mainactivity.MainActivity
 import com.svartifoss.snfell.view.settings.PlaylistShortcutsActivity
+import com.svartifoss.snfell.view.watchface.QuickPanelEditorActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -25,4 +26,7 @@ abstract class MainInjectorsModule {
 
     @ContributesAndroidInjector
     abstract fun contributePlaylistShortcutsActivity(): PlaylistShortcutsActivity
+
+    @ContributesAndroidInjector
+    abstract fun contributeQuickPanelEditorActivity(): QuickPanelEditorActivity
 }

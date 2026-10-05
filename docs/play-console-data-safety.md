@@ -44,7 +44,7 @@ off-by-default setting (`streaming_shortcut_artwork`, see
 directly to that streaming service's own oEmbed endpoint (Spotify, YouTube,
 SoundCloud, Deezer) to fetch a cover thumbnail and the item's title (the same
 request also runs once per tap of "Get name from link" while the setting is
-off) - no Firebase/Google involvement in that request. An on-by-default setting (`lyrics_enabled`, see
+off) - no Firebase/Google involvement in that request. With the same setting on, the fixed public cover image of YouTube Music's Liked Music or Spotify's Liked Songs is downloaded once from that service's image server when the collection is in use - a request for an image that is the same for every account, carrying no user data. An on-by-default setting (`lyrics_enabled`, see
 `LyricsFetcher.kt`) sends the playing track's name, artist and length to
 LRCLIB when - and only when - the user opens the watch's lyrics screen or
 selects the lyric-following Verse watch face; again
@@ -118,6 +118,7 @@ permissions:
 - **Search history / playlist shortcuts / recently-played tracks**: stored
   only in the app's private local storage. Not collected by the developer,
   so not reportable here either.
+- **Financial info / purchases (Play build only)**: the Play build sells an optional tip through Google Play Billing (`support/TipJar.kt`, see `docs/play-tips.md`). Google Play handles the payment end to end; the app never receives a payment method, card or name, and is handed only a purchase token and an order ID, which stay on the phone, are used only to consume the purchase, and are not transmitted anywhere by the app. So "Purchase history" and "User payment info" should stay **not collected** - re-check that against the live form, since Play's wording for data processed by Play itself changes. The tip unlocks nothing; the store listing will show "Offers in-app purchases" once the bundle carries the Billing permission. The GitHub build has no billing code at all.
 
 ## Standard follow-up questions
 

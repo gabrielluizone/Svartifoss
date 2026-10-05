@@ -43,7 +43,12 @@ internal object WatchCommandDelivery {
     private fun deliver(context: Context, command: WatchCommand) {
         val canStartService = command.path != CommPaths.MESSAGE_WATCH_CLOSED &&
                 command.path != CommPaths.MESSAGE_WATCH_CLOSED_MANUALLY &&
-                command.path != CommPaths.MESSAGE_ACK
+                command.path != CommPaths.MESSAGE_ACK &&
+                // A question about state only the running service holds. With no service there is
+                // no timer to report, and starting one just to say so would be refused on a locked
+                // phone and then shown on the watch as "phone unavailable" - an error about a
+                // panel that was merely opened.
+                command.path != CommPaths.MESSAGE_REQUEST_SLEEP_TIMER
         inbox.receive(command, canStartService) {
             try {
                 ContextCompat.startForegroundService(context,

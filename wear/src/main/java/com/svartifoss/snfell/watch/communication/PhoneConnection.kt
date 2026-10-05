@@ -27,6 +27,7 @@ import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.util.FloatPacker
 import com.svartifoss.snfell.proto.CustomList
 import com.svartifoss.snfell.proto.CustomListItemAction
+import com.svartifoss.snfell.proto.ShortcutPlayMode
 import com.svartifoss.snfell.proto.LyricsRequest
 import com.svartifoss.snfell.proto.LyricsResponse
 import com.svartifoss.snfell.proto.MusicState
@@ -130,6 +131,18 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
      * (see MetadataFeed) - the replay can never show the wrong table.
      */
     val trackMetadata = MutableLiveData<TrackMetadata>()
+
+    /**
+     * When the phone's sleep timer ends, as a reading of **this** watch's `elapsedRealtime`, or 0
+     * when none is running.
+     *
+     * The phone sends how long is left (see [CommPaths.MESSAGE_SLEEP_TIMER_STATE]) and this adds it
+     * to the moment that arrived, so the countdown is measured wholly on one clock and nothing is
+     * ever subtracted between the two devices' clocks. Holding the *end* rather than the remainder
+     * is what lets the quick panel count down on its own without the phone saying anything more.
+     * A plain [MutableLiveData]: the replay of the last value to a panel that opens later is wanted.
+     */
+    val sleepTimerEndsAt = MutableLiveData(0L)
 
     val rawPlaybackConfig = MutableLiveData<DataItem>()
     val rawStoppedConfig = MutableLiveData<DataItem>()
@@ -483,6 +496,33 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         sendToPhone(CommPaths.MESSAGE_SET_PLAYBACK_SPEED, FloatPacker.packFloat(multiplier))
     }
 
+    /** How long the sleep timer has left, or 0 when none is running - read off this device's clock. */
+    fun sleepTimerRemainingMs(): Long {
+        val endsAt = sleepTimerEndsAt.value ?: 0L
+        return if (endsAt == 0L) 0L else (endsAt - SystemClock.elapsedRealtime()).coerceAtLeast(0L)
+    }
+
+    /**
+     * Shows a sleep timer of [minutes] (0 = none) at once, before the phone has confirmed it. The
+     * phone's answer replaces this the moment it arrives, so a press that never reached it is
+     * corrected by the next [requestSleepTimer] instead of being left on screen.
+     */
+    fun showSleepTimerLocally(minutes: Int) {
+        sleepTimerEndsAt.value =
+                if (minutes <= 0) 0L else SystemClock.elapsedRealtime() + minutes * 60_000L
+    }
+
+    /** Starts, changes or cancels the phone's sleep timer - see [CommPaths.MESSAGE_SET_SLEEP_TIMER]. */
+    suspend fun sendSleepTimer(minutes: Int) {
+        sendToPhone(CommPaths.MESSAGE_SET_SLEEP_TIMER,
+                ByteBuffer.allocate(8).putLong(minutes.toLong()).array())
+    }
+
+    /** Asks the phone whether a sleep timer is running; it answers with its state. */
+    suspend fun requestSleepTimer() {
+        sendToPhone(CommPaths.MESSAGE_REQUEST_SLEEP_TIMER)
+    }
+
     /** [name] is one of "like"/"shuffle"/"repeat" - see MusicService.onMessageReceived on the phone. */
     suspend fun sendQuickAction(name: String) {
         sendToPhone(CommPaths.MESSAGE_QUICK_ACTION, name.toByteArray(Charsets.UTF_8))
@@ -508,15 +548,18 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
      * The send is not one call but a node lookup followed by a message, so a cancel landing between
      * the two dropped the selection entirely - the queue tap that appeared to do nothing.
      */
-    suspend fun executeCustomMenuAction(listId: String, entryId: String) {
+    suspend fun executeCustomMenuAction(
+            listId: String,
+            entryId: String,
+            /** How a streaming shortcut should start - Play or Shuffle from its own screen. Left
+             *  unset for [ShortcutPlayMode.AS_SAVED], so the payload is byte-for-byte what it was
+             *  for every other selection. */
+            playMode: ShortcutPlayMode = ShortcutPlayMode.AS_SAVED
+    ) {
         withContext(NonCancellable) {
             sendToPhone(
                     CommPaths.MESSAGE_CUSTOM_LIST_ITEM_SELECTED,
-                    CustomListItemAction.newBuilder()
-                            .setListId(listId)
-                            .setEntryId(entryId)
-                            .build()
-                            .toByteArray()
+                    customListItemPayload(listId, entryId, playMode)
             )
         }
     }
@@ -1325,6 +1368,14 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                 }
             } catch (e: Exception) {
                 Timber.w(e, "Could not parse the playback sync reply")
+            }
+
+            CommPaths.MESSAGE_SLEEP_TIMER_STATE -> try {
+                val remainingMs = ByteBuffer.wrap(event.data).long
+                sleepTimerEndsAt.postValue(
+                        if (remainingMs <= 0L) 0L else SystemClock.elapsedRealtime() + remainingMs)
+            } catch (e: Exception) {
+                Timber.w(e, "Could not parse the sleep timer state")
             }
 
             CommPaths.MESSAGE_COMMAND_NOT_EXECUTED -> {

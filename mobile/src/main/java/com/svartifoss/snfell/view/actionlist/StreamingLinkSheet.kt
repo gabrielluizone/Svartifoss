@@ -3,7 +3,6 @@ package com.svartifoss.snfell.view.actionlist
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
@@ -21,6 +20,7 @@ import androidx.core.view.AccessibilityDelegateCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.accessibility.AccessibilityNodeInfoCompat
 import androidx.core.widget.doAfterTextChanged
+import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
@@ -29,14 +29,16 @@ import com.google.android.material.textfield.TextInputLayout
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.actions.ShortcutMenuAddition
 import com.svartifoss.snfell.actions.ShortcutMenuPlanner
+import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.music.PlaylistShortcut
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
 import com.svartifoss.snfell.music.ShortcutArtworkFetcher
-import com.svartifoss.snfell.music.ShortcutArtworkStore
+import com.svartifoss.snfell.music.ShortcutCovers
 import com.svartifoss.snfell.music.StreamingService
 import com.svartifoss.snfell.music.StreamingShortcutLinks
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.MusicLoadingBarsView
+import com.matejdro.wearutils.preferences.definition.Preferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -121,7 +123,7 @@ class StreamingLinkSheet(
     private lateinit var lookupBars: MusicLoadingBarsView
     private lateinit var lookupButton: MaterialButton
     private lateinit var lookupStatus: TextView
-    private lateinit var shuffleCheckbox: CheckBox
+    private lateinit var shuffleHint: TextView
     private lateinit var addButton: MaterialButton
     private lateinit var statusView: TextView
     private lateinit var savedSection: View
@@ -199,7 +201,7 @@ class StreamingLinkSheet(
         lookupBars = view.findViewById(R.id.sheet_lookup_bars)
         lookupButton = view.findViewById(R.id.sheet_lookup_button)
         lookupStatus = view.findViewById(R.id.sheet_lookup_status)
-        shuffleCheckbox = view.findViewById(R.id.sheet_shuffle)
+        shuffleHint = view.findViewById(R.id.sheet_shuffle_hint)
         addButton = view.findViewById(R.id.sheet_add)
         statusView = view.findViewById(R.id.sheet_status)
         savedSection = view.findViewById(R.id.sheet_saved_section)
@@ -235,7 +237,6 @@ class StreamingLinkSheet(
         dialog.findViewById<MaterialButton>(R.id.sheet_paste)?.setTextColor(accentForeground)
         lookupButton.setTextColor(accentForeground)
         orLinkLabel.setTextColor(accentForeground)
-        shuffleCheckbox.buttonTintList = accentCheckTint(secondary)
 
         // A tinted button shows no disabled state of its own: without the extra state the
         // unavailable "Add" would be indistinguishable from the ready one.
@@ -315,8 +316,7 @@ class StreamingLinkSheet(
 
         if (!usable) {
             detectedView.visibility = View.GONE
-            shuffleCheckbox.visibility = View.GONE
-            shuffleCheckbox.isChecked = false
+            shuffleHint.visibility = View.GONE
             lookupRow.visibility = View.GONE
             updateAddEnabled()
             return
@@ -328,9 +328,16 @@ class StreamingLinkSheet(
 
         detectedView.text = PlaylistShortcutStorage.describe(context, PlaylistShortcut("", candidate))
         detectedView.visibility = View.VISIBLE
-        val supportsShuffle = StreamingShortcutLinks.supportsShuffle(candidate)
-        shuffleCheckbox.visibility = if (supportsShuffle) View.VISIBLE else View.GONE
-        if (!supportsShuffle) shuffleCheckbox.isChecked = false
+        // Only where the watch will actually offer the choice: a collection, with the watch set
+        // to ask, and not while picking for a button - a button assigned to one link starts it at
+        // once, so there is no screen for the choice to be made on. Telling someone saving a single
+        // track that they will pick a shuffle later would promise a button that never appears.
+        val offersShuffle = mode != Mode.PICK &&
+                StreamingShortcutLinks.detectContentType(candidate).offersShuffle &&
+                Preferences.getBoolean(
+                        PreferenceManager.getDefaultSharedPreferences(context),
+                        MiscPreferences.WEAR_SHORTCUT_DETAILS)
+        shuffleHint.visibility = if (offersShuffle) View.VISIBLE else View.GONE
 
         refreshLookup(candidate)
         updateAddEnabled()
@@ -404,10 +411,10 @@ class StreamingLinkSheet(
             return
         }
 
-        var link = StreamingShortcutLinks.stripShuffle(candidate)
-        if (shuffleCheckbox.isChecked && StreamingShortcutLinks.supportsShuffle(link)) {
-            link = StreamingShortcutLinks.withYoutubeShuffle(link)
-        }
+        // A YouTube Music shuffle flag that came along with a pasted link is dropped: shuffling is
+        // a choice made on the watch each time, and a saved flag would quietly overrule it for
+        // every button the shortcut is later assigned to.
+        val link = StreamingShortcutLinks.stripShuffle(candidate)
 
         // The menu is only consulted in MENU mode: a link picked for a button may well already be
         // on the menu, and that is no reason to refuse it.
@@ -577,12 +584,12 @@ class StreamingLinkSheet(
                 R.plurals.add_menu_add_selected, selected.size, selected.size)
     }
 
-    /** Cover if one was fetched, else the app's own icon, else a plain glyph - the order the
-     *  shortcuts screen uses, so a shortcut looks the same here as where it was saved. */
+    /** The shortcut's cover - the fetched picture, else the service's drawn one, the answer
+     *  [ShortcutCovers] gives everywhere a destination is listed - else the app's own icon, else a
+     *  plain glyph. */
     private fun bindIcon(view: ImageView, shortcut: PlaylistShortcut) {
         val service = StreamingShortcutLinks.detect(shortcut.link)
-        val cover = ShortcutArtworkStore.get(context, shortcut.link)
-                ?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
+        val cover = ShortcutCovers.forLink(context, shortcut.link)
         val appIcon = service.packageName?.let { packageName ->
             try {
                 context.packageManager.getApplicationIcon(packageName)

@@ -38,7 +38,7 @@
 
     <string name="no_phone">휴대전화가 연결되지 않음</string>
     <string name="phone_unavailable">재생을 제어하려면 휴대전화 잠금을 해제하세요</string>
-    <string name="playback_stopped">중지됨</string>
+    <string name="playback_stopped">일시중지됨</string>
     <string name="error">오류</string>
     <string name="error_play_services">Play 서비스 오류</string>
     <string name="button">버튼</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">최근 재생</string>
     <string name="queue_history_fallback_reason">이 앱은 대기열을 공유하지 않습니다</string>
+    <string name="menu_header_actions">동작</string>
+    <string name="menu_header_search_results">검색 결과</string>
+    <string name="menu_header_search_history">최근 검색</string>
+    <string name="menu_header_library">보관함</string>
+    <string name="shortcut_open_on_phone">휴대전화에서 열기</string>
+    <string name="shortcut_continue_on_phone">휴대전화에서 계속하세요</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">오늘</string>
 
@@ -203,4 +209,23 @@
     <string name="progress_screen_cancel_seek">탐색 취소</string>
     <string name="progress_screen_skip_back">%1$d초 뒤로 건너뛰기</string>
     <string name="progress_screen_skip_forward">%1$d초 앞으로 건너뛰기</string>
+    <string name="quick_block_all_actions">모든 작업</string>
+    <string name="quick_block_favorites">즐겨찾기</string>
+    <string name="quick_tool_speed">속도</string>
+    <string name="quick_tool_lyrics">가사</string>
+    <string name="quick_tool_queue">대기열</string>
+    <string name="quick_tool_volume">음량</string>
+    <string name="quick_tool_progress">진행상황</string>
+    <string name="quick_tool_faces">워치 페이스</string>
+    <string name="quick_tool_search">검색</string>
+    <string name="quick_tool_menu">메뉴</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">음량 %1$d%%</string>
+    <string name="quick_seek_back_description">뒤로 %1$d초</string>
+    <string name="quick_seek_forward_description">앞으로 %1$d초</string>
+    <string name="quick_speed_description">재생 속도 %1$s</string>
+    <string name="quick_tool_sleep">취침 타이머</string>
+    <string name="quick_sleep_minutes">%1$d분</string>
+    <string name="quick_sleep_description">수면 타이머, %1$d분 남았습니다. 탭하여 변경</string>
+    <string name="quick_sleep_off_description">취침 타이머가 꺼졌습니다. 탭하여 설정</string>
 </resources>

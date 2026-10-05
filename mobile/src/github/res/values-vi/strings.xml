@@ -9,4 +9,7 @@ Svartifoss không có trên Play Store — ứng dụng đồng hồ được si
     <string name="no_watch_app_button">Xem bản phát hành</string>
     <string name="update_watch_hint">“Cập nhật đồng hồ” tải ứng dụng đồng hồ mới và gửi qua Bluetooth — bạn xác nhận cài đặt trên chính đồng hồ, không cần cáp hay Wear Installer.</string>
     <string name="update_no_wear_asset">Bản phát hành này không có APK đồng hồ để gửi.</string>
+    <string name="drawer_support_summary">Svartifoss miễn phí và mã nguồn mở — nếu hữu ích, hãy mời tôi một ly cà phê :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

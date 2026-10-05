@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Releases ansehen</string>
     <string name="update_watch_hint">„Uhr aktualisieren“ lädt die neue Uhren-App und sendet sie über Bluetooth — du bestätigst die Installation auf der Uhr selbst, kein Kabel oder Wear Installer nötig.</string>
     <string name="update_no_wear_asset">Dieses Release hat keine Uhren-APK zum Senden.</string>
+    <string name="drawer_support_summary">Svartifoss ist kostenlos und quelloffen — spendier mir einen Kaffee, wenn es dir nützt :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

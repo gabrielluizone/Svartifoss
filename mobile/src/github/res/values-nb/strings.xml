@@ -9,4 +9,7 @@ Svartifoss finnes ikke i Play Butikk — klokkeappen sidelastes separat (f.eks. 
     <string name="no_watch_app_button">Vis utgivelser</string>
     <string name="update_watch_hint">«Oppdater klokken» laster ned den nye klokkeappen og sender den via Bluetooth — du bekrefter installasjonen på selve klokken, uten kabel eller Wear Installer.</string>
     <string name="update_no_wear_asset">Denne utgivelsen har ingen klokke-APK å sende.</string>
+    <string name="drawer_support_summary">Svartifoss er gratis og åpen kildekode — kjøp meg en kaffe hvis du har nytte av appen :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

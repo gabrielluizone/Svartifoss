@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Смотреть версии</string>
     <string name="update_watch_hint">«Обновить часы» скачивает новое приложение для часов и отправляет его по Bluetooth — вы подтверждаете установку на самих часах, без кабеля или Wear Installer.</string>
     <string name="update_no_wear_asset">В этом релизе нет APK для часов для отправки.</string>
+    <string name="drawer_support_summary">Svartifoss бесплатное и с открытым исходным кодом — угостите меня кофе, если оно вам полезно :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

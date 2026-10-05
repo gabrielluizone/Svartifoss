@@ -199,9 +199,11 @@
     <string name="playing_controls">Controls while playing</string>
     <string name="stopped_controls">Controls with no playback</string>
     <string name="actions_menu">Actions menu</string>
-    <string name="actions_intro">Everything here appears on your watch, in the order you set: in the menu, and again as rows under the quick panel’s buttons. Add playlists, albums and tracks by pasting a link, or add any other action.</string>
+    <string name="actions_intro">Everything here appears on your watch, in the order you set: in the menu and, unless you rearrange the quick panel, again as rows in it. Add playlists, albums and tracks by pasting a link, or add any other action.</string>
     <string name="actions_quick_panel_section">Quick panel</string>
     <string name="actions_watch_menu_section">Menu on watch</string>
+    <string name="actions_quick_pin_add">Show in quick panel</string>
+    <string name="actions_quick_pin_remove">Remove from quick panel</string>
     <plurals name="actions_list_summary">
         <item quantity="one">%1$d action · Tap to edit · Hold and drag to reorder</item>
         <item quantity="other">%1$d actions · Tap to edit · Hold and drag to reorder</item>
@@ -439,7 +441,7 @@
     <string name="preview_sample_lyric_current">The line playing now</string>
     <string name="preview_sample_lyric_next">The line after</string>
     <string name="preview_sample_next_title">Next song</string>
-    <string name="preview_playback_stopped">Stopped</string>
+    <string name="preview_playback_stopped">Paused</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -619,7 +621,7 @@
     <string name="setting_screen_buttons_opacity">Mini buttons opacity</string>
     <string name="setting_screen_buttons_opacity_description">Opacity of the entire mini-button group (0–100%%). Currently <![CDATA[<b>%1$s%%</b>]]>.</string>
     <string name="quick_panel_row_title">Quick actions panel</string>
-    <string name="quick_panel_link_summary">Double-tap the centre of the watch screen to open it. Tap here to set up its buttons in Actions.</string>
+    <string name="quick_panel_link_summary">Double-tap the centre of the watch screen to open it. Tap here to choose what it holds and in what order.</string>
     <string name="quick_panel_config_hint">These are the buttons on the panel opened by double-tapping the center of the watch screen. Tap a row to choose its action (\"None\" hides it); long-press to restore the default.</string>
     <string name="quick_panel_slot_1">Button 1</string>
     <string name="quick_panel_slot_2">Button 2</string>
@@ -630,6 +632,95 @@
     <string name="quick_panel_default_shuffle">Shuffle</string>
     <string name="quick_panel_default_repeat">Repeat</string>
     <string name="quick_panel_default_up_next">Up Next</string>
+    <!-- Quick panel editor -->
+    <string name="quick_panel_editor_title">Quick actions panel</string>
+    <string name="quick_panel_editor_open">Edit panel content</string>
+    <string name="quick_panel_editor_intro">Build the panel that opens when you double-tap the centre of the watch. Hold and drag a block to move it, tap one to adjust it.</string>
+    <string name="quick_panel_editor_add_block">Add block</string>
+    <string name="quick_panel_editor_restore">Restore the original panel</string>
+    <string name="quick_panel_editor_restore_title">Restore the original panel?</string>
+    <string name="quick_panel_editor_restore_message">Your arrangement is removed and the panel goes back to how it was. Your button choices and the actions you starred are kept.</string>
+    <string name="quick_panel_editor_restore_confirm">Restore</string>
+    <string name="quick_panel_editor_fold">End of the first screen (approximate)</string>
+    <string name="quick_panel_editor_last_block">A panel needs at least one block</string>
+    <string name="quick_panel_editor_removed">Removed %1$s</string>
+    <string name="quick_panel_editor_undo">Undo</string>
+    <string name="quick_panel_editor_move_up">Move up</string>
+    <string name="quick_panel_editor_move_down">Move down</string>
+    <string name="quick_panel_editor_more">More options</string>
+    <string name="quick_panel_editor_nothing_to_add">Every block is already on the panel</string>
+
+    <string name="quick_block_header">Track</string>
+    <string name="quick_block_buttons">Round buttons</string>
+    <string name="quick_block_upnext">Up Next</string>
+    <string name="quick_block_volume">Volume</string>
+    <string name="quick_block_seek">Skip and position</string>
+    <string name="quick_block_tools">Tools</string>
+    <string name="quick_block_favorites">Favorites</string>
+    <string name="quick_block_actions">All actions</string>
+    <string name="quick_block_all_actions">All actions</string>
+
+    <string name="quick_block_header_description">The title and artist of what is playing.</string>
+    <string name="quick_block_buttons_description">Round buttons for the actions you use most, or the ones the playing app offers.</string>
+    <string name="quick_block_upnext_description">The next track. Tap it to open the queue.</string>
+    <string name="quick_block_volume_description">Lower and raise the volume without leaving the panel.</string>
+    <string name="quick_block_seek_description">Where you are in the track, and buttons that skip back and forward.</string>
+    <string name="quick_block_tools_description">Small shortcuts: playback speed, lyrics, the queue and more.</string>
+    <string name="quick_block_favorites_description">The actions you starred on the Actions tab, as covers or rows.</string>
+    <string name="quick_block_actions_description">Every action of your watch menu, as rows in the panel or as one button that opens the menu.</string>
+
+    <string name="quick_summary_header">Title and artist</string>
+    <string name="quick_summary_buttons_session">From the playing app</string>
+    <string name="quick_summary_buttons_empty">No buttons chosen</string>
+    <string name="quick_summary_upnext">Next track · opens the queue</string>
+    <string name="quick_summary_volume">Steps of %1$d%%</string>
+    <string name="quick_summary_seek">%1$s seconds</string>
+    <string name="quick_summary_seek_bar">%1$s seconds · time and bar</string>
+    <string name="quick_summary_favorites_none">None starred yet</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d starred · %2$s</item>
+        <item quantity="other">%1$d starred · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">All %1$d actions</string>
+    <string name="quick_summary_actions_first">First %1$d actions</string>
+    <string name="quick_summary_actions_button">One button · opens the actions menu</string>
+    <string name="quick_summary_only_playing">only while playing</string>
+    <string name="quick_summary_only_not_playing">only while not playing</string>
+    <string name="quick_mode_grid">Grid</string>
+    <string name="quick_mode_rows">Rows</string>
+    <string name="quick_mode_actions_list">List</string>
+    <string name="quick_mode_actions_button">Button</string>
+
+    <string name="quick_sheet_show">Show</string>
+    <string name="quick_sheet_always">Always</string>
+    <string name="quick_sheet_while_playing">While playing</string>
+    <string name="quick_sheet_while_not_playing">While not playing</string>
+    <string name="quick_sheet_step">Step</string>
+    <string name="quick_sheet_jump">Jump by</string>
+    <string name="quick_sheet_seek_bar">Show time and progress bar</string>
+    <string name="quick_sheet_tools">Tools</string>
+    <string name="quick_sheet_layout">Layout</string>
+    <string name="quick_sheet_how_many">How many</string>
+    <string name="quick_sheet_all">All</string>
+    <string name="quick_sheet_buttons_source">Buttons from</string>
+    <string name="quick_sheet_source_configured">My choices</string>
+    <string name="quick_sheet_source_session">The playing app</string>
+    <string name="quick_sheet_buttons_hint">Tap a button to choose its action. Hold to restore its default.</string>
+    <string name="quick_sheet_favorites_hint">Star actions with the lightning bolt on the Actions tab. Only starred ones appear here.</string>
+    <string name="quick_sheet_actions_mode">Show as</string>
+    <string name="quick_sheet_actions_hint">A list puts every action on the panel as a row. A button keeps the panel short: one pill that opens the full menu. To leave the menu out of the panel altogether, remove this block.</string>
+    <string name="quick_sheet_remove">Remove this block</string>
+    <string name="quick_sheet_done">Done</string>
+
+    <string name="quick_tool_speed">Speed</string>
+    <string name="quick_tool_sleep">Sleep</string>
+    <string name="quick_tool_lyrics">Lyrics</string>
+    <string name="quick_tool_queue">Queue</string>
+    <string name="quick_tool_volume">Volume</string>
+    <string name="quick_tool_progress">Progress</string>
+    <string name="quick_tool_faces">Faces</string>
+    <string name="quick_tool_search">Search</string>
+    <string name="quick_tool_menu">Menu</string>
     <string name="setting_wear_center_long_press_queue">Long-press center for queue</string>
     <string name="setting_wear_center_long_press_queue_description">Long-press the center of the now-playing screen to open the playback queue.</string>
     <string name="setting_wear_center_long_press">Long-press center</string>
@@ -2507,6 +2598,8 @@
     <string name="setting_wear_close_on_idle_description">Automatically closes the watch app about a minute after it reaches the idle \"Nothing playing\" screen, so it never lingers there. Independent of the close timeout above, which covers a paused track.</string>
     <string name="setting_wear_hide_from_recents">Hide from recent apps</string>
     <string name="setting_wear_hide_from_recents_description">Keeps the watch app out of the watch\'s recent apps list once you close it or use another app. Useful if you open it from the watch face or the Now Bar instead. It stays reachable exactly as before, and music and the background connection are not affected.</string>
+    <string name="setting_wear_shortcut_details">Play or Shuffle on the watch</string>
+    <string name="setting_wear_shortcut_details_description">Picking a saved link on the watch, from its shortcut list, the Shortcuts Tile or the actions menu, first shows its cover with Play and Shuffle. Turn off to start it straight away instead. Buttons and gestures assigned to one link always start it straight away.</string>
     <string name="category_notifications">Notification popup</string>
     <string name="setting_enable_notifications">Show notification popup</string>
     <string name="setting_enable_notifications_description">This feature requires another app to manage notifications (Vibration Center for Wear).\n\nWhenever Vibration Center vibrates the watch, Svartifoss will display popup of the notification text, allowing you to glance at notification quickly without leaving Svartifoss.</string>
@@ -2562,9 +2655,6 @@
     <string name="drawer_sync_heading">Sync</string>
     <string name="drawer_sync_summary">Watch settings are configured here on the phone and synced automatically to your paired watch.</string>
     <string name="drawer_support_heading">Support</string>
-    <string name="drawer_support_summary">Svartifoss is free/libre and open source (GPLv3), and no feature is gated behind a payment. Buy me a coffee if it\'s useful to you :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Download cover art</string>
     <string name="album_art_saved">Cover art saved to gallery</string>
     <string name="album_art_save_error">Failed to save cover art</string>
@@ -2589,7 +2679,7 @@
     <string name="setting_playlist_shortcuts">Streaming shortcuts</string>
     <string name="setting_playlist_shortcuts_description">Open share links from the watch in YouTube Music, Spotify and other streaming apps</string>
     <string name="setting_shortcut_artwork">Fetch shortcut names and artwork online</string>
-    <string name="setting_shortcut_artwork_description">Look up each saved link’s name and thumbnail from the service’s public preview data. The name fills in when you add a link to the menu; the thumbnail is shown on the phone list, the watch menu and assigned buttons. Each is fetched once, and only the public share link is sent. Off by default: with it off, “Get name from link” makes the same request only when you tap it.</string>
+    <string name="setting_shortcut_artwork_description">Look up each saved link’s name, cover and public creator or description from the service’s preview data. Details appear on the shortcut screen; the thumbnail is shown on the phone list, watch menu and assigned buttons. Each is fetched once, and only the public share link is sent. Off by default: with it off, “Get name from link” makes the same request only when you tap it.</string>
     <string name="setting_queue_local_artwork">Queue covers from your library</string>
     <string name="setting_queue_local_artwork_description">Local music players publish queue covers as library references. Grant media access so they can be shown on the watch queue. No internet access is involved.</string>
     <string name="setting_queue_local_artwork_granted">Media access granted — local queue covers will be shown</string>
@@ -2617,6 +2707,14 @@
         <item>Android default</item>
         <item>Ask every time</item>
     </string-array>
+    <string name="setting_streaming_app_routes">Choose apps for streaming links</string>
+    <string name="setting_streaming_app_routes_description">Choose a compatible installed app separately for YouTube Music, Spotify and each other service. Used with “Detected streaming app”.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d service uses a selected app</item>
+        <item quantity="other">%1$d services use selected apps</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Apps that can open the link, plus installed media players, are shown.</string>
+    <string name="streaming_route_automatic">Automatic (detected app)</string>
     <string name="setting_persistent_notification">Manage the \"Svartifoss active\" notification</string>
     <string name="setting_persistent_notification_description">Opens this notification\'s Android settings — mute it, hide it from the lock screen, or otherwise adjust it. It can\'t be turned off entirely: Android requires an ongoing notification while the background service that talks to your watch is running.</string>
     <string name="setting_notification_access">Media notification access</string>
@@ -2658,7 +2756,7 @@
     <string name="playlist_shortcut_detected_format">Detected: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Name</string>
     <string name="playlist_shortcut_link_hint">Share link or app URI</string>
-    <string name="playlist_shortcut_shuffle">Play shuffled (YouTube Music only)</string>
+    <string name="playlist_shortcut_play_choice">You pick Play or Shuffle on the watch each time you start it.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>

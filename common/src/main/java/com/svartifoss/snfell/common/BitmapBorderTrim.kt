@@ -17,11 +17,12 @@ import kotlin.math.abs
  * the watch trims again at decode time. Trimming twice is free: an already-trimmed cover is square
  * and comes back unchanged.
  *
- * Only a picture that is **not already square** is trimmed, and only when the crop brings it closer
- * to square - which is exactly what removing a letterbox or pillarbox around a square cover does.
- * Without that rule it cut away any flat margin at all, so a minimalist sleeve - a small logo on a
- * plain field, a common design - was cropped down to the logo and shown on the watch as a close-up
- * of it. A square picture's margin is part of its design, and scanning it at all was wasted work.
+ * A non-square picture is trimmed only when the crop brings it closer to square - which is exactly
+ * what removing a letterbox or pillarbox around a square cover does. A square picture is normally
+ * preserved: only the narrow, two-opposite-bars exception in [shouldCropSquareLetterbox] is
+ * allowed through. Without that rule it cut away any flat margin at all, so a minimalist sleeve -
+ * a small logo on a plain field, a common design - was cropped down to the logo and shown on the
+ * watch as a close-up of it.
  */
 object BitmapBorderTrim {
     private const val BORDER_UNIFORMITY_THRESHOLD = 26
@@ -31,7 +32,6 @@ object BitmapBorderTrim {
         val width = source.width
         val height = source.height
         if (width < 16 || height < 16) return source
-        if (isSquare(width, height)) return source
         var top = 0
         var bottom = height - 1
         var left = 0
@@ -42,10 +42,25 @@ object BitmapBorderTrim {
         while (right > left && isUniformColumn(source, right, top, bottom)) right--
         val cropWidth = right - left + 1
         val cropHeight = bottom - top + 1
-        return if (shouldCrop(width, height, cropWidth, cropHeight)) {
-            Bitmap.createBitmap(source, left, top, cropWidth, cropHeight)
-        } else {
-            source
+        return when {
+            shouldCrop(width, height, cropWidth, cropHeight) ->
+                Bitmap.createBitmap(source, left, top, cropWidth, cropHeight)
+            // Some YouTube Music art-track thumbnails arrive in a *square* bitmap but contain a
+            // landscape picture between two black bars. A square bitmap normally must be kept - a
+            // flat margin can be part of an album's design - but two substantial opposite bars
+            // and no matching side bars identify this as letterboxing. Remove the bars and take
+            // the centre square of the actual picture, rather than retaining a tiny wide picture
+            // in a black square.
+            shouldCropSquareLetterbox(width, height, top, bottom, left, right) &&
+                    letterboxBarsMatch(width, height, top, bottom, left, right) { x, y ->
+                        source.getPixel(x, y)
+                    } -> {
+                val side = minOf(cropWidth, cropHeight)
+                val cropLeft = left + (cropWidth - side) / 2
+                val cropTop = top + (cropHeight - side) / 2
+                Bitmap.createBitmap(source, cropLeft, cropTop, side, side)
+            }
+            else -> source
         }
     }
 
@@ -66,6 +81,102 @@ object BitmapBorderTrim {
         if (cropWidth < 16 || cropHeight < 16) return false
         return squareness(cropWidth, cropHeight) > squareness(width, height)
     }
+
+    /**
+     * The narrow exception to the "never trim a square cover" rule: real letterbox bars inside a
+     * square canvas. [top], [bottom], [left] and [right] are the bounds left after uniform edges
+     * have been scanned. A normal sleeve with a frame on every side is rejected; it remains a
+     * square inner picture and its border is part of the artwork.
+     */
+    internal fun shouldCropSquareLetterbox(
+            width: Int,
+            height: Int,
+            top: Int,
+            bottom: Int,
+            left: Int,
+            right: Int
+    ): Boolean {
+        if (!isSquare(width, height)) return false
+        val minimumBar = (minOf(width, height) * LETTERBOX_BAR_FRACTION).toInt().coerceAtLeast(2)
+        val topBar = top
+        val bottomBar = height - 1 - bottom
+        val leftBar = left
+        val rightBar = width - 1 - right
+        val hasHorizontalBars = topBar >= minimumBar && bottomBar >= minimumBar &&
+                leftBar < minimumBar && rightBar < minimumBar
+        val hasVerticalBars = leftBar >= minimumBar && rightBar >= minimumBar &&
+                topBar < minimumBar && bottomBar < minimumBar
+        return hasHorizontalBars || hasVerticalBars
+    }
+
+    /**
+     * At least a tenth of the canvas per edge: a 1px compression edge is not a letterbox, and
+     * neither is the dark margin a sleeve fades out into. Five percent was the first value and it
+     * cropped a real cover - Muse's *Panic Station* is black above and below its design for 6% and
+     * 9% of the canvas, and was cut to a 229px square out of 269, so its edges went missing.
+     * Letterboxing a picture that is even 5:4 leaves bars of a tenth each, and a nearly square
+     * picture has nothing worth removing.
+     */
+    private const val LETTERBOX_BAR_FRACTION = .10f
+
+    /** How far, per channel, the outermost lines of the two bars may differ and still be one bar. */
+    private const val LETTERBOX_COLOUR_MATCH = 24
+
+    /**
+     * Whether the two bars [shouldCropSquareLetterbox] found are the same colour.
+     *
+     * A letterbox is two copies of one bar, so the outermost line of each is the same colour -
+     * black, or one flat album colour. A gradient is not: each of its rows is flat, which is all the
+     * scan in [trim] asks of a row, so a violet-to-pink sleeve with a glyph in its middle reads as
+     * two bars a hundred rows deep, and cropping them zoomed YouTube Music's Liked Music cover to
+     * almost twice its size. Its two ends are different colours, which is what gives it away.
+     *
+     * [pixelAt] is the only way this reads the picture, so a plain JVM test can pin it.
+     */
+    internal inline fun letterboxBarsMatch(
+            width: Int,
+            height: Int,
+            top: Int,
+            bottom: Int,
+            left: Int,
+            right: Int,
+            pixelAt: (x: Int, y: Int) -> Int
+    ): Boolean {
+        val horizontal = top + (height - 1 - bottom) >= left + (width - 1 - right)
+        val first: Int
+        val last: Int
+        if (horizontal) {
+            first = averageColour(0, width - 1) { x -> pixelAt(x, 0) }
+            last = averageColour(0, width - 1) { x -> pixelAt(x, height - 1) }
+        } else {
+            first = averageColour(0, height - 1) { y -> pixelAt(0, y) }
+            last = averageColour(0, height - 1) { y -> pixelAt(width - 1, y) }
+        }
+        return isSameBarColour(first, last)
+    }
+
+    /** The mean colour of a line, sampled like [isUniformLine], as packed RGB. */
+    internal inline fun averageColour(from: Int, to: Int, pixelAt: (Int) -> Int): Int {
+        var r = 0L; var g = 0L; var b = 0L
+        var count = 0
+        var i = from
+        while (i <= to) {
+            val pixel = pixelAt(i)
+            r += (pixel shr 16) and 0xFF
+            g += (pixel shr 8) and 0xFF
+            b += pixel and 0xFF
+            count++
+            i += BORDER_SAMPLE_STEP
+        }
+        if (count == 0) return 0
+        return ((r / count).toInt() shl 16) or ((g / count).toInt() shl 8) or (b / count).toInt()
+    }
+
+    /** Whether two packed RGB colours are within [LETTERBOX_COLOUR_MATCH] of each other per channel. */
+    internal fun isSameBarColour(a: Int, b: Int): Boolean =
+            abs(((a shr 16) and 0xFF) - ((b shr 16) and 0xFF)) <= LETTERBOX_COLOUR_MATCH &&
+                    abs(((a shr 8) and 0xFF) - ((b shr 8) and 0xFF)) <= LETTERBOX_COLOUR_MATCH &&
+                    abs((a and 0xFF) - (b and 0xFF)) <= LETTERBOX_COLOUR_MATCH
 
     private fun squareness(width: Int, height: Int): Float =
             minOf(width, height).toFloat() / maxOf(width, height)

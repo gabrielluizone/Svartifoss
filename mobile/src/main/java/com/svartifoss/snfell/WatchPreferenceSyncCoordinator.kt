@@ -33,6 +33,8 @@ import kotlin.math.min
 private const val CHANGE_DEBOUNCE_MS = 120L
 private const val INITIAL_RETRY_MS = 1_000L
 private const val MAX_RETRY_MS = 60_000L
+/** Phone-only preference that supplies [MiscPreferences.WEAR_PHONE_ACCENT_COLOR] at send time. */
+private const val PHONE_CUSTOM_ACCENT_COLOR_KEY = "custom_accent_color"
 
 /** Play Services' hard cap on one DataItem and on one message payload. */
 private const val DATA_ITEM_LIMIT_BYTES = 100 * 1024
@@ -56,6 +58,10 @@ private const val VALUE_OVERHEAD_BYTES = 12
  * `@face`, so [shouldSyncWatchPreference] normalizes them before checking this registry. */
 private val WATCH_SYNC_BASE_KEYS: Set<String> by lazy {
     MiscPreferences.EXPORTABLE.mapTo(mutableSetOf()) { it.key }.apply {
+        // This is a derived, sync-only value rather than an exportable watch setting. See
+        // phoneAccentForWatchSnapshot: an idle watch needs the phone's custom accent even though
+        // no album palette exists to supply one.
+        add(MiscPreferences.WEAR_PHONE_ACCENT_COLOR.key)
         // Diagnostics are intentionally excluded from backup/export, but are still phone-owned
         // watch settings and therefore must use the same immediate delivery path.
         add(MiscPreferences.WEAR_DEV_SHOW_LAYOUT_BOUNDS.key)
@@ -67,6 +73,20 @@ internal fun shouldSyncWatchPreference(key: String?): Boolean {
     val baseKey = key?.substringBefore(FaceScopedPreferences.SCOPE_SEPARATOR) ?: return false
     return baseKey in WATCH_SYNC_BASE_KEYS
 }
+
+/** A phone-local source can trigger a publication without itself crossing the Data Layer. */
+private fun shouldPublishWatchPreferenceSnapshot(key: String?): Boolean =
+        key == PHONE_CUSTOM_ACCENT_COLOR_KEY || shouldSyncWatchPreference(key)
+
+/**
+ * Adds the phone's static custom accent to a watch-only snapshot without persisting a duplicate
+ * preference. An empty value is intentional: it tells the watch to return to its built-in sage
+ * fallback after the user resets the phone colour.
+ */
+internal fun phoneAccentForWatchSnapshot(all: Map<String, *>): Map<String, Any?> =
+        all.mapValues { it.value as Any? } +
+                (MiscPreferences.WEAR_PHONE_ACCENT_COLOR.key to
+                        (all[PHONE_CUSTOM_ACCENT_COLOR_KEY] as? String).orEmpty())
 
 /**
  * Conservative common budget for the DataItem and immediate-message preference snapshots.
@@ -262,7 +282,7 @@ internal class WatchPreferenceSyncCoordinator(context: Context) {
     private var disabled = false
 
     private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-        if (key == null || shouldSyncWatchPreference(key)) requestSync(CHANGE_DEBOUNCE_MS)
+        if (key == null || shouldPublishWatchPreferenceSnapshot(key)) requestSync(CHANGE_DEBOUNCE_MS)
     }
 
     fun start() {
@@ -328,7 +348,7 @@ internal class WatchPreferenceSyncCoordinator(context: Context) {
     }
 
     private fun prepareLatestSnapshot(force: Boolean = false): Publication? {
-        val all = preferences.all
+        val all = phoneAccentForWatchSnapshot(preferences.all)
         val selection = selectWatchPreferenceSnapshot(all, activeWatchAppearanceScope(all))
         val snapshot = selection.values
         reportDroppedScopes(selection)

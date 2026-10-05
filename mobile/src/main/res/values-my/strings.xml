@@ -729,7 +729,7 @@
     <string name="preview_sample_lyric_current">ယခုဖွင့်နေသော စာကြောင်း</string>
     <string name="preview_sample_lyric_next">နောက်စာကြောင်း</string>
     <string name="preview_sample_next_title">နောက်သီချင်း</string>
-    <string name="preview_playback_stopped">ရပ်ထားသည်</string>
+    <string name="preview_playback_stopped">ခေတ္တရပ်ထားသည်</string>
     <string name="preview_verse_previous">ရှေ့စာကြောင်း</string>
     <string name="preview_verse_current">ယခုဖွင့်နေသော စာကြောင်း</string>
     <string name="preview_verse_next">ပြီးတော့ နောက်တစ်ကြောင်း</string>
@@ -1089,9 +1089,9 @@
         <item>အနက်</item>
         <item>Dynamic (album tone)</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Up Next pill နောက်ခံ</string>
-    <string name="setting_wear_show_up_next_pill">Player ပေါ် Up Next pill</string>
-    <string name="setting_wear_show_up_next_pill_description">now-playing မျက်နှာပြင်အောက်တွင် Up Next pill ကို ပြပါ။ ၎င်းသည် mini-buttons row နေရာကို ဖြည့်သဖြင့် row မပေါ်ချိန်တွင်သာ ပြမည်။</string>
+    <string name="setting_wear_up_next_pill">နောက်တစ်ပုဒ် ကပ်ဆူးလ် နောက်ခံ</string>
+    <string name="setting_wear_show_up_next_pill">Player ပေါ် နောက်တစ်ပုဒ် ကပ်ဆူးလ်</string>
+    <string name="setting_wear_show_up_next_pill_description">now-playing မျက်နှာပြင်အောက်တွင် နောက်တစ်ပုဒ် ကပ်ဆူးလ် ကို ပြပါ။ ၎င်းသည် mini-buttons row နေရာကို ဖြည့်သဖြင့် row မပေါ်ချိန်တွင်သာ ပြမည်။</string>
     <string name="category_wf_clock">နာရီ</string>
     <string name="setting_wear_clock_color">နာရီအရောင်</string>
     <string name="setting_wear_clock_custom_color">နာရီ စိတ်ကြိုက်အရောင်</string>
@@ -1106,8 +1106,8 @@
     <string name="setting_wear_aod_show_transport_description">ပံ့ပိုးထားသော visual always-on ပုံစံများတွင် outline previous/play/next ခလုတ်များကို ပြပါ။ မျက်နှာပြင်မှိန်နေချိန် နှိပ်၍မရသော်လည်း နှိပ်လိုက်ခြင်းက နာရီကို နိုးစေပြီး ခလုတ်က လက်ချောင်းအောက်တွင် ရှိနေပြီးသားဖြစ်သည်။</string>
     <string name="setting_wear_aod_show_progress">Always-on display ပေါ် progress ring</string>
     <string name="setting_wear_aod_show_progress_description">ambient mode တွင် play button ပတ်လည် progress ring ကို ပြပါ — ထိုနေရာတွင် position သည် တစ်မိနစ်ခန့်တစ်ကြိမ်သာ update ဖြစ်သည်</string>
-    <string name="setting_wear_aod_show_pills">Always-on display ပေါ် Up Next</string>
-    <string name="setting_wear_aod_show_pills_description">visual always-on ပုံစံများအောက်တွင် static outline Up Next pill ကို ပြပါ</string>
+    <string name="setting_wear_aod_show_pills">Always-on display ပေါ် နောက်တစ်ပုဒ်</string>
+    <string name="setting_wear_aod_show_pills_description">visual always-on ပုံစံများအောက်တွင် static outline နောက်တစ်ပုဒ် ကပ်ဆူးလ် ကို ပြပါ</string>
     <string name="category_wf_gestures">မျက်နှာပြင် gestures</string>
     <string name="setting_wear_mini_buttons_mode">Mini ခလုတ်များ ပြရန်</string>
     <string name="setting_wear_gestures_mode">မျက်နှာပြင် gestures</string>
@@ -1157,8 +1157,8 @@
     <string name="preview_notification_controls">media notification မှ icon</string>
     <string name="setting_wear_queue_style">Queue ပုံစံ</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Shortcut covers ကို နောက်ခံအဖြစ် သုံးရန်</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Queue style က Cover variant တစ်မျိုးဖြစ်ချိန် fetched shortcut cover (track, playlist, artist…) ပါသော quick-panel action row သည် Up Next လိုပဲ pill ကို ထို art ဖြင့် ဖြည့်မည်။ Fetched cover မရှိသော shortcuts (ရိုးရိုး app icon) မပြောင်းပါ။</string>
-    <string name="setting_wear_list_row_size">List pill အရွယ်</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Queue style က Cover variant တစ်မျိုးဖြစ်ချိန် fetched shortcut cover (track, playlist, artist…) ပါသော quick-panel action row သည် နောက်တစ်ပုဒ် လိုပဲ ကပ်ဆူးလ် ကို ထို art ဖြင့် ဖြည့်မည်။ Fetched cover မရှိသော shortcuts (ရိုးရိုး app icon) မပြောင်းပါ။</string>
+    <string name="setting_wear_list_row_size">စာရင်းကပ်ဆူးလ် အရွယ်အစား</string>
     <string name="setting_wear_list_row_size_description">Queue ထဲရှိ full-width rows ၏ အမြင့်။</string>
     <string name="setting_wear_progress_gradient">Palette ကို ring ထဲ ပေါင်းရန်</string>
     <string name="setting_wear_progress_gradient_description">အရောင်စုံ color treatment (Complementary, Triadic, Analogous, Duotone) တွင် solid ring သည် အရောင်သုံးရောင်လုံးတစ်လျှောက် fade ဖြစ်သည်။ အခြားနေရာများတွင် album palette ကို ထားပြီး single-color ring လိုပါက ပိတ်ပါ။</string>
@@ -1969,9 +1969,6 @@
     <string name="drawer_sync_heading">Sync</string>
     <string name="drawer_sync_summary">Watch settings များကို ဤနေရာ ဖုန်းပေါ်တွင် ပြင်ဆင်ပြီး ချိတ်ထားသော နာရီသို့ အလိုအလျောက် sync လုပ်သည်။</string>
     <string name="drawer_support_heading">ပံ့ပိုးမှု</string>
-    <string name="drawer_support_summary">Svartifoss သည် အခမဲ့နှင့် open source ဖြစ်သည် - အသုံးဝင်ပါက coffee တစ်ခွက် ဝယ်ပေးပါ :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Cover art ကို download လုပ်ပါ</string>
     <string name="album_art_saved">Cover art ကို gallery တွင် သိမ်းပြီးပါပြီ</string>
     <string name="album_art_save_error">Cover art သိမ်းမရပါ</string>
@@ -2060,7 +2057,7 @@
     <string name="playlist_shortcut_detected_format">တွေ့ရှိသည်: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">အမည်</string>
     <string name="playlist_shortcut_link_hint">Share link သို့မဟုတ် app URI</string>
-    <string name="playlist_shortcut_shuffle">Shuffle ဖြင့်ဖွင့်ပါ (YouTube Music အတွက်သာ)</string>
+    <string name="playlist_shortcut_play_choice">စတင်တိုင်း နာရီပေါ်တွင် ဖွင့်ရန် သို့မဟုတ် ရောနှောရန်ကို ရွေးပါ။</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2229,4 +2226,101 @@
         <item>ကျွန်ုပ်၏ gallery မှပုံ</item>
         <item>Folder မှ ကျပန်း</item>
     </string-array>
+    <string name="setting_wear_shortcut_details">နာရီပေါ်တွင် ဖွင့်ရန် သို့မဟုတ် ရောနှောရန်</string>
+    <string name="setting_wear_shortcut_details_description">နာရီပေါ်တွင် သိမ်းထားသော link တစ်ခုကို shortcut စာရင်း၊ Shortcuts Tile သို့မဟုတ် လုပ်ဆောင်ချက် menu မှ ရွေးသောအခါ ၎င်း၏ cover ကို ဖွင့်ရန်နှင့် ရောနှောရန်တို့နှင့်အတူ ဦးစွာပြသည်။ ချက်ချင်းစတင်စေရန် ပိတ်ပါ။ link တစ်ခုအတွက် သတ်မှတ်ထားသော ခလုတ်များနှင့် လက်ဟန်များသည် ၎င်းကို အမြဲ ချက်ချင်းစတင်သည်။</string>
+    <string name="actions_quick_pin_add">အမြန်အကန့်တွင်</string>
+    <string name="actions_quick_pin_remove">အမြန်အကန့်မှ</string>
+    <string name="quick_panel_editor_title">အမြန်လုပ်ဆောင်ချက်များ အကန့်</string>
+    <string name="quick_panel_editor_open">အကန့်အကြောင်းအရာ</string>
+    <string name="quick_panel_editor_intro">နာရီ၏အလယ်ဗဟိုကို နှစ်ချက်တို့လိုက်သောအခါ ပွင့်လာမည့်အကန့်ကို တည်ဆောက်ပါ။ ၎င်းကိုရွှေ့ရန် ဘလောက်တစ်ခုကို ဖိထားပြီး ဖိဆွဲပါ၊ ၎င်းကို ချိန်ညှိရန် တစ်ခုကို နှိပ်ပါ။</string>
+    <string name="quick_panel_editor_add_block">ပိတ်ဆို့ခြင်း</string>
+    <string name="quick_panel_editor_restore">မူရင်းအကန့်</string>
+    <string name="quick_panel_editor_restore_title">မူရင်းအကန့်ကို ပြန်ယူလိုပါသလား။</string>
+    <string name="quick_panel_editor_restore_message">သင့်အစီအစဉ်ကို ဖယ်ရှားလိုက်ပြီး အကန့်သည် ယခင်ပုံစံအတိုင်း ပြန်သွားပါသည်။ သင့်ခလုတ်ရွေးချယ်မှုများနှင့် သင်ကြယ်ပွင့်ပြထားသည့် လုပ်ဆောင်ချက်များကို သိမ်းဆည်းထားသည်။</string>
+    <string name="quick_panel_editor_restore_confirm">ပြန်ယူပါ။</string>
+    <string name="quick_panel_editor_fold">ပထမမျက်နှာပြင်၏အဆုံး (ခန့်မှန်းခြေ)</string>
+    <string name="quick_panel_editor_last_block">အကန့်တစ်ခုသည် အနည်းဆုံး ဘလောက်တစ်ခု</string>
+    <string name="quick_panel_editor_removed">ဖယ်ရှားပြီး %1$s</string>
+    <string name="quick_panel_editor_undo">မလုပ်တော့</string>
+    <string name="quick_panel_editor_move_up">အပေါ်ကိုရွှေ့ပါ။</string>
+    <string name="quick_panel_editor_move_down">အောက်သို့ရွှေ့ပါ။</string>
+    <string name="quick_panel_editor_more">နောက်ထပ်ရွေးချယ်စရာ</string>
+    <string name="quick_panel_editor_nothing_to_add">အကွက်တိုင်းသည် အကန့်တွင်</string>
+    <string name="quick_block_header">သီချင်း</string>
+    <string name="quick_block_buttons">အဝိုင်းခလုတ်များ</string>
+    <string name="quick_block_upnext">နောက်တစ်ပုဒ်</string>
+    <string name="quick_block_volume">အသံအတိုးအကျယ်</string>
+    <string name="quick_block_seek">ကျော်ပြီး နေရာ</string>
+    <string name="quick_block_tools">တူးလ်များ</string>
+    <string name="quick_block_favorites">အကြိုက်ဆုံးများ</string>
+    <string name="quick_block_actions">လုပ်ဆောင်ချက်အားလုံး</string>
+    <string name="quick_block_all_actions">လုပ်ဆောင်ချက်အားလုံး</string>
+    <string name="quick_block_header_description">ကစားနေသည့် ခေါင်းစဉ်နှင့် အနုပညာရှင်။</string>
+    <string name="quick_block_buttons_description">သင်အများဆုံးအသုံးပြုသည့် လုပ်ဆောင်ချက်များအတွက် အဝိုင်းခလုတ်များ သို့မဟုတ် ဖွင့်နေသောအက်ပ်မှ ကမ်းလှမ်းထားသည့် ခလုတ်များ။</string>
+    <string name="quick_block_upnext_description">နောက်တစ်ပုဒ်။ တန်းစီစာရင်းကို ဖွင့်ရန် ၎င်းကို နှိပ်ပါ။</string>
+    <string name="quick_block_volume_description">အကန့်ကို မထွက်ဘဲ လျှော့ပြီး အသံတိုးပေးပါ။</string>
+    <string name="quick_block_seek_description">သင် လမ်းကြောင်းပေါ်ရှိ နေရာတွင် နှင့် နောက်သို့ ရှေ့သို့ ကျော်သွားသော ခလုတ်များ။</string>
+    <string name="quick_block_tools_description">အသေးစားဖြတ်လမ်းများ- ပြန်ဖွင့်နှုန်း၊ သီချင်းစာသား၊ တန်းစီခြင်းနှင့် အခြားအရာများ။</string>
+    <string name="quick_block_favorites_description">အဖုံးများ သို့မဟုတ် အတန်းများအဖြစ် လုပ်ဆောင်ချက်များ တဘ်တွင် သင်ကြယ်ပွင့်ပြထားသည့် လုပ်ဆောင်ချက်များ။</string>
+    <string name="quick_block_actions_description">အကန့်ရှိအတန်းများအဖြစ် သို့မဟုတ် မီနူးကိုဖွင့်သည့် ခလုတ်တစ်ခုအနေဖြင့် သင့်နာရီမီနူး၏လုပ်ဆောင်ချက်တိုင်း။</string>
+    <string name="quick_summary_header">ခေါင်းစဉ်နှင့် အနုပညာရှင်</string>
+    <string name="quick_summary_buttons_session">ဖွင့်နေသောအက်ပ်မှ</string>
+    <string name="quick_summary_buttons_empty">ရွေးချယ်ထားသော ခလုတ်များ မရှိပါ</string>
+    <string name="quick_summary_upnext">နောက်တစ်ပုဒ် · တန်းစီခြင်းကို</string>
+    <string name="quick_summary_volume">အသံအတိုးအကျယ် အဆင့် %1$d%%</string>
+    <string name="quick_summary_seek">%1$s စက္ကန့်</string>
+    <string name="quick_summary_seek_bar">%1$s စက္ကန့် · အချိန်နှင့်ဘား</string>
+    <string name="quick_summary_favorites_none">တစ်ခုမှကြယ်ပွင့်မရသေးပါ</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d ကြယ်ပွင့်ပြထားသည် · %2$s</item>
+        <item quantity="other">%1$d ကြယ်ပွင့်ပြထားသည် · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">%1$d လုပ်ဆောင်ချက်များ အားလုံး</string>
+    <string name="quick_summary_actions_first">ပထမဦးစွာ %1$d လုပ်ဆောင်ချက်များ</string>
+    <string name="quick_summary_actions_button">ခလုတ်တစ်ခု · လုပ်ဆောင်ချက်များမီနူး</string>
+    <string name="quick_summary_only_playing">ဖွင့်နေချိန်တွင်သာ</string>
+    <string name="quick_summary_only_not_playing">မဖွင့်နေချိန်တွင်သာ</string>
+    <string name="quick_mode_grid">ဂရစ်</string>
+    <string name="quick_mode_rows">အတန်းများ</string>
+    <string name="quick_mode_actions_list">စာရင်း</string>
+    <string name="quick_mode_actions_button">ခလုတ်</string>
+    <string name="quick_sheet_show">ပြရန်</string>
+    <string name="quick_sheet_always">အမြဲတမ်း</string>
+    <string name="quick_sheet_while_playing">ဖွင့်နေချိန်တွင်သာ</string>
+    <string name="quick_sheet_while_not_playing">မဖွင့်နေချိန်တွင်သာ</string>
+    <string name="quick_sheet_step">အဆင့်</string>
+    <string name="quick_sheet_jump">ကျော်မည့်ပမာဏ</string>
+    <string name="quick_sheet_seek_bar">ပြသချိန်နှင့် တိုးတက်မှုဘား</string>
+    <string name="quick_sheet_tools">တူးလ်များ</string>
+    <string name="quick_sheet_layout">အပြင်အဆင်</string>
+    <string name="quick_sheet_how_many">ဘယ်လောက်များ</string>
+    <string name="quick_sheet_all">အားလုံး</string>
+    <string name="quick_sheet_buttons_source">ခလုတ်များ</string>
+    <string name="quick_sheet_source_configured">ကျွန်ုပ်၏ရွေးချယ်မှုများ</string>
+    <string name="quick_sheet_source_session">ဖွင့်နေသောအက်ပ်</string>
+    <string name="quick_sheet_buttons_hint">၎င်း၏လုပ်ဆောင်ချက်ကို ရွေးချယ်ရန် ခလုတ်တစ်ခုကို နှိပ်ပါ။ ၎င်း၏မူလအတိုင်း ပြန်လည်ရယူရန် ဖိထားပါ။</string>
+    <string name="quick_sheet_favorites_hint">လုပ်ဆောင်ချက်များ တဘ်ရှိ မိုးကြိုးဖြင့် ကြယ်ပွင့်လုပ်ဆောင်ချက်များ။ ကြယ်ပွင့်များသာ ဤနေရာတွင် ပေါ်လာသည်။</string>
+    <string name="quick_sheet_actions_mode">ကို</string>
+    <string name="quick_sheet_actions_hint">စာရင်းတစ်ခုသည် လုပ်ဆောင်ချက်တိုင်းကို အကန့်ပေါ်တွင် အတန်းတစ်ခုအဖြစ် ထည့်ထားသည်။ ခလုတ်တစ်ခုသည် အကန့်ကိုတိုစေသည်- မီနူးအပြည့်အစုံကိုဖွင့်သည့် ခလုတ်တစ်ခု။ မီနူးကို အကန့်အကန့်မှ လုံးဝထွက်သွားရန်၊ ဤပိတ်ဆို့ခြင်းကို ဖယ်ရှားပါ။</string>
+    <string name="quick_sheet_remove">ဤပိတ်ဆို့</string>
+    <string name="quick_sheet_done">ပြီးပါပြီ</string>
+    <string name="quick_tool_speed">မြန်နှုန်း</string>
+    <string name="quick_tool_sleep">အိပ်ချိန်ချိန်စက်</string>
+    <string name="quick_tool_lyrics">သီချင်းစာသား</string>
+    <string name="quick_tool_queue">တန်းစီ</string>
+    <string name="quick_tool_volume">အသံအတိုးအကျယ်</string>
+    <string name="quick_tool_progress">တိုးတက်မှု</string>
+    <string name="quick_tool_faces">နာရီမျက်နှာပြင်များ</string>
+    <string name="quick_tool_search">ရှာရန်</string>
+    <string name="quick_tool_menu">မီနူး</string>
+    <string name="setting_wear_hide_from_recents">လတ်တလောအက်ပ်များမှ</string>
+    <string name="setting_wear_hide_from_recents_description">သင် ၎င်းကိုပိတ်လိုက်သည် သို့မဟုတ် အခြားအက်ပ်ကိုအသုံးပြုပြီးသည်နှင့် နာရီအက်ပ်ကို လက်ပတ်နာရီ၏ လတ်တလောအက်ပ်များစာရင်းမှ သိမ်းထားပါ။ ၎င်းအစား နာရီမျက်နှာပြင် သို့မဟုတ် Now Bar မှဖွင့်ပါက အသုံးဝင်သည်။ ၎င်းသည် ယခင်အတိုင်း အတိအကျ လက်လှမ်းမီနိုင်မည်ဖြစ်ပြီး ဂီတနှင့် နောက်ခံချိတ်ဆက်မှုကို ထိခိုက်မည်မဟုတ်ပါ။</string>
+    <string name="setting_streaming_app_routes">တိုက်ရိုက်လွှင့်လင့်ခ်များ</string>
+    <string name="setting_streaming_app_routes_description">YouTube Music၊ Spotify နှင့် အခြားဝန်ဆောင်မှုများအတွက် သီးခြားထည့်သွင်းထားသည့် တွဲဖက်အသုံးပြုနိုင်သောအက်ပ်ကို ရွေးချယ်ပါ။ "တွေ့ရှိထားသော တိုက်ရိုက်ထုတ်လွှင့်ခြင်းအက်ပ်" ဖြင့် အသုံးပြုသည်။</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d ဝန်ဆောင်မှုသည် ရွေးချယ်ထားသောအက်ပ်</item>
+        <item quantity="other">%1$d ဝန်ဆောင်မှုများသည် ရွေးချယ်ထားသောအက်ပ်များ</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">လင့်ခ်ကိုဖွင့်နိုင်သောအက်ပ်များ၊ တပ်ဆင်ထားသည့်မီဒီယာပလေယာများကိုပြသထားသည်။</string>
+    <string name="streaming_route_automatic">အလိုအလျောက် (တွေ့ရှိထားသောအက်ပ်)</string>
 </resources>

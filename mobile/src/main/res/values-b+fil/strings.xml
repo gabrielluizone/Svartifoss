@@ -317,7 +317,7 @@ Kinakailangan ng ilang icon pack na may storage permission ang mga app. Kailanga
     <string name="preview_sample_lyric_current">Ang linyang tumutugtog ngayon</string>
     <string name="preview_sample_lyric_next">Ang susunod na linya</string>
     <string name="preview_sample_next_title">Susunod na kanta</string>
-    <string name="preview_playback_stopped">Huminto</string>
+    <string name="preview_playback_stopped">Naka-pause</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -815,9 +815,9 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Background ng Up Next pill</string>
-    <string name="setting_wear_show_up_next_pill">Up Next pill sa player</string>
-    <string name="setting_wear_show_up_next_pill_description">Magpakita ng Up Next pill sa ibaba ng now-playing screen. Pinupuno nito ang puwesto ng mini-buttons row, kaya lumalabas lang ito kapag hindi nakikita ang row na iyon.</string>
+    <string name="setting_wear_up_next_pill">Background ng Susunod na track kapsula</string>
+    <string name="setting_wear_show_up_next_pill">Susunod na track kapsula sa player</string>
+    <string name="setting_wear_show_up_next_pill_description">Magpakita ng Susunod na track kapsula sa ibaba ng now-playing screen. Pinupuno nito ang puwesto ng mini-buttons row, kaya lumalabas lang ito kapag hindi nakikita ang row na iyon.</string>
     <string name="category_wf_clock">Orasan</string>
     <string name="setting_wear_clock_color">Kulay ng clock</string>
     <string name="setting_wear_clock_custom_color">Custom na kulay ng clock</string>
@@ -832,8 +832,8 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
     <string name="setting_wear_aod_show_transport_description">Ipakita ang outlined previous/play/next buttons sa suportadong visual always-on styles. Hindi sila mata-tap habang dim ang screen, pero gigising ang relo sa isang tap na nasa ilalim na ng daliri mo ang button.</string>
     <string name="setting_wear_aod_show_progress">Progress ring sa always-on display</string>
     <string name="setting_wear_aod_show_progress_description">Ipakita ang progress ring sa paligid ng play button sa ambient mode — humigit-kumulang isang beses kada minuto lang nagre-refresh ang posisyon doon</string>
-    <string name="setting_wear_aod_show_pills">Up Next sa always-on display</string>
-    <string name="setting_wear_aod_show_pills_description">Ipakita ang static outlined Up Next pill sa ibaba ng visual always-on styles</string>
+    <string name="setting_wear_aod_show_pills">Susunod na track sa always-on display</string>
+    <string name="setting_wear_aod_show_pills_description">Ipakita ang static outlined Susunod na track kapsula sa ibaba ng visual always-on styles</string>
     <string name="category_wf_gestures">Mga screen gesture</string>
     <string name="setting_wear_mini_buttons_mode">Ipakita ang mini buttons</string>
     <string name="setting_wear_gestures_mode">Mga screen gesture</string>
@@ -896,8 +896,8 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
     <string name="preview_notification_controls">Icon mula sa media notification</string>
     <string name="setting_wear_queue_style">Style ng queue</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Gamitin ang shortcut covers bilang background</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Kapag Cover variant ang Queue style, ang quick-panel action row na may nakuhang shortcut cover (track, playlist, artist…) ay pupunuin din ang pill nito ng art na iyon, gaya ng Up Next. Hindi apektado ang shortcuts na walang nakuhang cover (plain app icon).</string>
-    <string name="setting_wear_list_row_size">Laki ng list pill</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Kapag Cover variant ang Queue style, ang quick-panel action row na may nakuhang shortcut cover (track, playlist, artist…) ay pupunuin din ang kapsula nito ng art na iyon, gaya ng Susunod na track. Hindi apektado ang shortcuts na walang nakuhang cover (plain app icon).</string>
+    <string name="setting_wear_list_row_size">Laki ng kapsula sa listahan</string>
     <string name="setting_wear_list_row_size_description">Taas ng full-width rows sa queue, menus at quick panel.</string>
     <string name="setting_wear_progress_gradient">I-blend ang palette sa ring</string>
     <string name="setting_wear_progress_gradient_description">Sa multi-hue color treatment (Complementary, Triadic, Analogous, Duotone), nagfa-fade ang solid ring sa lahat ng tatlong kulay. I-off ito para sa single-color ring habang pinapanatili ang album palette sa iba pang bahagi.</string>
@@ -2042,9 +2042,6 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     <string name="drawer_sync_heading">Sync</string>
     <string name="drawer_sync_summary">Dito sa phone kino-configure ang watch settings at awtomatikong sini-sync sa naka-pair mong relo.</string>
     <string name="drawer_support_heading">Suporta</string>
-    <string name="drawer_support_summary">Libre at open source ang Svartifoss — ilibre mo ako ng kape kung kapaki-pakinabang ito sa iyo :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">I-download ang cover art</string>
     <string name="album_art_saved">Na-save ang cover art sa gallery</string>
     <string name="album_art_save_error">Hindi na-save ang cover art</string>
@@ -2134,7 +2131,7 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     <string name="playlist_shortcut_detected_format">Natukoy: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Pangalan</string>
     <string name="playlist_shortcut_link_hint">Share link o app URI</string>
-    <string name="playlist_shortcut_shuffle">I-play nang shuffled (YouTube Music lang)</string>
+    <string name="playlist_shortcut_play_choice">Pipili ka ng I-play o Shuffle sa relo tuwing sisimulan mo ito.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2871,4 +2868,101 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     <string name="setting_wear_text_block_position_description">Kung saan nakaposisyon ang track text sa screen. Pinapanatili ng Follow face ang posisyong idinisenyo para sa bawat face.</string>
     <string name="setting_online_artwork">Online artwork</string>
     <string name="setting_online_artwork_description">Hayaan ang watch face na magpakita ng larawang hinanap online \u2014 ang artist na tumutugtog, o album cover para sa player na walang inilalabas na larawan. Ang telepono mo ang naghahanap sa pampublikong catalog ng Deezer at nagca-cache ng resulta; pangalan lang ng track at artist ang ipinapadala, at walang hinahanap maliban kung nakatakda ang isang face sa isa sa mga source na iyon. Kapag naka-off, sariling artwork ng player ang ginagamit.</string>
+    <string name="setting_wear_shortcut_details">I-play o i-shuffle sa relo</string>
+    <string name="setting_wear_shortcut_details_description">Kapag pumili ka ng naka-save na link sa relo, mula sa listahan ng shortcut, sa Shortcuts Tile o sa actions menu, ipapakita muna ang cover nito kasama ang I-play at Shuffle. I-off para agad itong magsimula. Ang mga button at gesture na naka-assign sa isang link ay laging agad itong sinisimulan.</string>
+    <string name="actions_quick_pin_add">Ipakita sa quick panel</string>
+    <string name="actions_quick_pin_remove">Alisin sa quick panel</string>
+    <string name="quick_panel_editor_title">Panel ng mabilis na pagkilos</string>
+    <string name="quick_panel_editor_open">I-edit ang nilalaman ng panel</string>
+    <string name="quick_panel_editor_intro">Buuin ang panel na bubukas kapag nag-double tap ka sa gitna ng relo. I-hold at i-drag ang isang block para ilipat ito, i-tap ang isa para ayusin ito.</string>
+    <string name="quick_panel_editor_add_block">Magdagdag ng block</string>
+    <string name="quick_panel_editor_restore">Ibalik ang orihinal na panel</string>
+    <string name="quick_panel_editor_restore_title">Ibalik ang orihinal na panel?</string>
+    <string name="quick_panel_editor_restore_message">Inalis ang iyong arrangement at babalik ang panel sa kung paano ito dati. Ang iyong mga pagpipilian sa button at ang mga aksyon na iyong nilagyan ng star ay pinapanatili.</string>
+    <string name="quick_panel_editor_restore_confirm">Ibalik ang</string>
+    <string name="quick_panel_editor_fold">Dulo ng unang screen (tinatayang)</string>
+    <string name="quick_panel_editor_last_block">Ang isang panel ay nangangailangan ng kahit isang block</string>
+    <string name="quick_panel_editor_removed">Inalis ang %1$s</string>
+    <string name="quick_panel_editor_undo">I-undo ang</string>
+    <string name="quick_panel_editor_move_up">Umakyat</string>
+    <string name="quick_panel_editor_move_down">Ibaba ang</string>
+    <string name="quick_panel_editor_more">Higit pang mga opsyon</string>
+    <string name="quick_panel_editor_nothing_to_add">Ang bawat block ay nasa panel na</string>
+    <string name="quick_block_header">Kanta</string>
+    <string name="quick_block_buttons">Mga bilog na pindutan</string>
+    <string name="quick_block_upnext">Susunod na track</string>
+    <string name="quick_block_volume">Lakas ng tunog</string>
+    <string name="quick_block_seek">Paglaktaw at posisyon</string>
+    <string name="quick_block_tools">Mga gamit</string>
+    <string name="quick_block_favorites">Mga Paborito</string>
+    <string name="quick_block_actions">Lahat ng aksyon</string>
+    <string name="quick_block_all_actions">Lahat ng aksyon</string>
+    <string name="quick_block_header_description">Ang pamagat at artist ng kung ano ang nagpe-play.</string>
+    <string name="quick_block_buttons_description">Round button para sa mga pagkilos na pinakamadalas mong ginagamit, o sa mga inaalok ng app na nagpapatugtog.</string>
+    <string name="quick_block_upnext_description">Ang susunod na track. I-tap ito para buksan ang pila.</string>
+    <string name="quick_block_volume_description">Babaan at lakasan ang volume nang hindi umaalis sa panel.</string>
+    <string name="quick_block_seek_description">Kung nasaan ka sa track, at mga button na lumalaktaw pabalik at pasulong.</string>
+    <string name="quick_block_tools_description">Maliit na shortcut: bilis ng pag-playback, lyrics, pila at higit pa.</string>
+    <string name="quick_block_favorites_description">Ang mga pagkilos na nilagyan mo ng star sa tab na Mga Pagkilos, bilang mga pabalat o row.</string>
+    <string name="quick_block_actions_description">Bawat pagkilos ng iyong menu ng relo, bilang mga row sa panel o bilang isang button na nagbubukas ng menu.</string>
+    <string name="quick_summary_header">Pamagat at artist</string>
+    <string name="quick_summary_buttons_session">Mula sa app na nagpapatugtog</string>
+    <string name="quick_summary_buttons_empty">Walang napiling button</string>
+    <string name="quick_summary_upnext">Susunod na track · nagbubukas ng queue</string>
+    <string name="quick_summary_volume">Mga dagdag sa volume na %1$d%%</string>
+    <string name="quick_summary_seek">%1$s segundo</string>
+    <string name="quick_summary_seek_bar">%1$s segundo · oras at bar</string>
+    <string name="quick_summary_favorites_none">Wala pang naka-star</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d naka-star · %2$s</item>
+        <item quantity="other">%1$d naka-star · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Lahat ng %1$d na pagkilos</string>
+    <string name="quick_summary_actions_first">Mga unang pagkilos ng %1$d</string>
+    <string name="quick_summary_actions_button">Isang button · binubuksan ang menu ng mga pagkilos</string>
+    <string name="quick_summary_only_playing">só habang may nagpapatugtog</string>
+    <string name="quick_summary_only_not_playing">só kapag walang nagpapatugtog</string>
+    <string name="quick_mode_grid">Grid</string>
+    <string name="quick_mode_rows">Mga hilera</string>
+    <string name="quick_mode_actions_list">Listahan</string>
+    <string name="quick_mode_actions_button">Pindutan</string>
+    <string name="quick_sheet_show">Ipakita ang</string>
+    <string name="quick_sheet_always">Laging</string>
+    <string name="quick_sheet_while_playing">só habang may nagpapatugtog</string>
+    <string name="quick_sheet_while_not_playing">só kapag walang nagpapatugtog</string>
+    <string name="quick_sheet_step">Hakbang</string>
+    <string name="quick_sheet_jump">Laktaw ng</string>
+    <string name="quick_sheet_seek_bar">Ipakita ang oras at progress bar</string>
+    <string name="quick_sheet_tools">Mga gamit</string>
+    <string name="quick_sheet_layout">Layout</string>
+    <string name="quick_sheet_how_many">Ilang</string>
+    <string name="quick_sheet_all">Lahat</string>
+    <string name="quick_sheet_buttons_source">Button mula sa</string>
+    <string name="quick_sheet_source_configured">Aking mga pagpipilian</string>
+    <string name="quick_sheet_source_session">App na nagpapatugtog</string>
+    <string name="quick_sheet_buttons_hint">Mag-tap ng button para piliin ang aksyon nito. I-hold para ibalik ang default nito.</string>
+    <string name="quick_sheet_favorites_hint">Lagyan ng star ang mga aksyon gamit ang lightning bolt sa tab na Mga Pagkilos. Mga naka-star lang ang lumalabas dito.</string>
+    <string name="quick_sheet_actions_mode">Ipakita bilang</string>
+    <string name="quick_sheet_actions_hint">Inilalagay ng isang listahan ang bawat aksyon sa panel bilang isang hilera. Pinapanatili ng isang button na maikli ang panel: isang button na nagbubukas ng buong menu. Upang tuluyang lumabas ang menu sa panel, alisin ang block na ito.</string>
+    <string name="quick_sheet_remove">Alisin ang block na ito</string>
+    <string name="quick_sheet_done">Tapos na</string>
+    <string name="quick_tool_speed">Bilis</string>
+    <string name="quick_tool_sleep">Timer ng pagtulog</string>
+    <string name="quick_tool_lyrics">Mga liriko</string>
+    <string name="quick_tool_queue">Nakapila</string>
+    <string name="quick_tool_volume">Lakas ng tunog</string>
+    <string name="quick_tool_progress">Pag-unlad</string>
+    <string name="quick_tool_faces">Mga mukha ng relo</string>
+    <string name="quick_tool_search">Maghanap</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="setting_wear_hide_from_recents">Itago mula sa mga kamakailang app</string>
+    <string name="setting_wear_hide_from_recents_description">Itinatago ang watch app sa listahan ng mga kamakailang app ng relo sa sandaling isara mo ito o gumamit ng isa pang app. Kapaki-pakinabang kung bubuksan mo ito mula sa mukha ng relo o sa Now Bar sa halip. Nananatili itong maabot nang eksakto tulad ng dati, at hindi apektado ang musika at ang koneksyon sa background.</string>
+    <string name="setting_streaming_app_routes">Pumili ng mga app para sa streaming link</string>
+    <string name="setting_streaming_app_routes_description">Pumili ng compatible na naka-install na app nang hiwalay para sa YouTube Music, Spotify at bawat isa na serbisyo. Ginamit sa "Natukoy na streaming app".</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d ng napiling app</item>
+        <item quantity="other">%1$d ng mga napiling app</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Ang mga app na maaaring magbukas ng link, kasama ang mga naka-install na media player, ay ipinapakita.</string>
+    <string name="streaming_route_automatic">Awtomatiko (natukoy na app)</string>
 </resources>

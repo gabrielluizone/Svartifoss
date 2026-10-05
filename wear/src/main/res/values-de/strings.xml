@@ -22,7 +22,7 @@
 
     <string name="no_phone">Kein Telefon verbunden</string>
     <string name="phone_unavailable">Entsperre dein Telefon, um die Wiedergabe zu steuern</string>
-    <string name="playback_stopped">Gestoppt</string>
+    <string name="playback_stopped">Pausiert</string>
     <string name="error">FEHLER</string>
     <string name="error_play_services">Play-Services-Fehler</string>
     <string name="button">Taste</string>
@@ -44,12 +44,18 @@
     <string name="queue_load_more">Mehr laden</string>
     <string name="queue_history_fallback">Zuletzt gespielt</string>
     <string name="queue_history_fallback_reason">Diese App teilt ihre Warteschlange nicht</string>
+    <string name="menu_header_actions">Aktionen</string>
+    <string name="menu_header_search_results">Suchergebnisse</string>
+    <string name="menu_header_search_history">Letzte Suchen</string>
+    <string name="menu_header_library">Mediathek</string>
+    <string name="shortcut_open_on_phone">Auf dem Telefon öffnen</string>
+    <string name="shortcut_continue_on_phone">Weiter auf deinem Telefon</string>
 
     <string name="hint_title">Bedienung</string>
     <string name="hint_edges">Oben, unten, links oder rechts tippen — jede Zone führt ihre Aktion aus</string>
     <string name="hint_center">Mitte — Wiedergabe/Pause\nDoppeltippen — Schnellaktionen\nLang drücken — Zifferblattauswahl (konfigurierbar)</string>
     <string name="hint_swipe_up">Nach oben — Aktionsmenü\nNach unten oder links — zugewiesene Aktionen\nVom Rand nach rechts — beenden</string>
-    <string name="hint_crown">Krone — Lautstärke oder Spulen\nSeitentasten — zugewiesene Aktionen\nAlles am Telefon unter Steuerung und Watch anpassen</string>
+    <string name="hint_crown">Krone — Lautstärke oder Spulen\nSeitentasten — zugewiesene Aktionen\nAlles am Telefon unter Steuerung und Uhr anpassen</string>
     <string name="hint_next">Weiter</string>
     <string name="hint_dismiss">Fertig</string>
 
@@ -141,7 +147,7 @@
     <string name="idle_action_search">Suchen</string>
     <string name="idle_action_queue">Zuletzt gespielt öffnen</string>
     <string name="chat_face_today">Heute</string>
-    <string name="face_picker_title">Face</string>
+    <string name="face_picker_title">Zifferblatt</string>
     <string name="face_picker_offline">Kein Telefon verbunden — dieses Face wird auf der Uhr übernommen, aber die Einstellung bleibt beim Telefon gespeichert</string>
     <string name="face_picker_section_builtin">Integrierte Designs</string>
     <string name="face_picker_section_custom">Meine Themes</string>
@@ -183,4 +189,23 @@
     <string name="progress_screen_cancel_seek">Spulen abbrechen</string>
     <string name="progress_screen_skip_back">%1$d Sekunden zurückspringen</string>
     <string name="progress_screen_skip_forward">%1$d Sekunden vorspringen</string>
+    <string name="quick_block_all_actions">Alle Aktionen</string>
+    <string name="quick_block_favorites">Favoriten</string>
+    <string name="quick_tool_speed">Geschwindigkeit</string>
+    <string name="quick_tool_lyrics">Songtext</string>
+    <string name="quick_tool_queue">Warteschlange</string>
+    <string name="quick_tool_volume">Lautstärke</string>
+    <string name="quick_tool_progress">Fortschritt</string>
+    <string name="quick_tool_faces">Zifferblätter</string>
+    <string name="quick_tool_search">Suche</string>
+    <string name="quick_tool_menu">Menü</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Lautstärke %1$d%%</string>
+    <string name="quick_seek_back_description">Zurück %1$d Sekunden</string>
+    <string name="quick_seek_forward_description">Vorwärts %1$d Sekunden</string>
+    <string name="quick_speed_description">Wiedergabegeschwindigkeit %1$s</string>
+    <string name="quick_tool_sleep">Timer</string>
+    <string name="quick_sleep_minutes">%1$d Min.</string>
+    <string name="quick_sleep_description">Timer, noch %1$d Minuten. Zum Ändern tippen.</string>
+    <string name="quick_sleep_off_description">Schlaftimer aus. Zum Einstellen tippen.</string>
 </resources>

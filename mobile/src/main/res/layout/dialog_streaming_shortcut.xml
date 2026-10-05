@@ -185,17 +185,23 @@
 
         </com.google.android.material.card.MaterialCardView>
 
-        <CheckBox
-            android:id="@+id/shuffle_checkbox"
+        <!-- See sheet_shuffle_hint: shuffle is a choice made on the watch when playing. -->
+        <TextView
+            android:id="@+id/shuffle_hint"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="6dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="8dp"
             android:fontFamily="@font/google_sans"
+            android:gravity="center_vertical"
             android:includeFontPadding="false"
-            android:text="@string/playlist_shortcut_shuffle"
-            android:textColor="@color/lyra_on_surface"
-            android:textSize="13sp"
-            android:visibility="gone" />
+            android:lineHeight="18sp"
+            android:text="@string/playlist_shortcut_play_choice"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:drawableStartCompat="@drawable/ic_shuffle"
+            app:drawableTint="@color/lyra_text_secondary" />
 
         <LinearLayout
             android:layout_width="match_parent"

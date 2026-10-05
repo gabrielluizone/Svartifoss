@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">リリースを見る</string>
     <string name="update_watch_hint">「ウォッチをアップデート」は新しいウォッチアプリをダウンロードし、Bluetooth で送信します。インストールはウォッチ側で確認します。ケーブルや Wear Installer は不要です。</string>
     <string name="update_no_wear_asset">このリリースには送信できるウォッチ APK がありません。</string>
+    <string name="drawer_support_summary">Svartifoss は無料のオープンソースです。役に立ったらコーヒーを1杯おごってください :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

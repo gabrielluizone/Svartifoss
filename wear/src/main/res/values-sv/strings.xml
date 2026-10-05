@@ -38,7 +38,7 @@
 
     <string name="no_phone">Ingen telefon ansluten</string>
     <string name="phone_unavailable">Lås upp telefonen för att styra uppspelningen</string>
-    <string name="playback_stopped">Stoppad</string>
+    <string name="playback_stopped">Pausad</string>
     <string name="error">FEL</string>
     <string name="error_play_services">Fel i Play Services</string>
     <string name="button">Knapp</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Nyligen spelat</string>
     <string name="queue_history_fallback_reason">Den här appen delar inte sin kö</string>
+    <string name="menu_header_actions">Åtgärder</string>
+    <string name="menu_header_search_results">Sökresultat</string>
+    <string name="menu_header_search_history">Senaste sökningar</string>
+    <string name="menu_header_library">Bibliotek</string>
+    <string name="shortcut_open_on_phone">Öppna på telefonen</string>
+    <string name="shortcut_continue_on_phone">Fortsätt på telefonen</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">I dag</string>
 
@@ -209,4 +215,23 @@ Anpassa allt under Kontroller och Klocka på telefonen</string>
     <string name="progress_screen_cancel_seek">Avbryt sökning</string>
     <string name="progress_screen_skip_back">Hoppa tillbaka %1$d sekunder</string>
     <string name="progress_screen_skip_forward">Hoppa framåt %1$d sekunder</string>
+    <string name="quick_block_all_actions">Alla åtgärder</string>
+    <string name="quick_block_favorites">Favoriter</string>
+    <string name="quick_tool_speed">Hastighet</string>
+    <string name="quick_tool_lyrics">Texter</string>
+    <string name="quick_tool_queue">Kö</string>
+    <string name="quick_tool_volume">Ljudstyrka</string>
+    <string name="quick_tool_progress">Framsteg</string>
+    <string name="quick_tool_faces">Urtavlor</string>
+    <string name="quick_tool_search">Sök</string>
+    <string name="quick_tool_menu">Meny</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Ljudstyrka %1$d%%</string>
+    <string name="quick_seek_back_description">Tillbaka %1$d sekunder</string>
+    <string name="quick_seek_forward_description">Framåt %1$d sekunder</string>
+    <string name="quick_speed_description">Uppspelningshastighet %1$s</string>
+    <string name="quick_tool_sleep">Insomningstimer</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Insomningstimer, %1$d minuter kvar. Tryck för att ändra</string>
+    <string name="quick_sleep_off_description">Insomningstimer avstängd. Tryck för att ställa in</string>
 </resources>

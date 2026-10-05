@@ -308,7 +308,7 @@
     <string name="preview_sample_lyric_current">Riadok, ktorý znie teraz</string>
     <string name="preview_sample_lyric_next">Ďalší riadok</string>
     <string name="preview_sample_next_title">Ďalšia skladba</string>
-    <string name="preview_playback_stopped">Zastavené</string>
+    <string name="preview_playback_stopped">Pozastavené</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -798,9 +798,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Pozadie pilulky Ďalej</string>
-    <string name="setting_wear_show_up_next_pill">Pilulka Ďalej v prehrávači</string>
-    <string name="setting_wear_show_up_next_pill_description">Zobrazí pilulku Ďalej v spodnej časti obrazovky prehrávania. Využíva miesto riadka minitlačidiel, takže sa zobrazí len vtedy, keď tento riadok nie je viditeľný.</string>
+    <string name="setting_wear_up_next_pill">Pozadie kapsulky Ďalej</string>
+    <string name="setting_wear_show_up_next_pill">Kapsulka Ďalej v prehrávači</string>
+    <string name="setting_wear_show_up_next_pill_description">Zobrazí kapsulku Ďalej v spodnej časti obrazovky prehrávania. Využíva miesto riadka minitlačidiel, takže sa zobrazí len vtedy, keď tento riadok nie je viditeľný.</string>
     <string name="category_wf_clock">Hodiny</string>
     <string name="setting_wear_clock_color">Farba hodín</string>
     <string name="setting_wear_clock_custom_color">Vlastná farba hodín</string>
@@ -816,7 +816,7 @@
     <string name="setting_wear_aod_show_progress">Kruh priebehu na vždy zapnutom displeji</string>
     <string name="setting_wear_aod_show_progress_description">Zobrazí kruh priebehu okolo tlačidla prehrávania v ambientnom režime — poloha sa tam obnovuje len približne raz za minútu</string>
     <string name="setting_wear_aod_show_pills">Ďalej na vždy zapnutom displeji</string>
-    <string name="setting_wear_aod_show_pills_description">Zobrazí statickú obrysovú pilulku Ďalej v spodnej časti vizuálnych štýlov vždy zapnutého displeja</string>
+    <string name="setting_wear_aod_show_pills_description">Zobrazí statickú obrysovú kapsulku Ďalej v spodnej časti vizuálnych štýlov vždy zapnutého displeja</string>
     <string name="category_wf_gestures">Gestá obrazovky</string>
     <string name="setting_wear_mini_buttons_mode">Zobraziť minitlačidlá</string>
     <string name="setting_wear_gestures_mode">Gestá obrazovky</string>
@@ -879,8 +879,8 @@
     <string name="preview_notification_controls">Ikona z mediálneho upozornenia</string>
     <string name="setting_wear_queue_style">Štýl poradia</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Použiť obaly skratiek ako pozadie</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Keď je Štýl poradia variantom Obal, riadok akcie rýchleho panela s načítaným obalom skratky (skladba, playlist, interpret…) tiež vyplní svoju pilulku týmto obrázkom, podobne ako Ďalej. Skratky bez načítaného obalu (obyčajná ikona aplikácie) nie sú ovplyvnené.</string>
-    <string name="setting_wear_list_row_size">Veľkosť pilulky zoznamu</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Keď je Štýl poradia variantom Obal, riadok akcie rýchleho panela s načítaným obalom skratky (skladba, playlist, interpret…) tiež vyplní svoju kapsulku týmto obrázkom, podobne ako Ďalej. Skratky bez načítaného obalu (obyčajná ikona aplikácie) nie sú ovplyvnené.</string>
+    <string name="setting_wear_list_row_size">Veľkosť kapsulky zoznamu</string>
     <string name="setting_wear_list_row_size_description">Výška riadkov na celú šírku v poradí, ponukách a rýchlom paneli.</string>
     <string name="setting_wear_progress_gradient">Prelínať paletu do kruhu</string>
     <string name="setting_wear_progress_gradient_description">Pri viacfarebnom spracovaní (Doplnkové, Triadické, Analogické, Duotón) plný kruh plynulo prechádza všetkými tromi farbami. Vypnite, ak chcete jednofarebný kruh a zároveň zachovať paletu albumu všade inde.</string>
@@ -2023,9 +2023,6 @@
     <string name="drawer_sync_heading">Synchronizácia</string>
     <string name="drawer_sync_summary">Nastavenia hodiniek sa konfigurujú tu v telefóne a automaticky sa synchronizujú so spárovanými hodinkami.</string>
     <string name="drawer_support_heading">Podpora</string>
-    <string name="drawer_support_summary">Svartifoss je bezplatný a open source — ak vám pomáha, môžete ma pozvať na kávu :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Stiahnuť obal</string>
     <string name="album_art_saved">Obal bol uložený do galérie</string>
     <string name="album_art_save_error">Obal sa nepodarilo uložiť</string>
@@ -2119,7 +2116,7 @@
     <string name="playlist_shortcut_detected_format">Zistené: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Názov</string>
     <string name="playlist_shortcut_link_hint">Odkaz na zdieľanie alebo URI aplikácie</string>
-    <string name="playlist_shortcut_shuffle">Prehrať náhodne (iba YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Zakaždým, keď ho spúšťate, vyberiete na hodinkách Prehrať alebo Náhodne.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2858,4 +2855,101 @@
     <string name="setting_wear_text_block_position_description">Kde sa na obrazovke nachádza text skladby. Voľba Podľa ciferníka zachová polohu, pre ktorú bol každý ciferník navrhnutý.</string>
     <string name="setting_online_artwork">Online grafika</string>
     <string name="setting_online_artwork_description">Umožniť ciferníku zobraziť obrázok vyhľadaný online \u2014 interpreta, ktorý práve hrá, alebo obal albumu pre prehrávač, ktorý žiadny obrázok nezverejňuje. Telefón vyhľadáva vo verejnom katalógu Deezer a výsledok ukladá do vyrovnávacej pamäte; odosiela sa iba názov skladby a interpreta a nič sa nevyhľadáva, kým nie je ciferník nastavený na jeden z týchto zdrojov. Pri vypnutí sa použije grafika poskytovaná prehrávačom.</string>
+    <string name="setting_wear_shortcut_details">Prehrať alebo náhodne na hodinkách</string>
+    <string name="setting_wear_shortcut_details_description">Výber uloženého odkazu na hodinkách – zo zoznamu skratiek, z Tile Skratky alebo z ponuky akcií – najprv zobrazí jeho obal s tlačidlami Prehrať a Náhodne. Vypnite, aby sa spustil hneď. Tlačidlá a gestá priradené jednému odkazu ho vždy spúšťajú hneď.</string>
+    <string name="actions_quick_pin_add">Zobraziť v rýchlom paneli</string>
+    <string name="actions_quick_pin_remove">Odstrániť z rýchleho panela</string>
+    <string name="quick_panel_editor_title">Panel rýchlych akcií</string>
+    <string name="quick_panel_editor_open">Upraviť obsah panela</string>
+    <string name="quick_panel_editor_intro">Vytvorte panel, ktorý sa otvorí, keď dvakrát klepnete na stred hodiniek. Podržaním a potiahnutím bloku ho presuniete, klepnutím na jeden ho upravíte.</string>
+    <string name="quick_panel_editor_add_block">Pridať blok</string>
+    <string name="quick_panel_editor_restore">Obnoviť pôvodný panel</string>
+    <string name="quick_panel_editor_restore_title">Obnoviť pôvodný panel?</string>
+    <string name="quick_panel_editor_restore_message">Vaše usporiadanie sa odstráni a panel sa vráti do pôvodného stavu. Vaše voľby tlačidiel a akcie, ktoré ste označili hviezdičkou, sa zachovajú.</string>
+    <string name="quick_panel_editor_restore_confirm">Obnoviť</string>
+    <string name="quick_panel_editor_fold">Koniec prvej obrazovky (približne)</string>
+    <string name="quick_panel_editor_last_block">Panel potrebuje aspoň jeden blok</string>
+    <string name="quick_panel_editor_removed">odstránené %1$s</string>
+    <string name="quick_panel_editor_undo">Späť</string>
+    <string name="quick_panel_editor_move_up">Posunúť hore</string>
+    <string name="quick_panel_editor_move_down">Posunúť nadol</string>
+    <string name="quick_panel_editor_more">Ďalšie možnosti</string>
+    <string name="quick_panel_editor_nothing_to_add">Každý blok je už na paneli</string>
+    <string name="quick_block_header">Skladba</string>
+    <string name="quick_block_buttons">Okrúhle tlačidlá</string>
+    <string name="quick_block_upnext">Ďalšia skladba</string>
+    <string name="quick_block_volume">Hlasitosť</string>
+    <string name="quick_block_seek">Preskočenie a poloha</string>
+    <string name="quick_block_tools">Nástroje</string>
+    <string name="quick_block_favorites">Obľúbené</string>
+    <string name="quick_block_actions">Všetky akcie</string>
+    <string name="quick_block_all_actions">Všetky akcie</string>
+    <string name="quick_block_header_description">Názov a interpret toho, čo sa hrá.</string>
+    <string name="quick_block_buttons_description">Okrúhle tlačidlá pre akcie, ktoré najčastejšie používate, alebo tie, ktoré ponúka aplikácia na prehrávanie.</string>
+    <string name="quick_block_upnext_description">Ďalšia skladba. Klepnutím naň otvoríte poradie.</string>
+    <string name="quick_block_volume_description">Znížte a zvýšte hlasitosť bez toho, aby ste opustili panel.</string>
+    <string name="quick_block_seek_description">Kde sa nachádzate v skladbe a tlačidlá, ktoré preskakujú dozadu a dopredu.</string>
+    <string name="quick_block_tools_description">Malé skratky: rýchlosť prehrávania, texty, poradie a ďalšie.</string>
+    <string name="quick_block_favorites_description">Akcie, ktoré ste označili hviezdičkou na karte Akcie, ako obaly alebo riadky.</string>
+    <string name="quick_block_actions_description">Každá akcia v ponuke hodiniek, ako riadky na paneli alebo ako jedno tlačidlo, ktoré otvorí ponuku.</string>
+    <string name="quick_summary_header">Názov a interpret</string>
+    <string name="quick_summary_buttons_session">Z aplikácie, ktorá prehráva</string>
+    <string name="quick_summary_buttons_empty">Neboli vybraté žiadne tlačidlá</string>
+    <string name="quick_summary_upnext">Ďalšia skladba · otvorí poradie</string>
+    <string name="quick_summary_volume">Kroky hlasitosti po %1$d%%</string>
+    <string name="quick_summary_seek">%1$s sekúnd</string>
+    <string name="quick_summary_seek_bar">%1$s sekúnd · čas a pruh</string>
+    <string name="quick_summary_favorites_none">zatiaľ nikto neoznačil hviezdičkou</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d označené hviezdičkou · %2$s</item>
+        <item quantity="other">%1$d označené hviezdičkou · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Všetky akcie %1$d</string>
+    <string name="quick_summary_actions_first">Prvé akcie %1$d</string>
+    <string name="quick_summary_actions_button">Jedno tlačidlo · otvorí ponuku akcií</string>
+    <string name="quick_summary_only_playing">iba počas prehrávania</string>
+    <string name="quick_summary_only_not_playing">iba bez prehrávania</string>
+    <string name="quick_mode_grid">Mriežka</string>
+    <string name="quick_mode_rows">Riadky</string>
+    <string name="quick_mode_actions_list">Zoznam</string>
+    <string name="quick_mode_actions_button">Tlačidlo</string>
+    <string name="quick_sheet_show">Zobraziť</string>
+    <string name="quick_sheet_always">Vždy</string>
+    <string name="quick_sheet_while_playing">iba počas prehrávania</string>
+    <string name="quick_sheet_while_not_playing">iba bez prehrávania</string>
+    <string name="quick_sheet_step">Krok</string>
+    <string name="quick_sheet_jump">Preskočiť o</string>
+    <string name="quick_sheet_seek_bar">Zobraziť čas a indikátor priebehu</string>
+    <string name="quick_sheet_tools">Nástroje</string>
+    <string name="quick_sheet_layout">rozloženie</string>
+    <string name="quick_sheet_how_many">Koľko</string>
+    <string name="quick_sheet_all">Všetky</string>
+    <string name="quick_sheet_buttons_source">tlačidlá od</string>
+    <string name="quick_sheet_source_configured">Moje voľby</string>
+    <string name="quick_sheet_source_session">Aplikácia, ktorá prehráva</string>
+    <string name="quick_sheet_buttons_hint">Klepnutím na tlačidlo vyberte jeho akciu. Podržaním obnovíte predvolené nastavenie.</string>
+    <string name="quick_sheet_favorites_hint">Označte akcie pomocou blesku na karte Akcie. Zobrazia sa tu iba tie označené hviezdičkou.</string>
+    <string name="quick_sheet_actions_mode">Zobraziť ako</string>
+    <string name="quick_sheet_actions_hint">Zoznam umiestni každú akciu na panel ako riadok. Tlačidlo udržuje panel krátky: jedno tlačidlo, ktorá otvára celú ponuku. Ak chcete ponuku z panela úplne vynechať, odstráňte tento blok.</string>
+    <string name="quick_sheet_remove">Odstrániť tento blok</string>
+    <string name="quick_sheet_done">Hotovo</string>
+    <string name="quick_tool_speed">Rýchlosť</string>
+    <string name="quick_tool_sleep">Časovač</string>
+    <string name="quick_tool_lyrics">texty</string>
+    <string name="quick_tool_queue">Poradie</string>
+    <string name="quick_tool_volume">Hlasitosť</string>
+    <string name="quick_tool_progress">Pokrok</string>
+    <string name="quick_tool_faces">Ciferníky</string>
+    <string name="quick_tool_search">Hľadať</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="setting_wear_hide_from_recents">Skryť z najnovších aplikácií</string>
+    <string name="setting_wear_hide_from_recents_description">Udržuje aplikáciu hodiniek mimo zoznamu najnovších aplikácií hodiniek, keď ich zatvoríte alebo použijete inú aplikáciu. Užitočné, ak ho namiesto toho otvoríte z ciferníka alebo z panela Now. Zostáva dostupný presne ako predtým a hudba a pripojenie na pozadí nie sú ovplyvnené.</string>
+    <string name="setting_streaming_app_routes">Vyberte aplikácie na streamovanie odkazov</string>
+    <string name="setting_streaming_app_routes_description">Vyberte si kompatibilnú nainštalovanú aplikáciu samostatne pre YouTube Music, Spotify a každú ďalšiu službu. Používa sa s „Zistenou aplikáciou na streamovanie“.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">Služba %1$d používa vybranú aplikáciu</item>
+        <item quantity="other">Služby %1$d používajú vybrané aplikácie</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">, ktoré dokážu otvoriť odkaz, plus nainštalované prehrávače médií.</string>
+    <string name="streaming_route_automatic">Automaticky (zistená aplikácia)</string>
 </resources>

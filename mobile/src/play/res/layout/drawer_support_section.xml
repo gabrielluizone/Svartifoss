@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Drawer support section, `play` flavor: one button that opens the tip dialog, sold through Google
+  Play Billing. The `github` flavor supplies a different file of the same name that links out to
+  Buy Me a Coffee and Ko-fi instead - Google Play's Payments policy forbids those in a Play build.
+
+  Hidden until DrawerSupportSection has heard back from Play that at least one tip product exists
+  and can be bought on this device: a "Support" button that opens an apology is worse than no
+  button, and a phone without the Play Store, or a listing whose products are not set up yet,
+  should look exactly like an app that never offered the option.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_support_section"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:visibility="gone">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/drawer_support_heading"
+        android:textSize="11sp"
+        android:letterSpacing="0.08"
+        android:textAllCaps="true"
+        android:textColor="@color/lyra_accent"
+        android:fontFamily="@font/google_sans"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/drawer_tip_summary"
+        android:textSize="13sp"
+        android:textColor="@color/lyra_text_secondary"
+        android:lineSpacingMultiplier="1.25"
+        android:fontFamily="@font/google_sans" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/drawer_tip_button"
+        style="@style/LyraGestureButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="@string/drawer_tip_button"
+        app:icon="@drawable/ic_favorite" />
+
+</LinearLayout>

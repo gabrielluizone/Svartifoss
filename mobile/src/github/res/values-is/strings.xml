@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Skoða útgáfur</string>
     <string name="update_watch_hint">“Uppfæra úr” sækir nýja úraforritið og sendir það um Bluetooth — þú staðfestir uppsetninguna á úrinu sjálfu, engin snúra eða Wear Installer er nauðsynleg.</string>
     <string name="update_no_wear_asset">Þessi útgáfa er ekki með APK-skrá fyrir úr til að senda.</string>
+    <string name="drawer_support_summary">Svartifoss er ókeypis og með opnum grunnkóða - bjóddu mér upp á kaffibolla ef þér finnst appið gagnlegt :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

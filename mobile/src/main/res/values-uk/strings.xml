@@ -308,7 +308,7 @@
     <string name="preview_sample_lyric_current">Рядок, що звучить зараз</string>
     <string name="preview_sample_lyric_next">Наступний рядок</string>
     <string name="preview_sample_next_title">Наступна пісня</string>
-    <string name="preview_playback_stopped">Зупинено</string>
+    <string name="preview_playback_stopped">Призупинено</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -798,9 +798,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Фон пігулки «Далі»</string>
-    <string name="setting_wear_show_up_next_pill">Пігулка «Далі» у програвачі</string>
-    <string name="setting_wear_show_up_next_pill_description">Показувати пігулку «Далі» внизу екрана відтворення. Вона займає місце рядка мінікнопок, тому з’являється лише коли цей рядок не показується.</string>
+    <string name="setting_wear_up_next_pill">Фон капсули «Далі»</string>
+    <string name="setting_wear_show_up_next_pill">Капсула «Далі» у програвачі</string>
+    <string name="setting_wear_show_up_next_pill_description">Показувати капсулу «Далі» внизу екрана відтворення. Вона займає місце рядка мінікнопок, тому з’являється лише коли цей рядок не показується.</string>
     <string name="category_wf_clock">Годинник</string>
     <string name="setting_wear_clock_color">Колір годинника</string>
     <string name="setting_wear_clock_custom_color">Власний колір годинника</string>
@@ -816,7 +816,7 @@
     <string name="setting_wear_aod_show_progress">Кільце прогресу на постійно ввімкненому екрані</string>
     <string name="setting_wear_aod_show_progress_description">Показувати кільце прогресу навколо кнопки відтворення в режимі очікування — позиція там оновлюється лише приблизно раз на хвилину</string>
     <string name="setting_wear_aod_show_pills">«Далі» на постійно ввімкненому екрані</string>
-    <string name="setting_wear_aod_show_pills_description">Показувати статичну контурну пігулку «Далі» внизу візуальних стилів постійно ввімкненого екрана</string>
+    <string name="setting_wear_aod_show_pills_description">Показувати статичну контурну капсулу «Далі» внизу візуальних стилів постійно ввімкненого екрана</string>
     <string name="category_wf_gestures">Жести екрана</string>
     <string name="setting_wear_mini_buttons_mode">Показувати мінікнопки</string>
     <string name="setting_wear_gestures_mode">Жести екрана</string>
@@ -879,8 +879,8 @@
     <string name="preview_notification_controls">Піктограма з медіасповіщення</string>
     <string name="setting_wear_queue_style">Стиль черги</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Використовувати обкладинки ярликів як фон</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Коли Стиль черги — варіант з обкладинкою, рядок дії швидкої панелі з отриманою обкладинкою ярлика (трек, плейлист, виконавець…) також заповнює свою пігулку цим зображенням, як «Далі». Ярлики без отриманої обкладинки (звичайна піктограма програми) не змінюються.</string>
-    <string name="setting_wear_list_row_size">Розмір пігулки списку</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Коли Стиль черги — варіант з обкладинкою, рядок дії швидкої панелі з отриманою обкладинкою ярлика (трек, плейлист, виконавець…) також заповнює свою капсулу цим зображенням, як «Далі». Ярлики без отриманої обкладинки (звичайна піктограма програми) не змінюються.</string>
+    <string name="setting_wear_list_row_size">Розмір капсули списку</string>
     <string name="setting_wear_list_row_size_description">Висота рядків на всю ширину в черзі, меню та швидкій панелі.</string>
     <string name="setting_wear_progress_gradient">Змішувати палітру в кільці</string>
     <string name="setting_wear_progress_gradient_description">За багатоколірної обробки (Доповняльна, Тріадна, Аналогова, Дуотон) суцільне кільце плавно переходить через усі три кольори. Вимкніть, щоб кільце було одноколірним, зберігши палітру альбому в інших місцях.</string>
@@ -2023,9 +2023,6 @@
     <string name="drawer_sync_heading">Синхронізація</string>
     <string name="drawer_sync_summary">Налаштування годинника задаються тут на телефоні й автоматично синхронізуються зі спареним годинником.</string>
     <string name="drawer_support_heading">Підтримка</string>
-    <string name="drawer_support_summary">Svartifoss безкоштовний і з відкритим кодом — якщо він вам корисний, пригостіть мене кавою :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Завантажити обкладинку</string>
     <string name="album_art_saved">Обкладинку збережено в галереї</string>
     <string name="album_art_save_error">Не вдалося зберегти обкладинку</string>
@@ -2119,7 +2116,7 @@
     <string name="playlist_shortcut_detected_format">Виявлено: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Назва</string>
     <string name="playlist_shortcut_link_hint">Посилання для поширення або URI програми</string>
-    <string name="playlist_shortcut_shuffle">Відтворювати у випадковому порядку (лише YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Щоразу під час запуску ви обираєте на годиннику «Відтворити» або «Перемішати».</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2858,4 +2855,101 @@
     <string name="setting_wear_text_block_position_description">Місце тексту композиції на екрані. «Відповідно до оформлення» зберігає позицію, для якої було спроєктовано кожне оформлення.</string>
     <string name="setting_online_artwork">Онлайн-обкладинка</string>
     <string name="setting_online_artwork_description">Дозвольте оформленню годинника показувати зображення, знайдене онлайн \u2014 виконавця композиції або обкладинку альбому для програвача, який її не надає. Телефон виконує пошук у публічному каталозі Deezer і кешує результат; надсилаються лише назви композиції та виконавця, а пошук не виконується, якщо оформлення не налаштовано на одне з цих джерел. Коли вимкнено, використовується власна обкладинка програвача.</string>
+    <string name="setting_wear_shortcut_details">Відтворити або перемішати на годиннику</string>
+    <string name="setting_wear_shortcut_details_description">Якщо вибрати збережене посилання на годиннику — зі списку ярликів, Tile ярликів або меню дій, — спершу з’являється його обкладинка з кнопками «Відтворити» і «Перемішати». Вимкніть, щоб запускати одразу. Кнопки й жести, призначені одному посиланню, завжди запускають його одразу.</string>
+    <string name="actions_quick_pin_add">Показати на панелі швидкого доступу</string>
+    <string name="actions_quick_pin_remove">Видалити з панелі швидкого доступу</string>
+    <string name="quick_panel_editor_title">Панель швидких дій</string>
+    <string name="quick_panel_editor_open">Редагувати вміст панелі</string>
+    <string name="quick_panel_editor_intro">Створіть панель, яка відкривається, коли ви двічі торкаєтеся центру годинника. Утримуйте та перетягуйте блок, щоб перемістити його, торкніться одного, щоб налаштувати його.</string>
+    <string name="quick_panel_editor_add_block">Додати блок</string>
+    <string name="quick_panel_editor_restore">Відновлення оригінальної панелі</string>
+    <string name="quick_panel_editor_restore_title">Відновити оригінальну панель?</string>
+    <string name="quick_panel_editor_restore_message">Ваше розташування видаляється, і панель повертається до попереднього стану. Вибрані вами кнопки та дії, позначені зірочкою, зберігаються.</string>
+    <string name="quick_panel_editor_restore_confirm">Відновити</string>
+    <string name="quick_panel_editor_fold">Кінець першого екрана (приблизно)</string>
+    <string name="quick_panel_editor_last_block">Для панелі потрібен принаймні один блок</string>
+    <string name="quick_panel_editor_removed">Видалено %1$s</string>
+    <string name="quick_panel_editor_undo">Скасувати</string>
+    <string name="quick_panel_editor_move_up">Перейти вгору</string>
+    <string name="quick_panel_editor_move_down">Перейти вниз</string>
+    <string name="quick_panel_editor_more">Більше опцій</string>
+    <string name="quick_panel_editor_nothing_to_add">Кожен блок вже є на панелі</string>
+    <string name="quick_block_header">Трек</string>
+    <string name="quick_block_buttons">Круглі кнопки</string>
+    <string name="quick_block_upnext">Наступний трек</string>
+    <string name="quick_block_volume">Гучність</string>
+    <string name="quick_block_seek">Пропуск і позиція</string>
+    <string name="quick_block_tools">Інструменти</string>
+    <string name="quick_block_favorites">Вибране</string>
+    <string name="quick_block_actions">Усі дії</string>
+    <string name="quick_block_all_actions">Усі дії</string>
+    <string name="quick_block_header_description">Назва та виконавець того, що відтворюється.</string>
+    <string name="quick_block_buttons_description">Круглі кнопки для дій, якими ви користуєтеся найчастіше, або тих, які пропонує програма відтворення.</string>
+    <string name="quick_block_upnext_description">Наступний трек. Торкніться його, щоб відкрити чергу.</string>
+    <string name="quick_block_volume_description">Знижуйте та збільшуйте гучність, не виходячи з панелі.</string>
+    <string name="quick_block_seek_description">Де ви знаходитесь у доріжці та кнопки для переходу назад і вперед.</string>
+    <string name="quick_block_tools_description">Невеликі ярлики: швидкість відтворення, слова пісень, черга тощо.</string>
+    <string name="quick_block_favorites_description">Дії, які ви позначили зірочкою на вкладці «Дії», як обкладинки або рядки.</string>
+    <string name="quick_block_actions_description">Кожна дія в меню вашого годинника, як рядки на панелі або як одна кнопка, яка відкриває меню.</string>
+    <string name="quick_summary_header">Назва та виконавець</string>
+    <string name="quick_summary_buttons_session">Із програми, яка відтворює</string>
+    <string name="quick_summary_buttons_empty">Кнопки не вибрано</string>
+    <string name="quick_summary_upnext">Наступний трек · відкриває чергу</string>
+    <string name="quick_summary_volume">Крок гучності: %1$d%%</string>
+    <string name="quick_summary_seek">%1$s секунд</string>
+    <string name="quick_summary_seek_bar">%1$s секунд · час і панель</string>
+    <string name="quick_summary_favorites_none">Ще ніхто не позначений зірочкою</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d із зірками · %2$s</item>
+        <item quantity="other">%1$d зібраний · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Усі дії %1$d</string>
+    <string name="quick_summary_actions_first">Перші дії %1$d</string>
+    <string name="quick_summary_actions_button">Одна кнопка · відкриває меню дій</string>
+    <string name="quick_summary_only_playing">лише під час відтворення</string>
+    <string name="quick_summary_only_not_playing">лише без відтворення</string>
+    <string name="quick_mode_grid">Сітка</string>
+    <string name="quick_mode_rows">Рядки</string>
+    <string name="quick_mode_actions_list">Список</string>
+    <string name="quick_mode_actions_button">Кнопка</string>
+    <string name="quick_sheet_show">Показати</string>
+    <string name="quick_sheet_always">Завжди</string>
+    <string name="quick_sheet_while_playing">лише під час відтворення</string>
+    <string name="quick_sheet_while_not_playing">лише без відтворення</string>
+    <string name="quick_sheet_step">Крок</string>
+    <string name="quick_sheet_jump">Крок переходу</string>
+    <string name="quick_sheet_seek_bar">Показати час і панель прогресу</string>
+    <string name="quick_sheet_tools">Інструменти</string>
+    <string name="quick_sheet_layout">Макет</string>
+    <string name="quick_sheet_how_many">Скільки</string>
+    <string name="quick_sheet_all">Усі</string>
+    <string name="quick_sheet_buttons_source">Кнопки від</string>
+    <string name="quick_sheet_source_configured">Мій вибір</string>
+    <string name="quick_sheet_source_session">Програма, яка відтворює</string>
+    <string name="quick_sheet_buttons_hint">Натисніть кнопку, щоб вибрати дію. Утримуйте, щоб відновити значення за замовчуванням.</string>
+    <string name="quick_sheet_favorites_hint">Дії зі зіркою за допомогою блискавки на вкладці «Дії». Тут відображаються лише позначені зірочкою.</string>
+    <string name="quick_sheet_actions_mode">Показати як</string>
+    <string name="quick_sheet_actions_hint">Список розміщує кожну дію на панелі у вигляді рядка. Кнопка робить панель короткою: одна кнопка відкриває повне меню. Щоб взагалі залишити меню поза панеллю, зніміть цей блок.</string>
+    <string name="quick_sheet_remove">Видалити цей блок</string>
+    <string name="quick_sheet_done">Виконано</string>
+    <string name="quick_tool_speed">Швидкість</string>
+    <string name="quick_tool_sleep">Таймер сну</string>
+    <string name="quick_tool_lyrics">Тексти пісень</string>
+    <string name="quick_tool_queue">Черга</string>
+    <string name="quick_tool_volume">Гучність</string>
+    <string name="quick_tool_progress">Прогрес</string>
+    <string name="quick_tool_faces">Циферблати</string>
+    <string name="quick_tool_search">Пошук</string>
+    <string name="quick_tool_menu">Меню</string>
+    <string name="setting_wear_hide_from_recents">Сховати від останніх програм</string>
+    <string name="setting_wear_hide_from_recents_description">Виключає програму годинника зі списку останніх програм годинника, коли ви закриваєте її або використовуєте іншу програму. Корисно, якщо ви відкриваєте його з циферблата або панелі зараз. Він залишається доступним, як і раніше, а музика та фонове з’єднання не впливають.</string>
+    <string name="setting_streaming_app_routes">Виберіть програми для потокових посилань</string>
+    <string name="setting_streaming_app_routes_description">Виберіть сумісну встановлену програму окремо для YouTube Music, Spotify та інших служб. Використовується з «Виявленою програмою потокового передавання».</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d використовує вибрану програму</item>
+        <item quantity="other">Служби %1$d використовують вибрані програми</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Показано програми, які можуть відкрити посилання, а також встановлені медіаплеєри.</string>
+    <string name="streaming_route_automatic">Автоматично (виявлена програма)</string>
 </resources>

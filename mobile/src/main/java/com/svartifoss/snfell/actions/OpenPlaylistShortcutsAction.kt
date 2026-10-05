@@ -10,6 +10,8 @@ import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * Shows the user's configured playlist shortcuts (see
@@ -29,9 +31,11 @@ class OpenPlaylistShortcutsAction : SelectableAction {
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<OpenPlaylistShortcutsAction> {
         override suspend fun handleAction(action: OpenPlaylistShortcutsAction) {
             val shortcuts = PlaylistShortcutStorage.load(service)
-            Wearable.getDataClient(service)
-                    .putDataItem(PlaylistShortcutStorage.createDataRequest(service, shortcuts))
-                    .await()
+            // Off the main thread: each entry's cover may have to be drawn and encoded first.
+            val request = withContext(Dispatchers.Default) {
+                PlaylistShortcutStorage.createDataRequest(service, shortcuts)
+            }
+            Wearable.getDataClient(service).putDataItem(request).await()
         }
     }
 }

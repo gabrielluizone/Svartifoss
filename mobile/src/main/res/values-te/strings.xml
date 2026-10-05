@@ -729,7 +729,7 @@
     <string name="preview_sample_lyric_current">ఇప్పుడు ప్లే అవుతున్న పంక్తి</string>
     <string name="preview_sample_lyric_next">తదుపరి పంక్తి</string>
     <string name="preview_sample_next_title">తదుపరి పాట</string>
-    <string name="preview_playback_stopped">ఆగింది</string>
+    <string name="preview_playback_stopped">పాజ్ చేయబడింది</string>
     <string name="preview_verse_previous">మునుపటి పంక్తి</string>
     <string name="preview_verse_current">ఇప్పుడు ప్లే అవుతున్న పంక్తి</string>
     <string name="preview_verse_next">మరియు దాని తర్వాతది</string>
@@ -1089,9 +1089,9 @@
         <item>నలుపు</item>
         <item>Dynamic (ఆల్బమ్ tone)</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Up Next pill నేపథ్యం</string>
-    <string name="setting_wear_show_up_next_pill">ప్లేయర్‌పై Up Next pill</string>
-    <string name="setting_wear_show_up_next_pill_description">now-playing స్క్రీన్ దిగువన Up Next pill ను చూపండి. అది mini-buttons row తీసుకునే స్థలాన్ని నింపుతుంది, కాబట్టి ఆ row కనిపించనప్పుడు మాత్రమే కనిపిస్తుంది.</string>
+    <string name="setting_wear_up_next_pill">తదుపరి ట్రాక్ క్యాప్సూల్ నేపథ్యం</string>
+    <string name="setting_wear_show_up_next_pill">ప్లేయర్‌పై తదుపరి ట్రాక్ క్యాప్సూల్</string>
+    <string name="setting_wear_show_up_next_pill_description">now-playing స్క్రీన్ దిగువన తదుపరి ట్రాక్ క్యాప్సూల్ ను చూపండి. అది mini-buttons row తీసుకునే స్థలాన్ని నింపుతుంది, కాబట్టి ఆ row కనిపించనప్పుడు మాత్రమే కనిపిస్తుంది.</string>
     <string name="category_wf_clock">గడియారం</string>
     <string name="setting_wear_clock_color">గడియారం రంగు</string>
     <string name="setting_wear_clock_custom_color">గడియారం కస్టమ్ రంగు</string>
@@ -1106,8 +1106,8 @@
     <string name="setting_wear_aod_show_transport_description">మద్దతు ఉన్న visual always-on శైలుల్లో outline చేసిన previous/play/next బటన్‌లను చూపండి. స్క్రీన్ మసకగా ఉన్నప్పుడు వాటిని ట్యాప్ చేయలేరు, కానీ ట్యాప్ గడియారాన్ని మేల్కొలిపి బటన్‌ను ఇప్పటికే మీ వేలి కింద ఉంచుతుంది.</string>
     <string name="setting_wear_aod_show_progress">ఎల్లప్పుడూ-ఆన్ డిస్ప్లేపై ప్రగతి రింగ్</string>
     <string name="setting_wear_aod_show_progress_description">ambient mode లో play button చుట్టూ ప్రగతి రింగ్‌ను చూపండి — అక్కడ స్థానం సుమారు నిమిషానికి ఒకసారి మాత్రమే నవీకరించబడుతుంది</string>
-    <string name="setting_wear_aod_show_pills">ఎల్లప్పుడూ-ఆన్ డిస్ప్లేపై Up Next</string>
-    <string name="setting_wear_aod_show_pills_description">visual always-on శైలుల దిగువన స్థిర outline చేసిన Up Next pill ను చూపండి</string>
+    <string name="setting_wear_aod_show_pills">ఎల్లప్పుడూ-ఆన్ డిస్ప్లేపై తదుపరి ట్రాక్</string>
+    <string name="setting_wear_aod_show_pills_description">visual always-on శైలుల దిగువన స్థిర outline చేసిన తదుపరి ట్రాక్ క్యాప్సూల్ ను చూపండి</string>
     <string name="category_wf_gestures">స్క్రీన్ జెస్చర్‌లు</string>
     <string name="setting_wear_mini_buttons_mode">మినీ బటన్‌లను చూపు</string>
     <string name="setting_wear_gestures_mode">స్క్రీన్ జెస్చర్‌లు</string>
@@ -1157,8 +1157,8 @@
     <string name="preview_notification_controls">media notification నుంచి ఐకాన్</string>
     <string name="setting_wear_queue_style">Queue శైలి</string>
     <string name="setting_wear_quick_panel_shortcut_cover">షార్ట్‌కట్ కవర్‌లను నేపథ్యంగా ఉపయోగించు</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Queue style Cover వేరియంట్‌గా ఉన్నప్పుడు, తెచ్చుకున్న shortcut cover (track, playlist, artist…) ఉన్న quick-panel action row తన pill ను కూడా ఆ art తో నింపుతుంది, Up Next లాగా. తెచ్చుకున్న cover లేని shortcuts (సాధారణ app icon మాత్రమే) మారవు.</string>
-    <string name="setting_wear_list_row_size">జాబితా pill పరిమాణం</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Queue style Cover వేరియంట్‌గా ఉన్నప్పుడు, తెచ్చుకున్న shortcut cover (track, playlist, artist…) ఉన్న quick-panel action row తన క్యాప్సూల్ ను కూడా ఆ art తో నింపుతుంది, తదుపరి ట్రాక్ లాగా. తెచ్చుకున్న cover లేని shortcuts (సాధారణ app icon మాత్రమే) మారవు.</string>
+    <string name="setting_wear_list_row_size">జాబితా క్యాప్సూల్ పరిమాణం</string>
     <string name="setting_wear_list_row_size_description">Queue లో పూర్తి వెడల్పు rows ఎత్తు.</string>
     <string name="setting_wear_progress_gradient">palette ను రింగ్‌లో కలపు</string>
     <string name="setting_wear_progress_gradient_description">బహుళ-రంగు color treatment (Complementary, Triadic, Analogous, Duotone) ఉన్నప్పుడు solid ring మూడు రంగుల గుండా fade అవుతుంది. మిగతా చోట్ల album palette ఉంచుతూ single-color ring కోసం దీన్ని ఆఫ్ చేయండి.</string>
@@ -1969,9 +1969,6 @@
     <string name="drawer_sync_heading">సింక్</string>
     <string name="drawer_sync_summary">వాచ్ సెట్టింగ్స్ ఇక్కడ ఫోన్‌లో కాన్ఫిగర్ చేయబడి జత చేసిన వాచ్‌తో స్వయంచాలకంగా సింక్ అవుతాయి.</string>
     <string name="drawer_support_heading">మద్దతు</string>
-    <string name="drawer_support_summary">Svartifoss ఉచితం మరియు open source - మీకు ఉపయోగకరంగా ఉంటే నాకు ఒక coffee కొనిపెట్టండి :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">కవర్ ఆర్ట్ డౌన్‌లోడ్ చేయండి</string>
     <string name="album_art_saved">కవర్ ఆర్ట్ గ్యాలరీలో సేవ్ అయింది</string>
     <string name="album_art_save_error">కవర్ ఆర్ట్ సేవ్ చేయడం విఫలమైంది</string>
@@ -2060,7 +2057,7 @@
     <string name="playlist_shortcut_detected_format">గుర్తించబడింది: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">పేరు</string>
     <string name="playlist_shortcut_link_hint">Share link లేదా app URI</string>
-    <string name="playlist_shortcut_shuffle">షఫుల్ చేసి ప్లే చేయండి (YouTube Music మాత్రమే)</string>
+    <string name="playlist_shortcut_play_choice">ప్రతిసారి ప్రారంభించేటప్పుడు మీరు వాచ్‌లో ప్లే లేదా షఫుల్ ఎంచుకుంటారు.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2229,4 +2226,101 @@
         <item>నా గ్యాలరీ నుండి చిత్రం</item>
         <item>ఫోల్డర్ నుండి యాదృచ్ఛికం</item>
     </string-array>
+    <string name="setting_wear_shortcut_details">వాచ్‌లో ప్లే లేదా షఫుల్</string>
+    <string name="setting_wear_shortcut_details_description">వాచ్‌లో సేవ్ చేసిన లింక్‌ను షార్ట్‌కట్‌ల జాబితా, షార్ట్‌కట్‌ల Tile లేదా చర్యల మెనూ నుండి ఎంచుకున్నప్పుడు, ముందుగా దాని కవర్ ప్లే మరియు షఫుల్‌తో కనిపిస్తుంది. వెంటనే ప్రారంభించడానికి ఆఫ్ చేయండి. ఒక లింక్‌కు కేటాయించిన బటన్లు, సంజ్ఞలు దాన్ని ఎల్లప్పుడూ వెంటనే ప్రారంభిస్తాయి.</string>
+    <string name="actions_quick_pin_add">త్వరిత ప్యానెల్‌లో చూపు</string>
+    <string name="actions_quick_pin_remove">త్వరిత ప్యానెల్ నుండి తీసివేయండి</string>
+    <string name="quick_panel_editor_title">త్వరిత చర్యల ప్యానెల్</string>
+    <string name="quick_panel_editor_open">ప్యానెల్ కంటెంట్‌ని సవరించండి</string>
+    <string name="quick_panel_editor_intro">మీరు వాచ్ మధ్యలో రెండుసార్లు నొక్కినప్పుడు తెరవబడే ప్యానెల్‌ను రూపొందించండి. ఒక బ్లాక్‌ని తరలించడానికి దాన్ని పట్టుకుని లాగండి, దాన్ని సర్దుబాటు చేయడానికి ఒకదాన్ని నొక్కండి.</string>
+    <string name="quick_panel_editor_add_block">బ్లాక్‌ని జోడించండి</string>
+    <string name="quick_panel_editor_restore">అసలు ప్యానెల్‌ని పునరుద్ధరించండి</string>
+    <string name="quick_panel_editor_restore_title">అసలు ప్యానెల్‌ని పునరుద్ధరించాలా?</string>
+    <string name="quick_panel_editor_restore_message">మీ అమరిక తీసివేయబడింది మరియు ప్యానెల్ ఎలా ఉందో తిరిగి వస్తుంది. మీ బటన్ ఎంపికలు మరియు మీరు స్టార్ చేసిన చర్యలు ఉంచబడతాయి.</string>
+    <string name="quick_panel_editor_restore_confirm">పునరుద్ధరించు</string>
+    <string name="quick_panel_editor_fold">మొదటి స్క్రీన్ ముగింపు (సుమారు)</string>
+    <string name="quick_panel_editor_last_block">ప్యానెల్‌కి కనీసం ఒక బ్లాక్ అవసరం</string>
+    <string name="quick_panel_editor_removed">%1$s తీసివేయబడింది</string>
+    <string name="quick_panel_editor_undo">అన్డు</string>
+    <string name="quick_panel_editor_move_up">పైకి తరలించు</string>
+    <string name="quick_panel_editor_move_down">క్రిందికి తరలించు</string>
+    <string name="quick_panel_editor_more">మరిన్ని ఎంపికలు</string>
+    <string name="quick_panel_editor_nothing_to_add">ప్రతి బ్లాక్ ఇప్పటికే ప్యానెల్‌లో ఉంది</string>
+    <string name="quick_block_header">ట్రాక్</string>
+    <string name="quick_block_buttons">రౌండ్ బటన్‌లు</string>
+    <string name="quick_block_upnext">తదుపరి ట్రాక్</string>
+    <string name="quick_block_volume">వాల్యూమ్</string>
+    <string name="quick_block_seek">స్కిప్ మరియు స్థానం</string>
+    <string name="quick_block_tools">సాధనాలు</string>
+    <string name="quick_block_favorites">ఇష్టమైనవి</string>
+    <string name="quick_block_actions">అన్ని చర్యలు</string>
+    <string name="quick_block_all_actions">అన్ని చర్యలు</string>
+    <string name="quick_block_header_description">ప్లే అవుతున్న వాటి యొక్క శీర్షిక మరియు కళాకారుడు.</string>
+    <string name="quick_block_buttons_description">మీరు ఎక్కువగా ఉపయోగించే లేదా ప్లే చేసే యాప్ అందించే చర్యల కోసం రౌండ్ బటన్‌లు.</string>
+    <string name="quick_block_upnext_description">తదుపరి ట్రాక్. క్యూను తెరవడానికి దాన్ని నొక్కండి.</string>
+    <string name="quick_block_volume_description">ప్యానెల్ నుండి నిష్క్రమించకుండానే తగ్గించి, వాల్యూమ్‌ను పెంచండి.</string>
+    <string name="quick_block_seek_description">మీరు ట్రాక్‌లో ఎక్కడ ఉన్నారు మరియు వెనుకకు మరియు ముందుకు దాటవేసే బటన్‌లు.</string>
+    <string name="quick_block_tools_description">చిన్న సత్వరమార్గాలు: ప్లేబ్యాక్ వేగం, సాహిత్యం, క్యూ మరియు మరిన్ని.</string>
+    <string name="quick_block_favorites_description">మీరు చర్యల ట్యాబ్‌లో కవర్‌లు లేదా అడ్డు వరుసలుగా నక్షత్రం చేసిన చర్యలు.</string>
+    <string name="quick_block_actions_description">మీ వాచ్ మెను యొక్క ప్రతి చర్య, ప్యానెల్‌లో అడ్డు వరుసలుగా లేదా మెనుని తెరిచే ఒక బటన్‌గా.</string>
+    <string name="quick_summary_header">శీర్షిక మరియు కళాకారుడు</string>
+    <string name="quick_summary_buttons_session">ప్లే చేస్తున్న యాప్ నుంచి</string>
+    <string name="quick_summary_buttons_empty">బటన్‌లు ఏవీ ఎంచుకోబడలేదు</string>
+    <string name="quick_summary_upnext">తదుపరి పాట · క్యూను తెరుస్తుంది</string>
+    <string name="quick_summary_volume">వాల్యూమ్ దశలు %1$d%%</string>
+    <string name="quick_summary_seek">%1$s సెకన్లు</string>
+    <string name="quick_summary_seek_bar">%1$s సెకన్లు · సమయం మరియు బార్</string>
+    <string name="quick_summary_favorites_none">ఏదీ ఇంకా నక్షత్రం వేయలేదు</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d నక్షత్రం · %2$s</item>
+        <item quantity="other">%1$d నక్షత్రం · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">అన్ని %1$d చర్యలు</string>
+    <string name="quick_summary_actions_first">మొదటి %1$d చర్యలు</string>
+    <string name="quick_summary_actions_button">ఒక బటన్ · చర్యల మెనుని తెరుస్తుంది</string>
+    <string name="quick_summary_only_playing">ప్లేబ్యాక్ జరుగుతున్నప్పుడు మాత్రమే</string>
+    <string name="quick_summary_only_not_playing">ప్లేబ్యాక్ లేనప్పుడు మాత్రమే</string>
+    <string name="quick_mode_grid">గ్రిడ్</string>
+    <string name="quick_mode_rows">అడ్డు వరుసలు</string>
+    <string name="quick_mode_actions_list">జాబితా</string>
+    <string name="quick_mode_actions_button">బటన్</string>
+    <string name="quick_sheet_show">చూపించు</string>
+    <string name="quick_sheet_always">ఎల్లప్పుడూ</string>
+    <string name="quick_sheet_while_playing">ప్లేబ్యాక్ జరుగుతున్నప్పుడు మాత్రమే</string>
+    <string name="quick_sheet_while_not_playing">ప్లేబ్యాక్ లేనప్పుడు మాత్రమే</string>
+    <string name="quick_sheet_step">దశ</string>
+    <string name="quick_sheet_jump">ఎంత దూకాలి</string>
+    <string name="quick_sheet_seek_bar">సమయం మరియు ప్రోగ్రెస్ బార్</string>
+    <string name="quick_sheet_tools">సాధనాలు</string>
+    <string name="quick_sheet_layout">లేఅవుట్</string>
+    <string name="quick_sheet_how_many">ఎన్ని</string>
+    <string name="quick_sheet_all">అన్నీ</string>
+    <string name="quick_sheet_buttons_source">బటన్‌లు</string>
+    <string name="quick_sheet_source_configured">నా ఎంపికలు</string>
+    <string name="quick_sheet_source_session">ప్లే చేస్తున్న యాప్</string>
+    <string name="quick_sheet_buttons_hint">దాని చర్యను ఎంచుకోవడానికి బటన్‌ను నొక్కండి. దాని డిఫాల్ట్‌ని పునరుద్ధరించడానికి పట్టుకోండి.</string>
+    <string name="quick_sheet_favorites_hint">చర్యల ట్యాబ్‌లో మెరుపు బోల్ట్‌తో స్టార్ చర్యలు. ఇక్కడ నక్షత్రం గుర్తు ఉన్నవి మాత్రమే కనిపిస్తాయి.</string>
+    <string name="quick_sheet_actions_mode">ఇలా చూపించు</string>
+    <string name="quick_sheet_actions_hint">ఒక జాబితా ప్యానెల్‌లోని ప్రతి చర్యను వరుసగా ఉంచుతుంది. ఒక బటన్ ప్యానెల్‌ను చిన్నదిగా ఉంచుతుంది: పూర్తి మెనుని తెరిచే ఒక బటన్. ప్యానెల్ నుండి మెనుని పూర్తిగా వదిలివేయడానికి, ఈ బ్లాక్‌ను తీసివేయండి.</string>
+    <string name="quick_sheet_remove">ఈ బ్లాక్‌ని తీసివేయండి</string>
+    <string name="quick_sheet_done">పూర్తయింది</string>
+    <string name="quick_tool_speed">వేగం</string>
+    <string name="quick_tool_sleep">స్లీప్ టైమర్</string>
+    <string name="quick_tool_lyrics">సాహిత్యం</string>
+    <string name="quick_tool_queue">క్యూ</string>
+    <string name="quick_tool_volume">వాల్యూమ్</string>
+    <string name="quick_tool_progress">పురోగతి</string>
+    <string name="quick_tool_faces">వాచ్ ఫేస్‌లు</string>
+    <string name="quick_tool_search">శోధన</string>
+    <string name="quick_tool_menu">మెనూ</string>
+    <string name="setting_wear_hide_from_recents">ఇటీవలి అనువర్తనాల నుండి దాచు</string>
+    <string name="setting_wear_hide_from_recents_description">మీరు వాచ్ యాప్‌ని మూసివేసిన తర్వాత లేదా మరొక యాప్‌ని ఉపయోగించిన తర్వాత వాచ్ యొక్క ఇటీవలి యాప్‌ల జాబితా నుండి దూరంగా ఉంచుతుంది. బదులుగా మీరు వాచ్ ఫేస్ లేదా Now బార్ నుండి తెరిస్తే ఉపయోగకరంగా ఉంటుంది. ఇది మునుపటిలానే అందుబాటులో ఉంటుంది మరియు సంగీతం మరియు నేపథ్య కనెక్షన్ ప్రభావితం కాదు.</string>
+    <string name="setting_streaming_app_routes">స్ట్రీమింగ్ లింక్‌ల కోసం యాప్‌లను ఎంచుకోండి</string>
+    <string name="setting_streaming_app_routes_description">YouTube సంగీతం, Spotify మరియు ప్రతి ఇతర సేవ కోసం విడిగా అనుకూలమైన ఇన్‌స్టాల్ చేసిన యాప్‌ను ఎంచుకోండి. "డిటెక్టెడ్ స్ట్రీమింగ్ యాప్"తో ఉపయోగించబడుతుంది.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d సేవ ఎంచుకున్న యాప్</item>
+        <item quantity="other">%1$d సేవలు ఎంచుకున్న యాప్‌లను ఉపయోగిస్తాయి</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">లింక్‌ని తెరవగల యాప్‌లు, అలాగే ఇన్‌స్టాల్ చేయబడిన మీడియా ప్లేయర్‌లు చూపబడతాయి.</string>
+    <string name="streaming_route_automatic">ఆటోమేటిక్ (గుర్తించబడిన యాప్)</string>
 </resources>

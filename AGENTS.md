@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-Svartifoss is a Groovy-Gradle Android project split into four modules. `mobile/` contains the phone app and uses Dagger 2; `wear/` contains the Wear OS app and uses Hilt. Shared Kotlin, Android resources, and protobuf schemas live in `common/`, while `wearutils/` is a Git submodule. Production code and resources follow `MODULE/src/main/{java,res,proto}`; JVM tests belong in `MODULE/src/test/java`. Store metadata is under `fastlane/`, documentation under `docs/`, and raw design references under `icons/` and `wearmediatemplate/`. Read `CLAUDE.md` before changing communication, preferences, playback, or watch UI behavior; it documents important architectural invariants.
+Svartifoss is a Groovy-Gradle Android project split into four modules. `mobile/` contains the phone app and uses Dagger 2; `wear/` contains the Wear OS app and uses Hilt. Shared Kotlin, Android resources, and protobuf schemas live in `common/`, while `wearutils/` is a Git submodule. Production code and resources follow `MODULE/src/main/{java,res,proto}`; JVM tests belong in `MODULE/src/test/java` (logic that exists only in the Play flavor, such as the tip option's billing bookkeeping, is tested from `mobile/src/testPlay/java`). Store metadata is under `fastlane/`, documentation under `docs/`, and raw design references under `icons/` and `wearmediatemplate/`. Read `CLAUDE.md` before changing communication, preferences, playback, or watch UI behavior; it documents important architectural invariants.
 
 ## Build, Test, and Development Commands
 

@@ -312,6 +312,23 @@ class ActionPickerActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * The cover [action] is listed with, or null for the ones listed with their glyph.
+     *
+     * Remembered per action: building one reads the cover from disk, and for a saved shortcut asks
+     * the package manager which app opens it, and a list that is scrolled binds the same row again
+     * and again. A copy of the cached drawable is handed out each time, since one Drawable cannot
+     * belong to two views.
+     */
+    private fun listCoverOf(action: PhoneAction): android.graphics.drawable.Drawable? {
+        if (action.customIconUri != null) return null
+        if (!listCovers.containsKey(action)) listCovers[action] = action.listCover
+        val cached = listCovers[action] ?: return null
+        return cached.constantState?.newDrawable(resources) ?: cached
+    }
+
+    private val listCovers = java.util.IdentityHashMap<PhoneAction, android.graphics.drawable.Drawable?>()
+
     private inner class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val iconView: ImageView = itemView.findViewById(R.id.icon)
         private val textView: TextView = itemView.findViewById(android.R.id.text1)
@@ -359,6 +376,24 @@ class ActionPickerActivity : AppCompatActivity() {
         private fun bindAction(action: PhoneAction, indent: Boolean) {
             setIndent(indent)
             textView.text = action.title
+
+            // A streaming destination is listed with its cover, in a circle: the picture the
+            // watch's menu shows and the Actions tab lists. This picker used to draw the glyph its
+            // *buttons* keep instead, so every liked-songs action here was the same thumbs-up
+            // while the same destinations, one screen away, were covers.
+            val cover = listCoverOf(action)
+            if (cover != null) {
+                iconView.clearColorFilter()
+                iconView.setImageDrawable(cover)
+                iconView.setBackgroundResource(R.drawable.circle_icon_bg)
+                iconView.scaleType = ImageView.ScaleType.CENTER_CROP
+                iconView.clipToOutline = true
+                return
+            }
+            // Rows are recycled: undo what a cover row did to the view.
+            iconView.background = null
+            iconView.clipToOutline = false
+            iconView.scaleType = ImageView.ScaleType.FIT_CENTER
             if (action.iconTintable) {
                 iconView.setColorFilter(ContextCompat.getColor(
                         this@ActionPickerActivity, R.color.lyra_on_surface))

@@ -51,6 +51,9 @@ class MenuViewModel @Inject constructor(
 
     val preferences: LiveData<SharedPreferences> = PreferencesBus
 
+    /** The playing cover, for the album colour the menu is washed in. */
+    val albumArt = phoneConnection.albumArt
+
     /** Deletes one entry from a watch-managed deletable custom list (currently just search
      *  history) - the phone re-pushes the updated list afterwards, updating [customList]. */
     fun deleteCustomListEntry(listId: String, entryId: String) {

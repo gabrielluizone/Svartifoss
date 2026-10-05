@@ -1,11 +1,14 @@
 package com.svartifoss.snfell.actions
 
 import android.content.Context
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.music.MusicService
+import com.svartifoss.snfell.music.ShortcutCovers
+import com.svartifoss.snfell.music.StreamingCollection
 import javax.inject.Inject
 
 /**
@@ -31,6 +34,14 @@ class PlayDeezerFlowAction : SelectableAction {
 
     override val remoteUri: String
         get() = PlayPlaylistShortcutAction(context, title, FLOW_LINK).remoteUri
+
+    /** Listed with its collection's cover rather than the glyph its buttons keep. */
+    override val listCover: Drawable
+        get() = BitmapDrawable(context.resources,
+                ShortcutCovers.forCollection(context, StreamingCollection.DEEZER_FLOW))
+
+    override val streamingCollection: StreamingCollection
+        get() = StreamingCollection.DEEZER_FLOW
 
     class Handler @Inject constructor(private val service: MusicService) :
             ActionHandler<PlayDeezerFlowAction> {

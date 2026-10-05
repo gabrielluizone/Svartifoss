@@ -38,7 +38,7 @@
 
     <string name="no_phone">Walang nakakonektang phone</string>
     <string name="phone_unavailable">I-unlock ang iyong phone para makontrol ang pag-playback</string>
-    <string name="playback_stopped">Huminto</string>
+    <string name="playback_stopped">Naka-pause</string>
     <string name="error">ERROR</string>
     <string name="error_play_services">Error sa Play Services</string>
     <string name="button">Pindutan</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Pinatugtog kamakailan</string>
     <string name="queue_history_fallback_reason">Hindi ibinabahagi ng app na ito ang queue nito</string>
+    <string name="menu_header_actions">Mga aksyon</string>
+    <string name="menu_header_search_results">Mga resulta ng paghahanap</string>
+    <string name="menu_header_search_history">Mga kamakailang paghahanap</string>
+    <string name="menu_header_library">Library</string>
+    <string name="shortcut_open_on_phone">Buksan sa phone</string>
+    <string name="shortcut_continue_on_phone">Ituloy sa phone mo</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Ngayon</string>
 
@@ -70,7 +76,7 @@
          and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
     <string name="face_picker_title">Mukha ng relo</string>
     <string name="face_picker_offline">Hindi nakakonekta ang phone — malalapat ang face na ito sa relo, pero pananatilihin ng phone ang setting nito</string>
-    <string name="face_picker_section_builtin">Mga built-in na face</string>
+    <string name="face_picker_section_builtin">Mga built-in na mukha ng relo</string>
     <string name="face_picker_section_custom">Mga theme ko</string>
     <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
     <string name="face_picker_custom_base">Batay sa %1$s</string>
@@ -98,13 +104,13 @@
     <!-- One-time gesture hints overlay shown on first launch -->
     <string name="hint_title">Paano gamitin</string>
     <string name="hint_edges">I-tap ang itaas, ibaba, kaliwa, o kanan — gagawin ng bawat zone ang nakatalagang action dito</string>
-    <string name="hint_center">Gitna — play/pause
+    <string name="hint_center">Gitna — I-play / I-pause
 Double-tap — quick actions
 Long-press — face picker (nako-configure)</string>
     <string name="hint_swipe_up">Mag-swipe pataas — actions menu
 Pababa o pakaliwa — mga nakatalagang action
 Pakanan mula sa gilid — lumabas</string>
-    <string name="hint_crown">Crown — volume o seek
+    <string name="hint_crown">Umiikot na crown — volume o seek
 Mga side button — mga nakatalagang action
 I-customize ang lahat sa Controls at Watch sa phone mo</string>
     <string name="hint_next">Susunod</string>
@@ -209,4 +215,23 @@ I-customize ang lahat sa Controls at Watch sa phone mo</string>
     <string name="progress_screen_cancel_seek">Kanselahin ang pag-seek</string>
     <string name="progress_screen_skip_back">Lumaktaw pabalik ng %1$d segundo</string>
     <string name="progress_screen_skip_forward">Lumaktaw pasulong ng %1$d segundo</string>
+    <string name="quick_block_all_actions">Lahat ng aksyon</string>
+    <string name="quick_block_favorites">Mga Paborito</string>
+    <string name="quick_tool_speed">Bilis</string>
+    <string name="quick_tool_lyrics">Mga liriko</string>
+    <string name="quick_tool_queue">Nakapila</string>
+    <string name="quick_tool_volume">Lakas ng tunog</string>
+    <string name="quick_tool_progress">Pag-unlad</string>
+    <string name="quick_tool_faces">Mga mukha ng relo</string>
+    <string name="quick_tool_search">Maghanap</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Lakas ng tunog %1$d%%</string>
+    <string name="quick_seek_back_description">Bumalik %1$d segundo</string>
+    <string name="quick_seek_forward_description">Pasulong %1$d segundo</string>
+    <string name="quick_speed_description">Bilis ng pag-playback %1$s</string>
+    <string name="quick_tool_sleep">Timer ng pagtulog</string>
+    <string name="quick_sleep_minutes">%1$d minuto</string>
+    <string name="quick_sleep_description">Timer ng pagtulog, %1$d minuto ang natitira. I-tap para baguhin.</string>
+    <string name="quick_sleep_off_description">Naka-off ang timer ng pagtulog. I-tap para itakda.</string>
 </resources>

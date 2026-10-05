@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">ดูรุ่น</string>
     <string name="update_watch_hint">“อัปเดตนาฬิกา” จะดาวน์โหลดแอปนาฬิกาใหม่และส่งผ่าน Bluetooth — คุณยืนยันการติดตั้งบนตัวนาฬิกาได้เลย โดยไม่ต้องใช้สายหรือ Wear Installer</string>
     <string name="update_no_wear_asset">รุ่นนี้ไม่มี APK สำหรับนาฬิกาให้ส่ง</string>
+    <string name="drawer_support_summary">Svartifoss ฟรีและโอเพนซอร์ส — หากมีประโยชน์กับคุณ เลี้ยงกาแฟฉันสักแก้วได้ :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

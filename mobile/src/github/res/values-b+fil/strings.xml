@@ -9,4 +9,7 @@ Wala ang Svartifoss sa Play Store — hiwalay na sini-sideload ang watch app (ha
     <string name="no_watch_app_button">Tingnan ang releases</string>
     <string name="update_watch_hint">Dina-download ng “Update watch” ang bagong watch app at ipinapadala sa Bluetooth — ikaw ang nagko-confirm ng install sa mismong relo, walang cable o Wear Installer na kailangan.</string>
     <string name="update_no_wear_asset">Walang watch APK na maipapadala ang release na ito.</string>
+    <string name="drawer_support_summary">Libre at open source ang Svartifoss — ilibre mo ako ng kape kung kapaki-pakinabang ito sa iyo :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

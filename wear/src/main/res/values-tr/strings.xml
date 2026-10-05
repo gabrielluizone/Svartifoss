@@ -38,7 +38,7 @@
 
     <string name="no_phone">Telefon bağlı değil</string>
     <string name="phone_unavailable">Oynatmayı kontrol etmek için telefonun kilidini aç</string>
-    <string name="playback_stopped">Durduruldu</string>
+    <string name="playback_stopped">Duraklatıldı</string>
     <string name="error">HATA</string>
     <string name="error_play_services">Play Hizmetleri hatası</string>
     <string name="button">Düğme</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Son çalınanlar</string>
     <string name="queue_history_fallback_reason">Bu uygulama sırasını paylaşmıyor</string>
+    <string name="menu_header_actions">Eylemler</string>
+    <string name="menu_header_search_results">Arama sonuçları</string>
+    <string name="menu_header_search_history">Son aramalar</string>
+    <string name="menu_header_library">Kitaplık</string>
+    <string name="shortcut_open_on_phone">Telefonda aç</string>
+    <string name="shortcut_continue_on_phone">Telefonunda devam et</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Bugün</string>
 
@@ -203,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Aramayı iptal et</string>
     <string name="progress_screen_skip_back">%1$d saniye geri atla</string>
     <string name="progress_screen_skip_forward">%1$d saniye ileri atla</string>
+    <string name="quick_block_all_actions">Tüm işlemler</string>
+    <string name="quick_block_favorites">Favoriler</string>
+    <string name="quick_tool_speed">Hız</string>
+    <string name="quick_tool_lyrics">Şarkı Sözleri</string>
+    <string name="quick_tool_queue">Kuyruk</string>
+    <string name="quick_tool_volume">Ses seviyesi</string>
+    <string name="quick_tool_progress">İlerleme</string>
+    <string name="quick_tool_faces">Saat kadranları</string>
+    <string name="quick_tool_search">Arama</string>
+    <string name="quick_tool_menu">Menüsü</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Ses seviyesi %1$d%%</string>
+    <string name="quick_seek_back_description">Geri %1$d saniye</string>
+    <string name="quick_seek_forward_description">İleri %1$d saniye</string>
+    <string name="quick_speed_description">Oynatma hızı %1$s</string>
+    <string name="quick_tool_sleep">Uyku zamanlayıcısı</string>
+    <string name="quick_sleep_minutes">%1$d dk.</string>
+    <string name="quick_sleep_description">Uyku zamanlayıcısı, %1$d dakika kaldı. Değiştirmek için dokunun.</string>
+    <string name="quick_sleep_off_description">Uyku zamanlayıcısı kapalı. Ayarlamak için dokunun.</string>
 </resources>

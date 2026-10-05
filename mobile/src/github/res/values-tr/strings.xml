@@ -9,4 +9,7 @@ Svartifoss Play Store’da değildir — saat uygulaması ayrı olarak yandan y�
     <string name="no_watch_app_button">Sürümleri görüntüle</string>
     <string name="update_watch_hint">“Saati güncelle” yeni saat uygulamasını indirir ve Bluetooth üzerinden gönderir — kurulumu saatin üzerinde onaylarsınız; kabloya veya Wear Installer’a gerek yoktur.</string>
     <string name="update_no_wear_asset">Bu sürümde gönderilecek saat APK’sı yok.</string>
+    <string name="drawer_support_summary">Svartifoss ücretsiz ve açık kaynaklıdır — işinize yarıyorsa bana bir kahve ısmarlayın :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

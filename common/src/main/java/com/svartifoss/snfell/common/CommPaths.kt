@@ -79,6 +79,35 @@ interface CommPaths {
         // ACTION_SET_PLAYBACK_SPEED simply reports the same speed back, which is a silent no-op
         // rather than a reason to withhold the command (see MediaSessionCapabilities's reasoning).
         const val MESSAGE_SET_PLAYBACK_SPEED = "/Messages/SetPlaybackSpeed"
+
+        /**
+         * Watch -> phone: start, change or cancel the sleep timer. Payload is the length in whole
+         * minutes as a big-endian long; 0 cancels it.
+         *
+         * The **phone** keeps the timer, not the watch: it is the phone that has to pause the music
+         * when it ends, and a timer on the wrist would need the watch to be awake, in range and
+         * running at the moment someone has fallen asleep. A length goes over and not a deadline, so
+         * the two devices never have to agree about what time it is (see PlaybackPositionEstimate).
+         */
+        const val MESSAGE_SET_SLEEP_TIMER = "/Messages/SleepTimerSet"
+
+        /** Watch -> phone: "is a sleep timer running?". No payload; answered with
+         *  [MESSAGE_SLEEP_TIMER_STATE]. Asked when the quick panel opens. */
+        const val MESSAGE_REQUEST_SLEEP_TIMER = "/Messages/SleepTimerRequest"
+
+        /**
+         * Phone -> watch: how long the sleep timer has left, in milliseconds as a big-endian long;
+         * 0 means none is running. Sent when it is set, cancelled or ends, and when asked.
+         *
+         * A **duration**, never a deadline: the watch adds it to its own `elapsedRealtime` the moment
+         * it arrives and counts down on its own clock, so nothing is ever subtracted across two
+         * devices' clocks. It is not pushed every minute for the same reason `MusicState` does not
+         * push the position - the watch can count on its own.
+         *
+         * `/Messages`, not `/IdleMessages`: worthless to a watch whose UI is not running, and the
+         * prefix that wakes one would only spin the process up to discard it.
+         */
+        const val MESSAGE_SLEEP_TIMER_STATE = "/Messages/SleepTimerState"
         const val MESSAGE_TOGGLE_PLAY_PAUSE = "/Messages/TogglePlayPause"
         const val MESSAGE_SKIP_NEXT = "/Messages/SkipNext"
         const val MESSAGE_SKIP_PREVIOUS = "/Messages/SkipPrevious"
@@ -253,6 +282,8 @@ interface CommPaths {
          * what keeps a new watch working against a phone build from before this path existed.
          */
         const val MESSAGE_DEEP_LINK_VERDICT = "/IdleMessages/DeepLinkVerdict"
+        const val MESSAGE_STREAMING_SHORTCUT_VERDICT = "/IdleMessages/StreamingShortcutVerdict"
+        const val MESSAGE_RESOLVE_STREAMING_SHORTCUT = "/Messages/ResolveStreamingShortcut"
 
         /** Immediate MessageClient delivery of a preference snapshot (see WatchPreferenceMessage),
          *  complementing the durable /Settings DataItem. Own prefix so a dedicated manifest

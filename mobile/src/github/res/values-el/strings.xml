@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Προβολή εκδόσεων</string>
     <string name="update_watch_hint">Το \"Ενημέρωση ρολογιού\" κατεβάζει τη νέα εφαρμογή ρολογιού και τη στέλνει μέσω Bluetooth — επιβεβαιώνετε την εγκατάσταση στο ίδιο το ρολόι, χωρίς καλώδιο ή Wear Installer.</string>
     <string name="update_no_wear_asset">Αυτή η έκδοση δεν έχει APK ρολογιού για αποστολή.</string>
+    <string name="drawer_support_summary">Το Svartifoss είναι δωρεάν και ανοιχτού κώδικα — κεράστε με έναν καφέ αν σας φανεί χρήσιμο :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

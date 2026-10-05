@@ -15,8 +15,8 @@ android {
         // Wear OS has a separate API-35 requirement and remains configured in wear/build.gradle.
         targetSdkVersion 36
         compileSdk 36
-        versionCode 85
-        versionName "4.1"
+        versionCode 87
+        versionName "4.2"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         wearAppUnbundled true
         multiDexEnabled true
@@ -131,6 +131,11 @@ dependencies {
     implementation libs.google.firebase.firestore
     implementation libs.google.identity.googleid
 
+    // The tip option in the drawer. `play` only: Google Play Billing is the one way to take a payment
+    // inside a Play listing, and the github build has no use for the library or for the
+    // com.android.vending.BILLING permission it declares. FlavorSupportIsolationTest pins this line.
+    playImplementation libs.google.billing.ktx
+
     testImplementation libs.kotlin.coroutines.test
     testImplementation libs.junit4
     // Android's org.json is a runtime stub in local JVM tests; use the reference implementation
@@ -174,6 +179,20 @@ tasks.withType(Test).configureEach {
             .withPathSensitivity(PathSensitivity.RELATIVE)
     inputs.file("${rootProject.projectDir}/.github/community-theme-publisher/publisher.mjs")
             .withPropertyName("communityThemePublisherForScreenshotContract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // The flavor-isolation tests read the flavor source sets and the Play tips guide off disk.
+    // `src/play` and `src/github` are not on the shared unit-test classpath, so without these an
+    // edit that moves the Buy Me a Coffee links back into the Play build, or lets billing reach
+    // `src/main`, leaves the task UP-TO-DATE and is reported only on a clean build.
+    inputs.dir("src/play")
+            .withPropertyName("playFlavorSourcesForSupportIsolation")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.dir("src/github")
+            .withPropertyName("githubFlavorSourcesForSupportIsolation")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file("${rootProject.projectDir}/docs/play-tips.md")
+            .withPropertyName("playTipsGuideForSupportIsolation")
             .withPathSensitivity(PathSensitivity.RELATIVE)
 }
 

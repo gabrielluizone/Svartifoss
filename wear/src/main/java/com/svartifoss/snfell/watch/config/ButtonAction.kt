@@ -18,11 +18,28 @@ class ButtonAction(
          *  skip/reverse-by-seconds actions. Lets the press be drawn at once; see
          *  `MusicViewModel.applyOptimisticSeek`. Null for everything else, and for any action
          *  from a phone build that predates it. */
-        val seekOffsetMs: Long? = null
+        val seekOffsetMs: Long? = null,
+        /** For an entry that starts one streaming destination (a saved shortcut, the account's
+         *  liked songs): its service and kind, shown on that destination's own screen. Its
+         *  presence is what lets a pick from the actions menu open that screen - see
+         *  `ShortcutScreenPolicy`. Null for everything else and for older phone builds. */
+        val shortcutSubtitle: String? = null,
+        /** Alongside [shortcutSubtitle]: whether that screen offers Shuffle beside Play. */
+        val shortcutShuffleable: Boolean = false,
+        /** Optional public link-preview byline for the shortcut's own screen. */
+        val shortcutCreator: String? = null,
+        /** Optional public link-preview description for the shortcut's own screen. */
+        val shortcutDescription: String? = null,
+        /** Whether the user starred this actions-menu entry for the quick panel's favourites
+         *  block. Only meaningful for entries of the actions menu; false from a phone build that
+         *  predates the flag, which is the same as nothing being starred. */
+        val inQuickPanel: Boolean = false
 ) {
     override fun toString(): String {
         return "ButtonAction(key='$key', icon=$icon, title=$title, " +
                 "iconTintable=$iconTintable, remoteUri=$remoteUri, isCoverArt=$isCoverArt, " +
-                "seekOffsetMs=$seekOffsetMs)"
+                "seekOffsetMs=$seekOffsetMs, shortcutSubtitle=$shortcutSubtitle, " +
+                "shortcutShuffleable=$shortcutShuffleable, shortcutCreator=$shortcutCreator, " +
+                "shortcutDescription=$shortcutDescription, inQuickPanel=$inQuickPanel)"
     }
 }

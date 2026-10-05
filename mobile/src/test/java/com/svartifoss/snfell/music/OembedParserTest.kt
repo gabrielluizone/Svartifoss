@@ -15,6 +15,7 @@ class OembedParserTest {
 
         assertEquals("Popular Music Videos", info?.title)
         assertEquals("https://i.ytimg.com/vi/fOT0BUpITw8/hqdefault.jpg", info?.thumbnailUrl)
+        assertEquals("Music", info?.creator)
     }
 
     @Test

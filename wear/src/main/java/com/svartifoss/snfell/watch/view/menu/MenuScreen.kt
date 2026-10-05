@@ -3,6 +3,7 @@ package com.svartifoss.snfell.watch.view.menu
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,20 +35,34 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.wear.compose.foundation.hierarchicalFocusGroup
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
+import androidx.wear.compose.foundation.lazy.ScalingLazyListState
 import androidx.wear.compose.foundation.lazy.itemsIndexed
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
+import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.SwipeToDismissBox
 import androidx.wear.compose.material3.Text
+import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.CustomLists
+import com.svartifoss.snfell.proto.ShortcutPlayMode
+import com.svartifoss.snfell.watch.communication.CustomListItemWithIcon
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.config.ButtonAction
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
@@ -62,8 +77,8 @@ import com.svartifoss.snfell.watch.view.queue.listRowArtworkSize
 import com.svartifoss.snfell.watch.view.queue.coverFill
 import com.svartifoss.snfell.watch.view.queue.rememberCoverImage
 import com.svartifoss.snfell.watch.view.queue.coverScrimFor
-import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.draw.paint
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailContent
+import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailUi
 
 /** What [MenuScreen] is currently showing. */
 sealed interface MenuContent {
@@ -85,7 +100,13 @@ private const val SUBTITLE_ALPHA = 0.65f
  * row selecting that row, every row's tap confirms whatever row is currently centered
  * ([onCenterConfirm]). This is done by swapping each row's onClick - NOT by laying a full-screen
  * clickable over the list, which would swallow finger drags and leave only the rotary crown able
- * to scroll. [onCenterItemChanged] keeps the host activity's stem-button confirm target up to date.
+ * to scroll. [onCenterItemChanged] keeps the host activity's stem-button confirm target up to date,
+ * as an *entry* index (see [MenuListLayout] - the heading is not an entry).
+ *
+ * [detail] is a streaming shortcut picked from this menu, shown on its own screen *inside* the
+ * menu rather than as another window: a swipe from it goes back to the list it was picked from,
+ * the way a playlist's page does in the music apps. A separate window could not do that here - the
+ * menu is a no-history activity, finished the moment another one covers it.
  */
 @Composable
 fun MenuScreen(
@@ -94,74 +115,174 @@ fun MenuScreen(
         /** The queue's list style. Its cover variations make custom-list rows whose entry has a
          *  thumbnail render it full-bleed behind the label instead of as a 30dp circle. */
         coverStyle: QueueStyle = QueueStyle.GLASS,
+        /** The playing album's colour, or null while it is still being worked out - the menu then
+         *  stays neutral rather than flashing the default accent first. */
+        accentColor: Color? = null,
+        detail: ShortcutDetailUi? = null,
+        accentSource: AlbumAccentSource = AlbumAccentSource.BALANCED,
         onActionClick: (index: Int) -> Unit,
         onEntryClick: (listId: String, entryId: String) -> Unit,
         onEntryLongClick: (listId: String, entryId: String) -> Unit,
         onCenterItemChanged: (Int) -> Unit,
         onCenterConfirm: () -> Unit,
+        onDetailPlay: (ShortcutPlayMode) -> Unit = {},
+        onDetailOpenOnPhone: () -> Unit = {},
+        onDetailDismiss: () -> Unit = {},
         onDismiss: () -> Unit
 ) {
     // Guard: SwipeToDismissBox can fire onDismissed more than once in edge cases.
     var dismissed by remember { mutableStateOf(false) }
-    SwipeToDismissBox(onDismissed = {
-        if (!dismissed) { dismissed = true; onDismiss() }
-    }) { isBackground ->
-        if (!isBackground) {
-            Box(Modifier.fillMaxSize().background(Color.Black)) {
-                val listState = rememberScalingLazyListState()
-                // The old (no-rotary-param) ScalingLazyColumn overload is a deprecated
-                // compatibility shim; besides leaving the crown unsupported, its legacy touch
-                // input path was also the cause of swipes over the list not registering as a
-                // scroll (only the crown worked). The current overload restores both.
-                val rotaryBehavior = RotaryScrollableDefaults.behavior(scrollableState = listState)
+    // Hoisted out of the list composable so the list keeps its place while a shortcut's screen
+    // covers it, and is exactly where the user left it when that screen is swiped away.
+    val listState = rememberScalingLazyListState()
 
-                LaunchedEffect(listState) {
-                    snapshotFlow { listState.centerItemIndex }.collect { onCenterItemChanged(it) }
+    // The watch's own back button (Galaxy Watch has one) steps back from a shortcut to its list
+    // instead of closing the whole menu out from under it.
+    BackHandler(enabled = detail != null) { onDetailDismiss() }
+
+    SwipeToDismissBox(
+            onDismissed = {
+                if (!dismissed) {
+                    dismissed = true
+                    onDismiss()
                 }
-
-                when (content) {
-                    null -> LoadingBars(
-                            Color(WatchTheme.ACCENT_DEFAULT),
-                            Modifier.align(Alignment.Center)
-                    )
-                    is MenuContent.Actions -> ScalingLazyColumn(
-                            modifier = Modifier.fillMaxSize(),
-                            state = listState,
-                            contentPadding = PaddingValues(start = 10.dp, end = 10.dp, top = 36.dp, bottom = 26.dp),
-                            verticalArrangement = Arrangement.spacedBy(6.dp),
-                            rotaryScrollableBehavior = rotaryBehavior
-                    ) {
-                        itemsIndexed(content.items) { index, action ->
-                            ActionRow(
-                                    action = action,
-                                    onClick = if (alwaysPickCenter) onCenterConfirm
-                                              else { { onActionClick(index) } }
-                            )
+            },
+            // A shortcut's screen owns the swipe while it is open: from there a swipe goes back to
+            // the list, and only from the list does it close the menu.
+            userSwipeEnabled = detail == null
+    ) { isBackground ->
+        if (!isBackground) {
+            Box(Modifier.fillMaxSize()) {
+                // The list stays composed under a shortcut's screen rather than being swapped out
+                // for it. Swapped, it had to be composed again on the first frame of the swipe that
+                // revealed it, and on a watch that stall could cost the swipe itself: a quick swipe
+                // back routinely did nothing. Inactive while covered, so the crown scrolls the
+                // screen on top and comes back to the list when that screen goes.
+                Box(Modifier.fillMaxSize().hierarchicalFocusGroup(active = detail == null)) {
+                    MenuListLayer(
+                            content = content,
+                            listState = listState,
+                            accentColor = accentColor,
+                            alwaysPickCenter = alwaysPickCenter,
+                            coverStyle = coverStyle,
+                            onActionClick = onActionClick,
+                            onEntryClick = onEntryClick,
+                            onEntryLongClick = onEntryLongClick,
+                            onCenterItemChanged = onCenterItemChanged,
+                            onCenterConfirm = onCenterConfirm)
+                }
+                if (detail != null) {
+                    // Its own dismiss box over the list: the swipe slides only the shortcut's screen
+                    // away and uncovers the list already there underneath. The box snaps itself
+                    // back before reporting the dismiss, so nothing is left half-swiped.
+                    SwipeToDismissBox(
+                            onDismissed = onDetailDismiss,
+                            modifier = Modifier.hierarchicalFocusGroup(active = true)
+                    ) { isDetailBackground ->
+                        if (!isDetailBackground) {
+                            ShortcutDetailContent(
+                                    detail = detail,
+                                    accentSource = accentSource,
+                                    fallbackAccent = accentColor ?: Color(WatchTheme.ACCENT_DEFAULT),
+                                    onPlay = onDetailPlay,
+                                    onOpenOnPhone = onDetailOpenOnPhone)
                         }
                     }
-                    is MenuContent.Custom -> {
-                        ScalingLazyColumn(
-                                modifier = Modifier.fillMaxSize(),
-                                state = listState,
-                                contentPadding = PaddingValues(start = 10.dp, end = 10.dp, top = 36.dp, bottom = 26.dp),
-                                verticalArrangement = Arrangement.spacedBy(6.dp),
-                                rotaryScrollableBehavior = rotaryBehavior
-                        ) {
-                            // Only search history supports deleting entries directly from the
-                            // watch - long-press elsewhere (playlists, past-played tracks, ...)
-                            // would have no clear meaning and risks an accidental deletion of
-                            // something not actually deletable.
-                            val deletable = content.list.listId == CustomLists.SEARCH_HISTORY
+                }
+            }
+        }
+    }
+}
 
-                            itemsIndexed(content.list.items) { _, item ->
+@Composable
+private fun MenuListLayer(
+        content: MenuContent?,
+        listState: ScalingLazyListState,
+        accentColor: Color?,
+        alwaysPickCenter: Boolean,
+        coverStyle: QueueStyle,
+        onActionClick: (index: Int) -> Unit,
+        onEntryClick: (listId: String, entryId: String) -> Unit,
+        onEntryLongClick: (listId: String, entryId: String) -> Unit,
+        onCenterItemChanged: (Int) -> Unit,
+        onCenterConfirm: () -> Unit
+) {
+    Box(
+            Modifier
+                    .fillMaxSize()
+                    .background(Color.Black)
+                    // A faint wash of the playing album's colour from the top, as the face picker
+                    // has - the menu belongs to the player it was opened over, and on pure black
+                    // it read as a system screen instead.
+                    .then(accentColor?.let { accent ->
+                        Modifier.background(Brush.verticalGradient(
+                                0f to accent.copy(alpha = .20f),
+                                .45f to Color.Transparent))
+                    } ?: Modifier)
+    ) {
+        // The old (no-rotary-param) ScalingLazyColumn overload is a deprecated compatibility
+        // shim; besides leaving the crown unsupported, its legacy touch input path was also the
+        // cause of swipes over the list not registering as a scroll (only the crown worked). The
+        // current overload restores both.
+        val rotaryBehavior = RotaryScrollableDefaults.behavior(scrollableState = listState)
+
+        LaunchedEffect(listState) {
+            snapshotFlow { listState.centerItemIndex }.collect {
+                onCenterItemChanged(MenuListLayout.entryIndexAt(it) ?: -1)
+            }
+        }
+
+        val header = when (content) {
+            null -> null
+            is MenuContent.Actions -> MenuHeader.ACTIONS
+            is MenuContent.Custom -> MenuHeader.forList(content.list.listId)
+        }
+        val tint = accentColor ?: Color(WatchTheme.ACCENT_DEFAULT)
+
+        when {
+            content == null -> LoadingBars(
+                    accentColor ?: Color.White,
+                    Modifier.align(Alignment.Center))
+            content is MenuContent.Custom && MenuListLayout.isOnlyMessage(
+                    content.list.items.map { it.listItem.entryId }) -> MenuEmptyState(
+                    header = header,
+                    // The phone's own wording, which already says what to do about it ("add them
+                    // in the phone app settings") - a hint of the watch's own repeated it.
+                    message = content.list.items.first().listItem.entryTitle,
+                    accent = tint)
+            else -> ScalingLazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    state = listState,
+                    contentPadding = PaddingValues(start = 10.dp, end = 10.dp, top = 30.dp, bottom = 26.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp),
+                    rotaryScrollableBehavior = rotaryBehavior
+            ) {
+                // Always present, even for a list this build cannot name, so the rows stay where
+                // MenuListLayout says they are: an untitled list gets an empty heading slot.
+                item(key = "header") { MenuHeading(header, tint) }
+                when (content) {
+                    is MenuContent.Actions -> itemsIndexed(content.items) { index, action ->
+                        ActionRow(
+                                action = action,
+                                onClick = if (alwaysPickCenter) onCenterConfirm
+                                          else { { onActionClick(index) } }
+                        )
+                    }
+                    is MenuContent.Custom -> {
+                        // Only search history supports deleting entries directly from the
+                        // watch - long-press elsewhere (playlists, past-played tracks, ...)
+                        // would have no clear meaning and risks an accidental deletion of
+                        // something not actually deletable.
+                        val deletable = content.list.listId == CustomLists.SEARCH_HISTORY
+
+                        itemsIndexed(content.list.items) { _, item ->
+                            if (item.listItem.entryId == CustomLists.SPECIAL_ITEM_ERROR) {
+                                // An explanation among real rows (an empty folder under its "Up"
+                                // row): drawn as text, so it is not mistaken for something to tap.
+                                MenuMessageRow(item.listItem.entryTitle)
+                            } else {
                                 CustomEntryRow(
-                                        title = item.listItem.entryTitle,
-                                        subtitle = if (item.listItem.hasEntrySubtitle()) {
-                                            item.listItem.entrySubtitle
-                                        } else {
-                                            null
-                                        },
-                                        icon = item.icon,
+                                        item = item,
                                         coverStyle = coverStyle,
                                         onClick = if (alwaysPickCenter) onCenterConfirm
                                                   else { { onEntryClick(content.list.listId, item.listItem.entryId) } },
@@ -175,15 +296,119 @@ fun MenuScreen(
                         }
                     }
                 }
-
-                // derivedStateOf: only recompose when the boolean flips, not on every
-                // center-item change while scrolling.
-                val clockVisible by remember { derivedStateOf { listState.centerItemIndex == 0 } }
-                CurvedClock(visible = clockVisible)
-                CurvedScrollIndicator(listState)
             }
         }
+
+        // derivedStateOf: only recompose when the boolean flips, not on every
+        // center-item change while scrolling. The heading or the first row centred is the list at
+        // rest at its top, which is where the clock belongs.
+        val clockVisible by remember {
+            derivedStateOf { listState.centerItemIndex <= MenuListLayout.LEADING_ROWS }
+        }
+        CurvedClock(visible = clockVisible || content == null)
+        CurvedScrollIndicator(listState)
     }
+}
+
+/**
+ * The list's heading: a small glyph in a disc of the album's colour over the list's name - the
+ * header the music apps on the watch put on a library page.
+ */
+@Composable
+private fun MenuHeading(header: MenuHeader?, accent: Color) {
+    if (header == null) {
+        Spacer(Modifier.height(1.dp))
+        return
+    }
+    Column(
+            modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 4.dp)
+                    .semantics { heading() },
+            horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Box(
+                modifier = Modifier
+                        .size(28.dp)
+                        .clip(CircleShape)
+                        .background(accent.copy(alpha = .26f)),
+                contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                    painter = painterResource(header.iconRes),
+                    contentDescription = null,
+                    tint = Color(WatchTheme.accentForText(accent.toArgb())),
+                    modifier = Modifier.size(16.dp))
+        }
+        Spacer(Modifier.height(4.dp))
+        Text(
+                text = stringResource(header.titleRes),
+                color = Color.White,
+                fontFamily = LocalWatchUiFontFamily.current,
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis)
+    }
+}
+
+private val MenuHeader.iconRes: Int
+    get() = when (this) {
+        MenuHeader.ACTIONS -> com.svartifoss.snfell.common.R.drawable.action_open_menu
+        MenuHeader.SHORTCUTS -> R.drawable.ic_playlist_play
+        MenuHeader.SEARCH_RESULTS -> com.svartifoss.snfell.common.R.drawable.action_search
+        MenuHeader.SEARCH_HISTORY, MenuHeader.RECENTLY_PLAYED -> R.drawable.ic_history
+        MenuHeader.LIBRARY -> R.drawable.ic_album
+        MenuHeader.UP_NEXT -> R.drawable.ic_queue_music
+    }
+
+private val MenuHeader.titleRes: Int
+    get() = when (this) {
+        MenuHeader.ACTIONS -> R.string.menu_header_actions
+        MenuHeader.SHORTCUTS -> R.string.shortcuts_tile_title
+        MenuHeader.SEARCH_RESULTS -> R.string.menu_header_search_results
+        MenuHeader.SEARCH_HISTORY -> R.string.menu_header_search_history
+        MenuHeader.LIBRARY -> R.string.menu_header_library
+        MenuHeader.UP_NEXT -> R.string.quick_action_up_next
+        MenuHeader.RECENTLY_PLAYED -> R.string.queue_history_fallback
+    }
+
+/**
+ * A list that holds only its explanation - no shortcuts yet, no results, no library - shown as a
+ * message under the list's heading instead of as a row that looked tappable and did nothing.
+ */
+@Composable
+private fun MenuEmptyState(header: MenuHeader?, message: String, accent: Color) {
+    Column(
+            modifier = Modifier.fillMaxSize().padding(horizontal = 26.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+    ) {
+        MenuHeading(header, accent)
+        Spacer(Modifier.height(6.dp))
+        Text(
+                text = message,
+                color = Color.White.copy(alpha = .78f),
+                fontFamily = LocalWatchUiFontFamily.current,
+                fontSize = 13.sp,
+                textAlign = TextAlign.Center,
+                maxLines = 5,
+                overflow = TextOverflow.Ellipsis)
+    }
+}
+
+@Composable
+private fun MenuMessageRow(text: String) {
+    Text(
+            text = text,
+            color = Color.White.copy(alpha = .6f),
+            fontFamily = LocalWatchUiFontFamily.current,
+            fontSize = 12.sp,
+            textAlign = TextAlign.Center,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 6.dp))
 }
 
 /**
@@ -257,30 +482,45 @@ private fun ActionRow(action: ButtonAction, onClick: () -> Unit) {
             )
             Spacer(Modifier.width(10.dp))
         }
-        // Ellipsis, not marquee: several rows animating at once re-runs layout every frame and
-        // makes list scrolling stutter on watch hardware (see the queue's QueueRow).
-        Text(
-                text = action.title.orEmpty(),
-                color = Color.White,
-                fontFamily = LocalWatchUiFontFamily.current,
-                fontWeight = FontWeight.Bold,
-                fontSize = 15.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-        )
+        Column(Modifier.weight(1f)) {
+            // Ellipsis, not marquee: several rows animating at once re-runs layout every frame and
+            // makes list scrolling stutter on watch hardware (see the queue's QueueRow).
+            Text(
+                    text = action.title.orEmpty(),
+                    color = Color.White,
+                    fontFamily = LocalWatchUiFontFamily.current,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 15.sp,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+            )
+            // A playlist entry says which service and what kind it is, as the same playlist does
+            // in the shortcut list - the phone sends it for exactly those entries.
+            action.shortcutSubtitle?.takeIf { it.isNotBlank() }?.let { subtitle ->
+                Text(
+                        text = subtitle,
+                        color = Color.White.copy(alpha = SUBTITLE_ALPHA),
+                        fontFamily = LocalWatchUiFontFamily.current,
+                        fontSize = 12.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                )
+            }
+        }
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun CustomEntryRow(
-        title: String,
-        subtitle: String?,
-        icon: Bitmap?,
+        item: CustomListItemWithIcon,
         coverStyle: QueueStyle,
         onClick: () -> Unit,
         onLongClick: (() -> Unit)? = null
 ) {
+    val title = item.listItem.entryTitle
+    val subtitle = item.listItem.entrySubtitle.takeIf { item.listItem.hasEntrySubtitle() }
+    val icon: Bitmap? = item.icon
     // Only a row that actually has a thumbnail can be cover-filled; the rest keep the plain pill,
     // which matters because shortcut artwork is opt-in and most entries have none.
     val cover = if (coverStyle.isCover) icon else null
@@ -313,9 +553,9 @@ private fun CustomEntryRow(
                             end = 16.dp),
             verticalAlignment = Alignment.CenterVertically
     ) {
-        if (showsThumbnail && icon != null) {
+        icon?.takeIf { showsThumbnail }?.let { thumbnail ->
             Image(
-                    bitmap = icon.asImageBitmap(),
+                    bitmap = thumbnail.asImageBitmap(),
                     contentDescription = null,
                     // Circular clip + center-crop so album/cover thumbnails sit fully inside the
                     // circle, and a rectangular source fills it without letterbox bars.

@@ -1,9 +1,11 @@
 package com.svartifoss.snfell.watch.view.progress
 
+import android.os.SystemClock
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.svartifoss.snfell.common.PlaybackPositionEstimate
+import com.svartifoss.snfell.common.PlaybackSpeeds
 import com.svartifoss.snfell.watch.communication.PhoneConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
@@ -18,9 +20,6 @@ data class ProgressUiState(
         val speed: Float = 1f
 )
 
-private const val PROGRESS_SPEED_STEP = 0.25f
-private const val PROGRESS_MIN_SPEED = 0.5f
-private const val PROGRESS_MAX_SPEED = 2.0f
 
 /**
  * Drives [ProgressActivity]. Reads position, duration, playback state and speed from
@@ -83,12 +82,11 @@ class ProgressViewModel @Inject constructor(
         launchSilently { phoneConnection.togglePlayPause() }
     }
 
+    private val speedTaps = PlaybackSpeeds.TapMemory { SystemClock.elapsedRealtime() }
+
     /** Keeps playback speed available without competing with the six primary seek buttons. */
     fun cycleSpeed() {
-        val current = state.value?.speed ?: 1f
-        val next = (current + PROGRESS_SPEED_STEP).let {
-            if (it > PROGRESS_MAX_SPEED + 0.001f) PROGRESS_MIN_SPEED else it
-        }.coerceIn(PROGRESS_MIN_SPEED, PROGRESS_MAX_SPEED)
+        val next = speedTaps.next(state.value?.speed ?: 1f)
         launchSilently { phoneConnection.sendPlaybackSpeed(next) }
     }
 

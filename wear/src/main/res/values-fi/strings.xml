@@ -38,7 +38,7 @@
 
     <string name="no_phone">Puhelinta ei ole yhdistetty</string>
     <string name="phone_unavailable">Avaa puhelimen lukitus hallitaksesi toistoa</string>
-    <string name="playback_stopped">Pysäytetty</string>
+    <string name="playback_stopped">Keskeytetty</string>
     <string name="error">VIRHE</string>
     <string name="error_play_services">Google Play Palvelut -virhe</string>
     <string name="button">Painike</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Viimeksi toistetut</string>
     <string name="queue_history_fallback_reason">Tämä sovellus ei jaa jonoaan</string>
+    <string name="menu_header_actions">Toiminnot</string>
+    <string name="menu_header_search_results">Hakutulokset</string>
+    <string name="menu_header_search_history">Viimeisimmät haut</string>
+    <string name="menu_header_library">Kirjasto</string>
+    <string name="shortcut_open_on_phone">Avaa puhelimessa</string>
+    <string name="shortcut_continue_on_phone">Jatka puhelimella</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Tänään</string>
 
@@ -203,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Peruuta siirtyminen</string>
     <string name="progress_screen_skip_back">Hyppää %1$d sekuntia taakse</string>
     <string name="progress_screen_skip_forward">Hyppää %1$d sekuntia eteen</string>
+    <string name="quick_block_all_actions">Kaikki toiminnot</string>
+    <string name="quick_block_favorites">Suosikit</string>
+    <string name="quick_tool_speed">Nopeus</string>
+    <string name="quick_tool_lyrics">Sanoitukset</string>
+    <string name="quick_tool_queue">Jono</string>
+    <string name="quick_tool_volume">Äänenvoimakkuus</string>
+    <string name="quick_tool_progress">Edistyminen</string>
+    <string name="quick_tool_faces">Kellotaulut</string>
+    <string name="quick_tool_search">Haku</string>
+    <string name="quick_tool_menu">Valikko</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Äänenvoimakkuus %1$d%%</string>
+    <string name="quick_seek_back_description">Takaisin %1$d sekuntia</string>
+    <string name="quick_seek_forward_description">Eteenpäin %1$d sekuntia</string>
+    <string name="quick_speed_description">Toistonopeus %1$s</string>
+    <string name="quick_tool_sleep">Uniajastin</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Uniajastin, %1$d minuuttia jäljellä. Napauta muuttaaksesi</string>
+    <string name="quick_sleep_off_description">Uniajastin pois päältä. Napauta asettaaksesi</string>
 </resources>

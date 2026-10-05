@@ -267,7 +267,7 @@
     <string name="preview_sample_lyric_current">La riga in riproduzione</string>
     <string name="preview_sample_lyric_next">La riga successiva</string>
     <string name="preview_sample_next_title">Prossima canzone</string>
-    <string name="preview_playback_stopped">Interrotta</string>
+    <string name="preview_playback_stopped">In pausa</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -711,9 +711,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Sfondo pillola In coda</string>
-    <string name="setting_wear_show_up_next_pill">Pillola In coda sul lettore</string>
-    <string name="setting_wear_show_up_next_pill_description">Mostra una pillola In coda nella parte inferiore della schermata di riproduzione. Occupa lo spazio che occuperebbe la riga dei mini pulsanti, quindi appare solo quando quella riga non è visibile.</string>
+    <string name="setting_wear_up_next_pill">Sfondo capsula In coda</string>
+    <string name="setting_wear_show_up_next_pill">Capsula In coda sul lettore</string>
+    <string name="setting_wear_show_up_next_pill_description">Mostra una capsula In coda nella parte inferiore della schermata di riproduzione. Occupa lo spazio che occuperebbe la riga dei mini pulsanti, quindi appare solo quando quella riga non è visibile.</string>
     <string name="category_wf_clock">Orologio</string>
     <string name="setting_wear_clock_color">Colore orologio</string>
     <string name="setting_wear_clock_custom_color">Colore orologio personalizzato</string>
@@ -729,7 +729,7 @@
     <string name="setting_wear_aod_show_progress">Anello di progresso su schermo sempre attivo</string>
     <string name="setting_wear_aod_show_progress_description">Mostra l\'anello di progresso intorno al pulsante di riproduzione in modalità ambient — la posizione si aggiorna solo circa una volta al minuto lì</string>
     <string name="setting_wear_aod_show_pills">In coda su schermo sempre attivo</string>
-    <string name="setting_wear_aod_show_pills_description">Mostra una pillola In coda statica e contornata nella parte inferiore degli stili visivi sempre attivi</string>
+    <string name="setting_wear_aod_show_pills_description">Mostra una capsula In coda statica e contornata nella parte inferiore degli stili visivi sempre attivi</string>
     <string name="category_wf_gestures">Gesti schermo</string>
     <string name="setting_wear_mini_buttons_mode">Mostra mini pulsanti</string>
     <string name="setting_wear_gestures_mode">Gesti schermo</string>
@@ -785,8 +785,8 @@
     <string name="preview_notification_controls">Icona dalla notifica multimediale</string>
     <string name="setting_wear_queue_style">Stile coda</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Usa copertine scorciatoie come sfondo</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Quando lo Stile coda è una variante Copertina, una riga di azione del pannello rapido con una copertina scorciatoia recuperata (traccia, playlist, artista…) riempie anche la sua pillola con quell\'immagine, come fa In coda. Le scorciatoie senza copertina recuperata (solo icona app) non sono interessate.</string>
-    <string name="setting_wear_list_row_size">Dimensione pillola elenco</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Quando lo Stile coda è una variante Copertina, una riga di azione del pannello rapido con una copertina scorciatoia recuperata (traccia, playlist, artista…) riempie anche la sua capsula con quell\'immagine, come fa In coda. Le scorciatoie senza copertina recuperata (solo icona app) non sono interessate.</string>
+    <string name="setting_wear_list_row_size">Dimensione capsula elenco</string>
     <string name="setting_wear_list_row_size_description">Altezza delle righe a larghezza intera nella coda, nei menu e nel pannello rapido.</string>
     <string name="setting_wear_progress_style">Stile anello di progresso</string>
     <string name="setting_wear_seek_style">Stile lettura ricerca e volume</string>
@@ -1361,9 +1361,6 @@
     <string name="drawer_sync_heading">Sincronizzazione</string>
     <string name="drawer_sync_summary">Le impostazioni dell\'orologio vengono configurate qui sul telefono e sincronizzate automaticamente con il tuo orologio associato.</string>
     <string name="drawer_support_heading">Supporto</string>
-    <string name="drawer_support_summary">Svartifoss è gratuito e open source — offrimi un caffè se ti è utile :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Scarica copertina</string>
     <string name="album_art_saved">Copertina salvata nella galleria</string>
     <string name="album_art_save_error">Impossibile salvare la copertina</string>
@@ -1438,7 +1435,7 @@
     <string name="playlist_shortcut_detected_format">Rilevato: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">Nome</string>
     <string name="playlist_shortcut_link_hint">Link di condivisione o URI dell\'app</string>
-    <string name="playlist_shortcut_shuffle">Riproduci in ordine casuale (solo YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">Scegli Riproduci o Casuale sull’orologio ogni volta che lo avvii.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2831,4 +2828,101 @@
     <string name="setting_wear_text_block_position_description">Dove si trova il testo del brano sullo schermo. Segui quadrante mantiene la posizione per cui è stato progettato ogni quadrante.</string>
     <string name="setting_online_artwork">Copertina online</string>
     <string name="setting_online_artwork_description">Consenti al quadrante di mostrare un’immagine cercata online \u2014 l’artista in riproduzione oppure la copertina di un album quando il player non ne fornisce una. Il telefono esegue la ricerca nel catalogo pubblico di Deezer e memorizza il risultato nella cache; vengono inviati solo i nomi del brano e dell’artista e non viene cercato nulla a meno che un quadrante sia impostato su una di queste origini. Se disattivato, viene usata la copertina fornita dal player.</string>
+    <string name="setting_wear_shortcut_details">Riproduci o casuale sull’orologio</string>
+    <string name="setting_wear_shortcut_details_description">Scegliendo un link salvato sull’orologio, dall’elenco delle scorciatoie, dal Tile Scorciatoie o dal menu azioni, viene mostrata prima la copertina con Riproduci e Casuale. Disattiva per avviarlo subito. I pulsanti e i gesti assegnati a un link lo avviano sempre subito.</string>
+    <string name="actions_quick_pin_add">Mostra nel pannello rapido</string>
+    <string name="actions_quick_pin_remove">Rimuovi dal pannello rapido</string>
+    <string name="quick_panel_editor_title">Pannello azioni rapide</string>
+    <string name="quick_panel_editor_open">Modifica contenuto pannello</string>
+    <string name="quick_panel_editor_intro">Costruisci il pannello che si apre quando tocchi due volte il centro dell\'orologio. Tieni premuto e trascina un blocco per spostarlo, toccane uno per regolarlo.</string>
+    <string name="quick_panel_editor_add_block">Aggiungi blocco</string>
+    <string name="quick_panel_editor_restore">Ripristina il pannello originale</string>
+    <string name="quick_panel_editor_restore_title">Ripristinare il pannello originale?</string>
+    <string name="quick_panel_editor_restore_message">La tua disposizione viene rimossa e il pannello torna come prima. Le scelte dei pulsanti e le azioni contrassegnate come Speciali verranno mantenute.</string>
+    <string name="quick_panel_editor_restore_confirm">Ripristina</string>
+    <string name="quick_panel_editor_fold">Fine della prima schermata (approssimativa)</string>
+    <string name="quick_panel_editor_last_block">Un pannello necessita di almeno un blocco</string>
+    <string name="quick_panel_editor_removed">Rimosso %1$s</string>
+    <string name="quick_panel_editor_undo">Annulla</string>
+    <string name="quick_panel_editor_move_up">Sposta su</string>
+    <string name="quick_panel_editor_move_down">Sposta verso il basso</string>
+    <string name="quick_panel_editor_more">Altre opzioni</string>
+    <string name="quick_panel_editor_nothing_to_add">Ogni blocco è già presente sul pannello</string>
+    <string name="quick_block_header">Traccia</string>
+    <string name="quick_block_buttons">Bottoni rotondi</string>
+    <string name="quick_block_upnext">Traccia successiva</string>
+    <string name="quick_block_volume">Volume</string>
+    <string name="quick_block_seek">Salto e posizione</string>
+    <string name="quick_block_tools">Strumenti</string>
+    <string name="quick_block_favorites">Preferiti</string>
+    <string name="quick_block_actions">Tutte le azioni</string>
+    <string name="quick_block_all_actions">Tutte le azioni</string>
+    <string name="quick_block_header_description">Il titolo e l\'artista del brano in riproduzione.</string>
+    <string name="quick_block_buttons_description">Pulsanti rotondi per le azioni che usi di più o quelle offerte dall\'app di riproduzione.</string>
+    <string name="quick_block_upnext_description">La traccia successiva. Toccalo per aprire la coda.</string>
+    <string name="quick_block_volume_description">Abbassa e alza il volume senza alzarti dal pannello.</string>
+    <string name="quick_block_seek_description">Dove ti trovi nella traccia e pulsanti che saltano avanti e indietro.</string>
+    <string name="quick_block_tools_description">Piccole scorciatoie: velocità di riproduzione, testi, coda e altro.</string>
+    <string name="quick_block_favorites_description">Le azioni che hai contrassegnato come speciali nella scheda Azioni, come copertine o righe.</string>
+    <string name="quick_block_actions_description">Ogni azione del menu del tuo orologio, come righe nel pannello o come un pulsante che apre il menu.</string>
+    <string name="quick_summary_header">Titolo e artista</string>
+    <string name="quick_summary_buttons_session">Dall’app che sta riproducendo</string>
+    <string name="quick_summary_buttons_empty">Nessun pulsante scelto</string>
+    <string name="quick_summary_upnext">Traccia successiva · apre la coda</string>
+    <string name="quick_summary_volume">Incrementi del volume di %1$d%%</string>
+    <string name="quick_summary_seek">%1$s secondi</string>
+    <string name="quick_summary_seek_bar">%1$s secondi · ora e barra</string>
+    <string name="quick_summary_favorites_none">Ancora nessuno aggiunto a Speciali</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d recitato · %2$s</item>
+        <item quantity="other">%1$d recitato · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Tutte le azioni %1$d</string>
+    <string name="quick_summary_actions_first">Prime azioni %1$d</string>
+    <string name="quick_summary_actions_button">Un pulsante · apre il menu azioni</string>
+    <string name="quick_summary_only_playing">solo durante la riproduzione</string>
+    <string name="quick_summary_only_not_playing">solo senza riproduzione</string>
+    <string name="quick_mode_grid">Griglia</string>
+    <string name="quick_mode_rows">Righe</string>
+    <string name="quick_mode_actions_list">Elenco</string>
+    <string name="quick_mode_actions_button">Pulsante</string>
+    <string name="quick_sheet_show">Mostra</string>
+    <string name="quick_sheet_always">Sempre</string>
+    <string name="quick_sheet_while_playing">solo durante la riproduzione</string>
+    <string name="quick_sheet_while_not_playing">solo senza riproduzione</string>
+    <string name="quick_sheet_step">Passaggio</string>
+    <string name="quick_sheet_jump">Salta di</string>
+    <string name="quick_sheet_seek_bar">Mostra ora e barra di avanzamento</string>
+    <string name="quick_sheet_tools">Strumenti</string>
+    <string name="quick_sheet_layout">Disposizione</string>
+    <string name="quick_sheet_how_many">Quanti</string>
+    <string name="quick_sheet_all">Tutti</string>
+    <string name="quick_sheet_buttons_source">Pulsanti da</string>
+    <string name="quick_sheet_source_configured">Le mie scelte</string>
+    <string name="quick_sheet_source_session">L’app che sta riproducendo</string>
+    <string name="quick_sheet_buttons_hint">Tocca un pulsante per sceglierne l\'azione. Hold to restore its default.</string>
+    <string name="quick_sheet_favorites_hint">Azioni speciali con il fulmine nella scheda Azioni. Only starred ones appear here.</string>
+    <string name="quick_sheet_actions_mode">Mostra come</string>
+    <string name="quick_sheet_actions_hint">Un elenco inserisce ogni azione sul pannello come una riga. Un pulsante mantiene il pannello breve: un pulsante che apre il menu completo. Per lasciare del tutto il menu fuori dal pannello, rimuovi questo blocco.</string>
+    <string name="quick_sheet_remove">Rimuovi questo blocco</string>
+    <string name="quick_sheet_done">Fatto</string>
+    <string name="quick_tool_speed">Velocità</string>
+    <string name="quick_tool_sleep">Timer</string>
+    <string name="quick_tool_lyrics">Testo</string>
+    <string name="quick_tool_queue">Coda</string>
+    <string name="quick_tool_volume">Volume</string>
+    <string name="quick_tool_progress">Avanzamento</string>
+    <string name="quick_tool_faces">Quadranti</string>
+    <string name="quick_tool_search">Cerca</string>
+    <string name="quick_tool_menu">Menù</string>
+    <string name="setting_wear_hide_from_recents">Nascondi dalle app recenti</string>
+    <string name="setting_wear_hide_from_recents_description">Mantiene l\'app dell\'orologio fuori dall\'elenco delle app recenti dell\'orologio quando la chiudi o utilizzi un\'altra app. Utile se lo apri invece dal quadrante o dalla barra Now. Resta raggiungibile esattamente come prima e la musica e la connessione in background non vengono influenzate.</string>
+    <string name="setting_streaming_app_routes">Scegli le app per i link in streaming</string>
+    <string name="setting_streaming_app_routes_description">Scegli un\'app compatibile installata separatamente per YouTube Music, Spotify e ogni altro servizio. Utilizzato con "App di streaming rilevata".</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">Il servizio %1$d utilizza un\'app selezionata</item>
+        <item quantity="other">I servizi %1$d utilizzano le app selezionate</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Le app che possono aprire il collegamento, oltre ai lettori multimediali installati.</string>
+    <string name="streaming_route_automatic">Automatico (app rilevata)</string>
 </resources>

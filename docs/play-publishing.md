@@ -63,6 +63,27 @@ The defaults are chosen for what cannot be undone: Play burns a `versionCode` pe
 release that has reached users cannot be recalled, so a mistyped command should not be able to put
 anything in front of anybody.
 
+## Release notes (What's new)
+
+The release notes shown to users come from Gradle Play Publisher files, not from
+`fastlane/metadata/android/*/changelogs`. Before each Play upload, update `CHANGELOG.md` and distill
+the user-facing changes into at most 500 characters per locale. Ship Brazilian Portuguese and English
+notes, and put each in both modules because the phone and Wear OS releases are sent to different
+form-factor tracks:
+
+```text
+mobile/src/playRelease/play/release-notes/pt-BR/default.txt
+mobile/src/playRelease/play/release-notes/en-US/default.txt
+wear/src/playRelease/play/release-notes/pt-BR/default.txt
+wear/src/playRelease/play/release-notes/en-US/default.txt
+```
+
+`default.txt` is used for every track. A track-specific file, such as `production.txt`, overrides it
+for that track. Add another locale directory only when supplying a translation. Normally the phone and
+watch files should contain the same note; diverge only for a form-factor-only change. Keep the text
+user-facing: features, fixes and relevant behavior changes, never credentials, internal implementation,
+or security-sensitive operational detail.
+
 ## Things specific to this app
 
 **The watch has its own tracks.** Phone and watch are one Play listing sharing one `applicationId`

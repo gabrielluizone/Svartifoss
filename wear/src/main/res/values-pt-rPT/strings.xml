@@ -32,7 +32,7 @@
 
     <string name="no_phone">Nenhum telemóvel ligado</string>
     <string name="phone_unavailable">Desbloqueie o telemóvel para controlar a reprodução</string>
-    <string name="playback_stopped">Parado</string>
+    <string name="playback_stopped">Pausado</string>
     <string name="error">ERRO</string>
     <string name="error_play_services">Erro dos Play Services</string>
     <string name="button">Botão</string>
@@ -48,19 +48,44 @@
     <string name="quick_action_repeat_one">Repetir uma</string>
     <string name="quick_action_up_next">A seguir</string>
     <string name="quick_actions_unavailable">A aplicação atual não tem ações rápidas</string>
+    <string name="quick_block_all_actions">Todas as ações</string>
+    <string name="quick_block_favorites">Favoritos</string>
+    <string name="quick_tool_speed">Velocidade</string>
+    <string name="quick_tool_lyrics">Letra</string>
+    <string name="quick_tool_queue">Fila</string>
+    <string name="quick_tool_volume">Volume</string>
+    <string name="quick_tool_progress">Progresso</string>
+    <string name="quick_tool_faces">Mostradores</string>
+    <string name="quick_tool_search">Pesquisar</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Volume %1$d%%</string>
+    <string name="quick_seek_back_description">Recuar %1$d segundos</string>
+    <string name="quick_seek_forward_description">Avançar %1$d segundos</string>
+    <string name="quick_speed_description">Velocidade de reprodução %1$s</string>
+    <string name="quick_tool_sleep">Temporizador</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Temporizador de sono, restam %1$d minutos. Toque para alterar</string>
+    <string name="quick_sleep_off_description">Temporizador de sono desligado. Toque para definir</string>
     <string name="voice_search_prompt">Procurar música</string>
     <string name="queue_empty">Nenhuma fila disponível</string>
     <string name="queue_now_playing">Em reprodução</string>
     <string name="queue_load_more">Carregar mais</string>
     <string name="queue_history_fallback">Reproduzidas recentemente</string>
     <string name="queue_history_fallback_reason">Esta aplicação não partilha a fila</string>
+    <string name="menu_header_actions">Ações</string>
+    <string name="menu_header_search_results">Resultados da pesquisa</string>
+    <string name="menu_header_search_history">Pesquisas recentes</string>
+    <string name="menu_header_library">Biblioteca</string>
+    <string name="shortcut_open_on_phone">Abrir no telemóvel</string>
+    <string name="shortcut_continue_on_phone">Continue no telemóvel</string>
     <string name="chat_face_today">Hoje</string>
 
     <string name="hint_title">Como usar</string>
     <string name="hint_edges">Toca em cima, baixo, à esquerda ou à direita — cada zona executa a ação atribuída</string>
     <string name="hint_center">Centro — reproduzir/pausar\nToca duas vezes — ações rápidas\nToque longo — seletor de mostrador (configurável)</string>
     <string name="hint_swipe_up">Para cima — menu de ações\nPara baixo ou esquerda — ações atribuídas\nDa margem para a direita — sair</string>
-    <string name="hint_crown">Coroa — volume ou posição\nBotões laterais — ações atribuídas\nPersonaliza tudo em Controlos e Watch no telemóvel</string>
+    <string name="hint_crown">Coroa — volume ou posição\nBotões laterais — ações atribuídas\nPersonaliza tudo em Controlos e Relógio no telemóvel</string>
     <string name="hint_next">Seguinte</string>
     <string name="hint_dismiss">Concluir</string>
 

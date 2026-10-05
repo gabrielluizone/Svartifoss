@@ -267,7 +267,7 @@
     <string name="preview_sample_lyric_current">سطری که اکنون پخش می‌شود</string>
     <string name="preview_sample_lyric_next">سطر بعدی</string>
     <string name="preview_sample_next_title">آهنگ بعدی</string>
-    <string name="preview_playback_stopped">متوقف</string>
+    <string name="preview_playback_stopped">مکث‌شده</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -711,9 +711,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">پس‌زمینه قرص بعدی</string>
-    <string name="setting_wear_show_up_next_pill">قرص بعدی روی پخش‌کننده</string>
-    <string name="setting_wear_show_up_next_pill_description">قرص بعدی را در پایین صفحه در حال پخش نمایش بده. فضایی را که ردیف دکمه‌های کوچک می‌گیرد پر می‌کند، بنابراین فقط وقتی آن ردیف نمایش داده نمی‌شود ظاهر می‌شود.</string>
+    <string name="setting_wear_up_next_pill">پس‌زمینه کپسول بعدی</string>
+    <string name="setting_wear_show_up_next_pill">کپسول بعدی روی پخش‌کننده</string>
+    <string name="setting_wear_show_up_next_pill_description">کپسول بعدی را در پایین صفحه در حال پخش نمایش بده. فضایی را که ردیف دکمه‌های کوچک می‌گیرد پر می‌کند، بنابراین فقط وقتی آن ردیف نمایش داده نمی‌شود ظاهر می‌شود.</string>
     <string name="category_wf_clock">ساعت</string>
     <string name="setting_wear_clock_color">رنگ ساعت</string>
     <string name="setting_wear_clock_custom_color">رنگ سفارشی ساعت</string>
@@ -729,7 +729,7 @@
     <string name="setting_wear_aod_show_progress">حلقه پیشرفت روی صفحه همیشه روشن</string>
     <string name="setting_wear_aod_show_progress_description">حلقه پیشرفت اطراف دکمه پخش را در حالت محیطی نشان بده — موقعیت آنجا فقط تقریباً هر یک دقیقه به‌روزرسانی می‌شود</string>
     <string name="setting_wear_aod_show_pills">بعدی روی صفحه همیشه روشن</string>
-    <string name="setting_wear_aod_show_pills_description">یک قرص بعدی ثابت و خط‌دار در پایین سبک‌های بصری همیشه روشن نشان بده</string>
+    <string name="setting_wear_aod_show_pills_description">یک کپسول بعدی ثابت و خط‌دار در پایین سبک‌های بصری همیشه روشن نشان بده</string>
     <string name="category_wf_gestures">حرکات صفحه</string>
     <string name="setting_wear_mini_buttons_mode">نمایش دکمه‌های کوچک</string>
     <string name="setting_wear_gestures_mode">حرکات صفحه</string>
@@ -785,8 +785,8 @@
     <string name="preview_notification_controls">نماد از اعلان رسانه</string>
     <string name="setting_wear_queue_style">سبک صف</string>
     <string name="setting_wear_quick_panel_shortcut_cover">استفاده از جلد میان‌برها به‌عنوان پس‌زمینه</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">وقتی سبک صف یک نوع جلد باشد، یک ردیف اقدام پنل سریع با جلد میان‌بر بازیابی‌شده (آهنگ، لیست پخش، خواننده…) قرص خود را نیز با آن تصویر پر می‌کند، همان‌طور که بعدی این کار را انجام می‌دهد. میان‌برهای بدون جلد بازیابی‌شده (فقط نماد برنامه) تحت‌تأثیر قرار نمی‌گیرند.</string>
-    <string name="setting_wear_list_row_size">اندازه قرص فهرست</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">وقتی سبک صف یک نوع جلد باشد، یک ردیف اقدام پنل سریع با جلد میان‌بر بازیابی‌شده (آهنگ، لیست پخش، خواننده…) کپسول خود را نیز با آن تصویر پر می‌کند، همان‌طور که بعدی این کار را انجام می‌دهد. میان‌برهای بدون جلد بازیابی‌شده (فقط نماد برنامه) تحت‌تأثیر قرار نمی‌گیرند.</string>
+    <string name="setting_wear_list_row_size">اندازه کپسول فهرست</string>
     <string name="setting_wear_list_row_size_description">ارتفاع ردیف‌های تمام‌عرض در صف، منوها و پنل سریع.</string>
     <string name="setting_wear_progress_style">سبک حلقه پیشرفت</string>
     <string name="setting_wear_seek_style">سبک نمایش جست‌وجو و صدا</string>
@@ -1361,9 +1361,6 @@
     <string name="drawer_sync_heading">همگام‌سازی</string>
     <string name="drawer_sync_summary">تنظیمات ساعت اینجا روی گوشی پیکربندی شده و به‌طور خودکار با ساعت جفت‌شده شما همگام می‌شود.</string>
     <string name="drawer_support_heading">پشتیبانی</string>
-    <string name="drawer_support_summary">Svartifoss رایگان و متن‌باز است — اگر برایتان مفید بود، یک قهوه برایم بخرید :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">دانلود جلد</string>
     <string name="album_art_saved">جلد در گالری ذخیره شد</string>
     <string name="album_art_save_error">ذخیره جلد ناموفق بود</string>
@@ -1438,7 +1435,7 @@
     <string name="playlist_shortcut_detected_format">شناسایی شد: %1$s • %2$s</string>
     <string name="playlist_shortcut_name_hint">نام</string>
     <string name="playlist_shortcut_link_hint">پیوند اشتراک‌گذاری یا URI برنامه</string>
-    <string name="playlist_shortcut_shuffle">پخش تصادفی (فقط YouTube Music)</string>
+    <string name="playlist_shortcut_play_choice">هر بار که آن را شروع می‌کنید، روی ساعت «پخش» یا «پخش تصادفی» را انتخاب می‌کنید.</string>
     <string name="playlist_source_yt_music">YouTube Music</string>
     <string name="playlist_source_spotify">Spotify</string>
     <string name="playlist_source_deezer">Deezer</string>
@@ -2831,4 +2828,101 @@
     <string name="setting_wear_text_block_position_description">جای متن قطعه روی صفحه. «دنبال کردن صفحه» موقعیتی را که هر صفحه برای آن طراحی شده حفظ می‌کند.</string>
     <string name="setting_online_artwork">اثر هنری آنلاین</string>
     <string name="setting_online_artwork_description">اجازه دهید صفحه ساعت تصویری را که آنلاین پیدا می‌شود نمایش دهد \u2014 هنرمند در حال اجرا، یا جلد آلبوم برای پخش‌کننده‌ای که تصویری منتشر نمی‌کند. تلفن شما جست‌وجو را در فهرست عمومی Deezer انجام می‌دهد و نتیجه را کش می‌کند؛ فقط نام قطعه و هنرمند ارسال می‌شوند و تا وقتی صفحه‌ای روی یکی از این منابع تنظیم نشده باشد چیزی جست‌وجو نمی‌شود. در حالت خاموش، اثر هنری خود پخش‌کننده استفاده می‌شود.</string>
+    <string name="setting_wear_shortcut_details">پخش یا پخش تصادفی روی ساعت</string>
+    <string name="setting_wear_shortcut_details_description">انتخاب یک پیوند ذخیره‌شده روی ساعت، از فهرست میان‌برها، کاشی میان‌برها یا منوی اقدامات، ابتدا جلد آن را با «پخش» و «پخش تصادفی» نشان می‌دهد. برای شروع فوری خاموش کنید. دکمه‌ها و اشاره‌هایی که به یک پیوند اختصاص داده شده‌اند همیشه آن را فوراً شروع می‌کنند.</string>
+    <string name="actions_quick_pin_add">نمایش در پانل سریع</string>
+    <string name="actions_quick_pin_remove">حذف از پانل سریع</string>
+    <string name="quick_panel_editor_title">پانل اقدامات سریع</string>
+    <string name="quick_panel_editor_open">ویرایش محتوای پنل</string>
+    <string name="quick_panel_editor_intro">پانلی را بسازید که با دوبار ضربه زدن به مرکز ساعت باز می شود. برای جابجایی یک بلوک، آن را نگه دارید و بکشید، برای تنظیم آن روی یکی ضربه بزنید.</string>
+    <string name="quick_panel_editor_add_block">افزودن بلوک</string>
+    <string name="quick_panel_editor_restore">پنل اصلی را بازیابی کنید</string>
+    <string name="quick_panel_editor_restore_title">پانل اصلی بازیابی شود؟</string>
+    <string name="quick_panel_editor_restore_message">ترتیب شما حذف شده و پانل به حالت قبلی باز می گردد. انتخاب‌های دکمه شما و اقداماتی که ستاره‌گذاری کرده‌اید حفظ می‌شوند.</string>
+    <string name="quick_panel_editor_restore_confirm">بازیابی</string>
+    <string name="quick_panel_editor_fold">پایان اولین صفحه (تقریبی)</string>
+    <string name="quick_panel_editor_last_block">یک پانل حداقل به یک بلوک نیاز دارد</string>
+    <string name="quick_panel_editor_removed">حذف شد %1$s</string>
+    <string name="quick_panel_editor_undo">واگرد</string>
+    <string name="quick_panel_editor_move_up">حرکت به بالا</string>
+    <string name="quick_panel_editor_move_down">حرکت به پایین</string>
+    <string name="quick_panel_editor_more">گزینه های بیشتر</string>
+    <string name="quick_panel_editor_nothing_to_add">هر بلوک از قبل در پانل</string>
+    <string name="quick_block_header">قطعه</string>
+    <string name="quick_block_buttons">دکمه های گرد</string>
+    <string name="quick_block_upnext">آهنگ بعدی</string>
+    <string name="quick_block_volume">حجم صدا</string>
+    <string name="quick_block_seek">پرش و موقعیت</string>
+    <string name="quick_block_tools">ابزار</string>
+    <string name="quick_block_favorites">موارد دلخواه</string>
+    <string name="quick_block_actions">همه اقدامات</string>
+    <string name="quick_block_all_actions">همه اقدامات</string>
+    <string name="quick_block_header_description">عنوان و هنرمند آنچه در حال پخش است.</string>
+    <string name="quick_block_buttons_description">برای اقداماتی که بیشتر استفاده می‌کنید یا آن‌هایی که برنامه پخش ارائه می‌دهد.</string>
+    <string name="quick_block_upnext_description">آهنگ بعدی. روی آن ضربه بزنید تا صف باز شود.</string>
+    <string name="quick_block_volume_description">بدون خروج از پانل صدا را کاهش داده و افزایش دهید.</string>
+    <string name="quick_block_seek_description">جایی که در مسیر هستید، و دکمه‌هایی که به عقب و جلو می‌روند.</string>
+    <string name="quick_block_tools_description">میانبرهای کوچک: سرعت پخش، اشعار، صف و موارد دیگر.</string>
+    <string name="quick_block_favorites_description">اقداماتی که در برگه Actions ستاره‌گذاری کرده‌اید، به عنوان جلد یا ردیف.</string>
+    <string name="quick_block_actions_description">هر عملکرد منوی ساعت شما، به عنوان ردیف در پانل یا به عنوان یک دکمه که منو را باز می کند.</string>
+    <string name="quick_summary_header">عنوان و هنرمند</string>
+    <string name="quick_summary_buttons_session">از برنامه‌ای که در حال پخش است</string>
+    <string name="quick_summary_buttons_empty">هیچ دکمه ای انتخاب نشده است</string>
+    <string name="quick_summary_upnext">آهنگ بعدی · صف را باز می کند</string>
+    <string name="quick_summary_volume">افزایش صدا به میزان %1$d%%</string>
+    <string name="quick_summary_seek">%1$s ثانیه</string>
+    <string name="quick_summary_seek_bar">%1$s ثانیه · زمان و نوار</string>
+    <string name="quick_summary_favorites_none">هنوز هیچ ستاره ای ندارد</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d ستاره دار · %2$s</item>
+        <item quantity="other">%1$d ستاره دار · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">همه اقدامات %1$d</string>
+    <string name="quick_summary_actions_first">اولین اقدامات %1$d</string>
+    <string name="quick_summary_actions_button">یک دکمه · منوی عملکردها را باز می کند</string>
+    <string name="quick_summary_only_playing">فقط هنگام پخش</string>
+    <string name="quick_summary_only_not_playing">فقط هنگام عدم پخش</string>
+    <string name="quick_mode_grid">شبکه</string>
+    <string name="quick_mode_rows">ردیف</string>
+    <string name="quick_mode_actions_list">فهرست کنید</string>
+    <string name="quick_mode_actions_button">دکمه</string>
+    <string name="quick_sheet_show">نمایش</string>
+    <string name="quick_sheet_always">همیشه</string>
+    <string name="quick_sheet_while_playing">فقط هنگام پخش</string>
+    <string name="quick_sheet_while_not_playing">فقط هنگام عدم پخش</string>
+    <string name="quick_sheet_step">مرحله</string>
+    <string name="quick_sheet_jump">میزان پرش</string>
+    <string name="quick_sheet_seek_bar">نمایش زمان و نوار پیشرفت</string>
+    <string name="quick_sheet_tools">ابزار</string>
+    <string name="quick_sheet_layout">طرح بندی</string>
+    <string name="quick_sheet_how_many">چند</string>
+    <string name="quick_sheet_all">همه</string>
+    <string name="quick_sheet_buttons_source">از</string>
+    <string name="quick_sheet_source_configured">انتخاب های من</string>
+    <string name="quick_sheet_source_session">برنامه‌ای که در حال پخش است</string>
+    <string name="quick_sheet_buttons_hint">روی یک دکمه ضربه بزنید تا عملکرد آن را انتخاب کنید. برای بازیابی پیش فرض آن نگه دارید.</string>
+    <string name="quick_sheet_favorites_hint">ستاره با پیچ رعد و برق در برگه اقدامات. فقط موارد ستاره دار در اینجا ظاهر می شوند.</string>
+    <string name="quick_sheet_actions_mode">نمایش به عنوان</string>
+    <string name="quick_sheet_actions_hint">فهرستی هر عمل را در پانل به عنوان یک ردیف قرار می دهد. یک دکمه پانل را کوتاه نگه می دارد: یک دکمه که منوی کامل را باز می کند. برای اینکه منو به طور کلی از پانل خارج شود، این بلوک را حذف کنید.</string>
+    <string name="quick_sheet_remove">حذف این بلوک</string>
+    <string name="quick_sheet_done">انجام شد</string>
+    <string name="quick_tool_speed">سرعت</string>
+    <string name="quick_tool_sleep">تایمر خواب</string>
+    <string name="quick_tool_lyrics">متن ترانه</string>
+    <string name="quick_tool_queue">صف</string>
+    <string name="quick_tool_volume">حجم صدا</string>
+    <string name="quick_tool_progress">پیشرفت</string>
+    <string name="quick_tool_faces">صفحه‌های ساعت</string>
+    <string name="quick_tool_search">جستجوی</string>
+    <string name="quick_tool_menu">منو</string>
+    <string name="setting_wear_hide_from_recents">پنهان شدن از برنامه های اخیر</string>
+    <string name="setting_wear_hide_from_recents_description">وقتی برنامه ساعت را ببندید یا از برنامه دیگری استفاده کنید، آن را از لیست برنامه های اخیر ساعت خارج می کند. اگر آن را از صفحه ساعت یا نوار Now باز کنید، مفید است. دقیقاً مانند قبل در دسترس باقی می ماند و موسیقی و اتصال پس زمینه تحت تأثیر قرار نمی گیرند.</string>
+    <string name="setting_streaming_app_routes">برنامه‌ها را برای پیوندهای جریانی انتخاب کنید</string>
+    <string name="setting_streaming_app_routes_description">یک برنامه نصب شده سازگار را به طور جداگانه برای YouTube Music، Spotify و سرویس های یکدیگر انتخاب کنید. با "برنامه پخش جریانی شناسایی شده" استفاده می شود.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">سرویس %1$d از برنامه انتخابی</item>
+        <item quantity="other">سرویس‌های %1$d از برنامه‌های انتخابی استفاده می‌کنند</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">برنامه‌هایی که می‌توانند پیوند را باز کنند، به‌علاوه پخش‌کننده‌های رسانه نصب شده، نشان داده می‌شوند.</string>
+    <string name="streaming_route_automatic">خودکار (برنامه شناسایی شده)</string>
 </resources>

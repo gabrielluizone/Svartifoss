@@ -58,6 +58,9 @@ class IdleMessageListener : WearableListenerService() {
                 // shortcut is picked, so the verdict routinely lands with no UI left to receive it.
                 PhoneUriOpener.onVerdict(this, messageEvent.data)
             }
+            CommPaths.MESSAGE_STREAMING_SHORTCUT_VERDICT -> {
+                PhoneUriOpener.onVerdict(this, messageEvent.data, correlated = true)
+            }
         }
     }
 

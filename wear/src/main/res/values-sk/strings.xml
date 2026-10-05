@@ -38,7 +38,7 @@
 
     <string name="no_phone">Telefón nie je pripojený</string>
     <string name="phone_unavailable">Odomknite telefón na ovládanie prehrávania</string>
-    <string name="playback_stopped">Zastavené</string>
+    <string name="playback_stopped">Pozastavené</string>
     <string name="error">CHYBA</string>
     <string name="error_play_services">Chyba služieb Google Play</string>
     <string name="button">Tlačidlo</string>
@@ -63,6 +63,12 @@
          played, so the screen has to say so rather than passing them off as what is coming up. -->
     <string name="queue_history_fallback">Nedávno prehrané</string>
     <string name="queue_history_fallback_reason">Táto aplikácia nezdieľa svoj rad</string>
+    <string name="menu_header_actions">Akcie</string>
+    <string name="menu_header_search_results">Výsledky vyhľadávania</string>
+    <string name="menu_header_search_history">Nedávne vyhľadávania</string>
+    <string name="menu_header_library">Knižnica</string>
+    <string name="shortcut_open_on_phone">Otvoriť v telefóne</string>
+    <string name="shortcut_continue_on_phone">Pokračujte v telefóne</string>
     <!-- Date divider on the Chat face, exactly as a messaging app shows above the day's messages. -->
     <string name="chat_face_today">Dnes</string>
 
@@ -203,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Zrušiť posun</string>
     <string name="progress_screen_skip_back">Preskočiť o %1$d sekúnd späť</string>
     <string name="progress_screen_skip_forward">Preskočiť o %1$d sekúnd dopredu</string>
+    <string name="quick_block_all_actions">Všetky akcie</string>
+    <string name="quick_block_favorites">Obľúbené</string>
+    <string name="quick_tool_speed">Rýchlosť</string>
+    <string name="quick_tool_lyrics">texty</string>
+    <string name="quick_tool_queue">Poradie</string>
+    <string name="quick_tool_volume">Hlasitosť</string>
+    <string name="quick_tool_progress">Pokrok</string>
+    <string name="quick_tool_faces">Ciferníky</string>
+    <string name="quick_tool_search">Hľadať</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Hlasitosť %1$d%%</string>
+    <string name="quick_seek_back_description">Späť %1$d sekúnd</string>
+    <string name="quick_seek_forward_description">Vpred %1$d sekúnd</string>
+    <string name="quick_speed_description">Rýchlosť prehrávania %1$s</string>
+    <string name="quick_tool_sleep">Časovač</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Časovač vypnutia, zostáva %1$d minút. Klepnutím zmeníte</string>
+    <string name="quick_sleep_off_description">Časovač spánku je vypnutý. Klepnutím ho nastavíte.</string>
 </resources>

@@ -84,6 +84,7 @@ screenshots/feature graphic exist and you know what to highlight visually)
 | Contact email | gabrielsvafoss@gmail.com |
 | Privacy policy URL | https://gabrielluizone.github.io/Svartifoss/privacy-policy.html |
 | Website (optional) | https://github.com/gabrielluizone/Svartifoss |
+| In-app products | Up to four optional tips (`support_tip_1` to `support_tip_4`), unlocking nothing - see `docs/play-tips.md`. Play will label the listing "Offers in-app purchases". |
 
 ## Still needed before you can publish (not text — assets)
 

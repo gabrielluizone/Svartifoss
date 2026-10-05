@@ -26,10 +26,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -55,7 +57,9 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
@@ -82,6 +86,7 @@ import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.BitmapBlur
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
+import com.svartifoss.snfell.watch.theme.LocalWatchTrackTextStyles
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.compose.CurvedClock
 import com.svartifoss.snfell.watch.view.compose.CurvedScrollIndicator
@@ -882,6 +887,11 @@ fun QueueScreen(
     // A legacy cover_compact / cover_tall selection still names its own size; the standalone
     // preference owns it for every other value.
     val effectiveRowSize = style.legacyRowSize ?: rowSize
+    val screenClip = if (LocalConfiguration.current.isScreenRound) {
+        Modifier.clip(CircleShape)
+    } else {
+        Modifier
+    }
     // Guard: SwipeToDismissBox can fire onDismissed more than once in edge cases (e.g. the system
     // windowSwipeToDismiss racing with the Compose gesture). Only forward the first call.
     var dismissed by remember { mutableStateOf(false) }
@@ -891,7 +901,9 @@ fun QueueScreen(
         // Only the foreground gets content; the swipe "background" stays empty (the opaque
         // window is black, so swiping back slides the list away over black - one clean close).
         if (!isBackground) {
-            Box(Modifier.fillMaxSize().background(Color.Black)) {
+            // ScalingLazyColumn scales edge rows, but still draws inside a rectangular
+            // viewport. Clip the entire surface to the same circle as the round backdrop.
+            Box(Modifier.fillMaxSize().then(screenClip).background(Color.Black)) {
                 // Under the rows and above the black ground, exactly where the panels put it.
                 screenBackdrop?.let { PanelBackdropLayer(it) }
                 QueueList(
@@ -1057,20 +1069,22 @@ private fun QueueHeader(title: String?, artist: String?, marquee: Boolean) {
             horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (!title.isNullOrBlank()) {
+            var roomWidth by remember { mutableIntStateOf(0) }
+            var lineWidth by remember(title) { mutableIntStateOf(0) }
             Text(
                     text = title,
                     color = Color.White,
-                    fontFamily = LocalWatchUiFontFamily.current,
-                    fontWeight = FontWeight.Bold,
+                    style = LocalWatchTrackTextStyles.current.title,
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    // The fade is tied to the scroll rather than applied always: a heading
-                    // short enough to sit still is fully legible and has no ends to dissolve.
-                    modifier = Modifier.fillMaxWidth().then(
+                    // basicMarquee measures the text at its natural width. Compare that with
+                    // the viewport outside it so a stationary title keeps every glyph opaque.
+                    onTextLayout = { lineWidth = it.size.width },
+                    modifier = Modifier.fillMaxWidth().onSizeChanged { roomWidth = it.width }.then(
                             if (marquee) {
-                                Modifier.marqueeFade()
+                                Modifier.marqueeFade(enabled = roomWidth in 1 until lineWidth)
                                         .basicMarquee(iterations = Int.MAX_VALUE)
                             } else {
                                 Modifier
@@ -1082,7 +1096,7 @@ private fun QueueHeader(title: String?, artist: String?, marquee: Boolean) {
             Text(
                     text = artist,
                     color = Color.White.copy(alpha = 0.6f),
-                    fontFamily = LocalWatchUiFontFamily.current,
+                    style = LocalWatchTrackTextStyles.current.artist,
                     fontSize = 12.sp,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
@@ -1184,29 +1198,32 @@ private fun QueueRow(
             Spacer(Modifier.width(10.dp))
         }
         Column(Modifier.weight(1f)) {
+            var roomWidth by remember { mutableIntStateOf(0) }
+            var lineWidth by remember(item.title) { mutableIntStateOf(0) }
             Text(
                     text = item.title,
                     color = onRow,
-                    fontFamily = LocalWatchUiFontFamily.current,
-                    fontWeight = FontWeight.Bold,
+                    style = LocalWatchTrackTextStyles.current.title,
                     fontSize = 15.sp,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     // Only the now-playing row scrolls its long title, and only while the list
                     // itself is at rest ([marquee]). Marquee on EVERY row (or during a scroll)
                     // re-lays the list out each frame and made scrolling visibly stutter.
-                    modifier = if (item.isPlaying && marquee) {
-                        Modifier.marqueeFade()
-                                .basicMarquee(iterations = Int.MAX_VALUE)
-                    } else {
-                        Modifier
-                    }
+                    onTextLayout = { lineWidth = it.size.width },
+                    modifier = Modifier.onSizeChanged { roomWidth = it.width }.then(
+                            if (item.isPlaying && marquee) {
+                                Modifier.marqueeFade(enabled = roomWidth in 1 until lineWidth)
+                                        .basicMarquee(iterations = Int.MAX_VALUE)
+                            } else {
+                                Modifier
+                            })
             )
             if (!item.subtitle.isNullOrBlank()) {
                 Text(
                         text = item.subtitle,
                         color = onRow.copy(alpha = SUBTITLE_ALPHA),
-                        fontFamily = LocalWatchUiFontFamily.current,
+                        style = LocalWatchTrackTextStyles.current.artist,
                         fontSize = 12.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis

@@ -22,11 +22,40 @@ message CustomList {
     required string entryId = 1;
     required string entryTitle = 2;
     optional string entrySubtitle = 3;
+    // Streaming shortcuts only: whether the destination is a collection a shuffled start makes
+    // sense for (a playlist, an album, an artist), which is what puts a Shuffle button beside Play
+    // on the watch's shortcut screen. Absent from older phone builds, which cannot honour a play
+    // mode at all - the watch then offers Play alone rather than a button that does nothing.
+    optional bool shuffleable = 4;
+    // Public link-preview metadata, cached on the phone. It is deliberately optional: a service
+    // that has no preview endpoint, or a user with online lookups disabled, keeps the existing
+    // compact shortcut screen.
+    optional string entryCreator = 6;
+    optional string entryDescription = 7;
   }
+}
+
+// How a streaming shortcut picked on the watch should start. AS_SAVED is what every selection
+// meant before the watch could ask, and what an older watch build (which never sets the field)
+// still gets: the link exactly as it was saved, with the player's shuffle state left alone.
+enum ShortcutPlayMode {
+  AS_SAVED = 0;
+  IN_ORDER = 1;
+  SHUFFLE = 2;
 }
 
 message CustomListItemAction {
   required string listId = 1;
   required string entryId = 2;
+  // Streaming shortcuts only. Older phone builds ignore it and play the link as saved.
+  optional ShortcutPlayMode playMode = 3 [default = AS_SAVED];
+  // Echoed on the correlated verdict path. Absent on older watches.
+  optional string requestId = 4;
+  optional string searchQuery = 5;
 }
 
+message StreamingShortcutVerdict {
+  required string requestId = 1;
+  // Absent when the phone played it without a visible open (or refused an unsafe URI).
+  optional string openUri = 2;
+}

@@ -9,4 +9,7 @@ Svartifoss není v Obchodu Play — aplikace pro hodinky se instaluje samostatn�
     <string name="no_watch_app_button">Zobrazit vydání</string>
     <string name="update_watch_hint">„Aktualizovat hodinky“ stáhne novou aplikaci pro hodinky a odešle ji přes Bluetooth — instalaci potvrdíte přímo na hodinkách, bez kabelu nebo Wear Installer.</string>
     <string name="update_no_wear_asset">Toto vydání neobsahuje APK pro hodinky k odeslání.</string>
+    <string name="drawer_support_summary">Svartifoss je zdarma a open source — pokud je pro vás užitečný, můžete mi koupit kávu :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

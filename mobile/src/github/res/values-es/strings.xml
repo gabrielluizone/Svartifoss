@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Ver versiones</string>
     <string name="update_watch_hint">\"Actualizar reloj\" descarga la nueva app del reloj y la envía por Bluetooth — confirmas la instalación en el propio reloj, sin cable ni Wear Installer.</string>
     <string name="update_no_wear_asset">Esta versión no tiene un APK de reloj para enviar.</string>
+    <string name="drawer_support_summary">Svartifoss es gratuito y de código abierto — invítame a un café si te resulta útil :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

@@ -2,10 +2,13 @@ package com.svartifoss.snfell.watch.view
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.drawable.Animatable
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.preference.PreferenceManager
+import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.R as commonR
 
 /**
@@ -29,6 +32,11 @@ class MusicLoadingBarsView @JvmOverloads constructor(
     init {
         setImageResource(commonR.drawable.ic_equalizer_bars_animated)
         scaleType = ScaleType.FIT_CENTER
+        // The XML tint is the sage default so a fresh install has a sensible first frame. On a
+        // paired watch, however, the last phone accent is already persisted locally before this
+        // view is inflated. Use it immediately instead of showing a green loading animation while
+        // MainActivity is still waiting for the preference/state observers to emit.
+        restoredPhoneAccent()?.let(::setBarsColor)
     }
 
     /** Tints all three bars while retaining the drawable's animated geometry. */
@@ -68,5 +76,17 @@ class MusicLoadingBarsView @JvmOverloads constructor(
 
     private fun stopAnimation() {
         (drawable as? Animatable)?.stop()
+    }
+
+    private fun restoredPhoneAccent(): Int? {
+        val value = PreferenceManager.getDefaultSharedPreferences(context)
+                .getString(MiscPreferences.WEAR_PHONE_ACCENT_COLOR.key, null)
+                ?.takeIf { it.isNotBlank() }
+                ?: return null
+        return try {
+            Color.parseColor(value)
+        } catch (_: IllegalArgumentException) {
+            null
+        }
     }
 }

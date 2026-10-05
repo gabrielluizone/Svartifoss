@@ -44,6 +44,14 @@ class ActionListViewModel @Inject constructor(@param:LocalActivityConfig val act
         saveActions()
     }
 
+    /** Stars or unstars the action at [position] for the quick panel's favourites block. */
+    fun setInQuickPanel(position: Int, inQuickPanel: Boolean) {
+        val action = actionStore.getOrNull(position)?.item ?: return
+        if (action.inQuickPanel == inQuickPanel) return
+        action.inQuickPanel = inQuickPanel
+        saveActions()
+    }
+
     fun editAction(position: Int) {
         openActionEditor.value = position
         openActionEditor.value = null

@@ -1,6 +1,7 @@
 package com.svartifoss.snfell
 
 import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -25,6 +26,21 @@ class WatchPreferenceSyncCoordinatorTest {
         assertFalse(shouldSyncWatchPreference(null))
         assertFalse(shouldSyncWatchPreference("app_theme"))
         assertFalse(shouldSyncWatchPreference("last_update_check"))
+    }
+
+    @Test
+    fun `projects the phone custom accent into the watch snapshot`() {
+        val snapshot = phoneAccentForWatchSnapshot(mapOf("custom_accent_color" to "#C0457A"))
+
+        assertFalse(shouldSyncWatchPreference("custom_accent_color"))
+        assertEquals("#C0457A", snapshot[MiscPreferences.WEAR_PHONE_ACCENT_COLOR.key])
+    }
+
+    @Test
+    fun `clearing the phone custom accent clears the watch fallback`() {
+        val snapshot = phoneAccentForWatchSnapshot(emptyMap<String, Any?>())
+
+        assertEquals("", snapshot[MiscPreferences.WEAR_PHONE_ACCENT_COLOR.key])
     }
 
     /**

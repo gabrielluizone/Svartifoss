@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">విడుదలలను చూడండి</string>
     <string name="update_watch_hint">\u201cవాచ్‌ను అప్‌డేట్ చేయండి\u201d కొత్త watch app‌ను డౌన్‌లోడ్ చేసి Bluetooth ద్వారా పంపుతుంది \u2014 ఇన్‌స్టాల్‌ను వాచ్‌పైనే మీరు నిర్ధారిస్తారు; cable లేదా Wear Installer అవసరం లేదు.</string>
     <string name="update_no_wear_asset">ఈ release‌లో పంపడానికి watch APK లేదు.</string>
+    <string name="drawer_support_summary">Svartifoss ఉచితం మరియు open source - మీకు ఉపయోగకరంగా ఉంటే నాకు ఒక coffee కొనిపెట్టండి :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

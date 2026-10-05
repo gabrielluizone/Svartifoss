@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">مشاهده انتشارات</string>
     <string name="update_watch_hint">«به‌روزرسانی ساعت» برنامه جدید ساعت را دانلود کرده و از طریق بلوتوث ارسال می‌کند — شما نصب را روی خود ساعت تأیید می‌کنید، بدون نیاز به کابل یا Wear Installer.</string>
     <string name="update_no_wear_asset">این انتشار هیچ فایل APK ساعتی برای ارسال ندارد.</string>
+    <string name="drawer_support_summary">Svartifoss رایگان و متن‌باز است — اگر برایتان مفید بود، یک قهوه برایم بخرید :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>
