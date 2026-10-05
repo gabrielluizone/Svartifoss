@@ -12,6 +12,7 @@ import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -41,6 +42,7 @@ import com.svartifoss.snfell.watch.theme.watchUiFontFamily
 import com.svartifoss.snfell.watch.util.WatchLanguage
 import com.svartifoss.snfell.watch.view.panel.AlbumPaletteCache
 import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
+import com.svartifoss.snfell.watch.view.panel.PanelTriad
 import dagger.hilt.android.AndroidEntryPoint
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -97,19 +99,42 @@ class ShortcutDetailActivity : ComponentActivity() {
                 entryId = entryId,
                 title = intent.getStringExtra(EXTRA_TITLE).orEmpty(),
                 subtitle = intent.getStringExtra(EXTRA_SUBTITLE),
-                shuffleable = intent.getBooleanExtra(EXTRA_SHUFFLEABLE, false))
+                shuffleable = intent.getBooleanExtra(EXTRA_SHUFFLEABLE, false),
+                creator = intent.getStringExtra(EXTRA_CREATOR),
+                description = intent.getStringExtra(EXTRA_DESCRIPTION))
                 .let { CoverHandoff.take(it) }
         findCloseButton()
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val appearance = ThemeAppearance.resolve(prefs)
         val accentSource = PanelAppearanceResolver.accentSource(prefs, appearance)
-        // With no cover to take a colour from, the colour of what is playing - the one the player
-        // underneath was just showing - rather than one fixed colour.
-        val fallbackAccent = AlbumPaletteCache.get(phoneConnection.albumArt.value, accentSource)
-                ?.primary ?: WatchTheme.ACCENT_DEFAULT
+        // With no cover to take a colour from, follow the player underneath.  In particular this
+        // must go through the same treatment/Normal-colour/Tone pipeline as the player: reading
+        // the raw palette here used the old sage fallback for a shortcut launched directly from a
+        // Tile, even when the current face was configured with a different accent.
+        val themeAccent = PanelAppearanceResolver.parseHexColorOrNull(
+                Preferences.getString(prefs, MiscPreferences.WEAR_PHONE_ACCENT_COLOR))
+                ?: getColor(R.color.theme_accent)
+        val rawTriad = AlbumPaletteCache.get(phoneConnection.albumArt.value, accentSource)
+                ?: PanelTriad(
+                        themeAccent,
+                        PanelAppearanceResolver.albumToneFallback(themeAccent, .42f),
+                        PanelAppearanceResolver.albumToneFallback(themeAccent, .68f))
+        val fallbackAccent = PanelAppearanceResolver.globalTriad(
+                prefs, appearance, rawTriad, themeAccent).primary
 
         setContent {
+            // The connection is established in onStart, after this Activity's onCreate.  Reading
+            // albumArt above seeds the first frame, but observing it here is what replaces the
+            // static phone accent with the now-playing cover's accent once that first state lands.
+            val playingArt by phoneConnection.albumArt.observeAsState()
+            var displayedFallbackAccent by remember { mutableStateOf(Color(fallbackAccent)) }
+            LaunchedEffect(playingArt, accentSource) {
+                PanelAppearanceResolver.albumTriad(playingArt, accentSource, themeAccent) { triad ->
+                    displayedFallbackAccent = Color(PanelAppearanceResolver.globalTriad(
+                            prefs, appearance, triad, themeAccent).primary)
+                }
+            }
             // The saved list fills in whatever the caller could not pass: the Tile knows a
             // shortcut's name but not its cover, and the cover can also land after the screen
             // opened (the phone fetches it in the background when the opt-in lookup is on).
@@ -120,6 +145,10 @@ class ShortcutDetailActivity : ComponentActivity() {
                     title = current.title.ifBlank { listed.listItem.entryTitle },
                     subtitle = current.subtitle ?: listed.listItem.entrySubtitle
                             .takeIf { listed.listItem.hasEntrySubtitle() },
+                    creator = current.creator ?: listed.listItem.entryCreator
+                            .takeIf { listed.listItem.hasEntryCreator() },
+                    description = current.description ?: listed.listItem.entryDescription
+                            .takeIf { listed.listItem.hasEntryDescription() },
                     shuffleable = current.shuffleable ||
                             (listed.listItem.hasShuffleable() && listed.listItem.shuffleable),
                     cover = current.cover ?: listed.icon)
@@ -136,7 +165,7 @@ class ShortcutDetailActivity : ComponentActivity() {
                         ShortcutDetailContent(
                                 detail = shown,
                                 accentSource = accentSource,
-                                fallbackAccent = Color(fallbackAccent),
+                                fallbackAccent = displayedFallbackAccent,
                                 onPlay = { mode -> choose(shown.entryId, mode, execute) },
                                 onOpenOnPhone = { openOnPhone(shown.entryId) })
                     }
@@ -249,6 +278,8 @@ class ShortcutDetailActivity : ComponentActivity() {
         const val EXTRA_ENTRY_ID = "com.svartifoss.snfell.watch.shortcut.ENTRY_ID"
         const val EXTRA_TITLE = "com.svartifoss.snfell.watch.shortcut.TITLE"
         const val EXTRA_SUBTITLE = "com.svartifoss.snfell.watch.shortcut.SUBTITLE"
+        const val EXTRA_CREATOR = "com.svartifoss.snfell.watch.shortcut.CREATOR"
+        const val EXTRA_DESCRIPTION = "com.svartifoss.snfell.watch.shortcut.DESCRIPTION"
         const val EXTRA_SHUFFLEABLE = "com.svartifoss.snfell.watch.shortcut.SHUFFLEABLE"
         const val EXTRA_EXECUTE = "com.svartifoss.snfell.watch.shortcut.EXECUTE"
 
@@ -262,6 +293,8 @@ class ShortcutDetailActivity : ComponentActivity() {
                     .putExtra(EXTRA_ENTRY_ID, detail.entryId)
                     .putExtra(EXTRA_TITLE, detail.title)
                     .putExtra(EXTRA_SUBTITLE, detail.subtitle)
+                    .putExtra(EXTRA_CREATOR, detail.creator)
+                    .putExtra(EXTRA_DESCRIPTION, detail.description)
                     .putExtra(EXTRA_SHUFFLEABLE, detail.shuffleable)
                     .putExtra(EXTRA_EXECUTE, execute)
         }
@@ -304,6 +337,8 @@ fun ButtonAction.toShortcutDetail(entryId: String): ShortcutDetailUi = ShortcutD
         title = title.orEmpty(),
         subtitle = shortcutSubtitle,
         shuffleable = shortcutShuffleable,
+        creator = shortcutCreator,
+        description = shortcutDescription,
         cover = if (isCoverArt) (icon as? BitmapDrawable)?.bitmap else null,
         mark = if (isCoverArt) null else icon?.let(::markBitmap),
         markTintable = iconTintable)
@@ -325,4 +360,7 @@ fun CustomListItemWithIcon.toShortcutDetail(): ShortcutDetailUi = ShortcutDetail
         title = listItem.entryTitle,
         subtitle = listItem.entrySubtitle.takeIf { listItem.hasEntrySubtitle() && it.isNotBlank() },
         shuffleable = listItem.hasShuffleable() && listItem.shuffleable,
+        creator = listItem.entryCreator.takeIf { listItem.hasEntryCreator() && it.isNotBlank() },
+        description = listItem.entryDescription
+                .takeIf { listItem.hasEntryDescription() && it.isNotBlank() },
         cover = icon)

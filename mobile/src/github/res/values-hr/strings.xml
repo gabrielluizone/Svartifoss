@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Prikaži izdanja</string>
     <string name="update_watch_hint">„Ažuriraj sat” preuzima novu aplikaciju za sat i šalje je putem Bluetootha — instalaciju potvrđujete na samom satu, bez kabela ili Wear Installera.</string>
     <string name="update_no_wear_asset">Ovo izdanje nema APK za sat koji se može poslati.</string>
+    <string name="drawer_support_summary">Svartifoss je besplatan i otvorenog koda — počastite me kavom ako vam je koristan :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

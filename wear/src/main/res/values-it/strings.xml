@@ -32,7 +32,7 @@
 
     <string name="no_phone">Nessun telefono connesso</string>
     <string name="phone_unavailable">Sblocca il telefono per controllare la riproduzione</string>
-    <string name="playback_stopped">Interrotta</string>
+    <string name="playback_stopped">In pausa</string>
     <string name="error">ERRORE</string>
     <string name="error_play_services">Errore di Play Services</string>
     <string name="button">Pulsante</string>
@@ -69,7 +69,7 @@
     <string name="hint_edges">Tocca in alto, in basso, a sinistra o a destra — ogni zona esegue l’azione assegnata</string>
     <string name="hint_center">Centro — riproduci/pausa\nDoppio tocco — azioni rapide\nPressione prolungata — selettore quadrante (configurabile)</string>
     <string name="hint_swipe_up">Verso l’alto — menu azioni\nIn basso o a sinistra — azioni assegnate\nDal bordo verso destra — esci</string>
-    <string name="hint_crown">Corona — volume o posizione\nPulsanti laterali — azioni assegnate\nPersonalizza tutto in Controlli e Watch sul telefono</string>
+    <string name="hint_crown">Corona — volume o posizione\nPulsanti laterali — azioni assegnate\nPersonalizza tutto in Controlli e Orologio sul telefono</string>
     <string name="hint_next">Avanti</string>
     <string name="hint_dismiss">Fine</string>
 
@@ -189,4 +189,23 @@
     <string name="progress_screen_cancel_seek">Annulla ricerca posizione</string>
     <string name="progress_screen_skip_back">Torna indietro di %1$d secondi</string>
     <string name="progress_screen_skip_forward">Vai avanti di %1$d secondi</string>
+    <string name="quick_block_all_actions">Tutte le azioni</string>
+    <string name="quick_block_favorites">Preferiti</string>
+    <string name="quick_tool_speed">Velocità</string>
+    <string name="quick_tool_lyrics">Testo</string>
+    <string name="quick_tool_queue">Coda</string>
+    <string name="quick_tool_volume">Volume</string>
+    <string name="quick_tool_progress">Progressi</string>
+    <string name="quick_tool_faces">Quadranti</string>
+    <string name="quick_tool_search">Cerca</string>
+    <string name="quick_tool_menu">Menù</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Volume %1$d%%</string>
+    <string name="quick_seek_back_description">Indietro %1$d secondi</string>
+    <string name="quick_seek_forward_description">Avanti %1$d secondi</string>
+    <string name="quick_speed_description">Velocità di riproduzione %1$s</string>
+    <string name="quick_tool_sleep">Timer</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Timer di sospensione: restano %1$d minuti. Tocca per modificare</string>
+    <string name="quick_sleep_off_description">Timer di sospensione disattivato. Tocca per impostare</string>
 </resources>

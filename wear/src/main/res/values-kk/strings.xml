@@ -38,7 +38,7 @@
 
     <string name="no_phone">Телефон қосылмаған</string>
     <string name="phone_unavailable">Ойнатуды басқару үшін телефонды құлыптан шығарыңыз</string>
-    <string name="playback_stopped">Тоқтатылды</string>
+    <string name="playback_stopped">Кідіртілді</string>
     <string name="error">ҚАТЕ</string>
     <string name="error_play_services">Play Services қатесі</string>
     <string name="button">Түйме</string>
@@ -215,4 +215,23 @@
     <string name="progress_screen_cancel_seek">Позицияны іздеуді болдырмау</string>
     <string name="progress_screen_skip_back">%1$d секунд артқа өту</string>
     <string name="progress_screen_skip_forward">%1$d секунд алға өту</string>
+    <string name="quick_block_all_actions">Барлық әрекеттер</string>
+    <string name="quick_block_favorites">Таңдаулылар</string>
+    <string name="quick_tool_speed">Жылдамдық</string>
+    <string name="quick_tool_lyrics">Ән мәтіні</string>
+    <string name="quick_tool_queue">кезегі</string>
+    <string name="quick_tool_volume">Дыбыс деңгейі</string>
+    <string name="quick_tool_progress">прогресс</string>
+    <string name="quick_tool_faces">Сағат беттері</string>
+    <string name="quick_tool_search">Іздеу</string>
+    <string name="quick_tool_menu">мәзірі</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Дыбыс деңгейі %1$d%%</string>
+    <string name="quick_seek_back_description">Артқа %1$d секунд</string>
+    <string name="quick_seek_forward_description">Алға %1$d секунд</string>
+    <string name="quick_speed_description">Ойнату жылдамдығы %1$s</string>
+    <string name="quick_tool_sleep">Ұйқы таймері</string>
+    <string name="quick_sleep_minutes">%1$d минут</string>
+    <string name="quick_sleep_description">Ұйқы таймері, %1$d минут қалды. Өзгерту үшін түртіңіз.</string>
+    <string name="quick_sleep_off_description">Ұйқы таймері өшірулі. Орнату үшін түртіңіз.</string>
 </resources>

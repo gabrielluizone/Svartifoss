@@ -1,0 +1,1 @@
+Organize o Painel rápido do relógio em blocos, incluindo Volume, Próxima faixa, ferramentas e favoritos. Adiciona temporizador de sono, telas de atalhos com Play e Shuffle e capas melhores para playlists. Melhora traduções, desempenho, consumo de bateria, sincronização e estabilidade da conexão entre celular e relógio.

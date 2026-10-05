@@ -27,6 +27,11 @@ message CustomList {
     // on the watch's shortcut screen. Absent from older phone builds, which cannot honour a play
     // mode at all - the watch then offers Play alone rather than a button that does nothing.
     optional bool shuffleable = 4;
+    // Public link-preview metadata, cached on the phone. It is deliberately optional: a service
+    // that has no preview endpoint, or a user with online lookups disabled, keeps the existing
+    // compact shortcut screen.
+    optional string entryCreator = 6;
+    optional string entryDescription = 7;
   }
 }
 

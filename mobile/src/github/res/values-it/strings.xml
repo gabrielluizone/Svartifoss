@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Vedi versioni</string>
     <string name="update_watch_hint">\"Aggiorna orologio\" scarica la nuova app per l\'orologio e la invia via Bluetooth — confermi l\'installazione sull\'orologio stesso, senza cavo o Wear Installer.</string>
     <string name="update_no_wear_asset">Questa versione non ha un APK per l\'orologio da inviare.</string>
+    <string name="drawer_support_summary">Svartifoss è gratuito e open source — offrimi un caffè se ti è utile :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

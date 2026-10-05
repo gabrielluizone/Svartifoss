@@ -302,7 +302,7 @@
     <string name="preview_sample_lyric_current">再生中の行</string>
     <string name="preview_sample_lyric_next">次の行</string>
     <string name="preview_sample_next_title">次の曲</string>
-    <string name="preview_playback_stopped">停止中</string>
+    <string name="preview_playback_stopped">一時停止中</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -792,9 +792,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">「次へ」ピルの背景</string>
-    <string name="setting_wear_show_up_next_pill">プレーヤーに「次へ」ピルを表示</string>
-    <string name="setting_wear_show_up_next_pill_description">再生画面の下部に「次へ」ピルを表示します。ミニボタン行が占める領域を使用するため、その行が表示されていないときだけ表示されます。</string>
+    <string name="setting_wear_up_next_pill">「次へ」カプセルの背景</string>
+    <string name="setting_wear_show_up_next_pill">プレーヤーに「次へ」カプセルを表示</string>
+    <string name="setting_wear_show_up_next_pill_description">再生画面の下部に「次へ」カプセルを表示します。ミニボタン行が占める領域を使用するため、その行が表示されていないときだけ表示されます。</string>
     <string name="category_wf_clock">時計</string>
     <string name="setting_wear_clock_color">時計の色</string>
     <string name="setting_wear_clock_custom_color">時計のカスタム色</string>
@@ -810,7 +810,7 @@
     <string name="setting_wear_aod_show_progress">常時表示でプログレスリング</string>
     <string name="setting_wear_aod_show_progress_description">アンビエントモードで再生ボタンの周囲にプログレスリングを表示します。ここでは位置がおよそ1分に1回だけ更新されます</string>
     <string name="setting_wear_aod_show_pills">常時表示で「次へ」</string>
-    <string name="setting_wear_aod_show_pills_description">ビジュアル常時表示スタイルの下部に、静的な枠線付き「次へ」ピルを表示します</string>
+    <string name="setting_wear_aod_show_pills_description">ビジュアル常時表示スタイルの下部に、静的な枠線付き「次へ」カプセルを表示します</string>
     <string name="category_wf_gestures">画面ジェスチャー</string>
     <string name="setting_wear_mini_buttons_mode">ミニボタンを表示</string>
     <string name="setting_wear_gestures_mode">画面ジェスチャー</string>
@@ -873,7 +873,7 @@
     <string name="preview_notification_controls">メディア通知のアイコン</string>
     <string name="setting_wear_queue_style">キューのスタイル</string>
     <string name="setting_wear_quick_panel_shortcut_cover">ショートカットのカバーを背景として使用</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">キュースタイルがカバーバリアントの場合、取得済みのショートカットカバー（曲、プレイリスト、アーティストなど）を持つクイックパネルのアクション行でも、「次へ」と同様にそのアートでピルを塗りつぶします。取得済みカバーがないショートカット（通常のアプリアイコン）は影響を受けません。</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">キュースタイルがカバーバリアントの場合、取得済みのショートカットカバー（曲、プレイリスト、アーティストなど）を持つクイックパネルのアクション行でも、「次へ」と同様にそのアートでカプセルを塗りつぶします。取得済みカバーがないショートカット（通常のアプリアイコン）は影響を受けません。</string>
     <string name="setting_wear_list_row_size">リストのピルサイズ</string>
     <string name="setting_wear_list_row_size_description">キュー、メニュー、クイックパネルにある全幅行の高さです。</string>
     <string name="setting_wear_progress_gradient">パレットをリングにブレンド</string>
@@ -2017,9 +2017,6 @@
     <string name="drawer_sync_heading">同期</string>
     <string name="drawer_sync_summary">ウォッチの設定はスマートフォン側で行い、ペアリング済みのウォッチへ自動的に同期されます。</string>
     <string name="drawer_support_heading">サポート</string>
-    <string name="drawer_support_summary">Svartifoss は無料のオープンソースです。役に立ったらコーヒーを1杯おごってください :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">カバーアートをダウンロード</string>
     <string name="album_art_saved">カバーアートをギャラリーに保存しました</string>
     <string name="album_art_save_error">カバーアートを保存できませんでした</string>
@@ -2845,4 +2842,99 @@
     <string name="setting_online_artwork_description">ウォッチフェイスにオンラインで検索した画像を表示します \u2014 再生中のアーティスト、または画像を公開していないプレーヤー向けのアルバムカバーです。スマートフォンが Deezer の公開カタログを検索して結果をキャッシュします。送信されるのはトラック名とアーティスト名だけで、フェイスがこれらのソースのいずれかに設定されている場合にのみ検索します。オフの場合は、プレーヤー自身のアートワークを使用します。</string>
     <string name="setting_wear_shortcut_details">ウォッチで再生またはシャッフル</string>
     <string name="setting_wear_shortcut_details_description">ウォッチで保存済みのリンクを選ぶと（ショートカットリスト、ショートカット Tile、アクションメニューのいずれからでも）、まずカバーと「再生」「シャッフル」が表示されます。オフにすると、すぐに再生を開始します。1 つのリンクに割り当てたボタンやジェスチャーは常にすぐ再生を開始します。</string>
+    <string name="actions_quick_pin_add">クイックパネルに表示</string>
+    <string name="actions_quick_pin_remove">クイックパネルから削除</string>
+    <string name="quick_panel_editor_title">クイック アクション パネル</string>
+    <string name="quick_panel_editor_open">パネルコンテンツの編集</string>
+    <string name="quick_panel_editor_intro">時計の中心をダブルタップすると開くパネルを構築します。ブロックを押したままドラッグして移動し、ブロックをタップして調整します。</string>
+    <string name="quick_panel_editor_add_block">ブロックを追加</string>
+    <string name="quick_panel_editor_restore">元のパネルに戻す</string>
+    <string name="quick_panel_editor_restore_title">元のパネルに戻しますか?</string>
+    <string name="quick_panel_editor_restore_message">配置が削除され、パネルが元の状態に戻ります。ボタンの選択とスターを付けたアクションは保持されます。</string>
+    <string name="quick_panel_editor_restore_confirm">復元</string>
+    <string name="quick_panel_editor_fold">最初の画面終了（おおよそ）</string>
+    <string name="quick_panel_editor_last_block">パネルには少なくとも 1 つのブロックが必要です</string>
+    <string name="quick_panel_editor_removed">削除 %1$s</string>
+    <string name="quick_panel_editor_undo">元に戻す</string>
+    <string name="quick_panel_editor_move_up">上に移動</string>
+    <string name="quick_panel_editor_move_down">下に移動</string>
+    <string name="quick_panel_editor_more">その他のオプション</string>
+    <string name="quick_panel_editor_nothing_to_add">すべてのブロックはすでにパネル上にあります</string>
+    <string name="quick_block_header">トラック</string>
+    <string name="quick_block_buttons">丸いボタン</string>
+    <string name="quick_block_upnext">次のトラック</string>
+    <string name="quick_block_volume">音量</string>
+    <string name="quick_block_seek">スキップと位置</string>
+    <string name="quick_block_tools">ツール</string>
+    <string name="quick_block_favorites">お気に入り</string>
+    <string name="quick_block_actions">すべてのアクション</string>
+    <string name="quick_block_all_actions">すべてのアクション</string>
+    <string name="quick_block_header_description">再生中のタイトルとアーティスト。</string>
+    <string name="quick_block_buttons_description">よく使用するアクション、または再生アプリが提供するアクションの丸いボタン。</string>
+    <string name="quick_block_upnext_description">次の曲。タップしてキューを開きます。</string>
+    <string name="quick_block_volume_description">パネルを離れずに音量を下げたり上げたりできます。</string>
+    <string name="quick_block_seek_description">トラック内のどこにいるのか、および前後にスキップするボタン。</string>
+    <string name="quick_block_tools_description">小さなショートカット: 再生速度、歌詞、キューなど。</string>
+    <string name="quick_block_favorites_description">[アクション] タブでカバーまたは行としてスターを付けたアクション。</string>
+    <string name="quick_block_actions_description">ウォッチ メニューのすべてのアクション。パネル内の行として、またはメニューを開く 1 つのボタンとして。</string>
+    <string name="quick_summary_header">タイトルとアーティスト</string>
+    <string name="quick_summary_buttons_session">再生中のアプリから</string>
+    <string name="quick_summary_buttons_empty">ボタンが選択されていません</string>
+    <string name="quick_summary_upnext">次のトラック · キューを開く</string>
+    <string name="quick_summary_volume">音量の増分: %1$d%%</string>
+    <string name="quick_summary_seek">%1$s 秒</string>
+    <string name="quick_summary_seek_bar">%1$s 秒・時間とバー</string>
+    <string name="quick_summary_favorites_none">スター付きのアクションはまだありません</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d スター付き · %2$s</item>
+        <item quantity="other">%1$d スター付き · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">すべての %1$d アクション</string>
+    <string name="quick_summary_actions_first">最初の %1$d アクション</string>
+    <string name="quick_summary_actions_button">ボタン 1 つ · アクション メニューを開きます</string>
+    <string name="quick_summary_only_playing">再生中のみ</string>
+    <string name="quick_summary_only_not_playing">未再生時のみ</string>
+    <string name="quick_mode_grid">グリッド</string>
+    <string name="quick_mode_rows">行</string>
+    <string name="quick_mode_actions_list">一覧</string>
+    <string name="quick_mode_actions_button">ボタン</string>
+    <string name="quick_sheet_show">見せる</string>
+    <string name="quick_sheet_always">常に</string>
+    <string name="quick_sheet_while_playing">再生中のみ</string>
+    <string name="quick_sheet_while_not_playing">未再生時のみ</string>
+    <string name="quick_sheet_step">ステップ</string>
+    <string name="quick_sheet_jump">ジャンプ幅</string>
+    <string name="quick_sheet_seek_bar">時間と進行状況バーを表示</string>
+    <string name="quick_sheet_tools">ツール</string>
+    <string name="quick_sheet_layout">レイアウト</string>
+    <string name="quick_sheet_how_many">幾つか</string>
+    <string name="quick_sheet_all">すべて</string>
+    <string name="quick_sheet_buttons_source">からのボタン</string>
+    <string name="quick_sheet_source_configured">私の選択</string>
+    <string name="quick_sheet_source_session">再生中のアプリ</string>
+    <string name="quick_sheet_buttons_hint">ボタンをタップしてアクションを選択します。押し続けるとデフォルトに戻ります。</string>
+    <string name="quick_sheet_favorites_hint">[アクション] タブのアクションに稲妻の星を付けます。ここには星付きのものだけが表示されます。</string>
+    <string name="quick_sheet_actions_mode">として表示</string>
+    <string name="quick_sheet_actions_hint">リストには、パネル上のすべてのアクションが行として配置されます。ボタンを押すとパネルが短くなり、1 つのボタンで完全なメニューが開きます。メニューをパネルから完全に外すには、このブロックを削除します。</string>
+    <string name="quick_sheet_remove">このブロックを削除します</string>
+    <string name="quick_sheet_done">完了</string>
+    <string name="quick_tool_speed">速度</string>
+    <string name="quick_tool_sleep">スリープタイマー</string>
+    <string name="quick_tool_lyrics">歌詞</string>
+    <string name="quick_tool_queue">キュー</string>
+    <string name="quick_tool_volume">音量</string>
+    <string name="quick_tool_progress">進捗状況</string>
+    <string name="quick_tool_faces">文字盤</string>
+    <string name="quick_tool_search">検索</string>
+    <string name="quick_tool_menu">メニュー</string>
+    <string name="setting_wear_hide_from_recents">最近のアプリから隠す</string>
+    <string name="setting_wear_hide_from_recents_description">ウォッチ アプリを閉じるか、別のアプリを使用すると、ウォッチ アプリがウォッチの最近のアプリ リストに表示されなくなります。代わりに文字盤または Now Bar から開く場合に便利です。以前とまったく同じように到達可能であり、音楽やバックグラウンド接続は影響を受けません。</string>
+    <string name="setting_streaming_app_routes">ストリーミングリンク用のアプリを選択</string>
+    <string name="setting_streaming_app_routes_description">YouTube Music、Spotify、その他のサービスごとに、互換性のあるインストール済みアプリを個別に選択します。 「検出されたストリーミングアプリ」で使用されます。</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d サービスは選択されたアプリを使用します</item>
+        <item quantity="other">%1$d サービスは選択されたアプリを使用します</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">リンクを開くことができるアプリと、インストールされているメディア プレーヤーが表示されます。</string>
+    <string name="streaming_route_automatic">自動（検出されたアプリ）</string>
 </resources>

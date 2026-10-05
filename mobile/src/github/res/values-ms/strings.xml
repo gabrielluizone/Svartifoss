@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Lihat keluaran</string>
     <string name="update_watch_hint">“Kemas kini jam” memuat turun aplikasi jam baharu dan menghantarnya melalui Bluetooth — anda mengesahkan pemasangan pada jam itu sendiri, tanpa kabel atau Wear Installer.</string>
     <string name="update_no_wear_asset">Keluaran ini tiada APK jam untuk dihantar.</string>
+    <string name="drawer_support_summary">Svartifoss adalah percuma dan sumber terbuka — belanja saya kopi jika ia berguna untuk anda :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

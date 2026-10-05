@@ -9,4 +9,7 @@ A Svartifoss nincs a Play Áruházban — az óraalkalmazást külön kell sidel
     <string name="no_watch_app_button">Kiadások megtekintése</string>
     <string name="update_watch_hint">Az „Óra frissítése” letölti az új óraalkalmazást, és Bluetoothon elküldi — a telepítést magán az órán erősíti meg, kábel vagy Wear Installer nélkül.</string>
     <string name="update_no_wear_asset">Ehhez a kiadáshoz nincs elküldhető óra-APK.</string>
+    <string name="drawer_support_summary">A Svartifoss ingyenes és nyílt forráskódú — ha hasznos, meghívhat egy kávéra :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

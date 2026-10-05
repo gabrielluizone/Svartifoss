@@ -93,47 +93,17 @@
             android:lineSpacingMultiplier="1.25"
             android:fontFamily="@font/google_sans" />
 
-        <TextView
+        <!-- The support section is the one part of the drawer that differs per distribution, so
+             it is a layout each flavor supplies: the github build links to Buy Me a Coffee and
+             Ko-fi (mobile/src/github/res/layout), the Play build offers a tip through Google Play
+             Billing (mobile/src/play/res/layout). Google Play's Payments policy forbids an in-app
+             button that leads to any other way of paying, which is why the links cannot simply be
+             hidden at runtime: nothing about them is allowed to ship in the Play artifact.
+             FlavorSupportIsolationTest pins the split. -->
+        <include
+            layout="@layout/drawer_support_section"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/drawer_support_heading"
-            android:textSize="11sp"
-            android:letterSpacing="0.08"
-            android:textAllCaps="true"
-            android:textColor="@color/lyra_accent"
-            android:fontFamily="@font/google_sans"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/drawer_support_summary"
-            android:textSize="13sp"
-            android:textColor="@color/lyra_text_secondary"
-            android:lineSpacingMultiplier="1.25"
-            android:fontFamily="@font/google_sans" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/drawer_support_button"
-            style="@style/LyraGestureButton"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:text="@string/drawer_support_button"
-            app:icon="@drawable/ic_buy_me_a_coffee" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/drawer_kofi_button"
-            style="@style/LyraGestureButton"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:text="@string/drawer_kofi_button"
-            app:icon="@drawable/ic_kofi" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/drawer_version_text"

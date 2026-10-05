@@ -38,7 +38,7 @@
 
     <string name="no_phone">Telefon nie jest połączony</string>
     <string name="phone_unavailable">Odblokuj telefon, aby sterować odtwarzaniem</string>
-    <string name="playback_stopped">Zatrzymano</string>
+    <string name="playback_stopped">Wstrzymano</string>
     <string name="error">BŁĄD</string>
     <string name="error_play_services">Błąd Usług Google Play</string>
     <string name="button">Przycisk</string>
@@ -209,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Anuluj przewijanie</string>
     <string name="progress_screen_skip_back">Cofnij o %1$d s</string>
     <string name="progress_screen_skip_forward">Przewiń o %1$d s do przodu</string>
+    <string name="quick_block_all_actions">Wszystkie akcje</string>
+    <string name="quick_block_favorites">Ulubione</string>
+    <string name="quick_tool_speed">Prędkość</string>
+    <string name="quick_tool_lyrics">teksty</string>
+    <string name="quick_tool_queue">Kolejka</string>
+    <string name="quick_tool_volume">Głośność</string>
+    <string name="quick_tool_progress">Postęp</string>
+    <string name="quick_tool_faces">Tarcze zegarka</string>
+    <string name="quick_tool_search">Szukaj</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Głośność %1$d%%</string>
+    <string name="quick_seek_back_description">Powrót %1$d sekundy</string>
+    <string name="quick_seek_forward_description">Do przodu %1$d sekundy</string>
+    <string name="quick_speed_description">Prędkość odtwarzania %1$s</string>
+    <string name="quick_tool_sleep">Timer uśpienia</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Timer uśpienia, %1$d pozostałe minuty. Kliknij, aby zmienić</string>
+    <string name="quick_sleep_off_description">Wyłącznik czasowy wyłączony. Kliknij, aby ustawić</string>
 </resources>

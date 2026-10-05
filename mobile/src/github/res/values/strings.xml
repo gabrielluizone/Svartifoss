@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">View releases</string>
     <string name="update_watch_hint">\u201cUpdate watch\u201d downloads the new watch app and sends it over Bluetooth \u2014 you confirm the install on the watch itself, no cable or Wear Installer needed.</string>
     <string name="update_no_wear_asset">This release has no watch APK to send.</string>
+    <string name="drawer_support_summary">Svartifoss is free/libre and open source (GPLv3), and no feature is gated behind a payment. Buy me a coffee if it\'s useful to you :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

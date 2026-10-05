@@ -26,6 +26,10 @@ class ButtonAction(
         val shortcutSubtitle: String? = null,
         /** Alongside [shortcutSubtitle]: whether that screen offers Shuffle beside Play. */
         val shortcutShuffleable: Boolean = false,
+        /** Optional public link-preview byline for the shortcut's own screen. */
+        val shortcutCreator: String? = null,
+        /** Optional public link-preview description for the shortcut's own screen. */
+        val shortcutDescription: String? = null,
         /** Whether the user starred this actions-menu entry for the quick panel's favourites
          *  block. Only meaningful for entries of the actions menu; false from a phone build that
          *  predates the flag, which is the same as nothing being starred. */
@@ -35,6 +39,7 @@ class ButtonAction(
         return "ButtonAction(key='$key', icon=$icon, title=$title, " +
                 "iconTintable=$iconTintable, remoteUri=$remoteUri, isCoverArt=$isCoverArt, " +
                 "seekOffsetMs=$seekOffsetMs, shortcutSubtitle=$shortcutSubtitle, " +
-                "shortcutShuffleable=$shortcutShuffleable, inQuickPanel=$inQuickPanel)"
+                "shortcutShuffleable=$shortcutShuffleable, shortcutCreator=$shortcutCreator, " +
+                "shortcutDescription=$shortcutDescription, inQuickPanel=$inQuickPanel)"
     }
 }

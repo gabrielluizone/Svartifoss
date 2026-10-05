@@ -9,4 +9,7 @@ Svartifoss Play Store पर नहीं है — वॉच ऐप अलग 
     <string name="no_watch_app_button">रिलीज़ देखें</string>
     <string name="update_watch_hint">“वॉच अपडेट करें” नया वॉच ऐप डाउनलोड करके Bluetooth से भेजता है — इंस्टॉल की पुष्टि घड़ी पर ही करते हैं, केबल या Wear Installer की ज़रूरत नहीं।</string>
     <string name="update_no_wear_asset">इस रिलीज़ में भेजने के लिए वॉच APK नहीं है।</string>
+    <string name="drawer_support_summary">Svartifoss मुफ़्त और ओपन सोर्स है — यदि यह आपके काम आता है तो मुझे एक कॉफ़ी पिला दें :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

@@ -118,6 +118,7 @@ permissions:
 - **Search history / playlist shortcuts / recently-played tracks**: stored
   only in the app's private local storage. Not collected by the developer,
   so not reportable here either.
+- **Financial info / purchases (Play build only)**: the Play build sells an optional tip through Google Play Billing (`support/TipJar.kt`, see `docs/play-tips.md`). Google Play handles the payment end to end; the app never receives a payment method, card or name, and is handed only a purchase token and an order ID, which stay on the phone, are used only to consume the purchase, and are not transmitted anywhere by the app. So "Purchase history" and "User payment info" should stay **not collected** - re-check that against the live form, since Play's wording for data processed by Play itself changes. The tip unlocks nothing; the store listing will show "Offers in-app purchases" once the bundle carries the Billing permission. The GitHub build has no billing code at all.
 
 ## Standard follow-up questions
 

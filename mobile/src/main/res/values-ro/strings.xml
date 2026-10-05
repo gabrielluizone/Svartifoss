@@ -269,7 +269,7 @@
     <string name="preview_sample_lyric_current">Rândul care se aude acum</string>
     <string name="preview_sample_lyric_next">Rândul următor</string>
     <string name="preview_sample_next_title">Piesa următoare</string>
-    <string name="preview_playback_stopped">Oprit</string>
+    <string name="preview_playback_stopped">În pauză</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -713,9 +713,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Fundal pastilă Urmează</string>
-    <string name="setting_wear_show_up_next_pill">Pastilă Urmează pe player</string>
-    <string name="setting_wear_show_up_next_pill_description">Afișează o pastilă Urmează în partea de jos a ecranului de redare. Umple spațiul pe care l-ar ocupa rândul de mini butoane, deci apare doar când acel rând nu este afișat.</string>
+    <string name="setting_wear_up_next_pill">Fundal capsulă Urmează</string>
+    <string name="setting_wear_show_up_next_pill">Capsulă Urmează pe player</string>
+    <string name="setting_wear_show_up_next_pill_description">Afișează o capsulă Urmează în partea de jos a ecranului de redare. Umple spațiul pe care l-ar ocupa rândul de mini butoane, deci apare doar când acel rând nu este afișat.</string>
     <string name="category_wf_clock">Ceas</string>
     <string name="setting_wear_clock_color">Culoare ceas</string>
     <string name="setting_wear_clock_custom_color">Culoare ceas personalizată</string>
@@ -731,7 +731,7 @@
     <string name="setting_wear_aod_show_progress">Inel de progres pe ecranul mereu activ</string>
     <string name="setting_wear_aod_show_progress_description">Afișează inelul de progres din jurul butonului de redare în modul ambiental — poziția se actualizează acolo doar cam o dată pe minut</string>
     <string name="setting_wear_aod_show_pills">Urmează pe ecranul mereu activ</string>
-    <string name="setting_wear_aod_show_pills_description">Afișează o pastilă Urmează statică, conturată în partea de jos a stilurilor vizuale mereu active</string>
+    <string name="setting_wear_aod_show_pills_description">Afișează o capsulă Urmează statică, conturată în partea de jos a stilurilor vizuale mereu active</string>
     <string name="category_wf_gestures">Gesturi ecran</string>
     <string name="setting_wear_mini_buttons_mode">Afișează mini butoane</string>
     <string name="setting_wear_gestures_mode">Gesturi ecran</string>
@@ -787,8 +787,8 @@
     <string name="preview_notification_controls">Pictogramă din notificarea media</string>
     <string name="setting_wear_queue_style">Stil coadă</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Folosește copertele scurtăturilor ca fundal</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Când Stilul cozii este o variantă Copertă, un rând de acțiune al panoului rapid cu o copertă de scurtătură preluată (piesă, listă de redare, artist…) umple și el pastila sa cu acea imagine, așa cum face Urmează. Scurtăturile fără copertă preluată (doar o pictogramă de aplicație) nu sunt afectate.</string>
-    <string name="setting_wear_list_row_size">Dimensiune pastilă listă</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Când Stilul cozii este o variantă Copertă, un rând de acțiune al panoului rapid cu o copertă de scurtătură preluată (piesă, listă de redare, artist…) umple și el capsula sa cu acea imagine, așa cum face Urmează. Scurtăturile fără copertă preluată (doar o pictogramă de aplicație) nu sunt afectate.</string>
+    <string name="setting_wear_list_row_size">Dimensiune capsulă listă</string>
     <string name="setting_wear_list_row_size_description">Înălțimea rândurilor pe toată lățimea în coadă, meniuri și panoul rapid.</string>
     <string name="setting_wear_progress_style">Stil inel de progres</string>
     <string name="setting_wear_seek_style">Stil afișare căutare și volum</string>
@@ -1363,9 +1363,6 @@
     <string name="drawer_sync_heading">Sincronizare</string>
     <string name="drawer_sync_summary">Setările ceasului sunt configurate aici pe telefon și sincronizate automat cu ceasul dvs. împerecheat.</string>
     <string name="drawer_support_heading">Susținere</string>
-    <string name="drawer_support_summary">Svartifoss este gratuit și cu sursă deschisă — cumpărați-mi o cafea dacă vă este util :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Descarcă coperta</string>
     <string name="album_art_saved">Coperta a fost salvată în galerie</string>
     <string name="album_art_save_error">Nu s-a putut salva coperta</string>
@@ -2838,4 +2835,99 @@
     <string name="setting_online_artwork_description">Permite cadranului să afișeze o imagine căutată online \u2014 artistul care cântă sau coperta unui album atunci când playerul nu furnizează niciuna. Telefonul face căutarea în catalogul public Deezer și păstrează rezultatul în cache; sunt trimise doar numele piesei și al artistului și nu se caută nimic decât dacă un cadran este setat să folosească una dintre aceste surse. Dacă opțiunea este oprită, se folosește coperta furnizată de player.</string>
     <string name="setting_wear_shortcut_details">Redare sau aleatoriu pe ceas</string>
     <string name="setting_wear_shortcut_details_description">Când alegi pe ceas un link salvat, din lista de comenzi rapide, din Tile-ul de comenzi rapide sau din meniul de acțiuni, mai întâi apare coperta cu Redare și Aleatoriu. Dezactivează ca să pornească imediat. Butoanele și gesturile atribuite unui link îl pornesc mereu imediat.</string>
+    <string name="actions_quick_pin_add">Afișați în panoul rapid</string>
+    <string name="actions_quick_pin_remove">Eliminați din panoul rapid</string>
+    <string name="quick_panel_editor_title">Panou de acțiuni rapide</string>
+    <string name="quick_panel_editor_open">Editați conținutul panoului</string>
+    <string name="quick_panel_editor_intro">Construiți panoul care se deschide când atingeți de două ori centrul ceasului. Țineți și trageți un bloc pentru a-l muta, atingeți unul pentru a-l ajusta.</string>
+    <string name="quick_panel_editor_add_block">Adaugă bloc</string>
+    <string name="quick_panel_editor_restore">Restaurați panoul original</string>
+    <string name="quick_panel_editor_restore_title">Restaurați panoul original?</string>
+    <string name="quick_panel_editor_restore_message">Aranjamentul dvs. este eliminat și panoul revine la modul în care era. Opțiunile tale pentru butoane și acțiunile pe care le-ai marcat cu stea sunt păstrate.</string>
+    <string name="quick_panel_editor_restore_confirm">Restaurare</string>
+    <string name="quick_panel_editor_fold">Sfârșitul primului ecran (aproximativ)</string>
+    <string name="quick_panel_editor_last_block">Un panou are nevoie de cel puțin un bloc</string>
+    <string name="quick_panel_editor_removed">Eliminat %1$s</string>
+    <string name="quick_panel_editor_undo">Anulați</string>
+    <string name="quick_panel_editor_move_up">Mutare în sus</string>
+    <string name="quick_panel_editor_move_down">Mutare în jos</string>
+    <string name="quick_panel_editor_more">Mai multe opțiuni</string>
+    <string name="quick_panel_editor_nothing_to_add">Fiecare bloc este deja pe panou</string>
+    <string name="quick_block_header">Piesă</string>
+    <string name="quick_block_buttons">Butoane rotunde</string>
+    <string name="quick_block_upnext">Următoarea piesă</string>
+    <string name="quick_block_volume">Volum</string>
+    <string name="quick_block_seek">Salt și poziție</string>
+    <string name="quick_block_tools">Instrumente</string>
+    <string name="quick_block_favorites">Favorite</string>
+    <string name="quick_block_actions">Toate acțiunile</string>
+    <string name="quick_block_all_actions">Toate acțiunile</string>
+    <string name="quick_block_header_description">Titlul și artistul a ceea ce se joacă.</string>
+    <string name="quick_block_buttons_description">Butoane rotunde pentru acțiunile pe care le folosești cel mai mult sau cele oferite de aplicația de redare.</string>
+    <string name="quick_block_upnext_description">Următoarea piesă. Atingeți-l pentru a deschide coada.</string>
+    <string name="quick_block_volume_description">Coborâți și ridicați volumul fără a părăsi panoul.</string>
+    <string name="quick_block_seek_description">Unde vă aflați pe pistă și butoane care sar înainte și înainte.</string>
+    <string name="quick_block_tools_description">Comenzi rapide mici: viteza de redare, versuri, coada și multe altele.</string>
+    <string name="quick_block_favorites_description">Acțiunile pe care le-ați marcat cu stea în fila Acțiuni, ca coperți sau rânduri.</string>
+    <string name="quick_block_actions_description">Fiecare acțiune din meniul ceasului tău, ca rânduri în panou sau ca un singur buton care deschide meniul.</string>
+    <string name="quick_summary_header">Titlu și artist</string>
+    <string name="quick_summary_buttons_session">Din aplicația care redă</string>
+    <string name="quick_summary_buttons_empty">Niciun buton ales</string>
+    <string name="quick_summary_upnext">Următoarea piesă · deschide coada</string>
+    <string name="quick_summary_volume">Pași de volum de %1$d%%</string>
+    <string name="quick_summary_seek">%1$s secunde</string>
+    <string name="quick_summary_seek_bar">%1$s secunde · timp și bară</string>
+    <string name="quick_summary_favorites_none">Nici unul cu stea încă</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d cu stea · %2$s</item>
+        <item quantity="other">%1$d marcat cu stea · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Toate acțiunile %1$d</string>
+    <string name="quick_summary_actions_first">Primele acțiuni %1$d</string>
+    <string name="quick_summary_actions_button">Un singur buton · deschide meniul de acțiuni</string>
+    <string name="quick_summary_only_playing">doar în timpul redării</string>
+    <string name="quick_summary_only_not_playing">doar fără redare</string>
+    <string name="quick_mode_grid">Grilă</string>
+    <string name="quick_mode_rows">Rânduri</string>
+    <string name="quick_mode_actions_list">Listă</string>
+    <string name="quick_mode_actions_button">Buton</string>
+    <string name="quick_sheet_show">Arată</string>
+    <string name="quick_sheet_always">Întotdeauna</string>
+    <string name="quick_sheet_while_playing">doar în timpul redării</string>
+    <string name="quick_sheet_while_not_playing">doar fără redare</string>
+    <string name="quick_sheet_step">Pasul</string>
+    <string name="quick_sheet_jump">Salt cu</string>
+    <string name="quick_sheet_seek_bar">Afișează timpul și bara de progres</string>
+    <string name="quick_sheet_tools">Instrumente</string>
+    <string name="quick_sheet_layout">Aspect</string>
+    <string name="quick_sheet_how_many">Câte</string>
+    <string name="quick_sheet_all">Toate</string>
+    <string name="quick_sheet_buttons_source">de la</string>
+    <string name="quick_sheet_source_configured">Alegerile mele</string>
+    <string name="quick_sheet_source_session">Aplicația care redă</string>
+    <string name="quick_sheet_buttons_hint">Atingeți un buton pentru a-i alege acțiunea. Țineți apăsat pentru a restabili valoarea implicită.</string>
+    <string name="quick_sheet_favorites_hint">Stare acțiuni cu fulgerul din fila Acțiuni. Aici apar doar cele marcate cu stea.</string>
+    <string name="quick_sheet_actions_mode">Afișați ca</string>
+    <string name="quick_sheet_actions_hint">O listă plasează fiecare acțiune pe panou ca un rând. Un buton menține panoul scurt: un buton care deschide meniul complet. Pentru a părăsi meniul complet din panou, eliminați acest bloc.</string>
+    <string name="quick_sheet_remove">Eliminați acest bloc</string>
+    <string name="quick_sheet_done">Terminat</string>
+    <string name="quick_tool_speed">Viteză</string>
+    <string name="quick_tool_sleep">Temporizator</string>
+    <string name="quick_tool_lyrics">Versuri</string>
+    <string name="quick_tool_queue">Coadă</string>
+    <string name="quick_tool_volume">Volum</string>
+    <string name="quick_tool_progress">Progres</string>
+    <string name="quick_tool_faces">Cadrane</string>
+    <string name="quick_tool_search">Căutare</string>
+    <string name="quick_tool_menu">Meniu</string>
+    <string name="setting_wear_hide_from_recents">Ascundeți din aplicațiile recente</string>
+    <string name="setting_wear_hide_from_recents_description">Menține aplicația ceas departe de lista de aplicații recente a ceasului după ce o închideți sau utilizați o altă aplicație. Util dacă îl deschideți de pe cadranul ceasului sau din bara Now. Rămâne accesibil exact ca înainte, iar muzica și conexiunea de fundal nu sunt afectate.</string>
+    <string name="setting_streaming_app_routes">Alegeți aplicații pentru legăturile de streaming</string>
+    <string name="setting_streaming_app_routes_description">Alegeți separat o aplicație instalată compatibilă pentru YouTube Music, Spotify și fiecare alt serviciu. Folosit cu „Aplicația de streaming detectată”.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">Serviciul %1$d utilizează o aplicație selectată</item>
+        <item quantity="other">Serviciile %1$d folosesc aplicațiile selectate</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Sunt afișate aplicațiile care pot deschide legătura, plus playerele media instalate.</string>
+    <string name="streaming_route_automatic">Automat (aplicație detectată)</string>
 </resources>

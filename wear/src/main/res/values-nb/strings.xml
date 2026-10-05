@@ -38,7 +38,7 @@
 
     <string name="no_phone">Ingen telefon tilkoblet</string>
     <string name="phone_unavailable">Lås opp telefonen for å styre avspillingen</string>
-    <string name="playback_stopped">Stoppet</string>
+    <string name="playback_stopped">Pauset</string>
     <string name="error">FEIL</string>
     <string name="error_play_services">Feil i Play Services</string>
     <string name="button">Knapp</string>
@@ -215,4 +215,23 @@ Tilpass alt under Kontroller og Klokke på telefonen</string>
     <string name="progress_screen_cancel_seek">Avbryt søking</string>
     <string name="progress_screen_skip_back">Hopp tilbake %1$d sekunder</string>
     <string name="progress_screen_skip_forward">Hopp frem %1$d sekunder</string>
+    <string name="quick_block_all_actions">Alle handlinger</string>
+    <string name="quick_block_favorites">Favoritter</string>
+    <string name="quick_tool_speed">Fart</string>
+    <string name="quick_tool_lyrics">Tekster</string>
+    <string name="quick_tool_queue">Kø</string>
+    <string name="quick_tool_volume">Lydstyrke</string>
+    <string name="quick_tool_progress">Fremgang</string>
+    <string name="quick_tool_faces">Urskiver</string>
+    <string name="quick_tool_search">Søk</string>
+    <string name="quick_tool_menu">Meny</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Lydstyrke %1$d%%</string>
+    <string name="quick_seek_back_description">Tilbake %1$d sekunder</string>
+    <string name="quick_seek_forward_description">Frem %1$d sekunder</string>
+    <string name="quick_speed_description">Avspillingshastighet %1$s</string>
+    <string name="quick_tool_sleep">Sovetimer</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Sovetimer, %1$d minutter igjen. Trykk for å endre</string>
+    <string name="quick_sleep_off_description">Sovetimer av. Trykk for å angi</string>
 </resources>

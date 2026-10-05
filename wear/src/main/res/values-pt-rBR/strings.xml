@@ -37,7 +37,7 @@
 
     <string name="no_phone">Nenhum celular conectado</string>
     <string name="phone_unavailable">Desbloqueie o celular para controlar a reprodução</string>
-    <string name="playback_stopped">Parado</string>
+    <string name="playback_stopped">Pausado</string>
     <string name="error">ERRO</string>
     <string name="error_play_services">Erro no Play Services</string>
     <string name="button">Botão</string>
@@ -60,7 +60,7 @@
     <string name="quick_tool_queue">Fila</string>
     <string name="quick_tool_volume">Volume</string>
     <string name="quick_tool_progress">Progresso</string>
-    <string name="quick_tool_faces">Mostrador</string>
+    <string name="quick_tool_faces">Mostradores</string>
     <string name="quick_tool_search">Buscar</string>
     <string name="quick_tool_menu">Menu</string>
     <string name="quick_volume_percent">%1$d%%</string>
@@ -68,7 +68,7 @@
     <string name="quick_seek_back_description">Voltar %1$d segundos</string>
     <string name="quick_seek_forward_description">Avançar %1$d segundos</string>
     <string name="quick_speed_description">Velocidade de reprodução %1$s</string>
-    <string name="quick_tool_sleep">Dormir</string>
+    <string name="quick_tool_sleep">Temporizador</string>
     <string name="quick_sleep_minutes">%1$d min</string>
     <string name="quick_sleep_description">Temporizador de sono, %1$d minutos restantes. Toque para mudar</string>
     <string name="quick_sleep_off_description">Temporizador de sono desligado. Toque para definir</string>
@@ -91,9 +91,9 @@
 
     <string name="hint_title">Como usar</string>
     <string name="hint_edges">Toque em cima, baixo, esquerda ou direita — cada zona executa sua ação atribuída</string>
-    <string name="hint_center">Centro — play/pause\n2 toques — ações rápidas\nToque longo — seletor de mostrador (configurável)</string>
+    <string name="hint_center">Centro — Reproduzir / Pausar\n2 toques — ações rápidas\nToque longo — seletor de mostrador (configurável)</string>
     <string name="hint_swipe_up">Para cima — menu de ações\nPara baixo ou esquerda — ações atribuídas\nDa borda para a direita — sair</string>
-    <string name="hint_crown">Coroa — volume ou posição\nBotões laterais — ações atribuídas\nPersonalize tudo em Controles e Watch no celular</string>
+    <string name="hint_crown">Coroa — volume ou posição\nBotões laterais — ações atribuídas\nPersonalize tudo em Controles e Relógio no celular</string>
     <string name="hint_next">Próximo</string>
     <string name="hint_dismiss">Concluir</string>
 
@@ -184,7 +184,7 @@
     <string name="metadata_url">URL</string>
     <string name="metadata_about">Sobre</string>
     <string name="metadata_source">Reproduzindo em</string>
-    <string name="face_picker_section_builtin">Faces integradas</string>
+    <string name="face_picker_section_builtin">Mostradores integrados</string>
     <string name="face_picker_section_custom">Meus temas</string>
     <string name="face_picker_custom_base">Baseado em %1$s</string>
     <string name="face_name_classic" translatable="false">Classic</string>

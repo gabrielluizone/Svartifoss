@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Drawer support section, `github` (sideload) flavor: links out to Buy Me a Coffee and Ko-fi.
+  The `play` flavor supplies a different file of the same name that offers a tip through Google
+  Play Billing instead, because Google Play's Payments policy forbids a button that leads to any
+  other way of paying. Both are included from main's nav_header_main.xml.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_support_section"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/drawer_support_heading"
+        android:textSize="11sp"
+        android:letterSpacing="0.08"
+        android:textAllCaps="true"
+        android:textColor="@color/lyra_accent"
+        android:fontFamily="@font/google_sans"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/drawer_support_summary"
+        android:textSize="13sp"
+        android:textColor="@color/lyra_text_secondary"
+        android:lineSpacingMultiplier="1.25"
+        android:fontFamily="@font/google_sans" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/drawer_support_button"
+        style="@style/LyraGestureButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="@string/drawer_support_button"
+        app:icon="@drawable/ic_buy_me_a_coffee" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/drawer_kofi_button"
+        style="@style/LyraGestureButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/drawer_kofi_button"
+        app:icon="@drawable/ic_kofi" />
+
+</LinearLayout>

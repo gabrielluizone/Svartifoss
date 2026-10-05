@@ -38,7 +38,7 @@
 
     <string name="no_phone">Telefon nije povezan</string>
     <string name="phone_unavailable">Otključajte telefon za upravljanje reprodukcijom</string>
-    <string name="playback_stopped">Zaustavljeno</string>
+    <string name="playback_stopped">Pauzirano</string>
     <string name="error">POGREŠKA</string>
     <string name="error_play_services">Pogreška Google Play usluga</string>
     <string name="button">Gumb</string>
@@ -209,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Otkaži traženje</string>
     <string name="progress_screen_skip_back">Preskoči unatrag %1$d sekundi</string>
     <string name="progress_screen_skip_forward">Preskoči unaprijed %1$d sekundi</string>
+    <string name="quick_block_all_actions">Sve akcije</string>
+    <string name="quick_block_favorites">Favoriti</string>
+    <string name="quick_tool_speed">Brzina</string>
+    <string name="quick_tool_lyrics">Tekstovi pjesama</string>
+    <string name="quick_tool_queue">Red</string>
+    <string name="quick_tool_volume">Glasnoća</string>
+    <string name="quick_tool_progress">Napredak</string>
+    <string name="quick_tool_faces">Brojčanici</string>
+    <string name="quick_tool_search">Traži</string>
+    <string name="quick_tool_menu">Izbornik</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Glasnoća %1$d%%</string>
+    <string name="quick_seek_back_description">Natrag %1$d sekundi</string>
+    <string name="quick_seek_forward_description">naprijed %1$d sekundi</string>
+    <string name="quick_speed_description">Brzina reprodukcije %1$s</string>
+    <string name="quick_tool_sleep">Mjerač vremena</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Mjerač vremena za isključivanje, još %1$d minuta. Dodirnite za promjenu</string>
+    <string name="quick_sleep_off_description">Mjerač vremena za spavanje isključen. Dodirnite za postavljanje</string>
 </resources>

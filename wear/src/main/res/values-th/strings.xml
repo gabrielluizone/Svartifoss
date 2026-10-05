@@ -38,7 +38,7 @@
 
     <string name="no_phone">ไม่ได้เชื่อมต่อโทรศัพท์</string>
     <string name="phone_unavailable">ปลดล็อกโทรศัพท์เพื่อควบคุมการเล่น</string>
-    <string name="playback_stopped">หยุดแล้ว</string>
+    <string name="playback_stopped">หยุดชั่วคราว</string>
     <string name="error">ข้อผิดพลาด</string>
     <string name="error_play_services">ข้อผิดพลาดของบริการ Google Play</string>
     <string name="button">ปุ่ม</string>
@@ -209,4 +209,23 @@
     <string name="progress_screen_cancel_seek">ยกเลิกการเลื่อนไปยังตำแหน่ง</string>
     <string name="progress_screen_skip_back">ข้ามย้อนกลับ %1$d วินาที</string>
     <string name="progress_screen_skip_forward">ข้ามไปข้างหน้า %1$d วินาที</string>
+    <string name="quick_block_all_actions">การกระทำทั้งหมด</string>
+    <string name="quick_block_favorites">รายการโปรด</string>
+    <string name="quick_tool_speed">ความเร็ว</string>
+    <string name="quick_tool_lyrics">เนื้อเพลง</string>
+    <string name="quick_tool_queue">คิว</string>
+    <string name="quick_tool_volume">ระดับเสียง</string>
+    <string name="quick_tool_progress">ความคืบหน้า</string>
+    <string name="quick_tool_faces">หน้าปัด</string>
+    <string name="quick_tool_search">ค้นหา</string>
+    <string name="quick_tool_menu">เมนู</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">ระดับเสียง %1$d%%</string>
+    <string name="quick_seek_back_description">กลับ %1$d วินาที</string>
+    <string name="quick_seek_forward_description">ไปข้างหน้า %1$d วินาที</string>
+    <string name="quick_speed_description">ความเร็วในการเล่น %1$s</string>
+    <string name="quick_tool_sleep">ตั้งเวลาปิดเครื่อง</string>
+    <string name="quick_sleep_minutes">%1$d นาที</string>
+    <string name="quick_sleep_description">ตั้งเวลาปิดเครื่อง เหลือเวลา %1$d นาที แตะเพื่อเปลี่ยน</string>
+    <string name="quick_sleep_off_description">ปิดตัวจับเวลาสลีปแล้ว แตะเพื่อตั้งค่า</string>
 </resources>

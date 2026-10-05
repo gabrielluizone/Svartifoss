@@ -267,7 +267,7 @@
     <string name="preview_sample_lyric_current">De regel die nu speelt</string>
     <string name="preview_sample_lyric_next">De volgende regel</string>
     <string name="preview_sample_next_title">Volgend nummer</string>
-    <string name="preview_playback_stopped">Gestopt</string>
+    <string name="preview_playback_stopped">Gepauzeerd</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -716,9 +716,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Achtergrond Volgende-pil</string>
-    <string name="setting_wear_show_up_next_pill">Volgende-pil op speler</string>
-    <string name="setting_wear_show_up_next_pill_description">Toon een Volgende-pil onderaan het nu-afspelend-scherm. Deze vult de ruimte die de miniknoppenrij zou innemen, dus verschijnt alleen wanneer die rij niet wordt getoond.</string>
+    <string name="setting_wear_up_next_pill">Achtergrond Volgende-capsule</string>
+    <string name="setting_wear_show_up_next_pill">Volgende-capsule op speler</string>
+    <string name="setting_wear_show_up_next_pill_description">Toon een Volgende-capsule onderaan het nu-afspelend-scherm. Deze vult de ruimte die de miniknoppenrij zou innemen, dus verschijnt alleen wanneer die rij niet wordt getoond.</string>
     <string name="category_wf_clock">Klok</string>
     <string name="setting_wear_clock_color">Klokkleur</string>
     <string name="setting_wear_clock_custom_color">Aangepaste klokkleur</string>
@@ -734,7 +734,7 @@
     <string name="setting_wear_aod_show_progress">Voortgangsring op altijd-aan-scherm</string>
     <string name="setting_wear_aod_show_progress_description">Toon de voortgangsring rond de afspeelknop in ambient-modus — de positie wordt daar slechts ongeveer eens per minuut vernieuwd</string>
     <string name="setting_wear_aod_show_pills">Volgende op altijd-aan-scherm</string>
-    <string name="setting_wear_aod_show_pills_description">Toon een statische, omlijnde Volgende-pil onderaan de visuele altijd-aan-stijlen</string>
+    <string name="setting_wear_aod_show_pills_description">Toon een statische, omlijnde Volgende-capsule onderaan de visuele altijd-aan-stijlen</string>
     <string name="category_wf_gestures">Schermgebaren</string>
     <string name="setting_wear_mini_buttons_mode">Miniknoppen tonen</string>
     <string name="setting_wear_gestures_mode">Schermgebaren</string>
@@ -790,7 +790,7 @@
     <string name="preview_notification_controls">Pictogram uit mediamelding</string>
     <string name="setting_wear_queue_style">Wachtrijstijl</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Snelkoppelingshoezen gebruiken als achtergrond</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Wanneer de Wachtrijstijl een Hoes-variant is, vult een actierij van het snelpaneel met een opgehaalde snelkoppelingshoes (nummer, afspeellijst, artiest…) ook zijn pil met die afbeelding, zoals Volgende doet. Snelkoppelingen zonder opgehaalde hoes (alleen een app-pictogram) worden niet beïnvloed.</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Wanneer de Wachtrijstijl een Hoes-variant is, vult een actierij van het snelpaneel met een opgehaalde snelkoppelingshoes (nummer, afspeellijst, artiest…) ook zijn capsule met die afbeelding, zoals Volgende doet. Snelkoppelingen zonder opgehaalde hoes (alleen een app-pictogram) worden niet beïnvloed.</string>
     <string name="setting_wear_list_row_size">Formaat lijstpil</string>
     <string name="setting_wear_list_row_size_description">Hoogte van de rijen over de volledige breedte in de wachtrij, menu\'s en snelpaneel.</string>
     <string name="setting_wear_progress_style">Stijl voortgangsring</string>
@@ -1366,9 +1366,6 @@
     <string name="drawer_sync_heading">Synchronisatie</string>
     <string name="drawer_sync_summary">Horloge-instellingen worden hier op de telefoon geconfigureerd en automatisch gesynchroniseerd met je gekoppelde horloge.</string>
     <string name="drawer_support_heading">Ondersteuning</string>
-    <string name="drawer_support_summary">Svartifoss is gratis en open source — trakteer me op een koffie als het nuttig voor je is :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Hoes downloaden</string>
     <string name="album_art_saved">Hoes opgeslagen in galerij</string>
     <string name="album_art_save_error">Kon hoes niet opslaan</string>
@@ -2833,4 +2830,99 @@
     <string name="setting_online_artwork_description">Laat de wijzerplaat een online opgezochte afbeelding tonen \u2014 de uitvoerende artiest of een albumhoes wanneer een speler er geen publiceert. Je telefoon zoekt in de openbare catalogus van Deezer en bewaart het resultaat in de cache; alleen de naam van het nummer en de artiest worden verzonden en er wordt niets opgezocht tenzij een wijzerplaat op een van die bronnen is ingesteld. Uitgeschakeld wordt de eigen hoesafbeelding van de speler gebruikt.</string>
     <string name="setting_wear_shortcut_details">Afspelen of shuffle op het horloge</string>
     <string name="setting_wear_shortcut_details_description">Als je op het horloge een opgeslagen link kiest, uit de lijst met snelkoppelingen, de Snelkoppelingen-Tile of het actiemenu, zie je eerst de cover met Afspelen en Shuffle. Zet uit om meteen te starten. Knoppen en gebaren die aan één link zijn toegewezen, starten die altijd meteen.</string>
+    <string name="actions_quick_pin_add">Toon in snelpaneel</string>
+    <string name="actions_quick_pin_remove">Verwijderen uit snelpaneel</string>
+    <string name="quick_panel_editor_title">Paneel Snelle acties</string>
+    <string name="quick_panel_editor_open">Paneelinhoud bewerken</string>
+    <string name="quick_panel_editor_intro">Bouw het paneel dat opengaat als je dubbeltikt op het midden van het horloge. Houd een blok vast en sleep het om het te verplaatsen. Tik op een blok om het aan te passen.</string>
+    <string name="quick_panel_editor_add_block">Blok toevoegen</string>
+    <string name="quick_panel_editor_restore">Herstel het originele paneel</string>
+    <string name="quick_panel_editor_restore_title">Het originele paneel herstellen?</string>
+    <string name="quick_panel_editor_restore_message">Uw arrangement wordt verwijderd en het paneel wordt teruggezet naar hoe het was. Uw knopkeuzes en de acties waaraan u een ster heeft toegevoegd, blijven behouden.</string>
+    <string name="quick_panel_editor_restore_confirm">Herstellen</string>
+    <string name="quick_panel_editor_fold">Einde van het eerste scherm (bij benadering)</string>
+    <string name="quick_panel_editor_last_block">Een paneel heeft minimaal één blok nodig</string>
+    <string name="quick_panel_editor_removed">%1$s verwijderd</string>
+    <string name="quick_panel_editor_undo">Ongedaan maken</string>
+    <string name="quick_panel_editor_move_up">Omhoog</string>
+    <string name="quick_panel_editor_move_down">Omlaag</string>
+    <string name="quick_panel_editor_more">Meer opties</string>
+    <string name="quick_panel_editor_nothing_to_add">Elk blok staat al op het paneel</string>
+    <string name="quick_block_header">Track</string>
+    <string name="quick_block_buttons">Ronde knoppen</string>
+    <string name="quick_block_upnext">Volgende nummer</string>
+    <string name="quick_block_volume">Volume</string>
+    <string name="quick_block_seek">Overslaan en positie</string>
+    <string name="quick_block_tools">Gereedschappen</string>
+    <string name="quick_block_favorites">Favorieten</string>
+    <string name="quick_block_actions">Alle acties</string>
+    <string name="quick_block_all_actions">Alle acties</string>
+    <string name="quick_block_header_description">De titel en artiest van wat er wordt afgespeeld.</string>
+    <string name="quick_block_buttons_description">Ronde knoppen voor de acties die je het meest gebruikt, of de acties die de afspeelapp aanbiedt.</string>
+    <string name="quick_block_upnext_description">Het volgende nummer. Tik erop om de wachtrij te openen.</string>
+    <string name="quick_block_volume_description">Verlaag en verhoog het volume zonder het paneel te verlaten.</string>
+    <string name="quick_block_seek_description">Waar je je bevindt in de track, en knoppen die heen en weer springen.</string>
+    <string name="quick_block_tools_description">Kleine snelkoppelingen: afspeelsnelheid, songteksten, de wachtrij en meer.</string>
+    <string name="quick_block_favorites_description">De acties die je op het tabblad Acties met een ster hebt gemarkeerd, als omslagen of rijen.</string>
+    <string name="quick_block_actions_description">Elke actie van je horlogemenu, als rijen in het paneel of als één knop waarmee je het menu opent.</string>
+    <string name="quick_summary_header">Titel en artiest</string>
+    <string name="quick_summary_buttons_session">Vanuit de app die afspeelt</string>
+    <string name="quick_summary_buttons_empty">Geen knoppen gekozen</string>
+    <string name="quick_summary_upnext">Volgend nummer · opent de wachtrij</string>
+    <string name="quick_summary_volume">Volumestappen van %1$d%%</string>
+    <string name="quick_summary_seek">%1$s seconden</string>
+    <string name="quick_summary_seek_bar">%1$s seconden · tijd en balk</string>
+    <string name="quick_summary_favorites_none">Nog geen ster</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d met ster · %2$s</item>
+        <item quantity="other">%1$d met ster · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Alle %1$d acties</string>
+    <string name="quick_summary_actions_first">Eerste %1$d acties</string>
+    <string name="quick_summary_actions_button">Eén knop · opent het actiemenu</string>
+    <string name="quick_summary_only_playing">alleen tijdens het afspelen</string>
+    <string name="quick_summary_only_not_playing">alleen zonder afspelen</string>
+    <string name="quick_mode_grid">Raster</string>
+    <string name="quick_mode_rows">Rijen</string>
+    <string name="quick_mode_actions_list">Lijst</string>
+    <string name="quick_mode_actions_button">Knop</string>
+    <string name="quick_sheet_show">Toon</string>
+    <string name="quick_sheet_always">Altijd</string>
+    <string name="quick_sheet_while_playing">alleen tijdens het afspelen</string>
+    <string name="quick_sheet_while_not_playing">alleen zonder afspelen</string>
+    <string name="quick_sheet_step">Stap</string>
+    <string name="quick_sheet_jump">Springen met</string>
+    <string name="quick_sheet_seek_bar">Toon tijd- en voortgangsbalk</string>
+    <string name="quick_sheet_tools">Gereedschappen</string>
+    <string name="quick_sheet_layout">Indeling</string>
+    <string name="quick_sheet_how_many">Hoeveel</string>
+    <string name="quick_sheet_all">Alle</string>
+    <string name="quick_sheet_buttons_source">Knoppen van</string>
+    <string name="quick_sheet_source_configured">Mijn keuzes</string>
+    <string name="quick_sheet_source_session">De afspeelapp</string>
+    <string name="quick_sheet_buttons_hint">Tik op een knop om de actie ervan te kiezen. Houd ingedrukt om de standaardinstelling te herstellen.</string>
+    <string name="quick_sheet_favorites_hint">Steracties met de bliksemschicht op het tabblad Acties. Alleen degenen met een ster verschijnen hier.</string>
+    <string name="quick_sheet_actions_mode">Tonen als</string>
+    <string name="quick_sheet_actions_hint">Een lijst zet elke actie op een rij op het paneel. Een knop houdt het paneel kort: één knop die het volledige menu opent. Om het menu helemaal uit het paneel te verwijderen, verwijdert u dit blok.</string>
+    <string name="quick_sheet_remove">Verwijder dit blok</string>
+    <string name="quick_sheet_done">Klaar</string>
+    <string name="quick_tool_speed">Snelheid</string>
+    <string name="quick_tool_sleep">Slaaptimer</string>
+    <string name="quick_tool_lyrics">Songteksten</string>
+    <string name="quick_tool_queue">Wachtrij</string>
+    <string name="quick_tool_volume">Volume</string>
+    <string name="quick_tool_progress">Voortgang</string>
+    <string name="quick_tool_faces">Wijzerplaten</string>
+    <string name="quick_tool_search">Zoeken</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="setting_wear_hide_from_recents">Verbergen in recente apps</string>
+    <string name="setting_wear_hide_from_recents_description">Houdt de horloge-app uit de lijst met recente apps van het horloge zodra u deze sluit of een andere app gebruikt. Handig als u het in plaats daarvan opent via de wijzerplaat of de Nu-balk. Het blijft precies zoals voorheen bereikbaar en de muziek en de achtergrondverbinding worden niet beïnvloed.</string>
+    <string name="setting_streaming_app_routes">Kies apps voor streaming links</string>
+    <string name="setting_streaming_app_routes_description">Kies apart een compatibele geïnstalleerde app voor YouTube Music, Spotify en elke andere dienst. Gebruikt met “Gedetecteerde streaming-app”.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d service maakt gebruik van een geselecteerde app</item>
+        <item quantity="other">%1$d services gebruiken geselecteerde apps</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Apps die de link kunnen openen, plus geïnstalleerde mediaspelers, worden getoond.</string>
+    <string name="streaming_route_automatic">Automatisch (gedetecteerde app)</string>
 </resources>

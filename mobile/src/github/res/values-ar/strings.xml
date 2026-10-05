@@ -9,4 +9,7 @@ Svartifoss غير متوفر على Play Store — ويتم تثبيت تطبي�
     <string name="no_watch_app_button">عرض الإصدارات</string>
     <string name="update_watch_hint">يقوم “تحديث الساعة” بتنزيل تطبيق الساعة الجديد وإرساله عبر Bluetooth — تؤكد التثبيت على الساعة نفسها، من دون كابل أو Wear Installer.</string>
     <string name="update_no_wear_asset">لا يحتوي هذا الإصدار على APK للساعة لإرساله.</string>
+    <string name="drawer_support_summary">Svartifoss مجاني ومفتوح المصدر — اشترِ لي قهوة إذا كان مفيدًا لك :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

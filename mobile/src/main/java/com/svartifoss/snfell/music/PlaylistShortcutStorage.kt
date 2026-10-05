@@ -16,13 +16,26 @@ import org.json.JSONObject
 import timber.log.Timber
 
 /** One user-defined streaming shortcut shown on the watch: display name + link to open. */
-data class PlaylistShortcut(val name: String, val link: String)
+data class PlaylistShortcut(
+        val name: String,
+        val link: String,
+        /** Optional public preview details, kept with the shortcut rather than re-requested. */
+        val publicMetadata: PublicLinkMetadata? = null,
+        /** A failed/missing public answer is cached as well, so opening this screen does not retry
+         * every unsupported link on every resume. The reload-covers button is the explicit retry. */
+        val metadataChecked: Boolean = false
+)
 
 /**
  * What the watch's shortcut screen says about a destination beyond its name: the service and kind
  * line, and whether Shuffle sits beside Play. See [PlaylistShortcutStorage.describeForWatch].
  */
-data class StreamingShortcutDescription(val subtitle: String, val shuffleable: Boolean)
+data class StreamingShortcutDescription(
+        val subtitle: String,
+        val shuffleable: Boolean,
+        val creator: String? = null,
+        val description: String? = null
+)
 
 /**
  * Persists streaming shortcuts as a JSON array in the default SharedPreferences. Configured
@@ -44,6 +57,13 @@ object PlaylistShortcutStorage {
                 val name = entry.optString("name")
                 val link = entry.optString("link")
                 if (name.isBlank() || link.isBlank()) null else PlaylistShortcut(name, link)
+                        .copy(
+                                publicMetadata = PublicLinkMetadata(
+                                        creator = entry.optString("creator").takeIf(String::isNotBlank),
+                                        description = entry.optString("description")
+                                                .takeIf(String::isNotBlank)
+                                ).takeIf { it.hasDetails },
+                                metadataChecked = entry.optBoolean("metadata_checked", false))
             }
         } catch (e: JSONException) {
             emptyList()
@@ -102,18 +122,30 @@ object PlaylistShortcutStorage {
      * actions menu that start one destination, so the two cannot describe the same playlist
      * differently - or disagree about whether it can be shuffled.
      */
-    fun describeForWatch(context: Context, name: String, link: String): StreamingShortcutDescription =
-            StreamingShortcutDescription(
-                    subtitle = describe(context, PlaylistShortcut(name, link), includeShuffleBadge = false),
-                    shuffleable = StreamingShortcutLinks.detectContentType(link).offersShuffle)
+    fun describeForWatch(context: Context, name: String, link: String): StreamingShortcutDescription {
+        // A parameterised action retains only name and link, whereas the saved library owns the
+        // cached public details. Match by the launch link so an already-assigned button or quick
+        // panel row gains the details on its next config sync without changing its action bundle.
+        val metadata = load(context).firstOrNull { it.link == link }?.publicMetadata
+        return StreamingShortcutDescription(
+                subtitle = describe(context, PlaylistShortcut(name, link), includeShuffleBadge = false),
+                shuffleable = StreamingShortcutLinks.detectContentType(link).offersShuffle,
+                creator = metadata?.creator,
+                description = metadata?.description)
+    }
 
     fun save(context: Context, shortcuts: List<PlaylistShortcut>) {
         val array = JSONArray()
         for (shortcut in shortcuts) {
             array.put(
-                    JSONObject()
+                JSONObject()
                             .put("name", shortcut.name)
                             .put("link", shortcut.link)
+                            .apply {
+                                shortcut.publicMetadata?.creator?.let { put("creator", it) }
+                                shortcut.publicMetadata?.description?.let { put("description", it) }
+                                if (shortcut.metadataChecked) put("metadata_checked", true)
+                            }
             )
         }
 
@@ -168,6 +200,10 @@ object PlaylistShortcutStorage {
                         .setEntryId(entryId)
                         .setEntryTitle(shortcut.name)
                         .setEntrySubtitle(description.subtitle)
+                        .apply {
+                            description.creator?.let { entryCreator = it }
+                            description.description?.let { entryDescription = it }
+                        }
                         // Sent for every entry, false included: its presence is what tells the
                         // watch this phone understands a play mode at all.
                         .setShuffleable(description.shuffleable)

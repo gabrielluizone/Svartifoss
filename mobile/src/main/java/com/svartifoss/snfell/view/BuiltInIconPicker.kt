@@ -1,8 +1,12 @@
 package com.svartifoss.snfell.view
 
 import android.app.Activity
+import android.content.Context
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Handler
+import android.os.Looper
+import android.os.SystemClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,7 +23,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.svartifoss.snfell.R
 import com.matejdro.wearutils.miscutils.BitmapUtils
+import com.svartifoss.snfell.music.StreamingShortcutRoutes
 import java.text.Normalizer
+import java.util.concurrent.Executors
+import timber.log.Timber
 
 /**
  * "Change icon" first stop: a searchable grid of the app's own glyphs to pick from, with a
@@ -317,21 +324,24 @@ object BuiltInIconPicker {
         val showArchived = PreferenceManager.getDefaultSharedPreferences(activity)
                 .getBoolean("dev_show_archived", false)
         val available = if (showArchived) BUILT_IN_ICONS + ARCHIVED_ICONS else BUILT_IN_ICONS
-        val entries = available.map { resId -> IconEntry(resId, iconLabel(activity, resId)) }
+        val builtIn = available.map { resId -> ResourceIconEntry(resId, iconLabel(activity, resId)) }
+        // The installed streaming apps are not here yet, and the dialog does not wait for them:
+        // finding them takes a second or more (see StreamingAppCatalog), and it used to be done
+        // right here, so the picker froze before it appeared. They are appended when they arrive.
+        var entries: List<IconEntry> = builtIn
 
         lateinit var dialog: AlertDialog
 
         fun pick(entry: IconEntry) {
-            val drawable = AppCompatResources.getDrawable(activity, entry.resId) ?: return
+            val drawable = entry.drawable(activity) ?: return
             // The grid applies a runtime tint, but BitmapUtils rasterizes the drawable's raw path
             // colours. Several legacy picker resources are authored black, so they looked correct
             // here and were then saved as an almost invisible black custom icon on the watch.
             // Persist built-ins as monochrome white templates; every watch surface can then apply
             // the correct contrast tint.
-            drawable.mutate().setTint(android.graphics.Color.WHITE)
+            if (entry.tintable) drawable.mutate().setTint(android.graphics.Color.WHITE)
             val bitmap = BitmapUtils.getBitmap(drawable) ?: return
-            val uri = Uri.parse("android.resource://${activity.packageName}/drawable/" +
-                    activity.resources.getResourceEntryName(entry.resId))
+            val uri = entry.uri(activity)
             dialog.dismiss()
             onIconPicked(uri, bitmap)
         }
@@ -363,7 +373,7 @@ object BuiltInIconPicker {
                 entries
             } else {
                 val needle = normalizeForSearch(query)
-                entries.filter { normalizeForSearch(it.label).contains(needle) }
+                entries.filter { it.searchKey.contains(needle) }
             }
             adapter.submit(filtered)
             emptyView.isVisible = filtered.isEmpty()
@@ -382,6 +392,13 @@ object BuiltInIconPicker {
         // Also reaches searchInput's cursor/selection handles, which a setView() dialog's shell
         // never styles - see LyraDialogStyling's own comment on why that walk is needed.
         dialog.applyLyraDialogStyling(accent)
+
+        StreamingAppCatalog.load(activity) { apps ->
+            if (apps.isEmpty() || !dialog.isShowing) return@load
+            entries = builtIn + apps
+            // Whatever was typed while they were being found is applied to them too.
+            applyFilter(searchInput.text?.toString().orEmpty())
+        }
     }
 
     /** Accent/case-insensitive comparison so "assao"/"ação" and "Colors"/"colors" match the same
@@ -389,10 +406,134 @@ object BuiltInIconPicker {
      *  diacritics. */
     private fun normalizeForSearch(text: String): String {
         val decomposed = Normalizer.normalize(text, Normalizer.Form.NFD)
-        return decomposed.replace(Regex("\\p{Mn}+"), "").lowercase()
+        return decomposed.replace(COMBINING_MARKS, "").lowercase()
     }
 
-    private data class IconEntry(val resId: Int, val label: String)
+    /** Built once: it used to be compiled again for every row on every keystroke. */
+    private val COMBINING_MARKS = Regex("\\p{Mn}+")
+
+    /**
+     * Finds the installed streaming apps **off the main thread**, once in a while.
+     *
+     * Deciding which installed apps can open a streaming service's links is a package-targeted
+     * query for every candidate against every service (`StreamingShortcutRoutes
+     * .availableStreamingApps`) - a thousand binder calls on a phone with sixty launcher apps, far
+     * more on a fuller one - and then a launcher icon has to be built for each app found. Done in
+     * `show()` that held the main thread for seconds, so tapping "change icon" appeared to hang
+     * before the dialog drew at all. Now the dialog opens with the built-in icons at once and the
+     * apps are appended to the end of the grid when they are ready, which is also where they were
+     * always listed, so nothing the user is looking at moves.
+     *
+     * The answer is kept for [FRESH_MS]: reopening the picker, which is how someone browses it,
+     * is then immediate. A request made while one is running joins it instead of starting another.
+     * Short, because installing an app and then looking for its icon is the one case where the
+     * list must not be stale.
+     */
+    private object StreamingAppCatalog {
+        private const val FRESH_MS = 60_000L
+
+        private val mainThread = Handler(Looper.getMainLooper())
+        private val worker = Executors.newSingleThreadExecutor { task ->
+            Thread(task, "icon-picker-streaming-apps").apply {
+                isDaemon = true
+                priority = Thread.MIN_PRIORITY
+            }
+        }
+
+        private var apps: List<AppIconEntry>? = null
+        private var foundAt = 0L
+        private var running = false
+        private val waiting = ArrayList<(List<AppIconEntry>) -> Unit>()
+
+        /** Calls [onReady] on the main thread - at once when the answer is still fresh. */
+        fun load(context: Context, onReady: (List<AppIconEntry>) -> Unit) {
+            val appContext = context.applicationContext
+            val fresh = synchronized(this) {
+                apps?.takeIf { SystemClock.elapsedRealtime() - foundAt < FRESH_MS }
+                        ?: run {
+                            waiting += onReady
+                            if (running) return
+                            running = true
+                            null
+                        }
+            }
+            if (fresh != null) {
+                onReady(fresh)
+                return
+            }
+            worker.execute {
+                val startedAt = SystemClock.elapsedRealtime()
+                val found = try {
+                    discover(appContext)
+                } catch (e: Exception) {
+                    // The grid simply stays without them; nothing else depends on this.
+                    Timber.w(e, "Could not list the installed streaming apps")
+                    null
+                }
+                Timber.d("Icon picker: %d streaming apps found in %d ms",
+                        found?.size ?: -1, SystemClock.elapsedRealtime() - startedAt)
+                val callbacks = synchronized(this) {
+                    if (found != null) {
+                        apps = found
+                        foundAt = SystemClock.elapsedRealtime()
+                    }
+                    running = false
+                    waiting.toList().also { waiting.clear() }
+                }
+                mainThread.post { callbacks.forEach { it(found.orEmpty()) } }
+            }
+        }
+
+        private fun discover(context: Context): List<AppIconEntry> =
+                StreamingShortcutRoutes.availableStreamingApps(context).mapNotNull { app ->
+                    try {
+                        context.packageManager.getApplicationIcon(app.packageName)?.let { icon ->
+                            AppIconEntry(app.packageName, app.label, icon)
+                        }
+                    } catch (_: android.content.pm.PackageManager.NameNotFoundException) {
+                        null
+                    } catch (_: SecurityException) {
+                        null
+                    }
+                }
+    }
+
+    private sealed class IconEntry(
+            val label: String,
+            /** Launcher icons carry their own colours; packaged Material glyphs are templates. */
+            val tintable: Boolean
+    ) {
+        /** What a search is matched against, normalised once instead of on every keystroke. */
+        val searchKey: String by lazy(LazyThreadSafetyMode.NONE) { normalizeForSearch(label) }
+
+        abstract fun drawable(context: android.content.Context): android.graphics.drawable.Drawable?
+        abstract fun uri(context: android.content.Context): Uri
+    }
+
+    private class ResourceIconEntry(val resId: Int, label: String) : IconEntry(label, tintable = true) {
+        override fun drawable(context: android.content.Context) =
+                AppCompatResources.getDrawable(context, resId)
+
+        override fun uri(context: android.content.Context): Uri = Uri.parse(
+                "android.resource://${context.packageName}/drawable/" +
+                        context.resources.getResourceEntryName(resId))
+    }
+
+    private class AppIconEntry(
+            private val packageName: String,
+            label: String,
+            private val appIcon: android.graphics.drawable.Drawable
+    ) : IconEntry(label, tintable = false) {
+        // A fresh copy for each use: the entry outlives the dialog (the catalog keeps it), and one
+        // Drawable instance cannot safely belong to two views or to a later dialog's cell.
+        override fun drawable(context: android.content.Context): android.graphics.drawable.Drawable =
+                appIcon.constantState?.newDrawable(context.resources) ?: appIcon
+
+        // The bitmap is copied to CustomIconStorage when selected. Its package-based URI gives
+        // reselections a stable key without attempting to dereference another app's resources
+        // after an update or uninstall.
+        override fun uri(context: android.content.Context): Uri = Uri.parse("app-icon://$packageName")
+    }
 
     private const val MIN_SPAN_COUNT = 3
 
@@ -408,8 +549,16 @@ object BuiltInIconPicker {
         private var items: List<IconEntry> = emptyList()
 
         fun submit(newItems: List<IconEntry>) {
+            val old = items
             items = newItems
-            notifyDataSetChanged()
+            // The streaming apps arrive after the dialog is already on screen; adding them to the
+            // end must not reset a grid someone has started scrolling.
+            val onlyAppended = newItems.size > old.size && old.indices.all { old[it] === newItems[it] }
+            if (onlyAppended) {
+                notifyItemRangeInserted(old.size, newItems.size - old.size)
+            } else {
+                notifyDataSetChanged()
+            }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -420,8 +569,8 @@ object BuiltInIconPicker {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val entry = items[position]
-            holder.image.setImageResource(entry.resId)
-            holder.image.setColorFilter(tint)
+            holder.image.setImageDrawable(entry.drawable(holder.itemView.context))
+            if (entry.tintable) holder.image.setColorFilter(tint) else holder.image.clearColorFilter()
             holder.label.text = entry.label
             holder.itemView.contentDescription = entry.label
             holder.itemView.setOnClickListener { onPicked(entry) }

@@ -34,6 +34,9 @@ desugarJdkLibs = "2.1.5"
 
 google-autoFactory = "1.0.1" # Do not update due to Jakarta issues
 google-autoValue = "1.10.1" # Do not update that due to minSdk compatibility
+# Play Billing, `play` flavor of mobile only (the tip option). Play stops accepting releases built on an
+# old major version roughly every year, so this one does need to keep moving.
+google-billing = "9.1.0"
 google-firebase-bom = "34.6.0"
 google-firebase-crashlytics-gradle = "3.0.6"
 google-identity-googleid = "1.1.1"
@@ -110,6 +113,7 @@ desugarJdkLibs = { module = "com.android.tools:desugar_jdk_libs", version.ref = 
 google-autoFactory = { module = "com.google.auto.factory:auto-factory", version.ref = "google-autoFactory" }
 google-autoValue = { module = "com.google.auto.value:auto-value", version.ref = "google-autoValue" }
 google-autoValue-annotations = { module = "com.google.auto.value:auto-value-annotations", version.ref = "google-autoValue" }
+google-billing-ktx = { module = "com.android.billingclient:billing-ktx", version.ref = "google-billing" }
 google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "google-firebase-bom" }
 google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 google-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }

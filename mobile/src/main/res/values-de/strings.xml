@@ -268,7 +268,7 @@
     <string name="preview_sample_lyric_current">Die Zeile, die gerade läuft</string>
     <string name="preview_sample_lyric_next">Die nächste Zeile</string>
     <string name="preview_sample_next_title">Nächster Song</string>
-    <string name="preview_playback_stopped">Gestoppt</string>
+    <string name="preview_playback_stopped">Pausiert</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -712,9 +712,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Hintergrund der Als-Nächstes-Pille</string>
-    <string name="setting_wear_show_up_next_pill">Als-Nächstes-Pille im Player</string>
-    <string name="setting_wear_show_up_next_pill_description">Zeigt eine Als-Nächstes-Pille am unteren Rand des Wiedergabebildschirms. Sie füllt den Platz der Mini-Tasten-Reihe, erscheint also nur, wenn diese Reihe nicht angezeigt wird.</string>
+    <string name="setting_wear_up_next_pill">Hintergrund der Als-Nächstes-Kapsel</string>
+    <string name="setting_wear_show_up_next_pill">Als-Nächstes-Kapsel im Player</string>
+    <string name="setting_wear_show_up_next_pill_description">Zeigt eine Als-Nächstes-Kapsel am unteren Rand des Wiedergabebildschirms. Sie füllt den Platz der Mini-Tasten-Reihe, erscheint also nur, wenn diese Reihe nicht angezeigt wird.</string>
     <string name="category_wf_clock">Uhr</string>
     <string name="setting_wear_clock_color">Uhrfarbe</string>
     <string name="setting_wear_clock_custom_color">Eigene Uhrfarbe</string>
@@ -730,7 +730,7 @@
     <string name="setting_wear_aod_show_progress">Fortschrittsring im Always-on-Display</string>
     <string name="setting_wear_aod_show_progress_description">Zeigt den Fortschrittsring um die Play-Taste im Ambient-Modus — die Position aktualisiert sich dort nur etwa einmal pro Minute</string>
     <string name="setting_wear_aod_show_pills">Als Nächstes im Always-on-Display</string>
-    <string name="setting_wear_aod_show_pills_description">Zeigt eine statische umrissene Als-Nächstes-Pille am unteren Rand der visuellen Always-on-Stile</string>
+    <string name="setting_wear_aod_show_pills_description">Zeigt eine statische umrissene Als-Nächstes-Kapsel am unteren Rand der visuellen Always-on-Stile</string>
     <string name="category_wf_gestures">Bildschirmgesten</string>
     <string name="setting_wear_mini_buttons_mode">Mini-Tasten anzeigen</string>
     <string name="setting_wear_gestures_mode">Bildschirmgesten</string>
@@ -786,8 +786,8 @@
     <string name="preview_notification_controls">Symbol aus der Medienbenachrichtigung</string>
     <string name="setting_wear_queue_style">Warteschlangen-Stil</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Verknüpfungscover als Hintergrund nutzen</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Wenn der Warteschlangen-Stil eine Cover-Variante ist, füllt eine Schnellpanel-Aktionszeile mit geholtem Verknüpfungscover (Titel, Playlist, Interpret…) ihre Pille ebenfalls mit diesem Artwork, wie bei Als Nächstes. Verknüpfungen ohne geholtes Cover (nur ein App-Symbol) sind nicht betroffen.</string>
-    <string name="setting_wear_list_row_size">Größe der Listenpille</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Wenn der Warteschlangen-Stil eine Cover-Variante ist, füllt eine Schnellpanel-Aktionszeile mit geholtem Verknüpfungscover (Titel, Playlist, Interpret…) ihre Kapsel ebenfalls mit diesem Artwork, wie bei Als Nächstes. Verknüpfungen ohne geholtes Cover (nur ein App-Symbol) sind nicht betroffen.</string>
+    <string name="setting_wear_list_row_size">Größe der Listenkapsel</string>
     <string name="setting_wear_list_row_size_description">Höhe der Zeilen über die volle Breite in Warteschlange, Menüs und Schnellpanel.</string>
     <string name="setting_wear_progress_style">Stil des Fortschrittsrings</string>
     <string name="setting_wear_seek_style">Stil der Such- &amp; Lautstärkeanzeige</string>
@@ -1362,9 +1362,6 @@
     <string name="drawer_sync_heading">Synchronisierung</string>
     <string name="drawer_sync_summary">Uhr-Einstellungen werden hier auf dem Telefon konfiguriert und automatisch mit deiner gekoppelten Uhr synchronisiert.</string>
     <string name="drawer_support_heading">Unterstützung</string>
-    <string name="drawer_support_summary">Svartifoss ist kostenlos und quelloffen — spendier mir einen Kaffee, wenn es dir nützt :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Cover herunterladen</string>
     <string name="album_art_saved">Cover in der Galerie gespeichert</string>
     <string name="album_art_save_error">Cover konnte nicht gespeichert werden</string>
@@ -2834,4 +2831,99 @@
     <string name="setting_online_artwork_description">Das Zifferblatt kann ein online gesuchtes Bild anzeigen \u2014 den gerade wiedergegebenen Künstler oder ein Albumcover für einen Player, der keines bereitstellt. Dein Smartphone sucht im öffentlichen Deezer-Katalog und speichert das Ergebnis im Cache; übertragen werden nur Titel- und Künstlername. Eine Suche findet nur statt, wenn ein Zifferblatt auf eine dieser Quellen eingestellt ist. Ist die Option aus, wird das Cover des Players verwendet.</string>
     <string name="setting_wear_shortcut_details">Wiedergabe oder Zufall auf der Uhr</string>
     <string name="setting_wear_shortcut_details_description">Wählst du auf der Uhr einen gespeicherten Link aus – in der Verknüpfungsliste, im Verknüpfungs-Tile oder im Aktionsmenü –, wird zuerst sein Cover mit Wiedergabe und Zufallswiedergabe angezeigt. Ausschalten, um ihn stattdessen sofort zu starten. Tasten und Gesten, die einem Link zugewiesen sind, starten ihn immer sofort.</string>
+    <string name="actions_quick_pin_add">Im Quickpanel anzeigen</string>
+    <string name="actions_quick_pin_remove">Aus Schnellpanel entfernen</string>
+    <string name="quick_panel_editor_title">Schnellaktionsfeld</string>
+    <string name="quick_panel_editor_open">Panelinhalt bearbeiten</string>
+    <string name="quick_panel_editor_intro">Bauen Sie das Panel auf, das sich öffnet, wenn Sie zweimal auf die Mitte der Uhr tippen. Halten Sie einen Block gedrückt und ziehen Sie ihn, um ihn zu verschieben. Tippen Sie auf einen, um ihn anzupassen.</string>
+    <string name="quick_panel_editor_add_block">Block hinzufügen</string>
+    <string name="quick_panel_editor_restore">Stellen Sie das ursprüngliche Panel wieder her.</string>
+    <string name="quick_panel_editor_restore_title">Originalpanel wiederherstellen?</string>
+    <string name="quick_panel_editor_restore_message">Ihr Arrangement wird entfernt und das Panel kehrt in den ursprünglichen Zustand zurück. Ihre Tastenauswahl und die von Ihnen markierten Aktionen bleiben erhalten.</string>
+    <string name="quick_panel_editor_restore_confirm">Wiederherstellen von</string>
+    <string name="quick_panel_editor_fold">Ende des ersten Bildschirms (ungefähr)</string>
+    <string name="quick_panel_editor_last_block">Ein Panel benötigt mindestens einen Block</string>
+    <string name="quick_panel_editor_removed">Entfernt %1$s</string>
+    <string name="quick_panel_editor_undo">Rückgängig machen</string>
+    <string name="quick_panel_editor_move_up">Nach oben verschieben</string>
+    <string name="quick_panel_editor_move_down">Nach unten bewegen</string>
+    <string name="quick_panel_editor_more">Weitere Optionen</string>
+    <string name="quick_panel_editor_nothing_to_add">Jeder Block ist bereits auf dem Panel</string>
+    <string name="quick_block_header">Titel</string>
+    <string name="quick_block_buttons">Runde Knöpfe</string>
+    <string name="quick_block_upnext">Nächster Titel</string>
+    <string name="quick_block_volume">Lautstärke</string>
+    <string name="quick_block_seek">Springen und Position</string>
+    <string name="quick_block_tools">Werkzeuge</string>
+    <string name="quick_block_favorites">Favoriten</string>
+    <string name="quick_block_actions">Alle Aktionen</string>
+    <string name="quick_block_all_actions">Alle Aktionen</string>
+    <string name="quick_block_header_description">Der Titel und Interpret dessen, was gerade abgespielt wird.</string>
+    <string name="quick_block_buttons_description">Runde Schaltflächen für die Aktionen, die Sie am häufigsten verwenden oder die die Wiedergabe-App anbietet.</string>
+    <string name="quick_block_upnext_description">Der nächste Titel. Tippen Sie darauf, um die Warteschlange zu öffnen.</string>
+    <string name="quick_block_volume_description">Verringern und erhöhen Sie die Lautstärke, ohne das Bedienfeld zu verlassen.</string>
+    <string name="quick_block_seek_description">Wo Sie sich im Track befinden und Schaltflächen zum Vor- und Zurückspringen.</string>
+    <string name="quick_block_tools_description">Kleine Shortcuts: Wiedergabegeschwindigkeit, Songtexte, die Warteschlange und mehr.</string>
+    <string name="quick_block_favorites_description">Die Aktionen, die Sie auf der Registerkarte „Aktionen“ markiert haben, als Cover oder Zeilen.</string>
+    <string name="quick_block_actions_description">Jede Aktion Ihres Uhrenmenüs, als Zeilen im Panel oder als eine Schaltfläche, die das Menü öffnet.</string>
+    <string name="quick_summary_header">Titel und Künstler</string>
+    <string name="quick_summary_buttons_session">Aus der App, die wiedergibt</string>
+    <string name="quick_summary_buttons_empty">Keine Schaltflächen ausgewählt</string>
+    <string name="quick_summary_upnext">Nächster Titel · öffnet die Warteschlange</string>
+    <string name="quick_summary_volume">Lautstärkeschritte von %1$d%%</string>
+    <string name="quick_summary_seek">%1$s Sekunden</string>
+    <string name="quick_summary_seek_bar">%1$s Sekunden · Zeit und Balken</string>
+    <string name="quick_summary_favorites_none">Noch keine Aktion markiert</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d mit · %2$s</item>
+        <item quantity="other">%1$d mit · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Alle %1$d-Aktionen</string>
+    <string name="quick_summary_actions_first">Erste %1$d-Aktionen</string>
+    <string name="quick_summary_actions_button">Eine Taste · öffnet das Aktionsmenü</string>
+    <string name="quick_summary_only_playing">nur während der Wiedergabe</string>
+    <string name="quick_summary_only_not_playing">nur ohne Wiedergabe</string>
+    <string name="quick_mode_grid">Raster</string>
+    <string name="quick_mode_rows">Zeilen</string>
+    <string name="quick_mode_actions_list">Liste</string>
+    <string name="quick_mode_actions_button">Taste</string>
+    <string name="quick_sheet_show">Zeigen</string>
+    <string name="quick_sheet_always">Immer</string>
+    <string name="quick_sheet_while_playing">nur während der Wiedergabe</string>
+    <string name="quick_sheet_while_not_playing">nur ohne Wiedergabe</string>
+    <string name="quick_sheet_step">Schritt</string>
+    <string name="quick_sheet_jump">Sprungweite</string>
+    <string name="quick_sheet_seek_bar">Zeit und Fortschrittsbalken anzeigen</string>
+    <string name="quick_sheet_tools">Werkzeuge</string>
+    <string name="quick_sheet_layout">Layout</string>
+    <string name="quick_sheet_how_many">Wie viele</string>
+    <string name="quick_sheet_all">Alle</string>
+    <string name="quick_sheet_buttons_source">Buttons von</string>
+    <string name="quick_sheet_source_configured">Meine Auswahl</string>
+    <string name="quick_sheet_source_session">Die Wiedergabe-App</string>
+    <string name="quick_sheet_buttons_hint">Tippen Sie auf eine Schaltfläche, um deren Aktion auszuwählen. Halten Sie gedrückt, um die Standardeinstellung wiederherzustellen.</string>
+    <string name="quick_sheet_favorites_hint">Markieren Sie Aktionen mit dem Blitz auf der Registerkarte „Aktionen“. Hier erscheinen nur markierte.</string>
+    <string name="quick_sheet_actions_mode">Als</string>
+    <string name="quick_sheet_actions_hint">Eine Liste stellt jede Aktion auf dem Panel als Zeile dar. Ein Knopf hält das Panel kurz: ein Knopf, der das vollständige Menü öffnet. Um das Menü ganz aus dem Panel zu entfernen, entfernen Sie diesen Block.</string>
+    <string name="quick_sheet_remove">Entfernen Sie diesen Block</string>
+    <string name="quick_sheet_done">Fertig</string>
+    <string name="quick_tool_speed">Geschwindigkeit</string>
+    <string name="quick_tool_sleep">Timer</string>
+    <string name="quick_tool_lyrics">Songtext</string>
+    <string name="quick_tool_queue">Warteschlange</string>
+    <string name="quick_tool_volume">Lautstärke</string>
+    <string name="quick_tool_progress">Fortschritt</string>
+    <string name="quick_tool_faces">Zifferblätter</string>
+    <string name="quick_tool_search">Suche</string>
+    <string name="quick_tool_menu">Menü</string>
+    <string name="setting_wear_hide_from_recents">Aus aktuellen Apps ausblenden</string>
+    <string name="setting_wear_hide_from_recents_description">Hält die Uhren-App aus der Liste der letzten Apps der Uhr fern, sobald Sie sie schließen oder eine andere App verwenden. Nützlich, wenn Sie es stattdessen über das Zifferblatt oder die Jetzt-Leiste öffnen. Die Erreichbarkeit bleibt wie bisher bestehen, Musik und Hintergrundverbindung werden nicht beeinträchtigt.</string>
+    <string name="setting_streaming_app_routes">Wählen Sie Apps für Streaming-Links</string>
+    <string name="setting_streaming_app_routes_description">Wählen Sie separat eine kompatible installierte App für YouTube Music, Spotify und jeden anderen Dienst. Wird mit „Erkannte Streaming-App“ verwendet.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d-Dienst nutzt eine ausgewählte App</item>
+        <item quantity="other">%1$d-Dienste nutzen ausgewählte Apps</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Apps, die den Link öffnen können, sowie installierte Mediaplayer werden angezeigt.</string>
+    <string name="streaming_route_automatic">Automatisch (erkannte App)</string>
 </resources>

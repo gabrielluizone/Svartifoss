@@ -117,6 +117,8 @@ class ActionListTransmitter(private val actionList: ActionList,
             action.streamingShortcut?.let { description ->
                 actionProto.shortcutSubtitle = description.subtitle
                 actionProto.shortcutShuffleable = description.shuffleable
+                description.creator?.let { actionProto.shortcutCreator = it }
+                description.description?.let { actionProto.shortcutDescription = it }
             }
             protoBuilder.addActions(actionProto.build())
 

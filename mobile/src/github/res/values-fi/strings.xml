@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Näytä julkaisut</string>
     <string name="update_watch_hint">”Päivitä kello” lataa uuden kellosovelluksen ja lähettää sen Bluetoothin kautta — vahvistat asennuksen itse kellossa ilman kaapelia tai Wear Installeria.</string>
     <string name="update_no_wear_asset">Tässä julkaisussa ei ole lähetettävää kellon APK:ta.</string>
+    <string name="drawer_support_summary">Svartifoss on ilmainen ja avoimen lähdekoodin sovellus — tarjoa minulle kahvi, jos siitä on sinulle hyötyä :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

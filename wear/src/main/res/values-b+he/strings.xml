@@ -38,7 +38,7 @@
 
     <string name="no_phone">הטלפון לא מחובר</string>
     <string name="phone_unavailable">בטל את נעילת הטלפון כדי לשלוט בהשמעה</string>
-    <string name="playback_stopped">נעצר</string>
+    <string name="playback_stopped">מושהה</string>
     <string name="error">שגיאה</string>
     <string name="error_play_services">שגיאת שירותי Google Play</string>
     <string name="button">כפתור</string>
@@ -209,4 +209,23 @@
     <string name="progress_screen_cancel_seek">ביטול דילוג למיקום</string>
     <string name="progress_screen_skip_back">דילוג %1$d שניות אחורה</string>
     <string name="progress_screen_skip_forward">דילוג %1$d שניות קדימה</string>
+    <string name="quick_block_all_actions">כל הפעולות</string>
+    <string name="quick_block_favorites">מועדפים</string>
+    <string name="quick_tool_speed">מְהִירוּת</string>
+    <string name="quick_tool_lyrics">מילים</string>
+    <string name="quick_tool_queue">תור</string>
+    <string name="quick_tool_volume">עוצמת קול</string>
+    <string name="quick_tool_progress">התקדמות</string>
+    <string name="quick_tool_faces">לוחות שעון</string>
+    <string name="quick_tool_search">חפש</string>
+    <string name="quick_tool_menu">תַפרִיט</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">עוצמת קול %1$d%%</string>
+    <string name="quick_seek_back_description">חזרה %1$d שניות</string>
+    <string name="quick_seek_forward_description">קדימה %1$d שניות</string>
+    <string name="quick_speed_description">מהירות השמעה %1$s</string>
+    <string name="quick_tool_sleep">טיימר שינה</string>
+    <string name="quick_sleep_minutes">%1$d דקות</string>
+    <string name="quick_sleep_description">טיימר שינה, נותרו %1$d דקות. הקש כדי לשנות.</string>
+    <string name="quick_sleep_off_description">טיימר השינה כבוי. הקש כדי להגדיר</string>
 </resources>

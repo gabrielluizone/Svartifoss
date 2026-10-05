@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">查看发布版本</string>
     <string name="update_watch_hint">「更新手表」会下载新的手表应用并通过蓝牙发送——你在手表本身确认安装，无需数据线或 Wear Installer。</string>
     <string name="update_no_wear_asset">此发布版本没有可发送的手表 APK。</string>
+    <string name="drawer_support_summary">Svartifoss 是免费开源的——如果它对你有用，请我喝杯咖啡吧 :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

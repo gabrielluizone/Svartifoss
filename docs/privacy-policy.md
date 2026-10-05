@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 04-10-2026**
+**Last updated: 05-10-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -27,6 +27,7 @@ notifications](#announcement-notifications) below. A separate,
 **off-by-default** setting can also fetch cover art for your saved playlist
 shortcuts directly from the streaming service — see [Streaming shortcut
 artwork](#streaming-shortcut-artwork-optional) below.
+The Google Play build also lets you leave an optional tip, paid entirely through Google Play Billing and unlocking nothing — see [Tips in the Play Store build](#tips-in-the-play-store-build) below.
 
 ## What the app needs access to, and why
 
@@ -63,7 +64,7 @@ all.
 | Vibrate                                                      | Haptic feedback on the watch when you press a button, if you enable that setting.                                                                                                              |
 | Run Tasker tasks                                             | Only relevant if you have the separate Tasker app installed and choose to bind a Tasker task to a button. Svartifoss does not read Tasker's data — it only triggers a task you've configured. |
 | Music and audio (Android 13+) / Storage (older versions)     | Only used to read album covers for entries in the playback queue, when the music app publishes them as references into your music library rather than as images. Requested from Settings → Apps, never at startup, and only ever read locally — nothing is uploaded. Decline it and the queue simply shows blank thumbnails. On very old Android versions the same legacy Storage permission also covers saving the current album art to your gallery, which only happens if you tap that option. |
-| Internet                                                     | Used for optional update checks, the opt-in Community themes gallery, and — only after you explicitly choose to submit a theme (Google Sign-In/Firebase Authentication) or to like, install or report one (a silent anonymous Firebase identity) — Firebase Authentication and Firestore. It is also used for the Firebase diagnostics described below, looking up song lyrics when you open the lyrics screen on the watch, and — only if you turn them on — fetching shortcut artwork from the streaming service and downloading queue covers that the music app published as links. Core playback mirroring and control work locally between your two devices.                         |
+| Internet                                                     | Used for optional update checks, the opt-in Community themes gallery, and — only after you explicitly choose to submit a theme (Google Sign-In/Firebase Authentication) or to like, install or report one (a silent anonymous Firebase identity) — Firebase Authentication and Firestore. It is also used for the Firebase diagnostics described below, looking up song lyrics when you open the lyrics screen on the watch, and — only if you turn them on — fetching public shortcut artwork and link details from the streaming service and downloading queue covers that the music app published as links. Core playback mirroring and control work locally between your two devices.                         |
 
 ## What's stored locally on your phone
 
@@ -413,11 +414,16 @@ If you save a playlist/track shortcut and turn on **Fetch shortcut names and
 artwork online** (Settings → Apps → Music apps & services — **off by
 default**), Svartifoss sends that shortcut's public share link to the
 corresponding streaming service's own public **oEmbed** endpoint (Spotify,
-YouTube, SoundCloud, or Deezer). The answer carries the item's public title
-and cover thumbnail: the title fills in the shortcut's name when you add a
-link to the Actions menu, and the thumbnail is shown on the phone, the watch
-menu, and any button you assign it to. Each thumbnail is fetched once and
-cached on-device; a title is used once, to fill in the name you then save.
+YouTube, SoundCloud, or Deezer). The answer carries the item's public title,
+cover thumbnail and, where the service publishes it, its creator. If the
+preview does not provide a creator or description, Svartifoss also reads the
+standard Open Graph or JSON-LD metadata from that same public share page; it
+does not log in, use cookies, render the service's private app UI, or call an
+undocumented player endpoint. Those public details appear on the shortcut's
+watch screen. The title fills in the shortcut's name when you add a link to
+the Actions menu, and the thumbnail is shown on the phone, the watch menu,
+and any button you assign it to. Each lookup is cached on-device with the
+shortcut, including an unsupported link, until you explicitly refresh covers.
 
 With the setting off, nothing is fetched on its own. The **Get name from
 link** button in the Add to watch menu sheet makes the same single request —
@@ -579,6 +585,14 @@ by [Google's Privacy Policy](https://policies.google.com/privacy) and
 The crash-reporting switch described above controls Crashlytics reports; it
 does not control these separate automatic Analytics events.
 
+## Tips in the Play Store build
+
+The Google Play build of Svartifoss offers an optional **tip** (navigation drawer → Support → Support the developer). The GitHub build has no such option; its drawer links to external support pages instead, and this section applies only to the Play build.
+
+A tip is sold through **Google Play Billing**, so the payment is handled entirely by Google Play under [Google's Privacy Policy](https://policies.google.com/privacy) and Google Play's terms: Svartifoss never sees your payment method, name or card details. After a purchase the app is told whether it succeeded, together with a purchase token and an order ID that Google Play uses to confirm and complete it; these stay on your phone, are used only to finish that purchase, and are not sent to us or to any server of ours. Google keeps your purchase history in your Google account, as it does for any other Play purchase, and refunds follow Google Play's refund policy.
+
+A tip **unlocks nothing**. The Play build is a paid app, so every feature is already available to whoever bought it, and tipping or not changes nothing about what the app does. To decide whether to show the option, the Play build asks the Google Play Store app on your phone which tip amounts are on sale when the app is opened; Svartifoss attaches no account, name or identifier of its own to that request. If Google Play is not available on your phone, or no amounts are on sale, the option is simply not shown.
+
 ## What we don't do
 
 - We don't require an account to use playback controls, browse Community
@@ -593,6 +607,7 @@ does not control these separate automatic Analytics events.
 - We don't capture your watch's screen. The only images Svartifoss ever
   publishes are ones you picked yourself and attached to a Community theme
   submission.
+- We don't gate any feature behind a payment. A tip in the Play build unlocks nothing, and the price of a store listing pays for a pre-built, automatically updated binary and nothing else.
 
 ## Children's privacy
 

@@ -32,7 +32,7 @@
 
     <string name="no_phone">Телефон не подключён</string>
     <string name="phone_unavailable">Разблокируйте телефон, чтобы управлять воспроизведением</string>
-    <string name="playback_stopped">Остановлено</string>
+    <string name="playback_stopped">Приостановлено</string>
     <string name="error">ОШИБКА</string>
     <string name="error_play_services">Ошибка Play Services</string>
     <string name="button">Кнопка</string>
@@ -69,7 +69,7 @@
     <string name="hint_edges">Нажмите сверху, снизу, слева или справа — каждая зона выполняет назначенное действие</string>
     <string name="hint_center">Центр — воспроизведение/пауза\nДвойное нажатие — быстрые действия\nДолгое нажатие — выбор циферблата (настраивается)</string>
     <string name="hint_swipe_up">Вверх — меню действий\nВниз или влево — назначенные действия\nОт края вправо — выход</string>
-    <string name="hint_crown">Колёсико — громкость или позиция\nБоковые кнопки — назначенные действия\nНастройте всё в разделах «Управление» и Watch на телефоне</string>
+    <string name="hint_crown">Колёсико — громкость или позиция\nБоковые кнопки — назначенные действия\nНастройте всё в разделах «Управление» и Часы на телефоне</string>
     <string name="hint_next">Далее</string>
     <string name="hint_dismiss">Готово</string>
 
@@ -189,4 +189,23 @@
     <string name="progress_screen_cancel_seek">Отменить перемотку</string>
     <string name="progress_screen_skip_back">Назад на %1$d сек.</string>
     <string name="progress_screen_skip_forward">Вперёд на %1$d сек.</string>
+    <string name="quick_block_all_actions">Все действия</string>
+    <string name="quick_block_favorites">Избранное</string>
+    <string name="quick_tool_speed">Скорость</string>
+    <string name="quick_tool_lyrics">Тексты песен</string>
+    <string name="quick_tool_queue">Очередь</string>
+    <string name="quick_tool_volume">Громкость</string>
+    <string name="quick_tool_progress">Прогресс</string>
+    <string name="quick_tool_faces">Циферблаты</string>
+    <string name="quick_tool_search">Поиск</string>
+    <string name="quick_tool_menu">Меню</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Громкость %1$d%%</string>
+    <string name="quick_seek_back_description">Назад %1$d секунд</string>
+    <string name="quick_seek_forward_description">Вперед %1$d секунд</string>
+    <string name="quick_speed_description">Скорость воспроизведения %1$s</string>
+    <string name="quick_tool_sleep">Таймер сна</string>
+    <string name="quick_sleep_minutes">%1$d мин</string>
+    <string name="quick_sleep_description">Таймер сна, осталось %1$d минут. Нажмите, чтобы изменить</string>
+    <string name="quick_sleep_off_description">Таймер сна выключен. Нажмите, чтобы установить</string>
 </resources>

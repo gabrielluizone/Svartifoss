@@ -43,7 +43,8 @@ class ShortcutLaunchActivity : ComponentActivity() {
                         MiscPreferences.WEAR_SHORTCUT_DETAILS),
                 listId = CustomLists.PLAYLIST_SHORTCUTS,
                 entryId = entryId,
-                phoneKnowsPlayModes = phoneKnowsPlayModes)
+                phoneKnowsPlayModes = phoneKnowsPlayModes,
+                shuffleable = intent.getBooleanExtra(EXTRA_SHUFFLEABLE, false))
 
         if (opensScreen) {
             startActivity(ShortcutDetailActivity.intentFor(

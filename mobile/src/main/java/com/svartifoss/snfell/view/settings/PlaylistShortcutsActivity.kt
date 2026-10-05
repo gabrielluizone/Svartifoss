@@ -418,8 +418,15 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
                     StreamingShortcutLinks.stripShuffle(candidate)
                 }
                 if (editIndex != null && editIndex in shortcuts.indices) {
-                    val previousLink = shortcuts[editIndex].link
-                    shortcuts[editIndex] = PlaylistShortcut(name, link)
+                    val previous = shortcuts[editIndex]
+                    val previousLink = previous.link
+                    // A rename is not a new public destination, so retain the answer already
+                    // fetched for it. A changed link deliberately starts with no cache at all.
+                    shortcuts[editIndex] = if (previousLink == link) {
+                        PlaylistShortcut(name, link, previous.publicMetadata, previous.metadataChecked)
+                    } else {
+                        PlaylistShortcut(name, link)
+                    }
                     persist()
                     listAdapter.notifyItemChanged(editIndex)
                     // Keep copies already bound to buttons/gestures/quick panel/action list in sync
@@ -666,13 +673,60 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
             val changed = com.svartifoss.snfell.music.ShortcutArtworkFetcher.ensureCachedAll(
                     this@PlaylistShortcutsActivity, snapshot)
+            val metadata = fetchPublicMetadata(snapshot)
             if (changed) {
                 kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
                     listAdapter.notifyDataSetChanged()
                 }
                 PlaylistShortcutStorage.syncToWatch(this@PlaylistShortcutsActivity)
             }
+            if (metadata.isNotEmpty()) {
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                    if (applyPublicMetadata(metadata)) {
+                        // The fields are user-visible shortcut data, not a disposable cache: save
+                        // them so reopening the editor does not repeat a public-page request.
+                        persist()
+                        // An already-assigned shortcut is represented by an ActionList entry,
+                        // separate from the saved-shortcuts DataItem that persist() refreshes.
+                        // Re-send it too so Quick Panel rows gain the byline without requiring an
+                        // unrelated edit to the Actions tab.
+                        actionConfig.getActionList().retransmit()
+                        listAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
         }
+    }
+
+    /** Looks up each link at most once unless the explicit reload button asks for a refresh. */
+    private fun fetchPublicMetadata(
+            shortcuts: List<PlaylistShortcut>,
+            force: Boolean = false
+    ): Map<String, com.svartifoss.snfell.music.PublicLinkMetadata?> = shortcuts
+            .filter { force || !it.metadataChecked }
+            .associate { shortcut ->
+                shortcut.link to com.svartifoss.snfell.music.ShortcutArtworkFetcher
+                        .lookupPublicMetadata(shortcut.link)
+            }
+
+    /** Applies both positive answers and misses. A miss is remembered to avoid retrying providers
+     * that publish no public details; the reload button is the user-controlled retry. */
+    private fun applyPublicMetadata(
+            metadata: Map<String, com.svartifoss.snfell.music.PublicLinkMetadata?>
+    ): Boolean {
+        var changed = false
+        shortcuts.indices.forEach { index ->
+            val shortcut = shortcuts[index]
+            if (shortcut.link !in metadata) return@forEach
+            val updated = shortcut.copy(
+                    publicMetadata = metadata[shortcut.link]?.takeIf { it.hasDetails },
+                    metadataChecked = true)
+            if (updated != shortcut) {
+                shortcuts[index] = updated
+                changed = true
+            }
+        }
+        return changed
     }
 
     private fun updateEmptyState() {
@@ -702,15 +756,24 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         lifecycleScope.launch(kotlinx.coroutines.Dispatchers.IO) {
             val changed = com.svartifoss.snfell.music.ShortcutArtworkFetcher.ensureCachedAll(
                     this@PlaylistShortcutsActivity, snapshot, force = true)
-            kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
-                if (changed) listAdapter.notifyDataSetChanged()
+            val metadata = fetchPublicMetadata(snapshot, force = true)
+            val metadataChanged = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.Main) {
+                val metadataChanged = applyPublicMetadata(metadata)
+                if (metadataChanged) {
+                    persist()
+                    actionConfig.getActionList().retransmit()
+                }
+                if (changed || metadataChanged) listAdapter.notifyDataSetChanged()
                 Toast.makeText(
                         this@PlaylistShortcutsActivity,
                         R.string.playlist_shortcuts_covers_reloaded,
                         Toast.LENGTH_SHORT
                 ).show()
+                metadataChanged
             }
-            if (changed) PlaylistShortcutStorage.syncToWatch(this@PlaylistShortcutsActivity)
+            if (changed && !metadataChanged) {
+                PlaylistShortcutStorage.syncToWatch(this@PlaylistShortcutsActivity)
+            }
         }
     }
 

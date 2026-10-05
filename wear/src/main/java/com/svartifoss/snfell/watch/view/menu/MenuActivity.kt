@@ -2,6 +2,7 @@ package com.svartifoss.snfell.watch.view.menu
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Bundle
@@ -36,6 +37,7 @@ import com.svartifoss.snfell.watch.communication.WatchMusicService
 import com.svartifoss.snfell.watch.util.WatchLanguage
 import com.svartifoss.snfell.watch.view.panel.AlbumPaletteCache
 import com.svartifoss.snfell.watch.view.panel.PanelAppearanceResolver
+import com.svartifoss.snfell.watch.view.panel.PanelTriad
 import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailActivity
 import com.svartifoss.snfell.watch.view.shortcut.ShortcutDetailUi
 import com.svartifoss.snfell.watch.view.shortcut.ShortcutScreenPolicy
@@ -143,10 +145,11 @@ class MenuActivity : ComponentActivity() {
                         it, MiscPreferences.WEAR_QUEUE_STYLE, ThemeAppearance.resolve(it)
                 ))
             } ?: QueueStyle.GLASS
+            val appearance = preferences?.let(ThemeAppearance::resolve)
             val accentSource = preferences?.let {
-                PanelAppearanceResolver.accentSource(it, ThemeAppearance.resolve(it))
+                PanelAppearanceResolver.accentSource(it, appearance!!)
             } ?: AlbumAccentSource.BALANCED
-            val accent = rememberPlayingAccent(albumArt, accentSource)
+            val accent = rememberPlayingAccent(albumArt, preferences, appearance, accentSource)
 
             CompositionLocalProvider(
                     LocalWatchUiFontFamily provides watchUiFontFamily(preferences)) {
@@ -174,20 +177,39 @@ class MenuActivity : ComponentActivity() {
     /**
      * The playing album's colour, seeded from [AlbumPaletteCache] so a menu opened over a cover the
      * player has already read is in that colour from its first frame, as the panel screens are.
-     * Null only while an uncached cover is being read; with no cover, the app accent.
+     * The raw album palette is then put through the face's colour treatment, Normal colour and
+     * Tone, exactly like the now-playing screen. With no cover, the app accent follows that same
+     * route rather than falling back to the fixed resource green.
      */
     @Composable
-    private fun rememberPlayingAccent(art: Bitmap?, source: AlbumAccentSource): Color? {
-        val themeAccent = getColor(R.color.theme_accent)
+    private fun rememberPlayingAccent(
+            art: Bitmap?,
+            prefs: SharedPreferences?,
+            appearance: com.svartifoss.snfell.common.AppearanceContext?,
+            source: AlbumAccentSource
+    ): Color {
+        val themeAccent = prefs?.let {
+            PanelAppearanceResolver.parseHexColorOrNull(
+                    Preferences.getString(it, MiscPreferences.WEAR_PHONE_ACCENT_COLOR))
+        } ?: getColor(R.color.theme_accent)
+        val fallbackTriad = PanelTriad(
+                themeAccent,
+                PanelAppearanceResolver.albumToneFallback(themeAccent, .42f),
+                PanelAppearanceResolver.albumToneFallback(themeAccent, .68f))
         val seed = AlbumPaletteCache.get(art, source)
-        var accent by remember(art, source) {
-            mutableStateOf(seed?.let { Color(it.primary) }
-                    ?: if (art == null) Color(themeAccent) else null)
+        fun resolve(raw: PanelTriad): Color = Color(
+                if (prefs != null && appearance != null) {
+                    PanelAppearanceResolver.globalTriad(prefs, appearance, raw, themeAccent).primary
+                } else {
+                    raw.primary
+                })
+        var accent by remember(art, prefs, appearance, source, themeAccent) {
+            mutableStateOf(resolve(seed ?: fallbackTriad))
         }
-        LaunchedEffect(art, source) {
+        LaunchedEffect(art, prefs, appearance, source, themeAccent) {
             if (seed != null || art == null) return@LaunchedEffect
             PanelAppearanceResolver.albumTriad(art, source, themeAccent) { triad ->
-                accent = Color(triad.primary)
+                accent = resolve(triad)
             }
         }
         return accent
@@ -252,7 +274,8 @@ class MenuActivity : ComponentActivity() {
         val action = viewModel.actions.value?.getOrNull(index)
         val remoteUri = action?.remoteUri
         if (action != null && remoteUri != null && ShortcutScreenPolicy.opensForMenuAction(
-                        shortcutScreenEnabled(), remoteUri, action.shortcutSubtitle)) {
+                        shortcutScreenEnabled(), remoteUri, action.shortcutSubtitle,
+                        action.shortcutShuffleable)) {
             buzz()
             shortcutDetail = action.toShortcutDetail(remoteUri)
             return
@@ -273,7 +296,8 @@ class MenuActivity : ComponentActivity() {
                     ?.firstOrNull { it.listItem.entryId == entryId }
             if (item != null && ShortcutScreenPolicy.opensForListEntry(
                             shortcutScreenEnabled(), listId, entryId,
-                            phoneKnowsPlayModes = item.listItem.hasShuffleable())) {
+                            phoneKnowsPlayModes = item.listItem.hasShuffleable(),
+                            shuffleable = item.listItem.shuffleable)) {
                 shortcutDetail = item.toShortcutDetail()
                 return
             }

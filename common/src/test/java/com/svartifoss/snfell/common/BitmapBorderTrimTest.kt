@@ -58,14 +58,92 @@ class BitmapBorderTrimTest {
 
     /**
      * The case that went wrong: a square sleeve with a plain field around a small logo. Its
-     * margin is its design, and it must not be cropped down to the logo - so a square picture is
-     * never trimmed at all.
+     * margin is its design, and it must not be cropped down to the logo. The only exception is
+     * a square canvas with two large, opposite letterbox bars, covered below.
      */
     @Test
     fun `a square cover is left whole, flat margin and all`() {
         assertTrue(BitmapBorderTrim.isSquare(500, 500))
         assertTrue(BitmapBorderTrim.isSquare(500, 490))
         assertFalse(BitmapBorderTrim.isSquare(480, 360))
+    }
+
+    @Test
+    fun `square canvas with two substantial horizontal bars is treated as letterboxed`() {
+        assertTrue(BitmapBorderTrim.shouldCropSquareLetterbox(
+                width = 400, height = 400, top = 52, bottom = 347, left = 0, right = 399))
+    }
+
+    @Test
+    fun `square sleeve framed on every side is not mistaken for letterboxing`() {
+        assertFalse(BitmapBorderTrim.shouldCropSquareLetterbox(
+                width = 400, height = 400, top = 52, bottom = 347, left = 52, right = 347))
+    }
+
+    @Test
+    fun `tiny square edges are not enough to trigger a crop`() {
+        assertFalse(BitmapBorderTrim.shouldCropSquareLetterbox(
+                width = 400, height = 400, top = 4, bottom = 395, left = 0, right = 399))
+    }
+
+    // ---- what a letterbox is, and what only looks like one -----------------------------
+
+    @Test
+    fun `a sleeve that fades to black over a few percent is not a letterbox`() {
+        // Muse's Panic Station: 269px square, black for 6% above and 9% below its design. Both
+        // are flat and both are black, which is exactly what a letterbox looks like - only their
+        // depth says they are the sleeve's own margin.
+        assertFalse(BitmapBorderTrim.shouldCropSquareLetterbox(
+                width = 269, height = 269, top = 16, bottom = 244, left = 0, right = 268))
+    }
+
+    @Test
+    fun `a thumbnail letterboxed to a tenth per bar is`() {
+        // A real art-track thumbnail: 360px square with 43 and 44 black rows around the picture.
+        assertTrue(BitmapBorderTrim.shouldCropSquareLetterbox(
+                width = 360, height = 360, top = 43, bottom = 315, left = 0, right = 359))
+    }
+
+    @Test
+    fun `two black bars are one bar`() {
+        assertTrue(BitmapBorderTrim.letterboxBarsMatch(360, 360, 43, 315, 0, 359) { _, _ ->
+            pixel(0, 0, 0)
+        })
+        // Noise, not a different bar.
+        assertTrue(BitmapBorderTrim.isSameBarColour(pixel(0, 0, 0), pixel(7, 3, 2)))
+    }
+
+    /**
+     * Every row of a vertical gradient is flat, so the scan reads a violet-to-pink sleeve with a
+     * glyph in the middle as two deep bars and no side bars - the signature of a letterbox. The
+     * bars are not the same colour, though: that is what saves YouTube Music's Liked Music cover,
+     * which was being cut to a square half its size.
+     */
+    @Test
+    fun `a vertical gradient is not two letterbox bars`() {
+        fun gradient(y: Int): Int {
+            val t = y / 479f
+            return pixel(
+                    (152 + (240 - 152) * t).toInt(),
+                    (110 + (95 - 110) * t).toInt(),
+                    (237 + (183 - 237) * t).toInt())
+        }
+        assertFalse(BitmapBorderTrim.letterboxBarsMatch(480, 480, 110, 355, 0, 479) { _, y ->
+            gradient(y)
+        })
+    }
+
+    @Test
+    fun `a horizontal gradient is not two pillarbox bars either`() {
+        assertFalse(BitmapBorderTrim.letterboxBarsMatch(480, 480, 0, 479, 110, 355) { x, _ ->
+            pixel(x / 2, 60, 255 - x / 2)
+        })
+    }
+
+    @Test
+    fun `the average of a flat line is its colour`() {
+        val line = List(40) { pixel(10, 200, 30) }
+        assertTrue(BitmapBorderTrim.averageColour(0, line.lastIndex) { line[it] } == pixel(10, 200, 30))
     }
 
     /** A landscape photo with a flat sky gets wider when its top is cut, not squarer. */

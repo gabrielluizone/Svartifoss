@@ -38,7 +38,7 @@
 
     <string name="no_phone">Телефон не підключено</string>
     <string name="phone_unavailable">Розблокуйте телефон, щоб керувати відтворенням</string>
-    <string name="playback_stopped">Зупинено</string>
+    <string name="playback_stopped">Призупинено</string>
     <string name="error">ПОМИЛКА</string>
     <string name="error_play_services">Помилка сервісів Google Play</string>
     <string name="button">Кнопка</string>
@@ -209,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Скасувати перемотування</string>
     <string name="progress_screen_skip_back">Назад на %1$d с</string>
     <string name="progress_screen_skip_forward">Уперед на %1$d с</string>
+    <string name="quick_block_all_actions">Усі дії</string>
+    <string name="quick_block_favorites">Вибране</string>
+    <string name="quick_tool_speed">Швидкість</string>
+    <string name="quick_tool_lyrics">Тексти пісень</string>
+    <string name="quick_tool_queue">Черга</string>
+    <string name="quick_tool_volume">Гучність</string>
+    <string name="quick_tool_progress">Прогрес</string>
+    <string name="quick_tool_faces">Циферблати</string>
+    <string name="quick_tool_search">Пошук</string>
+    <string name="quick_tool_menu">Меню</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Гучність %1$d%%</string>
+    <string name="quick_seek_back_description">Назад %1$d секунд</string>
+    <string name="quick_seek_forward_description">вперед %1$d секунд</string>
+    <string name="quick_speed_description">Швидкість відтворення %1$s</string>
+    <string name="quick_tool_sleep">Таймер сну</string>
+    <string name="quick_sleep_minutes">%1$d хв.</string>
+    <string name="quick_sleep_description">Таймер сну, залишилося %1$d хвилин. Торкніться, щоб змінити</string>
+    <string name="quick_sleep_off_description">Таймер сну вимкнено. Торкніться, щоб встановити</string>
 </resources>

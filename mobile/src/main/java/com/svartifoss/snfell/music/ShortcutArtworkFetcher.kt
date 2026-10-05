@@ -158,6 +158,21 @@ object ShortcutArtworkFetcher {
         return OembedParser.parse(json)
     }
 
+    /**
+     * Public details for one share link. oEmbed is preferred because it is an explicit preview
+     * contract; an Open Graph/JSON-LD read of the public page fills gaps for services without
+     * oEmbed, or where its answer has no creator/description. No login, cookies or private player
+     * endpoint is used. Blocking; callers must use an IO dispatcher.
+     */
+    fun lookupPublicMetadata(link: String): PublicLinkMetadata? {
+        val preview = lookupInfo(link)?.toPublicMetadata()
+        val needsPage = preview == null || !preview.hasDetails
+        if (!needsPage) return preview
+        val page = publicPageUrl(link) ?: return preview
+        return PublicLinkMetadataParser.parse(downloadText(page).orEmpty())?.mergeFallback(preview)
+                ?: preview
+    }
+
     private fun oembedEndpoint(link: String): String? {
         val service = StreamingShortcutLinks.detect(link)
         val source = when (service) {
@@ -173,6 +188,17 @@ object ShortcutArtworkFetcher {
             else -> null
         }
         return source
+    }
+
+    /** A web page is only fetched for a recognised streaming provider and a regular public web
+     * share link, never an arbitrary generic URL or app URI. Besides being more honest about the
+     * feature's scope, that prevents a pasted `http://` address from turning metadata lookup into
+     * a probe of a local/network service. */
+    private fun publicPageUrl(link: String): String? {
+        if (StreamingShortcutLinks.detect(link) == StreamingService.GENERIC) return null
+        return StreamingShortcutLinks.forBrowser(link)
+                .takeIf { it.startsWith("https://", ignoreCase = true) ||
+                        it.startsWith("http://", ignoreCase = true) }
     }
 
     /** YouTube's oEmbed only accepts youtube.com/watch URLs, so normalise the music.youtube link. */

@@ -38,7 +38,7 @@
 
     <string name="no_phone">Telefonen er ikke tilsluttet</string>
     <string name="phone_unavailable">Lås telefonen op for at styre afspilningen</string>
-    <string name="playback_stopped">Stoppet</string>
+    <string name="playback_stopped">På pause</string>
     <string name="error">FEJL</string>
     <string name="error_play_services">Fejl i Google Play-tjenester</string>
     <string name="button">Knap</string>
@@ -209,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Annuller søgning</string>
     <string name="progress_screen_skip_back">Hop %1$d sekunder tilbage</string>
     <string name="progress_screen_skip_forward">Hop %1$d sekunder frem</string>
+    <string name="quick_block_all_actions">Alle handlinger</string>
+    <string name="quick_block_favorites">Favoritter</string>
+    <string name="quick_tool_speed">Hastighed</string>
+    <string name="quick_tool_lyrics">Sangtekster</string>
+    <string name="quick_tool_queue">Kø</string>
+    <string name="quick_tool_volume">Lydstyrke</string>
+    <string name="quick_tool_progress">Fremskridt</string>
+    <string name="quick_tool_faces">Urskiver</string>
+    <string name="quick_tool_search">Søg i</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Lydstyrke %1$d%%</string>
+    <string name="quick_seek_back_description">Tilbage %1$d sekunder</string>
+    <string name="quick_seek_forward_description">Frem %1$d sekunder</string>
+    <string name="quick_speed_description">Afspilningshastighed %1$s</string>
+    <string name="quick_tool_sleep">Sleep-timer</string>
+    <string name="quick_sleep_minutes">%1$d min.</string>
+    <string name="quick_sleep_description">Sleep-timer, %1$d minutter tilbage. Tryk for at ændre</string>
+    <string name="quick_sleep_off_description">Søvntimeren er slået fra. Tryk for at indstille.</string>
 </resources>

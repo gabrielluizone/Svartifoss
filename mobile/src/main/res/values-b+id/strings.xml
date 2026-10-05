@@ -265,7 +265,7 @@
     <string name="preview_sample_lyric_current">Baris yang diputar sekarang</string>
     <string name="preview_sample_lyric_next">Baris berikutnya</string>
     <string name="preview_sample_next_title">Lagu berikutnya</string>
-    <string name="preview_playback_stopped">Dihentikan</string>
+    <string name="preview_playback_stopped">Dijeda</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -709,9 +709,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Latar belakang pil Berikutnya</string>
-    <string name="setting_wear_show_up_next_pill">Pil Berikutnya di pemutar</string>
-    <string name="setting_wear_show_up_next_pill_description">Tampilkan pil Berikutnya di bagian bawah layar sedang diputar. Mengisi ruang yang akan diambil baris tombol mini, jadi hanya muncul saat baris tersebut tidak ditampilkan.</string>
+    <string name="setting_wear_up_next_pill">Latar belakang kapsul Berikutnya</string>
+    <string name="setting_wear_show_up_next_pill">Kapsul Berikutnya di pemutar</string>
+    <string name="setting_wear_show_up_next_pill_description">Tampilkan kapsul Berikutnya di bagian bawah layar sedang diputar. Mengisi ruang yang akan diambil baris tombol mini, jadi hanya muncul saat baris tersebut tidak ditampilkan.</string>
     <string name="category_wf_clock">Jam</string>
     <string name="setting_wear_clock_color">Warna jam</string>
     <string name="setting_wear_clock_custom_color">Warna jam kustom</string>
@@ -727,7 +727,7 @@
     <string name="setting_wear_aod_show_progress">Cincin kemajuan pada layar selalu aktif</string>
     <string name="setting_wear_aod_show_progress_description">Tampilkan cincin kemajuan di sekitar tombol putar dalam mode ambient — posisi hanya diperbarui sekitar sekali per menit di sana</string>
     <string name="setting_wear_aod_show_pills">Berikutnya pada layar selalu aktif</string>
-    <string name="setting_wear_aod_show_pills_description">Tampilkan pil Berikutnya statis bergaris luar di bagian bawah gaya visual selalu aktif</string>
+    <string name="setting_wear_aod_show_pills_description">Tampilkan kapsul Berikutnya statis bergaris luar di bagian bawah gaya visual selalu aktif</string>
     <string name="category_wf_gestures">Gestur layar</string>
     <string name="setting_wear_mini_buttons_mode">Tampilkan tombol mini</string>
     <string name="setting_wear_gestures_mode">Gestur layar</string>
@@ -783,8 +783,8 @@
     <string name="preview_notification_controls">Ikon dari notifikasi media</string>
     <string name="setting_wear_queue_style">Gaya antrean</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Gunakan sampul pintasan sebagai latar belakang</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Ketika Gaya antrean adalah varian Sampul, baris aksi panel cepat dengan sampul pintasan yang diambil (trek, daftar putar, artis…) juga mengisi pilnya dengan sampul tersebut, seperti yang dilakukan Berikutnya. Pintasan tanpa sampul yang diambil (hanya ikon aplikasi) tidak terpengaruh.</string>
-    <string name="setting_wear_list_row_size">Ukuran pil daftar</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Ketika Gaya antrean adalah varian Sampul, baris aksi panel cepat dengan sampul pintasan yang diambil (trek, daftar putar, artis…) juga mengisi kapsulnya dengan sampul tersebut, seperti yang dilakukan Berikutnya. Pintasan tanpa sampul yang diambil (hanya ikon aplikasi) tidak terpengaruh.</string>
+    <string name="setting_wear_list_row_size">Ukuran kapsul daftar</string>
     <string name="setting_wear_list_row_size_description">Tinggi baris lebar penuh di antrean, menu, dan panel cepat.</string>
     <string name="setting_wear_progress_style">Gaya cincin kemajuan</string>
     <string name="setting_wear_seek_style">Gaya pembacaan pencarian &amp; volume</string>
@@ -1359,9 +1359,6 @@
     <string name="drawer_sync_heading">Sinkronisasi</string>
     <string name="drawer_sync_summary">Pengaturan jam tangan dikonfigurasi di sini pada ponsel dan disinkronkan secara otomatis ke jam tangan Anda yang dipasangkan.</string>
     <string name="drawer_support_heading">Dukungan</string>
-    <string name="drawer_support_summary">Svartifoss gratis dan sumber terbuka - belikan saya kopi jika bermanfaat bagi Anda :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Unduh sampul</string>
     <string name="album_art_saved">Sampul disimpan ke galeri</string>
     <string name="album_art_save_error">Gagal menyimpan sampul</string>
@@ -2828,4 +2825,99 @@
     <string name="setting_online_artwork_description">Biarkan tampilan jam menunjukkan gambar yang dicari secara online \u2014 artis yang tampil, atau sampul album untuk pemutar yang tidak menyediakan gambar. Ponsel Anda melakukan pencarian di katalog publik Deezer dan menyimpan hasilnya dalam cache; hanya nama trek dan artis yang dikirim, dan tidak ada yang dicari kecuali sebuah tampilan jam diatur ke salah satu sumber tersebut. Jika dimatikan, karya seni milik pemutar digunakan.</string>
     <string name="setting_wear_shortcut_details">Putar atau Acak di jam tangan</string>
     <string name="setting_wear_shortcut_details_description">Memilih link tersimpan di jam tangan, dari daftar pintasan, Tile Pintasan, atau menu aksi, akan menampilkan sampulnya terlebih dahulu dengan Putar dan Acak. Nonaktifkan untuk langsung memulainya. Tombol dan gestur yang ditetapkan untuk satu link selalu langsung memulainya.</string>
+    <string name="actions_quick_pin_add">Tampilkan di panel cepat</string>
+    <string name="actions_quick_pin_remove">Hapus dari panel cepat</string>
+    <string name="quick_panel_editor_title">Panel tindakan cepat</string>
+    <string name="quick_panel_editor_open">Edit konten panel</string>
+    <string name="quick_panel_editor_intro">Bangun panel yang terbuka saat Anda mengetuk dua kali bagian tengah jam tangan. Tahan dan seret blok untuk memindahkannya, ketuk salah satu untuk menyesuaikannya.</string>
+    <string name="quick_panel_editor_add_block">Tambahkan blok</string>
+    <string name="quick_panel_editor_restore">Mengembalikan panel asli</string>
+    <string name="quick_panel_editor_restore_title">Kembalikan panel asli?</string>
+    <string name="quick_panel_editor_restore_message">Pengaturan Anda dihapus dan panel kembali seperti semula. Pilihan tombol Anda dan tindakan yang Anda bintangi disimpan.</string>
+    <string name="quick_panel_editor_restore_confirm">Pulihkan</string>
+    <string name="quick_panel_editor_fold">Akhir layar pertama (perkiraan)</string>
+    <string name="quick_panel_editor_last_block">Panel memerlukan setidaknya satu blok</string>
+    <string name="quick_panel_editor_removed">Dihapus %1$s</string>
+    <string name="quick_panel_editor_undo">Membatalkan</string>
+    <string name="quick_panel_editor_move_up">Naik</string>
+    <string name="quick_panel_editor_move_down">Pindah ke bawah</string>
+    <string name="quick_panel_editor_more">Opsi lainnya</string>
+    <string name="quick_panel_editor_nothing_to_add">Setiap blok sudah ada di panel</string>
+    <string name="quick_block_header">Trek</string>
+    <string name="quick_block_buttons">Tombol bulat</string>
+    <string name="quick_block_upnext">Lagu berikutnya</string>
+    <string name="quick_block_volume">Volume</string>
+    <string name="quick_block_seek">Lewati dan posisi</string>
+    <string name="quick_block_tools">Alat</string>
+    <string name="quick_block_favorites">Favorit</string>
+    <string name="quick_block_actions">Semua tindakan</string>
+    <string name="quick_block_all_actions">Semua tindakan</string>
+    <string name="quick_block_header_description">Judul dan artis yang sedang diputar.</string>
+    <string name="quick_block_buttons_description">Tombol bulat untuk tindakan yang paling sering Anda gunakan, atau tindakan yang ditawarkan aplikasi pemutar.</string>
+    <string name="quick_block_upnext_description">Lagu berikutnya. Ketuk untuk membuka antrian.</string>
+    <string name="quick_block_volume_description">Turunkan dan naikkan volume tanpa meninggalkan panel.</string>
+    <string name="quick_block_seek_description">Posisi Anda di trek, dan tombol untuk melompat maju dan mundur.</string>
+    <string name="quick_block_tools_description">Pintasan kecil: kecepatan pemutaran, lirik, antrian, dan lainnya.</string>
+    <string name="quick_block_favorites_description">Tindakan yang Anda bintangi di tab Tindakan, sebagai sampul atau baris.</string>
+    <string name="quick_block_actions_description">Setiap tindakan menu jam tangan Anda, sebagai baris di panel atau sebagai satu tombol yang membuka menu.</string>
+    <string name="quick_summary_header">Judul dan artis</string>
+    <string name="quick_summary_buttons_session">Dari aplikasi yang memutar</string>
+    <string name="quick_summary_buttons_empty">Tidak ada tombol yang dipilih</string>
+    <string name="quick_summary_upnext">Lagu berikutnya · membuka antrian</string>
+    <string name="quick_summary_volume">Penambahan volume sebesar %1$d%%</string>
+    <string name="quick_summary_seek">%1$s detik</string>
+    <string name="quick_summary_seek_bar">%1$s detik · waktu dan bilah</string>
+    <string name="quick_summary_favorites_none">Belum ada bintangnya</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d berbintang · %2$s</item>
+        <item quantity="other">%1$d berbintang · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Semua tindakan %1$d</string>
+    <string name="quick_summary_actions_first">Tindakan %1$d pertama</string>
+    <string name="quick_summary_actions_button">Satu tombol · membuka menu tindakan</string>
+    <string name="quick_summary_only_playing">hanya saat memutar</string>
+    <string name="quick_summary_only_not_playing">hanya saat tidak memutar</string>
+    <string name="quick_mode_grid">jaringan</string>
+    <string name="quick_mode_rows">Baris</string>
+    <string name="quick_mode_actions_list">Daftar</string>
+    <string name="quick_mode_actions_button">Tombol</string>
+    <string name="quick_sheet_show">Tampilkan</string>
+    <string name="quick_sheet_always">Selalu</string>
+    <string name="quick_sheet_while_playing">hanya saat memutar</string>
+    <string name="quick_sheet_while_not_playing">hanya saat tidak memutar</string>
+    <string name="quick_sheet_step">Langkah</string>
+    <string name="quick_sheet_jump">Lompati sebesar</string>
+    <string name="quick_sheet_seek_bar">Tampilkan waktu dan bilah kemajuan</string>
+    <string name="quick_sheet_tools">Alat</string>
+    <string name="quick_sheet_layout">Tata Letak</string>
+    <string name="quick_sheet_how_many">Berapa banyak</string>
+    <string name="quick_sheet_all">Semua</string>
+    <string name="quick_sheet_buttons_source">Tombol dari</string>
+    <string name="quick_sheet_source_configured">Pilihan saya</string>
+    <string name="quick_sheet_source_session">Aplikasi yang memutar</string>
+    <string name="quick_sheet_buttons_hint">Ketuk tombol untuk memilih tindakannya. Tahan untuk mengembalikan defaultnya.</string>
+    <string name="quick_sheet_favorites_hint">Bintangi tindakan dengan tanda petir di tab Tindakan. Hanya yang berbintang yang muncul di sini.</string>
+    <string name="quick_sheet_actions_mode">Tampilkan sebagai</string>
+    <string name="quick_sheet_actions_hint">Daftar menempatkan setiap tindakan di panel sebagai satu baris. Sebuah tombol membuat panel tetap pendek: satu tombol yang membuka menu lengkap. Untuk membiarkan menu keluar dari panel sama sekali, hapus blok ini.</string>
+    <string name="quick_sheet_remove">Hapus blok ini</string>
+    <string name="quick_sheet_done">Selesai</string>
+    <string name="quick_tool_speed">Kecepatan</string>
+    <string name="quick_tool_sleep">Timer tidur</string>
+    <string name="quick_tool_lyrics">Lirik</string>
+    <string name="quick_tool_queue">Antrean</string>
+    <string name="quick_tool_volume">Volume</string>
+    <string name="quick_tool_progress">Kemajuan</string>
+    <string name="quick_tool_faces">Tampilan jam</string>
+    <string name="quick_tool_search">Penelusuran</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="setting_wear_hide_from_recents">Sembunyikan dari aplikasi terkini</string>
+    <string name="setting_wear_hide_from_recents_description">Menyimpan aplikasi jam tangan dari daftar aplikasi terbaru jam tangan setelah Anda menutupnya atau menggunakan aplikasi lain. Berguna jika Anda membukanya dari tampilan jam atau Now Bar. Itu tetap dapat dijangkau persis seperti sebelumnya, dan musik serta koneksi latar belakang tidak terpengaruh.</string>
+    <string name="setting_streaming_app_routes">Pilih aplikasi untuk tautan streaming</string>
+    <string name="setting_streaming_app_routes_description">Pilih aplikasi terpasang yang kompatibel secara terpisah untuk YouTube Music, Spotify, dan layanan lainnya. Digunakan dengan "Aplikasi streaming yang terdeteksi".</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d menggunakan aplikasi yang dipilih</item>
+        <item quantity="other">Layanan %1$d menggunakan aplikasi yang dipilih</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Aplikasi yang dapat membuka tautan, ditambah pemutar media terpasang, akan ditampilkan.</string>
+    <string name="streaming_route_automatic">Otomatis (aplikasi terdeteksi)</string>
 </resources>

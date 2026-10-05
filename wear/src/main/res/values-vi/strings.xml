@@ -38,7 +38,7 @@
 
     <string name="no_phone">Chưa kết nối điện thoại</string>
     <string name="phone_unavailable">Mở khóa điện thoại để điều khiển phát nhạc</string>
-    <string name="playback_stopped">Đã dừng</string>
+    <string name="playback_stopped">Đã tạm dừng</string>
     <string name="error">LỖI</string>
     <string name="error_play_services">Lỗi Play Services</string>
     <string name="button">Nút</string>
@@ -209,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Hủy tua đến vị trí</string>
     <string name="progress_screen_skip_back">Lùi %1$d giây</string>
     <string name="progress_screen_skip_forward">Tiến %1$d giây</string>
+    <string name="quick_block_all_actions">Tất cả hành động</string>
+    <string name="quick_block_favorites">Yêu thích</string>
+    <string name="quick_tool_speed">Tốc độ</string>
+    <string name="quick_tool_lyrics">Lời bài hát</string>
+    <string name="quick_tool_queue">Hàng đợi</string>
+    <string name="quick_tool_volume">Âm lượng</string>
+    <string name="quick_tool_progress">Tiến triển</string>
+    <string name="quick_tool_faces">Mặt đồng hồ</string>
+    <string name="quick_tool_search">Tìm kiếm</string>
+    <string name="quick_tool_menu">Thực đơn</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Âm lượng %1$d%%</string>
+    <string name="quick_seek_back_description">Quay lại %1$d giây</string>
+    <string name="quick_seek_forward_description">Chuyển tiếp %1$d giây</string>
+    <string name="quick_speed_description">Tốc độ phát lại %1$s</string>
+    <string name="quick_tool_sleep">Hẹn giờ ngủ</string>
+    <string name="quick_sleep_minutes">%1$d phút</string>
+    <string name="quick_sleep_description">Hẹn giờ ngủ, còn %1$d phút. Nhấn để thay đổi.</string>
+    <string name="quick_sleep_off_description">Tắt hẹn giờ ngủ. Nhấn để đặt</string>
 </resources>

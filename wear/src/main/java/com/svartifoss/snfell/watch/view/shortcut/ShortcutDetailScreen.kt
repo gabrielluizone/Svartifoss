@@ -85,6 +85,10 @@ data class ShortcutDetailUi(
         val subtitle: String?,
         /** Whether Shuffle is offered beside Play - a collection, on a phone that honours it. */
         val shuffleable: Boolean,
+        /** Public link-preview creator/byline, when the service publishes one. */
+        val creator: String? = null,
+        /** Public link-preview description, deliberately absent when no preview published it. */
+        val description: String? = null,
         /**
          * The cover: the fetched one when the opt-in lookup found it, otherwise the one the phone
          * draws (a liked-songs collection's own design, or the service's colour with its mark).
@@ -161,7 +165,7 @@ fun ShortcutDetailContent(
                 }
             }
             item(key = "title") {
-                ShortcutTitle(detail.title, detail.subtitle)
+                ShortcutTitle(detail.title, detail.creator, detail.subtitle, detail.description)
             }
             item(key = "buttons") {
                 Row(
@@ -279,7 +283,7 @@ private fun ShortcutCover(
                         modifier = Modifier.size(size * if (markTintable) .44f else .56f))
             } else {
                 Icon(
-                        painter = painterResource(R.drawable.ic_playlist_play),
+                        painter = painterResource(R.drawable.ic_shortcut_queue_music),
                         contentDescription = null,
                         tint = Color(WatchTheme.accentForText(accent.toArgb())),
                         modifier = Modifier.size(size * .42f))
@@ -289,7 +293,7 @@ private fun ShortcutCover(
 }
 
 @Composable
-private fun ShortcutTitle(title: String, subtitle: String?) {
+private fun ShortcutTitle(title: String, creator: String?, subtitle: String?, description: String?) {
     Column(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 10.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -304,15 +308,38 @@ private fun ShortcutTitle(title: String, subtitle: String?) {
                 textAlign = TextAlign.Center,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis)
-        if (!subtitle.isNullOrBlank()) {
+        if (!creator.isNullOrBlank()) {
             Spacer(Modifier.height(2.dp))
             Text(
-                    text = subtitle,
+                    text = creator,
                     color = Color.White.copy(alpha = .68f),
                     fontFamily = LocalWatchUiFontFamily.current,
                     fontSize = 12.sp,
                     textAlign = TextAlign.Center,
                     maxLines = 1,
+                    overflow = TextOverflow.Ellipsis)
+        }
+        if (!subtitle.isNullOrBlank()) {
+            Spacer(Modifier.height(2.dp))
+            Text(
+                    text = subtitle,
+                    color = Color.White.copy(alpha = .56f),
+                    fontFamily = LocalWatchUiFontFamily.current,
+                    fontSize = 11.sp,
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis)
+        }
+        if (!description.isNullOrBlank()) {
+            Spacer(Modifier.height(4.dp))
+            Text(
+                    text = description,
+                    color = Color.White.copy(alpha = .62f),
+                    fontFamily = LocalWatchUiFontFamily.current,
+                    fontSize = 11.sp,
+                    lineHeight = 13.sp,
+                    textAlign = TextAlign.Center,
+                    maxLines = 2,
                     overflow = TextOverflow.Ellipsis)
         }
     }

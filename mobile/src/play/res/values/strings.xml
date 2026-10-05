@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Play Store build only: the tip option in the navigation drawer, sold through Google Play
+     Billing. The github build has Buy Me a Coffee and Ko-fi links in their place (see
+     mobile/src/github/res). A tip unlocks nothing - the app is a paid listing and every feature is
+     already available to whoever bought it - so these strings must never promise a reward.
+     English is the fallback for every locale that has no file here. -->
+<resources>
+    <string name="drawer_tip_summary">You already have all of Svartifoss — nothing in the app is locked. If you\'d like to say thanks anyway, you can leave a tip. It unlocks nothing; it just helps me keep improving the app.</string>
+    <string name="drawer_tip_button">Support the developer</string>
+    <string name="tip_dialog_title">Leave a tip</string>
+    <string name="tip_dialog_message">Every feature is already unlocked for you, and a tip doesn\'t change that. It\'s only a way to say thanks and help pay for what comes next. Thank you!</string>
+    <string name="tip_thanks">Thank you so much for the support!</string>
+    <string name="tip_pending">Your tip is waiting for the payment to be confirmed. Thank you!</string>
+    <string name="tip_failed">The tip couldn\'t be completed. Please try again later.</string>
+</resources>

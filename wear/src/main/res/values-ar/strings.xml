@@ -38,7 +38,7 @@
 
     <string name="no_phone">لا يوجد هاتف متصل</string>
     <string name="phone_unavailable">افتح قفل هاتفك للتحكم في التشغيل</string>
-    <string name="playback_stopped">متوقف</string>
+    <string name="playback_stopped">متوقف مؤقتًا</string>
     <string name="error">خطأ</string>
     <string name="error_play_services">خطأ في خدمات Play</string>
     <string name="button">زر</string>
@@ -215,4 +215,23 @@
     <string name="progress_screen_cancel_seek">إلغاء الانتقال</string>
     <string name="progress_screen_skip_back">تخطي للخلف %1$d ثانية</string>
     <string name="progress_screen_skip_forward">تخطي للأمام %1$d ثانية</string>
+    <string name="quick_block_all_actions">جميع الإجراءات</string>
+    <string name="quick_block_favorites">المفضلة</string>
+    <string name="quick_tool_speed">السرعة</string>
+    <string name="quick_tool_lyrics">كلمات الأغاني</string>
+    <string name="quick_tool_queue">قائمة الانتظار</string>
+    <string name="quick_tool_volume">مستوى الصوت</string>
+    <string name="quick_tool_progress">التقدم</string>
+    <string name="quick_tool_faces">واجهات الساعة</string>
+    <string name="quick_tool_search">بحث</string>
+    <string name="quick_tool_menu">القائمة</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">مستوى الصوت %1$d%%</string>
+    <string name="quick_seek_back_description">رجوع %1$d ثانية</string>
+    <string name="quick_seek_forward_description">للأمام %1$d ثانية</string>
+    <string name="quick_speed_description">سرعة التشغيل %1$s</string>
+    <string name="quick_tool_sleep">مؤقت النوم</string>
+    <string name="quick_sleep_minutes">%1$d دقيقة</string>
+    <string name="quick_sleep_description">مؤقت النوم، %1$d دقيقة متبقية. انقر لتغيير</string>
+    <string name="quick_sleep_off_description">مؤقت النوم متوقف. انقر لتعيينه</string>
 </resources>

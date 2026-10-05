@@ -77,23 +77,7 @@ object StreamingShortcutRoutes {
         val links = representativeLinks(service)
         if (links.isEmpty()) return emptyList()
         val packageManager = context.packageManager
-        val packages = try {
-            packageManager.queryIntentActivities(
-                    Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), 0
-            ).map { it.activityInfo.packageName } + links.flatMap { link ->
-                packageManager.queryIntentActivities(Intent(Intent.ACTION_VIEW, Uri.parse(link)),
-                        PackageManager.MATCH_DEFAULT_ONLY).map { it.activityInfo.packageName }
-            } +
-                    packageManager.queryBroadcastReceivers(
-                            Intent(Intent.ACTION_MEDIA_BUTTON),
-                            0
-                    ).map { it.activityInfo.packageName }
-        } catch (_: SecurityException) {
-            emptyList()
-        }
-        return packages.asSequence()
-                .filter { it != context.packageName }
-                .distinct()
+        return candidatePackages(context, links).asSequence()
                 .filter { packageName -> links.any { link ->
                     canOpen(packageManager, packageName, linkForTarget(link, service, packageName))
                 } }
@@ -109,6 +93,85 @@ object StreamingShortcutRoutes {
                 }
                 .sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.label })
                 .toList()
+    }
+
+    /**
+     * The packages worth testing against [links]: everything with a launcher entry, everything the
+     * system itself resolves one of the links to, and every media-button receiver - a streaming
+     * client is one of those, and an alternative the system's own resolution leaves out (an
+     * unverified domain, since Android 12) is still found by the first or the last.
+     *
+     * Three queries that return every app on the phone, so they are asked once per call and not
+     * once per service: asked per service they were repeated twelve times for the same answer.
+     */
+    private fun candidatePackages(context: Context, links: List<String>): List<String> {
+        val packageManager = context.packageManager
+        return try {
+            (packageManager.queryIntentActivities(
+                    Intent(Intent.ACTION_MAIN).addCategory(Intent.CATEGORY_LAUNCHER), 0
+            ).map { it.activityInfo.packageName } + links.flatMap { link ->
+                packageManager.queryIntentActivities(Intent(Intent.ACTION_VIEW, Uri.parse(link)),
+                        PackageManager.MATCH_DEFAULT_ONLY).map { it.activityInfo.packageName }
+            } + packageManager.queryBroadcastReceivers(
+                    Intent(Intent.ACTION_MEDIA_BUTTON), 0
+            ).map { it.activityInfo.packageName })
+                    .filter { it != context.packageName }
+                    .distinct()
+        } catch (_: SecurityException) {
+            emptyList()
+        }
+    }
+
+    /**
+     * Installed apps that can be used for at least one supported streaming service.
+     *
+     * This is intentionally the same eligibility check as the per-service app picker.  It keeps
+     * the icon picker useful for patched/alternative clients as well as the official clients,
+     * without guessing from a package name or exposing arbitrary installed apps.
+     *
+     * **This is slow and must never run on the main thread.** Every candidate is tested against
+     * every service's links with a package-targeted query, which is one binder call each: some
+     * thousand of them on a phone with a hundred launcher apps. It used to be called from the icon
+     * picker's `show()`, which froze the dialog for seconds before it appeared. Callers go through
+     * `BuiltInIconPicker`'s background loader, which also keeps the answer for a while.
+     *
+     * One pass rather than one per service, since the answer is a union: a package that opens any
+     * service's link is in, whichever service that is, so it is not tested against the rest, and the
+     * official clients are listed on being installed without testing anything.
+     */
+    fun availableStreamingApps(context: Context): List<App> {
+        val packageManager = context.packageManager
+        val services = StreamingService.entries.filter { it != StreamingService.GENERIC }
+        val byPackage = linkedMapOf<String, App>()
+        services.forEach { service ->
+            service.packageName?.let { packageName ->
+                app(context, packageName)?.let { byPackage.putIfAbsent(packageName, it) }
+            }
+        }
+
+        val probes = services.flatMap { service ->
+            representativeLinks(service).map { link -> service to link }
+        }
+        candidatePackages(context, probes.map { it.second }.distinct())
+                .filter { it !in byPackage }
+                .forEach { packageName ->
+                    val opensAService = probes.any { (service, link) ->
+                        canOpen(packageManager, packageName,
+                                linkForTarget(link, service, packageName))
+                    }
+                    if (opensAService) app(context, packageName)?.let { byPackage[packageName] = it }
+                }
+        return byPackage.values.sortedWith(compareBy(String.CASE_INSENSITIVE_ORDER) { it.label })
+    }
+
+    private fun app(context: Context, packageName: String): App? = try {
+        val info = context.packageManager.getApplicationInfo(packageName, 0)
+        if (!info.enabled || packageName == context.packageName) null else App(
+                packageName, context.packageManager.getApplicationLabel(info).toString())
+    } catch (_: PackageManager.NameNotFoundException) {
+        null
+    } catch (_: SecurityException) {
+        null
     }
 
     private fun Context.isPackageInstalled(packageName: String): Boolean = try {

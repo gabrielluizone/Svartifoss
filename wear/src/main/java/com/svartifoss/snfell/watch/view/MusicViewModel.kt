@@ -241,7 +241,8 @@ class MusicViewModel @Inject constructor(
         // out over the player.
         val remoteUri = action.remoteUri
         if (remoteUri != null && ShortcutScreenPolicy.opensForMenuAction(
-                        shortcutScreenEnabled(), remoteUri, action.shortcutSubtitle)) {
+                        shortcutScreenEnabled(), remoteUri, action.shortcutSubtitle,
+                        action.shortcutShuffleable)) {
             openShortcutScreen.value = action.toShortcutDetail(remoteUri)
             return
         }
@@ -420,9 +421,9 @@ class MusicViewModel @Inject constructor(
         }
     }
 
-    /**
     private val speedTaps = PlaybackSpeeds.TapMemory { SystemClock.elapsedRealtime() }
 
+    /**
      * Steps the playback speed to the next rung of [PlaybackSpeeds] and returns it, so the control
      * that asked can show the new speed before the phone has confirmed it.
      */
@@ -434,7 +435,6 @@ class MusicViewModel @Inject constructor(
         return next
     }
 
-    /** Seeks to [fraction] (0f..1f) of the current track's duration. No-op if not seekable. */
     /** The phone's sleep timer, as the moment it ends on this watch's clock; 0 when none runs. */
     val sleepTimerEndsAt: LiveData<Long> = phoneConnection.sleepTimerEndsAt
 
@@ -467,6 +467,7 @@ class MusicViewModel @Inject constructor(
         }
     }
 
+    /** Seeks to [fraction] (0f..1f) of the current track's duration. No-op if not seekable. */
     fun seekTo(fraction: Float) {
         val state = latestMusicState ?: return
         if (!state.seekable || state.durationMs <= 0) {

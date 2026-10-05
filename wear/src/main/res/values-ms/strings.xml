@@ -38,7 +38,7 @@
 
     <string name="no_phone">Telefon tidak disambungkan</string>
     <string name="phone_unavailable">Buka kunci telefon untuk mengawal main balik</string>
-    <string name="playback_stopped">Dihentikan</string>
+    <string name="playback_stopped">Dijeda</string>
     <string name="error">RALAT</string>
     <string name="error_play_services">Ralat Perkhidmatan Google Play</string>
     <string name="button">Butang</string>
@@ -106,7 +106,7 @@
     <string name="hint_edges">Ketik atas, bawah, kiri atau kanan — setiap zon menjalankan tindakan yang ditetapkan</string>
     <string name="hint_center">Tengah — main/jeda\nKetik dua kali — Tindakan Pantas\nTekan lama — pemilih muka jam (boleh dikonfigurasi)</string>
     <string name="hint_swipe_up">Leret ke atas — menu tindakan\nBawah atau kiri — tindakan ditetapkan\nKanan dari tepi — keluar</string>
-    <string name="hint_crown">Crown — kelantangan atau carian\nButang sisi — tindakan ditetapkan\nSesuaikan semuanya dalam Kawalan dan Jam pada telefon anda</string>
+    <string name="hint_crown">Mahkota berputar — kelantangan atau carian\nButang sisi — tindakan ditetapkan\nSesuaikan semuanya dalam Kawalan dan Jam pada telefon anda</string>
     <string name="hint_next">Seterusnya</string>
     <string name="hint_dismiss">Selesai</string>
 
@@ -209,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Batalkan pencarian kedudukan</string>
     <string name="progress_screen_skip_back">Langkau ke belakang %1$d saat</string>
     <string name="progress_screen_skip_forward">Langkau ke hadapan %1$d saat</string>
+    <string name="quick_block_all_actions">Semua tindakan</string>
+    <string name="quick_block_favorites">Kegemaran</string>
+    <string name="quick_tool_speed">Kelajuan</string>
+    <string name="quick_tool_lyrics">Lirik</string>
+    <string name="quick_tool_queue">Beratur</string>
+    <string name="quick_tool_volume">Kelantangan</string>
+    <string name="quick_tool_progress">Kemajuan</string>
+    <string name="quick_tool_faces">Muka jam</string>
+    <string name="quick_tool_search">Cari</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Kelantangan %1$d%%</string>
+    <string name="quick_seek_back_description">Kembali %1$d saat</string>
+    <string name="quick_seek_forward_description">Hadapan %1$d saat</string>
+    <string name="quick_speed_description">Kelajuan main balik %1$s</string>
+    <string name="quick_tool_sleep">Pemasa tidur</string>
+    <string name="quick_sleep_minutes">%1$d minit</string>
+    <string name="quick_sleep_description">Pemasa tidur, %1$d minit lagi. Ketik untuk menukar</string>
+    <string name="quick_sleep_off_description">Pemasa tidur dimatikan. Ketik untuk menetapkan</string>
 </resources>

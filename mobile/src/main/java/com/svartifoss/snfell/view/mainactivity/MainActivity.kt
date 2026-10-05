@@ -2,8 +2,6 @@ package com.svartifoss.snfell.view.mainactivity
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.net.Uri
 import android.media.MediaMetadata
 import android.media.session.MediaController
 import android.media.session.PlaybackState
@@ -28,6 +26,7 @@ import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.databinding.ActivityMainBinding
 import com.svartifoss.snfell.di.InjectableViewModelFactory
 import com.svartifoss.snfell.music.isPlaying
+import com.svartifoss.snfell.support.DrawerSupportSection
 import com.svartifoss.snfell.view.ActivityResultReceiver
 import com.svartifoss.snfell.view.FabFragment
 import com.svartifoss.snfell.view.LyraAccent
@@ -53,7 +52,6 @@ import androidx.palette.graphics.Palette
 import androidx.preference.PreferenceManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.tabs.TabLayout
 import androidx.lifecycle.lifecycleScope
 import com.svartifoss.snfell.update.UpdateGateway
@@ -74,9 +72,6 @@ private const val REQUEST_CODE_SETTINGS_SEARCH = 1003
  *  Deliberately not in MiscPreferences.EXPORTABLE - it describes this phone's prompt history, so
  *  it neither syncs to the watch nor survives into a config backup as a meaningful setting. */
 private const val NOTIFICATION_ACCESS_PROMPTED_PREF = "notification_access_prompted"
-
-private const val BUY_ME_A_COFFEE_URL = "https://buymeacoffee.com/gabrielsvafoss"
-private const val KOFI_URL = "https://ko-fi.com/gabrielsvafoss"
 
 class MainActivity : WearCompanionPhoneActivity(),
         TitledActivity, ActivityResultReceiver, HasAndroidInjector {
@@ -1186,22 +1181,11 @@ class MainActivity : WearCompanionPhoneActivity(),
             versionText.text = getString(R.string.drawer_version_format, versionName)
         }
 
-        // LyraGestureButton sets iconTint=@null so screens that hand-tint an action icon (the
-        // gesture/action pickers) aren't fought by a style default - but this row never tints its
-        // own icon, so ic_buy_me_a_coffee's plain white fill was showing through unmodified,
-        // invisible on the light theme's surface. Same trap as the Watch tab's contextual editors.
-        header.findViewById<MaterialButton>(R.id.drawer_support_button)?.apply {
-            iconTint = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.lyra_on_surface))
-            setOnClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BUY_ME_A_COFFEE_URL)))
-            }
-        }
-
-        // ic_kofi is deliberately left untinted - it's a real, multi-colour brand mark (see its
-        // own comment), not a template glyph.
-        header.findViewById<View>(R.id.drawer_kofi_button)?.setOnClickListener {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(KOFI_URL)))
-        }
+        // The support section differs per distribution: Buy Me a Coffee and Ko-fi links in the
+        // github build, a tip sold through Google Play Billing in the Play build, whose Payments
+        // policy forbids a button leading to any other way of paying. Each flavor supplies this
+        // object and its own layout (src/github, src/play); nothing of either is in src/main.
+        DrawerSupportSection.bind(this, header)
     }
 
     private fun swapFragment(newFragment: Fragment) {

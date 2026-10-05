@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">வெளியீடுகளைப் பார்</string>
     <string name="update_watch_hint">\u201cWatch-ஐ update செய்\u201d புதிய watch app-ஐ download செய்து Bluetooth வழியாக அனுப்பும் \u2014 நிறுவலை watch-இலேயே நீங்கள் உறுதிப்படுத்த வேண்டும்; cable அல்லது Wear Installer தேவையில்லை.</string>
     <string name="update_no_wear_asset">இந்த release-இல் அனுப்ப watch APK இல்லை.</string>
+    <string name="drawer_support_summary">Svartifoss இலவசமும் open source-உம் ஆகும் - உங்களுக்கு பயனுள்ளதாக இருந்தால் எனக்கு ஒரு coffee வாங்கித் தாருங்கள் :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

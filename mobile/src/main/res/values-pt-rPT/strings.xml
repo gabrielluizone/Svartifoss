@@ -299,7 +299,7 @@
     <string name="preview_sample_lyric_current">A linha a tocar agora</string>
     <string name="preview_sample_lyric_next">A linha seguinte</string>
     <string name="preview_sample_next_title">Próxima música</string>
-    <string name="preview_playback_stopped">Parado</string>
+    <string name="preview_playback_stopped">Pausado</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -475,9 +475,9 @@
 
     <string name="quick_block_header">Faixa</string>
     <string name="quick_block_buttons">Botões redondos</string>
-    <string name="quick_block_upnext">A seguir</string>
+    <string name="quick_block_upnext">Próxima faixa</string>
     <string name="quick_block_volume">Volume</string>
-    <string name="quick_block_seek">Avançar e posição</string>
+    <string name="quick_block_seek">Avanço e posição</string>
     <string name="quick_block_tools">Ferramentas</string>
     <string name="quick_block_favorites">Favoritos</string>
     <string name="quick_block_actions">Todas as ações</string>
@@ -496,7 +496,7 @@
     <string name="quick_summary_buttons_session">Da aplicação em reprodução</string>
     <string name="quick_summary_buttons_empty">Nenhum botão escolhido</string>
     <string name="quick_summary_upnext">Próxima faixa · abre a fila</string>
-    <string name="quick_summary_volume">Passos de %1$d%%</string>
+    <string name="quick_summary_volume">Incrementos de volume de %1$d%%</string>
     <string name="quick_summary_seek">%1$s segundos</string>
     <string name="quick_summary_seek_bar">%1$s segundos · tempo e barra</string>
     <string name="quick_summary_favorites_none">Nenhuma marcada ainda</string>
@@ -507,7 +507,7 @@
     <string name="quick_summary_actions_all">Todas as %1$d ações</string>
     <string name="quick_summary_actions_first">As primeiras %1$d ações</string>
     <string name="quick_summary_actions_button">Um botão · abre o menu de ações</string>
-    <string name="quick_summary_only_playing">só tocando</string>
+    <string name="quick_summary_only_playing">só durante a reprodução</string>
     <string name="quick_summary_only_not_playing">só sem reprodução</string>
     <string name="quick_mode_grid">Grade</string>
     <string name="quick_mode_rows">Linhas</string>
@@ -516,10 +516,10 @@
 
     <string name="quick_sheet_show">Mostrar</string>
     <string name="quick_sheet_always">Sempre</string>
-    <string name="quick_sheet_while_playing">Tocando</string>
-    <string name="quick_sheet_while_not_playing">Sem reprodução</string>
+    <string name="quick_sheet_while_playing">só durante a reprodução</string>
+    <string name="quick_sheet_while_not_playing">só sem reprodução</string>
     <string name="quick_sheet_step">Passo</string>
-    <string name="quick_sheet_jump">Saltar de</string>
+    <string name="quick_sheet_jump">Saltar por</string>
     <string name="quick_sheet_seek_bar">Mostrar tempo e barra de progresso</string>
     <string name="quick_sheet_tools">Ferramentas</string>
     <string name="quick_sheet_layout">Disposição</string>
@@ -531,17 +531,17 @@
     <string name="quick_sheet_buttons_hint">Toca num botão para escolher a ação. Mantém para voltar ao predefinido.</string>
     <string name="quick_sheet_favorites_hint">Marca ações com o raio no separador Ações. Só as marcadas aparecem aqui.</string>
     <string name="quick_sheet_actions_mode">Mostrar como</string>
-    <string name="quick_sheet_actions_hint">A lista coloca cada ação no painel como uma linha. O botão deixa o painel curto: uma pílula que abre o menu completo. Para tirar o menu do painel de vez, remova este bloco.</string>
+    <string name="quick_sheet_actions_hint">A lista coloca cada ação no painel como uma linha. O botão deixa o painel curto: um botão que abre o menu completo. Para tirar o menu do painel de vez, remova este bloco.</string>
     <string name="quick_sheet_remove">Remover este bloco</string>
     <string name="quick_sheet_done">Pronto</string>
 
     <string name="quick_tool_speed">Velocidade</string>
-    <string name="quick_tool_sleep">Dormir</string>
+    <string name="quick_tool_sleep">Temporizador</string>
     <string name="quick_tool_lyrics">Letra</string>
     <string name="quick_tool_queue">Fila</string>
     <string name="quick_tool_volume">Volume</string>
     <string name="quick_tool_progress">Progresso</string>
-    <string name="quick_tool_faces">Mostrador</string>
+    <string name="quick_tool_faces">Mostradores</string>
     <string name="quick_tool_search">Pesquisar</string>
     <string name="quick_tool_menu">Menu</string>
     <string name="setting_wear_center_long_press_queue">Pressão longa no centro para a fila</string>
@@ -1486,9 +1486,6 @@
     <string name="drawer_sync_heading">Sincronização</string>
     <string name="drawer_sync_summary">As definições do relógio são configuradas aqui no telemóvel e sincronizadas automaticamente com o teu relógio emparelhado.</string>
     <string name="drawer_support_heading">Apoio</string>
-    <string name="drawer_support_summary">O Svartifoss é gratuito e de código aberto — paga-me um café se te for útil :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Transferir capa</string>
     <string name="album_art_saved">Capa guardada na galeria</string>
     <string name="album_art_save_error">Falha ao guardar a capa</string>
@@ -1512,7 +1509,7 @@
     <string name="setting_playlist_shortcuts">Atalhos de streaming</string>
     <string name="setting_playlist_shortcuts_description">Abre links de partilha do relógio no YouTube Music, Spotify e outras aplicações de streaming</string>
     <string name="setting_shortcut_artwork">Obter nomes e miniaturas dos atalhos online</string>
-    <string name="setting_shortcut_artwork_description">Obtém o nome e a miniatura de cada link guardado a partir dos dados públicos de pré-visualização do serviço. O nome é preenchido ao adicionar um link ao menu; a miniatura aparece na lista do telemóvel, no menu do relógio e nos botões atribuídos. Cada um é obtido uma vez e só o link público de partilha é enviado. Desligado por predefinição: com ele desligado, “Obter nome pelo link” faz o mesmo pedido apenas quando tocas.</string>
+    <string name="setting_shortcut_artwork_description">Obtém o nome, a capa e o autor ou descrição públicos de cada link guardado a partir dos dados de pré-visualização do serviço. Os detalhes aparecem no ecrã do atalho; a capa aparece na lista do telemóvel, no menu do relógio e nos botões atribuídos. Cada um é obtido uma vez e só o link público de partilha é enviado. Desligado por predefinição: com ele desligado, “Obter nome pelo link” faz o mesmo pedido apenas quando tocas.</string>
     <string name="watch_streaming_shortcuts_empty">Adiciona faixas, álbuns ou playlists para as Ações Rápidas e o menu do relógio</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d atalho guardado · Disponível nas Ações Rápidas e no menu do relógio</item>
@@ -2927,4 +2924,12 @@
     <string name="setting_wear_text_block_position_description">Onde o texto da faixa fica no ecrã. Seguir mostrador mantém a posição para a qual cada mostrador foi concebido.</string>
     <string name="setting_online_artwork">Capa online</string>
     <string name="setting_online_artwork_description">Permite que o mostrador apresente uma imagem pesquisada online \u2014 o artista em reprodução ou uma capa de álbum para um leitor que não forneça nenhuma. O telemóvel faz a pesquisa no catálogo público do Deezer e guarda o resultado em cache; apenas são enviados os nomes da faixa e do artista, e nada é pesquisado a menos que um mostrador esteja definido para uma dessas fontes. Quando desativado, é utilizada a própria capa do leitor.</string>
+    <string name="setting_streaming_app_routes">Escolha aplicações para ligações de streaming</string>
+    <string name="setting_streaming_app_routes_description">Escolha uma aplicação compatível instalada separadamente para o YouTube Music, Spotify e cada outro serviço. Utilizado com “Aplicação de streaming detetada”.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d utiliza uma aplicação selecionada</item>
+        <item quantity="other">%1$d utilizam aplicações selecionadas</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">São mostradas aplicações que podem abrir o link, além de media players instalados.</string>
+    <string name="streaming_route_automatic">Automático (aplicação detectada)</string>
 </resources>

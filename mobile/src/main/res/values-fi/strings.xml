@@ -304,7 +304,7 @@
     <string name="preview_sample_lyric_current">Nyt soiva rivi</string>
     <string name="preview_sample_lyric_next">Seuraava rivi</string>
     <string name="preview_sample_next_title">Seuraava kappale</string>
-    <string name="preview_playback_stopped">Pysäytetty</string>
+    <string name="preview_playback_stopped">Keskeytetty</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -794,9 +794,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Seuraavaksi-pillerin tausta</string>
-    <string name="setting_wear_show_up_next_pill">Seuraavaksi-pilleri soittimessa</string>
-    <string name="setting_wear_show_up_next_pill_description">Näytä Seuraavaksi-pilleri toistonäkymän alareunassa. Se käyttää minipainikerivin tilan, joten se näkyy vain, kun kyseinen rivi ei ole näkyvissä.</string>
+    <string name="setting_wear_up_next_pill">Seuraavaksi-kapselin tausta</string>
+    <string name="setting_wear_show_up_next_pill">Seuraavaksi-kapseli soittimessa</string>
+    <string name="setting_wear_show_up_next_pill_description">Näytä Seuraavaksi-kapseli toistonäkymän alareunassa. Se käyttää minipainikerivin tilan, joten se näkyy vain, kun kyseinen rivi ei ole näkyvissä.</string>
     <string name="category_wf_clock">Kello</string>
     <string name="setting_wear_clock_color">Kellon väri</string>
     <string name="setting_wear_clock_custom_color">Kellon mukautettu väri</string>
@@ -812,7 +812,7 @@
     <string name="setting_wear_aod_show_progress">Edistymisrengas aina päällä -näytössä</string>
     <string name="setting_wear_aod_show_progress_description">Näytä edistymisrengas toistopainikkeen ympärillä ympäristötilassa — sijainti päivittyy siellä vain noin kerran minuutissa</string>
     <string name="setting_wear_aod_show_pills">Seuraavaksi aina päällä -näytössä</string>
-    <string name="setting_wear_aod_show_pills_description">Näytä staattinen ääriviivallinen Seuraavaksi-pilleri visuaalisten aina päällä -tyylien alareunassa</string>
+    <string name="setting_wear_aod_show_pills_description">Näytä staattinen ääriviivallinen Seuraavaksi-kapseli visuaalisten aina päällä -tyylien alareunassa</string>
     <string name="category_wf_gestures">Näyttöeleet</string>
     <string name="setting_wear_mini_buttons_mode">Näytä minipainikkeet</string>
     <string name="setting_wear_gestures_mode">Näyttöeleet</string>
@@ -875,8 +875,8 @@
     <string name="preview_notification_controls">Kuvake mediailmoituksesta</string>
     <string name="setting_wear_queue_style">Jonon tyyli</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Käytä pikavalintojen kansia taustana</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Kun Jonon tyyli on kansiversio, pikapaneelin toimintorivi, jolla on haettu pikavalinnan kansi (kappale, soittolista, esittäjä…), täyttää myös pillerinsä kyseisellä kuvalla Seuraavaksi-toiminnon tavoin. Pikavalintoihin ilman haettua kantta (tavallinen sovelluskuvake) tämä ei vaikuta.</string>
-    <string name="setting_wear_list_row_size">Luettelopillerin koko</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Kun Jonon tyyli on kansiversio, pikapaneelin toimintorivi, jolla on haettu pikavalinnan kansi (kappale, soittolista, esittäjä…), täyttää myös kapselinsä kyseisellä kuvalla Seuraavaksi-toiminnon tavoin. Pikavalintoihin ilman haettua kantta (tavallinen sovelluskuvake) tämä ei vaikuta.</string>
+    <string name="setting_wear_list_row_size">Luettelokapselin koko</string>
     <string name="setting_wear_list_row_size_description">Jonon, valikoiden ja pikapaneelin täysleveiden rivien korkeus.</string>
     <string name="setting_wear_progress_gradient">Sekoita paletti renkaaseen</string>
     <string name="setting_wear_progress_gradient_description">Monisävyisessä värikäsittelyssä (Täydentävä, Triadinen, Analoginen, Duotone) yhtenäinen rengas liukuu kaikkien kolmen värin läpi. Poista käytöstä, jos haluat yksivärisen renkaan mutta säilyttää albumipaletin muualla.</string>
@@ -2019,9 +2019,6 @@
     <string name="drawer_sync_heading">Synkronointi</string>
     <string name="drawer_sync_summary">Kellon asetukset määritetään täällä puhelimessa ja synkronoidaan automaattisesti paritettuun kelloon.</string>
     <string name="drawer_support_heading">Tuki</string>
-    <string name="drawer_support_summary">Svartifoss on ilmainen ja avoimen lähdekoodin sovellus — tarjoa minulle kahvi, jos siitä on sinulle hyötyä :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Lataa kansikuva</string>
     <string name="album_art_saved">Kansikuva tallennettu galleriaan</string>
     <string name="album_art_save_error">Kansikuvan tallennus epäonnistui</string>
@@ -2850,4 +2847,99 @@
     <string name="setting_online_artwork_description">Anna kellotaulun näyttää verkosta haettu kuva \u2014 soivan esittäjän kuva tai albumikansi silloin, kun soitin ei tarjoa sellaista. Puhelin tekee haun Deezerin julkisesta luettelosta ja tallentaa tuloksen välimuistiin; vain kappaleen ja esittäjän nimet lähetetään, eikä mitään haeta, ellei kellotaulua ole asetettu käyttämään jotakin näistä lähteistä. Kun asetus on pois päältä, käytetään soittimen omaa kansikuvaa.</string>
     <string name="setting_wear_shortcut_details">Toista tai sekoita kellossa</string>
     <string name="setting_wear_shortcut_details_description">Kun valitset kellossa tallennetun linkin pikakuvakeluettelosta, Pikakuvakkeet-Tilestä tai toimintovalikosta, sen kansikuva näytetään ensin Toista- ja Sekoita-painikkeiden kanssa. Poista käytöstä, jos haluat sen alkavan heti. Yhteen linkkiin määritetyt painikkeet ja eleet aloittavat sen aina heti.</string>
+    <string name="actions_quick_pin_add">Näytä pikapaneelissa</string>
+    <string name="actions_quick_pin_remove">Poista pikapaneelista</string>
+    <string name="quick_panel_editor_title">Pikatoimintopaneeli</string>
+    <string name="quick_panel_editor_open">Muokkaa paneelin sisältöä</string>
+    <string name="quick_panel_editor_intro">Rakenna paneeli, joka avautuu, kun kaksoisnapautat kellon keskustaa. Siirrä lohkoa pitämällä sitä painettuna ja vetämällä sitä. Säädä sitä napauttamalla sitä.</string>
+    <string name="quick_panel_editor_add_block">Lisää lohko</string>
+    <string name="quick_panel_editor_restore">Palauta alkuperäinen paneeli</string>
+    <string name="quick_panel_editor_restore_title">Palautetaanko alkuperäinen paneeli?</string>
+    <string name="quick_panel_editor_restore_message">Järjestelysi poistetaan ja paneeli palaa entiseen malliin. Painikevalintasi ja tähdellä merkitsemäsi toiminnot säilytetään.</string>
+    <string name="quick_panel_editor_restore_confirm">Palauta</string>
+    <string name="quick_panel_editor_fold">Ensimmäisen näytön loppu (likimääräinen)</string>
+    <string name="quick_panel_editor_last_block">Paneeli tarvitsee vähintään yhden lohkon</string>
+    <string name="quick_panel_editor_removed">poistettu %1$s</string>
+    <string name="quick_panel_editor_undo">Kumoa</string>
+    <string name="quick_panel_editor_move_up">Siirrä ylöspäin</string>
+    <string name="quick_panel_editor_move_down">Siirrä alas</string>
+    <string name="quick_panel_editor_more">Lisää vaihtoehtoja</string>
+    <string name="quick_panel_editor_nothing_to_add">Jokainen lohko on jo paneelissa</string>
+    <string name="quick_block_header">Kappale</string>
+    <string name="quick_block_buttons">Pyöreät painikkeet</string>
+    <string name="quick_block_upnext">Seuraava kappale</string>
+    <string name="quick_block_volume">Äänenvoimakkuus</string>
+    <string name="quick_block_seek">Ohitus ja sijainti</string>
+    <string name="quick_block_tools">Työkalut</string>
+    <string name="quick_block_favorites">Suosikit</string>
+    <string name="quick_block_actions">Kaikki toiminnot</string>
+    <string name="quick_block_all_actions">Kaikki toiminnot</string>
+    <string name="quick_block_header_description">Toistettavan kappaleen nimi ja esittäjä.</string>
+    <string name="quick_block_buttons_description">Pyöreä painikkeet useimmin käyttämillesi tai toistosovelluksen tarjoamille toiminnoille.</string>
+    <string name="quick_block_upnext_description">Seuraava kappale. Avaa jono napauttamalla sitä.</string>
+    <string name="quick_block_volume_description">Laske ja lisää äänenvoimakkuutta poistumatta paneelista.</string>
+    <string name="quick_block_seek_description">Missä olet radalla, ja painikkeet, jotka hyppäävät taaksepäin ja eteenpäin.</string>
+    <string name="quick_block_tools_description">Pienet pikakuvakkeet: toistonopeus, sanoitukset, jono ja paljon muuta.</string>
+    <string name="quick_block_favorites_description">Toiminnot, jotka merkitsit tähdellä Toiminnot-välilehdellä kansina tai riveinä.</string>
+    <string name="quick_block_actions_description">Jokainen kellovalikon toiminto, paneelin riveinä tai yhtenä painikkeena, joka avaa valikon.</string>
+    <string name="quick_summary_header">Nimi ja esittäjä</string>
+    <string name="quick_summary_buttons_session">Toistavasta sovelluksesta</string>
+    <string name="quick_summary_buttons_empty">Ei painikkeita valittuna</string>
+    <string name="quick_summary_upnext">Seuraava kappale · avaa jonon</string>
+    <string name="quick_summary_volume">Äänenvoimakkuuden askel %1$d%%</string>
+    <string name="quick_summary_seek">%1$s sekuntia</string>
+    <string name="quick_summary_seek_bar">%1$s sekuntia · aika ja palkki</string>
+    <string name="quick_summary_favorites_none">Ei vielä tähdellä merkittyjä</string>
+    <plurals name="quick_summary_favorites">
+        <item quantity="one">%1$d tähdellä merkitty · %2$s</item>
+        <item quantity="other">%1$d tähdellä merkitty · %2$s</item>
+    </plurals>
+    <string name="quick_summary_actions_all">Kaikki %1$d-toiminnot</string>
+    <string name="quick_summary_actions_first">Ensimmäiset %1$d-toiminnot</string>
+    <string name="quick_summary_actions_button">Yksi painike · avaa toimintovalikon</string>
+    <string name="quick_summary_only_playing">vain toiston aikana</string>
+    <string name="quick_summary_only_not_playing">vain ilman toistoa</string>
+    <string name="quick_mode_grid">Ruudukko</string>
+    <string name="quick_mode_rows">rivit</string>
+    <string name="quick_mode_actions_list">Luettelo</string>
+    <string name="quick_mode_actions_button">Painike</string>
+    <string name="quick_sheet_show">Näytä</string>
+    <string name="quick_sheet_always">Aina</string>
+    <string name="quick_sheet_while_playing">vain toiston aikana</string>
+    <string name="quick_sheet_while_not_playing">vain ilman toistoa</string>
+    <string name="quick_sheet_step">Vaihe</string>
+    <string name="quick_sheet_jump">Hyppäys</string>
+    <string name="quick_sheet_seek_bar">Näytä aika ja edistymispalkki</string>
+    <string name="quick_sheet_tools">Työkalut</string>
+    <string name="quick_sheet_layout">Asettelu</string>
+    <string name="quick_sheet_how_many">Kuinka monta</string>
+    <string name="quick_sheet_all">Kaikki</string>
+    <string name="quick_sheet_buttons_source">Painikkeet kohteesta</string>
+    <string name="quick_sheet_source_configured">Omat valinnat</string>
+    <string name="quick_sheet_source_session">Toistosovellus</string>
+    <string name="quick_sheet_buttons_hint">Napauta painiketta valitaksesi sen toiminnon. Pidä painettuna palauttaaksesi oletusarvot.</string>
+    <string name="quick_sheet_favorites_hint">Merkitse toimintoja Toiminnot-välilehden salaman avulla. Vain tähdellä merkityt näkyvät täällä.</string>
+    <string name="quick_sheet_actions_mode">Näytä muodossa</string>
+    <string name="quick_sheet_actions_hint">Lista asettaa kaikki paneelin toiminnot riviksi. Painike pitää paneelin lyhyenä: yksi painike, joka avaa koko valikon. Jos haluat jättää valikon kokonaan pois paneelista, poista tämä lohko.</string>
+    <string name="quick_sheet_remove">Poista tämä lohko</string>
+    <string name="quick_sheet_done">Valmis</string>
+    <string name="quick_tool_speed">Nopeus</string>
+    <string name="quick_tool_sleep">Uniajastin</string>
+    <string name="quick_tool_lyrics">Sanoitukset</string>
+    <string name="quick_tool_queue">Jono</string>
+    <string name="quick_tool_volume">Äänenvoimakkuus</string>
+    <string name="quick_tool_progress">Edistyminen</string>
+    <string name="quick_tool_faces">Kellotaulut</string>
+    <string name="quick_tool_search">Haku</string>
+    <string name="quick_tool_menu">Valikko</string>
+    <string name="setting_wear_hide_from_recents">Piilota viimeaikaisista sovelluksista</string>
+    <string name="setting_wear_hide_from_recents_description">Pitää kellosovelluksen poissa kellon viimeaikaisten sovellusten luettelosta, kun suljet sen tai käytät toista sovellusta. Hyödyllinen, jos avaat sen kellotaulusta tai Now-palkista. Se pysyy tavoitettavissa täsmälleen kuten ennenkin, eikä se vaikuta musiikkiin ja taustayhteyteen.</string>
+    <string name="setting_streaming_app_routes">Valitse sovellukset linkkien suoratoistoon</string>
+    <string name="setting_streaming_app_routes_description">Valitse yhteensopiva asennettu sovellus erikseen YouTube Musicille, Spotifylle ja muille palveluille. Käytetään "Havaitun suoratoistosovelluksen" kanssa.</string>
+    <plurals name="setting_streaming_app_routes_selected">
+        <item quantity="one">%1$d-palvelu käyttää valittua sovellusta</item>
+        <item quantity="other">%1$d-palvelut käyttävät valittuja sovelluksia</item>
+    </plurals>
+    <string name="streaming_app_routes_picker_description">Sovellukset, jotka voivat avata linkin, sekä asennetut mediasoittimet näytetään.</string>
+    <string name="streaming_route_automatic">Automaattinen (havaittu sovellus)</string>
 </resources>

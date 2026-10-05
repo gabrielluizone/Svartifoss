@@ -43,7 +43,7 @@
          did reply, so telling someone to check the connection would send them looking in the
          wrong place. Names the one thing that reliably fixes it. -->
     <string name="phone_unavailable">Unlock your phone to control playback</string>
-    <string name="playback_stopped">Stopped</string>
+    <string name="playback_stopped">Paused</string>
     <string name="error">ERROR</string>
     <string name="error_play_services">Play Services error</string>
     <string name="button">Button</string>

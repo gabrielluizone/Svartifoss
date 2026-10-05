@@ -38,7 +38,7 @@
 
     <string name="no_phone">Telefon není připojen</string>
     <string name="phone_unavailable">Odemkněte telefon pro ovládání přehrávání</string>
-    <string name="playback_stopped">Zastaveno</string>
+    <string name="playback_stopped">Pozastaveno</string>
     <string name="error">CHYBA</string>
     <string name="error_play_services">Chyba Služeb Play</string>
     <string name="button">Tlačítko</string>
@@ -215,4 +215,23 @@ Vše si přizpůsobíte v Ovládání a Hodinky na telefonu</string>
     <string name="progress_screen_cancel_seek">Zrušit posun</string>
     <string name="progress_screen_skip_back">Přeskočit o %1$d sekund zpět</string>
     <string name="progress_screen_skip_forward">Přeskočit o %1$d sekund vpřed</string>
+    <string name="quick_block_all_actions">Všechny akce</string>
+    <string name="quick_block_favorites">Oblíbené</string>
+    <string name="quick_tool_speed">Rychlost</string>
+    <string name="quick_tool_lyrics">texty</string>
+    <string name="quick_tool_queue">fronta</string>
+    <string name="quick_tool_volume">Hlasitost</string>
+    <string name="quick_tool_progress">Pokrok</string>
+    <string name="quick_tool_faces">Ciferníky</string>
+    <string name="quick_tool_search">Hledat</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Hlasitost %1$d%%</string>
+    <string name="quick_seek_back_description">Zpět %1$d sekund</string>
+    <string name="quick_seek_forward_description">Vpřed %1$d sekund</string>
+    <string name="quick_speed_description">Rychlost přehrávání %1$s</string>
+    <string name="quick_tool_sleep">Časovač</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Časovač spánku, zbývá %1$d minut. Klepnutím změníte</string>
+    <string name="quick_sleep_off_description">Časovač spánku je vypnutý. Klepnutím nastavíte</string>
 </resources>

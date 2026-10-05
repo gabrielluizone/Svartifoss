@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="drawer_tip_summary">Você já tem o Svartifoss completo — nada no app é bloqueado. Se quiser agradecer mesmo assim, pode deixar uma gorjeta. Ela não libera nada; só me ajuda a continuar melhorando o app.</string>
+    <string name="drawer_tip_button">Apoiar o desenvolvedor</string>
+    <string name="tip_dialog_title">Deixar uma gorjeta</string>
+    <string name="tip_dialog_message">Todos os recursos já estão liberados para você, e a gorjeta não muda isso. É só uma forma de agradecer e ajudar a pagar o que vem pela frente. Obrigado!</string>
+    <string name="tip_thanks">Muito obrigado pelo apoio!</string>
+    <string name="tip_pending">Sua gorjeta está aguardando a confirmação do pagamento. Obrigado!</string>
+    <string name="tip_failed">Não foi possível concluir a gorjeta. Tente novamente mais tarde.</string>
+</resources>

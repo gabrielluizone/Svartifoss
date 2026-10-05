@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">Преглед на изданията</string>
     <string name="update_watch_hint">„Актуализиране на часовника“ изтегля новото приложение за часовника и го изпраща чрез Bluetooth — потвърждавате инсталирането на самия часовник, без кабел или Wear Installer.</string>
     <string name="update_no_wear_asset">Тази версия няма APK за часовника за изпращане.</string>
+    <string name="drawer_support_summary">Svartifoss е безплатен и с отворен код — почерпете ме с кафе, ако ви е полезен :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

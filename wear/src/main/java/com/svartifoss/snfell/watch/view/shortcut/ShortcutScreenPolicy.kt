@@ -4,7 +4,8 @@ import com.svartifoss.snfell.common.CustomLists
 
 /**
  * When picking a streaming shortcut opens its own screen - cover, name, Play beside Shuffle -
- * instead of starting it at once.
+ * instead of starting it at once. A destination with no Shuffle option starts at once: presenting
+ * a screen with the very same single action would add a needless tap.
  *
  * The rule is "picked from a list", and it is the same rule in every list that holds shortcuts:
  * the shortcut list, the Shortcuts Tile, the actions menu and the quick panel's rows. A button or a
@@ -29,9 +30,11 @@ object ShortcutScreenPolicy {
             enabled: Boolean,
             listId: String,
             entryId: String,
-            phoneKnowsPlayModes: Boolean
+            phoneKnowsPlayModes: Boolean,
+            shuffleable: Boolean
     ): Boolean = enabled &&
             phoneKnowsPlayModes &&
+            shuffleable &&
             listId == CustomLists.PLAYLIST_SHORTCUTS &&
             entryId.isNotBlank() &&
             entryId != CustomLists.SPECIAL_ITEM_ERROR
@@ -46,6 +49,10 @@ object ShortcutScreenPolicy {
     fun opensForMenuAction(
             enabled: Boolean,
             remoteUri: String?,
-            shortcutSubtitle: String?
-    ): Boolean = enabled && !remoteUri.isNullOrBlank() && shortcutSubtitle != null
+            shortcutSubtitle: String?,
+            shortcutShuffleable: Boolean
+    ): Boolean = enabled &&
+            shortcutShuffleable &&
+            !remoteUri.isNullOrBlank() &&
+            shortcutSubtitle != null
 }

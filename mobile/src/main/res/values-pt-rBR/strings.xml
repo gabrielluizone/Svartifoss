@@ -326,7 +326,7 @@
     <string name="preview_sample_lyric_current">A linha tocando agora</string>
     <string name="preview_sample_lyric_next">A linha seguinte</string>
     <string name="preview_sample_next_title">Próxima música</string>
-    <string name="preview_playback_stopped">Parado</string>
+    <string name="preview_playback_stopped">Pausado</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -506,9 +506,9 @@
 
     <string name="quick_block_header">Faixa</string>
     <string name="quick_block_buttons">Botões redondos</string>
-    <string name="quick_block_upnext">A seguir</string>
+    <string name="quick_block_upnext">Próxima faixa</string>
     <string name="quick_block_volume">Volume</string>
-    <string name="quick_block_seek">Avançar e posição</string>
+    <string name="quick_block_seek">Avanço e posição</string>
     <string name="quick_block_tools">Ferramentas</string>
     <string name="quick_block_favorites">Favoritos</string>
     <string name="quick_block_actions">Todas as ações</string>
@@ -524,10 +524,10 @@
     <string name="quick_block_actions_description">Todas as ações do menu do relógio, como linhas no painel ou como um botão que abre o menu.</string>
 
     <string name="quick_summary_header">Título e artista</string>
-    <string name="quick_summary_buttons_session">Do app tocando</string>
+    <string name="quick_summary_buttons_session">Do app em reprodução</string>
     <string name="quick_summary_buttons_empty">Nenhum botão escolhido</string>
     <string name="quick_summary_upnext">Próxima faixa · abre a fila</string>
-    <string name="quick_summary_volume">Passos de %1$d%%</string>
+    <string name="quick_summary_volume">Incrementos de volume de %1$d%%</string>
     <string name="quick_summary_seek">%1$s segundos</string>
     <string name="quick_summary_seek_bar">%1$s segundos · tempo e barra</string>
     <string name="quick_summary_favorites_none">Nenhum marcado ainda</string>
@@ -538,7 +538,7 @@
     <string name="quick_summary_actions_all">Todas as %1$d ações</string>
     <string name="quick_summary_actions_first">As primeiras %1$d ações</string>
     <string name="quick_summary_actions_button">Um botão · abre o menu de ações</string>
-    <string name="quick_summary_only_playing">só tocando</string>
+    <string name="quick_summary_only_playing">só durante a reprodução</string>
     <string name="quick_summary_only_not_playing">só sem reprodução</string>
     <string name="quick_mode_grid">Grade</string>
     <string name="quick_mode_rows">Linhas</string>
@@ -547,10 +547,10 @@
 
     <string name="quick_sheet_show">Mostrar</string>
     <string name="quick_sheet_always">Sempre</string>
-    <string name="quick_sheet_while_playing">Tocando</string>
-    <string name="quick_sheet_while_not_playing">Sem reprodução</string>
+    <string name="quick_sheet_while_playing">só durante a reprodução</string>
+    <string name="quick_sheet_while_not_playing">só sem reprodução</string>
     <string name="quick_sheet_step">Passo</string>
-    <string name="quick_sheet_jump">Pular de</string>
+    <string name="quick_sheet_jump">Avançar em</string>
     <string name="quick_sheet_seek_bar">Mostrar tempo e barra de progresso</string>
     <string name="quick_sheet_tools">Ferramentas</string>
     <string name="quick_sheet_layout">Disposição</string>
@@ -558,21 +558,21 @@
     <string name="quick_sheet_all">Todas</string>
     <string name="quick_sheet_buttons_source">Botões de</string>
     <string name="quick_sheet_source_configured">Minhas escolhas</string>
-    <string name="quick_sheet_source_session">App tocando</string>
+    <string name="quick_sheet_source_session">App em reprodução</string>
     <string name="quick_sheet_buttons_hint">Toque num botão para escolher a ação. Segure para voltar ao padrão.</string>
     <string name="quick_sheet_favorites_hint">Marque ações com o raio na aba Ações. Só as marcadas aparecem aqui.</string>
     <string name="quick_sheet_actions_mode">Mostrar como</string>
-    <string name="quick_sheet_actions_hint">A lista coloca cada ação no painel como uma linha. O botão deixa o painel curto: uma pill que abre o menu completo. Para tirar o menu do painel de vez, remova este bloco.</string>
+    <string name="quick_sheet_actions_hint">A lista coloca cada ação no painel como uma linha. O botão deixa o painel curto: um botão que abre o menu completo. Para tirar o menu do painel de vez, remova este bloco.</string>
     <string name="quick_sheet_remove">Remover este bloco</string>
     <string name="quick_sheet_done">Pronto</string>
 
     <string name="quick_tool_speed">Velocidade</string>
-    <string name="quick_tool_sleep">Dormir</string>
+    <string name="quick_tool_sleep">Temporizador</string>
     <string name="quick_tool_lyrics">Letra</string>
     <string name="quick_tool_queue">Fila</string>
     <string name="quick_tool_volume">Volume</string>
     <string name="quick_tool_progress">Progresso</string>
-    <string name="quick_tool_faces">Mostrador</string>
+    <string name="quick_tool_faces">Mostradores</string>
     <string name="quick_tool_search">Buscar</string>
     <string name="quick_tool_menu">Menu</string>
     <string name="setting_wear_center_long_press_queue">Toque longo no centro para a fila</string>
@@ -872,9 +872,9 @@
         <item>black</item>
         <item>dynamic</item>
     </string-array>
-    <string name="setting_wear_up_next_pill">Fundo da pill Up Next</string>
-    <string name="setting_wear_show_up_next_pill">Pill Up Next no player</string>
-    <string name="setting_wear_show_up_next_pill_description">Mostra uma pill Up Next na parte inferior da tela de reprodução. Ela preenche o espaço que a linha de mini botões ocuparia, então só aparece quando essa linha não está visível.</string>
+    <string name="setting_wear_up_next_pill">Fundo da cápsula Próxima faixa</string>
+    <string name="setting_wear_show_up_next_pill">Cápsula Próxima faixa no player</string>
+    <string name="setting_wear_show_up_next_pill_description">Mostra uma cápsula Próxima faixa na parte inferior da tela de reprodução. Ela preenche o espaço que a linha de mini botões ocuparia, então só aparece quando essa linha não está visível.</string>
     <string name="category_wf_clock">Relógio</string>
     <string name="setting_wear_clock_color">Cor do relógio</string>
     <string name="setting_wear_clock_custom_color">Cor personalizada do relógio</string>
@@ -890,7 +890,7 @@
     <string name="setting_wear_aod_show_progress">Anel de progresso na tela sempre ativa</string>
     <string name="setting_wear_aod_show_progress_description">Mostra o anel de progresso ao redor do botão play no modo ambiente — a posição só atualiza mais ou menos uma vez por minuto lá</string>
     <string name="setting_wear_aod_show_pills">A seguir na tela sempre ativa</string>
-    <string name="setting_wear_aod_show_pills_description">Mostra uma pill estática em contorno com a próxima música na parte inferior dos estilos visuais de tela sempre ativa</string>
+    <string name="setting_wear_aod_show_pills_description">Mostra uma cápsula estática em contorno com a próxima música na parte inferior dos estilos visuais de tela sempre ativa</string>
     <string name="category_wf_gestures">Gestos de tela</string>
     <string name="setting_wear_mini_buttons_mode">Mostrar mini botões</string>
     <string name="setting_wear_gestures_mode">Gestos de tela</string>
@@ -946,8 +946,8 @@
     <string name="preview_notification_controls">Ícone da notificação de mídia</string>
     <string name="setting_wear_queue_style">Estilo da fila</string>
     <string name="setting_wear_quick_panel_shortcut_cover">Usar capa do atalho como fundo</string>
-    <string name="setting_wear_quick_panel_shortcut_cover_description">Quando o Estilo da fila for uma variação de Capa, uma linha de ação do painel rápido com uma capa de atalho já buscada (faixa, playlist, artista…) também preenche seu pill com essa imagem, como já acontece no Próxima na fila. Atalhos sem capa buscada (só o ícone do app) não são afetados.</string>
-    <string name="setting_wear_list_row_size">Tamanho das pills</string>
+    <string name="setting_wear_quick_panel_shortcut_cover_description">Quando o Estilo da fila for uma variação de Capa, uma linha de ação do painel rápido com uma capa de atalho já buscada (faixa, playlist, artista…) também preenche sua cápsula com essa imagem, como já acontece na Próxima faixa. Atalhos sem capa buscada (só o ícone do app) não são afetados.</string>
+    <string name="setting_wear_list_row_size">Tamanho das cápsulas</string>
     <string name="setting_wear_list_row_size_description">Altura das linhas de largura total na fila.</string>
     <string name="setting_wear_progress_style">Estilo do anel de progresso</string>
     <string name="setting_wear_seek_style">Estilo do tempo de seek e volume</string>
@@ -1560,9 +1560,6 @@
     <string name="drawer_sync_heading">Sincronização</string>
     <string name="drawer_sync_summary">As configurações do relógio são definidas aqui no celular e sincronizadas automaticamente com o seu relógio pareado.</string>
     <string name="drawer_support_heading">Apoie o projeto</string>
-    <string name="drawer_support_summary">O Svartifoss é gratuito e de código aberto - me pague um café se ele for útil pra você :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Baixar capa do álbum</string>
     <string name="album_art_saved">Capa do álbum salva na galeria</string>
     <string name="album_art_save_error">Falha ao salvar a capa do álbum</string>
@@ -1586,7 +1583,7 @@
     <string name="setting_playlist_shortcuts">Atalhos de streaming</string>
     <string name="setting_playlist_shortcuts_description">Abra pelo relógio links do YouTube Music, Spotify e outros apps de streaming</string>
     <string name="setting_shortcut_artwork">Buscar nomes e miniaturas dos atalhos online</string>
-    <string name="setting_shortcut_artwork_description">Busca o nome e a miniatura de cada link salvo nos dados públicos de prévia do serviço. O nome é preenchido ao adicionar um link ao menu; a miniatura aparece na lista do celular, no menu do relógio e nos botões atribuídos. Cada um é buscado uma vez e só o link público de compartilhamento é enviado. Desligado por padrão: com ele desligado, “Buscar nome pelo link” faz a mesma consulta apenas quando você toca.</string>
+    <string name="setting_shortcut_artwork_description">Busca o nome, a capa e o autor ou descrição públicos de cada link salvo nos dados de prévia do serviço. Os detalhes aparecem na tela do atalho; a capa aparece na lista do celular, no menu do relógio e nos botões atribuídos. Cada um é buscado uma vez e só o link público de compartilhamento é enviado. Desligado por padrão: com ele desligado, “Buscar nome pelo link” faz a mesma consulta apenas quando você toca.</string>
     <string name="watch_streaming_shortcuts_empty">Adicione faixas, álbuns ou playlists para usar nas Ações rápidas e no menu do relógio</string>
     <plurals name="watch_streaming_shortcuts_summary">
         <item quantity="one">%1$d atalho salvo · Disponível nas Ações rápidas e no menu do relógio</item>

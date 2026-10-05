@@ -38,7 +38,7 @@
 
     <string name="no_phone">Aucun téléphone connecté</string>
     <string name="phone_unavailable">Déverrouillez votre téléphone pour contrôler la lecture</string>
-    <string name="playback_stopped">Arrêtée</string>
+    <string name="playback_stopped">En pause</string>
     <string name="error">ERREUR</string>
     <string name="error_play_services">Erreur Play Services</string>
     <string name="button">Bouton</string>
@@ -106,7 +106,7 @@
     <string name="hint_edges">Touchez en haut, en bas, à gauche ou à droite — chaque zone exécute son action assignée</string>
     <string name="hint_center">Centre — lecture/pause\nDouble tape — actions rapides\nAppui long — sélecteur de cadran (configurable)</string>
     <string name="hint_swipe_up">Glissement vers le haut — menu des actions\nVers le bas ou la gauche — actions assignées\nDepuis le bord vers la droite — quitter</string>
-    <string name="hint_crown">Couronne — volume ou position\nBoutons latéraux — actions assignées\nPersonnalisez tout dans Commandes et Watch sur votre téléphone</string>
+    <string name="hint_crown">Couronne — volume ou position\nBoutons latéraux — Actions assignées\nPersonnalisez tout dans Commandes et Montre sur votre téléphone</string>
     <string name="hint_next">Suivant</string>
     <string name="hint_dismiss">Terminé</string>
 
@@ -209,4 +209,23 @@
     <string name="progress_screen_cancel_seek">Annuler le déplacement</string>
     <string name="progress_screen_skip_back">Reculer de %1$d secondes</string>
     <string name="progress_screen_skip_forward">Avancer de %1$d secondes</string>
+    <string name="quick_block_all_actions">Toutes les actions</string>
+    <string name="quick_block_favorites">Favoris</string>
+    <string name="quick_tool_speed">Vitesse</string>
+    <string name="quick_tool_lyrics">Paroles</string>
+    <string name="quick_tool_queue">File d\'attente</string>
+    <string name="quick_tool_volume">Volume</string>
+    <string name="quick_tool_progress">Progrès</string>
+    <string name="quick_tool_faces">Cadrans</string>
+    <string name="quick_tool_search">Rechercher</string>
+    <string name="quick_tool_menu">Menu</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Volume %1$d%%</string>
+    <string name="quick_seek_back_description">Retour %1$d secondes</string>
+    <string name="quick_seek_forward_description">Avancer %1$d secondes</string>
+    <string name="quick_speed_description">Vitesse de lecture %1$s</string>
+    <string name="quick_tool_sleep">Minuteur</string>
+    <string name="quick_sleep_minutes">%1$d min</string>
+    <string name="quick_sleep_description">Minuteur de mise en veille, minutes %1$d restantes. Appuyez pour changer</string>
+    <string name="quick_sleep_off_description">Minuteur de mise en veille désactivé. Appuyez pour définir</string>
 </resources>

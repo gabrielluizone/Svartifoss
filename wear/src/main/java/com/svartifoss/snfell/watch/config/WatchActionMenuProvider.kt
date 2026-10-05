@@ -71,6 +71,12 @@ class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, 
                         },
                         shortcutShuffleable = it.value.hasShortcutShuffleable() &&
                                 it.value.shortcutShuffleable,
+                        shortcutCreator = it.value.shortcutCreator.takeIf { _ ->
+                            it.value.hasShortcutCreator() && it.value.shortcutCreator.isNotBlank()
+                        },
+                        shortcutDescription = it.value.shortcutDescription.takeIf { _ ->
+                            it.value.hasShortcutDescription() && it.value.shortcutDescription.isNotBlank()
+                        },
                         inQuickPanel = it.value.hasInQuickPanel() && it.value.inQuickPanel)
             }.toList()
 

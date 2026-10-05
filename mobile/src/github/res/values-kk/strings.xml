@@ -9,4 +9,7 @@ Svartifoss Play Store дүкенінде жоқ — сағат қолданба�
     <string name="no_watch_app_button">Релиздерді көру</string>
     <string name="update_watch_hint">“Сағатты жаңарту” жаңа сағат қолданбасын жүктеп, Bluetooth арқылы жібереді — орнатуды сағаттың өзінде растайсыз, кабель не Wear Installer қажет емес.</string>
     <string name="update_no_wear_asset">Бұл релизде жіберілетін сағат APK файлы жоқ.</string>
+    <string name="drawer_support_summary">Svartifoss тегін және ашық бастапқы кодты — пайдалы болса, маған бір кофе алып беріңіз :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

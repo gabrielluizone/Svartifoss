@@ -7,4 +7,7 @@
     <string name="no_watch_app_button">查看版本</string>
     <string name="update_watch_hint">「更新手錶」會下載新版手錶應用程式並透過 Bluetooth 傳送；您需在手錶上確認安裝，不需要傳輸線或 Wear Installer。</string>
     <string name="update_no_wear_asset">此版本沒有可傳送的手錶 APK。</string>
+    <string name="drawer_support_summary">Svartifoss 免費且開放原始碼 — 如果對你有幫助，請請我喝杯咖啡 :D</string>
+    <string name="drawer_support_button">Buy Me a Coffee</string>
+    <string name="drawer_kofi_button">Ko-fi</string>
 </resources>

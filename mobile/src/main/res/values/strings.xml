@@ -441,7 +441,7 @@
     <string name="preview_sample_lyric_current">The line playing now</string>
     <string name="preview_sample_lyric_next">The line after</string>
     <string name="preview_sample_next_title">Next song</string>
-    <string name="preview_playback_stopped">Stopped</string>
+    <string name="preview_playback_stopped">Paused</string>
     <!-- The Verse miniature has no real lyric to show, so its three rows name themselves. That is
          also the one thing a user needs to understand before picking the face: which row is the
          line being sung. -->
@@ -2655,9 +2655,6 @@
     <string name="drawer_sync_heading">Sync</string>
     <string name="drawer_sync_summary">Watch settings are configured here on the phone and synced automatically to your paired watch.</string>
     <string name="drawer_support_heading">Support</string>
-    <string name="drawer_support_summary">Svartifoss is free/libre and open source (GPLv3), and no feature is gated behind a payment. Buy me a coffee if it\'s useful to you :D</string>
-    <string name="drawer_support_button">Buy Me a Coffee</string>
-    <string name="drawer_kofi_button">Ko-fi</string>
     <string name="download_album_art">Download cover art</string>
     <string name="album_art_saved">Cover art saved to gallery</string>
     <string name="album_art_save_error">Failed to save cover art</string>
@@ -2682,7 +2679,7 @@
     <string name="setting_playlist_shortcuts">Streaming shortcuts</string>
     <string name="setting_playlist_shortcuts_description">Open share links from the watch in YouTube Music, Spotify and other streaming apps</string>
     <string name="setting_shortcut_artwork">Fetch shortcut names and artwork online</string>
-    <string name="setting_shortcut_artwork_description">Look up each saved link’s name and thumbnail from the service’s public preview data. The name fills in when you add a link to the menu; the thumbnail is shown on the phone list, the watch menu and assigned buttons. Each is fetched once, and only the public share link is sent. Off by default: with it off, “Get name from link” makes the same request only when you tap it.</string>
+    <string name="setting_shortcut_artwork_description">Look up each saved link’s name, cover and public creator or description from the service’s preview data. Details appear on the shortcut screen; the thumbnail is shown on the phone list, watch menu and assigned buttons. Each is fetched once, and only the public share link is sent. Off by default: with it off, “Get name from link” makes the same request only when you tap it.</string>
     <string name="setting_queue_local_artwork">Queue covers from your library</string>
     <string name="setting_queue_local_artwork_description">Local music players publish queue covers as library references. Grant media access so they can be shown on the watch queue. No internet access is involved.</string>
     <string name="setting_queue_local_artwork_granted">Media access granted — local queue covers will be shown</string>

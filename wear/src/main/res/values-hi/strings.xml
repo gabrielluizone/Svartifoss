@@ -76,7 +76,7 @@
          and stay untranslated, matching how the phone's own picker leaves most of them in English. -->
     <string name="face_picker_title">वॉच फ़ेस</string>
     <string name="face_picker_offline">फ़ोन कनेक्ट नहीं है — यह फ़ेस घड़ी पर लागू होगा, लेकिन फ़ोन अपनी सेटिंग रखेगा</string>
-    <string name="face_picker_section_builtin">बिल्ट-इन फ़ेस</string>
+    <string name="face_picker_section_builtin">अंतर्निर्मित वॉच फ़ेस</string>
     <string name="face_picker_section_custom">मेरी थीम</string>
     <!-- %1$s is the name of the built-in face a saved theme is based on, e.g. "Based on Expressive" -->
     <string name="face_picker_custom_base">%1$s पर आधारित</string>
@@ -215,4 +215,23 @@
     <string name="progress_screen_cancel_seek">सीक रद्द करें</string>
     <string name="progress_screen_skip_back">%1$d सेकंड पीछे जाएँ</string>
     <string name="progress_screen_skip_forward">%1$d सेकंड आगे जाएँ</string>
+    <string name="quick_block_all_actions">सभी क्रियाएं</string>
+    <string name="quick_block_favorites">पसंदीदा</string>
+    <string name="quick_tool_speed">स्पीड</string>
+    <string name="quick_tool_lyrics">गीत</string>
+    <string name="quick_tool_queue">कतार</string>
+    <string name="quick_tool_volume">वॉल्यूम</string>
+    <string name="quick_tool_progress">प्रगति</string>
+    <string name="quick_tool_faces">वॉच फ़ेस</string>
+    <string name="quick_tool_search">खोजें</string>
+    <string name="quick_tool_menu">मेनू</string>
+    <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">वॉल्यूम %1$d%%</string>
+    <string name="quick_seek_back_description">पीछे %1$d सेकंड</string>
+    <string name="quick_seek_forward_description">आगे बढ़ें %1$d सेकंड</string>
+    <string name="quick_speed_description">प्लेबैक गति %1$s</string>
+    <string name="quick_tool_sleep">स्लीप टाइमर</string>
+    <string name="quick_sleep_minutes">%1$d मिनट</string>
+    <string name="quick_sleep_description">स्लीप टाइमर, %1$d मिनट शेष। बदलने के लिए टैप करें।</string>
+    <string name="quick_sleep_off_description">स्लीप टाइमर बंद। सेट करने के लिए टैप करें।</string>
 </resources>
