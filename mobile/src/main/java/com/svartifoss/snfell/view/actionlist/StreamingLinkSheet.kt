@@ -3,7 +3,6 @@ package com.svartifoss.snfell.view.actionlist
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.LayoutInflater
@@ -34,7 +33,7 @@ import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.music.PlaylistShortcut
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
 import com.svartifoss.snfell.music.ShortcutArtworkFetcher
-import com.svartifoss.snfell.music.ShortcutArtworkStore
+import com.svartifoss.snfell.music.ShortcutCovers
 import com.svartifoss.snfell.music.StreamingService
 import com.svartifoss.snfell.music.StreamingShortcutLinks
 import com.svartifoss.snfell.view.LyraAccent
@@ -585,12 +584,12 @@ class StreamingLinkSheet(
                 R.plurals.add_menu_add_selected, selected.size, selected.size)
     }
 
-    /** Cover if one was fetched, else the app's own icon, else a plain glyph - the order the
-     *  shortcuts screen uses, so a shortcut looks the same here as where it was saved. */
+    /** The shortcut's cover - the fetched picture, else the service's drawn one, the answer
+     *  [ShortcutCovers] gives everywhere a destination is listed - else the app's own icon, else a
+     *  plain glyph. */
     private fun bindIcon(view: ImageView, shortcut: PlaylistShortcut) {
         val service = StreamingShortcutLinks.detect(shortcut.link)
-        val cover = ShortcutArtworkStore.get(context, shortcut.link)
-                ?.let { BitmapFactory.decodeByteArray(it, 0, it.size) }
+        val cover = ShortcutCovers.forLink(context, shortcut.link)
         val appIcon = service.packageName?.let { packageName ->
             try {
                 context.packageManager.getApplicationIcon(packageName)

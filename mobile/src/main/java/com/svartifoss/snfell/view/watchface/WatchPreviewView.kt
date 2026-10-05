@@ -8238,19 +8238,13 @@ class WatchPreviewView @JvmOverloads constructor(
         drawActionIcon(canvas, null, commonR.drawable.action_volume_up,
                 pill.right - inset - stepper / 2f, pill.centerY(), glyph, skin.onColor)
 
-        // The percentage over its bar, centred between the two buttons: 14dp of text, 5 of space
-        // and an 8dp bar, as one 27dp unit in the middle of the pill.
-        val middleLeft = pill.left + inset + stepper + dp(6f)
-        val middleRight = pill.right - inset - stepper - dp(6f)
-        val unitTop = pill.centerY() - dp(13.5f)
-        textPaint.textAlign = Paint.Align.CENTER
-        textPaint.typeface = watchUiTypeface(bold = true)
-        textPaint.textSize = dp(12f)
-        textPaint.color = skin.onColor
-        canvas.drawText("65%", (middleLeft + middleRight) / 2f, unitTop + dp(11f), textPaint)
+        // Just the bar between the two buttons - the percentage is not drawn, so the bar has the
+        // whole stretch to itself, as on the watch.
+        val barHeight = dp(QuickPanelGeometry.VOLUME_BAR_DP)
         drawPanelLevelBar(
                 canvas,
-                RectF(middleLeft, unitTop + dp(19f), middleRight, unitTop + dp(27f)),
+                RectF(pill.left + inset + stepper + dp(6f), pill.centerY() - barHeight / 2f,
+                        pill.right - inset - stepper - dp(6f), pill.centerY() + barHeight / 2f),
                 0.65f, skin.onColor)
         return pill.bottom
     }
@@ -8278,20 +8272,35 @@ class WatchPreviewView @JvmOverloads constructor(
         drawSkin(canvas, pill, skin, dp)
 
         val sidePadding = dp(QuickPanelGeometry.PILL_PADDING_H_DP)
-        textPaint.textAlign = Paint.Align.CENTER
         if (block.seekShowsBar) {
-            textPaint.typeface = watchUiTypeface(bold = true)
-            textPaint.textSize = dp(12f)
-            textPaint.color = skin.onColor
+            // 1:23 ━━━━━━━ 3:33 - a time at each end of the bar, as on the watch.
             val position = if (liveDurationMs > 0) livePositionMs else 103_000L
             val duration = if (liveDurationMs > 0) liveDurationMs else 237_000L
-            // 8dp of padding, then the time (14dp), 5 of space and the 6dp bar.
-            canvas.drawText(
-                    "${previewTime(position)} / ${previewTime(duration)}",
-                    pill.centerX(), pill.top + dp(8f + 11f), textPaint)
+            val elapsedText = previewTime(position)
+            val durationText = previewTime(duration)
+            val inset = dp(QuickPanelGeometry.SEEK_READOUT_INSET_DP)
+            val rowCenterY = pill.top + dp(QuickPanelGeometry.SEEK_READOUT_TOP_DP) +
+                    dp(QuickPanelGeometry.SEEK_READOUT_ROW_DP) / 2f
+
+            textPaint.typeface = watchUiTypeface(bold = true)
+            textPaint.textSize = dp(11f)
+            textPaint.color = skin.onColor
+            val baseline = rowCenterY + dp(4f)
+            val elapsedLeft = pill.left + sidePadding + inset
+            val durationRight = pill.right - sidePadding - inset
+            textPaint.textAlign = Paint.Align.LEFT
+            canvas.drawText(elapsedText, elapsedLeft, baseline, textPaint)
+            textPaint.textAlign = Paint.Align.RIGHT
+            canvas.drawText(durationText, durationRight, baseline, textPaint)
+            textPaint.textAlign = Paint.Align.CENTER
+
+            val gap = dp(QuickPanelGeometry.SEEK_BAR_MARGIN_DP)
+            val barHeight = dp(QuickPanelGeometry.SEEK_BAR_DP)
             val bar = RectF(
-                    pill.left + sidePadding + dp(8f), pill.top + dp(8f + 14f + 5f),
-                    pill.right - sidePadding - dp(8f), pill.top + dp(8f + 14f + 5f + 6f))
+                    elapsedLeft + textPaint.measureText(elapsedText) + gap,
+                    rowCenterY - barHeight / 2f,
+                    durationRight - textPaint.measureText(durationText) - gap,
+                    rowCenterY + barHeight / 2f)
             drawPanelLevelBar(canvas, bar, position.toFloat() / duration, skin.onColor)
         }
 

@@ -155,11 +155,11 @@ class QuickPanelBlockViews(
     private var speed = 1f
 
     private var volumeRoot: LinearLayout? = null
-    private var volumeLabel: TextView? = null
     private var volumeBar: LevelBarView? = null
 
     private var seekRoot: LinearLayout? = null
     private var seekTime: TextView? = null
+    private var seekDuration: TextView? = null
     private var seekBar: LevelBarView? = null
     private val seekChips = ArrayList<ImageView>()
 
@@ -177,8 +177,12 @@ class QuickPanelBlockViews(
 
     fun onVolume(level: Float) {
         volume = level.coerceIn(0f, 1f)
-        volumeBar?.fraction = volume
-        volumeLabel?.text = context.getString(R.string.quick_volume_percent, (volume * 100f).roundToInt())
+        volumeBar?.apply {
+            fraction = volume
+            // The number is no longer drawn, so the bar is what says it to a screen reader.
+            contentDescription = context.getString(
+                    R.string.quick_volume_description, (volume * 100f).roundToInt())
+        }
     }
 
     fun onPosition(positionMs: Long, durationMs: Long, seekable: Boolean) {
@@ -186,8 +190,18 @@ class QuickPanelBlockViews(
         this.durationMs = durationMs
         val changed = this.seekable != seekable
         this.seekable = seekable
-        seekBar?.fraction = if (durationMs > 0L) positionMs.toFloat() / durationMs else 0f
-        seekTime?.text = timeText()
+        val known = durationMs > 0L
+        seekBar?.fraction = if (known) positionMs.toFloat() / durationMs else 0f
+        // Nothing to say about a track whose length is not known (a live stream, or no track):
+        // both times go and the bar takes the row.
+        seekTime?.apply {
+            text = if (known) formatTime(positionMs) else ""
+            visibility = if (known) View.VISIBLE else View.GONE
+        }
+        seekDuration?.apply {
+            text = if (known) formatTime(durationMs) else ""
+            visibility = if (known) View.VISIBLE else View.GONE
+        }
         if (changed) styleSeekChips()
     }
 
@@ -269,32 +283,21 @@ class QuickPanelBlockViews(
                 com.svartifoss.snfell.common.R.drawable.action_volume_up,
                 R.string.action_name_volume_up, step)
 
-        val middle = LinearLayout(context).apply {
-            orientation = LinearLayout.VERTICAL
-            gravity = Gravity.CENTER
-            layoutParams = LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT, 1f)
-                    .apply {
-                        marginStart = dp(6f)
-                        marginEnd = dp(6f)
-                    }
-        }
-        val label = TextView(context).apply {
-            textSize = 12f
-            gravity = Gravity.CENTER
-            includeFontPadding = false
-            setTypeface(skin.typeface() ?: Typeface.DEFAULT, Typeface.BOLD)
-        }
+        // Just the bar between the two buttons. It used to carry the percentage over it, which
+        // took half the height and put a number where the eye wants a length; the bar says the
+        // level well enough, and the number is still there for a screen reader.
         val bar = LevelBarView(context).apply {
             layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, dp(8f)).apply { topMargin = dp(5f) }
+                    0, dp(QuickPanelGeometry.VOLUME_BAR_DP), 1f).apply {
+                marginStart = dp(6f)
+                marginEnd = dp(6f)
+            }
+            importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_YES
         }
-        middle.addView(label)
-        middle.addView(bar)
 
         root.addView(down)
-        root.addView(middle)
+        root.addView(bar)
         root.addView(up)
-        volumeLabel = label
         volumeBar = bar
         styleVolume(root)
         onVolume(host.volume())
@@ -309,7 +312,6 @@ class QuickPanelBlockViews(
                 foreground = pressHighlight(circle = true)
             }
         }
-        volumeLabel?.setTextColor(skin.tint())
         volumeBar?.apply {
             fillColor = skin.tint()
             trackColor = ColorUtils.setAlphaComponent(skin.tint(), TRACK_ALPHA)
@@ -381,38 +383,49 @@ class QuickPanelBlockViews(
         root.removeAllViews()
         seekChips.clear()
         seekTime = null
+        seekDuration = null
         seekBar = null
 
         val sidePadding = dp(QuickPanelGeometry.PILL_PADDING_H_DP)
-        // The readout is 39dp from the top of the pill to the top of the chips: 8 of padding, the
-        // time, then the bar between two gaps. Without it the chips sit under the plain 4.
+        // The readout - the time played, the bar and the length of the track, in one row - is
+        // QuickPanelGeometry.SEEK_READOUT_DP from the top of the pill to the top of the chips.
+        // Without it the chips sit under the plain padding.
         root.setPaddingRelative(
                 sidePadding,
-                dp(if (block.seekShowsBar) SEEK_READOUT_TOP_DP else QuickPanelGeometry.SEEK_PADDING_TOP_DP),
+                dp(if (block.seekShowsBar) QuickPanelGeometry.SEEK_READOUT_TOP_DP
+                else QuickPanelGeometry.SEEK_PADDING_TOP_DP),
                 sidePadding,
                 dp(QuickPanelGeometry.SEEK_PADDING_BOTTOM_DP))
 
         if (block.seekShowsBar) {
-            val time = TextView(context).apply {
-                textSize = 12f
-                gravity = Gravity.CENTER
-                includeFontPadding = false
-                setTypeface(skin.typeface() ?: Typeface.DEFAULT, Typeface.BOLD)
+            // 1:23 ━━━━━━━━━ 3:33: a time at each end of the bar, where the eye expects to find
+            // "how far" and "how long", rather than both over the bar as one line of text.
+            val readout = LinearLayout(context).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
                 layoutParams = LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            }
-            val bar = LevelBarView(context).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, dp(SEEK_BAR_DP)).apply {
-                    topMargin = dp(5f)
-                    bottomMargin = dp(6f)
-                    marginStart = dp(8f)
-                    marginEnd = dp(8f)
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        dp(QuickPanelGeometry.SEEK_READOUT_ROW_DP)).apply {
+                    marginStart = dp(QuickPanelGeometry.SEEK_READOUT_INSET_DP)
+                    marginEnd = dp(QuickPanelGeometry.SEEK_READOUT_INSET_DP)
+                    bottomMargin = dp(QuickPanelGeometry.SEEK_READOUT_GAP_DP)
                 }
             }
-            root.addView(time)
-            root.addView(bar)
-            seekTime = time
+            val elapsed = readoutTime()
+            val bar = LevelBarView(context).apply {
+                layoutParams = LinearLayout.LayoutParams(
+                        0, dp(QuickPanelGeometry.SEEK_BAR_DP), 1f).apply {
+                    marginStart = dp(QuickPanelGeometry.SEEK_BAR_MARGIN_DP)
+                    marginEnd = dp(QuickPanelGeometry.SEEK_BAR_MARGIN_DP)
+                }
+            }
+            val total = readoutTime()
+            readout.addView(elapsed)
+            readout.addView(bar)
+            readout.addView(total)
+            root.addView(readout)
+            seekTime = elapsed
+            seekDuration = total
             seekBar = bar
         }
 
@@ -464,9 +477,23 @@ class QuickPanelBlockViews(
         return root
     }
 
+    /** One of the two times beside the bar. */
+    private fun readoutTime(): TextView = TextView(context).apply {
+        textSize = 11f
+        includeFontPadding = false
+        gravity = Gravity.CENTER
+        setTypeface(skin.typeface() ?: Typeface.DEFAULT, Typeface.BOLD)
+        // Digits of one width, so the bar between the two times does not creep as the seconds
+        // tick over (a 1 is narrower than a 0 in most typefaces).
+        fontFeatureSettings = "tnum"
+        layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    }
+
     private fun styleSeek(root: LinearLayout) {
         surface(root)
         seekTime?.setTextColor(skin.tint())
+        seekDuration?.setTextColor(skin.tint())
         seekBar?.apply {
             fillColor = skin.tint()
             trackColor = ColorUtils.setAlphaComponent(skin.tint(), TRACK_ALPHA)
@@ -483,9 +510,6 @@ class QuickPanelBlockViews(
             chip.alpha = if (seekable) 1f else DISABLED_ALPHA
         }
     }
-
-    private fun timeText(): String =
-            if (durationMs > 0L) "${formatTime(positionMs)} / ${formatTime(durationMs)}" else ""
 
     // --- Tools ---
 
@@ -842,9 +866,6 @@ class QuickPanelBlockViews(
     }
 
     private companion object {
-        /** Padding above the time in a seek block that shows one - see [bindSeek]. */
-        const val SEEK_READOUT_TOP_DP = 8f
-        const val SEEK_BAR_DP = 6f
         const val CHIP_CORNER_DP = 18f
         const val REPEAT_DELAY_MS = 380L
         const val REPEAT_INTERVAL_MS = 110L

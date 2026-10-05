@@ -40,10 +40,32 @@ object QuickPanelGeometry {
     const val STEPPER_GLYPH_DP = 22f
     const val VOLUME_PADDING_H_DP = 4f
 
+    /**
+     * The level bar. It used to share the middle with the percentage, over it; with the number gone
+     * the bar has the whole stretch between the two buttons to itself and can be a little thicker.
+     */
+    const val VOLUME_BAR_DP = 10f
+
     // --- Skip and position ---
 
-    /** The time, the bar and the space around them, above the chips. */
-    const val SEEK_READOUT_DP = 39f
+    /** Above the readout row, inside the pill. */
+    const val SEEK_READOUT_TOP_DP = 10f
+
+    /** The readout row: the time played, the bar, and the track's length, side by side. */
+    const val SEEK_READOUT_ROW_DP = 16f
+
+    /** Between the readout row and the chips. */
+    const val SEEK_READOUT_GAP_DP = 4f
+
+    /** The readout and the space around it, above the chips. */
+    const val SEEK_READOUT_DP = SEEK_READOUT_TOP_DP + SEEK_READOUT_ROW_DP + SEEK_READOUT_GAP_DP
+
+    /** The bar's thickness, and the space between it and each of the two times. */
+    const val SEEK_BAR_DP = 6f
+    const val SEEK_BAR_MARGIN_DP = 8f
+
+    /** How far the readout row sits in from the pill's own padding, so the times clear its corners. */
+    const val SEEK_READOUT_INSET_DP = 12f
 
     /** Above the chips when there is no readout. */
     const val SEEK_PADDING_TOP_DP = 4f

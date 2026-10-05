@@ -59,6 +59,7 @@
     <string name="quick_tool_search">Pesquisar</string>
     <string name="quick_tool_menu">Menu</string>
     <string name="quick_volume_percent">%1$d%%</string>
+    <string name="quick_volume_description">Volume %1$d%%</string>
     <string name="quick_seek_back_description">Recuar %1$d segundos</string>
     <string name="quick_seek_forward_description">Avançar %1$d segundos</string>
     <string name="quick_speed_description">Velocidade de reprodução %1$s</string>
