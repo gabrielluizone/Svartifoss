@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **The watch app opens with its launcher icon, as Wear OS asks of a branded launch.** The launch screen drew the bare mark on black; it now shows the app's round launcher icon, 48 dp, on a black window, the way the system's own watch apps open. It is built on the androidx SplashScreen library, which uses the system splash screen on Android 12 and later and draws the same thing below that, so it looks alike on every Wear OS version.
+
+### Fixed
+
+- **Tapping the button on the watch's "install the phone app" screen no longer closes the watch app.** *Open on phone* (on Google Play; *View on GitHub* in the sideload build) was meant to open the app's page on the phone, and ended the watch app with a crash instead, because the piece of the Wear library it calls was not part of the watch build. It now asks the phone to open the page, shows a progress indicator meanwhile, and says *Opened on phone* or, when the watch has no paired phone to ask, *Could not open on phone*.
+
+- **The watch app's first screens are no longer cut off on a small round watch.** On a 192 dp round display (the Pixel Watch and Galaxy Watch size) the screen that says the phone app is missing set its sentence in a column about 60 dp wide, so it ran off the bottom after "phone app" and took its only button with it, and each page of the *How to use* lesson shown the first time the app opens lost its last line. The phone-app screen now uses the width the round display really has, with shorter wording on Google Play and a button that is always in view (it scrolls rather than cuts off if a translation runs long), and each page of the lesson sizes its text to the room it has.
+
 ## 4.2
 
 ### Added

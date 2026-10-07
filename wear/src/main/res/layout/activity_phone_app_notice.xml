@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "The phone app is missing" screen, shown by wearutils' PhoneAppNoticeActivity. This file
+     deliberately shadows the library's layout of the same name (an app resource wins over a
+     library's, so the wearutils submodule is untouched); the ids and the onClick handler are the
+     ones that activity looks for.
+
+     The library's version put the text in a BoxInsetLayout carrying an 18dp margin, inside which a
+     child was boxed to the round screen's inscribed square and padded again. On a 192dp round
+     watch that left a column about 60dp wide: the sentence wrapped to one short word per line, ran
+     off the bottom of the screen after "phone app" and took the only button with it. Google's Wear
+     OS review reads that as "No text or controls are cut off by the screen edges" (WO-V16) failing,
+     and it is the first and, with no phone paired, the only screen a reviewer sees.
+
+     Here only the left and right edges are boxed, so the text gets the width the round screen really
+     has, and the content scrolls in a ScrollView as a floor under it - a translated sentence or a
+     large font scale then costs a scroll instead of the button. The English text is written to fit
+     a small round watch without scrolling at all, which is the case that matters: nothing on this
+     screen says "scroll". -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+
+    <androidx.wear.widget.BoxInsetLayout
+        android:id="@+id/no_phone_error_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fillViewport="true"
+            android:focusable="true"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:scrollbars="none"
+            app:boxedEdges="left|right">
+
+            <!-- Takes the crown, which scrolls a focused ScrollView. -->
+            <requestFocus />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/google_sans"
+                    android:gravity="center"
+                    android:text="@string/no_phone_app_description"
+                    android:textColor="@android:color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <!-- 48dp tall: the smallest touch target Wear OS asks for. -->
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/notice_button_background"
+                    android:fontFamily="@font/google_sans"
+                    android:minWidth="0dp"
+                    android:minHeight="48dp"
+                    android:onClick="openGithub"
+                    android:paddingLeft="14dp"
+                    android:paddingRight="14dp"
+                    android:text="@string/no_phone_app_button"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.wear.widget.BoxInsetLayout>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateOnly="true"
+        android:indeterminateTint="@color/notice_accent"
+        android:visibility="gone" />
+
+</FrameLayout>
