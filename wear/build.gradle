@@ -100,6 +100,13 @@ unMock {
     keepAndRename "java.nio.charset.Charsets" to "xjava.nio.charset.Charsets"
 }
 
+// RemoteIntentShimContractTest reads the wearutils source that calls the shim. It lives outside this
+// module, so without declaring it a change there leaves the task UP-TO-DATE and the contract is only
+// checked on a clean build (the reason mobile/build.gradle declares its cross-module inputs too).
+tasks.withType(Test).configureEach {
+    inputs.file("${rootProject.projectDir}/wearutils/src/main/java/com/matejdro/wearutils/companionnotice/PhoneAppNoticeActivity.java")
+}
+
 dependencies {
     implementation(project(path: ':wearutils')) {
         exclude group: 'com.google.android.support', module: 'wearable'
@@ -113,6 +120,7 @@ dependencies {
     implementation libs.androidx.cardView
     implementation libs.androidx.appCompat
     implementation libs.androidx.core
+    implementation libs.androidx.core.splashscreen
     implementation libs.androidx.wear
     implementation libs.androidx.wear.input
     implementation libs.androidx.wear.ongoing

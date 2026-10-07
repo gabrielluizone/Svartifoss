@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The launcher icon at the size Wear OS's branded launch asks for (see AppTheme.Starting).
+
+     The size is carried by the layer rather than left to the splash screen: the platform and the
+     compat path each size the icon area differently, but an item with an explicit width, height
+     and gravity is drawn at exactly that size in the middle of whatever area it is given, so
+     the icon is 48dp on every Wear OS version. This is Google's own recipe for a round icon;
+     a non-round one would need the reduced size and an icon background instead. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:width="@dimen/splash_screen_icon_size"
+        android:height="@dimen/splash_screen_icon_size"
+        android:drawable="@mipmap/ic_launcher"
+        android:gravity="center" />
+</layer-list>

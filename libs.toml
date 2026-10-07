@@ -11,6 +11,9 @@ androidx-appCompat = "1.7.1"
 androidx-cardView = "1.0.0"
 androidx-constraintLayout = "2.2.1"
 androidx-core = "1.17.0"
+# Wear only: the branded launch Google's Wear OS quality review checks (a 48dp round icon on black).
+# 1.0.1 is the first version with Wear OS dimensions; see wear/.../res/values/styles.xml.
+androidx-core-splashscreen = "1.2.0"
 androidx-fragment = "1.8.9"
 androidx-palette = "1.0.0"
 androidx-activity = "1.11.0"
@@ -73,6 +76,7 @@ androidx-appCompat = { module = "androidx.appcompat:appcompat", version.ref = "a
 androidx-cardView = { module = "androidx.cardview:cardview", version.ref = "androidx-cardView" }
 androidx-constraintLayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintLayout" }
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-core-splashscreen" }
 androidx-fragment = { module = "androidx.fragment:fragment-ktx", version.ref = "androidx-fragment" }
 androidx-palette = { module = "androidx.palette:palette-ktx", version.ref = "androidx-palette" }
 androidx-activity = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }

@@ -10,9 +10,13 @@
 
   These names carry no translations in `wearutils`, so overriding the default `values/` is complete
   rather than partial. The github flavour keeps the library's own text.
+
+  The sentence is short on purpose: it has to fit, with the button under it, on a 192dp round
+  watch without scrolling (see res/layout/activity_phone_app_notice.xml). The longer wording it
+  replaced was cut off by the screen's edge, with the button out of reach, on exactly that watch.
 -->
 <resources>
-    <string name="no_phone_app_description">To use this app, you also need the Svartifoss phone app. Google Play installs it on your phone — open it there to finish setting up.</string>
+    <string name="no_phone_app_description">Install the Svartifoss phone app to use this watch app.</string>
     <string name="no_phone_app_button">Open on phone</string>
     <string name="no_phone_app_github_url" translatable="false">https://play.google.com/store/apps/details?id=com.svartifoss.snfell</string>
     <string name="github_page_opened">Opened on phone</string>

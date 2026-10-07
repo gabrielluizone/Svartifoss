@@ -73,6 +73,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.doOnLayout
 import androidx.lifecycle.Lifecycle
@@ -975,6 +976,9 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Before super.onCreate(), which is where the splash library has to swap the launch theme
+        // for AppTheme; after it the AppCompat decor would already have been built on the wrong one.
+        installSplashScreen()
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -6897,8 +6901,8 @@ class MainActivity : WearCompanionWatchActivity(),
                     // low-power mode. setIdleStateVisible restarts it on ambient exit.
                     (binding.idleStateIcon.drawable as? Animatable)?.stop()
 
-                    // The root is already opaque black from the layout (AMOLED + it covers the
-                    // branded splash windowBackground); nothing to override for ambient.
+                    // The root is already opaque black from the layout (AMOLED); nothing to
+                    // override for ambient.
 
                     binding.notificationPopup.backgroundImage.visibility = View.GONE
                     binding.notificationPopup.solidBackground.background = ColorDrawable(Color.BLACK)
@@ -6981,9 +6985,9 @@ class MainActivity : WearCompanionWatchActivity(),
 
                     viewModel.setContinuousPositionTicking(true)
 
-                    // Root deliberately keeps its opaque black layout background (never null -
-                    // that would let the splash windowBackground glyph bleed through wherever
-                    // no album art covers the screen).
+                    // Root deliberately keeps its opaque black layout background (never null, so
+                    // wherever no album art covers the screen it is black rather than whatever
+                    // the window behind it holds).
                     setIdleStateVisible(binding.idleStateGroup.visibility == View.VISIBLE)
 
                     binding.notificationPopup.backgroundImage.visibility = View.VISIBLE

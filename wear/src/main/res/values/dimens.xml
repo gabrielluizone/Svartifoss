@@ -23,4 +23,7 @@
 
     <dimen name="screen_button_width">46dp</dimen>
     <dimen name="screen_button_height">38dp</dimen>
+
+    <!-- Wear OS's branded launch: a round icon is 48dp. Change it only with the guideline. -->
+    <dimen name="splash_screen_icon_size">48dp</dimen>
 </resources>

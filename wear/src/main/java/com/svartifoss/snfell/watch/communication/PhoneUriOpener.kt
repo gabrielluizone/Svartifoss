@@ -86,7 +86,10 @@ object PhoneUriOpener {
             true
         } catch (e: CancellationException) {
             throw e
-        } catch (e: Exception) {
+        } catch (e: Throwable) {
+            // Throwable, not Exception: with no companion node the platform fails the helper's future
+            // with a bare Throwable (see RemoteIntent, which hit it first), and this runs from the
+            // 30 s backstop - exactly the case where the phone is out of reach.
             Timber.w(e, "Could not open streaming shortcut on phone")
             false
         }
