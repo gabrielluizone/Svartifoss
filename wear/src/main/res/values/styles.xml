@@ -8,9 +8,28 @@
         <item name="colorAccent">@color/theme_accent</item>
         <item name="android:fontFamily">@font/google_sans</item>
         <item name="fontFamily">@font/google_sans</item>
-        <!-- Black branded launch frame instead of the gray AppCompat default - pure black is
-             also what AMOLED watches want. See splash_background.xml. -->
-        <item name="android:windowBackground">@drawable/splash_background</item>
+        <!-- Pure black instead of the gray AppCompat default: it is what AMOLED watches want, and
+             the first frame the user sees after the branded launch below. -->
+        <item name="android:windowBackground">@android:color/black</item>
+    </style>
+
+    <!-- The theme MainActivity is *launched* with: the branded launch that Google's Wear OS app
+         quality review (WO-V15) checks - the launcher icon, round and 48dp, on a black window.
+         Google's documented route is the androidx SplashScreen library, "to ensure it displays
+         correctly on all Wear OS versions", so that is what this is: on Android 12+ it maps onto
+         the platform splash screen, below that it draws the same thing in the window background.
+         It hands over to AppTheme the moment MainActivity calls installSplashScreen().
+
+         Only the *launcher* activity needs it. The other activities are only ever opened from
+         inside the app (QueueTheme) or by the Tile trampoline, and none of them is an app start.
+
+         The icon is the launcher icon itself rather than a separate mark: the guideline says the
+         splash icon must match it, and an earlier splash drew the bare mark on black, which a
+         reviewer reads as a different icon. See splash_screen.xml for how it gets its size. -->
+    <style name="AppTheme.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@android:color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_screen</item>
+        <item name="postSplashScreenTheme">@style/AppTheme</item>
     </style>
 
     <!-- Theme for the full-screen Compose screens (queue, actions menu). Deliberately OPAQUE:

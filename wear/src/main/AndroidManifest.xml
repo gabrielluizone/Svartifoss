@@ -61,11 +61,14 @@
             android:name="com.google.android.wearable.standalone"
             android:value="true" />
 
+        <!-- Launched with the branded-launch theme (the launcher icon, 48dp, on black); MainActivity
+             hands over to AppTheme by calling installSplashScreen() before super.onCreate(). -->
         <activity
             android:name=".watch.view.MainActivity"
             android:label="@string/app_name_short"
             android:exported="true"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Starting">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
