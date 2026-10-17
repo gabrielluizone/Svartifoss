@@ -53,6 +53,15 @@ internal object ActionPickerCatalogue {
                     }
                 }
 
+        fun itemOf(action: PhoneAction): PickerItem<PhoneAction>? =
+                if (action is PickerActionGroup) {
+                    PickerItem.Group(action.javaClass.name, action) {
+                        action.pickerChildren().filter(::allowed)
+                    }
+                } else {
+                    choice(action)
+                }
+
         val playback = PlaybackActionList(context)
         val volume = VolumeActionList(context)
         val screens = WatchScreenActionList(context)
@@ -105,7 +114,7 @@ internal object ActionPickerCatalogue {
                         context.getString(R.string.picker_chip_streaming),
                         commonR.drawable.action_open_playlist,
                         listOf<PickerItem<PhoneAction>>(PickerItem.AddLink) +
-                                (saved + account + showAll).mapNotNull(::choice)),
+                                (saved + account + showAll).mapNotNull(::itemOf)),
                 PickerSection(
                         SECTION_APPS, context.getString(R.string.picker_section_apps),
                         context.getString(R.string.picker_chip_apps),

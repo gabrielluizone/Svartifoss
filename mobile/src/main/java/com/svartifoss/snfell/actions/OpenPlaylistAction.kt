@@ -18,6 +18,7 @@ import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.QueueEntry
 import com.svartifoss.snfell.common.QueuePaging
+import com.svartifoss.snfell.common.QueueShortcutLink
 import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.music.QueueArtworkResolver
 import com.svartifoss.snfell.proto.CustomList
@@ -102,6 +103,7 @@ class OpenPlaylistAction : SelectableAction {
             // Sent larger only for that style so the other styles keep the smaller payload - a
             // queue is up to 20 entries and each one crosses Bluetooth.
             val thumbnailSize = if (coverQueueStyleActive()) 320 else 96
+            val currentPlayerPackage = service.currentMediaController?.packageName
 
             val listId: String
             val protoList = if (playlist != null && playlist.isNotEmpty()) {
@@ -143,6 +145,27 @@ class OpenPlaylistAction : SelectableAction {
                             .setEntryId(QueueEntry.encode(queueItem.queueId, queueItem.description.mediaId))
                             .setEntryTitle(queueItem.description.title?.toString() ?: "")
                             .setEntrySubtitle(queueItem.description.subtitle?.toString() ?: "")
+                            .apply {
+                                // Players disagree about where this lives: streaming apps often
+                                // put a shareable URI in mediaUri, while others put a provider URI
+                                // in mediaId. Prefer mediaUri, then accept the first safe candidate;
+                                // opaque IDs and local content URIs never become shortcuts. Some
+                                // YouTube Music sessions publish neither, so retain a title/artist
+                                // search fallback rather than making the long press silently inert.
+                                val directLink = listOfNotNull(
+                                        queueItem.description.mediaUri?.toString(),
+                                        queueItem.description.mediaId
+                                ).firstNotNullOfOrNull(QueueShortcutLink::candidate)
+                                val fallbackLink = if (currentPlayerPackage ==
+                                                QueueShortcutLink.YOUTUBE_MUSIC_PACKAGE) {
+                                    QueueShortcutLink.youtubeMusicSearch(
+                                            queueItem.description.title?.toString(),
+                                            queueItem.description.subtitle?.toString())
+                                } else {
+                                    null
+                                }
+                                (directLink ?: fallbackLink)?.let(::setEntryMediaUri)
+                            }
                             .build()
                 }
             } else if (service.recentTrackHistory.isNotEmpty()) {

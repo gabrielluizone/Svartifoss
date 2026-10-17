@@ -23,6 +23,7 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.music.QueueArtworkResolver
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.TrackTimeFormat
 import com.svartifoss.snfell.databinding.ActivityMainBinding
 import com.svartifoss.snfell.di.InjectableViewModelFactory
 import com.svartifoss.snfell.music.isPlaying
@@ -890,12 +891,7 @@ class MainActivity : WearCompanionPhoneActivity(),
         }
     }
 
-    private fun formatTime(ms: Long): String {
-        val totalSeconds = ms / 1000
-        val minutes = totalSeconds / 60
-        val seconds = totalSeconds % 60
-        return String.format("%d:%02d", minutes, seconds)
-    }
+    private fun formatTime(ms: Long): String = TrackTimeFormat.format(ms)
 
     /**
      * Feeds the queue sheet.

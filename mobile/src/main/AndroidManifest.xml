@@ -45,6 +45,8 @@
         <package android:name="com.audiomack" />
         <package android:name="com.mixcloud.player" />
         <package android:name="com.pandora.android" />
+        <!-- Symfonium's public broadcast API is used to append search results to its queue. -->
+        <package android:name="app.symfonik.music.player" />
 
         <!-- Makes compatible alternative clients visible to the per-service shortcut router.
              Candidates are checked with package-targeted content links before being offered. -->

@@ -3,6 +3,7 @@ package com.svartifoss.snfell.view.settings
 import android.content.Context
 import android.content.res.XmlResourceParser
 import androidx.annotation.XmlRes
+import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.update.UpdateGateway
 import com.svartifoss.snfell.view.watchface.WatchFacePrefsFragment
@@ -57,6 +58,12 @@ object SettingsSearchIndex {
     private val EXCLUDED_CATEGORIES: Set<String> =
             if (UpdateGateway.SUPPORTS_SELF_UPDATE) emptySet() else setOf("cat_updates")
 
+    /** The Play-only icon choice is present in shared XML so it can be backed up and synced, but
+     * GitHub users must not find a hidden, non-functional search result for it. */
+    private val EXCLUDED_KEYS: Set<String> =
+            if (UpdateGateway.SUPPORTS_SELF_UPDATE) setOf(MiscPreferences.APP_ICON_STYLE.key)
+            else emptySet()
+
     private val FORMAT_PLACEHOLDER =
             Regex("%(?:\\d+\\$)?[-#+ 0,(<]*\\d*(?:\\.\\d+)?[a-zA-Z%]")
 
@@ -96,7 +103,7 @@ object SettingsSearchIndex {
                                     .takeIf { it.isNotEmpty() && it !in EXCLUDED_CATEGORIES }
                                     ?.let { SettingsCatalog.sectionForCategory(sections, it) }
                             categoryDepth = parser.depth
-                        } else if (key.isNotEmpty() && title.isNotEmpty()) {
+                        } else if (key.isNotEmpty() && title.isNotEmpty() && key !in EXCLUDED_KEYS) {
                             // A row outside any category, or in one no section shows, cannot be
                             // navigated to - offering it as a result would dead-end the user.
                             categorySection?.let { section ->

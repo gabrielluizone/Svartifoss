@@ -6,6 +6,7 @@ import com.google.android.gms.wearable.DataEvent
 import com.google.android.gms.wearable.DataEventBuffer
 import com.google.android.gms.wearable.WearableListenerService
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.displayArtist
 import com.svartifoss.snfell.proto.MusicState
 import timber.log.Timber
 
@@ -59,7 +60,7 @@ class MusicStateListenerService : WearableListenerService() {
         // load and throws "Service not registered" from its own background thread, where no
         // try/catch of ours can reach it - so the only lever we have is asking far less often.
         val fingerprint = latestState?.let {
-            "${it.title}|${it.artist}|${it.playing}|${it.error}|${it.albumArtPending}"
+            "${it.title}|${it.displayArtist()}|${it.playing}|${it.error}|${it.albumArtPending}"
         }
         if (fingerprint != lastGlanceableFingerprint) {
             lastGlanceableFingerprint = fingerprint

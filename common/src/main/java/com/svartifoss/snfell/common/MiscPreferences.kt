@@ -70,6 +70,14 @@ object MiscPreferences {
     val APP_LANGUAGE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("app_language", AppLocales.SYSTEM)
 
+    /**
+     * Launcher background used by the Play build. The GitHub build keeps its original icon and
+     * ignores this value; keeping the key shared lets the phone's Play setting reach the watch
+     * through the ordinary preference snapshot without creating a second sync protocol.
+     */
+    val APP_ICON_STYLE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("app_icon_style", AppIconStyle.GRADIENT.preferenceValue)
+
     val DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("disable_ambient_physical_double_click", false)
 
     // Legacy boolean superseded by AUTO_START_MODE. Kept only so the one-time migration in
@@ -741,6 +749,17 @@ object MiscPreferences {
      */
     val ONLINE_ARTWORK_ENABLED: PreferenceDefinition<Boolean> =
             SimplePreferenceDefinition("online_artwork_enabled", true)
+
+    /**
+     * Optional YouTube Data API v3 key used to retrieve the real thumbnail of a video or live
+     * stream whose player publishes no artwork.
+     *
+     * This is deliberately not in [EXPORTABLE]: it is a phone-only credential, must never travel
+     * to the watch, and should not be copied into a config backup. An empty value uses the key
+     * bundled at build time when one exists; otherwise it keeps the existing Deezer-only fallback.
+     */
+    val YOUTUBE_DATA_API_KEY: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("youtube_data_api_key", "")
 
     /** Silhouette of Chat's avatar - the same [CoverShape] vocabulary as [WEAR_NOTE_COVER_SHAPE]
      *  and [WEAR_CAROUSEL_CARD_SHAPE], its own key for the same reason theirs is: a rail of cards,
@@ -1607,7 +1626,7 @@ object MiscPreferences {
      *  the config export/import feature - add new preferences here too when adding them above. */
     val EXPORTABLE: List<PreferenceDefinition<*>> = listOf(
             ALWAYS_SHOW_TIME, PAUSE_ON_SWIPE_EXIT, ROTATING_CROWN_OFF_PERIOD, ROTATING_CROWN_SENSITIVITY,
-            ROTARY_SEEK, WEAR_ROTARY_ACTION, HAPTIC_FEEDBACK, APP_LANGUAGE,
+            ROTARY_SEEK, WEAR_ROTARY_ACTION, HAPTIC_FEEDBACK, APP_LANGUAGE, APP_ICON_STYLE,
             WEAR_HAND_GESTURE_MODE, WEAR_PINCH_SENSITIVITY, WEAR_PINCH_MAX_GAP,
             WEAR_PINCH_COOLDOWN, WEAR_PINCH_CALIBRATION,
             DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT, AUTO_START_MODE,

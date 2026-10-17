@@ -25,6 +25,8 @@ import com.svartifoss.snfell.watch.view.panel.PanelTriad
 import com.svartifoss.snfell.watch.view.panel.rememberScreenBackdrop
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchMusicService
+import com.svartifoss.snfell.watch.communication.QueueShortcutRequest
+import com.svartifoss.snfell.watch.view.shortcut.showContinueOnPhone
 import com.svartifoss.snfell.watch.util.WatchLanguage
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -141,6 +143,21 @@ class QueueActivity : ComponentActivity() {
                     onItemClick = { entryId ->
                         viewModel.selectItem(entryId)
                         safeFinish()
+                    },
+                    onItemLongClick = { item ->
+                        val link = com.svartifoss.snfell.common.QueueShortcutLink.candidate(
+                                item.mediaUri)
+                        if (link != null) {
+                            QueueShortcutRequest.openOnPhone(
+                                    this@QueueActivity,
+                                    item.title,
+                                    item.subtitle,
+                                    link
+                            ) {
+                                showContinueOnPhone(this@QueueActivity)
+                            }
+                            safeFinish()
+                        }
                     },
                     onDismiss = { safeFinish() },
                     style = queueStyle,

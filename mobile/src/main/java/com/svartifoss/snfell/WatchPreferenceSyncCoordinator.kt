@@ -282,6 +282,12 @@ internal class WatchPreferenceSyncCoordinator(context: Context) {
     private var disabled = false
 
     private val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == MiscPreferences.APP_ICON_STYLE.key) {
+            LauncherIconController.apply(
+                    appContext,
+                    preferences.getString(MiscPreferences.APP_ICON_STYLE.key,
+                            MiscPreferences.APP_ICON_STYLE.defaultValue))
+        }
         if (key == null || shouldPublishWatchPreferenceSnapshot(key)) requestSync(CHANGE_DEBOUNCE_MS)
     }
 

@@ -7,6 +7,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.svartifoss.snfell.common.CustomLists
+import com.svartifoss.snfell.proto.CustomList
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.PhoneConnection
 import com.svartifoss.snfell.watch.config.ButtonAction
@@ -67,6 +68,11 @@ class MenuViewModel @Inject constructor(
      */
     fun selectCustomListEntry(listId: String, entryId: String) {
         launchSilently { phoneConnection.executeCustomMenuAction(listId, entryId) }
+    }
+
+    /** Adds a playable search result to the end of the phone player's queue, keeping the menu open. */
+    fun enqueueSearchResult(entry: CustomList.ListEntry) {
+        launchSilently { phoneConnection.enqueueCustomListEntry(entry) }
     }
 
     /**

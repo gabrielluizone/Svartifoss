@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
+import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import com.svartifoss.snfell.NotificationService
@@ -44,6 +45,7 @@ import com.svartifoss.snfell.music.QueueArtworkResolver
 import com.svartifoss.snfell.music.StreamingService
 import com.svartifoss.snfell.music.StreamingShortcutLinks
 import com.svartifoss.snfell.music.StreamingShortcutRoutes
+import com.svartifoss.snfell.music.YouTubeThumbnailFetcher
 import com.svartifoss.snfell.di.GlobalConfig
 import com.svartifoss.snfell.util.WearableAvailability
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
@@ -190,6 +192,7 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
         devModeEnabled = preferenceManager.sharedPreferences?.getBoolean(PREF_DEV_MODE, false) == true
 
         initAppearanceSection()
+        initYouTubeApiKey()
         migrateRotarySeekSetting()
         initNavigationLinks()
         initAppsSection()
@@ -199,6 +202,28 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
         initAboutSection()
         initDevSection()
         applySectionVisibility()
+    }
+
+    /** Keeps the API credential usable without displaying the credential itself in the list. */
+    private fun initYouTubeApiKey() {
+        val preference = findPreference<EditTextPreference>(
+                MiscPreferences.YOUTUBE_DATA_API_KEY.key) ?: return
+
+        fun updateSummary(value: String?) {
+            preference.summary = getString(
+                    when {
+                        !value.isNullOrBlank() -> R.string.setting_youtube_api_key_configured
+                        YouTubeThumbnailFetcher.hasBundledKey() ->
+                                R.string.setting_youtube_api_key_bundled
+                        else -> R.string.setting_youtube_api_key_not_configured
+                    })
+        }
+
+        updateSummary(preference.text)
+        preference.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, value ->
+            updateSummary(value?.toString())
+            true
+        }
     }
 
     private fun initNavigationLinks() {
@@ -279,6 +304,13 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
                 applyTheme(newValue as String)
                 true
             }
+
+        findPreference<ListPreference>(MiscPreferences.APP_ICON_STYLE.key)?.let { iconPref ->
+            // The Play artifact owns the paid/gradient distinction. Keeping the row in shared XML
+            // lets the settings/search contracts stay identical, while this gate ensures the
+            // free GitHub artifact never advertises a choice it cannot apply.
+            iconPref.isVisible = !UpdateGateway.SUPPORTS_SELF_UPDATE
+        }
 
         findPreference<ListPreference>("app_language")?.let { languagePref ->
             languagePref.summary = "%s"

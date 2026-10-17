@@ -68,6 +68,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.svartifoss.snfell.common.PaletteTransforms
+import com.svartifoss.snfell.common.TrackTimeFormat
 import com.svartifoss.snfell.common.FaceGeometry
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
@@ -562,10 +563,7 @@ private fun AmbientCookie(
     }
 }
 
-private fun formatFaceTime(timeMs: Long): String {
-    val totalSeconds = timeMs / 1000
-    return String.format(java.util.Locale.getDefault(), "%d:%02d", totalSeconds / 60, totalSeconds % 60)
-}
+private fun formatFaceTime(timeMs: Long): String = TrackTimeFormat.format(timeMs)
 
 /** Polar angle of [pos] around [center] as a 0f..1f fraction, measured clockwise from 12
  *  o'clock - the same mapping the classic CircularProgressSeekBar uses, so a given finger

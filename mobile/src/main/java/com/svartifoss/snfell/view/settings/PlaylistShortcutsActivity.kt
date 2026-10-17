@@ -49,6 +49,8 @@ import com.matejdro.wearutils.miscutils.VibratorCompat
 import com.matejdro.wearutils.preferences.definition.Preferences
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.QueueShortcutImport
+import com.svartifoss.snfell.common.QueueShortcutLink
 import com.svartifoss.snfell.music.PlaylistShortcut
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
 import com.svartifoss.snfell.music.StreamingService
@@ -151,12 +153,17 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         }
 
         updateEmptyState()
-        if (savedInstanceState == null) handleIncomingShare(intent)
+        if (savedInstanceState == null) {
+            if (!handleIncomingQueueShortcut(intent)) handleIncomingShare(intent)
+        }
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
         setIntent(intent)
+        if (handleIncomingQueueShortcut(intent)) {
+            return
+        }
         if (intent.action == Intent.ACTION_SEND) {
             handleIncomingShare(intent)
         }
@@ -187,6 +194,26 @@ class PlaylistShortcutsActivity : AppCompatActivity(), RecyclerViewDragDropManag
         val setting = Settings.System.getInt(
                 contentResolver, Settings.System.HAPTIC_FEEDBACK_ENABLED, 0)
         return setting != 0
+    }
+
+    /** Opens the editor from a long-pressed queue row on the watch. */
+    private fun handleIncomingQueueShortcut(incomingIntent: Intent): Boolean {
+        if (incomingIntent.action != QueueShortcutImport.ACTION) return false
+
+        val link = QueueShortcutLink.candidate(
+                incomingIntent.getStringExtra(QueueShortcutImport.EXTRA_LINK))
+        if (link == null) {
+            Toast.makeText(this, R.string.playlist_shortcut_queue_link_unavailable,
+                    Toast.LENGTH_LONG).show()
+            return true
+        }
+
+        showShortcutDialog(
+                initialName = incomingIntent.getStringExtra(QueueShortcutImport.EXTRA_NAME)
+                        ?.trim().orEmpty(),
+                initialLink = link
+        )
+        return true
     }
 
     override fun onItemDragStarted(position: Int) = buzz()

@@ -114,18 +114,8 @@ object TrackMetadataFields {
     }
 
     /** `mm:ss`, or `h:mm:ss` past an hour. Null when there is no duration to show. */
-    fun formatDuration(durationMs: Long): String? {
-        if (durationMs <= 0L) return null
-        val totalSeconds = durationMs / 1000
-        val seconds = totalSeconds % 60
-        val minutes = (totalSeconds / 60) % 60
-        val hours = totalSeconds / 3600
-        return if (hours > 0) {
-            String.format(Locale.US, "%d:%02d:%02d", hours, minutes, seconds)
-        } else {
-            String.format(Locale.US, "%d:%02d", minutes, seconds)
-        }
-    }
+    fun formatDuration(durationMs: Long): String? =
+            if (durationMs <= 0L) null else TrackTimeFormat.format(durationMs, Locale.US)
 
     /**
      * Bitrate in kbps.

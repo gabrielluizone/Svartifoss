@@ -203,8 +203,17 @@ data class NowPlayingFaceState(
          */
         val playbackSpeed: Float = 1f,
         /** Whether the "1:23 / 3:45" line should show - already combines the phone-synced
-         *  track-time mode with whether a usable position exists. */
+         *  track-time mode with whether a usable position exists, or the session is live. */
         val showTrackTime: Boolean = false,
+        /**
+         * A stream with no length. The track-time line then reads [liveLabel] instead of
+         * "1:23 / 3:45" - `TrackTimeText` makes that swap, so no face has to know - and the
+         * progress ring stays away, since there is nothing to measure it against.
+         */
+        val live: Boolean = false,
+        /** The word for [live], in the watch's language - resolved by the host, which has the
+         *  resources the faces' plain state does not. */
+        val liveLabel: String = "LIVE",
         /** Raw album accent (or static theme accent) - the same color the shared UI tracks. */
         val accentColor: Int = WatchTheme.ACCENT_DEFAULT,
         /** Album-derived surface tint resolved by the host for the Material backdrop. Unlike

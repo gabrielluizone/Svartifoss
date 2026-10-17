@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 05-10-2026**
+**Last updated: 12-10-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -543,10 +543,7 @@ disabled. Everything else in the app keeps working offline.
 
 ## Artwork looked up online
 
-Two of the three **Album art source** choices put a picture behind the player that is not on your
-phone: **Artist picture**, a photograph of the performer, and **Looked up online**, an album cover
-for a player that publishes none. The third, **From the music app**, is the default and involves
-no network at all.
+Two of the three **Album art source** choices put a picture behind the player that is not on your phone: **Artist picture**, a photograph of the performer, and **Looked up online**, an album cover for a player that publishes none. The third, **From the music app**, is the default and looks nothing up for the face's picture. One lookup happens whatever the source: a cover is also looked up for a track whose app published **no cover at all**, as described below.
 
 Nothing on your phone or in Android carries an artist photograph — MediaStore has never stored
 artist images, the playing app publishes no field for one, and a music player that shows them
@@ -560,18 +557,11 @@ no API key. Nothing else is attached: no identifier, no account, no listening hi
 record of which app was playing. The request goes directly to Deezer, not through any server of
 ours, and is governed by that service's own terms rather than this policy.
 
-Nothing is looked up while the source is **From the music app**. When one of the other two is
-selected, each new artist (or each new track, for a cover) is looked up once and the result is
-cached on your phone, so an album playing through under **Artist picture** costs a single request.
-A record Deezer does not list is remembered as "no picture" for a week so the same name is not
-asked about again, and the player shows the artwork your music app published instead.
+While the source is **From the music app**, nothing is looked up for the face's picture. When one of the other two is selected, each new artist (or each new track, for a cover) is looked up once and the result is cached on your phone, so an album playing through under **Artist picture** costs a single request. A record Deezer does not list is remembered as "no picture" for a week so the same name is not asked about again, and the player shows the artwork your music app published instead.
 
-This is **on by default**, for the same reason the lyrics lookup is: choosing one of those sources
-is itself the choice to use it, and switching it off does not give you a cheaper version of
-anything — it falls back to the artwork you already had. **Online artwork** (Settings → Apps →
-Music apps & services) turns it off. Cached pictures live in the phone's cache directory, are never
-included in a settings backup, and are removed whenever Android clears app caches or you clear the
-app's storage.
+The one lookup that does not depend on the source is for a track whose app published **no cover at all** - no image and no address to fetch one from. YouTube is the case: a video or a live stream there carries a title and a channel name and nothing else. For such a track the phone asks the same Deezer search for an album cover, sending the **channel (or artist) name and the title**, with anything in brackets and anything after a "|" removed. A result is used only if its artist matches the channel or both its artist and its track are named in the title, so a stream that merely mentions a band is not given that band's sleeve. When nothing matches, which is the usual answer for a live stream, nothing more is sent and the watch shows what it would have shown without the lookup. Each upload is looked up once; a definite "no match" is remembered for a week like the record above, and a lookup that failed for lack of a connection is not remembered at all.
+
+This is **on by default**: a cover that is missing has no other source, so switching it off does not give you a cheaper version of anything - the watch shows what it showed before the lookup existed. **Online artwork** (Settings → Apps → Music apps & services) turns off both the face sources and this lookup. Cached pictures live in the phone's cache directory, are never included in a settings backup, and are removed whenever Android clears app caches or you clear the app's storage.
 
 ## Usage diagnostics
 

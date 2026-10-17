@@ -2,6 +2,7 @@ package com.svartifoss.snfell.watch
 
 import android.content.pm.ApplicationInfo
 import android.preference.PreferenceManager
+import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.MatejdroArtistAutosizeMigration
 import com.svartifoss.snfell.watch.config.PreferencesBus
 import com.svartifoss.snfell.watch.theme.UserFont
@@ -40,6 +41,10 @@ class WearMusicCenter : android.app.Application() {
         UserFont.initialize(this)
 
         val preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        LauncherIconController.apply(
+                this,
+                preferences.getString(MiscPreferences.APP_ICON_STYLE.key,
+                        MiscPreferences.APP_ICON_STYLE.defaultValue))
         // The watch may be installed independently while developing, so repair its local copy as
         // well as the phone's source copy before any screen resolves the active face.
         MatejdroArtistAutosizeMigration.repair(preferences)

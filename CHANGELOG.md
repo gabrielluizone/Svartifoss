@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+### Added
+
+- **Google Play and GitHub now have distinct launcher icons.** The Play builds use the new gradient-backed phone and Wear OS icons, while the GitHub builds keep the original solid icons. Play users can choose between the solid and gradient icon in the phone app's appearance settings, and the choice is synchronized to the watch.
+
+- **A live stream says so where the time would be.** A YouTube live has no length, so the line under the artist that reads `1:23 / 3:45` used to be left empty; it now reads **LIVE** (*AO VIVO* in Portuguese), on every face that shows the time and on the classic one. The phone decides it from the player publishing a duration of exactly 0 and sticking to it for three seconds, so a streaming player that fills the real length in a moment after a track starts does not flash the word. A face with its track time turned off stays as it was.
+
+- **A music video with no cover now gets the album's.** YouTube publishes only a title and a channel name - no image, and no video id to build its thumbnail from - so the watch showed a black screen on any face that draws the cover. The phone now looks for the album behind a music video in Deezer (by channel and title, and only when the result matches: a stream that merely mentions a band is not given that band's sleeve). When nothing matches - the usual answer for a live stream - the screen stays as it was, dark, rather than lighting up a stand-in. It applies to any app that publishes no cover at all and no address to fetch one from. **Online artwork** turns the lookup off.
+
+- **Symfonium can now be controlled from the watch integration.** Holding a song in search results can add it to Symfonium's queue, and the phone's action picker exposes **Symfonium** when the player is installed: force a provider sync or start a configured song, playlist, album, artist, genre, mix or internet radio. Media actions can play immediately, insert next or append to the queue, with resume and shuffle options. The actions use Symfonium's documented remote API and stay on the phone, while their configuration is synchronized to the watch.
+
 ### Changed
 
 - **The watch app opens with its launcher icon, as Wear OS asks of a branded launch.** The launch screen drew the bare mark on black; it now shows the app's round launcher icon, 48 dp, on a black window, the way the system's own watch apps open. It is built on the androidx SplashScreen library, which uses the system splash screen on Android 12 and later and draws the same thing below that, so it looks alike on every Wear OS version.
@@ -11,6 +21,12 @@
 - **Tapping the button on the watch's "install the phone app" screen no longer closes the watch app.** *Open on phone* (on Google Play; *View on GitHub* in the sideload build) was meant to open the app's page on the phone, and ended the watch app with a crash instead, because the piece of the Wear library it calls was not part of the watch build. It now asks the phone to open the page, shows a progress indicator meanwhile, and says *Opened on phone* or, when the watch has no paired phone to ask, *Could not open on phone*.
 
 - **The watch app's first screens are no longer cut off on a small round watch.** On a 192 dp round display (the Pixel Watch and Galaxy Watch size) the screen that says the phone app is missing set its sentence in a column about 60 dp wide, so it ran off the bottom after "phone app" and took its only button with it, and each page of the *How to use* lesson shown the first time the app opens lost its last line. The phone-app screen now uses the width the round display really has, with shorter wording on Google Play and a button that is always in view (it scrolls rather than cuts off if a translation runs long), and each page of the lesson sizes its text to the room it has.
+
+- **Track time past an hour now reads `4:00:00`, not `240:00`.** The playback time on the watch's faces, the seek readout, the progress screen, the quick panel's skip block, the phone's player details and the Watch tab's preview all kept counting minutes however long the track was, so a four-hour podcast showed `240:00` and an hour-long video `63:10`. From the first hour they now show hours, minutes and seconds (`1:03:10`, `4:00:00`), the way the music and video apps do; anything shorter reads exactly as before.
+
+- **Skipping or going back by seconds on a live stream no longer restarts it.** On a YouTube live, "go back 10 seconds" jumped to the very beginning of the stream and "skip 10 seconds" to 0:10, from wherever you were listening; the change in 4.2 did not reach it. Android reports the position of anything that has no length as zero, however far in it is, and a live publishes its length as 0, so the jump was measured from zero. It is now measured from the position the player itself last published, and when that is not known yet (the second after the phone app starts in the middle of a stream) the press does nothing instead of guessing. Skipping past the end of what has been broadcast is ignored by YouTube, and anything with a length - videos, podcasts, songs - behaves exactly as before.
+
+- **The artist line no longer stays empty when a player omits the artist.** The watch now shows the active player's app name, such as **Symfonium** or **YouTube Music**, only as a visual fallback. The original artist metadata remains unchanged for lyrics, history and detailed metadata, and the fallback is used consistently by the player, media controls, notifications, Tile and complication.
 
 ## 4.2
 

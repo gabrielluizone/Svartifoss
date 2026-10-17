@@ -61,6 +61,7 @@ import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.CustomLists
+import com.svartifoss.snfell.common.LibraryEntry
 import com.svartifoss.snfell.proto.ShortcutPlayMode
 import com.svartifoss.snfell.watch.communication.CustomListItemWithIcon
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
@@ -269,10 +270,9 @@ private fun MenuListLayer(
                         )
                     }
                     is MenuContent.Custom -> {
-                        // Only search history supports deleting entries directly from the
-                        // watch - long-press elsewhere (playlists, past-played tracks, ...)
-                        // would have no clear meaning and risks an accidental deletion of
-                        // something not actually deletable.
+                        // Search history deletes on long-press. A playable search result uses the
+                        // same gesture to append it to the phone player's queue; browsable rows
+                        // are navigation targets and therefore do not offer either action.
                         val deletable = content.list.listId == CustomLists.SEARCH_HISTORY
 
                         itemsIndexed(content.list.items) { _, item ->
@@ -281,12 +281,14 @@ private fun MenuListLayer(
                                 // row): drawn as text, so it is not mistaken for something to tap.
                                 MenuMessageRow(item.listItem.entryTitle)
                             } else {
+                                val queueable = content.list.listId == CustomLists.SEARCH_RESULTS &&
+                                        !LibraryEntry.isBrowsable(item.listItem.entryId)
                                 CustomEntryRow(
                                         item = item,
                                         coverStyle = coverStyle,
                                         onClick = if (alwaysPickCenter) onCenterConfirm
                                                   else { { onEntryClick(content.list.listId, item.listItem.entryId) } },
-                                        onLongClick = if (deletable) {
+                                        onLongClick = if (deletable || queueable) {
                                             { onEntryLongClick(content.list.listId, item.listItem.entryId) }
                                         } else {
                                             null

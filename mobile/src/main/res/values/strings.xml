@@ -16,6 +16,9 @@
     <string name="setting_language">Language</string>
     <string name="language_system">Follow System</string>
     <string name="language_change_watch_notice">The watch follows this language too, once it syncs.</string>
+    <string name="setting_app_icon_style">Launcher icon</string>
+    <string name="app_icon_style_solid">Solid colour</string>
+    <string name="app_icon_style_gradient">Gradient</string>
 
     <!-- Developer mode -->
     <string name="category_developer">Developer</string>
@@ -187,6 +190,20 @@
     <string name="action_open_face_picker">Open face picker</string>
     <string name="action_close_watch_app">Close watch app</string>
     <string name="group_streaming_shortcuts">Tracks, albums &amp; playlists</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string name="action_symfonium_sync">Sync Symfonium provider</string>
+    <string name="action_symfonium_start">Start media in Symfonium</string>
+    <string name="action_symfonium_start_named">Start in Symfonium: %1$s</string>
+    <string name="symfonium_provider_id">Provider ID</string>
+    <string name="symfonium_provider_id_description">Find the provider ID in Symfonium\'s Manage media providers screen.</string>
+    <string name="symfonium_media_type">Media type</string>
+    <string name="symfonium_media_name">Name</string>
+    <string name="symfonium_media_artist">Artist (optional)</string>
+    <string name="symfonium_media_album">Album (optional)</string>
+    <string name="symfonium_media_id_optional">ID (optional)</string>
+    <string name="symfonium_queue_mode">Queue mode</string>
+    <string name="symfonium_resume">Resume when possible</string>
+    <string name="symfonium_shuffle">Shuffle collections</string>
     <string name="pick_action">Pick action</string>
     <string name="action_search_hint">Search all actions</string>
     <string name="action_search_empty">No actions match this search.</string>
@@ -2579,6 +2596,10 @@
         <item>mr</item>
         <item>ckb</item>
     </string-array>
+    <string-array name="app_icon_style_entries">
+        <item>@string/app_icon_style_solid</item>
+        <item>@string/app_icon_style_gradient</item>
+    </string-array>
 
     <string-array name="auto_start_modes_keys">
         <item>OFF</item>
@@ -2799,6 +2820,7 @@
     <string name="playlist_shortcut_clipboard_invalid">The clipboard does not contain a valid streaming link</string>
     <string name="playlist_shortcut_name_required">Enter a shortcut name</string>
     <string name="playlist_shortcut_link_invalid">Enter a valid web link or app URI</string>
+    <string name="playlist_shortcut_queue_link_unavailable">This player did not publish a shareable link for this track</string>
     <string name="playlist_shortcut_service_invalid">Paste a valid link to detect its service</string>
     <string name="playlist_shortcut_service_generic">Compatible link · Android will choose an app</string>
     <string name="playlist_shortcut_service_installed">%1$s installed · Ready to open in its app</string>
@@ -2999,7 +3021,13 @@
     <string name="setting_wear_text_block_position">Text position</string>
     <string name="setting_wear_text_block_position_description">Where the track text sits on the screen. Follow face keeps the position each face was designed with.</string>
     <string name="setting_online_artwork">Online artwork</string>
-    <string name="setting_online_artwork_description">Let the watch face show a picture looked up online \u2014 the performing artist, or an album cover for a player that publishes none. Your phone does the lookup in Deezer\'s public catalogue and caches the result; only the track and artist names are sent, and nothing is looked up unless a face is set to one of those sources. Off, the player\'s own artwork is used.</string>
+    <string name="setting_youtube_api_key">YouTube Data API key</string>
+    <string name="setting_youtube_api_key_not_configured">Optional: no YouTube key configured</string>
+    <string name="setting_youtube_api_key_configured">YouTube key configured; stored only on this phone</string>
+    <string name="setting_youtube_api_key_bundled">YouTube key included in this app; users do not need to add one</string>
+    <string name="setting_youtube_api_key_dialog_title">Paste your YouTube Data API v3 key</string>
+    <string name="setting_youtube_api_key_description">When a player publishes no artwork, Svartifoss searches YouTube for an exact channel and title match and uses the video thumbnail. The key stays on the phone and is not sent to the watch or included in Svartifoss configuration backups.</string>
+    <string name="setting_online_artwork_description">Let the watch face show a picture looked up online \u2014 the performing artist, or an album cover for a player that publishes none. Your phone does the lookup in Deezer\'s public catalogue and caches the result; only the track and artist names are sent. It is also what finds a cover for a track whose app publishes none at all, such as a YouTube video, and only when the result matches. Off, only the player\'s own artwork is used.</string>
 
     <string-array name="wear_text_block_align_entries">
         <item>Follow face</item>

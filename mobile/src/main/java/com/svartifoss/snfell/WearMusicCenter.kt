@@ -70,6 +70,11 @@ class WearMusicCenter : Application(), HasAndroidInjector {
 
         repairCenterLongPressPreference()
         migrateRetiredArtistPhotoStyle()
+        LauncherIconController.apply(
+                this,
+                PreferenceManager.getDefaultSharedPreferences(this)
+                        .getString(MiscPreferences.APP_ICON_STYLE.key,
+                                MiscPreferences.APP_ICON_STYLE.defaultValue))
         // Builds that first introduced the artist-behaviour picker could materialize its generic
         // `static` default inside Matejdro's scope. Repair it before the process-lifetime sync
         // starts, otherwise that stale explicit value keeps overriding the face's smart default

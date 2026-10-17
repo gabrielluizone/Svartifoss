@@ -89,6 +89,7 @@ import androidx.compose.ui.text.style.TextAlign
 import com.svartifoss.snfell.common.RoundScreenText
 import com.svartifoss.snfell.common.TextBlockAlign
 import com.svartifoss.snfell.common.TextBlockPosition
+import com.svartifoss.snfell.common.TrackTimeFormat
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -1190,10 +1191,7 @@ private fun DrawScope.drawShadingTreatment(
     }
 }
 
-internal fun formatFaceClockTime(timeMs: Long): String {
-    val totalSeconds = timeMs / 1000
-    return String.format(java.util.Locale.getDefault(), "%d:%02d", totalSeconds / 60, totalSeconds % 60)
-}
+internal fun formatFaceClockTime(timeMs: Long): String = TrackTimeFormat.format(timeMs)
 
 /**
  * Vertical offset shared by Expressive and Material for their interactive track-time readout.
@@ -2653,7 +2651,9 @@ internal fun TrackTimeText(
         overflow: TextOverflow = TextOverflow.Clip
 ) {
     Text(
-            text = text,
+            // A live stream has no time to write, and every face draws this line through here, so
+            // the swap is made once instead of at each of their call sites.
+            text = if (state.live) state.liveLabel else text,
             color = state.trackTimeColor(color),
             fontSize = state.trackTimeTextSize(fontSize),
             fontWeight = state.trackTimeFontWeight ?: fontWeight,

@@ -25,7 +25,43 @@
         android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"
         tools:node="remove" />
 
-    <application>
+    <application
+        android:icon="@mipmap/ic_launcher_play_gradient"
+        android:roundIcon="@mipmap/ic_launcher_play_gradient"
+        tools:replace="android:icon,android:roundIcon">
+        <activity android:name=".watch.view.MainActivity">
+            <intent-filter tools:node="remove">
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity-alias
+            android:name=".LauncherIconGradient"
+            android:targetActivity=".watch.view.MainActivity"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_play_gradient"
+            android:roundIcon="@mipmap/ic_launcher_play_gradient"
+            android:label="@string/app_name_short">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".LauncherIconSolid"
+            android:targetActivity=".watch.view.MainActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_play_solid"
+            android:roundIcon="@mipmap/ic_launcher_play_solid"
+            android:label="@string/app_name_short">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
         <service
             android:name="com.matejdro.wearutils.logging.LogTransmitter"
             tools:node="remove" />

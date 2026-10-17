@@ -70,6 +70,19 @@ message MusicState {
   // arrives before it. Without it the face blanks the backdrop on every track change and fills it a
   // moment later, which reads as flicker rather than as loading.
   optional bool backdropArtPending = 21 [default = false];
+
+  // True when the session says it has no length - the player published a duration of exactly 0,
+  // which is what a live stream does - and has kept saying so for LiveStreamPolicy.CONFIRM_MS. It
+  // is what lets the watch write "LIVE" where the time goes instead of leaving that line empty:
+  // an absent duration alone cannot tell a live stream from a player that has not said yet.
+  // Absent (a phone that predates it) means "not known to be live", which is today's behaviour.
+  optional bool live = 22 [default = false];
+
+  // Display fallback only: the application label of the active media player. The watch uses this
+  // when [artist] is empty so the artist line does not leave an unexplained blank gap. The raw
+  // artist remains empty here deliberately; lyrics, history, metadata and track identity must
+  // never mistake an app label for an artist.
+  optional string sourceAppName = 23;
 }
 
 message MediaAction {

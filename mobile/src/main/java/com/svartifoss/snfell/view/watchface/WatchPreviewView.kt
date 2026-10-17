@@ -100,6 +100,7 @@ import com.svartifoss.snfell.common.SurfacePaletteResolver
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.TitleTextMode
 import com.svartifoss.snfell.common.TrackMetadataFields
+import com.svartifoss.snfell.common.TrackTimeFormat
 import com.svartifoss.snfell.common.resolveAodArtwork
 import com.svartifoss.snfell.common.resolveAlbumArtFilter
 import com.svartifoss.snfell.common.R as commonR
@@ -1760,10 +1761,7 @@ class WatchPreviewView @JvmOverloads constructor(
         "1:07"
     }
 
-    private fun formatTime(ms: Long): String {
-        val totalSeconds = ms / 1000
-        return String.format("%d:%02d", totalSeconds / 60, totalSeconds % 60)
-    }
+    private fun formatTime(ms: Long): String = TrackTimeFormat.format(ms)
 
     /** Mirrors the watch's WEAR_TRACK_TIME_MODE handling against the shown playing state. */
     private fun trackTimeVisible(): Boolean = when (trackTimeMode) {
@@ -8517,10 +8515,7 @@ class WatchPreviewView @JvmOverloads constructor(
         }
     }
 
-    private fun previewTime(ms: Long): String {
-        val seconds = (ms / 1000L).coerceAtLeast(0L)
-        return "%d:%02d".format(seconds / 60, seconds % 60)
-    }
+    private fun previewTime(ms: Long): String = TrackTimeFormat.format(ms)
 
     private fun toolIcon(tool: QuickPanelTool): Int = when (tool) {
         QuickPanelTool.SPEED -> commonR.drawable.action_speed

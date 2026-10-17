@@ -32,6 +32,7 @@ import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.Wearable
 import com.google.common.util.concurrent.ListenableFuture
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.displayArtist
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.MainActivity
@@ -211,12 +212,13 @@ class MediaTileService : TileService() {
     ): LayoutElementBuilders.LayoutElement {
         val accent = TileAlbumAccent.displayColor(albumAccent)
         val onAccent = TileAlbumAccent.contentColor(accent)
+        val displayArtist = state?.displayArtist().orEmpty()
         // A controller-less state is still published as a valid proto with all media fields
         // empty. Treating every non-error proto as an active session left a row of dead controls
         // below "Nothing playing" after playback ended.
         val hasMusic = state != null && !state.error && (
             state.title.isNotBlank() ||
-                state.artist.isNotBlank() ||
+                displayArtist.isNotBlank() ||
                 state.playing ||
                 state.durationMs > 0L
             )
@@ -224,7 +226,7 @@ class MediaTileService : TileService() {
             com.svartifoss.snfell.R.string.tile_nothing_playing
         )
         val artist = if (hasMusic) {
-            state!!.artist
+            displayArtist
         } else {
             context.getString(com.svartifoss.snfell.R.string.tile_open_app)
         }

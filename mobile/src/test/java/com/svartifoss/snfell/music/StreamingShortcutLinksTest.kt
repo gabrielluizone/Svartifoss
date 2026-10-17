@@ -144,6 +144,25 @@ class StreamingShortcutLinksTest {
     }
 
     @Test
+    fun youtubeSearchFallbackProvidesPlayFromSearchQuery() {
+        val link = "https://music.youtube.com/search?q=Fly%20Away%20From%20This%20World%20Blade%20%26%20Bath"
+        assertEquals(
+                "Fly Away From This World Blade & Bath",
+                StreamingShortcutLinks.youtubeMusicSearchQuery(link))
+        assertEquals(
+                StreamingContentType.UNKNOWN,
+                StreamingShortcutLinks.detectContentType(link))
+    }
+
+    @Test
+    fun youtubeSearchQueryDoesNotAcceptOtherPathsOrProviders() {
+        assertNull(StreamingShortcutLinks.youtubeMusicSearchQuery(
+                "https://music.youtube.com/watch?v=abc"))
+        assertNull(StreamingShortcutLinks.youtubeMusicSearchQuery(
+                "https://open.spotify.com/search?q=abc"))
+    }
+
+    @Test
     fun detectsProviderSpecificPlaylistShapes() {
         assertEquals(
             StreamingContentType.PLAYLIST,

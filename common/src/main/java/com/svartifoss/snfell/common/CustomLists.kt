@@ -1,6 +1,10 @@
 package com.svartifoss.snfell.common
 
 object CustomLists {
+    /** Queue insertion values carried by [CustomListItemAction.queuePosition]. */
+    const val QUEUE_NEXT = 1
+    const val QUEUE_AT_END = 2
+
     /** Entry ids are encoded by [QueueEntry] - see MusicService.onCustomMenuItemPresed for why a
      *  queue tap needs more than the position id most players accept. */
     const val PLAYLIST = "Playlist"

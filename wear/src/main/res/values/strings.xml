@@ -44,6 +44,8 @@
          wrong place. Names the one thing that reliably fixes it. -->
     <string name="phone_unavailable">Unlock your phone to control playback</string>
     <string name="playback_stopped">Paused</string>
+    <!-- Where the "1:23 / 3:45" line would be, for a stream that has no length. Short: it shares a line with nothing, but sits near the bezel on a small round watch. -->
+    <string name="playback_live">LIVE</string>
     <string name="error">ERROR</string>
     <string name="error_play_services">Play Services error</string>
     <string name="button">Button</string>
@@ -83,6 +85,7 @@
     <string name="voice_search_prompt">Search music</string>
     <string name="queue_empty">No queue available</string>
     <string name="queue_now_playing">Now playing</string>
+    <string name="queue_add_shortcut">Add this track to shortcuts</string>
     <string name="queue_load_more">Load more</string>
     <!-- Shown in place of the queue when the playing app publishes no queue at all and the phone
          falls back to the locally remembered recently-played list. These are tracks that already

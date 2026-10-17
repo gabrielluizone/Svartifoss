@@ -3,12 +3,14 @@ package com.svartifoss.snfell.music
 import android.content.ComponentName
 import android.content.Context
 import android.media.session.MediaController
+import android.media.session.MediaSession
 import android.media.session.MediaSessionManager
 import android.media.session.PlaybackState
 import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.R
 import com.matejdro.wearutils.lifecycle.Resource
 import timber.log.Timber
+import java.util.concurrent.ConcurrentHashMap
 import javax.inject.Inject
 
 class ActiveMediaSessionProvider @Inject constructor(private val context: Context) :
@@ -31,8 +33,31 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
     /** What the playing session last published about its playback - see [PlaybackReportPolicy]. */
     private var lastPlayback: PlaybackReportPolicy.Snapshot? = null
 
+    /**
+     * The last playback state each session *published*, exactly as its callback delivered it.
+     *
+     * Not the same thing as `controller.playbackState`, which the session service rewrites on the
+     * way out: a moving state comes back extrapolated to the moment of the call, stamped with that
+     * moment, and capped at the metadata's duration - which a live stream publishes as 0, so every
+     * reading of one is position 0. The callback gets the player's own state, with the position and
+     * time it actually published. See [com.svartifoss.snfell.common.PlaybackPositionEstimate.positionSourceFor].
+     */
+    private val publishedStates = ConcurrentHashMap<MediaSession.Token, PlaybackState>()
+
+    /** What [controller]'s player last published, or null when no callback has delivered one since
+     *  this provider started watching it. */
+    fun publishedPlaybackState(controller: MediaController): PlaybackState? =
+            publishedStates[controller.sessionToken]
+
+    private fun rememberPublished(controller: MediaController?, state: PlaybackState?) {
+        if (controller != null && state != null) {
+            publishedStates[controller.sessionToken] = state
+        }
+    }
+
     private fun findPlayingMediaController() {
         val activeSessions = getActiveSessions()
+        publishedStates.keys.retainAll(activeSessions.mapTo(HashSet()) { it.sessionToken })
         // Package names only. Each session's playback state and info are a binder call apiece, and
         // the log line used to make two per session just to be formatted - before the logger had
         // even decided whether to keep it.
@@ -164,6 +189,7 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
         removeCurrentController()
         idlePlayers.forEach(OwnedPlaybackCallback::unregister)
         idlePlayers.clear()
+        publishedStates.clear()
     }
 
     /** Re-resolves the reported session when the playing one is gone or has stopped playing.
@@ -209,6 +235,9 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
         }
 
         override fun onPlaybackStateChanged(state: PlaybackState?) {
+            // Before re-resolving, which swaps this callback for the playing one: the state that
+            // starts playback is the first the new callback would otherwise never see.
+            rememberPublished(controller, state)
             if (state?.isPlaying() == true) {
                 updateControllerIfNeeded()
             }
@@ -261,6 +290,7 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
         this.idlePlayers = ArrayList()
         this.mediaCallback = object : MediaController.Callback() {
             override fun onPlaybackStateChanged(state: PlaybackState?) {
+                rememberPublished(currentController, state)
                 if (updateControllerIfNeeded()) return
                 // Still the session playing. This used to end here, so nothing that changed
                 // *while* playing - a seek or a like on the phone, a speed change - reached the

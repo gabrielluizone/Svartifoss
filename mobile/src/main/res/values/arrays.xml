@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="symfonium_media_type_entries">
+        <item>Song</item>
+        <item>Playlist</item>
+        <item>Album</item>
+        <item>Artist</item>
+        <item>Genre</item>
+        <item>Song mix</item>
+        <item>Album mix</item>
+        <item>Internet radio</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Start now</item>
+        <item>Play next</item>
+        <item>Add to queue</item>
+    </string-array>
+
+    <string-array name="app_icon_style_values" translatable="false">
+        <item>solid</item>
+        <item>gradient</item>
+    </string-array>
+
     <!-- Preference values are protocol identifiers shared with the watch. Keep them outside
          localized resources so translations cannot accidentally change the synced payload. -->
     <string-array name="wear_screen_theme_values" translatable="false">

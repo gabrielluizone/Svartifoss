@@ -93,6 +93,32 @@ than playing a single track. Good behaviour to expect from Media3 clients genera
    Applied so far to the play-from-search fallback; the natural next users are playback speed and
    anything else that would silently do nothing on a player that never implemented it.
 
+### Symfonium
+
+Symfonium exposes a public broadcast API in addition to its MediaSession. The receiver is
+`app.symfonium.remote.api.ApiReceiver`; `app.symfonium.api.MEDIA_START` accepts a song name and
+artist, and `QUEUE=1` inserts it after the current item while `QUEUE=2` appends it to the end of
+the queue. The API is documented by Symfonium at
+<https://docs.symfonium.app/wiki/other/symfonium-api-allow-control-from-other-apps-like-tasker/>.
+
+This is the reliable route for the watch's "add search result to queue" action. The standard
+MediaSession queue is optional and can be hidden by a Symfonium setting, so a browser `mediaId`
+must not be treated as a portable playlist or filesystem identifier. The app therefore keeps the
+normal tap as immediate playback and uses a Symfonium-specific adapter for the long-press queue
+action.
+
+The same adapter now exposes two configured actions in the phone action picker when Symfonium is
+installed: force a provider sync (the provider id comes from Symfonium's provider settings) and
+start a song, playlist, album, artist, genre, mix, or internet radio. The latter can choose normal
+playback, play-next, append-to-queue, resume and shuffle. These actions stay phone-side because
+the public API is a best-effort broadcast with no result callback; the watch only carries the
+serialized action configuration.
+
+`MusicState.sourceAppName` is separate from `MusicState.artist`. The watch uses it only for the
+artist line when a player publishes no artist, so a player such as Symfonium or YouTube Music does
+not leave an empty metadata slot while lyrics, history and metadata lookups still receive the raw
+artist value.
+
 ### SoundCloud
 
 Closed source, so this is read from the shipped manifest and dex rather than from code: the Wear OS

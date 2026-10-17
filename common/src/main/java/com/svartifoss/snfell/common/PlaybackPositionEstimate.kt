@@ -86,6 +86,64 @@ object PlaybackPositionEstimate {
     fun sampleBelongsToTrack(sampleRealtimeMs: Long, trackFirstSeenRealtimeMs: Long): Boolean =
             sampleRealtimeMs > 0L && sampleRealtimeMs >= trackFirstSeenRealtimeMs
 
+    /** Where [positionSourceFor] says a session's position should be read from. */
+    enum class PositionSource {
+        /** `MediaController.getPlaybackState()`, which is exact for this session. */
+        FRAMEWORK,
+
+        /** The state the player last *published*, as its callback delivered it. */
+        PUBLISHED,
+
+        /** Nowhere: the only reading on offer is known to be wrong. */
+        UNKNOWN
+    }
+
+    /**
+     * Which reading of a session's playback state its position can be measured from.
+     *
+     * `MediaController.getPlaybackState()` does not hand out what the player published. For a state
+     * that is moving - playing, fast-forwarding, rewinding - Android's session service extrapolates
+     * the position to the moment of the call and stamps the result with that moment, and then
+     * **caps it at the metadata's `METADATA_KEY_DURATION` whenever the player published one**. A live
+     * stream publishes it as 0, meaning "no length", and the cap turns every reading into position 0
+     * with an age of 0: a YouTube live read back as `position=0` while the player's own published
+     * state said 3:32:06. Two things follow. A relative seek measured from that lands on `0 +- delta`,
+     * which is "back 10 seconds restarts the stream" and "forward 10 seconds goes to 0:10" however
+     * far into the stream the listener is - the 4.2 fix for the first assumed the player had merely
+     * not published lately, and extrapolating the clamped reading changes nothing. And every
+     * timestamp on such a reading is the moment it was read, so the guards that compare a sample's
+     * time with the moment a track was first seen or a seek was issued can never fire for it.
+     *
+     * The state delivered to `MediaController.Callback.onPlaybackStateChanged` is the player's own,
+     * uncapped, with the time it was published. So a session whose reading is capped is measured from
+     * that, and from nothing at all when none has arrived yet (a service that started mid-stream
+     * hears the next publish within a second for the lives that matter): an unknown position is
+     * better than a wrong one, because the caller refuses to seek from it rather than restarting the
+     * stream. Every other session keeps the framework reading, which is exact for it.
+     *
+     * @param frameworkExtrapolates whether the reading is of a moving state, the only kind the
+     *   service extrapolates and caps.
+     * @param durationPublished whether the metadata carries the duration key at all. Absent, the
+     *   service does not cap (it treats the duration as -1), and `getLong` cannot tell absent from 0.
+     * @param publishedDurationMs the duration the metadata carries.
+     * @param publishedStateUsable whether a published state exists for this session and agrees with
+     *   the reading on the state and the speed, which is how a stale one - from before the session
+     *   last paused, say - is told from a current one.
+     */
+    fun positionSourceFor(
+            frameworkExtrapolates: Boolean,
+            durationPublished: Boolean,
+            publishedDurationMs: Long,
+            publishedStateUsable: Boolean,
+    ): PositionSource {
+        val cappedToZero = frameworkExtrapolates && durationPublished && publishedDurationMs == 0L
+        return when {
+            !cappedToZero -> PositionSource.FRAMEWORK
+            publishedStateUsable -> PositionSource.PUBLISHED
+            else -> PositionSource.UNKNOWN
+        }
+    }
+
     /**
      * Longest a [PendingSeek] stands in for a player that has said nothing since.
      *

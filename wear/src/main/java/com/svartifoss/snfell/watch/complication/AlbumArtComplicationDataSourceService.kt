@@ -21,6 +21,7 @@ import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.displayArtist
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.watch.view.MainActivity
 import com.svartifoss.snfell.watch.util.WatchLanguage
@@ -144,12 +145,13 @@ class AlbumArtComplicationDataSourceService : SuspendingComplicationDataSourceSe
         albumArt: Bitmap?
     ): ComplicationData? {
         val hasMusic = state != null && !state.error
+        val displayArtist = state?.displayArtist().orEmpty()
         // A ComplicationDataSourceService gets no attachBaseContext, so its strings resolved
         // against the watch's own system locale while the app rendered in the chosen language.
         val strings = WatchLanguage.localized(this)
         val description = when {
-            hasMusic && state!!.title.isNotBlank() && state.artist.isNotBlank() ->
-                "${state.title} • ${state.artist}"
+            hasMusic && state!!.title.isNotBlank() && displayArtist.isNotBlank() ->
+                "${state.title} • $displayArtist"
             hasMusic && state!!.title.isNotBlank() -> state.title
             else -> strings.getString(R.string.complication_no_music)
         }
@@ -193,8 +195,8 @@ class AlbumArtComplicationDataSourceService : SuspendingComplicationDataSourceSe
                     .setSmallImage(SmallImage.Builder(imageIcon, SmallImageType.PHOTO).build())
                     .setTapAction(tapAction)
                     .apply {
-                        if (hasMusic && state!!.artist.isNotBlank()) {
-                            setTitle(PlainComplicationText.Builder(state.artist).build())
+                        if (hasMusic && displayArtist.isNotBlank()) {
+                            setTitle(PlainComplicationText.Builder(displayArtist).build())
                         }
                     }
                     .build()

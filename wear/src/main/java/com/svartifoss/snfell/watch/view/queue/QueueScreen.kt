@@ -13,6 +13,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -85,6 +86,7 @@ import com.svartifoss.snfell.watch.view.panel.ScreenBackdrop
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.BitmapBlur
+import com.svartifoss.snfell.common.QueueShortcutLink
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import com.svartifoss.snfell.watch.theme.LocalWatchTrackTextStyles
 import com.svartifoss.snfell.watch.theme.WatchTheme
@@ -104,7 +106,9 @@ data class QueueItemUi(
         val subtitle: String?,
         val isPlaying: Boolean,
         /** Cover published by the media app for this queue item. Null keeps the row text-only. */
-        val artwork: Bitmap? = null
+        val artwork: Bitmap? = null,
+        /** Provider link published by the media app, if this row can become a shortcut. */
+        val mediaUri: String? = null
 )
 
 // Idle rows are near-black for an OLED-dark look; the now-playing row uses the full album accent.
@@ -868,6 +872,7 @@ fun QueueScreen(
         nowPlayingTitle: String?,
         nowPlayingArtist: String?,
         onItemClick: (entryId: String) -> Unit,
+        onItemLongClick: (QueueItemUi) -> Unit = {},
         onDismiss: () -> Unit,
         style: QueueStyle = QueueStyle.GLASS,
         rowSize: QueueRowSize = QueueRowSize.NORMAL,
@@ -914,6 +919,7 @@ fun QueueScreen(
                         nowPlayingTitle,
                         nowPlayingArtist,
                         onItemClick,
+                        onItemLongClick,
                         style,
                         effectiveRowSize,
                         canLoadMore,
@@ -935,6 +941,7 @@ private fun QueueList(
         nowPlayingTitle: String?,
         nowPlayingArtist: String?,
         onItemClick: (String) -> Unit,
+        onItemLongClick: (QueueItemUi) -> Unit,
         style: QueueStyle,
         rowSize: QueueRowSize,
         canLoadMore: Boolean,
@@ -1033,6 +1040,7 @@ private fun QueueList(
                             secondaryAccentColor,
                             tertiaryAccentColor,
                             onItemClick,
+                            onItemLongClick,
                             marquee = listAtRest,
                             style = style,
                             rowSize = rowSize
@@ -1107,12 +1115,14 @@ private fun QueueHeader(title: String?, artist: String?, marquee: Boolean) {
 }
 
 @Composable
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 private fun QueueRow(
         item: QueueItemUi,
         accentColor: Color,
         secondaryAccentColor: Color,
         tertiaryAccentColor: Color,
         onItemClick: (String) -> Unit,
+        onItemLongClick: (QueueItemUi) -> Unit,
         marquee: Boolean,
         style: QueueStyle,
         rowSize: QueueRowSize
@@ -1137,6 +1147,8 @@ private fun QueueRow(
     val coverArt = if (style.isCover) item.artwork else null
     val coverImage = rememberCoverImage(coverArt, style)
     val showsThumbnail = item.artwork != null && (coverImage == null || style.coverKeepsThumbnail)
+    val shortcutLink = QueueShortcutLink.candidate(item.mediaUri)
+    val addShortcutLabel = stringResource(R.string.queue_add_shortcut)
     Row(
             modifier = Modifier
                     .fillMaxWidth()
@@ -1153,7 +1165,18 @@ private fun QueueRow(
                             }
                     )
                     .then(if (border != null) Modifier.border(border.first, border.second, shape) else Modifier)
-                    .clickable { onItemClick(item.entryId) }
+                    .combinedClickable(
+                            onClick = { onItemClick(item.entryId) },
+                            onLongClickLabel = if (shortcutLink != null && item.title.isNotBlank()) {
+                                addShortcutLabel
+                            } else {
+                                null
+                            },
+                            onLongClick = if (shortcutLink != null && item.title.isNotBlank()) {
+                                { onItemLongClick(item) }
+                            } else {
+                                null
+                            })
                     .semantics {
                         selected = item.isPlaying
                         if (item.isPlaying) stateDescription = nowPlayingDescription

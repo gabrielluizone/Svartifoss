@@ -162,7 +162,7 @@ class MenuActivity : ComponentActivity() {
                     accentSource = accentSource,
                     onActionClick = { index -> returnAction(index) },
                     onEntryClick = { listId, entryId -> returnCustomEntry(listId, entryId) },
-                    onEntryLongClick = { listId, entryId -> deleteEntry(listId, entryId) },
+                    onEntryLongClick = { listId, entryId -> longPressEntry(listId, entryId) },
                     onCenterItemChanged = { centerItemIndex = it },
                     onCenterConfirm = { confirmCenterItem() },
                     onDetailPlay = { mode -> playShortcut(mode) },
@@ -357,6 +357,23 @@ class MenuActivity : ComponentActivity() {
     private fun deleteEntry(listId: String, entryId: String) {
         buzz()
         viewModel.deleteCustomListEntry(listId, entryId)
+    }
+
+    /** Search-result long-press appends the selected playable row without leaving the results. */
+    private fun longPressEntry(listId: String, entryId: String) {
+        if (listId != CustomLists.SEARCH_RESULTS) {
+            deleteEntry(listId, entryId)
+            return
+        }
+
+        val entry = viewModel.customList.value?.items
+                ?.firstOrNull { it.listItem.entryId == entryId }
+                ?.listItem
+                ?: return
+        if (LibraryEntry.isBrowsable(entryId)) return
+
+        buzz()
+        viewModel.enqueueSearchResult(entry)
     }
 
     private fun buzz() {

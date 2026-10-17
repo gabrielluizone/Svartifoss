@@ -26,6 +26,7 @@ fun MusicState?.logSummary(): String {
         append(" seq=").append(seq)
         if (albumArtPending) append(" art-pending")
         if (hasBackdropArt) append(" backdrop")
+        if (live) append(" live")
         if (mediaActionsCount > 0) append(" actions=").append(mediaActionsCount)
     }
 }

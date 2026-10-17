@@ -52,7 +52,18 @@ import javax.inject.Inject
 import kotlin.math.max
 import kotlin.math.min
 
-data class PlaybackPosition(val positionMs: Long, val durationMs: Long, val seekable: Boolean)
+/**
+ * Where playback is, for whoever draws the progress and the time.
+ *
+ * [live] is a stream with no length: there is no progress to draw and no total to write, and the
+ * time line says so instead of going blank (see `LiveStreamTracker` on the phone for how it is
+ * decided).
+ */
+data class PlaybackPosition(
+        val positionMs: Long,
+        val durationMs: Long,
+        val seekable: Boolean,
+        val live: Boolean = false)
 
 private const val POSITION_TICK_INTERVAL_MS = 500L
 
@@ -487,7 +498,7 @@ class MusicViewModel @Inject constructor(
                 .build()
         anchorPositionNow(positionMs, state.playing)
 
-        playbackPosition.value = PlaybackPosition(positionMs, state.durationMs, state.seekable)
+        playbackPosition.value = PlaybackPosition(positionMs, state.durationMs, state.seekable, state.live)
         phoneConnection.sendSeek(positionMs)
     }
 
@@ -525,7 +536,7 @@ class MusicViewModel @Inject constructor(
             // line all move on the same corrected position instead of three drifting copies.
             val interpolatedPosition = phoneConnection.playbackClock.positionNowMs()
 
-            playbackPosition.value = PlaybackPosition(interpolatedPosition, state.durationMs, state.seekable)
+            playbackPosition.value = PlaybackPosition(interpolatedPosition, state.durationMs, state.seekable, state.live)
 
             expirePrediction()
             // After the position has been published, not before: the prediction replaces
@@ -996,7 +1007,7 @@ class MusicViewModel @Inject constructor(
                 .build()
         anchorPositionNow(target, state.playing)
 
-        playbackPosition.value = PlaybackPosition(target, state.durationMs, state.seekable)
+        playbackPosition.value = PlaybackPosition(target, state.durationMs, state.seekable, state.live)
     }
 
     /** Which way a track change the user just asked for is going - see [applyOptimisticTrackChange]. */

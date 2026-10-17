@@ -125,7 +125,10 @@ class QueueViewModel @Inject constructor(
                             null
                         },
                         isPlaying = item.listItem.entryId == list.activeEntryId,
-                        artwork = item.icon
+                        artwork = item.icon,
+                        mediaUri = item.listItem.entryMediaUri.takeIf {
+                            item.listItem.hasEntryMediaUri()
+                        }
                 )
             } ?: emptyList()
         }

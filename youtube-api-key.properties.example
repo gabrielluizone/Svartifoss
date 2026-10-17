@@ -1,0 +1,3 @@
+# Copy this file to youtube-api-key.properties and replace the value.
+# The copied file is ignored by Git and is read only while building the APK.
+youtube.data.api.key=PUT_YOUR_YOUTUBE_DATA_API_KEY_HERE

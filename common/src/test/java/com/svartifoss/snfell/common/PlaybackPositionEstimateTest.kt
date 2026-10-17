@@ -267,6 +267,80 @@ class PlaybackPositionEstimateTest {
                 playbackSpeed = 1f, elapsedSinceSampleMs = 0L))
     }
 
+    // ---- positionSourceFor ----
+
+    /**
+     * The reported case. A YouTube live is playing at 3:32:06 and publishes a duration of 0; the
+     * session service caps the reading it hands out at that duration, so the position read back is
+     * 0 and "forward 10 seconds" lands at 0:10 whatever the listener is up to.
+     */
+    @Test
+    fun `a moving session that publishes a zero duration is measured from what it published`() {
+        assertEquals(PlaybackPositionEstimate.PositionSource.PUBLISHED,
+                PlaybackPositionEstimate.positionSourceFor(
+                        frameworkExtrapolates = true,
+                        durationPublished = true,
+                        publishedDurationMs = 0L,
+                        publishedStateUsable = true))
+    }
+
+    /** Better to know nothing than to believe a 0 - the caller refuses to seek from nothing. */
+    @Test
+    fun `a capped reading with nothing published to replace it is unknown`() {
+        assertEquals(PlaybackPositionEstimate.PositionSource.UNKNOWN,
+                PlaybackPositionEstimate.positionSourceFor(
+                        frameworkExtrapolates = true,
+                        durationPublished = true,
+                        publishedDurationMs = 0L,
+                        publishedStateUsable = false))
+    }
+
+    /** The overwhelmingly common case, and it must not change: a track with a length is exact. */
+    @Test
+    fun `a session with a real duration keeps the framework reading`() {
+        for (usable in listOf(true, false)) {
+            assertEquals(PlaybackPositionEstimate.PositionSource.FRAMEWORK,
+                    PlaybackPositionEstimate.positionSourceFor(
+                            frameworkExtrapolates = true,
+                            durationPublished = true,
+                            publishedDurationMs = 3_790_000L,
+                            publishedStateUsable = usable))
+        }
+    }
+
+    /** The service only caps a duration that is there: an absent key is -1 to it, and 0 to `getLong`. */
+    @Test
+    fun `a session that publishes no duration at all keeps the framework reading`() {
+        assertEquals(PlaybackPositionEstimate.PositionSource.FRAMEWORK,
+                PlaybackPositionEstimate.positionSourceFor(
+                        frameworkExtrapolates = true,
+                        durationPublished = false,
+                        publishedDurationMs = 0L,
+                        publishedStateUsable = false))
+    }
+
+    /** A negative duration is "unknown" by the player's own convention, and is not a cap either. */
+    @Test
+    fun `a negative duration is not a cap`() {
+        assertEquals(PlaybackPositionEstimate.PositionSource.FRAMEWORK,
+                PlaybackPositionEstimate.positionSourceFor(
+                        frameworkExtrapolates = true,
+                        durationPublished = true,
+                        publishedDurationMs = -1L,
+                        publishedStateUsable = false))
+    }
+
+    /** A paused or stopped state is stored as published: nothing extrapolated, nothing capped. */
+    @Test
+    fun `a state the service does not extrapolate keeps the framework reading`() {
+        assertEquals(PlaybackPositionEstimate.PositionSource.FRAMEWORK,
+                PlaybackPositionEstimate.positionSourceFor(
+                        frameworkExtrapolates = false,
+                        durationPublished = true,
+                        publishedDurationMs = 0L,
+                        publishedStateUsable = false))
+    }
+
     /**
      * The end-to-end shape of the fault, as one case: two devices whose clocks sit 6 seconds apart,
      * on a track that has been playing for 30 seconds since the last state was sent.

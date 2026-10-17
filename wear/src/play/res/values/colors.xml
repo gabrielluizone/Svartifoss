@@ -1,0 +1,5 @@
+<resources>
+    <!-- Sampled from Untitled design (1)/white-wearos.png. -->
+    <color name="play_launcher_gradient_start">#FCFCFC</color>
+    <color name="play_launcher_gradient_end">#646464</color>
+</resources>

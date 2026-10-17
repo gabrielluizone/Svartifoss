@@ -35,6 +35,8 @@ import com.svartifoss.snfell.actions.playback.SkipToNextAction
 import com.svartifoss.snfell.actions.playback.SkipToPrevAction
 import com.svartifoss.snfell.actions.playback.StopAction
 import com.svartifoss.snfell.actions.tasker.TaskerTaskAction
+import com.svartifoss.snfell.actions.symfonium.SymfoniumMediaStartAction
+import com.svartifoss.snfell.actions.symfonium.SymfoniumSyncAction
 import com.svartifoss.snfell.actions.volume.MuteToggleAction
 import com.svartifoss.snfell.actions.volume.SetVolumePercentAction
 import dagger.Binds
@@ -223,4 +225,14 @@ abstract class ActionHandlersModule {
     @IntoMap
     @ClassKey(OpenLyricsAction::class)
     abstract fun bindOpenLyricsActionsHandler(handler: OpenLyricsAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
+    @ClassKey(SymfoniumSyncAction::class)
+    abstract fun bindSymfoniumSyncActionHandler(handler: SymfoniumSyncAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
+    @ClassKey(SymfoniumMediaStartAction::class)
+    abstract fun bindSymfoniumMediaStartActionHandler(handler: SymfoniumMediaStartAction.Handler): ActionHandler<*>
 }

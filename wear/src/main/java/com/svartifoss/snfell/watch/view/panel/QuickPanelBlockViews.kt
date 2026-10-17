@@ -27,6 +27,7 @@ import com.svartifoss.snfell.common.QuickPanelGeometry
 import com.svartifoss.snfell.common.QuickPanelTool
 import com.svartifoss.snfell.common.SeekGlyphs
 import com.svartifoss.snfell.common.SleepTimerPolicy
+import com.svartifoss.snfell.common.TrackTimeFormat
 import com.svartifoss.snfell.watch.config.ButtonAction
 import java.util.Locale
 import kotlin.math.abs
@@ -860,10 +861,7 @@ class QuickPanelBlockViews(
         false
     }
 
-    private fun formatTime(timeMs: Long): String {
-        val totalSeconds = (timeMs / 1000L).coerceAtLeast(0L)
-        return String.format(Locale.getDefault(), "%d:%02d", totalSeconds / 60, totalSeconds % 60)
-    }
+    private fun formatTime(timeMs: Long): String = TrackTimeFormat.format(timeMs)
 
     private companion object {
         const val CHIP_CORNER_DP = 18f

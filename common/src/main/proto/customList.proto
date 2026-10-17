@@ -32,6 +32,9 @@ message CustomList {
     // compact shortcut screen.
     optional string entryCreator = 6;
     optional string entryDescription = 7;
+    // The provider URI for a search result. It is not displayed on the watch; the phone may use it
+    // to resolve a local file path for a player-specific queue API.
+    optional string entryMediaUri = 8;
   }
 }
 
@@ -52,6 +55,14 @@ message CustomListItemAction {
   // Echoed on the correlated verdict path. Absent on older watches.
   optional string requestId = 4;
   optional string searchQuery = 5;
+  // Search-result queueing only. 1 inserts after the current item; 2 appends to the queue.
+  // Absent on older watches, which still mean "play this entry".
+  optional int32 queuePosition = 6;
+  // The displayed search-result metadata, needed by players whose queue API does not accept
+  // the opaque media id returned by their browser service (for example Symfonium's API).
+  optional string entryTitle = 7;
+  optional string entrySubtitle = 8;
+  optional string entryMediaUri = 9;
 }
 
 message StreamingShortcutVerdict {

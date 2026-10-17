@@ -4,8 +4,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.WatchPreferenceMessage
 import com.svartifoss.snfell.common.WatchPreferenceSyncProtocol
+import com.svartifoss.snfell.watch.LauncherIconController
 import com.svartifoss.snfell.watch.config.PreferencesBus
 import timber.log.Timber
 
@@ -46,6 +48,12 @@ internal object WatchPreferenceReceiver {
             PreferenceSnapshotReconciler.Result.FAILED -> Timber.w("Could not commit received preference snapshot")
             else -> Unit
         }
+        // This is intentionally after the atomic preference commit. A phone change therefore
+        // updates the watch's launcher using the same snapshot that the rest of the watch reads.
+        LauncherIconController.apply(
+                context,
+                prefs.getString(MiscPreferences.APP_ICON_STYLE.key,
+                        MiscPreferences.APP_ICON_STYLE.defaultValue))
     }
 
     private fun readState(context: Context, prefs: SharedPreferences): PreferenceSyncState {

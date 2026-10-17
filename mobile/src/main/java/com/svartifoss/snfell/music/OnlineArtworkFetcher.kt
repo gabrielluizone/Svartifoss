@@ -113,6 +113,94 @@ object OnlineArtworkFetcher {
     }
 
     /**
+     * What identifies a fallback lookup on disk, or null when there is nothing to ask about.
+     *
+     * Its own key, not [cacheKeyFor]'s `cover|artist|title`: the two ask different questions about
+     * the same names. The face source takes whatever Deezer ranks first, this one only a result it
+     * can tie to what is playing (see [OnlineCoverMatch]), and sharing an entry would hand one the
+     * other's answer.
+     */
+    fun fallbackCacheKey(channel: String, title: String): String? {
+        if (channel.isBlank() || title.isBlank()) return null
+        if (OnlineCoverMatch.searchQuery(channel, title).isBlank()) return null
+        return "fallback|${channel.trim()}|${title.trim()}"
+    }
+
+    /** The already-cached answer for a fallback lookup: null means "never asked". */
+    fun cachedFallbackCover(context: Context, channel: String, title: String): OnlineArtworkCache.Entry? {
+        val key = fallbackCacheKey(channel, title) ?: return null
+        return OnlineArtworkCache.get(context, key)
+    }
+
+    /**
+     * The album cover for a track whose player published none, or null when nothing found can be
+     * tied to it - which is the usual answer for a live stream and a common one for a video.
+     *
+     * A definite "nothing matches" is cached like a hit, so the same upload is not asked about
+     * again on every play. A *failed* request is not: a dropped connection says nothing about the
+     * record, and a week-long absence recorded for it (the miss lifetime) would keep a perfectly
+     * findable cover off the screen for no reason.
+     *
+     * Blocking, and never throws; call it off the main thread.
+     */
+    fun fallbackCoverFor(context: Context, channel: String, title: String): ByteArray? {
+        val key = fallbackCacheKey(channel, title) ?: return null
+        if (!isEnabled(context)) return null
+
+        // Prefer the video's own thumbnail when the user supplied a YouTube API key. If the key
+        // is absent, the request fails, or no exact result exists, retain the existing Deezer
+        // lookup for music videos whose album cover can still be identified safely.
+        YouTubeThumbnailFetcher.thumbnailFor(context, channel, title)?.let { return it }
+
+        OnlineArtworkCache.get(context, key)?.let { return it.bytes }
+
+        return when (val result = fetchFallbackCover(channel, title)) {
+            is Fallback.Hit -> result.bytes.also { OnlineArtworkCache.put(context, key, it) }
+            Fallback.NoMatch -> null.also { OnlineArtworkCache.put(context, key, null) }
+            Fallback.Failed -> null
+        }
+    }
+
+    private sealed class Fallback {
+        class Hit(val bytes: ByteArray) : Fallback()
+        object NoMatch : Fallback()
+        object Failed : Fallback()
+    }
+
+    /** More than the top result, because the best match for a messy title is often not first. */
+    private const val FALLBACK_CANDIDATES = 5
+
+    private fun fetchFallbackCover(channel: String, title: String): Fallback {
+        val query = OnlineCoverMatch.searchQuery(channel, title)
+        val json = downloadText(
+                "$SEARCH_ENDPOINT?limit=$FALLBACK_CANDIDATES&q=" + URLEncoder.encode(query, "UTF-8"))
+                ?: return Fallback.Failed
+        val results = try {
+            JSONObject(json).optJSONArray("data")
+        } catch (e: Exception) {
+            Timber.w(e, "Online artwork response could not be read")
+            null
+        } ?: return Fallback.Failed
+
+        for (index in 0 until results.length()) {
+            val entry = results.optJSONObject(index) ?: continue
+            val hitArtist = entry.optJSONObject("artist")?.optString("name").orEmpty()
+            val hitTrack = entry.optString("title_short").ifBlank { entry.optString("title") }
+            if (!OnlineCoverMatch.accepts(channel, title, hitArtist, hitTrack)) continue
+
+            val album = entry.optJSONObject("album") ?: continue
+            val url = COVER_FIELDS.asSequence()
+                    .map { album.optString(it) }
+                    .firstOrNull { it.isNotBlank() } ?: continue
+            val raw = downloadBytes(url) ?: return Fallback.Failed
+            val encoded = reencode(raw) ?: continue
+            Timber.d("Fallback cover resolved for '%s' via '%s' by '%s'", title, hitTrack, hitArtist)
+            return Fallback.Hit(encoded)
+        }
+        return Fallback.NoMatch
+    }
+
+    /**
      * What identifies this lookup on disk, or null when there is nothing to look up.
      *
      * An artist picture is keyed by the performer alone, so a whole album shares one entry; a cover

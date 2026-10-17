@@ -20,6 +20,7 @@ import androidx.wear.ongoing.Status
 import com.matejdro.wearutils.preferences.definition.Preferences
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.displayArtist
 import com.svartifoss.snfell.common.PausedHoldPolicy
 import com.svartifoss.snfell.watch.view.MainActivity
 import com.svartifoss.snfell.watch.util.WatchLanguage
@@ -104,7 +105,7 @@ class WatchMusicService : LifecycleService() {
             // step and seek too; update requests are rate-limited by the system, so spamming one
             // per state change could get the request that carries a new track/cover dropped.
             val fingerprint =
-                    "${state?.title}|${state?.artist}|${state?.playing}|" +
+                    "${state?.title}|${state?.displayArtist()}|${state?.playing}|" +
                             "${state?.albumArtPending}|${resource?.status}"
             if (fingerprint != lastGlanceableFingerprint) {
                 lastGlanceableFingerprint = fingerprint
@@ -199,8 +200,9 @@ class WatchMusicService : LifecycleService() {
         if (state.error || state.title.isBlank()) {
             return null
         }
-        return if (state.artist.isNotBlank()) {
-            "${state.title} • ${state.artist}"
+        val artist = state.displayArtist()
+        return if (artist.isNotBlank()) {
+            "${state.title} • $artist"
         } else {
             state.title
         }

@@ -101,6 +101,7 @@ import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.AodArtTreatment
 import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.FaceScopedPreferences
+import com.svartifoss.snfell.common.TrackTimeFormat
 import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.FrostedEdges
 import com.svartifoss.snfell.common.BitmapBlur
@@ -166,6 +167,7 @@ import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.TitleTextMode
 import com.svartifoss.snfell.common.resolveAodArtwork
 import com.svartifoss.snfell.common.resolveAlbumArtFilter
+import com.svartifoss.snfell.common.displayArtist
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_DOUBLE_TAP
 import com.svartifoss.snfell.common.buttonconfig.GESTURE_LONG_TAP
@@ -762,6 +764,9 @@ class MainActivity : WearCompanionWatchActivity(),
     private var trackTimeMode: String = "always"
     private var isMusicPlaying: Boolean = false
     private var hasPlaybackPosition: Boolean = false
+
+    /** The session is a stream with no length - the time line says so, see [PlaybackPosition.live]. */
+    private var isLiveStream: Boolean = false
 
     /**
      * The static colour used before a cover palette exists. The phone supplies its custom Accent
@@ -1648,7 +1653,7 @@ class MainActivity : WearCompanionWatchActivity(),
                 // Restores the dynamic (palette-extracted) color after a stopped/error message
                 // may have forced it to plain white below.
                 binding.textArtist.setTextColor(resolvedArtistTextColor())
-                setClassicArtist(it.data?.artist)
+                setClassicArtist(it.data?.displayArtist())
             } else {
                 setStatusMessageOnArtistLine(getString(R.string.playback_stopped))
             }
@@ -5830,8 +5835,16 @@ class MainActivity : WearCompanionWatchActivity(),
             playbackSeekable = false
             updateEdgeSeekTouchState()
             hasPlaybackPosition = false
+            // No length is also what a live stream looks like, and there the line is not blank: it
+            // says so. Both the host's own line and every face's go through the same flag.
+            isLiveStream = position?.live == true
             updatePlaybackTimeVisibility()
-            updateFaceState { it.copy(seekable = false) }
+            updateFaceState {
+                it.copy(
+                        seekable = false,
+                        live = isLiveStream,
+                        liveLabel = if (isLiveStream) getString(R.string.playback_live) else it.liveLabel)
+            }
             lastKnownPositionMs = 0L
             lastKnownDurationMs = 0L
             panelBlockViews?.onPosition(0L, 0L, false)
@@ -5848,12 +5861,14 @@ class MainActivity : WearCompanionWatchActivity(),
         updateEdgeSeekTouchState()
         binding.seekBar.progress = position.positionMs.toFloat() / position.durationMs
 
+        isLiveStream = false
         updateFaceState {
             it.copy(
                     progress = position.positionMs.toFloat() / position.durationMs,
                     seekable = position.seekable,
                     positionMs = position.positionMs,
-                    durationMs = position.durationMs
+                    durationMs = position.durationMs,
+                    live = false
             )
         }
 
@@ -5873,11 +5888,15 @@ class MainActivity : WearCompanionWatchActivity(),
      * (a face switch, the time mode, the wrist coming up) calls this so it never shows a stale time.
      */
     private fun renderPlaybackTimeText() {
-        if (!hasPlaybackPosition || !binding.textPlaybackTime.isShown) return
-        val text = getString(
-                R.string.playback_time_format,
-                formatPlaybackTime(lastKnownPositionMs),
-                formatPlaybackTime(lastKnownDurationMs))
+        if (!(hasPlaybackPosition || isLiveStream) || !binding.textPlaybackTime.isShown) return
+        val text = if (isLiveStream) {
+            getString(R.string.playback_live)
+        } else {
+            getString(
+                    R.string.playback_time_format,
+                    formatPlaybackTime(lastKnownPositionMs),
+                    formatPlaybackTime(lastKnownDurationMs))
+        }
         if (binding.textPlaybackTime.text?.toString() != text) {
             binding.textPlaybackTime.text = text
         }
@@ -5896,18 +5915,15 @@ class MainActivity : WearCompanionWatchActivity(),
             "paused" -> !isMusicPlaying
             else -> true
         }
+        // A live stream has no position to speak of but still has a line to fill.
+        val hasTimeToShow = hasPlaybackPosition || isLiveStream
         binding.textPlaybackTime.visibility =
-                if (hasPlaybackPosition && allowedByMode) View.VISIBLE else View.GONE
-        updateFaceState { it.copy(showTrackTime = hasPlaybackPosition && allowedByMode) }
+                if (hasTimeToShow && allowedByMode) View.VISIBLE else View.GONE
+        updateFaceState { it.copy(showTrackTime = hasTimeToShow && allowedByMode) }
         renderPlaybackTimeText()
     }
 
-    private fun formatPlaybackTime(timeMs: Long): String {
-        val totalSeconds = timeMs / 1000
-        val minutes = totalSeconds / 60
-        val seconds = totalSeconds % 60
-        return String.format(java.util.Locale.getDefault(), "%d:%02d", minutes, seconds)
-    }
+    private fun formatPlaybackTime(timeMs: Long): String = TrackTimeFormat.format(timeMs)
 
     private val volumeBarPopupListener = Observer<Unit?> {
         showVolumeBar()

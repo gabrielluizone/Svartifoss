@@ -9,6 +9,7 @@ import android.support.v4.media.session.MediaSessionCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import androidx.media.VolumeProviderCompat
 import com.svartifoss.snfell.proto.MusicState
+import com.svartifoss.snfell.common.displayArtist
 import com.svartifoss.snfell.watch.view.MainActivity
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -101,19 +102,20 @@ class WatchMediaSession(
 
         session.isActive = true
 
+        val displayArtist = state.displayArtist()
         val durationMs = if (state.durationMs > 0) state.durationMs else -1L
-        if (!metadataSet || state.title != lastMetaTitle || state.artist != lastMetaArtist ||
+        if (!metadataSet || state.title != lastMetaTitle || displayArtist != lastMetaArtist ||
                 durationMs != lastMetaDurationMs || albumArt !== lastMetaAlbumArt) {
             metadataSet = true
             lastMetaTitle = state.title
-            lastMetaArtist = state.artist
+            lastMetaArtist = displayArtist
             lastMetaDurationMs = durationMs
             lastMetaAlbumArt = albumArt
 
             session.setMetadata(
                     MediaMetadataCompat.Builder().apply {
                         putString(MediaMetadataCompat.METADATA_KEY_TITLE, state.title)
-                        putString(MediaMetadataCompat.METADATA_KEY_ARTIST, state.artist)
+                        putString(MediaMetadataCompat.METADATA_KEY_ARTIST, displayArtist)
                         if (durationMs > 0) {
                             putLong(MediaMetadataCompat.METADATA_KEY_DURATION, durationMs)
                         }

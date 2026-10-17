@@ -5,7 +5,9 @@ import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.actions.symfonium.SymfoniumActionList
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
+import com.svartifoss.snfell.music.SymfoniumPlayback
 
 /**
  * The streaming category of Pick action, backed by the same library as Streaming shortcuts. Saved
@@ -36,6 +38,10 @@ class StreamingShortcutActionList : PickerActionGroup {
             PlayDeezerFlowAction(context),
             PlaySoundCloudLikesAction(context)
         ))
+
+        if (SymfoniumPlayback.isInstalled(context)) {
+            actions.add(SymfoniumActionList(context))
+        }
 
         actions.addAll(shortcuts.map { shortcut ->
             PlayPlaylistShortcutAction(context, shortcut.name, shortcut.link)

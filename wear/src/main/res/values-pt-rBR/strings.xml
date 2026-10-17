@@ -38,6 +38,7 @@
     <string name="no_phone">Nenhum celular conectado</string>
     <string name="phone_unavailable">Desbloqueie o celular para controlar a reprodução</string>
     <string name="playback_stopped">Pausado</string>
+    <string name="playback_live">AO VIVO</string>
     <string name="error">ERRO</string>
     <string name="error_play_services">Erro no Play Services</string>
     <string name="button">Botão</string>
@@ -75,6 +76,7 @@
     <string name="voice_search_prompt">Buscar música</string>
     <string name="queue_empty">Sem fila disponível</string>
     <string name="queue_now_playing">Tocando agora</string>
+    <string name="queue_add_shortcut">Adicionar esta faixa aos atalhos</string>
     <string name="queue_load_more">Carregar mais</string>
     <string name="queue_history_fallback">Tocadas recentemente</string>
     <string name="queue_history_fallback_reason">Este app não compartilha a fila</string>

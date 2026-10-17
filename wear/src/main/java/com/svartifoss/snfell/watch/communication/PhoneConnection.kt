@@ -564,6 +564,26 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         }
     }
 
+    /** Adds a playable search result to the end of the phone player's queue. */
+    suspend fun enqueueCustomListEntry(entry: CustomList.ListEntry) {
+        withContext(NonCancellable) {
+            sendToPhone(
+                    CommPaths.MESSAGE_CUSTOM_LIST_ITEM_SELECTED,
+                    CustomListItemAction.newBuilder()
+                            .setListId(CustomLists.SEARCH_RESULTS)
+                            .setEntryId(entry.entryId)
+                            .setQueuePosition(CustomLists.QUEUE_AT_END)
+                            .setEntryTitle(entry.entryTitle)
+                            .apply {
+                                if (entry.hasEntrySubtitle()) setEntrySubtitle(entry.entrySubtitle)
+                                if (entry.hasEntryMediaUri()) setEntryMediaUri(entry.entryMediaUri)
+                            }
+                            .build()
+                            .toByteArray()
+            )
+        }
+    }
+
     /** Deletes one entry from a watch-managed deletable custom list (currently just search
      *  history) - see CommPaths.MESSAGE_DELETE_CUSTOM_LIST_ITEM. */
     suspend fun deleteCustomListItem(listId: String, entryId: String) {

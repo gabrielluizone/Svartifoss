@@ -3,6 +3,7 @@ package com.svartifoss.snfell.music
 import com.svartifoss.snfell.proto.ShortcutPlayMode
 import java.net.URI
 import java.net.URISyntaxException
+import java.net.URLDecoder
 import java.util.Locale
 
 /** Streaming services that can be identified from a user-provided share link or deep link. */
@@ -204,8 +205,25 @@ object StreamingShortcutLinks {
     }
 
     fun supportsShuffle(rawLink: String): Boolean =
-        detect(rawLink) == StreamingService.YOUTUBE_MUSIC &&
-                detectContentType(rawLink) == StreamingContentType.PLAYLIST
+            detect(rawLink) == StreamingService.YOUTUBE_MUSIC &&
+                    detectContentType(rawLink) == StreamingContentType.PLAYLIST
+
+    /** Query carried by the queue fallback for a YouTube Music player with no item URI. */
+    fun youtubeMusicSearchQuery(rawLink: String): String? {
+        val link = canonicalize(rawLink)
+        val uri = parse(link) ?: return null
+        if (detect(link) != StreamingService.YOUTUBE_MUSIC ||
+                uri.path?.equals("/search", ignoreCase = true) != true) {
+            return null
+        }
+        val rawQuery = parseQuery(uri.rawQuery.orEmpty())["q"]?.takeIf { it.isNotBlank() }
+                ?: return null
+        return try {
+            URLDecoder.decode(rawQuery, Charsets.UTF_8.name()).trim()
+        } catch (_: Exception) {
+            null
+        }?.takeIf { it.isNotBlank() }
+    }
 
     fun hasShuffle(rawLink: String): Boolean {
         val query = canonicalize(rawLink).substringBefore('#').substringAfter('?', "")

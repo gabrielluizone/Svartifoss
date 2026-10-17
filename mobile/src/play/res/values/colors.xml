@@ -1,0 +1,5 @@
+<resources>
+    <!-- Sampled from Untitled design (1)/green-android.png. -->
+    <color name="play_launcher_gradient_start">#A9CBC2</color>
+    <color name="play_launcher_gradient_end">#264940</color>
+</resources>

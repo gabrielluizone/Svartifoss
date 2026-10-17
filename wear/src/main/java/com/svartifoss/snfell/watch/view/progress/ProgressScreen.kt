@@ -35,6 +35,7 @@ import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.R as commonR
+import com.svartifoss.snfell.common.TrackTimeFormat
 import com.svartifoss.snfell.watch.view.CircularProgressSeekBar
 import com.svartifoss.snfell.watch.view.OverlayProgressMeter
 import com.svartifoss.snfell.watch.view.ProgressRingLayout
@@ -295,12 +296,7 @@ private fun SpeedChip(
     }
 }
 
-private fun formatDuration(ms: Long): String {
-    val totalSeconds = (ms.coerceAtLeast(0L) / 1000L)
-    val minutes = totalSeconds / 60
-    val seconds = totalSeconds % 60
-    return String.format(Locale.US, "%d:%02d", minutes, seconds)
-}
+private fun formatDuration(ms: Long): String = TrackTimeFormat.format(ms, Locale.US)
 
 @Composable
 private fun SkipColumn(

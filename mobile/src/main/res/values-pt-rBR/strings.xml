@@ -17,6 +17,9 @@
     <string name="setting_language">Idioma</string>
     <string name="language_system">Seguir sistema</string>
     <string name="language_change_watch_notice">O relógio também segue este idioma, assim que sincronizar.</string>
+    <string name="setting_app_icon_style">Ícone do app</string>
+    <string name="app_icon_style_solid">Cor sólida</string>
+    <string name="app_icon_style_gradient">Gradiente</string>
 
     <!-- Developer mode -->
     <string name="category_developer">Desenvolvedor</string>
@@ -162,6 +165,20 @@
     <string name="action_open_face_picker">Abrir seletor de mostrador</string>
     <string name="action_close_watch_app">Fechar app no relógio</string>
     <string name="group_streaming_shortcuts">Faixas, álbuns e playlists</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string name="action_symfonium_sync">Sincronizar provedor do Symfonium</string>
+    <string name="action_symfonium_start">Iniciar mídia no Symfonium</string>
+    <string name="action_symfonium_start_named">Iniciar no Symfonium: %1$s</string>
+    <string name="symfonium_provider_id">ID do provedor</string>
+    <string name="symfonium_provider_id_description">Encontre o ID na tela de gerenciamento de provedores do Symfonium.</string>
+    <string name="symfonium_media_type">Tipo de mídia</string>
+    <string name="symfonium_media_name">Nome</string>
+    <string name="symfonium_media_artist">Artista (opcional)</string>
+    <string name="symfonium_media_album">Álbum (opcional)</string>
+    <string name="symfonium_media_id_optional">ID (opcional)</string>
+    <string name="symfonium_queue_mode">Modo da fila</string>
+    <string name="symfonium_resume">Retomar quando possível</string>
+    <string name="symfonium_shuffle">Embaralhar coleções</string>
     <string name="pick_action">Escolher ação</string>
     <string name="action_opens_more">Múltiplas opções</string>
     <string name="action_volume_up">Aumentar volume</string>
@@ -1682,6 +1699,7 @@
     <string name="playlist_shortcut_clipboard_invalid">A área de transferência não contém um link de streaming válido</string>
     <string name="playlist_shortcut_name_required">Digite um nome para o atalho</string>
     <string name="playlist_shortcut_link_invalid">Digite um link da web ou URI de app válido</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Este player não publicou um link compartilhável para esta faixa</string>
     <string name="playlist_shortcut_service_invalid">Cole um link válido para detectar o serviço</string>
     <string name="playlist_shortcut_service_generic">Link compatível · O Android escolherá um app</string>
     <string name="playlist_shortcut_service_installed">%1$s instalado · Pronto para abrir no app</string>
@@ -2972,5 +2990,11 @@
     <string name="setting_wear_text_block_position">Posição do texto</string>
     <string name="setting_wear_text_block_position_description">Onde o texto da faixa fica na tela. Seguir mostrador mantém a posição para a qual cada mostrador foi projetado.</string>
     <string name="setting_online_artwork">Arte online</string>
-    <string name="setting_online_artwork_description">Permite que o mostrador exiba uma imagem pesquisada online \u2014 o artista em reprodução ou a capa de um álbum quando o player não fornece nenhuma. Seu celular faz a busca no catálogo público do Deezer e armazena o resultado em cache; somente os nomes da faixa e do artista são enviados, e nada é pesquisado a menos que um mostrador esteja configurado para usar uma dessas fontes. Quando desativado, é usada a própria arte do player.</string>
+    <string name="setting_youtube_api_key">Chave da YouTube Data API</string>
+    <string name="setting_youtube_api_key_not_configured">Opcional: nenhuma chave do YouTube configurada</string>
+    <string name="setting_youtube_api_key_configured">Chave do YouTube configurada; armazenada apenas neste celular</string>
+    <string name="setting_youtube_api_key_bundled">Chave do YouTube incluída neste app; usuários não precisam adicionar uma</string>
+    <string name="setting_youtube_api_key_dialog_title">Cole sua chave da YouTube Data API v3</string>
+    <string name="setting_youtube_api_key_description">Quando o player não fornece uma capa, o Svartifoss busca no YouTube uma correspondência exata de canal e título e usa a miniatura do vídeo. A chave fica no celular e não é enviada ao relógio nem incluída nos backups de configuração do Svartifoss.</string>
+    <string name="setting_online_artwork_description">Permite que o mostrador exiba uma imagem pesquisada online \u2014 o artista em reprodução ou a capa de um álbum quando o player não fornece nenhuma. Seu celular faz a busca no catálogo público do Deezer e armazena o resultado em cache; somente os nomes da faixa e do artista são enviados. É também o que encontra uma capa para uma faixa cujo app não publica nenhuma, como um vídeo do YouTube, e só quando o resultado combina. Quando desativado, é usada apenas a própria arte do player.</string>
 </resources>

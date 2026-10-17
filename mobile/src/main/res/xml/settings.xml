@@ -94,6 +94,18 @@
             android:summary="%s"
             android:layout="@layout/pref_item" />
 
+        <!-- Only the Play build exposes this choice. GitHub keeps the original launcher icon;
+             MiscSettingsFragment hides this row there and the search index excludes it. -->
+        <ListPreference
+            android:key="app_icon_style"
+            android:icon="@drawable/ic_palette"
+            android:title="@string/setting_app_icon_style"
+            android:defaultValue="gradient"
+            android:entries="@array/app_icon_style_entries"
+            android:entryValues="@array/app_icon_style_values"
+            android:summary="%s"
+            android:layout="@layout/pref_item" />
+
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:key="dynamic_accent_color"
             android:icon="@drawable/ic_colors"
@@ -399,6 +411,16 @@
             android:title="@string/setting_online_artwork"
             android:summary="@string/setting_online_artwork_description"
             android:layout="@layout/pref_switch_item" />
+
+        <EditTextPreference
+            android:key="youtube_data_api_key"
+            android:icon="@drawable/ic_link"
+            android:title="@string/setting_youtube_api_key"
+            android:summary="@string/setting_youtube_api_key_not_configured"
+            android:dialogTitle="@string/setting_youtube_api_key_dialog_title"
+            android:dialogMessage="@string/setting_youtube_api_key_description"
+            android:inputType="textPassword"
+            android:layout="@layout/pref_item" />
 
     </PreferenceCategory>
 

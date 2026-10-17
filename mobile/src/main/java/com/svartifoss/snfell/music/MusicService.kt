@@ -67,6 +67,7 @@ import com.svartifoss.snfell.common.LibraryEntry
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.LyricsStatus
+import com.svartifoss.snfell.common.LiveStreamTracker
 import com.svartifoss.snfell.common.PlaybackPositionEstimate
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.AppearanceContext
@@ -214,6 +215,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
          *  content a deep link opened. Generous: this runs only after the URI retries have already
          *  failed, and a cold streaming app can take seconds to publish its first metadata. */
         private const val PRESS_PLAY_ATTEMPTS = 10
+
+        /** Past the end of [LiveStreamTracker.CONFIRM_MS], so the recheck lands after it. */
+        private const val LIVE_RECHECK_SLACK_MS = 50L
         private const val PRESS_PLAY_INTERVAL_MS = 400L
 
         /** How long a direct `playFromUri` gets to actually start playing before the deep link
@@ -412,6 +416,15 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 backdropArtKey = ""
                 backdropArtBytes = null
                 backdropArtPending = false
+                buildMusicStateAndTransmit(currentMediaController)
+            }
+        } else if (key == MiscPreferences.ONLINE_ARTWORK_ENABLED.key ||
+                key == MiscPreferences.YOUTUBE_DATA_API_KEY.key) {
+            // The current track may have been cached as a miss before the user enabled online
+            // artwork or entered a YouTube key. Clear the in-memory fallback so the next state
+            // build can try the new configuration immediately.
+            queueRefreshHandler.post {
+                coverFallback.invalidate()
                 buildMusicStateAndTransmit(currentMediaController)
             }
         }
@@ -944,6 +957,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // A timer with no service to act on it would fire into nothing.
         sleepTimer.release()
         trackHistorySaveHandler.removeCallbacks(saveTrackHistory)
+        liveRecheckHandler.removeCallbacks(liveRecheck)
         persistTrackHistory()
         MediaNotificationActions.removeListener(notificationActionsChanged)
         AppGlyphStore.removeListener(appGlyphLearned)
@@ -1076,18 +1090,22 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     /**
      * Where playback is *now*, by this device's clock.
      *
-     * Never `PlaybackState.getPosition()` on its own: that is where playback was when the player
-     * last published, and players publish on events, not continuously - after a minute of
-     * uninterrupted playback it can still say zero. Seeking relative to it is what sent a "back 10
-     * seconds" to wherever the player last happened to publish: a few seconds off for a player that
-     * publishes often, and to the very start for one that had said nothing since it began - which
-     * is how a live stream was restarted from the beginning. Extrapolated exactly as the watch
-     * extrapolates the position it draws, so a relative seek lands relative to what the wrist shows.
+     * Measured from the state [positionStateOf] picks and extrapolated from its timestamp exactly
+     * as the watch extrapolates the position it draws, so a relative seek lands relative to what
+     * the wrist shows. Players publish on events, not continuously, so the raw sample can be
+     * minutes old; for most sessions the reading is already brought up to date by the session
+     * service and this adds nothing.
+     *
+     * Null when the position cannot be known (see [positionStateOf]), which is not zero. A live
+     * stream's reading comes back as 0, and a seek measured from it went to the start of the
+     * stream - "back 10 seconds" restarted it and "forward 10 seconds" landed at 0:10. An earlier
+     * fix blamed a stale sample and extrapolated the reading, which changed nothing because the
+     * reading was capped, not stale.
      */
     private fun livePositionMs(controller: MediaController): Long? {
         val playbackState = controller.playbackState ?: return null
         val now = android.os.SystemClock.elapsedRealtime()
-        val sample = positionSampleFor(controller, playbackState, now)
+        val sample = positionSampleFor(controller, playbackState, now) ?: return null
         return PlaybackPositionEstimate.positionAtMs(
                 positionMs = sample.positionMs,
                 durationMs = durationOf(controller),
@@ -1096,18 +1114,53 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 elapsedSinceSampleMs = now - sample.sampledAtRealtimeMs)
     }
 
-    /** The position sample to report or extrapolate from - see
-     *  [PlaybackPositionEstimate.reportableSample] for the two corrections it applies. */
+    /**
+     * The position sample to report or extrapolate from - see
+     * [PlaybackPositionEstimate.reportableSample] for the two corrections it applies - or null
+     * when this session's position cannot be known right now (see [positionStateOf]).
+     */
     private fun positionSampleFor(
             controller: MediaController,
             playbackState: PlaybackState,
             nowRealtimeMs: Long
-    ): PlaybackPositionEstimate.PositionSample = PlaybackPositionEstimate.reportableSample(
-            positionMs = playbackState.position,
-            sampleRealtimeMs = playbackState.lastPositionUpdateTime,
-            trackFirstSeenRealtimeMs = trackFirstSeenRealtimeMs,
-            pendingSeek = pendingSeekFor(controller),
-            nowRealtimeMs = nowRealtimeMs)
+    ): PlaybackPositionEstimate.PositionSample? {
+        val measured = positionStateOf(controller, playbackState) ?: return null
+        return PlaybackPositionEstimate.reportableSample(
+                positionMs = measured.position,
+                sampleRealtimeMs = measured.lastPositionUpdateTime,
+                trackFirstSeenRealtimeMs = trackFirstSeenRealtimeMs,
+                pendingSeek = pendingSeekFor(controller),
+                nowRealtimeMs = nowRealtimeMs)
+    }
+
+    /**
+     * The playback state to measure [controller]'s position from, or null when it has none.
+     *
+     * [reported] is `controller.playbackState`, and that is not what the player published: the
+     * session service extrapolates a moving state to the moment of the call and caps it at the
+     * metadata's duration, which a live stream publishes as 0 - so for one the position reads 0,
+     * stamped now, however far into the stream the listener is. Such a session is measured from the
+     * state its player last published (see [ActiveMediaSessionProvider.publishedPlaybackState]),
+     * which has the real position and the time it was real; the rest of the decision is
+     * [PlaybackPositionEstimate.positionSourceFor], which is where the reasoning lives.
+     */
+    private fun positionStateOf(controller: MediaController, reported: PlaybackState): PlaybackState? {
+        val meta = controller.metadata
+        val published = mediaSessionProvider.publishedPlaybackState(controller)
+        return when (PlaybackPositionEstimate.positionSourceFor(
+                frameworkExtrapolates = reported.state == PlaybackState.STATE_PLAYING ||
+                        reported.state == PlaybackState.STATE_FAST_FORWARDING ||
+                        reported.state == PlaybackState.STATE_REWINDING,
+                durationPublished = meta?.containsKey(MediaMetadata.METADATA_KEY_DURATION) == true,
+                publishedDurationMs = meta?.getLong(MediaMetadata.METADATA_KEY_DURATION) ?: 0L,
+                publishedStateUsable = published != null &&
+                        published.state == reported.state &&
+                        published.playbackSpeed == reported.playbackSpeed)) {
+            PlaybackPositionEstimate.PositionSource.FRAMEWORK -> reported
+            PlaybackPositionEstimate.PositionSource.PUBLISHED -> published
+            PlaybackPositionEstimate.PositionSource.UNKNOWN -> null
+        }
+    }
 
     /** [pendingSeek], only while [controller] is still the session and on the track it was made on. */
     private fun pendingSeekFor(controller: MediaController): PlaybackPositionEstimate.PendingSeek? {
@@ -1179,9 +1232,20 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      */
     fun seekRelative(deltaMs: Long) {
         val controller = currentMediaController ?: return
-        val position = livePositionMs(controller) ?: return
-        issueSeek(controller, PlaybackPositionEstimate.relativeSeekTargetMs(
-                position, deltaMs, durationOf(controller)))
+        val position = livePositionMs(controller)
+        if (position == null) {
+            // A seek measured from a position this device does not have is a seek to wherever the
+            // arithmetic lands, and on a live stream that is the start of it - see positionStateOf.
+            // Nothing happening is the better answer, and the watch's check after the press
+            // corrects whatever it drew.
+            Timber.w("Not seeking %d ms in %s: its position is not known yet",
+                    deltaMs, controller.packageName)
+            return
+        }
+        val target = PlaybackPositionEstimate.relativeSeekTargetMs(
+                position, deltaMs, durationOf(controller))
+        Timber.d("Seeking %s by %d ms, from %d to %d", controller.packageName, deltaMs, position, target)
+        issueSeek(controller, target)
     }
 
     private var preMuteVolume = 0
@@ -1402,6 +1466,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             musicStateBuilder.playing = playbackState?.isPlaying() == true
 
             val meta = mediaController.metadata
+            applicationLabel(mediaController.packageName).takeIf { it.isNotBlank() }?.let {
+                musicStateBuilder.sourceAppName = it
+            }
             if (meta != null) {
                 val newArtist = meta.getString(MediaMetadata.METADATA_KEY_ARTIST) ?: ""
                 val newTitle = meta.getString(MediaMetadata.METADATA_KEY_TITLE) ?: ""
@@ -1463,9 +1530,29 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // also carries, when the app published one and the user allows remote covers.
                 albumArt = higherResolutionArtOrSame(albumArt, artUriString)
 
+                // No bitmap and no address to fetch one from: the player has no cover at all and
+                // will not have one a moment later, so look for the album behind it (YouTube is the
+                // case that exists - see CoverFallback; it often finds nothing, and then the
+                // watch shows nothing, as it did). Not when an address is present: that cover is
+                // on its way.
+                if (albumArt == null && artUriString == null) {
+                    albumArt = coverFallback.coverFor(newArtist, newTitle)
+                }
+
                 val duration = meta.getLong(MediaMetadata.METADATA_KEY_DURATION)
                 if (duration > 0) {
                     musicStateBuilder.durationMs = duration
+                }
+
+                val verdict = liveStreamTracker.observe(
+                        identity = Pair(session, trackKey),
+                        durationPublishedAsZero =
+                                meta.containsKey(MediaMetadata.METADATA_KEY_DURATION) && duration == 0L,
+                        nowMs = android.os.SystemClock.elapsedRealtime())
+                musicStateBuilder.live = verdict.live
+                liveRecheckHandler.removeCallbacks(liveRecheck)
+                verdict.recheckAfterMs?.let {
+                    liveRecheckHandler.postDelayed(liveRecheck, it + LIVE_RECHECK_SLACK_MS)
                 }
             }
 
@@ -1480,6 +1567,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // service issued, the sample can likewise still describe where playback was before
                 // it. positionSampleFor answers both - see PlaybackPositionEstimate.reportableSample.
                 val sample = positionSampleFor(mediaController, playbackState, elapsedRealtimeNow)
+                        ?: PlaybackPositionEstimate.PositionSample(0L, elapsedRealtimeNow)
                 val sampleAgeMs = (elapsedRealtimeNow - sample.sampledAtRealtimeMs).coerceAtLeast(0L)
 
                 musicStateBuilder.positionMs = sample.positionMs
@@ -2036,6 +2124,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         return lastSourceIconBytes
     }
 
+    /** The player label is a display fallback, never a replacement for MediaMetadata.artist. */
+    private fun applicationLabel(packageName: String): String = try {
+        packageManager.getApplicationLabel(packageManager.getApplicationInfo(packageName, 0))
+                .toString().trim()
+    } catch (_: Exception) {
+        ""
+    }
+
     private fun rasterizeSourceIcon(drawable: android.graphics.drawable.Drawable): ByteArray? {
         // Matches MediaNotificationActions.SOURCE_ICON_SIZE_PX: the Split face draws this as its
         // seam mark at up to 52dp, so a 48px source came out visibly pixelated on a high-density
@@ -2505,6 +2601,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             return
         }
 
+        if (customListItemAction.hasQueuePosition()) {
+            enqueueSearchResult(customListItemAction)
+            return
+        }
+
         when (customListItemAction.listId) {
             CustomLists.PLAYLIST -> onQueueEntrySelected(customListItemAction.entryId)
             CustomLists.SEARCH_RESULTS -> {
@@ -2562,6 +2663,58 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                     onLibraryEntrySelected(customListItemAction.entryId)
                 }
             }
+        }
+    }
+
+    /**
+     * Adds a playable search result to Symfonium's queue. Symfonium exposes a public queue API,
+     * while the browser media id remains an opaque value that cannot be handed to a generic file
+     * or playlist command. The normal tap still follows the selection branch above and starts the
+     * track immediately.
+     */
+    private fun enqueueSearchResult(action: CustomListItemAction) {
+        if (action.listId != CustomLists.SEARCH_RESULTS ||
+                action.queuePosition != CustomLists.QUEUE_AT_END ||
+                action.entryTitle.isBlank()) {
+            Timber.w("Ignoring malformed queue request for custom list %s", action.listId)
+            return
+        }
+
+        val controller = currentMediaController
+        if (controller?.packageName != SymfoniumPlayback.PACKAGE_NAME) {
+            Timber.i("Cannot queue search result: current player is %s", controller?.packageName)
+            return
+        }
+
+        val queued = SymfoniumPlayback.appendToQueue(
+                this,
+                action.entryTitle,
+                action.entrySubtitle.takeIf { it.isNotBlank() },
+                resolveSearchResultFilePath(action.entryMediaUri))
+        Timber.i("Symfonium queue request for '%s': %s", action.entryTitle, queued)
+    }
+
+    /** Resolves a browser result's content URI to the filesystem path Symfonium's API accepts. */
+    private fun resolveSearchResultFilePath(mediaUri: String): String? {
+        if (mediaUri.isBlank()) return null
+
+        val uri = Uri.parse(mediaUri)
+        if (uri.scheme == "file") return uri.path
+        if (uri.scheme != "content") return mediaUri.takeIf { it.startsWith('/') }
+
+        return try {
+            contentResolver.query(
+                    uri,
+                    arrayOf(MediaStore.Audio.Media.DATA),
+                    null,
+                    null,
+                    null
+            )?.use { cursor ->
+                if (cursor.moveToFirst()) cursor.getString(0).takeIf { it.isNotBlank() } else null
+            }
+        } catch (e: Exception) {
+            Timber.w(e, "Could not resolve search result media URI %s", mediaUri)
+            null
         }
     }
 
@@ -2734,6 +2887,24 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     /** Its own handler: [queueRefreshHandler] is cleared wholesale by every queue refresh. */
     private val trackHistorySaveHandler = Handler(Looper.getMainLooper())
     private val saveTrackHistory = Runnable { persistTrackHistory() }
+
+    /**
+     * Whether the playing session is a live stream - see [LiveStreamTracker]. Needs a moment of
+     * stillness before it says yes, and a state is rebuilt only when something happens, so the
+     * moment is also scheduled: a live stream that republishes nothing new would otherwise never
+     * get its label. Its own handler for the reason [trackHistorySaveHandler] has one.
+     */
+    /**
+     * The cover for a track whose player published none - see [CoverFallback]. Lazy because it
+     * needs [lifecycleScope], which does not exist yet while this service is being constructed.
+     */
+    private val coverFallback by lazy {
+        CoverFallback(this, lifecycleScope) { buildMusicStateAndTransmit(currentMediaController) }
+    }
+
+    private val liveStreamTracker = LiveStreamTracker()
+    private val liveRecheckHandler = Handler(Looper.getMainLooper())
+    private val liveRecheck = Runnable { buildMusicStateAndTransmit(currentMediaController) }
 
     /**
      * How many queue entries the watch last asked for.
@@ -3082,6 +3253,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // what the watch asks for a moment after every seek it makes, so reporting it would
             // undo the seek it had just drawn.
             val sample = positionSampleFor(controller, playbackState, elapsedRealtimeNow)
+                    ?: PlaybackPositionEstimate.PositionSample(0L, elapsedRealtimeNow)
             val meta = controller.metadata
 
             builder.hasSession = true
@@ -3260,9 +3432,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
         val service = StreamingShortcutLinks.detect(link)
         val contentType = StreamingShortcutLinks.inspect(link).contentType
-        val query = searchQuery?.trim()?.takeIf { it.isNotEmpty() }
+        val linkSearchQuery = StreamingShortcutLinks.youtubeMusicSearchQuery(link)
+        val query = searchQuery?.trim()?.takeIf { it.isNotEmpty() } ?: linkSearchQuery
         // An artist URI is not honored by playFromUri; its named search is what actually plays.
-        val preferSearch = contentType == StreamingContentType.ARTIST && query != null
+        // The queue fallback uses the same route for YouTube Music sessions that publish no
+        // media URI: title + artist is more useful than opening a search page and waiting for a
+        // second manual tap.
+        val preferSearch = (contentType == StreamingContentType.ARTIST && query != null) ||
+                linkSearchQuery != null
         val openMode = preferences.getString(StreamingShortcutLinks.OPEN_MODE_KEY, null)
                 ?: if (preferences.getBoolean(
                                 StreamingShortcutLinks.PREFER_INSTALLED_APP_KEY,
@@ -3609,6 +3786,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                                     else LibraryEntry.playable(item.mediaId!!))
                             .setEntryTitle(item.description.title?.toString() ?: "")
                             .setEntrySubtitle(item.description.subtitle?.toString() ?: "")
+                            .apply {
+                                item.description.mediaUri?.toString()?.let(::setEntryMediaUri)
+                            }
                             .build()
                 }
 
@@ -3874,6 +4054,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         if (other == null ||
                 other.playing != playing ||
                 other.artist != artist ||
+                other.sourceAppName != sourceAppName ||
                 other.title != title ||
                 other.volume != volume ||
                 other.error != error ||
@@ -3893,7 +4074,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // changes nothing else must still reach the watch, exactly as a late shuffle or
                 // like flip must.
                 other.hasBackdropArt != hasBackdropArt ||
-                other.backdropArtPending != backdropArtPending
+                other.backdropArtPending != backdropArtPending ||
+                // Settled after a wait of its own, so it changes when nothing else does.
+                other.live != live
                 || other.mediaActionsList != mediaActionsList
         ) {
             return false

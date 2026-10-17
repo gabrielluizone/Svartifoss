@@ -5,6 +5,7 @@
 .gradle/
 .kotlin/
 local.properties
+youtube-api-key.properties
 keystore.properties
 play-publisher.json
 out/
