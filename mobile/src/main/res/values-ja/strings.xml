@@ -718,6 +718,8 @@
         <item>Material（アウトライン）</item>
         <item>AMOLED コントロール</item>
         <item>クロノ（大きな時計）</item>
+        <item>分リング</item>
+        <item>玄武岩フレーム</item>
         <item>ポスター</item>
         <item>スタジオ</item>
         <item>没入型</item>
@@ -748,6 +750,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">常時表示の色</string>
     <string-array name="wear_aod_color_entries">

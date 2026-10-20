@@ -720,6 +720,8 @@
         <item>Material (omrids)</item>
         <item>AMOLED-kontroller</item>
         <item>Chrono (stort ur)</item>
+        <item>Minutring</item>
+        <item>Basaltramme</item>
         <item>Plakat</item>
         <item>Studio</item>
         <item>Fordybende</item>
@@ -750,6 +752,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Farve på altid aktiv skærm</string>
     <string-array name="wear_aod_color_entries">

@@ -17,6 +17,14 @@ message CustomList {
   // needs the difference to know whether offering "load more" would actually get it anything.
   // Absent on older phone builds; the watch then assumes what it received is everything.
   optional int32 totalEntryCount = 5;
+  // Live queue only: where the playing entry sits in the *whole* queue, counting from 1, and how
+  // many entries the whole queue holds - what the watch writes as "Track 3 of 47". Neither can be
+  // derived from what was sent: the slice starts a few entries above the playing one (see
+  // QueuePaging.window) and totalEntryCount counts from the slice's start. Both absent when the
+  // playing entry could not be identified, and from older phone builds; the watch then says
+  // nothing rather than guess.
+  optional int32 activeEntryPosition = 6;
+  optional int32 queueSize = 7;
 
   message ListEntry {
     required string entryId = 1;

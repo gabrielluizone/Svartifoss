@@ -19,6 +19,7 @@ import com.svartifoss.snfell.watch.view.panel.PanelSurface
 import com.svartifoss.snfell.watch.view.panel.rememberPanelPalette
 import com.google.android.wearable.input.RotaryEncoderHelper
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.PhoneAudioBlock
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
 import com.svartifoss.snfell.watch.communication.WatchMusicService
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
@@ -102,6 +103,7 @@ class VolumeActivity : ComponentActivity() {
 
         setContent {
             val volume by viewModel.volume.observeAsState(0f)
+            val audioBlock by viewModel.audioBlock.observeAsState(PhoneAudioBlock.NONE)
             val albumArt by viewModel.albumArt.observeAsState()
 
             // Seeded from AlbumPaletteCache, so a cover the player has already extracted
@@ -131,7 +133,8 @@ class VolumeActivity : ComponentActivity() {
                         onVolumeChange = viewModel::setVolume,
                         onStep = viewModel::step,
                         onTogglePlayPause = viewModel::togglePlayPause,
-                        onDismiss = ::safeFinish)
+                        onDismiss = ::safeFinish,
+                        audioBlock = audioBlock)
             }
         }
     }

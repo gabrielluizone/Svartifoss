@@ -234,4 +234,5 @@ Mindent személyre szabhat a telefon Vezérlők és Óra részében</string>
     <string name="quick_sleep_minutes">%1$d perc</string>
     <string name="quick_sleep_description">Elalváskapcsoló, még %1$d perc van hátra. Koppintson a módosításhoz.</string>
     <string name="quick_sleep_off_description">Elalváskapcsoló kikapcsolva. Koppintson a beállításhoz.</string>
+    <string name="quick_lyric_plain">Ez a dalszöveg nincs időzítve. Koppintson az elolvasásához.</string>
 </resources>

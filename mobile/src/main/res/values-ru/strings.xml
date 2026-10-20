@@ -641,6 +641,8 @@
         <item>Material (контурный)</item>
         <item>Управление AMOLED</item>
         <item>Chrono (большие часы)</item>
+        <item>Кольцо минут</item>
+        <item>Базальтовая рамка</item>
         <item>Poster</item>
         <item>Studio</item>
         <item>Immersive</item>
@@ -671,6 +673,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Цвет всегда-включён</string>
     <string-array name="wear_aod_color_entries">

@@ -33,13 +33,16 @@ enum class VolumeControlAxis {
             // The upright meters fill bottom-to-top like the edge arcs, so they read the same way
             // even though they are not arcs.
             VolumeLayout.VERTICAL_LEFT,
-            VolumeLayout.VERTICAL_RIGHT -> VERTICAL
+            VolumeLayout.VERTICAL_RIGHT,
+            VolumeLayout.PILLAR -> VERTICAL
 
             VolumeLayout.EDGE_TOP,
             VolumeLayout.EDGE_BOTTOM,
             VolumeLayout.METER,
             VolumeLayout.METER_TOP,
-            VolumeLayout.METER_BOTTOM -> HORIZONTAL
+            VolumeLayout.METER_BOTTOM,
+            // Seven columns that fill left to right read sideways, like the horizontal meters.
+            VolumeLayout.BASALT -> HORIZONTAL
         }
     }
 }

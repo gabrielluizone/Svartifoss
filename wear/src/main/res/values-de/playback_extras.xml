@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Titelende</string>
+    <string name="quick_sleep_track_end_description">Schlaftimer, pausiert am Ende dieses Titels. Zum Ausschalten tippen</string>
+    <string name="queue_position">Titel %1$d von %2$d</string>
+    <string name="progress_screen_speed_description">Wiedergabegeschwindigkeit %1$s. Tippen für die nächste, halten für Feineinstellung</string>
+    <string name="progress_screen_speed_slower">Langsamer</string>
+    <string name="progress_screen_speed_faster">Schneller</string>
+    <string name="progress_screen_speed_reset">Normale Geschwindigkeit</string>
+    <string name="complication_playback_label">Wiedergabe und Pause</string>
+    <string name="complication_playback_idle">Abspielen</string>
+    <string name="complication_playback_idle_description">Nichts wird abgespielt. Tippen, um die letzte App fortzusetzen</string>
+    <string name="complication_playback_play_description">Pausiert: %1$s. Zum Abspielen tippen</string>
+    <string name="complication_playback_pause_description">Wird abgespielt: %1$s. Zum Pausieren tippen</string>
+    <string name="audio_block_dnd">Telefon ist auf „Bitte nicht stören“</string>
+    <string name="audio_block_muted">Medienlautstärke des Telefons ist aus</string>
+    <string name="audio_block_safe_volume">Auf sicherem Pegel gehalten. Zum Bestätigen einmal am Telefon lauter stellen</string>
+    <string name="refused_skip_app">%1$s erlaubt gerade kein Überspringen</string>
+    <string name="refused_skip">Diese App erlaubt gerade kein Überspringen</string>
+    <string name="refused_seek_app">%1$s erlaubt gerade kein Spulen</string>
+    <string name="refused_seek">Diese App erlaubt gerade kein Spulen</string>
+    <string name="tile_resume">Letzte App fortsetzen</string>
+    <string name="tile_resume_hint">Abspielen setzt die letzte App fort</string>
+    <string name="recent_tile_title">Zuletzt gespielt</string>
+    <string name="recent_tile_description">Deine zuletzt gespielten Titel, mit einem Tipp erneut abspielen</string>
+    <string name="recent_tile_empty">Noch nichts gespielt</string>
+    <string name="recent_tile_play_description">%1$s erneut abspielen</string>
+</resources>

@@ -234,4 +234,5 @@ Tilpass alt under Kontroller og Klokke på telefonen</string>
     <string name="quick_sleep_minutes">%1$d min</string>
     <string name="quick_sleep_description">Sovetimer, %1$d minutter igjen. Trykk for å endre</string>
     <string name="quick_sleep_off_description">Sovetimer av. Trykk for å angi</string>
+    <string name="quick_lyric_plain">Denne sangteksten har ikke tidsangivelser. Trykk for å lese den.</string>
 </resources>

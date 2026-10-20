@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Kapselin muoto</string>
+    <string name="setting_wear_queue_cover_shape">Kansikuvan muoto</string>
+    <string name="wear_queue_shape_follow">Noudata jonon tyyliä</string>
+    <string name="queue_shape_note_title">Tyyli ja muodot</string>
+    <string name="queue_shape_note_description">Tyyli määrää värit ja tehosteet. Kapselin muoto ja Kansikuvan muoto muuttavat vain ääriviivoja; Noudata jonon tyyliä säilyttää kunkin tyylin omat.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Kapseli</item>
+        <item>Pyöristetty</item>
+        <item>Pehmeät kulmat</item>
+        <item>Neliö</item>
+        <item>Lehti</item>
+        <item>Puhekupla</item>
+        <item>Kuusikulmio</item>
+    </string-array>
+</resources>

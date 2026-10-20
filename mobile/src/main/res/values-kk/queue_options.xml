@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Жапсырма пішіні</string>
+    <string name="setting_wear_queue_cover_shape">Мұқаба пішіні</string>
+    <string name="wear_queue_shape_follow">Кезек стилін ұстану</string>
+    <string name="queue_shape_note_title">Стиль және пішіндер</string>
+    <string name="queue_shape_note_description">Стиль түстер мен әсерлерді анықтайды. Жапсырма пішіні мен Мұқаба пішіні тек контурды өзгертеді; «Кезек стилін ұстану» әр стильдің өз контурын сақтайды.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Капсула</item>
+        <item>Дөңгелектелген</item>
+        <item>Жұмсақ бұрыштар</item>
+        <item>Шаршы</item>
+        <item>Жапырақ</item>
+        <item>Сөз көпіршігі</item>
+        <item>Алтыбұрыш</item>
+    </string-array>
+</resources>

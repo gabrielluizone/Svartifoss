@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">கேப்சூல் வடிவம்</string>
+    <string name="setting_wear_queue_cover_shape">அட்டைப்பட வடிவம்</string>
+    <string name="wear_queue_shape_follow">Queue பாணியைப் பின்பற்று</string>
+    <string name="queue_shape_note_title">பாணியும் வடிவங்களும்</string>
+    <string name="queue_shape_note_description">பாணி வண்ணங்களையும் விளைவுகளையும் தீர்மானிக்கிறது. கேப்சூல் வடிவமும் அட்டைப்பட வடிவமும் வெளிக்கோடுகளை மட்டுமே மாற்றும்; Queue பாணியைப் பின்பற்று ஒவ்வொரு பாணியின் சொந்த வெளிக்கோட்டை வைத்திருக்கும்.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>கேப்சூல்</item>
+        <item>வட்டமான</item>
+        <item>மென்மையான மூலைகள்</item>
+        <item>சதுரம்</item>
+        <item>இலை</item>
+        <item>பேச்சுக் குமிழி</item>
+        <item>அறுகோணம்</item>
+    </string-array>
+</resources>

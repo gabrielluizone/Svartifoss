@@ -66,6 +66,8 @@
         <item>మెట్లు</item>
         <item>క్యాండీ</item>
         <item>ఘోస్ట్</item>
+        <item>తరంగం</item>
+        <item>స్కేలు</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>డబుల్ ఎడ్జ్</item>
@@ -76,6 +78,8 @@
         <item>సెంటర్ డయల్</item>
         <item>టాప్ హాలో</item>
         <item>బాటమ్ హాలో</item>
+        <item>మధ్య స్తంభం</item>
+        <item>బసాల్ట్ స్తంభాలు</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>డబుల్ రింగ్</item>
@@ -88,6 +92,9 @@
         <item>నీడిల్</item>
         <item>మారుతూ</item>
         <item>స్పార్క్</item>
+        <item>తరంగం</item>
+        <item>ట్రాక్ నిమిషాలు</item>
+        <item>షట్కోణ గడులు</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>బెజెల్ ఎడ్జ్</item>
@@ -101,6 +108,8 @@
         <item>డబుల్ ట్రాక్</item>
         <item>ఎడమవైపు తెరవబడినది</item>
         <item>కుడివైపు తెరవబడినది</item>
+        <item>పై ఆర్క్</item>
+        <item>కింది ఆర్క్</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>కాంపాక్ట్ పిల్</item>
@@ -124,6 +133,7 @@
         <item>ట్విన్ టైమ్‌లైన్</item>
         <item>సెగ్మెంట్లు (క్రింద)</item>
         <item>సెంటర్ స్టాక్</item>
+        <item>తరంగం</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>సాఫ్ట్</item>
@@ -155,5 +165,8 @@
         <item>బబుల్</item>
         <item>క్రోమ్</item>
         <item>హోలోగ్రాఫిక్</item>
+        <item>బసాల్ట్</item>
+        <item>పొరలు</item>
+        <item>మార్గం</item>
     </string-array>
 </resources>

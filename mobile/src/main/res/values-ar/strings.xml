@@ -749,6 +749,8 @@ Svartifoss — أعمدة بازلت سوداء
         <item>Material (حدود)</item>
         <item>عناصر تحكم AMOLED</item>
         <item>Chrono (ساعة كبيرة)</item>
+        <item>حلقة الدقائق</item>
+        <item>إطار البازلت</item>
         <item>ملصق</item>
         <item>استوديو</item>
         <item>غامر</item>
@@ -779,6 +781,8 @@ Svartifoss — أعمدة بازلت سوداء
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">لون العرض الدائم</string>
     <string-array name="wear_aod_color_entries">

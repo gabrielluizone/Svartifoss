@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">ஒலியளவு பட்டையின் தடிமன்</string>
+    <string name="setting_wear_volume_thickness_description">ஒலியளவு பட்டைக் கோட்டின் தடிமன், இயல்புநிலையின் 50% முதல் 180% வரை. தடிமனான கோடுகளும் திரையின் விளிம்பைத் தொடாமல் இருக்கும்.</string>
+    <string name="setting_wear_volume_haptics">ஒலியளவில் கிரீட அதிர்வு</string>
+    <string name="setting_wear_queue_dim_played">இயக்கிய பாடல்களை மங்கச் செய்</string>
+    <string name="setting_wear_queue_dim_played_description">ஏற்கெனவே இயக்கிய பாடல்களை மங்கச் செய்து, வரவிருப்பவை தனித்துத் தெரியச் செய்யும்.</string>
+    <string name="quick_block_lyric">பாடல் வரிகள்</string>
+    <string name="quick_block_lyric_description">ஒத்திசைக்கப்பட்ட வரிகளிலிருந்து இப்போது பாடப்படும் வரியும் அடுத்த வரியும். வாட்சில் அதைத் தட்டினால் முழு வரிகளும் திறக்கும்.</string>
+    <string name="quick_summary_lyric">தற்போதைய மற்றும் அடுத்த வரி</string>
+    <string name="setting_wear_progress_weight">வளையத்தின் தடிமன்</string>
+    <string name="setting_wear_aod_night_dim">இரவில் மங்கல்</string>
+    <string name="aod_control_night_dim">இரவில் மங்கல்</string>
+    <string name="setting_wear_aod_shift">எரிதல் தடுப்பு நகர்வு</string>
+    <string name="aod_control_shift">எரிதல் தடுப்பு நகர்வு</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>முடக்கம்</item>
+        <item>ஒவ்வொரு 5%-க்கும்</item>
+        <item>ஒவ்வொரு 5%-க்கும் மற்றும் வரம்புகளில்</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>மெல்லிய</item>
+        <item>வழக்கமான</item>
+        <item>தடிமனான</item>
+        <item>மிகத் தடிமனான</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>முடக்கம்</item>
+        <item>இரவு · 22:00–07:00</item>
+        <item>அந்தியிலிருந்து விடியல் வரை · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>மென்மையான</item>
+        <item>வழக்கமான</item>
+        <item>அகலமான</item>
+    </string-array>
+</resources>

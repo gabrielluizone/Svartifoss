@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">व्हॉल्यूम बारची जाडी</string>
+    <string name="setting_wear_volume_thickness_description">व्हॉल्यूम बारच्या रेषेची जाडी, डीफॉल्टच्या 50% ते 180%. जाड रेषाही स्क्रीनच्या कडेपासून दूर राहतात.</string>
+    <string name="setting_wear_volume_haptics">व्हॉल्यूमवर क्राउनचे कंपन</string>
+    <string name="setting_wear_queue_dim_played">वाजलेले ट्रॅक फिकट करा</string>
+    <string name="setting_wear_queue_dim_played_description">आधीच वाजलेल्या नोंदी फिकट करते, म्हणजे पुढे येणाऱ्या उठून दिसतात.</string>
+    <string name="quick_block_lyric">गीत</string>
+    <string name="quick_block_lyric_description">सिंक केलेल्या गीतांमधून सध्या गायली जाणारी ओळ आणि पुढची ओळ. घड्याळावर टॅप केल्यास पूर्ण गीत उघडते.</string>
+    <string name="quick_summary_lyric">सध्याची आणि पुढची ओळ</string>
+    <string name="setting_wear_progress_weight">रिंगची जाडी</string>
+    <string name="setting_wear_aod_night_dim">रात्री मंद</string>
+    <string name="aod_control_night_dim">रात्री मंद</string>
+    <string name="setting_wear_aod_shift">बर्न-इन शिफ्ट</string>
+    <string name="aod_control_shift">बर्न-इन शिफ्ट</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>बंद</item>
+        <item>प्रत्येक 5% ला</item>
+        <item>प्रत्येक 5% ला आणि मर्यादांवर</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>पातळ</item>
+        <item>सामान्य</item>
+        <item>जाड</item>
+        <item>खूप जाड</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>बंद</item>
+        <item>रात्र · 22:00–07:00</item>
+        <item>संध्याकाळपासून पहाटेपर्यंत · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>सौम्य</item>
+        <item>सामान्य</item>
+        <item>रुंद</item>
+    </string-array>
+</resources>

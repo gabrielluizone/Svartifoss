@@ -26,4 +26,8 @@
 
     <!-- Wear OS's branded launch: a round icon is 48dp. Change it only with the guideline. -->
     <dimen name="splash_screen_icon_size">48dp</dimen>
+    <!-- How far the volume overlay's louder/quieter glyphs sit in from the top and bottom of the
+         glass. They used to share the classic face's 4dp quadrant offset, which put them against
+         the bezel where the round edge curves away from them. -->
+    <dimen name="volume_icon_edge_offset">12dp</dimen>
 </resources>

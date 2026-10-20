@@ -741,6 +741,8 @@ Hvis du opplever dette, kan du aktivere dette alternativet for å deaktivere dob
         <item>Material (kontur)</item>
         <item>AMOLED-kontroller</item>
         <item>Chrono (stor klokke)</item>
+        <item>Minuttring</item>
+        <item>Basaltramme</item>
         <item>Plakat</item>
         <item>Studio</item>
         <item>Oppslukende</item>
@@ -771,6 +773,8 @@ Hvis du opplever dette, kan du aktivere dette alternativet for å deaktivere dob
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Alltid på-farge</string>
     <string-array name="wear_aod_color_entries">

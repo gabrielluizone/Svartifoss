@@ -65,6 +65,26 @@ object StandardActions {
     /** Opens the on-watch face picker from an assigned action. */
     const val ACTION_OPEN_FACE_PICKER = "com.svartifoss.snfell.actions.OpenFacePickerAction"
 
+    /**
+     * Opens the phone's own audio-output switcher - which speaker, headphones or cast device the
+     * phone plays to - on the phone, from the watch.
+     *
+     * Intercepted by the watch, which opens it through `RemoteActivityHelper` exactly as a
+     * streaming shortcut's visible open does: that is the one route by which a screen can appear on
+     * a phone whose app is in the background, since the request comes through the companion app.
+     * The phone-side handler exists for an older watch that predates the interception, and can
+     * only try (see `OpenPhoneAudioOutputAction`), which is why this is not in [WATCH_LOCAL].
+     */
+    const val ACTION_OPEN_PHONE_AUDIO_OUTPUT =
+            "com.svartifoss.snfell.actions.volume.OpenPhoneAudioOutputAction"
+
+    /**
+     * The link the watch opens on the phone for [ACTION_OPEN_PHONE_AUDIO_OUTPUT]. A view link and
+     * not an explicit component because `RemoteActivityHelper` only starts browsable view intents;
+     * the phone's `AudioOutputSwitcherActivity` is the one thing that answers it.
+     */
+    const val PHONE_AUDIO_OUTPUT_URI = "svartifoss://audio-output"
+
     /** Closes only the watch UI; playback and the phone service keep running. */
     const val ACTION_CLOSE_WATCH_APP = "com.svartifoss.snfell.actions.CloseWatchAppAction"
 

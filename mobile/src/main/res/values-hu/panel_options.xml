@@ -66,6 +66,8 @@
         <item>Lépcsőfokok</item>
         <item>Cukorka</item>
         <item>Szellem</item>
+        <item>Hullám</item>
+        <item>Vonalzó</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Dupla szél</item>
@@ -76,6 +78,8 @@
         <item>Középső tárcsa</item>
         <item>Felső fényudvar</item>
         <item>Alsó fényudvar</item>
+        <item>Középső oszlop</item>
+        <item>Bazaltoszlopok</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Dupla gyűrű</item>
@@ -88,6 +92,9 @@
         <item>Tű</item>
         <item>Váltakozó</item>
         <item>Szikra</item>
+        <item>Hullám</item>
+        <item>Szám percei</item>
+        <item>Hatszögcellák</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Lünetta széle</item>
@@ -101,6 +108,8 @@
         <item>Dupla sáv</item>
         <item>Bal oldalon nyitott</item>
         <item>Jobb oldalon nyitott</item>
+        <item>Felső ív</item>
+        <item>Alsó ív</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Kompakt kapszula</item>
@@ -124,6 +133,7 @@
         <item>Dupla idővonal</item>
         <item>Szegmensek (alul)</item>
         <item>Középső verem</item>
+        <item>Hullám</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Lágy</item>
@@ -155,5 +165,8 @@
         <item>Buborék</item>
         <item>Króm</item>
         <item>Holografikus</item>
+        <item>Bazalt</item>
+        <item>Rétegek</item>
+        <item>Útvonal</item>
     </string-array>
 </resources>

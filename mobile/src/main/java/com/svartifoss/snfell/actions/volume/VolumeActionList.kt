@@ -16,7 +16,8 @@ class VolumeActionList : PickerActionGroup {
                 IncreaseVolumeAction(context),
                 DecreaseVolumeAction(context),
                 MuteToggleAction(context),
-                VolumeLevelActionList(context)
+                VolumeLevelActionList(context),
+                OpenPhoneAudioOutputAction(context)
         )
 
     override fun retrieveTitle(): String {

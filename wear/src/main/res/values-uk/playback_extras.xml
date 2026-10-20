@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Кінець треку</string>
+    <string name="quick_sleep_track_end_description">Таймер сну, пауза наприкінці цього треку. Торкніться, щоб вимкнути</string>
+    <string name="queue_position">Трек %1$d з %2$d</string>
+    <string name="progress_screen_speed_description">Швидкість відтворення %1$s. Торкніться для наступної, утримуйте для точного налаштування</string>
+    <string name="progress_screen_speed_slower">Повільніше</string>
+    <string name="progress_screen_speed_faster">Швидше</string>
+    <string name="progress_screen_speed_reset">Звичайна швидкість</string>
+    <string name="complication_playback_label">Відтворення й пауза</string>
+    <string name="complication_playback_idle">Відтворити</string>
+    <string name="complication_playback_idle_description">Нічого не відтворюється. Торкніться, щоб продовжити останній застосунок</string>
+    <string name="complication_playback_play_description">На паузі: %1$s. Торкніться, щоб відтворити</string>
+    <string name="complication_playback_pause_description">Відтворюється: %1$s. Торкніться, щоб призупинити</string>
+    <string name="audio_block_dnd">На телефоні ввімкнено режим «Не турбувати»</string>
+    <string name="audio_block_muted">Гучність медіа на телефоні вимкнено</string>
+    <string name="audio_block_safe_volume">Обмежено безпечним рівнем. Збільште один раз на телефоні, щоб підтвердити</string>
+    <string name="refused_skip_app">%1$s зараз не дозволяє перемикати треки</string>
+    <string name="refused_skip">Цей застосунок зараз не дозволяє перемикати треки</string>
+    <string name="refused_seek_app">%1$s зараз не дозволяє перемотувати</string>
+    <string name="refused_seek">Цей застосунок зараз не дозволяє перемотувати</string>
+    <string name="tile_resume">Продовжити останній застосунок</string>
+    <string name="tile_resume_hint">«Відтворити» продовжує останній застосунок</string>
+    <string name="recent_tile_title">Нещодавно відтворене</string>
+    <string name="recent_tile_description">Останні прослухані треки — один дотик, щоб увімкнути знову</string>
+    <string name="recent_tile_empty">Ще нічого не відтворено</string>
+    <string name="recent_tile_play_description">Відтворити знову: %1$s</string>
+</resources>

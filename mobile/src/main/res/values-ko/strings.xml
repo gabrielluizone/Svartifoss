@@ -718,6 +718,8 @@
         <item>Material(윤곽선)</item>
         <item>AMOLED 컨트롤</item>
         <item>크로노(큰 시계)</item>
+        <item>분 링</item>
+        <item>현무암 프레임</item>
         <item>포스터</item>
         <item>스튜디오</item>
         <item>몰입형</item>
@@ -748,6 +750,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">항상 켜짐 색상</string>
     <string-array name="wear_aod_color_entries">

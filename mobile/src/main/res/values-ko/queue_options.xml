@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">알약 모양</string>
+    <string name="setting_wear_queue_cover_shape">커버 모양</string>
+    <string name="wear_queue_shape_follow">대기열 스타일 따르기</string>
+    <string name="queue_shape_note_title">스타일과 모양</string>
+    <string name="queue_shape_note_description">스타일은 색상과 효과를 정합니다. 알약 모양과 커버 모양은 윤곽선만 바꾸며, ‘대기열 스타일 따르기’는 각 스타일 고유의 윤곽을 유지합니다.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>캡슐</item>
+        <item>둥근 모서리</item>
+        <item>부드러운 모서리</item>
+        <item>정사각형</item>
+        <item>나뭇잎</item>
+        <item>말풍선</item>
+        <item>육각형</item>
+    </string-array>
+</resources>

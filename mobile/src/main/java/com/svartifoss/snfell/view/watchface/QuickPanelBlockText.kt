@@ -18,6 +18,7 @@ internal object QuickPanelBlockText {
         QuickPanelBlockType.SEEK -> R.string.quick_block_seek
         QuickPanelBlockType.TOOLS -> R.string.quick_block_tools
         QuickPanelBlockType.FAVORITES -> R.string.quick_block_favorites
+        QuickPanelBlockType.LYRIC -> R.string.quick_block_lyric
         QuickPanelBlockType.ACTIONS -> R.string.quick_block_actions
     }
 
@@ -30,6 +31,7 @@ internal object QuickPanelBlockText {
         QuickPanelBlockType.SEEK -> R.string.quick_block_seek_description
         QuickPanelBlockType.TOOLS -> R.string.quick_block_tools_description
         QuickPanelBlockType.FAVORITES -> R.string.quick_block_favorites_description
+        QuickPanelBlockType.LYRIC -> R.string.quick_block_lyric_description
         QuickPanelBlockType.ACTIONS -> R.string.quick_block_actions_description
     }
 
@@ -42,6 +44,7 @@ internal object QuickPanelBlockText {
         QuickPanelBlockType.SEEK -> R.drawable.ic_forward_10
         QuickPanelBlockType.TOOLS -> R.drawable.ic_tune
         QuickPanelBlockType.FAVORITES -> R.drawable.ic_bolt
+        QuickPanelBlockType.LYRIC -> R.drawable.ic_subtitles
         QuickPanelBlockType.ACTIONS -> R.drawable.ic_actions_menu
     }
 }

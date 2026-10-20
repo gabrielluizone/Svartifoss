@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">ক্যাপসুলের আকৃতি</string>
+    <string name="setting_wear_queue_cover_shape">কভারের আকৃতি</string>
+    <string name="wear_queue_shape_follow">কিউ স্টাইল অনুসরণ করুন</string>
+    <string name="queue_shape_note_title">স্টাইল ও আকৃতি</string>
+    <string name="queue_shape_note_description">স্টাইল রং ও ইফেক্ট ঠিক করে। ক্যাপসুলের আকৃতি ও কভারের আকৃতি শুধু রূপরেখা বদলায়; কিউ স্টাইল অনুসরণ করুন প্রতিটি স্টাইলের নিজস্ব রূপরেখা রাখে।</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>ক্যাপসুল</item>
+        <item>গোলাকার</item>
+        <item>নরম কোণ</item>
+        <item>বর্গাকার</item>
+        <item>পাতা</item>
+        <item>কথার বুদবুদ</item>
+        <item>ষড়ভুজ</item>
+    </string-array>
+</resources>

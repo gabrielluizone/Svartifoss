@@ -33,6 +33,9 @@ object AppearanceNumericRanges {
             // those `coerceIn` calls rather than invented here.
             "rotary_deadzone" to 0..30,
             "volume_overlay_timeout" to 300..5000,
+            // Global rather than face-scoped, so outside the theme contract on purpose - see the
+            // note on MiscPreferences.WEAR_VOLUME_THICKNESS.
+            "wear_volume_thickness" to MeterShape.THICKNESS_MIN..MeterShape.THICKNESS_MAX,
 
             "album_art_blur_radius" to 5..120,
             "album_art_dim_strength" to 0..150,

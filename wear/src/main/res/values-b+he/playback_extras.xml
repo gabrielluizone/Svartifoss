@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">סוף הרצועה</string>
+    <string name="quick_sleep_track_end_description">טיימר שינה, ישהה בסוף הרצועה הזו. יש להקיש כדי לכבות</string>
+    <string name="queue_position">רצועה %1$d מתוך %2$d</string>
+    <string name="progress_screen_speed_description">מהירות הפעלה %1$s. הקשה למהירות הבאה, לחיצה ארוכה לכוונון עדין</string>
+    <string name="progress_screen_speed_slower">לאט יותר</string>
+    <string name="progress_screen_speed_faster">מהר יותר</string>
+    <string name="progress_screen_speed_reset">מהירות רגילה</string>
+    <string name="complication_playback_label">הפעלה והשהיה</string>
+    <string name="complication_playback_idle">הפעלה</string>
+    <string name="complication_playback_idle_description">שום דבר לא מתנגן. יש להקיש כדי להמשיך באפליקציה האחרונה</string>
+    <string name="complication_playback_play_description">מושהה: %1$s. יש להקיש כדי להפעיל</string>
+    <string name="complication_playback_pause_description">מתנגן: %1$s. יש להקיש כדי להשהות</string>
+    <string name="audio_block_dnd">הטלפון במצב נא לא להפריע</string>
+    <string name="audio_block_muted">עוצמת המדיה בטלפון כבויה</string>
+    <string name="audio_block_safe_volume">מוגבל לרמה בטוחה. יש להגביר פעם אחת בטלפון כדי לאשר</string>
+    <string name="refused_skip_app">%1$s לא מאפשרת דילוג כרגע</string>
+    <string name="refused_skip">האפליקציה הזו לא מאפשרת דילוג כרגע</string>
+    <string name="refused_seek_app">%1$s לא מאפשרת הרצה כרגע</string>
+    <string name="refused_seek">האפליקציה הזו לא מאפשרת הרצה כרגע</string>
+    <string name="tile_resume">המשך באפליקציה האחרונה</string>
+    <string name="tile_resume_hint">הפעלה ממשיכה את האפליקציה האחרונה</string>
+    <string name="recent_tile_title">הושמעו לאחרונה</string>
+    <string name="recent_tile_description">הרצועות האחרונות שהושמעו, במרחק הקשה מהשמעה חוזרת</string>
+    <string name="recent_tile_empty">עדיין לא הושמע דבר</string>
+    <string name="recent_tile_play_description">השמעה חוזרת של %1$s</string>
+</resources>

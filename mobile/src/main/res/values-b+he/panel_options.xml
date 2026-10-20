@@ -66,6 +66,8 @@
         <item>מדרגות</item>
         <item>ממתק</item>
         <item>רוח רפאים</item>
+        <item>גל</item>
+        <item>סרגל</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>קצה כפול</item>
@@ -76,6 +78,8 @@
         <item>חוגה מרכזית</item>
         <item>הילה עליונה</item>
         <item>הילה תחתונה</item>
+        <item>עמוד מרכזי</item>
+        <item>עמודי בזלת</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>טבעת כפולה</item>
@@ -88,6 +92,9 @@
         <item>מחט</item>
         <item>לסירוגין</item>
         <item>ניצוץ</item>
+        <item>גל</item>
+        <item>דקות השיר</item>
+        <item>תאים משושים</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>קצה המסגרת</item>
@@ -101,6 +108,8 @@
         <item>מסלול כפול</item>
         <item>פתיחה משמאל</item>
         <item>פתיחה מימין</item>
+        <item>קשת עליונה</item>
+        <item>קשת תחתונה</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>גלולה קומפקטית</item>
@@ -124,6 +133,7 @@
         <item>ציר זמן כפול</item>
         <item>מקטעים (למטה)</item>
         <item>ערימה מרכזית</item>
+        <item>גל</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>רך</item>
@@ -155,5 +165,8 @@
         <item>בועה</item>
         <item>כרום</item>
         <item>הולוגרפי</item>
+        <item>בזלת</item>
+        <item>שכבות</item>
+        <item>מסלול</item>
     </string-array>
 </resources>

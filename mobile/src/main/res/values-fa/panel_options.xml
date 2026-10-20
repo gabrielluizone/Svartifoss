@@ -66,6 +66,8 @@
         <item>پله‌ها</item>
         <item>آبنبات</item>
         <item>شبح</item>
+        <item>موج</item>
+        <item>خط‌کش</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>لبه دوگانه</item>
@@ -76,6 +78,8 @@
         <item>صفحه میانی</item>
         <item>هاله بالا</item>
         <item>هاله پایین</item>
+        <item>ستون مرکزی</item>
+        <item>ستون‌های بازالت</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>حلقه دوگانه</item>
@@ -88,6 +92,9 @@
         <item>سوزن</item>
         <item>یکی‌درمیان</item>
         <item>جرقه</item>
+        <item>موج</item>
+        <item>دقیقه‌های آهنگ</item>
+        <item>سلول‌های شش‌ضلعی</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>لبه قاب</item>
@@ -101,6 +108,8 @@
         <item>مسیر دوگانه</item>
         <item>باز شدن از چپ</item>
         <item>باز شدن از راست</item>
+        <item>کمان بالا</item>
+        <item>کمان پایین</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>کپسول فشرده</item>
@@ -124,6 +133,7 @@
         <item>خط زمانی دوگانه</item>
         <item>بخش‌ها (پایین)</item>
         <item>پشته میانی</item>
+        <item>موج</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>نرم</item>
@@ -155,5 +165,8 @@
         <item>حباب</item>
         <item>کروم</item>
         <item>هولوگرافیک</item>
+        <item>بازالت</item>
+        <item>لایه‌ها</item>
+        <item>مسیر</item>
     </string-array>
 </resources>

@@ -328,7 +328,13 @@ class WatchFaceFragment : Fragment() {
         selectedSection = sections[selectedIndex].key
         binding.watchPager.setCurrentItem(selectedIndex, false)
         binding.watchPager.registerOnPageChangeCallback(pageCallback)
-        tabMediator = TabLayoutMediator(binding.watchTabs, binding.watchPager) { tab, position ->
+        // A tab tap jumps straight to its page. With the mediator's default smooth scroll, a tap
+        // several tabs away animates through every page in between, and when one of those pages
+        // finished laying out mid-scroll the pager could come to rest on a different page from the
+        // selected tab - Always-on selected, Mini buttons on screen - with nothing to correct it.
+        tabMediator = TabLayoutMediator(
+                binding.watchTabs, binding.watchPager,
+                /* autoRefresh = */ true, /* smoothScroll = */ false) { tab, position ->
             tab.setText(sections[position].title)
         }.also { it.attach() }
         preview?.showSection(selectedSection)

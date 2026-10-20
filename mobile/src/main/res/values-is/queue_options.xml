@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Lögun hylkis</string>
+    <string name="setting_wear_queue_cover_shape">Lögun umslags</string>
+    <string name="wear_queue_shape_follow">Fylgja stíl biðraðar</string>
+    <string name="queue_shape_note_title">Stíll og lögun</string>
+    <string name="queue_shape_note_description">Stíllinn ræður litum og áhrifum. Lögun hylkis og Lögun umslags breyta aðeins útlínunum; Fylgja stíl biðraðar heldur útlínum hvers stíls.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Hylki</item>
+        <item>Ávalt</item>
+        <item>Mjúk horn</item>
+        <item>Ferningslaga</item>
+        <item>Laufblað</item>
+        <item>Talbóla</item>
+        <item>Sexhyrningur</item>
+    </string-array>
+</resources>

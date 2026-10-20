@@ -93,6 +93,16 @@ object QuickPanelGeometry {
     const val FAVORITES_LABEL_DP = 12f
     const val FAVORITES_ROW_GAP_DP = 6f
 
+    // --- Lyric ---
+
+    /** The line being sung over the next one, inside one pill. */
+    const val LYRIC_HEIGHT_DP = 66f
+    const val LYRIC_PADDING_H_DP = 14f
+    const val LYRIC_PADDING_V_DP = 8f
+
+    /** Height of the lyric block, gap included. */
+    fun lyricBlockDp(): Float = GAP_DP + LYRIC_HEIGHT_DP
+
     /** Height of the volume block, gap included. */
     fun volumeBlockDp(): Float = GAP_DP + VOLUME_HEIGHT_DP
 

@@ -720,6 +720,8 @@
         <item>Material (ääriviiva)</item>
         <item>AMOLED-ohjaimet</item>
         <item>Chrono (iso kello)</item>
+        <item>Minuuttirengas</item>
+        <item>Basalttikehys</item>
         <item>Juliste</item>
         <item>Studio</item>
         <item>Immersiivinen</item>
@@ -750,6 +752,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Aina päällä -näytön väri</string>
     <string-array name="wear_aod_color_entries">

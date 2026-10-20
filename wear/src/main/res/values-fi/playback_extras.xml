@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Kappaleen loppu</string>
+    <string name="quick_sleep_track_end_description">Uniajastin, keskeyttää kun tämä kappale päättyy. Napauta poistaaksesi käytöstä</string>
+    <string name="queue_position">Kappale %1$d/%2$d</string>
+    <string name="progress_screen_speed_description">Toistonopeus %1$s. Napauta seuraavaan nopeuteen, pidä painettuna hienosäätöä varten</string>
+    <string name="progress_screen_speed_slower">Hitaammin</string>
+    <string name="progress_screen_speed_faster">Nopeammin</string>
+    <string name="progress_screen_speed_reset">Normaali nopeus</string>
+    <string name="complication_playback_label">Toista ja keskeytä</string>
+    <string name="complication_playback_idle">Toista</string>
+    <string name="complication_playback_idle_description">Mitään ei toisteta. Napauta jatkaaksesi viimeisintä sovellusta</string>
+    <string name="complication_playback_play_description">Keskeytetty: %1$s. Napauta toistaaksesi</string>
+    <string name="complication_playback_pause_description">Toistetaan: %1$s. Napauta keskeyttääksesi</string>
+    <string name="audio_block_dnd">Puhelin on Älä häiritse -tilassa</string>
+    <string name="audio_block_muted">Puhelimen median äänenvoimakkuus on pois</string>
+    <string name="audio_block_safe_volume">Pidetty turvallisella tasolla. Vahvista nostamalla kerran puhelimessa</string>
+    <string name="refused_skip_app">%1$s ei salli ohittamista juuri nyt</string>
+    <string name="refused_skip">Tämä sovellus ei salli ohittamista juuri nyt</string>
+    <string name="refused_seek_app">%1$s ei salli siirtymistä kappaleessa juuri nyt</string>
+    <string name="refused_seek">Tämä sovellus ei salli siirtymistä kappaleessa juuri nyt</string>
+    <string name="tile_resume">Jatka viimeisintä sovellusta</string>
+    <string name="tile_resume_hint">Toista jatkaa viimeisintä sovellusta</string>
+    <string name="recent_tile_title">Viimeksi soitetut</string>
+    <string name="recent_tile_description">Viimeksi kuuntelemasi kappaleet, napautuksen päässä uudesta toistosta</string>
+    <string name="recent_tile_empty">Mitään ei ole vielä soitettu</string>
+    <string name="recent_tile_play_description">Toista %1$s uudelleen</string>
+</resources>

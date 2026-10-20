@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Volume thickness</string>
+    <string name="setting_wear_volume_thickness_description">Weight of the volume bar\'s stroke, from 50% to 180% of the default. Thicker strokes still keep clear of the bezel.</string>
+    <string name="setting_wear_volume_haptics">Crown vibration on volume</string>
+    <string name="setting_wear_progress_weight">Ring thickness</string>
+    <string name="setting_wear_queue_dim_played">Dim played tracks</string>
+    <string name="setting_wear_queue_dim_played_description">Fades the entries that already played so the ones still to come stand out.</string>
+    <string name="quick_block_lyric">Lyrics</string>
+    <string name="quick_block_lyric_description">The line being sung and the next one, from the synced lyrics. Tapping it on the watch opens the full lyrics.</string>
+    <string name="quick_summary_lyric">Current line and the next</string>
+    <string name="setting_wear_aod_night_dim">Night dimming</string>
+    <string name="aod_control_night_dim">Night dimming</string>
+    <string name="setting_wear_aod_shift">Burn-in shift</string>
+    <string name="aod_control_shift">Burn-in shift</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Off</item>
+        <item>Every 5%</item>
+        <item>Every 5% and at the limits</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Thin</item>
+        <item>Regular</item>
+        <item>Heavy</item>
+        <item>Bold</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Off</item>
+        <item>Night · 22:00–07:00</item>
+        <item>Dusk to dawn · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Gentle</item>
+        <item>Standard</item>
+        <item>Wide</item>
+    </string-array>
+    <string-array name="wear_volume_haptics_values" translatable="false">
+        <item>off</item>
+        <item>ticks</item>
+        <item>ticks_limits</item>
+    </string-array>
+    <string-array name="wear_progress_weight_values" translatable="false">
+        <item>thin</item>
+        <item>regular</item>
+        <item>heavy</item>
+        <item>bold</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_values" translatable="false">
+        <item>off</item>
+        <item>night</item>
+        <item>long_night</item>
+    </string-array>
+    <string-array name="wear_aod_shift_values" translatable="false">
+        <item>gentle</item>
+        <item>standard</item>
+        <item>wide</item>
+    </string-array>
+</resources>

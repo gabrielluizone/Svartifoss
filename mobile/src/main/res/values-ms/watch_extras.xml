@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Ketebalan bar kelantangan</string>
+    <string name="setting_wear_volume_thickness_description">Ketebalan garisan bar kelantangan, dari 50% hingga 180% daripada lalai. Garisan yang lebih tebal tetap jauh dari bingkai.</string>
+    <string name="setting_wear_volume_haptics">Getaran mahkota pada kelantangan</string>
+    <string name="setting_wear_queue_dim_played">Malapkan lagu yang telah dimainkan</string>
+    <string name="setting_wear_queue_dim_played_description">Memalapkan entri yang sudah dimainkan supaya yang akan datang lebih menonjol.</string>
+    <string name="quick_block_lyric">Lirik</string>
+    <string name="quick_block_lyric_description">Baris yang sedang dinyanyikan dan baris seterusnya, daripada lirik yang disegerakkan. Ketik padanya pada jam untuk membuka lirik penuh.</string>
+    <string name="quick_summary_lyric">Baris semasa dan seterusnya</string>
+    <string name="setting_wear_progress_weight">Ketebalan cincin</string>
+    <string name="setting_wear_aod_night_dim">Malapkan malam</string>
+    <string name="aod_control_night_dim">Malapkan malam</string>
+    <string name="setting_wear_aod_shift">Anjakan burn-in</string>
+    <string name="aod_control_shift">Anjakan burn-in</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Mati</item>
+        <item>Setiap 5%</item>
+        <item>Setiap 5% dan pada had</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Nipis</item>
+        <item>Biasa</item>
+        <item>Tebal</item>
+        <item>Sangat tebal</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Mati</item>
+        <item>Malam · 22:00–07:00</item>
+        <item>Senja hingga subuh · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Lembut</item>
+        <item>Biasa</item>
+        <item>Luas</item>
+    </string-array>
+</resources>

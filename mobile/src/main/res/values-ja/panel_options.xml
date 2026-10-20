@@ -66,6 +66,8 @@
         <item>ステップ</item>
         <item>キャンディ</item>
         <item>ゴースト</item>
+        <item>波</item>
+        <item>目盛り</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>ダブルエッジ</item>
@@ -76,6 +78,8 @@
         <item>中央ダイヤル</item>
         <item>上部ハロー</item>
         <item>下部ハロー</item>
+        <item>中央ピラー</item>
+        <item>玄武岩の柱</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>ダブルリング</item>
@@ -88,6 +92,9 @@
         <item>ニードル</item>
         <item>交互</item>
         <item>スパーク</item>
+        <item>波</item>
+        <item>曲の分数</item>
+        <item>六角セル</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>ベゼル端</item>
@@ -101,6 +108,8 @@
         <item>ダブルトラック</item>
         <item>左から開く</item>
         <item>右から開く</item>
+        <item>上部アーク</item>
+        <item>下部アーク</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>コンパクトピル</item>
@@ -124,6 +133,7 @@
         <item>ツインタイムライン</item>
         <item>セグメント（下）</item>
         <item>中央スタック</item>
+        <item>波</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>ソフト</item>
@@ -155,5 +165,8 @@
         <item>バブル</item>
         <item>クローム</item>
         <item>ホログラフィック</item>
+        <item>玄武岩</item>
+        <item>地層</item>
+        <item>ルート</item>
     </string-array>
 </resources>

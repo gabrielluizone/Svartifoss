@@ -61,10 +61,11 @@
                 android:id="@+id/aod_editor_style_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:layout_marginTop="6dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 app:icon="@drawable/ic_always_on"
                 tools:text="Follow the player face" />
 
@@ -72,9 +73,10 @@
                 android:id="@+id/aod_editor_color_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 app:icon="@drawable/ic_colors"
                 tools:text="Tint · White" />
 
@@ -85,9 +87,10 @@
                 android:id="@+id/aod_editor_custom_color_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:visibility="gone"
                 app:icon="@drawable/ic_palette"
                 tools:text="Always-on custom color"
@@ -97,11 +100,34 @@
                 android:id="@+id/aod_editor_intensity_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 app:icon="@drawable/ic_brightness_medium"
                 tools:text="Brightness · 100%" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/aod_editor_night_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                app:icon="@drawable/ic_dark_mode"
+                tools:text="Night dimming · Off" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/aod_editor_shift_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                app:icon="@drawable/ic_open_with"
+                tools:text="Burn-in shift · Standard" />
 
         </LinearLayout>
 
@@ -191,10 +217,11 @@
                 android:id="@+id/aod_editor_art_treatment_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:layout_marginTop="6dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 app:icon="@drawable/ic_album"
                 tools:text="Treatment · Blurred" />
 
@@ -202,9 +229,10 @@
                 android:id="@+id/aod_editor_art_opacity_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 app:icon="@drawable/ic_opacity"
                 tools:text="Opacity · 55%" />
 

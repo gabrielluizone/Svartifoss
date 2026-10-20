@@ -40,9 +40,9 @@ class PanelEditorModelTest {
     }
 
     @Test
-    fun `only the two documented keys escape face scoping`() {
+    fun `only the documented keys escape face scoping`() {
         // The Panel page is an appearance surface, so an unscoped key repaints every face at once.
-        // Two are deliberately global and both are named in the model; anything else appearing
+        // A few are deliberately global and all are named in the model; anything else appearing
         // here is the bug AppearancePreferenceScopingTest describes.
         val unscoped = PanelEditorModel.keys
                 .filter { PanelEditorModel.specFor(it)?.persisted == true }
@@ -53,13 +53,15 @@ class PanelEditorModelTest {
         assertTrue(
                 MiscPreferences.WEAR_QUICK_PANEL_SOURCE.key in PanelEditorModel.globalKeys)
         assertTrue("queue_remote_artwork" in PanelEditorModel.globalKeys)
+        assertTrue(MiscPreferences.WEAR_VOLUME_THICKNESS.key in PanelEditorModel.globalKeys)
     }
 
     @Test
     fun `rows that store nothing are not treated as values`() {
         // The open note is explanatory text and the shortcuts row opens another screen. Reading
         // either through the preference store would persist a value no watch has ever read.
-        listOf("quick_panel_open_note", "watch_streaming_shortcuts").forEach { key ->
+        listOf("quick_panel_open_note", PanelEditorModel.QUEUE_SHAPE_NOTE_KEY,
+                "watch_streaming_shortcuts").forEach { key ->
             assertFalse(key, PanelEditorModel.specFor(key)!!.persisted)
         }
     }
@@ -134,12 +136,32 @@ class PanelEditorModelTest {
     }
 
     @Test
-    fun `the queue has no layout control`() {
-        // Volume, seek and the quick panel each choose where they sit; a list does not.
-        assertNull(PanelEditorModel.keyFor(PanelTarget.QUEUE, PanelControl.LAYOUT))
+    fun `every surface that places itself has a layout control, and lyrics does not`() {
+        // Volume, seek and the quick panel each choose how they are arranged. The lyrics screen is
+        // one wall of text, and the queue is a list whose route is now one of its styles rather
+        // than a second arrangement on top of every style.
         listOf(PanelTarget.VOLUME, PanelTarget.SEEK, PanelTarget.QUICK_PANEL).forEach {
             assertNotNull("$it", PanelEditorModel.keyFor(it, PanelControl.LAYOUT))
         }
+        assertNull(PanelEditorModel.keyFor(PanelTarget.LYRICS, PanelControl.LAYOUT))
+        assertNull(PanelEditorModel.keyFor(PanelTarget.QUEUE, PanelControl.LAYOUT))
+    }
+
+    @Test
+    fun `the queue's outline choices sit with its style and follow it until set`() {
+        assertEquals(MiscPreferences.WEAR_QUEUE_ROW_SHAPE.key,
+                PanelEditorModel.keyFor(PanelTarget.QUEUE, PanelControl.ROW_SHAPE))
+        assertEquals(MiscPreferences.WEAR_QUEUE_COVER_SHAPE.key,
+                PanelEditorModel.keyFor(PanelTarget.QUEUE, PanelControl.COVER_SHAPE))
+        listOf(PanelControl.ROW_SHAPE, PanelControl.COVER_SHAPE).forEach { control ->
+            val key = PanelEditorModel.keyFor(PanelTarget.QUEUE, control)!!
+            assertEquals(PanelValueSpec.Choice("follow"), PanelEditorModel.specFor(key)!!.value)
+            PanelTarget.entries.filter { it != PanelTarget.QUEUE }.forEach {
+                assertNull("$it has no $control", PanelEditorModel.keyFor(it, control))
+            }
+        }
+        assertEquals(PanelControl.OPEN_NOTE,
+                PanelEditorModel.specFor(PanelEditorModel.QUEUE_SHAPE_NOTE_KEY)!!.control)
     }
 
     @Test

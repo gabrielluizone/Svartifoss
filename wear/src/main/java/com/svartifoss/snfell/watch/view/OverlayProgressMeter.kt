@@ -4,10 +4,14 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
 import androidx.core.graphics.ColorUtils
+import com.svartifoss.snfell.common.MeterTrack
+import com.svartifoss.snfell.common.VolumeFx
+import com.svartifoss.snfell.common.WavePhaseClock
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
@@ -32,11 +36,30 @@ class OverlayProgressMeter @JvmOverloads constructor(
         VERTICAL_LEFT,
         VERTICAL_RIGHT,
         DIAL,
-        TWIN
+        TWIN,
+
+        /** The timeline's place, drawn as a travelling wave - see [animating]. */
+        WAVE
     }
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val bounds = RectF()
+    private val wavePath = Path()
+
+    /**
+     * Whether the [Mode.WAVE] crests travel: the host says so while music plays, the way the
+     * Expressive face's ring turns, and the wave stands still when it is paused. Nothing else
+     * animates here, so any other mode - or a hidden meter - schedules no frames at all.
+     */
+    var animating: Boolean = false
+        set(value) {
+            if (field != value) {
+                field = value
+                invalidate()
+            }
+        }
+
+    private val waveClock = WavePhaseClock()
 
     var mode: Mode = Mode.TIMELINE
         set(value) {
@@ -65,6 +88,8 @@ class OverlayProgressMeter @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         val density = resources.displayMetrics.density
+        val waveMoves = mode == Mode.WAVE && animating && isShown && alpha > 0.01f
+        waveClock.advance(waveMoves, android.os.SystemClock.uptimeMillis())
         when (mode) {
             Mode.TIMELINE -> {
                 setHorizontalBounds(density, height / 2f + 25f * density, segmented = false)
@@ -95,7 +120,26 @@ class OverlayProgressMeter @JvmOverloads constructor(
             Mode.VERTICAL_RIGHT -> drawVerticalTimeline(canvas, density, left = false)
             Mode.DIAL -> drawDial(canvas, density)
             Mode.TWIN -> drawTwinTimeline(canvas, density)
+            Mode.WAVE -> {
+                setHorizontalBounds(density, height / 2f + 25f * density, segmented = false)
+                drawWave(canvas, density)
+            }
         }
+        if (waveMoves) postInvalidateDelayed(WavePhaseClock.FRAME_MS)
+    }
+
+    /**
+     * The timeline as the wave the progress ring has: the played part swings and travels, the rest
+     * is a straight faint line, and the head is a dot. Same drawing, same period as the volume bar's
+     * wave, so a player with both shows one motion.
+     */
+    private fun drawWave(canvas: Canvas, density: Float) {
+        val track = MeterTrack.Line(bounds.left, bounds.centerY(), bounds.right, bounds.centerY())
+        VolumeFx.wave(
+                canvas, track, progress, 3.4f * density, 4.2f * density, density,
+                0x38FFFFFF, accentColor, null, false, paint, wavePath,
+                amplitudeFollowsLevel = false, phase = waveClock.phase)
+        paint.style = Paint.Style.FILL
     }
 
     private fun setHorizontalBounds(density: Float, centerY: Float, segmented: Boolean) {

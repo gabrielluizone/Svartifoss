@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Forma capsulei</string>
+    <string name="setting_wear_queue_cover_shape">Forma coperții</string>
+    <string name="wear_queue_shape_follow">Urmează stilul cozii</string>
+    <string name="queue_shape_note_title">Stil și forme</string>
+    <string name="queue_shape_note_description">Stilul stabilește culorile și efectele. Forma capsulei și Forma coperții schimbă doar contururile; Urmează stilul cozii le păstrează pe ale fiecărui stil.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Capsulă</item>
+        <item>Rotunjită</item>
+        <item>Colțuri moi</item>
+        <item>Pătrată</item>
+        <item>Frunză</item>
+        <item>Balon de dialog</item>
+        <item>Hexagon</item>
+    </string-array>
+</resources>

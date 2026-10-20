@@ -720,6 +720,8 @@
         <item>Material (আউটলাইন)</item>
         <item>AMOLED কন্ট্রোল</item>
         <item>Chrono (বড় ঘড়ি)</item>
+        <item>মিনিটের রিং</item>
+        <item>ব্যাসল্ট ফ্রেম</item>
         <item>পোস্টার</item>
         <item>স্টুডিও</item>
         <item>ইমার্সিভ</item>
@@ -750,6 +752,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">অলওয়েজ-অন রং</string>
     <string-array name="wear_aod_color_entries">

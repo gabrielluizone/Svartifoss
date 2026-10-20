@@ -42,7 +42,7 @@ class AppearanceOptionCatalogTest {
                     "wear_up_next_pill_extra_values", "upNextPillStyle",
                     listOf("outline_album", "gradient_album", "secondary", "glass_album", "tertiary", "neon_outline"))) +
             listOf("wear_carousel_card_shape", "wear_note_cover_shape", "wear_chat_cover_shape",
-                    "wear_metadata_cover_shape").map { key ->
+                    "wear_metadata_cover_shape", "wear_queue_cover_shape").map { key ->
                 Catalog(key, "wear_cover_shape_extra_entries", "wear_cover_shape_extra_values",
                         "coverShape", listOf("leaf", "drop", "arch", "pebble", "shield"))
             }

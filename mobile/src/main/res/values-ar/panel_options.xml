@@ -66,6 +66,8 @@
         <item>درجات</item>
         <item>حلوى</item>
         <item>شبح</item>
+        <item>موجة</item>
+        <item>مسطرة</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>حافة مزدوجة</item>
@@ -76,6 +78,8 @@
         <item>قرص وسطي</item>
         <item>هالة علوية</item>
         <item>هالة سفلية</item>
+        <item>عمود مركزي</item>
+        <item>أعمدة البازلت</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>حلقة مزدوجة</item>
@@ -88,6 +92,9 @@
         <item>إبرة</item>
         <item>متناوب</item>
         <item>شرارة</item>
+        <item>موجة</item>
+        <item>دقائق المقطوعة</item>
+        <item>خلايا سداسية</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>حافة الإطار</item>
@@ -101,6 +108,8 @@
         <item>مسار مزدوج</item>
         <item>فتح من اليسار</item>
         <item>فتح من اليمين</item>
+        <item>قوس علوي</item>
+        <item>قوس سفلي</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>كبسولة مضغوطة</item>
@@ -124,6 +133,7 @@
         <item>خط زمني مزدوج</item>
         <item>مقاطع (أسفل)</item>
         <item>تكديس وسطي</item>
+        <item>موجة</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>ناعم</item>
@@ -155,5 +165,8 @@
         <item>فقاعة</item>
         <item>كروم</item>
         <item>هولوغرافي</item>
+        <item>بازلت</item>
+        <item>طبقات</item>
+        <item>مسار</item>
     </string-array>
 </resources>

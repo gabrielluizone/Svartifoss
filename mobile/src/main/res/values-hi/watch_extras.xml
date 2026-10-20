@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">वॉल्यूम बार की मोटाई</string>
+    <string name="setting_wear_volume_thickness_description">वॉल्यूम बार की रेखा की मोटाई, डिफ़ॉल्ट के 50% से 180% तक। मोटी रेखाएँ भी स्क्रीन के किनारे से दूर रहती हैं।</string>
+    <string name="setting_wear_volume_haptics">वॉल्यूम पर क्राउन का कंपन</string>
+    <string name="setting_wear_queue_dim_played">बजे हुए गाने धुंधले करें</string>
+    <string name="setting_wear_queue_dim_played_description">जो गाने बज चुके हैं उन्हें धुंधला करता है, ताकि आने वाले गाने उभरकर दिखें।</string>
+    <string name="quick_block_lyric">बोल</string>
+    <string name="quick_block_lyric_description">जो पंक्ति गाई जा रही है और उसके बाद वाली, सिंक किए गए बोलों से। घड़ी पर इसे टैप करने से पूरे बोल खुलते हैं।</string>
+    <string name="quick_summary_lyric">मौजूदा और अगली पंक्ति</string>
+    <string name="setting_wear_progress_weight">रिंग की मोटाई</string>
+    <string name="setting_wear_aod_night_dim">रात में मंद</string>
+    <string name="aod_control_night_dim">रात में मंद</string>
+    <string name="setting_wear_aod_shift">बर्न-इन शिफ्ट</string>
+    <string name="aod_control_shift">बर्न-इन शिफ्ट</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>बंद</item>
+        <item>हर 5% पर</item>
+        <item>हर 5% पर और सीमाओं पर</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>पतला</item>
+        <item>सामान्य</item>
+        <item>मोटा</item>
+        <item>बहुत मोटा</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>बंद</item>
+        <item>रात · 22:00–07:00</item>
+        <item>शाम से भोर तक · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>हल्का</item>
+        <item>सामान्य</item>
+        <item>चौड़ा</item>
+    </string-array>
+</resources>

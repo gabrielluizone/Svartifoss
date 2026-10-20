@@ -1,19 +1,31 @@
 package com.svartifoss.snfell.watch.view.panel
 
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.RelativeSizeSpan
+import android.text.style.ReplacementSpan
 import android.view.Gravity
 import android.widget.TextView
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.ColorUtils
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.PaletteTransforms
+import com.svartifoss.snfell.common.PhoneAudioBlock
+import com.svartifoss.snfell.common.R as commonR
+import com.svartifoss.snfell.watch.view.volume.phoneAudioBlockText
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 /**
@@ -469,6 +481,114 @@ object PanelReadout {
     fun applyLightArcContrast(text: TextView, readoutStyle: String, volumeStyleIsLight: Boolean) {
         if (volumeStyleIsLight && readoutStyle !in STYLES_WITH_OWN_CONTAINER) {
             text.setTextColor(LIGHT_PANEL_ON)
+        }
+    }
+
+    /**
+     * Says in the volume readout itself why the phone may not be heard - see [PhoneAudioBlock].
+     *
+     * A glyph rather than a sentence: a line of text under the percentage had to fit a narrow
+     * column in some forty languages and sat awkwardly in every readout style, where a glyph reads
+     * at a glance and wears the readout's own colour and pill. The number gives way where it would
+     * mislead - Do Not Disturb silences media whatever the level says, and a muted stream or a
+     * level of zero is better said by the mute glyph than by "0%" - and stays where it is true: a
+     * level held at the hearing-safety limit is the level playing, so that glyph goes under it,
+     * inside the same readout, where it cannot collide with the screen's own controls. The words
+     * stay as what the readout announces to a screen reader.
+     *
+     * Call after [apply] and [applyLightArcContrast], which set the text and the colour the glyph
+     * takes. Shared by the player's volume overlay and the dedicated volume screen.
+     */
+    fun applyAudioBlock(text: TextView, block: PhoneAudioBlock, levelPercent: Int) {
+        val context = text.context
+        val reason = phoneAudioBlockText(context, block)
+        val replacement = when {
+            block == PhoneAudioBlock.DO_NOT_DISTURB -> R.drawable.ic_audio_block_dnd
+            block == PhoneAudioBlock.MUTED || levelPercent <= 0 -> commonR.drawable.action_volume_off
+            else -> null
+        }
+        if (replacement != null) {
+            text.text = glyph(text, replacement, REPLACING_GLYPH_SCALE)
+            text.contentDescription = reason ?: context.getString(R.string.audio_block_muted)
+            return
+        }
+        if (block == PhoneAudioBlock.SAFE_VOLUME_HELD) {
+            val number = text.text
+            text.text = SpannableStringBuilder(number)
+                    .append('\n')
+                    .append(glyph(text, R.drawable.ic_audio_block_held, FOOTNOTE_GLYPH_SCALE))
+            text.contentDescription = "$number. $reason"
+            return
+        }
+        text.contentDescription = null
+    }
+
+    /** One [icon] as text, [scale] times the readout's text size, in the readout's colour. */
+    private fun glyph(text: TextView, @DrawableRes icon: Int, scale: Float): CharSequence {
+        val drawable = AppCompatResources.getDrawable(text.context, icon)?.mutate() ?: return ""
+        val size = (text.textSize * scale).roundToInt()
+        drawable.setBounds(0, 0, size, size)
+        drawable.setTint(text.currentTextColor)
+        return SpannableString(GLYPH_PLACEHOLDER).apply {
+            setSpan(CenteredGlyphSpan(drawable), 0, length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        }
+    }
+
+    /** A glyph the height of the digits it replaces: the icon's artwork fills about 5/6 of its
+     *  box, so a box slightly larger than the text size matches a bold number's visual weight. */
+    private const val REPLACING_GLYPH_SCALE = 1.15f
+
+    /** Small enough to read as a note on the number rather than as a second readout. */
+    private const val FOOTNOTE_GLYPH_SCALE = 0.62f
+
+    private const val GLYPH_PLACEHOLDER = "\uFFFC"
+
+    /**
+     * Draws a drawable as one character, centred on its line. `ImageSpan` can only centre from
+     * API 29 and the watch supports 26; aligned to the baseline instead, the glyph sat visibly low
+     * in the pill styles. The line keeps the font's height unless the glyph is taller, so a pill
+     * around a glyph is the same size as one around the number it replaced.
+     */
+    private class CenteredGlyphSpan(private val drawable: Drawable) : ReplacementSpan() {
+        override fun getSize(
+                paint: Paint,
+                text: CharSequence?,
+                start: Int,
+                end: Int,
+                fm: Paint.FontMetricsInt?
+        ): Int {
+            if (fm != null) {
+                val font = paint.fontMetricsInt
+                fm.ascent = font.ascent
+                fm.descent = font.descent
+                fm.top = font.top
+                fm.bottom = font.bottom
+                val extra = drawable.bounds.height() - (font.descent - font.ascent)
+                if (extra > 0) {
+                    fm.ascent -= extra / 2
+                    fm.descent += extra - extra / 2
+                    fm.top = min(fm.top, fm.ascent)
+                    fm.bottom = max(fm.bottom, fm.descent)
+                }
+            }
+            return drawable.bounds.width()
+        }
+
+        override fun draw(
+                canvas: Canvas,
+                text: CharSequence?,
+                start: Int,
+                end: Int,
+                x: Float,
+                top: Int,
+                y: Int,
+                bottom: Int,
+                paint: Paint
+        ) {
+            canvas.save()
+            canvas.translate(x, top + (bottom - top - drawable.bounds.height()) / 2f)
+            drawable.draw(canvas)
+            canvas.restore()
         }
     }
 

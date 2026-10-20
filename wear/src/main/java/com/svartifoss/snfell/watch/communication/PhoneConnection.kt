@@ -20,6 +20,8 @@ import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.BitmapBorderTrim
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.SleepTimerPolicy
+import com.svartifoss.snfell.common.TransportRefusal
 import com.svartifoss.snfell.common.PlaybackSyncPolicy
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.QueuePaging
@@ -112,6 +114,16 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     val notification = MutableLiveData<com.svartifoss.snfell.watch.model.Notification>()
 
     /**
+     * The last command the playing app refused - see [TransportRefusal] and
+     * [CommPaths.MESSAGE_ACTION_REFUSED]. A plain [MutableLiveData] for the reason [notification]
+     * is one; each event carries when it arrived, so the per-Activity relay can drop a replay.
+     */
+    val actionRefused = MutableLiveData<RefusedAction>()
+
+    /** One refusal, stamped with this watch's monotonic clock on arrival. */
+    data class RefusedAction(val refusal: TransportRefusal, val atRealtimeMs: Long)
+
+    /**
      * The phone's most recent answer to a lyrics request.
      *
      * A plain [MutableLiveData], so the last answer *is* replayed to a screen that opens later -
@@ -133,8 +145,8 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     val trackMetadata = MutableLiveData<TrackMetadata>()
 
     /**
-     * When the phone's sleep timer ends, as a reading of **this** watch's `elapsedRealtime`, or 0
-     * when none is running.
+     * The phone's sleep timer: when it ends, as a reading of **this** watch's `elapsedRealtime` (0
+     * when none is running), and whether it instead waits for the end of the track.
      *
      * The phone sends how long is left (see [CommPaths.MESSAGE_SLEEP_TIMER_STATE]) and this adds it
      * to the moment that arrived, so the countdown is measured wholly on one clock and nothing is
@@ -142,7 +154,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
      * is what lets the quick panel count down on its own without the phone saying anything more.
      * A plain [MutableLiveData]: the replay of the last value to a panel that opens later is wanted.
      */
-    val sleepTimerEndsAt = MutableLiveData(0L)
+    val sleepTimer = MutableLiveData(SleepTimerReading())
 
     val rawPlaybackConfig = MutableLiveData<DataItem>()
     val rawStoppedConfig = MutableLiveData<DataItem>()
@@ -497,19 +509,20 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     }
 
     /** How long the sleep timer has left, or 0 when none is running - read off this device's clock. */
-    fun sleepTimerRemainingMs(): Long {
-        val endsAt = sleepTimerEndsAt.value ?: 0L
-        return if (endsAt == 0L) 0L else (endsAt - SystemClock.elapsedRealtime()).coerceAtLeast(0L)
-    }
+    fun sleepTimerRemainingMs(): Long = sleepTimer.value?.remainingMs() ?: 0L
 
     /**
-     * Shows a sleep timer of [minutes] (0 = none) at once, before the phone has confirmed it. The
-     * phone's answer replaces this the moment it arrives, so a press that never reached it is
-     * corrected by the next [requestSleepTimer] instead of being left on screen.
+     * Shows a sleep timer of [minutes] (0 = none, [SleepTimerPolicy.END_OF_TRACK] = the end of the
+     * track) at once, before the phone has confirmed it. The phone's answer replaces this the
+     * moment it arrives, so a press that never reached it is corrected by the next
+     * [requestSleepTimer] instead of being left on screen.
      */
     fun showSleepTimerLocally(minutes: Int) {
-        sleepTimerEndsAt.value =
-                if (minutes <= 0) 0L else SystemClock.elapsedRealtime() + minutes * 60_000L
+        sleepTimer.value = when {
+            minutes == SleepTimerPolicy.END_OF_TRACK -> SleepTimerReading(atTrackEnd = true)
+            minutes <= 0 -> SleepTimerReading()
+            else -> SleepTimerReading(SystemClock.elapsedRealtime() + minutes * 60_000L)
+        }
     }
 
     /** Starts, changes or cancels the phone's sleep timer - see [CommPaths.MESSAGE_SET_SLEEP_TIMER]. */
@@ -1243,7 +1256,9 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                 listItems,
                 received.activeEntryId.takeIf { it.isNotEmpty() },
                 // A phone that predates paging reports no total; what arrived is then all there is.
-                if (received.hasTotalEntryCount()) received.totalEntryCount else listItems.size
+                if (received.hasTotalEntryCount()) received.totalEntryCount else listItems.size,
+                activeEntryPosition = received.activeEntryPosition,
+                queueSize = received.queueSize
         )
     }
 
@@ -1391,9 +1406,11 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             }
 
             CommPaths.MESSAGE_SLEEP_TIMER_STATE -> try {
-                val remainingMs = ByteBuffer.wrap(event.data).long
-                sleepTimerEndsAt.postValue(
-                        if (remainingMs <= 0L) 0L else SystemClock.elapsedRealtime() + remainingMs)
+                val state = SleepTimerPolicy.decodeState(event.data)
+                sleepTimer.postValue(SleepTimerReading(
+                        endsAtRealtimeMs = if (state.remainingMs <= 0L) 0L
+                        else SystemClock.elapsedRealtime() + state.remainingMs,
+                        atTrackEnd = state.atTrackEnd))
             } catch (e: Exception) {
                 Timber.w(e, "Could not parse the sleep timer state")
             }
@@ -1409,6 +1426,14 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                 musicState.postValue(Resource.error(
                         WatchLanguage.localized(context).getString(R.string.phone_unavailable),
                         null))
+            }
+
+            CommPaths.MESSAGE_ACTION_REFUSED -> {
+                val refusal = event.data.firstOrNull()?.toInt()?.let(TransportRefusal::fromCode)
+                if (refusal != null) {
+                    Timber.i("The playing app refused %s", refusal)
+                    actionRefused.postValue(RefusedAction(refusal, SystemClock.elapsedRealtime()))
+                }
             }
 
             CommPaths.MESSAGE_MUSIC_STATE -> try {

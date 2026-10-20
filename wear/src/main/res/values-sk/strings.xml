@@ -228,4 +228,5 @@
     <string name="quick_sleep_minutes">%1$d min</string>
     <string name="quick_sleep_description">Časovač vypnutia, zostáva %1$d minút. Klepnutím zmeníte</string>
     <string name="quick_sleep_off_description">Časovač spánku je vypnutý. Klepnutím ho nastavíte.</string>
+    <string name="quick_lyric_plain">Tento text nemá časovanie. Ťuknutím ho zobrazíte.</string>
 </resources>

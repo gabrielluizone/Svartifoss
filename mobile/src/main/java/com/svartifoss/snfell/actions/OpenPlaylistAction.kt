@@ -214,6 +214,14 @@ class OpenPlaylistAction : SelectableAction {
                 protoList.size
             }
 
+            // Where the playing track sits in the whole queue - the "Track 3 of 47" the watch's
+            // queue header shows. Only for a live queue whose playing row was actually found:
+            // a position guessed from a missing one would be a confidently wrong number.
+            if (listId == CustomLists.PLAYLIST && fullQueue != null && activeIndex in fullQueue.indices) {
+                protoDataBuilder.activeEntryPosition = activeIndex + 1
+                protoDataBuilder.queueSize = fullQueue.size
+            }
+
             val activeQueueItemId = service.currentMediaController?.playbackState?.activeQueueItemId
             if (listId == CustomLists.PLAYLIST &&
                     activeQueueItemId != null &&

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Konec skladby</string>
+    <string name="quick_sleep_track_end_description">Časovač spánku, pozastaví na konci této skladby. Klepnutím vypnete</string>
+    <string name="queue_position">Skladba %1$d z %2$d</string>
+    <string name="progress_screen_speed_description">Rychlost přehrávání %1$s. Klepnutím další rychlost, podržením jemné nastavení</string>
+    <string name="progress_screen_speed_slower">Pomaleji</string>
+    <string name="progress_screen_speed_faster">Rychleji</string>
+    <string name="progress_screen_speed_reset">Normální rychlost</string>
+    <string name="complication_playback_label">Přehrát a pozastavit</string>
+    <string name="complication_playback_idle">Přehrát</string>
+    <string name="complication_playback_idle_description">Nic se nepřehrává. Klepnutím obnovíte poslední aplikaci</string>
+    <string name="complication_playback_play_description">Pozastaveno: %1$s. Klepnutím přehrajete</string>
+    <string name="complication_playback_pause_description">Přehrává se: %1$s. Klepnutím pozastavíte</string>
+    <string name="audio_block_dnd">Telefon je v režimu Nerušit</string>
+    <string name="audio_block_muted">Hlasitost médií v telefonu je vypnutá</string>
+    <string name="audio_block_safe_volume">Drženo na bezpečné úrovni. Potvrďte jedním zesílením v telefonu</string>
+    <string name="refused_skip_app">%1$s teď nepovoluje přeskakování</string>
+    <string name="refused_skip">Tato aplikace teď nepovoluje přeskakování</string>
+    <string name="refused_seek_app">%1$s teď nepovoluje posouvání</string>
+    <string name="refused_seek">Tato aplikace teď nepovoluje posouvání</string>
+    <string name="tile_resume">Obnovit poslední aplikaci</string>
+    <string name="tile_resume_hint">Přehrát obnoví poslední aplikaci</string>
+    <string name="recent_tile_title">Nedávno přehrané</string>
+    <string name="recent_tile_description">Naposledy přehrané skladby, jedno klepnutí od opětovného přehrání</string>
+    <string name="recent_tile_empty">Zatím nic přehráno</string>
+    <string name="recent_tile_play_description">Znovu přehrát %1$s</string>
+</resources>

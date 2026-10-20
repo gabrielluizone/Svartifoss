@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Край на песента</string>
+    <string name="quick_sleep_track_end_description">Таймер за сън, спира на пауза в края на тази песен. Докоснете, за да го изключите</string>
+    <string name="queue_position">Песен %1$d от %2$d</string>
+    <string name="progress_screen_speed_description">Скорост на възпроизвеждане %1$s. Докоснете за следващата, задръжте за фина настройка</string>
+    <string name="progress_screen_speed_slower">По-бавно</string>
+    <string name="progress_screen_speed_faster">По-бързо</string>
+    <string name="progress_screen_speed_reset">Нормална скорост</string>
+    <string name="complication_playback_label">Пускане и пауза</string>
+    <string name="complication_playback_idle">Пусни</string>
+    <string name="complication_playback_idle_description">Нищо не се възпроизвежда. Докоснете, за да продължите последното приложение</string>
+    <string name="complication_playback_play_description">На пауза: %1$s. Докоснете, за да пуснете</string>
+    <string name="complication_playback_pause_description">Възпроизвежда се: %1$s. Докоснете за пауза</string>
+    <string name="audio_block_dnd">Телефонът е в режим „Не безпокойте“</string>
+    <string name="audio_block_muted">Силата на звука на мултимедията в телефона е изключена</string>
+    <string name="audio_block_safe_volume">Задържано на безопасно ниво. Увеличете веднъж на телефона, за да потвърдите</string>
+    <string name="refused_skip_app">%1$s не позволява прескачане в момента</string>
+    <string name="refused_skip">Това приложение не позволява прескачане в момента</string>
+    <string name="refused_seek_app">%1$s не позволява превъртане в момента</string>
+    <string name="refused_seek">Това приложение не позволява превъртане в момента</string>
+    <string name="tile_resume">Продължи последното приложение</string>
+    <string name="tile_resume_hint">Пускането продължава последното приложение</string>
+    <string name="recent_tile_title">Скоро пускани</string>
+    <string name="recent_tile_description">Последните пуснати песни, на едно докосване от ново пускане</string>
+    <string name="recent_tile_empty">Още нищо не е пускано</string>
+    <string name="recent_tile_play_description">Пусни отново %1$s</string>
+</resources>

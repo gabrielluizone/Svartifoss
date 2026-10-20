@@ -66,6 +66,8 @@
         <item>Tröppur</item>
         <item>Nammi</item>
         <item>Draugur</item>
+        <item>Alda</item>
+        <item>Reglustika</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Tvöföld brún</item>
@@ -76,6 +78,8 @@
         <item>Miðskífa</item>
         <item>Efri geislabaugur</item>
         <item>Neðri geislabaugur</item>
+        <item>Miðsúla</item>
+        <item>Stuðlaberg</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Tvöfaldur hringur</item>
@@ -88,6 +92,9 @@
         <item>Nál</item>
         <item>Víxlandi</item>
         <item>Neisti</item>
+        <item>Alda</item>
+        <item>Mínútur lags</item>
+        <item>Sexhyrningar</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Brún úrramma</item>
@@ -101,6 +108,8 @@
         <item>Tvöföld braut</item>
         <item>Opið vinstra megin</item>
         <item>Opið hægra megin</item>
+        <item>Efri bogi</item>
+        <item>Neðri bogi</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Þétt hylki</item>
@@ -124,6 +133,7 @@
         <item>Tvöföld tímalína</item>
         <item>Hlutar (neðst)</item>
         <item>Miðstafli</item>
+        <item>Alda</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Mjúkt</item>
@@ -155,5 +165,8 @@
         <item>Bóla</item>
         <item>Króm</item>
         <item>Heilmynd</item>
+        <item>Stuðlaberg</item>
+        <item>Jarðlög</item>
+        <item>Leið</item>
     </string-array>
 </resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Дебелина на лентата за звук</string>
+    <string name="setting_wear_volume_thickness_description">Дебелина на линията на лентата за звук, от 50% до 180% от стандартната. По-дебелите линии пак остават далеч от ръба.</string>
+    <string name="setting_wear_volume_haptics">Вибрация на короната при звук</string>
+    <string name="setting_wear_queue_dim_played">Затъмняване на изсвирените песни</string>
+    <string name="setting_wear_queue_dim_played_description">Затъмнява вече изсвирените записи, за да изпъкнат предстоящите.</string>
+    <string name="quick_block_lyric">Текст</string>
+    <string name="quick_block_lyric_description">Редът, който се пее, и следващият, от синхронизирания текст. Докосването му на часовника отваря целия текст.</string>
+    <string name="quick_summary_lyric">Текущ и следващ ред</string>
+    <string name="setting_wear_progress_weight">Дебелина на пръстена</string>
+    <string name="setting_wear_aod_night_dim">Затъмняване нощем</string>
+    <string name="aod_control_night_dim">Затъмняване нощем</string>
+    <string name="setting_wear_aod_shift">Отместване срещу прегаряне</string>
+    <string name="aod_control_shift">Отместване срещу прегаряне</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Изкл.</item>
+        <item>На всеки 5%</item>
+        <item>На всеки 5% и в крайните точки</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Тънък</item>
+        <item>Нормален</item>
+        <item>Дебел</item>
+        <item>Много дебел</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Изкл.</item>
+        <item>Нощ · 22:00–07:00</item>
+        <item>От здрач до зазоряване · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Лек</item>
+        <item>Нормален</item>
+        <item>Широк</item>
+    </string-array>
+</resources>

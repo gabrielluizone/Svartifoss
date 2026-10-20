@@ -66,6 +66,8 @@
         <item>सीढ़ियाँ</item>
         <item>कैंडी</item>
         <item>भूत</item>
+        <item>तरंग</item>
+        <item>स्केल</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>डबल एज</item>
@@ -76,6 +78,8 @@
         <item>बीच का डायल</item>
         <item>ऊपरी हेलो</item>
         <item>नीचे का हेलो</item>
+        <item>केंद्रीय स्तंभ</item>
+        <item>बेसाल्ट स्तंभ</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>डबल रिंग</item>
@@ -88,6 +92,9 @@
         <item>सुई</item>
         <item>बारी-बारी</item>
         <item>चिंगारी</item>
+        <item>तरंग</item>
+        <item>ट्रैक के मिनट</item>
+        <item>षट्कोणीय कोशिकाएँ</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>बेज़ल किनारा</item>
@@ -101,6 +108,8 @@
         <item>डबल ट्रैक</item>
         <item>बाएँ से खोलें</item>
         <item>दाएँ से खोलें</item>
+        <item>ऊपरी चाप</item>
+        <item>निचला चाप</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>कॉम्पैक्ट पिल</item>
@@ -124,6 +133,7 @@
         <item>ट्विन टाइमलाइन</item>
         <item>सेगमेंट (नीचे)</item>
         <item>बीच का स्टैक</item>
+        <item>तरंग</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>मुलायम</item>
@@ -155,5 +165,8 @@
         <item>बबल</item>
         <item>क्रोम</item>
         <item>होलोग्राफ़िक</item>
+        <item>बेसाल्ट</item>
+        <item>परतें</item>
+        <item>मार्ग</item>
     </string-array>
 </resources>

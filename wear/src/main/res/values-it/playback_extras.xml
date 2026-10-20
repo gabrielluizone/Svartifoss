@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Fine brano</string>
+    <string name="quick_sleep_track_end_description">Timer, mette in pausa alla fine di questo brano. Tocca per disattivarlo</string>
+    <string name="queue_position">Brano %1$d di %2$d</string>
+    <string name="progress_screen_speed_description">Velocità %1$s. Tocca per la velocità successiva, tieni premuto per la regolazione fine</string>
+    <string name="progress_screen_speed_slower">Più lento</string>
+    <string name="progress_screen_speed_faster">Più veloce</string>
+    <string name="progress_screen_speed_reset">Velocità normale</string>
+    <string name="complication_playback_label">Riproduci e metti in pausa</string>
+    <string name="complication_playback_idle">Riproduci</string>
+    <string name="complication_playback_idle_description">Niente in riproduzione. Tocca per riprendere l\'ultima app</string>
+    <string name="complication_playback_play_description">In pausa: %1$s. Tocca per riprodurre</string>
+    <string name="complication_playback_pause_description">In riproduzione: %1$s. Tocca per mettere in pausa</string>
+    <string name="audio_block_dnd">Telefono in modalità Non disturbare</string>
+    <string name="audio_block_muted">Volume multimediale del telefono disattivato</string>
+    <string name="audio_block_safe_volume">Limitato a un livello sicuro. Alzalo una volta sul telefono per confermare</string>
+    <string name="refused_skip_app">%1$s non consente di saltare brani in questo momento</string>
+    <string name="refused_skip">Questa app non consente di saltare brani in questo momento</string>
+    <string name="refused_seek_app">%1$s non consente di spostarsi nel brano in questo momento</string>
+    <string name="refused_seek">Questa app non consente di spostarsi nel brano in questo momento</string>
+    <string name="tile_resume">Riprendi l\'ultima app</string>
+    <string name="tile_resume_hint">Riproduci riprende l\'ultima app</string>
+    <string name="recent_tile_title">Ascoltati di recente</string>
+    <string name="recent_tile_description">Gli ultimi brani ascoltati, a un tocco dal riascoltarli</string>
+    <string name="recent_tile_empty">Ancora niente di ascoltato</string>
+    <string name="recent_tile_play_description">Riproduci di nuovo %1$s</string>
+</resources>

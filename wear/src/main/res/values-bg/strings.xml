@@ -228,4 +228,5 @@
     <string name="quick_sleep_minutes">%1$d минути</string>
     <string name="quick_sleep_description">Таймер за заспиване, остават %1$d минути. Докоснете, за да промените</string>
     <string name="quick_sleep_off_description">Таймерът за заспиване е изключен. Докоснете, за да зададете</string>
+    <string name="quick_lyric_plain">Този текст не е синхронизиран. Докоснете, за да го прочетете.</string>
 </resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Dulo ng track</string>
+    <string name="quick_sleep_track_end_description">Sleep timer, magpo-pause kapag natapos ang track na ito. I-tap para i-off</string>
+    <string name="queue_position">Track %1$d sa %2$d</string>
+    <string name="progress_screen_speed_description">Bilis ng pag-play %1$s. I-tap para sa susunod na bilis, pindutin nang matagal para sa pinong pag-adjust</string>
+    <string name="progress_screen_speed_slower">Mas mabagal</string>
+    <string name="progress_screen_speed_faster">Mas mabilis</string>
+    <string name="progress_screen_speed_reset">Normal na bilis</string>
+    <string name="complication_playback_label">I-play at i-pause</string>
+    <string name="complication_playback_idle">I-play</string>
+    <string name="complication_playback_idle_description">Walang nagpe-play. I-tap para ituloy ang huling app</string>
+    <string name="complication_playback_play_description">Naka-pause: %1$s. I-tap para i-play</string>
+    <string name="complication_playback_pause_description">Nagpe-play: %1$s. I-tap para i-pause</string>
+    <string name="audio_block_dnd">Naka-Huwag Istorbohin ang telepono</string>
+    <string name="audio_block_muted">Naka-off ang volume ng media ng telepono</string>
+    <string name="audio_block_safe_volume">Pinanatili sa ligtas na lebel. Lakasan nang isang beses sa telepono para kumpirmahin</string>
+    <string name="refused_skip_app">Hindi pinapayagan ng %1$s ang pag-skip ngayon</string>
+    <string name="refused_skip">Hindi pinapayagan ng app na ito ang pag-skip ngayon</string>
+    <string name="refused_seek_app">Hindi pinapayagan ng %1$s ang pag-seek ngayon</string>
+    <string name="refused_seek">Hindi pinapayagan ng app na ito ang pag-seek ngayon</string>
+    <string name="tile_resume">Ituloy ang huling app</string>
+    <string name="tile_resume_hint">Itinutuloy ng I-play ang huling app</string>
+    <string name="recent_tile_title">Kamakailang na-play</string>
+    <string name="recent_tile_description">Ang mga huling track na pinatugtog mo, isang tap para i-play muli</string>
+    <string name="recent_tile_empty">Wala pang na-play</string>
+    <string name="recent_tile_play_description">I-play muli ang %1$s</string>
+</resources>

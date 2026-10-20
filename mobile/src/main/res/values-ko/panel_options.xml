@@ -66,6 +66,8 @@
         <item>단계</item>
         <item>캔디</item>
         <item>고스트</item>
+        <item>물결</item>
+        <item>눈금자</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>이중 가장자리</item>
@@ -76,6 +78,8 @@
         <item>중앙 다이얼</item>
         <item>상단 헤일로</item>
         <item>하단 헤일로</item>
+        <item>중앙 기둥</item>
+        <item>현무암 기둥</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>이중 링</item>
@@ -88,6 +92,9 @@
         <item>바늘</item>
         <item>교차</item>
         <item>스파크</item>
+        <item>물결</item>
+        <item>트랙 분 단위</item>
+        <item>육각 셀</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>베젤 가장자리</item>
@@ -101,6 +108,8 @@
         <item>이중 트랙</item>
         <item>왼쪽에서 열기</item>
         <item>오른쪽에서 열기</item>
+        <item>상단 호</item>
+        <item>하단 호</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>컴팩트 필</item>
@@ -124,6 +133,7 @@
         <item>트윈 타임라인</item>
         <item>세그먼트(하단)</item>
         <item>중앙 스택</item>
+        <item>물결</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>부드러움</item>
@@ -155,5 +165,8 @@
         <item>버블</item>
         <item>크롬</item>
         <item>홀로그램</item>
+        <item>현무암</item>
+        <item>지층</item>
+        <item>경로</item>
     </string-array>
 </resources>

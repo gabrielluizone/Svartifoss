@@ -179,3 +179,19 @@ object QueuePaging {
                 totalEntryCount = minOf(queueSize - start, MAX_ENTRIES))
     }
 }
+
+/**
+ * The playing entry's place in the whole queue - what the watch's queue header writes as
+ * "Track 3 of 47" - when the phone named one.
+ *
+ * Only ever built from what the phone measured (`CustomList.activeEntryPosition`/`queueSize`):
+ * the watch holds a slice of the queue that starts a few entries above the playing one, so a
+ * position counted from the rows it received would be off by however many were left out.
+ */
+data class QueuePosition(val position: Int, val size: Int) {
+    companion object {
+        /** Null unless [position] is a real place, from 1, in a queue of [size]; 0 is "not said". */
+        fun of(position: Int, size: Int): QueuePosition? =
+                if (size > 0 && position in 1..size) QueuePosition(position, size) else null
+    }
+}

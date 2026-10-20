@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Форма на капсулата</string>
+    <string name="setting_wear_queue_cover_shape">Форма на корицата</string>
+    <string name="wear_queue_shape_follow">Следване на стила на опашката</string>
+    <string name="queue_shape_note_title">Стил и форми</string>
+    <string name="queue_shape_note_description">Стилът задава цветовете и ефектите. Формата на капсулата и формата на корицата променят само контурите; „Следване на стила на опашката“ запазва тези на всеки стил.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Капсула</item>
+        <item>Заоблена</item>
+        <item>Меки ъгли</item>
+        <item>Квадратна</item>
+        <item>Листо</item>
+        <item>Балонче</item>
+        <item>Шестоъгълник</item>
+    </string-array>
+</resources>

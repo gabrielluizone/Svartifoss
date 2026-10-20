@@ -739,6 +739,8 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>Material (çerçeveli)</item>
         <item>AMOLED kontrolleri</item>
         <item>Krono (büyük saat)</item>
+        <item>Dakika halkası</item>
+        <item>Bazalt çerçeve</item>
         <item>Poster</item>
         <item>Stüdyo</item>
         <item>Sürükleyici</item>
@@ -769,6 +771,8 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Her zaman açık rengi</string>
     <string-array name="wear_aod_color_entries">

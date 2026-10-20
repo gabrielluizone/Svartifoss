@@ -66,6 +66,8 @@
         <item>Stopnie</item>
         <item>Cukierkowy</item>
         <item>Duch</item>
+        <item>Fala</item>
+        <item>Linijka</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Podwójna krawędź</item>
@@ -76,6 +78,8 @@
         <item>Środkowa tarcza</item>
         <item>Górna aureola</item>
         <item>Dolna aureola</item>
+        <item>Środkowy filar</item>
+        <item>Kolumny bazaltowe</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Podwójny pierścień</item>
@@ -88,6 +92,9 @@
         <item>Igła</item>
         <item>Naprzemiennie</item>
         <item>Iskra</item>
+        <item>Fala</item>
+        <item>Minuty utworu</item>
+        <item>Komórki sześciokątne</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Krawędź pierścienia</item>
@@ -101,6 +108,8 @@
         <item>Podwójna ścieżka</item>
         <item>Otwarcie po lewej</item>
         <item>Otwarcie po prawej</item>
+        <item>Łuk górny</item>
+        <item>Łuk dolny</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Kompaktowa kapsułka</item>
@@ -124,6 +133,7 @@
         <item>Podwójna oś czasu</item>
         <item>Segmenty (dół)</item>
         <item>Środkowy stos</item>
+        <item>Fala</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Miękki</item>
@@ -155,5 +165,8 @@
         <item>Bańka</item>
         <item>Chrom</item>
         <item>Holograficzny</item>
+        <item>Bazalt</item>
+        <item>Warstwy</item>
+        <item>Trasa</item>
     </string-array>
 </resources>

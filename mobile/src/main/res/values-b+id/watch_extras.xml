@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Ketebalan bilah volume</string>
+    <string name="setting_wear_volume_thickness_description">Ketebalan garis bilah volume, dari 50% hingga 180% dari default. Garis yang lebih tebal tetap menjauh dari tepi layar.</string>
+    <string name="setting_wear_volume_haptics">Getaran crown saat volume</string>
+    <string name="setting_wear_queue_dim_played">Redupkan lagu yang sudah diputar</string>
+    <string name="setting_wear_queue_dim_played_description">Meredupkan entri yang sudah diputar agar yang akan datang lebih menonjol.</string>
+    <string name="quick_block_lyric">Lirik</string>
+    <string name="quick_block_lyric_description">Baris yang sedang dinyanyikan dan berikutnya, dari lirik tersinkron. Ketuk di jam tangan untuk membuka lirik lengkap.</string>
+    <string name="quick_summary_lyric">Baris saat ini dan berikutnya</string>
+    <string name="setting_wear_progress_weight">Ketebalan cincin</string>
+    <string name="setting_wear_aod_night_dim">Redup malam</string>
+    <string name="aod_control_night_dim">Redup malam</string>
+    <string name="setting_wear_aod_shift">Pergeseran anti burn-in</string>
+    <string name="aod_control_shift">Pergeseran anti burn-in</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Mati</item>
+        <item>Setiap 5%</item>
+        <item>Setiap 5% dan di batas</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Tipis</item>
+        <item>Reguler</item>
+        <item>Tebal</item>
+        <item>Sangat tebal</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Mati</item>
+        <item>Malam · 22:00–07:00</item>
+        <item>Senja hingga fajar · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Halus</item>
+        <item>Reguler</item>
+        <item>Lebar</item>
+    </string-array>
+</resources>

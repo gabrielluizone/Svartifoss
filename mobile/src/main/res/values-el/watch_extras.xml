@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Πάχος μπάρας έντασης</string>
+    <string name="setting_wear_volume_thickness_description">Πάχος της γραμμής της μπάρας έντασης, από 50% έως 180% του προεπιλεγμένου. Οι παχύτερες γραμμές παραμένουν μακριά από το περίγραμμα.</string>
+    <string name="setting_wear_volume_haptics">Δόνηση στεφάνης στην ένταση</string>
+    <string name="setting_wear_queue_dim_played">Χαμήλωμα κομματιών που έπαιξαν</string>
+    <string name="setting_wear_queue_dim_played_description">Θαμπώνει όσα κομμάτια έχουν ήδη παίξει, ώστε να ξεχωρίζουν αυτά που ακολουθούν.</string>
+    <string name="quick_block_lyric">Στίχοι</string>
+    <string name="quick_block_lyric_description">Η γραμμή που τραγουδιέται και η επόμενη, από τους συγχρονισμένους στίχους. Πατώντας την στο ρολόι ανοίγουν όλοι οι στίχοι.</string>
+    <string name="quick_summary_lyric">Τρέχουσα γραμμή και η επόμενη</string>
+    <string name="setting_wear_progress_weight">Πάχος δακτυλίου</string>
+    <string name="setting_wear_aod_night_dim">Νυχτερινή μείωση</string>
+    <string name="aod_control_night_dim">Νυχτερινή μείωση</string>
+    <string name="setting_wear_aod_shift">Μετατόπιση κατά του burn-in</string>
+    <string name="aod_control_shift">Μετατόπιση κατά του burn-in</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Ανενεργό</item>
+        <item>Κάθε 5%</item>
+        <item>Κάθε 5% και στα όρια</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Λεπτό</item>
+        <item>Κανονικό</item>
+        <item>Χονδρό</item>
+        <item>Πολύ χονδρό</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Ανενεργό</item>
+        <item>Νύχτα · 22:00–07:00</item>
+        <item>Από το σούρουπο ως την αυγή · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Ήπιο</item>
+        <item>Κανονικό</item>
+        <item>Ευρύ</item>
+    </string-array>
+</resources>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">ট্র্যাকের শেষ</string>
+    <string name="quick_sleep_track_end_description">স্লিপ টাইমার, এই ট্র্যাক শেষ হলে বিরতি দেবে। বন্ধ করতে ট্যাপ করুন</string>
+    <string name="queue_position">ট্র্যাক %1$d / %2$d</string>
+    <string name="progress_screen_speed_description">প্লেব্যাক গতি %1$s। পরের গতির জন্য ট্যাপ করুন, সূক্ষ্ম নিয়ন্ত্রণের জন্য ধরে রাখুন</string>
+    <string name="progress_screen_speed_slower">ধীরে</string>
+    <string name="progress_screen_speed_faster">দ্রুত</string>
+    <string name="progress_screen_speed_reset">স্বাভাবিক গতি</string>
+    <string name="complication_playback_label">চালান ও বিরতি দিন</string>
+    <string name="complication_playback_idle">চালান</string>
+    <string name="complication_playback_idle_description">কিছুই চলছে না। শেষ অ্যাপ আবার চালু করতে ট্যাপ করুন</string>
+    <string name="complication_playback_play_description">বিরতিতে: %1$s। চালাতে ট্যাপ করুন</string>
+    <string name="complication_playback_pause_description">চলছে: %1$s। বিরতি দিতে ট্যাপ করুন</string>
+    <string name="audio_block_dnd">ফোন বিরক্ত করবেন না মোডে আছে</string>
+    <string name="audio_block_muted">ফোনের মিডিয়া ভলিউম বন্ধ</string>
+    <string name="audio_block_safe_volume">নিরাপদ মাত্রায় রাখা হয়েছে। নিশ্চিত করতে ফোনে একবার বাড়ান</string>
+    <string name="refused_skip_app">%1$s এখন এড়িয়ে যেতে দিচ্ছে না</string>
+    <string name="refused_skip">এই অ্যাপ এখন এড়িয়ে যেতে দিচ্ছে না</string>
+    <string name="refused_seek_app">%1$s এখন সামনে-পিছনে যেতে দিচ্ছে না</string>
+    <string name="refused_seek">এই অ্যাপ এখন সামনে-পিছনে যেতে দিচ্ছে না</string>
+    <string name="tile_resume">শেষ অ্যাপ আবার চালু করুন</string>
+    <string name="tile_resume_hint">চালান শেষ অ্যাপ আবার চালু করে</string>
+    <string name="recent_tile_title">সম্প্রতি চালানো</string>
+    <string name="recent_tile_description">আপনার শেষ চালানো ট্র্যাক, আবার চালাতে এক ট্যাপ দূরে</string>
+    <string name="recent_tile_empty">এখনও কিছু চালানো হয়নি</string>
+    <string name="recent_tile_play_description">%1$s আবার চালান</string>
+</resources>

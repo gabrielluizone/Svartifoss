@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">पिल का आकार</string>
+    <string name="setting_wear_queue_cover_shape">कवर का आकार</string>
+    <string name="wear_queue_shape_follow">कतार शैली का अनुसरण करें</string>
+    <string name="queue_shape_note_title">शैली और आकार</string>
+    <string name="queue_shape_note_description">शैली रंग और इफ़ेक्ट तय करती है। पिल का आकार और कवर का आकार केवल रूपरेखा बदलते हैं; कतार शैली का अनुसरण करें हर शैली की अपनी रूपरेखा रखता है।</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>कैप्सूल</item>
+        <item>गोलाकार</item>
+        <item>नरम कोने</item>
+        <item>स्क्वायर</item>
+        <item>पत्ती</item>
+        <item>संवाद बुलबुला</item>
+        <item>षट्भुज</item>
+    </string-array>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Þykkt hljóðstyrksstiku</string>
+    <string name="setting_wear_volume_thickness_description">Þykkt línunnar í hljóðstyrksstikunni, frá 50% til 180% af sjálfgefnu. Þykkari línur halda sig samt frá brúninni.</string>
+    <string name="setting_wear_volume_haptics">Titringur krónu við hljóðstyrk</string>
+    <string name="setting_wear_queue_dim_played">Dempa spiluð lög</string>
+    <string name="setting_wear_queue_dim_played_description">Deyfir lögin sem þegar hafa verið spiluð svo næstu lög standi upp úr.</string>
+    <string name="quick_block_lyric">Söngtexti</string>
+    <string name="quick_block_lyric_description">Línan sem er sungin og sú næsta, úr samstilltum söngtexta. Ýttu á hana á úrinu til að opna allan textann.</string>
+    <string name="quick_summary_lyric">Núverandi lína og sú næsta</string>
+    <string name="setting_wear_progress_weight">Þykkt hrings</string>
+    <string name="setting_wear_aod_night_dim">Næturdimming</string>
+    <string name="aod_control_night_dim">Næturdimming</string>
+    <string name="setting_wear_aod_shift">Hliðrun gegn innbrennslu</string>
+    <string name="aod_control_shift">Hliðrun gegn innbrennslu</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Slökkt</item>
+        <item>Á 5% fresti</item>
+        <item>Á 5% fresti og við mörkin</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Þunnur</item>
+        <item>Venjulegur</item>
+        <item>Þykkur</item>
+        <item>Mjög þykkur</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Slökkt</item>
+        <item>Nótt · 22:00–07:00</item>
+        <item>Frá kvöldi til dögunar · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Mildur</item>
+        <item>Venjulegur</item>
+        <item>Víður</item>
+    </string-array>
+</resources>

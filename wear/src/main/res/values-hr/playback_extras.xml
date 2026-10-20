@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Kraj pjesme</string>
+    <string name="quick_sleep_track_end_description">Mjerač za spavanje, pauzira na kraju ove pjesme. Dodirnite za isključivanje</string>
+    <string name="queue_position">Pjesma %1$d od %2$d</string>
+    <string name="progress_screen_speed_description">Brzina reprodukcije %1$s. Dodirnite za sljedeću, zadržite za fino podešavanje</string>
+    <string name="progress_screen_speed_slower">Sporije</string>
+    <string name="progress_screen_speed_faster">Brže</string>
+    <string name="progress_screen_speed_reset">Normalna brzina</string>
+    <string name="complication_playback_label">Reprodukcija i pauza</string>
+    <string name="complication_playback_idle">Reproduciraj</string>
+    <string name="complication_playback_idle_description">Ništa se ne reproducira. Dodirnite za nastavak posljednje aplikacije</string>
+    <string name="complication_playback_play_description">Pauzirano: %1$s. Dodirnite za reprodukciju</string>
+    <string name="complication_playback_pause_description">Reproducira se: %1$s. Dodirnite za pauzu</string>
+    <string name="audio_block_dnd">Telefon je u načinu Ne ometaj</string>
+    <string name="audio_block_muted">Glasnoća medija na telefonu je isključena</string>
+    <string name="audio_block_safe_volume">Zadržano na sigurnoj razini. Pojačajte jednom na telefonu za potvrdu</string>
+    <string name="refused_skip_app">%1$s trenutačno ne dopušta preskakanje</string>
+    <string name="refused_skip">Ova aplikacija trenutačno ne dopušta preskakanje</string>
+    <string name="refused_seek_app">%1$s trenutačno ne dopušta premotavanje</string>
+    <string name="refused_seek">Ova aplikacija trenutačno ne dopušta premotavanje</string>
+    <string name="tile_resume">Nastavi posljednju aplikaciju</string>
+    <string name="tile_resume_hint">Reprodukcija nastavlja posljednju aplikaciju</string>
+    <string name="recent_tile_title">Nedavno reproducirano</string>
+    <string name="recent_tile_description">Vaše posljednje reproducirane pjesme, jedan dodir do ponovne reprodukcije</string>
+    <string name="recent_tile_empty">Još ništa nije reproducirano</string>
+    <string name="recent_tile_play_description">Ponovno reproduciraj %1$s</string>
+</resources>

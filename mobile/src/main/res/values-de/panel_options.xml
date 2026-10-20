@@ -66,6 +66,8 @@
         <item>Stufen</item>
         <item>Bonbon</item>
         <item>Geist</item>
+        <item>Welle</item>
+        <item>Lineal</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Doppelkante</item>
@@ -76,6 +78,8 @@
         <item>Mittleres Zifferblatt</item>
         <item>Oberer Halo</item>
         <item>Unterer Halo</item>
+        <item>Mittlere Säule</item>
+        <item>Basaltsäulen</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Doppelring</item>
@@ -88,6 +92,9 @@
         <item>Nadel</item>
         <item>Abwechselnd</item>
         <item>Funke</item>
+        <item>Welle</item>
+        <item>Titelminuten</item>
+        <item>Sechseckzellen</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Lünettenrand</item>
@@ -101,6 +108,8 @@
         <item>Doppelspur</item>
         <item>Links offen</item>
         <item>Rechts offen</item>
+        <item>Oberer Bogen</item>
+        <item>Unterer Bogen</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Kompakte Kapsel</item>
@@ -124,6 +133,7 @@
         <item>Doppelte Zeitleiste</item>
         <item>Segmente (unten)</item>
         <item>Mittlerer Stapel</item>
+        <item>Welle</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Weich</item>
@@ -155,5 +165,8 @@
         <item>Blase</item>
         <item>Chrom</item>
         <item>Holografisch</item>
+        <item>Basalt</item>
+        <item>Schichten</item>
+        <item>Route</item>
     </string-array>
 </resources>

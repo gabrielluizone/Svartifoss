@@ -28,6 +28,14 @@ class SettingsSearchTargetResolverTest {
     }
 
     @Test
+    fun `crown vibration with haptics off points at the haptics switch`() {
+        assertRedirect(
+                resolve("wear_volume_haptics", booleans = mapOf("haptic_feedback" to false)),
+                "haptic_feedback")
+        assertDirect(resolve("wear_volume_haptics", booleans = mapOf("haptic_feedback" to true)))
+    }
+
+    @Test
     fun `enabled and independent rows keep their destination`() {
         assertDirect(resolve(
                 "update_include_prereleases",

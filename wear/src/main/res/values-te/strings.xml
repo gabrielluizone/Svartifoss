@@ -170,4 +170,5 @@
     <string name="quick_sleep_minutes">%1$d నిమిషాలు</string>
     <string name="quick_sleep_description">స్లీప్ టైమర్, %1$d నిమిషాలు మిగిలి ఉన్నాయి. మార్చడానికి ట్యాప్ చేయండి.</string>
     <string name="quick_sleep_off_description">స్లీప్ టైమర్ ఆఫ్. సెట్ చేయడానికి ట్యాప్ చేయండి.</string>
+    <string name="quick_lyric_plain">ఈ సాహిత్యానికి సమయ గుర్తులు లేవు. చదవడానికి నొక్కండి.</string>
 </resources>

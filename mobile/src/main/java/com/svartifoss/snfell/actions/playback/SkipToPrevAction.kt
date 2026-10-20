@@ -20,7 +20,7 @@ class SkipToPrevAction : SelectableAction {
 
     class Handler @Inject constructor(private val service: MusicService) : ActionHandler<SkipToPrevAction> {
         override suspend fun handleAction(action: SkipToPrevAction) {
-            service.currentMediaController?.transportControls?.skipToPrevious()
+            service.skipVerified(next = false)
         }
     }
 }

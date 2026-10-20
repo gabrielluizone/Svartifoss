@@ -66,6 +66,8 @@
         <item>पायऱ्या</item>
         <item>कँडी</item>
         <item>भूत</item>
+        <item>लाट</item>
+        <item>मापपट्टी</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>दुहेरी काठ</item>
@@ -76,6 +78,8 @@
         <item>मध्य डायल</item>
         <item>वरचा हॅलो</item>
         <item>तळ हॅलो</item>
+        <item>मध्य स्तंभ</item>
+        <item>बेसाल्ट स्तंभ</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>दुहेरी रिंग</item>
@@ -88,6 +92,9 @@
         <item>सुई</item>
         <item>आलटून-पालटून</item>
         <item>ठिणगी</item>
+        <item>लाट</item>
+        <item>ट्रॅकची मिनिटे</item>
+        <item>षटकोनी कप्पे</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>बेझल काठ</item>
@@ -101,6 +108,8 @@
         <item>दुहेरी ट्रॅक</item>
         <item>डावीकडे उघडे</item>
         <item>उजवीकडे उघडे</item>
+        <item>वरचा चाप</item>
+        <item>खालचा चाप</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>कॉम्पॅक्ट पिल</item>
@@ -124,6 +133,7 @@
         <item>दुहेरी टाइमलाइन</item>
         <item>सेगमेंट्स (तळ)</item>
         <item>मध्य स्टॅक</item>
+        <item>लाट</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>मऊ</item>
@@ -155,5 +165,8 @@
         <item>बबल</item>
         <item>क्रोम</item>
         <item>होलोग्राफिक</item>
+        <item>बेसाल्ट</item>
+        <item>थर</item>
+        <item>मार्ग</item>
     </string-array>
 </resources>

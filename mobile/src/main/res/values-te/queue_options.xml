@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">క్యాప్సూల్ ఆకారం</string>
+    <string name="setting_wear_queue_cover_shape">కవర్ ఆకారం</string>
+    <string name="wear_queue_shape_follow">Queue శైలిని అనుసరించు</string>
+    <string name="queue_shape_note_title">శైలి మరియు ఆకారాలు</string>
+    <string name="queue_shape_note_description">శైలి రంగులు మరియు ఎఫెక్ట్‌లను నిర్ణయిస్తుంది. క్యాప్సూల్ ఆకారం మరియు కవర్ ఆకారం అంచు రేఖలను మాత్రమే మారుస్తాయి; Queue శైలిని అనుసరించు ప్రతి శైలి సొంత అంచు రేఖలను ఉంచుతుంది.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>క్యాప్సూల్</item>
+        <item>గుండ్రని</item>
+        <item>మృదువైన మూలలు</item>
+        <item>చతురస్రం</item>
+        <item>ఆకు</item>
+        <item>మాటల బుడగ</item>
+        <item>షడ్భుజి</item>
+    </string-array>
+</resources>

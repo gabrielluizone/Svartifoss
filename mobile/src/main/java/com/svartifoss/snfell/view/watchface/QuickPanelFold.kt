@@ -38,6 +38,7 @@ internal object QuickPanelFold {
         QuickPanelBlockType.VOLUME -> QuickPanelGeometry.volumeBlockDp()
         QuickPanelBlockType.SEEK -> QuickPanelGeometry.seekBlockDp(block.seekShowsBar)
         QuickPanelBlockType.TOOLS -> QuickPanelGeometry.toolsBlockDp(block.tools.size)
+        QuickPanelBlockType.LYRIC -> QuickPanelGeometry.lyricBlockDp()
         QuickPanelBlockType.FAVORITES -> {
             val shown = limited(counts.starredFavorites, block.maxEntries)
             when {

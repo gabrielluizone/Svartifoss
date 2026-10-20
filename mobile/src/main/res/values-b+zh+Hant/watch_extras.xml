@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">音量條粗細</string>
+    <string name="setting_wear_volume_thickness_description">音量條線條的粗細，為預設值的 50% 到 180%。線條再粗也不會貼到螢幕邊緣。</string>
+    <string name="setting_wear_volume_haptics">調整音量時錶冠震動</string>
+    <string name="setting_wear_queue_dim_played">調暗已播放的曲目</string>
+    <string name="setting_wear_queue_dim_played_description">調暗已經播放過的項目，讓接下來的曲目更醒目。</string>
+    <string name="quick_block_lyric">歌詞</string>
+    <string name="quick_block_lyric_description">來自同步歌詞的正在演唱的這一行和下一行。在手錶上輕觸即可開啟完整歌詞。</string>
+    <string name="quick_summary_lyric">目前這一行和下一行</string>
+    <string name="setting_wear_progress_weight">圓環粗細</string>
+    <string name="setting_wear_aod_night_dim">夜間調暗</string>
+    <string name="aod_control_night_dim">夜間調暗</string>
+    <string name="setting_wear_aod_shift">防烙印位移</string>
+    <string name="aod_control_shift">防烙印位移</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>關閉</item>
+        <item>每 5%</item>
+        <item>每 5% 及到達極限時</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>細</item>
+        <item>標準</item>
+        <item>粗</item>
+        <item>特粗</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>關閉</item>
+        <item>夜間 · 22:00–07:00</item>
+        <item>黃昏至黎明 · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>輕微</item>
+        <item>標準</item>
+        <item>寬</item>
+    </string-array>
+</resources>

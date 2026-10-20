@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">شێوەی کەپسول</string>
+    <string name="setting_wear_queue_cover_shape">شێوەی بەرگ</string>
+    <string name="wear_queue_shape_follow">پەیڕەوی شێوازی queue بکە</string>
+    <string name="queue_shape_note_title">شێواز و شێوەکان</string>
+    <string name="queue_shape_note_description">شێواز ڕەنگ و کاریگەرییەکان دیاری دەکات. شێوەی کەپسول و شێوەی بەرگ تەنها هێڵە دەرەکییەکان دەگۆڕن؛ پەیڕەوی شێوازی queue بکە شێوەی هەر شێوازێک دەپارێزێت.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>کەپسول</item>
+        <item>خڕ</item>
+        <item>گۆشەی نەرم</item>
+        <item>چوارگۆشە</item>
+        <item>گەڵا</item>
+        <item>پەڕەی قسە</item>
+        <item>شەشگۆشە</item>
+    </string-array>
+</resources>

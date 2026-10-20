@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Форма капсули</string>
+    <string name="setting_wear_queue_cover_shape">Форма обкладинки</string>
+    <string name="wear_queue_shape_follow">Як у стилі черги</string>
+    <string name="queue_shape_note_title">Стиль і форми</string>
+    <string name="queue_shape_note_description">Стиль визначає кольори й ефекти. Форма капсули та Форма обкладинки змінюють лише контури; «Як у стилі черги» зберігає контури кожного стилю.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Капсула</item>
+        <item>Округла</item>
+        <item>М’які кути</item>
+        <item>Квадратна</item>
+        <item>Листок</item>
+        <item>Бульбашка мовлення</item>
+        <item>Шестикутник</item>
+    </string-array>
+</resources>

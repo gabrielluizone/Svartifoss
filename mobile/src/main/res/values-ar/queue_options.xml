@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">شكل الشارة</string>
+    <string name="setting_wear_queue_cover_shape">شكل الغلاف</string>
+    <string name="wear_queue_shape_follow">اتباع نمط قائمة الانتظار</string>
+    <string name="queue_shape_note_title">النمط والأشكال</string>
+    <string name="queue_shape_note_description">يحدد النمط الألوان والتأثيرات. يغيّر شكل الشارة وشكل الغلاف الحدود فقط؛ ويحتفظ «اتباع نمط قائمة الانتظار» بحدود كل نمط.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>كبسولة</item>
+        <item>مستديرة</item>
+        <item>زوايا ناعمة</item>
+        <item>مربعة</item>
+        <item>ورقة</item>
+        <item>فقاعة كلام</item>
+        <item>سداسية</item>
+    </string-array>
+</resources>

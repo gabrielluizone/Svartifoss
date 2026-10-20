@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Einde nummer</string>
+    <string name="quick_sleep_track_end_description">Slaaptimer, pauzeert aan het einde van dit nummer. Tik om uit te zetten</string>
+    <string name="queue_position">Nummer %1$d van %2$d</string>
+    <string name="progress_screen_speed_description">Afspeelsnelheid %1$s. Tik voor de volgende snelheid, houd vast voor fijnafstelling</string>
+    <string name="progress_screen_speed_slower">Langzamer</string>
+    <string name="progress_screen_speed_faster">Sneller</string>
+    <string name="progress_screen_speed_reset">Normale snelheid</string>
+    <string name="complication_playback_label">Afspelen en pauzeren</string>
+    <string name="complication_playback_idle">Afspelen</string>
+    <string name="complication_playback_idle_description">Er wordt niets afgespeeld. Tik om de laatste app te hervatten</string>
+    <string name="complication_playback_play_description">Gepauzeerd: %1$s. Tik om af te spelen</string>
+    <string name="complication_playback_pause_description">Speelt af: %1$s. Tik om te pauzeren</string>
+    <string name="audio_block_dnd">Telefoon staat op Niet storen</string>
+    <string name="audio_block_muted">Mediavolume van de telefoon staat uit</string>
+    <string name="audio_block_safe_volume">Op een veilig niveau gehouden. Zet het één keer harder op de telefoon om te bevestigen</string>
+    <string name="refused_skip_app">%1$s staat nu geen overslaan toe</string>
+    <string name="refused_skip">Deze app staat nu geen overslaan toe</string>
+    <string name="refused_seek_app">%1$s staat nu geen spoelen toe</string>
+    <string name="refused_seek">Deze app staat nu geen spoelen toe</string>
+    <string name="tile_resume">Laatste app hervatten</string>
+    <string name="tile_resume_hint">Afspelen hervat de laatste app</string>
+    <string name="recent_tile_title">Onlangs afgespeeld</string>
+    <string name="recent_tile_description">Je laatst afgespeelde nummers, één tik om opnieuw af te spelen</string>
+    <string name="recent_tile_empty">Nog niets afgespeeld</string>
+    <string name="recent_tile_play_description">%1$s opnieuw afspelen</string>
+</resources>

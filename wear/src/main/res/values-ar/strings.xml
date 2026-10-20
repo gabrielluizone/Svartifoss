@@ -234,4 +234,5 @@
     <string name="quick_sleep_minutes">%1$d دقيقة</string>
     <string name="quick_sleep_description">مؤقت النوم، %1$d دقيقة متبقية. انقر لتغيير</string>
     <string name="quick_sleep_off_description">مؤقت النوم متوقف. انقر لتعيينه</string>
+    <string name="quick_lyric_plain">هذه الكلمات غير متزامنة مع الوقت. انقر لقراءتها.</string>
 </resources>

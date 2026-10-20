@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Hangerősáv vastagsága</string>
+    <string name="setting_wear_volume_thickness_description">A hangerősáv vonalának vastagsága, az alapérték 50–180%-a. A vastagabb vonalak is távol maradnak a peremtől.</string>
+    <string name="setting_wear_volume_haptics">Koronarezgés hangerőnél</string>
+    <string name="setting_wear_queue_dim_played">Lejátszott számok halványítása</string>
+    <string name="setting_wear_queue_dim_played_description">Elhalványítja a már lejátszott tételeket, hogy a következők kiemelkedjenek.</string>
+    <string name="quick_block_lyric">Dalszöveg</string>
+    <string name="quick_block_lyric_description">Az éppen énekelt sor és a következő a szinkronizált dalszövegből. Az órán rákoppintva megnyílik a teljes szöveg.</string>
+    <string name="quick_summary_lyric">Aktuális és következő sor</string>
+    <string name="setting_wear_progress_weight">Gyűrű vastagsága</string>
+    <string name="setting_wear_aod_night_dim">Éjszakai tompítás</string>
+    <string name="aod_control_night_dim">Éjszakai tompítás</string>
+    <string name="setting_wear_aod_shift">Beégés elleni eltolás</string>
+    <string name="aod_control_shift">Beégés elleni eltolás</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Ki</item>
+        <item>5%-onként</item>
+        <item>5%-onként és a határokon</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Vékony</item>
+        <item>Normál</item>
+        <item>Vastag</item>
+        <item>Nagyon vastag</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Ki</item>
+        <item>Éjszaka · 22:00–07:00</item>
+        <item>Alkonyattól hajnalig · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Enyhe</item>
+        <item>Normál</item>
+        <item>Széles</item>
+    </string-array>
+</resources>

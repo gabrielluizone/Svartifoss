@@ -170,4 +170,5 @@
     <string name="quick_sleep_minutes">%1$d မိနစ်</string>
     <string name="quick_sleep_description">အိပ်ချိန်ချိန်စက်၊ %1$d မိနစ်ကျန်သည်။ ပြောင်းရန် တို့ပါ။</string>
     <string name="quick_sleep_off_description">အိပ်ချိန်ချိန်စက် ပိတ်ထားသည်။ သတ်မှတ်ရန် နှိပ်ပါ။</string>
+    <string name="quick_lyric_plain">ဤစာသားတွင် အချိန်မှတ်ချက် မပါပါ။ ဖတ်ရန် တို့ပါ။</string>
 </resources>

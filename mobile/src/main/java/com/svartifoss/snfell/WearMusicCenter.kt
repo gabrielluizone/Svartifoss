@@ -10,7 +10,9 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.MatejdroArtistAutosizeMigration
 import com.svartifoss.snfell.common.logging.ReleaseLogcatTree
+import com.svartifoss.snfell.config.ActionConfig
 import com.svartifoss.snfell.di.DaggerAppComponent
+import com.svartifoss.snfell.di.GlobalConfig
 import com.svartifoss.snfell.logging.CrashlyticsExceptionWearHandler
 import com.svartifoss.snfell.logging.CrashReporting
 import com.svartifoss.snfell.logging.PlatformApiProbe
@@ -33,6 +35,17 @@ import javax.inject.Inject
 class WearMusicCenter : Application(), HasAndroidInjector {
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
+
+    /**
+     * The button configuration, for the one caller that has to read it with no service to ask:
+     * a watch button pressed while [com.svartifoss.snfell.music.MusicService] is not running (see
+     * `WatchCommandDelivery`). Lazy because building it can seed the bundled defaults from disk,
+     * and that has no business running on every process start. The same singleton the service and
+     * the screens are given, so there is still exactly one config.
+     */
+    @Inject
+    @GlobalConfig
+    lateinit var globalConfig: dagger.Lazy<ActionConfig>
 
     private lateinit var watchPreferenceSync: WatchPreferenceSyncCoordinator
 

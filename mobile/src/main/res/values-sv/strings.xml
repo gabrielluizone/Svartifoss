@@ -741,6 +741,8 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>Material (kontur)</item>
         <item>AMOLED-kontroller</item>
         <item>Chrono (stor klocka)</item>
+        <item>Minutring</item>
+        <item>Basaltram</item>
         <item>Affisch</item>
         <item>Studio</item>
         <item>Immersiv</item>
@@ -771,6 +773,8 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Alltid på-färg</string>
     <string-array name="wear_aod_color_entries">

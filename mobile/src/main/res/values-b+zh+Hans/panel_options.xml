@@ -66,6 +66,8 @@
         <item>台阶</item>
         <item>糖果</item>
         <item>幽灵</item>
+        <item>波浪</item>
+        <item>刻度尺</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>双边缘</item>
@@ -76,6 +78,8 @@
         <item>中央表盘</item>
         <item>顶部光环</item>
         <item>底部光环</item>
+        <item>居中立柱</item>
+        <item>玄武岩柱</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>双环</item>
@@ -88,6 +92,9 @@
         <item>指针</item>
         <item>交替</item>
         <item>火花</item>
+        <item>波浪</item>
+        <item>曲目分钟</item>
+        <item>六边形格</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>表圈边缘</item>
@@ -101,6 +108,8 @@
         <item>双轨</item>
         <item>从左侧打开</item>
         <item>从右侧打开</item>
+        <item>顶部圆弧</item>
+        <item>底部圆弧</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>紧凑胶囊</item>
@@ -124,6 +133,7 @@
         <item>双时间线</item>
         <item>分段（底部）</item>
         <item>中央堆叠</item>
+        <item>波浪</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>柔和</item>
@@ -155,5 +165,8 @@
         <item>气泡</item>
         <item>铬</item>
         <item>全息</item>
+        <item>玄武岩</item>
+        <item>地层</item>
+        <item>路线</item>
     </string-array>
 </resources>

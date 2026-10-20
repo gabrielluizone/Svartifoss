@@ -12,7 +12,6 @@ import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.RippleDrawable
 import android.os.Handler
 import android.os.Looper
-import android.os.SystemClock
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -22,14 +21,16 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.graphics.ColorUtils
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.LyricsParser
 import com.svartifoss.snfell.common.QuickPanelBlock
 import com.svartifoss.snfell.common.QuickPanelGeometry
 import com.svartifoss.snfell.common.QuickPanelTool
 import com.svartifoss.snfell.common.SeekGlyphs
 import com.svartifoss.snfell.common.SleepTimerPolicy
 import com.svartifoss.snfell.common.TrackTimeFormat
+import com.svartifoss.snfell.watch.communication.SleepTimerReading
 import com.svartifoss.snfell.watch.config.ButtonAction
-import java.util.Locale
+import com.svartifoss.snfell.watch.view.lyrics.LyricsUiState
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
@@ -86,6 +87,9 @@ interface QuickPanelHost {
 
     /** Steps the playback speed to the next preset. */
     fun cycleSpeed()
+
+    /** Opens the fine speed control (tenths, up to 3x) - a long press on the speed chip. */
+    fun openFineSpeed()
 
     /** Steps the phone's sleep timer to its next preset. The panel stays open. */
     fun cycleSleepTimer()
@@ -168,11 +172,19 @@ class QuickPanelBlockViews(
     private var speedChip: LinearLayout? = null
     private var sleepChip: LinearLayout? = null
 
-    /** When the sleep timer ends, on this device's monotonic clock; 0 when none is running. */
-    private var sleepEndsAtRealtimeMs = 0L
+    /** The phone's sleep timer: when it ends on this device's clock, or that it waits for the
+     *  end of the track. */
+    private var sleepTimer = SleepTimerReading()
 
     private var favoritesRoot: LinearLayout? = null
     private var actionsButtonRoot: LinearLayout? = null
+
+    private var lyricRoot: LinearLayout? = null
+    private var lyricNow: TextView? = null
+    private var lyricNext: TextView? = null
+    private var lyrics: LyricsUiState? = null
+    /** Whether the first lyric line is currently styled as a status rather than as a sung line. */
+    private var lyricShowsStatus = false
 
     // --- State ---
 
@@ -204,6 +216,13 @@ class QuickPanelBlockViews(
             visibility = if (known) View.VISIBLE else View.GONE
         }
         if (changed) styleSeekChips()
+        refreshLyric()
+    }
+
+    /** What the lyric block should be following: the feed's latest answer, or null before one. */
+    fun onLyrics(state: LyricsUiState?) {
+        lyrics = state
+        refreshLyric()
     }
 
     fun onSpeed(newSpeed: Float) {
@@ -211,15 +230,16 @@ class QuickPanelBlockViews(
         speedChip?.let(::styleToolChip)
     }
 
-    /** [endsAtRealtimeMs] is when the phone's sleep timer ends on this device's clock; 0 for none. */
-    fun onSleepTimer(endsAtRealtimeMs: Long) {
-        sleepEndsAtRealtimeMs = endsAtRealtimeMs
+    /** What the phone says its sleep timer is doing - see [SleepTimerReading]. */
+    fun onSleepTimer(reading: SleepTimerReading) {
+        sleepTimer = reading
         sleepChip?.let(::styleToolChip)
     }
 
-    private fun sleepMinutesLeft(): Int = if (sleepEndsAtRealtimeMs == 0L) 0 else {
-        SleepTimerPolicy.minutesLeft(sleepEndsAtRealtimeMs - SystemClock.elapsedRealtime())
-    }
+    /** Minutes left on a countdown; 0 when none runs, and while waiting for the end of the track,
+     *  whose time left is the track's and not the timer's. */
+    private fun sleepMinutesLeft(): Int =
+            if (sleepTimer.atTrackEnd) 0 else SleepTimerPolicy.minutesLeft(sleepTimer.remainingMs())
 
     /**
      * Keeps the sleep chip's minutes honest while the panel is open. The phone says how long is
@@ -258,6 +278,100 @@ class QuickPanelBlockViews(
                 ColorStateList.valueOf(ColorUtils.setAlphaComponent(skin.tint(), PRESS_HIGHLIGHT_ALPHA)),
                 null,
                 mask)
+    }
+
+    // --- Lyric ---
+
+    /**
+     * The line being sung over the one after it, on one pill. Tapping it opens the lyrics screen.
+     *
+     * The block only draws; whether the lyrics are being fetched at all is the host's decision, and
+     * it makes it from whether this block is on screen - nothing is looked up for a panel without it.
+     */
+    fun bindLyric(block: QuickPanelBlock): View {
+        val root = lyricRoot ?: LinearLayout(context).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    dp(QuickPanelGeometry.LYRIC_HEIGHT_DP))
+                    .apply { topMargin = dp(QuickPanelGeometry.GAP_DP) }
+            setPaddingRelative(
+                    dp(QuickPanelGeometry.LYRIC_PADDING_H_DP), dp(QuickPanelGeometry.LYRIC_PADDING_V_DP),
+                    dp(QuickPanelGeometry.LYRIC_PADDING_H_DP), dp(QuickPanelGeometry.LYRIC_PADDING_V_DP))
+        }.also { lyricRoot = it }
+        root.removeAllViews()
+
+        fun line(sizeSp: Float, bold: Boolean, lines: Int) = TextView(context).apply {
+            gravity = Gravity.CENTER
+            maxLines = lines
+            ellipsize = android.text.TextUtils.TruncateAt.END
+            textSize = sizeSp
+            typeface = Typeface.create(skin.typeface() ?: Typeface.DEFAULT,
+                    if (bold) Typeface.BOLD else Typeface.NORMAL)
+            includeFontPadding = false
+            layoutParams = LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        }
+        val now = line(LYRIC_LINE_SP, bold = true, lines = 2)
+        lyricShowsStatus = false
+        val next = line(11.5f, bold = false, lines = 1).apply {
+            (layoutParams as LinearLayout.LayoutParams).topMargin = dp(3f)
+        }
+        root.addView(now)
+        root.addView(next)
+        lyricNow = now
+        lyricNext = next
+
+        surface(root)
+        root.setOnClickListener {
+            host.buzz()
+            host.openTool(QuickPanelTool.LYRICS)
+        }
+        refreshLyric()
+        return root
+    }
+
+    private fun refreshLyric() {
+        val now = lyricNow ?: return
+        val next = lyricNext ?: return
+        next.setTextColor(ColorUtils.setAlphaComponent(skin.tint(), LYRIC_NEXT_ALPHA))
+
+        var current = ""
+        var following = ""
+        // Only words being sung get the bold line. Anything else - no lyric for this track, the
+        // lookup failed or is switched off - is a status, set small and quiet, so a panel opened on
+        // a track without lyrics does not shout a sentence about it in the middle of the controls.
+        var status = true
+        when (val state = lyrics) {
+            is LyricsUiState.Synced -> {
+                status = false
+                val index = LyricsParser.indexAt(state.lines, positionMs)
+                current = state.lines.getOrNull(index)?.text?.takeIf { it.isNotBlank() } ?: LYRIC_REST
+                following = state.lines.getOrNull(index + 1)?.text.orEmpty()
+            }
+            is LyricsUiState.Plain -> current = context.getString(R.string.quick_lyric_plain)
+            is LyricsUiState.None -> current = context.getString(R.string.lyrics_none)
+            is LyricsUiState.Failed -> current = context.getString(R.string.lyrics_failed)
+            is LyricsUiState.Disabled -> current = context.getString(R.string.lyrics_disabled)
+            is LyricsUiState.NoTrack -> current = context.getString(R.string.lyrics_no_track)
+            is LyricsUiState.Loading, null -> current = LYRIC_LOADING
+        }
+        if (status != lyricShowsStatus) {
+            lyricShowsStatus = status
+            now.textSize = if (status) LYRIC_STATUS_SP else LYRIC_LINE_SP
+            now.typeface = Typeface.create(skin.typeface() ?: Typeface.DEFAULT,
+                    if (status) Typeface.NORMAL else Typeface.BOLD)
+        }
+        now.setTextColor(if (status) {
+            ColorUtils.setAlphaComponent(skin.tint(), LYRIC_NEXT_ALPHA)
+        } else {
+            skin.tint()
+        })
+        // Position arrives twice a second; assigning an identical string would still re-measure.
+        if (now.text.toString() != current) now.text = current
+        if (next.text.toString() != following) next.text = following
+        next.visibility = if (following.isEmpty()) View.GONE else View.VISIBLE
     }
 
     // --- Volume ---
@@ -570,6 +684,15 @@ class QuickPanelBlockViews(
                     else -> host.openTool(tool)
                 }
             }
+            if (tool == QuickPanelTool.SPEED) {
+                // The tap keeps the one-press ladder; holding reaches the tenths and the range
+                // above 2x, which no number of taps on a quarter-step ladder can.
+                setOnLongClickListener {
+                    host.buzz()
+                    host.openFineSpeed()
+                    true
+                }
+            }
             setOnTouchListener(pressFeedback)
         }
         val icon = ImageView(context).apply {
@@ -617,7 +740,7 @@ class QuickPanelBlockViews(
         val tool = chip.tag as? QuickPanelTool ?: return
         val active = when (tool) {
             QuickPanelTool.SPEED -> abs(speed - 1f) > SPEED_EPSILON
-            QuickPanelTool.SLEEP -> sleepMinutesLeft() > 0
+            QuickPanelTool.SLEEP -> sleepTimer.atTrackEnd || sleepMinutesLeft() > 0
             else -> false
         }
         val color = if (active) skin.activeTint() else skin.tint()
@@ -632,8 +755,11 @@ class QuickPanelBlockViews(
             QuickPanelTool.SPEED ->
                 context.getString(R.string.quick_speed_description, formatSpeed(speed))
             QuickPanelTool.SLEEP -> sleepMinutesLeft().let { left ->
-                if (left > 0) context.getString(R.string.quick_sleep_description, left)
-                else context.getString(R.string.quick_sleep_off_description)
+                when {
+                    sleepTimer.atTrackEnd -> context.getString(R.string.quick_sleep_track_end_description)
+                    left > 0 -> context.getString(R.string.quick_sleep_description, left)
+                    else -> context.getString(R.string.quick_sleep_off_description)
+                }
             }
             else -> toolLabel(tool)
         }
@@ -642,8 +768,11 @@ class QuickPanelBlockViews(
     private fun toolLabel(tool: QuickPanelTool): String = when (tool) {
         QuickPanelTool.SPEED -> formatSpeed(speed)
         QuickPanelTool.SLEEP -> sleepMinutesLeft().let { left ->
-            if (left > 0) context.getString(R.string.quick_sleep_minutes, left)
-            else context.getString(R.string.quick_tool_sleep)
+            when {
+                sleepTimer.atTrackEnd -> context.getString(R.string.quick_sleep_track_end)
+                left > 0 -> context.getString(R.string.quick_sleep_minutes, left)
+                else -> context.getString(R.string.quick_tool_sleep)
+            }
         }
         QuickPanelTool.LYRICS -> context.getString(R.string.quick_tool_lyrics)
         QuickPanelTool.QUEUE -> context.getString(R.string.quick_tool_queue)
@@ -877,16 +1006,27 @@ class QuickPanelBlockViews(
 
         /** How much of the ink a bar's empty part, a pressed chip and a tile's disc are drawn in. */
         const val TRACK_ALPHA = 0x40
+
+        /** The line being sung, and a status line (no lyric, lookup off) in its place. */
+        const val LYRIC_LINE_SP = 14f
+        const val LYRIC_STATUS_SP = 12f
+
+        /** The next lyric line sits back a step from the one being sung. */
+        const val LYRIC_NEXT_ALPHA = 0x99
+
+        /** Shown between lines of a song, while the singer is not singing. */
+        const val LYRIC_REST = "\u266A"
+
+        /** Shown while the lookup is out. */
+        const val LYRIC_LOADING = "\u2026"
         const val PRESS_HIGHLIGHT_ALPHA = 0x38
         const val DISC_ALPHA = 0x26
     }
 }
 
-/** "1×", "1.25×", "0.75×": no trailing zeros, and locale-independent digits for the glyph's width. */
-internal fun formatSpeed(speed: Float): String {
-    val text = String.format(Locale.US, "%.2f", speed).trimEnd('0').trimEnd('.')
-    return "$text×"
-}
+/** "1×", "1.25×", "0.75×": no trailing zeros, and locale-independent digits for the glyph's width.
+ *  Shared with the progress screen's fine control, so both write a speed the same way. */
+internal fun formatSpeed(speed: Float): String = com.svartifoss.snfell.common.PlaybackSpeeds.label(speed)
 
 /** A pill-shaped level indicator: a track, and a rounded fill that is never narrower than a dot. */
 internal class LevelBarView(context: Context) : View(context) {

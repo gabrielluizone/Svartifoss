@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">ट्रॅकचा शेवट</string>
+    <string name="quick_sleep_track_end_description">स्लीप टायमर, हा ट्रॅक संपल्यावर थांबवेल. बंद करण्यासाठी टॅप करा</string>
+    <string name="queue_position">ट्रॅक %1$d / %2$d</string>
+    <string name="progress_screen_speed_description">प्लेबॅक वेग %1$s. पुढील वेगासाठी टॅप करा, बारीक समायोजनासाठी धरून ठेवा</string>
+    <string name="progress_screen_speed_slower">हळू</string>
+    <string name="progress_screen_speed_faster">जलद</string>
+    <string name="progress_screen_speed_reset">सामान्य वेग</string>
+    <string name="complication_playback_label">प्ले आणि पॉज</string>
+    <string name="complication_playback_idle">प्ले करा</string>
+    <string name="complication_playback_idle_description">काहीही वाजत नाही. शेवटचे ॲप पुन्हा सुरू करण्यासाठी टॅप करा</string>
+    <string name="complication_playback_play_description">थांबवले: %1$s. प्ले करण्यासाठी टॅप करा</string>
+    <string name="complication_playback_pause_description">वाजत आहे: %1$s. थांबवण्यासाठी टॅप करा</string>
+    <string name="audio_block_dnd">फोन व्यत्यय आणू नका मोडमध्ये आहे</string>
+    <string name="audio_block_muted">फोनचा मीडिया आवाज बंद आहे</string>
+    <string name="audio_block_safe_volume">सुरक्षित पातळीवर ठेवले. पुष्टी करण्यासाठी फोनवर एकदा वाढवा</string>
+    <string name="refused_skip_app">%1$s सध्या वगळू देत नाही</string>
+    <string name="refused_skip">हे ॲप सध्या वगळू देत नाही</string>
+    <string name="refused_seek_app">%1$s सध्या पुढे-मागे जाऊ देत नाही</string>
+    <string name="refused_seek">हे ॲप सध्या पुढे-मागे जाऊ देत नाही</string>
+    <string name="tile_resume">शेवटचे ॲप पुन्हा सुरू करा</string>
+    <string name="tile_resume_hint">प्ले केल्याने शेवटचे ॲप पुन्हा सुरू होते</string>
+    <string name="recent_tile_title">अलीकडे वाजवलेले</string>
+    <string name="recent_tile_description">तुम्ही शेवटी वाजवलेले ट्रॅक, पुन्हा वाजवण्यासाठी एका टॅपवर</string>
+    <string name="recent_tile_empty">अजून काहीही वाजवले नाही</string>
+    <string name="recent_tile_play_description">%1$s पुन्हा प्ले करा</string>
+</resources>

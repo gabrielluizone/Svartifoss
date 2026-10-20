@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Épaisseur de la barre de volume</string>
+    <string name="setting_wear_volume_thickness_description">Épaisseur du trait de la barre de volume, de 50 % à 180 % de la valeur par défaut. Même plus épais, le trait reste à l\'écart du bord.</string>
+    <string name="setting_wear_volume_haptics">Vibration de la couronne au volume</string>
+    <string name="setting_wear_queue_dim_played">Atténuer les titres déjà joués</string>
+    <string name="setting_wear_queue_dim_played_description">Estompe les titres déjà joués pour faire ressortir ceux à venir.</string>
+    <string name="quick_block_lyric">Paroles</string>
+    <string name="quick_block_lyric_description">La ligne chantée et la suivante, d\'après les paroles synchronisées. Touchez-la sur la montre pour ouvrir toutes les paroles.</string>
+    <string name="quick_summary_lyric">Ligne actuelle et suivante</string>
+    <string name="setting_wear_progress_weight">Épaisseur de l\'anneau</string>
+    <string name="setting_wear_aod_night_dim">Atténuation nocturne</string>
+    <string name="aod_control_night_dim">Atténuation nocturne</string>
+    <string name="setting_wear_aod_shift">Décalage anti-brûlure</string>
+    <string name="aod_control_shift">Décalage anti-brûlure</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Désactivé</item>
+        <item>Tous les 5 %</item>
+        <item>Tous les 5 % et aux limites</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Fin</item>
+        <item>Normal</item>
+        <item>Épais</item>
+        <item>Très épais</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Désactivé</item>
+        <item>Nuit · 22:00–07:00</item>
+        <item>Du crépuscule à l\'aube · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Léger</item>
+        <item>Normal</item>
+        <item>Large</item>
+    </string-array>
+</resources>

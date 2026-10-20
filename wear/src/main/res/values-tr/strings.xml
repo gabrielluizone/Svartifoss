@@ -228,4 +228,5 @@
     <string name="quick_sleep_minutes">%1$d dk.</string>
     <string name="quick_sleep_description">Uyku zamanlayıcısı, %1$d dakika kaldı. Değiştirmek için dokunun.</string>
     <string name="quick_sleep_off_description">Uyku zamanlayıcısı kapalı. Ayarlamak için dokunun.</string>
+    <string name="quick_lyric_plain">Bu sözlerde zamanlama yok. Okumak için dokunun.</string>
 </resources>

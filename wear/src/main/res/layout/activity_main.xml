@@ -433,7 +433,7 @@
             android:layout_width="@dimen/music_screen_icon_size"
             android:layout_height="@dimen/music_screen_icon_size"
             android:layout_gravity="center_horizontal|top"
-            android:layout_marginTop="@dimen/music_screen_icon_offset"
+            android:layout_marginTop="@dimen/volume_icon_edge_offset"
             android:src="@drawable/volume_icon_up_outline"
             android:visibility="gone"
             tools:ignore="ContentDescription" />
@@ -443,7 +443,7 @@
             android:layout_width="@dimen/music_screen_icon_size"
             android:layout_height="@dimen/music_screen_icon_size"
             android:layout_gravity="center_horizontal|bottom"
-            android:layout_marginBottom="@dimen/music_screen_icon_offset"
+            android:layout_marginBottom="@dimen/volume_icon_edge_offset"
             android:src="@drawable/volume_icon_down_outline"
             android:visibility="gone"
             tools:ignore="ContentDescription" />

@@ -94,7 +94,13 @@ class PanelOptionRenderingContractTest {
         val previewSeekLayout = functionBody(preview, "drawSeekSurface")
         val previewQuickStyle = functionBody(preview, "quickSkin")
         val previewQuickLayout = functionBody(preview, "previewQuickSlotRect")
-        val previewQueue = functionBody(preview, "queueSkin")
+        // The queue has no second table to check against any more: the watch and the miniature
+        // both paint from the shared registry, so a style has to be in that registry (its
+        // geometry) and in the skin resolver (its colours), and the watch has to map its token.
+        val queueRegistry = source(
+                "common/src/main/java/com/svartifoss/snfell/common/QueueStyles.kt")
+        val queueSkins = functionBody(source(
+                "common/src/main/java/com/svartifoss/snfell/common/QueueRowSkins.kt"), "resolve")
         val wearReadout = functionBody(panelReadout, "apply")
         val wearSeekLayout = functionBody(wearMain, "applySeekPanelLayout")
         val wearQuickStyle = functionBody(wearMain, "inactiveQuickButtonBackground")
@@ -185,11 +191,14 @@ class PanelOptionRenderingContractTest {
                         "wear_quick_panel_layout_extra_values",
                         previewQuickLayout,
                         wearQuickLayout),
-                enumContract(
-                        "wear_queue_style_extra_values",
-                        "QueueStyle",
-                        queue,
-                        previewQueue)
+                RendererContract(
+                        valuesArray = "wear_queue_style_extra_values",
+                        previewHas = { value ->
+                            hasLiteral(queueRegistry, value) &&
+                                    Regex(""""${Regex.escape(value)}"\s*->""")
+                                            .containsMatchIn(queueSkins)
+                        },
+                        wearHas = { value -> mapsToEnum(queue, value, enumConstant(value)) })
         )
     }
 

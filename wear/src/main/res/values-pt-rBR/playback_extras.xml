@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Fim da faixa</string>
+    <string name="quick_sleep_track_end_description">Temporizador de sono, pausa quando esta faixa terminar. Toque para desligar</string>
+    <string name="queue_position">Faixa %1$d de %2$d</string>
+    <string name="progress_screen_speed_description">Velocidade %1$s. Toque para a próxima velocidade, segure para ajuste fino</string>
+    <string name="progress_screen_speed_slower">Mais lento</string>
+    <string name="progress_screen_speed_faster">Mais rápido</string>
+    <string name="progress_screen_speed_reset">Velocidade normal</string>
+    <string name="complication_playback_label">Tocar e pausar</string>
+    <string name="complication_playback_idle">Tocar</string>
+    <string name="complication_playback_idle_description">Nada tocando. Toque para retomar o último app</string>
+    <string name="complication_playback_play_description">Pausado: %1$s. Toque para tocar</string>
+    <string name="complication_playback_pause_description">Tocando: %1$s. Toque para pausar</string>
+    <string name="audio_block_dnd">Celular em Não perturbe</string>
+    <string name="audio_block_muted">Volume de mídia do celular desligado</string>
+    <string name="audio_block_safe_volume">Limitado a um nível seguro. Aumente uma vez no celular para confirmar</string>
+    <string name="refused_skip_app">%1$s não está permitindo pular agora</string>
+    <string name="refused_skip">Este app não está permitindo pular agora</string>
+    <string name="refused_seek_app">%1$s não está permitindo avançar ou voltar agora</string>
+    <string name="refused_seek">Este app não está permitindo avançar ou voltar agora</string>
+    <string name="tile_resume">Retomar o último app</string>
+    <string name="tile_resume_hint">Tocar retoma o último app</string>
+    <string name="recent_tile_title">Tocadas recentemente</string>
+    <string name="recent_tile_description">As últimas faixas que você ouviu, a um toque de tocar de novo</string>
+    <string name="recent_tile_empty">Nada tocado ainda</string>
+    <string name="recent_tile_play_description">Tocar %1$s de novo</string>
+</resources>

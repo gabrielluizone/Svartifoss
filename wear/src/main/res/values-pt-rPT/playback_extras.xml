@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Fim da faixa</string>
+    <string name="quick_sleep_track_end_description">Temporizador, pausa quando esta faixa terminar. Toque para desligar</string>
+    <string name="queue_position">Faixa %1$d de %2$d</string>
+    <string name="progress_screen_speed_description">Velocidade %1$s. Toque para a velocidade seguinte, mantenha premido para ajuste fino</string>
+    <string name="progress_screen_speed_slower">Mais lento</string>
+    <string name="progress_screen_speed_faster">Mais rápido</string>
+    <string name="progress_screen_speed_reset">Velocidade normal</string>
+    <string name="complication_playback_label">Reproduzir e pausar</string>
+    <string name="complication_playback_idle">Reproduzir</string>
+    <string name="complication_playback_idle_description">Nada em reprodução. Toque para retomar a última app</string>
+    <string name="complication_playback_play_description">Em pausa: %1$s. Toque para reproduzir</string>
+    <string name="complication_playback_pause_description">A reproduzir: %1$s. Toque para pausar</string>
+    <string name="audio_block_dnd">Telemóvel em Não incomodar</string>
+    <string name="audio_block_muted">Volume de multimédia do telemóvel desligado</string>
+    <string name="audio_block_safe_volume">Limitado a um nível seguro. Aumente uma vez no telemóvel para confirmar</string>
+    <string name="refused_skip_app">%1$s não está a permitir avançar faixas agora</string>
+    <string name="refused_skip">Esta app não está a permitir avançar faixas agora</string>
+    <string name="refused_seek_app">%1$s não está a permitir procurar na faixa agora</string>
+    <string name="refused_seek">Esta app não está a permitir procurar na faixa agora</string>
+    <string name="tile_resume">Retomar a última app</string>
+    <string name="tile_resume_hint">Reproduzir retoma a última app</string>
+    <string name="recent_tile_title">Reproduzido recentemente</string>
+    <string name="recent_tile_description">As últimas faixas que ouviu, a um toque de voltar a tocar</string>
+    <string name="recent_tile_empty">Nada reproduzido ainda</string>
+    <string name="recent_tile_play_description">Reproduzir %1$s novamente</string>
+</resources>

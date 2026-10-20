@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">ভলিউম বারের পুরুত্ব</string>
+    <string name="setting_wear_volume_thickness_description">ভলিউম বারের রেখার পুরুত্ব, ডিফল্টের 50% থেকে 180%। মোটা রেখাও স্ক্রিনের কিনারা থেকে দূরে থাকে।</string>
+    <string name="setting_wear_volume_haptics">ভলিউমে ক্রাউনের কম্পন</string>
+    <string name="setting_wear_queue_dim_played">বাজানো ট্র্যাকগুলো ম্লান করুন</string>
+    <string name="setting_wear_queue_dim_played_description">আগে বাজানো এন্ট্রিগুলো ম্লান করে, যাতে পরেরগুলো আলাদা করে চোখে পড়ে।</string>
+    <string name="quick_block_lyric">গানের কথা</string>
+    <string name="quick_block_lyric_description">যে লাইনটি গাওয়া হচ্ছে এবং পরেরটি, সিঙ্ক করা গানের কথা থেকে। ঘড়িতে এতে ট্যাপ করলে পুরো গানের কথা খোলে।</string>
+    <string name="quick_summary_lyric">বর্তমান লাইন এবং পরেরটি</string>
+    <string name="setting_wear_progress_weight">রিংয়ের পুরুত্ব</string>
+    <string name="setting_wear_aod_night_dim">রাতে ম্লান</string>
+    <string name="aod_control_night_dim">রাতে ম্লান</string>
+    <string name="setting_wear_aod_shift">বার্ন-ইন সরণ</string>
+    <string name="aod_control_shift">বার্ন-ইন সরণ</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>বন্ধ</item>
+        <item>প্রতি 5%-এ</item>
+        <item>প্রতি 5%-এ এবং সীমায়</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>পাতলা</item>
+        <item>সাধারণ</item>
+        <item>মোটা</item>
+        <item>অত্যন্ত মোটা</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>বন্ধ</item>
+        <item>রাত · 22:00–07:00</item>
+        <item>গোধূলি থেকে ভোর · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>মৃদু</item>
+        <item>সাধারণ</item>
+        <item>প্রশস্ত</item>
+    </string-array>
+</resources>

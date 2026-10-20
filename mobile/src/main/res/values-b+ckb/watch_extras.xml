@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">ئەستووریی شریتی دەنگ</string>
+    <string name="setting_wear_volume_thickness_description">ئەستووریی هێڵی شریتی دەنگ، لە 50% تا 180%ی بنەڕەت. هێڵە ئەستوورترەکانیش هەر لە لێواری شاشە دوور دەمێننەوە.</string>
+    <string name="setting_wear_volume_haptics">لەرینەوەی تاج لە کاتی دەنگدا</string>
+    <string name="setting_wear_queue_dim_played">کاڵکردنەوەی گۆرانییە لێدراوەکان</string>
+    <string name="setting_wear_queue_dim_played_description">ئەو گۆرانییانەی پێشتر لێدراون کاڵ دەکاتەوە بۆ ئەوەی داهاتووەکان دیار بن.</string>
+    <string name="quick_block_lyric">دەقی گۆرانی</string>
+    <string name="quick_block_lyric_description">ئەو دێڕەی ئێستا دەگوترێت و دێڕی دواتر، لە دەقە هاوکاتکراوەکەوە. لێدان لەسەری لە کاتژمێرەکە دەقی تەواو دەکاتەوە.</string>
+    <string name="quick_summary_lyric">دێڕی ئێستا و دواتر</string>
+    <string name="setting_wear_progress_weight">ئەستووری ئەلقە</string>
+    <string name="setting_wear_aod_night_dim">کزکردنەوەی شەو</string>
+    <string name="aod_control_night_dim">کزکردنەوەی شەو</string>
+    <string name="setting_wear_aod_shift">جووڵەی دژە سووتان</string>
+    <string name="aod_control_shift">جووڵەی دژە سووتان</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>کوژاوە</item>
+        <item>هەر 5%</item>
+        <item>هەر 5% و لە سنوورەکاندا</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>باریک</item>
+        <item>ئاسایی</item>
+        <item>ئەستوور</item>
+        <item>زۆر ئەستوور</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>کوژاوە</item>
+        <item>شەو · 22:00–07:00</item>
+        <item>لە ئێوارە تا بەیانی · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>ئارام</item>
+        <item>ئاسایی</item>
+        <item>فراوان</item>
+    </string-array>
+</resources>

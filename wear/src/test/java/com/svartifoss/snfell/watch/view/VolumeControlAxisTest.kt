@@ -20,7 +20,8 @@ class VolumeControlAxisTest {
                 VolumeLayout.EDGE_RIGHT,
                 VolumeLayout.RING,
                 VolumeLayout.DIAL,
-                VolumeLayout.VERTICAL_LEFT
+                VolumeLayout.VERTICAL_LEFT,
+                VolumeLayout.PILLAR
         ).forEach {
             assertEquals(it.name, VolumeControlAxis.VERTICAL, VolumeControlAxis.forLayout(it))
         }
@@ -32,7 +33,8 @@ class VolumeControlAxisTest {
                 VolumeLayout.EDGE_TOP,
                 VolumeLayout.EDGE_BOTTOM,
                 VolumeLayout.METER,
-                VolumeLayout.METER_BOTTOM
+                VolumeLayout.METER_BOTTOM,
+                VolumeLayout.BASALT
         ).forEach {
             assertEquals(it.name, VolumeControlAxis.HORIZONTAL, VolumeControlAxis.forLayout(it))
         }

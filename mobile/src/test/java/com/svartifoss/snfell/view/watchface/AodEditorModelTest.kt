@@ -42,8 +42,11 @@ class AodEditorModelTest {
     @Test
     fun `every ambient setting is per-face`() {
         // The Always-on page is an appearance surface, so an unscoped key repaints every face at
-        // once - the bug AppearancePreferenceScopingTest describes. Nothing here is exempt.
-        val unscoped = AodEditorModel.keys.filterNot(FaceScopedPreferences::isScoped)
+        // once - the bug AppearancePreferenceScopingTest describes. Only the two behaviour settings
+        // named in AodEditorModel.globalKeys are exempt.
+        val unscoped = AodEditorModel.keys
+                .filterNot(FaceScopedPreferences::isScoped)
+                .filterNot { it in AodEditorModel.globalKeys }
         assertTrue("These ambient keys are not face-scoped: $unscoped", unscoped.isEmpty())
     }
 

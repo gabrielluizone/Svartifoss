@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Bentuk pil</string>
+    <string name="setting_wear_queue_cover_shape">Bentuk kover</string>
+    <string name="wear_queue_shape_follow">Ikut gaya giliran</string>
+    <string name="queue_shape_note_title">Gaya dan bentuk</string>
+    <string name="queue_shape_note_description">Gaya menentukan warna dan kesan. Bentuk pil dan Bentuk kover hanya mengubah garis luar; Ikut gaya giliran mengekalkan garis luar setiap gaya.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Kapsul</item>
+        <item>Bulat</item>
+        <item>Sudut lembut</item>
+        <item>Segi empat sama</item>
+        <item>Daun</item>
+        <item>Belon pertuturan</item>
+        <item>Heksagon</item>
+    </string-array>
+</resources>

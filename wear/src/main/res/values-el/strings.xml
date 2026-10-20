@@ -228,4 +228,5 @@
     <string name="quick_sleep_minutes">%1$d λεπτά</string>
     <string name="quick_sleep_description">Χρονόμετρο ύπνου, απομένουν %1$d λεπτά. Πατήστε για να αλλάξετε το</string>
     <string name="quick_sleep_off_description">Ο χρονοδιακόπτης ύπνου είναι απενεργοποιημένος. Πατήστε για να τον ορίσετε.</string>
+    <string name="quick_lyric_plain">Αυτοί οι στίχοι δεν είναι συγχρονισμένοι. Πατήστε για να τους διαβάσετε.</string>
 </resources>

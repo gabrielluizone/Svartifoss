@@ -66,6 +66,8 @@
         <item>Mga hakbang</item>
         <item>Kendi</item>
         <item>Multo</item>
+        <item>Alon</item>
+        <item>Ruler</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Dobleng gilid</item>
@@ -76,6 +78,8 @@
         <item>Dial sa gitna</item>
         <item>Top halo</item>
         <item>Halo sa ibaba</item>
+        <item>Gitnang haligi</item>
+        <item>Mga haliging basalt</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Dobleng singsing</item>
@@ -88,6 +92,9 @@
         <item>Karayom</item>
         <item>Salit-salitan</item>
         <item>Spark</item>
+        <item>Alon</item>
+        <item>Minuto ng kanta</item>
+        <item>Mga hex na selda</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Gilid ng bezel</item>
@@ -101,6 +108,8 @@
         <item>Dobleng track</item>
         <item>Buksan sa kaliwa</item>
         <item>Buksan sa kanan</item>
+        <item>Arko sa itaas</item>
+        <item>Arko sa ibaba</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Compact pill</item>
@@ -124,6 +133,7 @@
         <item>Twin timeline</item>
         <item>Mga segment (ibaba)</item>
         <item>Stack sa gitna</item>
+        <item>Alon</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Malambot</item>
@@ -155,5 +165,8 @@
         <item>Bula</item>
         <item>Chrome</item>
         <item>Holographic</item>
+        <item>Basalt</item>
+        <item>Mga patong</item>
+        <item>Ruta</item>
     </string-array>
 </resources>

@@ -9,7 +9,19 @@ import { readFileSync } from "node:fs";
 export const PROFILE_SCHEMA_VERSION = 1;
 export const SUBMISSION_SCHEMA_VERSION = 2;
 export const PROFILE_REVISION = 1;
-export const MINIMUM_APP_VERSION = "4.0";
+export const MINIMUM_APP_VERSION = "4.3";
+
+/**
+ * Every minimum app version a theme already in the catalogue may carry.
+ *
+ * A theme keeps the version it was published under. One published before a setting existed simply
+ * lacks that setting, and every app from its version on fills the gap from the base face's default
+ * - so it stays installable where it always was, and rewriting its version to the current one
+ * would only hide it from installs that can read it. Newly published themes always carry
+ * MINIMUM_APP_VERSION; add the old value here whenever that constant moves, or every theme
+ * published before the move fails validation and the whole publishing run stops.
+ */
+export const PUBLISHED_APP_VERSIONS = Object.freeze(["4.0", MINIMUM_APP_VERSION]);
 
 export const MAX_PUBLIC_TEXT_LENGTH = 48;
 export const MAX_SETTING_TEXT_LENGTH = 128;
@@ -97,7 +109,9 @@ const STRING_SETTINGS = [
     "wear_progress_style",
     "wear_queue_backdrop_style",
     "wear_queue_color_mode",
+    "wear_queue_cover_shape",
     "wear_queue_custom_color",
+    "wear_queue_row_shape",
     "wear_queue_style",
     "wear_quick_panel_backdrop_style",
     "wear_quick_panel_color_mode",
@@ -803,7 +817,9 @@ const DEFAULT_VALUES = Object.freeze({
     wear_progress_style: "solid",
     wear_quadrant_tap_flash: true,
     wear_queue_color_mode: "follow",
+    wear_queue_cover_shape: "follow",
     wear_queue_custom_color: "",
+    wear_queue_row_shape: "follow",
     wear_queue_style: "glass",
     wear_quick_panel_color_mode: "follow",
     wear_quick_panel_custom_color: "",

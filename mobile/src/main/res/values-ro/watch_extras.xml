@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Grosimea barei de volum</string>
+    <string name="setting_wear_volume_thickness_description">Grosimea liniei barei de volum, de la 50% la 180% din valoarea implicită. Și liniile mai groase rămân departe de margine.</string>
+    <string name="setting_wear_volume_haptics">Vibrația coroanei la volum</string>
+    <string name="setting_wear_queue_dim_played">Estompează piesele redate</string>
+    <string name="setting_wear_queue_dim_played_description">Estompează intrările deja redate, ca să iasă în evidență cele care urmează.</string>
+    <string name="quick_block_lyric">Versuri</string>
+    <string name="quick_block_lyric_description">Rândul cântat acum și următorul, din versurile sincronizate. Atingându-l pe ceas se deschid versurile complete.</string>
+    <string name="quick_summary_lyric">Rândul curent și următorul</string>
+    <string name="setting_wear_progress_weight">Grosimea inelului</string>
+    <string name="setting_wear_aod_night_dim">Atenuare nocturnă</string>
+    <string name="aod_control_night_dim">Atenuare nocturnă</string>
+    <string name="setting_wear_aod_shift">Deplasare anti burn-in</string>
+    <string name="aod_control_shift">Deplasare anti burn-in</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Dezactivat</item>
+        <item>La fiecare 5%</item>
+        <item>La fiecare 5% și la limite</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Subțire</item>
+        <item>Normal</item>
+        <item>Gros</item>
+        <item>Foarte gros</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Dezactivat</item>
+        <item>Noapte · 22:00–07:00</item>
+        <item>De la amurg la zori · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Ușor</item>
+        <item>Normal</item>
+        <item>Larg</item>
+    </string-array>
+</resources>

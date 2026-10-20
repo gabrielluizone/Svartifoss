@@ -975,6 +975,8 @@
         <item>Material (outlined)</item>
         <item>AMOLED controls</item>
         <item>Chrono (big clock)</item>
+        <item>Minute ring</item>
+        <item>Basalt frame</item>
         <item>Poster</item>
         <item>Studio</item>
         <item>Immersive</item>
@@ -994,6 +996,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>

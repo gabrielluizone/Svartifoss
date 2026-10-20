@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">వాల్యూమ్ బార్ మందం</string>
+    <string name="setting_wear_volume_thickness_description">వాల్యూమ్ బార్ గీత మందం, డిఫాల్ట్‌లో 50% నుండి 180% వరకు. మందమైన గీతలు కూడా స్క్రీన్ అంచుకు దూరంగానే ఉంటాయి.</string>
+    <string name="setting_wear_volume_haptics">వాల్యూమ్‌లో క్రౌన్ వైబ్రేషన్</string>
+    <string name="setting_wear_queue_dim_played">ప్లే అయిన ట్రాక్‌లను మసకబార్చు</string>
+    <string name="setting_wear_queue_dim_played_description">ఇప్పటికే ప్లే అయిన ఎంట్రీలను మసకబార్చి, రాబోయేవి ప్రత్యేకంగా కనిపించేలా చేస్తుంది.</string>
+    <string name="quick_block_lyric">పాట సాహిత్యం</string>
+    <string name="quick_block_lyric_description">సింక్ చేసిన సాహిత్యం నుండి ఇప్పుడు పాడుతున్న పంక్తి మరియు తర్వాతి పంక్తి. వాచ్‌లో దాన్ని నొక్కితే పూర్తి సాహిత్యం తెరుచుకుంటుంది.</string>
+    <string name="quick_summary_lyric">ప్రస్తుత పంక్తి మరియు తర్వాతిది</string>
+    <string name="setting_wear_progress_weight">రింగ్ మందం</string>
+    <string name="setting_wear_aod_night_dim">రాత్రి మసక</string>
+    <string name="aod_control_night_dim">రాత్రి మసక</string>
+    <string name="setting_wear_aod_shift">బర్న్-ఇన్ షిఫ్ట్</string>
+    <string name="aod_control_shift">బర్న్-ఇన్ షిఫ్ట్</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>ఆఫ్</item>
+        <item>ప్రతి 5%కి</item>
+        <item>ప్రతి 5%కి మరియు పరిమితుల వద్ద</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>సన్నని</item>
+        <item>సాధారణ</item>
+        <item>మందపాటి</item>
+        <item>చాలా మందపాటి</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>ఆఫ్</item>
+        <item>రాత్రి · 22:00–07:00</item>
+        <item>సంధ్య నుండి వేకువ వరకు · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>సున్నితమైన</item>
+        <item>సాధారణ</item>
+        <item>విశాలమైన</item>
+    </string-array>
+</resources>

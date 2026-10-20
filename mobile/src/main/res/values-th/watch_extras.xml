@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">ความหนาของแถบระดับเสียง</string>
+    <string name="setting_wear_volume_thickness_description">ความหนาของเส้นแถบระดับเสียง ตั้งแต่ 50% ถึง 180% ของค่าเริ่มต้น เส้นที่หนาขึ้นก็ยังอยู่ห่างจากขอบหน้าจอ</string>
+    <string name="setting_wear_volume_haptics">การสั่นของเม็ดมะยมเมื่อปรับเสียง</string>
+    <string name="setting_wear_queue_dim_played">หรี่เพลงที่เล่นไปแล้ว</string>
+    <string name="setting_wear_queue_dim_played_description">หรี่รายการที่เล่นไปแล้ว เพื่อให้เพลงที่กำลังจะมาโดดเด่นขึ้น</string>
+    <string name="quick_block_lyric">เนื้อเพลง</string>
+    <string name="quick_block_lyric_description">บรรทัดที่กำลังร้องและบรรทัดถัดไป จากเนื้อเพลงที่ซิงค์ แตะที่บล็อกนี้บนนาฬิกาเพื่อเปิดเนื้อเพลงทั้งหมด</string>
+    <string name="quick_summary_lyric">บรรทัดปัจจุบันและบรรทัดถัดไป</string>
+    <string name="setting_wear_progress_weight">ความหนาของวงแหวน</string>
+    <string name="setting_wear_aod_night_dim">หรี่ตอนกลางคืน</string>
+    <string name="aod_control_night_dim">หรี่ตอนกลางคืน</string>
+    <string name="setting_wear_aod_shift">การเลื่อนกันภาพไหม้</string>
+    <string name="aod_control_shift">การเลื่อนกันภาพไหม้</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>ปิด</item>
+        <item>ทุก 5%</item>
+        <item>ทุก 5% และที่ขีดจำกัด</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>บาง</item>
+        <item>ปกติ</item>
+        <item>หนา</item>
+        <item>หนามาก</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>ปิด</item>
+        <item>กลางคืน · 22:00–07:00</item>
+        <item>ตั้งแต่พลบค่ำถึงรุ่งเช้า · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>เบา</item>
+        <item>ปกติ</item>
+        <item>กว้าง</item>
+    </string-array>
+</resources>

@@ -41,6 +41,10 @@ class MusicStateListenerService : WearableListenerService() {
     override fun onDataChanged(dataEvents: DataEventBuffer) {
         super.onDataChanged(dataEvents)
 
+        if (dataEvents.any { it.dataItem.uri.path == CommPaths.DATA_RECENT_TRACKS }) {
+            GlanceableSurfaces.requestRecentTracksTileUpdate(this)
+        }
+
         val latestState = dataEvents
                 .filter { it.type == DataEvent.TYPE_CHANGED && it.dataItem.uri.path == CommPaths.DATA_MUSIC_STATE }
                 .lastOrNull()
@@ -66,6 +70,7 @@ class MusicStateListenerService : WearableListenerService() {
             lastGlanceableFingerprint = fingerprint
             GlanceableSurfaces.requestUpdate(this)
         }
+        GlanceableSurfaces.onMusicState(this, latestState)
 
         if (latestState?.playing == true && !latestState.error && !WatchMusicService.active) {
             // Same contract as IdleMessageListener: the service promotes itself to foreground, so

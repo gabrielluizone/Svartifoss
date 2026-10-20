@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Товщина смуги гучності</string>
+    <string name="setting_wear_volume_thickness_description">Товщина лінії смуги гучності, від 50% до 180% стандартної. Навіть товстіші лінії не заходять на край екрана.</string>
+    <string name="setting_wear_volume_haptics">Вібрація коронки при гучності</string>
+    <string name="setting_wear_queue_dim_played">Приглушувати прослухані треки</string>
+    <string name="setting_wear_queue_dim_played_description">Приглушує вже відтворені треки, щоб виділити наступні.</string>
+    <string name="quick_block_lyric">Текст пісні</string>
+    <string name="quick_block_lyric_description">Рядок, який зараз співають, і наступний із синхронізованого тексту. Натискання на годиннику відкриває весь текст.</string>
+    <string name="quick_summary_lyric">Поточний і наступний рядок</string>
+    <string name="setting_wear_progress_weight">Товщина кільця</string>
+    <string name="setting_wear_aod_night_dim">Нічне затемнення</string>
+    <string name="aod_control_night_dim">Нічне затемнення</string>
+    <string name="setting_wear_aod_shift">Зсув проти вигорання</string>
+    <string name="aod_control_shift">Зсув проти вигорання</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Вимк.</item>
+        <item>Кожні 5%</item>
+        <item>Кожні 5% і на межах</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Тонкий</item>
+        <item>Звичайний</item>
+        <item>Товстий</item>
+        <item>Дуже товстий</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Вимк.</item>
+        <item>Ніч · 22:00–07:00</item>
+        <item>Від сутінків до світанку · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>М’який</item>
+        <item>Звичайний</item>
+        <item>Широкий</item>
+    </string-array>
+</resources>

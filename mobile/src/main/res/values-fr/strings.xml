@@ -741,6 +741,8 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>Material (contour)</item>
         <item>Commandes AMOLED</item>
         <item>Chrono (grande horloge)</item>
+        <item>Anneau des minutes</item>
+        <item>Cadre de basalte</item>
         <item>Affiche</item>
         <item>Studio</item>
         <item>Immersif</item>
@@ -771,6 +773,8 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Couleur de l’affichage permanent</string>
     <string-array name="wear_aod_color_entries">

@@ -54,6 +54,8 @@ object StandardIcons {
                     com.svartifoss.snfell.common.R.drawable.action_face_picker,
             StandardActions.ACTION_CLOSE_WATCH_APP to
                     com.svartifoss.snfell.common.R.drawable.action_close,
+            StandardActions.ACTION_OPEN_PHONE_AUDIO_OUTPUT to
+                    com.svartifoss.snfell.common.R.drawable.action_audio_output,
 
             getButtonKey(KeyEvent.KEYCODE_BACK) to R.drawable.button_back,
             getButtonKey(SpecialButtonCodes.TURN_ROTARY_CW) to R.drawable.button_turn_cw,

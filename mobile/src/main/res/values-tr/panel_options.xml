@@ -66,6 +66,8 @@
         <item>Basamaklar</item>
         <item>Şeker</item>
         <item>Hayalet</item>
+        <item>Dalga</item>
+        <item>Cetvel</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Çift kenar</item>
@@ -76,6 +78,8 @@
         <item>Orta kadran</item>
         <item>Üst hale</item>
         <item>Alt hale</item>
+        <item>Orta sütun</item>
+        <item>Bazalt sütunlar</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Çift halka</item>
@@ -88,6 +92,9 @@
         <item>İbre</item>
         <item>Dönüşümlü</item>
         <item>Kıvılcım</item>
+        <item>Dalga</item>
+        <item>Parça dakikaları</item>
+        <item>Altıgen hücreler</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Çerçeve kenarı</item>
@@ -101,6 +108,8 @@
         <item>Çift iz</item>
         <item>Soldan açık</item>
         <item>Sağdan açık</item>
+        <item>Üst yay</item>
+        <item>Alt yay</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Kompakt kapsül</item>
@@ -124,6 +133,7 @@
         <item>Çift zaman çizelgesi</item>
         <item>Bölümler (alt)</item>
         <item>Orta yığın</item>
+        <item>Dalga</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Yumuşak</item>
@@ -155,5 +165,8 @@
         <item>Baloncuk</item>
         <item>Krom</item>
         <item>Holografik</item>
+        <item>Bazalt</item>
+        <item>Katmanlar</item>
+        <item>Rota</item>
     </string-array>
 </resources>

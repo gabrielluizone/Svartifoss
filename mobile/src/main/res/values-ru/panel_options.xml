@@ -66,6 +66,8 @@
         <item>Ступени</item>
         <item>Конфета</item>
         <item>Призрак</item>
+        <item>Волна</item>
+        <item>Линейка</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Двойной край</item>
@@ -76,6 +78,8 @@
         <item>Центральный циферблат</item>
         <item>Верхний ореол</item>
         <item>Нижний ореол</item>
+        <item>Центральный столб</item>
+        <item>Базальтовые колонны</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Двойное кольцо</item>
@@ -88,6 +92,9 @@
         <item>Стрелка</item>
         <item>Чередование</item>
         <item>Искра</item>
+        <item>Волна</item>
+        <item>Минуты трека</item>
+        <item>Шестиугольные ячейки</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Край безеля</item>
@@ -101,6 +108,8 @@
         <item>Двойная дорожка</item>
         <item>Открыто слева</item>
         <item>Открыто справа</item>
+        <item>Верхняя дуга</item>
+        <item>Нижняя дуга</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Компактная капсула</item>
@@ -124,6 +133,7 @@
         <item>Двойная временная шкала</item>
         <item>Сегменты (снизу)</item>
         <item>Центральная стопка</item>
+        <item>Волна</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Мягкий</item>
@@ -155,5 +165,8 @@
         <item>Пузырь</item>
         <item>Хром</item>
         <item>Голографический</item>
+        <item>Базальт</item>
+        <item>Слои</item>
+        <item>Маршрут</item>
     </string-array>
 </resources>

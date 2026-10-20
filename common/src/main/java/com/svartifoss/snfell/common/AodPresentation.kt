@@ -41,7 +41,8 @@ fun resolveAodArtwork(
         playerArtworkStyle: String,
         playerArtworkFilter: String? = null
 ): AodArtworkSpec {
-    if (!showArtwork || effectiveAodStyle == "chrono" || effectiveAodStyle == "eclipse") {
+    if (!showArtwork || AodStandaloneStyles.isStandalone(effectiveAodStyle) ||
+            effectiveAodStyle == "eclipse") {
         return AodArtworkSpec(visible = false)
     }
 

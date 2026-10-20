@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Tvar štítku</string>
+    <string name="setting_wear_queue_cover_shape">Tvar obalu</string>
+    <string name="wear_queue_shape_follow">Podle stylu fronty</string>
+    <string name="queue_shape_note_title">Styl a tvary</string>
+    <string name="queue_shape_note_description">Styl určuje barvy a efekty. Tvar štítku a Tvar obalu mění jen obrysy; Podle stylu fronty zachová ty, které má každý styl.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Kapsle</item>
+        <item>Zaoblený</item>
+        <item>Měkké rohy</item>
+        <item>Čtverec</item>
+        <item>List</item>
+        <item>Bublina</item>
+        <item>Šestiúhelník</item>
+    </string-array>
+</resources>

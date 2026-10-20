@@ -61,6 +61,15 @@ interface CommPaths {
          * localises what it shows (see the metadata codes-not-labels rule).
          */
         const val MESSAGE_COMMAND_NOT_EXECUTED = "/Messages/CommandNotExecuted"
+
+        /**
+         * Phone -> watch: the playing app did not carry out a skip or a seek and does not claim to
+         * support it (an advert playing, a skip limit). One byte, a [TransportRefusal] code; the
+         * watch words it. Sent [TransportRefusal.VERIFY_MS] after the command, only when both the
+         * track (or position) stayed put and the session never advertised the action - see that
+         * class for why both. `/Messages` for the same reason as [MESSAGE_COMMAND_NOT_EXECUTED].
+         */
+        const val MESSAGE_ACTION_REFUSED = "/Messages/ActionRefused"
         const val MESSAGE_CHANGE_VOLUME = "/Messages/SetVolume"
         // Watch -> phone: change the live media session by one native volume step. The signed
         // direction is a big-endian int (AudioManager.ADJUST_LOWER/ADJUST_RAISE). A relative
@@ -82,7 +91,9 @@ interface CommPaths {
 
         /**
          * Watch -> phone: start, change or cancel the sleep timer. Payload is the length in whole
-         * minutes as a big-endian long; 0 cancels it.
+         * minutes as a big-endian long; 0 cancels it, and [SleepTimerPolicy.END_OF_TRACK] (-1)
+         * pauses when the track playing now ends - which a phone build from before it reads as a
+         * cancel, the same as any other length of zero or less.
          *
          * The **phone** keeps the timer, not the watch: it is the phone that has to pause the music
          * when it ends, and a timer on the wrist would need the watch to be awake, in range and
@@ -97,7 +108,10 @@ interface CommPaths {
 
         /**
          * Phone -> watch: how long the sleep timer has left, in milliseconds as a big-endian long;
-         * 0 means none is running. Sent when it is set, cancelled or ends, and when asked.
+         * 0 means none is running. Sent when it is set, cancelled or ends, and when asked. A ninth
+         * byte of 1 says the timer waits for the end of the track, and the long is then the
+         * track's own time left (0 when its length is unknown) - see
+         * [SleepTimerPolicy.encodeState], which is also why the byte goes last.
          *
          * A **duration**, never a deadline: the watch adds it to its own `elapsedRealtime` the moment
          * it arrives and counts down on its own clock, so nothing is ever subtracted across two
@@ -380,6 +394,19 @@ interface CommPaths {
         // Persistent, independently cached streaming-shortcut list. It must not share
         // DATA_CUSTOM_LIST: queue/search pushes frequently replace that transient DataItem.
         const val DATA_STREAMING_SHORTCUTS = "/CustomList/StreamingShortcuts"
+
+        /**
+         * Phone -> watch: the last few tracks played, newest first, for the "Recently played" Tile
+         * - a [com.svartifoss.snfell.proto.CustomList] of title/artist entries and nothing else
+         * (no covers: a Tile row has no room for one, and the bytes would cross on every track).
+         *
+         * Its own DataItem rather than the custom-list one the queue's history fallback uses,
+         * because a Tile is read by the system with no app running and no request sent: it can
+         * only show what is already sitting in the Data Layer. Republished a moment after each
+         * track change and once per phone service start. The watch's manifest state listener
+         * also watches this path, so the Tile is refreshed when it lands rather than a track later.
+         */
+        const val DATA_RECENT_TRACKS = "/RecentTracks"
 
         const val PREFERENCES_PREFIX = "/Settings"
     }

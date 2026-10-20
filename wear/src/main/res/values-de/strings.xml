@@ -208,4 +208,5 @@
     <string name="quick_sleep_minutes">%1$d Min.</string>
     <string name="quick_sleep_description">Timer, noch %1$d Minuten. Zum Ändern tippen.</string>
     <string name="quick_sleep_off_description">Schlaftimer aus. Zum Einstellen tippen.</string>
+    <string name="quick_lyric_plain">Dieser Songtext ist nicht zeitlich synchronisiert. Zum Lesen tippen.</string>
 </resources>

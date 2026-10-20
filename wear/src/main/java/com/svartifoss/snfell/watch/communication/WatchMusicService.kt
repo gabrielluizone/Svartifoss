@@ -111,6 +111,7 @@ class WatchMusicService : LifecycleService() {
                 lastGlanceableFingerprint = fingerprint
                 GlanceableSurfaces.requestUpdate(this)
             }
+            GlanceableSurfaces.onMusicState(this, state)
         }
         phoneConnection.albumArt.observe(this) { albumArt ->
             mediaSession.update(phoneConnection.musicState.value?.data, albumArt)

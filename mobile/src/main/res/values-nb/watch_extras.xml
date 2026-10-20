@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Tykkelse på volumlinjen</string>
+    <string name="setting_wear_volume_thickness_description">Tykkelsen på streken i volumlinjen, fra 50 % til 180 % av standard. Tykkere streker holder seg likevel unna kanten.</string>
+    <string name="setting_wear_volume_haptics">Kronevibrering ved volum</string>
+    <string name="setting_wear_queue_dim_played">Demp spilte spor</string>
+    <string name="setting_wear_queue_dim_played_description">Toner ned sporene som allerede er spilt, så de som kommer, skiller seg ut.</string>
+    <string name="quick_block_lyric">Sangtekst</string>
+    <string name="quick_block_lyric_description">Linjen som synges og den neste, fra den synkroniserte sangteksten. Trykk på den på klokken for å åpne hele teksten.</string>
+    <string name="quick_summary_lyric">Nåværende linje og den neste</string>
+    <string name="setting_wear_progress_weight">Ringens tykkelse</string>
+    <string name="setting_wear_aod_night_dim">Natt-dimming</string>
+    <string name="aod_control_night_dim">Natt-dimming</string>
+    <string name="setting_wear_aod_shift">Innbrenningsforskyvning</string>
+    <string name="aod_control_shift">Innbrenningsforskyvning</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Av</item>
+        <item>Hver 5 %</item>
+        <item>Hver 5 % og ved grensene</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Tynn</item>
+        <item>Normal</item>
+        <item>Tykk</item>
+        <item>Veldig tykk</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Av</item>
+        <item>Natt · 22:00–07:00</item>
+        <item>Fra skumring til daggry · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Lett</item>
+        <item>Normal</item>
+        <item>Bred</item>
+    </string-array>
+</resources>

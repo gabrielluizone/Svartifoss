@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Track end</string>
+    <string name="quick_sleep_track_end_description">Sleep timer, pauses when this track ends. Tap to switch it off</string>
+    <string name="queue_position">Track %1$d of %2$d</string>
+    <string name="progress_screen_speed_description">Playback speed %1$s. Tap for the next speed, hold for fine control</string>
+    <string name="progress_screen_speed_slower">Slower</string>
+    <string name="progress_screen_speed_faster">Faster</string>
+    <string name="progress_screen_speed_reset">Normal speed</string>
+    <string name="complication_playback_label">Play and pause</string>
+    <string name="complication_playback_idle">Play</string>
+    <string name="complication_playback_idle_description">Nothing playing. Tap to resume the last app</string>
+    <string name="complication_playback_play_description">Paused: %1$s. Tap to play</string>
+    <string name="complication_playback_pause_description">Playing: %1$s. Tap to pause</string>
+    <string name="audio_block_dnd">Phone is in Do Not Disturb</string>
+    <string name="audio_block_muted">Phone media volume is off</string>
+    <string name="audio_block_safe_volume">Held at a safe level. Raise it once on the phone to confirm</string>
+    <string name="refused_skip_app">%1$s isn\'t allowing skips right now</string>
+    <string name="refused_skip">This app isn\'t allowing skips right now</string>
+    <string name="refused_seek_app">%1$s isn\'t allowing seeking right now</string>
+    <string name="refused_seek">This app isn\'t allowing seeking right now</string>
+    <string name="tile_resume">Resume the last app</string>
+    <string name="tile_resume_hint">Play resumes the last app</string>
+    <string name="recent_tile_title">Recently played</string>
+    <string name="recent_tile_description">The last tracks you played, one tap from playing again</string>
+    <string name="recent_tile_empty">Nothing played yet</string>
+    <string name="recent_tile_play_description">Play %1$s again</string>
+</resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Grosor de la barra de volumen</string>
+    <string name="setting_wear_volume_thickness_description">Grosor del trazo de la barra de volumen, del 50 % al 180 % del predeterminado. Los trazos más gruesos siguen sin tocar el borde.</string>
+    <string name="setting_wear_volume_haptics">Vibración de la corona en el volumen</string>
+    <string name="setting_wear_queue_dim_played">Atenuar pistas reproducidas</string>
+    <string name="setting_wear_queue_dim_played_description">Atenúa las pistas que ya sonaron para que destaquen las que están por venir.</string>
+    <string name="quick_block_lyric">Letra</string>
+    <string name="quick_block_lyric_description">La línea que se está cantando y la siguiente, de la letra sincronizada. Al tocarla en el reloj se abre la letra completa.</string>
+    <string name="quick_summary_lyric">Línea actual y la siguiente</string>
+    <string name="setting_wear_progress_weight">Grosor del anillo</string>
+    <string name="setting_wear_aod_night_dim">Atenuación nocturna</string>
+    <string name="aod_control_night_dim">Atenuación nocturna</string>
+    <string name="setting_wear_aod_shift">Desplazamiento anti quemado</string>
+    <string name="aod_control_shift">Desplazamiento anti quemado</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Desactivado</item>
+        <item>Cada 5 %</item>
+        <item>Cada 5 % y en los límites</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Fino</item>
+        <item>Normal</item>
+        <item>Grueso</item>
+        <item>Muy grueso</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Desactivado</item>
+        <item>Noche · 22:00–07:00</item>
+        <item>Del atardecer al amanecer · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Suave</item>
+        <item>Normal</item>
+        <item>Amplio</item>
+    </string-array>
+</resources>

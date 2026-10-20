@@ -66,6 +66,8 @@
         <item>Degraus</item>
         <item>Doce</item>
         <item>Fantasma</item>
+        <item>Onda</item>
+        <item>Régua</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Borda dupla</item>
@@ -76,6 +78,8 @@
         <item>Mostrador central</item>
         <item>Halo superior</item>
         <item>Halo inferior</item>
+        <item>Pilar central</item>
+        <item>Colunas de basalto</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Anel duplo</item>
@@ -88,6 +92,9 @@
         <item>Agulha</item>
         <item>Alternado</item>
         <item>Faísca</item>
+        <item>Onda</item>
+        <item>Minutos da faixa</item>
+        <item>Células hexagonais</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Borda do bisel</item>
@@ -101,6 +108,8 @@
         <item>Pista dupla</item>
         <item>Aberto à esquerda</item>
         <item>Aberto à direita</item>
+        <item>Arco superior</item>
+        <item>Arco inferior</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Cápsula compacta</item>
@@ -124,6 +133,7 @@
         <item>Linha temporal dupla</item>
         <item>Segmentos (baixo)</item>
         <item>Pilha central</item>
+        <item>Onda</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Suave</item>
@@ -155,5 +165,8 @@
         <item>Bolha</item>
         <item>Cromado</item>
         <item>Holográfico</item>
+        <item>Basalto</item>
+        <item>Estratos</item>
+        <item>Percurso</item>
     </string-array>
 </resources>

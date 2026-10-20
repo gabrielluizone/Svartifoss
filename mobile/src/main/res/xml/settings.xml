@@ -242,6 +242,19 @@
             android:summary="@string/setting_haptic_feedback_description"
             android:layout="@layout/pref_switch_item" />
 
+        <!-- Right under the switch it depends on: it only ever vibrates while haptic feedback is on,
+             so it greys out with it, and the reason is the row above rather than two sections away. -->
+        <ListPreference
+            android:defaultValue="off"
+            android:dependency="haptic_feedback"
+            android:key="wear_volume_haptics"
+            android:icon="@drawable/ic_volume_up"
+            android:title="@string/setting_wear_volume_haptics"
+            android:summary="%s"
+            android:entries="@array/wear_volume_haptics_entries"
+            android:entryValues="@array/wear_volume_haptics_values"
+            android:layout="@layout/pref_item" />
+
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="false"
             android:key="pause_on_swipe_exit"

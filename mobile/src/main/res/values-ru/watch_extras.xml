@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Толщина полосы громкости</string>
+    <string name="setting_wear_volume_thickness_description">Толщина линии полосы громкости, от 50% до 180% от стандартной. Даже толстые линии не заходят на край экрана.</string>
+    <string name="setting_wear_volume_haptics">Вибрация колёсика при громкости</string>
+    <string name="setting_wear_queue_dim_played">Затемнять прослушанные треки</string>
+    <string name="setting_wear_queue_dim_played_description">Приглушает уже сыгранные треки, чтобы выделить предстоящие.</string>
+    <string name="quick_block_lyric">Текст песни</string>
+    <string name="quick_block_lyric_description">Строка, которая сейчас поётся, и следующая из синхронизированного текста. Нажатие на часах открывает весь текст.</string>
+    <string name="quick_summary_lyric">Текущая и следующая строка</string>
+    <string name="setting_wear_progress_weight">Толщина кольца</string>
+    <string name="setting_wear_aod_night_dim">Ночное затемнение</string>
+    <string name="aod_control_night_dim">Ночное затемнение</string>
+    <string name="setting_wear_aod_shift">Сдвиг против выгорания</string>
+    <string name="aod_control_shift">Сдвиг против выгорания</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Выкл.</item>
+        <item>Каждые 5%</item>
+        <item>Каждые 5% и на пределах</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Тонкий</item>
+        <item>Обычный</item>
+        <item>Толстый</item>
+        <item>Очень толстый</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Выкл.</item>
+        <item>Ночь · 22:00–07:00</item>
+        <item>От сумерек до рассвета · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Мягкий</item>
+        <item>Обычный</item>
+        <item>Широкий</item>
+    </string-array>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Forma de la cápsula</string>
+    <string name="setting_wear_queue_cover_shape">Forma de la carátula</string>
+    <string name="wear_queue_shape_follow">Seguir el estilo de cola</string>
+    <string name="queue_shape_note_title">Estilo y formas</string>
+    <string name="queue_shape_note_description">El estilo define los colores y los efectos. Forma de la cápsula y Forma de la carátula solo cambian los contornos; Seguir el estilo de cola mantiene los de cada estilo.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Cápsula</item>
+        <item>Redondeada</item>
+        <item>Esquinas suaves</item>
+        <item>Cuadrada</item>
+        <item>Hoja</item>
+        <item>Bocadillo</item>
+        <item>Hexágono</item>
+    </string-array>
+</resources>

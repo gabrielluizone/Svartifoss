@@ -182,7 +182,6 @@
     <!-- Titles and controls for the dedicated Volume/Progress full screens. -->
     <string name="volume_screen_title">Volume</string>
     <string name="progress_screen_title">Progress</string>
-    <string name="progress_screen_speed_format" translatable="false">%1$.2fx</string>
     <string name="progress_screen_cancel_seek">Cancel seeking</string>
     <string name="progress_screen_skip_back">Skip back %1$d seconds</string>
     <string name="progress_screen_skip_forward">Skip forward %1$d seconds</string>
@@ -250,4 +249,5 @@
 
     <string name="metadata_about">About</string>
     <string name="metadata_source">Playing in</string>
+    <string name="quick_lyric_plain">These lyrics are not timed. Tap to read them.</string>
 </resources>

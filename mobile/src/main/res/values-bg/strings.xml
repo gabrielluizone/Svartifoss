@@ -720,6 +720,8 @@
         <item>Material (контур)</item>
         <item>AMOLED контроли</item>
         <item>Chrono (голям часовник)</item>
+        <item>Минутен пръстен</item>
+        <item>Базалтова рамка</item>
         <item>Плакат</item>
         <item>Студио</item>
         <item>Потапящ</item>
@@ -750,6 +752,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Цвят на винаги включения дисплей</string>
     <string-array name="wear_aod_color_entries">

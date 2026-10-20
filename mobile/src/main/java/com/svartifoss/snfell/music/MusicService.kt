@@ -61,6 +61,9 @@ import com.svartifoss.snfell.actions.playback.isShuffleOn
 import com.svartifoss.snfell.actions.playback.repeatModeCode
 import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.SleepTimerPolicy
+import com.svartifoss.snfell.common.PhoneAudioBlock
+import com.svartifoss.snfell.common.TransportRefusal
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.QueueEntry
 import com.svartifoss.snfell.common.LibraryEntry
@@ -146,6 +149,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         private const val MESSAGE_STOP_SELF = 0
         private val ACK_TIMEOUT_MS = TimeUnit.MINUTES.toMillis(3)
         private const val SEEK_DETECTION_THRESHOLD_MS = 1500L
+
+        /** How long after a volume command the phone is read back - see checkVolumeLanded. Long
+         *  enough for the audio service to have applied (or held) it. */
+        private const val VOLUME_LANDED_CHECK_MS = 500L
         private const val QUEUE_REFRESH_DEBOUNCE_MS = 600L
 
         /** Cap on resolving one neighbouring cover. Shorter than the queue's own, because this
@@ -207,6 +214,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         /** Smallest side a cover read from a content URI is decoded at - see [loadBitmapFromUri]. */
         private const val URI_ART_MIN_DECODE_PX = 512
         private const val MAX_TRACK_HISTORY_SIZE = 20
+
+        /** How many tracks the Recently played Tile is given, and how long after a track change. */
+        private const val RECENT_TRACKS_PUBLISHED = 5
+        private const val RECENT_TRACKS_DEBOUNCE_MS = 1_500L
 
         /** See [scheduleTrackHistorySave]. */
         private val TRACK_HISTORY_SAVE_INTERVAL_MS = TimeUnit.MINUTES.toMillis(20)
@@ -659,6 +670,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         actionHandlers = musicServiceComponentFactory.build(this).getActionHandlers()
 
         recentTrackHistory.addAll(TrackHistoryStorage.load(this))
+        scheduleRecentTracksPublication()
 
         // This service starts whenever media plays, making it the app's most reliable
         // background heartbeat for the sideload update check (throttled to once a day inside).
@@ -702,6 +714,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // fired this N times while the service lived, and afterwards kept calling into the
         // process through the dead entries for as long as it survived.
         contentResolver.registerContentObserver(Settings.System.CONTENT_URI, true, volumeContentObserver)
+        // Beside it and for the same reason - once per service.
+        androidx.core.content.ContextCompat.registerReceiver(this, interruptionFilterReceiver,
+                android.content.IntentFilter(NotificationManager.ACTION_INTERRUPTION_FILTER_CHANGED),
+                androidx.core.content.ContextCompat.RECEIVER_NOT_EXPORTED)
 
         if (!promoteToForeground()) {
             return
@@ -964,6 +980,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         compatController?.unregisterCallback(compatModeCallback)
         preferences.unregisterOnSharedPreferenceChangeListener(quickActionsPreferenceChanged)
         contentResolver.unregisterContentObserver(volumeContentObserver)
+        try {
+            unregisterReceiver(interruptionFilterReceiver)
+        } catch (e: IllegalArgumentException) {
+            // onCreate returned before registering it.
+        }
+        volumeCheckHandler.removeCallbacksAndMessages(null)
+        transportCheckHandler.removeCallbacksAndMessages(null)
+        recentTracksHandler.removeCallbacks(publishRecentTracks)
 
         active = false
 
@@ -1021,16 +1045,138 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private fun updateVolume(newVolume: Float) {
         val previousMediaController = currentMediaController ?: return
 
-        val maxVolume = previousMediaController.playbackInfo?.maxVolume ?: 0
-        val newAbsoluteVolume = (maxVolume * newVolume).toInt()
+        val newAbsoluteVolume = TransportCommands.absoluteVolume(previousMediaController, newVolume)
         currentVolume = newAbsoluteVolume
         previousMediaController.setVolumeTo(newAbsoluteVolume, 0)
+        checkVolumeLanded(previousMediaController, newAbsoluteVolume)
     }
 
     /** Applies one native session step so commands from stale, repeatable surfaces stay additive. */
     private fun adjustVolume(direction: Int) {
         if (direction != AudioManager.ADJUST_LOWER && direction != AudioManager.ADJUST_RAISE) return
-        currentMediaController?.adjustVolume(direction, 0)
+        val controller = currentMediaController ?: return
+        val before = controller.playbackInfo?.currentVolume
+        controller.adjustVolume(direction, 0)
+        if (direction == AudioManager.ADJUST_RAISE && before != null) {
+            checkVolumeLanded(controller, before + 1)
+        } else {
+            safeVolumeHeldAt = null
+        }
+    }
+
+    /**
+     * The volume a command asked for and the phone held back at the hearing-safety limit, or null.
+     *
+     * Android caps media volume through headphones until the person confirms a louder level *on
+     * the phone*, and a command sent with no UI flag - every one this app sends - is held there in
+     * silence: no dialog, nothing on the watch, a volume control that simply stops rising. There is
+     * no API that reports the limit, so it is inferred from its effect - see [checkVolumeLanded].
+     */
+    private var safeVolumeHeldAt: Int? = null
+    private val volumeCheckHandler = Handler(Looper.getMainLooper())
+
+    /**
+     * Reads back, a moment after a volume command, whether it landed - and if more was asked for
+     * than applied with headphones as the output, records the hold so the watch can say why the
+     * volume will go no higher. A later command that lands, or one asking for less, clears it.
+     */
+    private fun checkVolumeLanded(controller: MediaController, requested: Int) {
+        volumeCheckHandler.removeCallbacksAndMessages(null)
+        volumeCheckHandler.postDelayed({
+            if (controller != currentMediaController) return@postDelayed
+            val info = controller.playbackInfo ?: return@postDelayed
+            if (info.playbackType != MediaController.PlaybackInfo.PLAYBACK_TYPE_LOCAL) {
+                safeVolumeHeldAt = null
+                return@postDelayed
+            }
+            val applied = info.currentVolume
+            val held = PhoneAudioBlock.heldBySafetyLimit(
+                    requested = requested.coerceAtMost(info.maxVolume),
+                    applied = applied,
+                    headphonesOutput = headphonesAreOutput())
+            val wasHeld = safeVolumeHeldAt != null
+            safeVolumeHeldAt = if (held) requested else null
+            if (held != wasHeld) {
+                Timber.i("Volume %d of %d asked for, %d applied: %s", requested, info.maxVolume, applied,
+                        if (held) "held by the hearing-safety limit" else "landed")
+                buildMusicStateAndTransmit(currentMediaController)
+            }
+        }, VOLUME_LANDED_CHECK_MS)
+    }
+
+    /** Whether the phone's audio goes to headphones - the only output the safety limit covers. */
+    private fun headphonesAreOutput(): Boolean {
+        val audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager ?: return false
+        val headphoneTypes = buildSet {
+            add(android.media.AudioDeviceInfo.TYPE_WIRED_HEADSET)
+            add(android.media.AudioDeviceInfo.TYPE_WIRED_HEADPHONES)
+            add(android.media.AudioDeviceInfo.TYPE_BLUETOOTH_A2DP)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                add(android.media.AudioDeviceInfo.TYPE_USB_HEADSET)
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                add(android.media.AudioDeviceInfo.TYPE_BLE_HEADSET)
+            }
+        }
+        return try {
+            audioManager.getDevices(AudioManager.GET_DEVICES_OUTPUTS).any { it.type in headphoneTypes }
+        } catch (e: RuntimeException) {
+            false
+        }
+    }
+
+    /**
+     * Whether Do Not Disturb is silencing media right now.
+     *
+     * Total silence always does. Priority mode does when its policy leaves media out, which the
+     * policy can only say from Android 9 - before that, priority mode let media through. "Alarms
+     * only" lets media through on every version this app runs on. The policy read is guarded: it
+     * needs no permission on the versions tested, but a refusal must not take the state down with
+     * it, and an unreadable policy is reported as not silencing - a wrong warning is worse than
+     * none.
+     */
+    private fun dndSilencesMedia(): Boolean {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+                ?: return false
+        return when (notificationManager.currentInterruptionFilter) {
+            NotificationManager.INTERRUPTION_FILTER_NONE -> true
+            NotificationManager.INTERRUPTION_FILTER_PRIORITY ->
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && try {
+                    (notificationManager.notificationPolicy.priorityCategories and
+                            NotificationManager.Policy.PRIORITY_CATEGORY_MEDIA) == 0
+                } catch (e: RuntimeException) {
+                    false
+                }
+            else -> false
+        }
+    }
+
+    /** What may be keeping [controller]'s playback from being heard - see [PhoneAudioBlock]. */
+    private fun phoneAudioBlock(controller: MediaController): PhoneAudioBlock {
+        val info = controller.playbackInfo
+        val local = info == null || info.playbackType == MediaController.PlaybackInfo.PLAYBACK_TYPE_LOCAL
+        if (!local) return PhoneAudioBlock.NONE
+        val audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
+                ?: return PhoneAudioBlock.NONE
+        val held = safeVolumeHeldAt?.let { requested ->
+            headphonesAreOutput() && (info?.currentVolume ?: 0) < requested
+        } == true
+        return PhoneAudioBlock.resolve(
+                localPlayback = true,
+                dndSilencesMedia = dndSilencesMedia(),
+                streamMuted = audioManager.isStreamMute(AudioManager.STREAM_MUSIC),
+                streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC),
+                safeVolumeHeld = held)
+    }
+
+    /** Do Not Disturb has no other way to reach the watch: nothing about playback changes with it. */
+    private val interruptionFilterReceiver = object : android.content.BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            val controller = currentMediaController ?: return
+            if (phoneAudioBlock(controller).code != previousMusicState?.audioBlock) {
+                buildMusicStateAndTransmit(controller)
+            }
+        }
     }
 
     private fun seekTo(positionMs: Long) {
@@ -1072,7 +1218,24 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 ((controller.playbackState?.actions ?: 0L) and PlaybackState.ACTION_SEEK_TO) != 0L
         if (!advertisesSeek) {
             pendingSeek = null
+            val issuedAt = android.os.SystemClock.elapsedRealtime()
+            val positionBefore = livePositionMs(controller)
             controller.transportControls.seekTo(target)
+            // Sent regardless (see above); checked afterwards, because a session that does not
+            // claim seeking is the likeliest to ignore it, and the watch draws nothing for it.
+            transportCheckHandler.removeCallbacksAndMessages(null)
+            transportCheckHandler.postDelayed({
+                if (controller != currentMediaController) return@postDelayed
+                val elapsed = android.os.SystemClock.elapsedRealtime() - issuedAt
+                val playing = controller.isPlaying()
+                val speed = controller.playbackState?.playbackSpeed?.takeIf { it > 0f } ?: 1f
+                val expected = positionBefore?.let {
+                    if (playing) it + (elapsed * speed).toLong() else it
+                }
+                if (TransportRefusal.seekRefused(false, target, expected, livePositionMs(controller))) {
+                    reportRefused(TransportRefusal.SEEK, controller)
+                }
+            }, TransportRefusal.VERIFY_MS)
             return
         }
 
@@ -1184,6 +1347,24 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     /** Issued unconditionally, like every transport command in this switch - a session that does
      *  not implement ACTION_SET_PLAYBACK_SPEED reports the same speed back on its next state,
      *  which is a harmless no-op rather than a reason to withhold the command. */
+    /**
+     * What [state] says about the track for a sleep timer waiting for its end, or null when no
+     * track is readable. The position is dated back by the state's own age, so the reading is
+     * true at the moment it names - see [EndOfTrackSleep.Playback.positionAt].
+     */
+    private fun sleepTimerReadingOf(controller: MediaController?, state: MusicState): EndOfTrackSleep.Playback? {
+        val meta = controller?.metadata ?: return null
+        val now = android.os.SystemClock.elapsedRealtime()
+        return EndOfTrackSleep.Playback(
+                trackKey = trackKeyOf(meta),
+                positionMs = state.positionMs,
+                durationMs = state.durationMs,
+                playing = state.playing,
+                speed = state.playbackSpeed,
+                atRealtimeMs = now - state.positionAgeMs.coerceAtLeast(0L),
+                live = state.live)
+    }
+
     /** The timer ran out: pause what is playing. A session that is already paused is left alone. */
     private fun pauseForSleepTimer() {
         val controller = currentMediaController
@@ -1201,13 +1382,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      * minute. 0 means none is running - which is also what ending sends.
      */
     private fun sendSleepTimerState() {
-        val remainingMs = sleepTimer.remainingMs()
+        val payload = SleepTimerPolicy.encodeState(sleepTimer.remainingMs(), sleepTimer.atTrackEnd)
         lifecycleScope.launch {
             try {
                 Wearable.getMessageClient(applicationContext).sendMessageToNearestClient(
                         Wearable.getNodeClient(applicationContext),
                         CommPaths.MESSAGE_SLEEP_TIMER_STATE,
-                        ByteBuffer.allocate(8).putLong(remainingMs).array())
+                        payload)
             } catch (e: Exception) {
                 // Out of range. The watch asks again when its panel next opens.
                 Timber.w(e, "Could not send the sleep timer state")
@@ -1268,18 +1449,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private fun togglePlayPause() {
         val controller = currentMediaController
         if (controller != null) {
-            // Call the session's transport controls directly (play()/pause()) instead of
-            // dispatching a PLAY_PAUSE key event. A key event is routed through the media-button
-            // dispatcher and the session's onMediaButtonEvent before reaching onPlay/onPause - an
-            // extra hop that made the watch button feel slow next to the system media controls,
-            // which call the transport controls straight away. We already track playback state, so
-            // resolve the toggle here.
-            val isPlaying = controller.playbackState?.state == PlaybackState.STATE_PLAYING
-            if (isPlaying) {
-                controller.transportControls.pause()
-            } else {
-                controller.transportControls.play()
-            }
+            // Shared with DirectTransportControl so a press does the same whichever carries it.
+            TransportCommands.togglePlayPause(controller)
         } else {
             // Nothing is playing (the watch's "Nothing playing" screen): route a PLAY key through
             // the audio framework so the most recent media app resumes - the same thing the
@@ -1673,6 +1844,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             val maxVolume = mediaController.playbackInfo?.maxVolume ?: 0
             musicStateBuilder.volume =
                     if (maxVolume > 0) currentVolume.toFloat() / maxVolume else 0f
+
+            musicStateBuilder.audioBlock = phoneAudioBlock(mediaController).code
         }
 
 
@@ -1691,6 +1864,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val backdropArtChanged = !backdropArt.contentEqualsNullable(previousBackdropArtBytes)
 
         val musicState = musicStateBuilder.build()
+
+        // Before the dedupe below, deliberately: a timer waiting for the end of the track needs
+        // every reading, including the position-only ones that are not worth a transmission.
+        if (sleepTimer.atTrackEnd) {
+            sleepTimer.observe(sleepTimerReadingOf(mediaController, musicState))
+        }
 
         // MediaMetadata is immutable, so as long as the source app hasn't published a new
         // MediaMetadata object, repeated getBitmap() calls return the same Bitmap reference -
@@ -2789,6 +2968,59 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                     controller?.metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_ID),
                     controller?.metadata?.getString(MediaMetadata.METADATA_KEY_TITLE))
 
+    /**
+     * Skips, then checks the player answered - and tells the watch when it did not and does not
+     * claim it could (see [TransportRefusal]). The skip is always sent: a session's advertised
+     * actions are often wrong, and only the outcome is evidence.
+     *
+     * Every skip that reaches this service comes through here - the watch's buttons and gestures,
+     * the Tile, the watch's media session - so the answer does not depend on which was pressed.
+     */
+    fun skipVerified(next: Boolean) {
+        val controller = currentMediaController ?: return
+        val advertised = ((controller.playbackState?.actions ?: 0L) and
+                (if (next) PlaybackState.ACTION_SKIP_TO_NEXT else PlaybackState.ACTION_SKIP_TO_PREVIOUS)) != 0L
+        val before = playbackIdentity(controller)
+        val positionBefore = livePositionMs(controller)
+        if (next) controller.transportControls.skipToNext() else controller.transportControls.skipToPrevious()
+        if (advertised) return
+        transportCheckHandler.removeCallbacksAndMessages(null)
+        transportCheckHandler.postDelayed({
+            if (controller != currentMediaController) return@postDelayed
+            val refused = TransportRefusal.skipRefused(
+                    advertised = false,
+                    trackChanged = playbackIdentity(controller) != before,
+                    restartedTrack = !next &&
+                            TransportRefusal.restartedTrack(positionBefore, livePositionMs(controller)))
+            if (refused) {
+                reportRefused(if (next) TransportRefusal.SKIP_NEXT else TransportRefusal.SKIP_PREVIOUS,
+                        controller)
+            }
+        }, TransportRefusal.VERIFY_MS)
+    }
+
+    /** One check at a time: a newer press supersedes what the last one was waiting to find out. */
+    private val transportCheckHandler = Handler(Looper.getMainLooper())
+
+    private fun reportRefused(refusal: TransportRefusal, controller: MediaController) {
+        Timber.i("%s did not carry out %s and does not claim to", controller.packageName, refusal)
+        // The watch drew the skip (or the seek) the moment it was pressed, and nothing has changed
+        // since, so this service's dedupe would never send the state that corrects it. Forgetting
+        // the last one makes the next build go out whole.
+        previousMusicState = null
+        buildMusicStateAndTransmit(controller)
+        lifecycleScope.launch {
+            try {
+                Wearable.getMessageClient(applicationContext).sendMessageToNearestClient(
+                        Wearable.getNodeClient(applicationContext),
+                        CommPaths.MESSAGE_ACTION_REFUSED,
+                        byteArrayOf(refusal.code.toByte()))
+            } catch (e: Exception) {
+                Timber.w(e, "Could not tell the watch about a refused %s", refusal)
+            }
+        }
+    }
+
     /** Removes one entry from a watch-managed deletable custom list (currently just search
      *  history) and re-pushes the updated list so the watch's menu updates immediately. */
     private fun onCustomMenuItemDeleted(customListItemAction: CustomListItemAction) {
@@ -2846,10 +3078,48 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 recentTrackHistory.removeLast()
             }
             scheduleTrackHistorySave()
+            scheduleRecentTracksPublication()
         }
 
         lastTrackArtist = newArtist
         lastTrackTitle = newTitle
+    }
+
+    private val recentTracksHandler = Handler(Looper.getMainLooper())
+    private val publishRecentTracks = Runnable { publishRecentTracksNow() }
+
+    /** Collapses a run of skips into one publication - see [CommPaths.DATA_RECENT_TRACKS]. */
+    private fun scheduleRecentTracksPublication() {
+        recentTracksHandler.removeCallbacks(publishRecentTracks)
+        recentTracksHandler.postDelayed(publishRecentTracks, RECENT_TRACKS_DEBOUNCE_MS)
+    }
+
+    /**
+     * Publishes the newest few tracks for the watch's "Recently played" Tile. Entry ids are plain
+     * indices, but the Tile never sends one back: it plays a row by searching for its own artist
+     * and title, so a history that moved on between this put and a tap cannot make it play the
+     * wrong row.
+     */
+    private fun publishRecentTracksNow() {
+        val entries = recentTrackHistory.take(RECENT_TRACKS_PUBLISHED).mapIndexed { index, entry ->
+            CustomList.ListEntry.newBuilder()
+                    .setEntryId(index.toString())
+                    .setEntryTitle(entry.title)
+                    .setEntrySubtitle(entry.artist)
+                    .build()
+        }
+        val request = PutDataRequest.create(CommPaths.DATA_RECENT_TRACKS)
+        request.data = CustomList.newBuilder()
+                .setListId(CustomLists.HISTORY)
+                // Fixed rather than the time: unchanged history then makes byte-identical bytes,
+                // which the Data Layer does not deliver again - a service restart costs nothing.
+                .setListTimestamp(0L)
+                .addAllActions(entries)
+                .build()
+                .toByteArray()
+        lifecycleScope.launchWithPlayServicesErrorHandling(this) {
+            Wearable.getDataClient(this@MusicService).putDataItem(request).await()
+        }
     }
 
     /**
@@ -3941,6 +4211,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
             CommPaths.MESSAGE_SET_SLEEP_TIMER -> {
                 sleepTimer.set(ByteBuffer.wrap(event.data).long.toInt())
+                // Waiting for the end of the track needs a first reading of it now, not at the
+                // player's next state - which, for one that publishes only on events, may not come
+                // before the track is over.
+                if (sleepTimer.atTrackEnd) currentMediaController?.let(::buildMusicStateAndTransmit)
             }
             CommPaths.MESSAGE_REQUEST_SLEEP_TIMER -> {
                 sendSleepTimerState()
@@ -3949,10 +4223,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 togglePlayPause()
             }
             CommPaths.MESSAGE_SKIP_NEXT -> {
-                currentMediaController?.transportControls?.skipToNext()
+                skipVerified(next = true)
             }
             CommPaths.MESSAGE_SKIP_PREVIOUS -> {
-                currentMediaController?.transportControls?.skipToPrevious()
+                skipVerified(next = false)
             }
             CommPaths.MESSAGE_QUICK_ACTION -> {
                 executeQuickAction(String(event.data, Charsets.UTF_8))
@@ -4076,7 +4350,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 other.hasBackdropArt != hasBackdropArt ||
                 other.backdropArtPending != backdropArtPending ||
                 // Settled after a wait of its own, so it changes when nothing else does.
-                other.live != live
+                other.live != live ||
+                // Changes with a setting on the phone, not with playback, so nothing else moves.
+                other.audioBlock != audioBlock
                 || other.mediaActionsList != mediaActionsList
         ) {
             return false
@@ -4098,9 +4374,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
     private val volumeContentObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
         override fun onChange(selfChange: Boolean) {
-            val newVolume = currentMediaController?.playbackInfo?.currentVolume
-            if (newVolume != currentVolume) {
-                buildMusicStateAndTransmit(currentMediaController)
+            val controller = currentMediaController
+            val newVolume = controller?.playbackInfo?.currentVolume
+            // A mute, or a volume the safety limit stopped holding, can change what the watch is
+            // told without the session's own volume moving.
+            if (newVolume != currentVolume || (controller != null &&
+                            phoneAudioBlock(controller).code != previousMusicState?.audioBlock)) {
+                buildMusicStateAndTransmit(controller)
             }
         }
     }

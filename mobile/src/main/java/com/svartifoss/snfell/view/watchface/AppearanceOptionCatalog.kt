@@ -25,11 +25,11 @@ internal object AppearanceOptionCatalog {
                     R.array.wear_accent_floor_extra_values),
             Extension("wear_up_next_pill_style", R.array.wear_up_next_pill_extra_entries,
                     R.array.wear_up_next_pill_extra_values)) +
-            // All four cover pickers, not only the two that asked: they share one vocabulary and
-            // one public value set, so a theme carrying a new shape on any of them has to read as
-            // a named choice there rather than as its raw stored value.
+            // Every cover picker, not only the two that asked: they share one vocabulary, so a
+            // theme carrying a new shape on any of them has to read as a named choice there rather
+            // than as its raw stored value. The queue's is the fifth.
             listOf("wear_carousel_card_shape", "wear_note_cover_shape", "wear_chat_cover_shape",
-                    "wear_metadata_cover_shape").map { key ->
+                    "wear_metadata_cover_shape", "wear_queue_cover_shape").map { key ->
                 Extension(key, R.array.wear_cover_shape_extra_entries,
                         R.array.wear_cover_shape_extra_values)
             }

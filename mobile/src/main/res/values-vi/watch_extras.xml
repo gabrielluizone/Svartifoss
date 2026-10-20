@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Độ dày thanh âm lượng</string>
+    <string name="setting_wear_volume_thickness_description">Độ dày nét của thanh âm lượng, từ 50% đến 180% mặc định. Nét dày hơn vẫn cách xa viền màn hình.</string>
+    <string name="setting_wear_volume_haptics">Rung núm xoay khi chỉnh âm lượng</string>
+    <string name="setting_wear_queue_dim_played">Làm mờ bài đã phát</string>
+    <string name="setting_wear_queue_dim_played_description">Làm mờ các mục đã phát để những bài sắp tới nổi bật hơn.</string>
+    <string name="quick_block_lyric">Lời bài hát</string>
+    <string name="quick_block_lyric_description">Dòng đang hát và dòng tiếp theo, từ lời bài hát đồng bộ. Chạm vào đó trên đồng hồ để mở toàn bộ lời.</string>
+    <string name="quick_summary_lyric">Dòng hiện tại và dòng tiếp theo</string>
+    <string name="setting_wear_progress_weight">Độ dày vòng</string>
+    <string name="setting_wear_aod_night_dim">Giảm sáng ban đêm</string>
+    <string name="aod_control_night_dim">Giảm sáng ban đêm</string>
+    <string name="setting_wear_aod_shift">Dịch chuyển chống burn-in</string>
+    <string name="aod_control_shift">Dịch chuyển chống burn-in</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Tắt</item>
+        <item>Mỗi 5%</item>
+        <item>Mỗi 5% và ở giới hạn</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Mỏng</item>
+        <item>Thường</item>
+        <item>Dày</item>
+        <item>Rất dày</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Tắt</item>
+        <item>Ban đêm · 22:00–07:00</item>
+        <item>Từ hoàng hôn đến bình minh · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Nhẹ</item>
+        <item>Thường</item>
+        <item>Rộng</item>
+    </string-array>
+</resources>

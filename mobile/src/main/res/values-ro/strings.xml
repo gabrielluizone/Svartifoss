@@ -639,6 +639,8 @@
         <item>Material (conturat)</item>
         <item>Comenzi AMOLED</item>
         <item>Chrono (ceas mare)</item>
+        <item>Inel de minute</item>
+        <item>Ramă de bazalt</item>
         <item>Poster</item>
         <item>Studio</item>
         <item>Immersive</item>
@@ -669,6 +671,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Culoare mereu activ</string>
     <string-array name="wear_aod_color_entries">

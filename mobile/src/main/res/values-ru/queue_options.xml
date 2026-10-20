@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Форма плашки</string>
+    <string name="setting_wear_queue_cover_shape">Форма обложки</string>
+    <string name="wear_queue_shape_follow">Как в стиле очереди</string>
+    <string name="queue_shape_note_title">Стиль и формы</string>
+    <string name="queue_shape_note_description">Стиль задаёт цвета и эффекты. Форма плашки и Форма обложки меняют только контуры; «Как в стиле очереди» сохраняет контуры каждого стиля.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Капсула</item>
+        <item>Скруглённая</item>
+        <item>Мягкие углы</item>
+        <item>Квадратная</item>
+        <item>Лист</item>
+        <item>Речевой пузырь</item>
+        <item>Шестиугольник</item>
+    </string-array>
+</resources>

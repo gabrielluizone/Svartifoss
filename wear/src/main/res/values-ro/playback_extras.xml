@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Finalul piesei</string>
+    <string name="quick_sleep_track_end_description">Temporizator, pune pauză la finalul acestei piese. Atinge pentru a-l opri</string>
+    <string name="queue_position">Piesa %1$d din %2$d</string>
+    <string name="progress_screen_speed_description">Viteză de redare %1$s. Atinge pentru următoarea, ține apăsat pentru reglaj fin</string>
+    <string name="progress_screen_speed_slower">Mai lent</string>
+    <string name="progress_screen_speed_faster">Mai rapid</string>
+    <string name="progress_screen_speed_reset">Viteză normală</string>
+    <string name="complication_playback_label">Redare și pauză</string>
+    <string name="complication_playback_idle">Redă</string>
+    <string name="complication_playback_idle_description">Nu se redă nimic. Atinge pentru a relua ultima aplicație</string>
+    <string name="complication_playback_play_description">În pauză: %1$s. Atinge pentru a reda</string>
+    <string name="complication_playback_pause_description">Se redă: %1$s. Atinge pentru pauză</string>
+    <string name="audio_block_dnd">Telefonul este în Nu deranja</string>
+    <string name="audio_block_muted">Volumul media al telefonului este oprit</string>
+    <string name="audio_block_safe_volume">Menținut la un nivel sigur. Mărește o dată pe telefon pentru a confirma</string>
+    <string name="refused_skip_app">%1$s nu permite acum trecerea la altă piesă</string>
+    <string name="refused_skip">Această aplicație nu permite acum trecerea la altă piesă</string>
+    <string name="refused_seek_app">%1$s nu permite acum derularea</string>
+    <string name="refused_seek">Această aplicație nu permite acum derularea</string>
+    <string name="tile_resume">Reia ultima aplicație</string>
+    <string name="tile_resume_hint">Redarea reia ultima aplicație</string>
+    <string name="recent_tile_title">Redate recent</string>
+    <string name="recent_tile_description">Ultimele piese ascultate, la o atingere de a le reda din nou</string>
+    <string name="recent_tile_empty">Nimic redat încă</string>
+    <string name="recent_tile_play_description">Redă din nou %1$s</string>
+</resources>

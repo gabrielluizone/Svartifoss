@@ -2,6 +2,7 @@ package com.svartifoss.snfell.watch.view.progress
 
 import android.os.SystemClock
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.svartifoss.snfell.common.PlaybackPositionEstimate
@@ -9,6 +10,8 @@ import com.svartifoss.snfell.common.PlaybackSpeeds
 import com.svartifoss.snfell.watch.communication.PhoneConnection
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -84,10 +87,32 @@ class ProgressViewModel @Inject constructor(
 
     private val speedTaps = PlaybackSpeeds.TapMemory { SystemClock.elapsedRealtime() }
 
+    /**
+     * The speed a press just chose, shown in place of the reported one while the press is still
+     * remembered; null otherwise. The phone answers a speed change after a Bluetooth round trip,
+     * and a fine control whose number only moved when that answer arrived would read as one that
+     * ignored the crown - see [PlaybackSpeeds.TapMemory] for the same reasoning about the ladder.
+     */
+    val chosenSpeed = MutableLiveData<Float?>(null)
+    private var forgetChoice: Job? = null
+
     /** Keeps playback speed available without competing with the six primary seek buttons. */
-    fun cycleSpeed() {
-        val next = speedTaps.next(state.value?.speed ?: 1f)
-        launchSilently { phoneConnection.sendPlaybackSpeed(next) }
+    fun cycleSpeed() = sendSpeed(speedTaps.next(state.value?.speed ?: 1f))
+
+    /** Moves the speed [steps] tenths - the fine control's buttons and the crown while it is open. */
+    fun stepSpeedFine(steps: Int) = sendSpeed(speedTaps.fineStep(state.value?.speed ?: 1f, steps))
+
+    /** Back to normal speed. */
+    fun resetSpeed() = sendSpeed(speedTaps.set(1f))
+
+    private fun sendSpeed(speed: Float) {
+        chosenSpeed.value = speed
+        forgetChoice?.cancel()
+        forgetChoice = viewModelScope.launch {
+            delay(PlaybackSpeeds.TAP_MEMORY_MS)
+            chosenSpeed.value = null
+        }
+        launchSilently { phoneConnection.sendPlaybackSpeed(speed) }
     }
 
     /** Absolute seek from a ring drag - non-suspend and self-dispatching, same as `sendVolume`. */

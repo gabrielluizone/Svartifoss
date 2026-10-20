@@ -722,6 +722,8 @@
         <item>Material (obris)</item>
         <item>AMOLED kontrole</item>
         <item>Chrono (veliki sat)</item>
+        <item>Minutni prsten</item>
+        <item>Bazaltni okvir</item>
         <item>Poster</item>
         <item>Studio</item>
         <item>Imerzivno</item>
@@ -752,6 +754,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Boja uvijek uključenog zaslona</string>
     <string-array name="wear_aod_color_entries">

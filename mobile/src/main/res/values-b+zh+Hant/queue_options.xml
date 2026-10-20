@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">膠囊形狀</string>
+    <string name="setting_wear_queue_cover_shape">封面形狀</string>
+    <string name="wear_queue_shape_follow">跟隨佇列樣式</string>
+    <string name="queue_shape_note_title">樣式與形狀</string>
+    <string name="queue_shape_note_description">樣式決定顏色和效果。膠囊形狀和封面形狀只改變輪廓；「跟隨佇列樣式」保留每種樣式自己的輪廓。</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>膠囊</item>
+        <item>圓角</item>
+        <item>柔和圓角</item>
+        <item>方形</item>
+        <item>葉形</item>
+        <item>對話泡泡</item>
+        <item>六邊形</item>
+    </string-array>
+</resources>

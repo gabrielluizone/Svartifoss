@@ -66,6 +66,8 @@
         <item>Treden</item>
         <item>Snoep</item>
         <item>Geest</item>
+        <item>Golf</item>
+        <item>Liniaal</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Dubbele rand</item>
@@ -76,6 +78,8 @@
         <item>Middenwijzerplaat</item>
         <item>Bovenste halo</item>
         <item>Onderste halo</item>
+        <item>Middenpilaar</item>
+        <item>Basaltzuilen</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Dubbele ring</item>
@@ -88,6 +92,9 @@
         <item>Naald</item>
         <item>Afwisselend</item>
         <item>Vonk</item>
+        <item>Golf</item>
+        <item>Nummerminuten</item>
+        <item>Zeshoekige cellen</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Rand van bezel</item>
@@ -101,6 +108,8 @@
         <item>Dubbel spoor</item>
         <item>Open links</item>
         <item>Open rechts</item>
+        <item>Boog boven</item>
+        <item>Boog onder</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Compacte pil</item>
@@ -124,6 +133,7 @@
         <item>Dubbele tijdlijn</item>
         <item>Segmenten (onder)</item>
         <item>Middenstapel</item>
+        <item>Golf</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Zacht</item>
@@ -155,5 +165,8 @@
         <item>Bubbel</item>
         <item>Chroom</item>
         <item>Holografisch</item>
+        <item>Basalt</item>
+        <item>Lagen</item>
+        <item>Route</item>
     </string-array>
 </resources>

@@ -66,6 +66,8 @@
         <item>Askelmat</item>
         <item>Karkki</item>
         <item>Aave</item>
+        <item>Aalto</item>
+        <item>Viivoitin</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Kaksoisreuna</item>
@@ -76,6 +78,8 @@
         <item>Keskivalitsin</item>
         <item>Yläkehä</item>
         <item>Alakehä</item>
+        <item>Keskipilari</item>
+        <item>Basalttipylväät</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Kaksoisrengas</item>
@@ -88,6 +92,9 @@
         <item>Neula</item>
         <item>Vuorotteleva</item>
         <item>Kipinä</item>
+        <item>Aalto</item>
+        <item>Kappaleen minuutit</item>
+        <item>Kuusikulmiot</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Kehyksen reuna</item>
@@ -101,6 +108,8 @@
         <item>Kaksoisrata</item>
         <item>Avoin vasemmalta</item>
         <item>Avoin oikealta</item>
+        <item>Ylökaari</item>
+        <item>Alakaari</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Kompakti kapseli</item>
@@ -124,6 +133,7 @@
         <item>Kaksoisaikajana</item>
         <item>Segmentit (alhaalla)</item>
         <item>Keskipino</item>
+        <item>Aalto</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Pehmeä</item>
@@ -155,5 +165,8 @@
         <item>Kupla</item>
         <item>Kromi</item>
         <item>Holografinen</item>
+        <item>Basaltti</item>
+        <item>Kerrokset</item>
+        <item>Reitti</item>
     </string-array>
 </resources>

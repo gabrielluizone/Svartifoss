@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Kapszula formája</string>
+    <string name="setting_wear_queue_cover_shape">Borító formája</string>
+    <string name="wear_queue_shape_follow">Lejátszási sor stílusa szerint</string>
+    <string name="queue_shape_note_title">Stílus és formák</string>
+    <string name="queue_shape_note_description">A stílus határozza meg a színeket és az effektusokat. A Kapszula formája és a Borító formája csak a körvonalakat változtatja; a Lejátszási sor stílusa szerint megtartja az egyes stílusok sajátját.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Kapszula</item>
+        <item>Lekerekített</item>
+        <item>Lágy sarkok</item>
+        <item>Négyzet</item>
+        <item>Levél</item>
+        <item>Szövegbuborék</item>
+        <item>Hatszög</item>
+    </string-array>
+</resources>

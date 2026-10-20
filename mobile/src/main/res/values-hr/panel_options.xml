@@ -66,6 +66,8 @@
         <item>Stepenice</item>
         <item>Slatkiš</item>
         <item>Duh</item>
+        <item>Val</item>
+        <item>Ravnalo</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Dvostruki rub</item>
@@ -76,6 +78,8 @@
         <item>Središnji brojčanik</item>
         <item>Gornja aureola</item>
         <item>Donja aureola</item>
+        <item>Središnji stup</item>
+        <item>Bazaltni stupovi</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Dvostruki prsten</item>
@@ -88,6 +92,9 @@
         <item>Igla</item>
         <item>Naizmjenično</item>
         <item>Iskra</item>
+        <item>Val</item>
+        <item>Minute pjesme</item>
+        <item>Šesterokutne ćelije</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Rub okvira</item>
@@ -101,6 +108,8 @@
         <item>Dvostruka staza</item>
         <item>Otvoreno s lijeve strane</item>
         <item>Otvoreno s desne strane</item>
+        <item>Gornji luk</item>
+        <item>Donji luk</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Kompaktna kapsula</item>
@@ -124,6 +133,7 @@
         <item>Dvostruka vremenska crta</item>
         <item>Segmenti (dno)</item>
         <item>Središnji stog</item>
+        <item>Val</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Meko</item>
@@ -155,5 +165,8 @@
         <item>Mjehurić</item>
         <item>Krom</item>
         <item>Holografski</item>
+        <item>Bazalt</item>
+        <item>Slojevi</item>
+        <item>Ruta</item>
     </string-array>
 </resources>

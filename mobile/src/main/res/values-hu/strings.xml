@@ -741,6 +741,8 @@ Ha ezt tapasztalja, bekapcsolhatja ezt az opciót, hogy ambient módban teljesen
         <item>Material (körvonalas)</item>
         <item>AMOLED-vezérlők</item>
         <item>Chrono (nagy óra)</item>
+        <item>Percgyűrű</item>
+        <item>Bazaltkeret</item>
         <item>Poszter</item>
         <item>Stúdió</item>
         <item>Magával ragadó</item>
@@ -771,6 +773,8 @@ Ha ezt tapasztalja, bekapcsolhatja ezt az opciót, hogy ambient módban teljesen
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Mindig bekapcsolt szín</string>
     <string-array name="wear_aod_color_entries">

@@ -30,6 +30,8 @@ internal enum class AodControl {
     COLOR_MODE,
     CUSTOM_COLOR,
     INTENSITY,
+    NIGHT_DIM,
+    SHIFT,
     SHOW_ART,
     SHOW_CLOCK,
     SHOW_TRACK_INFO,
@@ -100,7 +102,7 @@ internal object AodEditorModel {
             "note", "verse", "metadata", "ribbon", "frame")
 
     /** Ambient styles that draw no artwork at all, so its three controls have nothing to act on. */
-    val ARTLESS_STYLES: Set<String> = setOf("chrono", "eclipse", "artist")
+    val ARTLESS_STYLES: Set<String> = setOf("chrono", "minute_ring", "hex_frame", "eclipse", "artist")
 
     // Artist is deliberately absent from VISUAL_STYLES above and present here, which together say
     // the same thing chrono's entries do: its ambient variant is two lines of type on black. It
@@ -124,6 +126,15 @@ internal object AodEditorModel {
             AodControl.ART_TREATMENT,
             AodControl.ART_OPACITY)
 
+    /**
+     * The two ambient settings that are the user's own rather than per-face: they describe how the
+     * panel behaves (when it dims, how far it moves) and not what it looks like, and a scoped key
+     * would join the public theme contract. See MiscPreferences.WEAR_AOD_NIGHT_DIM.
+     */
+    val globalKeys: Set<String> = setOf(
+            MiscPreferences.WEAR_AOD_NIGHT_DIM.key,
+            MiscPreferences.WEAR_AOD_SHIFT.key)
+
     val specs: List<AodSettingSpec> = listOf(
             // The style leads because it is the page's subject rather than one setting among many:
             // it decides which of the controls below apply at all.
@@ -146,6 +157,17 @@ internal object AodEditorModel {
                     AodSlot.IDENTITY,
                     AodControl.INTENSITY,
                     R.string.aod_control_brightness),
+
+            choice(
+                    MiscPreferences.WEAR_AOD_NIGHT_DIM,
+                    AodSlot.IDENTITY,
+                    AodControl.NIGHT_DIM,
+                    R.string.aod_control_night_dim),
+            choice(
+                    MiscPreferences.WEAR_AOD_SHIFT,
+                    AodSlot.IDENTITY,
+                    AodControl.SHIFT,
+                    R.string.aod_control_shift),
 
             element(
                     MiscPreferences.WEAR_AOD_SHOW_ART,

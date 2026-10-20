@@ -66,6 +66,8 @@
         <item>Steg</item>
         <item>Godis</item>
         <item>Spöke</item>
+        <item>Våg</item>
+        <item>Linjal</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Dubbel kant</item>
@@ -76,6 +78,8 @@
         <item>Mitturtavla</item>
         <item>Övre halo</item>
         <item>Nedre halo</item>
+        <item>Mittpelare</item>
+        <item>Basaltpelare</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Dubbel ring</item>
@@ -88,6 +92,9 @@
         <item>Nål</item>
         <item>Växlande</item>
         <item>Gnista</item>
+        <item>Våg</item>
+        <item>Spårets minuter</item>
+        <item>Sexhörningsceller</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Boettkant</item>
@@ -101,6 +108,8 @@
         <item>Dubbelt spår</item>
         <item>Öppen till vänster</item>
         <item>Öppen till höger</item>
+        <item>Övre båge</item>
+        <item>Nedre båge</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Kompakt kapsel</item>
@@ -124,6 +133,7 @@
         <item>Dubbel tidslinje</item>
         <item>Segment (nedtill)</item>
         <item>Mittstapel</item>
+        <item>Våg</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Mjuk</item>
@@ -155,5 +165,8 @@
         <item>Bubbla</item>
         <item>Krom</item>
         <item>Holografisk</item>
+        <item>Basalt</item>
+        <item>Lager</item>
+        <item>Rutt</item>
     </string-array>
 </resources>

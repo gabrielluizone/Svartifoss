@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">سُمك شريط الصوت</string>
+    <string name="setting_wear_volume_thickness_description">سُمك خط شريط الصوت، من 50% إلى 180% من الافتراضي. تبقى الخطوط الأسمك بعيدة عن حافة الشاشة.</string>
+    <string name="setting_wear_volume_haptics">اهتزاز التاج عند ضبط الصوت</string>
+    <string name="setting_wear_queue_dim_played">تعتيم المقاطع التي تم تشغيلها</string>
+    <string name="setting_wear_queue_dim_played_description">يُخفت المقاطع التي سبق تشغيلها لتبرز المقاطع القادمة.</string>
+    <string name="quick_block_lyric">كلمات الأغنية</string>
+    <string name="quick_block_lyric_description">السطر الذي يُغنّى الآن والسطر التالي، من الكلمات المتزامنة. النقر عليه في الساعة يفتح الكلمات كاملة.</string>
+    <string name="quick_summary_lyric">السطر الحالي والتالي</string>
+    <string name="setting_wear_progress_weight">سُمك الحلقة</string>
+    <string name="setting_wear_aod_night_dim">تعتيم ليلي</string>
+    <string name="aod_control_night_dim">تعتيم ليلي</string>
+    <string name="setting_wear_aod_shift">إزاحة منع الاحتراق</string>
+    <string name="aod_control_shift">إزاحة منع الاحتراق</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>إيقاف</item>
+        <item>كل 5%</item>
+        <item>كل 5% وعند الحدّين</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>رفيع</item>
+        <item>عادي</item>
+        <item>سميك</item>
+        <item>عريض جدًا</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>إيقاف</item>
+        <item>ليل · 22:00–07:00</item>
+        <item>من الغروب إلى الفجر · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>خفيف</item>
+        <item>عادي</item>
+        <item>واسع</item>
+    </string-array>
+</resources>

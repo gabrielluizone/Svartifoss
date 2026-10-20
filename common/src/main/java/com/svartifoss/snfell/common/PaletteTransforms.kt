@@ -92,6 +92,25 @@ object PaletteTransforms {
     }
 
     /**
+     * Adapts a raw palette [color] for use as a *filled surface carrying black text* - the queue's
+     * now-playing row, the menu's highlight pill: saturation clamped up and lightness into a band
+     * where the fill reads clearly against pure black and black text always reads on the fill.
+     *
+     * The watch's `WatchTheme.accentForSurface` and the phone preview each carried a copy of this,
+     * kept in step by a comment; both now call this one.
+     */
+    fun surfaceAccent(color: Int): Int {
+        val hsl = FloatArray(3)
+        ColorUtils.colorToHSL(color, hsl)
+        hsl[1] = hsl[1].coerceAtLeast(ColorHarmony.NEUTRAL_ACCENT_SATURATION)
+        hsl[2] = hsl[2].coerceIn(SURFACE_ACCENT_MIN_LIGHTNESS, SURFACE_ACCENT_MAX_LIGHTNESS)
+        return ColorUtils.HSLToColor(hsl)
+    }
+
+    private const val SURFACE_ACCENT_MIN_LIGHTNESS = 0.62f
+    private const val SURFACE_ACCENT_MAX_LIGHTNESS = 0.82f
+
+    /**
      * Downscale factor for the pre-API-31 software blur: shrinks from ~58% of the source at the
      * minimum radius to ~18% at the maximum, so the full slider travel produces a meaningfully
      * different blur strength. The watch's `createBlurredBitmapLegacy` and the phone preview's

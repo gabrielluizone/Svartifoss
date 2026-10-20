@@ -134,6 +134,90 @@ class WatchCommandInboxTest {
         assertEquals(listOf(1, 2, 3), received)
     }
 
+    @Test
+    fun aDirectCommandIsCarriedOutWithoutQueueingItOrStartingTheService() {
+        val inbox = WatchCommandInbox()
+        val ran = mutableListOf<Int>()
+        val received = mutableListOf<Int>()
+
+        inbox.receive(command(1), true, { ran.add(it.requestId); true }) {
+            error("A command already carried out must not start the service")
+        }
+        inbox.attach { received.add(it.requestId) }
+
+        assertEquals(listOf(1), ran)
+        // Queued as well it would run a second time the moment the service came up.
+        assertTrue(received.isEmpty())
+    }
+
+    @Test
+    fun theSameDirectCommandSeenByBothListenersRunsOnce() {
+        val inbox = WatchCommandInbox()
+        var runs = 0
+        val runDirect = { _: WatchCommand -> runs++; true }
+
+        // The manifest listener and the service's own both receive the event while the service is
+        // still coming up. A play/pause run twice is no play/pause at all.
+        inbox.receive(command(5), true, runDirect) { error("Not needed") }
+        inbox.receive(command(5), true, runDirect) { error("Not needed") }
+        inbox.receive(command(6), true, runDirect) { error("Not needed") }
+
+        assertEquals(2, runs)
+    }
+
+    @Test
+    fun aDeclinedDirectCommandTakesTheOrdinaryRoute() {
+        val inbox = WatchCommandInbox()
+        val received = mutableListOf<Int>()
+        var starts = 0
+
+        inbox.receive(command(1), true, { false }) { starts++; true }
+        inbox.attach { received.add(it.requestId) }
+
+        assertEquals(1, starts)
+        assertEquals(listOf(1), received)
+    }
+
+    @Test
+    fun aRunningServiceKeepsTheCommandAndTheDirectRunnerIsNeverAsked() {
+        val inbox = WatchCommandInbox()
+        val received = mutableListOf<Int>()
+        inbox.attach { received.add(it.requestId) }
+
+        inbox.receive(command(3), true, { error("The service has what it needs") }) {
+            error("A running service must not be restarted")
+        }
+
+        assertEquals(listOf(3), received)
+    }
+
+    @Test
+    fun aDirectCommandDuringStartupDoesNotDisturbTheOnesWaitingForTheService() {
+        val inbox = WatchCommandInbox()
+        val received = mutableListOf<Int>()
+        var starts = 0
+
+        inbox.receive(command(1), true, { false }) { starts++; true }
+        inbox.receive(command(2), true, { true }) { error("Startup already requested") }
+        inbox.receive(command(3), true, { false }) { error("Startup already requested") }
+        inbox.attach { received.add(it.requestId) }
+
+        assertEquals(1, starts)
+        assertEquals(listOf(1, 3), received)
+    }
+
+    @Test
+    fun aDirectCommandStillSuppressesALateDuplicateAfterTheServiceIsUp() {
+        val inbox = WatchCommandInbox()
+        val received = mutableListOf<Int>()
+        inbox.receive(command(9), true, { true }) { error("Not needed") }
+        inbox.attach { received.add(it.requestId) }
+
+        inbox.receive(command(9), true) { error("Already running") }
+
+        assertTrue(received.isEmpty())
+    }
+
     private fun command(id: Int, node: String = "watch") = WatchCommand(
             sourceNodeId = node,
             requestId = id,

@@ -41,6 +41,7 @@ import android.os.IBinder
 import android.os.Looper
 import android.os.Message
 import android.os.SystemClock
+import android.view.HapticFeedbackConstants
 import android.os.Vibrator
 import android.view.GestureDetector
 import android.view.Gravity
@@ -139,6 +140,9 @@ import com.svartifoss.snfell.common.RotaryAction
 import com.svartifoss.snfell.common.ScreenButtons
 import com.svartifoss.snfell.common.AccentFloorStyle
 import com.svartifoss.snfell.common.AppearanceNumericRanges
+import com.svartifoss.snfell.common.MeterShape
+import com.svartifoss.snfell.common.ProgressShape
+import com.svartifoss.snfell.common.VolumeHaptics
 import com.svartifoss.snfell.common.BackgroundLayer
 import com.svartifoss.snfell.common.BackgroundLayerColor
 import com.svartifoss.snfell.common.BackgroundLayerStack
@@ -178,6 +182,11 @@ import com.svartifoss.snfell.common.view.TapPulseDrawable
 import com.svartifoss.snfell.databinding.ActivityMainBinding
 import com.svartifoss.snfell.proto.MediaAction
 import com.svartifoss.snfell.proto.MusicState
+import com.svartifoss.snfell.watch.communication.SleepTimerReading
+import com.svartifoss.snfell.watch.communication.PhoneAudioOutput
+import com.svartifoss.snfell.watch.view.shortcut.showContinueOnPhone
+import com.svartifoss.snfell.common.PhoneAudioBlock
+import com.svartifoss.snfell.common.TransportRefusal
 import com.svartifoss.snfell.watch.communication.WatchAppShutdown
 import com.svartifoss.snfell.watch.communication.CustomListWithBitmaps
 import com.svartifoss.snfell.watch.communication.UiOpenServiceConnection
@@ -223,6 +232,11 @@ import com.svartifoss.snfell.watch.view.face.StudioFace
 import com.svartifoss.snfell.watch.view.face.VinylFace
 import com.svartifoss.snfell.watch.view.face.MaterialFace
 import com.svartifoss.snfell.watch.view.face.ChronoAmbientFace
+import com.svartifoss.snfell.watch.view.face.HexFrameAmbientFace
+import com.svartifoss.snfell.watch.view.face.MinuteRingAmbientFace
+import com.svartifoss.snfell.common.AodNightDim
+import com.svartifoss.snfell.common.AodShift
+import com.svartifoss.snfell.common.AodStandaloneStyles
 import com.svartifoss.snfell.common.CenterLongPressAction
 import com.svartifoss.snfell.watch.view.facepicker.FacePickerActivity
 import com.svartifoss.snfell.watch.view.face.CarouselFace
@@ -384,6 +398,10 @@ class MainActivity : WearCompanionWatchActivity(),
         private const val MIN_SHADOW_LAYER_RADIUS_PX = 0.01f
 
         private const val OVERLAY_FADE_OUT_MS = 150L
+
+        /** How long "this app isn't allowing skips" stays up - see actionRefusedListener. */
+        private const val REFUSAL_MESSAGE_MS = 2_500
+
         private const val OVERLAY_FADE_IN_MS = 90L
 
         /** See [enterQuickActionsPanel]: longer than the backdrop's fade, so the panel lands on it. */
@@ -516,6 +534,8 @@ class MainActivity : WearCompanionWatchActivity(),
     private var aodShowProgress = true
     private var aodShowPills = true
     private var aodIntensity: Float = 1f
+    private var aodNightDim: AodNightDim = AodNightDim.OFF
+    private var aodShift: AodShift = AodShift.STANDARD
 
     /** Awake-clock appearance (MiscPreferences.WEAR_CLOCK_*). Resolved into a single ARGB colour
      *  by [resolveClockColor]; the "dynamic" mode also samples [latestAlbumArt]. */
@@ -1094,6 +1114,8 @@ class MainActivity : WearCompanionWatchActivity(),
                 // Chrono is an AOD-only face (the awake screen never selects it), rendered in the
                 // same ComposeView while ambient - see applyAmbientPresentation.
                 "chrono" -> ChronoAmbientFace(state = faceState.value)
+                "minute_ring" -> MinuteRingAmbientFace(state = faceState.value)
+                "hex_frame" -> HexFrameAmbientFace(state = faceState.value)
                 else -> ExpressiveFace(state = faceState.value, listener = expressiveFaceListener)
             }
         }
@@ -1290,7 +1312,7 @@ class MainActivity : WearCompanionWatchActivity(),
         // is explicitly removed in onDestroy, so it cannot retain a dead Activity.
         viewModel.preferences.observeForever(preferencesChangeObserver)
         viewModel.volume.observe(this, phoneVolumeListener)
-        viewModel.sleepTimerEndsAt.observe(this, sleepTimerListener)
+        viewModel.sleepTimer.observe(this, sleepTimerListener)
         viewModel.popupVolumeBar.observe(this, volumeBarPopupListener)
         viewModel.openActionsMenu.observe(this, openActionsMenuListener)
         viewModel.openQuickActionsPanel.observe(this, openQuickActionsPanelListener)
@@ -1299,6 +1321,8 @@ class MainActivity : WearCompanionWatchActivity(),
         viewModel.openVolumeScreen.observe(this, openVolumeScreenListener)
         viewModel.openProgressScreen.observe(this, openProgressScreenListener)
         viewModel.openFacePicker.observe(this, openFacePickerListener)
+        viewModel.openPhoneAudioOutput.observe(this, openPhoneAudioOutputListener)
+        viewModel.actionRefused.observe(this, actionRefusedListener)
         viewModel.lyricsState.observe(this, lyricsStateObserver)
         viewModel.trackMetadata.observe(this, trackMetadataObserver)
         viewModel.openStreamingShortcutsMenu.observe(this, openStreamingShortcutsMenuListener)
@@ -1608,6 +1632,9 @@ class MainActivity : WearCompanionWatchActivity(),
         }
 
         binding.loadingIndicator.visibility = View.GONE
+        // A Do Not Disturb or mute change arrives as a state of its own, often while the overlay
+        // that shows it is up because someone is turning the volume to find out why.
+        if (binding.textVolumePercent.visibility == View.VISIBLE) refreshVolumeAudioBlock()
 
         isMusicPlaying = it.status == Resource.Status.SUCCESS && it.data?.playing == true
         // Three of the four position-mark modes read this. The seek bar keeps its own copy rather
@@ -5218,11 +5245,16 @@ class MainActivity : WearCompanionWatchActivity(),
         aodShowPills = faceBool(MiscPreferences.WEAR_AOD_SHOW_PILLS)
         aodIntensity = faceInt(MiscPreferences.WEAR_AOD_INTENSITY)
                 .coerceIn(20, 100) / 100f
+        // Global behaviour settings, read plainly rather than through the face scope.
+        aodNightDim = AodNightDim.fromPref(
+                Preferences.getString(preferences, MiscPreferences.WEAR_AOD_NIGHT_DIM))
+        aodShift = AodShift.fromPref(
+                Preferences.getString(preferences, MiscPreferences.WEAR_AOD_SHIFT))
         updateFaceState {
             it.copy(
                     ambientShowTrackInfo = aodShowTrackInfo,
                     ambientTint = resolvedAodTint(),
-                    ambientIntensity = aodIntensity,
+                    ambientIntensity = effectiveAodIntensity(),
                     ambientShowTransport = aodShowTransport,
                     ambientShowProgress = aodShowProgress,
                     ambientShowPills = aodShowPills
@@ -5267,11 +5299,18 @@ class MainActivity : WearCompanionWatchActivity(),
                 faceString(MiscPreferences.WEAR_VOLUME_STYLE))
         binding.volumeBar.barLayout = VolumeLayout.fromPref(
                 faceString(MiscPreferences.WEAR_VOLUME_LAYOUT))
+        binding.volumeBar.thickness = AppearanceNumericRanges.clamp(
+                MiscPreferences.WEAR_VOLUME_THICKNESS.key,
+                Preferences.getInt(preferences, MiscPreferences.WEAR_VOLUME_THICKNESS))
+        volumeHaptics = VolumeHaptics.fromPref(
+                Preferences.getString(preferences, MiscPreferences.WEAR_VOLUME_HAPTICS))
         val progressRingStyle = faceString(MiscPreferences.WEAR_PROGRESS_STYLE)
         binding.seekBar.ringStyle = RingStyle.fromPref(progressRingStyle)
         binding.seekBar.ringLayout = ProgressRingLayout.fromPref(
                 faceString(MiscPreferences.WEAR_PROGRESS_LAYOUT))
         binding.seekBar.gradientEnabled = faceBool(MiscPreferences.WEAR_PROGRESS_GRADIENT)
+        binding.seekBar.weightScale = ProgressShape.weightScale(
+                Preferences.getString(preferences, MiscPreferences.WEAR_PROGRESS_WEIGHT))
         binding.seekBar.markerVisibility = SeekMarkerVisibility.fromPreference(
                 faceString(MiscPreferences.WEAR_SEEK_MARKER))
         binding.seekBar.playing = isMusicPlaying
@@ -5702,7 +5741,7 @@ class MainActivity : WearCompanionWatchActivity(),
         // request on the phone per track - so the feed follows the face rather than running for
         // everyone. Driven from here because this is the one place the applied face is settled,
         // including when the phone pushes a new choice while the screen is already up.
-        viewModel.setLyricsEnabled(screenFace == FACE_VERSE)
+        updateLyricsFeed()
         // Same rule, same reason: the phone reads a file (and, if the user switched it on,
         // queries a service) to answer this, so nobody who has not selected the face pays.
         viewModel.setMetadataEnabled(screenFace == FACE_METADATA)
@@ -5817,8 +5856,8 @@ class MainActivity : WearCompanionWatchActivity(),
         panelBlockViews?.onVolume(it)
     }
 
-    private val sleepTimerListener = Observer<Long> { endsAt ->
-        panelBlockViews?.onSleepTimer(endsAt)
+    private val sleepTimerListener = Observer<SleepTimerReading> { reading ->
+        panelBlockViews?.onSleepTimer(reading)
     }
 
     private val playbackPositionObserver = Observer<PlaybackPosition?> { position ->
@@ -5847,6 +5886,7 @@ class MainActivity : WearCompanionWatchActivity(),
             }
             lastKnownPositionMs = 0L
             lastKnownDurationMs = 0L
+            binding.seekBar.trackDurationMs = 0L
             panelBlockViews?.onPosition(0L, 0L, false)
             updateDeveloperOverlay()
             return@Observer
@@ -5854,6 +5894,7 @@ class MainActivity : WearCompanionWatchActivity(),
 
         lastKnownPositionMs = position.positionMs
         lastKnownDurationMs = position.durationMs
+        binding.seekBar.trackDurationMs = position.durationMs
         playbackSeekable = position.seekable
         panelBlockViews?.onPosition(position.positionMs, position.durationMs, position.seekable)
         // Duration is enough to draw progress; session seek capability only gates interaction.
@@ -5953,6 +5994,37 @@ class MainActivity : WearCompanionWatchActivity(),
         startActivity(Intent(this, ProgressActivity::class.java))
     }
 
+    /**
+     * Says that the playing app would not skip or seek - see [TransportRefusal]. The system's
+     * failure confirmation rather than anything drawn on the face: it is rare, it has to be read,
+     * and it must not depend on which of twenty-one faces is on screen.
+     */
+    private val actionRefusedListener = Observer<TransportRefusal?> { refusal ->
+        if (refusal == null || isFinishing || isDestroyed) return@Observer
+        val app = viewModel.musicState.value?.data?.sourceAppName?.takeIf { it.isNotBlank() }
+        val message = when (refusal) {
+            TransportRefusal.SKIP_NEXT, TransportRefusal.SKIP_PREVIOUS ->
+                if (app != null) getString(R.string.refused_skip_app, app) else getString(R.string.refused_skip)
+            TransportRefusal.SEEK ->
+                if (app != null) getString(R.string.refused_seek_app, app) else getString(R.string.refused_seek)
+        }
+        startActivity(Intent(this, androidx.wear.activity.ConfirmationActivity::class.java)
+                .putExtra(androidx.wear.activity.ConfirmationActivity.EXTRA_ANIMATION_TYPE,
+                        androidx.wear.activity.ConfirmationActivity.FAILURE_ANIMATION)
+                .putExtra(androidx.wear.activity.ConfirmationActivity.EXTRA_MESSAGE, message)
+                // A sentence to read, not a tick to glance at: the default second is too short.
+                .putExtra(androidx.wear.activity.ConfirmationActivity.EXTRA_ANIMATION_DURATION_MILLIS,
+                        REFUSAL_MESSAGE_MS))
+    }
+
+    private val openPhoneAudioOutputListener = Observer<Unit?> {
+        PhoneAudioOutput.open(this) {
+            // The switcher is on the phone, so the wrist says where to look - the same
+            // confirmation a streaming shortcut opened on the phone shows.
+            if (!isFinishing && !isDestroyed) showContinueOnPhone(this)
+        }
+    }
+
     private val openFacePickerListener = Observer<Unit?> {
         startActivity(Intent(this, FacePickerActivity::class.java))
     }
@@ -5976,6 +6048,7 @@ class MainActivity : WearCompanionWatchActivity(),
     }
 
     private val lyricsStateObserver = Observer<LyricsUiState?> { state ->
+        panelBlockViews?.onLyrics(state)
         val lines = (state as? LyricsUiState.Synced)?.lines.orEmpty()
         updateFaceState { face ->
             face.copy(lyricLines = lines, lyricsPending = state is LyricsUiState.Loading)
@@ -6218,6 +6291,28 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private fun localUiPrefs(): SharedPreferences =
             getSharedPreferences(PREFS_LOCAL_UI, Context.MODE_PRIVATE)
+
+    /**
+     * The brightness the always-on display is drawn at right now: the chosen one, scaled down by
+     * the night schedule when the hour falls inside it. The ambient screen refreshes about once a
+     * minute, which is all the resolution a schedule needs.
+     */
+    private fun effectiveAodIntensity(): Float {
+        val hour = java.util.Calendar.getInstance().get(java.util.Calendar.HOUR_OF_DAY)
+        return aodIntensity * aodNightDim.factorAt(hour)
+    }
+
+    /** Applies [effectiveAodIntensity] to what is already on the ambient screen, if it has moved. */
+    private fun refreshAodIntensity() {
+        val intensity = effectiveAodIntensity()
+        if (binding.ambientClock.alpha == intensity &&
+                binding.classicTextBlock.alpha == intensity) {
+            return
+        }
+        binding.ambientClock.alpha = intensity
+        binding.classicTextBlock.alpha = intensity
+        updateFaceState { it.copy(ambientIntensity = intensity) }
+    }
 
     /** Resolves [MiscPreferences.WEAR_AOD_STYLE]'s "follow" against the selected face; every
      *  other value picks its AOD presentation directly. */
@@ -6763,10 +6858,10 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.textTitle.alpha = 1f
         binding.textArtist.alpha = 1f
         binding.textPlaybackTime.alpha = 1f
-        binding.ambientClock.alpha = aodIntensity
+        binding.ambientClock.alpha = effectiveAodIntensity()
         // Chrono draws its own large clock in Compose, so the small View clock is hidden for it.
         binding.ambientClock.visibility =
-                if (aodShowClock && style != "chrono") View.VISIBLE else View.GONE
+                if (aodShowClock && !AodStandaloneStyles.isStandalone(style)) View.VISIBLE else View.GONE
 
         // A cover transition interrupted by the wrist dropping would otherwise freeze part-way
         // and hand the always-on screen an overscaled, off-centre cover - animations stop being
@@ -6787,7 +6882,7 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.textArtist.setMarqueePaused(true)
 
         // Chrono is Compose-rendered like the face AODs, just not one of the interactive faces.
-        val composeAod = style in composeFaces || style == "chrono"
+        val composeAod = style in composeFaces || AodStandaloneStyles.isStandalone(style)
         if (composeAod) {
             composeFaceKind.value = style
             updateFaceState { it.copy(clockText = binding.ambientClock.text.toString()) }
@@ -6806,7 +6901,7 @@ class MainActivity : WearCompanionWatchActivity(),
                     artistBackdrop = null,
                     ambientShowTrackInfo = aodShowTrackInfo,
                     ambientTint = resolvedAodTint(),
-                    ambientIntensity = aodIntensity,
+                    ambientIntensity = effectiveAodIntensity(),
                     ambientShowTransport = aodShowTransport,
                     ambientShowProgress = aodShowProgress,
                     ambientShowPills = aodShowPills
@@ -6817,7 +6912,7 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.expressiveFace.visibility = if (composeAod) View.VISIBLE else View.GONE
         binding.classicTextBlock.visibility =
                 if (!composeAod && aodShowTrackInfo) View.VISIBLE else View.GONE
-        binding.classicTextBlock.alpha = aodIntensity
+        binding.classicTextBlock.alpha = effectiveAodIntensity()
         if (!composeAod) {
             binding.textArtist.visibility =
                     if (aodShowTrackInfo && showTrackArtist) View.VISIBLE else View.GONE
@@ -6873,7 +6968,8 @@ class MainActivity : WearCompanionWatchActivity(),
                     // was generalised but this refresh was not, so the rest were left drawing
                     // whatever queue data happened to be lying around, or none. Now that any face
                     // can be chosen as the AOD, that gap would be visible on nine more of them.
-                    if (effectiveAodStyle() in composeFaces || effectiveAodStyle() == "chrono") {
+                    if (effectiveAodStyle() in composeFaces ||
+                            AodStandaloneStyles.isStandalone(effectiveAodStyle())) {
                         // Keep the cached row visible. Clearing it here made AOD look empty until
                         // Quick Actions happened to request the queue later.
                         viewModel.customList.value?.let(::updateUpNextPreview)
@@ -6896,6 +6992,7 @@ class MainActivity : WearCompanionWatchActivity(),
                     binding.volumeIconBottom.visibility = View.GONE
                     binding.quickActionsDismissFrame.visibility = View.GONE
                     quickActionsPanelBackCallback.isEnabled = false
+                    updateLyricsFeed()
                     binding.loadingIndicator.visibility = View.GONE
                     // Hidden (not dismissed) in ambient: bright overlay text is a burn-in risk.
                     // onExitAmbient brings it back as long as the user never dismissed it.
@@ -6936,8 +7033,12 @@ class MainActivity : WearCompanionWatchActivity(),
                     viewModel.updateTimers()
                     hideNotificationIfOverdue()
 
-                    binding.contentFrame.translationX = Random.nextInt(-5, 6).toFloat()
-                    binding.contentFrame.translationY = Random.nextInt(-5, 6).toFloat()
+                    refreshAodIntensity()
+                    // Wider than the old fixed five pixels on request: a wider hop spreads the wear
+                    // further, a gentler one keeps the clock from visibly jumping.
+                    val shift = aodShift.maxPixels
+                    binding.contentFrame.translationX = Random.nextInt(-shift, shift + 1).toFloat()
+                    binding.contentFrame.translationY = Random.nextInt(-shift, shift + 1).toFloat()
                     updateDeveloperOverlay()
                 }
 
@@ -7160,9 +7261,12 @@ class MainActivity : WearCompanionWatchActivity(),
                 return true
             }
 
-            binding.volumeBar.incrementVolume(delta * 0.0011f * multipler)
+            val volumeBefore = binding.volumeBar.volume
+            val volumeChange = delta * 0.0011f * multipler
+            binding.volumeBar.incrementVolume(volumeChange)
             viewModel.updateVolume(binding.volumeBar.volume)
             showVolumeBar()
+            volumeCrownFeedback(volumeBefore, binding.volumeBar.volume, volumeChange)
 
 
             return true
@@ -7410,6 +7514,7 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.quickActionsDismissFrame.scaleX = 1f
         binding.quickActionsDismissFrame.scaleY = 1f
         quickActionsPanelBackCallback.isEnabled = false
+        updateLyricsFeed()
 
         handler.removeMessages(MESSAGE_HIDE_VOLUME)
     }
@@ -7511,6 +7616,7 @@ class MainActivity : WearCompanionWatchActivity(),
             frame.scaleY = QUICK_PANEL_ENTER_SCALE
         }
         frame.visibility = View.VISIBLE
+        updateLyricsFeed()
         frame.animate()
                 .alpha(1f)
                 .scaleX(1f)
@@ -7521,6 +7627,18 @@ class MainActivity : WearCompanionWatchActivity(),
 
     private fun isQuickActionsPanelShowing() =
             binding.quickActionsDismissFrame.visibility == View.VISIBLE
+
+    /**
+     * Whether the phone should be looking up lyrics: for the Verse face, which draws them on the
+     * player, or while the quick panel is open with a lyric block in it. Every lookup is a network
+     * request on the phone per track, so nothing else pays - the panel closing stops the feed
+     * again, and a panel without the block never starts it.
+     */
+    private fun updateLyricsFeed() {
+        val panelWantsLyrics = isQuickActionsPanelShowing() &&
+                panelShows(QuickPanelBlockType.LYRIC)
+        viewModel.setLyricsEnabled(screenFace == FACE_VERSE || panelWantsLyrics)
+    }
 
     /** Mirrors the user-configured Actions menu below the primary media controls. This turns the
      * panel into the scrollable launcher requested by the design without inventing a second set
@@ -7699,6 +7817,11 @@ class MainActivity : WearCompanionWatchActivity(),
             binding.root.postDelayed(resyncSpeedChip, PlaybackSpeeds.TAP_MEMORY_MS + SPEED_RESYNC_SLACK_MS)
         }
         override fun cycleSleepTimer() = viewModel.cycleSleepTimer()
+        override fun openFineSpeed() {
+            hideOverlay()
+            startActivity(Intent(this@MainActivity, ProgressActivity::class.java)
+                    .putExtra(ProgressActivity.EXTRA_FINE_SPEED, true))
+        }
         override fun openTool(tool: QuickPanelTool) = runQuickPanelTool(tool)
         override fun runMenuAction(index: Int) {
             hideOverlay()
@@ -7788,13 +7911,15 @@ class MainActivity : WearCompanionWatchActivity(),
                 QuickPanelBlockType.SEEK -> order += blockViews.bindSeek(block)
                 QuickPanelBlockType.TOOLS -> order += blockViews.bindTools(block)
                 QuickPanelBlockType.FAVORITES -> order += bindFavorites(block, blockViews)
+                QuickPanelBlockType.LYRIC -> order += blockViews.bindLyric(block)
             }
         }
         // Bound blocks start from whatever they last drew; bring them up to what is true now.
         blockViews.onVolume(viewModel.volume.value ?: 0f)
         blockViews.onPosition(lastKnownPositionMs, lastKnownDurationMs, playbackSeekable)
         blockViews.onSpeed(latestPlaybackSpeed)
-        blockViews.onSleepTimer(viewModel.sleepTimerEndsAt.value ?: 0L)
+        blockViews.onSleepTimer(viewModel.sleepTimer.value ?: SleepTimerReading())
+        blockViews.onLyrics(viewModel.lyricsState.value)
         return order
     }
 
@@ -9003,16 +9128,20 @@ class MainActivity : WearCompanionWatchActivity(),
     /** Same [MiscPreferences.WEAR_SEEK_STYLE] options, applied to the volume-percentage readout
      *  (there's no "split" equivalent for a single percentage, so it falls back to plain). */
     private fun applyVolumeOverlayStyle() {
-        val percentText = getString(
-                R.string.volume_percent_format,
-                (binding.volumeBar.volume * 100).roundToInt()
-        )
+        val percent = (binding.volumeBar.volume * 100).roundToInt()
+        val percentText = getString(R.string.volume_percent_format, percent)
         applyPillReadoutStyle(
                 binding.textVolumePercent, seekOverlayStyle, percentText, resolvedVolumeAccent())
         PanelReadout.applyLightArcContrast(
                 binding.textVolumePercent,
                 seekOverlayStyle,
                 binding.volumeBar.barStyle == VolumeStyle.LIGHT)
+        // Why the phone may not be heard, said by the readout itself - a glyph in place of the
+        // number, or under it - so it follows every readout style and layout with nothing to place.
+        PanelReadout.applyAudioBlock(
+                binding.textVolumePercent,
+                PhoneAudioBlock.fromCode(viewModel.musicState.value?.data?.audioBlock ?: 0),
+                percent)
     }
 
     private fun applyVolumePanelLayout() {
@@ -9021,15 +9150,16 @@ class MainActivity : WearCompanionWatchActivity(),
         val bottom = binding.volumeIconBottom.layoutParams as FrameLayout.LayoutParams
         top.marginStart = 0
         top.marginEnd = 0
-        top.topMargin = resources.getDimensionPixelSize(R.dimen.music_screen_icon_offset)
+        top.topMargin = resources.getDimensionPixelSize(R.dimen.volume_icon_edge_offset)
         top.bottomMargin = 0
         bottom.marginStart = 0
         bottom.marginEnd = 0
         bottom.topMargin = 0
-        bottom.bottomMargin = resources.getDimensionPixelSize(R.dimen.music_screen_icon_offset)
+        bottom.bottomMargin = resources.getDimensionPixelSize(R.dimen.volume_icon_edge_offset)
         binding.volumeIconTop.translationY = 0f
         binding.volumeIconBottom.translationY = 0f
         binding.textVolumePercent.translationY = 0f
+        binding.textVolumePercent.translationX = 0f
 
         // Which axis the glyphs sit on is [VolumeControlAxis], not a list repeated here: the
         // dedicated volume screen places its own step buttons and the two had already drifted,
@@ -9063,6 +9193,11 @@ class MainActivity : WearCompanionWatchActivity(),
                 else -> {
                     top.gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
                     bottom.gravity = Gravity.BOTTOM or Gravity.CENTER_HORIZONTAL
+                    // The pillar stands where the readout would, so the readout steps aside.
+                    if (layout == VolumeLayout.PILLAR) {
+                        binding.textVolumePercent.translationX =
+                                MeterShape.PILLAR_READOUT_SHIFT_X_DP * density
+                    }
                 }
             }
             // The glyphs sit at mid-height rather than beside the bar's ends: near the top or
@@ -9091,12 +9226,19 @@ class MainActivity : WearCompanionWatchActivity(),
                     VolumeLayout.METER_TOP -> 18f * density
                     VolumeLayout.METER_BOTTOM -> -18f * density
                     VolumeLayout.METER -> -16f * density
+                    VolumeLayout.BASALT -> MeterShape.BASALT_READOUT_SHIFT_Y_DP * density
                     else -> 0f
                 }
             }
         }
         binding.volumeIconTop.layoutParams = top
         binding.volumeIconBottom.layoutParams = bottom
+    }
+
+    /** Re-says the phone's audio state while the volume readout is up: a Do Not Disturb or mute
+     *  change arrives as a music state of its own, with no volume change to restyle the readout. */
+    private fun refreshVolumeAudioBlock() {
+        if (overlayActive && activeOverlayKind == OverlayKind.VOLUME) applyVolumeOverlayStyle()
     }
 
     private fun applySeekPanelLayout(fraction: Float) {
@@ -9114,7 +9256,8 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.seekBar.animate().cancel()
         binding.seekBar.alpha = if (customMeter) 0f else 1f
         binding.textSeekTime.translationY = when (seekPanelLayout) {
-            "timeline", "segments", "timeline_bottom", "segments_bottom" -> -18f * density
+            "timeline", "segments", "timeline_bottom", "segments_bottom", "wave_timeline" ->
+                    -18f * density
             "timeline_top", "segments_top" -> 20f * density
             "dial" -> -42f * density
             else -> 0f
@@ -9134,8 +9277,10 @@ class MainActivity : WearCompanionWatchActivity(),
                 "vertical_right" -> OverlayProgressMeter.Mode.VERTICAL_RIGHT
                 "dial" -> OverlayProgressMeter.Mode.DIAL
                 "twin" -> OverlayProgressMeter.Mode.TWIN
+                "wave_timeline" -> OverlayProgressMeter.Mode.WAVE
                 else -> OverlayProgressMeter.Mode.TIMELINE
             }
+            animating = isMusicPlaying
             visibility = if (customMeter) View.VISIBLE else View.GONE
         }
     }
@@ -9209,6 +9354,35 @@ class MainActivity : WearCompanionWatchActivity(),
         }
 
         VibratorCompat.vibrate(vibrator, 50)
+    }
+
+    private var volumeHaptics: VolumeHaptics = VolumeHaptics.OFF
+    private var lastVolumeLimitBuzzUptime = 0L
+
+    /**
+     * Ticks while the crown moves the volume, per [MiscPreferences.WEAR_VOLUME_HAPTICS].
+     *
+     * Goes through the view's haptic channel first: the platform's CLOCK_TICK is tuned by the
+     * device vendor to feel like a detent, which a raw vibration of the same length never does. The
+     * motor is the fallback for a watch whose haptics are switched off at the system level.
+     */
+    private fun volumeCrownFeedback(before: Float, after: Float, requested: Float) {
+        if (volumeHaptics == VolumeHaptics.OFF) return
+        if (!Preferences.getBoolean(preferences, MiscPreferences.HAPTIC_FEEDBACK)) return
+
+        if (volumeHaptics.ticksBetween(before, after)) {
+            if (!binding.root.performHapticFeedback(HapticFeedbackConstants.CLOCK_TICK)) {
+                VibratorCompat.vibrate(vibrator, 12)
+            }
+            return
+        }
+        if (volumeHaptics.hitsLimit(before, after, requested)) {
+            val now = SystemClock.uptimeMillis()
+            if (now - lastVolumeLimitBuzzUptime >= VolumeHaptics.LIMIT_REPEAT_MS) {
+                lastVolumeLimitBuzzUptime = now
+                VibratorCompat.vibrate(vibrator, 35)
+            }
+        }
     }
 
     /** Expanding-ring flash confirming a center tap the moment the finger lands (see the

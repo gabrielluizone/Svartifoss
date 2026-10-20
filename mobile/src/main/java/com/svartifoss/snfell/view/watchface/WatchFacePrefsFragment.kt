@@ -8,6 +8,10 @@ import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
 import android.provider.DocumentsContract
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.text.style.RelativeSizeSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +54,9 @@ import com.svartifoss.snfell.common.DeviceLocalAppearance
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiniButtonPlacement
 import com.svartifoss.snfell.common.ColorModifier
+import com.svartifoss.snfell.common.AppearanceNumericRanges
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.QueueAppearance
 import com.svartifoss.snfell.common.TextBackdropStyle
 import com.svartifoss.snfell.common.TextOutlineStyle
 import com.svartifoss.snfell.common.TextShadowColorMode
@@ -301,6 +307,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private val archivedAlbumArtSources = setOf("custom_image", "custom_folder")
 
     private val archivedMiniButtonBackgrounds = setOf("solid_theme")
+    /** "cover_square" is Cover with the Soft corners pill shape, now that the outline is a choice
+     *  of its own - offering both would be the same thing under two names. A queue that holds it
+     *  renders exactly as it did, and the picker keeps listing it there. */
+    private val archivedQueueStyles = setOf("cover_square")
     private val archivedMiniButtonShapes = setOf(
             "pill_wide_large", "pill_wide_xlarge", "rounded_rect_medium", "rounded_rect_large")
 
@@ -2005,6 +2015,30 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         editor.refresh()
     }
 
+    /**
+     * A slider with the typed value beside it, the same dialog the Text and Always-on pages use, in
+     * place of the bare number field the preference would open: a stroke weight is something to
+     * drag until it looks right, not a figure to know in advance.
+     */
+    private fun showPanelThicknessSlider(key: String) {
+        val range = AppearanceNumericRanges.rangeFor(key) ?: return
+        val default = (PanelEditorModel.specFor(key)?.value as? PanelValueSpec.Choice)
+                ?.defaultValue?.toIntOrNull() ?: range.first
+        showNumericSlider(
+                key,
+                range,
+                default,
+                format = { "$it%" },
+                onCommit = { value ->
+                    val candidate = value.coerceIn(range).toString()
+                    val preference = findPreference<EditTextPreference>(key)
+                    if (preference != null && preference.callChangeListener(candidate)) {
+                        preference.text = candidate
+                    }
+                    refreshPanelEditor()
+                })
+    }
+
     private fun refreshPanelEditor() {
         panelEditor?.refresh()
     }
@@ -2038,6 +2072,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // second copy of a picker, its validation or its archived-option filtering.
         listOf(
                 R.id.panel_editor_style_button to PanelControl.STYLE,
+                R.id.panel_editor_row_shape_button to PanelControl.ROW_SHAPE,
+                R.id.panel_editor_cover_shape_button to PanelControl.COVER_SHAPE,
                 R.id.panel_editor_layout_button to PanelControl.LAYOUT,
                 R.id.panel_editor_row_size_button to PanelControl.ROW_SIZE,
                 R.id.panel_editor_up_next_style_button to PanelControl.UP_NEXT_STYLE,
@@ -2046,6 +2082,10 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             root.findViewById<MaterialButton>(id).setOnClickListener {
                 PanelEditorModel.keyFor(panelTarget, control)?.let(::openPreferenceDialog)
             }
+        }
+
+        root.findViewById<MaterialButton>(R.id.panel_editor_thickness_button).setOnClickListener {
+            PanelEditorModel.keyFor(panelTarget, PanelControl.THICKNESS)?.let(::showPanelThicknessSlider)
         }
 
         // The shortcuts row is an action rather than a value: it opens the library screen the
@@ -2082,8 +2122,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             val default = (PanelEditorModel.specFor(key)?.value as? PanelValueSpec.Choice)
                     ?.defaultValue ?: OverlayBackdropResolver.SHARED
             val label = choiceLabel(key, readStringPreference(key, default))
-            surfaceBackdropButton.text =
-                    "${findPreference<Preference>(key)?.title ?: key} · $label"
+            surfaceBackdropButton.text = editorRowText(findPreference<Preference>(key)?.title, label)
             surfaceBackdropButton.contentDescription = buildPreferenceDescription(key, label)
         }
 
@@ -2101,7 +2140,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         if (blurApplies) {
             val blurValue = store.getInt(
                     blurKey, MiscPreferences.WEAR_OVERLAY_BLUR_RADIUS.defaultValue)
-            blurButton.text = "${getString(R.string.category_wf_panel_effects)} · $blurValue"
+            // Named after the setting itself: "Panel effects · 20" did not say what the 20 was.
+            blurButton.text = "${getString(R.string.setting_overlay_blur_radius)} · $blurValue"
             blurButton.contentDescription = buildPreferenceDescription(blurKey, blurValue)
         }
 
@@ -2120,6 +2160,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
         listOf(
                 R.id.panel_editor_style_button to PanelControl.STYLE,
+                R.id.panel_editor_row_shape_button to PanelControl.ROW_SHAPE,
+                R.id.panel_editor_cover_shape_button to PanelControl.COVER_SHAPE,
                 R.id.panel_editor_layout_button to PanelControl.LAYOUT,
                 R.id.panel_editor_row_size_button to PanelControl.ROW_SIZE,
                 R.id.panel_editor_up_next_style_button to PanelControl.UP_NEXT_STYLE,
@@ -2131,10 +2173,27 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             if (button.isVisible && key != null) bindPanelChoiceButton(button, key)
         }
 
+        // A numeric stroke weight: shown as "Title · value" and edited in the real field's dialog,
+        // like the blur radius above.
+        val thicknessKey = PanelEditorModel.keyFor(panelTarget, PanelControl.THICKNESS)
+        val thicknessButton = root.findViewById<MaterialButton>(R.id.panel_editor_thickness_button)
+        thicknessButton.isVisible = thicknessKey != null &&
+                panelControlApplies(PanelControl.THICKNESS, thicknessKey)
+        if (thicknessButton.isVisible && thicknessKey != null) {
+            val thicknessDefault = (PanelEditorModel.specFor(thicknessKey)?.value
+                    as? PanelValueSpec.Choice)?.defaultValue?.toIntOrNull() ?: 100
+            val thicknessValue = store.getInt(thicknessKey, thicknessDefault)
+            thicknessButton.text = editorRowText(
+                    findPreference<Preference>(thicknessKey)?.title, "$thicknessValue%")
+            thicknessButton.contentDescription =
+                    buildPreferenceDescription(thicknessKey, "$thicknessValue%")
+        }
+
         listOf(
                 R.id.panel_editor_up_next_switch to PanelControl.UP_NEXT,
                 R.id.panel_editor_shortcut_cover_switch to PanelControl.SHORTCUT_COVER,
-                R.id.panel_editor_remote_artwork_switch to PanelControl.REMOTE_ARTWORK
+                R.id.panel_editor_remote_artwork_switch to PanelControl.REMOTE_ARTWORK,
+                R.id.panel_editor_queue_dim_switch to PanelControl.QUEUE_DIM
         ).forEach { (id, control) ->
             val key = PanelEditorModel.keyFor(panelTarget, control)
             val switch = root.findViewById<SwitchMaterial>(id)
@@ -2200,6 +2259,18 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                             MiscPreferences.WEAR_VOLUME_STYLE.key,
                             MiscPreferences.WEAR_VOLUME_STYLE.defaultValue))
                     .usesAlbumBlur
+        PanelControl.THICKNESS ->
+            readStringPreference(
+                    MiscPreferences.WEAR_VOLUME_LAYOUT.key,
+                    MiscPreferences.WEAR_VOLUME_LAYOUT.defaultValue) !=
+                    PanelEditorModel.FIXED_SIZE_VOLUME_LAYOUT
+        // An outline choice beside a style with nothing for it to act on would read as broken:
+        // Minimal draws no outline, and the cover styles fill the row instead of cutting a cover.
+        // The same decision the watch makes - see QueueAppearance.
+        PanelControl.ROW_SHAPE -> QueueAppearance.rowShapeApplies(readStringPreference(
+                MiscPreferences.WEAR_QUEUE_STYLE.key, MiscPreferences.WEAR_QUEUE_STYLE.defaultValue))
+        PanelControl.COVER_SHAPE -> QueueAppearance.coverShapeApplies(readStringPreference(
+                MiscPreferences.WEAR_QUEUE_STYLE.key, MiscPreferences.WEAR_QUEUE_STYLE.defaultValue))
         else -> true
     }
 
@@ -2207,8 +2278,28 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val default = (PanelEditorModel.specFor(key)?.value as? PanelValueSpec.Choice)
                 ?.defaultValue ?: ""
         val label = choiceLabel(key, readStringPreference(key, default))
-        button.text = label
+        button.text = editorRowText(findPreference<Preference>(key)?.title, label)
         button.contentDescription = buildPreferenceDescription(key, label)
+    }
+
+    /**
+     * What a full-width editor row says: the name of the setting small above its current value.
+     *
+     * The rows used to say something different on every page and often within one - some only the
+     * value ("Steps", "Full ring", "Balanced", which does not say which setting it is), some
+     * "Name · value" - so a page of them could not be read without opening each. One shape for all
+     * of them, name above value, says what each row is before it is touched. Compact chips that sit
+     * in a scrolling row keep "Name · value" on one line; that is a different control.
+     */
+    private fun editorRowText(title: CharSequence?, value: CharSequence): CharSequence {
+        val name = title?.toString().orEmpty()
+        if (name.isEmpty()) return value
+        val text = SpannableStringBuilder(name)
+        text.setSpan(RelativeSizeSpan(0.82f), 0, name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        text.setSpan(
+                ForegroundColorSpan(ContextCompat.getColor(requireContext(), R.color.lyra_text_secondary)),
+                0, name.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        return text.append('\n').append(value)
     }
 
     private fun bindPanelSwitch(switch: SwitchMaterial, key: String, defaultValue: Boolean) {
@@ -2282,10 +2373,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 R.id.panel_editor_backdrop_button,
                 R.id.panel_editor_surface_backdrop_button,
                 R.id.panel_editor_style_button,
+                R.id.panel_editor_row_shape_button,
+                R.id.panel_editor_cover_shape_button,
                 R.id.panel_editor_layout_button,
                 R.id.panel_editor_row_size_button,
                 R.id.panel_editor_up_next_style_button,
                 R.id.panel_editor_source_button,
+                R.id.panel_editor_thickness_button,
                 R.id.panel_editor_shortcuts_button
         ).forEach { id -> root.findViewById<MaterialButton>(id)?.iconTint = neutralForegrounds }
 
@@ -2308,7 +2402,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         listOf(
                 R.id.panel_editor_up_next_switch,
                 R.id.panel_editor_shortcut_cover_switch,
-                R.id.panel_editor_remote_artwork_switch
+                R.id.panel_editor_remote_artwork_switch,
+                R.id.panel_editor_queue_dim_switch
         ).forEach { id ->
             root.findViewById<SwitchMaterial>(id)?.apply {
                 thumbTintList = thumb
@@ -2350,7 +2445,11 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         PanelControl.BLUR -> R.id.panel_editor_blur_button
         PanelControl.STYLE -> R.id.panel_editor_style_button
         PanelControl.LAYOUT -> R.id.panel_editor_layout_button
+        PanelControl.ROW_SHAPE -> R.id.panel_editor_row_shape_button
+        PanelControl.COVER_SHAPE -> R.id.panel_editor_cover_shape_button
         PanelControl.ROW_SIZE -> R.id.panel_editor_row_size_button
+        PanelControl.THICKNESS -> R.id.panel_editor_thickness_button
+        PanelControl.QUEUE_DIM -> R.id.panel_editor_queue_dim_switch
         PanelControl.UP_NEXT -> R.id.panel_editor_up_next_switch
         PanelControl.UP_NEXT_STYLE -> R.id.panel_editor_up_next_style_button
         PanelControl.SOURCE -> R.id.panel_editor_source_button
@@ -2669,7 +2768,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         val default = (PlayerEditorModel.specFor(key)?.value as? PlayerValueSpec.Choice)
                 ?.defaultValue ?: ""
         val label = choiceLabel(key, readStringPreference(key, default))
-        button.text = label
+        button.text = editorRowText(findPreference<Preference>(key)?.title, label)
         button.contentDescription = buildPreferenceDescription(key, label)
         button.tag = key
     }
@@ -3059,15 +3158,39 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         applyLyricsFontEntries(showArchived)
         applyTitleColorEntries()
         applyElementToneEntries()
+        // Before the additive catalog, which appends the queue's newer styles to what this leaves.
+        filterArchivedListPreference(
+                key = "wear_queue_style",
+                entriesRes = R.array.wear_overlay_style_entries,
+                valuesRes = R.array.wear_overlay_style_values,
+                archived = archivedQueueStyles,
+                defaultValue = "glass",
+                showArchived = showArchived)
         PanelOptionCatalog.apply(resources) { key -> findPreference(key) }
         // After the additive catalog: it appends the extra backdrops to the shared picker, and
         // the per-surface pickers are built from whatever that picker ends up offering.
         applySurfaceBackdropEntries()
+        applyQueueCoverShapeEntries()
         AppearanceOptionCatalog.apply(resources) { key -> findPreference(key) }
 
         // The per-surface pickers are copies of the shared one, so they have to be rebuilt
         // whenever its option list changes - archived values are removed from it right here.
         applySurfaceBackdropEntries()
+    }
+
+    /**
+     * Builds the queue's cover-shape picker from the cover shapes every face's cover uses, with
+     * "follow the queue style" on top. Derived rather than declared for [applyTitleColorEntries]'s
+     * reason: the shape names are already translated everywhere, and a second copy would fall
+     * behind. AppearanceOptionCatalog then appends the newer shapes, as it does for the faces.
+     */
+    private fun applyQueueCoverShapeEntries() {
+        val pref = findPreference<ListPreference>(MiscPreferences.WEAR_QUEUE_COVER_SHAPE.key) ?: return
+        val entries = resources.getStringArray(R.array.wear_cover_shape_entries)
+        val values = resources.getStringArray(R.array.wear_cover_shape_values)
+        pref.entries = (listOf(getString(R.string.wear_queue_shape_follow)) + entries.toList())
+                .toTypedArray()
+        pref.entryValues = (listOf(QueueAppearance.FOLLOW) + values.toList()).toTypedArray()
     }
 
     /**
@@ -3630,6 +3753,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         listOf(
                 R.id.aod_editor_style_button to AodControl.STYLE,
                 R.id.aod_editor_color_button to AodControl.COLOR_MODE,
+                R.id.aod_editor_night_button to AodControl.NIGHT_DIM,
+                R.id.aod_editor_shift_button to AodControl.SHIFT,
                 R.id.aod_editor_art_treatment_button to AodControl.ART_TREATMENT
         ).forEach { (id, control) ->
             root.findViewById<MaterialButton>(id).setOnClickListener {
@@ -3665,11 +3790,16 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
         bindAodValueButton(
                 root.findViewById(R.id.aod_editor_style_button),
-                MiscPreferences.WEAR_AOD_STYLE.key,
-                withLabel = false)
+                MiscPreferences.WEAR_AOD_STYLE.key)
         bindAodValueButton(
                 root.findViewById(R.id.aod_editor_color_button),
                 MiscPreferences.WEAR_AOD_COLOR_MODE.key)
+        bindAodValueButton(
+                root.findViewById(R.id.aod_editor_night_button),
+                MiscPreferences.WEAR_AOD_NIGHT_DIM.key)
+        bindAodValueButton(
+                root.findViewById(R.id.aod_editor_shift_button),
+                MiscPreferences.WEAR_AOD_SHIFT.key)
 
         // The swatch is revealed by the Custom tint alone, exactly as the Colors page pairs a mode
         // with its colour: any other mode names a colour this hex could never describe.
@@ -3728,16 +3858,13 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
 
     /** A picker row reads "<what it is> · <what it is set to>", unless its heading already says. */
     @SuppressLint("SetTextI18n") // "Label · value" is the editor's own notation, not prose.
-    private fun bindAodValueButton(
-            button: MaterialButton,
-            key: String,
-            withLabel: Boolean = true
-    ) {
+    private fun bindAodValueButton(button: MaterialButton, key: String) {
         val default = (AodEditorModel.specFor(key)?.value as? AodValueSpec.Choice)
                 ?.defaultValue ?: ""
         val label = choiceLabel(key, readStringPreference(key, default))
-        val prefix = AodEditorModel.specFor(key)?.labelRes?.takeIf { withLabel }?.let(::getString)
-        button.text = if (prefix != null) "$prefix · $label" else label
+        val name = AodEditorModel.specFor(key)?.labelRes?.let(::getString)
+                ?: findPreference<Preference>(key)?.title
+        button.text = editorRowText(name, label)
         button.contentDescription = buildPreferenceDescription(key, label)
         button.tag = key
     }
@@ -3746,9 +3873,9 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private fun bindAodNumberButton(button: MaterialButton, key: String) {
         val number = AodEditorModel.specFor(key)?.value as? AodValueSpec.Number ?: return
         val value = store.getInt(key, number.defaultValue).coerceIn(number.range)
-        val prefix = AodEditorModel.specFor(key)?.labelRes?.let(::getString)
+        val name = AodEditorModel.specFor(key)?.labelRes?.let(::getString)
                 ?: findPreference<Preference>(key)?.title
-        button.text = "$prefix · $value%"
+        button.text = editorRowText(name, "$value%")
         button.contentDescription = buildPreferenceDescription(key, "$value%")
         button.tag = key
     }
@@ -3815,6 +3942,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 R.id.aod_editor_style_button,
                 R.id.aod_editor_color_button,
                 R.id.aod_editor_intensity_button,
+                R.id.aod_editor_night_button,
+                R.id.aod_editor_shift_button,
                 R.id.aod_editor_art_treatment_button,
                 R.id.aod_editor_art_opacity_button
         ).forEach { tintEditorRow(root.findViewById(it), palette) }
@@ -5155,6 +5284,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // still show the ring would leave no way to choose what that temporary reveal looks like.
         findPreference<Preference>("wear_progress_style")?.isVisible = edgeVisible || edgeSeekEnabled
         findPreference<Preference>("wear_progress_layout")?.isVisible = edgeVisible || edgeSeekEnabled
+        findPreference<Preference>("wear_progress_weight")?.isVisible = edgeVisible || edgeSeekEnabled
         // A face that hosts the mini-button row inside its own composition places and shapes those
         // buttons itself (Chat's circles are the configured slots), so neither the curve/rail
         // arrangement nor the pill shape reaches them. Same rule as Carousel's card shape above:

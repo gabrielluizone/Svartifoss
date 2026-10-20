@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Hugis ng kapsula</string>
+    <string name="setting_wear_queue_cover_shape">Hugis ng cover</string>
+    <string name="wear_queue_shape_follow">Sundin ang style ng queue</string>
+    <string name="queue_shape_note_title">Style at mga hugis</string>
+    <string name="queue_shape_note_description">Ang style ang nagtatakda ng mga kulay at effect. Binabago lang ng Hugis ng kapsula at Hugis ng cover ang mga balangkas; pinapanatili ng Sundin ang style ng queue ang sariling balangkas ng bawat style.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Kapsula</item>
+        <item>Bilugan</item>
+        <item>Malalambot na sulok</item>
+        <item>Parisukat</item>
+        <item>Dahon</item>
+        <item>Speech bubble</item>
+        <item>Heksagono</item>
+    </string-array>
+</resources>

@@ -209,4 +209,5 @@
     <string name="progress_screen_cancel_seek">Cancelar ajuste</string>
     <string name="progress_screen_skip_back">Recuar %1$d segundos</string>
     <string name="progress_screen_skip_forward">Avançar %1$d segundos</string>
+    <string name="quick_lyric_plain">Esta letra não tem tempos. Toque para a ler.</string>
 </resources>

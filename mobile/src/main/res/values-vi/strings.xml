@@ -739,6 +739,8 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>Material (viền)</item>
         <item>Điều khiển AMOLED</item>
         <item>Chrono (đồng hồ lớn)</item>
+        <item>Vòng phút</item>
+        <item>Khung bazan</item>
         <item>Poster</item>
         <item>Studio</item>
         <item>Đắm chìm</item>
@@ -769,6 +771,8 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Màu luôn bật</string>
     <string-array name="wear_aod_color_entries">

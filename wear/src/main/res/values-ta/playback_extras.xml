@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">டிராக் முடிவு</string>
+    <string name="quick_sleep_track_end_description">உறக்க டைமர், இந்த டிராக் முடிந்ததும் இடைநிறுத்தும். அணைக்கத் தட்டவும்</string>
+    <string name="queue_position">டிராக் %1$d / %2$d</string>
+    <string name="progress_screen_speed_description">பிளேபேக் வேகம் %1$s. அடுத்த வேகத்திற்குத் தட்டவும், நுண் சரிசெய்தலுக்கு அழுத்திப் பிடிக்கவும்</string>
+    <string name="progress_screen_speed_slower">மெதுவாக</string>
+    <string name="progress_screen_speed_faster">வேகமாக</string>
+    <string name="progress_screen_speed_reset">இயல்பான வேகம்</string>
+    <string name="complication_playback_label">இயக்கு மற்றும் இடைநிறுத்து</string>
+    <string name="complication_playback_idle">இயக்கு</string>
+    <string name="complication_playback_idle_description">எதுவும் இயங்கவில்லை. கடைசி ஆப்ஸைத் தொடரத் தட்டவும்</string>
+    <string name="complication_playback_play_description">இடைநிறுத்தப்பட்டது: %1$s. இயக்கத் தட்டவும்</string>
+    <string name="complication_playback_pause_description">இயங்குகிறது: %1$s. இடைநிறுத்தத் தட்டவும்</string>
+    <string name="audio_block_dnd">மொபைல் தொந்தரவு செய்ய வேண்டாம் பயன்முறையில் உள்ளது</string>
+    <string name="audio_block_muted">மொபைலின் மீடியா ஒலியளவு அணைக்கப்பட்டுள்ளது</string>
+    <string name="audio_block_safe_volume">பாதுகாப்பான அளவில் வைக்கப்பட்டது. உறுதிப்படுத்த மொபைலில் ஒருமுறை அதிகரிக்கவும்</string>
+    <string name="refused_skip_app">%1$s இப்போது தவிர்க்க அனுமதிக்கவில்லை</string>
+    <string name="refused_skip">இந்த ஆப்ஸ் இப்போது தவிர்க்க அனுமதிக்கவில்லை</string>
+    <string name="refused_seek_app">%1$s இப்போது முன்னும் பின்னும் நகர்த்த அனுமதிக்கவில்லை</string>
+    <string name="refused_seek">இந்த ஆப்ஸ் இப்போது முன்னும் பின்னும் நகர்த்த அனுமதிக்கவில்லை</string>
+    <string name="tile_resume">கடைசி ஆப்ஸைத் தொடர்</string>
+    <string name="tile_resume_hint">இயக்கு கடைசி ஆப்ஸைத் தொடரும்</string>
+    <string name="recent_tile_title">சமீபத்தில் இயக்கியவை</string>
+    <string name="recent_tile_description">நீங்கள் கடைசியாக இயக்கிய டிராக்குகள், மீண்டும் இயக்க ஒரு தட்டல்</string>
+    <string name="recent_tile_empty">இன்னும் எதுவும் இயக்கப்படவில்லை</string>
+    <string name="recent_tile_play_description">%1$s மீண்டும் இயக்கு</string>
+</resources>

@@ -1,9 +1,11 @@
 package com.svartifoss.snfell.common
 
 import kotlin.math.floor
+import kotlin.math.roundToInt
 
 /**
- * The ladder the watch steps the playback speed along: 0.5x to 2x in quarter steps.
+ * The ladder the watch steps the playback speed along: 0.5x to 2x in quarter steps - and, beside
+ * it, the fine control's tenths from 0.5x to 3x ([fineStep]).
  *
  * One press goes to the next rung and the top wraps back to the bottom, so a single control can
  * reach every speed. It lives here, rather than in either screen that offers it, because the
@@ -26,6 +28,40 @@ object PlaybackSpeeds {
         val rung = floor(current / STEP + EPSILON) * STEP
         val stepped = rung + STEP
         return if (stepped > MAX + EPSILON) MIN else stepped.coerceIn(MIN, MAX)
+    }
+
+    /**
+     * The fine control's range and step: tenths, from 0.5x to 3x.
+     *
+     * Wider than the ladder on purpose. The ladder is one button that has to come back round, so
+     * every rung added is another press before it wraps; the fine control moves both ways and can
+     * afford the whole range a spoken-word listener wants (podcasts are routinely heard at 2.3x or
+     * 2.7x, and no quarter step lands there). Both go through the same phone command, so a speed
+     * chosen finely is simply reported back and the ladder steps on from it - above [MAX] its next
+     * press wraps to [MIN], as from any other rung past the top.
+     */
+    const val FINE_MIN = 0.5f
+    const val FINE_MAX = 3.0f
+    const val FINE_STEP = 0.1f
+
+    /**
+     * [current] moved [steps] tenths (negative is slower), clamped to the fine range.
+     *
+     * Snapped to the nearest tenth first, so a player reporting 1.25x steps to 1.4x or 1.2x rather
+     * than to another value between tenths, and the result is built from a whole number of tenths
+     * so float noise never accumulates over a long run of steps.
+     */
+    fun fineStep(current: Float, steps: Int): Float {
+        val tenths = (current / FINE_STEP).roundToInt() + steps
+        val min = (FINE_MIN / FINE_STEP).roundToInt()
+        val max = (FINE_MAX / FINE_STEP).roundToInt()
+        return tenths.coerceIn(min, max) / 10f
+    }
+
+    /** The label both controls show: "1×", "1.25×", "2.3×" - no trailing zeros, always a point. */
+    fun label(speed: Float): String {
+        val text = String.format(java.util.Locale.US, "%.2f", speed).trimEnd('0').trimEnd('.')
+        return "$text×"
     }
 
     /**
@@ -54,13 +90,26 @@ object PlaybackSpeeds {
         private var hasTapped = false
 
         /** The speed this press chooses, given what the phone [reported] last. */
-        fun next(reported: Float): Float {
-            val now = clock()
-            val elapsed = now - lastTappedAt
-            val base = if (hasTapped && elapsed in 0 until TAP_MEMORY_MS) lastTapped else reported
-            return PlaybackSpeeds.next(base).also {
+        fun next(reported: Float): Float = choose(reported, PlaybackSpeeds::next)
+
+        /** The speed [steps] tenths from the one in force - see [fineStep]. */
+        fun fineStep(reported: Float, steps: Int): Float =
+                choose(reported) { PlaybackSpeeds.fineStep(it, steps) }
+
+        /** Chooses [speed] outright (a reset), remembered like any other press. */
+        fun set(speed: Float): Float = choose(speed) { speed }
+
+        /** What the last press chose, while it is still remembered; null otherwise. */
+        fun recent(): Float? {
+            val elapsed = clock() - lastTappedAt
+            return if (hasTapped && elapsed in 0 until TAP_MEMORY_MS) lastTapped else null
+        }
+
+        private fun choose(reported: Float, transform: (Float) -> Float): Float {
+            val base = recent() ?: reported
+            return transform(base).also {
                 lastTapped = it
-                lastTappedAt = now
+                lastTappedAt = clock()
                 hasTapped = true
             }
         }

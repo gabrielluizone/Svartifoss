@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">شکل کپسول</string>
+    <string name="setting_wear_queue_cover_shape">شکل کاور</string>
+    <string name="wear_queue_shape_follow">پیروی از سبک صف</string>
+    <string name="queue_shape_note_title">سبک و شکل‌ها</string>
+    <string name="queue_shape_note_description">سبک، رنگ‌ها و جلوه‌ها را تعیین می‌کند. شکل کپسول و شکل کاور فقط طرح کلی را تغییر می‌دهند؛ «پیروی از سبک صف» طرح کلی هر سبک را نگه می‌دارد.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>کپسول</item>
+        <item>گرد</item>
+        <item>گوشه‌های نرم</item>
+        <item>مربعی</item>
+        <item>برگ</item>
+        <item>حباب گفتگو</item>
+        <item>شش‌ضلعی</item>
+    </string-array>
+</resources>

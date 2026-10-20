@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 12-10-2026**
+**Last updated: 20-10-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -76,7 +76,9 @@ queue, described below.
   does).
 - Your search history and playlist shortcuts, if you use those features.
 - A short local history of recently played tracks, used as a fallback when an
-  app doesn't expose a real playback queue.
+  app doesn't expose a real playback queue. The newest five (title and artist
+  only) are also sent to your paired watch for the Recently played Tile; they
+  never leave your two devices.
 - Your private theme library and other app preferences (theme, colors,
   timeouts, etc.). A profile leaves the device only if you select it for an
   explicit Community-theme submission.

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Forme des pastilles</string>
+    <string name="setting_wear_queue_cover_shape">Forme de la pochette</string>
+    <string name="wear_queue_shape_follow">Suivre le style de la file d’attente</string>
+    <string name="queue_shape_note_title">Style et formes</string>
+    <string name="queue_shape_note_description">Le style définit les couleurs et les effets. Forme des pastilles et Forme de la pochette ne changent que les contours ; Suivre le style de la file d’attente conserve ceux de chaque style.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Capsule</item>
+        <item>Arrondie</item>
+        <item>Coins doux</item>
+        <item>Carrée</item>
+        <item>Feuille</item>
+        <item>Bulle</item>
+        <item>Hexagone</item>
+    </string-array>
+</resources>

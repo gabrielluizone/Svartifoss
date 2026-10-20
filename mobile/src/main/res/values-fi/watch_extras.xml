@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Äänenvoimakkuuspalkin paksuus</string>
+    <string name="setting_wear_volume_thickness_description">Äänenvoimakkuuspalkin viivan paksuus, 50–180 % oletuksesta. Paksummatkin viivat pysyvät irti reunasta.</string>
+    <string name="setting_wear_volume_haptics">Kruunun värinä äänenvoimakkuudessa</string>
+    <string name="setting_wear_queue_dim_played">Himmennä soitetut kappaleet</string>
+    <string name="setting_wear_queue_dim_played_description">Himmentää jo soineet kappaleet, jotta tulevat erottuvat.</string>
+    <string name="quick_block_lyric">Sanat</string>
+    <string name="quick_block_lyric_description">Laulettava rivi ja seuraava synkronoiduista sanoista. Napauttamalla sitä kellossa avautuvat koko sanat.</string>
+    <string name="quick_summary_lyric">Nykyinen ja seuraava rivi</string>
+    <string name="setting_wear_progress_weight">Renkaan paksuus</string>
+    <string name="setting_wear_aod_night_dim">Yöhämmennys</string>
+    <string name="aod_control_night_dim">Yöhämmennys</string>
+    <string name="setting_wear_aod_shift">Palamisen siirto</string>
+    <string name="aod_control_shift">Palamisen siirto</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Pois</item>
+        <item>5 %:n välein</item>
+        <item>5 %:n välein ja ääripäissä</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Ohut</item>
+        <item>Tavallinen</item>
+        <item>Paksu</item>
+        <item>Erittäin paksu</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Pois</item>
+        <item>Yö · 22:00–07:00</item>
+        <item>Hämärästä aamunkoittoon · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Lievä</item>
+        <item>Tavallinen</item>
+        <item>Laaja</item>
+    </string-array>
+</resources>

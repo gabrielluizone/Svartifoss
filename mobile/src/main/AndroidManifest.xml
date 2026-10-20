@@ -266,6 +266,27 @@
         <!-- .update.PhoneInstallResultReceiver is registered by the `github` flavor only
              (src/github/AndroidManifest.xml). -->
 
+        <!-- Opened from the watch through the companion app ("Audio output on phone"); shows the
+             phone's own output switcher and is gone - see AudioOutputSwitcherActivity. Exported
+             because the companion app starts it; a browsable view link because that is the only
+             kind RemoteActivityHelper sends. -->
+        <activity
+            android:name=".view.output.AudioOutputSwitcherActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="svartifoss"
+                    android:host="audio-output" />
+            </intent-filter>
+        </activity>
+
     </application>
 
 </manifest>

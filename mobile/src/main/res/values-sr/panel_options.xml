@@ -66,6 +66,8 @@
         <item>Степенице</item>
         <item>Бомбона</item>
         <item>Дух</item>
+        <item>Талас</item>
+        <item>Лењир</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Двострука ивица</item>
@@ -76,6 +78,8 @@
         <item>Средишњи бројчаник</item>
         <item>Горњи ореол</item>
         <item>Доњи ореол</item>
+        <item>Централни стуб</item>
+        <item>Базалтни стубови</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Двоструки прстен</item>
@@ -88,6 +92,9 @@
         <item>Игла</item>
         <item>Наизменично</item>
         <item>Искра</item>
+        <item>Талас</item>
+        <item>Минути нумере</item>
+        <item>Шестоугаоне ћелије</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Ивица оквира</item>
@@ -101,6 +108,8 @@
         <item>Двострука стаза</item>
         <item>Отворено са леве стране</item>
         <item>Отворено са десне стране</item>
+        <item>Горњи лук</item>
+        <item>Доњи лук</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Компактна капсула</item>
@@ -124,6 +133,7 @@
         <item>Двострука временска линија</item>
         <item>Сегменти (дно)</item>
         <item>Средишњи стек</item>
+        <item>Талас</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Меко</item>
@@ -155,5 +165,8 @@
         <item>Мехурић</item>
         <item>Хром</item>
         <item>Холографски</item>
+        <item>Базалт</item>
+        <item>Слојеви</item>
+        <item>Рута</item>
     </string-array>
 </resources>

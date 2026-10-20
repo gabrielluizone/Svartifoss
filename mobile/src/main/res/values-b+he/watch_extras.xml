@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">עובי סרגל עוצמת הקול</string>
+    <string name="setting_wear_volume_thickness_description">עובי הקו של סרגל עוצמת הקול, מ־50% עד 180% מברירת המחדל. גם קווים עבים יותר נשארים רחוקים מהשוליים.</string>
+    <string name="setting_wear_volume_haptics">רטט הכתר בעוצמת הקול</string>
+    <string name="setting_wear_queue_dim_played">עמעום שירים שכבר הושמעו</string>
+    <string name="setting_wear_queue_dim_played_description">מעמעם את הפריטים שכבר הושמעו כדי שהבאים בתור יבלטו.</string>
+    <string name="quick_block_lyric">מילים</string>
+    <string name="quick_block_lyric_description">השורה שמושרת עכשיו והשורה הבאה, מתוך המילים המסונכרנות. הקשה עליה בשעון פותחת את המילים המלאות.</string>
+    <string name="quick_summary_lyric">השורה הנוכחית והבאה</string>
+    <string name="setting_wear_progress_weight">עובי הטבעת</string>
+    <string name="setting_wear_aod_night_dim">עמעום לילי</string>
+    <string name="aod_control_night_dim">עמעום לילי</string>
+    <string name="setting_wear_aod_shift">הסטה נגד צריבה</string>
+    <string name="aod_control_shift">הסטה נגד צריבה</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>כבוי</item>
+        <item>כל 5%</item>
+        <item>כל 5% ובקצוות</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>דק</item>
+        <item>רגיל</item>
+        <item>עבה</item>
+        <item>עבה מאוד</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>כבוי</item>
+        <item>לילה · 22:00–07:00</item>
+        <item>משקיעה עד שחר · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>עדין</item>
+        <item>רגיל</item>
+        <item>רחב</item>
+    </string-array>
+</resources>

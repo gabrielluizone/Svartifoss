@@ -745,6 +745,8 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>Material (obrys)</item>
         <item>Ovládání AMOLED</item>
         <item>Chrono (velké hodiny)</item>
+        <item>Minutový prstenec</item>
+        <item>Čedičový rám</item>
         <item>Plakát</item>
         <item>Studio</item>
         <item>Pohlcující</item>
@@ -775,6 +777,8 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Barva vždy zapnutého displeje</string>
     <string-array name="wear_aod_color_entries">

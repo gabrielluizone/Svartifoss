@@ -234,4 +234,5 @@ Anpassa allt under Kontroller och Klocka på telefonen</string>
     <string name="quick_sleep_minutes">%1$d min</string>
     <string name="quick_sleep_description">Insomningstimer, %1$d minuter kvar. Tryck för att ändra</string>
     <string name="quick_sleep_off_description">Insomningstimer avstängd. Tryck för att ställa in</string>
+    <string name="quick_lyric_plain">Den här låttexten saknar tider. Tryck för att läsa den.</string>
 </resources>

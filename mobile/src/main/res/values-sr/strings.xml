@@ -722,6 +722,8 @@
         <item>Material (оквир)</item>
         <item>AMOLED контроле</item>
         <item>Chrono (велики сат)</item>
+        <item>Минутни прстен</item>
+        <item>Базалтни оквир</item>
         <item>Постер</item>
         <item>Студио</item>
         <item>Имерзивно</item>
@@ -752,6 +754,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Боја увек укљученог екрана</string>
     <string-array name="wear_aod_color_entries">

@@ -741,6 +741,8 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
         <item>Material (आउटलाइन)</item>
         <item>AMOLED कंट्रोल</item>
         <item>Chrono (बड़ी घड़ी)</item>
+        <item>मिनट रिंग</item>
+        <item>बेसाल्ट फ्रेम</item>
         <item>पोस्टर</item>
         <item>स्टूडियो</item>
         <item>इमर्सिव</item>
@@ -771,6 +773,8 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">ऑलवेज़-ऑन रंग</string>
     <string-array name="wear_aod_color_entries">

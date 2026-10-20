@@ -724,6 +724,8 @@
         <item>Material (obrys)</item>
         <item>Ovládacie prvky AMOLED</item>
         <item>Chrono (veľké hodiny)</item>
+        <item>Minútový prstenec</item>
+        <item>Čadičový rám</item>
         <item>Plagát</item>
         <item>Štúdio</item>
         <item>Pohlcujúci</item>
@@ -754,6 +756,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Farba vždy zapnutého displeja</string>
     <string-array name="wear_aod_color_entries">

@@ -45,6 +45,8 @@ class WatchPreviewParityTest {
                 "CarouselAmbient" to "drawCarouselAod",
                 "ChatAmbient" to "drawChatAod",
                 "ChronoAmbientFace" to "drawChronoAod",
+                "MinuteRingAmbientFace" to "drawMinuteRingAod",
+                "HexFrameAmbientFace" to "drawHexFrameAod",
                 "CuratedAmbientFace" to "drawCuratedAod",
                 "ExpressiveAmbientFace" to "drawExpressiveAod",
                 "FrameAmbient" to "drawFrameAod",
@@ -72,6 +74,13 @@ class WatchPreviewParityTest {
          * screen - which is exactly the mistake the rest of this test exists to catch.
          */
         val NOT_PREVIEWABLE = mapOf(
+                "wear_aod_night_dim" to
+                        "Scales the brightness by the hour of the day. A miniature has no clock to " +
+                                "be set at three in the morning.",
+                "wear_aod_shift" to
+                        "How far the whole always-on panel hops between refreshes. A still " +
+                                "miniature never refreshes."
+                ,
                 "wear_keep_screen_on" to
                         "Holds the display against the inactivity timeout; draws nothing.",
                 "wear_gestures_mode" to
@@ -115,6 +124,7 @@ class WatchPreviewParityTest {
                 "reset_appearance",
                 "watch_streaming_shortcuts",
                 "quick_panel_open_note",
+                "queue_shape_note",
                 "screen_buttons_hint",
                 "wear_flex_axes_hint",
                 "typography_editor_surface",

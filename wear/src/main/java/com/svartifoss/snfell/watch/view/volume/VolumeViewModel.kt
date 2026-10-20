@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.watch.view.volume
 
 import androidx.lifecycle.MediatorLiveData
+import com.svartifoss.snfell.common.PhoneAudioBlock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.svartifoss.snfell.watch.communication.PhoneConnection
@@ -31,6 +32,15 @@ class VolumeViewModel @Inject constructor(
     val volume = MediatorLiveData<Float>().apply {
         addSource(phoneConnection.musicState) { resource ->
             resource?.data?.volume?.let { value = it }
+        }
+    }
+
+    /** Why the phone may not be heard, as it last said - see [PhoneAudioBlock]. */
+    val audioBlock = MediatorLiveData<PhoneAudioBlock>().apply {
+        value = PhoneAudioBlock.NONE
+        addSource(phoneConnection.musicState) { resource ->
+            val next = PhoneAudioBlock.fromCode(resource?.data?.audioBlock ?: 0)
+            if (next != value) value = next
         }
     }
 

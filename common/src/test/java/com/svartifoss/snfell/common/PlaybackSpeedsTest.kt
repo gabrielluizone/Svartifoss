@@ -76,4 +76,58 @@ class PlaybackSpeedsTest {
         assertEquals(PlaybackSpeeds.MIN, PlaybackSpeeds.next(0.1f), 0.0001f)
         assertEquals(PlaybackSpeeds.MIN, PlaybackSpeeds.next(3.0f), 0.0001f)
     }
+
+    @Test
+    fun `fine steps move by tenths in both directions`() {
+        assertEquals(1.1f, PlaybackSpeeds.fineStep(1.0f, 1), 0.0001f)
+        assertEquals(0.9f, PlaybackSpeeds.fineStep(1.0f, -1), 0.0001f)
+        assertEquals(2.3f, PlaybackSpeeds.fineStep(2.0f, 3), 0.0001f)
+    }
+
+    @Test
+    fun `a speed between tenths snaps to the nearest before stepping`() {
+        assertEquals(1.4f, PlaybackSpeeds.fineStep(1.25f, 1), 0.0001f)
+        assertEquals(1.2f, PlaybackSpeeds.fineStep(1.25f, -1), 0.0001f)
+        assertEquals(1.8f, PlaybackSpeeds.fineStep(1.75f, 0), 0.0001f)
+    }
+
+    @Test
+    fun `fine steps stop at the ends of their range`() {
+        assertEquals(PlaybackSpeeds.FINE_MAX, PlaybackSpeeds.fineStep(2.95f, 4), 0.0001f)
+        assertEquals(PlaybackSpeeds.FINE_MIN, PlaybackSpeeds.fineStep(0.6f, -5), 0.0001f)
+    }
+
+    @Test
+    fun `a long run of fine steps does not drift off the tenths`() {
+        var speed = 0.5f
+        repeat(25) { speed = PlaybackSpeeds.fineStep(speed, 1) }
+        assertEquals(3.0f, speed, 0.00001f)
+    }
+
+    @Test
+    fun `the ladder wraps from a fine speed above its top`() {
+        assertEquals(PlaybackSpeeds.MIN, PlaybackSpeeds.next(2.6f), 0.0001f)
+    }
+
+    @Test
+    fun `labels drop trailing zeros and always use a point`() {
+        assertEquals("1×", PlaybackSpeeds.label(1.0f))
+        assertEquals("1.25×", PlaybackSpeeds.label(1.25f))
+        assertEquals("2.3×", PlaybackSpeeds.label(2.3f))
+        assertEquals("0.5×", PlaybackSpeeds.label(0.5f))
+    }
+
+    @Test
+    fun `fine steps and resets share the press memory with the ladder`() {
+        var now = 10_000L
+        val taps = PlaybackSpeeds.TapMemory { now }
+        assertEquals(1.1f, taps.fineStep(reported = 1.0f, steps = 1), 0.0001f)
+        now += 300
+        assertEquals(1.2f, taps.fineStep(reported = 1.0f, steps = 1), 0.0001f)
+        assertEquals(1.2f, taps.recent()!!, 0.0001f)
+        now += 300
+        assertEquals(1.0f, taps.set(1.0f), 0.0001f)
+        now += PlaybackSpeeds.TAP_MEMORY_MS
+        assertEquals(null, taps.recent())
+    }
 }

@@ -20,6 +20,7 @@ gen/
 */build/
 *.apk
 *.keystore
+Svartifoss-5/*
 
 # OS generated files #
 ######################

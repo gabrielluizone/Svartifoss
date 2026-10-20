@@ -93,6 +93,17 @@
             android:taskAffinity=""
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <!-- Invisible bridge for a RecentTracksTileService row: asks the phone to search for the
+             track and play it, then finishes. Exported because the Tile framework starts it; all
+             it can do is send a search query, the same one any voice search sends. -->
+        <activity
+            android:name=".watch.tile.RecentTrackLaunchActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <service
             android:name=".watch.communication.PreferencesReceiver"
             android:exported="true"
@@ -199,6 +210,11 @@
                     android:host="*"
                     android:pathPrefix="/Music/State"
                     android:scheme="wear" />
+                <!-- The Recently played Tile's list: refreshed when it lands, not a track later. -->
+                <data
+                    android:host="*"
+                    android:pathPrefix="/RecentTracks"
+                    android:scheme="wear" />
             </intent-filter>
         </service>
 
@@ -257,6 +273,24 @@
                 android:resource="@drawable/tile_shortcuts_preview" />
         </service>
 
+        <!-- Recently played: the phone's last few tracks (CommPaths.DATA_RECENT_TRACKS), one tap
+             from playing again through RecentTrackLaunchActivity. -->
+        <service
+            android:name=".watch.tile.RecentTracksTileService"
+            android:exported="true"
+            android:label="@string/recent_tile_title"
+            android:description="@string/recent_tile_description"
+            android:icon="@drawable/ic_tile_recent"
+            android:permission="com.google.android.wearable.permission.BIND_TILE_PROVIDER">
+            <intent-filter>
+                <action android:name="androidx.wear.tiles.action.BIND_TILE_PROVIDER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="androidx.wear.tiles.PREVIEW"
+                android:resource="@drawable/tile_recent_preview" />
+        </service>
+
         <!-- Watch-face complication: current album cover, tap to open the player -->
         <!-- Icon: ic_complication_picker is a full-bleed copy of the glyph used ONLY here - both
              the ic_complication_media inset wrapper and even the raw glyph (built-in Material
@@ -283,6 +317,31 @@
                 android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
                 android:value="1800" />
         </service>
+
+        <!-- A control rather than a picture: play/pause glyph, elapsed time and track progress, and a
+             tap that plays or pauses without opening anything (the receiver below). Update period
+             0: it is pushed on state changes, and on Wear OS 4+ the face counts the time and the
+             progress on its own between them - see the service class. -->
+        <service
+            android:name=".watch.complication.PlaybackComplicationDataSourceService"
+            android:exported="true"
+            android:label="@string/complication_playback_label"
+            android:icon="@drawable/ic_complication_picker"
+            android:permission="com.google.android.wearable.permission.BIND_COMPLICATION_PROVIDER">
+            <intent-filter>
+                <action android:name="android.support.wearable.complications.ACTION_COMPLICATION_UPDATE_REQUEST" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.wearable.complications.SUPPORTED_TYPES"
+                android:value="RANGED_VALUE,SHORT_TEXT,ICON" />
+            <meta-data
+                android:name="android.support.wearable.complications.UPDATE_PERIOD_SECONDS"
+                android:value="0" />
+        </service>
+
+        <receiver
+            android:name=".watch.complication.PlaybackComplicationToggleReceiver"
+            android:exported="false" />
 
         <activity
             android:name="androidx.wear.activity.ConfirmationActivity"

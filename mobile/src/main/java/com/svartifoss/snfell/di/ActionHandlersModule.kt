@@ -38,6 +38,7 @@ import com.svartifoss.snfell.actions.tasker.TaskerTaskAction
 import com.svartifoss.snfell.actions.symfonium.SymfoniumMediaStartAction
 import com.svartifoss.snfell.actions.symfonium.SymfoniumSyncAction
 import com.svartifoss.snfell.actions.volume.MuteToggleAction
+import com.svartifoss.snfell.actions.volume.OpenPhoneAudioOutputAction
 import com.svartifoss.snfell.actions.volume.SetVolumePercentAction
 import dagger.Binds
 import dagger.Module
@@ -110,6 +111,11 @@ abstract class ActionHandlersModule {
     @IntoMap
     @ClassKey(MuteToggleAction::class)
     abstract fun bindMuteToggleActionsHandler(handler: MuteToggleAction.Handler): ActionHandler<*>
+
+    @Binds
+    @IntoMap
+    @ClassKey(OpenPhoneAudioOutputAction::class)
+    abstract fun bindOpenPhoneAudioOutputActionsHandler(handler: OpenPhoneAudioOutputAction.Handler): ActionHandler<*>
 
     @Binds
     @IntoMap

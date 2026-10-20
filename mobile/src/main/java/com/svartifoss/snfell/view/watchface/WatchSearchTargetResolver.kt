@@ -6,6 +6,7 @@ import com.svartifoss.snfell.common.MiniButtonPlacement
 import com.svartifoss.snfell.common.OverlayBackdropResolver
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
+import com.svartifoss.snfell.common.QueueAppearance
 import com.svartifoss.snfell.common.WatchTypography
 
 /**
@@ -182,11 +183,33 @@ internal object WatchSearchTargetResolver {
             return redirect(WatchFacePrefsFragment.SECTION_BACKGROUND, "album_art_style")
         }
 
+        // The basalt columns are drawn at a fixed size, so the stroke weight has nothing to act on
+        // there and the Panels page hides it - see panelControlApplies(PanelControl.THICKNESS).
+        if (key == MiscPreferences.WEAR_VOLUME_THICKNESS.key &&
+                readString(MiscPreferences.WEAR_VOLUME_LAYOUT.key, "edge") ==
+                PanelEditorModel.FIXED_SIZE_VOLUME_LAYOUT) {
+            return redirect(WatchFacePrefsFragment.SECTION_PANELS, MiscPreferences.WEAR_VOLUME_LAYOUT.key)
+        }
+
+        // The queue's outline and cover-cut pickers are hidden beside a style with nothing for them
+        // to act on - Minimal draws no outline, the Cover styles fill the row instead of cutting a
+        // cover. Asked of QueueAppearance directly, the same call panelControlApplies makes, so
+        // the two cannot disagree about a style.
+        val queueStyle = readString(
+                MiscPreferences.WEAR_QUEUE_STYLE.key, MiscPreferences.WEAR_QUEUE_STYLE.defaultValue)
+        if (key == MiscPreferences.WEAR_QUEUE_ROW_SHAPE.key &&
+                !QueueAppearance.rowShapeApplies(queueStyle) ||
+                key == MiscPreferences.WEAR_QUEUE_COVER_SHAPE.key &&
+                !QueueAppearance.coverShapeApplies(queueStyle)) {
+            return redirect(WatchFacePrefsFragment.SECTION_PANELS, MiscPreferences.WEAR_QUEUE_STYLE.key)
+        }
+
         val edgeProgressAvailable =
                 readBoolean("wear_edge_progress_visible", true) ||
                         readBoolean("wear_edge_seek_enabled", true)
         if (key in setOf(
-                        "wear_progress_style", "wear_progress_layout", "wear_progress_gradient") &&
+                        "wear_progress_style", "wear_progress_layout", "wear_progress_weight",
+                        "wear_progress_gradient") &&
                 !edgeProgressAvailable) {
             return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_edge_progress_visible")
         }

@@ -87,7 +87,32 @@ internal object PanelOptionCatalog {
         extraValues.forEachIndexed { index, value ->
             choices.putIfAbsent(value, extraEntries[index])
         }
-        preference.entries = choices.values.toTypedArray()
-        preference.entryValues = choices.keys.toTypedArray()
+        val order = ordered(choices.keys.toList(), featured[preference.key].orEmpty())
+        preference.entries = order.map { choices.getValue(it) }.toTypedArray()
+        preference.entryValues = order.toTypedArray()
+    }
+
+    /**
+     * The options that are worth seeing without scrolling, by preference.
+     *
+     * These lists have grown to thirty entries and everything added is appended to the end, which
+     * is the one place nobody looks: a new style was there and effectively invisible. The distinctive
+     * ones are put straight after the first entry instead, so they are on the first screen of the
+     * dialog, and everything else keeps the order it always had.
+     */
+    private val featured = mapOf(
+            "wear_volume_style" to listOf("wave", "ruler"),
+            "wear_progress_style" to listOf("wave", "minutes", "hex_cells"),
+            "wear_seek_layout" to listOf("wave_timeline"),
+            "wear_queue_style" to listOf("route", "basalt", "strata"))
+
+    /**
+     * [values] with the [featured] ones that are present moved to just after the first, in the order
+     * given. Pure so the placement can be pinned without an Android `ListPreference`.
+     */
+    internal fun ordered(values: List<String>, featured: List<String>): List<String> {
+        val present = featured.filter { it in values }
+        if (present.isEmpty() || values.size < 2) return values
+        return listOf(values.first()) + present + values.drop(1).filter { it !in present }
     }
 }

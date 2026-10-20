@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Stärke der Lautstärkeleiste</string>
+    <string name="setting_wear_volume_thickness_description">Strichstärke der Lautstärkeleiste, von 50 % bis 180 % des Standards. Auch dickere Striche halten Abstand zum Rand.</string>
+    <string name="setting_wear_volume_haptics">Kronenvibration bei Lautstärke</string>
+    <string name="setting_wear_queue_dim_played">Gespielte Titel abblenden</string>
+    <string name="setting_wear_queue_dim_played_description">Blendet bereits gespielte Einträge ab, damit die kommenden hervortreten.</string>
+    <string name="quick_block_lyric">Songtext</string>
+    <string name="quick_block_lyric_description">Die gerade gesungene Zeile und die nächste aus dem synchronisierten Songtext. Ein Tippen darauf öffnet auf der Uhr den ganzen Text.</string>
+    <string name="quick_summary_lyric">Aktuelle und nächste Zeile</string>
+    <string name="setting_wear_progress_weight">Ringstärke</string>
+    <string name="setting_wear_aod_night_dim">Nachtabdunklung</string>
+    <string name="aod_control_night_dim">Nachtabdunklung</string>
+    <string name="setting_wear_aod_shift">Einbrenn-Verschiebung</string>
+    <string name="aod_control_shift">Einbrenn-Verschiebung</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Aus</item>
+        <item>Alle 5 %</item>
+        <item>Alle 5 % und an den Grenzen</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Dünn</item>
+        <item>Normal</item>
+        <item>Dick</item>
+        <item>Sehr dick</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Aus</item>
+        <item>Nacht · 22:00–07:00</item>
+        <item>Dämmerung bis Morgengrauen · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Sanft</item>
+        <item>Normal</item>
+        <item>Weit</item>
+    </string-array>
+</resources>

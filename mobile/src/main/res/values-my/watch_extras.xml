@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">အသံ ဘား အထူ</string>
+    <string name="setting_wear_volume_thickness_description">အသံ ဘား မျဉ်း၏ အထူ၊ မူလ၏ 50% မှ 180% အထိ။ ထူသော မျဉ်းများလည်း စခရင် အစွန်းနှင့် ဝေးဝေး ရှိနေဆဲ။</string>
+    <string name="setting_wear_volume_haptics">အသံချိန်ရာတွင် သရဖူ တုန်ခါမှု</string>
+    <string name="setting_wear_queue_dim_played">ဖွင့်ပြီးသော သီချင်းများကို မှိန်ရန်</string>
+    <string name="setting_wear_queue_dim_played_description">ဖွင့်ပြီးသား သီချင်းများကို မှိန်စေပြီး လာမည့်သီချင်းများကို ထင်ရှားစေသည်။</string>
+    <string name="quick_block_lyric">သီချင်းစာသား</string>
+    <string name="quick_block_lyric_description">ချိန်ကိုက်ထားသော စာသားမှ ယခုဆိုနေသော စာကြောင်းနှင့် နောက်စာကြောင်း။ နာရီတွင် ၎င်းကို တို့လျှင် စာသားအပြည့် ဖွင့်ပါမည်။</string>
+    <string name="quick_summary_lyric">လက်ရှိ စာကြောင်းနှင့် နောက်တစ်ကြောင်း</string>
+    <string name="setting_wear_progress_weight">ကွင်း အထူ</string>
+    <string name="setting_wear_aod_night_dim">ညဘက် မှိန်ခြင်း</string>
+    <string name="aod_control_night_dim">ညဘက် မှိန်ခြင်း</string>
+    <string name="setting_wear_aod_shift">Burn-in ရွှေ့ခြင်း</string>
+    <string name="aod_control_shift">Burn-in ရွှေ့ခြင်း</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>ပိတ်</item>
+        <item>5% တိုင်း</item>
+        <item>5% တိုင်းနှင့် အကန့်အသတ်များတွင်</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>ပါး</item>
+        <item>ပုံမှန်</item>
+        <item>ထူ</item>
+        <item>အလွန်ထူ</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>ပိတ်</item>
+        <item>ည · 22:00–07:00</item>
+        <item>ညနေမှ နံနက်အထိ · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>ပျော့</item>
+        <item>ပုံမှန်</item>
+        <item>ကျယ်</item>
+    </string-array>
+</resources>

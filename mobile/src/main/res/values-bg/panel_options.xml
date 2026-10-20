@@ -66,6 +66,8 @@
         <item>Стъпки</item>
         <item>Бонбон</item>
         <item>Призрак</item>
+        <item>Вълна</item>
+        <item>Линийка</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Двоен ръб</item>
@@ -76,6 +78,8 @@
         <item>Централен циферблат</item>
         <item>Горен ореол</item>
         <item>Долен ореол</item>
+        <item>Централен стълб</item>
+        <item>Базалтови колони</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Двоен пръстен</item>
@@ -88,6 +92,9 @@
         <item>Игла</item>
         <item>Редуващо се</item>
         <item>Искра</item>
+        <item>Вълна</item>
+        <item>Минути на песента</item>
+        <item>Шестоъгълни клетки</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Ръб на безела</item>
@@ -101,6 +108,8 @@
         <item>Двойна пътека</item>
         <item>Отворено отляво</item>
         <item>Отворено отдясно</item>
+        <item>Горна дъга</item>
+        <item>Долна дъга</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Компактна капсула</item>
@@ -124,6 +133,7 @@
         <item>Двойна времева линия</item>
         <item>Сегменти (долу)</item>
         <item>Централен стек</item>
+        <item>Вълна</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Меко</item>
@@ -155,5 +165,8 @@
         <item>Балон</item>
         <item>Хром</item>
         <item>Холографско</item>
+        <item>Базалт</item>
+        <item>Пластове</item>
+        <item>Маршрут</item>
     </string-array>
 </resources>

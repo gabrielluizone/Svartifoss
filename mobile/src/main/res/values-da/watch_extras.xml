@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Lydstyrkebjælkens tykkelse</string>
+    <string name="setting_wear_volume_thickness_description">Tykkelsen på lydstyrkebjælkens streg, fra 50 % til 180 % af standarden. Tykkere streger holder sig stadig fri af kanten.</string>
+    <string name="setting_wear_volume_haptics">Kronevibration ved lydstyrke</string>
+    <string name="setting_wear_queue_dim_played">Dæmp afspillede numre</string>
+    <string name="setting_wear_queue_dim_played_description">Toner de numre ned, der allerede er afspillet, så de kommende træder frem.</string>
+    <string name="quick_block_lyric">Sangtekst</string>
+    <string name="quick_block_lyric_description">Linjen der synges og den næste, fra den synkroniserede sangtekst. Tryk på den på uret for at åbne hele teksten.</string>
+    <string name="quick_summary_lyric">Aktuel linje og den næste</string>
+    <string name="setting_wear_progress_weight">Ringens tykkelse</string>
+    <string name="setting_wear_aod_night_dim">Natdæmpning</string>
+    <string name="aod_control_night_dim">Natdæmpning</string>
+    <string name="setting_wear_aod_shift">Forskydning mod indbrænding</string>
+    <string name="aod_control_shift">Forskydning mod indbrænding</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Fra</item>
+        <item>Hver 5 %</item>
+        <item>Hver 5 % og ved grænserne</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Tynd</item>
+        <item>Normal</item>
+        <item>Tyk</item>
+        <item>Meget tyk</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Fra</item>
+        <item>Nat · 22:00–07:00</item>
+        <item>Fra skumring til daggry · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Blid</item>
+        <item>Normal</item>
+        <item>Bred</item>
+    </string-array>
+</resources>

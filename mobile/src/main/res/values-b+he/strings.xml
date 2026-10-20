@@ -722,6 +722,8 @@
         <item>Material (מתאר)</item>
         <item>פקדי AMOLED</item>
         <item>Chrono (שעון גדול)</item>
+        <item>טבעת דקות</item>
+        <item>מסגרת בזלת</item>
         <item>פוסטר</item>
         <item>סטודיו</item>
         <item>סוחף</item>
@@ -752,6 +754,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">צבע תצוגה פעילה תמיד</string>
     <string-array name="wear_aod_color_entries">

@@ -10,11 +10,11 @@ import androidx.compose.ui.text.font.FontVariation
 import androidx.compose.ui.text.font.FontWeight
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.ColorUtils
-import com.svartifoss.snfell.common.ColorHarmony
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.DeviceLocalAppearance
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.PaletteTransforms
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.WatchTypography
 
@@ -46,11 +46,6 @@ object WatchTheme {
     const val TEXT_SECONDARY = 0xFFB0B0B0.toInt()
 
     private const val TEXT_ACCENT_MIN_LIGHTNESS = 0.62f
-    /** The same value a colourless accent is promoted to at the source, so this clamp is a no-op
-     *  on the covers that used to depend on it - see ColorHarmony.NEUTRAL_ACCENT_SATURATION. */
-    private const val SURFACE_ACCENT_MIN_SATURATION = ColorHarmony.NEUTRAL_ACCENT_SATURATION
-    private const val SURFACE_ACCENT_MIN_LIGHTNESS = 0.62f
-    private const val SURFACE_ACCENT_MAX_LIGHTNESS = 0.82f
 
     /**
      * Adapts a raw palette [color] for use as *text* on the dark background: raises lightness so
@@ -70,13 +65,7 @@ object WatchTheme {
      * the same way a light theme's accent gets a brighter dark-theme variant instead of being
      * reused as-is.
      */
-    fun accentForSurface(color: Int): Int {
-        val hsl = FloatArray(3)
-        ColorUtils.colorToHSL(color, hsl)
-        hsl[1] = hsl[1].coerceAtLeast(SURFACE_ACCENT_MIN_SATURATION)
-        hsl[2] = hsl[2].coerceIn(SURFACE_ACCENT_MIN_LIGHTNESS, SURFACE_ACCENT_MAX_LIGHTNESS)
-        return ColorUtils.HSLToColor(hsl)
-    }
+    fun accentForSurface(color: Int): Int = PaletteTransforms.surfaceAccent(color)
 }
 
 /** The app-wide Google Sans typeface for Compose screens (View layouts set it via @font/google_sans). */

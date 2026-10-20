@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">သီချင်းအဆုံး</string>
+    <string name="quick_sleep_track_end_description">အိပ်ချိန်တိုင်မာ၊ ဤသီချင်းပြီးလျှင် ခဏရပ်မည်။ ပိတ်ရန် တို့ပါ</string>
+    <string name="queue_position">သီချင်း %2$d ပုဒ်အနက် %1$d</string>
+    <string name="progress_screen_speed_description">ဖွင့်နှုန်း %1$s။ နောက်နှုန်းအတွက် တို့ပါ၊ အသေးစိတ်ချိန်ရန် ဖိထားပါ</string>
+    <string name="progress_screen_speed_slower">ပိုနှေး</string>
+    <string name="progress_screen_speed_faster">ပိုမြန်</string>
+    <string name="progress_screen_speed_reset">ပုံမှန်နှုန်း</string>
+    <string name="complication_playback_label">ဖွင့်ရန်နှင့် ခဏရပ်ရန်</string>
+    <string name="complication_playback_idle">ဖွင့်ရန်</string>
+    <string name="complication_playback_idle_description">ဘာမှ ဖွင့်မထားပါ။ နောက်ဆုံးအက်ပ်ကို ဆက်ဖွင့်ရန် တို့ပါ</string>
+    <string name="complication_playback_play_description">ခဏရပ်ထားသည်- %1$s။ ဖွင့်ရန် တို့ပါ</string>
+    <string name="complication_playback_pause_description">ဖွင့်နေသည်- %1$s။ ခဏရပ်ရန် တို့ပါ</string>
+    <string name="audio_block_dnd">ဖုန်းသည် မနှောင့်ယှက်ရ မုဒ်တွင် ရှိသည်</string>
+    <string name="audio_block_muted">ဖုန်း၏ မီဒီယာအသံ ပိတ်ထားသည်</string>
+    <string name="audio_block_safe_volume">ဘေးကင်းသောအဆင့်တွင် ထိန်းထားသည်။ အတည်ပြုရန် ဖုန်းတွင် တစ်ကြိမ် တိုးပါ</string>
+    <string name="refused_skip_app">%1$s သည် ယခု ကျော်ခွင့်မပြုပါ</string>
+    <string name="refused_skip">ဤအက်ပ်သည် ယခု ကျော်ခွင့်မပြုပါ</string>
+    <string name="refused_seek_app">%1$s သည် ယခု ရှေ့နောက်ရွှေ့ခွင့်မပြုပါ</string>
+    <string name="refused_seek">ဤအက်ပ်သည် ယခု ရှေ့နောက်ရွှေ့ခွင့်မပြုပါ</string>
+    <string name="tile_resume">နောက်ဆုံးအက်ပ်ကို ဆက်ဖွင့်ရန်</string>
+    <string name="tile_resume_hint">ဖွင့်ခြင်းက နောက်ဆုံးအက်ပ်ကို ဆက်ဖွင့်သည်</string>
+    <string name="recent_tile_title">မကြာသေးမီက ဖွင့်ခဲ့သည်</string>
+    <string name="recent_tile_description">သင်နောက်ဆုံးဖွင့်ခဲ့သော သီချင်းများ၊ ပြန်ဖွင့်ရန် တစ်ချက်တို့ရုံ</string>
+    <string name="recent_tile_empty">ဘာမှ မဖွင့်ရသေးပါ</string>
+    <string name="recent_tile_play_description">%1$s ကို ထပ်ဖွင့်ရန်</string>
+</resources>

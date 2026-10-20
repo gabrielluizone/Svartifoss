@@ -14,7 +14,12 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.animation.LinearInterpolator
+import android.graphics.Path
 import com.svartifoss.snfell.common.ColorHarmony
+import com.svartifoss.snfell.common.MeterTrack
+import com.svartifoss.snfell.common.ProgressFx
+import com.svartifoss.snfell.common.VolumeFx
+import com.svartifoss.snfell.common.WavePhaseClock
 import com.svartifoss.snfell.common.SeekMarkerVisibility
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.watch.view.panel.PanelReadout
@@ -77,7 +82,13 @@ enum class RingStyle {
     /** Alternates primary and secondary blocks around the bezel. */
     ALTERNATING,
     /** Hairline track with a bright oversized progress head. */
-    SPARK;
+    SPARK,
+    /** A wave along the played part of the ring, the rest left straight. */
+    WAVE,
+    /** The ring cut into one piece per minute of the track, so its length can be read off it. */
+    MINUTES,
+    /** A ring of small hexagons - the basalt columns seen end-on - filling as the track plays. */
+    HEX_CELLS;
 
     companion object {
         fun fromPref(value: String?): RingStyle = when (value) {
@@ -98,6 +109,9 @@ enum class RingStyle {
             "needle" -> NEEDLE
             "alternating" -> ALTERNATING
             "spark" -> SPARK
+            "wave" -> WAVE
+            "minutes" -> MINUTES
+            "hex_cells" -> HEX_CELLS
             else -> SOLID
         }
     }
@@ -137,6 +151,10 @@ enum class ProgressRingLayout(
     OPEN_LEFT(45f, 270f, 1f),
     /** Three-quarter ring whose gap is centred on the right edge. */
     OPEN_RIGHT(-135f, 270f, 1f),
+    /** A short cap across the top of the bezel, filling left to right. */
+    TOP_ARC(205f, 130f, 1f),
+    /** A short cap across the bottom of the bezel, also filling left to right. */
+    BOTTOM_ARC(155f, -130f, 1f),
     /** Two concentric full rings, the inner rail taking the secondary palette color. */
     DOUBLE(
             -90f,
@@ -158,6 +176,8 @@ enum class ProgressRingLayout(
             "open_left" -> OPEN_LEFT
             "open_right" -> OPEN_RIGHT
             "double" -> DOUBLE
+            "top_arc" -> TOP_ARC
+            "bottom_arc" -> BOTTOM_ARC
             else -> EDGE
         }
     }
@@ -209,6 +229,14 @@ class CircularProgressSeekBar : View {
 
     private var displayProgress = 0f
     private var progressAnimator: ValueAnimator? = null
+
+    /**
+     * Where the [RingStyle.WAVE] crests have got to. The wave travels along the ring while music
+     * plays - the way the Expressive face's ring keeps turning - and stands still while it is
+     * paused; [WavePhaseClock] is why a pause and resume does not make it jump.
+     */
+    private val waveClock = WavePhaseClock()
+    private val wavePhase: Float get() = waveClock.phase
     private val touchBand = resources.getDimension(R.dimen.seek_bar_touch_band)
 
     private val touchLocation = IntArray(2)
@@ -433,8 +461,38 @@ class CircularProgressSeekBar : View {
 
     private val baseStrokeWidth = resources.getDimension(R.dimen.seek_bar_width)
 
+    /**
+     * The user's own stroke weight for the ring (`wear_progress_weight`), multiplied in beside the
+     * layout's and the seek overlay's. Like [edgeStrokeScale] it re-measures: the ring is inset by
+     * half its stroke, so a heavier one that skipped the pass would be clipped by what it grew.
+     */
+    var weightScale: Float = 1f
+        set(value) {
+            val clamped = value.coerceIn(0.3f, 2.5f)
+            if (field != clamped) {
+                field = clamped
+                requestLayout()
+                invalidate()
+            }
+        }
+
+    /**
+     * Length of the current track, for [RingStyle.MINUTES]. Zero or less means unknown - a live
+     * stream, or a player that published no duration - and that style then draws a plain ring.
+     */
+    var trackDurationMs: Long = 0L
+        set(value) {
+            if (field != value) {
+                field = value
+                if (ringStyle == RingStyle.MINUTES) invalidate()
+            }
+        }
+
+    private val fxPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val fxPath = Path()
+
     private fun effectiveStrokeWidth(): Float =
-            baseStrokeWidth * edgeStrokeScale * ringLayout.strokeScale
+            baseStrokeWidth * edgeStrokeScale * ringLayout.strokeScale * weightScale
 
     /**
      * Progress fraction, 0f..1f. Ignored while the user is actively dragging the ring.
@@ -627,6 +685,10 @@ class CircularProgressSeekBar : View {
             return
         }
 
+        // Not while the ring is faded out under an overlay: nobody can see it travel then.
+        val waveMoves = ringStyle == RingStyle.WAVE && playing && isShown && alpha > 0.01f
+        waveClock.advance(waveMoves, android.os.SystemClock.uptimeMillis())
+
         val baseWidth = effectiveStrokeWidth()
         drawRingStyle(canvas, circleBounds, baseWidth, allowPaletteGradient = true)
 
@@ -640,6 +702,10 @@ class CircularProgressSeekBar : View {
                     allowPaletteGradient = false)
             foregroundPaint.color = originalColor
         }
+
+        // One frame at a time, and only while it is visible and something is playing: a ring that
+        // is paused, hidden or in another style schedules nothing, so it costs nothing.
+        if (waveMoves) postInvalidateDelayed(WavePhaseClock.FRAME_MS)
 
         // The tick is a mark *on* the band, so it is inside the early return above rather than
         // beside it: with the ring hidden it would be a lone dash at the screen edge, which is a
@@ -888,6 +954,33 @@ class CircularProgressSeekBar : View {
                     drawHeadDot(canvas, bounds, baseWidth * 1.15f, start + playedSweep)
                 }
             }
+            RingStyle.WAVE -> VolumeFx.wave(
+                    canvas,
+                    MeterTrack.Arc(
+                            bounds.centerX(), bounds.centerY(), bounds.width() / 2f,
+                            start, totalSweep),
+                    displayProgress,
+                    // Lighter than the solid ring and swinging less than the volume bar's: a thick
+                    // edge layout multiplies both, and at the full figures the crests ran into the
+                    // buttons inside and the line was cut by the bezel outside.
+                    baseWidth * .7f,
+                    baseWidth * .32f,
+                    resources.displayMetrics.density,
+                    backgroundPaint.color,
+                    foregroundPaint.color,
+                    null,
+                    true,
+                    fxPaint,
+                    fxPath,
+                    amplitudeFollowsLevel = false,
+                    phase = wavePhase)
+            RingStyle.MINUTES -> ProgressFx.minutes(
+                    canvas, bounds, start, totalSweep, displayProgress, trackDurationMs,
+                    baseWidth, foregroundPaint.color, backgroundPaint.color, fxPaint)
+            RingStyle.HEX_CELLS -> ProgressFx.hexCells(
+                    canvas, bounds.centerX(), bounds.centerY(), bounds.width() / 2f,
+                    start, totalSweep, displayProgress, baseWidth * .7f,
+                    foregroundPaint.color, backgroundPaint.color, fxPaint, fxPath)
         }
         foregroundPaint.shader = null
         foregroundPaint.pathEffect = null

@@ -2,11 +2,6 @@ package com.svartifoss.snfell.watch.view.queue
 
 import android.graphics.Bitmap
 import android.util.LruCache
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -26,7 +21,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -40,27 +34,30 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.painter.BitmapPainter
-import androidx.compose.ui.draw.paint
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.RoundRect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
-import kotlin.math.roundToInt
-import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.drawOutline
+import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.selected
 import androidx.compose.ui.semantics.semantics
@@ -69,35 +66,56 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.graphics.ColorUtils
 import androidx.wear.compose.foundation.lazy.ScalingLazyColumn
-import androidx.wear.compose.foundation.lazy.items
+import androidx.wear.compose.foundation.lazy.ScalingLazyListState
+import androidx.wear.compose.foundation.lazy.itemsIndexed
 import androidx.wear.compose.foundation.lazy.rememberScalingLazyListState
 import androidx.wear.compose.foundation.rotary.RotaryScrollableDefaults
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.MaterialTheme
 import androidx.wear.compose.material3.SwipeToDismissBox
-import com.svartifoss.snfell.watch.view.panel.PanelBackdropLayer
-import com.svartifoss.snfell.watch.view.face.marqueeFade
-import com.svartifoss.snfell.watch.view.panel.ScreenBackdrop
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.BitmapBlur
+import com.svartifoss.snfell.common.CoverCorners
+import com.svartifoss.snfell.common.QueueAppearance
+import com.svartifoss.snfell.common.QueuePosition
+import com.svartifoss.snfell.common.QueueRouteColors
+import com.svartifoss.snfell.common.QueueRowAppearance
+import com.svartifoss.snfell.common.QueueRowFill
+import com.svartifoss.snfell.common.QueueRowLayout
+import com.svartifoss.snfell.common.QueueRowOutline
+import com.svartifoss.snfell.common.QueueRowShape
+import com.svartifoss.snfell.common.QueueRowSkin
+import com.svartifoss.snfell.common.QueueRowSkins
+import com.svartifoss.snfell.common.QueueShape
 import com.svartifoss.snfell.common.QueueShortcutLink
-import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
+import com.svartifoss.snfell.common.QueueStyleSpec
+import com.svartifoss.snfell.common.QueueStyles
 import com.svartifoss.snfell.watch.theme.LocalWatchTrackTextStyles
+import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import com.svartifoss.snfell.watch.theme.WatchTheme
 import com.svartifoss.snfell.watch.view.compose.CurvedClock
 import com.svartifoss.snfell.watch.view.compose.CurvedScrollIndicator
 import com.svartifoss.snfell.watch.view.compose.EqualizerBars
 import com.svartifoss.snfell.watch.view.compose.LoadingBars
+import com.svartifoss.snfell.watch.view.face.marqueeFade
+import com.svartifoss.snfell.watch.view.panel.PanelBackdropLayer
+import com.svartifoss.snfell.watch.view.panel.ScreenBackdrop
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.withContext
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.roundToInt
 
 /** View model for one queue row. [isPlaying] marks the entry the phone reports as currently active. */
 data class QueueItemUi(
@@ -111,8 +129,6 @@ data class QueueItemUi(
         val mediaUri: String? = null
 )
 
-// Idle rows are near-black for an OLED-dark look; the now-playing row uses the full album accent.
-private val IDLE_PILL_COLOR = Color(WatchTheme.SURFACE_DARK)
 private const val SUBTITLE_ALPHA = 0.65f
 // How long the loading spinner may wait for the phone's queue response before giving up and
 // showing the empty message instead (e.g. phone out of range never answers at all).
@@ -122,70 +138,83 @@ private const val QUEUE_LOAD_TIMEOUT_MS = 6000L
  *  restart them between two flicks of a continuing scroll, short enough that a stop feels immediate. */
 private const val SCROLL_SETTLE_MS = 220L
 
-/** The app-wide Google Sans typeface, so the queue matches the rest of the watch UI. */
-
-
-/** User-selectable visual style of the queue (see [MiscPreferences.WEAR_QUEUE_STYLE] on the
- *  phone). Shares the four-name vocabulary with the volume and quick-panel overlays. */
-enum class QueueStyle {
+/**
+ * User-selectable visual style of the queue (see [MiscPreferences.WEAR_QUEUE_STYLE] on the phone):
+ * the rows' colours, gradients, strokes and marks. What each one is drawn with lives in the shared
+ * registry ([QueueStyles], [QueueRowSkins]) so the phone's miniature paints the same thing; this
+ * enum is the watch's handle on it, and the one the menu and the quick panel read for the cover
+ * treatment they share with the queue.
+ *
+ * The outline and the cover cut are separate choices now ([QueueRowShape] and the queue's cover
+ * shape); a style only supplies the ones it was drawn with, for when those are left on "follow".
+ */
+enum class QueueStyle(val token: String) {
     /** Frosted glass pills; the now-playing entry is a light accent pill (original look). */
-    GLASS,
+    GLASS("glass"),
     /** AMOLED-flat: no pill, a thin accent keyline marks the now-playing row. */
-    MINIMAL,
+    MINIMAL("minimal"),
     /** Material Design 2: solid dark-grey rounded cards with an accent keyline on now-playing. */
-    MATERIAL,
+    MATERIAL("material"),
     /** Expressive: rounded cards tinted in the album accent, tall and bold. */
-    TONAL,
+    TONAL("tonal"),
     /** Transparent rows with a glowing album-accent outline; now-playing text/border in accent. */
-    NEON,
+    NEON("neon"),
     /** Light theme: pale cards with dark text; now-playing is an accent pill. */
-    LIGHT,
+    LIGHT("light"),
     /** Vertical-gradient cards made from two album-art swatches. */
-    GRADIENT,
+    GRADIENT("gradient"),
     /** Neutral greyscale, ignoring the album accent. */
-    MONO,
+    MONO("mono"),
     /** Thick white cartoon outline, transparent fill. */
-    OUTLINE,
+    OUTLINE("outline"),
     /** Two-hue: primary album swatch for now-playing, secondary swatch for the rest. */
-    DUOTONE,
+    DUOTONE("duotone"),
     /** Pure black/white, thick strokes (high contrast). */
-    CONTRAST,
+    CONTRAST("contrast"),
     /** Sharp-cornered monochrome-green CRT look. */
-    TERMINAL,
+    TERMINAL("terminal"),
     /** Three real album swatches with a diagonal glass keyline. */
-    PRISM,
+    PRISM("prism"),
     /** Light translucent frosted panels. */
-    FROST,
+    FROST("frost"),
     /** Quiet pastel blend with broad corners and a fine highlight. */
-    SOFT,
+    SOFT("soft"),
     /** Dense neutral slabs with tight corners and an album-colour active edge. */
-    SLAB,
+    SLAB("slab"),
     /** Nearly chromeless rows marked by a wet album-colour underline. */
-    INK,
+    INK("ink"),
     /** Compact dark cards tied together visually by a persistent palette rail. */
-    RAIL,
+    RAIL("rail"),
     /** Warm-feeling vertical three-swatch blend, brightening the active row. */
-    SUNSET,
+    SUNSET("sunset"),
     /** Album-tonal speech bubbles with an asymmetric tail corner. */
-    BUBBLE,
+    BUBBLE("bubble"),
     /** Desaturated three-swatch metallic bands with a polished keyline. */
-    CHROME,
+    CHROME("chrome"),
     /** Iridescent sweep through all three real album swatches. */
-    HOLO,
+    HOLO("holo"),
     /** The entry's own cover art fills the whole pill, with the title over a legibility scrim -
      *  the Wear OS media-template "browse" look. Rows with no artwork of their own fall back to
      *  [GLASS], since per-item art depends on the player and shortcut thumbnails are opt-in. */
-    COVER,
+    COVER("cover"),
     /** Cover, blurred: the art is a soft backdrop and the sharp thumbnail returns to its slot. */
-    COVER_BLUR,
+    COVER_BLUR("cover_blur"),
     /** Cover washed in the album accent instead of a neutral black scrim. */
-    COVER_TONAL,
-    /** Cover on tight rows - more entries visible per screen. */
-    COVER_COMPACT,
-    /** Cover on tall poster rows, closest to the Wear OS browse mock-ups. */
-    COVER_TALL,
-    /** Cover with squared-off corners rather than a stadium pill. */
-    COVER_SQUARE;
+    COVER_TONAL("cover_tonal"),
+    /** Cover on tight rows - a legacy size preset, see [legacyRowSize]. */
+    COVER_COMPACT("cover_compact"),
+    /** Cover on tall poster rows - a legacy size preset, see [legacyRowSize]. */
+    COVER_TALL("cover_tall"),
+    /** Cover with squared-off corners. No longer offered - it is Cover with the Soft corners pill
+     *  shape - but a configuration holding it renders as it always did. */
+    COVER_SQUARE("cover_square"),
+    /** Stone rows cut as hexagonal columns - basalt columns on their side. */
+    BASALT("basalt"),
+    /** Flat rows with three thin layers of the album's own colours along the foot, like sediment. */
+    STRATA("strata"),
+    /** The queue as a route: every cover a station on one line through the list, the stretch
+     *  already played in the album's colour and the playing entry held in a soft capsule. */
+    ROUTE("route");
 
     companion object {
         fun fromPref(value: String?): QueueStyle = when (value) {
@@ -216,6 +245,9 @@ enum class QueueStyle {
             "cover_compact" -> COVER_COMPACT
             "cover_tall" -> COVER_TALL
             "cover_square" -> COVER_SQUARE
+            "basalt" -> BASALT
+            "strata" -> STRATA
+            "route" -> ROUTE
             else -> GLASS
         }
 
@@ -223,6 +255,9 @@ enum class QueueStyle {
         val COVER_FAMILY = setOf(
                 COVER, COVER_BLUR, COVER_TONAL, COVER_COMPACT, COVER_TALL, COVER_SQUARE)
     }
+
+    /** This style's entry in the shared registry. */
+    val spec: QueueStyleSpec get() = QueueStyles.spec(token)
 
     /** True for any cover variation; the shared switch the surfaces branch on. */
     val isCover: Boolean get() = this in COVER_FAMILY
@@ -238,338 +273,6 @@ enum class QueueStyle {
         COVER_COMPACT -> QueueRowSize.COMPACT
         COVER_TALL -> QueueRowSize.TALL
         else -> null
-    }
-}
-
-/** Monochrome-green used by the terminal/CRT style. */
-private val TERMINAL_GREEN = Color(0xFF33FF66)
-
-/** Material Design 2 surface grey used for the "material" queue cards. */
-private val MATERIAL_CARD_COLOR = Color(0xFF2A2A2A)
-private val LIGHT_SURFACE = Color(0xFFECECEC)
-private val LIGHT_ON = Color(0xFF111111)
-private val MONO_IDLE = Color(0xFF262626)
-private val MONO_ACTIVE = Color(0xFFE0E0E0)
-private val SLAB_SURFACE = Color(0xFF1E1E20)
-
-/** The one non-uniform queue silhouette. Keeping this in the geometry contract lets tests pin
- *  that Bubble does not silently collapse back into another rounded rectangle. */
-internal enum class QueueRowShapeFamily { UNIFORM, SPEECH_BUBBLE }
-
-/** Layout tokens owned by a queue style. Colour/brush treatment stays in [queueRowSkin], while
- *  every measurement that must also govern artwork and list rhythm lives together here. */
-internal data class QueueRowGeometry(
-        val corner: Dp,
-        val verticalPadding: Dp,
-        val spacing: Dp,
-        val artworkCornerFraction: Float,
-        val shapeFamily: QueueRowShapeFamily = QueueRowShapeFamily.UNIFORM
-)
-
-internal fun queueRowGeometry(style: QueueStyle): QueueRowGeometry = when (style) {
-    QueueStyle.GLASS -> QueueRowGeometry(26.dp, 12.dp, 6.dp, .5f)
-    QueueStyle.MINIMAL -> QueueRowGeometry(0.dp, 10.dp, 2.dp, .067f)
-    QueueStyle.MATERIAL -> QueueRowGeometry(12.dp, 14.dp, 8.dp, .2f)
-    QueueStyle.TONAL -> QueueRowGeometry(28.dp, 16.dp, 8.dp, .5f)
-    QueueStyle.NEON -> QueueRowGeometry(18.dp, 12.dp, 6.dp, .3f)
-    QueueStyle.LIGHT -> QueueRowGeometry(20.dp, 13.dp, 8.dp, .333f)
-    QueueStyle.GRADIENT -> QueueRowGeometry(22.dp, 14.dp, 8.dp, .367f)
-    QueueStyle.MONO -> QueueRowGeometry(14.dp, 13.dp, 6.dp, .233f)
-    QueueStyle.OUTLINE -> QueueRowGeometry(16.dp, 12.dp, 6.dp, .267f)
-    QueueStyle.DUOTONE -> QueueRowGeometry(22.dp, 14.dp, 8.dp, .367f)
-    QueueStyle.CONTRAST -> QueueRowGeometry(8.dp, 13.dp, 6.dp, .133f)
-    QueueStyle.TERMINAL -> QueueRowGeometry(0.dp, 11.dp, 2.dp, 0f)
-    QueueStyle.PRISM -> QueueRowGeometry(22.dp, 14.dp, 8.dp, .267f)
-    QueueStyle.FROST -> QueueRowGeometry(24.dp, 13.dp, 8.dp, .4f)
-    QueueStyle.SOFT -> QueueRowGeometry(30.dp, 15.dp, 8.dp, .45f)
-    QueueStyle.SLAB -> QueueRowGeometry(10.dp, 12.dp, 5.dp, .167f)
-    QueueStyle.INK -> QueueRowGeometry(24.dp, 11.dp, 4.dp, .3f)
-    QueueStyle.RAIL -> QueueRowGeometry(6.dp, 13.dp, 3.dp, .067f)
-    QueueStyle.SUNSET -> QueueRowGeometry(20.dp, 15.dp, 9.dp, .4f)
-    QueueStyle.BUBBLE -> QueueRowGeometry(
-            28.dp, 16.dp, 10.dp, .5f, QueueRowShapeFamily.SPEECH_BUBBLE)
-    QueueStyle.CHROME -> QueueRowGeometry(12.dp, 13.dp, 6.dp, .2f)
-    QueueStyle.HOLO -> QueueRowGeometry(26.dp, 14.dp, 7.dp, .367f)
-    QueueStyle.COVER -> QueueRowGeometry(26.dp, 12.dp, 6.dp, .5f)
-    QueueStyle.COVER_BLUR -> QueueRowGeometry(26.dp, 12.dp, 6.dp, .5f)
-    QueueStyle.COVER_TONAL -> QueueRowGeometry(26.dp, 12.dp, 6.dp, .5f)
-    QueueStyle.COVER_COMPACT -> QueueRowGeometry(26.dp, 8.dp, 6.dp, .5f)
-    QueueStyle.COVER_TALL -> QueueRowGeometry(26.dp, 14.dp, 6.dp, .5f)
-    QueueStyle.COVER_SQUARE -> QueueRowGeometry(10.dp, 12.dp, 6.dp, .2f)
-}
-
-/** Per-style skin for one queue row. */
-private class QueueRowSkin(
-        val background: Brush,
-        val onColor: Color,
-        val corner: Dp,
-        val verticalPadding: Dp,
-        /** Left accent bar drawn to mark the now-playing row, or null for none. */
-        val keyline: Color?,
-        /** Rail variants use a wider/longer left mark than the standard active keyline. */
-        val keylineWidth: Dp = 3.dp,
-        val keylineInsetFraction: Float = .18f,
-        /** Bottom ink stroke (width, colour), independent from a full outline. */
-        val underline: Pair<Dp, Color>? = null,
-        /** Outline (width, colour) drawn around the row, or null for none. */
-        val border: Pair<Dp, Color>? = null
-)
-
-private fun queueRowSkin(
-        style: QueueStyle,
-        isPlaying: Boolean,
-        accent: Color,
-        secondaryAccent: Color,
-        tertiaryAccent: Color
-): QueueRowSkin {
-    val lighten = lightenForBlackText(accent)
-    val geometry = queueRowGeometry(style)
-    return when (style) {
-        QueueStyle.GLASS -> QueueRowSkin(
-                background = SolidColor(if (isPlaying) lighten else IDLE_PILL_COLOR),
-                onColor = if (isPlaying) Color.Black else Color.White,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = null
-        )
-        QueueStyle.MINIMAL -> QueueRowSkin(
-                background = SolidColor(Color.Transparent),
-                onColor = if (isPlaying) accent else Color.White,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = if (isPlaying) accent else null
-        )
-        QueueStyle.MATERIAL -> QueueRowSkin(
-                background = SolidColor(MATERIAL_CARD_COLOR),
-                onColor = if (isPlaying) accent else Color.White,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = if (isPlaying) accent else null
-        )
-        QueueStyle.TONAL -> QueueRowSkin(
-                background = SolidColor(if (isPlaying) lighten else tonalColor(accent, 0.22f)),
-                onColor = if (isPlaying) Color.Black else Color.White,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = null
-        )
-        QueueStyle.NEON -> QueueRowSkin(
-                background = SolidColor(Color.Transparent),
-                onColor = if (isPlaying) accent else Color.White,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = null,
-                border = (if (isPlaying) 2.dp else 1.dp) to (if (isPlaying) accent else accent.copy(alpha = 0.5f))
-        )
-        QueueStyle.LIGHT -> QueueRowSkin(
-                background = SolidColor(if (isPlaying) lighten else LIGHT_SURFACE),
-                onColor = if (isPlaying) Color.Black else LIGHT_ON,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = null
-        )
-        QueueStyle.GRADIENT -> QueueRowSkin(
-                background = if (isPlaying) {
-                    Brush.verticalGradient(listOf(lighten, tonalColor(secondaryAccent, 0.55f)))
-                } else {
-                    Brush.verticalGradient(listOf(
-                            tonalColor(accent, 0.26f),
-                            tonalColor(secondaryAccent, 0.13f)
-                    ))
-                },
-                onColor = if (isPlaying) Color.Black else Color.White,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = null
-        )
-        QueueStyle.MONO -> QueueRowSkin(
-                background = SolidColor(if (isPlaying) MONO_ACTIVE else MONO_IDLE),
-                onColor = if (isPlaying) Color.Black else Color.White,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = null
-        )
-        QueueStyle.OUTLINE -> QueueRowSkin(
-                background = SolidColor(Color.Transparent),
-                onColor = if (isPlaying) accent else Color.White,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = null,
-                border = (if (isPlaying) 3.dp else 2.5.dp) to (if (isPlaying) accent else Color.White)
-        )
-        QueueStyle.DUOTONE -> QueueRowSkin(
-                background = SolidColor(
-                        if (isPlaying) lighten else tonalColor(secondaryAccent, 0.24f)),
-                onColor = if (isPlaying) Color.Black else Color.White,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = null
-        )
-        QueueStyle.PRISM -> QueueRowSkin(
-                background = Brush.linearGradient(
-                        if (isPlaying) {
-                            listOf(
-                                    tonalColor(tertiaryAccent, .52f),
-                                    lighten,
-                                    tonalColor(secondaryAccent, .46f))
-                        } else {
-                            listOf(
-                                    tonalColor(tertiaryAccent, .18f),
-                                    tonalColor(accent, .28f),
-                                    tonalColor(secondaryAccent, .14f))
-                        }
-                ),
-                onColor = if (isPlaying) Color.Black else Color.White,
-                corner = geometry.corner,
-                verticalPadding = geometry.verticalPadding,
-                keyline = null,
-                border = 1.dp to Color.White.copy(alpha = .38f)
-        )
-        QueueStyle.CONTRAST -> QueueRowSkin(
-                background = SolidColor(if (isPlaying) Color.White else Color.Black),
-                onColor = if (isPlaying) Color.Black else Color.White,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = null,
-                border = if (isPlaying) null else 2.dp to Color.White
-        )
-        QueueStyle.TERMINAL -> QueueRowSkin(
-                background = SolidColor(Color.Transparent),
-                onColor = TERMINAL_GREEN,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = null,
-                border = (if (isPlaying) 2.dp else 1.dp) to TERMINAL_GREEN
-        )
-        QueueStyle.FROST -> QueueRowSkin(
-                background = SolidColor(if (isPlaying) accent.copy(alpha = 0.5f) else Color.White.copy(alpha = 0.16f)),
-                onColor = Color.White,
-                corner = geometry.corner, verticalPadding = geometry.verticalPadding,
-                keyline = null
-        )
-        QueueStyle.SOFT -> QueueRowSkin(
-                background = Brush.horizontalGradient(
-                        if (isPlaying) {
-                            listOf(lighten, lightenForBlackText(secondaryAccent))
-                        } else {
-                            listOf(tonalColor(accent, .24f), tonalColor(secondaryAccent, .18f))
-                        }),
-                onColor = if (isPlaying) Color.Black else Color.White,
-                corner = geometry.corner,
-                verticalPadding = geometry.verticalPadding,
-                keyline = null,
-                border = 1.dp to Color.White.copy(alpha = if (isPlaying) .42f else .16f)
-        )
-        QueueStyle.SLAB -> QueueRowSkin(
-                background = SolidColor(
-                        if (isPlaying) tonalColor(secondaryAccent, .34f) else SLAB_SURFACE),
-                onColor = Color.White,
-                corner = geometry.corner,
-                verticalPadding = geometry.verticalPadding,
-                keyline = if (isPlaying) lighten else null,
-                keylineWidth = 4.dp,
-                keylineInsetFraction = .12f
-        )
-        QueueStyle.INK -> QueueRowSkin(
-                background = Brush.horizontalGradient(listOf(
-                        Color.White.copy(alpha = .045f),
-                        tonalColor(accent, .14f).copy(alpha = .72f),
-                        Color.Transparent)),
-                onColor = if (isPlaying) lighten else Color.White,
-                corner = geometry.corner,
-                verticalPadding = geometry.verticalPadding,
-                keyline = null,
-                underline = (if (isPlaying) 3.dp else 1.dp) to
-                        (if (isPlaying) lighten else secondaryAccent.copy(alpha = .58f))
-        )
-        QueueStyle.RAIL -> QueueRowSkin(
-                background = Brush.horizontalGradient(listOf(
-                        tonalColor(accent, if (isPlaying) .32f else .18f),
-                        tonalColor(secondaryAccent, if (isPlaying) .18f else .10f))),
-                onColor = Color.White,
-                corner = geometry.corner,
-                verticalPadding = geometry.verticalPadding,
-                keyline = if (isPlaying) lighten else tertiaryAccent.copy(alpha = .68f),
-                keylineWidth = if (isPlaying) 5.dp else 2.5.dp,
-                keylineInsetFraction = .07f
-        )
-        QueueStyle.SUNSET -> QueueRowSkin(
-                background = Brush.verticalGradient(
-                        if (isPlaying) {
-                            listOf(
-                                    lightenForBlackText(tertiaryAccent),
-                                    lighten,
-                                    lightenForBlackText(secondaryAccent))
-                        } else {
-                            listOf(
-                                    tonalColor(tertiaryAccent, .32f),
-                                    tonalColor(accent, .22f),
-                                    tonalColor(secondaryAccent, .14f))
-                        }),
-                onColor = if (isPlaying) Color.Black else Color.White,
-                corner = geometry.corner,
-                verticalPadding = geometry.verticalPadding,
-                keyline = null
-        )
-        QueueStyle.BUBBLE -> QueueRowSkin(
-                background = if (isPlaying) {
-                    SolidColor(lighten)
-                } else {
-                    Brush.horizontalGradient(listOf(
-                            tonalColor(secondaryAccent, .30f),
-                            tonalColor(accent, .18f)))
-                },
-                onColor = if (isPlaying) Color.Black else Color.White,
-                corner = geometry.corner,
-                verticalPadding = geometry.verticalPadding,
-                keyline = null,
-                border = 1.dp to (if (isPlaying) {
-                    tertiaryAccent.copy(alpha = .50f)
-                } else {
-                    accent.copy(alpha = .28f)
-                })
-        )
-        QueueStyle.CHROME -> QueueRowSkin(
-                background = Brush.verticalGradient(
-                        if (isPlaying) {
-                            listOf(
-                                    chromeTone(tertiaryAccent, .88f),
-                                    chromeTone(accent, .58f),
-                                    chromeTone(secondaryAccent, .78f))
-                        } else {
-                            listOf(
-                                    chromeTone(tertiaryAccent, .38f),
-                                    chromeTone(accent, .10f),
-                                    chromeTone(secondaryAccent, .30f))
-                        }),
-                onColor = if (isPlaying) Color.Black else Color.White,
-                corner = geometry.corner,
-                verticalPadding = geometry.verticalPadding,
-                keyline = null,
-                border = 1.dp to Color.White.copy(alpha = if (isPlaying) .70f else .30f)
-        )
-        QueueStyle.HOLO -> QueueRowSkin(
-                background = Brush.sweepGradient(
-                        if (isPlaying) {
-                            listOf(
-                                    lighten,
-                                    lightenForBlackText(secondaryAccent),
-                                    lightenForBlackText(tertiaryAccent),
-                                    lighten)
-                        } else {
-                            listOf(
-                                    tonalColor(accent, .20f),
-                                    tonalColor(secondaryAccent, .26f),
-                                    tonalColor(tertiaryAccent, .16f),
-                                    tonalColor(accent, .20f))
-                        }),
-                onColor = if (isPlaying) Color.Black else Color.White,
-                corner = geometry.corner,
-                verticalPadding = geometry.verticalPadding,
-                keyline = null,
-                border = 1.dp to Color.White.copy(alpha = if (isPlaying) .60f else .28f)
-        )
-        // The cover itself is drawn by the row (a Brush cannot carry a bitmap); this is the
-        // fill that shows through where there is no artwork, matching GLASS so an art-less row
-        // is indistinguishable from the plain style. Text stays white over the scrim, and the
-        // now-playing row is marked with an accent keyline rather than a light pill, which would
-        // fight the artwork underneath it.
-        QueueStyle.COVER, QueueStyle.COVER_BLUR, QueueStyle.COVER_TONAL,
-        QueueStyle.COVER_COMPACT, QueueStyle.COVER_TALL, QueueStyle.COVER_SQUARE -> QueueRowSkin(
-                background = SolidColor(IDLE_PILL_COLOR),
-                onColor = Color.White,
-                corner = geometry.corner,
-                verticalPadding = geometry.verticalPadding,
-                keyline = if (isPlaying) accent else null
-        )
     }
 }
 
@@ -599,40 +302,19 @@ enum class QueueRowSize(val contentHeight: Dp) {
 }
 
 /**
- * Legibility scrim laid over a cover-filled pill. Album art is arbitrary - it can be white,
- * busy, or the same hue as the text - so the title needs a guaranteed floor of contrast. The
- * gradient is horizontal and heaviest on the left, where the (left-aligned) title sits, letting
- * the right side of the artwork stay visible the way the Wear OS media template does.
+ * Legibility scrim laid over a cover-filled pill, in [tint]. Album art is arbitrary - it can be
+ * white, busy, or the same hue as the text - so the title needs a guaranteed floor of contrast; the
+ * stops are [QueueRowSkins.neutralScrim]'s, shared with the phone's miniature.
  */
-internal fun coverScrim(tint: Color = Color.Black): Brush = Brush.horizontalGradient(
-        0f to tint.copy(alpha = .74f),
-        .55f to tint.copy(alpha = .46f),
-        1f to tint.copy(alpha = .22f)
-)
+internal fun coverScrim(tint: Color = Color.Black): Brush =
+        scrimBrush(QueueRowSkins.neutralScrim(tint.toArgb()))
 
-/**
- * Scrim for one cover variation. Tonal washes the row in a darkened album accent instead of
- * neutral black; Blur already softens the art underneath, so it needs far less darkening to stay
- * legible and keeps more of the colour visible.
- */
-internal fun coverScrimFor(style: QueueStyle, accent: Color): Brush = when (style) {
-    QueueStyle.COVER_TONAL -> coverScrim(darkenForScrim(accent))
-    QueueStyle.COVER_BLUR -> Brush.horizontalGradient(
-            0f to Color.Black.copy(alpha = .50f),
-            1f to Color.Black.copy(alpha = .28f)
-    )
-    else -> coverScrim()
-}
+/** The scrim for one cover variation - see [QueueRowSkins.coverScrim]. */
+internal fun coverScrimFor(style: QueueStyle, accent: Color): Brush =
+        scrimBrush(QueueRowSkins.coverScrim(style.token, accent.toArgb()))
 
-/** Pulls an accent down to a dark, low-saturation tone usable as a scrim - a bright accent at
- *  70% alpha would tint the artwork without actually darkening it. */
-private fun darkenForScrim(accent: Color): Color {
-    val hsl = FloatArray(3)
-    ColorUtils.colorToHSL(accent.toArgb(), hsl)
-    hsl[1] = (hsl[1] * .8f).coerceIn(0f, .65f)
-    hsl[2] = .16f
-    return Color(ColorUtils.HSLToColor(hsl))
-}
+private fun scrimBrush(stops: List<Pair<Float, Int>>): Brush =
+        Brush.horizontalGradient(*stops.map { (at, color) -> at to Color(color) }.toTypedArray())
 
 /**
  * Fills the node with [image], center-cropped and clipped to [shape], then lays [scrim] over it.
@@ -725,21 +407,18 @@ private const val BLURRED_COVER_CACHE_BYTES = 3 * 1024 * 1024
 /** Tuned for a pill-sized backdrop: enough to abstract the artwork without erasing its shapes. */
 private const val COVER_BLUR_RADIUS_PX = 28f
 
-/** Row spacing per style - tighter for flat/railed lists, roomier for soft statement cards. */
-internal fun queueRowSpacing(style: QueueStyle): Dp = queueRowGeometry(style).spacing
-
 /**
  * Air left between the cover and the pill's own edge. The cover used to be pinned at 30dp whatever
  * the row height was, so every style's vertical padding read as a thick border around a small
  * thumbnail - and picking a taller row size made the border grow instead of the artwork.
  */
-internal val QUEUE_ARTWORK_INSET = 5.dp
+internal val QUEUE_ARTWORK_INSET = QueueRowLayout.ARTWORK_INSET_DP.dp
 
 /**
  * Ceiling on the cover, so a tall row does not crowd the text column off a 192dp screen. Reached
  * only by the two largest row sizes, where the artwork is already the row's dominant element.
  */
-private val QUEUE_ARTWORK_MAX = 64.dp
+private val QUEUE_ARTWORK_MAX = QueueRowLayout.ARTWORK_MAX_DP.dp
 
 /**
  * The cover's side length inside any list pill of [rowHeight]: the full height less
@@ -775,86 +454,146 @@ internal fun queueArtworkSize(rowSize: QueueRowSize, verticalPadding: Dp): Dp =
  */
 internal val LIST_ROW_HEIGHT = QUEUE_ROW_CONTENT_HEIGHT + 12.dp * 2
 
+/** [QueueRowLayout] in Compose units: one row's height, cover, cover start and text inset. */
+internal data class QueueRowMetrics(
+        val height: Dp,
+        val artworkSize: Dp,
+        val coverStart: Dp,
+        val textInset: Dp
+) {
+    /** Where the Route style's line passes through the row: the middle of its cover. */
+    val stationCenter: Dp get() = coverStart + artworkSize / 2
+}
+
+internal fun queueRowMetrics(appearance: QueueRowAppearance, rowSize: QueueRowSize): QueueRowMetrics {
+    val layout = QueueRowLayout.of(appearance, rowSize.contentHeight.value)
+    return QueueRowMetrics(
+            layout.heightDp.dp, layout.artworkDp.dp, layout.coverStartDp.dp, layout.textInsetDp.dp)
+}
+
 /**
- * Corner treatment for the cover inside a queue row, as a fraction of the cover's own side.
- *
- * A fraction rather than a dp value because the cover is no longer a fixed 30dp: a 15dp radius made
- * that size a circle, but the same 15dp on a tall row's 64dp cover is a rounded square, which would
- * silently change each style's shape family as soon as the row size changed. The fractions preserve
- * what those dp values meant at 30dp - genuinely pill-like styles (Glass/Tonal) stay circular,
- * square styles (Material/Terminal/Contrast) stay visibly squarer.
- *
- * The artwork is still shaped independently from the row itself: copying the pill's own radius onto
- * the image would clamp almost every style back to the same circle.
+ * A [QueueRowOutline] as a Compose [Shape]. The corners come from the shared outline, so the watch
+ * and the phone's miniature round them with the same arithmetic - see [QueueRowOutline.Rounded.radii]
+ * for why that cannot be left to each toolkit.
  */
-internal fun queueArtworkCornerFraction(style: QueueStyle): Float =
-        queueRowGeometry(style).artworkCornerFraction
+private data class QueueOutlineShape(val outline: QueueRowOutline) : Shape {
+    override fun createOutline(size: Size, layoutDirection: LayoutDirection, density: Density): Outline =
+            when (outline) {
+                is QueueRowOutline.Rounded -> {
+                    val radii = outline.radii(size.width, size.height, density.density)
+                    Outline.Rounded(RoundRect(
+                            left = 0f,
+                            top = 0f,
+                            right = size.width,
+                            bottom = size.height,
+                            topLeftCornerRadius = CornerRadius(radii[0]),
+                            topRightCornerRadius = CornerRadius(radii[1]),
+                            bottomRightCornerRadius = CornerRadius(radii[2]),
+                            bottomLeftCornerRadius = CornerRadius(radii[3])))
+                }
+                is QueueRowOutline.Hexagon -> {
+                    val points = outline.points(0f, 0f, size.width, size.height, density.density)
+                    Outline.Generic(androidx.compose.ui.graphics.Path().apply {
+                        moveTo(points[0], points[1])
+                        for (corner in 1..5) lineTo(points[corner * 2], points[corner * 2 + 1])
+                        close()
+                    })
+                }
+            }
+}
 
-/** Row silhouette. Bubble deliberately keeps one tight lower-left corner so it reads as a speech
- *  shape; the artwork remains circular and therefore does not inherit that tail. */
-private fun queueRowShape(style: QueueStyle, corner: Dp): RoundedCornerShape =
-        if (queueRowGeometry(style).shapeFamily == QueueRowShapeFamily.SPEECH_BUBBLE) {
-            RoundedCornerShape(
-                    topStart = corner,
-                    topEnd = corner,
-                    bottomEnd = corner,
-                    bottomStart = 6.dp)
-        } else {
-            RoundedCornerShape(corner)
-        }
+/** A cover's cut ([CoverCorners]) as a Compose [Shape], each corner a fraction of the cover. */
+private data class CoverCornersShape(val corners: CoverCorners) : Shape {
+    override fun createOutline(size: Size, layoutDirection: LayoutDirection, density: Density): Outline {
+        val side = min(size.width, size.height)
+        return Outline.Rounded(RoundRect(
+                left = 0f,
+                top = 0f,
+                right = size.width,
+                bottom = size.height,
+                topLeftCornerRadius = CornerRadius(corners.topLeft * side),
+                topRightCornerRadius = CornerRadius(corners.topRight * side),
+                bottomRightCornerRadius = CornerRadius(corners.bottomRight * side),
+                bottomLeftCornerRadius = CornerRadius(corners.bottomLeft * side)))
+    }
+}
 
-/** Draws the deliberately partial chrome that cannot be expressed as a regular background or
- *  border: the active keyline, Rail's persistent spine, and Ink's bottom stroke. */
-private fun Modifier.queueSkinMarks(skin: QueueRowSkin): Modifier {
-    val keyline = skin.keyline
-    val underline = skin.underline
-    if (keyline == null && underline == null) return this
-    return drawBehind {
-        keyline?.let { color ->
-            val inset = skin.keylineInsetFraction
-            drawRoundRect(
-                    color = color,
-                    topLeft = Offset(0f, size.height * inset),
-                    size = Size(
-                            skin.keylineWidth.toPx(),
-                            size.height * (1f - inset * 2f)),
-                    cornerRadius = CornerRadius(2.dp.toPx())
-            )
-        }
-        underline?.let { (width, color) ->
-            val widthPx = width.toPx()
-            drawRoundRect(
-                    color = color,
-                    topLeft = Offset(size.width * .12f, size.height - widthPx),
-                    size = Size(size.width * .76f, widthPx),
-                    cornerRadius = CornerRadius(widthPx / 2f)
-            )
+private fun QueueRowFill.toBrush(): Brush = when (this) {
+    is QueueRowFill.Solid -> SolidColor(Color(color))
+    is QueueRowFill.Gradient -> {
+        val stops = colors.map(::Color)
+        when (direction) {
+            QueueRowFill.Direction.VERTICAL -> Brush.verticalGradient(stops)
+            QueueRowFill.Direction.HORIZONTAL -> Brush.horizontalGradient(stops)
+            QueueRowFill.Direction.DIAGONAL -> Brush.linearGradient(stops)
+            QueueRowFill.Direction.SWEEP -> Brush.sweepGradient(stops)
         }
     }
 }
 
-/** A dark, accent-tinted surface for the tonal idle rows - keeps saturation in a readable band. */
-private fun tonalColor(accent: Color, lightness: Float): Color {
-    val hsl = FloatArray(3)
-    ColorUtils.colorToHSL(accent.toArgb(), hsl)
-    hsl[1] = hsl[1].coerceIn(0.25f, 0.60f)
-    hsl[2] = lightness
-    return Color(ColorUtils.HSLToColor(hsl))
-}
-
-/** Turns one real album swatch into a low-saturation metallic stop without discarding its hue. */
-private fun chromeTone(swatch: Color, lightness: Float): Color {
-    val hsl = FloatArray(3)
-    ColorUtils.colorToHSL(swatch.toArgb(), hsl)
-    hsl[1] = hsl[1].coerceAtMost(.10f)
-    hsl[2] = lightness
-    return Color(ColorUtils.HSLToColor(hsl))
+/**
+ * Draws the deliberately partial chrome that cannot be expressed as a regular background or
+ * border: the active keyline, Rail's persistent spine, Ink's underline and Strata's layers.
+ *
+ * Each is placed inside the [outline] rather than against the row's box: the outline is chosen
+ * apart from the style now, and a keyline at the box's edge hangs outside a capsule's round end.
+ */
+private fun Modifier.queueSkinMarks(skin: QueueRowSkin, outline: QueueRowOutline): Modifier {
+    val keyline = skin.keyline
+    val underline = skin.underline
+    val strata = skin.strata
+    if (keyline == null && underline == null && strata == null) return this
+    return drawBehind {
+        val width = size.width
+        val height = size.height
+        strata?.let { layers ->
+            val line = QueueShape.STRATA_LINE_DP.dp.toPx()
+            val tops = QueueShape.strataLineTops(height, line, QueueShape.STRATA_GAP_DP.dp.toPx())
+            layers.forEachIndexed { index, color ->
+                val top = tops[index]
+                val middle = top + line / 2f
+                val left = max(width * .06f, outline.leftInset(middle, width, height, density))
+                val right = min(width * .94f, width - outline.rightInset(middle, width, height, density))
+                if (right > left) {
+                    drawRect(color = Color(color), topLeft = Offset(left, top), size = Size(right - left, line))
+                }
+            }
+        }
+        keyline?.let { mark ->
+            val top = height * mark.insetFraction
+            val bottom = height * (1f - mark.insetFraction)
+            drawRoundRect(
+                    color = Color(mark.color),
+                    topLeft = Offset(outline.leftEdgeOver(top, bottom, width, height, density), top),
+                    size = Size(mark.widthDp.dp.toPx(), bottom - top),
+                    cornerRadius = CornerRadius(2.dp.toPx())
+            )
+        }
+        underline?.let { stroke ->
+            val thickness = stroke.widthDp.dp.toPx()
+            val middle = height - thickness / 2f
+            val left = max(width * .12f, outline.leftInset(middle, width, height, density))
+            val right = min(width * .88f, width - outline.rightInset(middle, width, height, density))
+            if (right > left) {
+                drawRoundRect(
+                        color = Color(stroke.color),
+                        topLeft = Offset(left, height - thickness),
+                        size = Size(right - left, thickness),
+                        cornerRadius = CornerRadius(thickness / 2f)
+                )
+            }
+        }
+    }
 }
 
 /**
- * Playback queue screen. A [ScalingLazyColumn] of glass pills (with a now-playing header on top)
- * where the active entry is highlighted with the full album [accentColor] and a contrast-matched
- * text color. Wrapped in a [SwipeToDismissBox] so swiping right closes only this screen.
+ * Playback queue screen. A [ScalingLazyColumn] of rows (with a now-playing header on top) where the
+ * active entry is set apart by its style, in the album's colours. Wrapped in a [SwipeToDismissBox]
+ * so swiping right closes only this screen.
+ *
+ * Three separate choices decide how a row looks: [style] (its colours and effects), [rowShape] (its
+ * outline) and [coverShape] (how its cover is cut) - reconciled by [QueueAppearance], which ignores
+ * a choice the style has nothing to apply it to. [rowSize] sets the height on top.
  *
  * [items] is null while the queue request is still in flight (loading spinner); an empty list
  * means the phone answered but has no queue to show (empty message).
@@ -871,11 +610,19 @@ fun QueueScreen(
         tertiaryAccentColor: Color,
         nowPlayingTitle: String?,
         nowPlayingArtist: String?,
+        /** "Track 3 of 47" under the header, when the phone said where the playing entry is. */
+        queuePosition: QueuePosition? = null,
         onItemClick: (entryId: String) -> Unit,
         onItemLongClick: (QueueItemUi) -> Unit = {},
         onDismiss: () -> Unit,
         style: QueueStyle = QueueStyle.GLASS,
         rowSize: QueueRowSize = QueueRowSize.NORMAL,
+        /** The rows' outline, apart from their style - see [QueueRowShape]. */
+        rowShape: QueueRowShape = QueueRowShape.FOLLOW,
+        /** How the covers are cut: a `CoverShape` value, or "follow" for the style's own cut. */
+        coverShape: String? = QueueAppearance.FOLLOW,
+        /** Dim the entries that already played. */
+        dimPlayed: Boolean = false,
         canLoadMore: Boolean = false,
         loadingMore: Boolean = false,
         isHistoryFallback: Boolean = false,
@@ -892,6 +639,9 @@ fun QueueScreen(
     // A legacy cover_compact / cover_tall selection still names its own size; the standalone
     // preference owns it for every other value.
     val effectiveRowSize = style.legacyRowSize ?: rowSize
+    val appearance = remember(style, rowShape, coverShape) {
+        QueueAppearance.resolve(style.token, rowShape.token, coverShape)
+    }
     val screenClip = if (LocalConfiguration.current.isScreenRound) {
         Modifier.clip(CircleShape)
     } else {
@@ -918,10 +668,13 @@ fun QueueScreen(
                         tertiaryAccentColor,
                         nowPlayingTitle,
                         nowPlayingArtist,
+                        queuePosition,
                         onItemClick,
                         onItemLongClick,
                         style,
+                        appearance,
                         effectiveRowSize,
+                        dimPlayed,
                         canLoadMore,
                         loadingMore,
                         isHistoryFallback,
@@ -932,6 +685,10 @@ fun QueueScreen(
     }
 }
 
+/** The list's side padding - also how far in from the viewport each row starts, which the
+ *  Route style's line needs to find the covers. */
+private val QUEUE_LIST_SIDE_PADDING = 10.dp
+
 @Composable
 private fun QueueList(
         items: List<QueueItemUi>?,
@@ -940,16 +697,25 @@ private fun QueueList(
         tertiaryAccentColor: Color,
         nowPlayingTitle: String?,
         nowPlayingArtist: String?,
+        queuePosition: QueuePosition?,
         onItemClick: (String) -> Unit,
         onItemLongClick: (QueueItemUi) -> Unit,
         style: QueueStyle,
+        appearance: QueueRowAppearance,
         rowSize: QueueRowSize,
+        dimPlayed: Boolean,
         canLoadMore: Boolean,
         loadingMore: Boolean,
         isHistoryFallback: Boolean,
         onLoadMore: () -> Unit
 ) {
     val listState = rememberScalingLazyListState()
+    val metrics = remember(appearance, rowSize) { queueRowMetrics(appearance, rowSize) }
+    val routeColors = if (appearance.style.route) {
+        remember(accentColor) { QueueRowSkins.routeColors(accentColor.toArgb()) }
+    } else {
+        null
+    }
 
     // Whether the marquee titles may scroll. Only the marquee is gated on this - it re-lays out the
     // whole list every frame, which is what actually stuttered the scroll. The equalizer is not:
@@ -979,6 +745,10 @@ private fun QueueList(
     // than a queue index. Derived here, right beside the `item {}` calls that produce them, because
     // the two drifting apart would centre the list one row off and there is nothing to catch that.
     val leadingRows = 1 + if (isHistoryFallback) 1 else 0
+
+    // How far each entry is from the playing one. Null when none is marked playing - the history
+    // fallback - because there is then nothing to be relative to.
+    val offsets = remember(items) { QueueShape.offsets(items.orEmpty().map { it.isPlaying }) }
 
     val targetRow = remember(items, nowPlayingTitle) {
         QueueScrollPolicy.activeRowIndex(
@@ -1013,6 +783,18 @@ private fun QueueList(
     }
 
     Box(Modifier.fillMaxSize()) {
+        // Under the rows, so the line passes behind every cover and through the gaps between
+        // them - the stations sit on it rather than it being drawn over their artwork.
+        if (routeColors != null && !items.isNullOrEmpty()) {
+            QueueRouteLine(
+                    listState = listState,
+                    leadingRows = leadingRows,
+                    itemCount = items.size,
+                    playingIndex = items.indexOfFirst { it.isPlaying },
+                    continuesBelow = canLoadMore,
+                    stationX = metrics.stationCenter,
+                    colors = routeColors)
+        }
         when {
             items == null && !loadTimedOut -> QueueLoadingIndicator(accentColor)
             items.isNullOrEmpty() -> QueueEmptyMessage()
@@ -1020,20 +802,27 @@ private fun QueueList(
                     modifier = Modifier.fillMaxSize(),
                     state = listState,
                     // Extra top padding leaves room for the curved clock at the top bezel.
-                    contentPadding = PaddingValues(start = 10.dp, end = 10.dp, top = 36.dp, bottom = 26.dp),
-                    verticalArrangement = Arrangement.spacedBy(queueRowSpacing(style)),
+                    contentPadding = PaddingValues(
+                            start = QUEUE_LIST_SIDE_PADDING,
+                            end = QUEUE_LIST_SIDE_PADDING,
+                            top = 36.dp,
+                            bottom = 26.dp),
+                    verticalArrangement = Arrangement.spacedBy(appearance.spacingDp.dp),
                     // Same fix as MenuScreen: the old overload (no rotary param) is a deprecated
                     // compatibility shim whose legacy touch path is why swipes weren't scrolling.
                     rotaryScrollableBehavior = RotaryScrollableDefaults.behavior(scrollableState = listState)
             ) {
-                item { QueueHeader(nowPlayingTitle, nowPlayingArtist, marquee = listAtRest) }
+                item {
+                    QueueHeader(nowPlayingTitle, nowPlayingArtist, queuePosition, accentColor,
+                            marquee = listAtRest)
+                }
                 // Sits between the now-playing header and the rows, which is where a section
                 // caption belongs and, more to the point, is unmissable before the first row is
                 // read as "what plays next".
                 if (isHistoryFallback) {
                     item(key = HISTORY_CAPTION_KEY) { QueueHistoryCaption(accentColor) }
                 }
-                items(items, key = { it.entryId }) { item ->
+                itemsIndexed(items, key = { _, item -> item.entryId }) { index, item ->
                     QueueRow(
                             item,
                             accentColor,
@@ -1043,7 +832,13 @@ private fun QueueList(
                             onItemLongClick,
                             marquee = listAtRest,
                             style = style,
-                            rowSize = rowSize
+                            appearance = appearance,
+                            metrics = metrics,
+                            offset = offsets?.getOrNull(index),
+                            dimPlayed = dimPlayed,
+                            routeColors = routeColors,
+                            routeAbove = index > 0,
+                            routeBelow = index < items.size - 1 || canLoadMore
                     )
                 }
                 if (canLoadMore) {
@@ -1052,7 +847,8 @@ private fun QueueList(
                                 accentColor = accentColor,
                                 loading = loadingMore,
                                 style = style,
-                                rowSize = rowSize,
+                                appearance = appearance,
+                                metrics = metrics,
                                 onClick = onLoadMore
                         )
                     }
@@ -1071,7 +867,13 @@ private fun QueueList(
 }
 
 @Composable
-private fun QueueHeader(title: String?, artist: String?, marquee: Boolean) {
+private fun QueueHeader(
+        title: String?,
+        artist: String?,
+        position: QueuePosition?,
+        accentColor: Color,
+        marquee: Boolean
+) {
     Column(
             modifier = Modifier.fillMaxWidth().padding(bottom = 6.dp),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -1111,6 +913,21 @@ private fun QueueHeader(title: String?, artist: String?, marquee: Boolean) {
                     overflow = TextOverflow.Ellipsis
             )
         }
+        if (position != null) {
+            // The one number a queue cannot show by scrolling: where in the whole of it this
+            // track sits. In the album colour, lifted for a black ground, so it reads as part of
+            // the header rather than as a row.
+            Text(
+                    text = stringResource(R.string.queue_position, position.position, position.size),
+                    color = Color(WatchTheme.accentForText(accentColor.toArgb())),
+                    style = LocalWatchTrackTextStyles.current.artist,
+                    fontSize = 11.sp,
+                    textAlign = TextAlign.Center,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.padding(top = 2.dp)
+            )
+        }
     }
 }
 
@@ -1125,21 +942,38 @@ private fun QueueRow(
         onItemLongClick: (QueueItemUi) -> Unit,
         marquee: Boolean,
         style: QueueStyle,
-        rowSize: QueueRowSize
+        appearance: QueueRowAppearance,
+        metrics: QueueRowMetrics,
+        offset: Int? = null,
+        dimPlayed: Boolean = false,
+        /** The Route style's colours, or null for every other style. */
+        routeColors: QueueRouteColors? = null,
+        /** Whether the route goes on above and below this entry - false at the queue's ends. */
+        routeAbove: Boolean = false,
+        routeBelow: Boolean = false
 ) {
     // The lightened accent / tonal surfaces keep black or accent text readable regardless of the
-    // album's hue - see queueRowSkin for how each style paints the row.
-    val skin = queueRowSkin(
-            style, item.isPlaying, accentColor, secondaryAccentColor, tertiaryAccentColor)
-    val onRow = skin.onColor
+    // album's hue - see QueueRowSkins for how each style paints the row.
+    val skin = remember(appearance.style, item.isPlaying, accentColor, secondaryAccentColor,
+            tertiaryAccentColor) {
+        QueueRowSkins.resolve(
+                appearance.style.token,
+                item.isPlaying,
+                accentColor.toArgb(),
+                secondaryAccentColor.toArgb(),
+                tertiaryAccentColor.toArgb())
+    }
+    val background = remember(skin) { skin.fill.toBrush() }
+    val onRow = Color(skin.onColor)
 
-    // background(shape) draws an anti-aliased rounded rect directly; the previous
+    // background(shape) draws an anti-aliased outline directly; the previous
     // clip(RoundedCornerShape) forced an offscreen saveLayer PER ROW on every scroll frame
     // (hardware canvas can't anti-alias a rounded clip without one), which was the main source
     // of the scroll stutter. The row's content is inside padding and ellipsized, so it never
-    // needs the rounded clip - only the tap ripple loses its rounded corners, which is
-    // imperceptible next to smooth scrolling.
-    val shape = queueRowShape(style, skin.corner)
+    // needs the clip - only the tap ripple loses its rounded corners, which is imperceptible next
+    // to smooth scrolling.
+    val shape = remember(appearance.outline) { QueueOutlineShape(appearance.outline) }
+    val coverClip = remember(appearance.coverCorners) { CoverCornersShape(appearance.coverCorners) }
     val border = skin.border
     val nowPlayingDescription = stringResource(R.string.queue_now_playing)
     // Cover style: the entry's own art fills the pill. Null for every other style, and for a
@@ -1147,24 +981,44 @@ private fun QueueRow(
     val coverArt = if (style.isCover) item.artwork else null
     val coverImage = rememberCoverImage(coverArt, style)
     val showsThumbnail = item.artwork != null && (coverImage == null || style.coverKeepsThumbnail)
+    // A Route row keeps its station's place even without a cover, so every station lines up on
+    // the one line; the node it draws there instead is the stop without a picture.
+    val leadsWithStation = routeColors != null
     val shortcutLink = QueueShortcutLink.candidate(item.mediaUri)
     val addShortcutLabel = stringResource(R.string.queue_add_shortcut)
+    val rowAlpha = QueueShape.rowAlpha(offset ?: 0, dimPlayed)
     Row(
             modifier = Modifier
                     .fillMaxWidth()
-                    .background(skin.background, shape)
+                    .then(if (rowAlpha < 1f) Modifier.alpha(rowAlpha) else Modifier)
+                    .background(background, shape)
                     .then(
                             if (coverImage != null) {
-                                // Only this style pays for the rounded clip (and its per-row
-                                // saveLayer, see the note above) - it is the one treatment that
-                                // genuinely needs the artwork clipped to the pill.
+                                // Only this style pays for the clip (and its per-row saveLayer,
+                                // see the note above) - it is the one treatment that genuinely
+                                // needs the artwork clipped to the pill.
                                 Modifier.coverFill(
                                         coverImage, shape, coverScrimFor(style, accentColor))
                             } else {
                                 Modifier
                             }
                     )
-                    .then(if (border != null) Modifier.border(border.first, border.second, shape) else Modifier)
+                    .then(
+                            if (border != null) {
+                                Modifier.border(border.widthDp.dp, Color(border.color), shape)
+                            } else {
+                                Modifier
+                            })
+                    .then(
+                            // The playing station's capsule is opaque, so the line the list draws
+                            // under the rows would break off at its edges; the row carries its own
+                            // stretch of it through the capsule to its station.
+                            if (routeColors != null && item.isPlaying) {
+                                Modifier.routeThroughRow(
+                                        metrics.stationCenter, routeColors, routeAbove, routeBelow)
+                            } else {
+                                Modifier
+                            })
                     .combinedClickable(
                             onClick = { onItemClick(item.entryId) },
                             onLongClickLabel = if (shortcutLink != null && item.title.isNotBlank()) {
@@ -1181,44 +1035,47 @@ private fun QueueRow(
                         selected = item.isPlaying
                         if (item.isPlaying) stateDescription = nowPlayingDescription
                     }
-                    .queueSkinMarks(skin)
-                    // Height is derived from the style's padding around the 30dp artwork keyline
-                    // rather than left to the content. A row whose track has no artist collapses
-                    // to one line, so content-driven heights made the list ragged next to the
-                    // quick panel's pills; each style still keeps its own rhythm via its padding.
-                    .height(rowSize.contentHeight + skin.verticalPadding * 2)
-                    // A row leading with a cover insets it by the same amount top, bottom and
-                    // left, so the artwork sits in an even frame instead of being pushed inwards
-                    // by a text keyline it does not need. Text-only rows keep the wider inset.
+                    .queueSkinMarks(skin, appearance.outline)
+                    // Height is derived from the style's padding around the artwork keyline rather
+                    // than left to the content. A row whose track has no artist collapses to one
+                    // line, so content-driven heights made the list ragged next to the quick
+                    // panel's pills; each style still keeps its own rhythm via its padding.
+                    .height(metrics.height)
+                    // A row leading with a cover insets it evenly top, bottom and left, so the
+                    // artwork sits in a frame instead of being pushed inwards by a text keyline it
+                    // does not need. Text-only rows keep the wider inset the outline asks for.
                     .padding(
-                            start = if (showsThumbnail) QUEUE_ARTWORK_INSET else 16.dp,
-                            end = 16.dp),
+                            start = if (showsThumbnail || leadsWithStation) {
+                                metrics.coverStart
+                            } else {
+                                metrics.textInset
+                            },
+                            end = metrics.textInset),
             verticalAlignment = Alignment.CenterVertically
     ) {
-        // The cover style already shows the art full-bleed behind the text; a second thumbnail
-        // of the same image would just crowd the row.
-        item.artwork?.takeIf { showsThumbnail }?.let { bitmap ->
-            val image = remember(bitmap) { bitmap.asImageBitmap() }
-            // The row still owns its height; the artwork now fills it rather than sitting at a
-            // constant 30dp inside it, which is what made every pill look like a thick border
-            // around a small cover.
-            val artworkSize = queueArtworkSize(rowSize, skin.verticalPadding)
-            val artworkCorner = artworkSize * queueArtworkCornerFraction(style)
-            Image(
-                    bitmap = image,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                            .size(artworkSize)
-                            .then(
-                                    if (artworkCorner > 0.dp) {
-                                        Modifier.clip(RoundedCornerShape(artworkCorner))
-                                    } else {
-                                        Modifier
-                                    }
-                            )
-            )
+        if (routeColors != null) {
+            RouteStation(
+                    artwork = item.artwork,
+                    node = offset?.let(QueueShape::node),
+                    size = metrics.artworkSize,
+                    clip = coverClip,
+                    colors = routeColors)
             Spacer(Modifier.width(10.dp))
+        } else {
+            // The cover style already shows the art full-bleed behind the text; a second thumbnail
+            // of the same image would just crowd the row.
+            item.artwork?.takeIf { showsThumbnail }?.let { bitmap ->
+                val image = remember(bitmap) { bitmap.asImageBitmap() }
+                Image(
+                        bitmap = image,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                                .size(metrics.artworkSize)
+                                .clip(coverClip)
+                )
+                Spacer(Modifier.width(10.dp))
+            }
         }
         Column(Modifier.weight(1f)) {
             var roomWidth by remember { mutableIntStateOf(0) }
@@ -1257,6 +1114,160 @@ private fun QueueRow(
         if (item.isPlaying) {
             Spacer(Modifier.width(8.dp))
             EqualizerBars(color = onRow)
+        }
+    }
+}
+
+/** The playing row's own stretch of the route: down from its top edge to its station, then on
+ *  below it, in the colours the line has on either side of "you are here". */
+private fun Modifier.routeThroughRow(
+        stationCenter: Dp,
+        colors: QueueRouteColors,
+        above: Boolean,
+        below: Boolean
+): Modifier = drawBehind {
+    val x = stationCenter.toPx()
+    val middle = size.height / 2f
+    val stroke = QueueShape.ROUTE_LINE_DP.dp.toPx()
+    if (above) drawLine(Color(colors.travelled), Offset(x, 0f), Offset(x, middle), stroke)
+    if (below) drawLine(Color(colors.ahead), Offset(x, middle), Offset(x, size.height), stroke)
+}
+
+/**
+ * One stop on the Route style's line: the entry's cover, cut as the queue's covers are and ringed
+ * in the colour of the stretch it sits on - lit, with a glow, for the one playing - or, for an entry
+ * with no cover, a node in the same place: a lit dot now, a small dot behind, an open ring ahead.
+ * [node] is null when nothing is playing (the recently-played fallback), which draws them all as
+ * stops still to come rather than claiming any of them is current.
+ */
+@Composable
+private fun RouteStation(
+        artwork: Bitmap?,
+        node: QueueShape.Node?,
+        size: Dp,
+        clip: Shape,
+        colors: QueueRouteColors
+) {
+    Box(Modifier.size(size), contentAlignment = Alignment.Center) {
+        if (artwork != null) {
+            val image = remember(artwork) { artwork.asImageBitmap() }
+            val now = node == QueueShape.Node.NOW
+            val ring = Color(when (node) {
+                QueueShape.Node.NOW -> colors.lit
+                QueueShape.Node.PAST -> colors.travelled
+                else -> colors.ahead
+            })
+            Image(
+                    bitmap = image,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                            .fillMaxSize()
+                            .then(
+                                    if (now) {
+                                        Modifier.drawBehind {
+                                            val grow = 4.dp.toPx()
+                                            val halo = clip.createOutline(
+                                                    Size(this.size.width + grow * 2,
+                                                            this.size.height + grow * 2),
+                                                    layoutDirection,
+                                                    this)
+                                            translate(-grow, -grow) {
+                                                drawOutline(halo, Color(colors.halo))
+                                            }
+                                        }
+                                    } else {
+                                        Modifier
+                                    })
+                            .clip(clip)
+                            .border(if (now) 2.5.dp else 1.5.dp, ring, clip))
+        } else {
+            Canvas(Modifier.fillMaxSize()) { drawRouteNode(node, colors) }
+        }
+    }
+}
+
+private fun DrawScope.drawRouteNode(node: QueueShape.Node?, colors: QueueRouteColors) {
+    val radius = QueueShape.ROUTE_NODE_DP.dp.toPx()
+    when (node) {
+        QueueShape.Node.NOW -> {
+            drawCircle(Color(colors.halo), radius + 4.dp.toPx(), center)
+            drawCircle(Color(colors.lit), radius, center)
+        }
+        QueueShape.Node.PAST ->
+            drawCircle(Color(colors.past), radius * QueueShape.nodeScale(QueueShape.Node.PAST), center)
+        else -> {
+            val ring = radius * QueueShape.nodeScale(QueueShape.Node.UPCOMING)
+            // A dark core keeps the ring legible where the line passes behind it.
+            drawCircle(Color(colors.upcomingCore), ring + 1.dp.toPx(), center)
+            drawCircle(Color(colors.upcomingRing), ring, center, style = Stroke(1.6.dp.toPx()))
+        }
+    }
+}
+
+/**
+ * The Route style's line: one stroke through the middle of every visible station, in the album's
+ * colour above the playing entry and quiet white below it, running on and fading out past the
+ * stations on screen where the queue goes on.
+ *
+ * Drawn once under the whole list from where its rows really are - see [QueueShape.routeSegments]
+ * - rather than by each row: the list scales its rows towards the edges of the round screen, so a
+ * line drawn inside each row would step sideways from one to the next. Joined through the covers
+ * themselves, it bends with that scaling instead. The timeline layout this replaces ran a fixed arc
+ * along the bezel, near the rows rather than through them, and had to shrink every row to make room
+ * for it.
+ */
+@Composable
+private fun QueueRouteLine(
+        listState: ScalingLazyListState,
+        leadingRows: Int,
+        itemCount: Int,
+        playingIndex: Int,
+        continuesBelow: Boolean,
+        stationX: Dp,
+        colors: QueueRouteColors
+) {
+    Canvas(Modifier.fillMaxSize()) {
+        val info = listState.layoutInfo
+        val width = info.viewportSize.width.toFloat()
+        val height = info.viewportSize.height.toFloat()
+        if (width <= 0f || height <= 0f) return@Canvas
+        val itemWidth = width - QUEUE_LIST_SIDE_PADDING.toPx() * 2
+        val stationInRow = stationX.toPx()
+        val stations = info.visibleItemsInfo.mapNotNull { row ->
+            val index = row.index - leadingRows
+            if (index !in 0 until itemCount) {
+                null
+            } else {
+                QueueShape.station(
+                        index, width, height, itemWidth, stationInRow,
+                        row.offset.toFloat(), row.scale, row.alpha)
+            }
+        }
+        val stroke = QueueShape.ROUTE_LINE_DP.dp.toPx()
+        QueueShape.routeSegments(
+                stations, itemCount, playingIndex, continuesBelow,
+                QueueShape.ROUTE_TAIL_DP.dp.toPx()
+        ).forEach { segment ->
+            val base = Color(if (segment.travelled) colors.travelled else colors.ahead)
+            val color = base.copy(alpha = base.alpha * segment.alpha)
+            val start = Offset(segment.fromX, segment.fromY)
+            val end = Offset(segment.toX, segment.toY)
+            if (segment.fadesAtStart || segment.fadesAtEnd) {
+                val clear = color.copy(alpha = 0f)
+                drawLine(
+                        brush = Brush.linearGradient(
+                                listOf(
+                                        if (segment.fadesAtStart) clear else color,
+                                        if (segment.fadesAtEnd) clear else color),
+                                start, end),
+                        start = start,
+                        end = end,
+                        strokeWidth = stroke,
+                        cap = StrokeCap.Round)
+            } else {
+                drawLine(color, start, end, stroke, StrokeCap.Round)
+            }
         }
     }
 }
@@ -1318,57 +1329,60 @@ private fun QueueHistoryCaption(accentColor: Color) {
 /**
  * Trailing row that fetches the next page of a queue longer than what was sent.
  *
- * Wears the current style's own idle skin rather than a look of its own, so it reads as part of the
- * list instead of as a system affordance dropped on top of it. It replaces its label with a spinner
- * while the request is out because the phone answers by replacing the whole list - there is nothing
- * incremental to watch, and without the spinner a slow Bluetooth round trip looks like a dead tap.
+ * Wears the current style's own idle skin and outline rather than a look of its own, so it reads as
+ * part of the list instead of as a system affordance dropped on top of it. It replaces its label
+ * with a spinner while the request is out because the phone answers by replacing the whole list -
+ * there is nothing incremental to watch, and without the spinner a slow Bluetooth round trip looks
+ * like a dead tap.
  */
 @Composable
 private fun LoadMoreRow(
         accentColor: Color,
         loading: Boolean,
         style: QueueStyle,
-        rowSize: QueueRowSize,
+        appearance: QueueRowAppearance,
+        metrics: QueueRowMetrics,
         onClick: () -> Unit
 ) {
     // Never the cover treatment: this row has no artwork of its own, and the cover styles fall back
     // to the Glass pill in exactly that case anyway.
-    val renderedStyle = if (style.isCover) QueueStyle.GLASS else style
-    val skin = queueRowSkin(
-            renderedStyle,
-            isPlaying = false,
-            accent = accentColor,
-            secondaryAccent = accentColor,
-            tertiaryAccent = accentColor)
-    val shape = queueRowShape(renderedStyle, skin.corner)
+    val token = if (style.isCover) QueueStyles.DEFAULT_TOKEN else appearance.style.token
+    val skin = remember(token, accentColor) {
+        val accent = accentColor.toArgb()
+        QueueRowSkins.resolve(token, isPlaying = false, accent, accent, accent)
+    }
+    val background = remember(skin) { skin.fill.toBrush() }
+    val shape = remember(appearance.outline) { QueueOutlineShape(appearance.outline) }
+    val border = skin.border
     Box(
             modifier = Modifier
                     .fillMaxWidth()
-                    .background(skin.background, shape)
+                    .background(background, shape)
                     .then(
-                            if (skin.border != null) {
-                                Modifier.border(skin.border.first, skin.border.second, shape)
+                            if (border != null) {
+                                Modifier.border(border.widthDp.dp, Color(border.color), shape)
                             } else {
                                 Modifier
                             }
                     )
-                    .queueSkinMarks(skin)
+                    .queueSkinMarks(skin, appearance.outline)
                     // Taps are swallowed while a request is already in flight, so an impatient
                     // double tap cannot queue up two pages.
                     .clickable(enabled = !loading) { onClick() }
-                    .height(rowSize.contentHeight + skin.verticalPadding * 2)
-                    .padding(horizontal = 16.dp),
+                    .height(metrics.height)
+                    .padding(horizontal = metrics.textInset),
             contentAlignment = Alignment.Center
     ) {
+        val onRow = Color(skin.onColor)
         if (loading) {
             // The same pulsing bars the playing row draws - see EqualizerBars. At row height
             // *inside* the list, where a circular indicator is the one shape in the column that is
             // not part of the queue's own vocabulary.
-            EqualizerBars(skin.onColor)
+            EqualizerBars(onRow)
         } else {
             Text(
                     text = stringResource(R.string.queue_load_more),
-                    color = skin.onColor,
+                    color = onRow,
                     fontFamily = LocalWatchUiFontFamily.current,
                     fontWeight = FontWeight.Bold,
                     fontSize = 14.sp,
@@ -1405,10 +1419,6 @@ private fun QueueEmptyMessage() {
     }
 }
 
-/** Adapts the accent so black text always reads on it - same rule as the menu's highlight. */
-private fun lightenForBlackText(color: Color): Color =
-        Color(WatchTheme.accentForSurface(color.toArgb()))
-
 @Preview(showBackground = true, backgroundColor = 0xFF000000, widthDp = 220, heightDp = 220)
 @Composable
 private fun QueueScreenEmptyPreview() {
@@ -1443,6 +1453,28 @@ private fun QueueScreenPreview() {
                 nowPlayingArtist = "Lieless, PRATEIN & Pimpie",
                 onItemClick = {},
                 onDismiss = {}
+        )
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFF000000, widthDp = 220, heightDp = 220)
+@Composable
+private fun QueueScreenRoutePreview() {
+    MaterialTheme {
+        QueueScreen(
+                items = listOf(
+                        QueueItemUi("1", "Только звёзды над нами", "BXZX & prettydien", false),
+                        QueueItemUi("2", "WINGS", "Lieless, PRATEIN & Pimpie", true),
+                        QueueItemUi("3", "Otpusti", "hxvvxn & damnenby", false)
+                ),
+                accentColor = Color(0xFF9C5BD0),
+                secondaryAccentColor = Color(0xFF3F739C),
+                tertiaryAccentColor = Color(0xFF8C4F7E),
+                nowPlayingTitle = "WINGS",
+                nowPlayingArtist = "Lieless, PRATEIN & Pimpie",
+                onItemClick = {},
+                onDismiss = {},
+                style = QueueStyle.ROUTE
         )
     }
 }

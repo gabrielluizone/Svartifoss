@@ -66,6 +66,8 @@
         <item>Қадамдар</item>
         <item>Кәмпит</item>
         <item>Елес</item>
+        <item>Толқын</item>
+        <item>Сызғыш</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Қос жиек</item>
@@ -76,6 +78,8 @@
         <item>Ортаңғы циферблат</item>
         <item>Жоғарғы ореол</item>
         <item>Төменгі ореол</item>
+        <item>Орталық тірек</item>
+        <item>Базальт бағаналары</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Қос сақина</item>
@@ -88,6 +92,9 @@
         <item>Ине</item>
         <item>Кезектесіп</item>
         <item>Ұшқын</item>
+        <item>Толқын</item>
+        <item>Тректің минуттары</item>
+        <item>Алтыбұрышты ұяшықтар</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Безель жиегі</item>
@@ -101,6 +108,8 @@
         <item>Қос жол</item>
         <item>Сол жақтан ашық</item>
         <item>Оң жақтан ашық</item>
+        <item>Жоғарғы доға</item>
+        <item>Төменгі доға</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Ықшам капсула</item>
@@ -124,6 +133,7 @@
         <item>Қос уақыт шкаласы</item>
         <item>Сегменттер (төменгі)</item>
         <item>Ортаңғы стек</item>
+        <item>Толқын</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Жұмсақ</item>
@@ -155,5 +165,8 @@
         <item>Көпіршік</item>
         <item>Хром</item>
         <item>Голографиялық</item>
+        <item>Базальт</item>
+        <item>Қабаттар</item>
+        <item>Маршрут</item>
     </string-array>
 </resources>

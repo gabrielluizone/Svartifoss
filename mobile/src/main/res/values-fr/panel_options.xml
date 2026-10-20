@@ -66,6 +66,8 @@
         <item>Marches</item>
         <item>Bonbon</item>
         <item>Fantôme</item>
+        <item>Onde</item>
+        <item>Règle</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Double bord</item>
@@ -76,6 +78,8 @@
         <item>Cadran central</item>
         <item>Halo supérieur</item>
         <item>Halo inférieur</item>
+        <item>Pilier central</item>
+        <item>Colonnes de basalte</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Double anneau</item>
@@ -88,6 +92,9 @@
         <item>Aiguille</item>
         <item>Alterné</item>
         <item>Étincelle</item>
+        <item>Onde</item>
+        <item>Minutes du morceau</item>
+        <item>Cellules hexagonales</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Bord de lunette</item>
@@ -101,6 +108,8 @@
         <item>Double piste</item>
         <item>Ouvert à gauche</item>
         <item>Ouvert à droite</item>
+        <item>Arc supérieur</item>
+        <item>Arc inférieur</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Pastille compacte</item>
@@ -124,6 +133,7 @@
         <item>Double chronologie</item>
         <item>Segments (bas)</item>
         <item>Pile centrale</item>
+        <item>Onde</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Doux</item>
@@ -155,5 +165,8 @@
         <item>Bulle</item>
         <item>Chrome</item>
         <item>Holographique</item>
+        <item>Basalte</item>
+        <item>Strates</item>
+        <item>Itinéraire</item>
     </string-array>
 </resources>

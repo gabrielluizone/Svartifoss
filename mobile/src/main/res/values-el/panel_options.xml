@@ -66,6 +66,8 @@
         <item>Σκαλοπάτια</item>
         <item>Καραμέλα</item>
         <item>Φάντασμα</item>
+        <item>Κύμα</item>
+        <item>Χάρακας</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Διπλή άκρη</item>
@@ -76,6 +78,8 @@
         <item>Κεντρικός επιλογέας</item>
         <item>Επάνω άλω</item>
         <item>Κάτω άλω</item>
+        <item>Κεντρικός στύλος</item>
+        <item>Βασαλτικές στήλες</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Διπλός δακτύλιος</item>
@@ -88,6 +92,9 @@
         <item>Βελόνα</item>
         <item>Εναλλασσόμενο</item>
         <item>Σπίθα</item>
+        <item>Κύμα</item>
+        <item>Λεπτά κομματιού</item>
+        <item>Εξαγωνικά κελιά</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Άκρη στεφάνης</item>
@@ -101,6 +108,8 @@
         <item>Διπλή διαδρομή</item>
         <item>Ανοικτό αριστερά</item>
         <item>Ανοικτό δεξιά</item>
+        <item>Άνω τόξο</item>
+        <item>Κάτω τόξο</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Συμπαγής κάψουλα</item>
@@ -124,6 +133,7 @@
         <item>Διπλή χρονογραμμή</item>
         <item>Τμήματα (κάτω)</item>
         <item>Κεντρική στοίβα</item>
+        <item>Κύμα</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Απαλό</item>
@@ -155,5 +165,8 @@
         <item>Φούσκα</item>
         <item>Χρώμιο</item>
         <item>Ολογραφικό</item>
+        <item>Βασάλτης</item>
+        <item>Στρώματα</item>
+        <item>Διαδρομή</item>
     </string-array>
 </resources>

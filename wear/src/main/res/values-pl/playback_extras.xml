@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Koniec utworu</string>
+    <string name="quick_sleep_track_end_description">Wyłącznik czasowy, wstrzyma po zakończeniu tego utworu. Kliknij, by wyłączyć</string>
+    <string name="queue_position">Utwór %1$d z %2$d</string>
+    <string name="progress_screen_speed_description">Szybkość odtwarzania %1$s. Kliknij, by zmienić, przytrzymaj, by dostroić</string>
+    <string name="progress_screen_speed_slower">Wolniej</string>
+    <string name="progress_screen_speed_faster">Szybciej</string>
+    <string name="progress_screen_speed_reset">Normalna szybkość</string>
+    <string name="complication_playback_label">Odtwarzaj i wstrzymuj</string>
+    <string name="complication_playback_idle">Odtwórz</string>
+    <string name="complication_playback_idle_description">Nic nie jest odtwarzane. Kliknij, by wznowić ostatnią aplikację</string>
+    <string name="complication_playback_play_description">Wstrzymano: %1$s. Kliknij, by odtworzyć</string>
+    <string name="complication_playback_pause_description">Odtwarzanie: %1$s. Kliknij, by wstrzymać</string>
+    <string name="audio_block_dnd">Telefon jest w trybie Nie przeszkadzać</string>
+    <string name="audio_block_muted">Głośność multimediów w telefonie jest wyłączona</string>
+    <string name="audio_block_safe_volume">Utrzymano bezpieczny poziom. Zwiększ raz na telefonie, by potwierdzić</string>
+    <string name="refused_skip_app">%1$s nie pozwala teraz pomijać utworów</string>
+    <string name="refused_skip">Ta aplikacja nie pozwala teraz pomijać utworów</string>
+    <string name="refused_seek_app">%1$s nie pozwala teraz przewijać</string>
+    <string name="refused_seek">Ta aplikacja nie pozwala teraz przewijać</string>
+    <string name="tile_resume">Wznów ostatnią aplikację</string>
+    <string name="tile_resume_hint">Odtwórz wznawia ostatnią aplikację</string>
+    <string name="recent_tile_title">Ostatnio odtwarzane</string>
+    <string name="recent_tile_description">Twoje ostatnio odtwarzane utwory, jedno kliknięcie od ponownego odtworzenia</string>
+    <string name="recent_tile_empty">Jeszcze nic nie odtworzono</string>
+    <string name="recent_tile_play_description">Odtwórz ponownie %1$s</string>
+</resources>

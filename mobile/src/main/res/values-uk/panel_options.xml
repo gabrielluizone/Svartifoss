@@ -66,6 +66,8 @@
         <item>Сходи</item>
         <item>Цукерка</item>
         <item>Привид</item>
+        <item>Хвиля</item>
+        <item>Лінійка</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Подвійний край</item>
@@ -76,6 +78,8 @@
         <item>Центральний циферблат</item>
         <item>Верхній ореол</item>
         <item>Нижній ореол</item>
+        <item>Центральний стовп</item>
+        <item>Базальтові колони</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Подвійне кільце</item>
@@ -88,6 +92,9 @@
         <item>Голка</item>
         <item>Почергово</item>
         <item>Іскра</item>
+        <item>Хвиля</item>
+        <item>Хвилини треку</item>
+        <item>Шестикутні комірки</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Край безеля</item>
@@ -101,6 +108,8 @@
         <item>Подвійна доріжка</item>
         <item>Відкрито ліворуч</item>
         <item>Відкрито праворуч</item>
+        <item>Верхня дуга</item>
+        <item>Нижня дуга</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Компактна капсула</item>
@@ -124,6 +133,7 @@
         <item>Подвійна часова шкала</item>
         <item>Сегменти (низ)</item>
         <item>Центральний стос</item>
+        <item>Хвиля</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>М’який</item>
@@ -155,5 +165,8 @@
         <item>Бульбашка</item>
         <item>Хром</item>
         <item>Голографічний</item>
+        <item>Базальт</item>
+        <item>Шари</item>
+        <item>Маршрут</item>
     </string-array>
 </resources>

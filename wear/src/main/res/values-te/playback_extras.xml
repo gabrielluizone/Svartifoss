@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">ట్రాక్ ముగింపు</string>
+    <string name="quick_sleep_track_end_description">స్లీప్ టైమర్, ఈ ట్రాక్ ముగిసినప్పుడు పాజ్ చేస్తుంది. ఆఫ్ చేయడానికి ట్యాప్ చేయండి</string>
+    <string name="queue_position">ట్రాక్ %1$d / %2$d</string>
+    <string name="progress_screen_speed_description">ప్లేబ్యాక్ వేగం %1$s. తదుపరి వేగం కోసం ట్యాప్ చేయండి, సూక్ష్మ సర్దుబాటు కోసం నొక్కి ఉంచండి</string>
+    <string name="progress_screen_speed_slower">నెమ్మదిగా</string>
+    <string name="progress_screen_speed_faster">వేగంగా</string>
+    <string name="progress_screen_speed_reset">సాధారణ వేగం</string>
+    <string name="complication_playback_label">ప్లే మరియు పాజ్</string>
+    <string name="complication_playback_idle">ప్లే చేయి</string>
+    <string name="complication_playback_idle_description">ఏమీ ప్లే కావడం లేదు. చివరి యాప్‌ను కొనసాగించడానికి ట్యాప్ చేయండి</string>
+    <string name="complication_playback_play_description">పాజ్ అయింది: %1$s. ప్లే చేయడానికి ట్యాప్ చేయండి</string>
+    <string name="complication_playback_pause_description">ప్లే అవుతోంది: %1$s. పాజ్ చేయడానికి ట్యాప్ చేయండి</string>
+    <string name="audio_block_dnd">ఫోన్ అంతరాయం కలిగించవద్దు మోడ్‌లో ఉంది</string>
+    <string name="audio_block_muted">ఫోన్ మీడియా వాల్యూమ్ ఆఫ్‌లో ఉంది</string>
+    <string name="audio_block_safe_volume">సురక్షిత స్థాయిలో ఉంచబడింది. నిర్ధారించడానికి ఫోన్‌లో ఒకసారి పెంచండి</string>
+    <string name="refused_skip_app">%1$s ప్రస్తుతం స్కిప్ చేయనివ్వడం లేదు</string>
+    <string name="refused_skip">ఈ యాప్ ప్రస్తుతం స్కిప్ చేయనివ్వడం లేదు</string>
+    <string name="refused_seek_app">%1$s ప్రస్తుతం ముందుకు-వెనక్కి వెళ్లనివ్వడం లేదు</string>
+    <string name="refused_seek">ఈ యాప్ ప్రస్తుతం ముందుకు-వెనక్కి వెళ్లనివ్వడం లేదు</string>
+    <string name="tile_resume">చివరి యాప్‌ను కొనసాగించు</string>
+    <string name="tile_resume_hint">ప్లే చివరి యాప్‌ను కొనసాగిస్తుంది</string>
+    <string name="recent_tile_title">ఇటీవల ప్లే చేసినవి</string>
+    <string name="recent_tile_description">మీరు చివరగా ప్లే చేసిన ట్రాక్‌లు, మళ్లీ ప్లే చేయడానికి ఒక ట్యాప్</string>
+    <string name="recent_tile_empty">ఇంకా ఏమీ ప్లే చేయలేదు</string>
+    <string name="recent_tile_play_description">%1$s మళ్లీ ప్లే చేయి</string>
+</resources>

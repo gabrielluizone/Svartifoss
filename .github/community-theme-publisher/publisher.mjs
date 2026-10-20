@@ -13,6 +13,7 @@ import {
     MAX_SETTING_TEXT_LENGTH,
     maxSettingTextLength,
     MINIMUM_APP_VERSION,
+    PUBLISHED_APP_VERSIONS,
     PROFILE_REVISION,
     PROFILE_SCHEMA_VERSION,
     isOriginalityApplicableSetting,
@@ -488,7 +489,15 @@ function validatePublishedProfileInternal(rawProfile, { requireCompleteSettings 
     const updatedAt = assertTimestampMillis(profile.updatedAt, "invalid-published-profile-updated-at");
     if (updatedAt < createdAt) fail("invalid-published-profile-timestamps");
     assertExactInteger(profile.revision, PROFILE_REVISION, "unsupported-published-profile-revision");
-    if (profile.minimumAppVersion !== MINIMUM_APP_VERSION) fail("unexpected-minimum-app-version");
+    // A complete profile is one this run builds or has just built, so it carries the current
+    // version; a catalogue profile keeps the version it was published under - see
+    // PUBLISHED_APP_VERSIONS.
+    const minimumAppVersion = profile.minimumAppVersion;
+    if (requireCompleteSettings
+            ? minimumAppVersion !== MINIMUM_APP_VERSION
+            : !PUBLISHED_APP_VERSIONS.includes(minimumAppVersion)) {
+        fail("unexpected-minimum-app-version");
+    }
     const publishedAt = assertPublicationTimestamp(profile.publishedAt, "invalid-published-at");
     return {
         schemaVersion: PROFILE_SCHEMA_VERSION,
@@ -499,7 +508,7 @@ function validatePublishedProfileInternal(rawProfile, { requireCompleteSettings 
         createdAt,
         updatedAt,
         revision: PROFILE_REVISION,
-        minimumAppVersion: MINIMUM_APP_VERSION,
+        minimumAppVersion,
         publishedAt,
         // Positioned here rather than appended, because publicProfilesMatch compares serialized
         // JSON: the key order this builds has to be the one buildPublishedProfile writes.
@@ -785,6 +794,9 @@ function buildIndexEntry(
     likes = 0,
     settingsDigest = undefined,
     installs = 0,
+    // A catalogue theme's own, which may predate the current one - see PUBLISHED_APP_VERSIONS.
+    // Never taken from an intake profile: nothing an APK sent decides it.
+    minimumAppVersion = MINIMUM_APP_VERSION,
 ) {
     if (!Number.isSafeInteger(likes) || likes < 0) fail("invalid-index-likes");
     if (!Number.isSafeInteger(installs) || installs < 0) fail("invalid-index-installs");
@@ -795,7 +807,7 @@ function buildIndexEntry(
         baseFace: profile.baseFace,
         revision: PROFILE_REVISION,
         schemaVersion: PROFILE_SCHEMA_VERSION,
-        minimumAppVersion: MINIMUM_APP_VERSION,
+        minimumAppVersion,
         publishedAt,
         likes,
     };
@@ -1047,6 +1059,10 @@ async function collectPublishedDigestState(catalog) {
             legacyProfile,
             legacyProfile.author,
             legacyProfile.publishedAt,
+            0,
+            undefined,
+            0,
+            legacyProfile.minimumAppVersion,
         );
         if (!summariesMatch(entry, profileSummary)) fail("catalogue-profile-index-mismatch");
 

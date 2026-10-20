@@ -225,6 +225,10 @@ object FaceScopedPreferences {
             "wear_progress_style",
             "wear_progress_layout",
             "wear_queue_style",
+            // The queue's outline and cover cut, chosen apart from its style but scoped with it:
+            // a theme that pairs Tonal with square corners has to carry both halves of that.
+            "wear_queue_row_shape",
+            "wear_queue_cover_shape",
             "wear_quick_panel_shortcut_cover",
             "wear_list_row_size",
             "wear_mini_buttons_mode",

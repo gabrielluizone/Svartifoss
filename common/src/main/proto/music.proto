@@ -83,6 +83,12 @@ message MusicState {
   // artist remains empty here deliberately; lyrics, history, metadata and track identity must
   // never mistake an app label for an artist.
   optional string sourceAppName = 23;
+
+  // Why the phone may be playing without being heard - Do Not Disturb silencing media, a muted or
+  // zero media volume, or the hearing-safety limit holding a louder level back - as a
+  // PhoneAudioBlock code. The watch says so where the volume is shown. 0 (and absent, from an older
+  // phone) is "nothing in the way"; a code the watch does not know reads the same.
+  optional int32 audioBlock = 24 [default = 0];
 }
 
 message MediaAction {

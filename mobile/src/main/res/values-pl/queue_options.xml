@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Kształt kapsułki</string>
+    <string name="setting_wear_queue_cover_shape">Kształt okładki</string>
+    <string name="wear_queue_shape_follow">Jak styl kolejki</string>
+    <string name="queue_shape_note_title">Styl i kształty</string>
+    <string name="queue_shape_note_description">Styl określa kolory i efekty. Kształt kapsułki i Kształt okładki zmieniają tylko obrysy; Jak styl kolejki zachowuje te właściwe dla każdego stylu.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Kapsułka</item>
+        <item>Zaokrąglony</item>
+        <item>Miękkie rogi</item>
+        <item>Kwadrat</item>
+        <item>Liść</item>
+        <item>Dymek</item>
+        <item>Sześciokąt</item>
+    </string-array>
+</resources>

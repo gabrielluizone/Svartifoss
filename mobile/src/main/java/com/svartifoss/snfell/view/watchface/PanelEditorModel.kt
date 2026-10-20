@@ -31,6 +31,14 @@ internal enum class PanelControl {
     BLUR,
     STYLE,
     LAYOUT,
+    /** The queue rows' outline, chosen apart from their style. */
+    ROW_SHAPE,
+    /** How the queue's covers are cut. */
+    COVER_SHAPE,
+    /** How heavy the surface's stroke is; opens the real numeric field. */
+    THICKNESS,
+    /** Dims the queue entries that already played. */
+    QUEUE_DIM,
     ROW_SIZE,
     UP_NEXT,
     UP_NEXT_STYLE,
@@ -80,21 +88,35 @@ internal data class PanelSearchTarget(
  * [MiscPreferences], so the compact editor changes what the page looks like and nothing about what
  * a saved face, custom theme, backup, preview or watch reads.
  *
- * Two of these keys are deliberately **not** face-scoped and that is not an oversight:
- * `wear_quick_panel_source` drives a phone-side binding with no per-face notion, and
- * `queue_remote_artwork` is a network toggle declared on two screens at once. Both are listed in
- * `AppearancePreferenceScopingTest.DELIBERATELY_GLOBAL`, and [globalKeys] names them here so the
- * editor's own test can assert the split rather than assume it.
+ * A few of these keys are deliberately **not** face-scoped and that is not an oversight:
+ * `wear_quick_panel_source` drives a phone-side binding with no per-face notion,
+ * `queue_remote_artwork` is a network toggle declared on two screens at once, and the volume
+ * panel's thickness and return mark are kept out of the theme contract until its minimum app
+ * version moves. All are listed in `AppearancePreferenceScopingTest.DELIBERATELY_GLOBAL`, and
+ * [globalKeys] names them here so the editor's own test can assert the split rather than assume it.
  *
  * The global backdrop and blur controls use [PanelTarget.VOLUME] as their canonical navigation
  * target because Volume is the first tab on the rail.
  */
 internal object PanelEditorModel {
 
+    /**
+     * The one volume layout drawn at a fixed size: its basalt columns take their colours from the
+     * style but no stroke, so the thickness row has nothing to change while it is selected.
+     */
+    const val FIXED_SIZE_VOLUME_LAYOUT = "basalt"
+
+    /** The line under the queue's controls saying which of them are colours and which outlines. */
+    const val QUEUE_SHAPE_NOTE_KEY = "queue_shape_note"
+
     /** Keys that are page-wide rather than per-face. See the class doc. */
     val globalKeys: Set<String> = setOf(
             MiscPreferences.WEAR_QUICK_PANEL_SOURCE.key,
-            "queue_remote_artwork")
+            "queue_remote_artwork",
+            // Not scoped on purpose: a scoped key joins the public theme contract and needs the
+            // gallery's minimum app version raised with it. See MiscPreferences.WEAR_VOLUME_THICKNESS.
+            MiscPreferences.WEAR_VOLUME_THICKNESS.key,
+            MiscPreferences.WEAR_QUEUE_DIM_PLAYED.key)
 
     /**
      * The two controls the editor shows above the tab rail, on every tab.
@@ -145,6 +167,14 @@ internal object PanelEditorModel {
                     MiscPreferences.WEAR_VOLUME_LAYOUT,
                     PanelTarget.VOLUME,
                     PanelControl.LAYOUT),
+            // Like the blur radius: a free numeric field, so the editor opens the real dialog
+            // instead of inventing a slider whose range the typed path would then disagree with.
+            PanelSettingSpec(
+                    MiscPreferences.WEAR_VOLUME_THICKNESS.key,
+                    PanelTarget.VOLUME,
+                    PanelControl.THICKNESS,
+                    PanelValueSpec.Choice(
+                            MiscPreferences.WEAR_VOLUME_THICKNESS.defaultValue.toString())),
 
             choice(
                     MiscPreferences.WEAR_SEEK_STYLE,
@@ -190,14 +220,33 @@ internal object PanelEditorModel {
                     PanelControl.SHORTCUTS,
                     PanelValueSpec.Action),
 
+            // The queue's look is three choices, in this order: the style is the colours and
+            // effects, the two shapes are outlines only, each following the style until set.
             choice(
                     MiscPreferences.WEAR_QUEUE_STYLE,
                     PanelTarget.QUEUE,
                     PanelControl.STYLE),
             choice(
+                    MiscPreferences.WEAR_QUEUE_ROW_SHAPE,
+                    PanelTarget.QUEUE,
+                    PanelControl.ROW_SHAPE),
+            choice(
+                    MiscPreferences.WEAR_QUEUE_COVER_SHAPE,
+                    PanelTarget.QUEUE,
+                    PanelControl.COVER_SHAPE),
+            choice(
                     MiscPreferences.WEAR_LIST_ROW_SIZE,
                     PanelTarget.QUEUE,
                     PanelControl.ROW_SIZE),
+            PanelSettingSpec(
+                    QUEUE_SHAPE_NOTE_KEY,
+                    PanelTarget.QUEUE,
+                    PanelControl.OPEN_NOTE,
+                    PanelValueSpec.Information),
+            toggle(
+                    MiscPreferences.WEAR_QUEUE_DIM_PLAYED,
+                    PanelTarget.QUEUE,
+                    PanelControl.QUEUE_DIM),
             PanelSettingSpec(
                     "queue_remote_artwork",
                     PanelTarget.QUEUE,

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">ကပ်ဆူးလ် ပုံသဏ္ဍာန်</string>
+    <string name="setting_wear_queue_cover_shape">Cover ပုံသဏ္ဍာန်</string>
+    <string name="wear_queue_shape_follow">Queue ပုံစံကို လိုက်မည်</string>
+    <string name="queue_shape_note_title">ပုံစံနှင့် ပုံသဏ္ဍာန်များ</string>
+    <string name="queue_shape_note_description">ပုံစံက အရောင်နှင့် အထူးပြုချက်များကို သတ်မှတ်သည်။ ကပ်ဆူးလ် ပုံသဏ္ဍာန်နှင့် Cover ပုံသဏ္ဍာန်တို့က အနားသတ်မျဉ်းများကိုသာ ပြောင်းသည်။ Queue ပုံစံကို လိုက်မည် သည် ပုံစံတစ်ခုစီ၏ မူလအနားသတ်ကို ထိန်းထားသည်။</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>ကပ်ဆူးလ်</item>
+        <item>ဝိုင်းသော</item>
+        <item>ထောင့်ပျော့</item>
+        <item>စတုရန်း</item>
+        <item>အရွက်</item>
+        <item>စကားပြောပူဖောင်း</item>
+        <item>ဆဋ္ဌဂံ</item>
+    </string-array>
+</resources>

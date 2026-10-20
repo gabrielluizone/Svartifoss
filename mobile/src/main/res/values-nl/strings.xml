@@ -642,6 +642,8 @@
         <item>Material (omlijnd)</item>
         <item>AMOLED-bediening</item>
         <item>Chrono (grote klok)</item>
+        <item>Minutenring</item>
+        <item>Basaltkader</item>
         <item>Poster</item>
         <item>Studio</item>
         <item>Immersive</item>
@@ -672,6 +674,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Altijd-aan-kleur</string>
     <string-array name="wear_aod_color_entries">

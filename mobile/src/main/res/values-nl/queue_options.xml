@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Pilvorm</string>
+    <string name="setting_wear_queue_cover_shape">Hoesvorm</string>
+    <string name="wear_queue_shape_follow">Wachtrijstijl volgen</string>
+    <string name="queue_shape_note_title">Stijl en vormen</string>
+    <string name="queue_shape_note_description">De stijl bepaalt de kleuren en effecten. Pilvorm en Hoesvorm veranderen alleen de omtrek; Wachtrijstijl volgen behoudt die van elke stijl.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Capsule</item>
+        <item>Afgerond</item>
+        <item>Zachte hoeken</item>
+        <item>Vierkant</item>
+        <item>Blad</item>
+        <item>Tekstballon</item>
+        <item>Zeshoek</item>
+    </string-array>
+</resources>

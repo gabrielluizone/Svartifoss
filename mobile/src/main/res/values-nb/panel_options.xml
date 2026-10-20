@@ -66,6 +66,8 @@
         <item>Trinn</item>
         <item>Godteri</item>
         <item>Spøkelse</item>
+        <item>Bølge</item>
+        <item>Linjal</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Dobbel kant</item>
@@ -76,6 +78,8 @@
         <item>Midtskive</item>
         <item>Øvre glorie</item>
         <item>Nedre glorie</item>
+        <item>Midtsøyle</item>
+        <item>Basaltsøyler</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Dobbel ring</item>
@@ -88,6 +92,9 @@
         <item>Nål</item>
         <item>Vekslende</item>
         <item>Gnist</item>
+        <item>Bølge</item>
+        <item>Sporets minutter</item>
+        <item>Sekskantceller</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Ramme-kant</item>
@@ -101,6 +108,8 @@
         <item>Dobbelt spor</item>
         <item>Åpen til venstre</item>
         <item>Åpen til høyre</item>
+        <item>Øvre bue</item>
+        <item>Nedre bue</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Kompakt kapsel</item>
@@ -124,6 +133,7 @@
         <item>Dobbel tidslinje</item>
         <item>Segmenter (nederst)</item>
         <item>Midtstabel</item>
+        <item>Bølge</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Myk</item>
@@ -155,5 +165,8 @@
         <item>Boble</item>
         <item>Krom</item>
         <item>Holografisk</item>
+        <item>Basalt</item>
+        <item>Lag</item>
+        <item>Rute</item>
     </string-array>
 </resources>

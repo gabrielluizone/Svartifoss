@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Τέλος κομματιού</string>
+    <string name="quick_sleep_track_end_description">Χρονοδιακόπτης ύπνου, παύση στο τέλος αυτού του κομματιού. Πατήστε για απενεργοποίηση</string>
+    <string name="queue_position">Κομμάτι %1$d από %2$d</string>
+    <string name="progress_screen_speed_description">Ταχύτητα αναπαραγωγής %1$s. Πατήστε για την επόμενη, κρατήστε για λεπτή ρύθμιση</string>
+    <string name="progress_screen_speed_slower">Πιο αργά</string>
+    <string name="progress_screen_speed_faster">Πιο γρήγορα</string>
+    <string name="progress_screen_speed_reset">Κανονική ταχύτητα</string>
+    <string name="complication_playback_label">Αναπαραγωγή και παύση</string>
+    <string name="complication_playback_idle">Αναπαραγωγή</string>
+    <string name="complication_playback_idle_description">Δεν αναπαράγεται τίποτα. Πατήστε για συνέχιση της τελευταίας εφαρμογής</string>
+    <string name="complication_playback_play_description">Σε παύση: %1$s. Πατήστε για αναπαραγωγή</string>
+    <string name="complication_playback_pause_description">Αναπαράγεται: %1$s. Πατήστε για παύση</string>
+    <string name="audio_block_dnd">Το τηλέφωνο είναι σε Μην ενοχλείτε</string>
+    <string name="audio_block_muted">Η ένταση πολυμέσων του τηλεφώνου είναι κλειστή</string>
+    <string name="audio_block_safe_volume">Περιορίστηκε σε ασφαλές επίπεδο. Αυξήστε μία φορά στο τηλέφωνο για επιβεβαίωση</string>
+    <string name="refused_skip_app">Το %1$s δεν επιτρέπει παράλειψη αυτή τη στιγμή</string>
+    <string name="refused_skip">Αυτή η εφαρμογή δεν επιτρέπει παράλειψη αυτή τη στιγμή</string>
+    <string name="refused_seek_app">Το %1$s δεν επιτρέπει μετακίνηση αυτή τη στιγμή</string>
+    <string name="refused_seek">Αυτή η εφαρμογή δεν επιτρέπει μετακίνηση αυτή τη στιγμή</string>
+    <string name="tile_resume">Συνέχιση τελευταίας εφαρμογής</string>
+    <string name="tile_resume_hint">Η αναπαραγωγή συνεχίζει την τελευταία εφαρμογή</string>
+    <string name="recent_tile_title">Πρόσφατα</string>
+    <string name="recent_tile_description">Τα τελευταία κομμάτια που ακούσατε, ένα πάτημα για να παίξουν ξανά</string>
+    <string name="recent_tile_empty">Δεν έχει παιχτεί τίποτα ακόμα</string>
+    <string name="recent_tile_play_description">Αναπαραγωγή ξανά: %1$s</string>
+</resources>

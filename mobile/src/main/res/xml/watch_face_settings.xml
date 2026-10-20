@@ -268,6 +268,16 @@
             android:entryValues="@array/wear_progress_layout_values"
             android:layout="@layout/pref_item" />
 
+        <ListPreference
+            android:defaultValue="regular"
+            android:key="wear_progress_weight"
+            android:icon="@drawable/ic_border_color"
+            android:title="@string/setting_wear_progress_weight"
+            android:summary="%s"
+            android:entries="@array/wear_progress_weight_entries"
+            android:entryValues="@array/wear_progress_weight_values"
+            android:layout="@layout/pref_item" />
+
         <!-- Only the Solid ring blends the companion colours, so this is shown/hidden with it by
              WatchFacePrefsFragment.updateProgressGradientVisibility, and the Player editor
              applies the same rule to its chip. -->
@@ -1572,6 +1582,26 @@
             android:layout="@layout/pref_item"
             android:widgetLayout="@layout/pref_widget_color_dot" />
 
+        <ListPreference
+            android:key="wear_aod_night_dim"
+            android:icon="@drawable/ic_dark_mode"
+            android:defaultValue="off"
+            android:title="@string/setting_wear_aod_night_dim"
+            android:summary="%s"
+            android:entries="@array/wear_aod_night_dim_entries"
+            android:entryValues="@array/wear_aod_night_dim_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:key="wear_aod_shift"
+            android:icon="@drawable/ic_open_with"
+            android:defaultValue="standard"
+            android:title="@string/setting_wear_aod_shift"
+            android:summary="%s"
+            android:entries="@array/wear_aod_shift_entries"
+            android:entryValues="@array/wear_aod_shift_values"
+            android:layout="@layout/pref_item" />
+
         <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
             android:defaultValue="100"
             android:key="wear_aod_intensity"
@@ -1704,6 +1734,14 @@
             android:summary="%s"
             android:entries="@array/wear_volume_layout_entries"
             android:entryValues="@array/wear_volume_layout_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.ResettableNumericEditTextPreference
+            android:defaultValue="100"
+            android:key="wear_volume_thickness"
+            android:icon="@drawable/ic_border_color"
+            android:title="@string/setting_wear_volume_thickness"
+            android:summary="@string/setting_wear_volume_thickness_description"
             android:layout="@layout/pref_item" />
 
             <!-- Entries are built in WatchFacePrefsFragment.applySurfaceBackdropEntries by prepending
@@ -1864,6 +1902,41 @@
             android:entryValues="@array/wear_overlay_style_values"
             android:layout="@layout/pref_item" />
 
+        <!-- The rows' outline and their covers' cut, chosen apart from the style above (which is
+             the colours and effects) - see QueueAppearance. Both default to following the style,
+             so a queue nobody touches looks as it always did. The cover picker's entries are
+             rebuilt by WatchFacePrefsFragment.applyQueueCoverShapeEntries from the shape names
+             every face's cover already uses. -->
+        <ListPreference
+            android:key="wear_queue_row_shape"
+            android:icon="@drawable/ic_category"
+            android:defaultValue="follow"
+            android:title="@string/setting_wear_queue_row_shape"
+            android:summary="%s"
+            android:entries="@array/wear_queue_row_shape_entries"
+            android:entryValues="@array/wear_queue_row_shape_values"
+            android:layout="@layout/pref_item" />
+
+        <ListPreference
+            android:key="wear_queue_cover_shape"
+            android:icon="@drawable/ic_album"
+            android:defaultValue="follow"
+            android:title="@string/setting_wear_queue_cover_shape"
+            android:summary="%s"
+            android:entries="@array/wear_cover_shape_entries"
+            android:entryValues="@array/wear_cover_shape_values"
+            android:layout="@layout/pref_item" />
+
+        <!-- Says which of the queue's controls are colours and which are outlines. Shown by the
+             Panels editor's Queue tab; stores nothing. -->
+        <Preference
+            android:key="queue_shape_note"
+            android:icon="@drawable/ic_playlist_play"
+            android:title="@string/queue_shape_note_title"
+            android:summary="@string/queue_shape_note_description"
+            android:selectable="false"
+            android:layout="@layout/pref_item" />
+
         <ListPreference
             android:key="wear_list_row_size"
             android:icon="@drawable/ic_playlist_play"
@@ -1873,6 +1946,14 @@
             android:entries="@array/wear_list_row_size_entries"
             android:entryValues="@array/wear_list_row_size_values"
             android:layout="@layout/pref_item" />
+
+        <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
+            android:defaultValue="false"
+            android:key="wear_queue_dim_played"
+            android:icon="@drawable/ic_playlist_remove"
+            android:title="@string/setting_wear_queue_dim_played"
+            android:summary="@string/setting_wear_queue_dim_played_description"
+            android:layout="@layout/pref_switch_item" />
 
         <!-- Deliberately the same global key as the row in Settings -> Apps (it is not in
              FaceScopedPreferences.SCOPED_KEYS, so the face-scoped data store passes it straight

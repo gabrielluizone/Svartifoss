@@ -718,6 +718,8 @@
         <item>Material (เส้นขอบ)</item>
         <item>ตัวควบคุม AMOLED</item>
         <item>Chrono (นาฬิกาขนาดใหญ่)</item>
+        <item>วงแหวนนาที</item>
+        <item>กรอบหินบะซอลต์</item>
         <item>โปสเตอร์</item>
         <item>สตูดิโอ</item>
         <item>ดื่มด่ำ</item>
@@ -748,6 +750,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">สีจอเปิดตลอดเวลา</string>
     <string-array name="wear_aod_color_entries">

@@ -23,6 +23,8 @@ internal object SettingsSearchTargetResolver {
             key == "notification_timeout" &&
                     !readBoolean("enable_notification_popup", false) ->
                 "enable_notification_popup"
+            key == "wear_volume_haptics" &&
+                    !readBoolean("haptic_feedback", true) -> "haptic_feedback"
             key == "auto_start_apps_blacklist" &&
                     readString("auto_start_mode", "OFF") == "OFF" -> "auto_start_mode"
             else -> null

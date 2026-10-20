@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Spårets slut</string>
+    <string name="quick_sleep_track_end_description">Insomningstimer, pausar när det här spåret slutar. Tryck för att stänga av</string>
+    <string name="queue_position">Spår %1$d av %2$d</string>
+    <string name="progress_screen_speed_description">Uppspelningshastighet %1$s. Tryck för nästa hastighet, håll för finjustering</string>
+    <string name="progress_screen_speed_slower">Långsammare</string>
+    <string name="progress_screen_speed_faster">Snabbare</string>
+    <string name="progress_screen_speed_reset">Normal hastighet</string>
+    <string name="complication_playback_label">Spela upp och pausa</string>
+    <string name="complication_playback_idle">Spela upp</string>
+    <string name="complication_playback_idle_description">Inget spelas. Tryck för att återuppta den senaste appen</string>
+    <string name="complication_playback_play_description">Pausad: %1$s. Tryck för att spela upp</string>
+    <string name="complication_playback_pause_description">Spelas: %1$s. Tryck för att pausa</string>
+    <string name="audio_block_dnd">Telefonen är i Stör ej</string>
+    <string name="audio_block_muted">Telefonens medievolym är avstängd</string>
+    <string name="audio_block_safe_volume">Hålls på en säker nivå. Höj en gång på telefonen för att bekräfta</string>
+    <string name="refused_skip_app">%1$s tillåter inte att hoppa över just nu</string>
+    <string name="refused_skip">Den här appen tillåter inte att hoppa över just nu</string>
+    <string name="refused_seek_app">%1$s tillåter inte att spola just nu</string>
+    <string name="refused_seek">Den här appen tillåter inte att spola just nu</string>
+    <string name="tile_resume">Återuppta den senaste appen</string>
+    <string name="tile_resume_hint">Spela upp återupptar den senaste appen</string>
+    <string name="recent_tile_title">Nyligen spelat</string>
+    <string name="recent_tile_description">Dina senast spelade spår, ett tryck från att spelas igen</string>
+    <string name="recent_tile_empty">Inget spelat ännu</string>
+    <string name="recent_tile_play_description">Spela %1$s igen</string>
+</resources>

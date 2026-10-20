@@ -49,12 +49,13 @@
                 android:id="@+id/panel_editor_backdrop_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:layout_marginTop="6dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 app:icon="@drawable/ic_backdrop_style"
-                tools:text="Follow panel style" />
+                tools:text="Panel background\nFollow panel style" />
 
             <HorizontalScrollView
                 android:id="@+id/panel_editor_global_scroll"
@@ -178,9 +179,10 @@
                 android:id="@+id/panel_editor_surface_backdrop_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:visibility="gone"
                 app:icon="@drawable/ic_backdrop_style"
                 tools:text="Queue background · Follow shared panel appearance"
@@ -204,31 +206,89 @@
                 android:id="@+id/panel_editor_style_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 app:icon="@drawable/ic_progress_style"
                 tools:text="Glass" />
+
+            <!-- The queue's two outline choices, directly under the style they are chosen apart
+                 from. Hidden beside a style they have nothing to act on - see
+                 QueueAppearance.rowShapeApplies / coverShapeApplies. -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_editor_row_shape_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:visibility="gone"
+                app:icon="@drawable/ic_category"
+                tools:text="Follow queue style"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_editor_cover_shape_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:visibility="gone"
+                app:icon="@drawable/ic_album"
+                tools:text="Circle"
+                tools:visibility="visible" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/panel_editor_layout_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:visibility="gone"
                 app:icon="@drawable/ic_tune"
                 tools:text="Edge"
                 tools:visibility="visible" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/panel_editor_thickness_button"
+                style="@style/LyraGestureButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:visibility="gone"
+                app:icon="@drawable/ic_border_color"
+                tools:text="Volume thickness · 100"
+                tools:visibility="visible" />
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/panel_editor_queue_dim_switch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:fontFamily="@font/google_sans"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:textColor="@color/lyra_on_surface"
+                android:textSize="14sp"
+                android:visibility="gone"
+                tools:text="Dim played tracks"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/panel_editor_row_size_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:visibility="gone"
                 app:icon="@drawable/ic_playlist_play"
                 tools:text="Normal"
@@ -251,9 +311,10 @@
                 android:id="@+id/panel_editor_up_next_style_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:visibility="gone"
                 app:icon="@drawable/ic_queue_music"
                 tools:text="Follow panel style"
@@ -263,9 +324,10 @@
                 android:id="@+id/panel_editor_source_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 android:visibility="gone"
                 app:icon="@drawable/ic_joystick"
                 tools:text="Configured actions"

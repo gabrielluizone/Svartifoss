@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Конец трека</string>
+    <string name="quick_sleep_track_end_description">Таймер сна, пауза в конце этого трека. Нажмите, чтобы выключить</string>
+    <string name="queue_position">Трек %1$d из %2$d</string>
+    <string name="progress_screen_speed_description">Скорость воспроизведения %1$s. Нажмите для следующей, удерживайте для точной настройки</string>
+    <string name="progress_screen_speed_slower">Медленнее</string>
+    <string name="progress_screen_speed_faster">Быстрее</string>
+    <string name="progress_screen_speed_reset">Обычная скорость</string>
+    <string name="complication_playback_label">Воспроизведение и пауза</string>
+    <string name="complication_playback_idle">Играть</string>
+    <string name="complication_playback_idle_description">Ничего не воспроизводится. Нажмите, чтобы продолжить последнее приложение</string>
+    <string name="complication_playback_play_description">На паузе: %1$s. Нажмите, чтобы воспроизвести</string>
+    <string name="complication_playback_pause_description">Воспроизводится: %1$s. Нажмите для паузы</string>
+    <string name="audio_block_dnd">На телефоне включён режим «Не беспокоить»</string>
+    <string name="audio_block_muted">Громкость медиа на телефоне выключена</string>
+    <string name="audio_block_safe_volume">Ограничено безопасным уровнем. Увеличьте один раз на телефоне для подтверждения</string>
+    <string name="refused_skip_app">%1$s сейчас не позволяет переключать треки</string>
+    <string name="refused_skip">Это приложение сейчас не позволяет переключать треки</string>
+    <string name="refused_seek_app">%1$s сейчас не позволяет перематывать</string>
+    <string name="refused_seek">Это приложение сейчас не позволяет перематывать</string>
+    <string name="tile_resume">Продолжить последнее приложение</string>
+    <string name="tile_resume_hint">«Играть» продолжает последнее приложение</string>
+    <string name="recent_tile_title">Недавно прослушанное</string>
+    <string name="recent_tile_description">Последние прослушанные треки — одно нажатие, чтобы включить снова</string>
+    <string name="recent_tile_empty">Пока ничего не прослушано</string>
+    <string name="recent_tile_play_description">Включить снова: %1$s</string>
+</resources>

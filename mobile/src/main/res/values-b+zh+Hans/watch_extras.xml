@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">音量条粗细</string>
+    <string name="setting_wear_volume_thickness_description">音量条线条的粗细，为默认值的 50% 到 180%。线条再粗也不会贴到屏幕边缘。</string>
+    <string name="setting_wear_volume_haptics">调节音量时表冠振动</string>
+    <string name="setting_wear_queue_dim_played">调暗已播放的曲目</string>
+    <string name="setting_wear_queue_dim_played_description">调暗已经播放过的条目，让接下来的曲目更醒目。</string>
+    <string name="quick_block_lyric">歌词</string>
+    <string name="quick_block_lyric_description">来自同步歌词的正在演唱的这一行和下一行。在手表上点按即可打开完整歌词。</string>
+    <string name="quick_summary_lyric">当前行和下一行</string>
+    <string name="setting_wear_progress_weight">圆环粗细</string>
+    <string name="setting_wear_aod_night_dim">夜间调暗</string>
+    <string name="aod_control_night_dim">夜间调暗</string>
+    <string name="setting_wear_aod_shift">防烧屏位移</string>
+    <string name="aod_control_shift">防烧屏位移</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>关闭</item>
+        <item>每 5%</item>
+        <item>每 5% 及到达极限时</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>细</item>
+        <item>常规</item>
+        <item>粗</item>
+        <item>特粗</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>关闭</item>
+        <item>夜间 · 22:00–07:00</item>
+        <item>黄昏至黎明 · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>轻微</item>
+        <item>常规</item>
+        <item>宽</item>
+    </string-array>
+</resources>

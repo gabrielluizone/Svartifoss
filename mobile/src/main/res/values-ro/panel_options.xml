@@ -66,6 +66,8 @@
         <item>Trepte</item>
         <item>Bomboană</item>
         <item>Fantomă</item>
+        <item>Undă</item>
+        <item>Riglă</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Margine dublă</item>
@@ -76,6 +78,8 @@
         <item>Cadran central</item>
         <item>Halou superior</item>
         <item>Halou inferior</item>
+        <item>Stâlp central</item>
+        <item>Coloane de bazalt</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Inel dublu</item>
@@ -88,6 +92,9 @@
         <item>Ac</item>
         <item>Alternant</item>
         <item>Scânteie</item>
+        <item>Undă</item>
+        <item>Minutele piesei</item>
+        <item>Celule hexagonale</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Marginea ramei</item>
@@ -101,6 +108,8 @@
         <item>Pistă dublă</item>
         <item>Deschis în stânga</item>
         <item>Deschis în dreapta</item>
+        <item>Arc superior</item>
+        <item>Arc inferior</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Pastilă compactă</item>
@@ -124,6 +133,7 @@
         <item>Cronologie dublă</item>
         <item>Segmente (jos)</item>
         <item>Stivă centrală</item>
+        <item>Undă</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Moale</item>
@@ -155,5 +165,8 @@
         <item>Bulă</item>
         <item>Crom</item>
         <item>Holografic</item>
+        <item>Bazalt</item>
+        <item>Straturi</item>
+        <item>Traseu</item>
     </string-array>
 </resources>

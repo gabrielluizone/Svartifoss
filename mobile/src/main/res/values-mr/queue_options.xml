@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">कॅप्सूलचा आकार</string>
+    <string name="setting_wear_queue_cover_shape">कव्हरचा आकार</string>
+    <string name="wear_queue_shape_follow">रांग शैली वापरा</string>
+    <string name="queue_shape_note_title">शैली आणि आकार</string>
+    <string name="queue_shape_note_description">शैली रंग आणि इफेक्ट ठरवते. कॅप्सूलचा आकार आणि कव्हरचा आकार फक्त बाह्यरेषा बदलतात; रांग शैली वापरा प्रत्येक शैलीची स्वतःची बाह्यरेषा ठेवते.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>कॅप्सूल</item>
+        <item>गोलाकार</item>
+        <item>मऊ कोपरे</item>
+        <item>चौरस</item>
+        <item>पान</item>
+        <item>संवाद बुडबुडा</item>
+        <item>षटकोन</item>
+    </string-array>
+</resources>

@@ -103,7 +103,10 @@ fun PanelReadoutText(
         modifier: Modifier = Modifier,
         /** True while the volume arc is painted in the LIGHT style - see
          *  [PanelReadout.applyLightArcContrast]. */
-        lightArcBehind: Boolean = false
+        lightArcBehind: Boolean = false,
+        /** Runs on the readout once it is styled - the volume screen puts the phone's audio state
+         *  in it this way (see [PanelReadout.applyAudioBlock]). */
+        afterStyle: (TextView) -> Unit = {}
 ) {
     AndroidView(
             modifier = modifier,
@@ -121,6 +124,7 @@ fun PanelReadoutText(
                         view, style, content, accentColor, secondaryColor, themeAccentColor,
                         screenFace, view.resources.displayMetrics.density, typeface)
                 PanelReadout.applyLightArcContrast(view, style, lightArcBehind)
+                afterStyle(view)
             })
 }
 

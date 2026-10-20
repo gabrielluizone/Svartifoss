@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">곡 끝</string>
+    <string name="quick_sleep_track_end_description">수면 타이머, 이 곡이 끝나면 일시중지합니다. 탭하여 끄기</string>
+    <string name="queue_position">%2$d곡 중 %1$d번째</string>
+    <string name="progress_screen_speed_description">재생 속도 %1$s. 탭하면 다음 속도, 길게 누르면 세부 조정</string>
+    <string name="progress_screen_speed_slower">느리게</string>
+    <string name="progress_screen_speed_faster">빠르게</string>
+    <string name="progress_screen_speed_reset">보통 속도</string>
+    <string name="complication_playback_label">재생 및 일시중지</string>
+    <string name="complication_playback_idle">재생</string>
+    <string name="complication_playback_idle_description">재생 중인 항목이 없습니다. 탭하여 마지막 앱 재개</string>
+    <string name="complication_playback_play_description">일시중지됨: %1$s. 탭하여 재생</string>
+    <string name="complication_playback_pause_description">재생 중: %1$s. 탭하여 일시중지</string>
+    <string name="audio_block_dnd">휴대전화가 방해 금지 모드입니다</string>
+    <string name="audio_block_muted">휴대전화 미디어 볼륨이 꺼져 있습니다</string>
+    <string name="audio_block_safe_volume">안전한 수준으로 제한되었습니다. 휴대전화에서 한 번 높여 확인하세요</string>
+    <string name="refused_skip_app">%1$s에서 지금은 건너뛰기를 허용하지 않습니다</string>
+    <string name="refused_skip">이 앱에서 지금은 건너뛰기를 허용하지 않습니다</string>
+    <string name="refused_seek_app">%1$s에서 지금은 탐색을 허용하지 않습니다</string>
+    <string name="refused_seek">이 앱에서 지금은 탐색을 허용하지 않습니다</string>
+    <string name="tile_resume">마지막 앱 재개</string>
+    <string name="tile_resume_hint">재생하면 마지막 앱이 재개됩니다</string>
+    <string name="recent_tile_title">최근 재생</string>
+    <string name="recent_tile_description">최근에 재생한 곡을 탭 한 번으로 다시 재생</string>
+    <string name="recent_tile_empty">아직 재생한 항목이 없습니다</string>
+    <string name="recent_tile_play_description">%1$s 다시 재생</string>
+</resources>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">ピルの形</string>
+    <string name="setting_wear_queue_cover_shape">カバーの形</string>
+    <string name="wear_queue_shape_follow">キューのスタイルに従う</string>
+    <string name="queue_shape_note_title">スタイルと形</string>
+    <string name="queue_shape_note_description">スタイルは色と効果を決めます。ピルの形とカバーの形は輪郭だけを変え、「キューのスタイルに従う」は各スタイル本来の輪郭を保ちます。</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>カプセル</item>
+        <item>丸み</item>
+        <item>ソフトな角</item>
+        <item>正方形</item>
+        <item>リーフ</item>
+        <item>吹き出し</item>
+        <item>六角形</item>
+    </string-array>
+</resources>

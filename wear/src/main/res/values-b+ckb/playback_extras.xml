@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">کۆتایی تراک</string>
+    <string name="quick_sleep_track_end_description">کاتژمێری خەو، کاتێک ئەم تراکە تەواو دەبێت ڕادەگرێت. بۆ کوژاندنەوە دەست لێ بدە</string>
+    <string name="queue_position">تراکی %1$d لە %2$d</string>
+    <string name="progress_screen_speed_description">خێرایی لێدان %1$s. بۆ خێرایی دواتر دەست لێ بدە، بۆ ڕێکخستنی ورد دایبگرە</string>
+    <string name="progress_screen_speed_slower">هێواشتر</string>
+    <string name="progress_screen_speed_faster">خێراتر</string>
+    <string name="progress_screen_speed_reset">خێرایی ئاسایی</string>
+    <string name="complication_playback_label">لێدان و ڕاگرتن</string>
+    <string name="complication_playback_idle">لێدان</string>
+    <string name="complication_playback_idle_description">هیچ شتێک لێ نادرێت. بۆ بەردەوامبوون لە دوایین ئەپ دەست لێ بدە</string>
+    <string name="complication_playback_play_description">ڕاگیراوە: %1$s. بۆ لێدان دەست لێ بدە</string>
+    <string name="complication_playback_pause_description">لێدەدرێت: %1$s. بۆ ڕاگرتن دەست لێ بدە</string>
+    <string name="audio_block_dnd">مۆبایل لە دۆخی بێزارمەکەدایە</string>
+    <string name="audio_block_muted">دەنگی میدیای مۆبایل کوژاوەتەوە</string>
+    <string name="audio_block_safe_volume">لە ئاستێکی سەلامەتدا ڕاگیرا. بۆ پشتڕاستکردنەوە جارێک لە مۆبایلەکە بەرزی بکەرەوە</string>
+    <string name="refused_skip_app">%1$s ئێستا ڕێگە بە تێپەڕاندن نادات</string>
+    <string name="refused_skip">ئەم ئەپە ئێستا ڕێگە بە تێپەڕاندن نادات</string>
+    <string name="refused_seek_app">%1$s ئێستا ڕێگە بە گواستنەوەی شوێن نادات</string>
+    <string name="refused_seek">ئەم ئەپە ئێستا ڕێگە بە گواستنەوەی شوێن نادات</string>
+    <string name="tile_resume">بەردەوامبوون لە دوایین ئەپ</string>
+    <string name="tile_resume_hint">لێدان دوایین ئەپ بەردەوام دەکات</string>
+    <string name="recent_tile_title">دوایین لێدراوەکان</string>
+    <string name="recent_tile_description">دوایین ئەو تراکانەی لێتداون، بە یەک دەستلێدان دووبارە</string>
+    <string name="recent_tile_empty">هێشتا هیچ شتێک لێ نەدراوە</string>
+    <string name="recent_tile_play_description">دووبارە لێدانی %1$s</string>
+</resources>

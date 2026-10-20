@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">ट्रैक का अंत</string>
+    <string name="quick_sleep_track_end_description">स्लीप टाइमर, यह ट्रैक खत्म होने पर रोक देगा। बंद करने के लिए टैप करें</string>
+    <string name="queue_position">ट्रैक %1$d / %2$d</string>
+    <string name="progress_screen_speed_description">प्लेबैक स्पीड %1$s। अगली स्पीड के लिए टैप करें, बारीक समायोजन के लिए दबाकर रखें</string>
+    <string name="progress_screen_speed_slower">धीमा</string>
+    <string name="progress_screen_speed_faster">तेज़</string>
+    <string name="progress_screen_speed_reset">सामान्य स्पीड</string>
+    <string name="complication_playback_label">चलाएं और रोकें</string>
+    <string name="complication_playback_idle">चलाएं</string>
+    <string name="complication_playback_idle_description">कुछ नहीं चल रहा। पिछला ऐप फिर शुरू करने के लिए टैप करें</string>
+    <string name="complication_playback_play_description">रुका हुआ: %1$s। चलाने के लिए टैप करें</string>
+    <string name="complication_playback_pause_description">चल रहा है: %1$s। रोकने के लिए टैप करें</string>
+    <string name="audio_block_dnd">फ़ोन परेशान न करें मोड में है</string>
+    <string name="audio_block_muted">फ़ोन का मीडिया वॉल्यूम बंद है</string>
+    <string name="audio_block_safe_volume">सुरक्षित स्तर पर रोका गया। पुष्टि के लिए फ़ोन पर एक बार बढ़ाएं</string>
+    <string name="refused_skip_app">%1$s अभी स्किप करने नहीं दे रहा</string>
+    <string name="refused_skip">यह ऐप अभी स्किप करने नहीं दे रहा</string>
+    <string name="refused_seek_app">%1$s अभी आगे-पीछे करने नहीं दे रहा</string>
+    <string name="refused_seek">यह ऐप अभी आगे-पीछे करने नहीं दे रहा</string>
+    <string name="tile_resume">पिछला ऐप फिर शुरू करें</string>
+    <string name="tile_resume_hint">चलाएं पिछला ऐप फिर शुरू करता है</string>
+    <string name="recent_tile_title">हाल ही में चलाए गए</string>
+    <string name="recent_tile_description">आपके पिछले चलाए ट्रैक, फिर चलाने से बस एक टैप दूर</string>
+    <string name="recent_tile_empty">अभी तक कुछ नहीं चला</string>
+    <string name="recent_tile_play_description">%1$s फिर से चलाएं</string>
+</resources>

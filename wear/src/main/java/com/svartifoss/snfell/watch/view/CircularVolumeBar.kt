@@ -12,7 +12,12 @@ import android.util.AttributeSet
 import android.graphics.SweepGradient
 import android.view.MotionEvent
 import androidx.core.graphics.ColorUtils
+import android.graphics.Path
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.MeterShape
+import com.svartifoss.snfell.common.MeterTrack
+import com.svartifoss.snfell.common.VolumeFx
+import com.svartifoss.snfell.common.WavePhaseClock
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.hypot
@@ -74,7 +79,11 @@ enum class VolumeStyle {
     /** Alternating pink and amber candy rail. */
     CANDY,
     /** Nearly transparent track with a fine white value trace. */
-    GHOST;
+    GHOST,
+    /** A wave that grows with the level: nearly straight when quiet, sharply bent when loud. */
+    WAVE,
+    /** A graduated scale - a mark every 5 percent, a longer one every 25 - with a bright pointer. */
+    RULER;
 
     companion object {
         fun fromPref(value: String?): VolumeStyle = when (value) {
@@ -103,6 +112,8 @@ enum class VolumeStyle {
             "steps" -> STEPS
             "candy" -> CANDY
             "ghost" -> GHOST
+            "wave" -> WAVE
+            "ruler" -> RULER
             else -> GLASS
         }
     }
@@ -150,7 +161,11 @@ enum class VolumeLayout {
     /** Compact arc floating above the player controls. */
     HALO_TOP,
     /** Compact arc floating below the player controls. */
-    HALO_BOTTOM;
+    HALO_BOTTOM,
+    /** A centred upright capsule, wider than the side meters and filling bottom-to-top. */
+    PILLAR,
+    /** Seven hexagonal basalt columns of uneven height, lit from the quiet end. */
+    BASALT;
 
     companion object {
         fun fromPref(value: String?): VolumeLayout = when (value) {
@@ -169,6 +184,8 @@ enum class VolumeLayout {
             "dial" -> DIAL
             "halo_top" -> HALO_TOP
             "halo_bottom" -> HALO_BOTTOM
+            "pillar" -> PILLAR
+            "basalt" -> BASALT
             else -> EDGE
         }
     }
@@ -215,11 +232,35 @@ class CircularVolumeBar : android.view.View {
     private val meterBottomBounds = RectF()
     private val verticalLeftBounds = RectF()
     private val verticalRightBounds = RectF()
+    private val pillarBounds = RectF()
+    private val basaltBounds = RectF()
+    private val scratchPath = Path()
+
+    /** How far the [VolumeStyle.WAVE] crests have travelled - see [WavePhaseClock]. */
+    private val waveClock = WavePhaseClock()
+    private val wavePhase: Float get() = waveClock.phase
     private val touchBand = resources.getDimension(R.dimen.seek_bar_touch_band)
 
-    private val baseStroke = resources.getDimension(R.dimen.seek_bar_width)
+    private val nominalStroke = resources.getDimension(R.dimen.seek_bar_width)
+
+    /** Stroke weight as a percentage of the default (50-180); see [MeterShape.thicknessScale]. */
+    var thickness: Int = MeterShape.THICKNESS_DEFAULT
+        set(value) {
+            val clamped = value.coerceIn(MeterShape.THICKNESS_MIN, MeterShape.THICKNESS_MAX)
+            if (field != clamped) {
+                field = clamped
+                // The arc is inset by the fattest stroke it can draw, so a new weight can move it.
+                requestLayout()
+                invalidate()
+            }
+        }
+
+    private val baseStroke: Float get() = nominalStroke * MeterShape.thicknessScale(thickness)
+
     // The bounds inset uses the fattest style's stroke so no style ever clips at the screen edge.
-    private val maxStroke = baseStroke * 1.7f
+    // It only ever grows with the setting: thinning the stroke must not also move the arc inwards.
+    private val maxStroke: Float
+        get() = nominalStroke * 1.7f * MeterShape.reservedScale(thickness)
     private val glassTrackColor = resources.getColor(R.color.music_screen_volume_bar_background_color, null)
 
     // The accent (album/theme) color, set via progressColor. Kept in its own field so per-draw
@@ -324,7 +365,8 @@ class CircularVolumeBar : android.view.View {
                 measuredHeight / 2f + dialSize / 2f)
 
         val meterWidth = min(measuredWidth * .68f, 132f * density)
-        val meterHeight = 11f * density
+        // The slim meters take the stroke setting too, so "thicker" means the same on every layout.
+        val meterHeight = 11f * density * MeterShape.thicknessScale(thickness)
         val meterY = measuredHeight / 2f + 29f * density
         meterBounds.set(
                 measuredWidth / 2f - meterWidth / 2f,
@@ -360,11 +402,42 @@ class CircularVolumeBar : android.view.View {
                 verticalCenterY - verticalHeight / 2f,
                 measuredWidth - verticalInset + verticalWidth / 2f,
                 verticalCenterY + verticalHeight / 2f)
+
+        val pillarWidth = MeterShape.PILLAR_WIDTH_DP * density * MeterShape.thicknessScale(thickness)
+        val pillarHeight = min(
+                measuredHeight * MeterShape.PILLAR_HEIGHT_FRACTION,
+                MeterShape.PILLAR_HEIGHT_DP * density)
+        val pillarCenterX = measuredWidth / 2f + MeterShape.PILLAR_OFFSET_X_DP * density
+        pillarBounds.set(
+                pillarCenterX - pillarWidth / 2f,
+                verticalCenterY - pillarHeight / 2f,
+                pillarCenterX + pillarWidth / 2f,
+                verticalCenterY + pillarHeight / 2f)
+
+        val basaltWidth = min(
+                measuredWidth * MeterShape.BASALT_WIDTH_FRACTION,
+                MeterShape.BASALT_WIDTH_DP * density)
+        val basaltBottom = measuredHeight / 2f + MeterShape.BASALT_BOTTOM_OFFSET_DP * density
+        basaltBounds.set(
+                measuredWidth / 2f - basaltWidth / 2f,
+                basaltBottom - MeterShape.BASALT_HEIGHT_DP * density,
+                measuredWidth / 2f + basaltWidth / 2f,
+                basaltBottom)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
+        // A wave bar keeps travelling for as long as it is on screen - the volume panel is only ever
+        // up while somebody is adjusting - and schedules nothing otherwise, so any other style, and
+        // a hidden bar, cost no frames.
+        val waveMoves = barStyle == VolumeStyle.WAVE && isShown && alpha > 0.01f
+        waveClock.advance(waveMoves, android.os.SystemClock.uptimeMillis())
+        drawVolume(canvas)
+        if (waveMoves) postInvalidateDelayed(WavePhaseClock.FRAME_MS)
+    }
+
+    private fun drawVolume(canvas: Canvas) {
         when (barLayout) {
             VolumeLayout.METER,
             VolumeLayout.METER_TOP,
@@ -373,8 +446,19 @@ class CircularVolumeBar : android.view.View {
                 return
             }
             VolumeLayout.VERTICAL_LEFT,
-            VolumeLayout.VERTICAL_RIGHT -> {
+            VolumeLayout.VERTICAL_RIGHT,
+            VolumeLayout.PILLAR -> {
                 drawLinearMeter(canvas, activeVerticalMeterBounds(), vertical = true)
+                return
+            }
+            VolumeLayout.BASALT -> {
+                VolumeFx.basalt(
+                        canvas,
+                        basaltBounds.left, basaltBounds.top, basaltBounds.right, basaltBounds.bottom,
+                        volume, meterTrackColor(), meterFillColor(),
+                        MeterShape.BASALT_OUTLINE_COLOR,
+                        MeterShape.BASALT_OUTLINE_DP * resources.displayMetrics.density,
+                        fillPaint, scratchPath)
                 return
             }
             else -> Unit
@@ -469,11 +553,38 @@ class CircularVolumeBar : android.view.View {
             VolumeStyle.GHOST ->
                 drawArc(canvas, baseStroke * .42f, Paint.Cap.ROUND,
                         0x16FFFFFF, 0xD9FFFFFF.toInt())
+            VolumeStyle.WAVE -> activeArcGeometries().forEach { geometry ->
+                VolumeFx.wave(
+                        canvas, arcTrack(geometry), volume, baseStroke * 0.95f, baseStroke * 0.58f,
+                        resources.displayMetrics.density,
+                        0x35FFFFFF, accentColorInt, null, true, strokePaint, scratchPath,
+                        phase = wavePhase)
+            }
+            VolumeStyle.RULER -> activeArcGeometries().forEach { geometry ->
+                VolumeFx.ruler(
+                        canvas, arcTrack(geometry), volume, baseStroke * 1.4f,
+                        measuredWidth / 2f, measuredHeight / 2f,
+                        0x40FFFFFF, accentColorInt, Color.WHITE, strokePaint, scratchPath)
+            }
         }
 
         if (barLayout == VolumeLayout.DIAL) {
             drawDialNeedle(canvas)
         }
+    }
+
+    private fun arcTrack(geometry: ArcGeometry): MeterTrack = MeterTrack.Arc(
+            geometry.bounds.centerX(),
+            geometry.bounds.centerY(),
+            geometry.bounds.width() / 2f,
+            geometry.start,
+            geometry.sweep)
+
+    /** The straight track of a linear meter, from its quiet end to its loud end. */
+    private fun lineTrack(bounds: RectF, vertical: Boolean): MeterTrack = if (vertical) {
+        MeterTrack.Line(bounds.centerX(), bounds.bottom, bounds.centerX(), bounds.top)
+    } else {
+        MeterTrack.Line(bounds.left, bounds.centerY(), bounds.right, bounds.centerY())
     }
 
     /** Vertical gradient through real tertiary/primary/secondary album-art swatches. */
@@ -805,34 +916,60 @@ class CircularVolumeBar : android.view.View {
     private fun activeHorizontalMeterBounds(): RectF = when (barLayout) {
         VolumeLayout.METER_TOP -> meterTopBounds
         VolumeLayout.METER_BOTTOM -> meterBottomBounds
+        VolumeLayout.BASALT -> basaltBounds
         else -> meterBounds
     }
 
-    private fun activeVerticalMeterBounds(): RectF =
-            if (barLayout == VolumeLayout.VERTICAL_RIGHT) {
-                verticalRightBounds
-            } else {
-                verticalLeftBounds
-            }
+    private fun activeVerticalMeterBounds(): RectF = when (barLayout) {
+        VolumeLayout.VERTICAL_RIGHT -> verticalRightBounds
+        VolumeLayout.PILLAR -> pillarBounds
+        else -> verticalLeftBounds
+    }
+
+    /** The unfilled part of a linear meter, per style. Shared with the basalt columns. */
+    private fun meterTrackColor(): Int = when (barStyle) {
+        VolumeStyle.LIGHT -> 0x88CCCCCC.toInt()
+        VolumeStyle.TERMINAL -> ColorUtils.setAlphaComponent(TERMINAL_GREEN, 0x40)
+        VolumeStyle.DUOTONE -> tonal(secondaryColorInt, .30f)
+        VolumeStyle.TONAL -> tonal(accentColorInt, .22f)
+        VolumeStyle.GHOST -> 0x16FFFFFF
+        else -> 0x35FFFFFF
+    }
+
+    /** The filled part of a linear meter, per style. Shared with the basalt columns. */
+    private fun meterFillColor(): Int = when (barStyle) {
+        VolumeStyle.MONO -> 0xFFE0E0E0.toInt()
+        VolumeStyle.CONTRAST -> 0xFFFFFFFF.toInt()
+        VolumeStyle.TERMINAL -> TERMINAL_GREEN
+        VolumeStyle.TONAL -> tonal(accentColorInt, .72f)
+        VolumeStyle.GHOST -> 0xD9FFFFFF.toInt()
+        else -> accentColorInt
+    }
 
     /** Linear compositions use the same style vocabulary in either orientation. Vertical meters
      * fill bottom-to-top, while horizontal ones keep the established left-to-right direction. */
     private fun drawLinearMeter(canvas: Canvas, bounds: RectF, vertical: Boolean) {
-        val trackColor = when (barStyle) {
-            VolumeStyle.LIGHT -> 0x88CCCCCC.toInt()
-            VolumeStyle.TERMINAL -> ColorUtils.setAlphaComponent(TERMINAL_GREEN, 0x40)
-            VolumeStyle.DUOTONE -> tonal(secondaryColorInt, .30f)
-            VolumeStyle.TONAL -> tonal(accentColorInt, .22f)
-            VolumeStyle.GHOST -> 0x16FFFFFF
-            else -> 0x35FFFFFF
-        }
-        val fillColor = when (barStyle) {
-            VolumeStyle.MONO -> 0xFFE0E0E0.toInt()
-            VolumeStyle.CONTRAST -> 0xFFFFFFFF.toInt()
-            VolumeStyle.TERMINAL -> TERMINAL_GREEN
-            VolumeStyle.TONAL -> tonal(accentColorInt, .72f)
-            VolumeStyle.GHOST -> 0xD9FFFFFF.toInt()
-            else -> accentColorInt
+        val trackColor = meterTrackColor()
+        val fillColor = meterFillColor()
+
+        val thicknessPx = min(bounds.width(), bounds.height())
+        when (barStyle) {
+            VolumeStyle.WAVE -> {
+                VolumeFx.wave(
+                        canvas, lineTrack(bounds, vertical), volume, thicknessPx * .28f,
+                        thicknessPx * .4f, resources.displayMetrics.density,
+                        trackColor, fillColor, null, false, strokePaint, scratchPath,
+                        phase = wavePhase)
+                return
+            }
+            VolumeStyle.RULER -> {
+                VolumeFx.ruler(
+                        canvas, lineTrack(bounds, vertical), volume, thicknessPx * 1.1f,
+                        measuredWidth / 2f, measuredHeight / 2f,
+                        trackColor, fillColor, Color.WHITE, strokePaint, scratchPath)
+                return
+            }
+            else -> Unit
         }
 
         when (barStyle) {
@@ -1164,11 +1301,13 @@ class CircularVolumeBar : android.view.View {
         when (barLayout) {
             VolumeLayout.METER,
             VolumeLayout.METER_TOP,
-            VolumeLayout.METER_BOTTOM ->
+            VolumeLayout.METER_BOTTOM,
+            VolumeLayout.BASALT ->
                 return handleLinearMeterTouch(
                         event, activeHorizontalMeterBounds(), vertical = false)
             VolumeLayout.VERTICAL_LEFT,
-            VolumeLayout.VERTICAL_RIGHT ->
+            VolumeLayout.VERTICAL_RIGHT,
+            VolumeLayout.PILLAR ->
                 return handleLinearMeterTouch(
                         event, activeVerticalMeterBounds(), vertical = true)
             else -> Unit

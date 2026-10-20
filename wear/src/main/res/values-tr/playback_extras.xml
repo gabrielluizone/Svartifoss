@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Parça sonu</string>
+    <string name="quick_sleep_track_end_description">Uyku zamanlayıcısı, bu parça bitince duraklatır. Kapatmak için dokunun</string>
+    <string name="queue_position">Parça %1$d / %2$d</string>
+    <string name="progress_screen_speed_description">Oynatma hızı %1$s. Sonraki hız için dokunun, ince ayar için basılı tutun</string>
+    <string name="progress_screen_speed_slower">Daha yavaş</string>
+    <string name="progress_screen_speed_faster">Daha hızlı</string>
+    <string name="progress_screen_speed_reset">Normal hız</string>
+    <string name="complication_playback_label">Oynat ve duraklat</string>
+    <string name="complication_playback_idle">Oynat</string>
+    <string name="complication_playback_idle_description">Hiçbir şey çalmıyor. Son uygulamayı sürdürmek için dokunun</string>
+    <string name="complication_playback_play_description">Duraklatıldı: %1$s. Oynatmak için dokunun</string>
+    <string name="complication_playback_pause_description">Çalıyor: %1$s. Duraklatmak için dokunun</string>
+    <string name="audio_block_dnd">Telefon Rahatsız Etmeyin modunda</string>
+    <string name="audio_block_muted">Telefonun medya sesi kapalı</string>
+    <string name="audio_block_safe_volume">Güvenli seviyede tutuldu. Onaylamak için telefonda bir kez açın</string>
+    <string name="refused_skip_app">%1$s şu anda atlamaya izin vermiyor</string>
+    <string name="refused_skip">Bu uygulama şu anda atlamaya izin vermiyor</string>
+    <string name="refused_seek_app">%1$s şu anda sarmaya izin vermiyor</string>
+    <string name="refused_seek">Bu uygulama şu anda sarmaya izin vermiyor</string>
+    <string name="tile_resume">Son uygulamayı sürdür</string>
+    <string name="tile_resume_hint">Oynat son uygulamayı sürdürür</string>
+    <string name="recent_tile_title">Son çalınanlar</string>
+    <string name="recent_tile_description">Son dinlediğiniz parçalar, yeniden çalmaya bir dokunuş uzaklıkta</string>
+    <string name="recent_tile_empty">Henüz bir şey çalınmadı</string>
+    <string name="recent_tile_play_description">%1$s parçasını yeniden çal</string>
+</resources>

@@ -52,7 +52,8 @@ import timber.log.Timber
 /**
  * Glanceable quick-control Tile: shows the current track + artist, play/pause and skip prev/next
  * buttons plus a slimmer volume row, without opening the app. Tapping the text opens
- * Svartifoss on the watch.
+ * Svartifoss on the watch. With nothing playing it offers to resume the last app, beside opening
+ * this one.
  *
  * The Tile is a pure proxy like [com.svartifoss.snfell.watch.communication.WatchMediaSession]:
  * it reads the latest music-state [androidx.wear.protolayout] DataItem the phone already publishes,
@@ -228,7 +229,7 @@ class MediaTileService : TileService() {
         val artist = if (hasMusic) {
             displayArtist
         } else {
-            context.getString(com.svartifoss.snfell.R.string.tile_open_app)
+            context.getString(com.svartifoss.snfell.R.string.tile_resume_hint)
         }
         val playing = hasMusic && (state!!.playing xor flipPlaying)
 
@@ -345,11 +346,31 @@ class MediaTileService : TileService() {
             )
             .build()
 
+        // With nothing playing, play is still worth a button: the phone answers it by resuming
+        // the app that played last (see MusicService's no-session play), which is usually what
+        // someone reaching for this Tile wants - opening the app only to press play there is the
+        // longer way round. Opening the app stays beside it, secondary.
+        val resumeButton = Button.Builder(context, Clickable.Builder()
+                .setId(ID_PLAY_PAUSE)
+                .setOnClick(ActionBuilders.LoadAction.Builder().build())
+                .build())
+            .setIconContent(ICON_PLAY)
+            .setContentDescription(context.getString(com.svartifoss.snfell.R.string.tile_resume))
+            .setButtonColors(ButtonColors(accent, onAccent))
+            .setSize(ButtonDefaults.LARGE_SIZE)
+            .build()
         val openAppButton = Button.Builder(context, openAppClickable)
             .setIconContent(ICON_OPEN_APP)
             .setContentDescription(context.getString(com.svartifoss.snfell.R.string.tile_open_app))
-            .setButtonColors(ButtonColors(accent, onAccent))
-            .setSize(ButtonDefaults.LARGE_SIZE)
+            .setButtonColors(ButtonColors(WatchTheme.SURFACE_DARK, WatchTheme.ON_SURFACE))
+            .setSize(ButtonDefaults.DEFAULT_SIZE)
+            .build()
+        val idleRow = Row.Builder()
+            .setWidth(wrap())
+            .setVerticalAlignment(LayoutElementBuilders.VERTICAL_ALIGN_CENTER)
+            .addContent(resumeButton)
+            .addContent(Spacer.Builder().setWidth(dp(8f)).build())
+            .addContent(openAppButton)
             .build()
 
         val contentColumn = Column.Builder()
@@ -363,7 +384,7 @@ class MediaTileService : TileService() {
                     addContent(Spacer.Builder().setHeight(dp(5f)).build())
                     addContent(volumeRow)
                 } else {
-                    addContent(openAppButton)
+                    addContent(idleRow)
                 }
             }
             .build()

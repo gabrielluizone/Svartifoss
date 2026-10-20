@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Tloušťka ukazatele hlasitosti</string>
+    <string name="setting_wear_volume_thickness_description">Tloušťka čáry ukazatele hlasitosti, od 50 % do 180 % výchozí hodnoty. I silnější čáry zůstávají v bezpečné vzdálenosti od okraje.</string>
+    <string name="setting_wear_volume_haptics">Vibrace korunky u hlasitosti</string>
+    <string name="setting_wear_queue_dim_played">Ztlumit přehrané skladby</string>
+    <string name="setting_wear_queue_dim_played_description">Ztlumí položky, které už hrály, aby vynikly ty, které teprve přijdou.</string>
+    <string name="quick_block_lyric">Text</string>
+    <string name="quick_block_lyric_description">Právě zpívaný řádek a ten následující ze synchronizovaného textu. Klepnutím na hodinkách otevřete celý text.</string>
+    <string name="quick_summary_lyric">Aktuální a další řádek</string>
+    <string name="setting_wear_progress_weight">Tloušťka prstence</string>
+    <string name="setting_wear_aod_night_dim">Noční ztlumení</string>
+    <string name="aod_control_night_dim">Noční ztlumení</string>
+    <string name="setting_wear_aod_shift">Posun proti vypálení</string>
+    <string name="aod_control_shift">Posun proti vypálení</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Vypnuto</item>
+        <item>Každých 5 %</item>
+        <item>Každých 5 % a na hranicích</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Tenký</item>
+        <item>Běžný</item>
+        <item>Silný</item>
+        <item>Velmi silný</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Vypnuto</item>
+        <item>Noc · 22:00–07:00</item>
+        <item>Od soumraku do úsvitu · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Jemný</item>
+        <item>Běžný</item>
+        <item>Široký</item>
+    </string-array>
+</resources>

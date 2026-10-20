@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The phone-side name of the "Audio output on phone" action. Its own file for the reason the watch's playback_extras.xml is. -->
+<resources>
+    <string name="action_open_phone_audio_output">Telefonun ses çıkışı</string>
+</resources>

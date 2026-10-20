@@ -66,6 +66,8 @@
         <item>Schody</item>
         <item>Bonbón</item>
         <item>Duch</item>
+        <item>Vlna</item>
+        <item>Pravítko</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Dvojitý okraj</item>
@@ -76,6 +78,8 @@
         <item>Středový ciferník</item>
         <item>Horní halo</item>
         <item>Spodní halo</item>
+        <item>Střední sloup</item>
+        <item>Čedičové sloupy</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Dvojitý prstenec</item>
@@ -88,6 +92,9 @@
         <item>Jehla</item>
         <item>Střídavé</item>
         <item>Jiskra</item>
+        <item>Vlna</item>
+        <item>Minuty skladby</item>
+        <item>Šestiúhelníkové buňky</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Okraj lunety</item>
@@ -101,6 +108,8 @@
         <item>Dvojitá stopa</item>
         <item>Otevřít vlevo</item>
         <item>Otevřít vpravo</item>
+        <item>Horní oblouk</item>
+        <item>Dolní oblouk</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Kompaktní pilulka</item>
@@ -124,6 +133,7 @@
         <item>Dvojitá časová osa</item>
         <item>Segmenty (dole)</item>
         <item>Středový zásobník</item>
+        <item>Vlna</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Jemný</item>
@@ -155,5 +165,8 @@
         <item>Bublina</item>
         <item>Chrom</item>
         <item>Holografický</item>
+        <item>Čedič</item>
+        <item>Vrstvy</item>
+        <item>Trasa</item>
     </string-array>
 </resources>

@@ -66,6 +66,8 @@
         <item>Anak tangga</item>
         <item>Permen</item>
         <item>Hantu</item>
+        <item>Gelombang</item>
+        <item>Penggaris</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Tepi ganda</item>
@@ -76,6 +78,8 @@
         <item>Dial tengah</item>
         <item>Halo atas</item>
         <item>Halo bawah</item>
+        <item>Pilar tengah</item>
+        <item>Kolom basal</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Cincin ganda</item>
@@ -88,6 +92,9 @@
         <item>Jarum</item>
         <item>Berselang-seling</item>
         <item>Percikan</item>
+        <item>Gelombang</item>
+        <item>Menit lagu</item>
+        <item>Sel heksagon</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Tepi bezel</item>
@@ -101,6 +108,8 @@
         <item>Jalur ganda</item>
         <item>Buka di kiri</item>
         <item>Buka di kanan</item>
+        <item>Busur atas</item>
+        <item>Busur bawah</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Pil ringkas</item>
@@ -124,6 +133,7 @@
         <item>Linimasa kembar</item>
         <item>Segmen (bawah)</item>
         <item>Tumpukan tengah</item>
+        <item>Gelombang</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Lembut</item>
@@ -155,5 +165,8 @@
         <item>Gelembung</item>
         <item>Krom</item>
         <item>Holografik</item>
+        <item>Basal</item>
+        <item>Strata</item>
+        <item>Rute</item>
     </string-array>
 </resources>

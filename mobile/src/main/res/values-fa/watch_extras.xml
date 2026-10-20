@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">ضخامت نوار صدا</string>
+    <string name="setting_wear_volume_thickness_description">ضخامت خط نوار صدا، از 50٪ تا 180٪ حالت پیش‌فرض. خط‌های ضخیم‌تر هم از لبه صفحه فاصله می‌گیرند.</string>
+    <string name="setting_wear_volume_haptics">لرزش تاج هنگام تنظیم صدا</string>
+    <string name="setting_wear_queue_dim_played">کم‌رنگ کردن آهنگ‌های پخش‌شده</string>
+    <string name="setting_wear_queue_dim_played_description">آهنگ‌هایی را که پخش شده‌اند کم‌رنگ می‌کند تا آهنگ‌های بعدی بهتر دیده شوند.</string>
+    <string name="quick_block_lyric">متن ترانه</string>
+    <string name="quick_block_lyric_description">خطی که در حال خوانده شدن است و خط بعدی، از متن همگام‌شده. با ضربه زدن روی آن در ساعت، کل متن باز می‌شود.</string>
+    <string name="quick_summary_lyric">خط فعلی و خط بعدی</string>
+    <string name="setting_wear_progress_weight">ضخامت حلقه</string>
+    <string name="setting_wear_aod_night_dim">کم‌نور شبانه</string>
+    <string name="aod_control_night_dim">کم‌نور شبانه</string>
+    <string name="setting_wear_aod_shift">جابه‌جایی ضد سوختگی</string>
+    <string name="aod_control_shift">جابه‌جایی ضد سوختگی</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>خاموش</item>
+        <item>هر 5٪</item>
+        <item>هر 5٪ و در حدود</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>نازک</item>
+        <item>معمولی</item>
+        <item>ضخیم</item>
+        <item>بسیار ضخیم</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>خاموش</item>
+        <item>شب · 22:00–07:00</item>
+        <item>از غروب تا سپیده‌دم · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>ملایم</item>
+        <item>معمولی</item>
+        <item>گسترده</item>
+    </string-array>
+</resources>

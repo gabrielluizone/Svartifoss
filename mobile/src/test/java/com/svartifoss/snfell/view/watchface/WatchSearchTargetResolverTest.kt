@@ -238,6 +238,48 @@ class WatchSearchTargetResolverTest {
     }
 
     @Test
+    fun `volume thickness leads to the layout while the fixed-size basalt columns are chosen`() {
+        assertRedirect(
+                resolve(
+                        section = WatchFacePrefsFragment.SECTION_PANELS,
+                        key = "wear_volume_thickness",
+                        strings = mapOf("wear_volume_layout" to "basalt")),
+                WatchFacePrefsFragment.SECTION_PANELS,
+                "wear_volume_layout")
+        assertFalse(resolve(
+                section = WatchFacePrefsFragment.SECTION_PANELS,
+                key = "wear_volume_thickness",
+                strings = mapOf("wear_volume_layout" to "pillar")).redirected)
+    }
+
+    @Test
+    fun `the queue's outline choices lead to its style where that style cannot show them`() {
+        assertRedirect(
+                resolve(
+                        section = WatchFacePrefsFragment.SECTION_PANELS,
+                        key = "wear_queue_row_shape",
+                        strings = mapOf("wear_queue_style" to "minimal")),
+                WatchFacePrefsFragment.SECTION_PANELS,
+                "wear_queue_style")
+        assertRedirect(
+                resolve(
+                        section = WatchFacePrefsFragment.SECTION_PANELS,
+                        key = "wear_queue_cover_shape",
+                        strings = mapOf("wear_queue_style" to "cover")),
+                WatchFacePrefsFragment.SECTION_PANELS,
+                "wear_queue_style")
+        // Cover Blur keeps its thumbnail, and every other style draws an outline.
+        assertFalse(resolve(
+                section = WatchFacePrefsFragment.SECTION_PANELS,
+                key = "wear_queue_cover_shape",
+                strings = mapOf("wear_queue_style" to "cover_blur")).redirected)
+        assertFalse(resolve(
+                section = WatchFacePrefsFragment.SECTION_PANELS,
+                key = "wear_queue_row_shape",
+                strings = mapOf("wear_queue_style" to "route")).redirected)
+    }
+
+    @Test
     fun `progress appearance leads to edge progress control when both edge features are off`() {
         val unavailable = mapOf(
                 "wear_edge_progress_visible" to false,

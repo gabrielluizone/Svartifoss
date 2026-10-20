@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">צורת הקפסולה</string>
+    <string name="setting_wear_queue_cover_shape">צורת העטיפה</string>
+    <string name="wear_queue_shape_follow">לפי סגנון התור</string>
+    <string name="queue_shape_note_title">סגנון וצורות</string>
+    <string name="queue_shape_note_description">הסגנון קובע את הצבעים והאפקטים. צורת הקפסולה וצורת העטיפה משנות רק את קווי המתאר; ״לפי סגנון התור״ שומר על אלה של כל סגנון.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>קפסולה</item>
+        <item>מעוגלת</item>
+        <item>פינות רכות</item>
+        <item>מרובעת</item>
+        <item>עלה</item>
+        <item>בועת דיבור</item>
+        <item>משושה</item>
+    </string-array>
+</resources>

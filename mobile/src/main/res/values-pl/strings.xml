@@ -724,6 +724,8 @@
         <item>Material (kontur)</item>
         <item>Sterowanie AMOLED</item>
         <item>Chrono (duży zegar)</item>
+        <item>Pierścień minut</item>
+        <item>Rama bazaltowa</item>
         <item>Plakat</item>
         <item>Studio</item>
         <item>Immersyjny</item>
@@ -754,6 +756,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Kolor zawsze włączonego ekranu</string>
     <string-array name="wear_aod_color_entries">

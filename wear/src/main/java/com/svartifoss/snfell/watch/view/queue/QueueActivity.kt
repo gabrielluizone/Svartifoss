@@ -15,6 +15,7 @@ import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.QueueRowShape
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.watch.theme.LocalWatchUiFontFamily
 import com.svartifoss.snfell.watch.theme.LocalWatchTrackTextStyles
@@ -98,6 +99,15 @@ class QueueActivity : ComponentActivity() {
                 ThemeAppearance.resolve(prefs)
         ))
 
+        // The outline and the cover cut are scoped like the style they go with, so a saved theme
+        // carries all three; see QueueAppearance for how they are reconciled.
+        val rowShape = QueueRowShape.fromPreference(FaceScopedPreferences.getString(
+                prefs, MiscPreferences.WEAR_QUEUE_ROW_SHAPE, appearanceContext))
+        val coverShape = FaceScopedPreferences.getString(
+                prefs, MiscPreferences.WEAR_QUEUE_COVER_SHAPE, appearanceContext)
+        // Behaviour rather than appearance, and global - a Custom theme's snapshot never holds it.
+        val dimPlayed = prefs.getBoolean(MiscPreferences.WEAR_QUEUE_DIM_PLAYED.key, false)
+
         val trackTextStyles = watchTrackTextStyles(prefs)
         setContent {
             // No default value: null means the phone hasn't answered the queue request yet, which
@@ -109,6 +119,7 @@ class QueueActivity : ComponentActivity() {
             val loadingMore by viewModel.loadingMore.observeAsState(false)
             val isHistoryFallback by viewModel.isHistoryFallback.observeAsState(false)
             val artwork by viewModel.artwork.observeAsState()
+            val position by viewModel.position.observeAsState()
 
             // The configured ground is accent-dependent. QueueViewModel installs the current
             // cached palette synchronously, so this first loading frame is normally already in
@@ -140,6 +151,7 @@ class QueueActivity : ComponentActivity() {
                     tertiaryAccentColor = Color(resolvedTriad.tertiary),
                     nowPlayingTitle = nowPlaying?.title,
                     nowPlayingArtist = nowPlaying?.artist,
+                    queuePosition = position,
                     onItemClick = { entryId ->
                         viewModel.selectItem(entryId)
                         safeFinish()
@@ -162,6 +174,9 @@ class QueueActivity : ComponentActivity() {
                     onDismiss = { safeFinish() },
                     style = queueStyle,
                     rowSize = rowSize,
+                    rowShape = rowShape,
+                    coverShape = coverShape,
+                    dimPlayed = dimPlayed,
                     canLoadMore = canLoadMore,
                     loadingMore = loadingMore,
                     isHistoryFallback = isHistoryFallback,

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        The queue's outline choices, apart from its style - see QueueAppearance. Kept out of
+        strings.xml so they can be translated as a set; an untranslated locale falls back to these.
+    -->
+    <string name="setting_wear_queue_row_shape">Pill shape</string>
+    <string name="setting_wear_queue_cover_shape">Cover shape</string>
+    <string name="wear_queue_shape_follow">Follow queue style</string>
+    <string name="queue_shape_note_title">Style and shapes</string>
+    <string name="queue_shape_note_description">The style sets the colors and effects. Pill shape and Cover shape change only the outlines; Follow queue style keeps each style\'s own.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Capsule</item>
+        <item>Rounded</item>
+        <item>Soft corners</item>
+        <item>Square</item>
+        <item>Leaf</item>
+        <item>Speech bubble</item>
+        <item>Hexagon</item>
+    </string-array>
+    <string-array name="wear_queue_row_shape_values" translatable="false">
+        <item>follow</item>
+        <item>pill</item>
+        <item>rounded</item>
+        <item>soft</item>
+        <item>square</item>
+        <item>leaf</item>
+        <item>bubble</item>
+        <item>hexagon</item>
+    </string-array>
+</resources>

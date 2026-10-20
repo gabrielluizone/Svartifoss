@@ -58,10 +58,11 @@
                 android:id="@+id/player_editor_face_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:layout_marginTop="6dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 app:icon="@drawable/ic_player_theme"
                 tools:text="Classic" />
 
@@ -69,9 +70,10 @@
                 android:id="@+id/player_editor_screen_theme_button"
                 style="@style/LyraGestureButton"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:ellipsize="end"
-                android:maxLines="1"
+                android:maxLines="2"
                 app:icon="@drawable/ic_palette"
                 tools:text="Default" />
 

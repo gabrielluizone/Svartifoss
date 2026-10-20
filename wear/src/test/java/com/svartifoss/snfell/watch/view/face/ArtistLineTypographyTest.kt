@@ -47,6 +47,8 @@ class ArtistLineTypographyTest {
                 "ArtistAmbient" to "AOD variant",
                 "ArtistTextBlock" to
                         "passes the face's authored family to TrackTimeText, as the other track-time sites do",
+                "AmbientTrackBlock" to "AOD variant - the shared text block of the minute-ring and " +
+                        "hex-frame always-on faces",
                 "CarouselAmbient" to "AOD variant",
                 "ChatAmbient" to "AOD variant",
                 "CuratedAmbientFace" to "AOD variant",

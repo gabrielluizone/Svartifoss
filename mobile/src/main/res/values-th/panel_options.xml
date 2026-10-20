@@ -66,6 +66,8 @@
         <item>ขั้น</item>
         <item>ลูกกวาด</item>
         <item>ผี</item>
+        <item>คลื่น</item>
+        <item>ไม้บรรทัด</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>ขอบคู่</item>
@@ -76,6 +78,8 @@
         <item>หน้าปัดตรงกลาง</item>
         <item>ฮาโลด้านบน</item>
         <item>ฮาโลด้านล่าง</item>
+        <item>เสากลาง</item>
+        <item>เสาหินบะซอลต์</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>วงแหวนคู่</item>
@@ -88,6 +92,9 @@
         <item>เข็ม</item>
         <item>สลับ</item>
         <item>ประกายไฟ</item>
+        <item>คลื่น</item>
+        <item>นาทีของเพลง</item>
+        <item>เซลล์หกเหลี่ยม</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>ขอบหน้าปัด</item>
@@ -101,6 +108,8 @@
         <item>แทร็กคู่</item>
         <item>เปิดจากซ้าย</item>
         <item>เปิดจากขวา</item>
+        <item>ส่วนโค้งด้านบน</item>
+        <item>ส่วนโค้งด้านล่าง</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>แคปซูลกะทัดรัด</item>
@@ -124,6 +133,7 @@
         <item>ไทม์ไลน์คู่</item>
         <item>ส่วน (ล่าง)</item>
         <item>กองตรงกลาง</item>
+        <item>คลื่น</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>นุ่ม</item>
@@ -155,5 +165,8 @@
         <item>ฟอง</item>
         <item>โครม</item>
         <item>โฮโลกราฟิก</item>
+        <item>หินบะซอลต์</item>
+        <item>ชั้นหิน</item>
+        <item>เส้นทาง</item>
     </string-array>
 </resources>

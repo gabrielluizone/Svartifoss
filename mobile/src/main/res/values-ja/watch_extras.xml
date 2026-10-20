@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">音量バーの太さ</string>
+    <string name="setting_wear_volume_thickness_description">音量バーの線の太さ（標準の50%〜180%）。太くしても画面の縁にはかかりません。</string>
+    <string name="setting_wear_volume_haptics">音量調整時のリューズ振動</string>
+    <string name="setting_wear_queue_dim_played">再生済みの曲を暗くする</string>
+    <string name="setting_wear_queue_dim_played_description">再生済みの項目を暗くして、これから流れる曲を目立たせます。</string>
+    <string name="quick_block_lyric">歌詞</string>
+    <string name="quick_block_lyric_description">同期歌詞から、いま歌われている行と次の行を表示します。ウォッチでタップすると歌詞全体が開きます。</string>
+    <string name="quick_summary_lyric">現在の行と次の行</string>
+    <string name="setting_wear_progress_weight">リングの太さ</string>
+    <string name="setting_wear_aod_night_dim">夜間の減光</string>
+    <string name="aod_control_night_dim">夜間の減光</string>
+    <string name="setting_wear_aod_shift">焼き付き防止シフト</string>
+    <string name="aod_control_shift">焼き付き防止シフト</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>オフ</item>
+        <item>5%ごと</item>
+        <item>5%ごとと上限・下限</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>細い</item>
+        <item>標準</item>
+        <item>太い</item>
+        <item>極太</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>オフ</item>
+        <item>夜 · 22:00–07:00</item>
+        <item>夕暮れから夜明け · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>ゆるやか</item>
+        <item>標準</item>
+        <item>広い</item>
+    </string-array>
+</resources>

@@ -69,6 +69,7 @@ internal enum class PlayerControl {
     EDGE_SEEK,
     RING_STYLE,
     RING_LAYOUT,
+    RING_WEIGHT,
     RING_GRADIENT,
     ALWAYS_SHOW_TIME,
     CAROUSEL_SHAPE,
@@ -351,6 +352,10 @@ internal object PlayerEditorModel {
                     MiscPreferences.WEAR_PROGRESS_LAYOUT,
                     PlayerSlot.PROGRESS,
                     PlayerControl.RING_LAYOUT),
+            choice(
+                    MiscPreferences.WEAR_PROGRESS_WEIGHT,
+                    PlayerSlot.PROGRESS,
+                    PlayerControl.RING_WEIGHT),
             toggle(
                     MiscPreferences.WEAR_PROGRESS_GRADIENT,
                     PlayerSlot.PROGRESS,
@@ -419,6 +424,7 @@ internal object PlayerEditorModel {
     val RING_DEPENDENTS: Set<PlayerControl> = setOf(
             PlayerControl.RING_STYLE,
             PlayerControl.RING_LAYOUT,
+            PlayerControl.RING_WEIGHT,
             PlayerControl.RING_GRADIENT,
             PlayerControl.SEEK_MARKER)
 
@@ -434,7 +440,8 @@ internal object PlayerEditorModel {
      */
     fun isRevealed(control: PlayerControl, ring: RingState): Boolean = when (control) {
         PlayerControl.SEEK_MARKER -> ring.edgeArcOn
-        PlayerControl.RING_STYLE, PlayerControl.RING_LAYOUT -> ring.reachable
+        PlayerControl.RING_STYLE, PlayerControl.RING_LAYOUT, PlayerControl.RING_WEIGHT ->
+            ring.reachable
         PlayerControl.RING_GRADIENT -> ring.reachable && ring.solid
         else -> true
     }

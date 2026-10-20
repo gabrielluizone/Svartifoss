@@ -718,6 +718,8 @@
         <item>Material（外框）</item>
         <item>AMOLED 控制項</item>
         <item>Chrono（大型時鐘）</item>
+        <item>分鐘環</item>
+        <item>玄武岩框</item>
         <item>海報</item>
         <item>錄音室</item>
         <item>沉浸式</item>
@@ -748,6 +750,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">隨時顯示顏色</string>
     <string-array name="wear_aod_color_entries">

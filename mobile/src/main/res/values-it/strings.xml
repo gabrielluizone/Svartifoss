@@ -637,6 +637,8 @@
         <item>Material (contornato)</item>
         <item>Controlli AMOLED</item>
         <item>Chrono (orologio grande)</item>
+        <item>Anello dei minuti</item>
+        <item>Cornice di basalto</item>
         <item>Poster</item>
         <item>Studio</item>
         <item>Immersive</item>
@@ -667,6 +669,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Colore sempre attivo</string>
     <string-array name="wear_aod_color_entries">

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Трек соңы</string>
+    <string name="quick_sleep_track_end_description">Ұйқы таймері, осы трек біткенде кідіртеді. Өшіру үшін түртіңіз</string>
+    <string name="queue_position">%2$d тректің %1$d-сі</string>
+    <string name="progress_screen_speed_description">Ойнату жылдамдығы %1$s. Келесі жылдамдық үшін түртіңіз, дәл баптау үшін басып тұрыңыз</string>
+    <string name="progress_screen_speed_slower">Баяуырақ</string>
+    <string name="progress_screen_speed_faster">Жылдамырақ</string>
+    <string name="progress_screen_speed_reset">Қалыпты жылдамдық</string>
+    <string name="complication_playback_label">Ойнату және кідірту</string>
+    <string name="complication_playback_idle">Ойнату</string>
+    <string name="complication_playback_idle_description">Ештеңе ойнатылып жатқан жоқ. Соңғы қолданбаны жалғастыру үшін түртіңіз</string>
+    <string name="complication_playback_play_description">Кідіртілді: %1$s. Ойнату үшін түртіңіз</string>
+    <string name="complication_playback_pause_description">Ойнатылуда: %1$s. Кідірту үшін түртіңіз</string>
+    <string name="audio_block_dnd">Телефон «Мазаламау» режимінде</string>
+    <string name="audio_block_muted">Телефонның медиа дыбысы өшірулі</string>
+    <string name="audio_block_safe_volume">Қауіпсіз деңгейде ұсталды. Растау үшін телефонда бір рет көтеріңіз</string>
+    <string name="refused_skip_app">%1$s қазір өткізіп жіберуге рұқсат бермейді</string>
+    <string name="refused_skip">Бұл қолданба қазір өткізіп жіберуге рұқсат бермейді</string>
+    <string name="refused_seek_app">%1$s қазір айналдыруға рұқсат бермейді</string>
+    <string name="refused_seek">Бұл қолданба қазір айналдыруға рұқсат бермейді</string>
+    <string name="tile_resume">Соңғы қолданбаны жалғастыру</string>
+    <string name="tile_resume_hint">Ойнату соңғы қолданбаны жалғастырады</string>
+    <string name="recent_tile_title">Жақында ойнатылғандар</string>
+    <string name="recent_tile_description">Соңғы ойнатқан тректеріңіз, қайта ойнатуға бір түрту</string>
+    <string name="recent_tile_empty">Әлі ештеңе ойнатылмады</string>
+    <string name="recent_tile_play_description">%1$s қайта ойнату</string>
+</resources>

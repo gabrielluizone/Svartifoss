@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Hrúbka pruhu hlasitosti</string>
+    <string name="setting_wear_volume_thickness_description">Hrúbka čiary pruhu hlasitosti, od 50 % do 180 % predvolenej. Aj hrubšie čiary zostávajú mimo okraja.</string>
+    <string name="setting_wear_volume_haptics">Vibrácia korunky pri hlasitosti</string>
+    <string name="setting_wear_queue_dim_played">Stlmiť prehrané skladby</string>
+    <string name="setting_wear_queue_dim_played_description">Stlmí položky, ktoré už hrali, aby vynikli tie, ktoré prídu.</string>
+    <string name="quick_block_lyric">Text piesne</string>
+    <string name="quick_block_lyric_description">Práve spievaný riadok a nasledujúci zo synchronizovaného textu. Ťuknutím naň v hodinkách sa otvorí celý text.</string>
+    <string name="quick_summary_lyric">Aktuálny a ďalší riadok</string>
+    <string name="setting_wear_progress_weight">Hrúbka prstenca</string>
+    <string name="setting_wear_aod_night_dim">Nočné stmavenie</string>
+    <string name="aod_control_night_dim">Nočné stmavenie</string>
+    <string name="setting_wear_aod_shift">Posun proti vypáleniu</string>
+    <string name="aod_control_shift">Posun proti vypáleniu</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Vypnuté</item>
+        <item>Každých 5 %</item>
+        <item>Každých 5 % a na hraniciach</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Tenký</item>
+        <item>Bežný</item>
+        <item>Hrubý</item>
+        <item>Veľmi hrubý</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Vypnuté</item>
+        <item>Noc · 22:00–07:00</item>
+        <item>Od súmraku do úsvitu · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Jemný</item>
+        <item>Bežný</item>
+        <item>Široký</item>
+    </string-array>
+</resources>

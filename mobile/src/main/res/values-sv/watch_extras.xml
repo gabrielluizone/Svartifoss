@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Tjocklek på volymstapeln</string>
+    <string name="setting_wear_volume_thickness_description">Tjockleken på volymstapelns linje, från 50 % till 180 % av standard. Tjockare linjer håller sig ändå borta från kanten.</string>
+    <string name="setting_wear_volume_haptics">Kronvibration vid volym</string>
+    <string name="setting_wear_queue_dim_played">Dämpa spelade låtar</string>
+    <string name="setting_wear_queue_dim_played_description">Tonar ned spåren som redan spelats så att de kommande sticker ut.</string>
+    <string name="quick_block_lyric">Låttext</string>
+    <string name="quick_block_lyric_description">Raden som sjungs och nästa, från den synkroniserade låttexten. Tryck på den på klockan för att öppna hela texten.</string>
+    <string name="quick_summary_lyric">Aktuell rad och nästa</string>
+    <string name="setting_wear_progress_weight">Ringens tjocklek</string>
+    <string name="setting_wear_aod_night_dim">Nattdimning</string>
+    <string name="aod_control_night_dim">Nattdimning</string>
+    <string name="setting_wear_aod_shift">Förskjutning mot inbränning</string>
+    <string name="aod_control_shift">Förskjutning mot inbränning</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Av</item>
+        <item>Var 5:e %</item>
+        <item>Var 5:e % och vid gränserna</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Tunn</item>
+        <item>Normal</item>
+        <item>Tjock</item>
+        <item>Mycket tjock</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Av</item>
+        <item>Natt · 22:00–07:00</item>
+        <item>Från skymning till gryning · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Lätt</item>
+        <item>Normal</item>
+        <item>Bred</item>
+    </string-array>
+</resources>

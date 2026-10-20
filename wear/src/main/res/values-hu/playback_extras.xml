@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Szám vége</string>
+    <string name="quick_sleep_track_end_description">Elalvási időzítő, a szám végén szünetel. Koppints a kikapcsoláshoz</string>
+    <string name="queue_position">%1$d. szám / %2$d</string>
+    <string name="progress_screen_speed_description">Lejátszási sebesség %1$s. Koppints a következőhöz, tartsd lenyomva a finomhangoláshoz</string>
+    <string name="progress_screen_speed_slower">Lassabban</string>
+    <string name="progress_screen_speed_faster">Gyorsabban</string>
+    <string name="progress_screen_speed_reset">Normál sebesség</string>
+    <string name="complication_playback_label">Lejátszás és szünet</string>
+    <string name="complication_playback_idle">Lejátszás</string>
+    <string name="complication_playback_idle_description">Nincs lejátszás. Koppints az utolsó alkalmazás folytatásához</string>
+    <string name="complication_playback_play_description">Szüneteltetve: %1$s. Koppints a lejátszáshoz</string>
+    <string name="complication_playback_pause_description">Lejátszás: %1$s. Koppints a szüneteltetéshez</string>
+    <string name="audio_block_dnd">A telefon Ne zavarjanak módban van</string>
+    <string name="audio_block_muted">A telefon médiahangereje ki van kapcsolva</string>
+    <string name="audio_block_safe_volume">Biztonságos szinten tartva. A megerősítéshez hangosíts egyszer a telefonon</string>
+    <string name="refused_skip_app">A(z) %1$s most nem engedi a léptetést</string>
+    <string name="refused_skip">Ez az alkalmazás most nem engedi a léptetést</string>
+    <string name="refused_seek_app">A(z) %1$s most nem engedi a tekerést</string>
+    <string name="refused_seek">Ez az alkalmazás most nem engedi a tekerést</string>
+    <string name="tile_resume">Az utolsó alkalmazás folytatása</string>
+    <string name="tile_resume_hint">A lejátszás az utolsó alkalmazást folytatja</string>
+    <string name="recent_tile_title">Nemrég játszott</string>
+    <string name="recent_tile_description">Az utoljára hallgatott számok, egy koppintásra újra</string>
+    <string name="recent_tile_empty">Még semmi sem szólt</string>
+    <string name="recent_tile_play_description">%1$s újbóli lejátszása</string>
+</resources>

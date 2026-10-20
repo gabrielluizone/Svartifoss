@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Дыбыс жолағының қалыңдығы</string>
+    <string name="setting_wear_volume_thickness_description">Дыбыс жолағы сызығының қалыңдығы, әдепкінің 50%-нан 180%-на дейін. Қалың сызықтар да экран шетінен алыс тұрады.</string>
+    <string name="setting_wear_volume_haptics">Дыбысты реттегенде тәж дірілі</string>
+    <string name="setting_wear_queue_dim_played">Ойнатылған тректерді күңгірттеу</string>
+    <string name="setting_wear_queue_dim_played_description">Ойнатылып қойған жазбаларды күңгірттеп, алдағыларын ерекшелейді.</string>
+    <string name="quick_block_lyric">Ән мәтіні</string>
+    <string name="quick_block_lyric_description">Синхрондалған мәтіннен қазір айтылып жатқан жол және келесісі. Сағатта оны түртсеңіз, толық мәтін ашылады.</string>
+    <string name="quick_summary_lyric">Ағымдағы және келесі жол</string>
+    <string name="setting_wear_progress_weight">Сақина қалыңдығы</string>
+    <string name="setting_wear_aod_night_dim">Түнгі күңгірттеу</string>
+    <string name="aod_control_night_dim">Түнгі күңгірттеу</string>
+    <string name="setting_wear_aod_shift">Күю қарсы жылжыту</string>
+    <string name="aod_control_shift">Күю қарсы жылжыту</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Өшірулі</item>
+        <item>Әр 5% сайын</item>
+        <item>Әр 5% сайын және шектерде</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Жіңішке</item>
+        <item>Қалыпты</item>
+        <item>Қалың</item>
+        <item>Өте қалың</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Өшірулі</item>
+        <item>Түн · 22:00–07:00</item>
+        <item>Ымыртқа дейін таң · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Жеңіл</item>
+        <item>Қалыпты</item>
+        <item>Кең</item>
+    </string-array>
+</resources>

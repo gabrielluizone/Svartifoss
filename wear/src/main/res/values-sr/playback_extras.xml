@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Крај песме</string>
+    <string name="quick_sleep_track_end_description">Тајмер за спавање, паузира на крају ове песме. Додирните да искључите</string>
+    <string name="queue_position">Песма %1$d од %2$d</string>
+    <string name="progress_screen_speed_description">Брзина репродукције %1$s. Додирните за следећу, задржите за фино подешавање</string>
+    <string name="progress_screen_speed_slower">Спорије</string>
+    <string name="progress_screen_speed_faster">Брже</string>
+    <string name="progress_screen_speed_reset">Нормална брзина</string>
+    <string name="complication_playback_label">Пуштање и пауза</string>
+    <string name="complication_playback_idle">Пусти</string>
+    <string name="complication_playback_idle_description">Ништа се не пушта. Додирните да наставите последњу апликацију</string>
+    <string name="complication_playback_play_description">Паузирано: %1$s. Додирните да пустите</string>
+    <string name="complication_playback_pause_description">Пушта се: %1$s. Додирните за паузу</string>
+    <string name="audio_block_dnd">Телефон је у режиму Не узнемиравај</string>
+    <string name="audio_block_muted">Јачина звука медија на телефону је искључена</string>
+    <string name="audio_block_safe_volume">Задржано на безбедном нивоу. Појачајте једном на телефону да потврдите</string>
+    <string name="refused_skip_app">%1$s тренутно не дозвољава прескакање</string>
+    <string name="refused_skip">Ова апликација тренутно не дозвољава прескакање</string>
+    <string name="refused_seek_app">%1$s тренутно не дозвољава премотавање</string>
+    <string name="refused_seek">Ова апликација тренутно не дозвољава премотавање</string>
+    <string name="tile_resume">Настави последњу апликацију</string>
+    <string name="tile_resume_hint">Пуштање наставља последњу апликацију</string>
+    <string name="recent_tile_title">Недавно пуштано</string>
+    <string name="recent_tile_description">Последње пуштене песме, један додир до поновног пуштања</string>
+    <string name="recent_tile_empty">Још ништа није пуштано</string>
+    <string name="recent_tile_play_description">Поново пусти %1$s</string>
+</resources>

@@ -66,6 +66,8 @@
         <item>Gradini</item>
         <item>Caramella</item>
         <item>Fantasma</item>
+        <item>Onda</item>
+        <item>Righello</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Doppio bordo</item>
@@ -76,6 +78,8 @@
         <item>Quadrante centrale</item>
         <item>Alone superiore</item>
         <item>Alone inferiore</item>
+        <item>Pilastro centrale</item>
+        <item>Colonne di basalto</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Doppio anello</item>
@@ -88,6 +92,9 @@
         <item>Ago</item>
         <item>Alternato</item>
         <item>Scintilla</item>
+        <item>Onda</item>
+        <item>Minuti del brano</item>
+        <item>Celle esagonali</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Bordo lunetta</item>
@@ -101,6 +108,8 @@
         <item>Doppia traccia</item>
         <item>Aperto a sinistra</item>
         <item>Aperto a destra</item>
+        <item>Arco superiore</item>
+        <item>Arco inferiore</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Pillola compatta</item>
@@ -124,6 +133,7 @@
         <item>Doppia sequenza temporale</item>
         <item>Segmenti (in basso)</item>
         <item>Pila centrale</item>
+        <item>Onda</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Morbido</item>
@@ -155,5 +165,8 @@
         <item>Bolla</item>
         <item>Cromo</item>
         <item>Olografico</item>
+        <item>Basalto</item>
+        <item>Strati</item>
+        <item>Percorso</item>
     </string-array>
 </resources>

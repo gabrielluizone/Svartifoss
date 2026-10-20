@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.watch.view.queue
 
 import androidx.compose.ui.unit.dp
+import com.svartifoss.snfell.common.QueueAppearance
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Test
@@ -24,7 +25,7 @@ class QueueStyleArtworkTest {
     @Test
     fun everyStyleKeepsArtworkInsideItsOwnFrame() {
         QueueStyle.entries.forEach { style ->
-            val fraction = queueArtworkCornerFraction(style)
+            val fraction = coverFraction(style)
             assertTrue("$style corner must be non-negative", fraction >= 0f)
             assertTrue("$style corner must not exceed a circle", fraction <= 0.5f)
         }
@@ -96,7 +97,11 @@ class QueueStyleArtworkTest {
     }
 
     private fun cornerAt(size: androidx.compose.ui.unit.Dp, style: QueueStyle): Float =
-            size.value * queueArtworkCornerFraction(style)
+            size.value * coverFraction(style)
+
+    /** The cut a style's cover gets when the cover shape is left on "follow". */
+    private fun coverFraction(style: QueueStyle): Float =
+            QueueAppearance.resolve(style.token, "follow", "follow").coverCorners.topLeft
 
     private companion object {
         const val TOLERANCE = 0.05f

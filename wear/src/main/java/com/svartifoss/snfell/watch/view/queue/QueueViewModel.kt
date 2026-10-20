@@ -11,6 +11,7 @@ import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.CustomLists
+import com.svartifoss.snfell.common.QueuePosition
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.QueuePaging
@@ -258,6 +259,23 @@ class QueueViewModel @Inject constructor(
     val isHistoryFallback = MediatorLiveData<Boolean>().apply {
         value = false
         addSource(items) { value = latestList?.listId == CustomLists.HISTORY }
+    }
+
+    /**
+     * Where the playing entry sits in the whole queue ("Track 3 of 47"), or null when the phone did
+     * not say - the history fallback, an unidentified playing row, or an older phone build.
+     */
+    val position = MediatorLiveData<QueuePosition?>().apply {
+        value = null
+        addSource(items) {
+            val list = latestList
+            val next = if (list?.listId == CustomLists.PLAYLIST) {
+                QueuePosition.of(list.activeEntryPosition, list.queueSize)
+            } else {
+                null
+            }
+            if (next != value) value = next
+        }
     }
 
     /** True while a "load more" request is in flight, so the row can show progress and not fire

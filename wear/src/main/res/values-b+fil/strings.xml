@@ -234,4 +234,5 @@ I-customize ang lahat sa Controls at Watch sa phone mo</string>
     <string name="quick_sleep_minutes">%1$d minuto</string>
     <string name="quick_sleep_description">Timer ng pagtulog, %1$d minuto ang natitira. I-tap para baguhin.</string>
     <string name="quick_sleep_off_description">Naka-off ang timer ng pagtulog. I-tap para itakda.</string>
+    <string name="quick_lyric_plain">Walang timing ang lyrics na ito. I-tap para basahin.</string>
 </resources>

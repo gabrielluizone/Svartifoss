@@ -40,6 +40,8 @@ class TitleTextEffectsTest {
          * borrows the title's family for text that is not the title.
          */
         val ALLOWED_BARE_TITLE_FONT = mapOf(
+                "AmbientTrackBlock" to "AOD variant - the shared text block of the minute-ring and " +
+                        "hex-frame always-on faces",
                 "ArtistAmbient" to "AOD variant",
                 "CarouselAmbient" to "AOD variant",
                 "ChatAmbient" to "AOD variant",

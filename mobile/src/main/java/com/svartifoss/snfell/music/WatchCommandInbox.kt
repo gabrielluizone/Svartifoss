@@ -28,9 +28,31 @@ internal class WatchCommandInbox(private val historyCapacity: Int = 512) {
         require(historyCapacity > 0)
     }
 
-    fun receive(command: WatchCommand, canStartService: Boolean, startService: () -> Boolean) {
+    fun receive(command: WatchCommand, canStartService: Boolean, startService: () -> Boolean) =
+            receive(command, canStartService, { false }, startService)
+
+    /**
+     * [runDirect] gets the first chance at a command that has no ready service to run it, and
+     * returns true if it carried the command out itself. Such a command is neither queued nor does
+     * it start anything: it is already done, and queueing it as well would run it twice when the
+     * service came up. Its identity is remembered like any delivered command's, because the same
+     * event reaches both the manifest listener and the service's own, and a toggle run twice is
+     * no toggle at all.
+     *
+     * A command it declines (false) takes the ordinary route, so declining is always safe.
+     */
+    fun receive(
+            command: WatchCommand,
+            canStartService: Boolean,
+            runDirect: (WatchCommand) -> Boolean,
+            startService: () -> Boolean
+    ) {
         val identity = command.identity()
         if (identity in recent || identity in pendingIdentities) return
+        if (receiver == null && runDirect(command)) {
+            remember(identity)
+            return
+        }
         if (receiver == null && !canStartService) return
 
         pending.addLast(command)
@@ -83,16 +105,20 @@ internal class WatchCommandInbox(private val historyCapacity: Int = 512) {
                 val command = pending.removeFirst()
                 val identity = command.identity()
                 pendingIdentities.remove(identity)
-                recent.add(identity)
-                if (recent.size > historyCapacity) {
-                    val oldest = recent.iterator()
-                    oldest.next()
-                    oldest.remove()
-                }
+                remember(identity)
                 receiver(command)
             }
         } finally {
             draining = false
+        }
+    }
+
+    private fun remember(identity: Identity) {
+        recent.add(identity)
+        if (recent.size > historyCapacity) {
+            val oldest = recent.iterator()
+            oldest.next()
+            oldest.remove()
         }
     }
 

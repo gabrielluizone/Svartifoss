@@ -377,6 +377,7 @@ class QuickPanelEditorActivity : AppCompatActivity(),
                     block.seekSteps.joinToString(" · ") { "±$it" })
             QuickPanelBlockType.TOOLS -> block.tools.joinToString(" · ", transform = ::toolName)
             QuickPanelBlockType.FAVORITES -> favoritesSummary(block)
+            QuickPanelBlockType.LYRIC -> getString(R.string.quick_summary_lyric)
             QuickPanelBlockType.ACTIONS -> when {
                 block.actionsMode == ActionsMode.BUTTON ->
                     getString(R.string.quick_summary_actions_button)
@@ -531,6 +532,7 @@ class QuickPanelEditorActivity : AppCompatActivity(),
             QuickPanelBlockType.BUTTONS -> addButtonsSection(content, type)
 
             QuickPanelBlockType.HEADER,
+            QuickPanelBlockType.LYRIC,
             QuickPanelBlockType.UP_NEXT -> Unit
         }
     }

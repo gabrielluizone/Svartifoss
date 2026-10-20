@@ -36,6 +36,10 @@ class SurfaceStyleMappingTest {
         assertEquals(VolumeStyle.CHROME, VolumeStyle.fromPref("chrome"))
         assertEquals(VolumeStyle.SPECTRUM, VolumeStyle.fromPref("spectrum"))
         assertEquals(VolumeStyle.STEPS, VolumeStyle.fromPref("steps"))
+        assertEquals(VolumeStyle.WAVE, VolumeStyle.fromPref("wave"))
+        assertEquals(VolumeStyle.RULER, VolumeStyle.fromPref("ruler"))
+        assertEquals(VolumeLayout.PILLAR, VolumeLayout.fromPref("pillar"))
+        assertEquals(VolumeLayout.BASALT, VolumeLayout.fromPref("basalt"))
         assertEquals(VolumeStyle.GLASS, VolumeStyle.fromPref(null))
     }
 

@@ -216,4 +216,5 @@
     <string name="progress_screen_cancel_seek">Cancelar busca</string>
     <string name="progress_screen_skip_back">Voltar %1$d segundos</string>
     <string name="progress_screen_skip_forward">Avançar %1$d segundos</string>
+    <string name="quick_lyric_plain">Esta letra não tem tempos. Toque para ler.</string>
 </resources>

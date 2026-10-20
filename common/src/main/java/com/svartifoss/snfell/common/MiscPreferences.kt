@@ -259,6 +259,16 @@ object MiscPreferences {
     val WEAR_AOD_ART_TREATMENT: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_aod_art_treatment", AodArtTreatment.BLUR.preferenceValue)
 
+    /** Dims the always-on display by the hour: "off", "night" (22:00-07:00) or "long_night"
+     *  (19:00-08:00). Global - see [AodNightDim]. */
+    val WEAR_AOD_NIGHT_DIM: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_aod_night_dim", AodNightDim.OFF.token)
+
+    /** How far the always-on display moves its content to avoid burn-in: "gentle", "standard" (the
+     *  historical distance) or "wide". Global - see [AodShift]. */
+    val WEAR_AOD_SHIFT: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_aod_shift", AodShift.STANDARD.token)
+
     /** Show the clock on the always-on display. */
     val WEAR_AOD_SHOW_CLOCK: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("wear_aod_show_clock", true)
 
@@ -1513,6 +1523,28 @@ object MiscPreferences {
     val WEAR_VOLUME_LAYOUT: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_volume_layout", "edge")
 
+    // The three settings below (the volume panel's thickness and crown ticks, and the queue's
+    // dimming of played tracks) are deliberately global rather than face-scoped. Appearance settings
+    // that are scoped become part of the public theme contract: every published profile has to name
+    // them, and an app that predates them cannot install a theme that does, which is only honest if
+    // the gallery's minimum app version moves with them. That is a release decision, so until it is
+    // made these ship as the user's own setting - the same on every face, and not carried by a theme.
+
+    /** Stroke weight of the volume panel as a percentage of the default (50-180). The layouts
+     *  reserve room for the heavier values, so a thicker stroke never reaches the bezel. */
+    val WEAR_VOLUME_THICKNESS: PreferenceDefinition<Int> =
+            SimplePreferenceDefinition("wear_volume_thickness", 100)
+
+    /** Crown feedback while changing the volume: "off" (the historical behaviour), "ticks" (a click
+     *  at every 5 percent) or "ticks_limits" (the same, plus a firmer buzz at the ends). Behaviour
+     *  rather than appearance, and still subject to [HAPTIC_FEEDBACK]. */
+    val WEAR_VOLUME_HAPTICS: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_volume_haptics", VolumeHaptics.OFF.token)
+
+    /** Dims the entries that have already played. */
+    val WEAR_QUEUE_DIM_PLAYED: PreferenceDefinition<Boolean> =
+            SimplePreferenceDefinition("wear_queue_dim_played", false)
+
     /** Visual style of the quick-actions panel opened by double-tapping the screen centre. */
     val WEAR_QUICK_PANEL_STYLE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_quick_panel_style", "glass")
@@ -1552,15 +1584,34 @@ object MiscPreferences {
     val WEAR_QUICK_PANEL_BLOCKS: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_quick_panel_blocks", "")
 
-    /** Visual style of the playback queue screen. */
     /** Every list-style value that fills a pill with the entry's own artwork. The phone checks
      *  this to decide whether to send higher-resolution covers, and the preview to draw them;
-     *  the watch resolves the same values through QueueStyle.isCover. */
-    val COVER_LIST_STYLES: Set<String> = setOf(
-            "cover", "cover_blur", "cover_tonal", "cover_compact", "cover_tall", "cover_square")
+     *  the watch resolves the same values through QueueStyle.isCover. Read from the style
+     *  registry, so a new cover variation cannot be drawn without its covers being sent. */
+    val COVER_LIST_STYLES: Set<String> get() = QueueStyles.COVER_FILL_TOKENS
 
+    /**
+     * Visual style of the playback queue screen: the rows' colours, gradients, strokes and marks -
+     * see [QueueStyles] and [QueueRowSkins]. Each style also has an outline and a cover cut of its
+     * own, which [WEAR_QUEUE_ROW_SHAPE] and [WEAR_QUEUE_COVER_SHAPE] keep unless told otherwise.
+     */
     val WEAR_QUEUE_STYLE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_queue_style", "glass")
+
+    /**
+     * The outline of the queue's rows, apart from their style - see [QueueRowShape]. "follow"
+     * keeps the outline the style was drawn with, which is what every configuration saved before
+     * this existed resolves to. Face-scoped, like the style it goes with.
+     */
+    val WEAR_QUEUE_ROW_SHAPE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_queue_row_shape", "follow")
+
+    /**
+     * How the queue's covers are cut: one of the [CoverShape] values the faces' covers use, or
+     * "follow" for the cut the style was drawn with. Face-scoped, like the style.
+     */
+    val WEAR_QUEUE_COVER_SHAPE: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_queue_cover_shape", "follow")
 
     /** When [WEAR_QUEUE_STYLE] is a Cover variant, whether an eligible quick-panel action row
      *  (one whose icon is genuine fetched cover art - e.g. a streaming shortcut's cached
@@ -1582,6 +1633,12 @@ object MiscPreferences {
      *  see RingStyle on the watch. */
     val WEAR_PROGRESS_STYLE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_progress_style", "solid")
+
+    /** How heavy the progress ring's stroke is: "thin", "regular" (the default), "heavy" or "bold".
+     *  Global for the reason [WEAR_VOLUME_THICKNESS] is: a scoped key joins the public theme
+     *  contract, which is a release decision. See [ProgressShape.weightScale] for the multipliers. */
+    val WEAR_PROGRESS_WEIGHT: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_progress_weight", "regular")
 
     /** Geometry of the resting/interactive edge ring, independent from its stroke style. */
     val WEAR_PROGRESS_LAYOUT: PreferenceDefinition<String> =
@@ -1708,13 +1765,17 @@ object MiscPreferences {
             WEAR_MINI_BUTTONS_MODE, WEAR_GESTURES_MODE,
             WEAR_OVERLAY_BLUR_RADIUS,
             WEAR_OVERLAY_BACKDROP_STYLE,
-            WEAR_VOLUME_STYLE, WEAR_VOLUME_LAYOUT,
+            WEAR_AOD_NIGHT_DIM, WEAR_AOD_SHIFT,
+            WEAR_VOLUME_STYLE, WEAR_VOLUME_LAYOUT, WEAR_VOLUME_THICKNESS,
+            WEAR_VOLUME_HAPTICS,
             WEAR_QUICK_PANEL_STYLE, WEAR_QUICK_PANEL_LAYOUT, WEAR_UP_NEXT_PILL_STYLE,
             WEAR_SHOW_UP_NEXT_PILL,
             WEAR_QUICK_PANEL_SOURCE, WEAR_QUICK_PANEL_BLOCKS, WEAR_QUEUE_STYLE,
+            WEAR_QUEUE_ROW_SHAPE, WEAR_QUEUE_COVER_SHAPE, WEAR_QUEUE_DIM_PLAYED,
             WEAR_QUICK_PANEL_SHORTCUT_COVER,
             WEAR_LIST_ROW_SIZE,
-            WEAR_PROGRESS_STYLE, WEAR_PROGRESS_LAYOUT, WEAR_SEEK_STYLE, WEAR_SEEK_LAYOUT,
+            WEAR_PROGRESS_STYLE, WEAR_PROGRESS_LAYOUT, WEAR_PROGRESS_WEIGHT, WEAR_SEEK_STYLE,
+            WEAR_SEEK_LAYOUT,
             WEAR_TITLE_TEXT_MODE, WEAR_ARTIST_COLOR_MODE, WEAR_ARTIST_CUSTOM_COLOR, WEAR_ARTIST_DESATURATED,
             WEAR_PROGRESS_COLOR_MODE, WEAR_PROGRESS_CUSTOM_COLOR, WEAR_PROGRESS_DESATURATED,
             WEAR_VOLUME_COLOR_MODE, WEAR_VOLUME_CUSTOM_COLOR,

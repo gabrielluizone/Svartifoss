@@ -6,6 +6,7 @@ import android.graphics.Color
 import androidx.core.graphics.ColorUtils
 import androidx.palette.graphics.Palette
 import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
+import com.matejdro.wearutils.preferences.definition.Preferences
 import com.svartifoss.snfell.common.AccentFloorStyle
 import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.AppearanceContext
@@ -56,11 +57,15 @@ data class PanelAppearance(
         val volumeStyle: String,
         /** [com.svartifoss.snfell.watch.view.VolumeLayout] preference value. */
         val volumeLayout: String,
+        /** Stroke weight of the volume panel, percent of the default. */
+        val volumeThickness: Int,
         /** [com.svartifoss.snfell.watch.view.RingStyle] preference value. */
         val progressStyle: String,
         /** [com.svartifoss.snfell.watch.view.ProgressRingLayout] preference value. */
         val progressLayout: String,
         val progressGradient: Boolean,
+        /** `MiscPreferences.WEAR_PROGRESS_WEIGHT` - how heavy the ring's stroke is. */
+        val progressWeight: String,
         /** Readout treatment - `MiscPreferences.WEAR_SEEK_STYLE`. */
         val readoutStyle: String,
         /** Meter geometry - `MiscPreferences.WEAR_SEEK_LAYOUT`. */
@@ -511,10 +516,17 @@ object PanelAppearanceResolver {
                 triad = triad,
                 volumeStyle = volumeStyle,
                 volumeLayout = faceString(prefs, context, MiscPreferences.WEAR_VOLUME_LAYOUT),
+                // Global settings, not face-scoped, so they are read plainly - a Custom context
+                // would otherwise look them up in a snapshot that never holds them.
+                volumeThickness = AppearanceNumericRanges.clamp(
+                        MiscPreferences.WEAR_VOLUME_THICKNESS.key,
+                        Preferences.getInt(prefs, MiscPreferences.WEAR_VOLUME_THICKNESS)),
                 progressStyle = faceString(prefs, context, MiscPreferences.WEAR_PROGRESS_STYLE),
                 progressLayout = faceString(prefs, context, MiscPreferences.WEAR_PROGRESS_LAYOUT),
                 progressGradient = FaceScopedPreferences.getBoolean(
                         prefs, MiscPreferences.WEAR_PROGRESS_GRADIENT, context),
+                progressWeight =
+                        Preferences.getString(prefs, MiscPreferences.WEAR_PROGRESS_WEIGHT),
                 readoutStyle = readoutStyle,
                 seekLayout = faceString(prefs, context, MiscPreferences.WEAR_SEEK_LAYOUT))
     }

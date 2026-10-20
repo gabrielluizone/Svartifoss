@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Kapselform</string>
+    <string name="setting_wear_queue_cover_shape">Cover-Form</string>
+    <string name="wear_queue_shape_follow">Wie der Warteschlangen-Stil</string>
+    <string name="queue_shape_note_title">Stil und Formen</string>
+    <string name="queue_shape_note_description">Der Stil bestimmt Farben und Effekte. Kapselform und Cover-Form ändern nur die Umrisse; „Wie der Warteschlangen-Stil“ behält die des jeweiligen Stils.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Kapsel</item>
+        <item>Abgerundet</item>
+        <item>Weiche Ecken</item>
+        <item>Eckig</item>
+        <item>Blatt</item>
+        <item>Sprechblase</item>
+        <item>Sechseck</item>
+    </string-array>
+</resources>

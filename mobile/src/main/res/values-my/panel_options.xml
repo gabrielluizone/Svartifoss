@@ -66,6 +66,8 @@
         <item>လှေကားများ</item>
         <item>Candy</item>
         <item>Ghost</item>
+        <item>လှိုင်း</item>
+        <item>ပေတံ</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>နှစ်ထပ်အစွန်း</item>
@@ -76,6 +78,8 @@
         <item>အလယ် Dial</item>
         <item>အပေါ် Halo</item>
         <item>အောက် Halo</item>
+        <item>အလယ်တိုင်</item>
+        <item>ဘေဆော့တိုင်များ</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>နှစ်ထပ်ကွင်း</item>
@@ -88,6 +92,9 @@
         <item>အပ်</item>
         <item>အလှည့်ကျ</item>
         <item>မီးပွား</item>
+        <item>လှိုင်း</item>
+        <item>သီချင်း မိနစ်များ</item>
+        <item>ဆဋ္ဌဂံဆဲလ်များ</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Bezel အစွန်း</item>
@@ -101,6 +108,8 @@
         <item>နှစ်ထပ် track</item>
         <item>ဘယ်ဘက် ဖွင့်</item>
         <item>ညာဘက် ဖွင့်</item>
+        <item>အပေါ်ပိုင်း အကွေး</item>
+        <item>အောက်ပိုင်း အကွေး</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Compact pill</item>
@@ -124,6 +133,7 @@
         <item>Twin timeline</item>
         <item>အစိတ်အပိုင်းများ (အောက်)</item>
         <item>အလယ် Stack</item>
+        <item>လှိုင်း</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>ပျော့</item>
@@ -155,5 +165,8 @@
         <item>Bubble</item>
         <item>Chrome</item>
         <item>Holographic</item>
+        <item>ဘေဆော့</item>
+        <item>အလွှာများ</item>
+        <item>လမ်းကြောင်း</item>
     </string-array>
 </resources>

@@ -66,6 +66,8 @@
         <item>Các bậc</item>
         <item>Kẹo</item>
         <item>Bóng ma</item>
+        <item>Sóng</item>
+        <item>Thước kẻ</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Viền kép</item>
@@ -76,6 +78,8 @@
         <item>Mặt số giữa</item>
         <item>Quầng sáng trên</item>
         <item>Quầng sáng dưới</item>
+        <item>Cột giữa</item>
+        <item>Cột bazan</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Vòng kép</item>
@@ -88,6 +92,9 @@
         <item>Kim</item>
         <item>Xen kẽ</item>
         <item>Tia sáng</item>
+        <item>Sóng</item>
+        <item>Phút của bài hát</item>
+        <item>Ô lục giác</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Cạnh viền đồng hồ</item>
@@ -101,6 +108,8 @@
         <item>Rãnh kép</item>
         <item>Mở bên trái</item>
         <item>Mở bên phải</item>
+        <item>Cung trên</item>
+        <item>Cung dưới</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Viên thuốc gọn</item>
@@ -124,6 +133,7 @@
         <item>Dòng thời gian kép</item>
         <item>Các đoạn (dưới)</item>
         <item>Chồng giữa</item>
+        <item>Sóng</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Mềm</item>
@@ -155,5 +165,8 @@
         <item>Bong bóng</item>
         <item>Chrome</item>
         <item>Ba chiều</item>
+        <item>Bazan</item>
+        <item>Địa tầng</item>
+        <item>Lộ trình</item>
     </string-array>
 </resources>

@@ -724,6 +724,8 @@
         <item>Material (контур)</item>
         <item>Елементи керування AMOLED</item>
         <item>Chrono (великий годинник)</item>
+        <item>Кільце хвилин</item>
+        <item>Базальтова рамка</item>
         <item>Постер</item>
         <item>Студія</item>
         <item>Імерсивний</item>
@@ -754,6 +756,8 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Колір постійно ввімкненого екрана</string>
     <string-array name="wear_aod_color_entries">

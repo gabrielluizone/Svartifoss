@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Облик капсуле</string>
+    <string name="setting_wear_queue_cover_shape">Облик омота</string>
+    <string name="wear_queue_shape_follow">Прати стил реда</string>
+    <string name="queue_shape_note_title">Стил и облици</string>
+    <string name="queue_shape_note_description">Стил одређује боје и ефекте. Облик капсуле и Облик омота мењају само обрисе; Прати стил реда задржава оне које има сваки стил.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Капсула</item>
+        <item>Заобљено</item>
+        <item>Меки углови</item>
+        <item>Квадрат</item>
+        <item>Лист</item>
+        <item>Облачић</item>
+        <item>Шестоугао</item>
+    </string-array>
+</resources>

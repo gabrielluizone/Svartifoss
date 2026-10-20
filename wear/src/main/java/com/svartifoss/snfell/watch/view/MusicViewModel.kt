@@ -16,6 +16,8 @@ import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.PlaybackPositionEstimate
 import com.svartifoss.snfell.common.PlaybackSpeeds
 import com.svartifoss.snfell.common.SleepTimerPolicy
+import com.svartifoss.snfell.common.TransportRefusal
+import com.svartifoss.snfell.watch.communication.SleepTimerReading
 import com.svartifoss.snfell.common.logging.logSummary
 import com.svartifoss.snfell.watch.view.lyrics.LyricsFeed
 import com.svartifoss.snfell.watch.view.metadata.MetadataFeed
@@ -110,6 +112,21 @@ class MusicViewModel @Inject constructor(
         }
     }
 
+    /**
+     * A skip or seek the playing app refused, for this screen to say so once - see
+     * [TransportRefusal]. Relayed like [notification], and for the same reason.
+     */
+    val actionRefused = SingleLiveEvent<TransportRefusal>()
+    private var lastRefusalAt = 0L
+    private val refusalRelay = Observer<PhoneConnection.RefusedAction?> { incoming ->
+        if (incoming == null || incoming.atRealtimeMs == lastRefusalAt) return@Observer
+        lastRefusalAt = incoming.atRealtimeMs
+        // A refused skip is the case the transition hold was guessing about: what it holds is the
+        // truth now, so it is shown at once instead of when the hold's ceiling runs out.
+        if (incoming.refusal != TransportRefusal.SEEK) endTrackChangeHold(applyHeld = true)
+        actionRefused.value = incoming.refusal
+    }
+
     val volume = MutableLiveData<Float>()
     val playbackPosition = MutableLiveData<PlaybackPosition>()
     private var latestMusicState: MusicState? = null
@@ -161,6 +178,9 @@ class MusicViewModel @Inject constructor(
     val openVolumeScreen = SingleLiveEvent<Unit>()
     val openProgressScreen = SingleLiveEvent<Unit>()
     val openFacePicker = SingleLiveEvent<Unit>()
+
+    /** Opens the phone's audio-output switcher on the phone - see `communication.PhoneAudioOutput`. */
+    val openPhoneAudioOutput = SingleLiveEvent<Unit>()
 
     /**
      * Lyrics for the current track, for the Verse face.
@@ -405,6 +425,12 @@ class MusicViewModel @Inject constructor(
                 closeApp.call()
                 true
             }
+            StandardActions.ACTION_OPEN_PHONE_AUDIO_OUTPUT -> {
+                // Opened from here rather than on the phone: a phone app in the background cannot
+                // put a screen up, while the companion app this goes through can.
+                openPhoneAudioOutput.call()
+                true
+            }
             else -> false
         }
     }
@@ -446,15 +472,17 @@ class MusicViewModel @Inject constructor(
         return next
     }
 
-    /** The phone's sleep timer, as the moment it ends on this watch's clock; 0 when none runs. */
-    val sleepTimerEndsAt: LiveData<Long> = phoneConnection.sleepTimerEndsAt
+    /** The phone's sleep timer, as this watch draws it - see [SleepTimerReading]. */
+    val sleepTimer: LiveData<SleepTimerReading> = phoneConnection.sleepTimer
 
     /**
      * Steps the sleep timer to its next preset ([SleepTimerPolicy]) and shows it at once. The
      * phone's reply follows within a moment and is what the chip then settles on.
      */
     fun cycleSleepTimer() {
-        val minutes = SleepTimerPolicy.nextMinutes(phoneConnection.sleepTimerRemainingMs())
+        val minutes = SleepTimerPolicy.nextMinutes(
+                phoneConnection.sleepTimerRemainingMs(),
+                atTrackEnd = phoneConnection.sleepTimer.value?.atTrackEnd == true)
         phoneConnection.showSleepTimerLocally(minutes)
         viewModelScope.launchWithErrorHandling(application, musicState) {
             phoneConnection.sendSleepTimer(minutes)
@@ -1337,6 +1365,7 @@ class MusicViewModel @Inject constructor(
         // observeForever, not addSource: the relay must feed the SingleLiveEvent above, and it is
         // removed in onCleared so it dies with this ViewModel rather than with the connection.
         phoneConnection.notification.observeForever(notificationRelay)
+        phoneConnection.actionRefused.observeForever(refusalRelay)
 
         musicState.addSource(phoneConnection.musicState, musicStateListener)
         musicState.addSource(phoneConnection.customList) { customList.value = it }
@@ -1372,6 +1401,7 @@ class MusicViewModel @Inject constructor(
 
     override fun onCleared() {
         phoneConnection.notification.removeObserver(notificationRelay)
+        phoneConnection.actionRefused.removeObserver(refusalRelay)
         // Both feeds, not just the one: each holds observeForever hooks on PhoneConnection's
         // musicState, and that LiveData is one of the ones whose activity decides whether the
         // connection is open. The lyrics feed was left behind when the app closed on the Verse

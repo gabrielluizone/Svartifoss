@@ -66,6 +66,8 @@
         <item>Peldaños</item>
         <item>Caramelo</item>
         <item>Fantasma</item>
+        <item>Onda</item>
+        <item>Regla</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>Doble borde</item>
@@ -76,6 +78,8 @@
         <item>Dial central</item>
         <item>Halo superior</item>
         <item>Halo inferior</item>
+        <item>Pilar central</item>
+        <item>Columnas de basalto</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>Doble anillo</item>
@@ -88,6 +92,9 @@
         <item>Aguja</item>
         <item>Alternado</item>
         <item>Chispa</item>
+        <item>Onda</item>
+        <item>Minutos de la pista</item>
+        <item>Celdas hexagonales</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>Borde del bisel</item>
@@ -101,6 +108,8 @@
         <item>Doble pista</item>
         <item>Abierto a la izquierda</item>
         <item>Abierto a la derecha</item>
+        <item>Arco superior</item>
+        <item>Arco inferior</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Píldora compacta</item>
@@ -124,6 +133,7 @@
         <item>Línea de tiempo doble</item>
         <item>Segmentos (abajo)</item>
         <item>Pila central</item>
+        <item>Onda</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>Suave</item>
@@ -155,5 +165,8 @@
         <item>Burbuja</item>
         <item>Cromo</item>
         <item>Holográfico</item>
+        <item>Basalto</item>
+        <item>Estratos</item>
+        <item>Ruta</item>
     </string-array>
 </resources>

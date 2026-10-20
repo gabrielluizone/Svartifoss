@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Ses çubuğu kalınlığı</string>
+    <string name="setting_wear_volume_thickness_description">Ses çubuğu çizgisinin kalınlığı, varsayılanın yüzde 50 ile yüzde 180 arası. Daha kalın çizgiler de kenardan uzak durur.</string>
+    <string name="setting_wear_volume_haptics">Ses düzeyinde kuron titreşimi</string>
+    <string name="setting_wear_queue_dim_played">Çalınan parçaları soluklaştır</string>
+    <string name="setting_wear_queue_dim_played_description">Zaten çalınmış parçaları soluklaştırır, böylece sıradakiler öne çıkar.</string>
+    <string name="quick_block_lyric">Şarkı sözleri</string>
+    <string name="quick_block_lyric_description">Senkronize sözlerden o an söylenen satır ve sonraki. Saatte ona dokunmak sözlerin tamamını açar.</string>
+    <string name="quick_summary_lyric">Geçerli satır ve sonraki</string>
+    <string name="setting_wear_progress_weight">Halka kalınlığı</string>
+    <string name="setting_wear_aod_night_dim">Gece karartma</string>
+    <string name="aod_control_night_dim">Gece karartma</string>
+    <string name="setting_wear_aod_shift">Ekran yanması kaydırması</string>
+    <string name="aod_control_shift">Ekran yanması kaydırması</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Kapalı</item>
+        <item>Her yüzde 5\'te</item>
+        <item>Her yüzde 5\'te ve sınırlarda</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>İnce</item>
+        <item>Normal</item>
+        <item>Kalın</item>
+        <item>Çok kalın</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Kapalı</item>
+        <item>Gece · 22:00–07:00</item>
+        <item>Alacakaranlıktan şafağa · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Hafif</item>
+        <item>Normal</item>
+        <item>Geniş</item>
+    </string-array>
+</resources>

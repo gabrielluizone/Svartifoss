@@ -228,4 +228,5 @@
     <string name="quick_sleep_minutes">%1$d 分</string>
     <string name="quick_sleep_description">スリープ タイマー、残り %1$d 分です。タップして変更します</string>
     <string name="quick_sleep_off_description">スリープタイマーがオフです。タップして設定</string>
+    <string name="quick_lyric_plain">この歌詞にはタイミング情報がありません。タップして読めます。</string>
 </resources>

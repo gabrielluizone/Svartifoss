@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Kapselform</string>
+    <string name="setting_wear_queue_cover_shape">Omslagsform</string>
+    <string name="wear_queue_shape_follow">Följ köstilen</string>
+    <string name="queue_shape_note_title">Stil och former</string>
+    <string name="queue_shape_note_description">Stilen bestämmer färger och effekter. Kapselform och Omslagsform ändrar bara konturerna; Följ köstilen behåller varje stils egna.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Kapsel</item>
+        <item>Rundad</item>
+        <item>Mjuka hörn</item>
+        <item>Fyrkant</item>
+        <item>Blad</item>
+        <item>Pratbubbla</item>
+        <item>Sexhörning</item>
+    </string-array>
+</resources>

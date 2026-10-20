@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Debljina trake glasnoće</string>
+    <string name="setting_wear_volume_thickness_description">Debljina crte trake glasnoće, od 50 % do 180 % zadane. I deblje crte ostaju podalje od ruba.</string>
+    <string name="setting_wear_volume_haptics">Vibracija krune pri glasnoći</string>
+    <string name="setting_wear_queue_dim_played">Zatamni odsvirane pjesme</string>
+    <string name="setting_wear_queue_dim_played_description">Zatamnjuje stavke koje su već svirale kako bi se istaknule one koje tek dolaze.</string>
+    <string name="quick_block_lyric">Tekst pjesme</string>
+    <string name="quick_block_lyric_description">Redak koji se upravo pjeva i sljedeći, iz sinkroniziranog teksta. Dodirom na satu otvara se cijeli tekst.</string>
+    <string name="quick_summary_lyric">Trenutni i sljedeći redak</string>
+    <string name="setting_wear_progress_weight">Debljina prstena</string>
+    <string name="setting_wear_aod_night_dim">Noćno zatamnjenje</string>
+    <string name="aod_control_night_dim">Noćno zatamnjenje</string>
+    <string name="setting_wear_aod_shift">Pomak protiv urezivanja</string>
+    <string name="aod_control_shift">Pomak protiv urezivanja</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Isključeno</item>
+        <item>Svakih 5 %</item>
+        <item>Svakih 5 % i na granicama</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Tanak</item>
+        <item>Uobičajen</item>
+        <item>Debeo</item>
+        <item>Vrlo debeo</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Isključeno</item>
+        <item>Noć · 22:00–07:00</item>
+        <item>Od sumraka do zore · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Blag</item>
+        <item>Uobičajen</item>
+        <item>Širok</item>
+    </string-array>
+</resources>

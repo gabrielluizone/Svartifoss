@@ -741,6 +741,8 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>Material (may outline)</item>
         <item>Mga control na AMOLED</item>
         <item>Chrono (malaking clock)</item>
+        <item>Singsing ng minuto</item>
+        <item>Balangkas na basalt</item>
         <item>Poster</item>
         <item>Studio</item>
         <item>Immersive</item>
@@ -771,6 +773,8 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Kulay ng laging naka-on</string>
     <string-array name="wear_aod_color_entries">

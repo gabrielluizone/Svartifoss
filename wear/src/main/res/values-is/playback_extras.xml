@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Lok lags</string>
+    <string name="quick_sleep_track_end_description">Svefnteljari, gerir hlé þegar þessu lagi lýkur. Ýttu til að slökkva</string>
+    <string name="queue_position">Lag %1$d af %2$d</string>
+    <string name="progress_screen_speed_description">Spilunarhraði %1$s. Ýttu fyrir næsta hraða, haltu inni fyrir fínstillingu</string>
+    <string name="progress_screen_speed_slower">Hægar</string>
+    <string name="progress_screen_speed_faster">Hraðar</string>
+    <string name="progress_screen_speed_reset">Venjulegur hraði</string>
+    <string name="complication_playback_label">Spila og gera hlé</string>
+    <string name="complication_playback_idle">Spila</string>
+    <string name="complication_playback_idle_description">Ekkert í spilun. Ýttu til að halda áfram í síðasta forriti</string>
+    <string name="complication_playback_play_description">Í hléi: %1$s. Ýttu til að spila</string>
+    <string name="complication_playback_pause_description">Í spilun: %1$s. Ýttu til að gera hlé</string>
+    <string name="audio_block_dnd">Síminn er á Ónáðið ekki</string>
+    <string name="audio_block_muted">Slökkt er á miðlahljóðstyrk símans</string>
+    <string name="audio_block_safe_volume">Haldið í öruggu stigi. Hækkaðu einu sinni í símanum til að staðfesta</string>
+    <string name="refused_skip_app">%1$s leyfir ekki að sleppa lögum núna</string>
+    <string name="refused_skip">Þetta forrit leyfir ekki að sleppa lögum núna</string>
+    <string name="refused_seek_app">%1$s leyfir ekki að spóla núna</string>
+    <string name="refused_seek">Þetta forrit leyfir ekki að spóla núna</string>
+    <string name="tile_resume">Halda áfram í síðasta forriti</string>
+    <string name="tile_resume_hint">Spila heldur áfram í síðasta forriti</string>
+    <string name="recent_tile_title">Nýlega spilað</string>
+    <string name="recent_tile_description">Síðustu lögin sem þú spilaðir, einni snertingu frá því að spila aftur</string>
+    <string name="recent_tile_empty">Ekkert spilað enn</string>
+    <string name="recent_tile_play_description">Spila %1$s aftur</string>
+</resources>

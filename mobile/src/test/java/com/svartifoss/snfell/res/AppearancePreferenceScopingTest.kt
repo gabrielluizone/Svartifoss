@@ -38,7 +38,21 @@ class AppearancePreferenceScopingTest {
                 // photograph for each of twenty-two faces, and would put a storage reference
                 // inside every saved theme.
                 "custom_album_art_image",
-                "custom_album_art_folder"
+                "custom_album_art_folder",
+                // Two volume-panel options added after the community-theme vocabulary was last
+                // pinned. A scoped key joins every published profile and an older app cannot read a
+                // profile that names it, which needs the gallery's minimum app version raised with
+                // it - a release decision, not a side effect of adding a switch. Until that is made
+                // they are the user's own setting, the same on every face and not carried by a theme.
+                "wear_volume_thickness",
+                // The progress ring's weight, for the same reason.
+                "wear_progress_weight",
+                // The queue's dimming of played tracks, likewise.
+                "wear_queue_dim_played",
+                // The always-on display's night dimming and burn-in shift: behaviour of the panel,
+                // not a look, and kept out of the theme contract for the same reason.
+                "wear_aod_night_dim",
+                "wear_aod_shift"
         )
 
         /** Rows that are buttons, links or explanatory text rather than stored settings. */
@@ -46,6 +60,7 @@ class AppearancePreferenceScopingTest {
                 "reset_appearance",
                 "watch_streaming_shortcuts",
                 "quick_panel_open_note",
+                "queue_shape_note",
                 "screen_buttons_hint",
                 "wear_flex_axes_hint",
                 // A custom view over the real typography Preference objects; stores nothing.

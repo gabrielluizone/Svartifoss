@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Akhir lagu</string>
+    <string name="quick_sleep_track_end_description">Timer tidur, menjeda saat lagu ini berakhir. Ketuk untuk menonaktifkan</string>
+    <string name="queue_position">Lagu %1$d dari %2$d</string>
+    <string name="progress_screen_speed_description">Kecepatan putar %1$s. Ketuk untuk kecepatan berikutnya, tahan untuk penyesuaian halus</string>
+    <string name="progress_screen_speed_slower">Lebih lambat</string>
+    <string name="progress_screen_speed_faster">Lebih cepat</string>
+    <string name="progress_screen_speed_reset">Kecepatan normal</string>
+    <string name="complication_playback_label">Putar dan jeda</string>
+    <string name="complication_playback_idle">Putar</string>
+    <string name="complication_playback_idle_description">Tidak ada yang diputar. Ketuk untuk melanjutkan aplikasi terakhir</string>
+    <string name="complication_playback_play_description">Dijeda: %1$s. Ketuk untuk memutar</string>
+    <string name="complication_playback_pause_description">Diputar: %1$s. Ketuk untuk menjeda</string>
+    <string name="audio_block_dnd">Ponsel dalam mode Jangan Ganggu</string>
+    <string name="audio_block_muted">Volume media ponsel nonaktif</string>
+    <string name="audio_block_safe_volume">Ditahan di level aman. Naikkan sekali di ponsel untuk mengonfirmasi</string>
+    <string name="refused_skip_app">%1$s tidak mengizinkan lewati saat ini</string>
+    <string name="refused_skip">Aplikasi ini tidak mengizinkan lewati saat ini</string>
+    <string name="refused_seek_app">%1$s tidak mengizinkan geser posisi saat ini</string>
+    <string name="refused_seek">Aplikasi ini tidak mengizinkan geser posisi saat ini</string>
+    <string name="tile_resume">Lanjutkan aplikasi terakhir</string>
+    <string name="tile_resume_hint">Putar melanjutkan aplikasi terakhir</string>
+    <string name="recent_tile_title">Baru diputar</string>
+    <string name="recent_tile_description">Lagu terakhir yang Anda putar, sekali ketuk untuk diputar lagi</string>
+    <string name="recent_tile_empty">Belum ada yang diputar</string>
+    <string name="recent_tile_play_description">Putar %1$s lagi</string>
+</resources>

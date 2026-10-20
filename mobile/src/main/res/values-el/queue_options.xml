@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Σχήμα κάψουλας</string>
+    <string name="setting_wear_queue_cover_shape">Σχήμα εξωφύλλου</string>
+    <string name="wear_queue_shape_follow">Όπως το στυλ ουράς</string>
+    <string name="queue_shape_note_title">Στυλ και σχήματα</string>
+    <string name="queue_shape_note_description">Το στυλ ορίζει τα χρώματα και τα εφέ. Το σχήμα κάψουλας και το σχήμα εξωφύλλου αλλάζουν μόνο τα περιγράμματα· το «Όπως το στυλ ουράς» κρατά αυτά του κάθε στυλ.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Κάψουλα</item>
+        <item>Στρογγυλεμένο</item>
+        <item>Απαλές γωνίες</item>
+        <item>Τετράγωνο</item>
+        <item>Φύλλο</item>
+        <item>Συννεφάκι διαλόγου</item>
+        <item>Εξάγωνο</item>
+    </string-array>
+</resources>

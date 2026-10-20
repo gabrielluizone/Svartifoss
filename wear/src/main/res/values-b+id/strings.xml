@@ -207,4 +207,5 @@
     <string name="quick_sleep_minutes">%1$d menit</string>
     <string name="quick_sleep_description">Pengatur waktu tidur, %1$d menit lagi. Ketuk untuk mengubah</string>
     <string name="quick_sleep_off_description">Pengatur waktu tidur mati. Ketuk untuk menyetel</string>
+    <string name="quick_lyric_plain">Lirik ini tidak memiliki waktu. Ketuk untuk membacanya.</string>
 </resources>

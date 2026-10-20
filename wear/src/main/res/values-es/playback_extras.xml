@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Fin de la pista</string>
+    <string name="quick_sleep_track_end_description">Temporizador, pausa cuando termine esta pista. Toca para desactivarlo</string>
+    <string name="queue_position">Pista %1$d de %2$d</string>
+    <string name="progress_screen_speed_description">Velocidad %1$s. Toca para la siguiente velocidad, mantén pulsado para ajuste fino</string>
+    <string name="progress_screen_speed_slower">Más lento</string>
+    <string name="progress_screen_speed_faster">Más rápido</string>
+    <string name="progress_screen_speed_reset">Velocidad normal</string>
+    <string name="complication_playback_label">Reproducir y pausar</string>
+    <string name="complication_playback_idle">Reproducir</string>
+    <string name="complication_playback_idle_description">No se reproduce nada. Toca para reanudar la última app</string>
+    <string name="complication_playback_play_description">En pausa: %1$s. Toca para reproducir</string>
+    <string name="complication_playback_pause_description">Reproduciendo: %1$s. Toca para pausar</string>
+    <string name="audio_block_dnd">El teléfono está en No molestar</string>
+    <string name="audio_block_muted">El volumen multimedia del teléfono está apagado</string>
+    <string name="audio_block_safe_volume">Limitado a un nivel seguro. Súbelo una vez en el teléfono para confirmar</string>
+    <string name="refused_skip_app">%1$s no permite saltar ahora mismo</string>
+    <string name="refused_skip">Esta app no permite saltar ahora mismo</string>
+    <string name="refused_seek_app">%1$s no permite avanzar o retroceder ahora mismo</string>
+    <string name="refused_seek">Esta app no permite avanzar o retroceder ahora mismo</string>
+    <string name="tile_resume">Reanudar la última app</string>
+    <string name="tile_resume_hint">Reproducir reanuda la última app</string>
+    <string name="recent_tile_title">Reproducido recientemente</string>
+    <string name="recent_tile_description">Las últimas pistas que escuchaste, a un toque de volver a sonar</string>
+    <string name="recent_tile_empty">Aún no se ha reproducido nada</string>
+    <string name="recent_tile_play_description">Volver a reproducir %1$s</string>
+</resources>

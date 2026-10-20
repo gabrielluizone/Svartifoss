@@ -66,6 +66,8 @@
         <item>台階</item>
         <item>糖果</item>
         <item>幽靈</item>
+        <item>波浪</item>
+        <item>刻度尺</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>雙邊緣</item>
@@ -76,6 +78,8 @@
         <item>中央錶盤</item>
         <item>頂部光環</item>
         <item>底部光環</item>
+        <item>置中立柱</item>
+        <item>玄武岩柱</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>雙環</item>
@@ -88,6 +92,9 @@
         <item>指針</item>
         <item>交替</item>
         <item>火花</item>
+        <item>波浪</item>
+        <item>曲目分鐘</item>
+        <item>六邊形格</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>表圈邊緣</item>
@@ -101,6 +108,8 @@
         <item>雙軌</item>
         <item>從左側打開</item>
         <item>從右側打開</item>
+        <item>頂部圓弧</item>
+        <item>底部圓弧</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>緊湊膠囊</item>
@@ -124,6 +133,7 @@
         <item>雙時間線</item>
         <item>分段（底部）</item>
         <item>中央堆疊</item>
+        <item>波浪</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>柔和</item>
@@ -155,5 +165,8 @@
         <item>氣泡</item>
         <item>鉻</item>
         <item>全息</item>
+        <item>玄武岩</item>
+        <item>地層</item>
+        <item>路線</item>
     </string-array>
 </resources>

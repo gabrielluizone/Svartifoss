@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Hình dạng thẻ</string>
+    <string name="setting_wear_queue_cover_shape">Hình dạng ảnh bìa</string>
+    <string name="wear_queue_shape_follow">Theo kiểu hàng đợi</string>
+    <string name="queue_shape_note_title">Kiểu và hình dạng</string>
+    <string name="queue_shape_note_description">Kiểu quyết định màu sắc và hiệu ứng. Hình dạng thẻ và Hình dạng ảnh bìa chỉ thay đổi đường viền; Theo kiểu hàng đợi giữ đường viền riêng của từng kiểu.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Viên nang</item>
+        <item>Bo tròn</item>
+        <item>Góc mềm</item>
+        <item>Vuông</item>
+        <item>Lá</item>
+        <item>Bong bóng thoại</item>
+        <item>Lục giác</item>
+    </string-array>
+</resources>

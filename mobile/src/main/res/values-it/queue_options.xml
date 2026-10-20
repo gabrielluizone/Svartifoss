@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Forma della capsula</string>
+    <string name="setting_wear_queue_cover_shape">Forma della copertina</string>
+    <string name="wear_queue_shape_follow">Segui lo stile della coda</string>
+    <string name="queue_shape_note_title">Stile e forme</string>
+    <string name="queue_shape_note_description">Lo stile definisce colori ed effetti. Forma della capsula e Forma della copertina cambiano solo i contorni; Segui lo stile della coda mantiene quelli di ogni stile.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Capsula</item>
+        <item>Arrotondata</item>
+        <item>Angoli morbidi</item>
+        <item>Quadrata</item>
+        <item>Foglia</item>
+        <item>Fumetto</item>
+        <item>Esagono</item>
+    </string-array>
+</resources>

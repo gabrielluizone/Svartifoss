@@ -54,14 +54,18 @@ class PlayerEditorModelTest {
     }
 
     @Test
-    fun `only the face selector escapes face scoping`() {
+    fun `only the documented keys escape face scoping`() {
         // Scoping the face selector by face would be circular; everything else on an appearance
-        // page must be per-face or it silently repaints every face at once.
+        // page must be per-face or it silently repaints every face at once. The one other
+        // exception is the ring's weight, kept out of the public theme contract on purpose - see
+        // MiscPreferences.WEAR_PROGRESS_WEIGHT.
         val unscoped = PlayerEditorModel.keys
                 .filter { PlayerEditorModel.specFor(it)?.persisted == true }
                 .filterNot(FaceScopedPreferences::isScoped)
 
-        assertEquals(listOf(MiscPreferences.WEAR_SCREEN_FACE.key), unscoped)
+        assertEquals(
+                setOf(MiscPreferences.WEAR_SCREEN_FACE.key, MiscPreferences.WEAR_PROGRESS_WEIGHT.key),
+                unscoped.toSet())
     }
 
     @Test
@@ -508,6 +512,7 @@ class PlayerEditorModelTest {
      */
     private val namedByTheirValue = mapOf(
             "wear_progress_style" to "Dashed, Comet, Needle: the value names what it draws",
+            "wear_progress_weight" to "Thin, Heavy, Bold: the value names the weight it draws",
             "wear_progress_layout" to "Bezel edge, Open at bottom: the value names the geometry",
             "wear_carousel_card_shape" to "a shape is its own name",
             "wear_note_cover_shape" to "a shape is its own name",

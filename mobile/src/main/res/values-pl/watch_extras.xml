@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_volume_thickness">Grubość paska głośności</string>
+    <string name="setting_wear_volume_thickness_description">Grubość linii paska głośności, od 50% do 180% domyślnej. Nawet grubsze linie pozostają z dala od krawędzi.</string>
+    <string name="setting_wear_volume_haptics">Wibracje koronki przy głośności</string>
+    <string name="setting_wear_queue_dim_played">Przyciemniaj odtworzone utwory</string>
+    <string name="setting_wear_queue_dim_played_description">Przyciemnia utwory, które już grały, aby wyróżnić te nadchodzące.</string>
+    <string name="quick_block_lyric">Tekst piosenki</string>
+    <string name="quick_block_lyric_description">Śpiewana właśnie linijka i następna, z synchronizowanego tekstu. Dotknięcie jej na zegarku otwiera cały tekst.</string>
+    <string name="quick_summary_lyric">Bieżąca i następna linijka</string>
+    <string name="setting_wear_progress_weight">Grubość pierścienia</string>
+    <string name="setting_wear_aod_night_dim">Przyciemnianie nocą</string>
+    <string name="aod_control_night_dim">Przyciemnianie nocą</string>
+    <string name="setting_wear_aod_shift">Przesunięcie przeciw wypaleniu</string>
+    <string name="aod_control_shift">Przesunięcie przeciw wypaleniu</string>
+    <string-array name="wear_volume_haptics_entries">
+        <item>Wyłączone</item>
+        <item>Co 5%</item>
+        <item>Co 5% i na granicach</item>
+    </string-array>
+    <string-array name="wear_progress_weight_entries">
+        <item>Cienki</item>
+        <item>Normalny</item>
+        <item>Gruby</item>
+        <item>Bardzo gruby</item>
+    </string-array>
+    <string-array name="wear_aod_night_dim_entries">
+        <item>Wyłączone</item>
+        <item>Noc · 22:00–07:00</item>
+        <item>Od zmierzchu do świtu · 19:00–08:00</item>
+    </string-array>
+    <string-array name="wear_aod_shift_entries">
+        <item>Łagodne</item>
+        <item>Normalny</item>
+        <item>Szerokie</item>
+    </string-array>
+</resources>

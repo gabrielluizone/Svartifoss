@@ -8,6 +8,15 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Row
+import androidx.compose.runtime.remember
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import com.svartifoss.snfell.common.PlaybackSpeeds
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -17,6 +26,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -34,6 +45,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.ProgressShape
 import com.svartifoss.snfell.common.R as commonR
 import com.svartifoss.snfell.common.TrackTimeFormat
 import com.svartifoss.snfell.watch.view.CircularProgressSeekBar
@@ -86,7 +98,15 @@ fun ProgressScreen(
         onTogglePlayPause: () -> Unit,
         onSkipBy: (Long) -> Unit,
         onCycleSpeed: () -> Unit,
-        onDismiss: () -> Unit
+        onDismiss: () -> Unit,
+        /** The speed to show: the one a press just chose, else the reported one. */
+        shownSpeed: Float = state.speed,
+        /** Whether the fine speed control is open over the screen - see [FineSpeedPanel]. */
+        fineSpeedOpen: Boolean = false,
+        onOpenFineSpeed: () -> Unit = {},
+        onCloseFineSpeed: () -> Unit = {},
+        onStepSpeed: (Int) -> Unit = {},
+        onResetSpeed: () -> Unit = {}
 ) {
     PanelScaffold(appearance, backdrop, albumArt, showBackdrop, onDismiss) {
         val configuration = LocalConfiguration.current
@@ -108,6 +128,10 @@ fun ProgressScreen(
                     ring.ringStyle = RingStyle.fromPref(appearance.progressStyle)
                     ring.ringLayout = ProgressRingLayout.fromPref(appearance.progressLayout)
                     ring.gradientEnabled = appearance.progressGradient
+                    ring.weightScale = ProgressShape.weightScale(appearance.progressWeight)
+                    ring.trackDurationMs = state.durationMs
+                    // A wave ring travels while the music plays, here as on the player.
+                    ring.playing = state.playing
                     ring.setPaletteColors(
                             appearance.triad.primary,
                             appearance.triad.secondary,
@@ -159,18 +183,21 @@ fun ProgressScreen(
                             "vertical_right" -> OverlayProgressMeter.Mode.VERTICAL_RIGHT
                             "dial" -> OverlayProgressMeter.Mode.DIAL
                             "twin" -> OverlayProgressMeter.Mode.TWIN
+                            "wave_timeline" -> OverlayProgressMeter.Mode.WAVE
                             else -> OverlayProgressMeter.Mode.TIMELINE
                         }
+                        meter.animating = state.playing
                     })
         }
 
         SpeedChip(
-                speed = state.speed,
+                speed = shownSpeed,
                 appearance = appearance,
                 modifier = Modifier
                         .align(Alignment.Center)
                         .offset(y = screenHeight * -SPEED_VERTICAL_OFFSET_FRACTION),
-                onClick = onCycleSpeed)
+                onClick = onCycleSpeed,
+                onLongClick = onOpenFineSpeed)
         // "split"/"stacked_pill" stack the target over the total; every other style is the single
         // position, matching applySeekOverlayStyle.
         val readout = when (appearance.readoutStyle) {
@@ -248,6 +275,21 @@ fun ProgressScreen(
                 onFive = { onSkipBy(SKIP_FIVE_MS) },
                 onTen = { onSkipBy(SKIP_TEN_MS) },
                 onThirty = { onSkipBy(SKIP_THIRTY_MS) })
+
+        // Last, so it sits over every control on the screen and takes their taps while open.
+        AnimatedVisibility(
+                visible = fineSpeedOpen,
+                modifier = Modifier.fillMaxSize(),
+                enter = fadeIn(),
+                exit = fadeOut()
+        ) {
+            FineSpeedPanel(
+                    speed = shownSpeed,
+                    appearance = appearance,
+                    onStep = onStepSpeed,
+                    onReset = onResetSpeed,
+                    onClose = onCloseFineSpeed)
+        }
     }
 }
 
@@ -273,28 +315,151 @@ private val SKIP_BUTTON_SIZE = 36.dp
 private val FEATURED_SKIP_BUTTON_SIZE = 48.dp
 private val SKIP_BUTTON_GAP = 4.dp
 
+/**
+ * The speed pill. A tap steps the shared ladder ([PlaybackSpeeds.next]); a long press opens the
+ * fine control, which is the only way to reach the tenths and the range above 2x - kept off the
+ * tap so the one-press habit the quick panel's chip teaches still works here.
+ */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun SpeedChip(
         speed: Float,
         appearance: PanelAppearance,
         modifier: Modifier = Modifier,
-        onClick: () -> Unit
+        onClick: () -> Unit,
+        onLongClick: () -> Unit
 ) {
     val fill = PanelReadout.tonalSurface(appearance.triad.primary, .34f)
+    val description = stringResource(R.string.progress_screen_speed_description, PlaybackSpeeds.label(speed))
     Box(
             modifier = modifier
                     .clip(RoundedCornerShape(50))
                     .background(Color(fill))
-                    .clickable(onClick = onClick)
+                    .combinedClickable(onClick = onClick, onLongClick = onLongClick)
+                    .semantics { contentDescription = description }
                     .padding(horizontal = 8.dp, vertical = 4.dp),
             contentAlignment = Alignment.Center
     ) {
         Text(
-                text = stringResource(R.string.progress_screen_speed_format, speed),
+                text = PlaybackSpeeds.label(speed),
                 color = Color(PanelReadout.contrastingIconColor(fill)),
                 fontSize = 10.sp)
     }
 }
+
+/**
+ * The fine speed control: the speed large in the middle, a step of a tenth on either side, and a
+ * way back to 1x. The crown steps it too while it is open (see `ProgressActivity`), which is the
+ * quicker of the two for a long move. A tap on the dimmed ground closes it.
+ *
+ * Over the screen rather than a screen of its own because it is a detail of this one: the ring
+ * and the time stay visible underneath, and closing it lands exactly where it was opened.
+ */
+@Composable
+private fun FineSpeedPanel(
+        speed: Float,
+        appearance: PanelAppearance,
+        onStep: (Int) -> Unit,
+        onReset: () -> Unit,
+        onClose: () -> Unit
+) {
+    val fill = PanelReadout.tonalSurface(appearance.triad.primary, .34f)
+    val onFill = Color(PanelReadout.contrastingIconColor(fill))
+    val atNormal = kotlin.math.abs(speed - 1f) < 0.001f
+    // A stem press closes the control, not the screen under it.
+    BackHandler(onBack = onClose)
+    Box(
+            modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = FINE_SPEED_SCRIM_ALPHA))
+                    .clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = onClose),
+            contentAlignment = Alignment.Center
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                    text = stringResource(R.string.quick_tool_speed),
+                    color = Color.White.copy(alpha = .7f),
+                    fontSize = 12.sp)
+            Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier.padding(vertical = 6.dp)
+            ) {
+                FineSpeedButton(
+                        glyph = "\u2212",
+                        description = stringResource(R.string.progress_screen_speed_slower),
+                        enabled = speed > PlaybackSpeeds.FINE_MIN + 0.001f,
+                        fill = fill,
+                        onFill = onFill,
+                        onClick = { onStep(-1) })
+                // A fixed width, so "1×" and "2.75×" leave the two buttons where the finger
+                // already is: a row that re-centred on every step moved its own targets.
+                Text(
+                        text = PlaybackSpeeds.label(speed),
+                        color = Color.White,
+                        fontSize = 28.sp,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        modifier = Modifier
+                                .width(FINE_SPEED_VALUE_WIDTH)
+                                .semantics { contentDescription = PlaybackSpeeds.label(speed) })
+                FineSpeedButton(
+                        glyph = "+",
+                        description = stringResource(R.string.progress_screen_speed_faster),
+                        enabled = speed < PlaybackSpeeds.FINE_MAX - 0.001f,
+                        fill = fill,
+                        onFill = onFill,
+                        onClick = { onStep(1) })
+            }
+            Box(
+                    modifier = Modifier
+                            .clip(RoundedCornerShape(50))
+                            .background(Color(fill).copy(alpha = if (atNormal) .4f else 1f))
+                            .clickable(enabled = !atNormal, onClick = onReset)
+                            .padding(horizontal = 12.dp, vertical = 5.dp),
+                    contentAlignment = Alignment.Center
+            ) {
+                Text(
+                        text = stringResource(R.string.progress_screen_speed_reset),
+                        color = onFill.copy(alpha = if (atNormal) .6f else 1f),
+                        fontSize = 11.sp)
+            }
+        }
+    }
+}
+
+@Composable
+private fun FineSpeedButton(
+        glyph: String,
+        description: String,
+        enabled: Boolean,
+        fill: Int,
+        onFill: Color,
+        onClick: () -> Unit
+) {
+    Box(
+            modifier = Modifier
+                    .size(FINE_SPEED_BUTTON_SIZE)
+                    .clip(CircleShape)
+                    .background(Color(fill).copy(alpha = if (enabled) 1f else .4f))
+                    .clickable(enabled = enabled, onClick = onClick)
+                    .semantics { contentDescription = description },
+            contentAlignment = Alignment.Center
+    ) {
+        Text(
+                text = glyph,
+                color = onFill.copy(alpha = if (enabled) 1f else .5f),
+                fontSize = 22.sp)
+    }
+}
+
+/** Dark enough that the time readout underneath does not show through the speed. */
+private const val FINE_SPEED_SCRIM_ALPHA = 0.93f
+private val FINE_SPEED_BUTTON_SIZE = 40.dp
+private val FINE_SPEED_VALUE_WIDTH = 76.dp
 
 private fun formatDuration(ms: Long): String = TrackTimeFormat.format(ms, Locale.US)
 

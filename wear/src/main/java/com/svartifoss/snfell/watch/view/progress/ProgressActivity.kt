@@ -44,6 +44,9 @@ private const val POSITION_REFRESH_MS = 500L
  *  same settle delay before one turn becomes one seek. */
 private const val ROTARY_SEEK_SCALE = 0.0011f
 private const val ROTARY_SEEK_COMMIT_DELAY_MS = 400L
+/** Crown travel per tenth while the fine speed control is open: about one volume step's worth, so
+ *  a detent-by-detent turn moves the speed one tenth at a time on a typical crown. */
+private const val ROTARY_SPEED_PX_PER_STEP = 60f
 
 /**
  * Full-screen playback-progress control: seek ring and symmetric 5/10/30-second skip controls,
@@ -88,7 +91,27 @@ class ProgressActivity : ComponentActivity() {
         fraction?.let { viewModel.seekToFraction(it) }
     }
 
+    /**
+     * Whether the fine speed control is open. Compose state so the overlay follows it, and read
+     * here so the crown changes the speed instead of seeking while it is.
+     */
+    private val fineSpeedOpen = mutableStateOf(false)
+
+    /** Crown travel not yet spent on a speed step - see [ROTARY_SPEED_PX_PER_STEP]. */
+    private var rotarySpeedRemainder = 0f
+
     override fun onGenericMotionEvent(ev: MotionEvent): Boolean {
+        if (ev.action == MotionEvent.ACTION_SCROLL && RotaryEncoderHelper.isFromRotaryEncoder(ev) &&
+                fineSpeedOpen.value) {
+            rotarySpeedRemainder += -RotaryEncoderHelper.getRotaryAxisValue(ev) *
+                    RotaryEncoderHelper.getScaledScrollFactor(this)
+            val steps = (rotarySpeedRemainder / ROTARY_SPEED_PX_PER_STEP).toInt()
+            if (steps != 0) {
+                rotarySpeedRemainder -= steps * ROTARY_SPEED_PX_PER_STEP
+                viewModel.stepSpeedFine(steps)
+            }
+            return true
+        }
         if (ev.action == MotionEvent.ACTION_SCROLL && RotaryEncoderHelper.isFromRotaryEncoder(ev)) {
             val duration = viewModel.state.value?.durationMs ?: 0L
             if (duration <= 0L) return true
@@ -136,6 +159,11 @@ class ProgressActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTitle(R.string.progress_screen_title)
+        // Opened straight into the fine speed control from a long press on the quick panel's
+        // speed chip. Only on a fresh start: a recreated activity keeps whatever was on screen.
+        if (savedInstanceState == null && intent.getBooleanExtra(EXTRA_FINE_SPEED, false)) {
+            fineSpeedOpen.value = true
+        }
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         // See VolumeActivity for why the panel settings are read through the resolved appearance
@@ -149,6 +177,7 @@ class ProgressActivity : ComponentActivity() {
 
         setContent {
             val state by viewModel.state.observeAsState(ProgressUiState())
+            val chosenSpeed by viewModel.chosenSpeed.observeAsState()
             val albumArt by viewModel.albumArt.observeAsState()
             var livePositionMs by remember { mutableLongStateOf(state.positionMs) }
 
@@ -240,8 +269,22 @@ class ProgressActivity : ComponentActivity() {
                             viewModel.skipBy(deltaMs)
                         },
                         onCycleSpeed = viewModel::cycleSpeed,
-                        onDismiss = ::safeFinish)
+                        onDismiss = ::safeFinish,
+                        shownSpeed = chosenSpeed ?: state.speed,
+                        fineSpeedOpen = fineSpeedOpen.value,
+                        onOpenFineSpeed = {
+                            rotarySpeedRemainder = 0f
+                            fineSpeedOpen.value = true
+                        },
+                        onCloseFineSpeed = { fineSpeedOpen.value = false },
+                        onStepSpeed = viewModel::stepSpeedFine,
+                        onResetSpeed = viewModel::resetSpeed)
             }
         }
+    }
+
+    companion object {
+        /** Boolean extra: open with the fine speed control already showing. */
+        const val EXTRA_FINE_SPEED = "com.svartifoss.snfell.watch.extra.FINE_SPEED"
     }
 }

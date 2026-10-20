@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Strings for the playback controls added after the REA analysis (sleep timer end of track, queue position, fine speed, playback complication, phone audio hints, refusals, Tiles). Kept out of strings.xml so concurrent work there cannot collide. -->
+<resources>
+    <string name="quick_sleep_track_end">Nummerets slutning</string>
+    <string name="quick_sleep_track_end_description">Sleeptimer, sætter på pause når dette nummer slutter. Tryk for at slå fra</string>
+    <string name="queue_position">Nummer %1$d af %2$d</string>
+    <string name="progress_screen_speed_description">Afspilningshastighed %1$s. Tryk for næste hastighed, hold for finjustering</string>
+    <string name="progress_screen_speed_slower">Langsommere</string>
+    <string name="progress_screen_speed_faster">Hurtigere</string>
+    <string name="progress_screen_speed_reset">Normal hastighed</string>
+    <string name="complication_playback_label">Afspil og pause</string>
+    <string name="complication_playback_idle">Afspil</string>
+    <string name="complication_playback_idle_description">Intet afspilles. Tryk for at genoptage den seneste app</string>
+    <string name="complication_playback_play_description">Sat på pause: %1$s. Tryk for at afspille</string>
+    <string name="complication_playback_pause_description">Afspiller: %1$s. Tryk for at sætte på pause</string>
+    <string name="audio_block_dnd">Telefonen er i Forstyr ikke</string>
+    <string name="audio_block_muted">Telefonens medielydstyrke er slået fra</string>
+    <string name="audio_block_safe_volume">Holdt på et sikkert niveau. Skru op én gang på telefonen for at bekræfte</string>
+    <string name="refused_skip_app">%1$s tillader ikke spring lige nu</string>
+    <string name="refused_skip">Denne app tillader ikke spring lige nu</string>
+    <string name="refused_seek_app">%1$s tillader ikke spoling lige nu</string>
+    <string name="refused_seek">Denne app tillader ikke spoling lige nu</string>
+    <string name="tile_resume">Genoptag den seneste app</string>
+    <string name="tile_resume_hint">Afspil genoptager den seneste app</string>
+    <string name="recent_tile_title">Afspillet for nylig</string>
+    <string name="recent_tile_description">Dine senest afspillede numre, ét tryk fra at blive afspillet igen</string>
+    <string name="recent_tile_empty">Intet afspillet endnu</string>
+    <string name="recent_tile_play_description">Afspil %1$s igen</string>
+</resources>

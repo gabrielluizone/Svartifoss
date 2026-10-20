@@ -739,6 +739,8 @@ Svartifoss хабарландыруларыңыздың мазмұнын ешқ�
         <item>Material (жиектелген)</item>
         <item>AMOLED басқарулары</item>
         <item>Chrono (үлкен сағат)</item>
+        <item>Минут сақинасы</item>
+        <item>Базальт жақтауы</item>
         <item>Постер</item>
         <item>Студия</item>
         <item>Иммерсивті</item>
@@ -769,6 +771,8 @@ Svartifoss хабарландыруларыңыздың мазмұнын ешқ�
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Әрдайым қосулы түс</string>
     <string-array name="wear_aod_color_entries">

@@ -208,4 +208,5 @@
     <string name="quick_sleep_minutes">%1$d min</string>
     <string name="quick_sleep_description">Temporizator de oprire, %1$d minute rămase. Atingeți pentru a schimba</string>
     <string name="quick_sleep_off_description">Temporizator de repaus oprit. Atingeți pentru a seta</string>
+    <string name="quick_lyric_plain">Aceste versuri nu au marcaje de timp. Atingeți pentru a le citi.</string>
 </resources>

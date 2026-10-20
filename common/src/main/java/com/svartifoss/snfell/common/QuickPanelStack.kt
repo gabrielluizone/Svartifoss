@@ -312,6 +312,15 @@ enum class QuickPanelBlockType(val token: String) {
     FAVORITES("favorites"),
 
     /**
+     * The line being sung and the one after it, from the synced lyrics - a glance at the words that
+     * a long press of a screen never gave. Tapping it opens the lyrics screen.
+     *
+     * It costs a lookup on the phone per track, so the watch only follows the track while the panel
+     * is open with this block in it, the same rule the Verse face lives by.
+     */
+    LYRIC("lyric"),
+
+    /**
      * The whole actions menu: repeated as rows in the panel - what it has always listed - or kept
      * out of the way behind one pill that opens it ([ActionsMode]). One block with a choice rather
      * than two blocks, because a panel never wants both, and "show them all" and "show a way to

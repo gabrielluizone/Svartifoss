@@ -565,18 +565,18 @@ test("individual title and artist fonts retain their Flex contracts", () => {
 test("the published vocabulary is pinned to the app version that can read it", () => {
     assert.deepEqual(
         { settings: SETTING_KEYS.length, minimumAppVersion: MINIMUM_APP_VERSION },
-        { settings: 196, minimumAppVersion: "4.0" },
+        { settings: 198, minimumAppVersion: "4.3" },
     );
 });
 
 test("a complete approved intake creates a preview-free public profile", () => {
     const candidate = validateApprovedDocument(approvedDocument());
 
-    assert.equal(SETTING_KEYS.length, 196);
+    assert.equal(SETTING_KEYS.length, 198);
     assert.equal(candidate.id, ID);
     assert.equal(candidate.publicProfile.author, "Theme maker");
     assert.equal(candidate.publicProfile.publishedAt, PUBLISHED_AT);
-    assert.equal(candidate.summary.minimumAppVersion, "4.0");
+    assert.equal(candidate.summary.minimumAppVersion, "4.3");
     assert.equal(Object.hasOwn(candidate.publicProfile, "moderationPreviewWebpBase64"), false);
     assert.deepEqual(Object.keys(candidate.publicProfile.settings), SETTING_KEYS);
 });

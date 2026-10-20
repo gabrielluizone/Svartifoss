@@ -129,6 +129,8 @@
         <item>Steps</item>
         <item>Candy</item>
         <item>Ghost</item>
+        <item>Wave</item>
+        <item>Ruler</item>
     </string-array>
     <string-array name="wear_volume_style_extra_values" translatable="false">
         <item>beads</item>
@@ -139,6 +141,8 @@
         <item>steps</item>
         <item>candy</item>
         <item>ghost</item>
+        <item>wave</item>
+        <item>ruler</item>
     </string-array>
 
     <string-array name="wear_volume_layout_extra_entries">
@@ -150,6 +154,8 @@
         <item>Center dial</item>
         <item>Top halo</item>
         <item>Bottom halo</item>
+        <item>Center pillar</item>
+        <item>Basalt columns</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_values" translatable="false">
         <item>double_edge</item>
@@ -160,6 +166,8 @@
         <item>dial</item>
         <item>halo_top</item>
         <item>halo_bottom</item>
+        <item>pillar</item>
+        <item>basalt</item>
     </string-array>
 
     <string-array name="wear_progress_style_extra_entries">
@@ -173,6 +181,9 @@
         <item>Needle</item>
         <item>Alternating</item>
         <item>Spark</item>
+        <item>Wave</item>
+        <item>Track minutes</item>
+        <item>Hex cells</item>
     </string-array>
     <string-array name="wear_progress_style_extra_values" translatable="false">
         <item>double</item>
@@ -185,6 +196,9 @@
         <item>needle</item>
         <item>alternating</item>
         <item>spark</item>
+        <item>wave</item>
+        <item>minutes</item>
+        <item>hex_cells</item>
     </string-array>
 
     <string-array name="wear_progress_layout_entries">
@@ -199,6 +213,8 @@
         <item>Double track</item>
         <item>Open on left</item>
         <item>Open on right</item>
+        <item>Top arc</item>
+        <item>Bottom arc</item>
     </string-array>
     <string-array name="wear_progress_layout_values" translatable="false">
         <item>edge</item>
@@ -212,6 +228,8 @@
         <item>double</item>
         <item>open_left</item>
         <item>open_right</item>
+        <item>top_arc</item>
+        <item>bottom_arc</item>
     </string-array>
 
     <string-array name="wear_seek_style_extra_entries">
@@ -249,6 +267,7 @@
         <item>Twin timeline</item>
         <item>Segments (bottom)</item>
         <item>Center stack</item>
+        <item>Wave</item>
     </string-array>
     <string-array name="wear_seek_layout_extra_values" translatable="false">
         <item>timeline_top</item>
@@ -260,6 +279,7 @@
         <item>twin</item>
         <item>segments_bottom</item>
         <item>center_stack</item>
+        <item>wave_timeline</item>
     </string-array>
 
     <string-array name="wear_quick_panel_style_extra_entries">
@@ -315,6 +335,9 @@
         <item>Bubble</item>
         <item>Chrome</item>
         <item>Holographic</item>
+        <item>Basalt</item>
+        <item>Strata</item>
+        <item>Route</item>
     </string-array>
     <string-array name="wear_queue_style_extra_values" translatable="false">
         <item>soft</item>
@@ -325,5 +348,8 @@
         <item>bubble</item>
         <item>chrome</item>
         <item>holo</item>
+        <item>basalt</item>
+        <item>strata</item>
+        <item>route</item>
     </string-array>
 </resources>

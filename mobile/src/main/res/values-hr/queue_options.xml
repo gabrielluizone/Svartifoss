@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">Oblik kapsule</string>
+    <string name="setting_wear_queue_cover_shape">Oblik omota</string>
+    <string name="wear_queue_shape_follow">Prati stil reda čekanja</string>
+    <string name="queue_shape_note_title">Stil i oblici</string>
+    <string name="queue_shape_note_description">Stil određuje boje i efekte. Oblik kapsule i Oblik omota mijenjaju samo obrise; Prati stil reda čekanja zadržava one svakog stila.</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>Kapsula</item>
+        <item>Zaobljeno</item>
+        <item>Meki kutovi</item>
+        <item>Kvadrat</item>
+        <item>List</item>
+        <item>Oblačić</item>
+        <item>Šesterokut</item>
+    </string-array>
+</resources>

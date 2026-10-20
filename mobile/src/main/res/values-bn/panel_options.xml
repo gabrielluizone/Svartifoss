@@ -66,6 +66,8 @@
         <item>ধাপ</item>
         <item>ক্যান্ডি</item>
         <item>ভূত</item>
+        <item>তরঙ্গ</item>
+        <item>স্কেল</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>ডাবল এজ</item>
@@ -76,6 +78,8 @@
         <item>মধ্যের ডায়াল</item>
         <item>ওপরের হ্যালো</item>
         <item>নিচের হ্যালো</item>
+        <item>কেন্দ্রীয় স্তম্ভ</item>
+        <item>ব্যাসল্ট স্তম্ভ</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>ডাবল রিং</item>
@@ -88,6 +92,9 @@
         <item>সুঁই</item>
         <item>পরপর বিকল্প</item>
         <item>স্ফুলিঙ্গ</item>
+        <item>তরঙ্গ</item>
+        <item>গানের মিনিট</item>
+        <item>ষড়ভুজ কোষ</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>বেজেলের প্রান্ত</item>
@@ -101,6 +108,8 @@
         <item>ডাবল ট্র্যাক</item>
         <item>বাম দিক থেকে খুলুন</item>
         <item>ডান দিক থেকে খুলুন</item>
+        <item>উপরের চাপ</item>
+        <item>নিচের চাপ</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>কমপ্যাক্ট পিল</item>
@@ -124,6 +133,7 @@
         <item>টুইন টাইমলাইন</item>
         <item>সেগমেন্ট (নিচে)</item>
         <item>মধ্যের স্ট্যাক</item>
+        <item>তরঙ্গ</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>নরম</item>
@@ -155,5 +165,8 @@
         <item>বাবল</item>
         <item>ক্রোম</item>
         <item>হলোগ্রাফিক</item>
+        <item>ব্যাসল্ট</item>
+        <item>স্তর</item>
+        <item>পথ</item>
     </string-array>
 </resources>

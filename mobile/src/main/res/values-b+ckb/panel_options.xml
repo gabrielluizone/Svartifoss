@@ -66,6 +66,8 @@
         <item>پەلەکان</item>
         <item>Candy</item>
         <item>Ghost</item>
+        <item>شەپۆل</item>
+        <item>پێوەر</item>
     </string-array>
     <string-array name="wear_volume_layout_extra_entries">
         <item>لێواری دوو قات</item>
@@ -76,6 +78,8 @@
         <item>Dial ی ناوەڕاست</item>
         <item>Halo ی سەرەوە</item>
         <item>Halo ی خوارەوە</item>
+        <item>ستوونی ناوەند</item>
+        <item>ستوونەکانی بازاڵت</item>
     </string-array>
     <string-array name="wear_progress_style_extra_entries">
         <item>بازنەی دوو قات</item>
@@ -88,6 +92,9 @@
         <item>دەرزی</item>
         <item>یەک لە دوای یەک</item>
         <item>پشکۆ</item>
+        <item>شەپۆل</item>
+        <item>خولەکەکانی گۆرانی</item>
+        <item>خانە شەش گۆشەکان</item>
     </string-array>
     <string-array name="wear_progress_layout_entries">
         <item>لێواری bezel</item>
@@ -101,6 +108,8 @@
         <item>Track ی دوو قات</item>
         <item>لە چەپ کراوە</item>
         <item>لە ڕاست کراوە</item>
+        <item>کەوانی سەرەوە</item>
+        <item>کەوانی خوارەوە</item>
     </string-array>
     <string-array name="wear_seek_style_extra_entries">
         <item>Compact pill</item>
@@ -124,6 +133,7 @@
         <item>Twin timeline</item>
         <item>بەشەکان (خوارەوە)</item>
         <item>Stack ی ناوەڕاست</item>
+        <item>شەپۆل</item>
     </string-array>
     <string-array name="wear_quick_panel_style_extra_entries">
         <item>نەرم</item>
@@ -155,5 +165,8 @@
         <item>Bubble</item>
         <item>Chrome</item>
         <item>Holographic</item>
+        <item>بازاڵت</item>
+        <item>چینەکان</item>
+        <item>ڕێڕەو</item>
     </string-array>
 </resources>

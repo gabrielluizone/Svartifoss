@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_queue_row_shape">รูปทรงแคปซูล</string>
+    <string name="setting_wear_queue_cover_shape">รูปทรงปก</string>
+    <string name="wear_queue_shape_follow">ตามสไตล์คิว</string>
+    <string name="queue_shape_note_title">สไตล์และรูปทรง</string>
+    <string name="queue_shape_note_description">สไตล์กำหนดสีและเอฟเฟกต์ รูปทรงแคปซูลและรูปทรงปกเปลี่ยนเฉพาะเส้นขอบ ส่วนตามสไตล์คิวจะคงเส้นขอบของแต่ละสไตล์ไว้</string>
+
+    <string-array name="wear_queue_row_shape_entries">
+        <item>@string/wear_queue_shape_follow</item>
+        <item>แคปซูล</item>
+        <item>โค้งมน</item>
+        <item>มุมนุ่ม</item>
+        <item>สี่เหลี่ยมจัตุรัส</item>
+        <item>ใบไม้</item>
+        <item>ลูกโป่งคำพูด</item>
+        <item>หกเหลี่ยม</item>
+    </string-array>
+</resources>

@@ -11,6 +11,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -27,6 +32,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.MeterShape
 import com.svartifoss.snfell.common.R as commonR
 import com.svartifoss.snfell.watch.view.CircularVolumeBar
 import com.svartifoss.snfell.watch.view.VolumeControlAxis
@@ -35,6 +41,7 @@ import com.svartifoss.snfell.watch.view.VolumeStyle
 import com.svartifoss.snfell.watch.view.panel.PanelAppearance
 import com.svartifoss.snfell.watch.view.panel.PanelBackdrop
 import com.svartifoss.snfell.watch.view.panel.PanelCenterPlayPauseTarget
+import com.svartifoss.snfell.common.PhoneAudioBlock
 import com.svartifoss.snfell.watch.view.panel.PanelReadout
 import com.svartifoss.snfell.watch.view.panel.PanelReadoutText
 import com.svartifoss.snfell.watch.view.panel.PanelScaffold
@@ -69,7 +76,10 @@ fun VolumeScreen(
         onVolumeChange: (Float) -> Unit,
         onStep: (Float) -> Unit,
         onTogglePlayPause: () -> Unit,
-        onDismiss: () -> Unit
+        onDismiss: () -> Unit,
+        /** Why the phone may not be heard, which the readout shows as a glyph - see
+         *  [PanelReadout.applyAudioBlock]. */
+        audioBlock: PhoneAudioBlock = PhoneAudioBlock.NONE
 ) {
     PanelScaffold(appearance, backdrop, albumArt, showBackdrop, onDismiss) {
         val configuration = LocalConfiguration.current
@@ -84,6 +94,7 @@ fun VolumeScreen(
                 update = { bar ->
                     bar.barStyle = VolumeStyle.fromPref(appearance.volumeStyle)
                     bar.barLayout = layout
+                    bar.thickness = appearance.volumeThickness
                     bar.progressColor = appearance.triad.primary
                     bar.secondaryColor = appearance.triad.secondary
                     bar.tertiaryColor = appearance.triad.tertiary
@@ -93,17 +104,32 @@ fun VolumeScreen(
                     bar.onVolumeChanged = onVolumeChange
                 })
 
+        val percent = (volume * 100).roundToInt()
         PanelReadoutText(
                 style = appearance.readoutStyle,
-                content = stringResource(
-                        R.string.volume_percent_format, (volume * 100).roundToInt()),
+                content = stringResource(R.string.volume_percent_format, percent),
                 accentColor = appearance.triad.primary,
                 secondaryColor = appearance.triad.secondary,
                 themeAccentColor = themeAccentColor,
                 screenFace = screenFace,
                 typeface = uiTypeface,
-                modifier = Modifier.align(Alignment.Center),
-                lightArcBehind = VolumeStyle.fromPref(appearance.volumeStyle) == VolumeStyle.LIGHT)
+                modifier = Modifier
+                        .align(Alignment.Center)
+                        // The pillar and the basalt columns stand where the readout would, so it
+                        // steps aside by the same amounts the overlay uses.
+                        .offset(
+                                x = if (layout == VolumeLayout.PILLAR) {
+                                    MeterShape.PILLAR_READOUT_SHIFT_X_DP.dp
+                                } else {
+                                    0.dp
+                                },
+                                y = if (layout == VolumeLayout.BASALT) {
+                                    MeterShape.BASALT_READOUT_SHIFT_Y_DP.dp
+                                } else {
+                                    0.dp
+                                }),
+                lightArcBehind = VolumeStyle.fromPref(appearance.volumeStyle) == VolumeStyle.LIGHT,
+                afterStyle = { PanelReadout.applyAudioBlock(it, audioBlock, percent) })
 
         PanelCenterPlayPauseTarget(onClick = onTogglePlayPause)
 
@@ -116,7 +142,7 @@ fun VolumeScreen(
                         modifier = Modifier
                                 .align(Alignment.Center)
                                 .fillMaxHeight()
-                                .padding(vertical = screenHeight * EDGE_MARGIN_FRACTION),
+                                .padding(vertical = screenHeight * VERTICAL_EDGE_MARGIN_FRACTION),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.SpaceBetween
                 ) {
@@ -160,10 +186,13 @@ fun VolumeScreen(
 
 /**
  * How far the step buttons sit from the glass. A round display's chord is at its widest across the
- * centre line, so the horizontal pair needs almost no inset, while the vertical pair is pushed in
- * from the top and bottom where the glass curves away.
+ * centre line, so the horizontal pair needs almost no inset.
  */
 private const val EDGE_MARGIN_FRACTION = 0.055f
+
+/** The vertical pair is pushed further in from the top and bottom, where the glass curves away:
+ *  at the horizontal pair's inset the two buttons read as pressed against the bezel. */
+private const val VERTICAL_EDGE_MARGIN_FRACTION = 0.08f
 
 /**
  * A round step button, tinted from the panel's own palette rather than a flat white - the screen is
