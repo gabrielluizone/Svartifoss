@@ -103,6 +103,8 @@ const STRING_SETTINGS = [
   "wear_artist_shadow_style",
   "wear_seek_layout",
   "wear_seek_marker",
+  "wear_play_icon",
+  "wear_pause_icon",
   "wear_seek_style",
   "wear_shading_color_mode",
   "wear_shading_custom_color",

@@ -190,6 +190,13 @@ object StreamingShortcutLinks {
         return if (ANDROID_PACKAGE_NAME.matches(packageName) && isSafeLink(link)) link else rawTarget
     }
 
+    /** The package named by the `targetPackage|uri` launch form, or null for a plain link - the
+     *  same envelope rule as [unwrapRemoteTarget], so the two can never disagree about one. */
+    fun remoteTargetPackage(rawTarget: String): String? {
+        val link = unwrapRemoteTarget(rawTarget)
+        return if (link == rawTarget) null else rawTarget.substringBefore('|')
+    }
+
     /** Suggested title for a shared payload: prefer its subject, otherwise keep the prose before
      * the URL. Returning an empty string lets the editor ask the user instead of inventing a name. */
     fun suggestedName(sharedText: String, subject: String? = null): String {

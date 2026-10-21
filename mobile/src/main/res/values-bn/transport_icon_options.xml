@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">প্লে আইকন</string>
+    <string name="setting_wear_pause_icon">পজ আইকন</string>
+    <string name="setting_wear_transport_icon_description">প্লে ও পজ কন্ট্রোলের চিহ্ন। “ওয়াচ ফেস অনুসরণ করুন” এই ফেসের মূল ডিজাইনটি রাখে।</string>
+    <string name="transport_icon_follow">ওয়াচ ফেস অনুসরণ করুন</string>
+    <string name="transport_icon_a">গোলাকার</string>
+    <string name="transport_icon_b">গোলাকার রেখাচিত্র</string>
+    <string name="transport_icon_c">ধারালো রেখাচিত্র</string>
+    <string name="transport_icon_d">ধারালো</string>
+    <string name="transport_icon_e">মোটা গোলাকার রেখাচিত্র</string>
+</resources>

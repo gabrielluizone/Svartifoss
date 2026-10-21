@@ -10,12 +10,12 @@ import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.DataItemAsset
 import com.google.android.gms.wearable.Wearable
 import com.matejdro.wearutils.messages.getByteArrayAsset
-import com.matejdro.wearutils.miscutils.BitmapUtils
 import com.svartifoss.snfell.common.AlbumAccentSource
 import com.svartifoss.snfell.common.ColorHarmony
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.SampledBitmaps
 import com.svartifoss.snfell.common.SwatchInfo
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.selectPrimaryAccent
@@ -69,7 +69,10 @@ internal object TileAlbumAccent {
             return cached.accent ?: lastKnown(context)
         }
         val bitmap = try {
-            BitmapUtils.deserialize(dataClient.getByteArrayAsset(asset))
+            // The screen-sized bound the player decodes the same cover at, so both extract the
+            // accent from the same pixels.
+            SampledBitmaps.decode(dataClient.getByteArrayAsset(asset),
+                    SampledBitmaps.screenPx(context.resources))
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {

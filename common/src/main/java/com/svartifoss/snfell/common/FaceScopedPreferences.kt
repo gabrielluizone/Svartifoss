@@ -198,6 +198,11 @@ object FaceScopedPreferences {
             // nowhere to put the tick, so a global value would be meaningless on some
             // faces and load-bearing on others.
             "wear_seek_marker",
+            // The drawing of the play and pause marks (TransportGlyphs). Per face because the faces
+            // draw them at different sizes and in different company, and a theme that pairs
+            // Expressive's rounded marks with Material's outlined ones has to carry both.
+            "wear_play_icon",
+            "wear_pause_icon",
             "wear_expressive_seek_mode",
             "wear_font",
             // Queue, menus and Quick actions are opened from a face, so whether they inherit its

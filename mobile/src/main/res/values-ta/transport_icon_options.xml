@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">இயக்கு ஐகான்</string>
+    <string name="setting_wear_pause_icon">இடைநிறுத்து ஐகான்</string>
+    <string name="setting_wear_transport_icon_description">இயக்கு மற்றும் இடைநிறுத்து கட்டுப்பாட்டில் உள்ள குறி. “முகப்பைப் பின்பற்று” இந்த முகத்தின் அசல் வடிவமைப்பைத் தக்கவைக்கும்.</string>
+    <string name="transport_icon_follow">முகப்பைப் பின்பற்று</string>
+    <string name="transport_icon_a">வட்டமானது</string>
+    <string name="transport_icon_b">வட்டமான வெளிக்கோடு</string>
+    <string name="transport_icon_c">கூர்மையான வெளிக்கோடு</string>
+    <string name="transport_icon_d">கூர்மையானது</string>
+    <string name="transport_icon_e">தடிமனான வட்டமான வெளிக்கோடு</string>
+</resources>

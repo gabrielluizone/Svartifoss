@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Wiedergabe-Symbol</string>
+    <string name="setting_wear_pause_icon">Pause-Symbol</string>
+    <string name="setting_wear_transport_icon_description">Das Zeichen des Wiedergabe- und Pause-Reglers. „Face folgen“ behält das ursprüngliche Zeichen dieser Ansicht.</string>
+    <string name="transport_icon_follow">Face folgen</string>
+    <string name="transport_icon_a">Abgerundet</string>
+    <string name="transport_icon_b">Abgerundeter Umriss</string>
+    <string name="transport_icon_c">Eckiger Umriss</string>
+    <string name="transport_icon_d">Eckig</string>
+    <string name="transport_icon_e">Kräftiger abgerundeter Umriss</string>
+</resources>

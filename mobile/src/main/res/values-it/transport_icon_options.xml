@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Icona di riproduzione</string>
+    <string name="setting_wear_pause_icon">Icona di pausa</string>
+    <string name="setting_wear_transport_icon_description">Il simbolo del controllo di riproduzione e pausa. «Segui faccia» mantiene quello del disegno originale di questo quadrante.</string>
+    <string name="transport_icon_follow">Segui faccia</string>
+    <string name="transport_icon_a">Arrotondato</string>
+    <string name="transport_icon_b">Contorno arrotondato</string>
+    <string name="transport_icon_c">Contorno netto</string>
+    <string name="transport_icon_d">Netto</string>
+    <string name="transport_icon_e">Contorno arrotondato spesso</string>
+</resources>

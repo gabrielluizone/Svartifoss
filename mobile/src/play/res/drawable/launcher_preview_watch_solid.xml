@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Watch launcher icon, solid style: the watch's flat light grey with its dark mark, a circle because Wear OS masks every icon to one.
+     The icon is drawn the way a launcher draws an adaptive one: the 108dp artwork sits behind a
+     72dp window, so the mark, which is a fraction of the artwork, is enlarged by 1.5 around the
+     centre (the -11dp insets on a 44dp preview). The faint outline is not part of the real icon;
+     it keeps a dark icon visible on a dark dialog and a light one on a light dialog. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@color/launcher_preview_watch_solid" />
+            <stroke
+                android:width="1dp"
+                android:color="@color/lyra_divider" />
+        </shape>
+    </item>
+    <item
+        android:left="-11dp"
+        android:top="-11dp"
+        android:right="-11dp"
+        android:bottom="-11dp">
+        <bitmap
+            android:src="@mipmap/ic_launcher_foreground"
+            android:tint="@color/launcher_preview_watch_mark" />
+    </item>
+</layer-list>

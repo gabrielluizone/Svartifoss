@@ -22,13 +22,21 @@ package com.svartifoss.snfell.common
  * Corners are absolute (left/right), not start/end: the preview draws on a Canvas that has no
  * layout direction, and a leaf that mirrored in a right-to-left locale on the watch alone would be
  * the preview disagreeing with the wrist.
+ *
+ * One entry is not a rectangle at all: [SUPERELLIPSE] is a curve that bends the whole way round
+ * (see [Superellipse]), which no radius at any corner can draw. It still carries a corner fraction
+ * so a consumer that has not learned about it draws something close rather than nothing, but every
+ * renderer here checks [isSuperellipse] first and draws the real outline.
  */
 enum class CoverShape(
         val preferenceValue: String,
         val topLeft: Float,
         val topRight: Float,
         val bottomRight: Float,
-        val bottomLeft: Float
+        val bottomLeft: Float,
+        /** Drawn as a [Superellipse] instead of a rounded rectangle; the corners are then only the
+         *  nearest rounded-rectangle stand-in. */
+        val isSuperellipse: Boolean = false
 ) {
     /** A generously rounded square - the Carousel rail's reference look. */
     ROUNDED("rounded", 0.08f),
@@ -39,10 +47,9 @@ enum class CoverShape(
     /** Softer than [ROUNDED] without becoming a circle. */
     SQUIRCLE("squircle", 0.18f),
 
-    /** Rounder still than [SQUIRCLE], short of a circle - the continuous-curvature look of a modern
-     *  app-icon mask (One UI, iOS). Approximated the same way every other entry here is, with a
-     *  larger corner fraction rather than a true superellipse path. */
-    SAMSUNG("samsung", 0.30f),
+    /** The continuous-curvature outline of a modern app icon: rounder than [SQUIRCLE] and not a
+     *  rectangle with big corners, because it bends along the whole side - see [Superellipse]. */
+    SUPERELLIPSE("superellipse", 0.30f, 0.30f, 0.30f, 0.30f, isSuperellipse = true),
 
     /** Full circle. Crops the most artwork, so on Carousel it is a deliberate choice; on Note it is
      *  the default, because there the cover reads as a contact photo beside a message. */
@@ -67,9 +74,11 @@ enum class CoverShape(
             this(preferenceValue, corner, corner, corner, corner)
 
     /** Whether all four corners share one radius - such a shape can be drawn by the simplest
-     *  primitive each renderer has, and a circle by its dedicated one. */
+     *  primitive each renderer has, and a circle by its dedicated one. Never true of a
+     *  [Superellipse], whose uniform stand-in corners are not what is drawn. */
     val isUniform: Boolean
-        get() = topLeft == topRight && topRight == bottomRight && bottomRight == bottomLeft
+        get() = !isSuperellipse && topLeft == topRight && topRight == bottomRight &&
+                bottomRight == bottomLeft
 
     /**
      * The eight Canvas radii for a cover [size] pixels across, in `Path.addRoundRect` order:
@@ -82,10 +91,31 @@ enum class CoverShape(
             bottomLeft * size, bottomLeft * size)
 
     companion object {
+        /**
+         * What the superellipse was stored as before it had a name of its own: it shipped in 4.0
+         * under a trademarked label, so installs, backups and saved themes still carry the old
+         * token. Read as [SUPERELLIPSE] everywhere ([parse]) and rewritten where it is stored
+         * ([migrate]); nothing new is ever written under it.
+         */
+        const val RETIRED_VALUE = "samsung"
+
+        /** The shape stored as [value], the retired token included, or null when it names none.
+         *  Not [fromPreference]: the queue needs "unknown" to mean "follow the style". */
+        fun parse(value: String?): CoverShape? {
+            val token = value?.trim()
+            if (token == RETIRED_VALUE) return SUPERELLIPSE
+            return entries.firstOrNull { it.preferenceValue == token }
+        }
+
+        /** The value a stored [value] should be rewritten to, or null when it needs nothing - pure
+         *  and null for the ordinary case so a sweep writes only what changed. */
+        fun migrate(value: String?): String? =
+                if (value?.trim() == RETIRED_VALUE) SUPERELLIPSE.preferenceValue else null
+
         /** [default] is the caller's, not a property of the vocabulary: Carousel rests on a card
          *  and Note on a disc, and an unknown or missing value must land on whatever that face has
          *  always drawn rather than on a shape it never had. */
         fun fromPreference(value: String?, default: CoverShape = ROUNDED): CoverShape =
-                entries.firstOrNull { it.preferenceValue == value } ?: default
+                parse(value) ?: default
     }
 }

@@ -235,4 +235,6 @@
     <string name="quick_sleep_description">Ұйқы таймері, %1$d минут қалды. Өзгерту үшін түртіңіз.</string>
     <string name="quick_sleep_off_description">Ұйқы таймері өшірулі. Орнату үшін түртіңіз.</string>
     <string name="quick_lyric_plain">Бұл мәтінде уақыт белгілері жоқ. Оқу үшін түртіңіз.</string>
+    <string name="playback_live">ТІКЕЛЕЙ</string>
+    <string name="queue_add_shortcut">Бұл тректі жарлықтарға қосу</string>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Icon ng play</string>
+    <string name="setting_wear_pause_icon">Icon ng pause</string>
+    <string name="setting_wear_transport_icon_description">Ang marka sa kontrol ng play at pause. Pinananatili ng “Sundin ang face” ang orihinal na disenyo ng face na ito.</string>
+    <string name="transport_icon_follow">Sundin ang face</string>
+    <string name="transport_icon_a">Bilugan</string>
+    <string name="transport_icon_b">Bilugang balangkas</string>
+    <string name="transport_icon_c">Matulis na balangkas</string>
+    <string name="transport_icon_d">Matulis</string>
+    <string name="transport_icon_e">Makapal na bilugang balangkas</string>
+</resources>

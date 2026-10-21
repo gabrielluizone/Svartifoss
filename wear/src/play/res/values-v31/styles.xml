@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The Play build's launch theme on Android 12 and later: Wear OS 4 and up, which is every
+         Wear OS version that has a platform splash screen.
+
+         The launcher icon is a choice here (Settings -> Appearance -> Launcher icon): the watch
+         enables one of the <activity-alias> entries, and an alias cannot carry a theme of its
+         own - it takes the one of the activity it points at. A theme that names a splash icon
+         therefore names the same icon for every alias, which is how the watch went on opening
+         with the gradient icon after Cream had been chosen.
+
+         So this theme names none. With no icon of its own the system draws the launcher icon of
+         the component that was opened - the alias, whose android:icon is the chosen style's -
+         round, at the size Wear OS gives every app's launch (48 dp, which some versions then grow
+         to 60) on the black window. That is what WO-V15 asks for (a splash icon that matches the
+         launcher icon), and it follows the choice with nothing to keep in step.
+
+         Leaving the item out is not enough, and the difference is easy to miss: the androidx
+         Theme.SplashScreen this inherits from sets the platform attribute to its own default,
+         the generic Android icon. An explicit @null is what hands the choice back to the system.
+         The library's own attribute (windowSplashScreenAnimatedIcon, no android: prefix) is
+         deliberately left as it is.
+
+         Below Android 12 (Wear OS 3) there is no platform splash screen. The library draws the
+         icon into the window background from the theme in values/, which can only be one fixed
+         icon: the default style's, see splash_screen.xml. -->
+    <style name="AppTheme.Starting" parent="Base.AppTheme.Starting">
+        <item name="android:windowSplashScreenAnimatedIcon">@null</item>
+    </style>
+</resources>

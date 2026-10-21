@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Play mark, style E: icons/icons_4/PLAY-E.svg, path data unchanged. White so a caller tints it. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="960"
+    android:viewportHeight="960">
+    <group android:translateY="960">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M309-269.71v-420.58Q309-717 326.18-732t39.75-15q7.55 0 15.56 1.75 8.01 1.75 15.53 6.54L721.5-526.5q12.5 7.95 19.75 20.87 7.25 12.92 7.25 25.79t-7.25 25.79Q734-441.13 721.5-433.5L397-221.16q-7.51 4.79-15.67 6.47-8.15 1.69-15.59 1.69-22.64 0-39.69-15Q309-243 309-269.71ZM423-481Zm-1 108 166-107-166-107v214Z" />
+    </group>
+</vector>

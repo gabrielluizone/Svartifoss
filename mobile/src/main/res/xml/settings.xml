@@ -95,8 +95,9 @@
             android:layout="@layout/pref_item" />
 
         <!-- Only the Play build exposes this choice. GitHub keeps the original launcher icon;
-             MiscSettingsFragment hides this row there and the search index excludes it. -->
-        <ListPreference
+             MiscSettingsFragment hides this row there and the search index excludes it. The
+             dialog shows each style as the phone and watch icons it produces. -->
+        <com.svartifoss.snfell.view.settings.AppIconStylePreference
             android:key="app_icon_style"
             android:icon="@drawable/ic_palette"
             android:title="@string/setting_app_icon_style"
@@ -689,6 +690,13 @@
             android:icon="@drawable/ic_autorenew"
             android:title="@string/dev_open_update_screen"
             android:summary="@string/dev_open_update_screen_description"
+            android:layout="@layout/pref_item" />
+
+        <Preference
+            android:key="dev_show_rating_card"
+            android:icon="@drawable/ic_thumb_up"
+            android:title="@string/dev_show_rating_card"
+            android:summary="@string/dev_show_rating_card_description"
             android:layout="@layout/pref_item" />
 
         <Preference

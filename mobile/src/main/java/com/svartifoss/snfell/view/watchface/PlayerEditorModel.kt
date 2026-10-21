@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.TransportGlyphs
 import com.svartifoss.snfell.common.TextBlockPlacementSupport
 import com.svartifoss.snfell.common.TrackMetadataFields
 
@@ -61,6 +62,8 @@ internal enum class PlayerSlot(@StringRes val headingRes: Int? = null) {
 internal enum class PlayerControl {
     FACE,
     SCREEN_THEME,
+    PLAY_ICON,
+    PAUSE_ICON,
     SOURCE_ICON,
     PLAYER_CONTROLS,
     QUADRANT_FLASH,
@@ -225,6 +228,16 @@ internal object PlayerEditorModel {
             "spectrum", "material", "frame", "ribbon", "matejdro")
 
     /**
+     * Faces that draw their own play or pause mark while awake, and so have something for
+     * [MiscPreferences.WEAR_PLAY_ICON] and [MiscPreferences.WEAR_PAUSE_ICON] to change. Read from
+     * [TransportGlyphs.FACES], the registry the watch and the miniature resolve through, for the
+     * reason the text-placement lists are: the picker is only one of three consumers, and a face
+     * that is not offered the rows must not be changed by a value that arrives from a backup or a
+     * gallery theme either.
+     */
+    val TRANSPORT_GLYPH_FACES: Set<String> = TransportGlyphs.FACES
+
+    /**
      * Which faces offer *Text alignment*, and which offer *Text position* - two questions, not one.
      *
      * Read from [TextBlockPlacementSupport] rather than declared here, because the picker is only
@@ -386,6 +399,17 @@ internal object PlayerEditorModel {
                     MiscPreferences.WEAR_QUADRANT_TAP_FLASH,
                     PlayerSlot.CONTROLS,
                     PlayerControl.QUADRANT_FLASH),
+            choice(
+                    MiscPreferences.WEAR_PLAY_ICON,
+                    PlayerSlot.CONTROLS,
+                    PlayerControl.PLAY_ICON,
+                    R.string.setting_wear_transport_icon_description),
+            // No description of its own: the line above already explains both rows, and the same
+            // sentence twice in a row reads as a mistake.
+            choice(
+                    MiscPreferences.WEAR_PAUSE_ICON,
+                    PlayerSlot.CONTROLS,
+                    PlayerControl.PAUSE_ICON),
 
             toggle(
                     MiscPreferences.ALWAYS_SHOW_TIME,
@@ -505,6 +529,7 @@ internal object PlayerEditorModel {
      */
     fun appliesToFace(control: PlayerControl, face: String): Boolean = when (control) {
         PlayerControl.SCREEN_THEME -> face in CONTROL_STYLE_FACES
+        PlayerControl.PLAY_ICON, PlayerControl.PAUSE_ICON -> face in TRANSPORT_GLYPH_FACES
         // QUADRANT_FLASH is deliberately absent: the tap confirmation draws the action's glyph
         // inside the tap ripple, which the host paints above every face, so it applies to all of
         // them. It was once Classic-only here while search and the legacy row had already moved

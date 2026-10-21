@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">نماد پخش</string>
+    <string name="setting_wear_pause_icon">نماد مکث</string>
+    <string name="setting_wear_transport_icon_description">نشانه روی کنترل پخش و مکث. «پیروی از رویه» نشانه طرح اصلی این صفحه را نگه می‌دارد.</string>
+    <string name="transport_icon_follow">پیروی از رویه</string>
+    <string name="transport_icon_a">گرد</string>
+    <string name="transport_icon_b">قاب گرد</string>
+    <string name="transport_icon_c">قاب تیز</string>
+    <string name="transport_icon_d">تیز</string>
+    <string name="transport_icon_e">قاب گرد ضخیم</string>
+</resources>

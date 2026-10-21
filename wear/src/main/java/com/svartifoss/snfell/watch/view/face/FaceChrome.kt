@@ -87,6 +87,8 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import com.svartifoss.snfell.common.RoundScreenText
+import com.svartifoss.snfell.common.TransportGlyphs
+import com.svartifoss.snfell.common.TransportMark
 import com.svartifoss.snfell.common.TextBlockAlign
 import com.svartifoss.snfell.common.TextBlockPosition
 import com.svartifoss.snfell.common.TrackTimeFormat
@@ -115,6 +117,7 @@ import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.common.ResolvedBackgroundLayer
 import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
+import com.svartifoss.snfell.watch.view.compose.SuperellipseShape
 import com.svartifoss.snfell.watch.view.compose.drawAccentFloorGlow
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -1503,9 +1506,12 @@ internal fun ChronoAmbientFace(state: NowPlayingFaceState) {
  * Here rather than in one face because four draw a cover the user can reshape - Carousel's rail
  * cards, Note's disc, Chat's avatar and Metadata's thumbnail - and each corner is a *fraction* of
  * the size, so they must derive it the same way or the same choice reads as a different shape on
- * each. Absolute corners, matching the phone preview's Canvas - see [CoverShape].
+ * each. Absolute corners, matching the phone preview's Canvas - see [CoverShape]. The superellipse
+ * is the one entry that is not a rounded rectangle, so it is answered first and never reaches the
+ * corner arithmetic below.
  */
 internal fun CoverShape.toComposeShape(size: Dp): Shape = when {
+    isSuperellipse -> SuperellipseShape
     this == CoverShape.CIRCLE -> CircleShape
     isUniform -> RoundedCornerShape(size * topLeft)
     else -> AbsoluteRoundedCornerShape(
@@ -2817,8 +2823,7 @@ internal fun CenterGestureRegion(
             ) {
                 Icon(
                         painter = painterResource(
-                                if (enteringPlay) commonR.drawable.action_play_filled
-                                else commonR.drawable.action_pause_filled),
+                                if (enteringPlay) state.playIconRes() else state.pauseIconRes()),
                         contentDescription = null,
                         tint = Color.White.copy(alpha = state.screenTheme.tokens.iconAlpha),
                         modifier = Modifier.size(diameter * .5f)
@@ -2962,6 +2967,20 @@ internal fun rememberTransportPressGroup(base: List<Float>): TransportPressGroup
 internal fun TransportPressEffect(group: TransportPressGroup, slot: Int, pressed: Boolean) {
     LaunchedEffect(group, slot, pressed) { group.animate(slot, pressed) }
 }
+
+/**
+ * The play and pause marks this face draws, as the drawables to paint.
+ *
+ * The one place a face reads them: the host has already resolved the stored choice against the
+ * face ([com.svartifoss.snfell.common.TransportGlyphs]), so a face never switches on a style and
+ * "follow" keeps meaning the glyph that face was designed with. Awake only - the ambient variants
+ * draw their own static outlines.
+ */
+internal fun NowPlayingFaceState.playIconRes(): Int =
+        TransportGlyphs.drawable(TransportMark.PLAY, playGlyph)
+
+internal fun NowPlayingFaceState.pauseIconRes(): Int =
+        TransportGlyphs.drawable(TransportMark.PAUSE, pauseGlyph)
 
 /** How long the play glyph takes to become the pause glyph. */
 private const val PLAY_PAUSE_MORPH_MS = 280

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Tjocklek på volymstapeln</string>
-    <string name="setting_wear_volume_thickness_description">Tjockleken på volymstapelns linje, från 50 % till 180 % av standard. Tjockare linjer håller sig ändå borta från kanten.</string>
+    <string name="setting_wear_volume_thickness_description">Tjockleken på volymstapelns linje, från 50 %% till 180 %% av standard. Tjockare linjer håller sig ändå borta från kanten.</string>
     <string name="setting_wear_volume_haptics">Kronvibration vid volym</string>
     <string name="setting_wear_queue_dim_played">Dämpa spelade låtar</string>
     <string name="setting_wear_queue_dim_played_description">Tonar ned spåren som redan spelats så att de kommande sticker ut.</string>

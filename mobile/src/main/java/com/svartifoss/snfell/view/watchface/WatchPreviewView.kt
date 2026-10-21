@@ -102,6 +102,7 @@ import com.svartifoss.snfell.common.resolveLayers
 import com.svartifoss.snfell.common.SplitPanelStyle
 import com.svartifoss.snfell.common.AdaptiveTextContrast
 import com.svartifoss.snfell.common.CoverShape
+import com.svartifoss.snfell.common.CoverShapePaths
 import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.TextBlockAlign
 import com.svartifoss.snfell.common.TextBlockPlacementSupport
@@ -116,6 +117,8 @@ import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.common.TitleTextMode
 import com.svartifoss.snfell.common.TrackMetadataFields
 import com.svartifoss.snfell.common.TrackTimeFormat
+import com.svartifoss.snfell.common.TransportMark
+import com.svartifoss.snfell.common.TransportGlyphs
 import com.svartifoss.snfell.common.resolveAodArtwork
 import com.svartifoss.snfell.common.resolveAlbumArtFilter
 import com.svartifoss.snfell.common.R as commonR
@@ -489,6 +492,10 @@ class WatchPreviewView @JvmOverloads constructor(
     private var edgeProgressVisible = true
     private var edgeSeekEnabled = true
     private var screenTheme = "default"
+    /** The stored choice for the play and pause marks ("follow", or a style letter) - resolved
+     *  against [face] by [TransportGlyphs], the same call the watch makes. */
+    private var playIconChoice = TransportGlyphs.FOLLOW
+    private var pauseIconChoice = TransportGlyphs.FOLLOW
     private var wearFontKey = "google_sans"
     private var fontAllScreens = false
     private var wearTitleFontKey = WatchTypography.TITLE_FONT_FOLLOW
@@ -1397,6 +1404,14 @@ class WatchPreviewView @JvmOverloads constructor(
         else -> PreviewSurface.PLAYER
     }
 
+    /**
+     * The mark an awake face draws while [playing] - pause when it is, play when it is not - as the
+     * watch resolves it. The AOD miniatures keep their own fixed glyphs, as the watch's do.
+     */
+    private fun transportGlyphRes(playing: Boolean): Int =
+            if (playing) TransportGlyphs.drawableFor(TransportMark.PAUSE, pauseIconChoice, face)
+            else TransportGlyphs.drawableFor(TransportMark.PLAY, playIconChoice, face)
+
     private fun readPreferenceSnapshot() {
         val previousAlbumBlur = albumBlurRadius
         val previousOverlayBlur = overlayBlurRadius
@@ -1427,6 +1442,8 @@ class WatchPreviewView @JvmOverloads constructor(
         edgeProgressVisible = readBoolean("wear_edge_progress_visible", true)
         edgeSeekEnabled = readBoolean("wear_edge_seek_enabled", true)
         screenTheme = readString("wear_screen_theme", "default")
+        playIconChoice = readString(MiscPreferences.WEAR_PLAY_ICON.key, TransportGlyphs.FOLLOW)
+        pauseIconChoice = readString(MiscPreferences.WEAR_PAUSE_ICON.key, TransportGlyphs.FOLLOW)
         wearFontKey = readString("wear_font", "google_sans")
         fontAllScreens = readBoolean("wear_font_all_screens", false)
         wearTitleFontKey = readString("wear_title_font", WatchTypography.TITLE_FONT_FOLLOW)
@@ -9518,9 +9535,7 @@ class WatchPreviewView @JvmOverloads constructor(
     private fun drawQueueThumbnail(canvas: Canvas, box: RectF, corners: CoverCorners) {
         val art = displayedArt() ?: return
         val saved = canvas.save()
-        canvas.clipPath(Path().apply {
-            addRoundRect(box, corners.radii(box.width()), Path.Direction.CW)
-        })
+        canvas.clipPath(CoverShapePaths.path(corners, box))
         drawArtwork(canvas, art, box, 255, filter = AlbumArtFilter.NONE)
         canvas.restoreToCount(saved)
     }
@@ -9542,9 +9557,7 @@ class WatchPreviewView @JvmOverloads constructor(
             val grow = 4f * unit
             val halo = RectF(box).apply { inset(-grow, -grow) }
             fillPaint.color = colors.halo
-            canvas.drawPath(Path().apply {
-                addRoundRect(halo, corners.radii(halo.width()), Path.Direction.CW)
-            }, fillPaint)
+            canvas.drawPath(CoverShapePaths.path(corners, halo), fillPaint)
         }
         drawQueueThumbnail(canvas, box, corners)
         strokePaint.style = Paint.Style.STROKE
@@ -9558,9 +9571,7 @@ class WatchPreviewView @JvmOverloads constructor(
         }
         val half = strokePaint.strokeWidth / 2f
         val ring = RectF(box).apply { inset(half, half) }
-        canvas.drawPath(Path().apply {
-            addRoundRect(ring, corners.radii(ring.width()), Path.Direction.CW)
-        }, strokePaint)
+        canvas.drawPath(CoverShapePaths.path(corners, ring), strokePaint)
     }
 
     /** Mirrors the watch's QueueRouteLine through the sample rows' stations. */
@@ -12055,8 +12066,7 @@ class WatchPreviewView @JvmOverloads constructor(
             val cookiePath = contourPath(cx, cy, cookieRadius, cookieModulation, 0f, 360f).apply { close() }
             canvas.drawPath(cookiePath, fillPaint)
             drawIcon(canvas,
-                    if (playing) commonR.drawable.action_pause_expressive
-                    else commonR.drawable.action_play_filled,
+                    transportGlyphRes(playing),
                     cx, cy, cookieSize * 0.48f * theme.iconScale, onContainer,
                     expressiveIconAlpha)
         }
@@ -12135,7 +12145,7 @@ class WatchPreviewView @JvmOverloads constructor(
                     cx + dx - size / 2f, railCenterY - size / 2f,
                     cx + dx + size / 2f, railCenterY + size / 2f)
             canvas.save()
-            canvas.clipPath(Path().apply { addRoundRect(rect, shape.radii(size), Path.Direction.CW) })
+            canvas.clipPath(CoverShapePaths.path(shape, rect))
             if (art != null) {
                 drawArtwork(canvas, art, rect, 255)
             } else {
@@ -12757,12 +12767,9 @@ class WatchPreviewView @JvmOverloads constructor(
             val art = displayedArt()
             // A round-rect at half the (square) side is a perfect circle, same as drawNotePlayer's
             // disc - no separate CIRCLE case needed.
-            val avatarRadii = CoverShape.fromPreference(chatCoverShape, CoverShape.CIRCLE)
-                    .radii(avatarSize)
+            val avatarShape = CoverShape.fromPreference(chatCoverShape, CoverShape.CIRCLE)
             canvas.save()
-            canvas.clipPath(Path().apply {
-                addRoundRect(avatarRect, avatarRadii, Path.Direction.CW)
-            })
+            canvas.clipPath(CoverShapePaths.path(avatarShape, avatarRect))
             if (art != null) {
                 drawArtwork(canvas, art, avatarRect, 255)
             } else {
@@ -13164,12 +13171,9 @@ class WatchPreviewView @JvmOverloads constructor(
         if (art != null && metadataShowCover) {
             val side = screen * .17f
             val rect = RectF(cx - side / 2f, y, cx + side / 2f, y + side)
-            val radii = CoverShape.fromPreference(metadataCoverShape, CoverShape.ROUNDED)
-                    .radii(side)
+            val coverShape = CoverShape.fromPreference(metadataCoverShape, CoverShape.ROUNDED)
             canvas.save()
-            canvas.clipPath(Path().apply {
-                addRoundRect(rect, radii, Path.Direction.CW)
-            })
+            canvas.clipPath(CoverShapePaths.path(coverShape, rect))
             drawArtwork(canvas, art, rect, 255)
             canvas.restore()
             y += side + dp(4f)
@@ -13556,12 +13560,9 @@ class WatchPreviewView @JvmOverloads constructor(
             // The same shared silhouette Carousel's cards are cut to, so one vocabulary answers
             // both faces here as it does on the watch. A circle is only this face's default, not
             // its shape.
-            val discRadii = CoverShape.fromPreference(noteCoverShape, CoverShape.CIRCLE)
-                    .radii(discSize)
+            val discShape = CoverShape.fromPreference(noteCoverShape, CoverShape.CIRCLE)
             canvas.save()
-            canvas.clipPath(Path().apply {
-                addRoundRect(discRect, discRadii, Path.Direction.CW)
-            })
+            canvas.clipPath(CoverShapePaths.path(discShape, discRect))
             if (art != null) {
                 drawArtwork(canvas, art, discRect, 255)
             } else {
@@ -13977,8 +13978,7 @@ class WatchPreviewView @JvmOverloads constructor(
         fun playGlyph(x: Float, y: Float, size: Float, tint: Int = Color.WHITE) {
             if (!controlsVisible) return
             drawIcon(canvas,
-                    if (isPlayingShown()) commonR.drawable.action_pause_filled
-                    else commonR.drawable.action_play_filled,
+                    transportGlyphRes(isPlayingShown()),
                     x, y, size * theme.iconScale, tint, iconAlpha)
         }
 

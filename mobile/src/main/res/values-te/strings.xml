@@ -449,7 +449,7 @@
     <string name="setting_wear_text_block_position">టెక్స్ట్ స్థానం</string>
     <string name="setting_wear_text_block_position_description">ట్రాక్ టెక్స్ట్ స్క్రీన్‌పై ఎక్కడ ఉంటుంది. Follow face ప్రతి ఫేస్ రూపొందించిన స్థానాన్ని అలాగే ఉంచుతుంది.</string>
     <string name="setting_online_artwork">ఆన్‌లైన్ ఆర్ట్‌వర్క్</string>
-    <string name="setting_online_artwork_description">వాచ్ ఫేస్‌కు ఆన్‌లైన్‌లో వెతికిన చిత్రాన్ని చూపనివ్వండి \u2014 ప్రదర్శిస్తున్న ఆర్టిస్ట్, లేదా స్వంత ఆర్ట్‌వర్క్ ఇవ్వని ప్లేయర్‌కు ఆల్బమ్ కవర్. మీ ఫోన్ Deezer పబ్లిక్ క్యాటలాగ్‌లో వెతికి ఫలితాన్ని క్యాష్ చేస్తుంది; ట్రాక్ మరియు ఆర్టిస్ట్ పేర్లు మాత్రమే పంపబడతాయి, మరియు ఫేస్ ఆ మూలాల్లో ఏదో ఒకదానికి సెట్ చేయకపోతే ఏదీ వెతకదు. ఆఫ్‌లో ఉంటే ప్లేయర్ స్వంత ఆర్ట్‌వర్క్ ఉపయోగించబడుతుంది.</string>
+    <string name="setting_online_artwork_description">వాచ్ ఫేస్‌ను ఆన్‌లైన్‌లో వెతికిన చిత్రాన్ని చూపనివ్వండి — ప్రదర్శిస్తున్న కళాకారుడు, లేదా ఏ కవర్‌నూ ప్రచురించని ప్లేయర్ కోసం ఆల్బమ్ కవర్. శోధనను మీ ఫోన్ చేసి ఫలితాన్ని కాష్‌లో ఉంచుతుంది; ట్రాక్ మరియు కళాకారుడి పేర్లు మాత్రమే Deezer యొక్క పబ్లిక్ కేటలాగ్‌కు పంపబడతాయి. YouTube వీడియో వంటి, యాప్ అసలు కవర్‌నే ప్రచురించని ట్రాక్‌కు కూడా కవర్‌ను ఇదే కనుగొంటుంది: ఫోన్ YouTube నుండి ఆ వీడియో సొంత థంబ్‌నెయిల్‌ను అడుగుతుంది (ఛానెల్ మరియు శీర్షికను Google యొక్క YouTube Data APIకి పంపి), తర్వాత Deezer నుండి ఆల్బమ్ కవర్‌ను అడుగుతుంది, ఫలితం సరిపోలినప్పుడే వాడుతుంది. ఆఫ్‌లో ఉంటే, ప్లేయర్ సొంత ఆర్ట్‌వర్క్ మాత్రమే వాడబడుతుంది.</string>
     <string name="app_name">Svartifoss</string>
     <string name="app_name_short">Svartifoss</string>
     <string name="setting_no_wearable_api_banner">ఈ పరికరంలో Wear OS కు మద్దతు లేదు</string>
@@ -1735,7 +1735,7 @@
         <item>చతురస్రం</item>
         <item>Squircle</item>
         <item>వృత్తం</item>
-        <item>Samsung శైలి</item>
+        <item>సూపర్ ఎలిప్స్</item>
     </string-array>
     <string name="setting_wear_font_all_screens">ఫాంట్‌ను ఎక్కడైనా ఉపయోగించండి</string>
     <string name="setting_wear_font_all_screens_description">ఎంచుకున్న ఫాంట్ ప్లేయర్‌కే కాకుండా మెనూలు, క్యూ మరియు Quick actions‌కు కూడా వర్తిస్తుంది. Display మరియు చేతిరాత ఫాంట్లు జాబితాల్లో చదవడానికి కష్టంగా ఉండవచ్చు.</string>
@@ -1968,15 +1968,13 @@
     <string name="drawer_about_summary">మీ Wear OS వాచ్ నుండి ఫోన్‌లోని సంగీతాన్ని నియంత్రించడానికి Svartifoss అనుమతిస్తుంది — మీ పరికరానికి సరిపోయే పూర్తిగా అనుకూలీకరించగల remote‌తో.</string>
     <string name="drawer_name_heading">పేరు</string>
     <string name="drawer_name_meaning">Icelandic‌లో Svartifoss అంటే “Black Falls” — Vatnajökull National Park‌లో ముదురు basalt స్తంభాలు సన్నని జలపాతాన్ని చుట్టుముట్టే ఆ జలపాతం పేరుతో పిలవబడింది. రాతిపై ప్రవహించే నీటిలా సంగీతం యాప్ ద్వారా ప్రవహిస్తుంది.</string>
-    <string name="drawer_sync_heading">సింక్</string>
-    <string name="drawer_sync_summary">వాచ్ సెట్టింగ్స్ ఇక్కడ ఫోన్‌లో కాన్ఫిగర్ చేయబడి జత చేసిన వాచ్‌తో స్వయంచాలకంగా సింక్ అవుతాయి.</string>
     <string name="drawer_support_heading">మద్దతు</string>
     <string name="download_album_art">కవర్ ఆర్ట్ డౌన్‌లోడ్ చేయండి</string>
     <string name="album_art_saved">కవర్ ఆర్ట్ గ్యాలరీలో సేవ్ అయింది</string>
     <string name="album_art_save_error">కవర్ ఆర్ట్ సేవ్ చేయడం విఫలమైంది</string>
-    <string name="action_play_liked_songs">లైక్ చేసిన పాటలను ప్లే చేయండి (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">లైక్ చేసిన పాటలను ప్లే చేయండి (Spotify)</string>
-    <string name="action_play_soundcloud_likes">లైక్ చేసిన ట్రాక్‌లను ప్లే చేయండి (SoundCloud)</string>
+    <string name="action_play_liked_songs">లైక్ చేసిన పాటలు</string>
+    <string name="action_play_spotify_liked_songs">లైక్ చేసిన పాటలు</string>
+    <string name="action_play_soundcloud_likes">లైక్ చేసిన ట్రాక్‌లు</string>
     <string name="action_my_playlists">స్ట్రీమింగ్ షార్ట్‌కట్‌లు</string>
     <string name="action_show_streaming_library">సేవ్ చేసిన అన్ని షార్ట్‌కట్‌లను చూపించండి</string>
     <string name="picker_section_apps">Apps &amp; ఆటోమేషన్</string>
@@ -2108,7 +2106,7 @@
     <string name="playlist_shortcut_share_failed">ఈ షార్ట్‌కట్‌ను షేర్ చేయడానికి యాప్ అందుబాటులో లేదు</string>
     <string name="playlist_shortcut_deleted">%1$s తొలగించబడింది</string>
     <string name="playlist_shortcut_undo">రద్దు చేయండి</string>
-    <string name="action_play_liked_songs_shuffled">లైక్ చేసిన పాటలను షఫుల్ చేసి ప్లే చేయండి (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">లైక్ చేసిన పాటలు, షఫుల్</string>
     <string name="action_search_history">శోధన చరిత్ర</string>
     <string name="search_history_empty">ఇంకా ఇటీవలి శోధనలు లేవు</string>
     <string name="category_updates">అప్‌డేట్లు</string>
@@ -2325,4 +2323,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">లింక్‌ని తెరవగల యాప్‌లు, అలాగే ఇన్‌స్టాల్ చేయబడిన మీడియా ప్లేయర్‌లు చూపబడతాయి.</string>
     <string name="streaming_route_automatic">ఆటోమేటిక్ (గుర్తించబడిన యాప్)</string>
+    <string name="action_symfonium_start">Symfoniumలో మీడియాను ప్రారంభించండి</string>
+    <string name="action_symfonium_start_named">Symfoniumలో ప్రారంభించండి: %1$s</string>
+    <string name="action_symfonium_sync">Symfonium ప్రొవైడర్‌ను సింక్ చేయండి</string>
+    <string name="app_icon_style_gradient">గ్రేడియెంట్</string>
+    <string name="app_icon_style_solid">ఒకే రంగు</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">బొగ్గు ఈక</string>
+    <string name="dev_show_rating_card">రేటింగ్ కార్డ్‌ను చూపండి</string>
+    <string name="dev_show_rating_card_description">సాధారణ పరిమితులను పట్టించుకోకుండా Google Play నుండి దాని యాప్‌లోని రివ్యూ కార్డ్‌ను ఇప్పుడే అడుగుతుంది. ఇది Google Play నుండి ఇన్‌స్టాల్ చేసిన బిల్డ్‌లో మాత్రమే కనిపిస్తుంది (అంతర్గత పరీక్ష కూడా లెక్కలోకి వస్తుంది)</string>
+    <string name="dev_show_rating_card_unavailable">ఈ బిల్డ్ కోసం Google Playలో రివ్యూ కార్డ్ లేదు. అంతర్గత పరీక్షతో సహా Google Play నుండి ఇన్‌స్టాల్ చేసి, మళ్లీ ప్రయత్నించండి</string>
+    <string name="playlist_shortcut_queue_link_unavailable">ఈ ప్లేయర్ ఈ ట్రాక్ కోసం షేర్ చేయదగిన లింక్‌ను ప్రచురించలేదు</string>
+    <string name="setting_app_icon_style">యాప్ ఐకాన్</string>
+    <string name="setting_youtube_api_key">YouTube Data API కీ</string>
+    <string name="setting_youtube_api_key_bundled">YouTube కీ ఈ యాప్‌లోనే ఉంది; మీరు స్వయంగా జోడించాల్సిన అవసరం లేదు</string>
+    <string name="setting_youtube_api_key_configured">YouTube కీ కాన్ఫిగర్ చేయబడింది; ఈ ఫోన్‌లో మాత్రమే నిల్వ చేయబడింది</string>
+    <string name="setting_youtube_api_key_description">ప్లేయర్ కవర్‌ను ప్రచురించనప్పుడు, Svartifoss Google యొక్క YouTube Data API ద్వారా YouTubeలో వెతికి, ఈ కీతో పాటు ఛానెల్ మరియు శీర్షికను పంపి, సరిగ్గా సరిపోలే వీడియో థంబ్‌నెయిల్‌ను ఉపయోగిస్తుంది. యాప్‌లో ఉన్న కీని వాడటానికి ఖాళీగా ఉంచండి. మీరు పేస్ట్ చేసే కీ ఈ ఫోన్‌లోనే ఉంటుంది: అది వాచ్‌కు పంపబడదు, Svartifoss కాన్ఫిగరేషన్ బ్యాకప్‌లలో కూడా చేరదు.</string>
+    <string name="setting_youtube_api_key_dialog_title">మీ YouTube Data API v3 కీని పేస్ట్ చేయండి</string>
+    <string name="setting_youtube_api_key_not_configured">ఐచ్ఛికం: YouTube కీ కాన్ఫిగర్ చేయబడలేదు</string>
+    <string name="symfonium_media_album">ఆల్బమ్ (ఐచ్ఛికం)</string>
+    <string name="symfonium_media_artist">కళాకారుడు (ఐచ్ఛికం)</string>
+    <string name="symfonium_media_id_optional">ID (ఐచ్ఛికం)</string>
+    <string name="symfonium_media_name">పేరు</string>
+    <string name="symfonium_media_type">మీడియా రకం</string>
+    <string name="symfonium_provider_id">ప్రొవైడర్ ID</string>
+    <string name="symfonium_provider_id_description">ప్రొవైడర్ IDని Symfonium యొక్క “మీడియా ప్రొవైడర్లను నిర్వహించండి” స్క్రీన్‌లో కనుగొనవచ్చు.</string>
+    <string name="symfonium_queue_mode">క్యూ మోడ్</string>
+    <string name="symfonium_resume">వీలైతే కొనసాగించండి</string>
+    <string name="symfonium_shuffle">సేకరణలను షఫుల్ చేయండి</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>పాట</item>
+        <item>ప్లేలిస్ట్</item>
+        <item>ఆల్బమ్</item>
+        <item>కళాకారుడు</item>
+        <item>జానర్</item>
+        <item>పాటల మిక్స్</item>
+        <item>ఆల్బమ్ మిక్స్</item>
+        <item>ఇంటర్నెట్ రేడియో</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>ఇప్పుడే ప్రారంభించండి</item>
+        <item>తర్వాత ప్లే చేయండి</item>
+        <item>క్యూకు జోడించండి</item>
+    </string-array>
 </resources>

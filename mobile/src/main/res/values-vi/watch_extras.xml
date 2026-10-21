@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Độ dày thanh âm lượng</string>
-    <string name="setting_wear_volume_thickness_description">Độ dày nét của thanh âm lượng, từ 50% đến 180% mặc định. Nét dày hơn vẫn cách xa viền màn hình.</string>
+    <string name="setting_wear_volume_thickness_description">Độ dày nét của thanh âm lượng, từ 50%% đến 180%% mặc định. Nét dày hơn vẫn cách xa viền màn hình.</string>
     <string name="setting_wear_volume_haptics">Rung núm xoay khi chỉnh âm lượng</string>
     <string name="setting_wear_queue_dim_played">Làm mờ bài đã phát</string>
     <string name="setting_wear_queue_dim_played_description">Làm mờ các mục đã phát để những bài sắp tới nổi bật hơn.</string>

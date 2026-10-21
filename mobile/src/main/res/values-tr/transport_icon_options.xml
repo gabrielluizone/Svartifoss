@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Oynat simgesi</string>
+    <string name="setting_wear_pause_icon">Duraklat simgesi</string>
+    <string name="setting_wear_transport_icon_description">Oynat ve duraklat denetiminin işareti. “Yüzü izle” bu yüzün özgün tasarımındaki işareti korur.</string>
+    <string name="transport_icon_follow">Yüzü izle</string>
+    <string name="transport_icon_a">Yuvarlak</string>
+    <string name="transport_icon_b">Yuvarlak çerçeve</string>
+    <string name="transport_icon_c">Keskin çerçeve</string>
+    <string name="transport_icon_d">Keskin</string>
+    <string name="transport_icon_e">Kalın yuvarlak çerçeve</string>
+</resources>

@@ -25,9 +25,11 @@ import kotlin.math.roundToInt
  * service's mark on it ([service]) - so a playlist whose cover was never looked up still says which
  * player it opens in, instead of standing in a tile of one fixed colour.
  *
- * The glyphs are Material Symbols (see `icons/`), not the services' artwork: nothing here copies an
- * image anyone published. Covers are cached in memory - they cost a few milliseconds to draw, but
- * list rows ask for them on every bind.
+ * The glyphs are Material Symbols (see `icons/`), not the services' artwork: nothing drawn here
+ * copies an image anyone published. The one cover that is a picture and not a drawing - YouTube
+ * Music's Liked Music, which the owner chose - is bundled and resolved by [ShortcutCovers] before
+ * this is asked, so [collection] only draws it as a last resort. Covers are cached in memory - they
+ * cost a few milliseconds to draw, but list rows ask for them on every bind.
  */
 object ShortcutCoverArt {
 

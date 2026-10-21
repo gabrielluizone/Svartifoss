@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Ketebalan bar kelantangan</string>
-    <string name="setting_wear_volume_thickness_description">Ketebalan garisan bar kelantangan, dari 50% hingga 180% daripada lalai. Garisan yang lebih tebal tetap jauh dari bingkai.</string>
+    <string name="setting_wear_volume_thickness_description">Ketebalan garisan bar kelantangan, dari 50%% hingga 180%% daripada lalai. Garisan yang lebih tebal tetap jauh dari bingkai.</string>
     <string name="setting_wear_volume_haptics">Getaran mahkota pada kelantangan</string>
     <string name="setting_wear_queue_dim_played">Malapkan lagu yang telah dimainkan</string>
     <string name="setting_wear_queue_dim_played_description">Memalapkan entri yang sudah dimainkan supaya yang akan datang lebih menonjol.</string>

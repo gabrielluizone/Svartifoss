@@ -968,7 +968,10 @@ private fun CookiePlayButton(
                             // them, and a pause bar drawn out of proportion would be the one part
                             // of this that looked like a mistake rather than a press.
                             .graphicsLayer { scaleX = 1f / stretch },
-                    pauseIcon = commonR.drawable.action_pause_expressive
+                    // Resolved against Expressive by the host, so "follow" still gives it the
+                    // sharp outlined pause it has always had.
+                    playIcon = state.playIconRes(),
+                    pauseIcon = state.pauseIconRes()
             )
         }
     }

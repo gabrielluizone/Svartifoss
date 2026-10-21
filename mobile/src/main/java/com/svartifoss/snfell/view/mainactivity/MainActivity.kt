@@ -27,6 +27,7 @@ import com.svartifoss.snfell.common.TrackTimeFormat
 import com.svartifoss.snfell.databinding.ActivityMainBinding
 import com.svartifoss.snfell.di.InjectableViewModelFactory
 import com.svartifoss.snfell.music.isPlaying
+import com.svartifoss.snfell.review.ReviewPrompt
 import com.svartifoss.snfell.support.DrawerSupportSection
 import com.svartifoss.snfell.view.ActivityResultReceiver
 import com.svartifoss.snfell.view.FabFragment
@@ -283,6 +284,12 @@ class MainActivity : WearCompanionPhoneActivity(),
         // single global appearance value now bleeds into whichever per-face defaults it happens
         // to match, so recommend resetting watch appearance to actually land on the new defaults.
         com.svartifoss.snfell.view.watchface.FaceResetMigrationPrompt.maybeShow(this)
+
+        // Play build: asks for a rating with Play's own in-app card once the app has been opened
+        // on a few different days, and decides for itself when (see ReviewPromptPolicy). It is
+        // wired here, at start-up, and nowhere a user can press, on purpose: Play advises against
+        // a button that raises the card. Inert in the github build.
+        ReviewPrompt.attach(this)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

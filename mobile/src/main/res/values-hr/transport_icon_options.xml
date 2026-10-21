@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Ikona reprodukcije</string>
+    <string name="setting_wear_pause_icon">Ikona pauze</string>
+    <string name="setting_wear_transport_icon_description">Simbol gumba za reprodukciju i pauzu. „Prati lice” zadržava simbol iz izvornog dizajna ovog brojčanika.</string>
+    <string name="transport_icon_follow">Prati lice</string>
+    <string name="transport_icon_a">Zaobljeno</string>
+    <string name="transport_icon_b">Zaobljeni obrub</string>
+    <string name="transport_icon_c">Oštri obrub</string>
+    <string name="transport_icon_d">Oštro</string>
+    <string name="transport_icon_e">Debeli zaobljeni obrub</string>
+</resources>

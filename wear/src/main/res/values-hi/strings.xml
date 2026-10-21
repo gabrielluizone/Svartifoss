@@ -235,4 +235,6 @@
     <string name="quick_sleep_description">स्लीप टाइमर, %1$d मिनट शेष। बदलने के लिए टैप करें।</string>
     <string name="quick_sleep_off_description">स्लीप टाइमर बंद। सेट करने के लिए टैप करें।</string>
     <string name="quick_lyric_plain">इन बोलों में समय नहीं दिया गया है। पढ़ने के लिए टैप करें।</string>
+    <string name="playback_live">लाइव</string>
+    <string name="queue_add_shortcut">इस ट्रैक को शॉर्टकट में जोड़ें</string>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Икона за възпроизвеждане</string>
+    <string name="setting_wear_pause_icon">Икона за пауза</string>
+    <string name="setting_wear_transport_icon_description">Символът на бутона за възпроизвеждане и пауза. „Следвай циферблата“ запазва символа от оригиналния дизайн на този циферблат.</string>
+    <string name="transport_icon_follow">Следвай циферблата</string>
+    <string name="transport_icon_a">Закръглена</string>
+    <string name="transport_icon_b">Закръглен контур</string>
+    <string name="transport_icon_c">Остър контур</string>
+    <string name="transport_icon_d">Остра</string>
+    <string name="transport_icon_e">Дебел закръглен контур</string>
+</resources>

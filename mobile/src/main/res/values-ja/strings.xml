@@ -739,6 +739,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -750,8 +752,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">常時表示の色</string>
     <string-array name="wear_aod_color_entries">
@@ -1639,7 +1639,7 @@
         <item>正方形</item>
         <item>スクワークル</item>
         <item>円</item>
-        <item>サムスン風</item>
+        <item>スーパー楕円</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">フォントをすべてに使用</string>
@@ -2018,16 +2018,14 @@
     <string name="drawer_about_summary">Svartifoss を使えば、Wear OS ウォッチからスマートフォンの音楽を操作できます。デバイスに合わせて完全にカスタマイズできるリモコンです。</string>
     <string name="drawer_name_heading">名前について</string>
     <string name="drawer_name_meaning">Svartifoss はアイスランド語で「黒い滝」を意味します。ヴァトナヨークトル国立公園にある滝にちなんだ名前で、暗い玄武岩の柱が細い水流を囲んでいます。石の上を流れる水のように、音楽がアプリを流れます。</string>
-    <string name="drawer_sync_heading">同期</string>
-    <string name="drawer_sync_summary">ウォッチの設定はスマートフォン側で行い、ペアリング済みのウォッチへ自動的に同期されます。</string>
     <string name="drawer_support_heading">サポート</string>
     <string name="download_album_art">カバーアートをダウンロード</string>
     <string name="album_art_saved">カバーアートをギャラリーに保存しました</string>
     <string name="album_art_save_error">カバーアートを保存できませんでした</string>
 
-    <string name="action_play_liked_songs">高評価した曲を再生（YT Music）</string>
-    <string name="action_play_spotify_liked_songs">高評価した曲を再生（Spotify）</string>
-    <string name="action_play_soundcloud_likes">高評価したトラックを再生（SoundCloud）</string>
+    <string name="action_play_liked_songs">高評価した曲</string>
+    <string name="action_play_spotify_liked_songs">高評価した曲</string>
+    <string name="action_play_soundcloud_likes">高評価したトラック</string>
     <string name="action_my_playlists">ストリーミングショートカット</string>
     <string name="action_show_streaming_library">保存したショートカットをすべて表示</string>
     <string name="picker_section_apps">アプリと自動化</string>
@@ -2157,7 +2155,7 @@
     <string name="playlist_shortcut_deleted">%1$s を削除しました</string>
     <string name="playlist_shortcut_undo">元に戻す</string>
 
-    <string name="action_play_liked_songs_shuffled">高評価した曲をシャッフル再生（YT Music）</string>
+    <string name="action_play_liked_songs_shuffled">高評価した曲（シャッフル）</string>
     <string name="action_search_history">検索履歴</string>
     <string name="search_history_empty">最近の検索はまだありません</string>
 
@@ -2843,7 +2841,7 @@
     <string name="setting_wear_text_block_position">テキスト位置</string>
     <string name="setting_wear_text_block_position_description">画面上でトラックテキストが置かれる位置です。「フェイスに従う」では、各フェイスに設計された位置を保持します。</string>
     <string name="setting_online_artwork">オンラインアートワーク</string>
-    <string name="setting_online_artwork_description">ウォッチフェイスにオンラインで検索した画像を表示します \u2014 再生中のアーティスト、または画像を公開していないプレーヤー向けのアルバムカバーです。スマートフォンが Deezer の公開カタログを検索して結果をキャッシュします。送信されるのはトラック名とアーティスト名だけで、フェイスがこれらのソースのいずれかに設定されている場合にのみ検索します。オフの場合は、プレーヤー自身のアートワークを使用します。</string>
+    <string name="setting_online_artwork_description">ウォッチフェイスにオンラインで検索した画像を表示します — 再生中のアーティスト、または画像を公開していないプレーヤー向けのアルバムカバーです。検索と結果のキャッシュはスマートフォンが行い、送信されるのはトラック名とアーティスト名だけで、送信先は Deezer の公開カタログです。YouTube の動画のように、アプリがカバーをまったく公開していないトラックのカバーを見つけるのもこの機能です。スマートフォンはまず YouTube にその動画自身のサムネイルを要求し（チャンネル名とタイトルを Google の YouTube Data API に送信します）、次に Deezer にアルバムカバーを要求して、一致した場合にのみ結果を使用します。オフの場合は、プレーヤー自身のアートワークのみを使用します。</string>
     <string name="setting_wear_shortcut_details">ウォッチで再生またはシャッフル</string>
     <string name="setting_wear_shortcut_details_description">ウォッチで保存済みのリンクを選ぶと（ショートカットリスト、ショートカット Tile、アクションメニューのいずれからでも）、まずカバーと「再生」「シャッフル」が表示されます。オフにすると、すぐに再生を開始します。1 つのリンクに割り当てたボタンやジェスチャーは常にすぐ再生を開始します。</string>
     <string name="actions_quick_pin_add">クイックパネルに表示</string>
@@ -2941,4 +2939,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">リンクを開くことができるアプリと、インストールされているメディア プレーヤーが表示されます。</string>
     <string name="streaming_route_automatic">自動（検出されたアプリ）</string>
+    <string name="action_symfonium_start">Symfonium でメディアを開始</string>
+    <string name="action_symfonium_start_named">Symfonium で開始：%1$s</string>
+    <string name="action_symfonium_sync">Symfonium のプロバイダーを同期</string>
+    <string name="app_icon_style_gradient">グラデーション</string>
+    <string name="app_icon_style_solid">単色</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">灰羽</string>
+    <string name="dev_show_rating_card">評価カードを表示</string>
+    <string name="dev_show_rating_card_description">通常の制限を無視して、Google Play のアプリ内レビューカードを今すぐ要求します。Google Play からインストールしたビルドでのみ表示されます（内部テストも対象です）</string>
+    <string name="dev_show_rating_card_unavailable">このビルドには Google Play のレビューカードがありません。内部テストを含め、Google Play からインストールしてもう一度お試しください</string>
+    <string name="playlist_shortcut_queue_link_unavailable">このプレーヤーは、このトラックの共有可能なリンクを公開していません</string>
+    <string name="setting_app_icon_style">アプリアイコン</string>
+    <string name="setting_youtube_api_key">YouTube Data API キー</string>
+    <string name="setting_youtube_api_key_bundled">YouTube キーはこのアプリに含まれています。ご自身で追加する必要はありません</string>
+    <string name="setting_youtube_api_key_configured">YouTube キーを設定済み。このスマートフォンにのみ保存されます</string>
+    <string name="setting_youtube_api_key_description">プレーヤーがアートワークを公開していない場合、Svartifoss は Google の YouTube Data API で YouTube を検索し、チャンネル名とタイトルをこのキーとともに送信して、完全に一致する動画のサムネイルを使用します。空欄のままにすると、このアプリに含まれるキーを使用します。貼り付けたキーはこのスマートフォンに残り、ウォッチには送信されず、Svartifoss の設定バックアップにも含まれません。</string>
+    <string name="setting_youtube_api_key_dialog_title">YouTube Data API v3 キーを貼り付け</string>
+    <string name="setting_youtube_api_key_not_configured">任意：YouTube キーは未設定です</string>
+    <string name="symfonium_media_album">アルバム（任意）</string>
+    <string name="symfonium_media_artist">アーティスト（任意）</string>
+    <string name="symfonium_media_id_optional">ID（任意）</string>
+    <string name="symfonium_media_name">名前</string>
+    <string name="symfonium_media_type">メディアの種類</string>
+    <string name="symfonium_provider_id">プロバイダー ID</string>
+    <string name="symfonium_provider_id_description">プロバイダー ID は、Symfonium の「メディアプロバイダーの管理」画面で確認できます。</string>
+    <string name="symfonium_queue_mode">キューモード</string>
+    <string name="symfonium_resume">可能なときは再開</string>
+    <string name="symfonium_shuffle">コレクションをシャッフル</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>曲</item>
+        <item>プレイリスト</item>
+        <item>アルバム</item>
+        <item>アーティスト</item>
+        <item>ジャンル</item>
+        <item>曲のミックス</item>
+        <item>アルバムのミックス</item>
+        <item>インターネットラジオ</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>今すぐ開始</item>
+        <item>次に再生</item>
+        <item>キューに追加</item>
+    </string-array>
 </resources>

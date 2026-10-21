@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Lydstyrkebjælkens tykkelse</string>
-    <string name="setting_wear_volume_thickness_description">Tykkelsen på lydstyrkebjælkens streg, fra 50 % til 180 % af standarden. Tykkere streger holder sig stadig fri af kanten.</string>
+    <string name="setting_wear_volume_thickness_description">Tykkelsen på lydstyrkebjælkens streg, fra 50 %% til 180 %% af standarden. Tykkere streger holder sig stadig fri af kanten.</string>
     <string name="setting_wear_volume_haptics">Kronevibration ved lydstyrke</string>
     <string name="setting_wear_queue_dim_played">Dæmp afspillede numre</string>
     <string name="setting_wear_queue_dim_played_description">Toner de numre ned, der allerede er afspillet, så de kommende træder frem.</string>

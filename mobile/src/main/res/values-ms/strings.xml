@@ -739,6 +739,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -750,8 +752,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Warna paparan sentiasa hidup</string>
     <string-array name="wear_aod_color_entries">
@@ -1639,7 +1639,7 @@
         <item>Segi empat sama</item>
         <item>Segi empat bulat</item>
         <item>Bulatan</item>
-        <item>Gaya Samsung</item>
+        <item>Superelips</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Gunakan fon di mana-mana</string>
@@ -2018,16 +2018,14 @@
     <string name="drawer_about_summary">Svartifoss membolehkan anda mengawal muzik pada telefon dari jam Wear OS — dengan alat kawalan jauh yang boleh disesuaikan sepenuhnya untuk peranti anda.</string>
     <string name="drawer_name_heading">Nama</string>
     <string name="drawer_name_meaning">Svartifoss bermaksud “Air Terjun Hitam” dalam bahasa Iceland — dinamakan sempena air terjun di Taman Negara Vatnajökull, tempat tiang basalt gelap membingkai aliran air terjun yang sempit. Seperti air mengalir di atas batu, muzik mengalir melalui aplikasi.</string>
-    <string name="drawer_sync_heading">Segerak</string>
-    <string name="drawer_sync_summary">Tetapan jam dikonfigurasikan di sini pada telefon dan disegerakkan secara automatik ke jam yang dipasangkan.</string>
     <string name="drawer_support_heading">Sokongan</string>
     <string name="download_album_art">Muat turun seni kulit</string>
     <string name="album_art_saved">Seni kulit disimpan ke galeri</string>
     <string name="album_art_save_error">Gagal menyimpan seni kulit</string>
 
-    <string name="action_play_liked_songs">Mainkan lagu disukai (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Mainkan lagu disukai (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Mainkan trek disukai (SoundCloud)</string>
+    <string name="action_play_liked_songs">Lagu disukai</string>
+    <string name="action_play_spotify_liked_songs">Lagu disukai</string>
+    <string name="action_play_soundcloud_likes">Trek disukai</string>
     <string name="action_my_playlists">Pintasan penstriman</string>
     <string name="action_show_streaming_library">Tunjukkan semua pintasan disimpan</string>
     <string name="picker_section_apps">Aplikasi &amp; automasi</string>
@@ -2157,7 +2155,7 @@
     <string name="playlist_shortcut_deleted">%1$s dipadam</string>
     <string name="playlist_shortcut_undo">Buat asal</string>
 
-    <string name="action_play_liked_songs_shuffled">Mainkan lagu disukai secara rawak (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Lagu disukai, rawak</string>
     <string name="action_search_history">Sejarah carian</string>
     <string name="search_history_empty">Belum ada carian terkini</string>
 
@@ -2843,7 +2841,7 @@
     <string name="setting_wear_text_block_position">Kedudukan teks</string>
     <string name="setting_wear_text_block_position_description">Kedudukan teks trek pada skrin. Ikut muka mengekalkan kedudukan yang direka untuk setiap muka jam.</string>
     <string name="setting_online_artwork">Ilustrasi dalam talian</string>
-    <string name="setting_online_artwork_description">Benarkan muka jam memaparkan imej yang dicari dalam talian \u2014 artis yang sedang dimainkan, atau kulit album bagi pemain yang tidak menerbitkan imej. Telefon anda membuat carian dalam katalog awam Deezer dan menyimpan hasil dalam cache; hanya nama trek dan artis dihantar, dan tiada carian dibuat melainkan muka ditetapkan kepada salah satu sumber tersebut. Jika dimatikan, ilustrasi milik pemain digunakan.</string>
+    <string name="setting_online_artwork_description">Benarkan muka jam menunjukkan gambar yang dicari dalam talian — artis yang membuat persembahan, atau muka depan album untuk pemain yang tidak menyediakan sebarang gambar. Telefon anda membuat carian dan menyimpan hasilnya dalam cache; hanya nama trek dan artis yang dihantar, ke katalog awam Deezer. Ini juga yang mencari muka depan bagi trek yang aplnya tidak menerbitkan sebarang gambar langsung, seperti video YouTube: telefon meminta imej kecil video itu sendiri daripada YouTube (menghantar saluran dan tajuk kepada YouTube Data API milik Google), kemudian muka depan album daripada Deezer, dan hanya menggunakan hasil apabila ia sepadan. Apabila dimatikan, hanya karya seni pemain itu sendiri digunakan.</string>
     <string name="setting_wear_shortcut_details">Main atau rawak pada jam</string>
     <string name="setting_wear_shortcut_details_description">Memilih pautan yang disimpan pada jam, daripada senarai pintasan, Tile pintasan atau menu tindakan, akan menunjukkan kulitnya dahulu dengan Main dan Rawak. Matikan untuk terus memulakannya. Butang dan gerak isyarat yang ditetapkan pada satu pautan sentiasa terus memulakannya.</string>
     <string name="actions_quick_pin_add">Tunjukkan dalam panel pantas</string>
@@ -2941,4 +2939,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">Apl yang boleh membuka pautan, serta pemain media yang dipasang, ditunjukkan.</string>
     <string name="streaming_route_automatic">Automatik (apl yang dikesan)</string>
+    <string name="action_symfonium_start">Mulakan media dalam Symfonium</string>
+    <string name="action_symfonium_start_named">Mulakan dalam Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Segerakkan penyedia Symfonium</string>
+    <string name="app_icon_style_gradient">Kecerunan</string>
+    <string name="app_icon_style_solid">Warna pepejal</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Bulu Arang</string>
+    <string name="dev_show_rating_card">Tunjukkan kad penilaian</string>
+    <string name="dev_show_rating_card_description">Meminta kad ulasan dalam apl daripada Google Play sekarang juga, tanpa mengambil kira had biasa. Ia hanya muncul dalam binaan yang dipasang daripada Google Play (ujian dalaman turut dikira)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play tidak mempunyai kad ulasan untuk binaan ini. Pasangnya daripada Google Play, termasuk ujian dalaman, dan cuba lagi</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Pemain ini tidak menerbitkan pautan yang boleh dikongsi untuk trek ini</string>
+    <string name="setting_app_icon_style">Ikon apl</string>
+    <string name="setting_youtube_api_key">Kunci YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">Kunci YouTube disertakan dalam apl ini; anda tidak perlu menambahnya</string>
+    <string name="setting_youtube_api_key_configured">Kunci YouTube telah dikonfigurasi; disimpan pada telefon ini sahaja</string>
+    <string name="setting_youtube_api_key_description">Apabila pemain tidak menerbitkan gambar muka depan, Svartifoss mencari di YouTube melalui YouTube Data API milik Google, menghantar saluran dan tajuk bersama kunci ini, dan menggunakan imej kecil video yang sepadan sepenuhnya. Biarkan kosong untuk menggunakan kunci yang disertakan dalam apl ini. Kunci yang anda tampal kekal pada telefon ini: ia tidak dihantar ke jam dan tidak disertakan dalam sandaran konfigurasi Svartifoss.</string>
+    <string name="setting_youtube_api_key_dialog_title">Tampal kunci YouTube Data API v3 anda</string>
+    <string name="setting_youtube_api_key_not_configured">Pilihan: tiada kunci YouTube dikonfigurasi</string>
+    <string name="symfonium_media_album">Album (pilihan)</string>
+    <string name="symfonium_media_artist">Artis (pilihan)</string>
+    <string name="symfonium_media_id_optional">ID (pilihan)</string>
+    <string name="symfonium_media_name">Nama</string>
+    <string name="symfonium_media_type">Jenis media</string>
+    <string name="symfonium_provider_id">ID penyedia</string>
+    <string name="symfonium_provider_id_description">ID penyedia boleh didapati pada skrin Urus penyedia media dalam Symfonium.</string>
+    <string name="symfonium_queue_mode">Mod baris gilir</string>
+    <string name="symfonium_resume">Sambung semula apabila boleh</string>
+    <string name="symfonium_shuffle">Rawakkan koleksi</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Lagu</item>
+        <item>Senarai main</item>
+        <item>Album</item>
+        <item>Artis</item>
+        <item>Genre</item>
+        <item>Campuran lagu</item>
+        <item>Campuran album</item>
+        <item>Radio internet</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Mula sekarang</item>
+        <item>Main seterusnya</item>
+        <item>Tambah ke baris gilir</item>
+    </string-array>
 </resources>

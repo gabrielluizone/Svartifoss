@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- The Play build's branded launch: the same 48dp layer as main's splash_screen.xml, holding the
-     icon the Play build actually launches with. Wear OS app quality (WO-V15) requires the splash
-     icon to match the launcher icon, and the Play build's default launcher entry is
-     .LauncherIconGradient (see this flavor's manifest) - main's plain ic_launcher is the GitHub
-     build's icon and only matches the alternative solid entry. A splash theme is fixed per
-     activity, so it follows the default entry that a reviewer and a new install see. -->
+<!-- The Play build's branded launch below Android 12 (Wear OS 3): the same 48dp layer as main's
+     splash_screen.xml, holding the icon the Play build actually launches with. Wear OS app quality
+     (WO-V15) requires the splash icon to match the launcher icon, and the Play build's default
+     launcher entry is .LauncherIconGradient (see this flavor's manifest) - main's plain
+     ic_launcher is the GitHub build's icon and only matches the alternative solid entry. There the
+     library draws it into the window background from the theme, which is fixed per activity and
+     so cannot follow an <activity-alias>: it shows the default entry, the one a reviewer and a new
+     install see. From Android 12 the theme names no icon at all and the system draws the one of
+     the entry that was opened (values-v31/styles.xml), so this drawable is not used there. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:width="@dimen/splash_screen_icon_size"

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">ئایکۆنی پەخش</string>
+    <string name="setting_wear_pause_icon">ئایکۆنی وەستانی کاتی</string>
+    <string name="setting_wear_transport_icon_description">هێمای دوگمەی پەخش و وەستانی کاتی. «شوێن face بکەوە» هێمای دیزاینی ڕەسەنی ئەم ڕووکارە دەپارێزێت.</string>
+    <string name="transport_icon_follow">شوێن face بکەوە</string>
+    <string name="transport_icon_a">خڕ</string>
+    <string name="transport_icon_b">هێڵی دەرەوەی خڕ</string>
+    <string name="transport_icon_c">هێڵی دەرەوەی تیژ</string>
+    <string name="transport_icon_d">تیژ</string>
+    <string name="transport_icon_e">هێڵی دەرەوەی خڕی ئەستوور</string>
+</resources>

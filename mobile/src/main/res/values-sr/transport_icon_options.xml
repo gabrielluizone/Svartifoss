@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Икона репродукције</string>
+    <string name="setting_wear_pause_icon">Икона паузе</string>
+    <string name="setting_wear_transport_icon_description">Симбол дугмета за репродукцију и паузу. „Прати лице“ задржава симбол из изворног дизајна овог бројчаника.</string>
+    <string name="transport_icon_follow">Прати лице</string>
+    <string name="transport_icon_a">Заобљено</string>
+    <string name="transport_icon_b">Заобљени обрис</string>
+    <string name="transport_icon_c">Оштри обрис</string>
+    <string name="transport_icon_d">Оштро</string>
+    <string name="transport_icon_e">Дебели заобљени обрис</string>
+</resources>

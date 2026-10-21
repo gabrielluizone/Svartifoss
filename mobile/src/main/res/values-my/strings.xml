@@ -449,7 +449,7 @@
     <string name="setting_wear_text_block_position">စာသား နေရာ</string>
     <string name="setting_wear_text_block_position_description">သီချင်းစာသား မျက်နှာပြင်ပေါ်တွင် မည်သည့်နေရာ၌ ရှိမည်။ Follow face က မျက်နှာတစ်ခုစီအတွက် ဒီဇိုင်းလုပ်ထားသော နေရာကို ဆက်ထိန်းထားမည်။</string>
     <string name="setting_online_artwork">အွန်လိုင်း အနုပညာပုံ</string>
-    <string name="setting_online_artwork_description">နာရီမျက်နှာပေါ်တွင် အွန်လိုင်းမှ ရှာထားသောပုံကို ပြနိုင်စေပါ \u2014 ဖျော်ဖြေနေသော အနုပညာရှင်၏ပုံ၊ သို့မဟုတ် အနုပညာပုံမပေးသော ပလေယာအတွက် အယ်လ်ဘမ်အဖုံး။ သင့်ဖုန်းသည် Deezer ၏ အများပြည်သူကတ်တလောက်တွင် ရှာပြီး ရလဒ်ကို cache လုပ်သည်။ သီချင်းနှင့် အနုပညာရှင်အမည်များကိုသာ ပို့ပြီး၊ နာရီမျက်နှာကို ထိုအရင်းအမြစ်များထဲမှ တစ်ခုအဖြစ် မသတ်မှတ်ထားလျှင် မည်သည့်ရှာဖွေမှုမျှ မလုပ်ပါ။ ပိတ်ထားပါက ပလေယာ၏ ကိုယ်ပိုင်အနုပညာပုံကို သုံးမည်။</string>
+    <string name="setting_online_artwork_description">နာရီမျက်နှာပြင်ကို အွန်လိုင်းတွင် ရှာတွေ့သော ပုံပြခွင့်ပြုပါ — တင်ဆက်နေသော အနုပညာရှင်၊ သို့မဟုတ် ကာဗာမထုတ်ပြန်သော ပလေယာအတွက် အယ်လ်ဘမ်ကာဗာ။ သင့်ဖုန်းက ရှာဖွေပြီး ရလဒ်ကို cache တွင် သိမ်းသည်။ သီချင်းနှင့် အနုပညာရှင်အမည်များကိုသာ Deezer ၏ အများသုံးကတ်တလောက်သို့ ပို့သည်။ YouTube ဗီဒီယိုကဲ့သို့ အက်ပ်က ကာဗာ လုံးဝ မထုတ်ပြန်သော သီချင်းအတွက်လည်း ဤအင်္ဂါရပ်က ကာဗာ ရှာပေးသည်- ဖုန်းသည် YouTube ထံမှ ထိုဗီဒီယို၏ ကိုယ်ပိုင်ပုံသေးကို တောင်းပြီး (ချန်နယ်နှင့် ခေါင်းစဉ်ကို Google ၏ YouTube Data API သို့ ပို့သည်)၊ ထို့နောက် Deezer ထံမှ အယ်လ်ဘမ်ကာဗာကို တောင်းပြီး ကိုက်ညီမှသာ ရလဒ်ကို သုံးသည်။ ပိတ်ထားလျှင် ပလေယာ၏ ကိုယ်ပိုင်ပုံကိုသာ သုံးသည်။</string>
     <string name="app_name">Svartifoss</string>
     <string name="app_name_short">Svartifoss</string>
     <string name="setting_no_wearable_api_banner">ဤစက်တွင် Wear OS ကို မပံ့ပိုးပါ</string>
@@ -1735,7 +1735,7 @@
         <item>စတုရန်း</item>
         <item>Squircle</item>
         <item>စက်ဝိုင်း</item>
-        <item>Samsung ပုံစံ</item>
+        <item>Superellipse</item>
     </string-array>
     <string name="setting_wear_font_all_screens">Font ကို နေရာတိုင်းတွင် သုံးပါ</string>
     <string name="setting_wear_font_all_screens_description">ရွေးထားသော font ကို player အပြင် menus, queue နှင့် Quick actions တွင်လည်း သုံးသည်။ Display နှင့် လက်ရေး font များသည် စာရင်းများတွင် ဖတ်ရခက်နိုင်သည်။</string>
@@ -1968,15 +1968,13 @@
     <string name="drawer_about_summary">Svartifoss က Wear OS နာရီမှ ဖုန်းပေါ်ရှိ သီချင်းကို ထိန်းချုပ်နိုင်စေသည် — သင့် device အတွက် အပြည့်အဝ စိတ်ကြိုက်ပြင်နိုင်သော remote နှင့်အတူ။</string>
     <string name="drawer_name_heading">အမည်</string>
     <string name="drawer_name_meaning">Icelandic ဘာသာတွင် Svartifoss သည် “Black Falls” ဟု အဓိပ္ပာယ်ရသည် — Vatnajökull National Park ရှိ အနက်ရောင် basalt တိုင်များက ကျဉ်းမြောင်းသော ရေတံခွန်ကို ဝန်းရံထားသည့် ရေတံခွန်အမည်မှ ယူထားသည်။ ကျောက်ပေါ်စီးသော ရေကဲ့သို့ သီချင်းသည် app မှတစ်ဆင့် စီးဆင်းသည်။</string>
-    <string name="drawer_sync_heading">Sync</string>
-    <string name="drawer_sync_summary">Watch settings များကို ဤနေရာ ဖုန်းပေါ်တွင် ပြင်ဆင်ပြီး ချိတ်ထားသော နာရီသို့ အလိုအလျောက် sync လုပ်သည်။</string>
     <string name="drawer_support_heading">ပံ့ပိုးမှု</string>
     <string name="download_album_art">Cover art ကို download လုပ်ပါ</string>
     <string name="album_art_saved">Cover art ကို gallery တွင် သိမ်းပြီးပါပြီ</string>
     <string name="album_art_save_error">Cover art သိမ်းမရပါ</string>
-    <string name="action_play_liked_songs">Like လုပ်ထားသော သီချင်းများကို ဖွင့်ပါ (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Like လုပ်ထားသော သီချင်းများကို ဖွင့်ပါ (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Like လုပ်ထားသော track များကို ဖွင့်ပါ (SoundCloud)</string>
+    <string name="action_play_liked_songs">Like လုပ်ထားသော သီချင်းများ</string>
+    <string name="action_play_spotify_liked_songs">Like လုပ်ထားသော သီချင်းများ</string>
+    <string name="action_play_soundcloud_likes">Like လုပ်ထားသော track များ</string>
     <string name="action_my_playlists">Streaming shortcut များ</string>
     <string name="action_show_streaming_library">သိမ်းထားသော shortcut အားလုံးပြပါ</string>
     <string name="picker_section_apps">Apps &amp; အလိုအလျောက်စနစ်</string>
@@ -2108,7 +2106,7 @@
     <string name="playlist_shortcut_share_failed">ဤ shortcut ကို share လုပ်ရန် app မရှိပါ</string>
     <string name="playlist_shortcut_deleted">%1$s ဖျက်ပြီးပါပြီ</string>
     <string name="playlist_shortcut_undo">ပြန်ယူပါ</string>
-    <string name="action_play_liked_songs_shuffled">Like လုပ်ထားသော သီချင်းများကို shuffle ဖြင့်ဖွင့်ပါ (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Like လုပ်ထားသော သီချင်းများ (shuffle)</string>
     <string name="action_search_history">ရှာဖွေမှုမှတ်တမ်း</string>
     <string name="search_history_empty">မကြာသေးမီ ရှာဖွေမှုမရှိသေးပါ</string>
     <string name="category_updates">Updates</string>
@@ -2325,4 +2323,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">လင့်ခ်ကိုဖွင့်နိုင်သောအက်ပ်များ၊ တပ်ဆင်ထားသည့်မီဒီယာပလေယာများကိုပြသထားသည်။</string>
     <string name="streaming_route_automatic">အလိုအလျောက် (တွေ့ရှိထားသောအက်ပ်)</string>
+    <string name="action_symfonium_start">Symfonium တွင် မီဒီယာ စတင်ရန်</string>
+    <string name="action_symfonium_start_named">Symfonium တွင် စတင်ရန်- %1$s</string>
+    <string name="action_symfonium_sync">Symfonium ပံ့ပိုးသူကို ထပ်တူပြုရန်</string>
+    <string name="app_icon_style_gradient">အရောင်ဆင်ခြင်</string>
+    <string name="app_icon_style_solid">အရောင်တစ်ရောင်တည်း</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">မီးသွေးငှက်မွှေး</string>
+    <string name="dev_show_rating_card">အဆင့်သတ်မှတ်ကတ်ကို ပြရန်</string>
+    <string name="dev_show_rating_card_description">ပုံမှန်ကန့်သတ်ချက်များကို လျစ်လျူရှုပြီး Google Play ထံမှ အက်ပ်အတွင်း သုံးသပ်ချက်ကတ်ကို ယခုချက်ချင်း တောင်းသည်။ Google Play မှ ထည့်သွင်းထားသော ဗားရှင်းတွင်သာ ပေါ်လာသည် (အတွင်းပိုင်း စမ်းသပ်မှုလည်း ပါဝင်သည်)</string>
+    <string name="dev_show_rating_card_unavailable">ဤဗားရှင်းအတွက် Google Play တွင် သုံးသပ်ချက်ကတ် မရှိပါ။ အတွင်းပိုင်း စမ်းသပ်မှုအပါအဝင် Google Play မှ ထည့်သွင်းပြီး ထပ်စမ်းကြည့်ပါ</string>
+    <string name="playlist_shortcut_queue_link_unavailable">ဤပလေယာသည် ဤသီချင်းအတွက် မျှဝေနိုင်သော လင့်ခ်ကို မထုတ်ပြန်ထားပါ</string>
+    <string name="setting_app_icon_style">အက်ပ်သင်္ကေတ</string>
+    <string name="setting_youtube_api_key">YouTube Data API ကီး</string>
+    <string name="setting_youtube_api_key_bundled">ဤအက်ပ်တွင် YouTube ကီး ပါဝင်ပြီးဖြစ်သည်။ ကိုယ်တိုင် ထည့်ရန် မလိုပါ</string>
+    <string name="setting_youtube_api_key_configured">YouTube ကီး သတ်မှတ်ပြီးပါပြီ။ ဤဖုန်းတွင်သာ သိမ်းထားသည်</string>
+    <string name="setting_youtube_api_key_description">ပလေယာက ကာဗာပုံ မထုတ်ပြန်သောအခါ Svartifoss သည် Google ၏ YouTube Data API ဖြင့် YouTube တွင် ရှာပြီး ချန်နယ်နှင့် ခေါင်းစဉ်ကို ဤကီးနှင့်အတူ ပို့ကာ အတိအကျ ကိုက်ညီသော ဗီဒီယိုတစ်ခု၏ ပုံသေးကို သုံးသည်။ အက်ပ်တွင် ပါဝင်သော ကီးကို သုံးရန် ကွက်လပ်ထားပါ။ သင်ကူးထည့်သော ကီးသည် ဤဖုန်းတွင်သာ ကျန်ရစ်သည်- နာရီသို့ မပို့ပါ၊ Svartifoss ဆက်တင် ဘက်ခ်အက်ပ်များတွင်လည်း မပါဝင်ပါ။</string>
+    <string name="setting_youtube_api_key_dialog_title">သင့် YouTube Data API v3 ကီးကို ကူးထည့်ပါ</string>
+    <string name="setting_youtube_api_key_not_configured">ရွေးချယ်နိုင်သည်- YouTube ကီး မသတ်မှတ်ရသေးပါ</string>
+    <string name="symfonium_media_album">Album (ရွေးချယ်နိုင်သည်)</string>
+    <string name="symfonium_media_artist">အနုပညာရှင် (ရွေးချယ်နိုင်သည်)</string>
+    <string name="symfonium_media_id_optional">ID (ရွေးချယ်နိုင်သည်)</string>
+    <string name="symfonium_media_name">အမည်</string>
+    <string name="symfonium_media_type">မီဒီယာ အမျိုးအစား</string>
+    <string name="symfonium_provider_id">ပံ့ပိုးသူ ID</string>
+    <string name="symfonium_provider_id_description">ပံ့ပိုးသူ ID ကို Symfonium ၏ “မီဒီယာ ပံ့ပိုးသူများ စီမံရန်” မျက်နှာပြင်တွင် တွေ့နိုင်သည်။</string>
+    <string name="symfonium_queue_mode">တန်းစီစာရင်း မုဒ်</string>
+    <string name="symfonium_resume">ဖြစ်နိုင်လျှင် ဆက်ဖွင့်ရန်</string>
+    <string name="symfonium_shuffle">စုစည်းမှုများကို ရောနှောရန်</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>သီချင်း</item>
+        <item>Playlist</item>
+        <item>Album</item>
+        <item>အနုပညာရှင်</item>
+        <item>အမျိုးအစား</item>
+        <item>သီချင်း Mix</item>
+        <item>Album Mix</item>
+        <item>အင်တာနက်ရေဒီယို</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>ယခု စတင်ရန်</item>
+        <item>နောက်တစ်ပုဒ် ဖွင့်ရန်</item>
+        <item>တန်းစီစာရင်းသို့ ထည့်ရန်</item>
+    </string-array>
 </resources>

@@ -71,28 +71,6 @@
             android:lineSpacingMultiplier="1.3"
             android:fontFamily="@font/google_sans" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/drawer_sync_heading"
-            android:textSize="11sp"
-            android:letterSpacing="0.08"
-            android:textAllCaps="true"
-            android:textColor="@color/lyra_accent"
-            android:fontFamily="@font/google_sans"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/drawer_sync_summary"
-            android:textSize="13sp"
-            android:textColor="@color/lyra_text_secondary"
-            android:lineSpacingMultiplier="1.25"
-            android:fontFamily="@font/google_sans" />
-
         <!-- The support section is the one part of the drawer that differs per distribution, so
              it is a layout each flavor supplies: the github build links to Buy Me a Coffee and
              Ko-fi (mobile/src/github/res/layout), the Play build offers a tip through Google Play

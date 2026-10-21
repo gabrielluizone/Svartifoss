@@ -4,9 +4,11 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import android.os.PersistableBundle
 import androidx.appcompat.content.res.AppCompatResources
+import com.svartifoss.snfell.common.SampledBitmaps
 import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
 import com.svartifoss.snfell.music.ShortcutAppMark
+import com.svartifoss.snfell.music.ShortcutArtworkFetcher
 import com.svartifoss.snfell.music.ShortcutCovers
 import com.svartifoss.snfell.music.StreamingCollection
 import com.svartifoss.snfell.music.StreamingShortcutDescription
@@ -71,7 +73,7 @@ class PlayPlaylistShortcutAction : SelectableAction {
      *  so it must never be tinted. */
     private val cachedThumbnail: Drawable? by lazy {
         com.svartifoss.snfell.music.ShortcutArtworkStore.get(context, link)?.let { png ->
-            android.graphics.BitmapFactory.decodeByteArray(png, 0, png.size)?.let { bitmap ->
+            SampledBitmaps.decode(png, ShortcutArtworkFetcher.MAX_THUMBNAIL_PX)?.let { bitmap ->
                 android.graphics.drawable.BitmapDrawable(context.resources, bitmap)
             }
         }

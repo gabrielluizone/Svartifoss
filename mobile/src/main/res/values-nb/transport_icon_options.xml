@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Spill av-ikon</string>
+    <string name="setting_wear_pause_icon">Pause-ikon</string>
+    <string name="setting_wear_transport_icon_description">Symbolet på avspillings- og pauseknappen. «Følg urskive» beholder det opprinnelige designet.</string>
+    <string name="transport_icon_follow">Følg urskive</string>
+    <string name="transport_icon_a">Avrundet</string>
+    <string name="transport_icon_b">Avrundet kontur</string>
+    <string name="transport_icon_c">Skarp kontur</string>
+    <string name="transport_icon_d">Skarp</string>
+    <string name="transport_icon_e">Tykk avrundet kontur</string>
+</resources>

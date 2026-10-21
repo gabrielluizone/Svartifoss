@@ -1,6 +1,7 @@
 package com.svartifoss.snfell.music
 
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
@@ -83,7 +84,8 @@ class StreamingCollectionTest {
 
     @Test
     fun `only the services that publish one have official artwork`() {
-        assertNotNull(StreamingCollection.YOUTUBE_MUSIC_LIKED.officialArtworkUrl)
+        // YouTube Music's Liked Music ships its cover inside the app, so there is nothing to fetch.
+        assertNull(StreamingCollection.YOUTUBE_MUSIC_LIKED.officialArtworkUrl)
         assertNotNull(StreamingCollection.SPOTIFY_LIKED.officialArtworkUrl)
         assertNull(StreamingCollection.SOUNDCLOUD_LIKES.officialArtworkUrl)
         assertNull(StreamingCollection.DEEZER_FLOW.officialArtworkUrl)
@@ -95,9 +97,19 @@ class StreamingCollectionTest {
     fun `each collection keeps its artwork under its own key`() {
         val keys = StreamingCollection.entries.map { it.storeKey }
         assertEquals(keys.size, keys.toSet().size)
-        assertEquals(keys.toSet(), StreamingCollection.storeKeys)
         // A store key must never be mistaken for a saved link - the store keys files by link too.
         keys.forEach { assertNull(it, StreamingCollection.forLink(it)) }
+    }
+
+    @Test
+    fun `the store keeps a collection's artwork only when there is something to fetch`() {
+        StreamingCollection.entries.forEach { collection ->
+            assertEquals(collection.name, collection.officialArtworkUrl != null,
+                    collection.storeKey in StreamingCollection.storeKeys)
+        }
+        // Fetched by builds from before its cover shipped with the app: a copy left on a phone is
+        // pruned rather than kept forever under a key nothing reads any more.
+        assertFalse(StreamingCollection.YOUTUBE_MUSIC_LIKED.storeKey in StreamingCollection.storeKeys)
     }
 
     @Test

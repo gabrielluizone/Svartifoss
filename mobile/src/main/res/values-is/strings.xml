@@ -710,6 +710,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -721,8 +723,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Litur alltaf-virks skjás</string>
     <string-array name="wear_aod_color_entries">
@@ -1603,7 +1603,7 @@
         <item>Ferningslaga</item>
         <item>Squircle</item>
         <item>Hringlaga</item>
-        <item>Samsung stíll</item>
+        <item>Superellipsa</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Nota letur alls staðar</string>
@@ -1979,16 +1979,14 @@
     <string name="drawer_about_summary">Svartifoss gerir þér kleift að stýra tónlist í símanum þínum frá Wear OS-úrinu þínu — með fullkomlega sérsniðinni fjarstýringu löguð að tækinu þínu.</string>
     <string name="drawer_name_heading">Nafnið</string>
     <string name="drawer_name_meaning">Svartifoss þýðir bókstaflega „svarti fossinn“ á íslensku — nefndur eftir fossinum í Vatnajökulsþjóðgarði, þar sem dökkir stuðlabergsdrangar umgirða mjóa flúð. Líkt og vatn yfir stein flæðir tónlist í gegnum appið.</string>
-    <string name="drawer_sync_heading">Samstilling</string>
-    <string name="drawer_sync_summary">Úrstillingar eru stilltar hér í símanum og samstillast sjálfkrafa við parðaða úrið þitt.</string>
     <string name="drawer_support_heading">Stuðningur</string>
     <string name="download_album_art">Sækja umslagsmynd</string>
     <string name="album_art_saved">Umslagsmynd vistuð í myndasafni</string>
     <string name="album_art_save_error">Ekki tókst að vista umslagsmynd</string>
 
-    <string name="action_play_liked_songs">Spila lög sem mér líkar við (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Spila lög sem mér líkar við (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Spila lög sem mér líkar við (SoundCloud)</string>
+    <string name="action_play_liked_songs">Lög sem mér líkar við</string>
+    <string name="action_play_spotify_liked_songs">Lög sem mér líkar við</string>
+    <string name="action_play_soundcloud_likes">Lög sem mér líkar við</string>
     <string name="action_my_playlists">Streymisflýtileiðir</string>
     <string name="action_show_streaming_library">Sýna allar vistaðar flýtileiðir</string>
     <string name="picker_section_apps">Öpp &amp; sjálfvirkni</string>
@@ -2115,7 +2113,7 @@
     <string name="playlist_shortcut_deleted">%1$s eytt</string>
     <string name="playlist_shortcut_undo">Afturkalla</string>
 
-    <string name="action_play_liked_songs_shuffled">Spila lög sem mér líkar við, stokkað (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Lög sem mér líkar við, stokkað</string>
     <string name="action_search_history">Leitarsaga</string>
     <string name="search_history_empty">Engar nýlegar leitir ennþá</string>
 
@@ -2842,7 +2840,7 @@
     <string name="setting_wear_text_block_position">Textastaðsetning</string>
     <string name="setting_wear_text_block_position_description">Hvar lagatextinn situr á skjánum. Fylgja úrskífu heldur þeirri staðsetningu sem hver úrskífa var hönnuð fyrir.</string>
     <string name="setting_online_artwork">Myndefni af netinu</string>
-    <string name="setting_online_artwork_description">Leyfðu úrskífunni að sýna mynd sem er fundin á netinu \u2014 flytjandann sem er að spila eða plötuumslag þegar spilarinn birtir ekkert. Síminn leitar í opinberri Deezer-skrá og vistar niðurstöðuna í skyndiminni; aðeins heiti lags og flytjanda eru send og ekkert er leitað upp nema úrskífa sé stillt á eina af þessum uppsprettum. Þegar slökkt er á þessu er eigið myndefni spilarans notað.</string>
+    <string name="setting_online_artwork_description">Láttu úrskífuna sýna mynd sem leitað var að á netinu — flytjandann sem kemur fram, eða plötuumslag fyrir spilara sem birtir ekkert. Síminn þinn sér um leitina og vistar niðurstöðuna í skyndiminni; aðeins nöfn lagsins og flytjandans eru send, í opinbera skrá Deezer. Þetta er líka það sem finnur umslag fyrir lag þar sem forritið birtir alls ekkert umslag, til dæmis YouTube-myndband: síminn biður YouTube um smámynd myndbandsins sjálfs (og sendir rásina og titilinn til YouTube Data API frá Google), síðan Deezer um plötuumslag, og notar niðurstöðu aðeins þegar hún passar. Þegar slökkt er á þessu er aðeins umslag spilarans sjálfs notað.</string>
     <string name="setting_wear_shortcut_details">Spila eða stokka á úrinu</string>
     <string name="setting_wear_shortcut_details_description">Þegar þú velur vistaðan tengil á úrinu, af flýtileiðalistanum, flýtileiðaflísinni eða aðgerðavalmyndinni, birtist umslagið fyrst með Spila og Stokka. Slökktu til að hefja spilun strax í staðinn. Hnappar og bendingar sem tengdar eru einum tengli hefja hann alltaf strax.</string>
     <string name="actions_quick_pin_add">Sýna í hraðborði</string>
@@ -2940,4 +2938,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">Forrit sem geta opnað hlekkinn, auk uppsettra fjölmiðlaspilara, eru sýnd.</string>
     <string name="streaming_route_automatic">Sjálfvirkt (greint app)</string>
+    <string name="action_symfonium_start">Ræsa efni í Symfonium</string>
+    <string name="action_symfonium_start_named">Ræsa í Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Samstilla Symfonium-veitu</string>
+    <string name="app_icon_style_gradient">Litstigull</string>
+    <string name="app_icon_style_solid">Einlitur</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Kolfjöður</string>
+    <string name="dev_show_rating_card">Sýna einkunnaspjaldið</string>
+    <string name="dev_show_rating_card_description">Biður Google Play strax um umsagnarspjaldið sitt í forritinu og hunsar venjuleg takmörk. Það birtist aðeins í útgáfu sem sett var upp frá Google Play (innri prófun telst með)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play er ekki með umsagnarspjald fyrir þessa útgáfu. Settu hana upp frá Google Play, þar með talið innri prófun, og reyndu aftur</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Þessi spilari birti ekki deilanlegan tengil fyrir þetta lag</string>
+    <string name="setting_app_icon_style">Forritstákn</string>
+    <string name="setting_youtube_api_key">YouTube Data API-lykill</string>
+    <string name="setting_youtube_api_key_bundled">YouTube-lykill fylgir með þessu forriti; þú þarft ekki að bæta við þínum eigin</string>
+    <string name="setting_youtube_api_key_configured">YouTube-lykill er stilltur; aðeins vistaður á þessum síma</string>
+    <string name="setting_youtube_api_key_description">Þegar spilari birtir ekkert umslag leitar Svartifoss á YouTube í gegnum YouTube Data API frá Google, sendir rásina og titilinn ásamt þessum lykli og notar smámynd af myndbandi sem passar nákvæmlega. Skildu reitinn eftir auðan til að nota lykilinn sem fylgir forritinu. Lykill sem þú límir inn verður áfram á þessum síma: hann er ekki sendur í úrið og er ekki hluti af stillingaafritum Svartifoss.</string>
+    <string name="setting_youtube_api_key_dialog_title">Límdu inn YouTube Data API v3-lykilinn þinn</string>
+    <string name="setting_youtube_api_key_not_configured">Valfrjálst: enginn YouTube-lykill stilltur</string>
+    <string name="symfonium_media_album">Plata (valfrjálst)</string>
+    <string name="symfonium_media_artist">Flytjandi (valfrjálst)</string>
+    <string name="symfonium_media_id_optional">Auðkenni (valfrjálst)</string>
+    <string name="symfonium_media_name">Nafn</string>
+    <string name="symfonium_media_type">Tegund efnis</string>
+    <string name="symfonium_provider_id">Auðkenni veitu</string>
+    <string name="symfonium_provider_id_description">Auðkenni veitunnar er að finna á skjánum „Stjórna efnisveitum“ í Symfonium.</string>
+    <string name="symfonium_queue_mode">Biðraðarstilling</string>
+    <string name="symfonium_resume">Halda áfram þegar hægt er</string>
+    <string name="symfonium_shuffle">Stokka söfn</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Lag</item>
+        <item>Lagalisti</item>
+        <item>Plata</item>
+        <item>Flytjandi</item>
+        <item>Tegund</item>
+        <item>Lagablanda</item>
+        <item>Plötublanda</item>
+        <item>Netútvarp</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Byrja núna</item>
+        <item>Spila næst</item>
+        <item>Bæta í biðröð</item>
+    </string-array>
 </resources>

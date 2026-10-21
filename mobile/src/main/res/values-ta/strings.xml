@@ -449,7 +449,7 @@
     <string name="setting_wear_text_block_position">உரை நிலை</string>
     <string name="setting_wear_text_block_position_description">பாடல் உரை திரையில் எங்கு இருக்கும். Follow face ஒவ்வொரு ஃபேஸும் வடிவமைக்கப்பட்ட இடத்தை அப்படியே வைத்திருக்கும்.</string>
     <string name="setting_online_artwork">ஆன்லைன் கலைப்படம்</string>
-    <string name="setting_online_artwork_description">வாட்ச் ஃபேஸ் ஆன்லைனில் தேடப்பட்ட படத்தை காட்ட அனுமதிக்கவும் \u2014 இசையைக் கலைஞரின் படம், அல்லது எந்தக் கலைப்படமும் வழங்காத பிளேயருக்கான ஆல்பம் அட்டை. உங்கள் தொலைபேசி Deezer-ன் பொது பட்டியலில் தேடி முடிவை cache செய்கிறது; பாடல் மற்றும் கலைஞர் பெயர்கள் மட்டுமே அனுப்பப்படும், மேலும் ஒரு ஃபேஸ் அந்த மூலங்களில் ஒன்றாக அமைக்கப்படாத வரை எதுவும் தேடப்படாது. அணைத்தால், பிளேயரின் சொந்த கலைப்படம் பயன்படுத்தப்படும்.</string>
+    <string name="setting_online_artwork_description">வாட்ச் முகம் ஆன்லைனில் தேடிய படத்தைக் காட்ட அனுமதிக்கவும் — இசைக்கும் கலைஞர், அல்லது எந்த கவரையும் வெளியிடாத பிளேயருக்கான ஆல்பம் கவர். தேடலை உங்கள் ஃபோன் செய்து முடிவை கேஷில் சேமிக்கிறது; டிராக் மற்றும் கலைஞர் பெயர்கள் மட்டுமே, Deezer இன் பொது பட்டியலுக்கு அனுப்பப்படும். YouTube வீடியோ போன்ற, ஆப் எந்த கவரையும் வெளியிடாத டிராக்கிற்கும் இதுவே கவரைக் கண்டறிகிறது: ஃபோன் YouTube இடம் அந்த வீடியோவின் சொந்த சிறுபடத்தைக் கேட்கிறது (சேனல் மற்றும் தலைப்பை Google இன் YouTube Data API க்கு அனுப்பி), பிறகு Deezer இடம் ஆல்பம் கவரைக் கேட்கிறது; முடிவு பொருந்தினால் மட்டுமே பயன்படுத்தும். அணைத்திருந்தால், பிளேயரின் சொந்தப் படம் மட்டுமே பயன்படுத்தப்படும்.</string>
     <string name="app_name">Svartifoss</string>
     <string name="app_name_short">Svartifoss</string>
     <string name="setting_no_wearable_api_banner">இந்தச் சாதனத்தில் Wear OS ஆதரிக்கப்படவில்லை</string>
@@ -1735,7 +1735,7 @@
         <item>சதுரம்</item>
         <item>Squircle</item>
         <item>வட்டம்</item>
-        <item>Samsung பாணி</item>
+        <item>சூப்பர் நீள்வட்டம்</item>
     </string-array>
     <string name="setting_wear_font_all_screens">எங்கும் எழுத்துருவைப் பயன்படுத்து</string>
     <string name="setting_wear_font_all_screens_description">தேர்ந்தெடுத்த எழுத்துரு player மட்டும் அல்லாமல் menu, queue மற்றும் Quick actions-க்கும் பயன்படுத்தப்படும். Display மற்றும் கையெழுத்து எழுத்துருக்கள் பட்டியல்களில் படிக்க சிரமமாக இருக்கலாம்.</string>
@@ -1968,15 +1968,13 @@
     <string name="drawer_about_summary">உங்கள் Wear OS கடிகாரத்திலிருந்து தொலைபேசியில் உள்ள இசையை கட்டுப்படுத்த Svartifoss உதவுகிறது — உங்கள் சாதனத்துக்கேற்ப முழுமையாக தனிப்பயனாக்கக்கூடிய remote உடன்.</string>
     <string name="drawer_name_heading">பெயர்</string>
     <string name="drawer_name_meaning">Icelandic மொழியில் Svartifoss என்பது “Black Falls” என்று பொருள் — Vatnajökull National Park-இல் கருமையான basalt தூண்கள் குறுகிய அருவியைச் சுற்றி நிற்கும் அந்த நீர்வீழ்ச்சியின் பெயர். கல்லின் மேல் ஓடும் நீரைப் போல இசை app வழியாக ஓடுகிறது.</string>
-    <string name="drawer_sync_heading">ஒத்திசைவு</string>
-    <string name="drawer_sync_summary">கடிகார settings இங்கே தொலைபேசியில் அமைக்கப்பட்டு இணைக்கப்பட்ட கடிகாரத்துடன் தானாக sync செய்யப்படும்.</string>
     <string name="drawer_support_heading">ஆதரவு</string>
     <string name="download_album_art">Cover art-ஐப் பதிவிறக்கு</string>
     <string name="album_art_saved">Cover art gallery-இல் சேமிக்கப்பட்டது</string>
     <string name="album_art_save_error">Cover art-ஐச் சேமிக்க முடியவில்லை</string>
-    <string name="action_play_liked_songs">விரும்பிய பாடல்களை இயக்கு (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">விரும்பிய பாடல்களை இயக்கு (Spotify)</string>
-    <string name="action_play_soundcloud_likes">விரும்பிய track-களை இயக்கு (SoundCloud)</string>
+    <string name="action_play_liked_songs">விரும்பிய பாடல்கள்</string>
+    <string name="action_play_spotify_liked_songs">விரும்பிய பாடல்கள்</string>
+    <string name="action_play_soundcloud_likes">விரும்பிய track-கள்</string>
     <string name="action_my_playlists">Streaming குறுக்குவழிகள்</string>
     <string name="action_show_streaming_library">சேமித்த அனைத்து shortcut-களையும் காட்டு</string>
     <string name="picker_section_apps">Apps &amp; தானியங்கு செயல்பாடு</string>
@@ -2108,7 +2106,7 @@
     <string name="playlist_shortcut_share_failed">இந்த shortcut-ஐ பகிர எந்த app-மும் இல்லை</string>
     <string name="playlist_shortcut_deleted">%1$s நீக்கப்பட்டது</string>
     <string name="playlist_shortcut_undo">செயல்தவிர்</string>
-    <string name="action_play_liked_songs_shuffled">விரும்பிய பாடல்களை shuffle செய்து இயக்கு (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">விரும்பிய பாடல்கள், shuffle</string>
     <string name="action_search_history">தேடல் வரலாறு</string>
     <string name="search_history_empty">இன்னும் சமீபத்திய தேடல்கள் இல்லை</string>
     <string name="category_updates">புதுப்பிப்புகள்</string>
@@ -2325,4 +2323,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">இணைப்பைத் திறக்கக்கூடிய பயன்பாடுகள் மற்றும் நிறுவப்பட்ட மீடியா பிளேயர்கள் காட்டப்படுகின்றன.</string>
     <string name="streaming_route_automatic">தானியங்கு (கண்டறியப்பட்ட பயன்பாடு)</string>
+    <string name="action_symfonium_start">Symfonium இல் மீடியாவைத் தொடங்கு</string>
+    <string name="action_symfonium_start_named">Symfonium இல் தொடங்கு: %1$s</string>
+    <string name="action_symfonium_sync">Symfonium வழங்குநரை ஒத்திசை</string>
+    <string name="app_icon_style_gradient">கிரேடியன்ட்</string>
+    <string name="app_icon_style_solid">ஒற்றை நிறம்</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">கரி இறகு</string>
+    <string name="dev_show_rating_card">மதிப்பீட்டு அட்டையைக் காட்டு</string>
+    <string name="dev_show_rating_card_description">வழக்கமான வரம்புகளைப் புறக்கணித்து, Google Play இடம் அதன் ஆப்-இல் மதிப்பாய்வு அட்டையை இப்போதே கேட்கிறது. Google Play இலிருந்து நிறுவிய பதிப்பில் மட்டுமே இது தோன்றும் (உள் சோதனையும் கணக்கில் வரும்)</string>
+    <string name="dev_show_rating_card_unavailable">இந்தப் பதிப்புக்கு Google Play இல் மதிப்பாய்வு அட்டை இல்லை. உள் சோதனை உட்பட Google Play இலிருந்து நிறுவி, மீண்டும் முயலவும்</string>
+    <string name="playlist_shortcut_queue_link_unavailable">இந்த பிளேயர் இந்த டிராக்கிற்கான பகிரக்கூடிய இணைப்பை வெளியிடவில்லை</string>
+    <string name="setting_app_icon_style">ஆப் ஐகான்</string>
+    <string name="setting_youtube_api_key">YouTube Data API விசை</string>
+    <string name="setting_youtube_api_key_bundled">YouTube விசை இந்த ஆப்பிலேயே உள்ளது; நீங்கள் சேர்க்கத் தேவையில்லை</string>
+    <string name="setting_youtube_api_key_configured">YouTube விசை அமைக்கப்பட்டுள்ளது; இந்த ஃபோனில் மட்டுமே சேமிக்கப்படும்</string>
+    <string name="setting_youtube_api_key_description">ஒரு பிளேயர் கவர் படத்தை வெளியிடாதபோது, Svartifoss Google இன் YouTube Data API மூலம் YouTube இல் தேடி, இந்த விசையுடன் சேனல் மற்றும் தலைப்பை அனுப்பி, சரியாகப் பொருந்தும் வீடியோவின் சிறுபடத்தைப் பயன்படுத்தும். ஆப்பில் உள்ள விசையைப் பயன்படுத்த காலியாக விடவும். நீங்கள் ஒட்டும் விசை இந்த ஃபோனிலேயே இருக்கும்: அது கடிகாரத்திற்கு அனுப்பப்படாது, Svartifoss உள்ளமைவு காப்புப்பிரதிகளிலும் சேராது.</string>
+    <string name="setting_youtube_api_key_dialog_title">உங்கள் YouTube Data API v3 விசையை ஒட்டவும்</string>
+    <string name="setting_youtube_api_key_not_configured">விருப்பத்திற்குரியது: YouTube விசை அமைக்கப்படவில்லை</string>
+    <string name="symfonium_media_album">Album (விருப்பத்திற்குரியது)</string>
+    <string name="symfonium_media_artist">கலைஞர் (விருப்பத்திற்குரியது)</string>
+    <string name="symfonium_media_id_optional">ID (விருப்பத்திற்குரியது)</string>
+    <string name="symfonium_media_name">பெயர்</string>
+    <string name="symfonium_media_type">மீடியா வகை</string>
+    <string name="symfonium_provider_id">வழங்குநர் ID</string>
+    <string name="symfonium_provider_id_description">வழங்குநர் ID ஐ Symfonium இன் “மீடியா வழங்குநர்களை நிர்வகி” திரையில் காணலாம்.</string>
+    <string name="symfonium_queue_mode">வரிசை முறை</string>
+    <string name="symfonium_resume">முடிந்தால் மீண்டும் தொடங்கு</string>
+    <string name="symfonium_shuffle">தொகுப்புகளைக் கலக்கு</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>பாடல்</item>
+        <item>Playlist</item>
+        <item>Album</item>
+        <item>கலைஞர்</item>
+        <item>வகை</item>
+        <item>பாடல் Mix</item>
+        <item>Album Mix</item>
+        <item>இணைய வானொலி</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>இப்போதே தொடங்கு</item>
+        <item>அடுத்து இயக்கு</item>
+        <item>வரிசையில் சேர்</item>
+    </string-array>
 </resources>

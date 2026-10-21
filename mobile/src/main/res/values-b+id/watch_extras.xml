@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Ketebalan bilah volume</string>
-    <string name="setting_wear_volume_thickness_description">Ketebalan garis bilah volume, dari 50% hingga 180% dari default. Garis yang lebih tebal tetap menjauh dari tepi layar.</string>
+    <string name="setting_wear_volume_thickness_description">Ketebalan garis bilah volume, dari 50%% hingga 180%% dari default. Garis yang lebih tebal tetap menjauh dari tepi layar.</string>
     <string name="setting_wear_volume_haptics">Getaran crown saat volume</string>
     <string name="setting_wear_queue_dim_played">Redupkan lagu yang sudah diputar</string>
     <string name="setting_wear_queue_dim_played_description">Meredupkan entri yang sudah diputar agar yang akan datang lebih menonjol.</string>

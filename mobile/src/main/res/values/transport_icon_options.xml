@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        The play and pause marks (common/TransportGlyphs): one picker per mark, the same six
+        choices. A letter names the same style for both marks, so choosing the same one twice gives
+        a matching pair and two different ones a mixed pair. Kept out of strings.xml so they can be
+        translated as a set; an untranslated locale falls back to these.
+    -->
+    <string name="setting_wear_play_icon">Play icon</string>
+    <string name="setting_wear_pause_icon">Pause icon</string>
+    <string name="setting_wear_transport_icon_description">The mark on the play and pause control. “Follow face” keeps the one this face was designed with.</string>
+    <string name="transport_icon_follow">Follow face</string>
+    <string name="transport_icon_a">Rounded</string>
+    <string name="transport_icon_b">Rounded outline</string>
+    <string name="transport_icon_c">Sharp outline</string>
+    <string name="transport_icon_d">Sharp</string>
+    <string name="transport_icon_e">Bold rounded outline</string>
+
+    <string-array name="wear_transport_icon_entries">
+        <item>@string/transport_icon_follow</item>
+        <item>@string/transport_icon_a</item>
+        <item>@string/transport_icon_b</item>
+        <item>@string/transport_icon_c</item>
+        <item>@string/transport_icon_d</item>
+        <item>@string/transport_icon_e</item>
+    </string-array>
+    <string-array name="wear_transport_icon_values" translatable="false">
+        <item>follow</item>
+        <item>a</item>
+        <item>b</item>
+        <item>c</item>
+        <item>d</item>
+        <item>e</item>
+    </string-array>
+</resources>

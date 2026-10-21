@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Πάχος μπάρας έντασης</string>
-    <string name="setting_wear_volume_thickness_description">Πάχος της γραμμής της μπάρας έντασης, από 50% έως 180% του προεπιλεγμένου. Οι παχύτερες γραμμές παραμένουν μακριά από το περίγραμμα.</string>
+    <string name="setting_wear_volume_thickness_description">Πάχος της γραμμής της μπάρας έντασης, από 50%% έως 180%% του προεπιλεγμένου. Οι παχύτερες γραμμές παραμένουν μακριά από το περίγραμμα.</string>
     <string name="setting_wear_volume_haptics">Δόνηση στεφάνης στην ένταση</string>
     <string name="setting_wear_queue_dim_played">Χαμήλωμα κομματιών που έπαιξαν</string>
     <string name="setting_wear_queue_dim_played_description">Θαμπώνει όσα κομμάτια έχουν ήδη παίξει, ώστε να ξεχωρίζουν αυτά που ακολουθούν.</string>

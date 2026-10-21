@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">वॉल्यूम बार की मोटाई</string>
-    <string name="setting_wear_volume_thickness_description">वॉल्यूम बार की रेखा की मोटाई, डिफ़ॉल्ट के 50% से 180% तक। मोटी रेखाएँ भी स्क्रीन के किनारे से दूर रहती हैं।</string>
+    <string name="setting_wear_volume_thickness_description">वॉल्यूम बार की रेखा की मोटाई, डिफ़ॉल्ट के 50%% से 180%% तक। मोटी रेखाएँ भी स्क्रीन के किनारे से दूर रहती हैं।</string>
     <string name="setting_wear_volume_haptics">वॉल्यूम पर क्राउन का कंपन</string>
     <string name="setting_wear_queue_dim_played">बजे हुए गाने धुंधले करें</string>
     <string name="setting_wear_queue_dim_played_description">जो गाने बज चुके हैं उन्हें धुंधला करता है, ताकि आने वाले गाने उभरकर दिखें।</string>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Spilunartákn</string>
+    <string name="setting_wear_pause_icon">Hléstákn</string>
+    <string name="setting_wear_transport_icon_description">Táknið á spilunar- og hléhnappnum. „Fylgja skífu“ heldur því sem upphaflega var hannað.</string>
+    <string name="transport_icon_follow">Fylgja skífu</string>
+    <string name="transport_icon_a">Ávalt</string>
+    <string name="transport_icon_b">Ávöl útlína</string>
+    <string name="transport_icon_c">Hvöss útlína</string>
+    <string name="transport_icon_d">Hvasst</string>
+    <string name="transport_icon_e">Þykk ávöl útlína</string>
+</resources>

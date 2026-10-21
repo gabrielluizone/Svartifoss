@@ -1,1 +1,8 @@
-Organize o Painel rápido do relógio em blocos, incluindo Volume, Próxima faixa, ferramentas e favoritos. Adiciona temporizador de sono, telas de atalhos com Play e Shuffle e capas melhores para playlists. Nova gorjeta opcional no menu lateral (Apoiar o desenvolvedor), que não libera nada. Traduções corrigidas e melhorias de desempenho, bateria, sincronização e estabilidade da conexão entre celular e relógio.
+Novidades do 4.3
+• Volume e progresso em onda, régua, minutos e hexágonos
+• Fila: formas de cápsula e capa, estilo Percurso
+• Letras no painel rápido; temporizador de sono até o fim da faixa
+• Tela sempre ativa que escurece à noite; complicação Tocar e pausar
+• Escolha os ícones de reproduzir/pausar e do app
+• Ações do Symfonium, miniaturas de vídeos sem capa, aviso AO VIVO
+Corrigidos: botões do relógio com o celular bloqueado, faixas longas (4:00:00) e pulo em transmissões ao vivo.

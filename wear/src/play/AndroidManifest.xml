@@ -61,6 +61,32 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity-alias>
+        <activity-alias
+            android:name=".LauncherIconCream"
+            android:targetActivity=".watch.view.MainActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_play_cream"
+            android:roundIcon="@mipmap/ic_launcher_play_cream"
+            android:label="@string/app_name_short">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity-alias
+            android:name=".LauncherIconFeather"
+            android:targetActivity=".watch.view.MainActivity"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher_play_feather"
+            android:roundIcon="@mipmap/ic_launcher_play_feather"
+            android:label="@string/app_name_short">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
 
         <service
             android:name="com.matejdro.wearutils.logging.LogTransmitter"

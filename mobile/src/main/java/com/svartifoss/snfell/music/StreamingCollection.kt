@@ -13,8 +13,10 @@ import java.util.Locale
  * used to be drawn as a bare glyph in whatever colour the playing song happened to be. Each one
  * gets a cover of its own instead, in the style the services draw them - a gradient behind a white
  * mark - drawn on the phone by `ShortcutCoverArt` from [cover], so it works offline and before any
- * setting is touched. Two services also publish that cover as a public image ([officialArtworkUrl]);
+ * setting is touched. Spotify also publishes its cover as a public image ([officialArtworkUrl]);
  * with the opt-in artwork lookup on it replaces the drawn one, the same as a fetched playlist cover.
+ * YouTube Music's is the exception the other way: its cover ships inside the app
+ * (`ShortcutCovers.bundledResource`), so it is neither drawn nor fetched.
  *
  * Pure, so the link recognition is pinned by a JVM test.
  */
@@ -25,10 +27,14 @@ enum class StreamingCollection(
         /** What the drawn cover looks like. */
         val cover: CoverGradient
 ) {
-    /** YouTube Music's "Liked Music": a thumbs-up over violet fading to pink, top to bottom. */
+    /**
+     * YouTube Music's "Liked Music". Its cover is the image bundled with the app, so there is no
+     * address to fetch; the gradient (a thumbs-up over violet fading to pink) is only what gets
+     * drawn if that image cannot be decoded.
+     */
     YOUTUBE_MUSIC_LIKED(
             StreamingService.YOUTUBE_MUSIC,
-            "https://www.gstatic.com/youtube/media/ytm/images/pbg/liked-songs-delhi-1200.png",
+            null,
             CoverGradient(0xFF8C70F6.toInt(), 0xFFFE5DAD.toInt(), CoverGradient.Direction.VERTICAL)),
 
     /** Spotify's "Liked Songs": a heart over deep violet fading to mint, corner to corner. */
@@ -60,9 +66,15 @@ enum class StreamingCollection(
     companion object {
         private const val STORE_KEY_PREFIX = "svartifoss:collection:"
 
-        /** Every [storeKey], so the artwork store's pruning keeps them. */
+        /**
+         * The [storeKey] of every collection that has an image to fetch, so the artwork store's
+         * pruning keeps those and only those. A collection with none never has anything stored,
+         * and a file left under its key by an earlier build - YouTube Music's Liked Music was
+         * fetched before its cover shipped with the app - is pruned rather than kept forever.
+         */
         val storeKeys: Set<String>
-            get() = entries.mapTo(LinkedHashSet()) { it.storeKey }
+            get() = entries.filter { it.officialArtworkUrl != null }
+                    .mapTo(LinkedHashSet()) { it.storeKey }
 
         /** The collection [rawLink] points at, or null for anything else. Never throws. */
         fun forLink(rawLink: String): StreamingCollection? {

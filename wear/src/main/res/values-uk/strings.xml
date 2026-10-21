@@ -229,4 +229,6 @@
     <string name="quick_sleep_description">Таймер сну, залишилося %1$d хвилин. Торкніться, щоб змінити</string>
     <string name="quick_sleep_off_description">Таймер сну вимкнено. Торкніться, щоб встановити</string>
     <string name="quick_lyric_plain">Цей текст не має позначок часу. Торкніться, щоб прочитати.</string>
+    <string name="playback_live">НАЖИВО</string>
+    <string name="queue_add_shortcut">Додати цей трек до ярликів</string>
 </resources>

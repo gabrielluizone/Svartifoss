@@ -2,7 +2,7 @@ package com.svartifoss.snfell.music
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import com.svartifoss.snfell.common.SampledBitmaps
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -90,5 +90,5 @@ class CoverFallback(
     }
 
     private fun decode(bytes: ByteArray): Bitmap? =
-            BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            SampledBitmaps.decode(bytes, OnlineArtworkFetcher.MAX_ARTWORK_PX)
 }

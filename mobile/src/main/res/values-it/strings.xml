@@ -658,6 +658,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -669,8 +671,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Colore sempre attivo</string>
     <string-array name="wear_aod_color_entries">
@@ -1362,16 +1362,14 @@
     <string name="drawer_about_summary">Svartifoss ti permette di controllare la musica sul tuo telefono dal tuo orologio Wear OS — con un telecomando completamente personalizzabile su misura per il tuo dispositivo.</string>
     <string name="drawer_name_heading">Il nome</string>
     <string name="drawer_name_meaning">Svartifoss significa \"Cascata Nera\" in islandese — chiamata così dalla cascata nel Parco Nazionale di Vatnajökull, dove colonne di basalto scuro incorniciano una stretta cascata. Come l\'acqua sulla pietra, la musica scorre attraverso l\'app.</string>
-    <string name="drawer_sync_heading">Sincronizzazione</string>
-    <string name="drawer_sync_summary">Le impostazioni dell\'orologio vengono configurate qui sul telefono e sincronizzate automaticamente con il tuo orologio associato.</string>
     <string name="drawer_support_heading">Supporto</string>
     <string name="download_album_art">Scarica copertina</string>
     <string name="album_art_saved">Copertina salvata nella galleria</string>
     <string name="album_art_save_error">Impossibile salvare la copertina</string>
 
-    <string name="action_play_liked_songs">Riproduci canzoni piaciute (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Riproduci canzoni piaciute (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Riproduci canzoni piaciute (SoundCloud)</string>
+    <string name="action_play_liked_songs">Canzoni piaciute</string>
+    <string name="action_play_spotify_liked_songs">Canzoni piaciute</string>
+    <string name="action_play_soundcloud_likes">Canzoni piaciute</string>
     <string name="action_my_playlists">Scorciatoie streaming</string>
     <string name="action_show_streaming_library">Mostra tutte le scorciatoie salvate</string>
     <string name="picker_section_apps">App &amp; automazione</string>
@@ -1489,7 +1487,7 @@
     <string name="playlist_shortcut_deleted">%1$s eliminata</string>
     <string name="playlist_shortcut_undo">Annulla</string>
 
-    <string name="action_play_liked_songs_shuffled">Riproduci canzoni piaciute, casuale (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Canzoni piaciute, casuale</string>
     <string name="action_search_history">Cronologia ricerche</string>
     <string name="search_history_empty">Ancora nessuna ricerca recente</string>
 
@@ -2049,7 +2047,7 @@
         <item>Quadrato</item>
         <item>Squircle</item>
         <item>Cerchio</item>
-        <item>Stile Samsung</item>
+        <item>Superellisse</item>
     </string-array>
     <string-array name="theme_entries">
         <item>@string/theme_light</item>
@@ -2831,7 +2829,7 @@
     <string name="setting_wear_text_block_position">Posizione testo</string>
     <string name="setting_wear_text_block_position_description">Dove si trova il testo del brano sullo schermo. Segui quadrante mantiene la posizione per cui è stato progettato ogni quadrante.</string>
     <string name="setting_online_artwork">Copertina online</string>
-    <string name="setting_online_artwork_description">Consenti al quadrante di mostrare un’immagine cercata online \u2014 l’artista in riproduzione oppure la copertina di un album quando il player non ne fornisce una. Il telefono esegue la ricerca nel catalogo pubblico di Deezer e memorizza il risultato nella cache; vengono inviati solo i nomi del brano e dell’artista e non viene cercato nulla a meno che un quadrante sia impostato su una di queste origini. Se disattivato, viene usata la copertina fornita dal player.</string>
+    <string name="setting_online_artwork_description">Consenti al quadrante di mostrare un’immagine cercata online — l’artista in riproduzione oppure la copertina di un album quando il player non ne fornisce una. Il telefono esegue la ricerca e memorizza il risultato nella cache; vengono inviati solo i nomi del brano e dell’artista, al catalogo pubblico di Deezer. È anche ciò che trova una copertina per un brano la cui app non ne pubblica alcuna, come un video di YouTube: il telefono chiede a YouTube la miniatura di quel video (inviando canale e titolo all’API YouTube Data di Google), poi a Deezer la copertina di un album, e usa un risultato solo se corrisponde. Se disattivato, viene usata solo la copertina fornita dal player.</string>
     <string name="setting_wear_shortcut_details">Riproduci o casuale sull’orologio</string>
     <string name="setting_wear_shortcut_details_description">Scegliendo un link salvato sull’orologio, dall’elenco delle scorciatoie, dal Tile Scorciatoie o dal menu azioni, viene mostrata prima la copertina con Riproduci e Casuale. Disattiva per avviarlo subito. I pulsanti e i gesti assegnati a un link lo avviano sempre subito.</string>
     <string name="actions_quick_pin_add">Mostra nel pannello rapido</string>
@@ -2929,4 +2927,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">Le app che possono aprire il collegamento, oltre ai lettori multimediali installati.</string>
     <string name="streaming_route_automatic">Automatico (app rilevata)</string>
+    <string name="action_symfonium_start">Avvia contenuto in Symfonium</string>
+    <string name="action_symfonium_start_named">Avvia in Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Sincronizza il provider Symfonium</string>
+    <string name="app_icon_style_gradient">Gradiente</string>
+    <string name="app_icon_style_solid">Tinta unita</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Piuma di carbone</string>
+    <string name="dev_show_rating_card">Mostra la scheda di valutazione</string>
+    <string name="dev_show_rating_card_description">Chiede subito a Google Play la sua scheda di recensione integrata, ignorando i consueti limiti. Compare solo in una build installata da Google Play (il test interno conta)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play non ha una scheda di recensione per questa build. Installala da Google Play, test interno incluso, e riprova</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Questo player non ha pubblicato un link condivisibile per questa traccia</string>
+    <string name="setting_app_icon_style">Icona dell’app</string>
+    <string name="setting_youtube_api_key">Chiave API di YouTube Data</string>
+    <string name="setting_youtube_api_key_bundled">Chiave YouTube inclusa in questa app; non serve aggiungerne una</string>
+    <string name="setting_youtube_api_key_configured">Chiave YouTube configurata; salvata solo su questo telefono</string>
+    <string name="setting_youtube_api_key_dialog_title">Incolla la tua chiave API di YouTube Data v3</string>
+    <string name="setting_youtube_api_key_not_configured">Facoltativo: nessuna chiave YouTube configurata</string>
+    <string name="symfonium_media_album">Album (facoltativo)</string>
+    <string name="symfonium_media_artist">Artista (facoltativo)</string>
+    <string name="symfonium_media_id_optional">ID (facoltativo)</string>
+    <string name="symfonium_media_name">Nome</string>
+    <string name="symfonium_media_type">Tipo di contenuto</string>
+    <string name="symfonium_provider_id">ID del provider</string>
+    <string name="symfonium_provider_id_description">Trovi l’ID del provider nella schermata «Gestisci provider multimediali» di Symfonium.</string>
+    <string name="symfonium_queue_mode">Modalità coda</string>
+    <string name="symfonium_resume">Riprendi quando possibile</string>
+    <string name="symfonium_shuffle">Riproduci le raccolte in ordine casuale</string>
+    <string name="setting_youtube_api_key_description">Quando un player non pubblica alcuna copertina, Svartifoss cerca su YouTube tramite l’API YouTube Data di Google, inviando canale e titolo insieme a questa chiave, e usa la miniatura di un video che corrisponde esattamente. Lascia vuoto per usare la chiave inclusa in questa app. Una chiave incollata resta su questo telefono: non viene inviata all’orologio né inclusa nei backup di configurazione di Svartifoss.</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Brano</item>
+        <item>Playlist</item>
+        <item>Album</item>
+        <item>Artista</item>
+        <item>Genere</item>
+        <item>Mix di brani</item>
+        <item>Mix di album</item>
+        <item>Radio su internet</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Avvia ora</item>
+        <item>Riproduci dopo</item>
+        <item>Aggiungi alla coda</item>
+    </string-array>
 </resources>

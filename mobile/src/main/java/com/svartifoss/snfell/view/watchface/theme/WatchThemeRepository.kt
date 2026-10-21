@@ -11,6 +11,7 @@ import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.AppearanceNumericRanges
 import com.svartifoss.snfell.common.BackgroundLayerStack
+import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.ArchivedFaces
 import com.svartifoss.snfell.common.DeviceLocalAppearance
 import com.svartifoss.snfell.common.FaceScopedPreferences
@@ -855,7 +856,7 @@ class WatchThemeRepository(context: Context) {
         // replaced it.
         val storedStyle = (profile.settings[MiscPreferences.ALBUM_ART_STYLE.key]
                 as? WatchThemeValue.Text)?.value
-        val settings = AlbumArtSource.migrate(storedStyle)
+        val artworkMigrated = AlbumArtSource.migrate(storedStyle)
                 ?.let { (style, source) ->
                     profile.settings +
                             (MiscPreferences.ALBUM_ART_STYLE.key to WatchThemeValue.Text(style)) +
@@ -863,6 +864,15 @@ class WatchThemeRepository(context: Context) {
                                     WatchThemeValue.Text(source.preferenceValue))
                 }
                 ?: profile.settings
+        // The superellipse cover shape was stored under another token before it was renamed; the
+        // community vocabulary no longer lists that one, so a theme still carrying it could not be
+        // submitted. Same lossless rewrite as above, over every setting that stores a shape.
+        val settings = MiscPreferences.COVER_SHAPE_KEYS.fold(artworkMigrated) { current, key ->
+            val stored = (current[key] as? WatchThemeValue.Text)?.value
+            CoverShape.migrate(stored)
+                    ?.let { current + (key to WatchThemeValue.Text(it)) }
+                    ?: current
+        }
         val complete = FaceScopedPreferences.SCOPED_DEFINITIONS.associate { definition ->
             val candidate = settings[definition.key]
             definition.key to if (valueMatchesDefinition(candidate, definition.defaultValue)) {

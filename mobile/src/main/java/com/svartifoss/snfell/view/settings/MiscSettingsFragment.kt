@@ -18,6 +18,7 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -36,6 +37,7 @@ import com.svartifoss.snfell.config.ConfigBackup
 import com.svartifoss.snfell.config.ConfigBackupSection
 import com.svartifoss.snfell.config.DefaultConfigExport
 import com.svartifoss.snfell.config.ActionConfig
+import com.svartifoss.snfell.review.ReviewPrompt
 import com.svartifoss.snfell.update.UpdateGateway
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
@@ -925,6 +927,15 @@ class MiscSettingsFragment : PreferenceFragmentCompatEx() {
             row.isVisible = UpdateGateway.SUPPORTS_SELF_UPDATE
             row.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 UpdateGateway.openUpdateScreen(requireContext())
+                true
+            }
+        }
+
+        findPreference<Preference>("dev_show_rating_card")?.let { row ->
+            // The review card is Google Play's, so only the Play build has one to show.
+            row.isVisible = ReviewPrompt.SUPPORTED
+            row.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                (activity as? AppCompatActivity)?.let(ReviewPrompt::showNow)
                 true
             }
         }

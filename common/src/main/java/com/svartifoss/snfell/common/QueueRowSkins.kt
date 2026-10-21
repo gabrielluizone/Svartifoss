@@ -112,12 +112,12 @@ object QueueRowSkins {
         if (style.fillsWithCover) {
             // The cover itself is painted by the row, under a scrim (see coverScrim); this is the
             // fill that shows where an entry has no artwork, matching Glass so an art-less row is
-            // indistinguishable from the plain style. The playing row is marked by a keyline
-            // rather than a light pill, which would fight the artwork under it.
+            // indistinguishable from the plain style. The playing row carries no mark of its own:
+            // the equalizer bars say it, and both a straight bar (crooked against a rounded end)
+            // and a ring (noise over the cover) were tried and rejected.
             return QueueRowSkin(
                     fill = QueueRowFill.Solid(IDLE_SURFACE),
-                    onColor = WHITE,
-                    keyline = if (isPlaying) QueueRowKeyline(accent) else null)
+                    onColor = WHITE)
         }
         val onLit = if (isPlaying) BLACK else WHITE
         return when (style.token) {

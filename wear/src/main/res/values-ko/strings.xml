@@ -229,4 +229,6 @@
     <string name="quick_sleep_description">수면 타이머, %1$d분 남았습니다. 탭하여 변경</string>
     <string name="quick_sleep_off_description">취침 타이머가 꺼졌습니다. 탭하여 설정</string>
     <string name="quick_lyric_plain">이 가사에는 시간 정보가 없습니다. 탭하여 읽으세요.</string>
+    <string name="playback_live">라이브</string>
+    <string name="queue_add_shortcut">이 트랙을 바로가기에 추가</string>
 </resources>

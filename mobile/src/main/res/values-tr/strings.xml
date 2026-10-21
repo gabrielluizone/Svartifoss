@@ -760,6 +760,8 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -771,8 +773,6 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Her zaman açık rengi</string>
     <string-array name="wear_aod_color_entries">
@@ -1660,7 +1660,7 @@ Bunu yaşıyorsanız ortam modunda çift tıklamaları tamamen devre dışı bı
         <item>Kare</item>
         <item>Squircle</item>
         <item>Daire</item>
-        <item>Samsung stili</item>
+        <item>Süper elips</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Yazı tipini her yerde kullan</string>
@@ -2041,16 +2041,14 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     <string name="drawer_about_summary">Svartifoss, telefonunuzdaki müziği Wear OS saatinizden kontrol etmenizi sağlar — cihazınıza göre tamamen özelleştirilebilir bir uzaktan kumandayla.</string>
     <string name="drawer_name_heading">Adı</string>
     <string name="drawer_name_meaning">Svartifoss İzlandaca “Kara Şelale” anlamına gelir — adını Vatnajökull Millî Parkı’ndaki, koyu bazalt sütunların dar bir şelaleyi çerçevelediği şelaleden alır. Taşın üzerinden akan su gibi, müzik de uygulamanın içinden akar.</string>
-    <string name="drawer_sync_heading">Eşitleme</string>
-    <string name="drawer_sync_summary">Saat ayarları burada telefonda yapılandırılır ve eşleştirilmiş saatinizle otomatik olarak eşitlenir.</string>
     <string name="drawer_support_heading">Destek</string>
     <string name="download_album_art">Kapak görselini indir</string>
     <string name="album_art_saved">Kapak görseli galeriye kaydedildi</string>
     <string name="album_art_save_error">Kapak görseli kaydedilemedi</string>
 
-    <string name="action_play_liked_songs">Beğenilen şarkıları çal (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Beğenilen şarkıları çal (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Beğenilen parçaları çal (SoundCloud)</string>
+    <string name="action_play_liked_songs">Beğenilen şarkılar</string>
+    <string name="action_play_spotify_liked_songs">Beğenilen şarkılar</string>
+    <string name="action_play_soundcloud_likes">Beğenilen parçalar</string>
     <string name="action_my_playlists">Yayın kısayolları</string>
     <string name="action_show_streaming_library">Tüm kaydedilmiş kısayolları göster</string>
     <string name="picker_section_apps">Uygulamalar &amp; otomasyon</string>
@@ -2180,7 +2178,7 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     <string name="playlist_shortcut_deleted">%1$s silindi</string>
     <string name="playlist_shortcut_undo">Geri al</string>
 
-    <string name="action_play_liked_songs_shuffled">Beğenilen şarkıları karışık çal (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Beğenilen şarkılar, karışık</string>
     <string name="action_search_history">Arama geçmişi</string>
     <string name="search_history_empty">Henüz yakın tarihli arama yok</string>
 
@@ -2866,7 +2864,7 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     <string name="setting_wear_text_block_position">Metin konumu</string>
     <string name="setting_wear_text_block_position_description">Parça metninin ekranda nerede durduğu. Kadranı izle, her kadranın tasarlandığı konumu korur.</string>
     <string name="setting_online_artwork">Çevrimiçi kapak görseli</string>
-    <string name="setting_online_artwork_description">Saat yüzünün çevrimiçi bulunan bir resmi göstermesine izin verin \u2014 çalan sanatçı veya oynatıcının sağlamadığı durumlarda albüm kapağı. Telefonunuz Deezer’ın herkese açık kataloğunda arama yapar ve sonucu önbelleğe alır; yalnızca parça ve sanatçı adları gönderilir ve bir saat yüzü bu kaynaklardan birine ayarlanmadıkça hiçbir şey aranmaz. Kapalıyken oynatıcının kendi kapak görseli kullanılır.</string>
+    <string name="setting_online_artwork_description">Kadranın çevrimiçi aranan bir görseli göstermesine izin verin — çalan sanatçıyı veya kapak yayımlamayan bir oynatıcı için albüm kapağını. Aramayı telefonunuz yapar ve sonucu önbelleğe alır; yalnızca parça ve sanatçı adları, Deezer\'ın herkese açık kataloğuna gönderilir. Uygulaması hiç kapak yayımlamayan bir parça için, örneğin bir YouTube videosu, kapağı bulan da budur: telefon YouTube\'dan o videonun kendi küçük resmini ister (kanalı ve başlığı Google\'ın YouTube Data API\'sine göndererek), sonra Deezer\'dan bir albüm kapağı ister ve bir sonucu yalnızca eşleştiğinde kullanır. Kapalıyken yalnızca oynatıcının kendi kapağı kullanılır.</string>
     <string name="setting_wear_shortcut_details">Saatte oynat veya karıştır</string>
     <string name="setting_wear_shortcut_details_description">Saatte kayıtlı bir bağlantıyı kısayol listesinden, Kısayollar Tile’ından veya eylemler menüsünden seçtiğinde önce kapağı Oynat ve Karıştır düğmeleriyle gösterilir. Hemen başlaması için kapat. Tek bir bağlantıya atanmış düğmeler ve hareketler onu her zaman hemen başlatır.</string>
     <string name="actions_quick_pin_add">Hızlı panelde göster</string>
@@ -2964,4 +2962,48 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
     </plurals>
     <string name="streaming_app_routes_picker_description">Bağlantıyı açabilen uygulamalar ve yüklü medya oynatıcılar gösterilir.</string>
     <string name="streaming_route_automatic">Otomatik (algılanan uygulama)</string>
+    <string name="action_symfonium_start">Symfonium\'da medyayı başlat</string>
+    <string name="action_symfonium_start_named">Symfonium\'da başlat: %1$s</string>
+    <string name="action_symfonium_sync">Symfonium sağlayıcısını senkronize et</string>
+    <string name="app_icon_style_gradient">Gradyan</string>
+    <string name="app_icon_style_solid">Düz renk</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Kömür Tüyü</string>
+    <string name="dev_show_rating_card">Puanlama kartını göster</string>
+    <string name="dev_show_rating_card_description">Olağan sınırları yok sayarak Google Play\'den uygulama içi inceleme kartını hemen ister. Yalnızca Google Play\'den yüklenen bir sürümde görünür (dahili test de sayılır)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play\'in bu sürüm için bir inceleme kartı yok. Dahili test dahil Google Play\'den yükleyin ve tekrar deneyin</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Bu oynatıcı bu parça için paylaşılabilir bir bağlantı yayımlamadı</string>
+    <string name="setting_app_icon_style">Uygulama simgesi</string>
+    <string name="setting_youtube_api_key">YouTube Data API anahtarı</string>
+    <string name="setting_youtube_api_key_bundled">YouTube anahtarı bu uygulamaya dahildir; kendi anahtarınızı eklemeniz gerekmez</string>
+    <string name="setting_youtube_api_key_configured">YouTube anahtarı yapılandırıldı; yalnızca bu telefonda saklanır</string>
+    <string name="setting_youtube_api_key_description">Bir oynatıcı kapak yayımlamadığında Svartifoss, Google\'ın YouTube Data API\'si üzerinden YouTube\'da arama yapar, kanalı ve başlığı bu anahtarla birlikte gönderir ve tam olarak eşleşen bir videonun küçük resmini kullanır. Uygulamaya dahil anahtarı kullanmak için boş bırakın. Yapıştırdığınız anahtar bu telefonda kalır: saate gönderilmez ve Svartifoss yapılandırma yedeklerine dahil edilmez.</string>
+    <string name="setting_youtube_api_key_dialog_title">YouTube Data API v3 anahtarınızı yapıştırın</string>
+    <string name="setting_youtube_api_key_not_configured">İsteğe bağlı: YouTube anahtarı yapılandırılmadı</string>
+    <string name="symfonium_media_album">Albüm (isteğe bağlı)</string>
+    <string name="symfonium_media_artist">Sanatçı (isteğe bağlı)</string>
+    <string name="symfonium_media_id_optional">Kimlik (isteğe bağlı)</string>
+    <string name="symfonium_media_name">Ad</string>
+    <string name="symfonium_media_type">Medya türü</string>
+    <string name="symfonium_provider_id">Sağlayıcı kimliği</string>
+    <string name="symfonium_provider_id_description">Sağlayıcı kimliğini Symfonium\'daki Medya sağlayıcılarını yönet ekranında bulabilirsiniz.</string>
+    <string name="symfonium_queue_mode">Kuyruk modu</string>
+    <string name="symfonium_resume">Mümkün olduğunda devam et</string>
+    <string name="symfonium_shuffle">Koleksiyonları karıştır</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Şarkı</item>
+        <item>Çalma listesi</item>
+        <item>Albüm</item>
+        <item>Sanatçı</item>
+        <item>Tür</item>
+        <item>Şarkı miksi</item>
+        <item>Albüm miksi</item>
+        <item>İnternet radyosu</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Şimdi başlat</item>
+        <item>Sıradaki olarak çal</item>
+        <item>Kuyruğa ekle</item>
+    </string-array>
 </resources>

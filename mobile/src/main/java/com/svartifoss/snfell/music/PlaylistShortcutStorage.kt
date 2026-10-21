@@ -222,7 +222,8 @@ object PlaylistShortcutStorage {
             context: Context,
             shortcuts: List<PlaylistShortcut> = load(context)
     ): PutDataRequest = PutDataRequest.create(CommPaths.DATA_STREAMING_SHORTCUTS).apply {
-        data = buildCustomList(context, shortcuts).toByteArray()
+        val list = buildCustomList(context, shortcuts)
+        data = list.toByteArray()
         // Attach each shortcut's cover as a per-index asset - the watch menu reads
         // dataItem.assets[index] for the entry icon (same path as the queue's album art). The
         // entry index in buildCustomList matches the shortcut index when the list is non-empty.
@@ -232,6 +233,14 @@ object PlaylistShortcutStorage {
             ShortcutCovers.pngForLink(context, shortcut.link)?.let { png ->
                 putAsset(index.toString(), Asset.createFromBytes(png))
             }
+            // The glyph of the app the entry opens in, for "Open on phone" on its screen. Read
+            // from the built entry, whose id names the app this phone will actually open. Every
+            // shortcut to one app carries identical bytes, which the Data Layer sends once.
+            list.actionsList.getOrNull(index)?.entryId
+                    ?.let { ShortcutAppMark.glyphPngFor(context, it) }
+                    ?.let { png ->
+                        putAsset(CommPaths.ASSET_APP_MARK_PREFIX + index, Asset.createFromBytes(png))
+                    }
         }
         setUrgent()
     }

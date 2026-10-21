@@ -741,6 +741,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -752,8 +754,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">অলওয়েজ-অন রং</string>
     <string-array name="wear_aod_color_entries">
@@ -1641,7 +1641,7 @@
         <item>বর্গাকার</item>
         <item>গোলাকার বর্গ</item>
         <item>বৃত্ত</item>
-        <item>স্যামসাং শৈলী</item>
+        <item>সুপার-এলিপ্স</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">সব জায়গায় ফন্ট ব্যবহার করুন</string>
@@ -2020,16 +2020,14 @@
     <string name="drawer_about_summary">Svartifoss দিয়ে Wear OS ঘড়ি থেকে ফোনের গান নিয়ন্ত্রণ করতে পারেন — আপনার ডিভাইস অনুযায়ী সম্পূর্ণ কাস্টমাইজযোগ্য রিমোটসহ।</string>
     <string name="drawer_name_heading">নাম</string>
     <string name="drawer_name_meaning">Svartifoss আইসল্যান্ডীয় ভাষায় “কালো জলপ্রপাত” — Vatnajökull জাতীয় উদ্যানের সেই জলপ্রপাতের নাম থেকে নেওয়া, যেখানে গাঢ় ব্যাসাল্ট স্তম্ভ সরু জলধারাকে ঘিরে রেখেছে। পাথরের ওপর দিয়ে জলের মতোই, সঙ্গীত অ্যাপের মধ্য দিয়ে প্রবাহিত হয়।</string>
-    <string name="drawer_sync_heading">সিঙ্ক</string>
-    <string name="drawer_sync_summary">ঘড়ির সেটিংস ফোনে এখানে কনফিগার করা হয় এবং জোড়া ঘড়িতে স্বয়ংক্রিয়ভাবে সিঙ্ক হয়।</string>
     <string name="drawer_support_heading">সহায়তা</string>
     <string name="download_album_art">কভার আর্ট ডাউনলোড করুন</string>
     <string name="album_art_saved">কভার আর্ট গ্যালারিতে সংরক্ষিত হয়েছে</string>
     <string name="album_art_save_error">কভার আর্ট সংরক্ষণ করা যায়নি</string>
 
-    <string name="action_play_liked_songs">পছন্দ করা গান চালান (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">পছন্দ করা গান চালান (Spotify)</string>
-    <string name="action_play_soundcloud_likes">পছন্দ করা ট্র্যাক চালান (SoundCloud)</string>
+    <string name="action_play_liked_songs">পছন্দ করা গান</string>
+    <string name="action_play_spotify_liked_songs">পছন্দ করা গান</string>
+    <string name="action_play_soundcloud_likes">পছন্দ করা ট্র্যাক</string>
     <string name="action_my_playlists">স্ট্রিমিং শর্টকাট</string>
     <string name="action_show_streaming_library">সব সংরক্ষিত শর্টকাট দেখান</string>
     <string name="picker_section_apps">অ্যাপ ও অটোমেশন</string>
@@ -2162,7 +2160,7 @@
     <string name="playlist_shortcut_deleted">%1$s মুছে ফেলা হয়েছে</string>
     <string name="playlist_shortcut_undo">পূর্বাবস্থা</string>
 
-    <string name="action_play_liked_songs_shuffled">পছন্দ করা গান শাফল করে চালান (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">পছন্দ করা গান, শাফল</string>
     <string name="action_search_history">সার্চ ইতিহাস</string>
     <string name="search_history_empty">এখনও সাম্প্রতিক কোনো সার্চ নেই</string>
 
@@ -2848,7 +2846,7 @@
     <string name="setting_wear_text_block_position">টেক্সটের অবস্থান</string>
     <string name="setting_wear_text_block_position_description">স্ক্রিনে ট্র্যাক টেক্সট যেখানে থাকে। Follow face প্রতিটি ফেসের জন্য ডিজাইন করা অবস্থান বজায় রাখে।</string>
     <string name="setting_online_artwork">অনলাইন আর্টওয়ার্ক</string>
-    <string name="setting_online_artwork_description">ওয়াচ ফেসকে অনলাইনে খোঁজা ছবি দেখাতে দিন \u2014 বাজতে থাকা শিল্পী, অথবা এমন প্লেয়ারের জন্য অ্যালবাম কভার যা কোনো ছবি প্রকাশ করে না। আপনার ফোন Deezer-এর পাবলিক ক্যাটালগে খোঁজ করে এবং ফলাফল ক্যাশ করে; শুধু ট্র্যাক ও শিল্পীর নাম পাঠানো হয়, এবং কোনো ফেসকে ওই উৎসগুলোর একটিতে সেট না করা পর্যন্ত কিছু খোঁজা হয় না। বন্ধ থাকলে প্লেয়ারের নিজস্ব আর্টওয়ার্ক ব্যবহার করা হয়।</string>
+    <string name="setting_online_artwork_description">ওয়াচ ফেসকে অনলাইনে খুঁজে পাওয়া ছবি দেখাতে দিন — পরিবেশনকারী শিল্পী, অথবা যে প্লেয়ার কোনো ছবি দেয় না তার জন্য অ্যালবামের কভার। আপনার ফোন খোঁজ করে ফল ক্যাশে রাখে; কেবল ট্র্যাক ও শিল্পীর নাম পাঠানো হয়, Deezer-এর সর্বজনীন ক্যাটালগে। যে ট্র্যাকের অ্যাপ একেবারেই কভার প্রকাশ করে না, যেমন YouTube ভিডিও, তার কভারও এভাবে খোঁজা হয়: ফোন YouTube-কে সেই ভিডিওর নিজস্ব থাম্বনেইল চায় (চ্যানেল ও শিরোনাম Google-এর YouTube Data API-তে পাঠিয়ে), তারপর Deezer-কে অ্যালবামের কভার চায়, এবং ফল মিললে তবেই ব্যবহার করে। বন্ধ থাকলে কেবল প্লেয়ারের নিজস্ব আর্টওয়ার্ক ব্যবহৃত হয়।</string>
     <string name="setting_wear_shortcut_details">ঘড়িতে প্লে বা শাফল</string>
     <string name="setting_wear_shortcut_details_description">ঘড়িতে সংরক্ষিত কোনো লিঙ্ক বেছে নিলে, শর্টকাট তালিকা, শর্টকাট Tile বা অ্যাকশন মেনু থেকে, প্রথমে তার কভার প্লে ও শাফল সহ দেখায়। বন্ধ করলে সরাসরি শুরু হবে। একটি লিঙ্কে নির্ধারিত বোতাম ও জেসচার সবসময় সরাসরি শুরু করে।</string>
     <string name="actions_quick_pin_add">দ্রুত প্যানেলে দেখান</string>
@@ -2946,4 +2944,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">অ্যাপ্লিকেশানগুলি যেগুলি লিঙ্কটি খুলতে পারে, এছাড়াও ইনস্টল করা মিডিয়া প্লেয়ারগুলি দেখানো হয়েছে৷</string>
     <string name="streaming_route_automatic">স্বয়ংক্রিয় (শনাক্ত করা অ্যাপ)</string>
+    <string name="action_symfonium_start">Symfonium-এ মিডিয়া শুরু করুন</string>
+    <string name="action_symfonium_start_named">Symfonium-এ শুরু করুন: %1$s</string>
+    <string name="action_symfonium_sync">Symfonium প্রোভাইডার সিঙ্ক করুন</string>
+    <string name="app_icon_style_gradient">গ্র্যাডিয়েন্ট</string>
+    <string name="app_icon_style_solid">একরঙা</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">চারকোল পালক</string>
+    <string name="dev_show_rating_card">রেটিং কার্ড দেখান</string>
+    <string name="dev_show_rating_card_description">স্বাভাবিক সীমা উপেক্ষা করে এখনই Google Play-র কাছে তার অ্যাপ-মধ্যস্থ রিভিউ কার্ড চায়। এটি কেবল Google Play থেকে ইনস্টল করা বিল্ডে দেখা যায় (অভ্যন্তরীণ টেস্টিংও গণ্য)</string>
+    <string name="dev_show_rating_card_unavailable">এই বিল্ডের জন্য Google Play-র কোনো রিভিউ কার্ড নেই। Google Play থেকে ইনস্টল করুন, অভ্যন্তরীণ টেস্টিং সহ, তারপর আবার চেষ্টা করুন</string>
+    <string name="playlist_shortcut_queue_link_unavailable">এই প্লেয়ার এই ট্র্যাকের জন্য শেয়ার করার মতো কোনো লিংক প্রকাশ করেনি</string>
+    <string name="setting_app_icon_style">অ্যাপের আইকন</string>
+    <string name="setting_youtube_api_key">YouTube Data API কী</string>
+    <string name="setting_youtube_api_key_bundled">এই অ্যাপে YouTube কী অন্তর্ভুক্ত আছে; আলাদা করে যোগ করতে হবে না</string>
+    <string name="setting_youtube_api_key_configured">YouTube কী কনফিগার করা হয়েছে; কেবল এই ফোনে সংরক্ষিত</string>
+    <string name="setting_youtube_api_key_description">কোনো প্লেয়ার আর্টওয়ার্ক প্রকাশ না করলে Svartifoss Google-এর YouTube Data API দিয়ে YouTube-এ খোঁজে, এই কী-র সঙ্গে চ্যানেল ও শিরোনাম পাঠায় এবং হুবহু মিলে যাওয়া ভিডিওর থাম্বনেইল ব্যবহার করে। অ্যাপে অন্তর্ভুক্ত কী ব্যবহার করতে ফাঁকা রাখুন। আপনি যে কী পেস্ট করবেন তা এই ফোনেই থাকবে: ঘড়িতে পাঠানো হবে না এবং Svartifoss কনফিগারেশন ব্যাকআপে অন্তর্ভুক্ত হবে না।</string>
+    <string name="setting_youtube_api_key_dialog_title">আপনার YouTube Data API v3 কী পেস্ট করুন</string>
+    <string name="setting_youtube_api_key_not_configured">ঐচ্ছিক: কোনো YouTube কী কনফিগার করা নেই</string>
+    <string name="symfonium_media_album">অ্যালবাম (ঐচ্ছিক)</string>
+    <string name="symfonium_media_artist">শিল্পী (ঐচ্ছিক)</string>
+    <string name="symfonium_media_id_optional">ID (ঐচ্ছিক)</string>
+    <string name="symfonium_media_name">নাম</string>
+    <string name="symfonium_media_type">মিডিয়ার ধরন</string>
+    <string name="symfonium_provider_id">প্রোভাইডার ID</string>
+    <string name="symfonium_provider_id_description">Symfonium-এর “মিডিয়া প্রোভাইডার পরিচালনা” স্ক্রিনে প্রোভাইডার ID পাবেন।</string>
+    <string name="symfonium_queue_mode">কিউ মোড</string>
+    <string name="symfonium_resume">সম্ভব হলে আবার শুরু করুন</string>
+    <string name="symfonium_shuffle">সংগ্রহ শাফল করুন</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>গান</item>
+        <item>প্লেলিস্ট</item>
+        <item>অ্যালবাম</item>
+        <item>শিল্পী</item>
+        <item>ধরন</item>
+        <item>গানের মিক্স</item>
+        <item>অ্যালবামের মিক্স</item>
+        <item>ইন্টারনেট রেডিও</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>এখনই শুরু করুন</item>
+        <item>পরে চালান</item>
+        <item>কিউতে যোগ করুন</item>
+    </string-array>
 </resources>

@@ -659,6 +659,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -670,8 +672,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Always-on-Farbe</string>
     <string-array name="wear_aod_color_entries">
@@ -1363,16 +1363,14 @@
     <string name="drawer_about_summary">Svartifoss lässt dich die Musik auf deinem Telefon von deiner Wear-OS-Uhr aus steuern — mit einer voll anpassbaren, auf dein Gerät zugeschnittenen Fernbedienung.</string>
     <string name="drawer_name_heading">Der Name</string>
     <string name="drawer_name_meaning">Svartifoss bedeutet auf Isländisch „Schwarzer Wasserfall“ — benannt nach dem Wasserfall im Vatnajökull-Nationalpark, wo dunkle Basaltsäulen eine schmale Kaskade einrahmen. Wie Wasser über Stein fließt Musik durch die App.</string>
-    <string name="drawer_sync_heading">Synchronisierung</string>
-    <string name="drawer_sync_summary">Uhr-Einstellungen werden hier auf dem Telefon konfiguriert und automatisch mit deiner gekoppelten Uhr synchronisiert.</string>
     <string name="drawer_support_heading">Unterstützung</string>
     <string name="download_album_art">Cover herunterladen</string>
     <string name="album_art_saved">Cover in der Galerie gespeichert</string>
     <string name="album_art_save_error">Cover konnte nicht gespeichert werden</string>
 
-    <string name="action_play_liked_songs">Gefällt mir-Songs abspielen (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Gefällt mir-Songs abspielen (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Gefällt mir-Songs abspielen (SoundCloud)</string>
+    <string name="action_play_liked_songs">Gefällt mir-Songs</string>
+    <string name="action_play_spotify_liked_songs">Gefällt mir-Songs</string>
+    <string name="action_play_soundcloud_likes">Gefällt mir-Songs</string>
     <string name="action_my_playlists">Streaming-Verknüpfungen</string>
     <string name="action_show_streaming_library">Alle gespeicherten Verknüpfungen anzeigen</string>
     <string name="picker_section_apps">Apps &amp; Automatisierung</string>
@@ -1490,7 +1488,7 @@
     <string name="playlist_shortcut_deleted">%1$s gelöscht</string>
     <string name="playlist_shortcut_undo">Rückgängig</string>
 
-    <string name="action_play_liked_songs_shuffled">Gefällt mir-Songs zufällig abspielen (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Gefällt mir-Songs, zufällig</string>
     <string name="action_search_history">Suchverlauf</string>
     <string name="search_history_empty">Noch keine letzten Suchen</string>
 
@@ -1720,7 +1718,7 @@
         <item>Eckig</item>
         <item>Squircle</item>
         <item>Kreis</item>
-        <item>Samsung-Stil</item>
+        <item>Superellipse</item>
     </string-array>
     <string-array name="auto_start_modes_descriptions">
         <item>Deaktiviert</item>
@@ -2832,7 +2830,7 @@
     <string name="setting_wear_text_block_position">Textposition</string>
     <string name="setting_wear_text_block_position_description">Wo der Titeltext auf dem Bildschirm sitzt. „Zifferblatt folgen“ behält die Position bei, für die jedes Zifferblatt entworfen wurde.</string>
     <string name="setting_online_artwork">Online-Cover</string>
-    <string name="setting_online_artwork_description">Das Zifferblatt kann ein online gesuchtes Bild anzeigen \u2014 den gerade wiedergegebenen Künstler oder ein Albumcover für einen Player, der keines bereitstellt. Dein Smartphone sucht im öffentlichen Deezer-Katalog und speichert das Ergebnis im Cache; übertragen werden nur Titel- und Künstlername. Eine Suche findet nur statt, wenn ein Zifferblatt auf eine dieser Quellen eingestellt ist. Ist die Option aus, wird das Cover des Players verwendet.</string>
+    <string name="setting_online_artwork_description">Das Zifferblatt kann ein online gesuchtes Bild anzeigen — den gerade wiedergegebenen Künstler oder ein Albumcover für einen Player, der keines bereitstellt. Dein Smartphone führt die Suche aus und speichert das Ergebnis im Cache; gesendet werden nur Titel- und Künstlername, und zwar an den öffentlichen Katalog von Deezer. Das ist auch der Weg zu einem Cover für einen Titel, dessen App gar keines bereitstellt, etwa ein YouTube-Video: Das Smartphone fragt YouTube nach dem eigenen Vorschaubild des Videos (Kanal und Titel gehen dabei an die YouTube Data API von Google) und danach Deezer nach einem Albumcover und verwendet ein Ergebnis nur, wenn es passt. Ist die Option aus, wird nur das Cover des Players verwendet.</string>
     <string name="setting_wear_shortcut_details">Wiedergabe oder Zufall auf der Uhr</string>
     <string name="setting_wear_shortcut_details_description">Wählst du auf der Uhr einen gespeicherten Link aus – in der Verknüpfungsliste, im Verknüpfungs-Tile oder im Aktionsmenü –, wird zuerst sein Cover mit Wiedergabe und Zufallswiedergabe angezeigt. Ausschalten, um ihn stattdessen sofort zu starten. Tasten und Gesten, die einem Link zugewiesen sind, starten ihn immer sofort.</string>
     <string name="actions_quick_pin_add">Im Quickpanel anzeigen</string>
@@ -2930,4 +2928,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">Apps, die den Link öffnen können, sowie installierte Mediaplayer werden angezeigt.</string>
     <string name="streaming_route_automatic">Automatisch (erkannte App)</string>
+    <string name="action_symfonium_start">Medien in Symfonium starten</string>
+    <string name="action_symfonium_start_named">In Symfonium starten: %1$s</string>
+    <string name="action_symfonium_sync">Symfonium-Anbieter synchronisieren</string>
+    <string name="app_icon_style_gradient">Farbverlauf</string>
+    <string name="app_icon_style_solid">Einfarbig</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Kohlefeder</string>
+    <string name="dev_show_rating_card">Bewertungskarte anzeigen</string>
+    <string name="dev_show_rating_card_description">Fordert sofort die In-App-Bewertungskarte von Google Play an und ignoriert die üblichen Grenzen. Sie erscheint nur in einer Version, die über Google Play installiert wurde (der interne Test zählt mit)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play hat für diese Version keine Bewertungskarte. Installiere sie über Google Play, auch der interne Test zählt, und versuche es erneut</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Dieser Player hat für diesen Titel keinen teilbaren Link bereitgestellt</string>
+    <string name="setting_app_icon_style">App-Symbol</string>
+    <string name="setting_youtube_api_key">YouTube-Data-API-Schlüssel</string>
+    <string name="setting_youtube_api_key_bundled">YouTube-Schlüssel in dieser App enthalten; du musst keinen hinzufügen</string>
+    <string name="setting_youtube_api_key_configured">YouTube-Schlüssel eingerichtet; nur auf diesem Smartphone gespeichert</string>
+    <string name="setting_youtube_api_key_dialog_title">YouTube-Data-API-v3-Schlüssel einfügen</string>
+    <string name="setting_youtube_api_key_not_configured">Optional: kein YouTube-Schlüssel eingerichtet</string>
+    <string name="symfonium_media_album">Album (optional)</string>
+    <string name="symfonium_media_artist">Interpret (optional)</string>
+    <string name="symfonium_media_id_optional">ID (optional)</string>
+    <string name="symfonium_media_name">Name</string>
+    <string name="symfonium_media_type">Medientyp</string>
+    <string name="symfonium_provider_id">Anbieter-ID</string>
+    <string name="symfonium_provider_id_description">Die Anbieter-ID findest du in Symfonium unter „Medienanbieter verwalten“.</string>
+    <string name="symfonium_queue_mode">Warteschlangenmodus</string>
+    <string name="symfonium_resume">Wenn möglich fortsetzen</string>
+    <string name="symfonium_shuffle">Sammlungen zufällig wiedergeben</string>
+    <string name="setting_youtube_api_key_description">Wenn ein Player kein Cover bereitstellt, sucht Svartifoss über die YouTube Data API von Google nach dem Video und sendet dazu Kanal und Titel zusammen mit diesem Schlüssel; verwendet wird das Vorschaubild eines exakt passenden Videos. Leer lassen, um den in dieser App enthaltenen Schlüssel zu nutzen. Ein eingefügter Schlüssel bleibt auf diesem Smartphone: Er wird weder an die Uhr gesendet noch in Svartifoss-Konfigurationssicherungen aufgenommen.</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Titel</item>
+        <item>Playlist</item>
+        <item>Album</item>
+        <item>Interpret</item>
+        <item>Genre</item>
+        <item>Titel-Mix</item>
+        <item>Album-Mix</item>
+        <item>Internetradio</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Jetzt starten</item>
+        <item>Als Nächstes wiedergeben</item>
+        <item>Zur Warteschlange hinzufügen</item>
+    </string-array>
 </resources>

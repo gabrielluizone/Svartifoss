@@ -83,6 +83,7 @@ import androidx.core.content.res.ResourcesCompat
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.applyLyraDialogStyling
 import com.svartifoss.snfell.view.settings.ColorTreatmentPreference
+import com.svartifoss.snfell.view.settings.TransportGlyphPreference
 import com.svartifoss.snfell.view.settings.FaceScopedPreferenceDataStore
 import com.svartifoss.snfell.view.settings.HexColorDotPreference
 import com.svartifoss.snfell.view.settings.WatchFontCatalog
@@ -2984,6 +2985,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         if (preference is ColorTreatmentPreference) {
             refreshColorTreatmentSwatches(preference)
         }
+        // "Follow face" stands for whatever the current face was designed with, so the picker
+        // needs the face to draw that row's glyph - see TransportGlyphPreference.
+        if (preference is TransportGlyphPreference) {
+            preference.face = readStringPreference(
+                    MiscPreferences.WEAR_SCREEN_FACE.key, MiscPreferences.WEAR_SCREEN_FACE.defaultValue)
+        }
         super.onDisplayPreferenceDialog(preference)
         // Preference dialogs inflate with the static theme colors; once the dialog is up,
         // re-tint it with the accent currently on screen.
@@ -5257,6 +5264,11 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // Restyles a face's own icon glyphs only - see PlayerEditorModel.CONTROL_STYLE_FACES.
         findPreference<Preference>(MiscPreferences.WEAR_SCREEN_THEME.key)?.isVisible =
                 face in PlayerEditorModel.CONTROL_STYLE_FACES
+        // The marks only exist on the faces that draw a play/pause of their own - see
+        // PlayerEditorModel.TRANSPORT_GLYPH_FACES.
+        listOf(MiscPreferences.WEAR_PLAY_ICON.key, MiscPreferences.WEAR_PAUSE_ICON.key).forEach {
+            findPreference<Preference>(it)?.isVisible = face in PlayerEditorModel.TRANSPORT_GLYPH_FACES
+        }
         // Same rule, same reason: the card silhouette is Carousel's own cover rail. It sat in the
         // Player category unconditioned, so every other layout offered a picker that changed
         // nothing - which reads as a broken setting rather than an inapplicable one.

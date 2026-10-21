@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Grosor de la barra de volumen</string>
-    <string name="setting_wear_volume_thickness_description">Grosor del trazo de la barra de volumen, del 50 % al 180 % del predeterminado. Los trazos más gruesos siguen sin tocar el borde.</string>
+    <string name="setting_wear_volume_thickness_description">Grosor del trazo de la barra de volumen, del 50 %% al 180 %% del predeterminado. Los trazos más gruesos siguen sin tocar el borde.</string>
     <string name="setting_wear_volume_haptics">Vibración de la corona en el volumen</string>
     <string name="setting_wear_queue_dim_played">Atenuar pistas reproducidas</string>
     <string name="setting_wear_queue_dim_played_description">Atenúa las pistas que ya sonaron para que destaquen las que están por venir.</string>

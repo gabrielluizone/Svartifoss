@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Tloušťka ukazatele hlasitosti</string>
-    <string name="setting_wear_volume_thickness_description">Tloušťka čáry ukazatele hlasitosti, od 50 % do 180 % výchozí hodnoty. I silnější čáry zůstávají v bezpečné vzdálenosti od okraje.</string>
+    <string name="setting_wear_volume_thickness_description">Tloušťka čáry ukazatele hlasitosti, od 50 %% do 180 %% výchozí hodnoty. I silnější čáry zůstávají v bezpečné vzdálenosti od okraje.</string>
     <string name="setting_wear_volume_haptics">Vibrace korunky u hlasitosti</string>
     <string name="setting_wear_queue_dim_played">Ztlumit přehrané skladby</string>
     <string name="setting_wear_queue_dim_played_description">Ztlumí položky, které už hrály, aby vynikly ty, které teprve přijdou.</string>

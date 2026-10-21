@@ -770,6 +770,8 @@ Svartifoss — أعمدة بازلت سوداء
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -781,8 +783,6 @@ Svartifoss — أعمدة بازلت سوداء
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">لون العرض الدائم</string>
     <string-array name="wear_aod_color_entries">
@@ -1670,7 +1670,7 @@ Svartifoss — أعمدة بازلت سوداء
         <item>مربع</item>
         <item>مربع مستدير</item>
         <item>دائرة</item>
-        <item>نمط سامسونج</item>
+        <item>قطع ناقص فائق</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">استخدام الخط في كل مكان</string>
@@ -2051,16 +2051,14 @@ Svartifoss — أعمدة بازلت سوداء
     <string name="drawer_about_summary">يتيح لك Svartifoss التحكم في موسيقى هاتفك من ساعة Wear OS — عبر جهاز تحكم قابل للتخصيص بالكامل ومهيأ لجهازك.</string>
     <string name="drawer_name_heading">الاسم</string>
     <string name="drawer_name_meaning">تعني Svartifoss «الشلال الأسود» باللغة الآيسلندية — وقد سُمّي التطبيق نسبةً إلى الشلال في متنزه Vatnajökull الوطني، حيث تؤطّر أعمدة البازلت الداكنة شلالًا ضيقًا. وكالماء فوق الصخر، تتدفق الموسيقى عبر التطبيق.</string>
-    <string name="drawer_sync_heading">المزامنة</string>
-    <string name="drawer_sync_summary">تتم تهيئة إعدادات الساعة هنا على الهاتف وتُزامن تلقائيًا مع ساعتك المقترنة.</string>
     <string name="drawer_support_heading">الدعم</string>
     <string name="download_album_art">تنزيل صورة الغلاف</string>
     <string name="album_art_saved">تم حفظ صورة الغلاف في المعرض</string>
     <string name="album_art_save_error">فشل حفظ صورة الغلاف</string>
 
-    <string name="action_play_liked_songs">تشغيل الأغاني التي أعجبتني (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">تشغيل الأغاني التي أعجبتني (Spotify)</string>
-    <string name="action_play_soundcloud_likes">تشغيل المقاطع التي أعجبتني (SoundCloud)</string>
+    <string name="action_play_liked_songs">الأغاني التي أعجبتني</string>
+    <string name="action_play_spotify_liked_songs">الأغاني التي أعجبتني</string>
+    <string name="action_play_soundcloud_likes">المقاطع التي أعجبتني</string>
     <string name="action_my_playlists">اختصارات خدمات البث</string>
     <string name="action_show_streaming_library">إظهار كل الاختصارات المحفوظة</string>
     <string name="picker_section_apps">التطبيقات والأتمتة</string>
@@ -2205,7 +2203,7 @@ Svartifoss — أعمدة بازلت سوداء
     <string name="playlist_shortcut_deleted">تم حذف %1$s</string>
     <string name="playlist_shortcut_undo">تراجع</string>
 
-    <string name="action_play_liked_songs_shuffled">تشغيل الأغاني التي أعجبتني عشوائيًا (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">الأغاني التي أعجبتني، عشوائيًا</string>
     <string name="action_search_history">سجل البحث</string>
     <string name="search_history_empty">لا توجد عمليات بحث حديثة بعد</string>
 
@@ -2891,7 +2889,7 @@ Svartifoss — أعمدة بازلت سوداء
     <string name="setting_wear_text_block_position">موضع النص</string>
     <string name="setting_wear_text_block_position_description">موضع نص المقطع على الشاشة. «اتباع الواجهة» يحافظ على الموضع الذي صُممت به كل واجهة.</string>
     <string name="setting_online_artwork">عمل فني عبر الإنترنت</string>
-    <string name="setting_online_artwork_description">اسمح لواجهة الساعة بعرض صورة يتم البحث عنها عبر الإنترنت \u2014 الفنان المؤدي، أو غلاف ألبوم لمشغّل لا ينشر صورة. يجري هاتفك البحث في كتالوج Deezer العام ويخزّن النتيجة مؤقتًا؛ لا يتم إرسال سوى اسم المقطع والفنان، ولا يحدث أي بحث إلا إذا ضُبطت واجهة على أحد هذه المصادر. عند الإيقاف، يُستخدم العمل الفني الخاص بالمشغّل.</string>
+    <string name="setting_online_artwork_description">اسمح لواجهة الساعة بعرض صورة يتم البحث عنها عبر الإنترنت — الفنان الذي يؤدي المقطع، أو غلاف ألبوم لمشغّل لا يوفّر أي غلاف. يجري هاتفك البحث ويحفظ النتيجة مؤقتًا؛ ولا يُرسل سوى اسمي المقطع والفنان، إلى فهرس Deezer العام. وهذا أيضًا ما يوجد به غلاف لمقطع لا يوفّر تطبيقه أي غلاف، مثل فيديو على YouTube: يطلب الهاتف من YouTube الصورة المصغّرة لذلك الفيديو (مع إرسال اسم القناة والعنوان إلى YouTube Data API من Google)، ثم يطلب من Deezer غلاف ألبوم، ولا يستخدم نتيجة إلا عند مطابقتها. عند الإيقاف، يُستخدم غلاف المشغّل نفسه فقط.</string>
     <string name="setting_wear_shortcut_details">تشغيل أو تشغيل عشوائي على الساعة</string>
     <string name="setting_wear_shortcut_details_description">اختيار رابط محفوظ على الساعة، من قائمة الاختصارات أو Tile الاختصارات أو قائمة الإجراءات، يعرض غلافه أولًا مع «تشغيل» و«تشغيل عشوائي». أوقف هذا الخيار لبدء التشغيل فورًا بدلًا من ذلك. الأزرار والإيماءات المخصصة لرابط واحد تبدأ تشغيله فورًا دائمًا.</string>
     <string name="actions_quick_pin_add">العرض في اللوحة السريعة</string>
@@ -2989,4 +2987,48 @@ Svartifoss — أعمدة بازلت سوداء
     </plurals>
     <string name="streaming_app_routes_picker_description">يتم عرض التطبيقات التي يمكنها فتح الرابط، بالإضافة إلى مشغلات الوسائط المثبتة.</string>
     <string name="streaming_route_automatic">تلقائي (التطبيق المكتشف)</string>
+    <string name="action_symfonium_start">تشغيل الوسائط في Symfonium</string>
+    <string name="action_symfonium_start_named">التشغيل في Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">مزامنة مزوّد Symfonium</string>
+    <string name="app_icon_style_gradient">تدرّج لوني</string>
+    <string name="app_icon_style_solid">لون موحّد</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">ريشة الفحم</string>
+    <string name="dev_show_rating_card">إظهار بطاقة التقييم</string>
+    <string name="dev_show_rating_card_description">يطلب فورًا من Google Play بطاقة المراجعة المدمجة في التطبيق متجاوزًا الحدود المعتادة. لا تظهر إلا في إصدار مثبّت من Google Play (ويُحتسب الاختبار الداخلي)</string>
+    <string name="dev_show_rating_card_unavailable">لا توجد بطاقة مراجعة من Google Play لهذا الإصدار. ثبّته من Google Play، بما في ذلك الاختبار الداخلي، ثم حاول مجددًا</string>
+    <string name="playlist_shortcut_queue_link_unavailable">لم يوفّر هذا المشغّل رابطًا قابلًا للمشاركة لهذا المقطع</string>
+    <string name="setting_app_icon_style">أيقونة التطبيق</string>
+    <string name="setting_youtube_api_key">مفتاح YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">مفتاح YouTube مضمّن في هذا التطبيق؛ لا حاجة لإضافة مفتاح</string>
+    <string name="setting_youtube_api_key_configured">تم إعداد مفتاح YouTube؛ يُحفظ على هذا الهاتف فقط</string>
+    <string name="setting_youtube_api_key_description">عندما لا يوفّر المشغّل صورة غلاف، يبحث Svartifoss في YouTube عبر واجهة YouTube Data API من Google، ويرسل اسم القناة والعنوان مع هذا المفتاح، ثم يستخدم الصورة المصغّرة لفيديو مطابق تمامًا. اتركه فارغًا لاستخدام المفتاح المضمّن في هذا التطبيق. المفتاح الذي تلصقه يبقى على هذا الهاتف: لا يُرسل إلى الساعة ولا يُضمَّن في النسخ الاحتياطية لإعدادات Svartifoss.</string>
+    <string name="setting_youtube_api_key_dialog_title">الصق مفتاح YouTube Data API v3 الخاص بك</string>
+    <string name="setting_youtube_api_key_not_configured">اختياري: لم يتم إعداد مفتاح YouTube</string>
+    <string name="symfonium_media_album">الألبوم (اختياري)</string>
+    <string name="symfonium_media_artist">الفنان (اختياري)</string>
+    <string name="symfonium_media_id_optional">المعرّف (اختياري)</string>
+    <string name="symfonium_media_name">الاسم</string>
+    <string name="symfonium_media_type">نوع الوسائط</string>
+    <string name="symfonium_provider_id">معرّف المزوّد</string>
+    <string name="symfonium_provider_id_description">ستجد معرّف المزوّد في شاشة «إدارة مزوّدي الوسائط» في Symfonium.</string>
+    <string name="symfonium_queue_mode">وضع قائمة الانتظار</string>
+    <string name="symfonium_resume">الاستئناف عند الإمكان</string>
+    <string name="symfonium_shuffle">تشغيل المجموعات عشوائيًا</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>أغنية</item>
+        <item>قائمة تشغيل</item>
+        <item>ألبوم</item>
+        <item>فنان</item>
+        <item>نوع موسيقي</item>
+        <item>مزيج أغانٍ</item>
+        <item>مزيج ألبومات</item>
+        <item>راديو الإنترنت</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>ابدأ الآن</item>
+        <item>تشغيل التالي</item>
+        <item>إضافة إلى قائمة الانتظار</item>
+    </string-array>
 </resources>

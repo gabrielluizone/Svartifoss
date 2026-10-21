@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">音量条粗细</string>
-    <string name="setting_wear_volume_thickness_description">音量条线条的粗细，为默认值的 50% 到 180%。线条再粗也不会贴到屏幕边缘。</string>
+    <string name="setting_wear_volume_thickness_description">音量条线条的粗细，为默认值的 50%% 到 180%%。线条再粗也不会贴到屏幕边缘。</string>
     <string name="setting_wear_volume_haptics">调节音量时表冠振动</string>
     <string name="setting_wear_queue_dim_played">调暗已播放的曲目</string>
     <string name="setting_wear_queue_dim_played_description">调暗已经播放过的条目，让接下来的曲目更醒目。</string>

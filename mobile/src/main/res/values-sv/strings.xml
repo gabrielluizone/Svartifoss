@@ -762,6 +762,8 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -773,8 +775,6 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Alltid på-färg</string>
     <string-array name="wear_aod_color_entries">
@@ -1662,7 +1662,7 @@ Om du upplever detta kan du aktivera alternativet för att helt inaktivera dubbe
         <item>Fyrkant</item>
         <item>Squircle</item>
         <item>Cirkel</item>
-        <item>Samsung-stil</item>
+        <item>Superellips</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Använd typsnittet överallt</string>
@@ -2043,16 +2043,14 @@ När Vibration Center får klockan att vibrera visar Svartifoss en popup med avi
     <string name="drawer_about_summary">Med Svartifoss kan du styra musiken på telefonen från din Wear OS-klocka — med en fullt anpassningsbar fjärrkontroll utformad för din enhet.</string>
     <string name="drawer_name_heading">Namnet</string>
     <string name="drawer_name_meaning">Svartifoss betyder ”Svarta fallet” på isländska — uppkallad efter vattenfallet i Vatnajökulls nationalpark, där mörka basaltpelare ramar in en smal kaskad. Som vatten över sten flödar musiken genom appen.</string>
-    <string name="drawer_sync_heading">Synkronisering</string>
-    <string name="drawer_sync_summary">Klockinställningarna konfigureras här på telefonen och synkroniseras automatiskt till din parkopplade klocka.</string>
     <string name="drawer_support_heading">Support</string>
     <string name="download_album_art">Hämta omslag</string>
     <string name="album_art_saved">Omslaget sparades i galleriet</string>
     <string name="album_art_save_error">Det gick inte att spara omslaget</string>
 
-    <string name="action_play_liked_songs">Spela gillade låtar (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Spela gillade låtar (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Spela gillade spår (SoundCloud)</string>
+    <string name="action_play_liked_songs">Gillade låtar</string>
+    <string name="action_play_spotify_liked_songs">Gillade låtar</string>
+    <string name="action_play_soundcloud_likes">Gillade spår</string>
     <string name="action_my_playlists">Streaminggenvägar</string>
     <string name="action_show_streaming_library">Visa alla sparade genvägar</string>
     <string name="picker_section_apps">Appar &amp; automatisering</string>
@@ -2185,7 +2183,7 @@ När Vibration Center får klockan att vibrera visar Svartifoss en popup med avi
     <string name="playlist_shortcut_deleted">%1$s borttagen</string>
     <string name="playlist_shortcut_undo">Ångra</string>
 
-    <string name="action_play_liked_songs_shuffled">Spela gillade låtar, blandat (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Gillade låtar, blandat</string>
     <string name="action_search_history">Sökhistorik</string>
     <string name="search_history_empty">Inga senaste sökningar ännu</string>
 
@@ -2871,7 +2869,7 @@ När Vibration Center får klockan att vibrera visar Svartifoss en popup med avi
     <string name="setting_wear_text_block_position">Textposition</string>
     <string name="setting_wear_text_block_position_description">Var spårtexten ligger på skärmen. Följ urtavlan behåller den position som varje urtavla är utformad för.</string>
     <string name="setting_online_artwork">Onlineomslag</string>
-    <string name="setting_online_artwork_description">Låt urtavlan visa en bild som hämtas online \u2014 artisten som spelas, eller ett albumomslag när en spelare inte publicerar något. Telefonen gör sökningen i Deezers offentliga katalog och cachar resultatet; endast spår- och artistnamnen skickas, och inget söks upp om inte en urtavla är inställd på en av dessa källor. När funktionen är av används spelarens eget omslag.</string>
+    <string name="setting_online_artwork_description">Låt urtavlan visa en bild som slagits upp online — artisten som framför, eller ett albumomslag för en spelare som inte publicerar något. Telefonen gör sökningen och sparar resultatet i cacheminnet; bara spårets och artistens namn skickas, till Deezers offentliga katalog. Det är också det som hittar ett omslag till ett spår vars app inte publicerar något alls, som en YouTube-video: telefonen ber YouTube om videons egen miniatyrbild (och skickar kanal och titel till Googles YouTube Data API), därefter Deezer om ett albumomslag, och använder ett resultat bara när det matchar. När funktionen är av används bara spelarens eget omslag.</string>
     <string name="setting_wear_shortcut_details">Spela upp eller blanda på klockan</string>
     <string name="setting_wear_shortcut_details_description">När du väljer en sparad länk på klockan – från genvägslistan, genvägspanelen eller åtgärdsmenyn – visas först dess omslag med Spela upp och Blanda. Stäng av för att starta direkt i stället. Knappar och gester som är tilldelade en länk startar den alltid direkt.</string>
     <string name="actions_quick_pin_add">Visa i snabbpanel</string>
@@ -2969,4 +2967,48 @@ När Vibration Center får klockan att vibrera visar Svartifoss en popup med avi
     </plurals>
     <string name="streaming_app_routes_picker_description">Appar som kan öppna länken, plus installerade mediaspelare, visas.</string>
     <string name="streaming_route_automatic">Automatisk (upptäckt app)</string>
+    <string name="action_symfonium_start">Starta media i Symfonium</string>
+    <string name="action_symfonium_start_named">Starta i Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Synkronisera Symfonium-leverantör</string>
+    <string name="app_icon_style_gradient">Toning</string>
+    <string name="app_icon_style_solid">Enfärgad</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Kolfjäder</string>
+    <string name="dev_show_rating_card">Visa betygskortet</string>
+    <string name="dev_show_rating_card_description">Ber Google Play om sitt recensionskort i appen direkt och ignorerar de vanliga gränserna. Det visas bara i en version som installerats från Google Play (intern testning räknas)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play har inget recensionskort för den här versionen. Installera den från Google Play, inklusive intern testning, och försök igen</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Den här spelaren har inte publicerat någon delbar länk för det här spåret</string>
+    <string name="setting_app_icon_style">Appikon</string>
+    <string name="setting_youtube_api_key">YouTube Data API-nyckel</string>
+    <string name="setting_youtube_api_key_bundled">YouTube-nyckel ingår i den här appen; du behöver inte lägga till någon</string>
+    <string name="setting_youtube_api_key_configured">YouTube-nyckel konfigurerad; lagras bara på den här telefonen</string>
+    <string name="setting_youtube_api_key_description">När en spelare inte publicerar något omslag söker Svartifoss på YouTube via Googles YouTube Data API, skickar kanal och titel tillsammans med nyckeln och använder miniatyrbilden från en video som matchar exakt. Lämna tomt för att använda nyckeln som ingår i appen. En nyckel du klistrar in stannar på den här telefonen: den skickas inte till klockan och ingår inte i Svartifoss konfigurationssäkerhetskopior.</string>
+    <string name="setting_youtube_api_key_dialog_title">Klistra in din YouTube Data API v3-nyckel</string>
+    <string name="setting_youtube_api_key_not_configured">Valfritt: ingen YouTube-nyckel konfigurerad</string>
+    <string name="symfonium_media_album">Album (valfritt)</string>
+    <string name="symfonium_media_artist">Artist (valfritt)</string>
+    <string name="symfonium_media_id_optional">ID (valfritt)</string>
+    <string name="symfonium_media_name">Namn</string>
+    <string name="symfonium_media_type">Mediatyp</string>
+    <string name="symfonium_provider_id">Leverantörs-ID</string>
+    <string name="symfonium_provider_id_description">Leverantörs-ID:t hittar du på skärmen Hantera medieleverantörer i Symfonium.</string>
+    <string name="symfonium_queue_mode">Köläge</string>
+    <string name="symfonium_resume">Återuppta när det går</string>
+    <string name="symfonium_shuffle">Blanda samlingar</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Låt</item>
+        <item>Spellista</item>
+        <item>Album</item>
+        <item>Artist</item>
+        <item>Genre</item>
+        <item>Låtmix</item>
+        <item>Albummix</item>
+        <item>Internetradio</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Starta nu</item>
+        <item>Spela härnäst</item>
+        <item>Lägg till i kön</item>
+    </string-array>
 </resources>

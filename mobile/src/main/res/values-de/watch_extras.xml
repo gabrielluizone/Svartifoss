@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Stärke der Lautstärkeleiste</string>
-    <string name="setting_wear_volume_thickness_description">Strichstärke der Lautstärkeleiste, von 50 % bis 180 % des Standards. Auch dickere Striche halten Abstand zum Rand.</string>
+    <string name="setting_wear_volume_thickness_description">Strichstärke der Lautstärkeleiste, von 50 %% bis 180 %% des Standards. Auch dickere Striche halten Abstand zum Rand.</string>
     <string name="setting_wear_volume_haptics">Kronenvibration bei Lautstärke</string>
     <string name="setting_wear_queue_dim_played">Gespielte Titel abblenden</string>
     <string name="setting_wear_queue_dim_played_description">Blendet bereits gespielte Einträge ab, damit die kommenden hervortreten.</string>

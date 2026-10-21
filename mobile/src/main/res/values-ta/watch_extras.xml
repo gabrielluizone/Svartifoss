@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">ஒலியளவு பட்டையின் தடிமன்</string>
-    <string name="setting_wear_volume_thickness_description">ஒலியளவு பட்டைக் கோட்டின் தடிமன், இயல்புநிலையின் 50% முதல் 180% வரை. தடிமனான கோடுகளும் திரையின் விளிம்பைத் தொடாமல் இருக்கும்.</string>
+    <string name="setting_wear_volume_thickness_description">ஒலியளவு பட்டைக் கோட்டின் தடிமன், இயல்புநிலையின் 50%% முதல் 180%% வரை. தடிமனான கோடுகளும் திரையின் விளிம்பைத் தொடாமல் இருக்கும்.</string>
     <string name="setting_wear_volume_haptics">ஒலியளவில் கிரீட அதிர்வு</string>
     <string name="setting_wear_queue_dim_played">இயக்கிய பாடல்களை மங்கச் செய்</string>
     <string name="setting_wear_queue_dim_played_description">ஏற்கெனவே இயக்கிய பாடல்களை மங்கச் செய்து, வரவிருப்பவை தனித்துத் தெரியச் செய்யும்.</string>

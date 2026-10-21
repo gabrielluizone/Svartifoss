@@ -19,6 +19,8 @@
     <string name="setting_app_icon_style">Launcher icon</string>
     <string name="app_icon_style_solid">Solid colour</string>
     <string name="app_icon_style_gradient">Gradient</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Charcoal Feather</string>
 
     <!-- Developer mode -->
     <string name="category_developer">Developer</string>
@@ -55,6 +57,9 @@
     <string name="dev_copy_debug_info_done">Debug info copied</string>
     <string name="dev_open_update_screen">Open update screen</string>
     <string name="dev_open_update_screen_description">Preview the Updates screen (cover banner, release notes layout) without waiting for a real release</string>
+    <string name="dev_show_rating_card">Show the rating card</string>
+    <string name="dev_show_rating_card_description">Asks Google Play for its in-app review card right now, ignoring the usual limits. It only appears in a build installed from Google Play (the internal testing track counts)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play has no review card for this build. Install it from Google Play, internal testing included, and try again</string>
     <string name="dev_watch_layout_bounds">Show watch layout bounds</string>
     <string name="dev_watch_layout_bounds_description">Outline visible player elements and touch regions on the watch. Diagnostic overlay only.</string>
     <string name="dev_watch_player_info">Show watch player info</string>
@@ -2135,7 +2140,7 @@
         <item>Square</item>
         <item>Squircle</item>
         <item>Circle</item>
-        <item>Samsung style</item>
+        <item>Superellipse</item>
     </string-array>
 
     <!-- Shared by wear_title_text_case and wear_artist_text_case - one vocabulary, same as
@@ -2603,6 +2608,8 @@
     <string-array name="app_icon_style_entries">
         <item>@string/app_icon_style_solid</item>
         <item>@string/app_icon_style_gradient</item>
+        <item>@string/app_icon_style_cream</item>
+        <item>@string/app_icon_style_feather</item>
     </string-array>
 
     <string-array name="auto_start_modes_keys">
@@ -2677,17 +2684,15 @@
     <string name="drawer_about_summary">Svartifoss lets you control music on your phone from your Wear OS watch — with a fully customizable remote tailored to your device.</string>
     <string name="drawer_name_heading">The name</string>
     <string name="drawer_name_meaning">Svartifoss means “Black Falls” in Icelandic — named after the waterfall in Vatnajökull National Park, where dark basalt columns frame a narrow cascade. Like water over stone, music flows through the app.</string>
-    <string name="drawer_sync_heading">Sync</string>
-    <string name="drawer_sync_summary">Watch settings are configured here on the phone and synced automatically to your paired watch.</string>
     <string name="drawer_support_heading">Support</string>
     <string name="download_album_art">Download cover art</string>
     <string name="album_art_saved">Cover art saved to gallery</string>
     <string name="album_art_save_error">Failed to save cover art</string>
 
-    <string name="action_play_liked_songs">Play liked songs (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Play liked songs (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Play liked tracks (SoundCloud)</string>
-    <string name="action_play_deezer_flow" translatable="false">Deezer Flow</string>
+    <string name="action_play_liked_songs">Liked Music</string>
+    <string name="action_play_spotify_liked_songs">Liked Songs</string>
+    <string name="action_play_soundcloud_likes">Liked tracks</string>
+    <string name="action_play_deezer_flow" translatable="false">Flow</string>
     <string name="action_my_playlists">Streaming shortcuts</string>
     <string name="action_show_streaming_library">Show all saved shortcuts</string>
     <string name="picker_section_apps">Apps &amp; automation</string>
@@ -2837,7 +2842,7 @@
     <string name="playlist_shortcut_deleted">%1$s deleted</string>
     <string name="playlist_shortcut_undo">Undo</string>
 
-    <string name="action_play_liked_songs_shuffled">Play liked songs, shuffled (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Liked Music, shuffled</string>
     <string name="action_search_history">Search history</string>
     <string name="search_history_empty">No recent searches yet</string>
 
@@ -3030,8 +3035,8 @@
     <string name="setting_youtube_api_key_configured">YouTube key configured; stored only on this phone</string>
     <string name="setting_youtube_api_key_bundled">YouTube key included in this app; users do not need to add one</string>
     <string name="setting_youtube_api_key_dialog_title">Paste your YouTube Data API v3 key</string>
-    <string name="setting_youtube_api_key_description">When a player publishes no artwork, Svartifoss searches YouTube for an exact channel and title match and uses the video thumbnail. The key stays on the phone and is not sent to the watch or included in Svartifoss configuration backups.</string>
-    <string name="setting_online_artwork_description">Let the watch face show a picture looked up online \u2014 the performing artist, or an album cover for a player that publishes none. Your phone does the lookup in Deezer\'s public catalogue and caches the result; only the track and artist names are sent. It is also what finds a cover for a track whose app publishes none at all, such as a YouTube video, and only when the result matches. Off, only the player\'s own artwork is used.</string>
+    <string name="setting_youtube_api_key_description">When a player publishes no artwork, Svartifoss searches YouTube through Google\'s YouTube Data API, sending the channel and title together with this key, and uses the thumbnail of a video that matches exactly. Leave it empty to use the key included in this app. A key you paste stays on this phone: it is not sent to the watch or included in Svartifoss configuration backups.</string>
+    <string name="setting_online_artwork_description">Let the watch face show a picture looked up online \u2014 the performing artist, or an album cover for a player that publishes none. Your phone does the lookup and caches the result; only the track and artist names are sent, to Deezer\'s public catalogue. It is also what finds a cover for a track whose app publishes none at all, such as a YouTube video: the phone asks YouTube for that video\'s own thumbnail (sending the channel and title to Google\'s YouTube Data API), then Deezer for an album cover, and uses a result only when it matches. Off, only the player\'s own artwork is used.</string>
 
     <string-array name="wear_text_block_align_entries">
         <item>Follow face</item>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Volume thickness</string>
-    <string name="setting_wear_volume_thickness_description">Weight of the volume bar\'s stroke, from 50% to 180% of the default. Thicker strokes still keep clear of the bezel.</string>
+    <string name="setting_wear_volume_thickness_description">Weight of the volume bar\'s stroke, from 50%% to 180%% of the default. Thicker strokes still keep clear of the bezel.</string>
     <string name="setting_wear_volume_haptics">Crown vibration on volume</string>
     <string name="setting_wear_progress_weight">Ring thickness</string>
     <string name="setting_wear_queue_dim_played">Dim played tracks</string>

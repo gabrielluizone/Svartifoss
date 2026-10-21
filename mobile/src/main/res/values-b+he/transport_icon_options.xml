@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">סמל ניגון</string>
+    <string name="setting_wear_pause_icon">סמל השהיה</string>
+    <string name="setting_wear_transport_icon_description">הסימן בפקד הניגון וההשהיה. „לפי פני השעון” שומר על הסימן מהעיצוב המקורי של התצוגה.</string>
+    <string name="transport_icon_follow">לפי פני השעון</string>
+    <string name="transport_icon_a">מעוגל</string>
+    <string name="transport_icon_b">מתאר מעוגל</string>
+    <string name="transport_icon_c">מתאר חד</string>
+    <string name="transport_icon_d">חד</string>
+    <string name="transport_icon_e">מתאר מעוגל עבה</string>
+</resources>

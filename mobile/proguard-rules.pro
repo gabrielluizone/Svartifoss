@@ -1,58 +1,50 @@
-# Add project specific ProGuard rules here.
-# By default, the flags in this file are appended to flags specified
-# in D:\Android\android-sdk-windows/tools/proguard/proguard-android.txt
-# You can edit the include path and order by changing the proguardFiles
-# directive in build.gradle.
+# R8 rules for the phone app. build.gradle pairs this file with proguard-android-optimize.txt, so a
+# release build is shrunk, optimized *and* obfuscated, and every rule below is a narrow exception
+# for a place where a name is data.
 #
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Neither -dontobfuscate nor -dontoptimize belongs here, and neither does plain
+# proguard-android.txt (which carries -dontoptimize). Play Console grades each bundle on how much
+# of its code R8 was allowed to optimize, rename and remove - the percentages R8 writes into the
+# bundle's BUNDLE-METADATA/com.android.tools/r8.json - and flags any category under 25%. 4.2
+# shipped with both switches off and was graded 0% optimization and 0% obfuscation.
+# R8ConfigurationContractTest pins that, and a broad -keep added to silence some release-only
+# crash costs the same grade, so keep each rule as narrow as the name it protects.
 
-# Add any project specific keep options here:
-
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
-
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
-
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
-
-# Do not obfuscate the code
--dontobfuscate
--optimizations !code/simplification/arithmetic,!field/*,!class/merging/*,!code/allocation/variable
-
-# Keep exceptions, line numbers and annotations for better crash reporting
--keepattributes *Annotation*
+# Crashlytics and Play retrace reports with the mapping each release build uploads, which needs
+# the line table and the source file attribute.
 -keepattributes SourceFile,LineNumberTable
--keep public class * extends java.lang.Exception
 
--keepclassmembers public class * extends com.svartifoss.snfell.actions.PhoneAction {
-   public <init>(android.content.Context, android.os.PersistableBundle);
+# Obfuscated classes all move into one package, shortening every type reference in the DEX.
+-repackageclasses
+
+# Exception type names stay readable without a mapping: they are the issue titles, the start of
+# every toString() written to the logs, and what log filters match on. Unused ones may still go.
+-keepnames class * extends java.lang.Throwable
+
+# Actions are stored by class name. Bundlable.writeToBundle puts getCanonicalName() into every
+# saved action - both button configs, the action list, every backup, and res/raw/default_config.json -
+# and PhoneAction.deserialize resolves it with Class.forName and the (Context, PersistableBundle)
+# constructor. The same name is the actionKey the watch receives and matches against
+# StandardActions. A renamed class would therefore silently drop every saved assignment of it and
+# every watch-side match, so each subclass keeps its exact name and that constructor - including
+# one that no code constructs any more, since a config written by an older build can still name it.
+-keep class * extends com.svartifoss.snfell.actions.PhoneAction {
+    public <init>(android.content.Context, android.os.PersistableBundle);
+}
+# The same contract for any other Bundlable (ButtonInfo is the one written to disk today), which
+# Bundlable.deserialize rebuilds through its one-argument constructor.
+-keep class * extends com.matejdro.wearutils.serialization.Bundlable {
+    public <init>(android.os.PersistableBundle);
 }
 
--keepclassmembers public class * extends com.matejdro.wearutils.serialization.Bundlable {
-   public <init>(android.os.PersistableBundle);
-}
-
-# protobuf-javalite ships no consumer rule of its own, and the `!field/*` term above is a
-# no-op under R8 (it only recognizes the coarse -dontoptimize/-optimizations toggle, not
-# ProGuard's fine-grained categories), so nothing was stopping R8 from removing a message
-# field it saw no live getter/setter for on this side of the wire - e.g. several MusicState
-# fields the phone only writes (positionAgeMs, albumArtPending, sourceIconTemplate) or only
-# reads on the watch. Those fields' Java declarations are gone from the release build, but the
-# schema table protoc baked into the class's static initializer still names all of them, so
-# the *first* time a message with a missing field is parsed or serialized, resolving that
-# table via reflection fails to find the field and throws for the whole message. This is what
-# leaves the watch stuck on "ERROR" in a release build - see wear/proguard-rules.pro for the
-# fuller writeup of the symptom. Keeping every declared field on every generated message class
-# is the standard fix Google's own protobuf-lite consumer rule would supply.
+# protobuf-javalite ships no consumer rule of its own, and a generated message's schema table -
+# baked into its static initializer by protoc - names every field it declares. The runtime resolves
+# that table by reflection the first time a message is parsed or serialized, so a field R8 removed
+# (because this side of the wire never reads or never writes it - e.g. the MusicState fields the
+# phone only writes, positionAgeMs, albumArtPending, sourceIconTemplate) or renamed makes the lookup
+# fail and the whole message throw. That is the release-only bug that left the watch stuck on
+# "ERROR" - see wear/proguard-rules.pro. Keeping every declared field, under its own name, on every
+# generated message class is the rule Google's own protobuf-lite consumer rules would supply.
 -keepclassmembers class * extends com.google.protobuf.GeneratedMessageLite {
     <fields>;
 }

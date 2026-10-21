@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The watch's launcher icon colours, as the phone's launcher-icon picker draws them. The
+         originals live in the wear module (wear/src/play/res/values/colors.xml for the gradient,
+         wear/src/main/res/values/colors.xml for the flat background, and the mark's own colour in
+         the shared launcher foreground), which this module cannot see, so the picker needs its own
+         copy. AppIconStyleContractTest keeps every value below equal to its original, so a change
+         to the watch's icon that forgets the preview fails a test instead of drifting.
+
+         The phone's own colours need no copy: the previews read the very resources the phone's
+         launcher icons use (lyra_accent, play_launcher_gradient_*, launcher_cream/charcoal). -->
+    <color name="launcher_preview_watch_solid">#DEDEDE</color>
+    <color name="launcher_preview_watch_gradient_start">#FCFCFC</color>
+    <color name="launcher_preview_watch_gradient_end">#646464</color>
+    <color name="launcher_preview_watch_mark">#202124</color>
+</resources>

@@ -110,6 +110,30 @@ class OnlineArtworkPolicyTest {
     }
 
     @Test
+    fun `a thumbnail from YouTube is kept for under thirty days and then looked up again`() {
+        val written = 1_000_000L
+        assertFalse(OnlineArtworkCache.youtubeHitExpired(written, written))
+        assertFalse(OnlineArtworkCache.youtubeHitExpired(
+                written, written + OnlineArtworkCache.YOUTUBE_HIT_TTL_MS - 1))
+        assertTrue(OnlineArtworkCache.youtubeHitExpired(
+                written, written + OnlineArtworkCache.YOUTUBE_HIT_TTL_MS))
+        // YouTube's API policies ask that such data be refreshed or deleted within 30 days; the
+        // margin below that is deliberate, since the check runs when the cache is used.
+        assertTrue(OnlineArtworkCache.YOUTUBE_HIT_TTL_MS < 30L * 24 * 60 * 60 * 1000)
+    }
+
+    @Test
+    fun `only a key made for a YouTube thumbnail is subject to that term`() {
+        val youtube = YouTubeThumbnailMatch.cacheKey("Channel", "Title")!!
+        assertTrue(OnlineArtworkCache.isYoutubeKey(youtube))
+        assertTrue(youtube.startsWith(YouTubeThumbnailMatch.KEY_PREFIX))
+        // A Deezer cover and an artist picture keep the cache's old rule: a hit never expires.
+        assertFalse(OnlineArtworkCache.isYoutubeKey("artist|Daft Punk"))
+        assertFalse(OnlineArtworkCache.isYoutubeKey(
+                OnlineArtworkFetcher.fallbackCacheKey("Channel", "Title")!!))
+    }
+
+    @Test
     fun `eviction drops the least recently written first`() {
         val entries = listOf(
                 OnlineArtworkCache.Eviction("c", 300),

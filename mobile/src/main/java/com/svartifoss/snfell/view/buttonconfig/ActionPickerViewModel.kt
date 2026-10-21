@@ -89,13 +89,29 @@ class ActionPickerViewModel @Inject constructor(
             screen.value = PickerScreen(layout, info, searching = false)
         } else {
             val results = ActionPickerLayout.searchRows(
-                    sections, { it.title }, query, leading = listOfNotNull(none))
+                    sections, ::searchKeyOf, query, leading = listOfNotNull(none))
             screen.value = PickerScreen(
                     PickerLayout(results, sectionStarts = emptyList(), sectionIds = emptyList()),
                     info,
                     searching = true)
         }
     }
+
+    /**
+     * What a search matches [action] on: its title, and for a streaming destination the service it
+     * plays from. The liked-songs actions no longer name their service - their cover already does -
+     * and typing "spotify" should still find Spotify's. Built once per action, since the service
+     * line is worked out from the saved library and is asked for on every keystroke.
+     */
+    private fun searchKeyOf(action: PhoneAction): String = searchKeys.getOrPut(action) {
+        listOfNotNull(
+                action.title,
+                action.streamingShortcut?.subtitle,
+                action.streamingCollection?.service?.name?.replace('_', ' ')
+        ).joinToString(" ")
+    }
+
+    private val searchKeys = java.util.IdentityHashMap<PhoneAction, String>()
 
     companion object {
         const val ARG_SHOW_NONE = "ShowNone"

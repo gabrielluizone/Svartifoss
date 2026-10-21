@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Icône de lecture</string>
+    <string name="setting_wear_pause_icon">Icône de pause</string>
+    <string name="setting_wear_transport_icon_description">Le symbole du contrôle lecture et pause. « Suivre le cadran » garde celui du dessin d\'origine de ce cadran.</string>
+    <string name="transport_icon_follow">Suivre le cadran</string>
+    <string name="transport_icon_a">Arrondi</string>
+    <string name="transport_icon_b">Contour arrondi</string>
+    <string name="transport_icon_c">Contour anguleux</string>
+    <string name="transport_icon_d">Anguleux</string>
+    <string name="transport_icon_e">Contour arrondi épais</string>
+</resources>

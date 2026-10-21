@@ -19,5 +19,8 @@ data class CustomListWithBitmaps(
 
 data class CustomListItemWithIcon(
         val listItem: CustomList.ListEntry,
-        val icon: Bitmap?
+        val icon: Bitmap?,
+        /** For a streaming shortcut: the status-bar glyph of the app it opens in, sent by the
+         *  phone beside the cover (see `CommPaths.ASSET_APP_MARK_PREFIX`). */
+        val mark: Bitmap? = null
 )

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Дебелина на лентата за звук</string>
-    <string name="setting_wear_volume_thickness_description">Дебелина на линията на лентата за звук, от 50% до 180% от стандартната. По-дебелите линии пак остават далеч от ръба.</string>
+    <string name="setting_wear_volume_thickness_description">Дебелина на линията на лентата за звук, от 50%% до 180%% от стандартната. По-дебелите линии пак остават далеч от ръба.</string>
     <string name="setting_wear_volume_haptics">Вибрация на короната при звук</string>
     <string name="setting_wear_queue_dim_played">Затъмняване на изсвирените песни</string>
     <string name="setting_wear_queue_dim_played_description">Затъмнява вече изсвирените записи, за да изпъкнат предстоящите.</string>

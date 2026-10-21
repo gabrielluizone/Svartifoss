@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Grosimea barei de volum</string>
-    <string name="setting_wear_volume_thickness_description">Grosimea liniei barei de volum, de la 50% la 180% din valoarea implicită. Și liniile mai groase rămân departe de margine.</string>
+    <string name="setting_wear_volume_thickness_description">Grosimea liniei barei de volum, de la 50%% la 180%% din valoarea implicită. Și liniile mai groase rămân departe de margine.</string>
     <string name="setting_wear_volume_haptics">Vibrația coroanei la volum</string>
     <string name="setting_wear_queue_dim_played">Estompează piesele redate</string>
     <string name="setting_wear_queue_dim_played_description">Estompează intrările deja redate, ca să iasă în evidență cele care urmează.</string>

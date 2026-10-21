@@ -741,6 +741,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -752,8 +754,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Цвят на винаги включения дисплей</string>
     <string-array name="wear_aod_color_entries">
@@ -1641,7 +1641,7 @@
         <item>Квадрат</item>
         <item>Закръглен квадрат</item>
         <item>Кръг</item>
-        <item>Стил Samsung</item>
+        <item>Суперелипса</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Използване на шрифта навсякъде</string>
@@ -2020,16 +2020,14 @@
     <string name="drawer_about_summary">Svartifoss ви позволява да управлявате музиката на телефона си от часовника Wear OS — с напълно персонализируемо дистанционно управление, съобразено с устройството ви.</string>
     <string name="drawer_name_heading">Името</string>
     <string name="drawer_name_meaning">Svartifoss означава „Черният водопад“ на исландски — името идва от водопада в Национален парк Vatnajökull, където тъмни базалтови колони обграждат тесен водопад. Както водата тече по камъка, музиката тече през приложението.</string>
-    <string name="drawer_sync_heading">Синхронизиране</string>
-    <string name="drawer_sync_summary">Настройките на часовника се конфигурират тук на телефона и се синхронизират автоматично със сдвоения часовник.</string>
     <string name="drawer_support_heading">Поддръжка</string>
     <string name="download_album_art">Изтегляне на обложката</string>
     <string name="album_art_saved">Обложката е запазена в галерията</string>
     <string name="album_art_save_error">Неуспешно запазване на обложката</string>
 
-    <string name="action_play_liked_songs">Възпроизвеждане на харесани песни (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Възпроизвеждане на харесани песни (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Възпроизвеждане на харесани песни (SoundCloud)</string>
+    <string name="action_play_liked_songs">Харесани песни</string>
+    <string name="action_play_spotify_liked_songs">Харесани песни</string>
+    <string name="action_play_soundcloud_likes">Харесани песни</string>
     <string name="action_my_playlists">Преки пътища за стрийминг</string>
     <string name="action_show_streaming_library">Показване на всички запазени преки пътища</string>
     <string name="picker_section_apps">Приложения &amp; автоматизация</string>
@@ -2162,7 +2160,7 @@
     <string name="playlist_shortcut_deleted">%1$s е изтрито</string>
     <string name="playlist_shortcut_undo">Отмяна</string>
 
-    <string name="action_play_liked_songs_shuffled">Разбъркано възпроизвеждане на харесани песни (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Харесани песни, разбъркано</string>
     <string name="action_search_history">История на търсенето</string>
     <string name="search_history_empty">Все още няма скорошни търсения</string>
 
@@ -2848,7 +2846,7 @@
     <string name="setting_wear_text_block_position">Позиция на текста</string>
     <string name="setting_wear_text_block_position_description">Мястото на текста на песента върху екрана. „Следвай изгледа” запазва позицията, за която е проектиран всеки изглед.</string>
     <string name="setting_online_artwork">Онлайн обложка</string>
-    <string name="setting_online_artwork_description">Позволете на циферблата да показва изображение, намерено онлайн \u2014 изпълнителя на песента или обложка на албум за плейър, който не предоставя такава. Телефонът търси в публичния каталог на Deezer и кешира резултата; изпращат се само имената на песента и изпълнителя и не се извършва търсене, освен ако даден изглед не е зададен към един от тези източници. Когато е изключено, се използва собствената обложка на плейъра.</string>
+    <string name="setting_online_artwork_description">Позволява на циферблата да показва изображение, намерено онлайн — изпълнителя или обложката на албум за плейър, който не предоставя такава. Телефонът извършва търсенето и запазва резултата в кеш; изпращат се само имената на песента и изпълнителя, до публичния каталог на Deezer. Така се намира и обложка за песен, чието приложение изобщо не публикува такава, например видео в YouTube: телефонът иска от YouTube миниатюрата на самото видео (като изпраща канала и заглавието към YouTube Data API на Google), след това от Deezer — обложка на албум, и използва резултат само когато съвпада. Когато е изключено, се използва само собствената обложка на плейъра.</string>
     <string name="setting_wear_shortcut_details">Пускане или разбъркване на часовника</string>
     <string name="setting_wear_shortcut_details_description">Изборът на запазена връзка на часовника – от списъка с преки пътища, Tile с преки пътища или менюто с действия – първо показва обложката ѝ с „Пускане“ и „Разбъркване“. Изключете, за да започва веднага. Бутоните и жестовете, зададени на една връзка, винаги я пускат веднага.</string>
     <string name="actions_quick_pin_add">Показване в бърз панел</string>
@@ -2946,4 +2944,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">Показани са приложения, които могат да отварят връзката, плюс инсталирани медийни плейъри.</string>
     <string name="streaming_route_automatic">Автоматично (открито приложение)</string>
+    <string name="action_symfonium_start">Стартиране на медия в Symfonium</string>
+    <string name="action_symfonium_start_named">Стартиране в Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Синхронизиране на доставчика на Symfonium</string>
+    <string name="app_icon_style_gradient">Градиент</string>
+    <string name="app_icon_style_solid">Плътен цвят</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Перо от въглен</string>
+    <string name="dev_show_rating_card">Показване на картата за оценка</string>
+    <string name="dev_show_rating_card_description">Моментално иска от Google Play вградената му карта за отзив, без да се съобразява с обичайните ограничения. Появява се само в версия, инсталирана от Google Play (вътрешното тестване също се брои)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play няма карта за отзив за тази версия. Инсталирайте я от Google Play, включително от вътрешното тестване, и опитайте отново</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Този плейър не е публикувал връзка за споделяне за тази песен</string>
+    <string name="setting_app_icon_style">Икона на приложението</string>
+    <string name="setting_youtube_api_key">Ключ за YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">Ключ за YouTube е включен в това приложение; не е нужно да добавяте свой</string>
+    <string name="setting_youtube_api_key_configured">Ключът за YouTube е настроен; пази се само на този телефон</string>
+    <string name="setting_youtube_api_key_description">Когато плейърът не публикува обложка, Svartifoss търси в YouTube чрез YouTube Data API на Google, като изпраща канала и заглавието заедно с този ключ, и използва миниатюрата на видео, което съвпада точно. Оставете празно, за да се ползва ключът, включен в приложението. Ключ, който поставите, остава на този телефон: не се изпраща към часовника и не се включва в резервните копия на настройките на Svartifoss.</string>
+    <string name="setting_youtube_api_key_dialog_title">Поставете вашия ключ за YouTube Data API v3</string>
+    <string name="setting_youtube_api_key_not_configured">По избор: не е настроен ключ за YouTube</string>
+    <string name="symfonium_media_album">Албум (по избор)</string>
+    <string name="symfonium_media_artist">Изпълнител (по избор)</string>
+    <string name="symfonium_media_id_optional">ID (по избор)</string>
+    <string name="symfonium_media_name">Име</string>
+    <string name="symfonium_media_type">Тип медия</string>
+    <string name="symfonium_provider_id">ID на доставчика</string>
+    <string name="symfonium_provider_id_description">ID на доставчика ще намерите в екрана „Управление на медийни доставчици“ в Symfonium.</string>
+    <string name="symfonium_queue_mode">Режим на опашката</string>
+    <string name="symfonium_resume">Продължаване, когато е възможно</string>
+    <string name="symfonium_shuffle">Разбъркване на колекциите</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Песен</item>
+        <item>Плейлист</item>
+        <item>Албум</item>
+        <item>Изпълнител</item>
+        <item>Жанр</item>
+        <item>Микс от песни</item>
+        <item>Микс от албуми</item>
+        <item>Интернет радио</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Старт сега</item>
+        <item>Пускане следващо</item>
+        <item>Добавяне към опашката</item>
+    </string-array>
 </resources>

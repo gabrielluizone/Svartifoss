@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Толщина полосы громкости</string>
-    <string name="setting_wear_volume_thickness_description">Толщина линии полосы громкости, от 50% до 180% от стандартной. Даже толстые линии не заходят на край экрана.</string>
+    <string name="setting_wear_volume_thickness_description">Толщина линии полосы громкости, от 50%% до 180%% от стандартной. Даже толстые линии не заходят на край экрана.</string>
     <string name="setting_wear_volume_haptics">Вибрация колёсика при громкости</string>
     <string name="setting_wear_queue_dim_played">Затемнять прослушанные треки</string>
     <string name="setting_wear_queue_dim_played_description">Приглушает уже сыгранные треки, чтобы выделить предстоящие.</string>

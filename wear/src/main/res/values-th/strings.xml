@@ -229,4 +229,6 @@
     <string name="quick_sleep_description">ตั้งเวลาปิดเครื่อง เหลือเวลา %1$d นาที แตะเพื่อเปลี่ยน</string>
     <string name="quick_sleep_off_description">ปิดตัวจับเวลาสลีปแล้ว แตะเพื่อตั้งค่า</string>
     <string name="quick_lyric_plain">เนื้อเพลงนี้ไม่มีการกำหนดเวลา แตะเพื่ออ่าน</string>
+    <string name="playback_live">สด</string>
+    <string name="queue_add_shortcut">เพิ่มแทร็กนี้ในทางลัด</string>
 </resources>

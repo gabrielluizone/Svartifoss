@@ -663,6 +663,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -674,8 +676,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Altijd-aan-kleur</string>
     <string-array name="wear_aod_color_entries">
@@ -1367,16 +1367,14 @@
     <string name="drawer_about_summary">Svartifoss laat je muziek op je telefoon bedienen vanaf je Wear OS-horloge — met een volledig aanpasbare afstandsbediening op maat van je apparaat.</string>
     <string name="drawer_name_heading">De naam</string>
     <string name="drawer_name_meaning">Svartifoss betekent \"Zwarte Waterval\" in het IJslands — genoemd naar de waterval in Vatnajökull National Park, waar donkere basaltzuilen een smalle waterval omlijsten. Zoals water over steen, stroomt muziek door de app.</string>
-    <string name="drawer_sync_heading">Synchronisatie</string>
-    <string name="drawer_sync_summary">Horloge-instellingen worden hier op de telefoon geconfigureerd en automatisch gesynchroniseerd met je gekoppelde horloge.</string>
     <string name="drawer_support_heading">Ondersteuning</string>
     <string name="download_album_art">Hoes downloaden</string>
     <string name="album_art_saved">Hoes opgeslagen in galerij</string>
     <string name="album_art_save_error">Kon hoes niet opslaan</string>
 
-    <string name="action_play_liked_songs">Leuk gevonden nummers afspelen (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Leuk gevonden nummers afspelen (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Leuk gevonden nummers afspelen (SoundCloud)</string>
+    <string name="action_play_liked_songs">Leuk gevonden nummers</string>
+    <string name="action_play_spotify_liked_songs">Leuk gevonden nummers</string>
+    <string name="action_play_soundcloud_likes">Leuk gevonden nummers</string>
     <string name="action_my_playlists">Streamingsnelkoppelingen</string>
     <string name="action_show_streaming_library">Alle opgeslagen snelkoppelingen tonen</string>
     <string name="picker_section_apps">Apps &amp; automatisering</string>
@@ -1494,7 +1492,7 @@
     <string name="playlist_shortcut_deleted">%1$s verwijderd</string>
     <string name="playlist_shortcut_undo">Ongedaan maken</string>
 
-    <string name="action_play_liked_songs_shuffled">Leuk gevonden nummers afspelen, willekeurig (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Leuk gevonden nummers, willekeurig</string>
     <string name="action_search_history">Zoekgeschiedenis</string>
     <string name="search_history_empty">Nog geen recente zoekopdrachten</string>
 
@@ -2054,7 +2052,7 @@
         <item>Vierkant</item>
         <item>Squircle</item>
         <item>Cirkel</item>
-        <item>Samsung-stijl</item>
+        <item>Superellips</item>
     </string-array>
     <string-array name="theme_entries">
         <item>@string/theme_light</item>
@@ -2831,7 +2829,7 @@
     <string name="setting_wear_text_block_position">Tekstpositie</string>
     <string name="setting_wear_text_block_position_description">Waar de nummertekst op het scherm staat. Wijzerplaat volgen behoudt de positie waarvoor elke wijzerplaat is ontworpen.</string>
     <string name="setting_online_artwork">Online hoesafbeelding</string>
-    <string name="setting_online_artwork_description">Laat de wijzerplaat een online opgezochte afbeelding tonen \u2014 de uitvoerende artiest of een albumhoes wanneer een speler er geen publiceert. Je telefoon zoekt in de openbare catalogus van Deezer en bewaart het resultaat in de cache; alleen de naam van het nummer en de artiest worden verzonden en er wordt niets opgezocht tenzij een wijzerplaat op een van die bronnen is ingesteld. Uitgeschakeld wordt de eigen hoesafbeelding van de speler gebruikt.</string>
+    <string name="setting_online_artwork_description">Laat de wijzerplaat een online opgezochte afbeelding tonen — de uitvoerende artiest of een albumhoes wanneer een speler er geen publiceert. Je telefoon zoekt het op en bewaart het resultaat in de cache; alleen de naam van het nummer en de artiest worden verzonden, naar de openbare catalogus van Deezer. Zo wordt ook een hoes gevonden voor een nummer waarvan de app er helemaal geen publiceert, zoals een YouTube-video: de telefoon vraagt YouTube om de eigen miniatuur van die video (kanaal en titel gaan naar de YouTube Data API van Google) en daarna Deezer om een albumhoes, en gebruikt een resultaat alleen als het overeenkomt. Uitgeschakeld wordt alleen de eigen hoesafbeelding van de speler gebruikt.</string>
     <string name="setting_wear_shortcut_details">Afspelen of shuffle op het horloge</string>
     <string name="setting_wear_shortcut_details_description">Als je op het horloge een opgeslagen link kiest, uit de lijst met snelkoppelingen, de Snelkoppelingen-Tile of het actiemenu, zie je eerst de cover met Afspelen en Shuffle. Zet uit om meteen te starten. Knoppen en gebaren die aan één link zijn toegewezen, starten die altijd meteen.</string>
     <string name="actions_quick_pin_add">Toon in snelpaneel</string>
@@ -2929,4 +2927,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">Apps die de link kunnen openen, plus geïnstalleerde mediaspelers, worden getoond.</string>
     <string name="streaming_route_automatic">Automatisch (gedetecteerde app)</string>
+    <string name="action_symfonium_start">Media starten in Symfonium</string>
+    <string name="action_symfonium_start_named">Starten in Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Symfonium-provider synchroniseren</string>
+    <string name="app_icon_style_gradient">Kleurverloop</string>
+    <string name="app_icon_style_solid">Effen kleur</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Houtskoolveer</string>
+    <string name="dev_show_rating_card">Beoordelingskaart tonen</string>
+    <string name="dev_show_rating_card_description">Vraagt Google Play meteen om de ingebouwde beoordelingskaart en negeert de gebruikelijke limieten. Hij verschijnt alleen in een versie die via Google Play is geïnstalleerd (de interne test telt mee)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play heeft geen beoordelingskaart voor deze versie. Installeer hem via Google Play, interne test inbegrepen, en probeer het opnieuw</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Deze speler heeft geen deelbare link voor dit nummer gepubliceerd</string>
+    <string name="setting_app_icon_style">App-pictogram</string>
+    <string name="setting_youtube_api_key">YouTube Data API-sleutel</string>
+    <string name="setting_youtube_api_key_bundled">YouTube-sleutel zit in deze app; je hoeft er geen toe te voegen</string>
+    <string name="setting_youtube_api_key_configured">YouTube-sleutel ingesteld; alleen op deze telefoon opgeslagen</string>
+    <string name="setting_youtube_api_key_dialog_title">Plak je YouTube Data API v3-sleutel</string>
+    <string name="setting_youtube_api_key_not_configured">Optioneel: geen YouTube-sleutel ingesteld</string>
+    <string name="symfonium_media_album">Album (optioneel)</string>
+    <string name="symfonium_media_artist">Artiest (optioneel)</string>
+    <string name="symfonium_media_id_optional">ID (optioneel)</string>
+    <string name="symfonium_media_name">Naam</string>
+    <string name="symfonium_media_type">Mediatype</string>
+    <string name="symfonium_provider_id">Provider-ID</string>
+    <string name="symfonium_provider_id_description">Je vindt de provider-ID in het scherm ‘Mediaproviders beheren’ van Symfonium.</string>
+    <string name="symfonium_queue_mode">Wachtrijmodus</string>
+    <string name="symfonium_resume">Hervatten wanneer mogelijk</string>
+    <string name="symfonium_shuffle">Collecties shufflen</string>
+    <string name="setting_youtube_api_key_description">Als een speler geen hoes publiceert, zoekt Svartifoss op YouTube via de YouTube Data API van Google, waarbij kanaal en titel samen met deze sleutel worden verzonden, en gebruikt de miniatuur van een video die exact overeenkomt. Laat leeg om de sleutel in deze app te gebruiken. Een sleutel die je plakt blijft op deze telefoon: hij wordt niet naar het horloge gestuurd en niet opgenomen in configuratieback-ups van Svartifoss.</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Nummer</item>
+        <item>Afspeellijst</item>
+        <item>Album</item>
+        <item>Artiest</item>
+        <item>Genre</item>
+        <item>Nummermix</item>
+        <item>Albummix</item>
+        <item>Internetradio</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Nu starten</item>
+        <item>Hierna afspelen</item>
+        <item>Toevoegen aan wachtrij</item>
+    </string-array>
 </resources>

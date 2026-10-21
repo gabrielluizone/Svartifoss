@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">سُمك شريط الصوت</string>
-    <string name="setting_wear_volume_thickness_description">سُمك خط شريط الصوت، من 50% إلى 180% من الافتراضي. تبقى الخطوط الأسمك بعيدة عن حافة الشاشة.</string>
+    <string name="setting_wear_volume_thickness_description">سُمك خط شريط الصوت، من 50%% إلى 180%% من الافتراضي. تبقى الخطوط الأسمك بعيدة عن حافة الشاشة.</string>
     <string name="setting_wear_volume_haptics">اهتزاز التاج عند ضبط الصوت</string>
     <string name="setting_wear_queue_dim_played">تعتيم المقاطع التي تم تشغيلها</string>
     <string name="setting_wear_queue_dim_played_description">يُخفت المقاطع التي سبق تشغيلها لتبرز المقاطع القادمة.</string>

@@ -745,6 +745,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -756,8 +758,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Kolor zawsze włączonego ekranu</string>
     <string-array name="wear_aod_color_entries">
@@ -1645,7 +1645,7 @@
         <item>Kwadrat</item>
         <item>Superelipsa</item>
         <item>Koło</item>
-        <item>Styl Samsung</item>
+        <item>Gładka superelipsa</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Używaj fontu wszędzie</string>
@@ -2024,16 +2024,14 @@
     <string name="drawer_about_summary">Svartifoss pozwala sterować muzyką w telefonie z zegarka Wear OS — za pomocą w pełni konfigurowalnego pilota dopasowanego do urządzenia.</string>
     <string name="drawer_name_heading">Nazwa</string>
     <string name="drawer_name_meaning">Svartifoss po islandzku znaczy „Czarny Wodospad” — nazwa pochodzi od wodospadu w Parku Narodowym Vatnajökull, gdzie ciemne kolumny bazaltowe otaczają wąską kaskadę. Jak woda po kamieniu, muzyka przepływa przez aplikację.</string>
-    <string name="drawer_sync_heading">Synchronizacja</string>
-    <string name="drawer_sync_summary">Ustawienia zegarka konfiguruje się tutaj w telefonie i są automatycznie synchronizowane ze sparowanym zegarkiem.</string>
     <string name="drawer_support_heading">Wsparcie</string>
     <string name="download_album_art">Pobierz okładkę</string>
     <string name="album_art_saved">Okładka zapisana w galerii</string>
     <string name="album_art_save_error">Nie udało się zapisać okładki</string>
 
-    <string name="action_play_liked_songs">Odtwórz polubione utwory (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Odtwórz polubione utwory (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Odtwórz polubione utwory (SoundCloud)</string>
+    <string name="action_play_liked_songs">Polubione utwory</string>
+    <string name="action_play_spotify_liked_songs">Polubione utwory</string>
+    <string name="action_play_soundcloud_likes">Polubione utwory</string>
     <string name="action_my_playlists">Skróty strumieniowe</string>
     <string name="action_show_streaming_library">Pokaż wszystkie zapisane skróty</string>
     <string name="picker_section_apps">Aplikacje &amp; automatyzacja</string>
@@ -2172,7 +2170,7 @@
     <string name="playlist_shortcut_deleted">Usunięto %1$s</string>
     <string name="playlist_shortcut_undo">Cofnij</string>
 
-    <string name="action_play_liked_songs_shuffled">Odtwórz polubione utwory losowo (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Polubione utwory, losowo</string>
     <string name="action_search_history">Historia wyszukiwania</string>
     <string name="search_history_empty">Brak ostatnich wyszukiwań</string>
 
@@ -2858,7 +2856,7 @@
     <string name="setting_wear_text_block_position">Pozycja tekstu</string>
     <string name="setting_wear_text_block_position_description">Miejsce tekstu utworu na ekranie. Opcja „Zgodnie z tarczą” zachowuje pozycję zaprojektowaną dla każdej tarczy.</string>
     <string name="setting_online_artwork">Grafika online</string>
-    <string name="setting_online_artwork_description">Pozwól tarczy zegarka wyświetlać obraz znaleziony online \u2014 wykonawcę utworu albo okładkę albumu dla odtwarzacza, który jej nie udostępnia. Telefon wyszukuje obraz w publicznym katalogu Deezer i zapisuje wynik w pamięci podręcznej; wysyłane są tylko nazwy utworu i wykonawcy, a wyszukiwanie odbywa się wyłącznie wtedy, gdy tarcza korzysta z jednego z tych źródeł. Gdy opcja jest wyłączona, używana jest grafika udostępniana przez odtwarzacz.</string>
+    <string name="setting_online_artwork_description">Pozwól tarczy zegarka wyświetlać obraz znaleziony online — wykonawcę utworu albo okładkę albumu dla odtwarzacza, który jej nie udostępnia. Telefon wyszukuje obraz i zapisuje wynik w pamięci podręcznej; wysyłane są tylko nazwy utworu i wykonawcy, do publicznego katalogu Deezer. Dzięki temu znajdzie się też okładka dla utworu, którego aplikacja nie udostępnia żadnej, na przykład filmu z YouTube: telefon prosi YouTube o miniaturę tego filmu (wysyłając kanał i tytuł do YouTube Data API Google), a potem Deezer o okładkę albumu, i używa wyniku tylko wtedy, gdy pasuje. Gdy opcja jest wyłączona, używana jest wyłącznie grafika udostępniana przez odtwarzacz.</string>
     <string name="setting_wear_shortcut_details">Odtwarzaj lub losowo na zegarku</string>
     <string name="setting_wear_shortcut_details_description">Wybranie zapisanego linku na zegarku – z listy skrótów, kafelka Skróty lub menu akcji – najpierw pokazuje jego okładkę z przyciskami Odtwórz i Losowo. Wyłącz, aby od razu go uruchamiać. Przyciski i gesty przypisane do jednego linku zawsze uruchamiają go od razu.</string>
     <string name="actions_quick_pin_add">Pokaż w szybkim panelu</string>
@@ -2956,4 +2954,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">Wyświetlane są aplikacje, które mogą otworzyć łącze, a także zainstalowane odtwarzacze multimedialne.</string>
     <string name="streaming_route_automatic">Automatic (wykryta aplikacja)</string>
+    <string name="action_symfonium_start">Uruchom multimedia w Symfonium</string>
+    <string name="action_symfonium_start_named">Uruchom w Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Synchronizuj dostawcę Symfonium</string>
+    <string name="app_icon_style_gradient">Gradient</string>
+    <string name="app_icon_style_solid">Jednolity kolor</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Węglowe pióro</string>
+    <string name="dev_show_rating_card">Pokaż kartę oceny</string>
+    <string name="dev_show_rating_card_description">Od razu prosi Google Play o wbudowaną kartę opinii, pomijając zwykłe limity. Pojawia się tylko w wersji zainstalowanej z Google Play (test wewnętrzny też się liczy)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play nie ma karty opinii dla tej wersji. Zainstaluj ją z Google Play, także z testu wewnętrznego, i spróbuj ponownie</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Ten odtwarzacz nie udostępnił linku do udostępniania dla tego utworu</string>
+    <string name="setting_app_icon_style">Ikona aplikacji</string>
+    <string name="setting_youtube_api_key">Klucz API YouTube Data</string>
+    <string name="setting_youtube_api_key_bundled">Klucz YouTube jest dołączony do tej aplikacji; nie trzeba dodawać własnego</string>
+    <string name="setting_youtube_api_key_configured">Klucz YouTube skonfigurowany; zapisany tylko na tym telefonie</string>
+    <string name="setting_youtube_api_key_dialog_title">Wklej swój klucz YouTube Data API v3</string>
+    <string name="setting_youtube_api_key_not_configured">Opcjonalnie: brak skonfigurowanego klucza YouTube</string>
+    <string name="symfonium_media_album">Album (opcjonalnie)</string>
+    <string name="symfonium_media_artist">Wykonawca (opcjonalnie)</string>
+    <string name="symfonium_media_id_optional">ID (opcjonalnie)</string>
+    <string name="symfonium_media_name">Nazwa</string>
+    <string name="symfonium_media_type">Typ multimediów</string>
+    <string name="symfonium_provider_id">ID dostawcy</string>
+    <string name="symfonium_provider_id_description">ID dostawcy znajdziesz w Symfonium na ekranie „Zarządzaj dostawcami multimediów”.</string>
+    <string name="symfonium_queue_mode">Tryb kolejki</string>
+    <string name="symfonium_resume">Wznów, gdy to możliwe</string>
+    <string name="symfonium_shuffle">Losowa kolejność kolekcji</string>
+    <string name="setting_youtube_api_key_description">Gdy odtwarzacz nie udostępnia okładki, Svartifoss wyszukuje w YouTube przez interfejs YouTube Data API Google, wysyłając kanał i tytuł wraz z tym kluczem, i używa miniatury filmu, który dokładnie pasuje. Zostaw puste, aby użyć klucza dołączonego do tej aplikacji. Wklejony klucz zostaje na tym telefonie: nie jest wysyłany do zegarka ani dołączany do kopii zapasowych konfiguracji Svartifoss.</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Utwór</item>
+        <item>Playlista</item>
+        <item>Album</item>
+        <item>Wykonawca</item>
+        <item>Gatunek</item>
+        <item>Miks utworów</item>
+        <item>Miks albumów</item>
+        <item>Radio internetowe</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Zacznij teraz</item>
+        <item>Odtwórz jako następny</item>
+        <item>Dodaj do kolejki</item>
+    </string-array>
 </resources>

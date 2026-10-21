@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Pictogramă de redare</string>
+    <string name="setting_wear_pause_icon">Pictogramă de pauză</string>
+    <string name="setting_wear_transport_icon_description">Simbolul butonului de redare și pauză. „Urmează fața” păstrează simbolul din designul original al acestui cadran.</string>
+    <string name="transport_icon_follow">Urmează fața</string>
+    <string name="transport_icon_a">Rotunjit</string>
+    <string name="transport_icon_b">Contur rotunjit</string>
+    <string name="transport_icon_c">Contur ascuțit</string>
+    <string name="transport_icon_d">Ascuțit</string>
+    <string name="transport_icon_e">Contur rotunjit gros</string>
+</resources>

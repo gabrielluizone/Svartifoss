@@ -762,6 +762,8 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -773,8 +775,6 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">ऑलवेज़-ऑन रंग</string>
     <string-array name="wear_aod_color_entries">
@@ -1662,7 +1662,7 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
         <item>स्क्वायर</item>
         <item>स्क्वर्कल</item>
         <item>सर्कल</item>
-        <item>सैमसंग शैली</item>
+        <item>सुपरएलिप्स</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">हर जगह फ़ॉन्ट इस्तेमाल करें</string>
@@ -2043,16 +2043,14 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
     <string name="drawer_about_summary">Svartifoss आपको अपनी Wear OS घड़ी से फ़ोन का संगीत नियंत्रित करने देता है — आपके डिवाइस के अनुसार पूरी तरह कस्टमाइज़ होने वाले रिमोट के साथ।</string>
     <string name="drawer_name_heading">नाम</string>
     <string name="drawer_name_meaning">Svartifoss का अर्थ आइसलैंडिक में “Black Falls” है — इसका नाम Vatnajökull National Park के उस झरने पर रखा गया है जहाँ गहरे बेसाल्ट स्तंभ एक संकरी जलधारा को घेरे हैं। पत्थर पर बहते पानी की तरह संगीत ऐप के भीतर बहता है।</string>
-    <string name="drawer_sync_heading">सिंक</string>
-    <string name="drawer_sync_summary">वॉच सेटिंग यहाँ फ़ोन पर कॉन्फ़िगर की जाती हैं और आपकी पेयर की गई घड़ी से अपने-आप सिंक होती हैं।</string>
     <string name="drawer_support_heading">सहायता</string>
     <string name="download_album_art">कवर आर्ट डाउनलोड करें</string>
     <string name="album_art_saved">कवर आर्ट गैलरी में सहेजा गया</string>
     <string name="album_art_save_error">कवर आर्ट सहेजा नहीं जा सका</string>
 
-    <string name="action_play_liked_songs">पसंद किए गए गाने चलाएँ (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">पसंद किए गए गाने चलाएँ (Spotify)</string>
-    <string name="action_play_soundcloud_likes">पसंद किए गए ट्रैक चलाएँ (SoundCloud)</string>
+    <string name="action_play_liked_songs">पसंद किए गए गाने</string>
+    <string name="action_play_spotify_liked_songs">पसंद किए गए गाने</string>
+    <string name="action_play_soundcloud_likes">पसंद किए गए ट्रैक</string>
     <string name="action_my_playlists">स्ट्रीमिंग शॉर्टकट</string>
     <string name="action_show_streaming_library">सभी सहेजे गए शॉर्टकट दिखाएँ</string>
     <string name="picker_section_apps">ऐप और ऑटोमेशन</string>
@@ -2185,7 +2183,7 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
     <string name="playlist_shortcut_deleted">%1$s हटाया गया</string>
     <string name="playlist_shortcut_undo">वापस लें</string>
 
-    <string name="action_play_liked_songs_shuffled">पसंद किए गए गाने शफ़ल करके चलाएँ (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">पसंद किए गए गाने, शफ़ल</string>
     <string name="action_search_history">खोज इतिहास</string>
     <string name="search_history_empty">अभी कोई हाल की खोज नहीं</string>
 
@@ -2871,7 +2869,7 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
     <string name="setting_wear_text_block_position">टेक्स्ट स्थिति</string>
     <string name="setting_wear_text_block_position_description">स्क्रीन पर ट्रैक टेक्स्ट कहाँ बैठता है। Follow face हर फ़ेस के लिए डिज़ाइन की गई स्थिति को बनाए रखता है।</string>
     <string name="setting_online_artwork">ऑनलाइन आर्टवर्क</string>
-    <string name="setting_online_artwork_description">वॉच फ़ेस को ऑनलाइन खोजी गई तस्वीर दिखाने दें \u2014 बज रहा आर्टिस्ट, या ऐसे प्लेयर के लिए एल्बम कवर जो कोई तस्वीर प्रकाशित नहीं करता। आपका फ़ोन Deezer की सार्वजनिक कैटलॉग में खोज करता है और परिणाम कैश करता है; केवल ट्रैक और आर्टिस्ट के नाम भेजे जाते हैं, और तब तक कुछ नहीं खोजा जाता जब तक किसी फ़ेस को इन स्रोतों में से किसी एक पर सेट न किया गया हो। बंद होने पर प्लेयर का अपना आर्टवर्क इस्तेमाल होता है।</string>
+    <string name="setting_online_artwork_description">वॉच फ़ेस को ऑनलाइन खोजी गई तस्वीर दिखाने दें — प्रस्तुति दे रहा कलाकार, या ऐसे प्लेयर के लिए एल्बम कवर जो कोई कवर नहीं देता। आपका फ़ोन खोज करता है और नतीजा कैश में रखता है; केवल ट्रैक और कलाकार के नाम भेजे जाते हैं, Deezer के सार्वजनिक कैटलॉग को। यही उस ट्रैक के लिए भी कवर खोजता है जिसका ऐप कोई कवर प्रकाशित ही नहीं करता, जैसे YouTube वीडियो: फ़ोन YouTube से उस वीडियो का अपना थंबनेल माँगता है (चैनल और शीर्षक Google के YouTube Data API को भेजकर), फिर Deezer से एल्बम कवर, और नतीजा तभी इस्तेमाल करता है जब वह मेल खाए। बंद होने पर केवल प्लेयर का अपना आर्टवर्क इस्तेमाल होता है।</string>
     <string name="setting_wear_shortcut_details">घड़ी पर चलाएँ या शफ़ल</string>
     <string name="setting_wear_shortcut_details_description">घड़ी पर सहेजा गया लिंक चुनने पर, चाहे शॉर्टकट सूची से, शॉर्टकट Tile से या ऐक्शन मेन्यू से, पहले उसका कवर चलाएँ और शफ़ल के साथ दिखता है। इसे तुरंत शुरू करने के लिए बंद करें। किसी एक लिंक को सौंपे गए बटन और जेस्चर उसे हमेशा तुरंत शुरू करते हैं।</string>
     <string name="actions_quick_pin_add">त्वरित पैनल में दिखाएं</string>
@@ -2969,4 +2967,48 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
     </plurals>
     <string name="streaming_app_routes_picker_description">ऐप्स जो लिंक खोल सकते हैं, साथ ही इंस्टॉल किए गए मीडिया प्लेयर भी दिखाए गए हैं।</string>
     <string name="streaming_route_automatic">स्वचालित (पता चला ऐप)</string>
+    <string name="action_symfonium_start">Symfonium में मीडिया शुरू करें</string>
+    <string name="action_symfonium_start_named">Symfonium में शुरू करें: %1$s</string>
+    <string name="action_symfonium_sync">Symfonium प्रदाता सिंक करें</string>
+    <string name="app_icon_style_gradient">ग्रेडिएंट</string>
+    <string name="app_icon_style_solid">एक रंग</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">चारकोल पंख</string>
+    <string name="dev_show_rating_card">रेटिंग कार्ड दिखाएँ</string>
+    <string name="dev_show_rating_card_description">सामान्य सीमाओं को अनदेखा करके अभी Google Play से उसका इन-ऐप रिव्यू कार्ड माँगता है। यह केवल Google Play से इंस्टॉल किए गए बिल्ड में दिखता है (आंतरिक टेस्टिंग भी गिनी जाती है)</string>
+    <string name="dev_show_rating_card_unavailable">इस बिल्ड के लिए Google Play के पास कोई रिव्यू कार्ड नहीं है। इसे Google Play से इंस्टॉल करें, आंतरिक टेस्टिंग समेत, और फिर कोशिश करें</string>
+    <string name="playlist_shortcut_queue_link_unavailable">इस प्लेयर ने इस ट्रैक के लिए साझा करने योग्य लिंक प्रकाशित नहीं किया</string>
+    <string name="setting_app_icon_style">ऐप आइकन</string>
+    <string name="setting_youtube_api_key">YouTube Data API कुंजी</string>
+    <string name="setting_youtube_api_key_bundled">इस ऐप में YouTube कुंजी शामिल है; आपको अपनी जोड़ने की ज़रूरत नहीं</string>
+    <string name="setting_youtube_api_key_configured">YouTube कुंजी कॉन्फ़िगर है; केवल इस फ़ोन पर सहेजी गई</string>
+    <string name="setting_youtube_api_key_description">जब कोई प्लेयर आर्टवर्क प्रकाशित नहीं करता, तो Svartifoss Google के YouTube Data API से YouTube पर खोजता है, इस कुंजी के साथ चैनल और शीर्षक भेजता है, और ठीक-ठीक मेल खाने वाले वीडियो का थंबनेल इस्तेमाल करता है। ऐप में शामिल कुंजी इस्तेमाल करने के लिए इसे खाली छोड़ें। आपकी चिपकाई गई कुंजी इसी फ़ोन पर रहती है: उसे घड़ी को नहीं भेजा जाता और वह Svartifoss कॉन्फ़िगरेशन बैकअप में शामिल नहीं होती।</string>
+    <string name="setting_youtube_api_key_dialog_title">अपनी YouTube Data API v3 कुंजी चिपकाएँ</string>
+    <string name="setting_youtube_api_key_not_configured">वैकल्पिक: कोई YouTube कुंजी कॉन्फ़िगर नहीं है</string>
+    <string name="symfonium_media_album">एल्बम (वैकल्पिक)</string>
+    <string name="symfonium_media_artist">कलाकार (वैकल्पिक)</string>
+    <string name="symfonium_media_id_optional">ID (वैकल्पिक)</string>
+    <string name="symfonium_media_name">नाम</string>
+    <string name="symfonium_media_type">मीडिया प्रकार</string>
+    <string name="symfonium_provider_id">प्रदाता ID</string>
+    <string name="symfonium_provider_id_description">प्रदाता ID Symfonium की “मीडिया प्रदाता प्रबंधित करें” स्क्रीन में मिलेगी।</string>
+    <string name="symfonium_queue_mode">क्यू मोड</string>
+    <string name="symfonium_resume">संभव होने पर फिर से शुरू करें</string>
+    <string name="symfonium_shuffle">संग्रह शफ़ल करें</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>गाना</item>
+        <item>प्लेलिस्ट</item>
+        <item>एल्बम</item>
+        <item>कलाकार</item>
+        <item>शैली</item>
+        <item>गानों का मिक्स</item>
+        <item>एल्बमों का मिक्स</item>
+        <item>इंटरनेट रेडियो</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>अभी शुरू करें</item>
+        <item>अगला चलाएँ</item>
+        <item>क्यू में जोड़ें</item>
+    </string-array>
 </resources>

@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.Animatable
 import android.media.MediaMetadata
@@ -36,6 +35,7 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommunityThemeScreenshots
 import com.svartifoss.snfell.common.R as commonR
+import com.svartifoss.snfell.common.SampledBitmaps
 import com.svartifoss.snfell.music.ActiveMediaSessionProvider
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.applyLyraDialogStyling
@@ -486,7 +486,7 @@ class CommunityThemeDetailActivity : AppCompatActivity() {
     }
 
     private fun decodeScreenshot(bytes: ByteArray): Bitmap? = try {
-        BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+        SampledBitmaps.decode(bytes, CommunityThemeScreenshots.MAX_PIXELS)
     } catch (error: Exception) {
         Timber.d(error, "Could not decode a community theme screenshot")
         null

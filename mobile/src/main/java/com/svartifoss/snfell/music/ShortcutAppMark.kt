@@ -45,6 +45,25 @@ data class ShortcutAppMark(val drawable: Drawable, val tintable: Boolean) {
             }
         }
 
+        /**
+         * The status-bar glyph of the app [target] opens in, as the PNG [AppGlyphStore] keeps, for
+         * the watch to draw beside "Open on phone". [target] is a link or the `targetPackage|uri`
+         * form a list entry carries, whose package wins: it is the app the phone will actually
+         * open, which for a service with several clients need not be the official one.
+         *
+         * Only the glyph, never the launcher icon: the watch draws this as a white template, and
+         * a full-colour icon there would be a white square. Null when this phone has not seen
+         * that app post a notification yet; the watch then draws its own mark for the service.
+         */
+        fun glyphPngFor(context: Context, target: String): ByteArray? {
+            val link = StreamingShortcutLinks.unwrapRemoteTarget(target)
+            val packageName = StreamingShortcutLinks.remoteTargetPackage(target)
+                    ?: StreamingShortcutLinks.detect(link).packageName
+                    ?: defaultHandler(context, link)
+                    ?: return null
+            return AppGlyphStore.glyph(context, packageName)
+        }
+
         /** The package Android would open [link] in, for a link to a service not in the table. */
         fun defaultHandler(context: Context, link: String): String? {
             val canonicalLink = StreamingShortcutLinks.canonicalize(link)

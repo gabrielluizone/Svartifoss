@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Lejátszás ikon</string>
+    <string name="setting_wear_pause_icon">Szünet ikon</string>
+    <string name="setting_wear_transport_icon_description">A lejátszás és szünet gomb jele. A „Óralap követése” megtartja az eredeti tervezésű jelet.</string>
+    <string name="transport_icon_follow">Óralap követése</string>
+    <string name="transport_icon_a">Lekerekített</string>
+    <string name="transport_icon_b">Lekerekített körvonal</string>
+    <string name="transport_icon_c">Éles körvonal</string>
+    <string name="transport_icon_d">Éles</string>
+    <string name="transport_icon_e">Vastag lekerekített körvonal</string>
+</resources>

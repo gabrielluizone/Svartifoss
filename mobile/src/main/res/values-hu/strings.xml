@@ -762,6 +762,8 @@ Ha ezt tapasztalja, bekapcsolhatja ezt az opciót, hogy ambient módban teljesen
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -773,8 +775,6 @@ Ha ezt tapasztalja, bekapcsolhatja ezt az opciót, hogy ambient módban teljesen
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Mindig bekapcsolt szín</string>
     <string-array name="wear_aod_color_entries">
@@ -1662,7 +1662,7 @@ Ha ezt tapasztalja, bekapcsolhatja ezt az opciót, hogy ambient módban teljesen
         <item>Négyzet</item>
         <item>Kerekített négyzet</item>
         <item>Kör</item>
-        <item>Samsung stílus</item>
+        <item>Szuperellipszis</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Betűtípus használata mindenhol</string>
@@ -2043,16 +2043,14 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
     <string name="drawer_about_summary">A Svartifoss segítségével Wear OS-órájáról vezérelheti a telefonon szóló zenét — teljesen testreszabható, az eszközére szabott távirányítóval.</string>
     <string name="drawer_name_heading">A név</string>
     <string name="drawer_name_meaning">A Svartifoss izlandiul „Fekete vízesést” jelent — nevét a Vatnajökull Nemzeti Park vízeséséről kapta, ahol sötét bazaltoszlopok kereteznek egy keskeny zuhatagot. Ahogy a víz a köveken, úgy áramlik a zene az alkalmazáson keresztül.</string>
-    <string name="drawer_sync_heading">Szinkronizálás</string>
-    <string name="drawer_sync_summary">Az órabeállításokat itt, a telefonon konfigurálhatja, és automatikusan szinkronizálódnak a párosított órára.</string>
     <string name="drawer_support_heading">Támogatás</string>
     <string name="download_album_art">Borító letöltése</string>
     <string name="album_art_saved">Borító mentve a galériába</string>
     <string name="album_art_save_error">A borító mentése sikertelen</string>
 
-    <string name="action_play_liked_songs">Kedvelt dalok lejátszása (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Kedvelt dalok lejátszása (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Kedvelt számok lejátszása (SoundCloud)</string>
+    <string name="action_play_liked_songs">Kedvelt dalok</string>
+    <string name="action_play_spotify_liked_songs">Kedvelt dalok</string>
+    <string name="action_play_soundcloud_likes">Kedvelt számok</string>
     <string name="action_my_playlists">Streaming parancsikonok</string>
     <string name="action_show_streaming_library">Összes mentett parancsikon megjelenítése</string>
     <string name="picker_section_apps">Alkalmazások &amp; automatizálás</string>
@@ -2185,7 +2183,7 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
     <string name="playlist_shortcut_deleted">%1$s törölve</string>
     <string name="playlist_shortcut_undo">Visszavonás</string>
 
-    <string name="action_play_liked_songs_shuffled">Kedvelt dalok lejátszása véletlen sorrendben (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Kedvelt dalok, véletlen sorrendben</string>
     <string name="action_search_history">Keresési előzmények</string>
     <string name="search_history_empty">Még nincsenek legutóbbi keresések</string>
 
@@ -2871,7 +2869,7 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
     <string name="setting_wear_text_block_position">Szöveg pozíciója</string>
     <string name="setting_wear_text_block_position_description">Ahol a szám szövege a képernyőn helyezkedik el. A „Számlap követése” megtartja azt a pozíciót, amelyre az adott számlapot tervezték.</string>
     <string name="setting_online_artwork">Online borítókép</string>
-    <string name="setting_online_artwork_description">Engedd, hogy a számlap online keresett képet mutasson \u2014 az éppen játszott előadót, vagy album borítóját, ha a lejátszó nem biztosít ilyet. A telefon a Deezer nyilvános katalógusában keres, és gyorsítótárazza az eredményt; csak a szám és az előadó neve kerül elküldésre, és semmi sem lesz lekérdezve, hacsak egy számlap nincs e források egyikére állítva. Kikapcsolva a lejátszó saját borítóképe használatos.</string>
+    <string name="setting_online_artwork_description">Engedje, hogy a számlap online megkeresett képet jelenítsen meg — az éppen szereplő előadót, vagy albumborítót olyan lejátszóhoz, amely nem tesz közzé ilyet. A telefon végzi a keresést, és az eredményt gyorsítótárba menti; csak a szám és az előadó neve kerül elküldésre, a Deezer nyilvános katalógusának. Ez talál borítót olyan számhoz is, amelynek az alkalmazása egyáltalán nem tesz közzé borítót, például egy YouTube-videóhoz: a telefon elkéri a YouTube-tól a videó saját miniatűrjét (a csatornát és a címet a Google YouTube Data API-jának elküldve), majd a Deezertől egy albumborítót, és csak egyezés esetén használja az eredményt. Kikapcsolva csak a lejátszó saját borítója jelenik meg.</string>
     <string name="setting_wear_shortcut_details">Lejátszás vagy véletlen sorrend az órán</string>
     <string name="setting_wear_shortcut_details_description">Ha az órán kiválaszt egy mentett linket – a parancsikonlistából, a Parancsikonok csempéből vagy a műveletmenüből –, először a borítója jelenik meg a Lejátszás és a Véletlen sorrend gombbal. Kapcsolja ki, ha inkább azonnal induljon. Az egy linkhez rendelt gombok és kézmozdulatok mindig azonnal elindítják.</string>
     <string name="actions_quick_pin_add">Megjelenítés a gyorspanelen</string>
@@ -2969,4 +2967,48 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
     </plurals>
     <string name="streaming_app_routes_picker_description">Megjelennek azok az alkalmazások, amelyek képesek megnyitni a hivatkozást, valamint a telepített médialejátszók.</string>
     <string name="streaming_route_automatic">Automatikus (észlelt alkalmazás)</string>
+    <string name="action_symfonium_start">Média indítása a Symfoniumban</string>
+    <string name="action_symfonium_start_named">Indítás a Symfoniumban: %1$s</string>
+    <string name="action_symfonium_sync">Symfonium-szolgáltató szinkronizálása</string>
+    <string name="app_icon_style_gradient">Színátmenet</string>
+    <string name="app_icon_style_solid">Egyszínű</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Széntoll</string>
+    <string name="dev_show_rating_card">Értékelőkártya megjelenítése</string>
+    <string name="dev_show_rating_card_description">Azonnal elkéri a Google Playtől az alkalmazáson belüli véleménykártyát, a szokásos korlátokat figyelmen kívül hagyva. Csak a Google Playből telepített verzióban jelenik meg (a belső tesztelés is számít)</string>
+    <string name="dev_show_rating_card_unavailable">A Google Playnek nincs véleménykártyája ehhez a verzióhoz. Telepítse a Google Playből, a belső tesztelést is beleértve, majd próbálja újra</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Ez a lejátszó nem tett közzé megosztható hivatkozást ehhez a számhoz</string>
+    <string name="setting_app_icon_style">Alkalmazásikon</string>
+    <string name="setting_youtube_api_key">YouTube Data API-kulcs</string>
+    <string name="setting_youtube_api_key_bundled">A YouTube-kulcs része ennek az alkalmazásnak; nem kell sajátot megadnia</string>
+    <string name="setting_youtube_api_key_configured">A YouTube-kulcs be van állítva; csak ezen a telefonon van tárolva</string>
+    <string name="setting_youtube_api_key_description">Ha egy lejátszó nem tesz közzé borítót, a Svartifoss a Google YouTube Data API-ján keresztül keres a YouTube-on, a csatornát és a címet ezzel a kulccsal együtt elküldi, és a pontosan egyező videó miniatűrjét használja. Hagyja üresen, ha az alkalmazásban lévő kulcsot szeretné használni. A beillesztett kulcs ezen a telefonon marad: nem kerül át az órára, és a Svartifoss konfigurációs mentései sem tartalmazzák.</string>
+    <string name="setting_youtube_api_key_dialog_title">Illessze be a saját YouTube Data API v3-kulcsát</string>
+    <string name="setting_youtube_api_key_not_configured">Nem kötelező: nincs YouTube-kulcs beállítva</string>
+    <string name="symfonium_media_album">Album (nem kötelező)</string>
+    <string name="symfonium_media_artist">Előadó (nem kötelező)</string>
+    <string name="symfonium_media_id_optional">Azonosító (nem kötelező)</string>
+    <string name="symfonium_media_name">Név</string>
+    <string name="symfonium_media_type">Médiatípus</string>
+    <string name="symfonium_provider_id">Szolgáltató azonosítója</string>
+    <string name="symfonium_provider_id_description">A szolgáltató azonosítóját a Symfonium „Médiaszolgáltatók kezelése” képernyőjén találja.</string>
+    <string name="symfonium_queue_mode">Lejátszási sor módja</string>
+    <string name="symfonium_resume">Folytatás, ha lehetséges</string>
+    <string name="symfonium_shuffle">Gyűjtemények véletlen sorrendben</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Dal</item>
+        <item>Lejátszási lista</item>
+        <item>Album</item>
+        <item>Előadó</item>
+        <item>Műfaj</item>
+        <item>Dalmix</item>
+        <item>Albummix</item>
+        <item>Internetes rádió</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Indítás most</item>
+        <item>Lejátszás következőként</item>
+        <item>Hozzáadás a sorhoz</item>
+    </string-array>
 </resources>

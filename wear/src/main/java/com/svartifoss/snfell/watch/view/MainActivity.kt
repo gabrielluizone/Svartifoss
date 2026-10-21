@@ -9,7 +9,6 @@ import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Matrix
@@ -103,6 +102,8 @@ import com.svartifoss.snfell.common.AodArtTreatment
 import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.TrackTimeFormat
+import com.svartifoss.snfell.common.TransportMark
+import com.svartifoss.snfell.common.TransportGlyphs
 import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.FrostedEdges
 import com.svartifoss.snfell.common.BitmapBlur
@@ -119,6 +120,7 @@ import com.svartifoss.snfell.common.PlayerShadingIntensity
 import com.svartifoss.snfell.common.PlayerShadingStyle
 import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.common.SHADING_MAX_PERCENT
+import com.svartifoss.snfell.common.SampledBitmaps
 import com.svartifoss.snfell.common.ScreenQuadrant
 import com.svartifoss.snfell.common.TextBackdropSpec
 import com.svartifoss.snfell.common.TextOutlineSpec
@@ -3842,7 +3844,7 @@ class MainActivity : WearCompanionWatchActivity(),
             if (cached != null && cached.png.contentEquals(bytes)) {
                 cached.bitmap
             } else {
-                val decoded = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                val decoded = SampledBitmaps.decode(bytes, SampledBitmaps.screenPx(resources))
                 if (decoded != null && hasVisiblePixels(decoded)) {
                     sessionQuickIconBitmaps[action.id] = CachedSessionQuickIcon(bytes, decoded)
                     decoded
@@ -5435,6 +5437,12 @@ class MainActivity : WearCompanionWatchActivity(),
         updateFaceState {
             it.copy(
                     screenTheme = effectiveFaceTheme,
+                    // Resolved here, against this face, so every face draws what the registry says
+                    // and "follow" cannot mean something different on the wrist and in the preview.
+                    playGlyph = TransportGlyphs.resolve(
+                            TransportMark.PLAY, faceString(MiscPreferences.WEAR_PLAY_ICON), screenFace),
+                    pauseGlyph = TransportGlyphs.resolve(
+                            TransportMark.PAUSE, faceString(MiscPreferences.WEAR_PAUSE_ICON), screenFace),
                     showControls = playerControlsVisible || keepsEssentialTransport,
                     showInternalProgress = internalProgressVisible,
                     // Cookie and bezel are disjoint targets; neither disables the other.

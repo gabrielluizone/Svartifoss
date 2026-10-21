@@ -6,6 +6,7 @@ import android.os.Build
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.BuildConfig
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.SampledBitmaps
 import org.json.JSONObject
 import timber.log.Timber
 import java.net.HttpURLConnection
@@ -130,7 +131,7 @@ object YouTubeThumbnailFetcher {
     }
 
     private fun decodeAndEncode(raw: ByteArray): ByteArray? =
-            android.graphics.BitmapFactory.decodeByteArray(raw, 0, raw.size)
+            SampledBitmaps.decode(raw, OnlineArtworkFetcher.MAX_ARTWORK_PX)
                     ?.let(OnlineArtworkFetcher::encodeForBackdrop)
 
     private fun <T> openConnection(

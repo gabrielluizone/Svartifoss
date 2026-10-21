@@ -390,6 +390,15 @@ interface CommPaths {
         const val DATA_STOPPING_ACTION_CONFIG = DATA_ACTION_CONFIG_PREFIX + "/Stopped"
         const val ASSET_BUTTON_ICON_PREFIX = "/Button_Icon_"
 
+        /**
+         * Start of the asset key that carries, for one entry of a list that starts a streaming
+         * destination, the status-bar glyph of the app it opens in - completed by the entry's
+         * index, on both [DATA_LIST_ITEMS] and [DATA_STREAMING_SHORTCUTS]. A white template on
+         * transparency, so the watch tints it; absent when the phone has never seen that app post
+         * a notification, and the watch then draws a mark of its own for the service.
+         */
+        const val ASSET_APP_MARK_PREFIX = "/App_Mark_"
+
         const val DATA_CUSTOM_LIST = "/CustomList/List"
         // Persistent, independently cached streaming-shortcut list. It must not share
         // DATA_CUSTOM_LIST: queue/search pushes frequently replace that transient DataItem.

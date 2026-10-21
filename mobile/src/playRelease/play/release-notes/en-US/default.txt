@@ -1,1 +1,8 @@
-Build your watch Quick Panel from customizable blocks, including Volume, Up Next, tools, and favorites. Adds a sleep timer, shortcut screens with Play and Shuffle, and richer playlist artwork. New optional tip in the side menu (Support the developer) that unlocks nothing. Corrected translations, plus better performance, battery use, playback sync, and phone-to-watch connection stability.
+New in 4.3
+• Volume and progress in wave, ruler, per-minute and hex styles
+• Queue: pill and cover shapes and a Route style
+• Lyrics in the quick panel; sleep timer that stops at track end
+• Always-on display that dims at night; play/pause complication
+• Choose play/pause and app icons
+• Symfonium actions, thumbnails for cover-less videos, LIVE label
+Fixed: watch buttons with the phone locked, long-track time (4:00:00) and skipping in live streams.

@@ -766,6 +766,8 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -777,8 +779,6 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Barva vždy zapnutého displeje</string>
     <string-array name="wear_aod_color_entries">
@@ -1666,7 +1666,7 @@ Pokud se s tím setkáváte, můžete touto možností dvojité stisknutí v amb
         <item>Čtverec</item>
         <item>Zaoblený čtverec</item>
         <item>Kruh</item>
-        <item>Styl Samsung</item>
+        <item>Superelipsa</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Používat písmo všude</string>
@@ -2047,16 +2047,14 @@ Kdykoli Vibration Center zavibruje hodinkami, Svartifoss zobrazí vyskakovací o
     <string name="drawer_about_summary">Svartifoss vám umožňuje ovládat hudbu v telefonu z hodinek Wear OS — pomocí plně přizpůsobitelného dálkového ovladače uzpůsobeného vašemu zařízení.</string>
     <string name="drawer_name_heading">Název</string>
     <string name="drawer_name_meaning">Svartifoss znamená v islandštině „Černé vodopády“ — jméno pochází od vodopádu v národním parku Vatnajökull, kde tmavé čedičové sloupy rámují úzkou kaskádu. Stejně jako voda přes kámen proudí aplikací hudba.</string>
-    <string name="drawer_sync_heading">Synchronizace</string>
-    <string name="drawer_sync_summary">Nastavení hodinek se provádí zde v telefonu a automaticky se synchronizuje se spárovanými hodinkami.</string>
     <string name="drawer_support_heading">Podpora</string>
     <string name="download_album_art">Stáhnout obal</string>
     <string name="album_art_saved">Obal uložen do galerie</string>
     <string name="album_art_save_error">Obal se nepodařilo uložit</string>
 
-    <string name="action_play_liked_songs">Přehrát oblíbené skladby (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Přehrát oblíbené skladby (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Přehrát oblíbené skladby (SoundCloud)</string>
+    <string name="action_play_liked_songs">Oblíbené skladby</string>
+    <string name="action_play_spotify_liked_songs">Oblíbené skladby</string>
+    <string name="action_play_soundcloud_likes">Oblíbené skladby</string>
     <string name="action_my_playlists">Streamovací zkratky</string>
     <string name="action_show_streaming_library">Zobrazit všechny uložené zkratky</string>
     <string name="picker_section_apps">Aplikace &amp; automatizace</string>
@@ -2195,7 +2193,7 @@ Kdykoli Vibration Center zavibruje hodinkami, Svartifoss zobrazí vyskakovací o
     <string name="playlist_shortcut_deleted">%1$s odstraněno</string>
     <string name="playlist_shortcut_undo">Zpět</string>
 
-    <string name="action_play_liked_songs_shuffled">Přehrát oblíbené skladby náhodně (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Oblíbené skladby, náhodně</string>
     <string name="action_search_history">Historie hledání</string>
     <string name="search_history_empty">Zatím žádná nedávná hledání</string>
 
@@ -2881,7 +2879,7 @@ Kdykoli Vibration Center zavibruje hodinkami, Svartifoss zobrazí vyskakovací o
     <string name="setting_wear_text_block_position">Pozice textu</string>
     <string name="setting_wear_text_block_position_description">Kde se na obrazovce nachází text skladby. Volba Podle ciferníku zachová pozici, pro kterou byl každý ciferník navržen.</string>
     <string name="setting_online_artwork">Online grafika</string>
-    <string name="setting_online_artwork_description">Umožnit ciferníku zobrazit obrázek vyhledaný online \u2014 interpreta, který právě hraje, nebo obal alba pro přehrávač, který žádný obrázek nezveřejňuje. Telefon vyhledává ve veřejném katalogu Deezer a výsledek ukládá do mezipaměti; odesílá se pouze název skladby a interpreta a nic se nevyhledává, dokud není ciferník nastaven na jeden z těchto zdrojů. Při vypnutí se použije grafika poskytovaná přehrávačem.</string>
+    <string name="setting_online_artwork_description">Umožní ciferníku zobrazit obrázek vyhledaný online — vystupujícího interpreta nebo obal alba pro přehrávač, který žádný neposkytuje. Vyhledávání provádí telefon a výsledek ukládá do mezipaměti; odesílají se pouze názvy skladby a interpreta, a to do veřejného katalogu Deezer. Je to také to, co najde obal pro skladbu, jejíž aplikace žádný nezveřejňuje, například video na YouTube: telefon požádá YouTube o miniaturu samotného videa (kanál a název odešle do YouTube Data API od Googlu), poté Deezer o obal alba a výsledek použije, jen když odpovídá. Když je funkce vypnutá, použije se pouze obal přímo od přehrávače.</string>
     <string name="setting_wear_shortcut_details">Přehrát nebo náhodně na hodinkách</string>
     <string name="setting_wear_shortcut_details_description">Výběr uloženého odkazu na hodinkách – ze seznamu zkratek, z Tile Zkratky nebo z nabídky akcí – nejprve zobrazí jeho obal s tlačítky Přehrát a Náhodně. Vypněte, aby se spustil hned. Tlačítka a gesta přiřazená jednomu odkazu ho vždy spouštějí hned.</string>
     <string name="actions_quick_pin_add">Zobrazit v rychlém panelu</string>
@@ -2979,4 +2977,48 @@ Kdykoli Vibration Center zavibruje hodinkami, Svartifoss zobrazí vyskakovací o
     </plurals>
     <string name="streaming_app_routes_picker_description">, které mohou odkaz otevřít, a nainstalované přehrávače médií.</string>
     <string name="streaming_route_automatic">Automaticky (zjištěná aplikace)</string>
+    <string name="action_symfonium_start">Spustit média v Symfonium</string>
+    <string name="action_symfonium_start_named">Spustit v Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Synchronizovat poskytovatele Symfonium</string>
+    <string name="app_icon_style_gradient">Přechod</string>
+    <string name="app_icon_style_solid">Jednobarevná</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Uhelné pírko</string>
+    <string name="dev_show_rating_card">Zobrazit hodnoticí kartu</string>
+    <string name="dev_show_rating_card_description">Okamžitě si vyžádá od Google Play jeho kartu pro hodnocení přímo v aplikaci a přitom ignoruje obvyklá omezení. Zobrazí se jen v sestavení nainstalovaném z Google Play (počítá se i interní testování)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play pro toto sestavení nemá hodnoticí kartu. Nainstalujte ho z Google Play, včetně interního testování, a zkuste to znovu</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Tento přehrávač pro tuto skladbu nezveřejnil sdílitelný odkaz</string>
+    <string name="setting_app_icon_style">Ikona aplikace</string>
+    <string name="setting_youtube_api_key">Klíč rozhraní YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">Klíč YouTube je součástí této aplikace; nemusíte žádný přidávat</string>
+    <string name="setting_youtube_api_key_configured">Klíč YouTube je nastaven; uložen pouze v tomto telefonu</string>
+    <string name="setting_youtube_api_key_description">Když přehrávač nezveřejní obal, Svartifoss vyhledá video na YouTube přes rozhraní YouTube Data API od Googlu, odešle kanál a název spolu s tímto klíčem a použije miniaturu videa, které přesně odpovídá. Ponechte prázdné, chcete-li použít klíč, který je součástí aplikace. Klíč, který vložíte, zůstává v tomto telefonu: neposílá se do hodinek ani se nezahrnuje do záloh konfigurace Svartifoss.</string>
+    <string name="setting_youtube_api_key_dialog_title">Vložte svůj klíč YouTube Data API v3</string>
+    <string name="setting_youtube_api_key_not_configured">Volitelné: žádný klíč YouTube není nastaven</string>
+    <string name="symfonium_media_album">Album (volitelné)</string>
+    <string name="symfonium_media_artist">Interpret (volitelné)</string>
+    <string name="symfonium_media_id_optional">ID (volitelné)</string>
+    <string name="symfonium_media_name">Název</string>
+    <string name="symfonium_media_type">Typ média</string>
+    <string name="symfonium_provider_id">ID poskytovatele</string>
+    <string name="symfonium_provider_id_description">ID poskytovatele najdete v Symfonium na obrazovce Spravovat poskytovatele médií.</string>
+    <string name="symfonium_queue_mode">Režim fronty</string>
+    <string name="symfonium_resume">Pokračovat, když to jde</string>
+    <string name="symfonium_shuffle">Náhodně přehrávat kolekce</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Skladba</item>
+        <item>Playlist</item>
+        <item>Album</item>
+        <item>Interpret</item>
+        <item>Žánr</item>
+        <item>Mix skladeb</item>
+        <item>Mix alb</item>
+        <item>Internetové rádio</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Spustit hned</item>
+        <item>Přehrát jako další</item>
+        <item>Přidat do fronty</item>
+    </string-array>
 </resources>

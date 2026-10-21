@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Dikte van de volumebalk</string>
-    <string name="setting_wear_volume_thickness_description">Dikte van de lijn van de volumebalk, van 50% tot 180% van de standaard. Ook dikkere lijnen blijven vrij van de rand.</string>
+    <string name="setting_wear_volume_thickness_description">Dikte van de lijn van de volumebalk, van 50%% tot 180%% van de standaard. Ook dikkere lijnen blijven vrij van de rand.</string>
     <string name="setting_wear_volume_haptics">Kroontrilling bij volume</string>
     <string name="setting_wear_queue_dim_played">Afgespeelde nummers dimmen</string>
     <string name="setting_wear_queue_dim_played_description">Dimt de nummers die al gespeeld zijn, zodat de komende opvallen.</string>

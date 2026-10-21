@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Afspeelpictogram</string>
+    <string name="setting_wear_pause_icon">Pauzepictogram</string>
+    <string name="setting_wear_transport_icon_description">Het symbool op de afspeel- en pauzeknop. ‘Gezicht volgen’ houdt het symbool van het oorspronkelijke ontwerp aan.</string>
+    <string name="transport_icon_follow">Gezicht volgen</string>
+    <string name="transport_icon_a">Afgerond</string>
+    <string name="transport_icon_b">Afgeronde omlijning</string>
+    <string name="transport_icon_c">Hoekige omlijning</string>
+    <string name="transport_icon_d">Hoekig</string>
+    <string name="transport_icon_e">Dikke afgeronde omlijning</string>
+</resources>

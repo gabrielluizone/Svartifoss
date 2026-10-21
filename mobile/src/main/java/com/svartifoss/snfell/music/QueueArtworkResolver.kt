@@ -15,6 +15,7 @@ import android.util.Size
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.BitmapBorderTrim
+import com.svartifoss.snfell.common.SampledBitmaps
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.sync.Semaphore
@@ -370,14 +371,8 @@ object QueueArtworkResolver {
      * row of a queue that ends up as a 96px thumbnail cost several megabytes for a moment. Sampling
      * never goes below the target, so what the thumbnail is shrunk from is still at least its size.
      */
-    internal fun sampleSizeFor(width: Int, height: Int, targetPx: Int): Int {
-        if (width <= 0 || height <= 0 || targetPx <= 0) return 1
-        var sample = 1
-        while (width / (sample * 2) >= targetPx && height / (sample * 2) >= targetPx) {
-            sample *= 2
-        }
-        return sample
-    }
+    internal fun sampleSizeFor(width: Int, height: Int, targetPx: Int): Int =
+            SampledBitmaps.sampleSizeFor(width, height, targetPx)
 
     /** Decodes the stream [open] returns at [sampleSizeFor] [targetPx], reading the bounds first
      *  from a stream of its own. */

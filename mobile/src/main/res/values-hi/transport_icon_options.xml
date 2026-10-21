@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">प्ले आइकन</string>
+    <string name="setting_wear_pause_icon">पॉज़ आइकन</string>
+    <string name="setting_wear_transport_icon_description">प्ले और पॉज़ कंट्रोल पर बना चिह्न। “फ़ेस के अनुसार” इस फ़ेस का मूल डिज़ाइन बनाए रखता है।</string>
+    <string name="transport_icon_follow">फ़ेस के अनुसार</string>
+    <string name="transport_icon_a">गोल किनारे</string>
+    <string name="transport_icon_b">गोल किनारों वाली रूपरेखा</string>
+    <string name="transport_icon_c">नुकीली रूपरेखा</string>
+    <string name="transport_icon_d">नुकीला</string>
+    <string name="transport_icon_e">मोटी गोल रूपरेखा</string>
+</resources>

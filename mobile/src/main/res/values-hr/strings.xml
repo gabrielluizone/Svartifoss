@@ -743,6 +743,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -754,8 +756,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Boja uvijek uključenog zaslona</string>
     <string-array name="wear_aod_color_entries">
@@ -1643,7 +1643,7 @@
         <item>Kvadrat</item>
         <item>Zaobljeni kvadrat</item>
         <item>Krug</item>
-        <item>Samsung stil</item>
+        <item>Superelipsa</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Koristi font posvuda</string>
@@ -2022,16 +2022,14 @@
     <string name="drawer_about_summary">Svartifoss vam omogućuje upravljanje glazbom na telefonu s Wear OS sata — potpuno prilagodljivim daljinskim upravljačem prilagođenim vašem uređaju.</string>
     <string name="drawer_name_heading">Naziv</string>
     <string name="drawer_name_meaning">Svartifoss na islandskom znači „Crni slap“ — nazvan po slapu u Nacionalnom parku Vatnajökull, gdje tamni bazaltni stupovi uokviruju usku kaskadu. Poput vode preko kamena, glazba teče kroz aplikaciju.</string>
-    <string name="drawer_sync_heading">Sinkronizacija</string>
-    <string name="drawer_sync_summary">Postavke sata konfiguriraju se ovdje na telefonu i automatski sinkroniziraju s uparenim satom.</string>
     <string name="drawer_support_heading">Podrška</string>
     <string name="download_album_art">Preuzmi naslovnicu</string>
     <string name="album_art_saved">Naslovnica je spremljena u galeriju</string>
     <string name="album_art_save_error">Spremanje naslovnice nije uspjelo</string>
 
-    <string name="action_play_liked_songs">Reproduciraj označene pjesme (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Reproduciraj označene pjesme (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Reproduciraj označene pjesme (SoundCloud)</string>
+    <string name="action_play_liked_songs">Označene pjesme</string>
+    <string name="action_play_spotify_liked_songs">Označene pjesme</string>
+    <string name="action_play_soundcloud_likes">Označene pjesme</string>
     <string name="action_my_playlists">Prečaci za streaming</string>
     <string name="action_show_streaming_library">Prikaži sve spremljene prečace</string>
     <string name="picker_section_apps">Aplikacije &amp; automatizacija</string>
@@ -2167,7 +2165,7 @@
     <string name="playlist_shortcut_deleted">%1$s je izbrisan</string>
     <string name="playlist_shortcut_undo">Poništi</string>
 
-    <string name="action_play_liked_songs_shuffled">Reproduciraj označene pjesme nasumično (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Označene pjesme, nasumično</string>
     <string name="action_search_history">Povijest pretraživanja</string>
     <string name="search_history_empty">Još nema nedavnih pretraživanja</string>
 
@@ -2853,7 +2851,7 @@
     <string name="setting_wear_text_block_position">Položaj teksta</string>
     <string name="setting_wear_text_block_position_description">Mjesto teksta pjesme na zaslonu. „Prati lice” zadržava položaj za koji je svako lice dizajnirano.</string>
     <string name="setting_online_artwork">Slika s mreže</string>
-    <string name="setting_online_artwork_description">Dopustite brojčaniku sata da prikazuje sliku pronađenu na mreži \u2014 izvođača pjesme ili naslovnicu albuma za reproduktor koji je ne objavljuje. Telefon pretražuje javni katalog Deezera i sprema rezultat u predmemoriju; šalju se samo nazivi pjesme i izvođača, a ništa se ne pretražuje osim ako je lice postavljeno na jedan od tih izvora. Kada je isključeno, koristi se vlastita slika reproduktora.</string>
+    <string name="setting_online_artwork_description">Dopustite brojčaniku da prikaže sliku pronađenu na internetu — izvođača koji nastupa ili naslovnicu albuma za player koji je ne objavljuje. Vaš telefon obavlja pretraživanje i sprema rezultat u predmemoriju; šalju se samo nazivi pjesme i izvođača, u javni katalog Deezera. To je ujedno i ono što pronalazi naslovnicu za pjesmu čija aplikacija uopće ne objavljuje nijednu, poput videozapisa na YouTubeu: telefon od YouTubea traži sličicu samog videozapisa (šaljući kanal i naslov Googleovu YouTube Data API-ju), zatim od Deezera naslovnicu albuma, a rezultat koristi samo kad se podudara. Kad je isključeno, koristi se samo naslovnica samog playera.</string>
     <string name="setting_wear_shortcut_details">Reprodukcija ili nasumično na satu</string>
     <string name="setting_wear_shortcut_details_description">Odabir spremljene poveznice na satu, s popisa prečaca, Tilea s prečacima ili iz izbornika radnji, najprije prikazuje njezin omot s gumbima Reproduciraj i Nasumično. Isključite da bi odmah počela. Gumbi i pokreti dodijeljeni jednoj poveznici uvijek je odmah pokreću.</string>
     <string name="actions_quick_pin_add">Prikaži na brzoj ploči</string>
@@ -2951,4 +2949,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">Prikazane su aplikacije koje mogu otvoriti poveznicu, plus instalirani media playeri.</string>
     <string name="streaming_route_automatic">Automatski (otkrivena aplikacija)</string>
+    <string name="action_symfonium_start">Pokreni medij u aplikaciji Symfonium</string>
+    <string name="action_symfonium_start_named">Pokreni u aplikaciji Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Sinkroniziraj pružatelja Symfonium</string>
+    <string name="app_icon_style_gradient">Gradijent</string>
+    <string name="app_icon_style_solid">Jednobojna</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Ugljeno pero</string>
+    <string name="dev_show_rating_card">Prikaži karticu za ocjenjivanje</string>
+    <string name="dev_show_rating_card_description">Odmah traži od Google Playa njegovu karticu za recenziju u aplikaciji, zanemarujući uobičajena ograničenja. Pojavljuje se samo u verziji instaliranoj iz Google Playa (računa se i interno testiranje)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play nema karticu za recenziju za ovu verziju. Instalirajte je iz Google Playa, uključujući interno testiranje, i pokušajte ponovno</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Ovaj player nije objavio poveznicu za dijeljenje za ovu pjesmu</string>
+    <string name="setting_app_icon_style">Ikona aplikacije</string>
+    <string name="setting_youtube_api_key">Ključ za YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">YouTube ključ uključen je u ovu aplikaciju; ne morate dodavati svoj</string>
+    <string name="setting_youtube_api_key_configured">YouTube ključ je postavljen; pohranjen samo na ovom telefonu</string>
+    <string name="setting_youtube_api_key_description">Kad player ne objavi naslovnicu, Svartifoss traži na YouTubeu putem Googleova YouTube Data API-ja, šalje kanal i naslov zajedno s ovim ključem te koristi sličicu videozapisa koji se točno podudara. Ostavite prazno da biste koristili ključ uključen u aplikaciju. Ključ koji zalijepite ostaje na ovom telefonu: ne šalje se na sat niti se uključuje u sigurnosne kopije konfiguracije Svartifossa.</string>
+    <string name="setting_youtube_api_key_dialog_title">Zalijepite svoj ključ za YouTube Data API v3</string>
+    <string name="setting_youtube_api_key_not_configured">Neobavezno: nijedan YouTube ključ nije postavljen</string>
+    <string name="symfonium_media_album">Album (neobavezno)</string>
+    <string name="symfonium_media_artist">Izvođač (neobavezno)</string>
+    <string name="symfonium_media_id_optional">ID (neobavezno)</string>
+    <string name="symfonium_media_name">Naziv</string>
+    <string name="symfonium_media_type">Vrsta medija</string>
+    <string name="symfonium_provider_id">ID pružatelja</string>
+    <string name="symfonium_provider_id_description">ID pružatelja nalazi se na zaslonu Upravljanje pružateljima medija u aplikaciji Symfonium.</string>
+    <string name="symfonium_queue_mode">Način reda čekanja</string>
+    <string name="symfonium_resume">Nastavi kad je moguće</string>
+    <string name="symfonium_shuffle">Nasumično reproduciraj zbirke</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Pjesma</item>
+        <item>Popis za reprodukciju</item>
+        <item>Album</item>
+        <item>Izvođač</item>
+        <item>Žanr</item>
+        <item>Miks pjesama</item>
+        <item>Miks albuma</item>
+        <item>Internetski radio</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Pokreni odmah</item>
+        <item>Reproduciraj sljedeće</item>
+        <item>Dodaj u red čekanja</item>
+    </string-array>
 </resources>

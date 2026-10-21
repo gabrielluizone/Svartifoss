@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.watch.config
 
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 
 class ButtonAction(
@@ -33,13 +34,19 @@ class ButtonAction(
         /** Whether the user starred this actions-menu entry for the quick panel's favourites
          *  block. Only meaningful for entries of the actions menu; false from a phone build that
          *  predates the flag, which is the same as nothing being starred. */
-        val inQuickPanel: Boolean = false
+        val inQuickPanel: Boolean = false,
+        /** For a streaming destination: the status-bar glyph of the app it opens in, a white
+         *  template the phone learned from that app's notifications - drawn on the destination's
+         *  own screen beside "Open on phone". Null when the phone has not learned it, and from
+         *  older phone builds. */
+        val appMark: Bitmap? = null
 ) {
     override fun toString(): String {
         return "ButtonAction(key='$key', icon=$icon, title=$title, " +
                 "iconTintable=$iconTintable, remoteUri=$remoteUri, isCoverArt=$isCoverArt, " +
                 "seekOffsetMs=$seekOffsetMs, shortcutSubtitle=$shortcutSubtitle, " +
                 "shortcutShuffleable=$shortcutShuffleable, shortcutCreator=$shortcutCreator, " +
-                "shortcutDescription=$shortcutDescription, inQuickPanel=$inQuickPanel)"
+                "shortcutDescription=$shortcutDescription, inQuickPanel=$inQuickPanel, " +
+                "appMark=${appMark != null})"
     }
 }

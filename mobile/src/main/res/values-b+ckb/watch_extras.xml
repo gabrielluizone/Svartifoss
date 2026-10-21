@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">ئەستووریی شریتی دەنگ</string>
-    <string name="setting_wear_volume_thickness_description">ئەستووریی هێڵی شریتی دەنگ، لە 50% تا 180%ی بنەڕەت. هێڵە ئەستوورترەکانیش هەر لە لێواری شاشە دوور دەمێننەوە.</string>
+    <string name="setting_wear_volume_thickness_description">ئەستووریی هێڵی شریتی دەنگ، لە 50%% تا 180%%ی بنەڕەت. هێڵە ئەستوورترەکانیش هەر لە لێواری شاشە دوور دەمێننەوە.</string>
     <string name="setting_wear_volume_haptics">لەرینەوەی تاج لە کاتی دەنگدا</string>
     <string name="setting_wear_queue_dim_played">کاڵکردنەوەی گۆرانییە لێدراوەکان</string>
     <string name="setting_wear_queue_dim_played_description">ئەو گۆرانییانەی پێشتر لێدراون کاڵ دەکاتەوە بۆ ئەوەی داهاتووەکان دیار بن.</string>

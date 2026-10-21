@@ -6,10 +6,10 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import com.google.android.gms.wearable.*
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.SampledBitmaps
 import com.svartifoss.snfell.proto.WatchInfo
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
 import com.matejdro.wearutils.messages.getByteArrayAsset
-import com.matejdro.wearutils.miscutils.BitmapUtils
 import dagger.Reusable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.tasks.await
@@ -59,7 +59,8 @@ class WatchInfoProvider @Inject constructor(private val context: Context) :
                         val asset = frozenDataItem.assets[buttonAssetName] ?: return@mapNotNull null
 
                         val iconBytes = dataClient.getByteArrayAsset(asset)
-                        val icon = BitmapUtils.deserialize(iconBytes)
+                        val icon = SampledBitmaps.decode(iconBytes,
+                                SampledBitmaps.screenPx(this@WatchInfoProvider.context.resources))
 
                         buttonCode to BitmapDrawable(this@WatchInfoProvider.context.resources, icon)
                     }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">볼륨 바 두께</string>
-    <string name="setting_wear_volume_thickness_description">볼륨 바 선의 두께로, 기본값의 50%~180%입니다. 선이 두꺼워도 화면 가장자리에 닿지 않습니다.</string>
+    <string name="setting_wear_volume_thickness_description">볼륨 바 선의 두께로, 기본값의 50%%~180%%입니다. 선이 두꺼워도 화면 가장자리에 닿지 않습니다.</string>
     <string name="setting_wear_volume_haptics">볼륨 조절 시 크라운 진동</string>
     <string name="setting_wear_queue_dim_played">재생한 트랙 흐리게</string>
     <string name="setting_wear_queue_dim_played_description">이미 재생한 항목을 흐리게 해서 앞으로 나올 곡이 돋보이게 합니다.</string>

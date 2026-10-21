@@ -9,6 +9,7 @@ import com.google.android.gms.wearable.DataItem
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.proto.WatchList
+import com.svartifoss.snfell.watch.communication.getAssetBitmap
 import com.svartifoss.snfell.watch.communication.getIcon
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -77,7 +78,9 @@ class WatchActionMenuProvider(context: Context, coroutineScope: CoroutineScope, 
                         shortcutDescription = it.value.shortcutDescription.takeIf { _ ->
                             it.value.hasShortcutDescription() && it.value.shortcutDescription.isNotBlank()
                         },
-                        inQuickPanel = it.value.hasInQuickPanel() && it.value.inQuickPanel)
+                        inQuickPanel = it.value.hasInQuickPanel() && it.value.inQuickPanel,
+                        appMark = dataClient.getAssetBitmap(
+                                dataItem, CommPaths.ASSET_APP_MARK_PREFIX + it.index))
             }.toList()
 
             ensureActive()

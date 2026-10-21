@@ -21,11 +21,20 @@ import java.util.Locale
  * is worth least. [MISS_TTL_MS] is what keeps that from being permanent, since a failure can be a
  * dropped connection rather than a real absence; a hit has no expiry, because an artist's
  * photograph is not something this face needs to keep up with.
+ *
+ * ## ...except a thumbnail that came from YouTube
+ *
+ * Those are fetched through YouTube's Data API with a plain key, and its API Services policies ask
+ * that such data be refreshed or deleted within 30 days. They are the one kind of hit that expires
+ * ([YOUTUBE_HIT_TTL_MS]), and they are written under a suffix of their own ([YOUTUBE_HIT_SUFFIX])
+ * so that [trim] can drop the ones past their term without knowing the key behind a hashed name:
+ * an entry nobody asks for again would otherwise sit on disk for as long as the cache does.
  */
 object OnlineArtworkCache {
     private const val FOLDER = "online_artwork"
 
     private const val HIT_SUFFIX = ".jpg"
+    private const val YOUTUBE_HIT_SUFFIX = ".yt.jpg"
     private const val MISS_SUFFIX = ".miss"
 
     /** Comfortably more records than a listening history reaches between cache clears. Covers are
@@ -35,6 +44,12 @@ object OnlineArtworkCache {
 
     /** How long a recorded absence stands before the artist is worth asking about again. */
     const val MISS_TTL_MS = 7L * 24 * 60 * 60 * 1000
+
+    /**
+     * How long a thumbnail from YouTube may stay: two days inside the 30 the API policies allow,
+     * because the check runs when the cache is used and not on the day it comes due.
+     */
+    const val YOUTUBE_HIT_TTL_MS = 28L * 24 * 60 * 60 * 1000
 
     /** A cached answer. [bytes] is null for a recorded absence - which is an answer, not a gap. */
     data class Entry(val bytes: ByteArray?) {
@@ -51,7 +66,11 @@ object OnlineArtworkCache {
             File(context.cacheDir, FOLDER).apply { mkdirs() }
 
     private fun hitFile(context: Context, lookupKey: String): File =
-            File(folder(context), key(lookupKey) + HIT_SUFFIX)
+            File(folder(context),
+                    key(lookupKey) + if (isYoutubeKey(lookupKey)) YOUTUBE_HIT_SUFFIX else HIT_SUFFIX)
+
+    /** Whether [lookupKey] names a thumbnail looked up on YouTube - see [YouTubeThumbnailMatch.cacheKey]. */
+    fun isYoutubeKey(lookupKey: String): Boolean = lookupKey.startsWith(YouTubeThumbnailMatch.KEY_PREFIX)
 
     private fun missFile(context: Context, lookupKey: String): File =
             File(folder(context), key(lookupKey) + MISS_SUFFIX)
@@ -64,12 +83,17 @@ object OnlineArtworkCache {
     fun get(context: Context, lookupKey: String): Entry? {
         val hit = hitFile(context, lookupKey)
         if (hit.exists()) {
-            val bytes = try {
-                hit.readBytes()
-            } catch (_: Exception) {
-                null
+            if (isYoutubeKey(lookupKey) && youtubeHitExpired(hit.lastModified(), System.currentTimeMillis())) {
+                // Past its term: gone, and the caller asks again.
+                hit.delete()
+            } else {
+                val bytes = try {
+                    hit.readBytes()
+                } catch (_: Exception) {
+                    null
+                }
+                if (bytes != null && bytes.isNotEmpty()) return Entry(bytes)
             }
-            if (bytes != null && bytes.isNotEmpty()) return Entry(bytes)
         }
         val miss = missFile(context, lookupKey)
         if (miss.exists()) {
@@ -81,6 +105,10 @@ object OnlineArtworkCache {
 
     /** Pure so the expiry rule is pinned by a JVM test rather than by the clock. */
     fun missExpired(writtenAtMs: Long, nowMs: Long): Boolean = nowMs - writtenAtMs >= MISS_TTL_MS
+
+    /** Pure for the same reason: the 30-day rule for a YouTube thumbnail is pinned, not timed. */
+    fun youtubeHitExpired(writtenAtMs: Long, nowMs: Long): Boolean =
+            nowMs - writtenAtMs >= YOUTUBE_HIT_TTL_MS
 
     /** Records [bytes] for [lookupKey], or the absence of a picture when it is null. */
     fun put(context: Context, lookupKey: String, bytes: ByteArray?) {
@@ -107,8 +135,13 @@ object OnlineArtworkCache {
     }
 
     private fun trim(context: Context) {
+        val now = System.currentTimeMillis()
         val files = folder(context).listFiles()?.filter {
             it.isFile && (it.name.endsWith(HIT_SUFFIX) || it.name.endsWith(MISS_SUFFIX))
+        }?.filterNot {
+            // A YouTube thumbnail past its term goes whether or not anyone asks for it again.
+            (it.name.endsWith(YOUTUBE_HIT_SUFFIX) && youtubeHitExpired(it.lastModified(), now))
+                    .also { expired -> if (expired) it.delete() }
         } ?: return
         if (files.size <= MAX_ENTRIES) return
         val doomed = evictions(files.map { Eviction(it.name, it.lastModified()) }, MAX_ENTRIES)

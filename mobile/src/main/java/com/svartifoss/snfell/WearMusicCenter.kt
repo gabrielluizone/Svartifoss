@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.CenterLongPressAction
 import com.svartifoss.snfell.common.AlbumArtSource
+import com.svartifoss.snfell.common.CoverShape
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.MatejdroArtistAutosizeMigration
@@ -83,6 +84,7 @@ class WearMusicCenter : Application(), HasAndroidInjector {
 
         repairCenterLongPressPreference()
         migrateRetiredArtistPhotoStyle()
+        migrateRetiredCoverShape()
         LauncherIconController.apply(
                 this,
                 PreferenceManager.getDefaultSharedPreferences(this)
@@ -223,6 +225,37 @@ class WearMusicCenter : Application(), HasAndroidInjector {
             editor.apply()
             Timber.i("Migrated the retired artist_photo artwork style to the source setting")
         }
+    }
+
+    /**
+     * Rewrites the cover shape the superellipse was stored as before it was renamed.
+     *
+     * It shipped under a trademarked label, so installs and restored backups carry the old token in
+     * each shape preference, once per face scope. Nothing breaks if it stays - [CoverShape.parse]
+     * reads it - but the picker would show no selection for it, and a saved theme holding it could
+     * not be submitted, because the community vocabulary no longer lists it. Idempotent for
+     * [migrateRetiredArtistPhotoStyle]'s reason (it only ever matches a value it then replaces), so
+     * it needs no one-shot flag.
+     */
+    private fun migrateRetiredCoverShape() {
+        val prefs = PreferenceManager.getDefaultSharedPreferences(this)
+        val stale = try {
+            prefs.all.entries.filter { (key, value) ->
+                value is String && MiscPreferences.COVER_SHAPE_KEYS.any { base ->
+                    key == base || key.startsWith("$base${FaceScopedPreferences.SCOPE_SEPARATOR}")
+                } && CoverShape.migrate(value) != null
+            }.map { it.key }
+        } catch (e: RuntimeException) {
+            Timber.w(e, "Could not read preferences to migrate the retired cover shape")
+            return
+        }
+        if (stale.isEmpty()) return
+        val editor = prefs.edit()
+        stale.forEach { key ->
+            CoverShape.migrate(prefs.getString(key, null))?.let { editor.putString(key, it) }
+        }
+        editor.apply()
+        Timber.i("Migrated %d stored cover shape(s) to the superellipse's own value", stale.size)
     }
 
     private fun repairCenterLongPressPreference() {

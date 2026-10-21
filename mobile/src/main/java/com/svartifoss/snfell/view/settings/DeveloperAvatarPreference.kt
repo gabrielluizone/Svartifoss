@@ -1,7 +1,6 @@
 package com.svartifoss.snfell.view.settings
 
 import android.content.Context
-import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.ImageView
@@ -9,6 +8,11 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.SampledBitmaps
+import kotlin.math.roundToInt
+
+/** The dialog portrait, the larger of the two places the photo is drawn. */
+private const val LARGEST_AVATAR_DP = 44
 
 /**
  * The developer's photo, circular, as a drawable both the "About the developer" row and its
@@ -24,8 +28,9 @@ import com.svartifoss.snfell.R
  * source serves a 22dp row icon and a 44dp dialog portrait without a second asset.
  */
 internal fun developerAvatar(context: Context): Drawable? {
-    val bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.developer_avatar)
-            ?: return null
+    val largestPx = (LARGEST_AVATAR_DP * context.resources.displayMetrics.density).roundToInt()
+    val bitmap = SampledBitmaps.decodeResource(context.resources, R.drawable.developer_avatar,
+            largestPx) ?: return null
     return RoundedBitmapDrawableFactory.create(context.resources, bitmap).apply {
         isCircular = true
     }

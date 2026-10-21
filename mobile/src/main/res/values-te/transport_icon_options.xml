@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">ప్లే ఐకాన్</string>
+    <string name="setting_wear_pause_icon">పాజ్ ఐకాన్</string>
+    <string name="setting_wear_transport_icon_description">ప్లే మరియు పాజ్ నియంత్రణపై ఉన్న గుర్తు. “ఫేస్‌ను అనుసరించు” ఈ ఫేస్ అసలు డిజైన్‌ను ఉంచుతుంది.</string>
+    <string name="transport_icon_follow">ఫేస్‌ను అనుసరించు</string>
+    <string name="transport_icon_a">గుండ్రని</string>
+    <string name="transport_icon_b">గుండ్రని అంచు రేఖ</string>
+    <string name="transport_icon_c">పదునైన అంచు రేఖ</string>
+    <string name="transport_icon_d">పదునైన</string>
+    <string name="transport_icon_e">మందపాటి గుండ్రని అంచు రేఖ</string>
+</resources>

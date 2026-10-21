@@ -229,4 +229,6 @@
     <string name="quick_sleep_description">স্লিপ টাইমার, %1$d মিনিট বাকি। পরিবর্তন করতে ট্যাপ করুন।</string>
     <string name="quick_sleep_off_description">স্লিপ টাইমার বন্ধ। সেট করতে ট্যাপ করুন।</string>
     <string name="quick_lyric_plain">এই গানের কথায় সময় দেওয়া নেই। পড়তে ট্যাপ করুন।</string>
+    <string name="playback_live">লাইভ</string>
+    <string name="queue_add_shortcut">এই ট্র্যাকটি শর্টকাটে যোগ করুন</string>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Значок воспроизведения</string>
+    <string name="setting_wear_pause_icon">Значок паузы</string>
+    <string name="setting_wear_transport_icon_description">Символ кнопки воспроизведения и паузы. «Как в циферблате» сохраняет символ из исходного дизайна этого циферблата.</string>
+    <string name="transport_icon_follow">Как в циферблате</string>
+    <string name="transport_icon_a">Скруглённый</string>
+    <string name="transport_icon_b">Скруглённый контур</string>
+    <string name="transport_icon_c">Угловой контур</string>
+    <string name="transport_icon_d">Угловой</string>
+    <string name="transport_icon_e">Жирный скруглённый контур</string>
+</resources>

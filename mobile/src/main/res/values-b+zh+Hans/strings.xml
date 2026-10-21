@@ -656,6 +656,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -667,8 +669,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">常亮显示颜色</string>
     <string-array name="wear_aod_color_entries">
@@ -1360,16 +1360,14 @@
     <string name="drawer_about_summary">Svartifoss 让你可以从 Wear OS 手表控制手机上的音乐——提供一个完全可自定义、专为你的设备量身打造的遥控器。</string>
     <string name="drawer_name_heading">名称含义</string>
     <string name="drawer_name_meaning">Svartifoss 在冰岛语中意为「黑色瀑布」——得名于瓦特纳冰川国家公园中的一处瀑布，那里深色玄武岩柱环绕着一道狭窄的瀑流。就像水流过岩石一样，音乐在这个应用中流淌。</string>
-    <string name="drawer_sync_heading">同步</string>
-    <string name="drawer_sync_summary">手表设置在这里的手机上配置，并自动同步到你已配对的手表。</string>
     <string name="drawer_support_heading">支持</string>
     <string name="download_album_art">下载封面</string>
     <string name="album_art_saved">封面已保存到相册</string>
     <string name="album_art_save_error">保存封面失败</string>
 
-    <string name="action_play_liked_songs">播放喜欢的歌曲（YT Music）</string>
-    <string name="action_play_spotify_liked_songs">播放喜欢的歌曲（Spotify）</string>
-    <string name="action_play_soundcloud_likes">播放喜欢的歌曲（SoundCloud）</string>
+    <string name="action_play_liked_songs">喜欢的歌曲</string>
+    <string name="action_play_spotify_liked_songs">喜欢的歌曲</string>
+    <string name="action_play_soundcloud_likes">喜欢的歌曲</string>
     <string name="action_my_playlists">流媒体快捷方式</string>
     <string name="action_show_streaming_library">显示所有已保存的快捷方式</string>
     <string name="picker_section_apps">应用和自动化</string>
@@ -1484,7 +1482,7 @@
     <string name="playlist_shortcut_deleted">已删除 %1$s</string>
     <string name="playlist_shortcut_undo">撤销</string>
 
-    <string name="action_play_liked_songs_shuffled">随机播放喜欢的歌曲（YT Music）</string>
+    <string name="action_play_liked_songs_shuffled">喜欢的歌曲（随机）</string>
     <string name="action_search_history">搜索历史</string>
     <string name="search_history_empty">还没有最近的搜索记录</string>
 
@@ -1714,7 +1712,7 @@
         <item>方形</item>
         <item>Squircle</item>
         <item>圆形</item>
-        <item>三星风格</item>
+        <item>超椭圆</item>
     </string-array>
     <string-array name="auto_start_modes_descriptions">
         <item>已禁用</item>
@@ -2826,7 +2824,7 @@
     <string name="setting_wear_text_block_position">文本位置</string>
     <string name="setting_wear_text_block_position_description">曲目文本在屏幕上的位置。“跟随表盘”会保留每个表盘设计时设定的位置。</string>
     <string name="setting_online_artwork">在线封面图</string>
-    <string name="setting_online_artwork_description">让表盘显示在线查找的图片 \u2014 可以是正在演唱的艺术家，也可以是在播放器未提供图片时显示专辑封面。手机会在 Deezer 的公开目录中进行查找并缓存结果；只会发送曲目名和艺术家名，并且只有当某个表盘设置为使用这些来源之一时才会进行查找。关闭后，将使用播放器自身的封面图。</string>
+    <string name="setting_online_artwork_description">让表盘显示在线查找的图片 — 可以是正在演唱的艺术家，也可以是在播放器未提供图片时显示专辑封面。手机负责查找并缓存结果；只会发送曲目名和艺术家名，且发送到 Deezer 的公开目录。对于所属应用完全没有提供封面的曲目（例如 YouTube 视频），也由它来查找封面：手机会先向 YouTube 请求该视频自己的缩略图（将频道和标题发送到 Google 的 YouTube Data API），再向 Deezer 请求专辑封面，并且只在结果匹配时才使用。关闭后，仅使用播放器自身的封面图。</string>
     <string name="setting_wear_shortcut_details">在手表上选择播放或随机播放</string>
     <string name="setting_wear_shortcut_details_description">在手表上从快捷方式列表、快捷方式磁贴或操作菜单中选择已保存的链接时，会先显示其封面以及“播放”和“随机播放”。关闭后将直接开始播放。分配给某个链接的按钮和手势始终直接开始播放。</string>
     <string name="actions_quick_pin_add">在快捷面板中显示</string>
@@ -2924,4 +2922,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">显示可以打开链接的应用程序以及已安装的媒体播放器。</string>
     <string name="streaming_route_automatic">自动（检测到的应用程序）</string>
+    <string name="action_symfonium_start">在 Symfonium 中开始播放媒体</string>
+    <string name="action_symfonium_start_named">在 Symfonium 中开始：%1$s</string>
+    <string name="action_symfonium_sync">同步 Symfonium 提供方</string>
+    <string name="app_icon_style_gradient">渐变</string>
+    <string name="app_icon_style_solid">纯色</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">灰羽</string>
+    <string name="dev_show_rating_card">显示评分卡片</string>
+    <string name="dev_show_rating_card_description">立即向 Google Play 请求其应用内评价卡片，忽略平时的限制。仅在从 Google Play 安装的版本中才会显示（内部测试也算）</string>
+    <string name="dev_show_rating_card_unavailable">Google Play 没有适用于此版本的评价卡片。请从 Google Play 安装（包括内部测试），然后重试</string>
+    <string name="playlist_shortcut_queue_link_unavailable">此播放器没有为这首曲目发布可分享的链接</string>
+    <string name="setting_app_icon_style">应用图标</string>
+    <string name="setting_youtube_api_key">YouTube Data API 密钥</string>
+    <string name="setting_youtube_api_key_bundled">此应用已内置 YouTube 密钥；无需自行添加</string>
+    <string name="setting_youtube_api_key_configured">已配置 YouTube 密钥；仅保存在这部手机上</string>
+    <string name="setting_youtube_api_key_description">当播放器没有提供封面时，Svartifoss 会通过 Google 的 YouTube Data API 在 YouTube 中搜索，将频道和标题连同此密钥一起发送，并使用完全匹配的视频的缩略图。留空则使用此应用内置的密钥。您粘贴的密钥只保存在这部手机上：不会发送到手表，也不会包含在 Svartifoss 配置备份中。</string>
+    <string name="setting_youtube_api_key_dialog_title">粘贴您的 YouTube Data API v3 密钥</string>
+    <string name="setting_youtube_api_key_not_configured">可选：未配置 YouTube 密钥</string>
+    <string name="symfonium_media_album">专辑（可选）</string>
+    <string name="symfonium_media_artist">艺术家（可选）</string>
+    <string name="symfonium_media_id_optional">ID（可选）</string>
+    <string name="symfonium_media_name">名称</string>
+    <string name="symfonium_media_type">媒体类型</string>
+    <string name="symfonium_provider_id">提供方 ID</string>
+    <string name="symfonium_provider_id_description">可在 Symfonium 的“管理媒体提供方”界面中找到提供方 ID。</string>
+    <string name="symfonium_queue_mode">队列模式</string>
+    <string name="symfonium_resume">可能时继续播放</string>
+    <string name="symfonium_shuffle">随机播放合集</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>歌曲</item>
+        <item>播放列表</item>
+        <item>专辑</item>
+        <item>艺术家</item>
+        <item>风格</item>
+        <item>歌曲混音集</item>
+        <item>专辑混音集</item>
+        <item>网络电台</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>立即开始</item>
+        <item>下一首播放</item>
+        <item>添加到队列</item>
+    </string-array>
 </resources>

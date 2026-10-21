@@ -658,6 +658,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -669,8 +671,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Χρώμα πάντα ενεργό</string>
     <string-array name="wear_aod_color_entries">
@@ -1362,16 +1362,14 @@
     <string name="drawer_about_summary">Το Svartifoss σάς επιτρέπει να ελέγχετε τη μουσική στο τηλέφωνό σας από το ρολόι Wear OS — με ένα πλήρως προσαρμόσιμο τηλεχειριστήριο προσαρμοσμένο στη συσκευή σας.</string>
     <string name="drawer_name_heading">Το όνομα</string>
     <string name="drawer_name_meaning">Το Svartifoss σημαίνει «Μαύρος Καταρράκτης» στα ισλανδικά — ονομάστηκε από τον καταρράκτη στο Εθνικό Πάρκο Vatnajökull, όπου σκούρες βασαλτικές κολόνες πλαισιώνουν έναν στενό καταρράκτη. Όπως το νερό πάνω από την πέτρα, η μουσική ρέει μέσα από την εφαρμογή.</string>
-    <string name="drawer_sync_heading">Συγχρονισμός</string>
-    <string name="drawer_sync_summary">Οι ρυθμίσεις ρολογιού διαμορφώνονται εδώ στο τηλέφωνο και συγχρονίζονται αυτόματα με το συζευγμένο ρολόι σας.</string>
     <string name="drawer_support_heading">Υποστήριξη</string>
     <string name="download_album_art">Λήψη εξωφύλλου</string>
     <string name="album_art_saved">Το εξώφυλλο αποθηκεύτηκε στη συλλογή</string>
     <string name="album_art_save_error">Αποτυχία αποθήκευσης εξωφύλλου</string>
 
-    <string name="action_play_liked_songs">Αναπαραγωγή αγαπημένων τραγουδιών (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Αναπαραγωγή αγαπημένων τραγουδιών (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Αναπαραγωγή αγαπημένων τραγουδιών (SoundCloud)</string>
+    <string name="action_play_liked_songs">Αγαπημένα τραγούδια</string>
+    <string name="action_play_spotify_liked_songs">Αγαπημένα τραγούδια</string>
+    <string name="action_play_soundcloud_likes">Αγαπημένα τραγούδια</string>
     <string name="action_my_playlists">Συντομεύσεις streaming</string>
     <string name="action_show_streaming_library">Εμφάνιση όλων των αποθηκευμένων συντομεύσεων</string>
     <string name="picker_section_apps">Εφαρμογές &amp; αυτοματισμός</string>
@@ -1489,7 +1487,7 @@
     <string name="playlist_shortcut_deleted">Το %1$s διαγράφηκε</string>
     <string name="playlist_shortcut_undo">Αναίρεση</string>
 
-    <string name="action_play_liked_songs_shuffled">Αναπαραγωγή αγαπημένων τραγουδιών, τυχαία (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Αγαπημένα τραγούδια, τυχαία</string>
     <string name="action_search_history">Ιστορικό αναζήτησης</string>
     <string name="search_history_empty">Δεν υπάρχουν πρόσφατες αναζητήσεις ακόμη</string>
 
@@ -2049,7 +2047,7 @@
         <item>Τετράγωνο</item>
         <item>Squircle</item>
         <item>Κύκλος</item>
-        <item>Στιλ Samsung</item>
+        <item>Υπερέλλειψη</item>
     </string-array>
     <string-array name="theme_entries">
         <item>@string/theme_light</item>
@@ -2831,7 +2829,7 @@
     <string name="setting_wear_text_block_position">Θέση κειμένου</string>
     <string name="setting_wear_text_block_position_description">Πού βρίσκεται το κείμενο κομματιού στην οθόνη. Η επιλογή «Ακολούθηση πρόσοψης» διατηρεί τη θέση για την οποία σχεδιάστηκε κάθε πρόσοψη.</string>
     <string name="setting_online_artwork">Online εξώφυλλο</string>
-    <string name="setting_online_artwork_description">Επιτρέψτε στην πρόσοψη να εμφανίζει μια εικόνα που αναζητείται online \u2014 τον καλλιτέχνη που παίζει ή ένα εξώφυλλο άλμπουμ όταν ο player δεν παρέχει κανένα. Το τηλέφωνό σας κάνει την αναζήτηση στον δημόσιο κατάλογο του Deezer και αποθηκεύει το αποτέλεσμα στην κρυφή μνήμη· αποστέλλονται μόνο τα ονόματα του κομματιού και του καλλιτέχνη και δεν γίνεται καμία αναζήτηση εκτός αν μια πρόσοψη έχει οριστεί σε μία από αυτές τις πηγές. Όταν είναι απενεργοποιημένο, χρησιμοποιείται το εξώφυλλο του ίδιου του player.</string>
+    <string name="setting_online_artwork_description">Επιτρέψτε στο καντράν να εμφανίζει μια εικόνα που αναζητήθηκε στο διαδίκτυο — τον καλλιτέχνη που ερμηνεύει ή το εξώφυλλο ενός άλμπουμ για μια εφαρμογή αναπαραγωγής που δεν παρέχει κανένα. Το τηλέφωνό σας κάνει την αναζήτηση και αποθηκεύει το αποτέλεσμα στη μνήμη cache· στέλνονται μόνο τα ονόματα του κομματιού και του καλλιτέχνη, στον δημόσιο κατάλογο του Deezer. Είναι επίσης αυτό που βρίσκει εξώφυλλο για ένα κομμάτι του οποίου η εφαρμογή δεν δημοσιεύει κανένα, όπως ένα βίντεο στο YouTube: το τηλέφωνο ζητά από το YouTube τη μικρογραφία του ίδιου του βίντεο (στέλνοντας το κανάλι και τον τίτλο στο YouTube Data API της Google) και έπειτα από το Deezer ένα εξώφυλλο άλμπουμ, και χρησιμοποιεί ένα αποτέλεσμα μόνο όταν ταιριάζει. Όταν είναι απενεργοποιημένο, χρησιμοποιείται μόνο το δικό της εξώφυλλο της εφαρμογής αναπαραγωγής.</string>
     <string name="setting_wear_shortcut_details">Αναπαραγωγή ή τυχαία σειρά στο ρολόι</string>
     <string name="setting_wear_shortcut_details_description">Όταν επιλέγετε έναν αποθηκευμένο σύνδεσμο στο ρολόι, από τη λίστα συντομεύσεων, το πλακίδιο συντομεύσεων ή το μενού ενεργειών, εμφανίζεται πρώτα το εξώφυλλό του με Αναπαραγωγή και Τυχαία σειρά. Απενεργοποιήστε το για να ξεκινά αμέσως. Τα κουμπιά και οι χειρονομίες που έχουν ανατεθεί σε έναν σύνδεσμο τον ξεκινούν πάντα αμέσως.</string>
     <string name="actions_quick_pin_add">Εμφάνιση στον γρήγορο πίνακα</string>
@@ -2929,4 +2927,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">Οι εφαρμογές που μπορούν να ανοίξουν τον σύνδεσμο, καθώς και οι εγκατεστημένες συσκευές αναπαραγωγής πολυμέσων, εμφανίζονται.</string>
     <string name="streaming_route_automatic">Αυτόματη (ανιχνευμένη εφαρμογή)</string>
+    <string name="action_symfonium_start">Έναρξη πολυμέσων στο Symfonium</string>
+    <string name="action_symfonium_start_named">Έναρξη στο Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Συγχρονισμός παρόχου Symfonium</string>
+    <string name="app_icon_style_gradient">Διαβάθμιση</string>
+    <string name="app_icon_style_solid">Μονόχρωμο</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Φτερό κάρβουνου</string>
+    <string name="dev_show_rating_card">Εμφάνιση κάρτας αξιολόγησης</string>
+    <string name="dev_show_rating_card_description">Ζητά αμέσως από το Google Play την ενσωματωμένη κάρτα αξιολόγησης, αγνοώντας τα συνήθη όρια. Εμφανίζεται μόνο σε έκδοση που εγκαταστάθηκε από το Google Play (μετράει και η εσωτερική δοκιμή)</string>
+    <string name="dev_show_rating_card_unavailable">Το Google Play δεν έχει κάρτα αξιολόγησης για αυτή την έκδοση. Εγκαταστήστε την από το Google Play, συμπεριλαμβανομένης της εσωτερικής δοκιμής, και δοκιμάστε ξανά</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Αυτή η εφαρμογή αναπαραγωγής δεν δημοσίευσε σύνδεσμο κοινοποίησης για αυτό το κομμάτι</string>
+    <string name="setting_app_icon_style">Εικονίδιο εφαρμογής</string>
+    <string name="setting_youtube_api_key">Κλειδί YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">Το κλειδί YouTube περιλαμβάνεται σε αυτή την εφαρμογή· δεν χρειάζεται να προσθέσετε δικό σας</string>
+    <string name="setting_youtube_api_key_configured">Το κλειδί YouTube έχει ρυθμιστεί· αποθηκεύεται μόνο σε αυτό το τηλέφωνο</string>
+    <string name="setting_youtube_api_key_description">Όταν μια εφαρμογή αναπαραγωγής δεν δημοσιεύει εξώφυλλο, το Svartifoss αναζητά στο YouTube μέσω του YouTube Data API της Google, στέλνοντας το κανάλι και τον τίτλο μαζί με αυτό το κλειδί, και χρησιμοποιεί τη μικρογραφία ενός βίντεο που ταιριάζει ακριβώς. Αφήστε το κενό για να χρησιμοποιηθεί το κλειδί που περιλαμβάνεται στην εφαρμογή. Ένα κλειδί που επικολλάτε παραμένει σε αυτό το τηλέφωνο: δεν στέλνεται στο ρολόι και δεν περιλαμβάνεται στα αντίγραφα ασφαλείας ρυθμίσεων του Svartifoss.</string>
+    <string name="setting_youtube_api_key_dialog_title">Επικολλήστε το κλειδί YouTube Data API v3</string>
+    <string name="setting_youtube_api_key_not_configured">Προαιρετικό: δεν έχει ρυθμιστεί κλειδί YouTube</string>
+    <string name="symfonium_media_album">Άλμπουμ (προαιρετικό)</string>
+    <string name="symfonium_media_artist">Καλλιτέχνης (προαιρετικό)</string>
+    <string name="symfonium_media_id_optional">ID (προαιρετικό)</string>
+    <string name="symfonium_media_name">Όνομα</string>
+    <string name="symfonium_media_type">Τύπος πολυμέσου</string>
+    <string name="symfonium_provider_id">ID παρόχου</string>
+    <string name="symfonium_provider_id_description">Το ID του παρόχου βρίσκεται στην οθόνη «Διαχείριση παρόχων πολυμέσων» του Symfonium.</string>
+    <string name="symfonium_queue_mode">Λειτουργία ουράς</string>
+    <string name="symfonium_resume">Συνέχιση όταν είναι δυνατό</string>
+    <string name="symfonium_shuffle">Τυχαία σειρά στις συλλογές</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Τραγούδι</item>
+        <item>Λίστα αναπαραγωγής</item>
+        <item>Άλμπουμ</item>
+        <item>Καλλιτέχνης</item>
+        <item>Είδος</item>
+        <item>Μιξ τραγουδιών</item>
+        <item>Μιξ άλμπουμ</item>
+        <item>Διαδικτυακό ραδιόφωνο</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Έναρξη τώρα</item>
+        <item>Αναπαραγωγή επόμενου</item>
+        <item>Προσθήκη στην ουρά</item>
+    </string-array>
 </resources>

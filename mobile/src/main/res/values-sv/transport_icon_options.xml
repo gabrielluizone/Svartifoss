@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Uppspelningsikon</string>
+    <string name="setting_wear_pause_icon">Pausikon</string>
+    <string name="setting_wear_transport_icon_description">Symbolen på uppspelnings- och pausknappen. ”Följ urtavla” behåller den ursprungliga designen.</string>
+    <string name="transport_icon_follow">Följ urtavla</string>
+    <string name="transport_icon_a">Rundad</string>
+    <string name="transport_icon_b">Rundad kontur</string>
+    <string name="transport_icon_c">Skarp kontur</string>
+    <string name="transport_icon_d">Skarp</string>
+    <string name="transport_icon_e">Tjock rundad kontur</string>
+</resources>

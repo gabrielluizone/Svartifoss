@@ -739,6 +739,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -750,8 +752,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">สีจอเปิดตลอดเวลา</string>
     <string-array name="wear_aod_color_entries">
@@ -1639,7 +1639,7 @@
         <item>สี่เหลี่ยมจัตุรัส</item>
         <item>สเควอร์เคิล</item>
         <item>วงกลม</item>
-        <item>สไตล์ Samsung</item>
+        <item>ซูเปอร์วงรี</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">ใช้ฟอนต์ทุกที่</string>
@@ -2018,16 +2018,14 @@
     <string name="drawer_about_summary">Svartifoss ให้คุณควบคุมเพลงบนโทรศัพท์จากนาฬิกา Wear OS — ด้วยรีโมตที่ปรับแต่งได้เต็มที่ให้เหมาะกับอุปกรณ์ของคุณ</string>
     <string name="drawer_name_heading">ชื่อ</string>
     <string name="drawer_name_meaning">Svartifoss แปลว่า “น้ำตกดำ” ในภาษาไอซ์แลนด์ — ตั้งชื่อตามน้ำตกในอุทยานแห่งชาติ Vatnajökull ที่เสาหินบะซอลต์สีเข้มล้อมกรอบสายน้ำตกแคบ ๆ ดั่งน้ำที่ไหลผ่านหิน ดนตรีก็ไหลผ่านแอป</string>
-    <string name="drawer_sync_heading">ซิงค์</string>
-    <string name="drawer_sync_summary">ตั้งค่านาฬิกาที่นี่บนโทรศัพท์และซิงค์ไปยังนาฬิกาที่จับคู่โดยอัตโนมัติ</string>
     <string name="drawer_support_heading">สนับสนุน</string>
     <string name="download_album_art">ดาวน์โหลดภาพปก</string>
     <string name="album_art_saved">บันทึกภาพปกลงแกลเลอรีแล้ว</string>
     <string name="album_art_save_error">บันทึกภาพปกไม่สำเร็จ</string>
 
-    <string name="action_play_liked_songs">เล่นเพลงที่กดถูกใจ (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">เล่นเพลงที่กดถูกใจ (Spotify)</string>
-    <string name="action_play_soundcloud_likes">เล่นแทร็กที่กดถูกใจ (SoundCloud)</string>
+    <string name="action_play_liked_songs">เพลงที่กดถูกใจ</string>
+    <string name="action_play_spotify_liked_songs">เพลงที่กดถูกใจ</string>
+    <string name="action_play_soundcloud_likes">แทร็กที่กดถูกใจ</string>
     <string name="action_my_playlists">ทางลัดสตรีมมิง</string>
     <string name="action_show_streaming_library">แสดงทางลัดที่บันทึกไว้ทั้งหมด</string>
     <string name="picker_section_apps">แอป &amp; ระบบอัตโนมัติ</string>
@@ -2157,7 +2155,7 @@
     <string name="playlist_shortcut_deleted">ลบ %1$s แล้ว</string>
     <string name="playlist_shortcut_undo">เลิกทำ</string>
 
-    <string name="action_play_liked_songs_shuffled">เล่นเพลงที่กดถูกใจแบบสุ่ม (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">เพลงที่กดถูกใจ (สุ่ม)</string>
     <string name="action_search_history">ประวัติการค้นหา</string>
     <string name="search_history_empty">ยังไม่มีการค้นหาล่าสุด</string>
 
@@ -2843,7 +2841,7 @@
     <string name="setting_wear_text_block_position">ตำแหน่งข้อความ</string>
     <string name="setting_wear_text_block_position_description">ตำแหน่งของข้อความแทร็กบนหน้าจอ “ตามหน้าปัด” จะคงตำแหน่งที่ออกแบบไว้สำหรับแต่ละหน้าปัด</string>
     <string name="setting_online_artwork">อาร์ตเวิร์กออนไลน์</string>
-    <string name="setting_online_artwork_description">ให้หน้าปัดแสดงรูปภาพที่ค้นหาทางออนไลน์ \u2014 ศิลปินที่กำลังเล่น หรือปกอัลบั้มสำหรับเครื่องเล่นที่ไม่ได้เผยแพร่รูปภาพ โทรศัพท์ของคุณจะค้นหาในแค็ตตาล็อกสาธารณะของ Deezer และแคชผลลัพธ์ โดยส่งเฉพาะชื่อแทร็กและศิลปิน และจะไม่ค้นหาอะไรเว้นแต่หน้าปัดจะตั้งค่าให้ใช้แหล่งใดแหล่งหนึ่งดังกล่าว เมื่อปิด จะใช้อาร์ตเวิร์กจากเครื่องเล่นเอง</string>
+    <string name="setting_online_artwork_description">ให้หน้าปัดแสดงรูปภาพที่ค้นหาทางออนไลน์ — ศิลปินที่กำลังเล่น หรือปกอัลบั้มสำหรับเครื่องเล่นที่ไม่ได้เผยแพร่ภาพ โทรศัพท์ของคุณเป็นผู้ค้นหาและแคชผลลัพธ์ โดยส่งเฉพาะชื่อแทร็กและชื่อศิลปินไปยังแค็ตตาล็อกสาธารณะของ Deezer ฟีเจอร์นี้ยังหาปกให้แทร็กที่แอปไม่ได้เผยแพร่ปกเลย เช่นวิดีโอ YouTube ด้วย โดยโทรศัพท์จะขอภาพขนาดย่อของวิดีโอนั้นจาก YouTube (ส่งชื่อช่องและชื่อเรื่องไปยัง YouTube Data API ของ Google) แล้วขอปกอัลบั้มจาก Deezer และใช้ผลลัพธ์เฉพาะเมื่อตรงกันเท่านั้น เมื่อปิด จะใช้เฉพาะอาร์ตเวิร์กของเครื่องเล่นเอง</string>
     <string name="setting_wear_shortcut_details">เล่นหรือสุ่มบนนาฬิกา</string>
     <string name="setting_wear_shortcut_details_description">เมื่อเลือกลิงก์ที่บันทึกไว้บนนาฬิกา จากรายการทางลัด Tile ทางลัด หรือเมนูการทำงาน จะแสดงปกพร้อมปุ่มเล่นและสุ่มก่อน ปิดเพื่อให้เริ่มเล่นทันทีแทน ปุ่มและท่าทางที่กำหนดให้กับลิงก์เดียวจะเริ่มเล่นทันทีเสมอ</string>
     <string name="actions_quick_pin_add">แสดงในแผงควบคุมด่วน</string>
@@ -2941,4 +2939,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">จะแสดงแอปที่สามารถเปิดลิงก์ได้พร้อมโปรแกรมเล่นสื่อที่ติดตั้งไว้</string>
     <string name="streaming_route_automatic">อัตโนมัติ (แอปที่ตรวจพบ)</string>
+    <string name="action_symfonium_start">เริ่มสื่อใน Symfonium</string>
+    <string name="action_symfonium_start_named">เริ่มใน Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">ซิงค์ผู้ให้บริการ Symfonium</string>
+    <string name="app_icon_style_gradient">ไล่เฉดสี</string>
+    <string name="app_icon_style_solid">สีเดียว</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">ขนนกสีถ่าน</string>
+    <string name="dev_show_rating_card">แสดงการ์ดให้คะแนน</string>
+    <string name="dev_show_rating_card_description">ขอการ์ดรีวิวในแอปจาก Google Play ทันที โดยไม่สนขีดจำกัดตามปกติ การ์ดจะปรากฏเฉพาะในบิลด์ที่ติดตั้งจาก Google Play เท่านั้น (การทดสอบภายในก็นับ)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play ไม่มีการ์ดรีวิวสำหรับบิลด์นี้ ติดตั้งจาก Google Play รวมถึงการทดสอบภายใน แล้วลองอีกครั้ง</string>
+    <string name="playlist_shortcut_queue_link_unavailable">เครื่องเล่นนี้ไม่ได้เผยแพร่ลิงก์ที่แชร์ได้สำหรับแทร็กนี้</string>
+    <string name="setting_app_icon_style">ไอคอนแอป</string>
+    <string name="setting_youtube_api_key">คีย์ YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">แอปนี้มีคีย์ YouTube รวมอยู่แล้ว คุณไม่ต้องเพิ่มเอง</string>
+    <string name="setting_youtube_api_key_configured">ตั้งค่าคีย์ YouTube แล้ว เก็บไว้ในโทรศัพท์เครื่องนี้เท่านั้น</string>
+    <string name="setting_youtube_api_key_description">เมื่อเครื่องเล่นไม่เผยแพร่ภาพปก Svartifoss จะค้นหาใน YouTube ผ่าน YouTube Data API ของ Google โดยส่งชื่อช่องและชื่อเรื่องพร้อมคีย์นี้ แล้วใช้ภาพขนาดย่อของวิดีโอที่ตรงกันทุกประการ เว้นว่างไว้เพื่อใช้คีย์ที่รวมอยู่ในแอป คีย์ที่คุณวางจะอยู่ในโทรศัพท์เครื่องนี้เท่านั้น ไม่ถูกส่งไปยังนาฬิกาและไม่รวมอยู่ในข้อมูลสำรองการกำหนดค่าของ Svartifoss</string>
+    <string name="setting_youtube_api_key_dialog_title">วางคีย์ YouTube Data API v3 ของคุณ</string>
+    <string name="setting_youtube_api_key_not_configured">ไม่บังคับ: ยังไม่ได้ตั้งค่าคีย์ YouTube</string>
+    <string name="symfonium_media_album">อัลบั้ม (ไม่บังคับ)</string>
+    <string name="symfonium_media_artist">ศิลปิน (ไม่บังคับ)</string>
+    <string name="symfonium_media_id_optional">ID (ไม่บังคับ)</string>
+    <string name="symfonium_media_name">ชื่อ</string>
+    <string name="symfonium_media_type">ประเภทสื่อ</string>
+    <string name="symfonium_provider_id">ID ผู้ให้บริการ</string>
+    <string name="symfonium_provider_id_description">ดู ID ผู้ให้บริการได้ที่หน้าจอ “จัดการผู้ให้บริการสื่อ” ใน Symfonium</string>
+    <string name="symfonium_queue_mode">โหมดคิว</string>
+    <string name="symfonium_resume">เล่นต่อเมื่อเป็นไปได้</string>
+    <string name="symfonium_shuffle">สุ่มเล่นคอลเลกชัน</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>เพลง</item>
+        <item>เพลย์ลิสต์</item>
+        <item>อัลบั้ม</item>
+        <item>ศิลปิน</item>
+        <item>แนวเพลง</item>
+        <item>มิกซ์เพลง</item>
+        <item>มิกซ์อัลบั้ม</item>
+        <item>วิทยุอินเทอร์เน็ต</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>เริ่มเลย</item>
+        <item>เล่นถัดไป</item>
+        <item>เพิ่มในคิว</item>
+    </string-array>
 </resources>

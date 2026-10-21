@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One row of the TransportGlyphPreference dialog: the glyph a choice draws, then its name, so the
+     five drawings are seen and not only read. The glyph is a white vector tinted by the adapter to
+     the row's text colour (the accent while selected), the way the watch tints it. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:minHeight="56dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
+
+    <ImageView
+        android:id="@+id/choice_glyph"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/choice_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="16dp"
+        android:includeFontPadding="false"
+        android:textSize="16sp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:fontFamily="@font/google_sans"
+        android:textColor="@color/lyra_on_surface" />
+
+    <ImageView
+        android:id="@+id/choice_check"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/ic_check_circle"
+        android:importantForAccessibility="no" />
+
+</LinearLayout>

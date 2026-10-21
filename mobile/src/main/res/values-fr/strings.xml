@@ -762,6 +762,8 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -773,8 +775,6 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Couleur de l’affichage permanent</string>
     <string-array name="wear_aod_color_entries">
@@ -1662,7 +1662,7 @@ Si cela vous arrive, vous pouvez activer cette option pour désactiver complète
         <item>Carré</item>
         <item>Squircle</item>
         <item>Cercle</item>
-        <item>Style Samsung</item>
+        <item>Superellipse</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Utiliser la police partout</string>
@@ -2043,16 +2043,14 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
     <string name="drawer_about_summary">Svartifoss vous permet de contrôler la musique de votre téléphone depuis votre montre Wear OS — avec une télécommande entièrement personnalisable adaptée à votre appareil.</string>
     <string name="drawer_name_heading">Le nom</string>
     <string name="drawer_name_meaning">Svartifoss signifie « Chutes noires » en islandais — le nom vient de la cascade du parc national du Vatnajökull, où des colonnes de basalte sombre encadrent une étroite chute d’eau. Comme l’eau sur la pierre, la musique s’écoule à travers l’application.</string>
-    <string name="drawer_sync_heading">Synchronisation</string>
-    <string name="drawer_sync_summary">Les paramètres de la montre se configurent ici sur le téléphone et se synchronisent automatiquement avec votre montre appairée.</string>
     <string name="drawer_support_heading">Assistance</string>
     <string name="download_album_art">Télécharger la pochette</string>
     <string name="album_art_saved">Pochette enregistrée dans la galerie</string>
     <string name="album_art_save_error">Échec de l’enregistrement de la pochette</string>
 
-    <string name="action_play_liked_songs">Lire les titres aimés (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Lire les titres aimés (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Lire les titres aimés (SoundCloud)</string>
+    <string name="action_play_liked_songs">Titres aimés</string>
+    <string name="action_play_spotify_liked_songs">Titres aimés</string>
+    <string name="action_play_soundcloud_likes">Titres aimés</string>
     <string name="action_my_playlists">Raccourcis de streaming</string>
     <string name="action_show_streaming_library">Afficher tous les raccourcis enregistrés</string>
     <string name="picker_section_apps">Applications &amp; automatisation</string>
@@ -2185,7 +2183,7 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
     <string name="playlist_shortcut_deleted">%1$s supprimé</string>
     <string name="playlist_shortcut_undo">Annuler</string>
 
-    <string name="action_play_liked_songs_shuffled">Lire les titres aimés en aléatoire (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Titres aimés, en aléatoire</string>
     <string name="action_search_history">Historique de recherche</string>
     <string name="search_history_empty">Aucune recherche récente</string>
 
@@ -2871,7 +2869,7 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
     <string name="setting_wear_text_block_position">Position du texte</string>
     <string name="setting_wear_text_block_position_description">Emplacement du texte du morceau à l’écran. Suivre le cadran conserve la position pour laquelle chaque cadran a été conçu.</string>
     <string name="setting_online_artwork">Illustration en ligne</string>
-    <string name="setting_online_artwork_description">Autorisez le cadran à afficher une image recherchée en ligne \u2014 l’artiste en cours de lecture, ou une pochette d’album si le lecteur n’en fournit aucune. Votre téléphone effectue la recherche dans le catalogue public de Deezer et met le résultat en cache ; seuls les noms du morceau et de l’artiste sont envoyés, et aucune recherche n’est faite à moins qu’un cadran soit réglé sur l’une de ces sources. Lorsque cette option est désactivée, l’illustration fournie par le lecteur est utilisée.</string>
+    <string name="setting_online_artwork_description">Autorisez le cadran à afficher une image recherchée en ligne — l’artiste en cours de lecture, ou une pochette d’album si le lecteur n’en fournit aucune. Votre téléphone effectue la recherche et met le résultat en cache ; seuls les noms du morceau et de l’artiste sont envoyés, au catalogue public de Deezer. C’est aussi ce qui permet de trouver une pochette pour un titre dont l’application n’en publie aucune, comme une vidéo YouTube : le téléphone demande à YouTube la miniature de cette vidéo (en envoyant la chaîne et le titre à l’API YouTube Data de Google), puis à Deezer une pochette d’album, et n’utilise un résultat que s’il correspond. Lorsque cette option est désactivée, seule l’illustration fournie par le lecteur est utilisée.</string>
     <string name="setting_wear_shortcut_details">Lecture ou aléatoire sur la montre</string>
     <string name="setting_wear_shortcut_details_description">Choisir un lien enregistré sur la montre, depuis la liste des raccourcis, la Tile Raccourcis ou le menu d’actions, affiche d’abord sa pochette avec Lecture et Aléatoire. Désactivez pour le lancer immédiatement à la place. Les boutons et gestes attribués à un lien le lancent toujours immédiatement.</string>
     <string name="actions_quick_pin_add">Afficher dans le panneau rapide</string>
@@ -2969,4 +2967,48 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
     </plurals>
     <string name="streaming_app_routes_picker_description">Les applications pouvant ouvrir le lien, ainsi que les lecteurs multimédias installés, sont affichés.</string>
     <string name="streaming_route_automatic">Automatique (application détectée)</string>
+    <string name="action_symfonium_start">Lancer un média dans Symfonium</string>
+    <string name="action_symfonium_start_named">Lancer dans Symfonium : %1$s</string>
+    <string name="action_symfonium_sync">Synchroniser le fournisseur Symfonium</string>
+    <string name="app_icon_style_gradient">Dégradé</string>
+    <string name="app_icon_style_solid">Couleur unie</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Plume de charbon</string>
+    <string name="dev_show_rating_card">Afficher la carte d’évaluation</string>
+    <string name="dev_show_rating_card_description">Demande tout de suite à Google Play sa carte d’avis intégrée, sans tenir compte des limites habituelles. Elle n’apparaît que dans une version installée depuis Google Play (le test interne compte)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play n’a pas de carte d’avis pour cette version. Installez-la depuis Google Play, test interne compris, puis réessayez</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Ce lecteur n’a pas publié de lien partageable pour ce titre</string>
+    <string name="setting_app_icon_style">Icône de l’application</string>
+    <string name="setting_youtube_api_key">Clé de l’API YouTube Data</string>
+    <string name="setting_youtube_api_key_bundled">Clé YouTube incluse dans cette application ; inutile d’en ajouter une</string>
+    <string name="setting_youtube_api_key_configured">Clé YouTube configurée ; stockée uniquement sur ce téléphone</string>
+    <string name="setting_youtube_api_key_dialog_title">Collez votre clé de l’API YouTube Data v3</string>
+    <string name="setting_youtube_api_key_not_configured">Facultatif : aucune clé YouTube configurée</string>
+    <string name="symfonium_media_album">Album (facultatif)</string>
+    <string name="symfonium_media_artist">Artiste (facultatif)</string>
+    <string name="symfonium_media_id_optional">ID (facultatif)</string>
+    <string name="symfonium_media_name">Nom</string>
+    <string name="symfonium_media_type">Type de média</string>
+    <string name="symfonium_provider_id">ID du fournisseur</string>
+    <string name="symfonium_provider_id_description">Retrouvez l’ID du fournisseur dans l’écran « Gérer les fournisseurs de médias » de Symfonium.</string>
+    <string name="symfonium_queue_mode">Mode de file d’attente</string>
+    <string name="symfonium_resume">Reprendre quand c’est possible</string>
+    <string name="symfonium_shuffle">Lecture aléatoire des collections</string>
+    <string name="setting_youtube_api_key_description">Quand un lecteur ne publie aucune pochette, Svartifoss cherche sur YouTube via l’API YouTube Data de Google, en envoyant la chaîne et le titre avec cette clé, et utilise la miniature d’une vidéo qui correspond exactement. Laissez le champ vide pour utiliser la clé incluse dans cette application. Une clé que vous collez reste sur ce téléphone : elle n’est ni envoyée à la montre ni incluse dans les sauvegardes de configuration de Svartifoss.</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Titre</item>
+        <item>Playlist</item>
+        <item>Album</item>
+        <item>Artiste</item>
+        <item>Genre</item>
+        <item>Mix de titres</item>
+        <item>Mix d’albums</item>
+        <item>Radio Internet</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Lancer maintenant</item>
+        <item>Lire ensuite</item>
+        <item>Ajouter à la file d’attente</item>
+    </string-array>
 </resources>

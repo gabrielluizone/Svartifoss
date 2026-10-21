@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Значок відтворення</string>
+    <string name="setting_wear_pause_icon">Значок паузи</string>
+    <string name="setting_wear_transport_icon_description">Символ кнопки відтворення та паузи. «Відповідно до циферблата» зберігає символ із початкового дизайну цього циферблата.</string>
+    <string name="transport_icon_follow">Відповідно до циферблата</string>
+    <string name="transport_icon_a">Округлений</string>
+    <string name="transport_icon_b">Округлений контур</string>
+    <string name="transport_icon_c">Кутастий контур</string>
+    <string name="transport_icon_d">Кутастий</string>
+    <string name="transport_icon_e">Товстий округлений контур</string>
+</resources>

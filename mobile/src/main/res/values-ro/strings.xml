@@ -660,6 +660,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -671,8 +673,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Culoare mereu activ</string>
     <string-array name="wear_aod_color_entries">
@@ -1364,16 +1364,14 @@
     <string name="drawer_about_summary">Svartifoss vă permite să controlați muzica de pe telefon de la ceasul Wear OS — cu o telecomandă complet personalizabilă, adaptată dispozitivului dvs.</string>
     <string name="drawer_name_heading">Numele</string>
     <string name="drawer_name_meaning">Svartifoss înseamnă „Cascada Neagră” în islandeză — numit după cascada din Parcul Național Vatnajökull, unde coloane de bazalt întunecat încadrează o cascadă îngustă. Ca apa peste piatră, muzica curge prin aplicație.</string>
-    <string name="drawer_sync_heading">Sincronizare</string>
-    <string name="drawer_sync_summary">Setările ceasului sunt configurate aici pe telefon și sincronizate automat cu ceasul dvs. împerecheat.</string>
     <string name="drawer_support_heading">Susținere</string>
     <string name="download_album_art">Descarcă coperta</string>
     <string name="album_art_saved">Coperta a fost salvată în galerie</string>
     <string name="album_art_save_error">Nu s-a putut salva coperta</string>
 
-    <string name="action_play_liked_songs">Redă melodiile apreciate (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Redă melodiile apreciate (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Redă melodiile apreciate (SoundCloud)</string>
+    <string name="action_play_liked_songs">Melodii apreciate</string>
+    <string name="action_play_spotify_liked_songs">Melodii apreciate</string>
+    <string name="action_play_soundcloud_likes">Melodii apreciate</string>
     <string name="action_my_playlists">Scurtături de streaming</string>
     <string name="action_show_streaming_library">Afișează toate scurtăturile salvate</string>
     <string name="picker_section_apps">Aplicații &amp; automatizare</string>
@@ -1494,7 +1492,7 @@
     <string name="playlist_shortcut_deleted">%1$s șters</string>
     <string name="playlist_shortcut_undo">Anulează</string>
 
-    <string name="action_play_liked_songs_shuffled">Redă melodiile apreciate, aleatoriu (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Melodii apreciate, aleatoriu</string>
     <string name="action_search_history">Istoric căutări</string>
     <string name="search_history_empty">Nicio căutare recentă încă</string>
 
@@ -2054,7 +2052,7 @@
         <item>Pătrat</item>
         <item>Squircle</item>
         <item>Cerc</item>
-        <item>Stil Samsung</item>
+        <item>Superelipsă</item>
     </string-array>
     <string-array name="theme_entries">
         <item>@string/theme_light</item>
@@ -2836,7 +2834,7 @@
     <string name="setting_wear_text_block_position">Poziția textului</string>
     <string name="setting_wear_text_block_position_description">Locul în care apare textul piesei pe ecran. Urmează cadranul păstrează poziția pentru care a fost proiectat fiecare cadran.</string>
     <string name="setting_online_artwork">Copertă online</string>
-    <string name="setting_online_artwork_description">Permite cadranului să afișeze o imagine căutată online \u2014 artistul care cântă sau coperta unui album atunci când playerul nu furnizează niciuna. Telefonul face căutarea în catalogul public Deezer și păstrează rezultatul în cache; sunt trimise doar numele piesei și al artistului și nu se caută nimic decât dacă un cadran este setat să folosească una dintre aceste surse. Dacă opțiunea este oprită, se folosește coperta furnizată de player.</string>
+    <string name="setting_online_artwork_description">Permite cadranului să afișeze o imagine căutată online — artistul care interpretează sau coperta unui album pentru un player care nu o publică. Telefonul tău face căutarea și păstrează rezultatul în memoria cache; sunt trimise doar numele piesei și al artistului, către catalogul public Deezer. Tot asta găsește o copertă pentru o piesă a cărei aplicație nu publică niciuna, cum ar fi un videoclip YouTube: telefonul cere de la YouTube miniatura videoclipului însuși (trimițând canalul și titlul către YouTube Data API de la Google), apoi de la Deezer coperta unui album, și folosește un rezultat doar când se potrivește. Când este dezactivat, se folosește doar coperta propriului player.</string>
     <string name="setting_wear_shortcut_details">Redare sau aleatoriu pe ceas</string>
     <string name="setting_wear_shortcut_details_description">Când alegi pe ceas un link salvat, din lista de comenzi rapide, din Tile-ul de comenzi rapide sau din meniul de acțiuni, mai întâi apare coperta cu Redare și Aleatoriu. Dezactivează ca să pornească imediat. Butoanele și gesturile atribuite unui link îl pornesc mereu imediat.</string>
     <string name="actions_quick_pin_add">Afișați în panoul rapid</string>
@@ -2934,4 +2932,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">Sunt afișate aplicațiile care pot deschide legătura, plus playerele media instalate.</string>
     <string name="streaming_route_automatic">Automat (aplicație detectată)</string>
+    <string name="action_symfonium_start">Pornește media în Symfonium</string>
+    <string name="action_symfonium_start_named">Pornește în Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Sincronizează furnizorul Symfonium</string>
+    <string name="app_icon_style_gradient">Gradient</string>
+    <string name="app_icon_style_solid">Culoare uniformă</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Pană de cărbune</string>
+    <string name="dev_show_rating_card">Afișează cardul de evaluare</string>
+    <string name="dev_show_rating_card_description">Cere imediat de la Google Play cardul său de recenzie din aplicație, ignorând limitele obișnuite. Apare doar într-o versiune instalată din Google Play (testarea internă contează)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play nu are card de recenzie pentru această versiune. Instaleaz-o din Google Play, inclusiv din testarea internă, și încearcă din nou</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Acest player nu a publicat un link care poate fi distribuit pentru această piesă</string>
+    <string name="setting_app_icon_style">Pictograma aplicației</string>
+    <string name="setting_youtube_api_key">Cheie YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">Cheia YouTube este inclusă în această aplicație; nu trebuie să adaugi una</string>
+    <string name="setting_youtube_api_key_configured">Cheia YouTube este configurată; stocată doar pe acest telefon</string>
+    <string name="setting_youtube_api_key_description">Când un player nu publică nicio copertă, Svartifoss caută pe YouTube prin YouTube Data API de la Google, trimițând canalul și titlul împreună cu această cheie, și folosește miniatura unui videoclip care se potrivește exact. Lasă gol pentru a folosi cheia inclusă în aplicație. O cheie pe care o lipești rămâne pe acest telefon: nu este trimisă la ceas și nu este inclusă în copiile de rezervă ale configurației Svartifoss.</string>
+    <string name="setting_youtube_api_key_dialog_title">Lipește cheia ta YouTube Data API v3</string>
+    <string name="setting_youtube_api_key_not_configured">Opțional: nicio cheie YouTube configurată</string>
+    <string name="symfonium_media_album">Album (opțional)</string>
+    <string name="symfonium_media_artist">Artist (opțional)</string>
+    <string name="symfonium_media_id_optional">ID (opțional)</string>
+    <string name="symfonium_media_name">Nume</string>
+    <string name="symfonium_media_type">Tip de media</string>
+    <string name="symfonium_provider_id">ID furnizor</string>
+    <string name="symfonium_provider_id_description">Găsești ID-ul furnizorului pe ecranul Gestionare furnizori media din Symfonium.</string>
+    <string name="symfonium_queue_mode">Mod coadă</string>
+    <string name="symfonium_resume">Reia când este posibil</string>
+    <string name="symfonium_shuffle">Redare aleatorie a colecțiilor</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Melodie</item>
+        <item>Listă de redare</item>
+        <item>Album</item>
+        <item>Artist</item>
+        <item>Gen</item>
+        <item>Mix de melodii</item>
+        <item>Mix de albume</item>
+        <item>Radio pe internet</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Pornește acum</item>
+        <item>Redă următoarea</item>
+        <item>Adaugă în coadă</item>
+    </string-array>
 </resources>

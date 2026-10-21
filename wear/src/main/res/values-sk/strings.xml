@@ -229,4 +229,6 @@
     <string name="quick_sleep_description">Časovač vypnutia, zostáva %1$d minút. Klepnutím zmeníte</string>
     <string name="quick_sleep_off_description">Časovač spánku je vypnutý. Klepnutím ho nastavíte.</string>
     <string name="quick_lyric_plain">Tento text nemá časovanie. Ťuknutím ho zobrazíte.</string>
+    <string name="playback_live">ŽIVE</string>
+    <string name="queue_add_shortcut">Pridať túto skladbu do skratiek</string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">עובי סרגל עוצמת הקול</string>
-    <string name="setting_wear_volume_thickness_description">עובי הקו של סרגל עוצמת הקול, מ־50% עד 180% מברירת המחדל. גם קווים עבים יותר נשארים רחוקים מהשוליים.</string>
+    <string name="setting_wear_volume_thickness_description">עובי הקו של סרגל עוצמת הקול, מ־50%% עד 180%% מברירת המחדל. גם קווים עבים יותר נשארים רחוקים מהשוליים.</string>
     <string name="setting_wear_volume_haptics">רטט הכתר בעוצמת הקול</string>
     <string name="setting_wear_queue_dim_played">עמעום שירים שכבר הושמעו</string>
     <string name="setting_wear_queue_dim_played_description">מעמעם את הפריטים שכבר הושמעו כדי שהבאים בתור יבלטו.</string>

@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.logging
 
+import android.os.Build
 import com.google.android.gms.wearable.DataMap
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
@@ -34,6 +35,12 @@ class CrashlyticsExceptionWearHandler : ExceptionWearHandler {
             "api_level",
             map.getString("api_level")!!
         )
+
+        // WatchException.create puts the watch's frames on the exception from Android N on; below
+        // that they travel inside the message text, and the stack is the phone's own.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            throwable.stackTrace = WatchCrashFrames.mark(throwable.stackTrace)
+        }
 
         FirebaseCrashlytics.getInstance().recordException(throwable)
     }

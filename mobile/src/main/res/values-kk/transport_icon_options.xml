@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Ойнату белгішесі</string>
+    <string name="setting_wear_pause_icon">Кідірту белгішесі</string>
+    <string name="setting_wear_transport_icon_description">Ойнату және кідірту басқару элементіндегі таңба. «Циферблатты қолдану» осы циферблаттың бастапқы дизайнын сақтайды.</string>
+    <string name="transport_icon_follow">Циферблатты қолдану</string>
+    <string name="transport_icon_a">Дөңгелектелген</string>
+    <string name="transport_icon_b">Дөңгелектелген контур</string>
+    <string name="transport_icon_c">Өткір контур</string>
+    <string name="transport_icon_d">Өткір</string>
+    <string name="transport_icon_e">Қалың дөңгелектелген контур</string>
+</resources>

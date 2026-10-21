@@ -238,12 +238,17 @@ sealed interface QueueRowOutline {
  *
  * The queue's own styles each carry a single fraction ([QueueStyleSpec.coverCornerFraction]), which
  * is the uniform case of the same thing.
+ *
+ * A cover cut as [CoverShape.SUPERELLIPSE] is not four radii, so [superellipse] says to draw the
+ * [Superellipse] outline instead; the fractions are then only the stand-in a renderer that ignored
+ * the flag would draw.
  */
 data class CoverCorners(
         val topLeft: Float,
         val topRight: Float,
         val bottomRight: Float,
-        val bottomLeft: Float
+        val bottomLeft: Float,
+        val superellipse: Boolean = false
 ) {
 
     /** The eight Canvas radii for a cover [size] pixels across, in `Path.addRoundRect` order. */
@@ -254,20 +259,27 @@ data class CoverCorners(
             bottomLeft * size, bottomLeft * size)
 
     /** How far in from its own left edge the cover's outline runs at height [y] of [size]. */
-    fun leftInset(y: Float, size: Float): Float = roundedSideInset(
-            y,
-            size,
-            (topLeft * size).coerceIn(0f, size / 2f),
-            (bottomLeft * size).coerceIn(0f, size / 2f))
+    fun leftInset(y: Float, size: Float): Float =
+            if (superellipse) {
+                Superellipse.leftInset(y, size, size)
+            } else {
+                roundedSideInset(
+                        y,
+                        size,
+                        (topLeft * size).coerceIn(0f, size / 2f),
+                        (bottomLeft * size).coerceIn(0f, size / 2f))
+            }
 
     val isUniform: Boolean
-        get() = topLeft == topRight && topRight == bottomRight && bottomRight == bottomLeft
+        get() = !superellipse && topLeft == topRight && topRight == bottomRight &&
+                bottomRight == bottomLeft
 
     companion object {
         fun uniform(fraction: Float) = CoverCorners(fraction, fraction, fraction, fraction)
 
-        fun of(shape: CoverShape) =
-                CoverCorners(shape.topLeft, shape.topRight, shape.bottomRight, shape.bottomLeft)
+        fun of(shape: CoverShape) = CoverCorners(
+                shape.topLeft, shape.topRight, shape.bottomRight, shape.bottomLeft,
+                superellipse = shape.isSuperellipse)
     }
 }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Äänenvoimakkuuspalkin paksuus</string>
-    <string name="setting_wear_volume_thickness_description">Äänenvoimakkuuspalkin viivan paksuus, 50–180 % oletuksesta. Paksummatkin viivat pysyvät irti reunasta.</string>
+    <string name="setting_wear_volume_thickness_description">Äänenvoimakkuuspalkin viivan paksuus, 50–180 %% oletuksesta. Paksummatkin viivat pysyvät irti reunasta.</string>
     <string name="setting_wear_volume_haptics">Kruunun värinä äänenvoimakkuudessa</string>
     <string name="setting_wear_queue_dim_played">Himmennä soitetut kappaleet</string>
     <string name="setting_wear_queue_dim_played_description">Himmentää jo soineet kappaleet, jotta tulevat erottuvat.</string>

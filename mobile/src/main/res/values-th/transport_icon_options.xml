@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">ไอคอนเล่น</string>
+    <string name="setting_wear_pause_icon">ไอคอนหยุดชั่วคราว</string>
+    <string name="setting_wear_transport_icon_description">สัญลักษณ์บนปุ่มเล่นและหยุดชั่วคราว “ตามหน้าปัด” จะคงสัญลักษณ์ตามการออกแบบเดิมของหน้าปัดนี้</string>
+    <string name="transport_icon_follow">ตามหน้าปัด</string>
+    <string name="transport_icon_a">มน</string>
+    <string name="transport_icon_b">เส้นขอบมน</string>
+    <string name="transport_icon_c">เส้นขอบเหลี่ยม</string>
+    <string name="transport_icon_d">เหลี่ยม</string>
+    <string name="transport_icon_e">เส้นขอบมนหนา</string>
+</resources>

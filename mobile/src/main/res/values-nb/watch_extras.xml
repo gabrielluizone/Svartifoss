@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Tykkelse på volumlinjen</string>
-    <string name="setting_wear_volume_thickness_description">Tykkelsen på streken i volumlinjen, fra 50 % til 180 % av standard. Tykkere streker holder seg likevel unna kanten.</string>
+    <string name="setting_wear_volume_thickness_description">Tykkelsen på streken i volumlinjen, fra 50 %% til 180 %% av standard. Tykkere streker holder seg likevel unna kanten.</string>
     <string name="setting_wear_volume_haptics">Kronevibrering ved volum</string>
     <string name="setting_wear_queue_dim_played">Demp spilte spor</string>
     <string name="setting_wear_queue_dim_played_description">Toner ned sporene som allerede er spilt, så de som kommer, skiller seg ut.</string>

@@ -171,4 +171,6 @@
     <string name="quick_sleep_description">ஸ்லீப் டைமர், %1$d நிமிடங்கள் உள்ளன. மாற்றத் தட்டவும்.</string>
     <string name="quick_sleep_off_description">ஸ்லீப் டைமர் முடக்கப்பட்டுள்ளது. அமைக்கத் தட்டவும்.</string>
     <string name="quick_lyric_plain">இந்த வரிகளுக்கு நேரக் குறிப்புகள் இல்லை. படிக்கத் தட்டவும்.</string>
+    <string name="playback_live">நேரலை</string>
+    <string name="queue_add_shortcut">இந்த டிராக்கை Shortcut-களில் சேர்</string>
 </resources>

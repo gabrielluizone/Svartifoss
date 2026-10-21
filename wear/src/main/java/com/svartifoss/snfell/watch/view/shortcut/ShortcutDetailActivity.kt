@@ -19,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
-import androidx.core.graphics.drawable.toBitmap
 import androidx.preference.PreferenceManager
 import androidx.wear.activity.ConfirmationActivity
 import androidx.wear.compose.material3.SwipeToDismissBox
@@ -151,7 +150,8 @@ class ShortcutDetailActivity : ComponentActivity() {
                             .takeIf { listed.listItem.hasEntryDescription() },
                     shuffleable = current.shuffleable ||
                             (listed.listItem.hasShuffleable() && listed.listItem.shuffleable),
-                    cover = current.cover ?: listed.icon)
+                    cover = current.cover ?: listed.icon,
+                    mark = current.mark ?: listed.mark)
 
             var dismissed by remember { mutableStateOf(false) }
             CompositionLocalProvider(LocalWatchUiFontFamily provides watchUiFontFamily(prefs)) {
@@ -242,7 +242,7 @@ class ShortcutDetailActivity : ComponentActivity() {
     }
 
     /**
-     * The cover and the player's mark, handed across the activity boundary by reference.
+     * The cover and the app's glyph, handed across the activity boundary by reference.
      *
      * A Bitmap does not belong in an Intent - a 480px cover is most of the Binder transaction
      * limit - and both callers already hold it decoded. Weak, so a screen that is never opened
@@ -252,13 +252,11 @@ class ShortcutDetailActivity : ComponentActivity() {
         private var entryId: String? = null
         private var cover: WeakReference<Bitmap>? = null
         private var mark: WeakReference<Bitmap>? = null
-        private var markTintable = false
 
         fun put(detail: ShortcutDetailUi) {
             entryId = detail.entryId
             cover = detail.cover?.let(::WeakReference)
             mark = detail.mark?.let(::WeakReference)
-            markTintable = detail.markTintable
         }
 
         /** [detail] with whatever pictures were handed over for it. */
@@ -266,11 +264,10 @@ class ShortcutDetailActivity : ComponentActivity() {
             val matches = entryId == detail.entryId
             val picture = cover?.get()?.takeIf { matches && !it.isRecycled }
             val appMark = mark?.get()?.takeIf { matches && !it.isRecycled }
-            val tintable = markTintable
             entryId = null
             cover = null
             mark = null
-            return detail.copy(cover = picture, mark = appMark, markTintable = tintable)
+            return detail.copy(cover = picture, mark = appMark)
         }
     }
 
@@ -327,10 +324,10 @@ fun showContinueOnPhone(context: Context) {
  * This menu entry as its shortcut screen shows it, started through [entryId] - the entry's remote
  * URI, which the phone's shortcut path plays the same way it plays a row of the shortcut list.
  *
- * Cover art becomes the cover. Anything else the entry carries is its player's mark (a launcher
- * icon or a notification glyph): not a cover - grown to cover size it would read as a smeared
- * logo - but the screen shows it on its placeholder tile, so a cover that never arrived still
- * leaves the player recognisable.
+ * Only cover art becomes the cover: the entry's icon is otherwise its player's mark or a generic
+ * glyph, which as a backdrop would be a smeared logo. The app's glyph for "Open on phone" is the
+ * one the phone sent for that purpose ([ButtonAction.appMark]), never the entry's icon, which can
+ * be the watch's own stand-in for an icon that did not arrive.
  */
 fun ButtonAction.toShortcutDetail(entryId: String): ShortcutDetailUi = ShortcutDetailUi(
         entryId = entryId,
@@ -340,19 +337,7 @@ fun ButtonAction.toShortcutDetail(entryId: String): ShortcutDetailUi = ShortcutD
         creator = shortcutCreator,
         description = shortcutDescription,
         cover = if (isCoverArt) (icon as? BitmapDrawable)?.bitmap else null,
-        mark = if (isCoverArt) null else icon?.let(::markBitmap),
-        markTintable = iconTintable)
-
-/** An entry icon as a bitmap big enough for the placeholder tile - a vector at its own 24dp
- *  intrinsic size would be drawn blurred at several times that. */
-private fun markBitmap(icon: android.graphics.drawable.Drawable): Bitmap? =
-        (icon as? BitmapDrawable)?.bitmap ?: try {
-            icon.toBitmap(MARK_BITMAP_PX, MARK_BITMAP_PX)
-        } catch (_: IllegalArgumentException) {
-            null
-        }
-
-private const val MARK_BITMAP_PX = 128
+        mark = appMark)
 
 /** A row of the shortcut list as its screen shows it. */
 fun CustomListItemWithIcon.toShortcutDetail(): ShortcutDetailUi = ShortcutDetailUi(
@@ -363,4 +348,5 @@ fun CustomListItemWithIcon.toShortcutDetail(): ShortcutDetailUi = ShortcutDetail
         creator = listItem.entryCreator.takeIf { listItem.hasEntryCreator() && it.isNotBlank() },
         description = listItem.entryDescription
                 .takeIf { listItem.hasEntryDescription() && it.isNotBlank() },
-        cover = icon)
+        cover = icon,
+        mark = mark)

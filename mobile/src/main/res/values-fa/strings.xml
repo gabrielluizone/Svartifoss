@@ -658,6 +658,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -669,8 +671,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">رنگ همیشه روشن</string>
     <string-array name="wear_aod_color_entries">
@@ -1362,16 +1362,14 @@
     <string name="drawer_about_summary">Svartifoss به شما امکان می‌دهد موسیقی روی گوشی خود را از ساعت Wear OS خود کنترل کنید — با یک ریموت کاملاً قابل‌شخصی‌سازی متناسب با دستگاه شما.</string>
     <string name="drawer_name_heading">نام</string>
     <string name="drawer_name_meaning">Svartifoss در ایسلندی به معنای «آبشار سیاه» است — نام‌گذاری‌شده به افتخار آبشاری در پارک ملی واتنایوکول، جایی که ستون‌های بازالت تیره یک آبشار باریک را قاب می‌گیرند. مانند آب روی سنگ، موسیقی از میان برنامه جاری می‌شود.</string>
-    <string name="drawer_sync_heading">همگام‌سازی</string>
-    <string name="drawer_sync_summary">تنظیمات ساعت اینجا روی گوشی پیکربندی شده و به‌طور خودکار با ساعت جفت‌شده شما همگام می‌شود.</string>
     <string name="drawer_support_heading">پشتیبانی</string>
     <string name="download_album_art">دانلود جلد</string>
     <string name="album_art_saved">جلد در گالری ذخیره شد</string>
     <string name="album_art_save_error">ذخیره جلد ناموفق بود</string>
 
-    <string name="action_play_liked_songs">پخش آهنگ‌های پسندیده‌شده (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">پخش آهنگ‌های پسندیده‌شده (Spotify)</string>
-    <string name="action_play_soundcloud_likes">پخش آهنگ‌های پسندیده‌شده (SoundCloud)</string>
+    <string name="action_play_liked_songs">آهنگ‌های پسندیده‌شده</string>
+    <string name="action_play_spotify_liked_songs">آهنگ‌های پسندیده‌شده</string>
+    <string name="action_play_soundcloud_likes">آهنگ‌های پسندیده‌شده</string>
     <string name="action_my_playlists">میان‌برهای پخش</string>
     <string name="action_show_streaming_library">نمایش همه میان‌برهای ذخیره‌شده</string>
     <string name="picker_section_apps">برنامه‌ها و خودکارسازی</string>
@@ -1489,7 +1487,7 @@
     <string name="playlist_shortcut_deleted">%1$s حذف شد</string>
     <string name="playlist_shortcut_undo">لغو</string>
 
-    <string name="action_play_liked_songs_shuffled">پخش آهنگ‌های پسندیده‌شده، تصادفی (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">آهنگ‌های پسندیده‌شده، تصادفی</string>
     <string name="action_search_history">تاریخچه جست‌وجو</string>
     <string name="search_history_empty">هنوز هیچ جست‌وجوی اخیری وجود ندارد</string>
 
@@ -2049,7 +2047,7 @@
         <item>مربعی</item>
         <item>مربع‌گرد</item>
         <item>دایره‌ای</item>
-        <item>سبک سامسونگ</item>
+        <item>ابربیضی</item>
     </string-array>
     <string-array name="theme_entries">
         <item>@string/theme_light</item>
@@ -2831,7 +2829,7 @@
     <string name="setting_wear_text_block_position">موقعیت متن</string>
     <string name="setting_wear_text_block_position_description">جای متن قطعه روی صفحه. «دنبال کردن صفحه» موقعیتی را که هر صفحه برای آن طراحی شده حفظ می‌کند.</string>
     <string name="setting_online_artwork">اثر هنری آنلاین</string>
-    <string name="setting_online_artwork_description">اجازه دهید صفحه ساعت تصویری را که آنلاین پیدا می‌شود نمایش دهد \u2014 هنرمند در حال اجرا، یا جلد آلبوم برای پخش‌کننده‌ای که تصویری منتشر نمی‌کند. تلفن شما جست‌وجو را در فهرست عمومی Deezer انجام می‌دهد و نتیجه را کش می‌کند؛ فقط نام قطعه و هنرمند ارسال می‌شوند و تا وقتی صفحه‌ای روی یکی از این منابع تنظیم نشده باشد چیزی جست‌وجو نمی‌شود. در حالت خاموش، اثر هنری خود پخش‌کننده استفاده می‌شود.</string>
+    <string name="setting_online_artwork_description">به صفحهٔ ساعت اجازه دهید تصویری را که به‌صورت آنلاین پیدا شده نشان دهد — خوانندهٔ در حال اجرا، یا جلد آلبوم برای پخش‌کننده‌ای که جلدی منتشر نمی‌کند. گوشی شما جست‌وجو را انجام می‌دهد و نتیجه را در حافظهٔ پنهان نگه می‌دارد؛ فقط نام آهنگ و خواننده به فهرست عمومی Deezer فرستاده می‌شود. همین، جلد آهنگی را هم پیدا می‌کند که برنامه‌اش اصلاً جلدی منتشر نمی‌کند، مانند یک ویدیوی YouTube: گوشی تصویر بندانگشتیِ خود آن ویدیو را از YouTube می‌خواهد (نام کانال و عنوان را به YouTube Data API گوگل می‌فرستد)، سپس جلد آلبوم را از Deezer، و فقط وقتی نتیجه مطابقت داشته باشد از آن استفاده می‌کند. وقتی خاموش باشد، فقط جلد خود پخش‌کننده استفاده می‌شود.</string>
     <string name="setting_wear_shortcut_details">پخش یا پخش تصادفی روی ساعت</string>
     <string name="setting_wear_shortcut_details_description">انتخاب یک پیوند ذخیره‌شده روی ساعت، از فهرست میان‌برها، کاشی میان‌برها یا منوی اقدامات، ابتدا جلد آن را با «پخش» و «پخش تصادفی» نشان می‌دهد. برای شروع فوری خاموش کنید. دکمه‌ها و اشاره‌هایی که به یک پیوند اختصاص داده شده‌اند همیشه آن را فوراً شروع می‌کنند.</string>
     <string name="actions_quick_pin_add">نمایش در پانل سریع</string>
@@ -2929,4 +2927,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">برنامه‌هایی که می‌توانند پیوند را باز کنند، به‌علاوه پخش‌کننده‌های رسانه نصب شده، نشان داده می‌شوند.</string>
     <string name="streaming_route_automatic">خودکار (برنامه شناسایی شده)</string>
+    <string name="action_symfonium_start">شروع رسانه در Symfonium</string>
+    <string name="action_symfonium_start_named">شروع در Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">همگام‌سازی ارائه‌دهندهٔ Symfonium</string>
+    <string name="app_icon_style_gradient">گرادیان</string>
+    <string name="app_icon_style_solid">رنگ ساده</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">پر ذغال</string>
+    <string name="dev_show_rating_card">نمایش کارت امتیازدهی</string>
+    <string name="dev_show_rating_card_description">بلافاصله کارت نقد و بررسی درون‌برنامه‌ای را از Google Play می‌خواهد و محدودیت‌های معمول را نادیده می‌گیرد. این کارت فقط در نسخه‌ای نمایش داده می‌شود که از Google Play نصب شده باشد (آزمون داخلی هم حساب می‌شود)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play برای این نسخه کارت نقد و بررسی ندارد. آن را از Google Play نصب کنید، از جمله از طریق آزمون داخلی، و دوباره امتحان کنید</string>
+    <string name="playlist_shortcut_queue_link_unavailable">این پخش‌کننده پیوند قابل‌اشتراکی برای این آهنگ منتشر نکرده است</string>
+    <string name="setting_app_icon_style">نماد برنامه</string>
+    <string name="setting_youtube_api_key">کلید YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">کلید YouTube در این برنامه گنجانده شده است؛ نیازی به افزودن کلید نیست</string>
+    <string name="setting_youtube_api_key_configured">کلید YouTube تنظیم شده است؛ فقط روی این گوشی ذخیره می‌شود</string>
+    <string name="setting_youtube_api_key_description">وقتی پخش‌کننده‌ای تصویر جلد منتشر نمی‌کند، Svartifoss از طریق YouTube Data API گوگل در YouTube جست‌وجو می‌کند، نام کانال و عنوان را همراه با این کلید می‌فرستد و از تصویر بندانگشتیِ ویدیویی که دقیقاً مطابقت دارد استفاده می‌کند. برای استفاده از کلیدی که در برنامه گنجانده شده، آن را خالی بگذارید. کلیدی که جای‌گذاری می‌کنید روی همین گوشی می‌ماند: به ساعت فرستاده نمی‌شود و در پشتیبان‌های پیکربندی Svartifoss گنجانده نمی‌شود.</string>
+    <string name="setting_youtube_api_key_dialog_title">کلید YouTube Data API v3 خود را جای‌گذاری کنید</string>
+    <string name="setting_youtube_api_key_not_configured">اختیاری: کلید YouTube تنظیم نشده است</string>
+    <string name="symfonium_media_album">آلبوم (اختیاری)</string>
+    <string name="symfonium_media_artist">خواننده (اختیاری)</string>
+    <string name="symfonium_media_id_optional">شناسه (اختیاری)</string>
+    <string name="symfonium_media_name">نام</string>
+    <string name="symfonium_media_type">نوع رسانه</string>
+    <string name="symfonium_provider_id">شناسهٔ ارائه‌دهنده</string>
+    <string name="symfonium_provider_id_description">شناسهٔ ارائه‌دهنده را در صفحهٔ «مدیریت ارائه‌دهندگان رسانه» در Symfonium پیدا کنید.</string>
+    <string name="symfonium_queue_mode">حالت صف</string>
+    <string name="symfonium_resume">در صورت امکان ادامه بده</string>
+    <string name="symfonium_shuffle">پخش تصادفی مجموعه‌ها</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>آهنگ</item>
+        <item>لیست پخش</item>
+        <item>آلبوم</item>
+        <item>خواننده</item>
+        <item>ژانر</item>
+        <item>میکس آهنگ</item>
+        <item>میکس آلبوم</item>
+        <item>رادیو اینترنتی</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>همین حالا شروع کن</item>
+        <item>بعدی را پخش کن</item>
+        <item>افزودن به صف</item>
+    </string-array>
 </resources>

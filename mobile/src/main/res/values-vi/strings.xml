@@ -760,6 +760,8 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -771,8 +773,6 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Màu luôn bật</string>
     <string-array name="wear_aod_color_entries">
@@ -1660,7 +1660,7 @@ Nếu gặp tình trạng này, bạn có thể bật tùy chọn để tắt ho
         <item>Vuông</item>
         <item>Squircle</item>
         <item>Tròn</item>
-        <item>Kiểu Samsung</item>
+        <item>Siêu elip</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Dùng phông ở mọi nơi</string>
@@ -2041,16 +2041,14 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
     <string name="drawer_about_summary">Svartifoss cho phép bạn điều khiển nhạc trên điện thoại từ đồng hồ Wear OS — với điều khiển từ xa có thể tùy chỉnh hoàn toàn theo thiết bị.</string>
     <string name="drawer_name_heading">Tên gọi</string>
     <string name="drawer_name_meaning">Svartifoss có nghĩa là “Thác Đen” trong tiếng Iceland — được đặt theo thác nước ở Vườn quốc gia Vatnajökull, nơi các cột bazan tối màu bao quanh một dòng thác hẹp. Như nước chảy qua đá, âm nhạc chảy qua ứng dụng.</string>
-    <string name="drawer_sync_heading">Đồng bộ</string>
-    <string name="drawer_sync_summary">Cài đặt đồng hồ được cấu hình tại đây trên điện thoại và tự động đồng bộ với đồng hồ đã ghép nối.</string>
     <string name="drawer_support_heading">Hỗ trợ</string>
     <string name="download_album_art">Tải ảnh bìa</string>
     <string name="album_art_saved">Đã lưu ảnh bìa vào thư viện</string>
     <string name="album_art_save_error">Không thể lưu ảnh bìa</string>
 
-    <string name="action_play_liked_songs">Phát bài đã thích (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Phát bài đã thích (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Phát bài đã thích (SoundCloud)</string>
+    <string name="action_play_liked_songs">Bài đã thích</string>
+    <string name="action_play_spotify_liked_songs">Bài đã thích</string>
+    <string name="action_play_soundcloud_likes">Bài đã thích</string>
     <string name="action_my_playlists">Phím tắt phát trực tuyến</string>
     <string name="action_show_streaming_library">Hiển thị tất cả phím tắt đã lưu</string>
     <string name="picker_section_apps">Ứng dụng &amp; tự động hóa</string>
@@ -2180,7 +2178,7 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
     <string name="playlist_shortcut_deleted">Đã xóa %1$s</string>
     <string name="playlist_shortcut_undo">Hoàn tác</string>
 
-    <string name="action_play_liked_songs_shuffled">Phát ngẫu nhiên bài đã thích (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Bài đã thích, ngẫu nhiên</string>
     <string name="action_search_history">Lịch sử tìm kiếm</string>
     <string name="search_history_empty">Chưa có tìm kiếm gần đây</string>
 
@@ -2866,7 +2864,7 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
     <string name="setting_wear_text_block_position">Vị trí văn bản</string>
     <string name="setting_wear_text_block_position_description">Vị trí văn bản bài hát trên màn hình. Theo mặt đồng hồ sẽ giữ vị trí mà từng mặt được thiết kế sẵn.</string>
     <string name="setting_online_artwork">Ảnh minh họa trực tuyến</string>
-    <string name="setting_online_artwork_description">Cho phép mặt đồng hồ hiển thị hình ảnh được tìm trực tuyến \u2014 nghệ sĩ đang biểu diễn hoặc bìa album cho trình phát không cung cấp ảnh. Điện thoại của bạn thực hiện tra cứu trong danh mục công khai của Deezer và lưu kết quả vào bộ nhớ đệm; chỉ tên bài hát và nghệ sĩ được gửi đi, và không có gì được tra cứu trừ khi một mặt đồng hồ được đặt dùng một trong các nguồn đó. Khi tắt, ảnh minh họa do chính trình phát cung cấp sẽ được dùng.</string>
+    <string name="setting_online_artwork_description">Cho phép mặt đồng hồ hiển thị hình ảnh được tìm trực tuyến — nghệ sĩ đang biểu diễn hoặc bìa album cho trình phát không cung cấp ảnh. Điện thoại của bạn thực hiện tra cứu và lưu kết quả vào bộ nhớ đệm; chỉ tên bài hát và nghệ sĩ được gửi đi, đến danh mục công khai của Deezer. Đây cũng là thứ tìm ảnh bìa cho bài hát mà ứng dụng hoàn toàn không đăng ảnh bìa, chẳng hạn video YouTube: điện thoại yêu cầu YouTube ảnh thu nhỏ của chính video đó (gửi kênh và tiêu đề đến YouTube Data API của Google), sau đó yêu cầu Deezer bìa album, và chỉ dùng kết quả khi nó khớp. Khi tắt, chỉ ảnh của chính trình phát được dùng.</string>
     <string name="setting_wear_shortcut_details">Phát hoặc phát ngẫu nhiên trên đồng hồ</string>
     <string name="setting_wear_shortcut_details_description">Khi chọn một đường liên kết đã lưu trên đồng hồ, từ danh sách lối tắt, Tile lối tắt hoặc menu hành động, bìa của nó sẽ hiện trước cùng nút Phát và Phát ngẫu nhiên. Tắt để bắt đầu phát ngay. Các nút và cử chỉ được gán cho một đường liên kết luôn bắt đầu phát ngay.</string>
     <string name="actions_quick_pin_add">Hiển thị trong bảng điều khiển nhanh</string>
@@ -2964,4 +2962,48 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
     </plurals>
     <string name="streaming_app_routes_picker_description">Các ứng dụng có thể mở liên kết, cùng với các trình phát phương tiện đã cài đặt, sẽ được hiển thị.</string>
     <string name="streaming_route_automatic">Tự động (ứng dụng được phát hiện)</string>
+    <string name="action_symfonium_start">Bắt đầu phát trong Symfonium</string>
+    <string name="action_symfonium_start_named">Bắt đầu trong Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Đồng bộ nhà cung cấp Symfonium</string>
+    <string name="app_icon_style_gradient">Chuyển sắc</string>
+    <string name="app_icon_style_solid">Màu đơn sắc</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Lông vũ than</string>
+    <string name="dev_show_rating_card">Hiện thẻ đánh giá</string>
+    <string name="dev_show_rating_card_description">Yêu cầu Google Play hiện thẻ đánh giá trong ứng dụng ngay lập tức, bỏ qua các giới hạn thông thường. Thẻ chỉ xuất hiện trong bản được cài từ Google Play (thử nghiệm nội bộ cũng được tính)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play không có thẻ đánh giá cho bản này. Hãy cài từ Google Play, kể cả thử nghiệm nội bộ, rồi thử lại</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Trình phát này không đăng liên kết chia sẻ được cho bài này</string>
+    <string name="setting_app_icon_style">Biểu tượng ứng dụng</string>
+    <string name="setting_youtube_api_key">Khóa YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">Khóa YouTube đã có sẵn trong ứng dụng này; bạn không cần tự thêm</string>
+    <string name="setting_youtube_api_key_configured">Đã cấu hình khóa YouTube; chỉ lưu trên điện thoại này</string>
+    <string name="setting_youtube_api_key_description">Khi trình phát không đăng ảnh bìa, Svartifoss tìm trên YouTube qua YouTube Data API của Google, gửi kênh và tiêu đề cùng khóa này, rồi dùng ảnh thu nhỏ của video khớp chính xác. Để trống để dùng khóa có sẵn trong ứng dụng. Khóa bạn dán vào vẫn nằm trên điện thoại này: không gửi sang đồng hồ và không nằm trong bản sao lưu cấu hình của Svartifoss.</string>
+    <string name="setting_youtube_api_key_dialog_title">Dán khóa YouTube Data API v3 của bạn</string>
+    <string name="setting_youtube_api_key_not_configured">Tùy chọn: chưa cấu hình khóa YouTube</string>
+    <string name="symfonium_media_album">Album (tùy chọn)</string>
+    <string name="symfonium_media_artist">Nghệ sĩ (tùy chọn)</string>
+    <string name="symfonium_media_id_optional">ID (tùy chọn)</string>
+    <string name="symfonium_media_name">Tên</string>
+    <string name="symfonium_media_type">Loại phương tiện</string>
+    <string name="symfonium_provider_id">ID nhà cung cấp</string>
+    <string name="symfonium_provider_id_description">Bạn có thể tìm ID nhà cung cấp trong màn hình Quản lý nhà cung cấp phương tiện của Symfonium.</string>
+    <string name="symfonium_queue_mode">Chế độ hàng đợi</string>
+    <string name="symfonium_resume">Tiếp tục khi có thể</string>
+    <string name="symfonium_shuffle">Phát ngẫu nhiên bộ sưu tập</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Bài hát</item>
+        <item>Danh sách phát</item>
+        <item>Album</item>
+        <item>Nghệ sĩ</item>
+        <item>Thể loại</item>
+        <item>Mix bài hát</item>
+        <item>Mix album</item>
+        <item>Radio internet</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Bắt đầu ngay</item>
+        <item>Phát tiếp theo</item>
+        <item>Thêm vào hàng đợi</item>
+    </string-array>
 </resources>

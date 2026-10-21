@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One row of the AppIconStylePreference dialog: the two icons a style produces (the phone's,
+     then the watch's) followed by its name, so the choice is seen and not only read. The previews
+     are drawn at exactly 44dp with fitXY because their artwork is laid out for that size (see
+     launcher_preview_*.xml in the Play build); the name may take two lines, since it is
+     translated into every language and some run to twice the English length. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:minHeight="64dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
+
+    <ImageView
+        android:id="@+id/preview_phone"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:scaleType="fitXY"
+        android:importantForAccessibility="no" />
+
+    <ImageView
+        android:id="@+id/preview_watch"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="10dp"
+        android:scaleType="fitXY"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/choice_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="16dp"
+        android:includeFontPadding="false"
+        android:textSize="16sp"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:fontFamily="@font/google_sans"
+        android:textColor="@color/lyra_on_surface" />
+
+    <ImageView
+        android:id="@+id/choice_check"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginStart="12dp"
+        android:src="@drawable/ic_check_circle"
+        android:importantForAccessibility="no" />
+
+</LinearLayout>

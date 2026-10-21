@@ -9,6 +9,7 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.svartifoss.snfell.common.AccentFloorStyle
+import com.svartifoss.snfell.common.TransportGlyph
 import com.svartifoss.snfell.common.ResolvedBackgroundLayer
 import com.svartifoss.snfell.common.MiniButtonSurfaces
 import com.svartifoss.snfell.common.SplitPanelStyle
@@ -166,6 +167,11 @@ data class NowPlayingFaceState(
         /** Interactive player theme shared by Classic and every Compose face. Ambient rendering
          *  deliberately ignores it and continues to use the independent AOD preferences. */
         val screenTheme: ScreenTheme = ScreenTheme.DEFAULT,
+        /** The drawings of the play and the pause mark, already resolved against the face by
+         *  [TransportGlyphs] (so "follow" has become the glyph this face was designed with).
+         *  Only the awake transport reads them; AOD draws its own outline glyphs. */
+        val playGlyph: TransportGlyph = TransportGlyph.D,
+        val pauseGlyph: TransportGlyph = TransportGlyph.D,
         /** Whether built-in player controls are painted. Their hit targets and accessibility
          *  actions stay active when false; this is a visual preference, not an input remap. */
         val showControls: Boolean = true,

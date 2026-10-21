@@ -10,4 +10,21 @@
     <color name="accent">#87A89F</color>
 
     <color name="ic_launcher_background">#FFFFFF</color>
+
+    <!-- The Play build's Cream launcher icon (AppIconStyle.CREAM), in cream and charcoal. One pair of colours
+         for both devices, with the roles swapped: the phone's icon is a charcoal background with
+         a cream mark, the watch's a cream background with a charcoal mark. Defined once here so
+         the two icons and the picker's previews cannot drift from each other. -->
+    <color name="launcher_cream">#F5F0E5</color>
+    <color name="launcher_charcoal">#32312F</color>
+
+    <!-- The Play build's Charcoal Feather launcher icon (AppIconStyle.FEATHER, "Pena de Carvão"),
+         named after the haibane of Haibane Renmei. Unlike the cream icon it is not one pair with
+         its roles swapped but a palette per device, in the same polarity: the phone's icon is a
+         dark green with a warm grey mark, the watch's a pale yellow with a brown mark. All four
+         live here so the icons and the picker's previews read the very same values. -->
+    <color name="launcher_feather_phone_background">#435244</color>
+    <color name="launcher_feather_phone_mark">#BCB8AD</color>
+    <color name="launcher_feather_watch_background">#F5F3D9</color>
+    <color name="launcher_feather_watch_mark">#6C5E3B</color>
 </resources>

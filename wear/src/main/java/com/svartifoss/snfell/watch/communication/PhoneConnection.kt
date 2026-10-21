@@ -25,6 +25,7 @@ import com.svartifoss.snfell.common.TransportRefusal
 import com.svartifoss.snfell.common.PlaybackSyncPolicy
 import com.svartifoss.snfell.common.CustomLists
 import com.svartifoss.snfell.common.QueuePaging
+import com.svartifoss.snfell.common.SampledBitmaps
 import com.svartifoss.snfell.common.buttonconfig.ButtonInfo
 import com.svartifoss.snfell.common.util.FloatPacker
 import com.svartifoss.snfell.proto.CustomList
@@ -47,7 +48,6 @@ import com.matejdro.wearutils.lifecycle.SingleLiveEvent
 import com.matejdro.wearutils.messages.getByteArrayAsset
 import com.matejdro.wearutils.messages.getNearestNodeId
 import com.matejdro.wearutils.messages.sendMessageToNearestClient
-import com.matejdro.wearutils.miscutils.BitmapUtils
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -665,7 +665,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
                         val pictureData = dataItem.assets[CommPaths.ASSET_NOTIFICATION_BACKGROUND]
                                 ?.let { asset -> dataClient.getByteArrayAsset(asset) }
                         val picture = pictureData?.let { bytes ->
-                            withContext(Dispatchers.Default) { BitmapUtils.deserialize(bytes) }
+                            withContext(Dispatchers.Default) { decodeFromPhone(bytes) }
                         }
 
                         val mergedNotification = com.svartifoss.snfell.watch.model.Notification(
@@ -929,7 +929,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
         val albumArtData = dataClient.getByteArrayAsset(asset)
         val receivedAlbumArt = albumArtData?.let { bytes ->
-            withContext(Dispatchers.Default) { BitmapUtils.deserialize(bytes) }
+            withContext(Dispatchers.Default) { decodeFromPhone(bytes) }
         }
         if (receivedAlbumArt != null) {
             publishMusicAsset(state) {
@@ -997,7 +997,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             val asset = track.assetKey?.takeIf { it.isNotEmpty() }?.let { dataItem.assets[it] }
             val bytes = asset?.let { dataClient.getByteArrayAsset(it) }
             val cover = bytes?.let {
-                withContext(Dispatchers.Default) { BitmapUtils.deserialize(it) }
+                withContext(Dispatchers.Default) { decodeFromPhone(it) }
             }
             PrefetchedCover(title, track.artist.orEmpty(), cover, asset?.id)
         }
@@ -1026,7 +1026,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         }
         if (asset.id == lastSourceIconAssetId && sourceIcon.value != null) return
         val bytes = dataClient.getByteArrayAsset(asset)
-        val bitmap = bytes?.let { withContext(Dispatchers.Default) { BitmapUtils.deserialize(it) } }
+        val bitmap = bytes?.let { withContext(Dispatchers.Default) { decodeFromPhone(it) } }
         publishMusicAsset(state) {
             lastSourceIconAssetId = asset.id
             sourceIcon.postValue(bitmap)
@@ -1058,7 +1058,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         }
         if (asset.id == lastBackdropArtAssetId && backdropArt.value != null) return
         val bytes = dataClient.getByteArrayAsset(asset)
-        val bitmap = bytes?.let { withContext(Dispatchers.Default) { BitmapUtils.deserialize(it) } }
+        val bitmap = bytes?.let { withContext(Dispatchers.Default) { decodeFromPhone(it) } }
         if (bitmap != null) {
             publishMusicAsset(state) {
                 lastBackdropArtAssetId = asset.id
@@ -1247,7 +1247,12 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             val asset = dataItem.assets[index.toString()]
             val picture = asset?.let { previous[it.id] ?: decoded[it.id] ?: decodeListCover(it) }
             if (asset != null && picture != null) decoded[asset.id] = picture
-            CustomListItemWithIcon(rawEntry, picture)
+            // A streaming shortcut's app glyph, when the phone sent one. Every shortcut to one
+            // app carries the same asset, so it is decoded once per list.
+            val markAsset = dataItem.assets[CommPaths.ASSET_APP_MARK_PREFIX + index]
+            val mark = markAsset?.let { previous[it.id] ?: decoded[it.id] ?: decodeListMark(it) }
+            if (markAsset != null && mark != null) decoded[markAsset.id] = mark
+            CustomListItemWithIcon(rawEntry, picture, mark)
         }
         decodedListCovers[path] = decoded
         return CustomListWithBitmaps(
@@ -1263,6 +1268,14 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     }
 
     /**
+     * Decodes a picture the phone sent. The phone already sizes everything it sends for this
+     * watch, so bounding the decode by the screen changes nothing for a current phone build; it is
+     * what keeps a larger asset (an older or future phone build) from being decoded whole.
+     */
+    private fun decodeFromPhone(bytes: ByteArray): Bitmap? =
+            SampledBitmaps.decode(bytes, SampledBitmaps.screenPx(context.resources))
+
+    /**
      * Reads and decodes one list cover, or null when it cannot be had.
      *
      * Decoded away from the main dispatcher. Trimmed here rather than only on the phone because
@@ -1275,10 +1288,23 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
      * decode, which runs under launchWithErrorHandling - so one unreadable cover threw away the
      * whole list and put an error screen over the player.
      */
+    /** An app glyph from a list, or null - like [decodeListCover] but never trimmed: a glyph is a
+     *  shape on transparency, which the trim would read as one big border to cut away. */
+    private suspend fun decodeListMark(asset: DataItemAsset): Bitmap? = try {
+        dataClient.getByteArrayAsset(asset)?.let { bytes ->
+            withContext(Dispatchers.Default) { decodeFromPhone(bytes) }
+        }
+    } catch (e: CancellationException) {
+        throw e
+    } catch (e: Exception) {
+        Timber.w(e, "Could not decode an app glyph of a custom list")
+        null
+    }
+
     private suspend fun decodeListCover(asset: DataItemAsset): Bitmap? = try {
         dataClient.getByteArrayAsset(asset)?.let { bytes ->
             withContext(Dispatchers.Default) {
-                BitmapUtils.deserialize(bytes)?.let(BitmapBorderTrim::trim)
+                decodeFromPhone(bytes)?.let(BitmapBorderTrim::trim)
             }
         }
     } catch (e: CancellationException) {

@@ -760,6 +760,8 @@ Svartifoss хабарландыруларыңыздың мазмұнын ешқ�
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -771,8 +773,6 @@ Svartifoss хабарландыруларыңыздың мазмұнын ешқ�
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Әрдайым қосулы түс</string>
     <string-array name="wear_aod_color_entries">
@@ -1660,7 +1660,7 @@ Svartifoss хабарландыруларыңыздың мазмұнын ешқ�
         <item>Шаршы</item>
         <item>Жұмыр шаршы</item>
         <item>Шеңбер</item>
-        <item>Samsung стилі</item>
+        <item>Суперэллипс</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Қаріпті барлық жерде пайдалану</string>
@@ -2041,16 +2041,14 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
     <string name="drawer_about_summary">Svartifoss Wear OS сағатыңыздан телефоныңыздағы музыканы басқаруға мүмкіндік береді — құрылғыңызға бейімделген толық бапталатын қашықтан басқару арқылы.</string>
     <string name="drawer_name_heading">Атауы</string>
     <string name="drawer_name_meaning">Svartifoss исланд тілінде “Black Falls” дегенді білдіреді — атауы Vatnajökull ұлттық паркіндегі қара базальт бағандары тар сарқыраманы қоршаған жерден алынған. Тас үстімен аққан судай, музыка қолданба арқылы ағады.</string>
-    <string name="drawer_sync_heading">Синхрондау</string>
-    <string name="drawer_sync_summary">Сағат баптаулары осы жерде телефонда конфигурацияланып, жұпталған сағатыңызға автоматты синхрондалады.</string>
     <string name="drawer_support_heading">Қолдау</string>
     <string name="download_album_art">Мұқаба суретін жүктеп алу</string>
     <string name="album_art_saved">Мұқаба суреті галереяға сақталды</string>
     <string name="album_art_save_error">Мұқаба суретін сақтау сәтсіз аяқталды</string>
 
-    <string name="action_play_liked_songs">Ұнатқан әндерді ойнату (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Ұнатқан әндерді ойнату (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Ұнатқан тректерді ойнату (SoundCloud)</string>
+    <string name="action_play_liked_songs">Ұнатқан әндер</string>
+    <string name="action_play_spotify_liked_songs">Ұнатқан әндер</string>
+    <string name="action_play_soundcloud_likes">Ұнатқан тректер</string>
     <string name="action_my_playlists">Стриминг жарлықтары</string>
     <string name="action_show_streaming_library">Барлық сақталған жарлықты көрсету</string>
     <string name="picker_section_apps">Қолданбалар &amp; автоматтандыру</string>
@@ -2180,7 +2178,7 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
     <string name="playlist_shortcut_deleted">%1$s жойылды</string>
     <string name="playlist_shortcut_undo">Болдырмау</string>
 
-    <string name="action_play_liked_songs_shuffled">Ұнатқан әндерді араластырып ойнату (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Ұнатқан әндер, араластырып</string>
     <string name="action_search_history">Іздеу тарихы</string>
     <string name="search_history_empty">Әзірге соңғы іздеулер жоқ</string>
 
@@ -2866,7 +2864,7 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
     <string name="setting_wear_text_block_position">Мәтін орны</string>
     <string name="setting_wear_text_block_position_description">Трек мәтінінің экранда орналасатын орны. «Бетке сай» параметрі әр бет үшін жобаланған орынды сақтайды.</string>
     <string name="setting_online_artwork">Онлайн мұқаба</string>
-    <string name="setting_online_artwork_description">Сағат бетіне интернеттен табылған суретті көрсетуге рұқсат етіңіз \u2014 орындаушының суретін немесе мұқаба жарияламайтын ойнатқыш үшін альбом мұқабасын. Телефоныңыз Deezer ашық каталогынан іздеп, нәтижені кэшке сақтайды; тек трек пен орындаушы атаулары жіберіледі және бет осы көздердің біріне орнатылмаса, ештеңе ізделмейді. Өшірілген кезде ойнатқыштың өз мұқабасы пайдаланылады.</string>
+    <string name="setting_online_artwork_description">Сағат циферблатына интернеттен табылған суретті көрсетуге рұқсат беріңіз — ойнап тұрған орындаушыны немесе мұқаба жарияламайтын ойнатқыш үшін альбом мұқабасын. Іздеуді телефоныңыз жасайды және нәтижені кэште сақтайды; тек трек пен орындаушы атаулары, Deezer-дің ашық каталогына жіберіледі. Қолданбасы мүлде мұқаба жарияламайтын трек үшін де, мысалы YouTube бейнесі үшін, мұқабаны осы табады: телефон YouTube-тен сол бейненің өз нобайын сұрайды (арна мен атауды Google-дің YouTube Data API-ына жібереді), содан кейін Deezer-ден альбом мұқабасын сұрайды және нәтижені тек сәйкес келгенде пайдаланады. Өшірулі болса, тек ойнатқыштың өз мұқабасы қолданылады.</string>
     <string name="setting_wear_shortcut_details">Сағатта ойнату не араластыру</string>
     <string name="setting_wear_shortcut_details_description">Сағатта сақталған сілтемені таңдағанда (жарлықтар тізімінен, жарлықтар Tile-ынан не әрекеттер мәзірінен) алдымен оның мұқабасы «Ойнату» және «Араластырып ойнату» түймелерімен көрсетіледі. Бірден бастау үшін өшіріңіз. Бір сілтемеге тағайындалған түймелер мен қимылдар оны әрқашан бірден бастайды.</string>
     <string name="actions_quick_pin_add">Жылдам панельде көрсету</string>
@@ -2964,4 +2962,48 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
     </plurals>
     <string name="streaming_app_routes_picker_description">Сілтемені аша алатын қолданбалар және орнатылған медиа ойнатқыштар көрсетіледі.</string>
     <string name="streaming_route_automatic">Автоматты (анықталған қолданба)</string>
+    <string name="action_symfonium_start">Symfonium қолданбасында медианы бастау</string>
+    <string name="action_symfonium_start_named">Symfonium қолданбасында бастау: %1$s</string>
+    <string name="action_symfonium_sync">Symfonium провайдерін синхрондау</string>
+    <string name="app_icon_style_gradient">Градиент</string>
+    <string name="app_icon_style_solid">Біртекті түс</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Көмір қауырсыны</string>
+    <string name="dev_show_rating_card">Бағалау картасын көрсету</string>
+    <string name="dev_show_rating_card_description">Әдеттегі шектеулерді елемей, Google Play-ден оның қолданба ішіндегі пікір картасын бірден сұрайды. Ол тек Google Play-ден орнатылған құрастырмада көрінеді (ішкі сынақ та есептеледі)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play-де бұл құрастырма үшін пікір картасы жоқ. Оны Google Play-ден, ішкі сынақты қоса, орнатып, қайта көріңіз</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Бұл ойнатқыш осы трек үшін бөлісуге болатын сілтеме жарияламады</string>
+    <string name="setting_app_icon_style">Қолданба белгішесі</string>
+    <string name="setting_youtube_api_key">YouTube Data API кілті</string>
+    <string name="setting_youtube_api_key_bundled">YouTube кілті осы қолданбаға кіріктірілген; өзіңіз қосудың қажеті жоқ</string>
+    <string name="setting_youtube_api_key_configured">YouTube кілті бапталды; тек осы телефонда сақталады</string>
+    <string name="setting_youtube_api_key_description">Ойнатқыш мұқаба жарияламаған кезде Svartifoss Google компаниясының YouTube Data API арқылы YouTube-тен іздейді, осы кілтпен бірге арна мен атауды жібереді және дәл сәйкес келетін бейненің нобайын пайдаланады. Қолданбаға кіріктірілген кілтті пайдалану үшін бос қалдырыңыз. Қойған кілтіңіз осы телефонда қалады: ол сағатқа жіберілмейді және Svartifoss конфигурациясының сақтық көшірмелеріне қосылмайды.</string>
+    <string name="setting_youtube_api_key_dialog_title">YouTube Data API v3 кілтіңізді қойыңыз</string>
+    <string name="setting_youtube_api_key_not_configured">Міндетті емес: YouTube кілті бапталмаған</string>
+    <string name="symfonium_media_album">Альбом (міндетті емес)</string>
+    <string name="symfonium_media_artist">Орындаушы (міндетті емес)</string>
+    <string name="symfonium_media_id_optional">ID (міндетті емес)</string>
+    <string name="symfonium_media_name">Атауы</string>
+    <string name="symfonium_media_type">Медиа түрі</string>
+    <string name="symfonium_provider_id">Провайдер ID</string>
+    <string name="symfonium_provider_id_description">Провайдер ID-ін Symfonium қолданбасының «Медиа провайдерлерді басқару» экранынан табасыз.</string>
+    <string name="symfonium_queue_mode">Кезек режимі</string>
+    <string name="symfonium_resume">Мүмкін болғанда жалғастыру</string>
+    <string name="symfonium_shuffle">Жинақтарды араластыру</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Ән</item>
+        <item>Ойнату тізімі</item>
+        <item>Альбом</item>
+        <item>Орындаушы</item>
+        <item>Жанр</item>
+        <item>Әндер миксі</item>
+        <item>Альбомдар миксі</item>
+        <item>Интернет-радио</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Қазір бастау</item>
+        <item>Келесі ретінде ойнату</item>
+        <item>Кезекке қосу</item>
+    </string-array>
 </resources>

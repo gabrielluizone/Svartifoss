@@ -118,7 +118,7 @@ object MediaNotificationActions {
      * ~130px on a high-density round watch. Kept as its own constant rather than sharing
      * [ICON_SIZE_PX]: that one is paid up to three times per state change, this one once.
      */
-    private const val SOURCE_ICON_SIZE_PX = 144
+    internal const val SOURCE_ICON_SIZE_PX = 144
     private const val MAX_ACTIONS = 3
 
     /** Alpha above which a pixel counts as part of the glyph rather than as antialiasing spill.

@@ -741,6 +741,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -752,8 +754,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Aina päällä -näytön väri</string>
     <string-array name="wear_aod_color_entries">
@@ -1641,7 +1641,7 @@
         <item>Neliö</item>
         <item>Pyöristetty neliö</item>
         <item>Ympyrä</item>
-        <item>Samsung-tyyli</item>
+        <item>Superellipsi</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Käytä fonttia kaikkialla</string>
@@ -2020,16 +2020,14 @@
     <string name="drawer_about_summary">Svartifossilla voit hallita puhelimen musiikkia Wear OS -kellosta täysin muokattavalla, laitteellesi sovitetulla kauko-ohjaimella.</string>
     <string name="drawer_name_heading">Nimi</string>
     <string name="drawer_name_meaning">Svartifoss tarkoittaa islanniksi \"mustaa putousta\" — nimi tulee Vatnajökullin kansallispuiston vesiputouksesta, jossa tummat basalttipylväät kehystävät kapeaa putousta. Kuten vesi virtaa kiven yli, musiikki virtaa sovelluksen läpi.</string>
-    <string name="drawer_sync_heading">Synkronointi</string>
-    <string name="drawer_sync_summary">Kellon asetukset määritetään täällä puhelimessa ja synkronoidaan automaattisesti paritettuun kelloon.</string>
     <string name="drawer_support_heading">Tuki</string>
     <string name="download_album_art">Lataa kansikuva</string>
     <string name="album_art_saved">Kansikuva tallennettu galleriaan</string>
     <string name="album_art_save_error">Kansikuvan tallennus epäonnistui</string>
 
-    <string name="action_play_liked_songs">Toista tykätyt kappaleet (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Toista tykätyt kappaleet (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Toista tykätyt kappaleet (SoundCloud)</string>
+    <string name="action_play_liked_songs">Tykätyt kappaleet</string>
+    <string name="action_play_spotify_liked_songs">Tykätyt kappaleet</string>
+    <string name="action_play_soundcloud_likes">Tykätyt kappaleet</string>
     <string name="action_my_playlists">Suoratoiston pikavalinnat</string>
     <string name="action_show_streaming_library">Näytä kaikki tallennetut pikavalinnat</string>
     <string name="picker_section_apps">Sovellukset &amp; automaatio</string>
@@ -2162,7 +2160,7 @@
     <string name="playlist_shortcut_deleted">%1$s poistettu</string>
     <string name="playlist_shortcut_undo">Kumoa</string>
 
-    <string name="action_play_liked_songs_shuffled">Toista tykätyt kappaleet satunnaisesti (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Tykätyt kappaleet, satunnaisesti</string>
     <string name="action_search_history">Hakuhistoria</string>
     <string name="search_history_empty">Ei vielä viimeaikaisia hakuja</string>
 
@@ -2848,7 +2846,7 @@
     <string name="setting_wear_text_block_position">Tekstin sijainti</string>
     <string name="setting_wear_text_block_position_description">Missä kappaleen teksti sijaitsee näytöllä. Seuraa kellotaulua säilyttää sijainnin, jota varten kukin kellotaulu on suunniteltu.</string>
     <string name="setting_online_artwork">Verkkokansikuva</string>
-    <string name="setting_online_artwork_description">Anna kellotaulun näyttää verkosta haettu kuva \u2014 soivan esittäjän kuva tai albumikansi silloin, kun soitin ei tarjoa sellaista. Puhelin tekee haun Deezerin julkisesta luettelosta ja tallentaa tuloksen välimuistiin; vain kappaleen ja esittäjän nimet lähetetään, eikä mitään haeta, ellei kellotaulua ole asetettu käyttämään jotakin näistä lähteistä. Kun asetus on pois päältä, käytetään soittimen omaa kansikuvaa.</string>
+    <string name="setting_online_artwork_description">Anna kellotaulun näyttää verkosta haettu kuva — esiintyvä artisti tai albumin kansi soittimelle, joka ei julkaise sellaista. Puhelimesi tekee haun ja tallentaa tuloksen välimuistiin; vain kappaleen ja esittäjän nimet lähetetään, Deezerin julkiseen hakemistoon. Sama haku löytää kannen myös kappaleelle, jonka sovellus ei julkaise lainkaan kansikuvaa, kuten YouTube-videolle: puhelin pyytää YouTubelta videon oman pikkukuvan (lähettäen kanavan ja otsikon Googlen YouTube Data API:lle) ja sitten Deezeriltä albumin kannen, ja käyttää tulosta vain, jos se täsmää. Kun asetus on pois päältä, käytetään vain soittimen omaa kansikuvaa.</string>
     <string name="setting_wear_shortcut_details">Toista tai sekoita kellossa</string>
     <string name="setting_wear_shortcut_details_description">Kun valitset kellossa tallennetun linkin pikakuvakeluettelosta, Pikakuvakkeet-Tilestä tai toimintovalikosta, sen kansikuva näytetään ensin Toista- ja Sekoita-painikkeiden kanssa. Poista käytöstä, jos haluat sen alkavan heti. Yhteen linkkiin määritetyt painikkeet ja eleet aloittavat sen aina heti.</string>
     <string name="actions_quick_pin_add">Näytä pikapaneelissa</string>
@@ -2946,4 +2944,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">Sovellukset, jotka voivat avata linkin, sekä asennetut mediasoittimet näytetään.</string>
     <string name="streaming_route_automatic">Automaattinen (havaittu sovellus)</string>
+    <string name="action_symfonium_start">Käynnistä media Symfoniumissa</string>
+    <string name="action_symfonium_start_named">Käynnistä Symfoniumissa: %1$s</string>
+    <string name="action_symfonium_sync">Synkronoi Symfonium-palveluntarjoaja</string>
+    <string name="app_icon_style_gradient">Liukuväri</string>
+    <string name="app_icon_style_solid">Yksivärinen</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Hiilisulka</string>
+    <string name="dev_show_rating_card">Näytä arviointikortti</string>
+    <string name="dev_show_rating_card_description">Pyytää heti Google Playltä sovelluksen sisäistä arvostelukorttia ja ohittaa tavalliset rajoitukset. Kortti näkyy vain Google Playsta asennetussa versiossa (sisäinen testaus lasketaan mukaan)</string>
+    <string name="dev_show_rating_card_unavailable">Google Playlla ei ole arvostelukorttia tälle versiolle. Asenna se Google Playsta, sisäinen testaus mukaan lukien, ja yritä uudelleen</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Tämä soitin ei julkaissut jaettavaa linkkiä tälle kappaleelle</string>
+    <string name="setting_app_icon_style">Sovelluskuvake</string>
+    <string name="setting_youtube_api_key">YouTube Data API -avain</string>
+    <string name="setting_youtube_api_key_bundled">YouTube-avain sisältyy tähän sovellukseen; omaa ei tarvitse lisätä</string>
+    <string name="setting_youtube_api_key_configured">YouTube-avain on määritetty; tallennettu vain tähän puhelimeen</string>
+    <string name="setting_youtube_api_key_description">Kun soitin ei julkaise kansikuvaa, Svartifoss hakee YouTubesta Googlen YouTube Data API:n kautta, lähettää kanavan ja otsikon yhdessä tämän avaimen kanssa ja käyttää täsmälleen vastaavan videon pikkukuvaa. Jätä tyhjäksi, jos haluat käyttää sovellukseen sisältyvää avainta. Liittämäsi avain pysyy tässä puhelimessa: sitä ei lähetetä kellolle eikä sitä sisällytetä Svartifossin asetusvarmuuskopioihin.</string>
+    <string name="setting_youtube_api_key_dialog_title">Liitä oma YouTube Data API v3 -avaimesi</string>
+    <string name="setting_youtube_api_key_not_configured">Valinnainen: YouTube-avainta ei ole määritetty</string>
+    <string name="symfonium_media_album">Albumi (valinnainen)</string>
+    <string name="symfonium_media_artist">Esittäjä (valinnainen)</string>
+    <string name="symfonium_media_id_optional">Tunnus (valinnainen)</string>
+    <string name="symfonium_media_name">Nimi</string>
+    <string name="symfonium_media_type">Median tyyppi</string>
+    <string name="symfonium_provider_id">Palveluntarjoajan tunnus</string>
+    <string name="symfonium_provider_id_description">Palveluntarjoajan tunnuksen löydät Symfoniumin Hallitse mediapalveluntarjoajia -näkymästä.</string>
+    <string name="symfonium_queue_mode">Jonotila</string>
+    <string name="symfonium_resume">Jatka, kun mahdollista</string>
+    <string name="symfonium_shuffle">Sekoita kokoelmat</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Kappale</item>
+        <item>Soittolista</item>
+        <item>Albumi</item>
+        <item>Esittäjä</item>
+        <item>Tyylilaji</item>
+        <item>Kappalemiksaus</item>
+        <item>Albumimiksaus</item>
+        <item>Verkkoradio</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Aloita nyt</item>
+        <item>Toista seuraavaksi</item>
+        <item>Lisää jonoon</item>
+    </string-array>
 </resources>

@@ -739,6 +739,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -750,8 +752,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">항상 켜짐 색상</string>
     <string-array name="wear_aod_color_entries">
@@ -1639,7 +1639,7 @@
         <item>정사각형</item>
         <item>스쿼클</item>
         <item>원</item>
-        <item>삼성 스타일</item>
+        <item>슈퍼타원</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">모든 곳에 글꼴 사용</string>
@@ -2018,16 +2018,14 @@
     <string name="drawer_about_summary">Svartifoss를 사용하면 Wear OS 워치에서 휴대전화의 음악을 제어할 수 있습니다. 기기에 맞게 완전히 사용자 지정 가능한 리모컨입니다.</string>
     <string name="drawer_name_heading">이름</string>
     <string name="drawer_name_meaning">Svartifoss는 아이슬란드어로 \"검은 폭포\"를 뜻합니다. 바트나요쿨 국립공원의 폭포에서 이름을 따왔으며, 어두운 현무암 기둥이 좁은 폭포수를 둘러싸고 있습니다. 돌 위로 흐르는 물처럼 음악이 앱을 흐릅니다.</string>
-    <string name="drawer_sync_heading">동기화</string>
-    <string name="drawer_sync_summary">워치 설정은 휴대전화에서 구성되며 페어링된 워치에 자동으로 동기화됩니다.</string>
     <string name="drawer_support_heading">지원</string>
     <string name="download_album_art">커버 아트 다운로드</string>
     <string name="album_art_saved">커버 아트를 갤러리에 저장했습니다</string>
     <string name="album_art_save_error">커버 아트를 저장하지 못했습니다</string>
 
-    <string name="action_play_liked_songs">좋아요 표시한 노래 재생(YT Music)</string>
-    <string name="action_play_spotify_liked_songs">좋아요 표시한 노래 재생(Spotify)</string>
-    <string name="action_play_soundcloud_likes">좋아요 표시한 트랙 재생(SoundCloud)</string>
+    <string name="action_play_liked_songs">좋아요 표시한 노래</string>
+    <string name="action_play_spotify_liked_songs">좋아요 표시한 노래</string>
+    <string name="action_play_soundcloud_likes">좋아요 표시한 트랙</string>
     <string name="action_my_playlists">스트리밍 바로가기</string>
     <string name="action_show_streaming_library">저장된 바로가기 모두 표시</string>
     <string name="picker_section_apps">앱 및 자동화</string>
@@ -2157,7 +2155,7 @@
     <string name="playlist_shortcut_deleted">%1$s 삭제됨</string>
     <string name="playlist_shortcut_undo">실행 취소</string>
 
-    <string name="action_play_liked_songs_shuffled">좋아요 표시한 노래 셔플 재생(YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">좋아요 표시한 노래(셔플)</string>
     <string name="action_search_history">검색 기록</string>
     <string name="search_history_empty">아직 최근 검색이 없습니다</string>
 
@@ -2843,7 +2841,7 @@
     <string name="setting_wear_text_block_position">텍스트 위치</string>
     <string name="setting_wear_text_block_position_description">트랙 텍스트가 화면에 놓이는 위치입니다. 페이스 따르기는 각 페이스에 설계된 위치를 유지합니다.</string>
     <string name="setting_online_artwork">온라인 아트워크</string>
-    <string name="setting_online_artwork_description">시계 화면에 온라인에서 찾은 이미지를 표시합니다 \u2014 재생 중인 아티스트 또는 이미지를 제공하지 않는 플레이어를 위한 앨범 커버입니다. 휴대전화가 Deezer 공개 카탈로그에서 검색하고 결과를 캐시합니다. 트랙 이름과 아티스트 이름만 전송되며, 페이스가 해당 소스 중 하나를 사용하도록 설정된 경우에만 검색합니다. 끄면 플레이어가 제공한 아트워크를 사용합니다.</string>
+    <string name="setting_online_artwork_description">시계 화면에 온라인에서 찾은 이미지를 표시합니다 — 재생 중인 아티스트 또는 이미지를 제공하지 않는 플레이어를 위한 앨범 커버입니다. 검색과 결과 캐시는 휴대전화가 처리하며, 트랙 이름과 아티스트 이름만 Deezer의 공개 카탈로그로 전송됩니다. YouTube 동영상처럼 앱이 커버를 전혀 게시하지 않는 트랙의 커버를 찾는 것도 이 기능입니다. 휴대전화가 먼저 YouTube에 해당 동영상 자체의 썸네일을 요청하고(채널과 제목을 Google의 YouTube Data API로 전송), 그다음 Deezer에 앨범 커버를 요청하며, 일치하는 경우에만 결과를 사용합니다. 끄면 플레이어 자체의 아트워크만 사용합니다.</string>
     <string name="setting_wear_shortcut_details">시계에서 재생 또는 셔플</string>
     <string name="setting_wear_shortcut_details_description">시계에서 저장된 링크를 선택하면(바로가기 목록, 바로가기 Tile, 동작 메뉴 어디에서든) 먼저 커버와 함께 재생 및 셔플 버튼이 표시됩니다. 끄면 바로 재생을 시작합니다. 링크 하나에 지정한 버튼과 제스처는 항상 바로 재생을 시작합니다.</string>
     <string name="actions_quick_pin_add">퀵패널에 표시</string>
@@ -2941,4 +2939,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">링크를 열 수 있는 앱과 설치된 미디어 플레이어가 표시됩니다.</string>
     <string name="streaming_route_automatic">자동(감지된 앱)</string>
+    <string name="action_symfonium_start">Symfonium에서 미디어 시작</string>
+    <string name="action_symfonium_start_named">Symfonium에서 시작: %1$s</string>
+    <string name="action_symfonium_sync">Symfonium 제공자 동기화</string>
+    <string name="app_icon_style_gradient">그라데이션</string>
+    <string name="app_icon_style_solid">단색</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">차콜 깃털</string>
+    <string name="dev_show_rating_card">평가 카드 표시</string>
+    <string name="dev_show_rating_card_description">평소의 제한을 무시하고 지금 바로 Google Play의 앱 내 리뷰 카드를 요청합니다. Google Play에서 설치한 빌드에서만 표시됩니다(내부 테스트 포함)</string>
+    <string name="dev_show_rating_card_unavailable">이 빌드에는 Google Play 리뷰 카드가 없습니다. 내부 테스트를 포함해 Google Play에서 설치한 뒤 다시 시도하세요</string>
+    <string name="playlist_shortcut_queue_link_unavailable">이 플레이어는 이 트랙의 공유 가능한 링크를 게시하지 않았습니다</string>
+    <string name="setting_app_icon_style">앱 아이콘</string>
+    <string name="setting_youtube_api_key">YouTube Data API 키</string>
+    <string name="setting_youtube_api_key_bundled">이 앱에 YouTube 키가 포함되어 있어 직접 추가할 필요가 없습니다</string>
+    <string name="setting_youtube_api_key_configured">YouTube 키가 설정됨. 이 휴대전화에만 저장됩니다</string>
+    <string name="setting_youtube_api_key_description">플레이어가 아트워크를 게시하지 않으면 Svartifoss가 Google의 YouTube Data API로 YouTube를 검색하여 채널과 제목을 이 키와 함께 전송하고, 정확히 일치하는 동영상의 썸네일을 사용합니다. 앱에 포함된 키를 사용하려면 비워 두세요. 붙여넣은 키는 이 휴대전화에만 남으며 워치로 전송되지 않고 Svartifoss 구성 백업에도 포함되지 않습니다.</string>
+    <string name="setting_youtube_api_key_dialog_title">YouTube Data API v3 키를 붙여넣으세요</string>
+    <string name="setting_youtube_api_key_not_configured">선택 사항: YouTube 키가 설정되지 않음</string>
+    <string name="symfonium_media_album">앨범(선택 사항)</string>
+    <string name="symfonium_media_artist">아티스트(선택 사항)</string>
+    <string name="symfonium_media_id_optional">ID(선택 사항)</string>
+    <string name="symfonium_media_name">이름</string>
+    <string name="symfonium_media_type">미디어 유형</string>
+    <string name="symfonium_provider_id">제공자 ID</string>
+    <string name="symfonium_provider_id_description">제공자 ID는 Symfonium의 ‘미디어 제공자 관리’ 화면에서 확인할 수 있습니다.</string>
+    <string name="symfonium_queue_mode">대기열 모드</string>
+    <string name="symfonium_resume">가능하면 이어서 재생</string>
+    <string name="symfonium_shuffle">컬렉션 셔플</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>노래</item>
+        <item>재생목록</item>
+        <item>앨범</item>
+        <item>아티스트</item>
+        <item>장르</item>
+        <item>노래 믹스</item>
+        <item>앨범 믹스</item>
+        <item>인터넷 라디오</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>지금 시작</item>
+        <item>다음에 재생</item>
+        <item>대기열에 추가</item>
+    </string-array>
 </resources>

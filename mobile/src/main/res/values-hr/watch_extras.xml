@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Debljina trake glasnoće</string>
-    <string name="setting_wear_volume_thickness_description">Debljina crte trake glasnoće, od 50 % do 180 % zadane. I deblje crte ostaju podalje od ruba.</string>
+    <string name="setting_wear_volume_thickness_description">Debljina crte trake glasnoće, od 50 %% do 180 %% zadane. I deblje crte ostaju podalje od ruba.</string>
     <string name="setting_wear_volume_haptics">Vibracija krune pri glasnoći</string>
     <string name="setting_wear_queue_dim_played">Zatamni odsvirane pjesme</string>
     <string name="setting_wear_queue_dim_played_description">Zatamnjuje stavke koje su već svirale kako bi se istaknule one koje tek dolaze.</string>

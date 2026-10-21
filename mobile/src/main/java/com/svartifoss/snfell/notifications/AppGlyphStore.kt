@@ -2,9 +2,9 @@ package com.svartifoss.snfell.notifications
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import com.svartifoss.snfell.common.SampledBitmaps
 import java.io.File
 import java.util.concurrent.CopyOnWriteArraySet
 import timber.log.Timber
@@ -182,7 +182,7 @@ object AppGlyphStore {
     fun drawable(context: Context, packageName: String): Drawable? {
         val bytes = glyph(context, packageName) ?: return null
         val bitmap = try {
-            BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+            SampledBitmaps.decode(bytes, MediaNotificationActions.SOURCE_ICON_SIZE_PX)
         } catch (e: Exception) {
             null
         } ?: return null

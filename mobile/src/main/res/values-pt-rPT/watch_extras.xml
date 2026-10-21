@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Espessura do volume</string>
-    <string name="setting_wear_volume_thickness_description">Espessura do traço da barra de volume, de 50% a 180% do predefinido. Traços mais grossos continuam afastados do rebordo.</string>
+    <string name="setting_wear_volume_thickness_description">Espessura do traço da barra de volume, de 50%% a 180%% do predefinido. Traços mais grossos continuam afastados do rebordo.</string>
     <string name="setting_wear_volume_haptics">Vibração da coroa no volume</string>
     <string name="setting_wear_queue_dim_played">Esbater faixas já tocadas</string>
     <string name="setting_wear_queue_dim_played_description">Esbate as faixas que já tocaram para destacar as que ainda vão tocar.</string>

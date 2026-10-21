@@ -35,7 +35,7 @@
     "buttonBackground": ["glass", "uniform_glass", "uniform_glass_light", "translucent_album", "translucent_album_exp", "glow_album", "glow_exp", "solid_album", "solid_exp_album", "outline", "outline_exp_album", "transparent", "icon_exp"],
     "buttonCurve": ["flat", "arc", "curved_gentle", "curved_soft", "curved_medium", "curved", "curved_extreme", "spread", "side_left", "side_right", "side_split"],
     "buttonShape": ["pill", "circle", "square", "rounded_square_soft", "rounded_square_medium", "squircle", "leaf", "drop", "leaf_reverse", "drop_reverse", "pebble", "arch", "shield", "arch_reverse", "shield_reverse", "pill_wide_small", "pill_wide_medium", "rounded_rect_small"],
-    "coverShape": ["rounded", "square", "squircle", "circle", "samsung", "leaf", "drop", "arch", "pebble", "shield"],
+    "coverShape": ["rounded", "square", "squircle", "circle", "superellipse", "leaf", "drop", "arch", "pebble", "shield"],
     "clockColorMode": ["white", "dynamic", "album", "custom"],
     "colorModifier": ["none", "vibrant", "pastel", "warm", "cool"],
     "elementColorModifier": ["follow", "none", "vibrant", "pastel", "warm", "cool"],
@@ -49,7 +49,7 @@
     "surfaceOverlayBackdrop": [
       "shared","follow", "transparent", "acrylic", "black", "album", "glass", "gradient", "duotone", "prism", "expressive", "expressive_no_blur", "secondary", "tertiary", "mesh", "aurora", "spotlight", "vignette", "split", "bands", "midnight", "halo", "smoke", "sunrise", "deep_ocean", "nebula", "ember", "tideline", "bioluminescence", "iridescent", "graphite", "cinema", "orbit", "horizon", "ink_wash", "blossom", "fjord", "dot_matrix", "scanlines", "radar", "contour", "faceted", "dusk", "ice", "rose", "paper", "monolith", "lantern", "noir", "velvet", "mirage", "bloom", "cloud", "nocturne", "liquid", "tidal", "vinyl", "corona", "crescent", "grid", "glass_veil", "material", "poster", "studio", "spectrum"],
     "overlayStyle": ["glass", "minimal", "material", "tonal", "neon", "light", "gradient", "mono", "outline", "duotone", "prism", "contrast", "terminal", "frost", "cover", "cover_blur", "cover_tonal", "soft", "slab", "ink", "rail", "sunset", "bubble", "chrome", "holo", "basalt", "strata", "route"],
-    "queueCoverShape": ["follow", "rounded", "square", "squircle", "circle", "samsung", "leaf", "drop", "arch", "pebble", "shield"],
+    "queueCoverShape": ["follow", "rounded", "square", "squircle", "circle", "superellipse", "leaf", "drop", "arch", "pebble", "shield"],
     "queueRowShape": ["follow", "pill", "rounded", "soft", "square", "leaf", "bubble", "hexagon"],
     "playerShadingIntensity": ["soft", "balanced", "strong"],
     "playerShadingStyle": ["follow", "edge_vignette", "edge_vignette_strong", "edge_vignette_heavy", "bottom_corner", "bottom_fade", "floor_ceiling", "full_filter", "album_tint", "duotone", "side_curtains", "top_fade", "center_spotlight", "diagonal", "left_curtain", "right_curtain", "center_band", "crossfade"],
@@ -60,6 +60,7 @@
     "screenTheme": ["default", "minimal", "compact", "contrast"],
     "seekLayout": ["edge", "edge_thin", "edge_thick", "timeline", "segments", "timeline_top", "timeline_bottom", "segments_top", "vertical_left", "vertical_right", "dial", "twin", "segments_bottom", "center_stack", "wave_timeline"],
     "seekMarkerVisibility": ["always", "drag", "drag_paused", "paused"],
+    "transportGlyph": ["follow", "a", "b", "c", "d", "e"],
     "textShadowStyle": ["none", "soft", "hard", "glow", "lift", "whisper"],
     "textShadowColorMode": ["black", "album", "white", "custom"],
     "textOutlineStyle": ["none", "hairline", "thin", "medium", "bold"],
@@ -108,6 +109,8 @@
       "wear_player_shading_intensity": [],
       "wear_progress_desaturated": [],
       "wear_quadrant_tap_flash": ["classic"],
+      "wear_play_icon": ["expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "ribbon", "frame"],
+      "wear_pause_icon": ["expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum", "material", "ribbon", "frame"],
       "wear_split_panel": ["split"]
     }
   },
@@ -496,6 +499,8 @@
     "wear_screen_theme": { "type": "string", "valueSet": "screenTheme" },
     "wear_seek_layout": { "type": "string", "valueSet": "seekLayout" },
     "wear_seek_marker": { "type": "string", "valueSet": "seekMarkerVisibility" },
+    "wear_play_icon": { "type": "string", "valueSet": "transportGlyph" },
+    "wear_pause_icon": { "type": "string", "valueSet": "transportGlyph" },
     "wear_seek_style": { "type": "string", "valueSet": "seekStyle" },
     "wear_shading_color_mode": { "type": "string", "valueSet": "shadingColorMode" },
     "wear_shading_custom_color": { "type": "string", "colorRule": "empty-or-uppercase-hex-rgb" },

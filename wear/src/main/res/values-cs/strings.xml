@@ -235,4 +235,6 @@ Vše si přizpůsobíte v Ovládání a Hodinky na telefonu</string>
     <string name="quick_sleep_description">Časovač spánku, zbývá %1$d minut. Klepnutím změníte</string>
     <string name="quick_sleep_off_description">Časovač spánku je vypnutý. Klepnutím nastavíte</string>
     <string name="quick_lyric_plain">Tento text nemá časování. Klepnutím ho zobrazíte.</string>
+    <string name="playback_live">ŽIVĚ</string>
+    <string name="queue_add_shortcut">Přidat tuto skladbu do zkratek</string>
 </resources>

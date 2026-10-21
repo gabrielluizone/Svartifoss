@@ -3,7 +3,6 @@ package com.svartifoss.snfell.watch.complication
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.Icon
 import android.net.Uri
 import java.io.File
@@ -21,6 +20,7 @@ import com.google.android.gms.wearable.DataClient
 import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.SampledBitmaps
 import com.svartifoss.snfell.common.displayArtist
 import com.svartifoss.snfell.proto.MusicState
 import com.svartifoss.snfell.watch.view.MainActivity
@@ -123,7 +123,8 @@ class AlbumArtComplicationDataSourceService : SuspendingComplicationDataSourceSe
     }
 
     private fun readCachedAlbumArt(): Bitmap? = try {
-        albumArtCacheFile.takeIf { it.exists() }?.let { BitmapFactory.decodeFile(it.path) }
+        albumArtCacheFile.takeIf { it.exists() }
+                ?.let { SampledBitmaps.decodeFile(it, SampledBitmaps.screenPx(resources)) }
     } catch (e: Exception) {
         Timber.w(e, "Complication: failed reading cached album art")
         null
@@ -265,7 +266,8 @@ class AlbumArtComplicationDataSourceService : SuspendingComplicationDataSourceSe
             return NowPlayingResult.Playing(state, cover.bitmap, newCover = false)
         }
         val albumArt = try {
-            BitmapUtils.deserialize(dataClient.getByteArrayAsset(albumArtAsset))
+            SampledBitmaps.decode(dataClient.getByteArrayAsset(albumArtAsset),
+                    SampledBitmaps.screenPx(resources))
         } catch (e: Exception) {
             Timber.w(e, "Complication: failed fetching the album-art asset")
             null

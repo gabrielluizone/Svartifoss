@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Hrúbka pruhu hlasitosti</string>
-    <string name="setting_wear_volume_thickness_description">Hrúbka čiary pruhu hlasitosti, od 50 % do 180 % predvolenej. Aj hrubšie čiary zostávajú mimo okraja.</string>
+    <string name="setting_wear_volume_thickness_description">Hrúbka čiary pruhu hlasitosti, od 50 %% do 180 %% predvolenej. Aj hrubšie čiary zostávajú mimo okraja.</string>
     <string name="setting_wear_volume_haptics">Vibrácia korunky pri hlasitosti</string>
     <string name="setting_wear_queue_dim_played">Stlmiť prehrané skladby</string>
     <string name="setting_wear_queue_dim_played_description">Stlmí položky, ktoré už hrali, aby vynikli tie, ktoré prídu.</string>

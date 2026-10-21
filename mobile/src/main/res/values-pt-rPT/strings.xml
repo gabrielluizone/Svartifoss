@@ -18,6 +18,8 @@
     <string name="setting_app_icon_style">Ícone da aplicação</string>
     <string name="app_icon_style_solid">Cor sólida</string>
     <string name="app_icon_style_gradient">Gradiente</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Pena de Carvão</string>
 
     <!-- Developer mode -->
     <string name="category_developer">Programador</string>
@@ -40,6 +42,9 @@
     <string name="dev_copy_debug_info_done">Informações de depuração copiadas</string>
     <string name="dev_open_update_screen">Abrir ecrã de atualizações</string>
     <string name="dev_open_update_screen_description">Pré-visualizar o ecrã de Atualizações (banner de capa, esquema das notas de versão) sem esperar por uma versão real</string>
+    <string name="dev_show_rating_card">Mostrar o cartão de avaliação</string>
+    <string name="dev_show_rating_card_description">Pede agora à Google Play o cartão de avaliação dentro da app, ignorando os limites habituais. Só aparece numa versão instalada pela Google Play (o teste interno conta)</string>
+    <string name="dev_show_rating_card_unavailable">A Google Play não tem um cartão de avaliação para esta versão. Instale pela Google Play, teste interno incluído, e tente de novo</string>
     <string name="dev_watch_layout_bounds">Mostrar limites do esquema do relógio</string>
     <string name="dev_watch_layout_bounds_description">Contornar os elementos visíveis do leitor e as zonas de toque no relógio. Apenas sobreposição de diagnóstico.</string>
     <string name="dev_watch_player_info">Mostrar informações do leitor no relógio</string>
@@ -796,6 +801,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -807,8 +814,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Cor sempre visível</string>
     <string-array name="wear_aod_color_entries">
@@ -1504,16 +1509,14 @@
     <string name="drawer_about_summary">O Svartifoss permite-te controlar a música no telemóvel a partir do teu relógio Wear OS — com um comando totalmente personalizável adaptado ao teu dispositivo.</string>
     <string name="drawer_name_heading">O nome</string>
     <string name="drawer_name_meaning">Svartifoss significa “Cascata Negra” em islandês — batizado com o nome da cascata no Parque Nacional de Vatnajökull, onde colunas de basalto escuro emolduram uma queda estreita. Como a água sobre a pedra, a música flui pela aplicação.</string>
-    <string name="drawer_sync_heading">Sincronização</string>
-    <string name="drawer_sync_summary">As definições do relógio são configuradas aqui no telemóvel e sincronizadas automaticamente com o teu relógio emparelhado.</string>
     <string name="drawer_support_heading">Apoio</string>
     <string name="download_album_art">Transferir capa</string>
     <string name="album_art_saved">Capa guardada na galeria</string>
     <string name="album_art_save_error">Falha ao guardar a capa</string>
 
-    <string name="action_play_liked_songs">Reproduzir músicas gostadas (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Reproduzir músicas gostadas (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Reproduzir músicas gostadas (SoundCloud)</string>
+    <string name="action_play_liked_songs">Músicas gostadas</string>
+    <string name="action_play_spotify_liked_songs">Músicas gostadas</string>
+    <string name="action_play_soundcloud_likes">Músicas gostadas</string>
     <string name="action_my_playlists">Atalhos de streaming</string>
     <string name="action_show_streaming_library">Mostrar todos os atalhos guardados</string>
     <string name="picker_section_apps">Aplicações e automação</string>
@@ -1632,7 +1635,7 @@
     <string name="playlist_shortcut_deleted">%1$s eliminado</string>
     <string name="playlist_shortcut_undo">Anular</string>
 
-    <string name="action_play_liked_songs_shuffled">Reproduzir músicas gostadas, aleatório (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Músicas gostadas, aleatório</string>
     <string name="action_search_history">Histórico de pesquisas</string>
     <string name="search_history_empty">Ainda sem pesquisas recentes</string>
 
@@ -1861,7 +1864,7 @@
         <item>Quadrado</item>
         <item>Squircle</item>
         <item>Círculo</item>
-        <item>Estilo Samsung</item>
+        <item>Superelipse</item>
     </string-array>
     <string-array name="wear_text_case_entries">
         <item>Normal</item>
@@ -2950,8 +2953,8 @@
     <string name="setting_youtube_api_key_configured">Chave do YouTube configurada; guardada apenas neste telemóvel</string>
     <string name="setting_youtube_api_key_bundled">Chave do YouTube incluída nesta aplicação; os utilizadores não precisam de adicionar uma</string>
     <string name="setting_youtube_api_key_dialog_title">Cole a sua chave da YouTube Data API v3</string>
-    <string name="setting_youtube_api_key_description">Quando o leitor não fornece uma capa, o Svartifoss procura no YouTube uma correspondência exata de canal e título e usa a miniatura do vídeo. A chave fica no telemóvel e não é enviada para o relógio nem incluída nas cópias de segurança da configuração do Svartifoss.</string>
-    <string name="setting_online_artwork_description">Permite que o mostrador apresente uma imagem pesquisada online \u2014 o artista em reprodução ou uma capa de álbum para um leitor que não forneça nenhuma. O telemóvel faz a pesquisa no catálogo público do Deezer e guarda o resultado em cache; apenas são enviados os nomes da faixa e do artista. É também o que encontra uma capa para uma faixa cuja aplicação não publica nenhuma, como um vídeo do YouTube, e só quando o resultado corresponde. Quando desativado, é utilizada apenas a própria capa do leitor.</string>
+    <string name="setting_youtube_api_key_description">Quando um leitor não publica nenhuma capa, o Svartifoss pesquisa no YouTube através da API YouTube Data da Google, enviando o canal e o título juntamente com esta chave, e usa a miniatura de um vídeo que corresponda exatamente. Deixe em branco para usar a chave incluída nesta aplicação. Uma chave que colar fica neste telemóvel: não é enviada para o relógio nem incluída nas cópias de segurança da configuração do Svartifoss.</string>
+    <string name="setting_online_artwork_description">Permite que o mostrador apresente uma imagem pesquisada online — o artista em reprodução ou a capa de um álbum quando o leitor não fornece nenhuma. O seu telemóvel faz a pesquisa e guarda o resultado em cache; apenas os nomes da faixa e do artista são enviados, ao catálogo público do Deezer. É também o que encontra uma capa para uma faixa cuja aplicação não publica nenhuma, como um vídeo do YouTube: o telemóvel pede ao YouTube a miniatura própria desse vídeo (enviando o canal e o título para a API YouTube Data da Google) e depois ao Deezer a capa de um álbum, e só usa um resultado quando este corresponde. Quando desativado, é usada apenas a arte do próprio leitor.</string>
     <string name="setting_streaming_app_routes">Escolha aplicações para ligações de streaming</string>
     <string name="setting_streaming_app_routes_description">Escolha uma aplicação compatível instalada separadamente para o YouTube Music, Spotify e cada outro serviço. Utilizado com “Aplicação de streaming detetada”.</string>
     <plurals name="setting_streaming_app_routes_selected">
@@ -2960,4 +2963,19 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">São mostradas aplicações que podem abrir o link, além de media players instalados.</string>
     <string name="streaming_route_automatic">Automático (aplicação detectada)</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Música</item>
+        <item>Lista de reprodução</item>
+        <item>Álbum</item>
+        <item>Artista</item>
+        <item>Género</item>
+        <item>Mix de músicas</item>
+        <item>Mix de álbuns</item>
+        <item>Rádio na internet</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Iniciar agora</item>
+        <item>Reproduzir a seguir</item>
+        <item>Adicionar à fila</item>
+    </string-array>
 </resources>

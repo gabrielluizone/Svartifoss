@@ -201,6 +201,28 @@
             app:descriptions="@array/wear_screen_theme_descriptions"
             android:layout="@layout/pref_item" />
 
+        <!-- The drawing of the play and of the pause mark on the faces that draw one (see
+             TransportGlyphs). Two keys so a pair can be mixed; the dialog shows each drawing. -->
+        <com.svartifoss.snfell.view.settings.TransportGlyphPreference
+            android:key="wear_play_icon"
+            android:icon="@drawable/ic_transport_controls"
+            android:defaultValue="follow"
+            android:title="@string/setting_wear_play_icon"
+            android:summary="%s"
+            android:entries="@array/wear_transport_icon_entries"
+            android:entryValues="@array/wear_transport_icon_values"
+            android:layout="@layout/pref_item" />
+
+        <com.svartifoss.snfell.view.settings.TransportGlyphPreference
+            android:key="wear_pause_icon"
+            android:icon="@drawable/ic_transport_controls"
+            android:defaultValue="follow"
+            android:title="@string/setting_wear_pause_icon"
+            android:summary="%s"
+            android:entries="@array/wear_transport_icon_entries"
+            android:entryValues="@array/wear_transport_icon_values"
+            android:layout="@layout/pref_item" />
+
         <com.matejdro.wearutils.preferences.compat.SwitchPreferenceEx
             android:defaultValue="true"
             android:key="wear_classic_icons_visible"

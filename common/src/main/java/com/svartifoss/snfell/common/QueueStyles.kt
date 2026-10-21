@@ -186,8 +186,7 @@ object QueueAppearance {
      * choosing: here an unknown value has to fall back to the style's own cut, the one thing no
      * single [CoverShape] can stand for.
      */
-    fun coverShape(value: String?): CoverShape? =
-            CoverShape.entries.firstOrNull { it.preferenceValue == value }
+    fun coverShape(value: String?): CoverShape? = CoverShape.parse(value)
 
     /** Whether the pill-shape picker has anything to act on beside [styleToken]. */
     fun rowShapeApplies(styleToken: String?): Boolean = QueueStyles.spec(styleToken).drawsOutline

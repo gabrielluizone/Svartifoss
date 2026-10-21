@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The Svartifoss mark of the Charcoal Feather icon (AppIconStyle.FEATHER), phone edition: the
+     same mark as the other styles, recoloured warm grey. The artwork is the shared launcher
+     foreground, whose alpha channel is the whole shape, so tinting it gives a flat, exact colour
+     with the original anti-aliasing and no second copy of the mark to keep in step. -->
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@mipmap/ic_launcher_foreground"
+    android:tint="@color/launcher_feather_phone_mark" />

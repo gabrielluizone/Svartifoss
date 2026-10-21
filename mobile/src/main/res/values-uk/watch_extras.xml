@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Товщина смуги гучності</string>
-    <string name="setting_wear_volume_thickness_description">Товщина лінії смуги гучності, від 50% до 180% стандартної. Навіть товстіші лінії не заходять на край екрана.</string>
+    <string name="setting_wear_volume_thickness_description">Товщина лінії смуги гучності, від 50%% до 180%% стандартної. Навіть товстіші лінії не заходять на край екрана.</string>
     <string name="setting_wear_volume_haptics">Вібрація коронки при гучності</string>
     <string name="setting_wear_queue_dim_played">Приглушувати прослухані треки</string>
     <string name="setting_wear_queue_dim_played_description">Приглушує вже відтворені треки, щоб виділити наступні.</string>

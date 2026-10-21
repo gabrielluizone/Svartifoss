@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Ikona přehrávání</string>
+    <string name="setting_wear_pause_icon">Ikona pauzy</string>
+    <string name="setting_wear_transport_icon_description">Symbol tlačítka přehrávání a pozastavení. „Podle ciferníku“ ponechá symbol z původního návrhu tohoto ciferníku.</string>
+    <string name="transport_icon_follow">Podle ciferníku</string>
+    <string name="transport_icon_a">Zaoblená</string>
+    <string name="transport_icon_b">Zaoblený obrys</string>
+    <string name="transport_icon_c">Ostrý obrys</string>
+    <string name="transport_icon_d">Ostrá</string>
+    <string name="transport_icon_e">Tlustý zaoblený obrys</string>
+</resources>

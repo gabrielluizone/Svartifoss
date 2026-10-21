@@ -209,4 +209,6 @@
     <string name="quick_sleep_description">تایمر خواب، %1$d دقیقه باقی مانده است. برای تغییر ضربه بزنید.</string>
     <string name="quick_sleep_off_description">تایمر خواب خاموش است. برای تنظیم ضربه بزنید.</string>
     <string name="quick_lyric_plain">این متن ترانه زمان‌بندی ندارد. برای خواندن ضربه بزنید.</string>
+    <string name="playback_live">زنده</string>
+    <string name="queue_add_shortcut">افزودن این آهنگ به میان‌برها</string>
 </resources>

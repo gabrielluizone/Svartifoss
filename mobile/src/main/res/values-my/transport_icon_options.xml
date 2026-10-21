@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">ဖွင့်ရန် သင်္ကေတ</string>
+    <string name="setting_wear_pause_icon">ခဏရပ်ရန် သင်္ကေတ</string>
+    <string name="setting_wear_transport_icon_description">ဖွင့်ခြင်းနှင့် ခဏရပ်ခြင်း ခလုတ်ပေါ်ရှိ သင်္ကေတ။ “Face အတိုင်း လိုက်နာရန်” သည် ဤ face ၏ မူလဒီဇိုင်းကို ထိန်းထားသည်။</string>
+    <string name="transport_icon_follow">Face အတိုင်း လိုက်နာရန်</string>
+    <string name="transport_icon_a">ဝိုင်းဝိုင်း</string>
+    <string name="transport_icon_b">ဝိုင်းသော ဘောင်</string>
+    <string name="transport_icon_c">ထက်သော ဘောင်</string>
+    <string name="transport_icon_d">ထက်သော</string>
+    <string name="transport_icon_e">ထူသော ဝိုင်းသည့် ဘောင်</string>
+</resources>

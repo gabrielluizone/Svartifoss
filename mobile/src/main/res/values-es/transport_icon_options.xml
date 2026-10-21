@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Icono de reproducir</string>
+    <string name="setting_wear_pause_icon">Icono de pausa</string>
+    <string name="setting_wear_transport_icon_description">La marca del control de reproducir y pausar. «Seguir cara» conserva la del diseño original de esta cara.</string>
+    <string name="transport_icon_follow">Seguir cara</string>
+    <string name="transport_icon_a">Redondeado</string>
+    <string name="transport_icon_b">Contorno redondeado</string>
+    <string name="transport_icon_c">Contorno recto</string>
+    <string name="transport_icon_d">Recto</string>
+    <string name="transport_icon_e">Contorno redondeado grueso</string>
+</resources>

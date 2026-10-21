@@ -2,6 +2,8 @@ package com.svartifoss.snfell.common
 
 import org.junit.Assert.assertArrayEquals
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -13,7 +15,6 @@ class CoverShapeTest {
                 CoverShape.ROUNDED to 0.08f,
                 CoverShape.SQUARE to 0f,
                 CoverShape.SQUIRCLE to 0.18f,
-                CoverShape.SAMSUNG to 0.30f,
                 CoverShape.CIRCLE to 0.5f
         ).forEach { (shape, corner) ->
             assertTrue("$shape", shape.isUniform)
@@ -51,6 +52,48 @@ class CoverShapeTest {
         assertArrayEquals(
                 floatArrayOf(6f, 6f, 50f, 50f, 50f, 50f, 50f, 50f),
                 CoverShape.DROP.radii(100f), 1e-4f)
+    }
+
+    /** The one shape that is not a rounded rectangle: every renderer must draw its own outline,
+     *  so nothing may mistake it for a uniform rounded square. */
+    @Test
+    fun `the superellipse is not a rounded rectangle`() {
+        assertTrue(CoverShape.SUPERELLIPSE.isSuperellipse)
+        assertFalse(CoverShape.SUPERELLIPSE.isUniform)
+        assertTrue(CoverCorners.of(CoverShape.SUPERELLIPSE).superellipse)
+        assertFalse(CoverCorners.of(CoverShape.SUPERELLIPSE).isUniform)
+        CoverShape.entries.filter { it != CoverShape.SUPERELLIPSE }.forEach {
+            assertFalse("$it", it.isSuperellipse)
+            assertFalse("$it", CoverCorners.of(it).superellipse)
+        }
+    }
+
+    /** A cover's clearance from the queue row follows the curve, not the stand-in corners. */
+    @Test
+    fun `a superellipse cover is inset along its own curve`() {
+        val size = 40f
+        val curved = CoverCorners.of(CoverShape.SUPERELLIPSE)
+        val stand = curved.copy(superellipse = false)
+        assertEquals(Superellipse.leftInset(4f, size, size), curved.leftInset(4f, size), 1e-4f)
+        assertTrue(curved.leftInset(4f, size) != stand.leftInset(4f, size))
+    }
+
+    /** It shipped under another token, so stored values, backups and saved themes still hold it. */
+    @Test
+    fun `the retired token still reads as the superellipse and migrates to its own value`() {
+        assertEquals(CoverShape.SUPERELLIPSE, CoverShape.parse(CoverShape.RETIRED_VALUE))
+        assertEquals(CoverShape.SUPERELLIPSE,
+                CoverShape.fromPreference(CoverShape.RETIRED_VALUE, CoverShape.SQUARE))
+        assertEquals("superellipse", CoverShape.migrate(CoverShape.RETIRED_VALUE))
+        assertEquals("superellipse", CoverShape.migrate(" ${CoverShape.RETIRED_VALUE} "))
+        // Nothing else needs rewriting, so a sweep writes only what changed.
+        CoverShape.entries.forEach { assertNull("$it", CoverShape.migrate(it.preferenceValue)) }
+        assertNull(CoverShape.migrate(null))
+        assertNull(CoverShape.migrate("follow"))
+        // The retired token is never a value anything new writes.
+        assertTrue(CoverShape.entries.none { it.preferenceValue == CoverShape.RETIRED_VALUE })
+        assertNull(QueueAppearance.coverShape("follow"))
+        assertEquals(CoverShape.SUPERELLIPSE, QueueAppearance.coverShape(CoverShape.RETIRED_VALUE))
     }
 
     @Test

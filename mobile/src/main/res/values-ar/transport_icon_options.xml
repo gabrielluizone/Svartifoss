@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">أيقونة التشغيل</string>
+    <string name="setting_wear_pause_icon">أيقونة الإيقاف المؤقت</string>
+    <string name="setting_wear_transport_icon_description">العلامة على زر التشغيل والإيقاف المؤقت. يحتفظ الخيار «اتباع الواجهة» بالعلامة من التصميم الأصلي لهذه الواجهة.</string>
+    <string name="transport_icon_follow">اتباع الواجهة</string>
+    <string name="transport_icon_a">مستدير</string>
+    <string name="transport_icon_b">حدود مستديرة</string>
+    <string name="transport_icon_c">حدود حادة</string>
+    <string name="transport_icon_d">حاد</string>
+    <string name="transport_icon_e">حدود مستديرة سميكة</string>
+</resources>

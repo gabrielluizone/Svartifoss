@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">再生アイコン</string>
+    <string name="setting_wear_pause_icon">一時停止アイコン</string>
+    <string name="setting_wear_transport_icon_description">再生・一時停止コントロールのマーク。「フェイスに従う」はこのフェイスの元のデザインを維持します。</string>
+    <string name="transport_icon_follow">フェイスに従う</string>
+    <string name="transport_icon_a">丸み</string>
+    <string name="transport_icon_b">丸みのある輪郭</string>
+    <string name="transport_icon_c">角のある輪郭</string>
+    <string name="transport_icon_d">角</string>
+    <string name="transport_icon_e">太い丸みのある輪郭</string>
+</resources>

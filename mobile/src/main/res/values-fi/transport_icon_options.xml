@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Toistokuvake</string>
+    <string name="setting_wear_pause_icon">Taukokuvake</string>
+    <string name="setting_wear_transport_icon_description">Toisto- ja taukopainikkeen merkki. ”Seuraa kellotaulua” säilyttää tämän kellotaulun alkuperäisen merkin.</string>
+    <string name="transport_icon_follow">Seuraa kellotaulua</string>
+    <string name="transport_icon_a">Pyöristetty</string>
+    <string name="transport_icon_b">Pyöristetty ääriviiva</string>
+    <string name="transport_icon_c">Terävä ääriviiva</string>
+    <string name="transport_icon_d">Terävä</string>
+    <string name="transport_icon_e">Paksu pyöristetty ääriviiva</string>
+</resources>

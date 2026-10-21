@@ -762,6 +762,8 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -773,8 +775,6 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Kulay ng laging naka-on</string>
     <string-array name="wear_aod_color_entries">
@@ -1662,7 +1662,7 @@ Kung nararanasan mo ito, maaari mong i-enable ang opsyong ito para tuluyang i-di
         <item>Parisukat</item>
         <item>Squircle</item>
         <item>Bilog</item>
-        <item>Estilo ng Samsung</item>
+        <item>Superellipse</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">Gamitin ang font sa lahat</string>
@@ -2043,16 +2043,14 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     <string name="drawer_about_summary">Hinahayaan ka ng Svartifoss na kontrolin ang musika sa phone mula sa Wear OS watch mo — gamit ang ganap na nako-customize na remote na iniangkop sa device mo.</string>
     <string name="drawer_name_heading">Ang pangalan</string>
     <string name="drawer_name_meaning">Ang Svartifoss ay nangangahulugang “Black Falls” sa Icelandic — ipinangalan ito sa talon sa Vatnajökull National Park, kung saan ang madidilim na basalt column ay pumapalibot sa makitid na bagsak ng tubig. Tulad ng tubig sa bato, dumadaloy ang musika sa app.</string>
-    <string name="drawer_sync_heading">Sync</string>
-    <string name="drawer_sync_summary">Dito sa phone kino-configure ang watch settings at awtomatikong sini-sync sa naka-pair mong relo.</string>
     <string name="drawer_support_heading">Suporta</string>
     <string name="download_album_art">I-download ang cover art</string>
     <string name="album_art_saved">Na-save ang cover art sa gallery</string>
     <string name="album_art_save_error">Hindi na-save ang cover art</string>
 
-    <string name="action_play_liked_songs">I-play ang liked songs (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">I-play ang liked songs (Spotify)</string>
-    <string name="action_play_soundcloud_likes">I-play ang liked tracks (SoundCloud)</string>
+    <string name="action_play_liked_songs">Liked songs</string>
+    <string name="action_play_spotify_liked_songs">Liked songs</string>
+    <string name="action_play_soundcloud_likes">Liked tracks</string>
     <string name="action_my_playlists">Mga streaming shortcut</string>
     <string name="action_show_streaming_library">Ipakita ang lahat ng naka-save na shortcut</string>
     <string name="picker_section_apps">Mga app &amp; automation</string>
@@ -2185,7 +2183,7 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     <string name="playlist_shortcut_deleted">Tinanggal ang %1$s</string>
     <string name="playlist_shortcut_undo">I-undo</string>
 
-    <string name="action_play_liked_songs_shuffled">I-play ang liked songs nang shuffled (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Liked songs, naka-shuffle</string>
     <string name="action_search_history">History ng paghahanap</string>
     <string name="search_history_empty">Wala pang recent search</string>
 
@@ -2871,7 +2869,7 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     <string name="setting_wear_text_block_position">Posisyon ng text</string>
     <string name="setting_wear_text_block_position_description">Kung saan nakaposisyon ang track text sa screen. Pinapanatili ng Follow face ang posisyong idinisenyo para sa bawat face.</string>
     <string name="setting_online_artwork">Online artwork</string>
-    <string name="setting_online_artwork_description">Hayaan ang watch face na magpakita ng larawang hinanap online \u2014 ang artist na tumutugtog, o album cover para sa player na walang inilalabas na larawan. Ang telepono mo ang naghahanap sa pampublikong catalog ng Deezer at nagca-cache ng resulta; pangalan lang ng track at artist ang ipinapadala, at walang hinahanap maliban kung nakatakda ang isang face sa isa sa mga source na iyon. Kapag naka-off, sariling artwork ng player ang ginagamit.</string>
+    <string name="setting_online_artwork_description">Hayaang magpakita ang watch face ng larawang hinanap online — ang artist na tumutugtog, o cover ng album para sa player na walang inilalabas. Ang telepono mo ang gumagawa ng paghahanap at nagka-cache ng resulta; mga pangalan lang ng track at artist ang ipinapadala, sa pampublikong catalogue ng Deezer. Ito rin ang nakakahanap ng cover para sa track na walang inilalabas na cover ang app, gaya ng YouTube video: hihingin ng telepono sa YouTube ang mismong thumbnail ng video na iyon (ipapadala ang channel at pamagat sa YouTube Data API ng Google), saka sa Deezer ang cover ng album, at gagamit lang ng resulta kapag tugma. Kapag naka-off, ang artwork lang ng mismong player ang gagamitin.</string>
     <string name="setting_wear_shortcut_details">I-play o i-shuffle sa relo</string>
     <string name="setting_wear_shortcut_details_description">Kapag pumili ka ng naka-save na link sa relo, mula sa listahan ng shortcut, sa Shortcuts Tile o sa actions menu, ipapakita muna ang cover nito kasama ang I-play at Shuffle. I-off para agad itong magsimula. Ang mga button at gesture na naka-assign sa isang link ay laging agad itong sinisimulan.</string>
     <string name="actions_quick_pin_add">Ipakita sa quick panel</string>
@@ -2969,4 +2967,48 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
     </plurals>
     <string name="streaming_app_routes_picker_description">Ang mga app na maaaring magbukas ng link, kasama ang mga naka-install na media player, ay ipinapakita.</string>
     <string name="streaming_route_automatic">Awtomatiko (natukoy na app)</string>
+    <string name="action_symfonium_start">Simulan ang media sa Symfonium</string>
+    <string name="action_symfonium_start_named">Simulan sa Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">I-sync ang provider ng Symfonium</string>
+    <string name="app_icon_style_gradient">Gradient</string>
+    <string name="app_icon_style_solid">Solidong kulay</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Balahibo ng Uling</string>
+    <string name="dev_show_rating_card">Ipakita ang rating card</string>
+    <string name="dev_show_rating_card_description">Agad na hihingin sa Google Play ang in-app review card nito, nang hindi isinasaalang-alang ang karaniwang mga limitasyon. Lalabas lang ito sa build na na-install mula sa Google Play (kasama ang internal testing)</string>
+    <string name="dev_show_rating_card_unavailable">Walang review card ang Google Play para sa build na ito. I-install ito mula sa Google Play, kasama ang internal testing, at subukan muli</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Hindi naglabas ang player na ito ng maibabahaging link para sa track na ito</string>
+    <string name="setting_app_icon_style">Icon ng app</string>
+    <string name="setting_youtube_api_key">YouTube Data API key</string>
+    <string name="setting_youtube_api_key_bundled">Kasama na sa app na ito ang YouTube key; hindi mo na kailangang magdagdag</string>
+    <string name="setting_youtube_api_key_configured">Naka-configure ang YouTube key; sa teleponong ito lang naka-store</string>
+    <string name="setting_youtube_api_key_description">Kapag walang inilabas na artwork ang isang player, hahanapin ng Svartifoss sa YouTube gamit ang YouTube Data API ng Google, ipapadala ang channel at pamagat kasama ng key na ito, at gagamitin ang thumbnail ng video na eksaktong tugma. Iwanang walang laman para gamitin ang key na kasama sa app na ito. Mananatili sa teleponong ito ang key na i-paste mo: hindi ito ipinapadala sa relo at hindi isinasama sa mga backup ng configuration ng Svartifoss.</string>
+    <string name="setting_youtube_api_key_dialog_title">I-paste ang iyong YouTube Data API v3 key</string>
+    <string name="setting_youtube_api_key_not_configured">Opsyonal: walang naka-configure na YouTube key</string>
+    <string name="symfonium_media_album">Album (opsyonal)</string>
+    <string name="symfonium_media_artist">Artist (opsyonal)</string>
+    <string name="symfonium_media_id_optional">ID (opsyonal)</string>
+    <string name="symfonium_media_name">Pangalan</string>
+    <string name="symfonium_media_type">Uri ng media</string>
+    <string name="symfonium_provider_id">Provider ID</string>
+    <string name="symfonium_provider_id_description">Makikita ang provider ID sa screen na Manage media providers ng Symfonium.</string>
+    <string name="symfonium_queue_mode">Mode ng queue</string>
+    <string name="symfonium_resume">Ituloy kapag posible</string>
+    <string name="symfonium_shuffle">I-shuffle ang mga koleksyon</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Kanta</item>
+        <item>Playlist</item>
+        <item>Album</item>
+        <item>Artist</item>
+        <item>Genre</item>
+        <item>Halo ng kanta</item>
+        <item>Halo ng album</item>
+        <item>Internet radio</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Simulan ngayon</item>
+        <item>I-play susunod</item>
+        <item>Idagdag sa queue</item>
+    </string-array>
 </resources>

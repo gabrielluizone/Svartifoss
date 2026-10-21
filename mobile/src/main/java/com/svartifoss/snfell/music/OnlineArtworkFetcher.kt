@@ -2,11 +2,11 @@ package com.svartifoss.snfell.music
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.SampledBitmaps
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -350,7 +350,7 @@ object OnlineArtworkFetcher {
      * display. Cropping twice would throw away framing the face could have used.
      */
     private fun reencode(raw: ByteArray): ByteArray? =
-            BitmapFactory.decodeByteArray(raw, 0, raw.size)?.let(::encodeForBackdrop)
+            SampledBitmaps.decode(raw, MAX_ARTWORK_PX)?.let(::encodeForBackdrop)
 
     /**
      * Sizes and encodes one bitmap for [CommPaths.ASSET_BACKDROP_ART].

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Дебљина траке јачине звука</string>
-    <string name="setting_wear_volume_thickness_description">Дебљина линије траке јачине звука, од 50% до 180% подразумеване. И дебље линије остају даље од ивице.</string>
+    <string name="setting_wear_volume_thickness_description">Дебљина линије траке јачине звука, од 50%% до 180%% подразумеване. И дебље линије остају даље од ивице.</string>
     <string name="setting_wear_volume_haptics">Вибрација круне при јачини звука</string>
     <string name="setting_wear_queue_dim_played">Затамни пуштене нумере</string>
     <string name="setting_wear_queue_dim_played_description">Затамњује ставке које су већ пуштене, како би се истакле оне које следе.</string>

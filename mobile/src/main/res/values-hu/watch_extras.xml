@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Hangerősáv vastagsága</string>
-    <string name="setting_wear_volume_thickness_description">A hangerősáv vonalának vastagsága, az alapérték 50–180%-a. A vastagabb vonalak is távol maradnak a peremtől.</string>
+    <string name="setting_wear_volume_thickness_description">A hangerősáv vonalának vastagsága, az alapérték 50–180%%-a. A vastagabb vonalak is távol maradnak a peremtől.</string>
     <string name="setting_wear_volume_haptics">Koronarezgés hangerőnél</string>
     <string name="setting_wear_queue_dim_played">Lejátszott számok halványítása</string>
     <string name="setting_wear_queue_dim_played_description">Elhalványítja a már lejátszott tételeket, hogy a következők kiemelkedjenek.</string>

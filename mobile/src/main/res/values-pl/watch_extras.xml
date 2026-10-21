@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Grubość paska głośności</string>
-    <string name="setting_wear_volume_thickness_description">Grubość linii paska głośności, od 50% do 180% domyślnej. Nawet grubsze linie pozostają z dala od krawędzi.</string>
+    <string name="setting_wear_volume_thickness_description">Grubość linii paska głośności, od 50%% do 180%% domyślnej. Nawet grubsze linie pozostają z dala od krawędzi.</string>
     <string name="setting_wear_volume_haptics">Wibracje koronki przy głośności</string>
     <string name="setting_wear_queue_dim_played">Przyciemniaj odtworzone utwory</string>
     <string name="setting_wear_queue_dim_played_description">Przyciemnia utwory, które już grały, aby wyróżnić te nadchodzące.</string>

@@ -229,4 +229,6 @@
     <string name="quick_sleep_description">睡眠計時器，剩下 %1$d 分鐘。點選更改</string>
     <string name="quick_sleep_off_description">睡眠定時器關閉。點選設定</string>
     <string name="quick_lyric_plain">這段歌詞沒有時間軸。輕觸即可閱讀。</string>
+    <string name="playback_live">直播</string>
+    <string name="queue_add_shortcut">將這首曲目新增到捷徑</string>
 </resources>

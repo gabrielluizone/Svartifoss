@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">व्हॉल्यूम बारची जाडी</string>
-    <string name="setting_wear_volume_thickness_description">व्हॉल्यूम बारच्या रेषेची जाडी, डीफॉल्टच्या 50% ते 180%. जाड रेषाही स्क्रीनच्या कडेपासून दूर राहतात.</string>
+    <string name="setting_wear_volume_thickness_description">व्हॉल्यूम बारच्या रेषेची जाडी, डीफॉल्टच्या 50%% ते 180%%. जाड रेषाही स्क्रीनच्या कडेपासून दूर राहतात.</string>
     <string name="setting_wear_volume_haptics">व्हॉल्यूमवर क्राउनचे कंपन</string>
     <string name="setting_wear_queue_dim_played">वाजलेले ट्रॅक फिकट करा</string>
     <string name="setting_wear_queue_dim_played_description">आधीच वाजलेल्या नोंदी फिकट करते, म्हणजे पुढे येणाऱ्या उठून दिसतात.</string>

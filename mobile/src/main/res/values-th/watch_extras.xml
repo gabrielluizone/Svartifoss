@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">ความหนาของแถบระดับเสียง</string>
-    <string name="setting_wear_volume_thickness_description">ความหนาของเส้นแถบระดับเสียง ตั้งแต่ 50% ถึง 180% ของค่าเริ่มต้น เส้นที่หนาขึ้นก็ยังอยู่ห่างจากขอบหน้าจอ</string>
+    <string name="setting_wear_volume_thickness_description">ความหนาของเส้นแถบระดับเสียง ตั้งแต่ 50%% ถึง 180%% ของค่าเริ่มต้น เส้นที่หนาขึ้นก็ยังอยู่ห่างจากขอบหน้าจอ</string>
     <string name="setting_wear_volume_haptics">การสั่นของเม็ดมะยมเมื่อปรับเสียง</string>
     <string name="setting_wear_queue_dim_played">หรี่เพลงที่เล่นไปแล้ว</string>
     <string name="setting_wear_queue_dim_played_description">หรี่รายการที่เล่นไปแล้ว เพื่อให้เพลงที่กำลังจะมาโดดเด่นขึ้น</string>

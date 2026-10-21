@@ -662,6 +662,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -673,8 +675,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">Цвет всегда-включён</string>
     <string-array name="wear_aod_color_entries">
@@ -1366,16 +1366,14 @@
     <string name="drawer_about_summary">Svartifoss позволяет управлять музыкой на телефоне с ваших часов Wear OS — с полностью настраиваемым пультом, адаптированным под ваше устройство.</string>
     <string name="drawer_name_heading">Название</string>
     <string name="drawer_name_meaning">Svartifoss означает «Чёрный водопад» на исландском языке — назван в честь водопада в национальном парке Ватнайёкюдль, где тёмные базальтовые колонны обрамляют узкий каскад. Как вода по камню, музыка течёт через приложение.</string>
-    <string name="drawer_sync_heading">Синхронизация</string>
-    <string name="drawer_sync_summary">Настройки часов настраиваются здесь на телефоне и автоматически синхронизируются с сопряжёнными часами.</string>
     <string name="drawer_support_heading">Поддержка</string>
     <string name="download_album_art">Скачать обложку</string>
     <string name="album_art_saved">Обложка сохранена в галерею</string>
     <string name="album_art_save_error">Не удалось сохранить обложку</string>
 
-    <string name="action_play_liked_songs">Воспроизвести понравившиеся песни (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">Воспроизвести понравившиеся песни (Spotify)</string>
-    <string name="action_play_soundcloud_likes">Воспроизвести понравившиеся песни (SoundCloud)</string>
+    <string name="action_play_liked_songs">Понравившиеся песни</string>
+    <string name="action_play_spotify_liked_songs">Понравившиеся песни</string>
+    <string name="action_play_soundcloud_likes">Понравившиеся песни</string>
     <string name="action_my_playlists">Ярлыки стриминга</string>
     <string name="action_show_streaming_library">Показать все сохранённые ярлыки</string>
     <string name="picker_section_apps">Приложения &amp; автоматизация</string>
@@ -1499,7 +1497,7 @@
     <string name="playlist_shortcut_deleted">%1$s удалён</string>
     <string name="playlist_shortcut_undo">Отменить</string>
 
-    <string name="action_play_liked_songs_shuffled">Воспроизвести понравившиеся песни вперемешку (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">Понравившиеся песни, вперемешку</string>
     <string name="action_search_history">История поиска</string>
     <string name="search_history_empty">Пока нет недавних поисков</string>
 
@@ -2059,7 +2057,7 @@
         <item>Квадратная</item>
         <item>Сквиркл</item>
         <item>Круглая</item>
-        <item>Стиль Samsung</item>
+        <item>Суперэллипс</item>
     </string-array>
     <string-array name="theme_entries">
         <item>@string/theme_light</item>
@@ -2841,7 +2839,7 @@
     <string name="setting_wear_text_block_position">Положение текста</string>
     <string name="setting_wear_text_block_position_description">Где на экране располагается текст композиции. «Следовать циферблату» сохраняет положение, для которого спроектирован каждый циферблат.</string>
     <string name="setting_online_artwork">Онлайн-обложка</string>
-    <string name="setting_online_artwork_description">Разрешить циферблату показывать изображение, найденное в интернете \u2014 текущего исполнителя или обложку альбома, если проигрыватель её не предоставляет. Телефон выполняет поиск в открытом каталоге Deezer и кэширует результат; отправляются только названия композиции и исполнителя, а поиск выполняется лишь тогда, когда циферблат настроен на один из этих источников. Если функция отключена, используется собственная обложка проигрывателя.</string>
+    <string name="setting_online_artwork_description">Разрешить циферблату показывать изображение, найденное в интернете — текущего исполнителя или обложку альбома, если проигрыватель её не предоставляет. Телефон выполняет поиск и кэширует результат; отправляются только названия композиции и исполнителя, в открытый каталог Deezer. Так же находится обложка для трека, у которого приложение не публикует её совсем, например для видео на YouTube: телефон запрашивает у YouTube миниатюру этого видео (отправляя канал и название в YouTube Data API от Google), затем у Deezer — обложку альбома и использует результат, только если он совпадает. Если функция отключена, используется только собственная обложка проигрывателя.</string>
     <string name="setting_wear_shortcut_details">Воспроизвести или перемешать на часах</string>
     <string name="setting_wear_shortcut_details_description">При выборе сохранённой ссылки на часах — из списка ярлыков, плитки ярлыков или меню действий — сначала показывается её обложка с кнопками «Воспроизвести» и «Перемешать». Выключите, чтобы запускать сразу. Кнопки и жесты, назначенные одной ссылке, всегда запускают её сразу.</string>
     <string name="actions_quick_pin_add">Показать на панели быстрого доступа</string>
@@ -2939,4 +2937,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">Показаны приложения, которые могут открыть ссылку, а также установленные медиаплееры.</string>
     <string name="streaming_route_automatic">Автоматически (обнаружено приложение)</string>
+    <string name="action_symfonium_start">Запустить медиа в Symfonium</string>
+    <string name="action_symfonium_start_named">Запустить в Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">Синхронизировать источник Symfonium</string>
+    <string name="app_icon_style_gradient">Градиент</string>
+    <string name="app_icon_style_solid">Однотонный</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">Угольное перо</string>
+    <string name="dev_show_rating_card">Показать карточку оценки</string>
+    <string name="dev_show_rating_card_description">Сразу запрашивает у Google Play встроенную карточку отзыва, не учитывая обычные ограничения. Она появляется только в сборке, установленной из Google Play (внутреннее тестирование тоже подходит)</string>
+    <string name="dev_show_rating_card_unavailable">У Google Play нет карточки отзыва для этой сборки. Установите её из Google Play, в том числе из внутреннего тестирования, и повторите попытку</string>
+    <string name="playlist_shortcut_queue_link_unavailable">Этот проигрыватель не предоставил ссылку, которой можно поделиться, для этого трека</string>
+    <string name="setting_app_icon_style">Значок приложения</string>
+    <string name="setting_youtube_api_key">Ключ YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">Ключ YouTube включён в приложение; добавлять свой не нужно</string>
+    <string name="setting_youtube_api_key_configured">Ключ YouTube настроен; хранится только на этом телефоне</string>
+    <string name="setting_youtube_api_key_dialog_title">Вставьте ваш ключ YouTube Data API v3</string>
+    <string name="setting_youtube_api_key_not_configured">Необязательно: ключ YouTube не настроен</string>
+    <string name="symfonium_media_album">Альбом (необязательно)</string>
+    <string name="symfonium_media_artist">Исполнитель (необязательно)</string>
+    <string name="symfonium_media_id_optional">ID (необязательно)</string>
+    <string name="symfonium_media_name">Название</string>
+    <string name="symfonium_media_type">Тип медиа</string>
+    <string name="symfonium_provider_id">ID источника</string>
+    <string name="symfonium_provider_id_description">ID источника можно найти на экране «Управление медиаисточниками» в Symfonium.</string>
+    <string name="symfonium_queue_mode">Режим очереди</string>
+    <string name="symfonium_resume">Возобновлять, когда возможно</string>
+    <string name="symfonium_shuffle">Перемешивать коллекции</string>
+    <string name="setting_youtube_api_key_description">Если проигрыватель не предоставляет обложку, Svartifoss ищет в YouTube через YouTube Data API от Google, отправляя канал и название вместе с этим ключом, и использует миниатюру видео, которое точно совпадает. Оставьте поле пустым, чтобы использовать ключ, включённый в приложение. Вставленный вами ключ остаётся на этом телефоне: он не отправляется на часы и не попадает в резервные копии конфигурации Svartifoss.</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>Композиция</item>
+        <item>Плейлист</item>
+        <item>Альбом</item>
+        <item>Исполнитель</item>
+        <item>Жанр</item>
+        <item>Микс композиций</item>
+        <item>Микс альбомов</item>
+        <item>Интернет-радио</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>Начать сейчас</item>
+        <item>Воспроизвести следующим</item>
+        <item>Добавить в очередь</item>
+    </string-array>
 </resources>

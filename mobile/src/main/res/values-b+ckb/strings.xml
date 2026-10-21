@@ -449,7 +449,7 @@
     <string name="setting_wear_text_block_position">شوێنی دەق</string>
     <string name="setting_wear_text_block_position_description">دەقی تراک لە کوێی شاشە دادەنیشێت. Follow face شوێنەکەی هەر ڕووێک کە بۆی دیزاین کراوە دەپارێزێت.</string>
     <string name="setting_online_artwork">وێنەی هونەری ئۆنلاین</string>
-    <string name="setting_online_artwork_description">ڕێگە بدە ڕووی کاتژمێر وێنەیەکی لە ئۆنلاین دۆزراوە پیشان بدات \u2014 هونەرمەندی پەخشکراو، یان بەرگی ئالبوم بۆ پڵەیەرێک کە هیچ وێنەیەک بڵاوناکاتەوە. مۆبایلەکەت لە کاتەلۆگی گشتی Deezer دەگەڕێت و ئەنجامەکە cache دەکات؛ تەنها ناوی تراک و هونەرمەند دەنێردرێن، و هیچ گەڕانێک ناکرێت مەگەر ڕووێک لەسەر یەکێک لەو سەرچاوانە دانرابێت. ئەگەر ناچالاک بێت، وێنەی خۆی پڵەیەر بەکاردێت.</string>
+    <string name="setting_online_artwork_description">ڕێگە بدە ڕووکاری کاتژمێرەکە وێنەیەک نیشان بدات کە لە ئینتەرنێتدا دۆزراوەتەوە — هونەرمەندی لێدەر، یان بەرگی ئەلبومێک بۆ لێدەرێک کە هیچی بڵاو ناکاتەوە. تەلەفۆنەکەت گەڕانەکە دەکات و ئەنجامەکە هەڵدەگرێت؛ تەنها ناوی پارچە و هونەرمەند دەنێردرێن، بۆ کاتالۆگی گشتیی Deezer. هەروەها ئەمە شتێکە بەرگ بۆ پارچەیەک دەدۆزێتەوە کە ئەپەکەی هیچ بەرگێک بڵاو ناکاتەوە، وەک ڤیدیۆیەکی YouTube: تەلەفۆنەکە وێنە بچووکەی ئەو ڤیدیۆیە لە YouTube داوا دەکات (ناوی کەناڵ و ناونیشان بۆ YouTube Data API ی Google دەنێرێت)، پاشان بەرگی ئەلبومێک لە Deezer، و ئەنجامێک بەکار دەهێنێت تەنها ئەگەر بگونجێت. ئەگەر کوژاوە بێت، تەنها وێنەی خودی لێدەرەکە بەکار دێت.</string>
     <string name="app_name">Svartifoss</string>
     <string name="app_name_short">Svartifoss</string>
     <string name="setting_no_wearable_api_banner">Wear OS لەم ئامێرەدا پشتگیری ناکرێت</string>
@@ -1735,7 +1735,7 @@
         <item>چوارگۆشە</item>
         <item>Squircle</item>
         <item>بازنە</item>
-        <item>شێوازی Samsung</item>
+        <item>Superellipse</item>
     </string-array>
     <string name="setting_wear_font_all_screens">فۆنت لە هەموو شوێنێک بەکاربهێنە</string>
     <string name="setting_wear_font_all_screens_description">فۆنتی هەڵبژێردراو تەنها بۆ player نییە، بۆ menu و queue و Quick actions ـیش بەکاردێت. فۆنتە display و دەستنووسەکان لە لیستەکاندا ڕەنگە خوێندنەوەیان سەخت بێت.</string>
@@ -1968,15 +1968,13 @@
     <string name="drawer_about_summary">Svartifoss ڕێگەت پێدەدات مۆسیقای ناو مۆبایلەکەت لە کاتژمێری Wear OS کۆنترۆڵ بکەیت — بە remote ـێکی تەواو سازکراو بۆ ئامێرەکەت.</string>
     <string name="drawer_name_heading">ناو</string>
     <string name="drawer_name_meaning">Svartifoss بە زمانی Icelandic واتای “Black Falls” دەدات — ناوی ئەو ئاوشارەیە لە Vatnajökull National Park، کە ستوونە تاریکەکانی basalt لە دەوری ئاوشارێکی باریکن. وەک ئاوی سەر بەرد، مۆسیقا بەناو ئەپەکەدا دەڕوات.</string>
-    <string name="drawer_sync_heading">Sync</string>
-    <string name="drawer_sync_summary">ڕێکخستنەکانی کاتژمێر لێرە لە مۆبایل ڕێکدەخرێن و خۆکارانە لەگەڵ کاتژمێری پەیوەست sync دەبن.</string>
     <string name="drawer_support_heading">پشتگیری</string>
     <string name="download_album_art">cover art دابگرە</string>
     <string name="album_art_saved">cover art لە gallery پاشەکەوت کرا</string>
     <string name="album_art_save_error">پاشەکەوتکردنی cover art سەرکەوتوو نەبوو</string>
-    <string name="action_play_liked_songs">گۆرانییە حەزپێکراوەکان پخش بکە (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">گۆرانییە حەزپێکراوەکان پخش بکە (Spotify)</string>
-    <string name="action_play_soundcloud_likes">track ـە حەزپێکراوەکان پخش بکە (SoundCloud)</string>
+    <string name="action_play_liked_songs">گۆرانییە حەزپێکراوەکان</string>
+    <string name="action_play_spotify_liked_songs">گۆرانییە حەزپێکراوەکان</string>
+    <string name="action_play_soundcloud_likes">track ـە حەزپێکراوەکان</string>
     <string name="action_my_playlists">Shortcut ـەکانی streaming</string>
     <string name="action_show_streaming_library">هەموو shortcut ـە پاشەکەوتکراوەکان پیشان بدە</string>
     <string name="picker_section_apps">ئەپەکان &amp; ئۆتۆماتیک</string>
@@ -2108,7 +2106,7 @@
     <string name="playlist_shortcut_share_failed">هیچ ئەپێک بۆ share کردنی ئەم shortcut ـە بەردەست نییە</string>
     <string name="playlist_shortcut_deleted">%1$s سڕایەوە</string>
     <string name="playlist_shortcut_undo">گەڕاندنەوە</string>
-    <string name="action_play_liked_songs_shuffled">گۆرانییە حەزپێکراوەکان بە shuffle پخش بکە (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">گۆرانییە حەزپێکراوەکان بە shuffle</string>
     <string name="action_search_history">مێژووی گەڕان</string>
     <string name="search_history_empty">هێشتا هیچ گەڕانێکی دوایی نییە</string>
     <string name="category_updates">نوێکردنەوەکان</string>
@@ -2325,4 +2323,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">ئەو ئەپانەی کە دەتوانن بەستەرەکە بکەنەوە، لەگەڵ میدیا پلەیەرەکانی دامەزراو، پیشان دەدرێن.</string>
     <string name="streaming_route_automatic">ئۆتۆماتیکی (ئەپی دۆزراوەتەوە)</string>
+    <string name="action_symfonium_start">دەستپێکردنی میدیا لە Symfonium</string>
+    <string name="action_symfonium_start_named">دەستپێکردن لە Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">هاوکاتکردنی دابینکەری Symfonium</string>
+    <string name="app_icon_style_gradient">پلەپلە</string>
+    <string name="app_icon_style_solid">ڕەنگی تەخت</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">پەڕی خەڵووز</string>
+    <string name="dev_show_rating_card">نیشاندانی کارتی هەڵسەنگاندن</string>
+    <string name="dev_show_rating_card_description">یەکسەر کارتی پێداچوونەوەی ناو ئەپی Google Play داوا دەکات و سنوورە ئاساییەکان پشتگوێ دەخات. تەنها لە وەشانێک دەردەکەوێت کە لە Google Play دامەزرابێت (تاقیکردنەوەی ناوخۆیی بەژمار دێت)</string>
+    <string name="dev_show_rating_card_unavailable">Google Play کارتی پێداچوونەوەی بۆ ئەم وەشانە نییە. لە Google Play دایبمەزرێنە، تاقیکردنەوەی ناوخۆییش دەگرێتەوە، و دووبارە هەوڵ بدەرەوە</string>
+    <string name="playlist_shortcut_queue_link_unavailable">ئەم لێدەرە بەستەرێکی هاوبەشکردنی بۆ ئەم پارچەیە بڵاو نەکردووەتەوە</string>
+    <string name="setting_app_icon_style">ئایکۆنی ئەپ</string>
+    <string name="setting_youtube_api_key">کلیلی YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">کلیلی YouTube لەناو ئەم ئەپەدایە؛ پێویست ناکات خۆت یەکێک زیاد بکەیت</string>
+    <string name="setting_youtube_api_key_configured">کلیلی YouTube ڕێک خراوە؛ تەنها لەسەر ئەم تەلەفۆنە هەڵگیراوە</string>
+    <string name="setting_youtube_api_key_description">کاتێک لێدەرێک هیچ وێنەی بەرگێک بڵاو ناکاتەوە، Svartifoss لە YouTube دەگەڕێت لە ڕێگەی YouTube Data API ی Google، ناوی کەناڵ و ناونیشان لەگەڵ ئەم کلیلە دەنێرێت، و وێنە بچووکەی ڤیدیۆیەک بەکار دەهێنێت کە بە تەواوی دەگونجێت. بەتاڵی بهێڵەرەوە بۆ بەکارهێنانی ئەو کلیلەی لەناو ئەم ئەپەدایە. ئەو کلیلەی خۆت دایدەنێیت لەسەر ئەم تەلەفۆنە دەمێنێتەوە: بۆ کاتژمێرەکە ناکرێت و لە باکئەپی ڕێکخستنەکانی Svartifoss ناخرێتە ناوەوە.</string>
+    <string name="setting_youtube_api_key_dialog_title">کلیلی YouTube Data API v3 ی خۆت دابنێ</string>
+    <string name="setting_youtube_api_key_not_configured">ئارەزوومەندانە: هیچ کلیلێکی YouTube ڕێک نەخراوە</string>
+    <string name="symfonium_media_album">ئەلبوم (ئارەزوومەندانە)</string>
+    <string name="symfonium_media_artist">هونەرمەند (ئارەزوومەندانە)</string>
+    <string name="symfonium_media_id_optional">ناسنامە (ئارەزوومەندانە)</string>
+    <string name="symfonium_media_name">ناو</string>
+    <string name="symfonium_media_type">جۆری میدیا</string>
+    <string name="symfonium_provider_id">ناسنامەی دابینکەر</string>
+    <string name="symfonium_provider_id_description">ناسنامەی دابینکەر لە شاشەی «بەڕێوەبردنی دابینکەرانی میدیا»ی Symfonium دەدۆزیتەوە.</string>
+    <string name="symfonium_queue_mode">دۆخی ڕیز</string>
+    <string name="symfonium_resume">بەردەوامبوون کاتێک دەکرێت</string>
+    <string name="symfonium_shuffle">تێکەڵکردنی کۆمەڵەکان</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>گۆرانی</item>
+        <item>لیستی لێدان</item>
+        <item>ئەلبوم</item>
+        <item>هونەرمەند</item>
+        <item>ژانر</item>
+        <item>تێکەڵەی گۆرانی</item>
+        <item>تێکەڵەی ئەلبوم</item>
+        <item>ڕادیۆی ئینتەرنێت</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>ئێستا دەستپێبکە</item>
+        <item>دواتر لێبدە</item>
+        <item>زیادکردن بۆ ڕیز</item>
+    </string-array>
 </resources>

@@ -5,7 +5,6 @@ import android.content.SharedPreferences
 import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
@@ -53,6 +52,7 @@ import com.svartifoss.snfell.view.MusicLoadingBarsView
 import com.svartifoss.snfell.view.applyLyraDialogStyling
 import com.google.android.material.imageview.ShapeableImageView
 import com.svartifoss.snfell.common.CommunityThemeScreenshots
+import com.svartifoss.snfell.common.SampledBitmaps
 import com.svartifoss.snfell.view.watchface.WatchPreviewView
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -1174,7 +1174,8 @@ class OnlineThemesActivity : AppCompatActivity() {
                             CommunityThemeScreenshots.SURFACE_PLAYER)
                             ?.let { bytes ->
                                 withContext(Dispatchers.Default) {
-                                    BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                                    SampledBitmaps.decode(bytes,
+                                            CommunityThemeScreenshots.MAX_PIXELS)
                                 }
                             }
                 } catch (e: CancellationException) {

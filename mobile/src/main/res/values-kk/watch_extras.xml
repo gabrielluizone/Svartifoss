@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Дыбыс жолағының қалыңдығы</string>
-    <string name="setting_wear_volume_thickness_description">Дыбыс жолағы сызығының қалыңдығы, әдепкінің 50%-нан 180%-на дейін. Қалың сызықтар да экран шетінен алыс тұрады.</string>
+    <string name="setting_wear_volume_thickness_description">Дыбыс жолағы сызығының қалыңдығы, әдепкінің 50%%-нан 180%%-на дейін. Қалың сызықтар да экран шетінен алыс тұрады.</string>
     <string name="setting_wear_volume_haptics">Дыбысты реттегенде тәж дірілі</string>
     <string name="setting_wear_queue_dim_played">Ойнатылған тректерді күңгірттеу</string>
     <string name="setting_wear_queue_dim_played_description">Ойнатылып қойған жазбаларды күңгірттеп, алдағыларын ерекшелейді.</string>

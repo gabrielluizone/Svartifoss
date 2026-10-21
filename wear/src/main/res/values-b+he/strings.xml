@@ -229,4 +229,6 @@
     <string name="quick_sleep_description">טיימר שינה, נותרו %1$d דקות. הקש כדי לשנות.</string>
     <string name="quick_sleep_off_description">טיימר השינה כבוי. הקש כדי להגדיר</string>
     <string name="quick_lyric_plain">המילים האלה אינן מתוזמנות. הקש כדי לקרוא.</string>
+    <string name="playback_live">שידור חי</string>
+    <string name="queue_add_shortcut">הוספת הרצועה הזאת לקיצורי הדרך</string>
 </resources>

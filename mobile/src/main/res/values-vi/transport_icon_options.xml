@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Biểu tượng phát</string>
+    <string name="setting_wear_pause_icon">Biểu tượng tạm dừng</string>
+    <string name="setting_wear_transport_icon_description">Biểu tượng trên nút phát và tạm dừng. “Theo mặt” giữ biểu tượng theo thiết kế gốc của mặt này.</string>
+    <string name="transport_icon_follow">Theo mặt</string>
+    <string name="transport_icon_a">Bo tròn</string>
+    <string name="transport_icon_b">Viền bo tròn</string>
+    <string name="transport_icon_c">Viền vuông</string>
+    <string name="transport_icon_d">Vuông</string>
+    <string name="transport_icon_e">Viền bo tròn dày</string>
+</resources>

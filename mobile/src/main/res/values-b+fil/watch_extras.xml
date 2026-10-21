@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Kapal ng volume bar</string>
-    <string name="setting_wear_volume_thickness_description">Kapal ng guhit ng volume bar, mula 50% hanggang 180% ng default. Lumalayo pa rin sa gilid ang mas makakapal na guhit.</string>
+    <string name="setting_wear_volume_thickness_description">Kapal ng guhit ng volume bar, mula 50%% hanggang 180%% ng default. Lumalayo pa rin sa gilid ang mas makakapal na guhit.</string>
     <string name="setting_wear_volume_haptics">Pag-vibrate ng crown sa volume</string>
     <string name="setting_wear_queue_dim_played">Palabuin ang mga natugtog na</string>
     <string name="setting_wear_queue_dim_played_description">Pinalalabo ang mga natugtog na para mapansin ang mga susunod.</string>

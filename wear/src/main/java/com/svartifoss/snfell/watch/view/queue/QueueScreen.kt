@@ -106,6 +106,7 @@ import com.svartifoss.snfell.watch.view.compose.CurvedClock
 import com.svartifoss.snfell.watch.view.compose.CurvedScrollIndicator
 import com.svartifoss.snfell.watch.view.compose.EqualizerBars
 import com.svartifoss.snfell.watch.view.compose.LoadingBars
+import com.svartifoss.snfell.watch.view.compose.SuperellipseShape
 import com.svartifoss.snfell.watch.view.face.marqueeFade
 import com.svartifoss.snfell.watch.view.panel.PanelBackdropLayer
 import com.svartifoss.snfell.watch.view.panel.ScreenBackdrop
@@ -505,6 +506,9 @@ private data class QueueOutlineShape(val outline: QueueRowOutline) : Shape {
 /** A cover's cut ([CoverCorners]) as a Compose [Shape], each corner a fraction of the cover. */
 private data class CoverCornersShape(val corners: CoverCorners) : Shape {
     override fun createOutline(size: Size, layoutDirection: LayoutDirection, density: Density): Outline {
+        if (corners.superellipse) {
+            return SuperellipseShape.createOutline(size, layoutDirection, density)
+        }
         val side = min(size.width, size.height)
         return Outline.Rounded(RoundRect(
                 left = 0f,

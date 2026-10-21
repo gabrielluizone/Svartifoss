@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">వాల్యూమ్ బార్ మందం</string>
-    <string name="setting_wear_volume_thickness_description">వాల్యూమ్ బార్ గీత మందం, డిఫాల్ట్‌లో 50% నుండి 180% వరకు. మందమైన గీతలు కూడా స్క్రీన్ అంచుకు దూరంగానే ఉంటాయి.</string>
+    <string name="setting_wear_volume_thickness_description">వాల్యూమ్ బార్ గీత మందం, డిఫాల్ట్‌లో 50%% నుండి 180%% వరకు. మందమైన గీతలు కూడా స్క్రీన్ అంచుకు దూరంగానే ఉంటాయి.</string>
     <string name="setting_wear_volume_haptics">వాల్యూమ్‌లో క్రౌన్ వైబ్రేషన్</string>
     <string name="setting_wear_queue_dim_played">ప్లే అయిన ట్రాక్‌లను మసకబార్చు</string>
     <string name="setting_wear_queue_dim_played_description">ఇప్పటికే ప్లే అయిన ఎంట్రీలను మసకబార్చి, రాబోయేవి ప్రత్యేకంగా కనిపించేలా చేస్తుంది.</string>

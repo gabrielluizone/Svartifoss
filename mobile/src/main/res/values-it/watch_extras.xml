@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Spessore della barra del volume</string>
-    <string name="setting_wear_volume_thickness_description">Spessore del tratto della barra del volume, dal 50% al 180% del predefinito. Anche i tratti più spessi restano lontani dal bordo.</string>
+    <string name="setting_wear_volume_thickness_description">Spessore del tratto della barra del volume, dal 50%% al 180%% del predefinito. Anche i tratti più spessi restano lontani dal bordo.</string>
     <string name="setting_wear_volume_haptics">Vibrazione della corona sul volume</string>
     <string name="setting_wear_queue_dim_played">Attenua i brani già riprodotti</string>
     <string name="setting_wear_queue_dim_played_description">Attenua i brani già riprodotti così risaltano quelli in arrivo.</string>

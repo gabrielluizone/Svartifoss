@@ -13,9 +13,15 @@ object YouTubeThumbnailMatch {
 
     private const val MAX_QUERY_LENGTH = 120
 
+    /**
+     * What every cache key for a YouTube thumbnail starts with. [OnlineArtworkCache] reads it to
+     * tell these entries apart, because they are the one kind it may not keep indefinitely.
+     */
+    const val KEY_PREFIX = "youtube|"
+
     fun cacheKey(channel: String, title: String): String? {
         if (normalize(channel).isBlank() || normalize(title).isBlank()) return null
-        return "youtube|${channel.trim()}|${title.trim()}"
+        return "$KEY_PREFIX${channel.trim()}|${title.trim()}"
     }
 
     fun searchQuery(channel: String, title: String): String? {

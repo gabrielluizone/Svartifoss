@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">播放图标</string>
+    <string name="setting_wear_pause_icon">暂停图标</string>
+    <string name="setting_wear_transport_icon_description">播放和暂停控件上的标记。“跟随表盘”保留此表盘的原始设计。</string>
+    <string name="transport_icon_follow">跟随表盘</string>
+    <string name="transport_icon_a">圆角</string>
+    <string name="transport_icon_b">圆角轮廓</string>
+    <string name="transport_icon_c">直角轮廓</string>
+    <string name="transport_icon_d">直角</string>
+    <string name="transport_icon_e">粗圆角轮廓</string>
+</resources>

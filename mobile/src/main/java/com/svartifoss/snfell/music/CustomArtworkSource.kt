@@ -8,6 +8,7 @@ import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
 import androidx.preference.PreferenceManager
 import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.SampledBitmaps
 import timber.log.Timber
 import kotlin.random.Random
 
@@ -275,18 +276,8 @@ object CustomArtworkSource {
      * scale-down in `encodeForBackdrop` still has real pixels to work from and the result is not a
      * blur of an already-shrunken decode.
      */
-    private fun sampleSizeFor(width: Int, height: Int): Int {
-        var sample = 1
-        var currentWidth = width
-        var currentHeight = height
-        while (currentWidth / 2 >= OnlineArtworkFetcher.MAX_ARTWORK_PX &&
-                currentHeight / 2 >= OnlineArtworkFetcher.MAX_ARTWORK_PX) {
-            currentWidth /= 2
-            currentHeight /= 2
-            sample *= 2
-        }
-        return sample
-    }
+    private fun sampleSizeFor(width: Int, height: Int): Int =
+            SampledBitmaps.sampleSizeFor(width, height, OnlineArtworkFetcher.MAX_ARTWORK_PX)
 
     private fun preference(
             context: Context,

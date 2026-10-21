@@ -40,6 +40,10 @@ google-autoValue = "1.10.1" # Do not update that due to minSdk compatibility
 # Play Billing, `play` flavor of mobile only (the tip option). Play stops accepting releases built on an
 # old major version roughly every year, so this one does need to keep moving.
 google-billing = "9.1.0"
+# Play In-App Review, `play` flavor of mobile only (the rating prompt). 2.0.2 is the newest the Maven
+# repository publishes. Only the plain artifact is used, not review-ktx: that one drags in
+# kotlin-stdlib 1.3 and coroutines 1.5, and Task.await() already comes with kotlinx-coroutines-play-services.
+google-play-review = "2.0.2"
 google-firebase-bom = "34.6.0"
 google-firebase-crashlytics-gradle = "3.0.6"
 google-identity-googleid = "1.1.1"
@@ -118,6 +122,7 @@ google-autoFactory = { module = "com.google.auto.factory:auto-factory", version.
 google-autoValue = { module = "com.google.auto.value:auto-value", version.ref = "google-autoValue" }
 google-autoValue-annotations = { module = "com.google.auto.value:auto-value-annotations", version.ref = "google-autoValue" }
 google-billing-ktx = { module = "com.android.billingclient:billing-ktx", version.ref = "google-billing" }
+google-play-review = { module = "com.google.android.play:review", version.ref = "google-play-review" }
 google-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "google-firebase-bom" }
 google-firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 google-firebase-analytics = { module = "com.google.firebase:firebase-analytics" }

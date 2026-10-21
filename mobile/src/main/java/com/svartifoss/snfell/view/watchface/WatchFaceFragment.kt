@@ -37,7 +37,9 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.MiscPreferences
+import com.svartifoss.snfell.common.SampledBitmaps
 import com.svartifoss.snfell.music.CustomArtworkSource
+import com.svartifoss.snfell.music.OnlineArtworkFetcher
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.databinding.FragmentWatchFaceBinding
@@ -685,7 +687,7 @@ class WatchFaceFragment : Fragment() {
             }
             if (_binding == null || key != customBackdropKey) return@launch
             customBackdrop = bytes?.let {
-                android.graphics.BitmapFactory.decodeByteArray(it, 0, it.size)
+                SampledBitmaps.decode(it, OnlineArtworkFetcher.MAX_ARTWORK_PX)
             }
             pushNowPlaying(mediaController?.metadata)
         }

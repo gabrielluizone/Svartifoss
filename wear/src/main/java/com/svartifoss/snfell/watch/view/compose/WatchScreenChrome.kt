@@ -92,7 +92,12 @@ private fun currentTime(pattern: String): String =
  * changing visibility or affecting list screens, whose default remains fully opaque.
  */
 @Composable
-internal fun CurvedClock(visible: Boolean, contentAlpha: Float = 1f) {
+internal fun CurvedClock(
+        visible: Boolean,
+        contentAlpha: Float = 1f,
+        /** Regular on the list screens; a screen that sets its own heading in bold matches it. */
+        fontWeight: FontWeight = FontWeight.Normal
+) {
     val clockAlpha = animateFloatAsState(
             targetValue = if (visible) contentAlpha.coerceIn(0f, 1f) else 0f,
             animationSpec = tween(durationMillis = 200),
@@ -114,7 +119,7 @@ internal fun CurvedClock(visible: Boolean, contentAlpha: Float = 1f) {
                         fontSize = 16.sp,
                         color = Color.White.copy(alpha = 0.75f),
                         fontFamily = fontFamily,
-                        fontWeight = FontWeight.Normal
+                        fontWeight = fontWeight
                 )
         )
     }

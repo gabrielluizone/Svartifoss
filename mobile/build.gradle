@@ -36,8 +36,8 @@ android {
         // Wear OS has a separate API-35 requirement and remains configured in wear/build.gradle.
         targetSdkVersion 36
         compileSdk 36
-        versionCode 89
-        versionName "4.2"
+        versionCode 90
+        versionName "4.3"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         wearAppUnbundled true
         multiDexEnabled true
@@ -49,7 +49,9 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // The -optimize defaults, never plain proguard-android.txt: that one carries
+            // -dontoptimize, which Play Console grades as 0% optimization (see proguard-rules.pro).
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             // Sign with the debug config so local release builds produce an installable APK.
             // When keystore.properties exists, the root build.gradle afterEvaluate swaps the
             // debug config's credentials for the real keystore, so this also covers releases.
@@ -160,6 +162,10 @@ dependencies {
     // com.android.vending.BILLING permission it declares. FlavorSupportIsolationTest pins this line.
     playImplementation libs.google.billing.ktx
 
+    // The rating prompt. `play` only: the in-app review card is drawn by the Play Store app, so a
+    // build installed from anywhere else has nothing to ask. FlavorReviewIsolationTest pins this line.
+    playImplementation libs.google.play.review
+
     testImplementation libs.kotlin.coroutines.test
     testImplementation libs.junit4
     // Android's org.json is a runtime stub in local JVM tests; use the reference implementation
@@ -217,6 +223,59 @@ tasks.withType(Test).configureEach {
             .withPathSensitivity(PathSensitivity.RELATIVE)
     inputs.file("${rootProject.projectDir}/docs/play-tips.md")
             .withPropertyName("playTipsGuideForSupportIsolation")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // FlavorReviewIsolationTest reads this very file to check which configuration the review library
+    // is declared in. Moving it from `playImplementation` to `implementation` changes no other input
+    // the task can see, so without this the check would stay UP-TO-DATE and green.
+    inputs.file("build.gradle")
+            .withPropertyName("mobileBuildScriptForReviewIsolation")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // AppIconStyleContractTest compares the phone's Play launcher icons and picker previews with the
+    // watch's icons, which live in the wear module and in `common` - neither of which this module's
+    // tests would otherwise notice changing. `src/play`, `src/github` and `src/main/res` of this
+    // module are declared above; these are the rest of what the test reads.
+    inputs.dir("${rootProject.projectDir}/wear/src/play")
+            .withPropertyName("wearPlayFlavorForIconContract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file("${rootProject.projectDir}/wear/src/main/AndroidManifest.xml")
+            .withPropertyName("wearMainManifestForIconContract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file("${rootProject.projectDir}/wear/src/main/res/values/colors.xml")
+            .withPropertyName("wearColoursForIconContract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file("${rootProject.projectDir}/wear/src/main/res/values/styles.xml")
+            .withPropertyName("wearLaunchThemesForIconContract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file("${rootProject.projectDir}/wear/src/github/AndroidManifest.xml")
+            .withPropertyName("wearGithubManifestForIconContract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.dir("${rootProject.projectDir}/common/src/main/res")
+            .withPropertyName("commonResourcesForIconContract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file("src/main/AndroidManifest.xml")
+            .withPropertyName("mobileMainManifestForIconContract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // TransportGlyphContractTest compares the ten play/pause drawings with the SVGs they were taken
+    // from. `icons/` is not part of any module, so without this an edit to a source SVG (or a
+    // drawing that drifted from it) leaves the task UP-TO-DATE and passing.
+    inputs.dir("${rootProject.projectDir}/icons/icons_4")
+            .withPropertyName("transportGlyphSvgSources")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // R8ConfigurationContractTest reads both apps' R8 rules and the watch's build script, none of
+    // which is on this module's test classpath, so an edit that switches a pass back off would
+    // otherwise leave the task UP-TO-DATE and green. (This module's build.gradle is declared above.)
+    inputs.file("proguard-rules.pro")
+            .withPropertyName("mobileR8RulesForR8Contract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file("${rootProject.projectDir}/wear/proguard-rules.pro")
+            .withPropertyName("wearR8RulesForR8Contract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    inputs.file("${rootProject.projectDir}/wear/build.gradle")
+            .withPropertyName("wearBuildScriptForR8Contract")
             .withPathSensitivity(PathSensitivity.RELATIVE)
 }
 

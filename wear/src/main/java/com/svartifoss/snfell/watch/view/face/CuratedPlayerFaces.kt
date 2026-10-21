@@ -1590,8 +1590,7 @@ private fun PlayPauseGlyph(
     if (!state.showControls) return
     Icon(
             painter = painterResource(
-                    if (state.playing) commonR.drawable.action_pause_filled
-                    else commonR.drawable.action_play_filled
+                    if (state.playing) state.pauseIconRes() else state.playIconRes()
             ),
             contentDescription = null,
             tint = tint.copy(alpha = state.screenTheme.tokens.iconAlpha),
@@ -2005,7 +2004,9 @@ private fun BoxScope.MaterialComposition(
                             tint = Color.White.copy(alpha = state.screenTheme.tokens.iconAlpha),
                             size = 38.dp * state.screenTheme.tokens.iconScale,
                             pauseSize = 34.dp * state.screenTheme.tokens.iconScale,
-                            playOffsetX = 1.dp
+                            playOffsetX = 1.dp,
+                            playIcon = state.playIconRes(),
+                            pauseIcon = state.pauseIconRes()
                     )
                 }
             }

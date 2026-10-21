@@ -402,6 +402,24 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
     }
 
+    /**
+     * Re-sends the action list once after a cover that ships inside the app changed - see
+     * [ShortcutCovers.bundledCoversNeedRepublish]. The shortcut list needs no such nudge: it is
+     * rebuilt and put on every service start (above), and its content-addressed assets follow the
+     * bytes. The action list is the one that would otherwise keep the old picture on the watch.
+     */
+    private fun republishBundledCovers() {
+        if (!ShortcutCovers.bundledCoversNeedRepublish(this)) return
+        queueRefreshHandler.post {
+            try {
+                config.getActionList().retransmit()
+                ShortcutCovers.markBundledCoversRepublished(this)
+            } catch (e: Exception) {
+                Timber.w(e, "Could not re-send the action list after a bundled cover changed")
+            }
+        }
+    }
+
     private val quickActionsPreferenceChanged =
             SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == MiscPreferences.WEAR_QUICK_PANEL_SOURCE.key) {
@@ -692,6 +710,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             queueRefreshHandler.post { retransmitConfigsForGlyphs() }
         }
         fetchMissingCollectionArtwork()
+        republishBundledCovers()
         NotificationService.updateQuickActionsBinding(this)
 
         try {

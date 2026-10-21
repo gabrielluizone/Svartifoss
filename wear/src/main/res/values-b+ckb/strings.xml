@@ -171,4 +171,6 @@
     <string name="quick_sleep_description">کاتی خەوتن، %1$d خولەک ماوە. بۆ گۆڕین لێی بدە</string>
     <string name="quick_sleep_off_description">کاتی خەوتن کوژاوەتەوە. بۆ ڕێکخستن لێی بدە</string>
     <string name="quick_lyric_plain">ئەم دەقە کاتی بۆ دانەنراوە. لێی بدە بۆ خوێندنەوە.</string>
+    <string name="playback_live">ڕاستەوخۆ</string>
+    <string name="queue_add_shortcut">ئەم پارچەیە زیاد بکە بۆ شورتکەتەکان</string>
 </resources>

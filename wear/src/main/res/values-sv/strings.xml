@@ -235,4 +235,6 @@ Anpassa allt under Kontroller och Klocka på telefonen</string>
     <string name="quick_sleep_description">Insomningstimer, %1$d minuter kvar. Tryck för att ändra</string>
     <string name="quick_sleep_off_description">Insomningstimer avstängd. Tryck för att ställa in</string>
     <string name="quick_lyric_plain">Den här låttexten saknar tider. Tryck för att läsa den.</string>
+    <string name="playback_live">LIVE</string>
+    <string name="queue_add_shortcut">Lägg till det här spåret i genvägar</string>
 </resources>

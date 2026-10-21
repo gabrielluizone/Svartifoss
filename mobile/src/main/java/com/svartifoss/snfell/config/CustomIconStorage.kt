@@ -10,9 +10,11 @@ import android.net.Uri
 import android.util.LruCache
 import androidx.collection.ArraySet
 import com.svartifoss.snfell.actions.PhoneAction
+import com.svartifoss.snfell.common.SampledBitmaps
 import com.svartifoss.snfell.config.actionlist.ActionList
 import com.svartifoss.snfell.config.buttons.ButtonConfig
 import com.svartifoss.snfell.di.GlobalConfig
+import com.svartifoss.snfell.music.ShortcutArtworkFetcher
 import dagger.Lazy
 import dagger.Reusable
 import timber.log.Timber
@@ -110,7 +112,9 @@ class CustomIconStorage @Inject constructor(private val context: Context,
         }
 
         return try {
-            BitmapFactory.decodeFile(file.absolutePath)
+            // A gallery pick is stored at whatever size the photo had, while an icon is never drawn
+            // larger than a shortcut cover (a custom icon is never treated as cover art).
+            SampledBitmaps.decodeFile(file, ShortcutArtworkFetcher.MAX_THUMBNAIL_PX)
         } catch (e: IOException) {
             Timber.e(e, "Image loading error")
             null

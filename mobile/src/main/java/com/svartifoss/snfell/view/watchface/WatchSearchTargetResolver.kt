@@ -137,6 +137,8 @@ internal object WatchSearchTargetResolver {
         }
         if (key == "wear_expressive_seek_mode" && face != "expressive" ||
                 key == "wear_screen_theme" && face !in PlayerEditorModel.CONTROL_STYLE_FACES ||
+                (key == "wear_play_icon" || key == "wear_pause_icon") &&
+                        face !in PlayerEditorModel.TRANSPORT_GLYPH_FACES ||
                 key == "wear_carousel_card_shape" && face != "carousel" ||
                 key == "wear_note_cover_shape" && face != "note" ||
                 key == "wear_note_show_cover" && face != "note" ||

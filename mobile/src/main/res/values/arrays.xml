@@ -16,9 +16,13 @@
         <item>Add to queue</item>
     </string-array>
 
+    <!-- Same order as common's AppIconStyle, and as app_icon_style_entries: ListPreference pairs
+         the two arrays by index. AppIconStyleContractTest pins all three. -->
     <string-array name="app_icon_style_values" translatable="false">
         <item>solid</item>
         <item>gradient</item>
+        <item>cream</item>
+        <item>feather</item>
     </string-array>
 
     <!-- Preference values are protocol identifiers shared with the watch. Keep them outside
@@ -59,7 +63,7 @@
         <item>square</item>
         <item>squircle</item>
         <item>circle</item>
-        <item>samsung</item>
+        <item>superellipse</item>
     </string-array>
     <string-array name="wear_text_case_values" translatable="false">
         <item>normal</item>

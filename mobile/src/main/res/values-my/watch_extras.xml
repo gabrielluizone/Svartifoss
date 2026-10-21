@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">အသံ ဘား အထူ</string>
-    <string name="setting_wear_volume_thickness_description">အသံ ဘား မျဉ်း၏ အထူ၊ မူလ၏ 50% မှ 180% အထိ။ ထူသော မျဉ်းများလည်း စခရင် အစွန်းနှင့် ဝေးဝေး ရှိနေဆဲ။</string>
+    <string name="setting_wear_volume_thickness_description">အသံ ဘား မျဉ်း၏ အထူ၊ မူလ၏ 50%% မှ 180%% အထိ။ ထူသော မျဉ်းများလည်း စခရင် အစွန်းနှင့် ဝေးဝေး ရှိနေဆဲ။</string>
     <string name="setting_wear_volume_haptics">အသံချိန်ရာတွင် သရဖူ တုန်ခါမှု</string>
     <string name="setting_wear_queue_dim_played">ဖွင့်ပြီးသော သီချင်းများကို မှိန်ရန်</string>
     <string name="setting_wear_queue_dim_played_description">ဖွင့်ပြီးသား သီချင်းများကို မှိန်စေပြီး လာမည့်သီချင်းများကို ထင်ရှားစေသည်။</string>

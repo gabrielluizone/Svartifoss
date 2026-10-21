@@ -23,6 +23,7 @@ import com.svartifoss.snfell.config.needsTransmittedIcon
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.buttons.ConfigConstants
 import com.svartifoss.snfell.music.PlaylistShortcutStorage
+import com.svartifoss.snfell.music.ShortcutAppMark
 import com.svartifoss.snfell.music.ShortcutArtworkFetcher
 import com.svartifoss.snfell.proto.WatchList
 import com.svartifoss.snfell.util.launchWithPlayServicesErrorHandling
@@ -53,6 +54,13 @@ class ActionListTransmitter(private val actionList: ActionList,
             val expectedAssets = actionList.actions.withIndex()
                     .filter { transmitsListIcon(it.value) }
                     .mapTo(mutableSetOf()) { CommPaths.ASSET_BUTTON_ICON_PREFIX + it.index }
+            // The app glyphs too, so a menu sent before they existed - or before this phone had
+            // learned one - picks them up without an edit. Glyphs arrive later than the menu (an
+            // app has to post a notification first), and the learned-glyph retransmit only runs
+            // while the music service is up.
+            actionList.actions.withIndex()
+                    .filter { appMarkOf(it.value) != null }
+                    .mapTo(expectedAssets) { CommPaths.ASSET_APP_MARK_PREFIX + it.index }
             // Entries the phone now lists with a cover. A menu sent before covers existed already
             // carries an icon for a saved shortcut (its app's glyph), so the asset check alone
             // would keep that glyph on the watch until the menu happened to be edited.
@@ -88,7 +96,6 @@ class ActionListTransmitter(private val actionList: ActionList,
     suspend fun sendConfigToWatch(actions: List<PhoneAction>) {
         val density = watchInfoProvider.value?.watchInfo?.displayDensity ?: 1f
         val targetIconSize = (ConfigConstants.MENU_ICON_SIZE_DP * density).toInt()
-        val detailCoverSizePx = (DETAIL_COVER_SIZE_DP * density).toInt()
         val coverIconSizePx = (watchInfoProvider.value?.watchInfo?.displayWidth?.takeIf { it > 0 }
                 ?: DEFAULT_COVER_ICON_SIZE_PX).coerceAtMost(ShortcutArtworkFetcher.MAX_THUMBNAIL_PX)
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -122,6 +129,10 @@ class ActionListTransmitter(private val actionList: ActionList,
             }
             protoBuilder.addActions(actionProto.build())
 
+            appMarkOf(action)?.let { png ->
+                putDataRequest.putAsset(CommPaths.ASSET_APP_MARK_PREFIX + index, Asset.createFromBytes(png))
+            }
+
             if (listCover == null && !needsTransmittedIcon(action, actionProto.actionKey)) {
                 // The watch ships the same vector and resolves it from the action key.
                 continue
@@ -136,12 +147,13 @@ class ActionListTransmitter(private val actionList: ActionList,
             // clamped to what ShortcutArtworkFetcher ever caches (shrinkPreservingRatio only
             // shrinks, so sending more than that would just waste bandwidth).
             //
-            // Any cover also opens the shortcut's own screen, where it is drawn several times the
-            // size of a row's thumbnail - so a cover is never sent smaller than that.
+            // Any other cover is sent at the row's size, but never below MIN_COVER_ICON_PX: the
+            // shortcut's own screen blurs it into a glow built from a 64 px thumbnail, and a watch
+            // that has not reported its density yet would otherwise be sent one smaller than that.
             val isCover = actionProto.iconIsCoverArt
             val iconSize = when {
                 isCover && coverArtwork && shortcutCoverEnabled -> coverIconSizePx
-                isCover -> maxOf(targetIconSize, detailCoverSizePx)
+                isCover -> maxOf(targetIconSize, MIN_COVER_ICON_PX)
                 else -> targetIconSize
             }
             icon = BitmapUtils.shrinkPreservingRatio(icon, iconSize, iconSize, true)
@@ -176,6 +188,17 @@ class ActionListTransmitter(private val actionList: ActionList,
     private fun listCoverOf(action: PhoneAction): Drawable? =
             action.listCover.takeIf { action.customIconUri == null }
 
+    /**
+     * The glyph of the app a streaming destination opens in, for "Open on phone" on that
+     * destination's own screen - null for every other entry, and for an app this phone has not
+     * learned a glyph for. One function for the send and the resend check, like [transmitsListIcon].
+     */
+    private fun appMarkOf(action: PhoneAction): ByteArray? {
+        if (action.streamingShortcut == null) return null
+        val target = action.remoteUri?.takeIf(String::isNotBlank) ?: return null
+        return ShortcutAppMark.glyphPngFor(context, target)
+    }
+
     /** Whether [action]'s entry carries an icon asset - the predicate both the send and the
      *  "is the watch's copy current" check use, so the two cannot disagree. */
     private fun transmitsListIcon(action: PhoneAction): Boolean =
@@ -186,5 +209,5 @@ class ActionListTransmitter(private val actionList: ActionList,
  *  used only until a watch has reported its actual display width. */
 private const val DEFAULT_COVER_ICON_SIZE_PX = 400
 
-/** The largest the shortcut screen draws a cover (`ShortcutDetailContent`'s clamp, rounded up). */
-private const val DETAIL_COVER_SIZE_DP = 96
+/** The least a cover is sent at, in pixels - enough for the shortcut screen's glow and a row's thumbnail. */
+private const val MIN_COVER_ICON_PX = 96

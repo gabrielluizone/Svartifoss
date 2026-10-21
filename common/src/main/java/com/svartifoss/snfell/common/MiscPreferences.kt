@@ -71,12 +71,13 @@ object MiscPreferences {
             SimplePreferenceDefinition("app_language", AppLocales.SYSTEM)
 
     /**
-     * Launcher background used by the Play build. The GitHub build keeps its original icon and
-     * ignores this value; keeping the key shared lets the phone's Play setting reach the watch
-     * through the ordinary preference snapshot without creating a second sync protocol.
+     * Launcher icon style used by the Play build (see [AppIconStyle]). The GitHub build keeps its
+     * original icon and ignores this value; keeping the key shared lets the phone's Play setting
+     * reach the watch through the ordinary preference snapshot without creating a second sync
+     * protocol.
      */
     val APP_ICON_STYLE: PreferenceDefinition<String> =
-            SimplePreferenceDefinition("app_icon_style", AppIconStyle.GRADIENT.preferenceValue)
+            SimplePreferenceDefinition("app_icon_style", AppIconStyle.DEFAULT.preferenceValue)
 
     val DISABLE_PHYSICAL_DOUBLE_CLICK_IN_AMBIENT: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("disable_ambient_physical_double_click", false)
 
@@ -1179,6 +1180,17 @@ object MiscPreferences {
                     "wear_seek_marker",
                     SeekMarkerVisibility.DURING_SEEK.preferenceValue)
 
+    /**
+     * The drawing of the play mark and of the pause mark on the faces that draw one - see
+     * [TransportGlyphs]. `"follow"` keeps the glyph each face was designed with, `"a"`..`"e"` pick
+     * one of the five styles. Two keys rather than one pair so a face can mix, say, rounded play
+     * with an outlined pause.
+     */
+    val WEAR_PLAY_ICON: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_play_icon", TransportGlyphs.FOLLOW)
+    val WEAR_PAUSE_ICON: PreferenceDefinition<String> =
+            SimplePreferenceDefinition("wear_pause_icon", TransportGlyphs.FOLLOW)
+
     /** Extract accent color from album art on the watch (when off, uses the static theme accent). */
     val WEAR_DYNAMIC_ACCENT: PreferenceDefinition<Boolean> = SimplePreferenceDefinition("wear_dynamic_accent", true)
 
@@ -1613,6 +1625,15 @@ object MiscPreferences {
     val WEAR_QUEUE_COVER_SHAPE: PreferenceDefinition<String> =
             SimplePreferenceDefinition("wear_queue_cover_shape", "follow")
 
+    /**
+     * Every preference whose value is a [CoverShape] token, base key only (each is stored once per
+     * face scope as well). What [CoverShape.migrate] sweeps. Declared after all five so it can
+     * name them - an `object` initialises in textual order.
+     */
+    val COVER_SHAPE_KEYS: List<String> = listOf(
+            WEAR_CAROUSEL_CARD_SHAPE, WEAR_NOTE_COVER_SHAPE, WEAR_CHAT_COVER_SHAPE,
+            WEAR_METADATA_COVER_SHAPE, WEAR_QUEUE_COVER_SHAPE).map { it.key }
+
     /** When [WEAR_QUEUE_STYLE] is a Cover variant, whether an eligible quick-panel action row
      *  (one whose icon is genuine fetched cover art - e.g. a streaming shortcut's cached
      *  thumbnail - not just a generic app icon) also fills its pill with that art, the same
@@ -1738,6 +1759,7 @@ object MiscPreferences {
             WEAR_ARTIST_TEXT_BG_STYLE, WEAR_ARTIST_TEXT_BG_COLOR_MODE,
             WEAR_ARTIST_TEXT_BG_CUSTOM_COLOR, WEAR_ARTIST_TEXT_BG_OPACITY,
             WEAR_TRACK_TIME_MODE, WEAR_SEEK_MARKER,
+            WEAR_PLAY_ICON, WEAR_PAUSE_ICON,
             WEAR_TRACK_TIME_FONT, WEAR_TRACK_TIME_FONT_WEIGHT,
             WEAR_TRACK_TIME_FONT_ITALIC, WEAR_TRACK_TIME_FONT_SCALE,
             WEAR_TRACK_TIME_FONT_OPACITY, WEAR_TRACK_TIME_FONT_TRACKING,

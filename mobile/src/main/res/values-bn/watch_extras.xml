@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">ভলিউম বারের পুরুত্ব</string>
-    <string name="setting_wear_volume_thickness_description">ভলিউম বারের রেখার পুরুত্ব, ডিফল্টের 50% থেকে 180%। মোটা রেখাও স্ক্রিনের কিনারা থেকে দূরে থাকে।</string>
+    <string name="setting_wear_volume_thickness_description">ভলিউম বারের রেখার পুরুত্ব, ডিফল্টের 50%% থেকে 180%%। মোটা রেখাও স্ক্রিনের কিনারা থেকে দূরে থাকে।</string>
     <string name="setting_wear_volume_haptics">ভলিউমে ক্রাউনের কম্পন</string>
     <string name="setting_wear_queue_dim_played">বাজানো ট্র্যাকগুলো ম্লান করুন</string>
     <string name="setting_wear_queue_dim_played_description">আগে বাজানো এন্ট্রিগুলো ম্লান করে, যাতে পরেরগুলো আলাদা করে চোখে পড়ে।</string>

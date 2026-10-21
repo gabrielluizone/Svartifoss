@@ -1,6 +1,6 @@
 # Privacy Policy for Svartifoss
 
-**Last updated: 20-10-2026**
+**Last updated: 21-10-2026**
 
 Svartifoss ("the app", "we", "our") is a Wear OS companion app that lets a
 paired watch control music playback on your phone. This policy explains what
@@ -26,8 +26,12 @@ reports](#crash-reports) and [Announcement
 notifications](#announcement-notifications) below. A separate,
 **off-by-default** setting can also fetch cover art for your saved playlist
 shortcuts directly from the streaming service — see [Streaming shortcut
-artwork](#streaming-shortcut-artwork-optional) below.
+artwork](#streaming-shortcut-artwork-optional) below. When a track has no cover at all
+(a YouTube video, for instance) the phone can also look one up, first in YouTube's Data API
+(a Google service) and then in Deezer, and it can look up lyrics in LRCLIB — see [Artwork looked up
+online](#artwork-looked-up-online) and [Song lyrics](#song-lyrics) below.
 The Google Play build also lets you leave an optional tip, paid entirely through Google Play Billing and unlocking nothing — see [Tips in the Play Store build](#tips-in-the-play-store-build) below.
+It may also, now and then, ask you to rate the app with Google Play's own review card — see [Rating prompt in the Play Store build](#rating-prompt-in-the-play-store-build) below.
 
 ## What the app needs access to, and why
 
@@ -83,6 +87,7 @@ queue, described below.
   timeouts, etc.). A profile leaves the device only if you select it for an
   explicit Community-theme submission.
 - A copy of any font file you import (Watch tab → Text → My own font) and, if you set Album art source to one of the two options that use your own pictures, the reference to the image or folder you picked. The font is copied into the app's private storage so it keeps working if you move or delete the original; the pictures are read from where they already are. Both are sent to your paired watch so it can render them, and neither leaves your two devices — a theme that uses them cannot be submitted to the Community themes gallery, and the app refuses such a submission rather than sharing the file.
+- A YouTube Data API key, only if you paste your own under Settings → Apps → Music apps & services. It stays in the app's private storage: it is never sent to the watch and never included in a settings backup.
 - A disposable cache of the public Community themes catalogue, theme files and author screenshots after you open that gallery. It contains only the public JSON served from this project's GitHub Pages site, is not included in configuration backups, and can be cleared with Android's app-cache controls.
 
 Uninstalling the app removes all of this data. If you use the app's
@@ -439,7 +444,7 @@ is governed by that service's own privacy policy, not this one. Apple
 Music, Amazon Music, and Tidal have no public oEmbed endpoint, so shortcuts
 to those services always fall back to a cover drawn on the phone instead.
 
-The same setting covers the liked-songs collections, which have no oEmbed record because they are personal rather than public. For YouTube Music's Liked Music and Spotify's Liked Songs — and only when one is in use, as a built-in action in the Actions menu or as a saved link — Svartifoss downloads that service's own public cover image for the collection once, from the service's image server (`www.gstatic.com` for YouTube Music, `misc.scdn.co` for Spotify), and caches it on-device. That request names a fixed image that is the same for every account; no link, account, or other personal data is sent with it. With the setting off, or if the download fails, these collections — like every shortcut without a fetched cover — are shown with a cover drawn on the phone itself, which involves no network access.
+The same setting covers Spotify's Liked Songs collection, which has no oEmbed record because it is personal rather than public. When it is in use — as a built-in action in the Actions menu or as a saved link — Svartifoss downloads Spotify's own public cover image for the collection once, from Spotify's image server (`misc.scdn.co`), and caches it on-device. That request names a fixed image that is the same for every account; no link, account, or other personal data is sent with it. With the setting off, or if the download fails, this collection — like every shortcut without a fetched cover — is shown with a cover drawn on the phone itself, which involves no network access. YouTube Music's Liked Music uses a cover that is bundled with the app, so it involves no network access at all, whatever the setting.
 
 ## Playback queue covers (optional)
 
@@ -561,9 +566,15 @@ ours, and is governed by that service's own terms rather than this policy.
 
 While the source is **From the music app**, nothing is looked up for the face's picture. When one of the other two is selected, each new artist (or each new track, for a cover) is looked up once and the result is cached on your phone, so an album playing through under **Artist picture** costs a single request. A record Deezer does not list is remembered as "no picture" for a week so the same name is not asked about again, and the player shows the artwork your music app published instead.
 
-The one lookup that does not depend on the source is for a track whose app published **no cover at all** - no image and no address to fetch one from. YouTube is the case: a video or a live stream there carries a title and a channel name and nothing else. For such a track the phone asks the same Deezer search for an album cover, sending the **channel (or artist) name and the title**, with anything in brackets and anything after a "|" removed. A result is used only if its artist matches the channel or both its artist and its track are named in the title, so a stream that merely mentions a band is not given that band's sleeve. When nothing matches, which is the usual answer for a live stream, nothing more is sent and the watch shows what it would have shown without the lookup. Each upload is looked up once; a definite "no match" is remembered for a week like the record above, and a lookup that failed for lack of a connection is not remembered at all.
+The one lookup that does not depend on the source is for a track whose app published **no cover at all** - no image and no address to fetch one from. YouTube is the case: a video or a live stream there carries a title and a channel name and nothing else. For such a track the phone looks in up to two places, in this order.
 
-This is **on by default**: a cover that is missing has no other source, so switching it off does not give you a cheaper version of anything - the watch shows what it showed before the lookup existed. **Online artwork** (Settings → Apps → Music apps & services) turns off both the face sources and this lookup. Cached pictures live in the phone's cache directory, are never included in a settings backup, and are removed whenever Android clears app caches or you clear the app's storage.
+**First, YouTube.** The phone asks YouTube's Data API (a Google service, `www.googleapis.com/youtube/v3/search`) for that video's own thumbnail. It sends the **channel (or artist) name and the title**, reduced to plain letters and digits and cut to 120 characters, together with the API key that Svartifoss carries (or the one you entered under **YouTube Data API key**, see below) and the app's package name and signing-certificate fingerprint, which Google uses to check that the key is used only by this app. A video is used only if its channel and its title both match what was playing, word for word; its thumbnail is then downloaded from Google's image servers. Svartifoss uses **YouTube API Services** for this step. By using it you also agree to be bound by the [YouTube Terms of Service](https://www.youtube.com/t/terms), and Google's handling of the request is described in the [Google Privacy Policy](https://policies.google.com/privacy). Like any web request, it shows Google your phone's IP address and which title was asked about. Svartifoss attaches no account, no identifier of its own and no record of which app was playing, does not read your YouTube account, history or playlists, and the key identifies the app, not you.
+
+**Then, if that finds nothing, Deezer.** The phone asks the same Deezer search described above for an album cover, sending the channel (or artist) name and the title, with anything in brackets and anything after a "|" removed. A result is used only if its artist matches the channel or both its artist and its track are named in the title, so a stream that merely mentions a band is not given that band's sleeve. When neither finds a match, which is the usual answer for a live stream, nothing more is sent and the watch shows what it would have shown without the lookup.
+
+Each upload is looked up once. A thumbnail from YouTube is kept in the phone's cache for at most 28 days and is then looked up again if it is needed; a cover from Deezer stays until Android clears the cache; a definite "no match" is remembered for a week like the record above, and a lookup that failed for lack of a connection is not remembered at all.
+
+This is **on by default**: a cover that is missing has no other source, so switching it off does not give you a cheaper version of anything - the watch shows what it showed before the lookup existed. **Online artwork** (Settings → Apps → Music apps & services) turns off both the face sources and both steps of this lookup. **YouTube Data API key**, in the same place, is optional: leave it empty to use the key included in the app, or paste your own to use that instead. A key you paste is stored only on your phone, is never sent to the watch and is never included in a settings backup. Cached pictures live in the phone's cache directory, are never included in a settings backup, and are removed whenever Android clears app caches or you clear the app's storage.
 
 ## Usage diagnostics
 
@@ -585,6 +596,14 @@ A tip is sold through **Google Play Billing**, so the payment is handled entirel
 
 A tip **unlocks nothing**. The Play build is a paid app, so every feature is already available to whoever bought it, and tipping or not changes nothing about what the app does. To decide whether to show the option, the Play build asks the Google Play Store app on your phone which tip amounts are on sale when the app is opened; Svartifoss attaches no account, name or identifier of its own to that request. If Google Play is not available on your phone, or no amounts are on sale, the option is simply not shown.
 
+## Rating prompt in the Play Store build
+
+The Google Play build of Svartifoss may ask you to rate the app. The GitHub build has no such prompt, and this section applies only to the Play build.
+
+The prompt is **Google Play's own in-app review card**, shown over the app a few seconds after you open it, once you have used the app on a few different days and have set up notification access. The stars and the optional comment are typed into Google Play's card, not into Svartifoss, and Google Play posts them as a review on the app's Store listing under [Google's Privacy Policy](https://policies.google.com/privacy) and Google Play's terms. Svartifoss is not told whether the card appeared, whether you rated, or what you wrote, and nothing about it is sent to us or to any server of ours. Google Play decides whether the card is shown at all, you can dismiss it without rating, and you can delete a review at any time from your Google Play account.
+
+All the app keeps is a few counters in private storage on your phone, used only to space the requests out: on how many different days you opened it, how many times it has asked, and when it last did. It asks at most three times for as long as the app is installed, at least 60 days apart, and a rating is never a condition of anything: the card changes nothing about what the app does.
+
 ## What we don't do
 
 - We don't require an account to use playback controls, browse Community
@@ -600,6 +619,7 @@ A tip **unlocks nothing**. The Play build is a paid app, so every feature is alr
   publishes are ones you picked yourself and attached to a Community theme
   submission.
 - We don't gate any feature behind a payment. A tip in the Play build unlocks nothing, and the price of a store listing pays for a pre-built, automatically updated binary and nothing else.
+- We don't make a rating a condition of anything. The Play build's rating prompt is Google Play's card, can be dismissed, and changes nothing about what the app does.
 
 ## Children's privacy
 

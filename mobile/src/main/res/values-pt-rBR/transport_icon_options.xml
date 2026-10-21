@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="setting_wear_play_icon">Ícone de reproduzir</string>
+    <string name="setting_wear_pause_icon">Ícone de pausar</string>
+    <string name="setting_wear_transport_icon_description">A marca do controle de reproduzir e pausar. “Seguir a face” mantém a do desenho original desta face.</string>
+    <string name="transport_icon_follow">Seguir a face</string>
+    <string name="transport_icon_a">Arredondado</string>
+    <string name="transport_icon_b">Contorno arredondado</string>
+    <string name="transport_icon_c">Contorno reto</string>
+    <string name="transport_icon_d">Reto</string>
+    <string name="transport_icon_e">Contorno arredondado grosso</string>
+</resources>

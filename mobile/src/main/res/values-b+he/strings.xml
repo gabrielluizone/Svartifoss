@@ -743,6 +743,8 @@
         <item>material</item>
         <item>eclipse</item>
         <item>chrono</item>
+        <item>minute_ring</item>
+        <item>hex_frame</item>
         <item>poster</item>
         <item>studio</item>
         <item>immersive</item>
@@ -754,8 +756,6 @@
         <item>artist</item>
         <item>ribbon</item>
         <item>frame</item>
-        <item>minute_ring</item>
-        <item>hex_frame</item>
     </string-array>
     <string name="setting_wear_aod_color">צבע תצוגה פעילה תמיד</string>
     <string-array name="wear_aod_color_entries">
@@ -1643,7 +1643,7 @@
         <item>ריבוע</item>
         <item>ריבוע מעוגל</item>
         <item>עיגול</item>
-        <item>סגנון Samsung</item>
+        <item>סופר-אליפסה</item>
     </string-array>
 
     <string name="setting_wear_font_all_screens">השתמש בגופן בכל מקום</string>
@@ -2022,16 +2022,14 @@
     <string name="drawer_about_summary">Svartifoss מאפשרת לשלוט במוזיקה בטלפון משעון Wear OS — באמצעות שלט שניתן להתאים אישית לחלוטין למכשיר שלך.</string>
     <string name="drawer_name_heading">השם</string>
     <string name="drawer_name_meaning">Svartifoss פירושו \"המפלים השחורים\" באיסלנדית — על שם המפל בפארק הלאומי Vatnajökull, שבו עמודי בזלת כהים ממסגרים מפל צר. כמו מים על אבן, המוזיקה זורמת דרך האפליקציה.</string>
-    <string name="drawer_sync_heading">סנכרון</string>
-    <string name="drawer_sync_summary">הגדרות השעון מוגדרות כאן בטלפון ומסונכרנות אוטומטית לשעון המותאם.</string>
     <string name="drawer_support_heading">תמיכה</string>
     <string name="download_album_art">הורד עטיפה</string>
     <string name="album_art_saved">העטיפה נשמרה בגלריה</string>
     <string name="album_art_save_error">שמירת העטיפה נכשלה</string>
 
-    <string name="action_play_liked_songs">נגן שירים שאהבתי (YT Music)</string>
-    <string name="action_play_spotify_liked_songs">נגן שירים שאהבתי (Spotify)</string>
-    <string name="action_play_soundcloud_likes">נגן רצועות שאהבתי (SoundCloud)</string>
+    <string name="action_play_liked_songs">שירים שאהבתי</string>
+    <string name="action_play_spotify_liked_songs">שירים שאהבתי</string>
+    <string name="action_play_soundcloud_likes">רצועות שאהבתי</string>
     <string name="action_my_playlists">קיצורי דרך לסטרימינג</string>
     <string name="action_show_streaming_library">הצג את כל קיצורי הדרך השמורים</string>
     <string name="picker_section_apps">אפליקציות ואוטומציה</string>
@@ -2167,7 +2165,7 @@
     <string name="playlist_shortcut_deleted">%1$s נמחק</string>
     <string name="playlist_shortcut_undo">בטל</string>
 
-    <string name="action_play_liked_songs_shuffled">נגן שירים שאהבתי באקראי (YT Music)</string>
+    <string name="action_play_liked_songs_shuffled">שירים שאהבתי, באקראי</string>
     <string name="action_search_history">היסטוריית חיפוש</string>
     <string name="search_history_empty">עדיין אין חיפושים אחרונים</string>
 
@@ -2853,7 +2851,7 @@
     <string name="setting_wear_text_block_position">מיקום טקסט</string>
     <string name="setting_wear_text_block_position_description">המיקום של טקסט הרצועה על המסך. "לפי פני השעון" שומר את המיקום שעבורו תוכננו כל פני שעון.</string>
     <string name="setting_online_artwork">גרפיקה מקוונת</string>
-    <string name="setting_online_artwork_description">אפשר לפני השעון להציג תמונה שנמצאה באינטרנט \u2014 האמן שמבצע, או עטיפת אלבום עבור נגן שאינו מפרסם תמונה. הטלפון שלך מבצע את החיפוש בקטלוג הציבורי של Deezer ושומר את התוצאה במטמון; רק שמות הרצועה והאמן נשלחים, ולא מתבצע חיפוש אלא אם פני שעון הוגדרו להשתמש באחד המקורות האלה. כשהאפשרות כבויה, נעשה שימוש בגרפיקה של הנגן עצמו.</string>
+    <string name="setting_online_artwork_description">מאפשר לפני השעון להציג תמונה שחיפשו ברשת — האמן המבצע, או עטיפת אלבום עבור נגן שלא מפרסם כזו. הטלפון מבצע את החיפוש ושומר את התוצאה במטמון; נשלחים רק שמות הרצועה והאמן, אל הקטלוג הציבורי של Deezer. כך נמצאת גם עטיפה לרצועה שהאפליקציה שלה לא מפרסמת אף עטיפה, כמו סרטון ב-YouTube: הטלפון מבקש מ-YouTube את התמונה הממוזערת של הסרטון עצמו (ושולח את שם הערוץ והכותרת אל YouTube Data API של Google), ואז מ-Deezer עטיפת אלבום, ומשתמש בתוצאה רק אם היא תואמת. כשהאפשרות כבויה, נעשה שימוש רק בעטיפה של הנגן עצמו.</string>
     <string name="setting_wear_shortcut_details">נגן או ערבוב בשעון</string>
     <string name="setting_wear_shortcut_details_description">בחירת קישור שמור בשעון, מרשימת קיצורי הדרך, מה-Tile של קיצורי הדרך או מתפריט הפעולות, מציגה קודם את העטיפה שלו עם ״נגן״ ו״ערבוב״. כבו כדי להתחיל לנגן מיד במקום זאת. כפתורים ומחוות שהוקצו לקישור אחד תמיד מתחילים אותו מיד.</string>
     <string name="actions_quick_pin_add">הצג בחלונית מהירה</string>
@@ -2951,4 +2949,48 @@
     </plurals>
     <string name="streaming_app_routes_picker_description">יוצגו אפליקציות שיכולות לפתוח את הקישור, בתוספת נגני מדיה מותקנים.</string>
     <string name="streaming_route_automatic">אוטומטי (אפליקציה שזוהתה)</string>
+    <string name="action_symfonium_start">התחלת מדיה ב-Symfonium</string>
+    <string name="action_symfonium_start_named">התחלה ב-Symfonium: %1$s</string>
+    <string name="action_symfonium_sync">סנכרון ספק Symfonium</string>
+    <string name="app_icon_style_gradient">מעבר צבעים</string>
+    <string name="app_icon_style_solid">צבע אחיד</string>
+    <string name="app_icon_style_cream">Cream</string>
+    <string name="app_icon_style_feather">נוצת פחם</string>
+    <string name="dev_show_rating_card">הצגת כרטיס הדירוג</string>
+    <string name="dev_show_rating_card_description">מבקש מיד מ-Google Play את כרטיס הביקורת שלו בתוך האפליקציה, בלי להתחשב במגבלות הרגילות. הוא מופיע רק בגרסה שהותקנה מ-Google Play (הבדיקה הפנימית נחשבת)</string>
+    <string name="dev_show_rating_card_unavailable">ל-Google Play אין כרטיס ביקורת לגרסה הזאת. התקינו אותה מ-Google Play, גם דרך הבדיקה הפנימית, ונסו שוב</string>
+    <string name="playlist_shortcut_queue_link_unavailable">הנגן הזה לא פרסם קישור לשיתוף עבור הרצועה הזאת</string>
+    <string name="setting_app_icon_style">סמל האפליקציה</string>
+    <string name="setting_youtube_api_key">מפתח YouTube Data API</string>
+    <string name="setting_youtube_api_key_bundled">מפתח YouTube כלול באפליקציה הזאת; אין צורך להוסיף אחד</string>
+    <string name="setting_youtube_api_key_configured">מפתח YouTube הוגדר; נשמר רק בטלפון הזה</string>
+    <string name="setting_youtube_api_key_description">כשנגן לא מפרסם תמונת עטיפה, Svartifoss מחפש ב-YouTube דרך YouTube Data API של Google, שולח את שם הערוץ והכותרת יחד עם המפתח הזה, ומשתמש בתמונה הממוזערת של סרטון שמתאים בדיוק. אפשר להשאיר ריק כדי להשתמש במפתח הכלול באפליקציה. מפתח שתדביקו נשאר בטלפון הזה: הוא לא נשלח לשעון ולא נכלל בגיבויי ההגדרות של Svartifoss.</string>
+    <string name="setting_youtube_api_key_dialog_title">הדביקו את מפתח YouTube Data API v3 שלכם</string>
+    <string name="setting_youtube_api_key_not_configured">אופציונלי: לא הוגדר מפתח YouTube</string>
+    <string name="symfonium_media_album">אלבום (אופציונלי)</string>
+    <string name="symfonium_media_artist">אמן (אופציונלי)</string>
+    <string name="symfonium_media_id_optional">מזהה (אופציונלי)</string>
+    <string name="symfonium_media_name">שם</string>
+    <string name="symfonium_media_type">סוג מדיה</string>
+    <string name="symfonium_provider_id">מזהה ספק</string>
+    <string name="symfonium_provider_id_description">את מזהה הספק אפשר למצוא במסך “ניהול ספקי מדיה” ב-Symfonium.</string>
+    <string name="symfonium_queue_mode">מצב תור</string>
+    <string name="symfonium_resume">המשך כשאפשר</string>
+    <string name="symfonium_shuffle">ערבוב אוספים</string>
+    <string name="group_symfonium">Symfonium</string>
+    <string-array name="symfonium_media_type_entries">
+        <item>שיר</item>
+        <item>רשימת השמעה</item>
+        <item>אלבום</item>
+        <item>אמן</item>
+        <item>ז׳אנר</item>
+        <item>מיקס שירים</item>
+        <item>מיקס אלבומים</item>
+        <item>רדיו אינטרנט</item>
+    </string-array>
+    <string-array name="symfonium_queue_mode_entries">
+        <item>התחלה עכשיו</item>
+        <item>השמעה הבא</item>
+        <item>הוספה לתור</item>
+    </string-array>
 </resources>

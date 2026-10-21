@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="setting_wear_volume_thickness">Þykkt hljóðstyrksstiku</string>
-    <string name="setting_wear_volume_thickness_description">Þykkt línunnar í hljóðstyrksstikunni, frá 50% til 180% af sjálfgefnu. Þykkari línur halda sig samt frá brúninni.</string>
+    <string name="setting_wear_volume_thickness_description">Þykkt línunnar í hljóðstyrksstikunni, frá 50%% til 180%% af sjálfgefnu. Þykkari línur halda sig samt frá brúninni.</string>
     <string name="setting_wear_volume_haptics">Titringur krónu við hljóðstyrk</string>
     <string name="setting_wear_queue_dim_played">Dempa spiluð lög</string>
     <string name="setting_wear_queue_dim_played_description">Deyfir lögin sem þegar hafa verið spiluð svo næstu lög standi upp úr.</string>
