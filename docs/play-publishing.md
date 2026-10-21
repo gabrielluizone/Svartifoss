@@ -115,3 +115,9 @@ through this path today.
   releases one back.
 - `Your edit was in an unexpected state` — an edit was left open in the Console. Discard the draft
   release there and run the command again.
+- `403 ... Play automatic protection requires a minimum SDK version of 24 or higher` — the listing
+  has automatic protection switched on in Play Console (*Protected with Play*), and the bundle's
+  minimum SDK is lower. The `play` flavor of `mobile/` therefore sets `minSdkVersion 24`; the watch
+  is already 26. Turning the protection off in the Console is the other way out. A
+  `--no-commit` run of both modules (add it to the publish command) shows this before anything is
+  committed to Play.

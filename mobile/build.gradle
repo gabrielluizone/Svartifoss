@@ -36,7 +36,7 @@ android {
         // Wear OS has a separate API-35 requirement and remains configured in wear/build.gradle.
         targetSdkVersion 36
         compileSdk 36
-        versionCode 90
+        versionCode 91
         versionName "4.3"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         wearAppUnbundled true
@@ -71,6 +71,12 @@ android {
         }
         play {
             dimension "distribution"
+            // Play's automatic protection, switched on for this listing in Play Console (Protected
+            // with Play), refuses a bundle whose minSdk is below 24 at upload time: "Play automatic
+            // protection requires a minimum SDK version of 24 or higher". So the Play build starts
+            // at Android 7.0, while the github build, which Play never touches, still installs on
+            // Android 6.0 (the defaultConfig value above).
+            minSdkVersion 24
         }
     }
     packagingOptions {

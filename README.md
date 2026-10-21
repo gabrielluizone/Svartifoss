@@ -242,7 +242,7 @@ The app asks for notification access to read and control the active media sessio
 
 ## Installing
 
-You need an **Android phone running Android 6.0 / API 23 or newer** and a **paired Wear OS watch running Android 8.0 / API 26 or newer**.
+You need an **Android phone running Android 7.0 / API 24 or newer** (Android 6.0 / API 23 for the GitHub APKs) and a **paired Wear OS watch running Android 8.0 / API 26 or newer**.
 
 ### Google Play
 
