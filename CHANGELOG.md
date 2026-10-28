@@ -1,5 +1,25 @@
 # Changelog
 
+## 4.3.1
+
+### Added
+
+- **The developer MediaSession explorer lists what each streaming app offers.** Settings → Data & support → Developer → **MediaSession explorer** shows every installed streaming app's media services and the ways it can be asked to play, and which of them has worked on this phone.
+
+### Changed
+
+- **Shortcuts that have to open the app now ask it to play first.** The watch opens a one-time link on the phone, which starts the app through the play requests the app declares to Android and keeps whichever one worked. Spotify Free ignores all of them, so its shortcuts still open the right page and wait for a tap on Play; Premium is untested.
+
+- **Playback, search and library browsing try each of an app's media services**, not only the first. Spotify publishes two.
+
+- **Searching from the watch no longer opens Android's voice-search screen from the background**, where Android drops it silently; the playing app's own session is asked instead.
+
+### Fixed
+
+- **English no longer breaks dialogs on Android 12 or older.** Cancel and OK came out oversized, which hid the action editor's Delete button and shrank the Controls dialog's OK to "…". Seen on Android 10.
+
+- **SoundCloud shortcuts saved with Share now play.** Those short links only opened the app; the phone now plays them by name, even in a pocket (a playlist plays the best match for its name).
+
 ## 4.3
 
 ### Added

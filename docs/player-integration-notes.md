@@ -157,11 +157,39 @@ Deep links seen in the same dex (watch app): `soundcloud://soundcloud//player`, 
 remote can call. None of these are a substitute for a browsed id — the rule at the top of this file
 still holds, so "play my likes" should come from walking the library, not from a constructed id.
 
+### Spotify
+
+Closed source, and its terms forbid decompiling it, so this is only what its phone manifest
+**declares** (9.1.94.1912, read 2026-10-24 with `aapt2 dump xmltree`; `adb shell dumpsys package
+com.spotify.music` prints the same from an installed copy). The full write-up, with the legal
+reasoning, is `streaming-app-interop.md`.
+
+- Two browser services: `SpotifyMediaBrowserService` (legacy) and `SpotifyMediaLibraryService`
+  (legacy **and** Media3). Svartifoss now tries both (`MediaBrowserSearch.findBrowserServices`);
+  whether the Media3 one accepts a client the legacy one refuses is not yet known.
+- `SpotifyMainActivity` accepts `android.media.action.MEDIA_PLAY_FROM_SEARCH` twice: plain, and with
+  the `spotify:` scheme as data plus `BROWSABLE`. That is the public "play this URI" entry point the
+  visible rung of `playDeepLink` now uses through the hand-off activity.
+- `VIEW` of `spotify:` URIs is documented by Spotify and only navigates; its users report that a
+  `:play` suffix (`spotify:playlist:<id>:play`) starts playback, which the hand-off keeps as a second
+  technique.
+
+Behaviour observed on a phone (9.1.92.3058, **Free** account, Android 10, 2026-10-24; full table in
+`streaming-app-interop.md` §5.6): its browser logs `No root for client com.svartifoss.snfell`, its
+session ignores `playFromUri` and `playFromSearch` from Svartifoss, and neither play intent starts
+anything, cold or warm: every one of them only opens the right page. Premium untested.
+
+Same day, two more apps the shortcuts reach: **SoundCloud 2026.10.14** (phone) *accepts* Svartifoss's
+browser connection and plays a `playFromSearch` through it silently, while its exported
+`SHORTCUT_PLAY_LIKES` only opens the Likes page when another app sends it; **Amazon Music 26.36.1**
+refuses the browser (`No root for client`) from `com.amazon.mp3.auto.AutoMusicService`, and its
+link's `do=play` parameter starts nothing.
+
 ## Not investigated
 
-Spotify, Apple Music and Amazon Music are closed source, so none of the above can be established for
-them by reading. Spotify publishes an App Remote SDK that would answer the "artist page does not
-play" case properly, at the cost of a registered client id, a Premium requirement for playback
-control, and a proprietary dependency in an otherwise GPLv3 codebase. Whether
-Apple Music or Amazon Music expose any public control API on Android is unverified — do not assume
-either way without checking.
+Apple Music and Amazon Music are closed source, so none of the above can be established for them by
+reading code. Whether they expose any public control API on Android is unverified — do not assume
+either way without checking their declarations (`dumpsys package`). Spotify publishes an App Remote
+SDK that would answer the "artist page does not play" case properly, at the cost of a registered
+client id, a Premium requirement for playback control, and a proprietary dependency in an otherwise
+GPLv3 codebase (see `spotify-integration-assessment.md`).

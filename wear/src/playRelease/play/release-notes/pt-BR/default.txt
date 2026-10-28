@@ -1,9 +1,3 @@
-Novidades do 4.3
-• Volume e progresso em onda, régua, minutos e hexágonos
-• Fila: formas de cápsula e capa, estilo Percurso
-• Letras no painel rápido; temporizador de sono até o fim da faixa
-• Tela sempre ativa que escurece à noite
-• Nova complicação Tocar e pausar e Tile Tocadas recentemente
-• Escolha os ícones de reproduzir/pausar
-• Miniaturas de vídeos sem capa e aviso AO VIVO
-Corrigidos: botões com o celular bloqueado, faixas longas (4:00:00) e pulo em transmissões ao vivo.
+Correções do 4.3.1
+• Inglês no Android 12 ou anterior não deixa mais os botões dos diálogos enormes nem esconde o botão Excluir do editor de ações
+• Atalhos do SoundCloud salvos com Compartilhar agora tocam

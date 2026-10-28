@@ -39,6 +39,24 @@ class BrowserServiceActionsTest {
     }
 
     @Test
+    fun everyDeclaredServiceIsKeptInActionOrderOnce() {
+        // Spotify declares a legacy MediaBrowserService and a Media3 MediaLibraryService that also
+        // answers the legacy action: both are tried, the one findBrowserService always returned
+        // first, and the Media3 one not twice for being listed under two actions.
+        val ranked = MediaBrowserSearch.rankBrowserServices(listOf(
+                listOf("SpotifyMediaBrowserService", "SpotifyMediaLibraryService"),
+                listOf("SpotifyMediaLibraryService"),
+                emptyList()))
+        assertEquals(listOf("SpotifyMediaBrowserService", "SpotifyMediaLibraryService"), ranked)
+    }
+
+    @Test
+    fun aRunawayListOfServicesIsCapped() {
+        val ranked = MediaBrowserSearch.rankBrowserServices(listOf((1..10).map { "service$it" }))
+        assertEquals(listOf("service1", "service2", "service3"), ranked)
+    }
+
+    @Test
     fun theBrowsableMedia3ServiceIsPreferredOverTheSessionOnlyOne() {
         // MediaLibraryService carries a library; MediaSessionService does not. An app declaring
         // both must resolve to the one that can actually answer a browse.

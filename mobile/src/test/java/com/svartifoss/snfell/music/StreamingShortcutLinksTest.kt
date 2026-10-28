@@ -388,4 +388,17 @@ class StreamingShortcutLinksTest {
             StreamingShortcutLinks.forPlayback("https://music.youtube.com/watch?list=LM")
         )
     }
+
+    @Test
+    fun searchableNameDropsTheServiceNameShareSheetsAppend() {
+        assertEquals("Virtualism", StreamingShortcutLinks.searchableName("Virtualism - SoundCloud"))
+        assertEquals("TAKO∞TAKOVER", StreamingShortcutLinks.searchableName("TAKO∞TAKOVER - SoundCloud"))
+        assertEquals("Song", StreamingShortcutLinks.searchableName("Song | Spotify"))
+        assertEquals("Mix", StreamingShortcutLinks.searchableName("  Mix — YouTube Music "))
+        // A separator before anything that is not a service is part of the name.
+        assertEquals("Black Gole • Muse", StreamingShortcutLinks.searchableName("Black Gole • Muse"))
+        assertEquals("Best of Spotify", StreamingShortcutLinks.searchableName("Best of Spotify"))
+        assertEquals(null, StreamingShortcutLinks.searchableName(" - SoundCloud"))
+        assertEquals(null, StreamingShortcutLinks.searchableName("   "))
+    }
 }

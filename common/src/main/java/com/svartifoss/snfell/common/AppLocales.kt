@@ -38,8 +38,21 @@ object AppLocales {
     fun localeFor(value: String?): Locale? {
         if (value.isNullOrBlank() || value == SYSTEM) return null
         if (value !in SUPPORTED) return null
-        return Locale.forLanguageTag(value)
+        return Locale.forLanguageTag(APPLIED_TAGS[value] ?: value)
     }
+
+    /**
+     * Stored tags applied as a more specific one. English is stored and offered as plain "en", but
+     * a bare "en" is not a safe request to make of Android: its own resources keep English in the
+     * untagged default, have no plain "en" variant, and do carry the test pseudo-locales en-XA and
+     * en-XC. On Android 12 and earlier a request for "en" resolved the system's strings to en-XC,
+     * which wraps each word in about a hundred invisible direction marks - so every
+     * `@android:string/cancel` and `ok` the app shows measured as wide as that, and a dialog's
+     * buttons crowded out their neighbours (the action editor's Delete button disappeared; seen on a
+     * Pixel 3, Android 10). en-US resolves to the system's default English, and the app's own
+     * strings are the same either way: it has one English, in `values/`.
+     */
+    private val APPLIED_TAGS = mapOf("en" to "en-US")
 
     /** The stored value, normalised - anything unrecognised collapses to [SYSTEM]. */
     fun normalize(value: String?): String =

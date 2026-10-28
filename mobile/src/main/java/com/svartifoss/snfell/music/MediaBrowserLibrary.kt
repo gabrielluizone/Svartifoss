@@ -32,18 +32,19 @@ object MediaBrowserLibrary {
      * answered and that node is genuinely empty.
      */
     suspend fun browse(context: Context, packageName: String, parentId: String?): Page? {
-        val component = MediaBrowserSearch.findBrowserService(context, packageName) ?: return null
+        val components = MediaBrowserSearch.findBrowserServices(context, packageName)
+        if (components.isEmpty()) return null
 
-        return withTimeoutOrNull(TIMEOUT_MS) {
-            val browser = MediaBrowserSearch.connect(context, component) ?: return@withTimeoutOrNull null
-            try {
+        val browser = MediaBrowserSearch.connectFirst(context, components) ?: return null
+        return try {
+            withTimeoutOrNull(TIMEOUT_MS) {
                 // getRoot() is only valid while connected, and it is also the id to browse when the
                 // caller asked for the top of the tree.
                 val rootId = browser.root
                 Page(rootId, childrenOf(browser, parentId ?: rootId))
-            } finally {
-                browser.disconnect()
             }
+        } finally {
+            browser.disconnect()
         }
     }
 

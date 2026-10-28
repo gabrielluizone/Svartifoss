@@ -7,6 +7,12 @@ developer ineligible. Recorded here so the question does not get re-opened from 
 Researched 2026-08-07 against Spotify's published documentation and repositories. Their terms change;
 re-check before reversing this.
 
+**Update 2026-10-24.** The playlist case this document left to the existing ladder (a shortcut that
+opened Spotify without playing) is now addressed without either route below: the visible step of
+`playDeepLink` goes through a phone-side hand-off activity that starts Spotify's own declared
+`MEDIA_PLAY_FROM_SEARCH` entry point with the playlist's URI. No SDK, no client id, no Web API. See
+`streaming-app-interop.md`. The conclusion about Routes A and B is unchanged.
+
 ## The problem it would have solved
 
 Picking an artist from the watch (search result, saved shortcut, or library row) does not start

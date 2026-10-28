@@ -75,6 +75,13 @@
         <intent>
             <action android:name="androidx.media3.session.MediaSessionService" />
         </intent>
+        <!-- Android's "play this" voice-search contract, which a music app declares for assistants.
+             Lets a streaming shortcut that has to be opened visibly be started *playing* in an app
+             that declares it (see VisiblePlaybackPlan); the official apps above are visible anyway,
+             this keeps alternative clients' declarations readable too. -->
+        <intent>
+            <action android:name="android.media.action.MEDIA_PLAY_FROM_SEARCH" />
+        </intent>
         <!-- Lets the "which apps count as music" list (MusicAppListPreference) enumerate installed
              apps that have a launcher icon on Android 11+ (API 30+), where getInstalledPackages()
              is otherwise filtered to only the packages declared above. This is the Play-policy-safe
@@ -284,6 +291,28 @@
                 <data
                     android:scheme="svartifoss"
                     android:host="audio-output" />
+            </intent-filter>
+        </activity>
+
+        <!-- Invisible one-frame trampoline the watch opens when a streaming shortcut has to be
+             started visibly: from the foreground it can start the launch that makes the app play
+             (see StreamingPlaybackActivity and VisiblePlaybackRegistry). Exported and browsable for
+             the same reason as the activity above; the link carries only a one-time token, so
+             anything else that opens it reaches nothing. -->
+        <activity
+            android:name=".view.handoff.StreamingPlaybackActivity"
+            android:exported="true"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="svartifoss"
+                    android:host="play-shortcut" />
             </intent-filter>
         </activity>
 

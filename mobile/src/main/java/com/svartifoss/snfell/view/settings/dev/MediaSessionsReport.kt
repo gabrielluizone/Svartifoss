@@ -2,12 +2,18 @@ package com.svartifoss.snfell.view.settings.dev
 
 import android.content.ComponentName
 import android.content.Context
+import android.content.pm.PackageManager
 import android.media.session.MediaController
 import android.media.session.MediaSessionManager
 import android.media.session.PlaybackState
 import com.svartifoss.snfell.NotificationService
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.music.MediaBrowserSearch
+import com.svartifoss.snfell.music.StreamingContentType
+import com.svartifoss.snfell.music.StreamingService
+import com.svartifoss.snfell.music.VisibleLaunchIntents
+import com.svartifoss.snfell.music.VisiblePlaybackMemory
+import com.svartifoss.snfell.music.VisiblePlaybackPlan
 
 /** Named framework [PlaybackState] actions, for a human-readable dump of what a session claims to
  *  support - see [com.svartifoss.snfell.music.MediaSessionCapabilities] for why that claim is a
@@ -74,7 +80,10 @@ internal fun buildMediaSessionsReport(context: Context): String {
     }
 
     if (sessions.isEmpty()) {
-        return "No active MediaSessions."
+        return buildString {
+            appendLine("No active MediaSessions.")
+            appendStreamingApps(context)
+        }
     }
 
     return buildString {
@@ -116,6 +125,67 @@ internal fun buildMediaSessionsReport(context: Context): String {
             val browserService = MediaBrowserSearch.findBrowserService(context, controller.packageName)
             appendLine("  MediaBrowserService: " +
                     if (browserService != null) browserService.className else "(none found)")
+        }
+        appendStreamingApps(context)
+    }
+}
+
+/**
+ * Links that exercise every hand-off technique, so the report shows exactly what the playback
+ * ladder would find declared - by asking the same [VisiblePlaybackPlan] - rather than a separate
+ * list of intents that could drift from it.
+ */
+private val PLAY_PROBES: List<Pair<String, StreamingContentType>> = listOf(
+        "spotify:playlist:probe" to StreamingContentType.PLAYLIST,
+        "spotify:collection:tracks" to StreamingContentType.PLAYLIST,
+        "https://soundcloud.com/you/likes" to StreamingContentType.PLAYLIST,
+        "https://soundcloud.com/probe/sets/probe" to StreamingContentType.PLAYLIST,
+        "https://example.com/artist/probe" to StreamingContentType.ARTIST)
+
+/**
+ * What each installed streaming app *declares* to Android - its media browser services and the
+ * public ways it can be asked to play - and what this phone has seen each way do. All of it comes
+ * from PackageManager, the same public declarations `adb shell dumpsys package` prints; nothing is
+ * read out of any app's code (see docs/streaming-app-interop.md).
+ */
+private fun StringBuilder.appendStreamingApps(context: Context) {
+    val installed = StreamingService.entries.mapNotNull { service ->
+        service.packageName?.takeIf { packageName ->
+            try {
+                context.packageManager.getApplicationInfo(packageName, 0).enabled
+            } catch (_: PackageManager.NameNotFoundException) {
+                false
+            }
+        }
+    }
+    appendLine()
+    appendLine("Streaming apps (public declarations):")
+    if (installed.isEmpty()) {
+        appendLine("  none of the known streaming apps is installed")
+        return
+    }
+    val memory = VisiblePlaybackMemory.Store(context)
+    installed.forEach { packageName ->
+        appendLine()
+        appendLine("  $packageName")
+        val browsers = MediaBrowserSearch.findBrowserServices(context, packageName)
+        appendLine("    Browser services: " + if (browsers.isEmpty()) "(none)"
+                else browsers.joinToString { it.className.substringAfterLast('.') })
+        val declared = PLAY_PROBES.flatMap { (link, type) ->
+            VisiblePlaybackPlan.candidates(link, packageName, type, "probe")
+        }.filter { VisibleLaunchIntents.isDeclared(context, it) }
+                .mapNotNull { it.technique?.storageKey }
+                .distinct()
+        appendLine("    Play techniques declared: " +
+                if (declared.isEmpty()) "(none)" else declared.joinToString())
+        memory.recordsFor(packageName).forEach { (kind, records) ->
+            appendLine("    Seen on this phone for $kind: " + records.entries.joinToString { (technique, record) ->
+                when {
+                    record.provenGood -> "${technique.storageKey} played"
+                    record.failures > 0 -> "${technique.storageKey} failed x${record.failures}"
+                    else -> technique.storageKey
+                }
+            })
         }
     }
 }

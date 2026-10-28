@@ -22,6 +22,15 @@ gen/
 *.keystore
 Svartifoss-5/*
 
+# Third-party apps kept locally for interoperability analysis. Never commit them: they are other
+# companies' copyrighted software (APKMirror bundles are .apkm/.xapk, which *.apk above misses),
+# and redistributing them from a public repository is the one clearly unlawful step in that work.
+# See docs/streaming-app-interop.md.
+rea-apps/
+*.apkm
+*.xapk
+*.apks
+
 # OS generated files #
 ######################
 .DS_Store

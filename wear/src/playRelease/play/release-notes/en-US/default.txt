@@ -1,9 +1,3 @@
-New in 4.3
-• Volume and progress in wave, ruler, per-minute and hex styles
-• Queue: pill and cover shapes and a Route style
-• Lyrics in the quick panel; sleep timer that stops at track end
-• Always-on display that dims at night
-• New play/pause complication and Recently played Tile
-• Choose play/pause icons
-• Thumbnails for cover-less videos; LIVE label on streams
-Fixed: buttons with the phone locked, long-track time (4:00:00) and skipping in live streams.
+Fixes in 4.3.1
+• English on Android 12 or older no longer makes dialog buttons huge or hides the Delete button in the action editor
+• SoundCloud shortcuts saved with Share now play

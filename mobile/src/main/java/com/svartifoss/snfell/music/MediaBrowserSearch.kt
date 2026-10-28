@@ -18,21 +18,30 @@ import kotlin.coroutines.resume
 object MediaBrowserSearch {
     private const val TIMEOUT_MS = 6000L
 
+    /** How long one browser service gets to accept or refuse a connection. */
+    internal const val CONNECT_TIMEOUT_MS = 4000L
+
+    /**
+     * Most browser services of one app that are tried. Spotify declares two (a legacy
+     * `MediaBrowserService` and a Media3 `MediaLibraryService`), and each answers a connection
+     * by its own rules, so a refusal from one says nothing about the other.
+     */
+    private const val MAX_BROWSER_SERVICES = 3
+
     /**
      * Null means the app has no browsable library at all (no MediaBrowserService found, or
      * connecting/searching timed out) - as opposed to an empty list, which means the app was
      * reached but genuinely found no matches.
      */
     suspend fun search(context: Context, packageName: String, query: String): List<MediaBrowserCompat.MediaItem>? {
-        val serviceComponent = findBrowserService(context, packageName) ?: return null
+        val components = findBrowserServices(context, packageName)
+        if (components.isEmpty()) return null
 
-        return withTimeoutOrNull(TIMEOUT_MS) {
-            val browser = connect(context, serviceComponent) ?: return@withTimeoutOrNull null
-            try {
-                searchOn(browser, query)
-            } finally {
-                browser.disconnect()
-            }
+        val browser = connectFirst(context, components) ?: return null
+        return try {
+            withTimeoutOrNull(TIMEOUT_MS) { searchOn(browser, query) }
+        } finally {
+            browser.disconnect()
         }
     }
 
@@ -66,14 +75,41 @@ object MediaBrowserSearch {
             "androidx.media3.session.MediaSessionService"
     )
 
-    internal fun findBrowserService(context: Context, packageName: String): ComponentName? {
-        for (action in BROWSER_SERVICE_ACTIONS) {
-            val intent = Intent(action).setPackage(packageName)
-            val resolveInfo = context.packageManager
-                    .queryIntentServices(intent, 0)
-                    .firstOrNull()
-                    ?: continue
-            return ComponentName(resolveInfo.serviceInfo.packageName, resolveInfo.serviceInfo.name)
+    internal fun findBrowserService(context: Context, packageName: String): ComponentName? =
+            findBrowserServices(context, packageName).firstOrNull()
+
+    /**
+     * Every browser service [packageName] declares, ranked by [BROWSER_SERVICE_ACTIONS] - so the
+     * first is the one [findBrowserService] always returned - and each once, since one service
+     * often declares several of the actions.
+     */
+    internal fun findBrowserServices(context: Context, packageName: String): List<ComponentName> =
+            rankBrowserServices(BROWSER_SERVICE_ACTIONS.map { action ->
+                try {
+                    context.packageManager.queryIntentServices(Intent(action).setPackage(packageName), 0)
+                            .map { ComponentName(it.serviceInfo.packageName, it.serviceInfo.name) }
+                } catch (_: RuntimeException) {
+                    emptyList()
+                }
+            })
+
+    /** Pure ranking behind [findBrowserServices]: action order, no repeats, capped. */
+    internal fun <T> rankBrowserServices(perAction: List<List<T>>): List<T> =
+            perAction.flatten().distinct().take(MAX_BROWSER_SERVICES)
+
+    /**
+     * Connects to the first of [components] that accepts, or null when none does.
+     *
+     * Every attempt is made as this app, under its own name: a service that refuses is refused,
+     * never retried in disguise. Trying the app's *other* declared services is not that - each
+     * applies its own policy to the same honest request (see `docs/streaming-app-interop.md`).
+     */
+    internal suspend fun connectFirst(
+            context: Context,
+            components: List<ComponentName>
+    ): MediaBrowserCompat? {
+        for (component in components) {
+            withTimeoutOrNull(CONNECT_TIMEOUT_MS) { connect(context, component) }?.let { return it }
         }
         return null
     }

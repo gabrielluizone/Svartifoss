@@ -6,7 +6,6 @@ import android.support.v4.media.session.MediaControllerCompat
 import android.support.v4.media.session.PlaybackStateCompat
 import android.support.v4.media.MediaMetadataCompat
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.withTimeoutOrNull
 import timber.log.Timber
 
 /**
@@ -24,8 +23,6 @@ import timber.log.Timber
  * navigates. Artists therefore go straight to search.
  */
 object MediaBrowserPlayback {
-    private const val CONNECT_TIMEOUT_MS = 4000L
-
     /** How long to wait for one command to reach a playing state before trying the next strategy.
      *  Kept alive so the freshly-woken process does not die before promoting itself to foreground. */
     private const val STRATEGY_TIMEOUT_MS = 5000L
@@ -108,10 +105,8 @@ object MediaBrowserPlayback {
             description: String,
             block: suspend (MediaControllerCompat) -> Boolean
     ): Boolean {
-        val component = MediaBrowserSearch.findBrowserService(context, packageName) ?: return false
-        val browser = withTimeoutOrNull(CONNECT_TIMEOUT_MS) {
-            MediaBrowserSearch.connect(context, component)
-        } ?: return false
+        val browser = MediaBrowserSearch.connectFirst(
+                context, MediaBrowserSearch.findBrowserServices(context, packageName)) ?: return false
 
         return try {
             block(MediaControllerCompat(context, browser.sessionToken))
@@ -147,10 +142,10 @@ object MediaBrowserPlayback {
         val strategies = buildStrategies(Uri.parse(playbackLink), query, preferSearch)
         if (strategies.isEmpty()) return false
 
-        val component = MediaBrowserSearch.findBrowserService(context, packageName) ?: return false
-        val browser = withTimeoutOrNull(CONNECT_TIMEOUT_MS) {
-            MediaBrowserSearch.connect(context, component)
-        } ?: return false
+        // Every browser service the app declares, until one accepts: an app can run two under
+        // different rules (Spotify's legacy one and its Media3 one).
+        val browser = MediaBrowserSearch.connectFirst(
+                context, MediaBrowserSearch.findBrowserServices(context, packageName)) ?: return false
 
         return try {
             val controller = MediaControllerCompat(context, browser.sessionToken)

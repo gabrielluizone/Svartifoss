@@ -238,6 +238,19 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         private const val DEEP_LINK_VERIFY_MS = 1800L
 
         /**
+         * After a hand-off launch (see [playThroughHandoff]): how long the app gets to start
+         * playing, how often it is looked at, and how long it is left alone before a loaded but
+         * paused item is pressed play. Long, because this is a cold start of a streaming app that
+         * the user is usually unlocking the phone for at that very moment.
+         */
+        private const val HANDOFF_VERIFY_MS = 12_000L
+        private const val HANDOFF_POLL_MS = 250L
+        private const val HANDOFF_PRESS_PLAY_AFTER_MS = 4_000L
+
+        /** Waiting for the watch to open the hand-off: its autoplay window plus delivery time. */
+        private const val HANDOFF_GRACE_MS = 5_000L
+
+        /**
          * How long a shuffle choice made on the watch waits for its app to start playing - see
          * [requestShortcutShuffle]. Covers the whole playback ladder (verification, the browser
          * route and the visible open with its retries, about sixteen seconds at worst) with room
@@ -3304,7 +3317,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // Those same apps DO handle the Assistant's voice-search activity intent, which
                 // plays the best match directly. Session-level playFromSearch stays as the very
                 // last resort - many apps (YouTube Music included) silently ignore it.
-                if (!launchPlayFromSearchIntent(query, controller.packageName)) {
+                //
+                // But only while one of this app's screens is showing. From the background Android
+                // 10+ drops an activity start without a word, so the intent "succeeded", the two
+                // silent routes below never ran, and a search from the wrist with the phone in a
+                // pocket played nothing in an app (Spotify) that honours the session's own command.
+                if (!appIsVisible() || !launchPlayFromSearchIntent(query, controller.packageName)) {
                     // Routed through the browser connection rather than fired at the tracked
                     // controller. Retro Music is the case that forced this: its play capabilities
                     // live on the browser service's session, so the old call went to a session that
@@ -3322,6 +3340,18 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
             sendSearchResultsToWatch(results)
         }
+    }
+
+    /**
+     * Whether one of this app's own screens is showing - the state in which this service may start
+     * another app's activity. From the background, Android 10+ drops such a start without an error,
+     * so a launch made then looks as if it worked and nothing happens.
+     */
+    private fun appIsVisible(): Boolean {
+        val info = android.app.ActivityManager.RunningAppProcessInfo()
+        android.app.ActivityManager.getMyMemoryState(info)
+        return info.importance == android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND ||
+                info.importance == android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE
     }
 
     /**
@@ -3662,6 +3692,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
     private var shortcutPlaybackJob: kotlinx.coroutines.Job? = null
 
+    /** Which hand-off technique has started what on this phone - see [VisiblePlaybackMemory]. */
+    private val visiblePlaybackMemory by lazy { VisiblePlaybackMemory.Store(this) }
+
     fun playDeepLink(
             savedLink: String,
             searchQuery: String? = null,
@@ -3722,13 +3755,17 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         val service = StreamingShortcutLinks.detect(link)
         val contentType = StreamingShortcutLinks.inspect(link).contentType
         val linkSearchQuery = StreamingShortcutLinks.youtubeMusicSearchQuery(link)
-        val query = searchQuery?.trim()?.takeIf { it.isNotEmpty() } ?: linkSearchQuery
+        val query = searchQuery?.let { StreamingShortcutLinks.searchableName(it) } ?: linkSearchQuery
         // An artist URI is not honored by playFromUri; its named search is what actually plays.
         // The queue fallback uses the same route for YouTube Music sessions that publish no
         // media URI: title + artist is more useful than opening a search page and waiting for a
-        // second manual tap.
+        // second manual tap. A SoundCloud short link (on.soundcloud.com, what its share sheet
+        // hands out) names nothing until it is opened, and SoundCloud ignores a collection URI
+        // anyway, so its saved name is what can play it.
         val preferSearch = (contentType == StreamingContentType.ARTIST && query != null) ||
-                linkSearchQuery != null
+                linkSearchQuery != null ||
+                (service == StreamingService.SOUNDCLOUD &&
+                        contentType == StreamingContentType.UNKNOWN && query != null)
         val openMode = preferences.getString(StreamingShortcutLinks.OPEN_MODE_KEY, null)
                 ?: if (preferences.getBoolean(
                                 StreamingShortcutLinks.PREFER_INSTALLED_APP_KEY,
@@ -3764,11 +3801,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // through to it instead of duplicating it.
         val continueWithBrowserThenVisibleOpen: suspend () -> Unit = {
             if (targetPackage != null && (contentType.isPlayable || preferSearch)) {
-                startBrowserThenVisibleOpen(
-                        link, service, targetPackage, browserLink, query, preferSearch, reply)
+                startBrowserThenVisibleOpen(link, service, targetPackage, browserLink, query,
+                        preferSearch, plan.sessionShuffle, reply)
             } else {
-                startStreamingLinkWithPlaybackNudge(
-                        link, service, targetPackage, browserLink, query, preferSearch, reply)
+                startStreamingLinkWithPlaybackNudge(link, service, targetPackage, browserLink,
+                        query, preferSearch, plan.sessionShuffle, reply)
             }
         }
 
@@ -3817,6 +3854,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             browserLink: String,
             query: String?,
             preferSearch: Boolean,
+            sessionShuffle: Boolean?,
             reply: suspend (String?) -> Unit
     ) {
         // Ask the app's MediaBrowserService to play (the Android Auto/Assistant path). This
@@ -3839,8 +3877,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         } else {
             Timber.d("playDeepLink: step 2 (MediaBrowserService) did not play %s, moving to step 3",
                     targetPackage)
-            startStreamingLinkWithPlaybackNudge(
-                    link, service, targetPackage, browserLink, query, preferSearch, reply)
+            startStreamingLinkWithPlaybackNudge(link, service, targetPackage, browserLink, query,
+                    preferSearch, sessionShuffle, reply)
         }
     }
 
@@ -3853,9 +3891,29 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             browserLink: String,
             searchQuery: String? = null,
             preferSearch: Boolean = false,
+            sessionShuffle: Boolean? = null,
             reply: suspend (String?) -> Unit
     ) {
         val primaryLink = StreamingShortcutRoutes.linkForTarget(link, service, targetPackage)
+
+        // Sampled before anything opens, so the steps below can tell "the app loaded the thing we
+        // asked for" apart from "the app is sitting on whatever it had before".
+        val controllerBeforeOpen = targetPackage?.let { mediaSessionProvider.controllerForPackage(it) }
+        val identityBeforeOpen = playbackIdentity(controllerBeforeOpen)
+        val hadTrackBeforeOpen = identityBeforeOpen.second != null || identityBeforeOpen.third != null
+
+        // Where the app declares a public way to be asked to *play* (Spotify, SoundCloud's Likes,
+        // an artist by name), the visible open goes through the hand-off activity, which can start
+        // that launch from the foreground - the plain open below only ever shows the content.
+        if (targetPackage != null) {
+            val handoff = prepareVisiblePlayback(link, targetPackage, searchQuery, primaryLink)
+            if (handoff != null) {
+                playThroughHandoff(handoff, targetPackage, controllerBeforeOpen?.isPlaying() == true,
+                        identityBeforeOpen, sessionShuffle, reply)
+                return
+            }
+        }
+
         Timber.d("playDeepLink: step 3 (visible open) opening %s", primaryLink)
 
         // Every silent route is spent, so the link has to be opened visibly - and only the watch
@@ -3864,12 +3922,6 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // form PlayPlaylistShortcutAction.remoteUri produces.
         reply(
                 if (targetPackage != null) "$targetPackage|$primaryLink" else primaryLink)
-
-        // Sampled before the link opens, so the press-play step below can tell "the app loaded the
-        // thing we asked for" apart from "the app is sitting on whatever it had before".
-        val identityBeforeOpen = playbackIdentity(
-                targetPackage?.let { mediaSessionProvider.controllerForPackage(it) })
-        val hadTrackBeforeOpen = identityBeforeOpen.second != null || identityBeforeOpen.third != null
 
         if (startStreamingLink(primaryLink, targetPackage)) {
             if (targetPackage != null) {
@@ -3932,6 +3984,152 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
     }
 
+    /** A planned hand-off: what the watch opens, and what to learn from once it has. */
+    private class VisibleHandoff(
+            val handle: VisiblePlaybackRegistry.Handle,
+            val memoryKey: String,
+            val technique: VisiblePlayTechnique
+    )
+
+    /**
+     * Plans the launch that makes [targetPackage] play [link], or null when this rung has nothing
+     * better than the plain open: the app declares none of [VisiblePlaybackPlan]'s techniques, or
+     * every one it declares has been seen not to start anything here lately.
+     */
+    private fun prepareVisiblePlayback(
+            link: String,
+            targetPackage: String,
+            name: String?,
+            primaryLink: String
+    ): VisibleHandoff? {
+        val contentType = StreamingShortcutLinks.inspect(link).contentType
+        val declared = VisiblePlaybackPlan.candidates(link, targetPackage, contentType, name)
+                .filter { VisibleLaunchIntents.isDeclared(this, it) }
+        if (declared.isEmpty()) return null
+        val key = VisiblePlaybackPlan.memoryKey(targetPackage, link, contentType)
+        val technique = visiblePlaybackMemory.choose(
+                key, declared.mapNotNull { it.technique }, System.currentTimeMillis())
+        if (technique == null) {
+            Timber.d("playDeepLink: every play technique failed lately for %s; plain open", key)
+            return null
+        }
+        val play = declared.first { it.technique == technique }
+        val handle = VisiblePlaybackRegistry.register(play,
+                VisibleLaunch.navigation(primaryLink, targetPackage),
+                android.os.SystemClock.elapsedRealtime())
+        return VisibleHandoff(handle, key, technique)
+    }
+
+    /**
+     * The visible open, made by [com.svartifoss.snfell.view.handoff.StreamingPlaybackActivity] so
+     * that it can *play*: the watch opens the hand-off link (the only launch it can make on a phone
+     * in the background), the activity starts the planned technique from the foreground, and this
+     * then checks whether music actually began and remembers the answer for next time.
+     */
+    private suspend fun playThroughHandoff(
+            handoff: VisibleHandoff,
+            targetPackage: String,
+            wasPlayingBefore: Boolean,
+            identityBeforeOpen: Triple<Long?, String?, String?>,
+            sessionShuffle: Boolean?,
+            reply: suspend (String?) -> Unit
+    ) {
+        Timber.d("playDeepLink: step 3 (visible) through the hand-off with %s for %s",
+                handoff.technique, handoff.memoryKey)
+        reply("$packageName|${handoff.handle.uri}")
+        // Started here too, for when this app is on screen: a shortcut started from its own UI has
+        // no watch to open anything. In the background Android refuses this without a word, and
+        // the watch's open is the one that lands; the token works once, so the second to arrive
+        // finds nothing to do.
+        startStreamingLink(handoff.handle.uri, packageName)
+
+        val outcome = try {
+            withTimeoutOrNull(VisiblePlaybackRegistry.AUTOPLAY_WINDOW_MS + HANDOFF_GRACE_MS) {
+                VisiblePlaybackRegistry.awaitOutcome(handoff.handle)
+            }
+        } catch (e: CancellationException) {
+            // A newer pick replaced this one, and its link must no longer start anything.
+            VisiblePlaybackRegistry.cancel(handoff.handle)
+            throw e
+        }
+        if (outcome != null && outcome.fresh && !outcome.autoplay) {
+            // In time, but the technique could not even be started - the app changed since it was
+            // planned, or refused the launch - so the activity fell back to the plain open. That
+            // is a failure of the technique like any other.
+            Timber.d("playDeepLink: %s could not be started for %s", handoff.technique, handoff.memoryKey)
+            visiblePlaybackMemory.record(
+                    handoff.memoryKey, handoff.technique, played = false, nowMs = System.currentTimeMillis())
+            return
+        }
+        if (outcome == null || !outcome.autoplay) {
+            // Not opened in time (a phone locked in a pocket), superseded, or opened too late to
+            // play: nothing was asked to play, so there is nothing to learn.
+            Timber.d("playDeepLink: hand-off for %s ended without a play launch (%s)",
+                    handoff.memoryKey, outcome)
+            return
+        }
+
+        // The player may only be coming up now, so the watch's shuffle choice is asked again from
+        // here rather than left to a window that opened when the request did.
+        if (sessionShuffle != null) requestShortcutShuffle(targetPackage, sessionShuffle)
+        val played = awaitHandoffPlayback(targetPackage, wasPlayingBefore, identityBeforeOpen)
+        Timber.d("playDeepLink: %s for %s -> played=%s", handoff.technique, handoff.memoryKey, played)
+        if (played != null) {
+            visiblePlaybackMemory.record(
+                    handoff.memoryKey, handoff.technique, played, System.currentTimeMillis())
+        }
+        scheduleStateRefresh()
+    }
+
+    /**
+     * Whether [targetPackage] started playing what the hand-off asked for: true, false, or null
+     * when that cannot be told - it was already playing something and still plays the same thing,
+     * which is also what a request for that very item looks like.
+     */
+    private suspend fun awaitHandoffPlayback(
+            targetPackage: String,
+            wasPlayingBefore: Boolean,
+            identityBefore: Triple<Long?, String?, String?>
+    ): Boolean? {
+        val start = android.os.SystemClock.elapsedRealtime()
+        val hadTrackBefore = identityBefore.second != null || identityBefore.third != null
+        var pressedPlay = false
+        while (android.os.SystemClock.elapsedRealtime() - start < HANDOFF_VERIFY_MS) {
+            delay(HANDOFF_POLL_MS)
+            val controller = mediaSessionProvider.controllerForPackage(targetPackage) ?: continue
+            val moved = playbackIdentity(controller) != identityBefore
+            // Only STATE_PLAYING is evidence, unlike [isPlaying]. An app started cold publishes
+            // CONNECTING or BUFFERING within a second whatever it was asked - Spotify does it while
+            // restoring the track it played last and then settles on paused - so counting those
+            // reported "played" for a request that started nothing, and taught the memory a
+            // technique that does not work.
+            val state = controller.playbackState?.state
+            if (state == PlaybackState.STATE_PLAYING) {
+                if (moved || !wasPlayingBefore) return true
+                continue
+            }
+            if (state != PlaybackState.STATE_PAUSED && state != PlaybackState.STATE_STOPPED) continue
+            // Moved from a track it had before to a new one and left it paused - a play-from-search
+            // that queues without starting, say. That is the one state a bare play() is safe in,
+            // because what it would resume is what was just asked for (the rule
+            // pressPlayAfterNavigating documents), and not before the app has had time to start on
+            // its own. Deliberately *not* on a cold start: an app that was not running comes up
+            // holding whatever it played last, and pressing play would start that instead.
+            if (!pressedPlay && hadTrackBefore && moved &&
+                    android.os.SystemClock.elapsedRealtime() - start >= HANDOFF_PRESS_PLAY_AFTER_MS) {
+                pressedPlay = true
+                Timber.d("Hand-off loaded new content in %s without playing; pressing play", targetPackage)
+                try {
+                    controller.transportControls.play()
+                } catch (e: RuntimeException) {
+                    Timber.w(e, "Play command rejected by %s", targetPackage)
+                }
+            }
+        }
+        val after = mediaSessionProvider.controllerForPackage(targetPackage)
+        return if (wasPlayingBefore && playbackIdentity(after) == identityBefore) null else false
+    }
+
     private fun requestStreamingPlayback(
             link: String,
             service: StreamingService,
@@ -3940,7 +4138,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             preferSearch: Boolean = false
     ): Boolean {
         val info = StreamingShortcutLinks.inspect(link)
-        if (info.service != service || !info.contentType.isPlayable) return false
+        // A link that names nothing playable can still be played by its saved name when that is
+        // the plan (a SoundCloud short link): the search below is all that is ever sent then.
+        val playableByName = preferSearch && searchQuery != null
+        if (info.service != service || !(info.contentType.isPlayable || playableByName)) return false
         // Prefer the tracked session when it is already the target app, but fall back to any live
         // session that app has - it may be playing/paused without being the foreground one we
         // mirror, and we can still hand it a command (this is what lets Spotify respond while it

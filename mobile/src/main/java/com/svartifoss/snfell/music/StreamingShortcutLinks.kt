@@ -211,6 +211,14 @@ object StreamingShortcutLinks {
                 .orEmpty()
     }
 
+    /**
+     * A saved name as a search query: without the service's own name that share sheets append
+     * ("Virtualism - SoundCloud"), which no search inside that very app would match on. Null for a
+     * name with nothing left to search for.
+     */
+    fun searchableName(name: String): String? =
+            name.trim().replace(SERVICE_NAME_SUFFIX, "").trim().takeIf { it.isNotEmpty() }
+
     fun supportsShuffle(rawLink: String): Boolean =
             detect(rawLink) == StreamingService.YOUTUBE_MUSIC &&
                     detectContentType(rawLink) == StreamingContentType.PLAYLIST
@@ -541,6 +549,11 @@ object StreamingShortcutLinks {
         host == root || host.endsWith(".$root")
 
     private val SCHEME_PREFIX = Regex("^[A-Za-z][A-Za-z0-9+.-]*:")
+
+    private val SERVICE_NAME_SUFFIX = Regex(
+            "\\s*[-–—|•·]\\s*(SoundCloud|Spotify|YouTube Music|YouTube|Deezer|TIDAL|Apple Music|" +
+                    "Amazon Music|Qobuz|Bandcamp|Audiomack|Mixcloud|Pandora)\\s*$",
+            RegexOption.IGNORE_CASE)
 
     private val CONTENT_ENTITY_NAMES = setOf(
         "track", "tracks", "song", "songs",
