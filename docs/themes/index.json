@@ -1,7 +1,46 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-28T10:40:25.031Z",
+  "generatedAt": "2026-10-29T10:57:53.121Z",
   "themes": [
+    {
+      "id": "4c36f4e1-9e62-4a1a-94b7-ac357550868a",
+      "name": "Free Me",
+      "author": "Gabriel L Svafoss",
+      "baseFace": "artist",
+      "revision": 1,
+      "schemaVersion": 1,
+      "minimumAppVersion": "4.3",
+      "publishedAt": "2026-10-29T10:57:53.121Z",
+      "likes": 0,
+      "settingsDigest": "sha256:8a9be04eb0290b14838aaa6628dc08a391b3b55e2e287892337c59adac882534",
+      "installs": 0
+    },
+    {
+      "id": "64a0cb48-5e19-49c6-ab57-00d0e4b37e66",
+      "name": "Card",
+      "author": "Gabriel L Svafoss",
+      "baseFace": "frame",
+      "revision": 1,
+      "schemaVersion": 1,
+      "minimumAppVersion": "4.3",
+      "publishedAt": "2026-10-29T10:57:53.121Z",
+      "likes": 0,
+      "settingsDigest": "sha256:113739edfab64a7fd993f97f1ff97c8a78e42582b032485f29d04fd125a410a8",
+      "installs": 0
+    },
+    {
+      "id": "e4208a70-bde6-4219-bdb4-e6d7c6ef0ef2",
+      "name": "OutThere",
+      "author": "Gabriel L Svafoss",
+      "baseFace": "artist",
+      "revision": 1,
+      "schemaVersion": 1,
+      "minimumAppVersion": "4.3",
+      "publishedAt": "2026-10-29T10:57:53.121Z",
+      "likes": 0,
+      "settingsDigest": "sha256:0fe541e6a58aa7d6a59b96349d105e3b78494f341f20301a9f9c02b021cffa98",
+      "installs": 0
+    },
     {
       "id": "502e5e8a-23ef-414a-8eac-4a8b853572c6",
       "name": "A New Type of Material",
