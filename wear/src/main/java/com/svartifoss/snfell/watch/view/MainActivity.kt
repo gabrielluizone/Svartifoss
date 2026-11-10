@@ -126,6 +126,7 @@ import com.svartifoss.snfell.common.TextBackdropSpec
 import com.svartifoss.snfell.common.TextOutlineSpec
 import com.svartifoss.snfell.common.TextOutlineStyle
 import com.svartifoss.snfell.common.TextShadowSpec
+import com.svartifoss.snfell.common.TitleBand
 import com.svartifoss.snfell.common.SeekMarkerVisibility
 import com.svartifoss.snfell.common.ScreenSwipeDirection
 import com.svartifoss.snfell.common.ScreenSwipeResolver
@@ -380,12 +381,15 @@ class MainActivity : WearCompanionWatchActivity(),
         // Versioned so an expanded guide can be presented once to people who completed the old
         // one-screen hint. A version is persisted only after the final page is completed.
         private const val KEY_GESTURE_GUIDE_VERSION = "gesture_guide_version"
+        /** [MiscPreferences.WEAR_ARTIST_COLOR_MODE]'s default: the artist follows the face. */
+        private const val ARTIST_COLOR_FOLLOW = "follow"
         private const val GESTURE_GUIDE_VERSION = 2
 
         /** Top edge of the awake Up Next pill as a fraction of screen height: it sits at
          *  BottomCenter with ~.07 bottom padding and ~.25 height, so its top is ~1 - .07 - .25.
-         *  Fed to the faces as miniButtonsTopFraction so the track time clears it. */
-        private const val AWAKE_PILL_TOP_FRACTION = 0.66f
+         *  Fed to the faces as miniButtonsTopFraction so the track time clears it - and so a
+         *  title block stops above it; held in TitleBand so the phone's miniature reserves the same. */
+        private const val AWAKE_PILL_TOP_FRACTION = TitleBand.UP_NEXT_PILL_TOP
 
         private const val ROTARY_SEEK_COMMIT_DELAY_MS = 400L
         private const val SEEK_CANCEL_FADE_MS = 140L
@@ -1286,6 +1290,16 @@ class MainActivity : WearCompanionWatchActivity(),
                 maxSizeSp = CLASSIC_ARTIST_MAX_SP, minSizeSp = CLASSIC_ARTIST_MIN_SP)
         binding.textTitle.enableSmartWordSizing(
                 maxSizeSp = CLASSIC_TITLE_MAX_SP, minSizeSp = CLASSIC_TITLE_MIN_SP)
+        // The title shares Classic's block with the artist row and the track time, so it may only
+        // take the room those two leave - see OutlineTextView.heightBudget. Re-chosen whenever that
+        // room changes: the time line appearing, the artist wrapping to a second line.
+        binding.classicMetadataBlock.viewTreeObserver.addOnGlobalLayoutListener {
+            val room = classicTitleRoom()
+            if (room != lastClassicTitleRoom) {
+                lastClassicTitleRoom = room
+                binding.textTitle.refreshSizing()
+            }
+        }
         // Same idea for the quick-actions panel's copy of the title/artist - without this a long
         // title just sat there clipped instead of shrinking a bit and then scrolling.
         binding.quickActionPanelTitle.enableSmartWordSizing(maxSizeSp = 18f, minSizeSp = 15f)
@@ -1307,6 +1321,7 @@ class MainActivity : WearCompanionWatchActivity(),
         viewModel.albumArt.observe(this, albumArtObserver)
         viewModel.backdropArt.observe(this, backdropArtObserver)
         viewModel.sourceIcon.observe(this, sourceIconObserver)
+        viewModel.actionIcons.observe(this, actionIconsObserver)
         viewModel.currentButtonConfig.observe(this, buttonConfigObserver)
         // Preference delivery must remain active while the activity is in ambient/paused state.
         // A lifecycle-bound observer can be suspended there, making an already-received phone
@@ -2106,6 +2121,14 @@ class MainActivity : WearCompanionWatchActivity(),
         setTaskDescription(description)
     }
 
+    /** Icons sent by key land after the state that names them; an open panel has to be redrawn,
+     *  since nothing about the state changes when they do. */
+    private val actionIconsObserver = Observer<Map<String, ByteArray>> {
+        if (isQuickActionsPanelShowing()) {
+            configureQuickPanelButtons()
+        }
+    }
+
     private val sourceIconObserver = Observer<Bitmap?> { bitmap ->
         latestSourceIcon = bitmap
         updateFaceState { it.copy(sourceIcon = bitmap?.asImageBitmap()) }
@@ -2550,6 +2573,12 @@ class MainActivity : WearCompanionWatchActivity(),
         binding.idleStateIcon.imageTintList = ColorStateList.valueOf(currentAccentColor)
         // Artist name uses the same dark-theme-adapted (lightened) accent as the queue's now-playing row.
         binding.textArtist.setTextColor(resolvedArtistTextColor())
+        // The title too, for the View faces (Classic, Matejdro). Its colour used to be applied
+        // only on leaving ambient, so a title colour chosen on the phone - or one derived from the
+        // album - did nothing on these two faces until the watch had dozed and woken again, while
+        // every Compose face picked it up here through `titleColor`. White is the face's own.
+        // In ambient the block below re-applies the always-on tint over this.
+        binding.textTitle.setTextColor(resolvedTitleTextColor() ?: Color.WHITE)
         // The "album" shadow colour is accent-derived, so it is recomputed here rather than beside
         // the preference read - the same rule the clock's appearance follows further down.
         applyClassicTextShadows()
@@ -2595,6 +2624,7 @@ class MainActivity : WearCompanionWatchActivity(),
                     backgroundLayers = resolvedBackgroundLayers(),
                     progressColor = binding.seekBar.progressColor,
                     artistColor = binding.textArtist.currentTextColor,
+                    artistColorChosen = artistColorMode != ARTIST_COLOR_FOLLOW,
                     titleColor = resolvedTitleTextColor(),
                     titleShadow = composeShadow(titleShadowSpec),
                     artistShadow = composeShadow(artistShadowSpec),
@@ -3834,8 +3864,15 @@ class MainActivity : WearCompanionWatchActivity(),
         // controls, so the app's rasterized notification icon wins whenever one exists. The local
         // semantic glyph (sessionQuickFallbackIcon) is only the fallback for actions that arrive
         // without a raster (MediaSession custom actions, whose drawables live in the remote app).
-        val bitmap = if (action.hasIconPng() && !action.iconPng.isEmpty) {
-            val bytes = action.iconPng.toByteArray()
+        // Inline from an older phone, or by key from one that sends each icon once (see
+        // MediaAction.iconKey). A key whose bytes have not landed yet draws the glyph below until
+        // they do, and actionIconsObserver then redraws the panel.
+        val bytes = when {
+            action.hasIconPng() && !action.iconPng.isEmpty -> action.iconPng.toByteArray()
+            action.iconKey.isNotEmpty() -> viewModel.actionIcons.value?.get(action.iconKey)
+            else -> null
+        }
+        val bitmap = if (bytes != null) {
             val cached = sessionQuickIconBitmaps[action.id]
             // A cached entry was already checked for visible pixels when it was decoded, and its
             // bytes are compared here, so it cannot have become blank. Re-scanning it was cheap
@@ -6593,6 +6630,29 @@ class MainActivity : WearCompanionWatchActivity(),
      * under a running screen (the phone pushes a new choice, or the on-watch picker applies one),
      * and a View whose layout params were rewritten does not go back on its own.
      */
+    /** The last room [classicTitleRoom] reported, so a layout pass that changes nothing is free. */
+    private var lastClassicTitleRoom = -1
+
+    /**
+     * The height Classic's block leaves its title once the artist row and the track time have
+     * taken theirs. Zero before the first layout, which the title reads as "no budget yet".
+     */
+    private fun classicTitleRoom(): Int {
+        val block = binding.classicMetadataBlock
+        val inner = block.height - block.paddingTop - block.paddingBottom
+        if (inner <= 0) return 0
+        fun taken(view: View): Int {
+            if (view.visibility == View.GONE) return 0
+            val params = view.layoutParams as? ViewGroup.MarginLayoutParams
+            return view.height + (params?.topMargin ?: 0) + (params?.bottomMargin ?: 0)
+        }
+        val titleParams = binding.textTitle.layoutParams as? ViewGroup.MarginLayoutParams
+        val titleMargins = (titleParams?.topMargin ?: 0) + (titleParams?.bottomMargin ?: 0)
+        return (inner - taken(binding.classicArtistRow) - taken(binding.textPlaybackTime) -
+                titleMargins - binding.textTitle.paddingTop - binding.textTitle.paddingBottom)
+                .coerceAtLeast(0)
+    }
+
     private fun applyClassicBandGeometry() {
         val bands = screenFace == FACE_MATEJDRO
         val artistRow = binding.classicArtistRow
@@ -6635,6 +6695,9 @@ class MainActivity : WearCompanionWatchActivity(),
         // note. Set together with the bands that create that height.
         binding.textArtist.fitsWithinViewHeight = bands
         title.fitsWithinViewHeight = bands
+        // Matejdro's bands already give the title a fixed height of its own; Classic's stacked
+        // lines do not, so there the title is told what the rest of the block leaves it.
+        title.heightBudget = if (bands) null else ::classicTitleRoom
         // A band is a box to fill, so the line centres inside it; Classic's lines are stacked
         // tight against each other and take their spacing from the block's own gravity.
         binding.textArtist.gravity = Gravity.CENTER

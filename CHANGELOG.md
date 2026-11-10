@@ -1,5 +1,41 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **Settings a face cannot show are no longer offered for it.** The app icon is hidden on Chat, Note, Verse and Metadata, and the track time on Carousel, Split, Ribbon and Depth, which have no place for them; the Text page hides those tabs too.
+
+- **Text position is no longer offered on Expressive** (or on the archived Eclipse and Aurora faces), where the only room for the text is where it already sits; Bottom put it over the track time. On Poster and Studio, Bottom now means just above the play button or progress ring, or above the mini buttons, the Up Next pill or the track time when those sit higher, and "Center the title" no longer pushes the block lower there.
+
+### Fixed
+
+- **A scrolling title no longer looks faded while it stands still.** Both ends stayed faded between passes, eating the first letters; they now fade only while the text moves. On every face, in the queue and in the phone's preview.
+
+- **Long or large titles no longer run into a face's controls.** Wrap to 5 lines, a long title or a big title size pushed the text into the play button on Poster, the progress ring on Studio and the disc on Material, and on Expressive a two-line title hid the artist. The title now stops at an ellipsis where the controls begin, and the artist keeps its line. When the title and artist are set larger than a face has room for (Expressive, Material, Split, Poster and Studio), both stop growing at the largest size that fits, in the proportion chosen, instead of the title being cut. On Material, a long title also stays clear of the progress ring around the edge.
+
+- **Classic shows the track time under two-line titles again.** A short title like "Panic Station" was set so large that the time was cut off at the bottom.
+
+- **The title colour works on Classic**, not only after the watch had dozed and woken.
+
+- **The artist colour works on Split, Frame and Verse.** Split and Frame kept their own colour, and Verse's title card (shown when a song has no synced lyrics) ignored every title and artist setting.
+
+- **Split, Carousel and Ribbon keep large text on the screen.** At 160% the title ran into or off the bottom edge, and on Ribbon an artist name above 100% reached down onto the covers. Ribbon's title and artist now stop growing where they still fit.
+
+- **The phone's preview of Poster and Studio matches the watch.** The title there ignored its colour, opacity, outline, background and alignment, choosing a text position moved nothing, the play button was missing, and Studio's progress ring sat higher than on the watch.
+
+- **The phone spends far less Bluetooth, and battery, keeping the watch up to date.** With YouTube Music it re-sent the whole now-playing screen, about 12 KB, for every small update, and once kept doing so every couple of seconds for 25 minutes. It now sends only what changed, at most about once a second, and each button icon once.
+
+- **YouTube Music track changes no longer start an online cover search.** The app publishes a new song a moment before its cover; the phone now waits for it.
+
+- **The watch app needs about 15 MB less memory, and the phone app no longer keeps fonts in memory after the font picker.** Each font was copied whole into memory every time it was loaded, and the copies were never released; fonts are now read from the installed app as needed. The app takes about 22 MB more storage on each device.
+
+- **The community theme gallery needs about 35 MB less memory.** Each card drew its own copy of the same sample covers; the cards now share one.
+
+- **The watch keeps fewer covers in memory.** The covers it holds ready for the next and previous tracks are let go when the track changes with the screen off, and tracks that share a cover share one copy of it.
+
+- **The tick and dot progress rings are symmetrical on the open layouts.** On Open at top and the other open layouts, 60 watch ticks, 60 watch dots, 24-hour ticks and Beads began on a long mark at one end, ended on a short one at the other and put the mark at the bottom off centre. Both ends and the middle are now long marks, so the ring reads the same on both sides of the gap; the scale has one more mark, and the last one lights up when the track ends.
+
 ## 4.3.1
 
 ### Added

@@ -466,6 +466,37 @@ class WatchSearchTargetResolverTest {
                 "wear_show_track_title")
     }
 
+    @Test
+    fun `the app mark and the track time lead to the face picker where the face has neither`() {
+        // FaceElements: Chat, Note, Verse and Metadata draw no app mark; Carousel, Split, Ribbon
+        // and Depth draw no track time. Their rows are not offered there, so search must not land
+        // on them - and the face picker is the one control that changes the answer.
+        listOf("wear_show_source_icon", "wear_source_icon_scale", "wear_source_icon_opacity")
+                .forEach { key ->
+                    listOf("chat", "note", "verse", "metadata").forEach { face ->
+                        assertRedirect(
+                                resolve(key = key, strings = mapOf("wear_screen_face" to face)),
+                                WatchFacePrefsFragment.SECTION_STYLE,
+                                "wear_screen_face")
+                    }
+                    assertFalse(resolve(
+                            key = key,
+                            strings = mapOf("wear_screen_face" to "poster")).redirected)
+                }
+        listOf("wear_track_time_mode", "wear_track_time_font", "wear_track_time_font_scale")
+                .forEach { key ->
+                    listOf("carousel", "split", "ribbon", "depth").forEach { face ->
+                        assertRedirect(
+                                resolve(key = key, strings = mapOf("wear_screen_face" to face)),
+                                WatchFacePrefsFragment.SECTION_STYLE,
+                                "wear_screen_face")
+                    }
+                    assertFalse(resolve(
+                            key = key,
+                            strings = mapOf("wear_screen_face" to "studio")).redirected)
+                }
+    }
+
     private fun resolve(
             section: String = WatchFacePrefsFragment.SECTION_COLORS,
             key: String,

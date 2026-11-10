@@ -136,6 +136,41 @@ object WatchFontCatalog {
     )
 
     /**
+     * The bundled font resource [key] names, or null for a system family, the imported font, the
+     * default and unknown keys. One table for [typefaceFor] and [listRowTypefaceFor], which load
+     * the same file and differ only in whether they keep it.
+     */
+    @FontRes
+    private fun bundledResourceFor(key: String?): Int? =
+            key?.let(expandedBundledFontResources::get) ?: when (key) {
+                // Keep both legacy keys so saved preferences and imported themes continue to work.
+                // "typewriter" used to select Mom's Typewriter; that font carried no redistribution
+                // license this project ever held, so the file was removed and the key now aliases
+                // to Special Elite, mirroring "love_letter".
+                "typewriter" -> R.font.special_elite_regular
+                "love_letter" -> R.font.special_elite_regular
+                "poppins" -> R.font.poppins_regular
+                "montserrat" -> R.font.montserrat_regular
+                "marcellus" -> R.font.marcellus_regular
+                "bebas_neue" -> R.font.bebas_neue_regular
+                "playfair" -> R.font.playfair_display_regular
+                "space_grotesk" -> R.font.space_grotesk_regular
+                "orbitron" -> R.font.orbitron_regular
+                "caveat" -> R.font.caveat_regular
+                "inter" -> R.font.inter_regular
+                "atkinson_hyperlegible" -> R.font.atkinson_hyperlegible_regular
+                "rubik" -> R.font.rubik_regular
+                "barlow_condensed" -> R.font.barlow_condensed_regular
+                "oswald" -> R.font.oswald_regular
+                "lora" -> R.font.lora_regular
+                "fraunces" -> R.font.fraunces_regular
+                "space_mono" -> R.font.space_mono_regular
+                "archivo_black" -> R.font.archivo_black_regular
+                "dancing_script" -> R.font.dancing_script_regular
+                else -> null
+            }
+
+    /**
      * The typeface for [key], or null when the caller's own preloaded Google Sans should be used
      * (the default, and the fallback for unknown keys).
      *
@@ -144,38 +179,13 @@ object WatchFontCatalog {
      * honest preview, since the watch would do exactly the same.
      */
     fun typefaceFor(context: Context, key: String?): Typeface? =
-            key?.let(expandedBundledFontResources::get)
-                    ?.let { bundledTypeface(context, it) }
+            bundledResourceFor(key)?.let { bundledTypeface(context, it) }
                     ?: when (key) {
                         "roboto" -> Typeface.DEFAULT
                         // The typeface imported from this phone's storage. Resolving it here is
                         // what makes the preview honest: the watch reads the same key out of the
                         // same file, so a face previewed in an imported font renders in it.
                         DeviceLocalAppearance.USER_FONT_KEY -> UserFontStore.typeface(context)
-                        // Keep both legacy keys so saved preferences and imported themes continue
-                        // to work. "typewriter" used to select Mom's Typewriter; that font carried
-                        // no redistribution license this project ever held, so the file was
-                        // removed and the key now aliases to Special Elite, mirroring "love_letter".
-                        "typewriter" -> bundledTypeface(context, R.font.special_elite_regular)
-                        "love_letter" -> bundledTypeface(context, R.font.special_elite_regular)
-                        "poppins" -> bundledTypeface(context, R.font.poppins_regular)
-                        "montserrat" -> bundledTypeface(context, R.font.montserrat_regular)
-                        "marcellus" -> bundledTypeface(context, R.font.marcellus_regular)
-                        "bebas_neue" -> bundledTypeface(context, R.font.bebas_neue_regular)
-                        "playfair" -> bundledTypeface(context, R.font.playfair_display_regular)
-                        "space_grotesk" -> bundledTypeface(context, R.font.space_grotesk_regular)
-                        "orbitron" -> bundledTypeface(context, R.font.orbitron_regular)
-                        "caveat" -> bundledTypeface(context, R.font.caveat_regular)
-                        "inter" -> bundledTypeface(context, R.font.inter_regular)
-                        "atkinson_hyperlegible" -> bundledTypeface(context, R.font.atkinson_hyperlegible_regular)
-                        "rubik" -> bundledTypeface(context, R.font.rubik_regular)
-                        "barlow_condensed" -> bundledTypeface(context, R.font.barlow_condensed_regular)
-                        "oswald" -> bundledTypeface(context, R.font.oswald_regular)
-                        "lora" -> bundledTypeface(context, R.font.lora_regular)
-                        "fraunces" -> bundledTypeface(context, R.font.fraunces_regular)
-                        "space_mono" -> bundledTypeface(context, R.font.space_mono_regular)
-                        "archivo_black" -> bundledTypeface(context, R.font.archivo_black_regular)
-                        "dancing_script" -> bundledTypeface(context, R.font.dancing_script_regular)
                         "rounded" -> Typeface.create("sans-serif-rounded", Typeface.NORMAL)
                         "sans_light" -> Typeface.create("sans-serif-light", Typeface.NORMAL)
                         "sans_thin" -> Typeface.create("sans-serif-thin", Typeface.NORMAL)
@@ -215,6 +225,28 @@ object WatchFontCatalog {
         return typefaceFor(context, key)
                 ?: bundledTypeface(context, R.font.google_sans_regular)
                 ?: Typeface.DEFAULT
+    }
+
+    /**
+     * [previewTypefaceFor] for one row of a font list, which does not keep what it loads.
+     *
+     * The picker draws every row in its own font, so scrolling it once loads all 122 bundled
+     * fonts, and through [bundledTypeface] each was pinned for the life of the process - the one
+     * that lives on as the music service. Rows instead take ResourcesCompat's own small cache, so
+     * a font scrolled out of it can be freed once the platform's text caches (Skia's glyph cache,
+     * the layout cache) let go of it too; on a Pixel 3 that is not at once, since those are only
+     * emptied by eviction in a process the system treats as foreground (docs/memory-investigation.md).
+     * Safe only because a row shows its font and never derives a style from it: deriving is what
+     * [bundledTypefaces] exists to keep stable. A font already kept there is reused, so the selected
+     * one never loads twice.
+     */
+    @Synchronized
+    fun listRowTypefaceFor(context: Context, key: String?): Typeface {
+        if (WatchTypography.isFlexFont(key)) return previewTypefaceFor(context, key)
+        val resource = bundledResourceFor(key) ?: return previewTypefaceFor(context, key)
+        return bundledTypefaces[resource]
+                ?: ResourcesCompat.getFont(context.applicationContext, resource)
+                ?: previewTypefaceFor(context, null)
     }
 
     // ResourcesCompat's small LRU can reload a font after browsing the picker. Android's styled

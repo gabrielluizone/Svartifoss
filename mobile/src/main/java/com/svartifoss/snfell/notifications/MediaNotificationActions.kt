@@ -324,6 +324,20 @@ object MediaNotificationActions {
                 .orEmpty()
     }
 
+    /**
+     * For the log, when [actionsForSession] found nothing: what this registry holds for
+     * [packageName] and whether any of it belongs to [sessionToken]. An empty answer there sends
+     * the quick panel to the session's custom actions, whose icons often cannot be drawn outside
+     * their app, and from the wrist the two look the same.
+     */
+    fun describeForLog(packageName: String, sessionToken: MediaSession.Token?): String =
+            synchronized(this) {
+                val stored = notifications.values.filter { it.packageName == packageName }
+                if (stored.isEmpty()) return "no media notification stored"
+                "${stored.size} stored, ${stored.count { it.sessionToken == sessionToken }} for this " +
+                        "session, ${stored.count { it.sessionToken == null }} without one"
+            }
+
     /** Resolves an id only inside the currently active package/session. */
     fun execute(
             actionId: String,

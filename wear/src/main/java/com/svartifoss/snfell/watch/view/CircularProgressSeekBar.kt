@@ -18,6 +18,8 @@ import android.graphics.Path
 import com.svartifoss.snfell.common.ColorHarmony
 import com.svartifoss.snfell.common.MeterTrack
 import com.svartifoss.snfell.common.ProgressFx
+import com.svartifoss.snfell.common.ProgressScale
+import com.svartifoss.snfell.common.ProgressShape
 import com.svartifoss.snfell.common.VolumeFx
 import com.svartifoss.snfell.common.WavePhaseClock
 import com.svartifoss.snfell.common.SeekMarkerVisibility
@@ -589,15 +591,31 @@ class CircularProgressSeekBar : View {
         }
     }
 
-    private fun markerFraction(index: Int, count: Int): Float =
-            if (kotlin.math.abs(ringLayout.sweepAngle) >= 359.5f) {
-                index.toFloat() / count
-            } else {
-                index.toFloat() / (count - 1).coerceAtLeast(1)
-            }
-
-    private fun markIsPlayed(fraction: Float): Boolean =
-            displayProgress > 0f && fraction < displayProgress
+    /**
+     * Calls [block] once for every mark of a tick or dot scale of [count] divisions on the current
+     * layout, with the mark's angle in radians, whether it is a long one and whether the playhead
+     * has passed it.
+     *
+     * All of the arithmetic is [ProgressScale]'s, which the phone's miniature draws from too. It is
+     * why an open arc has one more mark than a ring would, so that the scale starts and ends on the
+     * same long mark and reads the same from both sides of the gap.
+     */
+    private inline fun forEachScaleMark(
+            count: Int,
+            emphasizeEvery: Int,
+            block: (angle: Double, major: Boolean, played: Boolean) -> Unit
+    ) {
+        val closed = ProgressShape.isClosed(ringLayout.sweepAngle)
+        val divisions = ProgressScale.divisions(count, emphasizeEvery, closed)
+        for (index in 0 until ProgressScale.markCount(count, emphasizeEvery, closed)) {
+            val fraction = ProgressScale.fraction(index, divisions)
+            block(
+                    Math.toRadians(
+                            (ringLayout.startAngle + fraction * ringLayout.sweepAngle).toDouble()),
+                    ProgressScale.isMajor(index, emphasizeEvery),
+                    ProgressScale.isPlayed(fraction, displayProgress))
+        }
+    }
 
     private fun drawWatchDots(
             canvas: Canvas,
@@ -613,12 +631,8 @@ class CircularProgressSeekBar : View {
         val orbit = bounds.width() / 2f
         headDotPaint.style = Paint.Style.FILL
 
-        repeat(count) { index ->
-            val fraction = markerFraction(index, count)
-            val angle = Math.toRadians(
-                    (ringLayout.startAngle + fraction * ringLayout.sweepAngle).toDouble())
-            val major = emphasizeEvery > 0 && index % emphasizeEvery == 0
-            headDotPaint.color = if (markIsPlayed(fraction)) {
+        forEachScaleMark(count, emphasizeEvery) { angle, major, played ->
+            headDotPaint.color = if (played) {
                 foregroundPaint.color
             } else {
                 backgroundPaint.color
@@ -650,14 +664,10 @@ class CircularProgressSeekBar : View {
         headDotPaint.style = Paint.Style.STROKE
         headDotPaint.strokeCap = Paint.Cap.ROUND
 
-        repeat(count) { index ->
-            val fraction = markerFraction(index, count)
-            val angle = Math.toRadians(
-                    (ringLayout.startAngle + fraction * ringLayout.sweepAngle).toDouble())
-            val emphasized = emphasizeEvery > 0 && index % emphasizeEvery == 0
+        forEachScaleMark(count, emphasizeEvery) { angle, emphasized, played ->
             val length = if (emphasized) emphasizedLength else normalLength
             headDotPaint.strokeWidth = if (emphasized) emphasizedWidth else normalWidth
-            headDotPaint.color = if (markIsPlayed(fraction)) {
+            headDotPaint.color = if (played) {
                 foregroundPaint.color
             } else {
                 backgroundPaint.color

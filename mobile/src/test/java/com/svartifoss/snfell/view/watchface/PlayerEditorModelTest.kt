@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.view.watchface
 
+import com.svartifoss.snfell.common.FaceElements
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.ThemeAppearance
@@ -595,5 +596,23 @@ class PlayerEditorModelTest {
             if (category in owned) keys += key
         }
         return keys
+    }
+
+    @Test
+    fun `the app mark and the track time are offered only where the face draws them`() {
+        // Offered everywhere, the switch and the mode moved nothing on eight faces - see
+        // FaceElements for which, and why.
+        ThemeAppearance.ALLOWED_BASE_FACES.forEach { face ->
+            assertEquals(
+                    "source icon on $face",
+                    FaceElements.drawsSourceIcon(face),
+                    PlayerEditorModel.appliesToFace(PlayerControl.SOURCE_ICON, face))
+            assertEquals(
+                    "track time on $face",
+                    FaceElements.drawsTrackTime(face),
+                    PlayerEditorModel.appliesToFace(PlayerControl.TRACK_TIME_MODE, face))
+        }
+        assertFalse(PlayerEditorModel.appliesToFace(PlayerControl.SOURCE_ICON, "note"))
+        assertFalse(PlayerEditorModel.appliesToFace(PlayerControl.TRACK_TIME_MODE, "carousel"))
     }
 }

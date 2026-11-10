@@ -1,5 +1,6 @@
 package com.svartifoss.snfell.view.watchface
 
+import com.svartifoss.snfell.common.FaceElements
 import com.svartifoss.snfell.common.AlbumArtSource
 
 import com.svartifoss.snfell.common.MiniButtonPlacement
@@ -105,6 +106,14 @@ internal object WatchSearchTargetResolver {
                     setOf(AlbumArtSource.CUSTOM_FOLDER.preferenceValue),
                     WatchFacePrefsFragment.SECTION_BACKGROUND))
 
+    /** The rows that only act on the source app's mark. */
+    private val sourceIconRows = setOf(
+            "wear_show_source_icon", "wear_source_icon_scale", "wear_source_icon_opacity")
+
+    /** The rows that only act on the elapsed/total readout: its mode and the Text page's controls. */
+    private fun isTrackTimeRow(key: String): Boolean =
+            key == "wear_track_time_mode" || key.startsWith("wear_track_time_font")
+
     fun resolve(
             section: String,
             key: String,
@@ -121,6 +130,12 @@ internal object WatchSearchTargetResolver {
         }
         if (key in artistDependentRows && !readBoolean("wear_show_track_artist", true)) {
             return redirect(WatchFacePrefsFragment.SECTION_TYPOGRAPHY, "wear_show_track_artist")
+        }
+        // Before the switch check below: on a face with no mark at all the switch is not offered
+        // either, so pointing at it would point at nothing - see FaceElements.
+        if (key in sourceIconRows && !FaceElements.drawsSourceIcon(face) ||
+                isTrackTimeRow(key) && !FaceElements.drawsTrackTime(face)) {
+            return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_screen_face")
         }
         if (key in setOf("wear_source_icon_scale", "wear_source_icon_opacity") &&
                 !readBoolean("wear_show_source_icon", true)) {

@@ -148,6 +148,9 @@ object FaceGeometry {
         const val CARD_BOTTOM = RAIL_CENTER + CARD_FRACTION / 2f
         const val ARTIST_TOP = CARD_TOP - ARTIST_ROW_FRACTION
         const val TITLE_TOP = CARD_BOTTOM + .014f
+        /** The title's line, at 100%, and the most lines the band under the rail can hold. */
+        const val TITLE_LINE_HEIGHT_DP = 16f
+        const val MAX_TITLE_LINES = 3
         const val NEAR_SHADE = .46f
         const val FAR_SHADE = .68f
 
@@ -750,6 +753,41 @@ object FaceGeometry {
         }
     }
 
+    /**
+     * Poster's controls under its block of text, as screen fractions: the play mark, the progress
+     * line and the track time. `TitleBand.posterFloor` stops the block above them, and the phone's
+     * miniature draws them where the watch does, so all three read these.
+     */
+    object Poster {
+        /** The play mark's size. */
+        const val MARK_FRACTION = .09f
+        /** How far the mark's bottom edge sits above the bottom of the screen with the progress
+         *  line drawn under it, and with no line. */
+        const val MARK_LIFT_WITH_LINE = .20f
+        const val MARK_LIFT = .24f
+        /** The progress line's centre below the middle of the screen, and its width. */
+        const val LINE_OFFSET = .32f
+        const val LINE_WIDTH = .54f
+        /** The track time's centre below the middle of the screen, under the line and without it. */
+        const val TIME_OFFSET_WITH_LINE = .38f
+        const val TIME_OFFSET = .42f
+    }
+
+    /**
+     * Studio's progress orb at the bottom of the screen, the play mark inside it and the time at its
+     * centre, as screen fractions - read by `TitleBand.studioFloor`, the face and its miniature.
+     */
+    object Studio {
+        const val ORB_RADIUS = .16f
+        /** The gap between the orb's bottom and the bottom of the screen; the mark sits on it too. */
+        const val ORB_LIFT = .04f
+        /** The play mark, as a fraction of the orb's radius. */
+        const val MARK_OF_ORB = .55f
+        /** The time's centre below the middle of the screen: inside the orb, or with no orb. */
+        const val TIME_OFFSET_IN_ORB = .30f
+        const val TIME_OFFSET = .42f
+    }
+
     /** The Material 3 Expressive controls: the cookie play/pause button and its contour ring. */
     object Expressive {
         const val COOKIE_LOBES = 10
@@ -757,6 +795,15 @@ object FaceGeometry {
         const val COOKIE_MODULATION = 0.05f
         const val RING_MODULATION = 0.03f
         const val RING_GAP_DEGREES = 7f
+
+        /** Where the track text hangs from, as a fraction of the screen. */
+        const val TEXT_TOP_FRACTION = .17f
+
+        /** The 16sp title with its default leading, the 2dp gap above the artist row folded in. */
+        const val TITLE_LINE_DP = 21f
+
+        /** The 13dp source glyph is taller than the 11sp artist line beside it. */
+        const val ARTIST_ROW_DP = 13f
     }
 
     /** The detail table: how much of the screen it may take, and what a line costs it. */

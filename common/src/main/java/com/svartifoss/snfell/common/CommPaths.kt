@@ -184,7 +184,7 @@ interface CommPaths {
          *
          * The correction half of the watch's position prediction. The phone deliberately does not
          * retransmit a `MusicState` for a position that only moved on its own (see
-         * `MusicService.equalsIgnoringTime`), which is right - it would be constant Bluetooth
+         * the phone's `MusicStateDedupe`), which is right - it would be constant Bluetooth
          * traffic to say nothing - but it leaves the watch extrapolating unattended for a whole
          * track. Whatever error the first sample carried then lasts the whole song, and on the
          * lyrics screen a second of error is the difference between the right line and the wrong
@@ -342,6 +342,10 @@ interface CommPaths {
          *  state so faces can show it next to the artist (the Data Layer dedupes it while the
          *  source app is unchanged). */
         const val ASSET_SOURCE_ICON = "SourceAppIcon"
+
+        /** Prefix of a media-action icon attached to the music state by its key - see
+         *  `MediaActionIcons` and `MediaAction.iconKey` in music.proto. */
+        const val ASSET_ACTION_ICON_PREFIX = "ActionIcon_"
 
         /**
          * The picture the player draws behind it, when that is not the sleeve in [ASSET_ALBUM_ART].

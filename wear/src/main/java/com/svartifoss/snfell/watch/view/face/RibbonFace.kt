@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.common.FaceGeometry
+import com.svartifoss.snfell.common.TitleBand
 import com.svartifoss.snfell.common.RoundScreenText
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
 import com.svartifoss.snfell.watch.view.compose.FaceClock
@@ -214,7 +215,20 @@ private fun BoxWithConstraintsScope.RibbonMetadata(state: NowPlayingFaceState, s
     // Both bands are inset for the glass rather than by a flat side padding. The title is the one
     // that needed it: it sits low enough that the chord has taken a quarter of the width away, so
     // the old .13 inset ran the ends of a long line under the bezel. See RoundScreenText.
-    val titleLineFraction = FaceGeometry.Ribbon.TITLE_LINE_HEIGHT_DP.dp / screen
+    // The title stops growing where its 100% line ends (TitleBand.RIBBON_TITLE_FLOOR): any deeper
+    // and the glass narrows faster than the line grows, so a larger title was shrunk to fit and
+    // came out smaller than at 100% - and at 160% its foot ran to the edge of the glass.
+    val titled = state.withTextFit(
+            TitleBand.fitScale(
+                    bandDp = (screen * (TitleBand.RIBBON_TITLE_FLOOR -
+                            FaceGeometry.Ribbon.TITLE_TOP_FRACTION)).value,
+                    titleLineDp = FaceGeometry.Ribbon.TITLE_LINE_HEIGHT_DP,
+                    titleScale = state.titleTypography.scale),
+            artist = false)
+    // At the title's size as it will be drawn: a larger line reaches deeper into the narrowing
+    // chord, which is what the inset is measured for.
+    val titleLineFraction =
+            (FaceGeometry.Ribbon.TITLE_LINE_HEIGHT_DP * titled.titleTypography.scale).dp / screen
     val titleLines = RoundScreenText.linesThatFit(
             top = FaceGeometry.Ribbon.TITLE_TOP_FRACTION,
             lineHeight = titleLineFraction,
@@ -224,6 +238,19 @@ private fun BoxWithConstraintsScope.RibbonMetadata(state: NowPlayingFaceState, s
             lineHeight = titleLineFraction,
             lines = titleLines)
     if (state.showArtist && state.artist.isNotBlank()) {
+        // The artist has a band of its own, from its top down to the cover rail. Past the size that
+        // holds it stops growing - above 100% it used to reach down onto the covers. The title,
+        // under the rail, keeps its own size; see TitleBand.fitScale.
+        val artist = state.withTextFit(
+                TitleBand.fitScale(
+                        bandDp = (screen * (minOf(
+                                FaceGeometry.Ribbon.CENTER_COVER_TOP_FRACTION,
+                                FaceGeometry.Ribbon.COLUMN_TOP_FRACTION) -
+                                FaceGeometry.Ribbon.ARTIST_TOP_FRACTION)).value,
+                        titleLineDp = 0f,
+                        artistRowDp = FaceGeometry.Ribbon.ARTIST_LINE_HEIGHT_DP,
+                        artistScale = state.artistTypography.scale),
+                title = false)
         val artistInset = RoundScreenText.sideInsetFor(
                 top = FaceGeometry.Ribbon.ARTIST_TOP_FRACTION,
                 bottom = FaceGeometry.Ribbon.ARTIST_TOP_FRACTION +
@@ -243,12 +270,12 @@ private fun BoxWithConstraintsScope.RibbonMetadata(state: NowPlayingFaceState, s
             // notification-template/app-icon treatment, scale and opacity identical to every
             // other face that identifies the streaming app beside its artist line.
             SourceIconGlyph(
-                    state = state,
+                    state = artist,
                     size = 18.dp,
                     tint = Color(state.artistColor))
             ArtistLineText(
                     text = state.artist,
-                    state = state,
+                    state = artist,
                     color = Color(state.artistColor),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
@@ -259,12 +286,12 @@ private fun BoxWithConstraintsScope.RibbonMetadata(state: NowPlayingFaceState, s
         AdaptiveTitleText(
                 text = state.title,
                 mode = state.titleTextMode,
-                state = state,
+                state = titled,
                 color = titleTextColor(state, Color.White),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 fontFamily = state.titleFont,
-                typography = state.titleTypography,
+                typography = titled.titleTypography,
                 minFontSize = 15.sp,
                 maxLines = titleLines,
                 modifier = Modifier

@@ -70,6 +70,8 @@ import androidx.compose.ui.unit.sp
 import com.svartifoss.snfell.common.PaletteTransforms
 import com.svartifoss.snfell.common.TrackTimeFormat
 import com.svartifoss.snfell.common.FaceGeometry
+import com.svartifoss.snfell.common.TextBlockPosition
+import com.svartifoss.snfell.common.TitleBand
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.R
@@ -115,10 +117,6 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
         // never changes and the far control cannot move. See TransportPressLayout.
         val pressGroup = rememberTransportPressGroup(
                 listOf(metrics.side.value, metrics.cookieBox.value, metrics.side.value))
-        // The ring's bottom edge below screen center - the transport row is centered and the ring
-        // fills the cookie box, so half the box height. Layout clamps (title height, track-time
-        // offset) hang off this instead of a magic fraction, so they track the real button size.
-        val ringBottom = metrics.cookieBox / 2
         val theme = state.screenTheme
         val themeTokens = theme.tokens
         // Every other control-style theme only fades or scales these icons; only Hidden zeroes
@@ -160,6 +158,19 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
         val isRound = LocalConfiguration.current.isScreenRound
         val titleHorizontalPadding = if (isRound) screen * 0.16f else 16.dp
         if (state.showTitle || state.showArtist) {
+            // The band above the ring: from the block's 17% top down to the ring's own top.
+            val band = TitleBand.expressiveBand(screen.value, metrics.cookieBox.value).dp
+            val bandCapped = state.textBlockPosition == TextBlockPosition.FOLLOW
+            val artistShown = state.showArtist && state.artist.isNotEmpty()
+            // Past the sizes the band holds, the title and the artist shrink together. The title
+            // used to be squeezed under its own line instead and clipped by the cap below - from
+            // about 115% the foot of every letter was cut, at 140% only the top half showed.
+            val text = state.withTextFit(if (!bandCapped) 1f else TitleBand.fitScale(
+                    bandDp = band.value,
+                    titleLineDp = if (state.showTitle) EXPRESSIVE_TITLE_LINE_DP else 0f,
+                    titleScale = state.titleTypography.scale,
+                    artistRowDp = if (artistShown) EXPRESSIVE_ARTIST_ROW_DP else 0f,
+                    artistScale = state.artistTypography.scale))
             val insets = state.blockLineInsets(
                     screen,
                     BlockAnchor.TOP,
@@ -180,14 +191,14 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                             // rare overflowing second line is far better than overlapping the
                             // controls. Ring top from screen top = center (0.5) minus half the ring.
                             //
-                            // The cap describes the band *above the ring* and is therefore only
-                            // true while the block is still in it: once the user has moved the
-                            // block the ring is no longer what it has to clear, and keeping the
-                            // cap clipped a wrapped title to a single line at the bottom of the
-                            // screen for no reason anybody could see.
-                            .then(if (state.blockPlacementOverridden) Modifier else Modifier
-                                    .heightIn(max = (screen * 0.33f - ringBottom)
-                                            .coerceAtLeast(screen * 0.14f))
+                            // The cap describes the band *above the ring*, which is where the block
+                            // always is now: this face no longer offers a position (see
+                            // TextBlockPlacementSupport.POSITION_FACES), and lining the block up on
+                            // a side keeps it in the same band. It used to be lifted for any
+                            // override, alignment included, so "align left" alone let a wrapped
+                            // title run into the transport row.
+                            .then(if (!bandCapped) Modifier else Modifier
+                                    .heightIn(max = band)
                                     .clipToBounds()),
                     horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
             ) {
@@ -195,26 +206,34 @@ fun ExpressiveFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener)
                     AdaptiveTitleText(
                             text = state.title,
                             mode = state.titleTextMode,
-                            state = state,
-                            typography = state.titleTypography,
+                            state = text,
+                            typography = text.titleTypography,
                             color = titleTextColor(state, Color.White),
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                             fontFamily = state.titleFont,
                             textAlign = TextAlign.Center,
                             minFontSize = 12.sp,
-                            modifier = Modifier.padding(horizontal = insets.extra(0))
+                            // The title takes what the artist row leaves, never the reverse. The
+                            // band above the ring holds about one title line and the artist row;
+                            // with the cap on the column alone, any title that wrapped to two
+                            // lines filled it and the artist row was clipped out of sight - so on
+                            // this face every long title silently cost the user the artist. A
+                            // weighted child is measured after the others, so the artist keeps its
+                            // line and the title shrinks or ellipsizes into the rest.
+                            modifier = Modifier.weight(1f, fill = false)
+                                    .padding(horizontal = insets.extra(0))
                     )
                 }
-                if (state.showArtist && state.artist.isNotEmpty()) {
+                if (artistShown) {
                     Row(verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = state.blockArrangement(Arrangement.Center),
                             modifier = Modifier.padding(horizontal = insets.extra(1))
                                     .padding(top = if (state.showTitle) 2.dp else 0.dp)) {
-                        SourceIconGlyph(state, 13.dp, Color(state.artistColor))
+                        SourceIconGlyph(text, 13.dp, Color(state.artistColor))
                         ArtistLineText(
                                 text = state.artist,
-                                state = state,
+                                state = text,
                                 color = Color(state.artistColor),
                                 fontSize = 11.sp
                         )
@@ -1025,13 +1044,13 @@ private fun DrawScope.drawContourStroke(
  * depth. Local rather than in `FaceGeometry` because the phone's miniature draws this face's text
  * from the same literals it always has; if that changes, both sides move here together.
  */
-private const val EXPRESSIVE_TEXT_TOP_FRACTION = .17f
+private const val EXPRESSIVE_TEXT_TOP_FRACTION = FaceGeometry.Expressive.TEXT_TOP_FRACTION
 
 /** 16sp title with default leading, plus the 2dp gap above the artist row folded into it. */
-private const val EXPRESSIVE_TITLE_LINE_DP = 21f
+private const val EXPRESSIVE_TITLE_LINE_DP = FaceGeometry.Expressive.TITLE_LINE_DP
 
 /** The 13dp source glyph is taller than the 11sp line beside it. */
-private const val EXPRESSIVE_ARTIST_ROW_DP = 13f
+private const val EXPRESSIVE_ARTIST_ROW_DP = FaceGeometry.Expressive.ARTIST_ROW_DP
 
 /** The AOD variant's two outlined lines, as a screen-height fraction. */
 private const val EXPRESSIVE_AMBIENT_HEIGHT_FRACTION = .16f

@@ -35,6 +35,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.wear.compose.material3.Text
+import androidx.compose.foundation.layout.heightIn
+import com.svartifoss.snfell.common.TitleBand
 import com.svartifoss.snfell.common.AdaptiveTextContrast
 import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.RoundScreenText
@@ -250,6 +252,17 @@ private fun BoxScope.TrackText(
     val inset = RoundScreenText.sideInsetFor(
             top = SEAM_FRACTION + .04f,
             bottom = SEAM_FRACTION + .28f)
+    val band = (screen * (TitleBand.SPLIT_FLOOR - TitleBand.SPLIT_TOP)).value
+    val artistShown = state.showArtist && state.artist.isNotEmpty()
+    val titleShown = state.showTitle && state.title.isNotEmpty()
+    // Past the sizes the panel holds, the artist and the title shrink together. A short title at
+    // 140% used to be squeezed under its own line and cut by the cap below. See TitleBand.fitScale.
+    val text = state.withTextFit(TitleBand.fitScale(
+            bandDp = band,
+            titleLineDp = if (titleShown) TitleBand.SPLIT_TITLE_LINE_DP else 0f,
+            titleScale = state.titleTypography.scale,
+            artistRowDp = if (artistShown) TitleBand.SPLIT_ARTIST_ROW_DP else 0f,
+            artistScale = state.artistTypography.scale))
     Column(
             modifier = Modifier
                     .align(state.blockPlacement(Alignment.TopStart))
@@ -269,21 +282,26 @@ private fun BoxScope.TrackText(
                         seam + screen * .04f
                     } else {
                         0.dp
-                    }),
+                    })
+                    // The panel's band ends before the bezel. Without the cap a title at 160%
+                    // carried on past the bottom of the screen.
+                    .heightIn(max = band.dp),
             horizontalAlignment = state.blockAlignment(Alignment.Start),
             verticalArrangement = Arrangement.Top
     ) {
-        if (state.showArtist && state.artist.isNotEmpty()) {
+        if (artistShown) {
             ArtistLineText(
                     text = state.artist,
-                    state = state,
-                    color = secondary,
+                    state = text,
+                    // The panel-contrast colour until the user picks one - the title already
+                    // honoured its own colour here, the artist did not.
+                    color = if (state.artistColorChosen) Color(state.artistColor) else secondary,
                     fontSize = 15.sp,
                     textAlign = TextAlign.Start,
                     modifier = Modifier.fillMaxWidth()
             )
         }
-        if (state.showTitle && state.title.isNotEmpty()) {
+        if (titleShown) {
             // The shared adaptive title rather than a bare Text with maxLines = 2. A plain wrap
             // breaks wherever the width runs out, which on a title like "Footprints" left a single
             // orphaned "s" on the second line - technically correct and unreadable. This honours
@@ -292,7 +310,7 @@ private fun BoxScope.TrackText(
             AdaptiveTitleText(
                     text = state.title,
                     mode = state.titleTextMode,
-                    state = state,
+                    state = text,
                     fontSize = 21.sp,
                     color = titleTextColor(state, primary),
                     fontWeight = FontWeight.Bold,
@@ -305,8 +323,15 @@ private fun BoxScope.TrackText(
                     // lines wider than the letters themselves. Unspecified lets Compose derive it
                     // from whatever size the text actually settled on.
                     textAlign = TextAlign.Start,
-                    typography = state.titleTypography,
-                    modifier = Modifier.fillMaxWidth()
+                    typography = text.titleTypography,
+                    maxLines = TitleBand.lineCeiling(
+                            bandDp = band,
+                            titleLineDp = TitleBand.SPLIT_TITLE_LINE_DP,
+                            titleScale = text.titleTypography.scale,
+                            artistRowDp = if (artistShown) TitleBand.SPLIT_ARTIST_ROW_DP else 0f,
+                            artistScale = text.artistTypography.scale),
+                    // Measured after the artist above it, so the title is what gives way.
+                    modifier = Modifier.weight(1f, fill = false).fillMaxWidth()
             )
         }
     }

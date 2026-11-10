@@ -1,6 +1,8 @@
 package com.svartifoss.snfell.music
 
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -78,5 +80,31 @@ class PlaybackReportPolicyTest {
     @Test
     fun `nothing is reported without a previous sample`() {
         assertFalse(PlaybackReportPolicy.worthReporting(null, playing))
+    }
+
+    /** Worded for the phone's transmission log, which has to say which update set off each
+     *  transmission - see docs/watch-sync-battery-investigation.md. */
+    @Test
+    fun `the change worth reporting is named`() {
+        assertEquals("position expected 61000 ms, got 150000 ms",
+                PlaybackReportPolicy.changeWorthReporting(
+                        playing, playing.copy(positionMs = 150_000L, positionUpdateTimeMs = 1_001_000L)))
+        assertEquals("custom action #0 like|Like|12 -> like|Unlike|13",
+                PlaybackReportPolicy.changeWorthReporting(
+                        playing, playing.copy(customActions = listOf("like|Unlike|13"))))
+        assertEquals("custom action #1 null -> shuffle|Shuffle|14",
+                PlaybackReportPolicy.changeWorthReporting(
+                        playing, playing.copy(customActions = listOf("like|Like|12", "shuffle|Shuffle|14"))))
+        assertEquals("queue item 7 -> 8",
+                PlaybackReportPolicy.changeWorthReporting(playing, playing.copy(activeQueueItemId = 8L)))
+        assertEquals("actions 1ff -> 1",
+                PlaybackReportPolicy.changeWorthReporting(playing, playing.copy(actions = 0x1L)))
+    }
+
+    @Test
+    fun `a routine update has no change to name`() {
+        val oneSecondLater = playing.copy(positionMs = 61_000L, positionUpdateTimeMs = 1_001_000L)
+
+        assertNull(PlaybackReportPolicy.changeWorthReporting(playing, oneSecondLater))
     }
 }

@@ -49,6 +49,7 @@ import kotlinx.coroutines.withContext
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import com.svartifoss.snfell.config.BundledAppearanceDefaults
+import com.svartifoss.snfell.common.FaceElements
 import com.svartifoss.snfell.common.AlbumArtSource
 import com.svartifoss.snfell.common.DeviceLocalAppearance
 import com.svartifoss.snfell.common.FaceScopedPreferences
@@ -654,6 +655,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     }
 
     @SuppressLint("SetTextI18n") // B, percentages and +/- are locale-independent editor notation.
+    /** Whether [face] draws [target] at all - the Text page hides the tab when it does not. */
+    private fun typographyTargetDrawn(target: TypographyTarget, face: String): Boolean =
+            when (target) {
+                TypographyTarget.TRACK_TIME -> FaceElements.drawsTrackTime(face)
+                TypographyTarget.ICON -> FaceElements.drawsSourceIcon(face)
+                else -> true
+            }
+
     private fun renderTypographyEditor(root: View) {
         val fontValue = readStringPreference(
                 MiscPreferences.WEAR_FONT.key,
@@ -672,6 +681,17 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // selects Flex gets its own axes button below its font picker instead of editing this set.
         root.findViewById<View>(R.id.typography_flex_button).isVisible =
                 WatchTypography.isFlexFont(fontValue)
+
+        // The track time and the app's mark are not drawn by every face (see FaceElements), and a
+        // tab of controls for an element the face does not have changes nothing on the watch.
+        val face = readStringPreference("wear_screen_face", "classic")
+        root.findViewById<View>(R.id.typography_target_track_time).isVisible =
+                FaceElements.drawsTrackTime(face)
+        root.findViewById<View>(R.id.typography_target_icon).isVisible =
+                FaceElements.drawsSourceIcon(face)
+        if (!typographyTargetDrawn(typographyTarget, face)) {
+            typographyTarget = TypographyTarget.TITLE
+        }
 
         val targetGroup = root.findViewById<MaterialButtonToggleGroup>(R.id.typography_target_group)
         if (targetGroup.checkedButtonId != buttonIdFor(typographyTarget)) {

@@ -172,10 +172,14 @@ private fun CarouselFrameContent(
     var titleLines by remember(frame.title) { mutableIntStateOf(1) }
     // sp is treated as dp here, as everywhere else in the faces: Wear OS has no user font scaling,
     // and the phone preview measures the same way against its 192dp reference watch.
-    val titleLineFraction = CAROUSEL_TITLE_LINE_HEIGHT.dp / screen
-    // A mode like "wrap5" can ask for more lines than the band below the cover can hold. Capping
-    // the inset at what fits keeps the column readable rather than collapsing it to a sliver for
-    // lines that were never going to be on the glass anyway.
+    // At the user's title size: a larger title reaches deeper per line, where the band under the
+    // rail runs out sooner.
+    val titleLineFraction =
+            (CAROUSEL_TITLE_LINE_HEIGHT * state.titleTypography.scale).dp / screen
+    // A mode like "wrap5" can ask for more lines than the band below the cover can hold. The title
+    // stops at what fits - it used to stop only the *inset* there and render the lines anyway, so
+    // at 160% the second line ran off the bottom of the screen - and the inset is measured for
+    // the lines that remain.
     val fittingLines = RoundScreenText.linesThatFit(
             top = TITLE_TOP, lineHeight = titleLineFraction, maxLines = MAX_TITLE_LINES)
     val titleInset = RoundScreenText.sideInsetForLines(
@@ -314,10 +318,11 @@ private fun CarouselFrameContent(
                         fontWeight = FontWeight.Normal,
                         fontFamily = state.titleFont,
                         textAlign = TextAlign.Center,
+                        maxLines = fittingLines,
                         // Only ever grows, and resets with the track. A narrower column can push
                         // the text onto one more line, which narrows it again - monotonic growth is
                         // what makes that settle instead of oscillating between two widths, and the
-                        // mode's own maxLines is the ceiling that ends it.
+                        // lines that fit under the rail are the ceiling that ends it.
                         onLineCount = { titleLines = maxOf(titleLines, it) })
             }
         }
@@ -353,12 +358,11 @@ private const val ARTIST_TOP = FaceGeometry.Carousel.ARTIST_TOP
 /** A hair of air between the cover and the title, not a gap: they read as one block. */
 private const val TITLE_TOP = FaceGeometry.Carousel.TITLE_TOP
 
-/** Ceiling for the inset calculation. Modes offering more lines than this (wrap5) still render
- *  them; this only stops the *width* being computed for lines that fall outside the glass. */
-private const val MAX_TITLE_LINES = 3
+/** The most lines the band under the rail holds at 100%; fewer at a larger title size. */
+private const val MAX_TITLE_LINES = FaceGeometry.Carousel.MAX_TITLE_LINES
 
 private const val CAROUSEL_TITLE_SIZE = 14f
-private const val CAROUSEL_TITLE_LINE_HEIGHT = 16f
+private const val CAROUSEL_TITLE_LINE_HEIGHT = FaceGeometry.Carousel.TITLE_LINE_HEIGHT_DP
 
 /** The AOD variant's two outlined lines, as a screen-height fraction. */
 private const val AMBIENT_TEXT_HEIGHT_FRACTION = .16f

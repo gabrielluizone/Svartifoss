@@ -32,6 +32,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -81,6 +82,9 @@ import androidx.compose.ui.unit.sp
 import com.svartifoss.snfell.common.PaletteTransforms
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.Text
+import com.svartifoss.snfell.common.TitleBand
+import com.svartifoss.snfell.common.TextBlockPosition
+import androidx.compose.foundation.layout.heightIn
 import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
@@ -612,22 +616,27 @@ private fun BoxScope.PosterComposition(
         // The artwork otherwise stays unobscured (no glyph at all) - this only appears when the
         // user turns "Show player controls" on, same as every other curated face.
         PlayPauseGlyph(
-                state, Color.White, screen * .09f,
+                state, Color.White, screen * FaceGeometry.Poster.MARK_FRACTION,
                 modifier = Modifier.align(Alignment.BottomCenter)
-                        .offset(y = screen * (if (posterProgressShown) -.20f else -.24f))
+                        .offset(y = -screen * (if (posterProgressShown) FaceGeometry.Poster.MARK_LIFT_WITH_LINE
+                                else FaceGeometry.Poster.MARK_LIFT))
         )
     }
     if (posterProgressShown) {
-        LinearProgress(progress, Modifier.offset(y = screen * .32f)
-                .width(screen * .54f), Color(state.progressColor))
+        LinearProgress(progress, Modifier.offset(y = screen * FaceGeometry.Poster.LINE_OFFSET)
+                .width(screen * FaceGeometry.Poster.LINE_WIDTH), Color(state.progressColor))
     }
     // With no progress line above it the time sits on the floor of the screen instead of
     // floating in the empty band the line used to occupy.
-    TrackFooter(state, y = screen * (if (posterProgressShown) .38f else .42f),
+    TrackFooter(state, y = screen * (if (posterProgressShown) FaceGeometry.Poster.TIME_OFFSET_WITH_LINE
+            else FaceGeometry.Poster.TIME_OFFSET),
             screen = screen, width = screen * .72f,
-            fontSize = 8.sp, color = Color.White.copy(alpha = .76f),
+            fontSize = POSTER_STUDIO_TIME_SP.sp, color = Color.White.copy(alpha = .76f),
             letterSpacing = 1.55.sp, fontFamily = state.artistFont)
 }
+
+/** The size Poster and Studio set their track time in; their floors measure the lifted line by it. */
+private const val POSTER_STUDIO_TIME_SP = 8f
 
 @Composable
 private fun BoxScope.StudioComposition(
@@ -637,12 +646,12 @@ private fun BoxScope.StudioComposition(
     if (state.showTitle || state.showArtist) {
         StudioMetadata(state, screen, p)
     }
-    val orbR = screen * .16f
+    val orbR = screen * FaceGeometry.Studio.ORB_RADIUS
     InteractiveFocus(state, listener, RoundedCornerShape(0.dp),
             Modifier.fillMaxSize()) {
         if (state.showInternalProgress) {
             Canvas(Modifier.align(Alignment.BottomCenter)
-                    .padding(bottom = screen * .04f)
+                    .padding(bottom = screen * FaceGeometry.Studio.ORB_LIFT)
                     .size(orbR * 2)) {
                 val stroke = 4.dp.toPx()
                 drawArc(Color.White.copy(alpha = .24f), -90f, 360f, false,
@@ -657,15 +666,17 @@ private fun BoxScope.StudioComposition(
         // "Show player controls" actually does something here instead of the artwork always
         // staying completely unobscured.
         PlayPauseGlyph(
-                state, Color.White, orbR * .55f,
-                modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = screen * .04f)
+                state, Color.White, orbR * FaceGeometry.Studio.MARK_OF_ORB,
+                modifier = Modifier.align(Alignment.BottomCenter)
+                        .padding(bottom = screen * FaceGeometry.Studio.ORB_LIFT)
         )
     }
     // Inside the bottom progress orb when it's drawn; anchored to the floor when it isn't,
     // instead of floating in the space the absent orb used to occupy.
-    TrackFooter(state, y = screen * (if (state.showInternalProgress) .30f else .42f),
+    TrackFooter(state, y = screen * (if (state.showInternalProgress) FaceGeometry.Studio.TIME_OFFSET_IN_ORB
+            else FaceGeometry.Studio.TIME_OFFSET),
             screen = screen, width = screen * .72f,
-            fontSize = 8.sp, color = Color.White.copy(alpha = .62f),
+            fontSize = POSTER_STUDIO_TIME_SP.sp, color = Color.White.copy(alpha = .62f),
             letterSpacing = 1.2.sp, fontFamily = state.artistFont)
 }
 
@@ -1129,14 +1140,26 @@ private fun BoxScope.TitleAnchoredMetadata(
         state: NowPlayingFaceState,
         modifier: Modifier,
         insets: BlockLineInsets,
+        room: BlockRoom,
         title: @Composable () -> Unit,
         rest: @Composable () -> Unit
 ) {
     var blockHeight by remember { mutableIntStateOf(0) }
     var titleHeight by remember { mutableIntStateOf(0) }
-    val anchorTitle = state.titleCentered && state.showTitle
+    // Only while the block is centred. Sent to the top or the bottom it is placed against an edge,
+    // and sliding it down by half the artist row there pushed the artist past the face's floor -
+    // onto Poster's play mark or Studio's orb. curatedTitleCeiling reserves the shift for the same
+    // two placements, so the ceiling and the shift agree.
+    val anchorTitle = state.titleCentered && state.showTitle &&
+            (state.textBlockPosition == TextBlockPosition.FOLLOW ||
+                    state.textBlockPosition == TextBlockPosition.MIDDLE)
     Column(
             modifier
+                    // Never past the face's own controls - see blockRoomAbove. The cap is the
+                    // safety net under the title's line ceiling: a typeface taller than the
+                    // reference metrics still cannot push the artist row into the play mark.
+                    .padding(top = room.top, bottom = room.bottom)
+                    .heightIn(max = room.maxHeight)
                     .align(state.blockPlacement(Alignment.Center))
                     .offset {
                         IntOffset(0, if (anchorTitle) (blockHeight - titleHeight) / 2 else 0)
@@ -1152,7 +1175,11 @@ private fun BoxScope.TitleAnchoredMetadata(
         // faces that use this. TextAlign.Center cannot fix that: it aligns lines inside the text's
         // own measured width, and a wrap-content Text is exactly as wide as its longest line.
         Box(
-                modifier = Modifier.fillMaxWidth()
+                // Weighted, so the artist row below is measured first and the title takes what is
+                // left: when the room runs out it is the title that ellipsizes, not the artist that
+                // is pushed out of the block.
+                modifier = Modifier.weight(1f, fill = false)
+                        .fillMaxWidth()
                         .padding(horizontal = insets.extra(0))
                         .onSizeChanged { titleHeight = it.height },
                 contentAlignment = Alignment.TopCenter
@@ -1161,20 +1188,122 @@ private fun BoxScope.TitleAnchoredMetadata(
     }
 }
 
+/**
+ * The title's line ceiling inside [room] for a title-anchored block, through [TitleBand] - the same
+ * call the phone's miniature makes, so the two stop at the same line.
+ *
+ * With "Centre the title" on, the block is shifted down by half the artist row so the title's own
+ * centre sits on the screen's; that half has to come out of the room the title may use.
+ */
+private fun curatedTitleCeiling(
+        state: NowPlayingFaceState,
+        room: BlockRoom,
+        titleLineDp: Float,
+        artistRowDp: Float
+): Int {
+    val artistShown = state.showArtist
+    val anchored = state.titleCentered && state.showTitle && artistShown &&
+            state.textBlockPosition.let {
+                it == TextBlockPosition.FOLLOW || it == TextBlockPosition.MIDDLE
+            }
+    val band = room.maxHeight.value -
+            (if (anchored) artistRowDp * state.artistTypography.scale else 0f)
+    return TitleBand.lineCeiling(
+            bandDp = band,
+            titleLineDp = titleLineDp,
+            titleScale = state.titleTypography.scale,
+            artistRowDp = if (artistShown) artistRowDp else 0f,
+            artistScale = state.artistTypography.scale)
+}
+
+/**
+ * The shrink [TitleBand.fitScale] asks of a title-anchored block in [room]: 1 while one title line
+ * and the artist row fit at the user's sizes, less past them - at 300% Studio's title was squeezed
+ * under its own line and only its top half showed. With "Centre the title" the artist row counts
+ * twice, because the shift that centres the title hangs half of it below the block's own room
+ * (the same reservation [curatedTitleCeiling] makes).
+ */
+private fun curatedTextFit(
+        state: NowPlayingFaceState,
+        room: BlockRoom,
+        titleLineDp: Float,
+        artistRowDp: Float
+): Float {
+    val anchored = state.titleCentered && state.showTitle && state.showArtist &&
+            state.textBlockPosition.let {
+                it == TextBlockPosition.FOLLOW || it == TextBlockPosition.MIDDLE
+            }
+    return TitleBand.fitScale(
+            bandDp = room.maxHeight.value,
+            titleLineDp = if (state.showTitle) titleLineDp else 0f,
+            titleScale = state.titleTypography.scale,
+            artistRowDp = if (state.showArtist) artistRowDp * (if (anchored) 2f else 1f) else 0f,
+            artistScale = state.artistTypography.scale)
+}
+
+/**
+ * The heights [blockLineInsets] measures a title-anchored block with: the title as the lines it
+ * actually wrapped to, then the artist row, both at the user's size.
+ *
+ * The title used to count as one line whatever it wrapped to. A four-line title sent to the bottom
+ * of Poster was therefore measured as a block two lines deep, and its first line - three lines
+ * higher on the round screen than assumed - ran out to the bezel.
+ */
+private fun curatedElementHeights(
+        state: NowPlayingFaceState,
+        titleLines: Int,
+        titleLineDp: Float,
+        artistRowDp: Float
+): List<Dp> = listOf(
+        if (state.showTitle) (titleLineDp * state.titleTypography.scale * titleLines).dp else 0.dp,
+        if (state.showArtist) (artistRowDp * state.artistTypography.scale).dp else 0.dp)
+
+/**
+ * How many lines the title settled on, for [curatedElementHeights]: it only grows, and starts over
+ * whenever the title or anything that re-wraps it changes. The settle CarouselFace uses - a column
+ * narrowed for a taller title can push the text onto one more line, which narrows it again, and
+ * growing monotonically up to the title's own line ceiling is what makes that stop.
+ */
+@Composable
+private fun rememberWrappedTitleLines(state: NowPlayingFaceState): MutableIntState = remember(
+        state.title, state.titleTextMode, state.titleTypography,
+        state.textBlockPosition, state.textBlockAlign) { mutableIntStateOf(1) }
+
 @Composable
 private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
+    val posterLine = state.showDefaultBottomPills && state.showInternalProgress
+    val room = state.blockRoomAbove(screen, minOf(
+            TitleBand.posterFloor(
+                    controls = state.showControls,
+                    progressLine = posterLine,
+                    trackTime = state.showTrackTime),
+            state.trackFooterTop(
+                    if (posterLine) FaceGeometry.Poster.TIME_OFFSET_WITH_LINE
+                    else FaceGeometry.Poster.TIME_OFFSET,
+                    POSTER_STUDIO_TIME_SP, screen)))
+    // Past the sizes the room holds, the title and the artist shrink together - see curatedTextFit.
+    val text = state.withTextFit(curatedTextFit(
+            state, room, FaceGeometry.CuratedText.POSTER_TITLE_LINE_DP,
+            FaceGeometry.CuratedText.POSTER_ARTIST_ROW_DP))
+    val titleLines = curatedTitleCeiling(
+            text, room, FaceGeometry.CuratedText.POSTER_TITLE_LINE_DP,
+            FaceGeometry.CuratedText.POSTER_ARTIST_ROW_DP)
+    val wrapped = rememberWrappedTitleLines(text)
     val insets = state.blockLineInsets(
             screen,
             BlockAnchor.CENTER,
             0f,
-            listOf(FaceGeometry.CuratedText.POSTER_TITLE_LINE_DP.dp, FaceGeometry.CuratedText.POSTER_ARTIST_ROW_DP.dp))
+            curatedElementHeights(
+                    text, wrapped.intValue, FaceGeometry.CuratedText.POSTER_TITLE_LINE_DP,
+                    FaceGeometry.CuratedText.POSTER_ARTIST_ROW_DP),
+            bottomEdge = room.floor)
             .limitToWidth(screen, screen * FaceGeometry.CuratedText.POSTER_WIDTH_FRACTION)
     TitleAnchoredMetadata(
             state,
             Modifier.padding(horizontal = insets.outer)
-                    .padding(vertical = state.blockSafeVerticalInset(screen))
                     .fillMaxWidth(),
             insets,
+            room,
             title = {
         if (state.showTitle) {
             // AdaptiveTitleText, not a bare Text, so the user's Title text behaviour actually
@@ -1184,14 +1313,16 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
             AdaptiveTitleText(
                     text = state.title,
                     mode = state.titleTextMode,
-                    state = state,
-                    typography = state.titleTypography,
+                    state = text,
+                    typography = text.titleTypography,
                     color = titleTextColor(state, Color.White),
                     fontSize = 22.sp,
                     lineHeight = 24.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = state.titleFont,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    maxLines = titleLines,
+                    onLineCount = { if (it > wrapped.intValue) wrapped.intValue = it }
             )
         }
     }, rest = {
@@ -1200,10 +1331,10 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
                     horizontalArrangement = state.blockArrangement(Arrangement.Center),
                     modifier = Modifier.padding(horizontal = insets.extra(1))
                             .padding(top = if (state.showTitle) 6.dp else 0.dp)) {
-                SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .76f))
+                SourceIconGlyph(text, 10.dp, artistOrStatusColor(state, .76f))
                 ArtistLineText(
                         text = artistOrStatus(state).uppercase(),
-                        state = state,
+                        state = text,
                         color = artistOrStatusColor(state, .76f),
                         fontSize = 8.sp,
                         lineHeight = 9.sp,
@@ -1217,32 +1348,54 @@ private fun BoxScope.PosterMetadata(state: NowPlayingFaceState, screen: Dp) {
 
 @Composable
 private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: CuratedPalette) {
+    val room = state.blockRoomAbove(screen, minOf(
+            TitleBand.studioFloor(
+                    progressOrb = state.showInternalProgress,
+                    controls = state.showControls,
+                    trackTime = state.showTrackTime),
+            state.trackFooterTop(
+                    if (state.showInternalProgress) FaceGeometry.Studio.TIME_OFFSET_IN_ORB
+                    else FaceGeometry.Studio.TIME_OFFSET,
+                    POSTER_STUDIO_TIME_SP, screen)))
+    // Past the sizes the room holds, the title and the artist shrink together - see curatedTextFit.
+    val text = state.withTextFit(curatedTextFit(
+            state, room, FaceGeometry.CuratedText.STUDIO_TITLE_LINE_DP,
+            FaceGeometry.CuratedText.STUDIO_ARTIST_ROW_DP))
+    val titleLines = curatedTitleCeiling(
+            text, room, FaceGeometry.CuratedText.STUDIO_TITLE_LINE_DP,
+            FaceGeometry.CuratedText.STUDIO_ARTIST_ROW_DP)
+    val wrapped = rememberWrappedTitleLines(text)
     val insets = state.blockLineInsets(
             screen,
             BlockAnchor.CENTER,
             0f,
-            listOf(FaceGeometry.CuratedText.STUDIO_TITLE_LINE_DP.dp, FaceGeometry.CuratedText.STUDIO_ARTIST_ROW_DP.dp))
+            curatedElementHeights(
+                    text, wrapped.intValue, FaceGeometry.CuratedText.STUDIO_TITLE_LINE_DP,
+                    FaceGeometry.CuratedText.STUDIO_ARTIST_ROW_DP),
+            bottomEdge = room.floor)
             .limitToWidth(screen, screen * FaceGeometry.CuratedText.STUDIO_WIDTH_FRACTION)
     TitleAnchoredMetadata(
             state,
             Modifier.padding(horizontal = insets.outer)
-                    .padding(vertical = state.blockSafeVerticalInset(screen))
                     .fillMaxWidth(),
             insets,
+            room,
             title = {
         if (state.showTitle) {
             // AdaptiveTitleText for the same reason as PosterMetadata above.
             AdaptiveTitleText(
                     text = state.title,
                     mode = state.titleTextMode,
-                    state = state,
-                    typography = state.titleTypography,
+                    state = text,
+                    typography = text.titleTypography,
                     color = titleTextColor(state, Color.White),
                     fontSize = 15.sp,
                     lineHeight = 17.sp,
                     fontWeight = FontWeight.Medium,
                     fontFamily = state.titleFont,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
+                    maxLines = titleLines,
+                    onLineCount = { if (it > wrapped.intValue) wrapped.intValue = it }
             )
         }
     }, rest = {
@@ -1251,10 +1404,10 @@ private fun BoxScope.StudioMetadata(state: NowPlayingFaceState, screen: Dp, p: C
                     horizontalArrangement = state.blockArrangement(Arrangement.Center),
                     modifier = Modifier.padding(horizontal = insets.extra(1))
                             .padding(top = if (state.showTitle) 5.dp else 0.dp)) {
-                SourceIconGlyph(state, 10.dp, artistOrStatusColor(state, .62f))
+                SourceIconGlyph(text, 10.dp, artistOrStatusColor(state, .62f))
                 ArtistLineText(
                         text = artistOrStatus(state).uppercase(),
-                        state = state,
+                        state = text,
                         color = artistOrStatusColor(state, .62f),
                         fontSize = 8.sp,
                         lineHeight = 9.sp,
@@ -1378,6 +1531,22 @@ private fun BoxScope.EclipseMetadata(state: NowPlayingFaceState, screen: Dp) {
     }
 }
 
+/** [TrackFooter]'s offset below the centre, as a screen fraction, once lifted clear of the chrome. */
+private fun NowPlayingFaceState.trackFooterOffset(designed: Float, screen: Dp): Float =
+        TitleBand.footerOffset(designed, miniButtonsTopFraction, TRACK_FOOTER_GAP / screen)
+
+/**
+ * Where [TrackFooter]'s line begins, as a screen fraction from the top, or 1 when the time is not
+ * shown - the part of a face's floor that moves: with the Up Next pill or a mini-button row in the
+ * bottom band, the time is lifted above it, and a block of text has to stop above the time too.
+ */
+private fun NowPlayingFaceState.trackFooterTop(designed: Float, fontSizeSp: Float, screen: Dp): Float =
+        if (!showTrackTime) 1f
+        else .5f + trackFooterOffset(designed, screen) - (fontSizeSp / 2f).dp / screen
+
+/** The clearance [TrackFooter] keeps above the shared chrome in the bottom band. */
+private val TRACK_FOOTER_GAP = 10.dp
+
 @Composable
 private fun BoxScope.TrackFooter(
         state: NowPlayingFaceState,
@@ -1399,9 +1568,8 @@ private fun BoxScope.TrackFooter(
     // The clearance term goes negative when the row settles high (fraction near its .20f floor);
     // coerceAtLeast keeps this from yanking the time up over the face's central focus. The floor
     // is the caller's desired y, but never above screen*0.16f, so it always stays below center.
-    val miniRowClearance =
-            screen * state.miniButtonsTopFraction.coerceIn(.20f, .95f) - screen * .50f - 10.dp
-    val clampedY = minOf(y, miniRowClearance).coerceAtLeast(minOf(y, screen * 0.16f))
+    // TitleBand holds the clamp so a block of text above this line can stop where it really is.
+    val clampedY = screen * state.trackFooterOffset(y / screen, screen)
     TrackTimeText(
             text = stringResource(R.string.playback_time_format,
                     formatFaceClockTime(state.positionMs), formatFaceClockTime(state.durationMs)),
@@ -1876,14 +2044,39 @@ private fun BoxScope.MaterialComposition(
 ) {
     // The awake typography is larger than Material AOD's, so 17% places the visible baselines in
     // the same clock-to-control band without letting the artist line touch the center disc.
+    val artistShown = state.showArtist && state.artist.isNotEmpty()
+    val band = (screen * (TitleBand.MATERIAL_FLOOR - TitleBand.MATERIAL_TOP)).value
+    // Past the sizes the band holds, the title and the artist shrink together rather than the
+    // title being squeezed under its own line and clipped by the cap - from about 110% the foot of
+    // the title was cut, at 140% only its top half showed. See TitleBand.fitScale.
+    val text = state.withTextFit(TitleBand.fitScale(
+            bandDp = band,
+            titleLineDp = if (state.showTitle) FaceGeometry.CuratedText.MATERIAL_TITLE_LINE_DP else 0f,
+            titleScale = state.titleTypography.scale,
+            artistRowDp = if (artistShown) FaceGeometry.CuratedText.MATERIAL_ARTIST_ROW_DP else 0f,
+            artistScale = state.artistTypography.scale))
+    val titleLines = TitleBand.lineCeiling(
+            bandDp = band,
+            titleLineDp = FaceGeometry.CuratedText.MATERIAL_TITLE_LINE_DP,
+            titleScale = text.titleTypography.scale,
+            artistRowDp = if (artistShown) FaceGeometry.CuratedText.MATERIAL_ARTIST_ROW_DP else 0f,
+            artistScale = text.artistTypography.scale)
     val insets = state.blockLineInsets(
             screen,
             BlockAnchor.TOP,
             FaceGeometry.CuratedText.MATERIAL_TOP_FRACTION,
             listOf(
-                    FaceGeometry.CuratedText.MATERIAL_TITLE_LINE_DP.dp,
-                    FaceGeometry.CuratedText.MATERIAL_ARTIST_ROW_DP.dp),
-            floor = screen * .12f)
+                    if (state.showTitle) (FaceGeometry.CuratedText.MATERIAL_TITLE_LINE_DP *
+                            text.titleTypography.scale * titleLines).dp else 0.dp,
+                    if (artistShown) (FaceGeometry.CuratedText.MATERIAL_ARTIST_ROW_DP *
+                            text.artistTypography.scale).dp else 0.dp),
+            floor = screen * .12f,
+            // Measured where the text is even at the default placement, as Immersive does. The
+            // title sits high on the round screen, where the designed 12% margin is wider than
+            // the glass, and with the line ceiling keeping a long title on one line, that line
+            // ran full width into the edge ring. The artist row, lower down, keeps the 12%.
+            fitToScreen = true,
+            isRound = LocalConfiguration.current.isScreenRound)
     Column(
             modifier = Modifier
                     .align(state.blockPlacement(Alignment.TopCenter))
@@ -1894,35 +2087,41 @@ private fun BoxScope.MaterialComposition(
                                     screen * FaceGeometry.CuratedText.MATERIAL_TOP_FRACTION))
                     // The inset already includes the designed margin. Fill what remains instead
                     // of subtracting the chord from a column that has its own side margins.
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    // The band ends at the disc's top. A two-line title in the default mode used
+                    // to carry the artist line straight across the disc's progress ring.
+                    .heightIn(max = band.dp),
             horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)
     ) {
         if (state.showTitle) {
             AdaptiveTitleText(
                     text = state.title,
                     mode = state.titleTextMode,
-                    state = state,
-                    typography = state.titleTypography,
+                    state = text,
+                    typography = text.titleTypography,
                     color = titleTextColor(state, Color.White),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     fontFamily = state.titleFont,
                     textAlign = TextAlign.Center,
                     minFontSize = 13.sp,
-                    modifier = Modifier.padding(horizontal = insets.extra(0))
+                    maxLines = titleLines,
+                    // Measured after the artist row, so the title is what gives way.
+                    modifier = Modifier.weight(1f, fill = false)
+                            .padding(horizontal = insets.extra(0))
             )
         }
-        if (state.showArtist && state.artist.isNotEmpty()) {
+        if (artistShown) {
             Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = state.blockArrangement(Arrangement.Center),
                     modifier = Modifier.padding(horizontal = insets.extra(1))
                             .padding(top = 2.dp)
             ) {
-                SourceIconGlyph(state, 13.dp, artistOrStatusColor(state, 0.70f))
+                SourceIconGlyph(text, 13.dp, artistOrStatusColor(state, 0.70f))
                 ArtistLineText(
                         text = state.artist,
-                        state = state,
+                        state = text,
                         color = artistOrStatusColor(state, 0.70f),
                         fontSize = 13.sp
                 )

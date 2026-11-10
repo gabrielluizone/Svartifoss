@@ -2,13 +2,26 @@ package com.svartifoss.snfell.watch.view
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.LinearGradient
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.graphics.PorterDuffXfermode
+import android.graphics.Shader
+import android.graphics.Typeface
+import android.text.Layout
+import android.text.StaticLayout
+import android.text.TextDirectionHeuristics
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.Gravity
+import android.view.View
+import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatTextView
+import com.svartifoss.snfell.common.MarqueeMotion
+import kotlin.math.ceil
 
 /**
  * How [OutlineTextView] resolves text that doesn't fit its available width.
@@ -24,11 +37,6 @@ enum class TextSizingMode { SMART, MARQUEE, WRAP, SHRINK }
 /**
  * TextView that can be displayed either as a filled text or as an outline.
  */
-/** Matches `FaceChrome.MARQUEE_FADE_WIDTH`, which the Compose faces and the phone's miniature
- *  both use - the same line should dissolve over the same distance whichever renderer drew it.
- *  Restated in dp rather than imported because this file is Android Views and that one is Compose. */
-private const val MARQUEE_FADE_WIDTH_DP = 18f
-
 class OutlineTextView : AppCompatTextView {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -123,6 +131,25 @@ class OutlineTextView : AppCompatTextView {
             requestSmartResize()
         }
 
+    /**
+     * The height, in pixels, this line may take inside a block whose other lines it must not push
+     * out of sight - or null to keep the view's own behaviour.
+     *
+     * Classic's title shares one centred block with the artist row and the track time, inside the
+     * round screen's inscribed square. Its cascade picked the largest size that wraps the title
+     * cleanly within its line limit and never asked whether two lines *that* size left room for
+     * the rest: a short two-word title such as "Panic Station" settled on two 40sp lines, the block
+     * overflowed its box, and the track time was cut off at the bottom of the screen on the
+     * default settings. The caller knows what else is in the block, so it supplies the room; the
+     * cascade then also steps down until the lines fit it, and the wrap modes stop at the number of
+     * lines it can hold. Read when the size is chosen, so it follows the other lines appearing and
+     * disappearing - call [refreshSizing] when they do.
+     */
+    var heightBudget: (() -> Int)? = null
+
+    /** Chooses the size again, for a caller whose [heightBudget] has just changed. */
+    fun refreshSizing() = requestSmartResize()
+
     // The cap wrapping respects before giving up and switching to a scrolling single line. Follows
     // the chosen text mode, so "Wrap to 3 lines" really wraps to three.
     private var wrapMaxLines = 1
@@ -191,11 +218,16 @@ class OutlineTextView : AppCompatTextView {
 
     override fun onTextChanged(text: CharSequence?, start: Int, lengthBefore: Int, lengthAfter: Int) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter)
+        // A new title starts from rest, like any line that has just appeared. Also reached from
+        // TextView's constructor, before this class's initialisers have run; restartMarquee only
+        // touches primitives and the line cache is keyed by the text, so that is harmless.
+        restartMarquee()
         requestSmartResize()
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
+        restartMarquee()
         requestSmartResize()
     }
 
@@ -231,6 +263,25 @@ class OutlineTextView : AppCompatTextView {
     private fun applyWrapMode() {
         disableMarquee()
         setTextSize(TypedValue.COMPLEX_UNIT_PX, smartMaxSizePx)
+        // The mode's line count, but no more lines than the block has room for: a fifth line
+        // that pushes the artist or the time out of the screen is worse than an ellipsis.
+        val measurePaint = Paint(paint)
+        measurePaint.textSize = smartMaxSizePx
+        val fitting = linesWithinBudget(measurePaint)
+        maxLines = if (fitting == null) wrapMaxLines else minOf(wrapMaxLines, fitting)
+    }
+
+    /** How many lines at [paint]'s size fit [heightBudget], or null when there is no budget. */
+    private fun linesWithinBudget(paint: Paint): Int? {
+        val budget = heightBudget?.invoke() ?: return null
+        if (budget <= 0) return null
+        return (budget / lineHeightFor(paint)).toInt().coerceAtLeast(1)
+    }
+
+    /** One line's height at [paint]'s size, the way this view lays its lines out. */
+    private fun lineHeightFor(paint: Paint): Float {
+        val metrics = paint.fontMetrics
+        return (metrics.descent - metrics.ascent) * lineSpacingMultiplier + lineSpacingExtra
     }
 
     /** Always a single line at [smartMaxSizePx]; scrolls (marquee) only if that line doesn't fit,
@@ -242,6 +293,7 @@ class OutlineTextView : AppCompatTextView {
 
         if (singleLineWidth <= availableWidth) {
             disableMarquee()
+            maxLines = wrapMaxLines
             setTextSize(TypedValue.COMPLEX_UNIT_PX, smartMaxSizePx)
         } else {
             enableMarquee(smartMaxSizePx)
@@ -282,6 +334,11 @@ class OutlineTextView : AppCompatTextView {
         if (fits || !fallbackToMarquee) {
             disableMarquee()
             setTextSize(TypedValue.COMPLEX_UNIT_PX, sizePx)
+            // Shrink stops at its floor even when that still does not fit, so the line count is
+            // capped to the room as well - an ellipsis rather than a line pushed out of sight.
+            measurePaint.textSize = sizePx
+            val fitting = linesWithinBudget(measurePaint)
+            maxLines = if (fitting == null) wrapMaxLines else minOf(wrapMaxLines, fitting)
         } else {
             enableMarquee(smartMinSizePx)
         }
@@ -308,6 +365,10 @@ class OutlineTextView : AppCompatTextView {
         if (lines > wrapMaxLines) {
             return false
         }
+        val budget = heightBudget?.invoke()
+        if (budget != null && budget > 0 && lines * lineHeightFor(paint) > budget) {
+            return false
+        }
         if (!fitsWithinViewHeight) {
             return true
         }
@@ -322,21 +383,24 @@ class OutlineTextView : AppCompatTextView {
         return lines * (metrics.descent - metrics.ascent) <= availableHeight
     }
 
+    /**
+     * Turns the scroll on. The line is drawn by [drawMarquee], not by TextView's own marquee.
+     *
+     * TextView's marquee keeps its position to itself, so nothing outside it can tell a line that
+     * is moving from one resting between passes - and its fading edge stayed on through the rest,
+     * dissolving the clipped end of a title that was standing still. Drawing the line here, from
+     * [MarqueeMotion], is what lets the dissolve follow the movement, and it is the same motion the
+     * Compose faces and the phone's miniature run, so a title scrolls and fades alike on all three.
+     *
+     * TextView itself is left holding one ellipsized line, which is all it needs to measure the
+     * view's height; that layout is never drawn while the line overflows.
+     */
     private fun enableMarquee(sizePx: Float) {
         if (!marqueeActive) {
             marqueeActive = true
-            isSingleLine = true
-            ellipsize = TextUtils.TruncateAt.MARQUEE
-            marqueeRepeatLimit = -1
-            isSelected = true
-            // Dissolve the ends rather than cutting them. TextView already knows how to fade a
-            // marquee - its own edge-strength calculation follows the scroll offset, so the lead
-            // end stays sharp until there is something behind it - and this is the switch that
-            // asks for it. Turned on with the scroll and off with it, because on a line that is
-            // not scrolling the framework would still fade whichever end is clipped.
-            isHorizontalFadingEdgeEnabled = true
-            setFadingEdgeLength(
-                    (MARQUEE_FADE_WIDTH_DP * resources.displayMetrics.density).toInt())
+            maxLines = 1
+            ellipsize = TextUtils.TruncateAt.END
+            restartMarquee()
         }
         setTextSize(TypedValue.COMPLEX_UNIT_PX, sizePx)
     }
@@ -344,30 +408,182 @@ class OutlineTextView : AppCompatTextView {
     private fun disableMarquee() {
         if (marqueeActive) {
             marqueeActive = false
-            isSingleLine = false
             maxLines = wrapMaxLines
             ellipsize = TextUtils.TruncateAt.END
-            isSelected = false
-            isHorizontalFadingEdgeEnabled = false
+            marqueeLine = null
+            invalidate()
         }
     }
-
-    // Marquee only animates while the view is considered focused; this view normally never
-    // receives real focus (the four-way touch layout below claims it instead).
-    override fun isFocused(): Boolean = (marqueeActive && !marqueePaused) || super.isFocused()
 
     private var marqueePaused = false
 
     /**
-     * Freezes a scrolling title in place (e.g. for ambient mode, where a continuously animating
+     * Freezes a scrolling title at rest (e.g. for ambient mode, where a continuously animating
      * marquee would be both a burn-in risk and a pointless battery drain) without forgetting that
-     * it's in marquee mode - [setMarqueePaused] (false) picks the animation back up afterwards.
+     * it's in marquee mode - [setMarqueePaused] (false) picks the animation back up afterwards,
+     * from rest, as a title that has just appeared would.
      */
     fun setMarqueePaused(paused: Boolean) {
-        if (marqueeActive) {
-            marqueePaused = paused
-            isSelected = !paused
+        if (marqueePaused == paused) return
+        marqueePaused = paused
+        restartMarquee()
+    }
+
+    /** When the current pass began, on [AnimationUtils]'s clock; negative until the next draw. */
+    private var marqueeStartMs = -1L
+
+    /** The whole text laid out on one line at its natural width - what the scroll moves. */
+    private var marqueeLine: StaticLayout? = null
+    private var marqueeLineKey: MarqueeLineKey? = null
+    private val marqueeMaskPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_IN)
+    }
+
+    /** What [marqueeLine] was built from; anything else changing means building it again. */
+    private data class MarqueeLineKey(
+            val text: CharSequence,
+            val textSize: Float,
+            val typeface: Typeface?,
+            val letterSpacing: Float,
+            val includePad: Boolean,
+            val rtl: Boolean)
+
+    /** Back to rest: the next draw starts a new pass from the line's start. */
+    private fun restartMarquee() {
+        marqueeStartMs = -1L
+        if (marqueeActive) invalidate()
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        restartMarquee()
+    }
+
+    override fun onWindowVisibilityChanged(visibility: Int) {
+        super.onWindowVisibilityChanged(visibility)
+        // Returning to a screen shows the title from its start rather than wherever the clock
+        // would have carried it while nobody could see it.
+        restartMarquee()
+    }
+
+    private fun obtainMarqueeLine(): StaticLayout? {
+        val content = text ?: return null
+        if (content.isEmpty()) return null
+        val rtl = layoutDirection == View.LAYOUT_DIRECTION_RTL
+        val key = MarqueeLineKey(content.toString(), paint.textSize, paint.typeface,
+                paint.letterSpacing, includeFontPadding, rtl)
+        marqueeLine?.let { if (key == marqueeLineKey) return it }
+        val width = ceil(Layout.getDesiredWidth(content, paint)).toInt().coerceAtLeast(1)
+        val built = StaticLayout.Builder.obtain(content, 0, content.length, paint, width)
+                .setAlignment(Layout.Alignment.ALIGN_NORMAL)
+                .setIncludePad(includeFontPadding)
+                .setLineSpacing(lineSpacingExtra, lineSpacingMultiplier)
+                .setTextDirection(
+                        if (rtl) TextDirectionHeuristics.FIRSTSTRONG_RTL
+                        else TextDirectionHeuristics.FIRSTSTRONG_LTR)
+                .setMaxLines(1)
+                .build()
+        marqueeLine = built
+        marqueeLineKey = key
+        return built
+    }
+
+    /**
+     * Draws the scrolling line, or returns false to let TextView draw it - which is what happens
+     * once the text fits after all (the view grew, or the text got shorter).
+     */
+    private fun drawMarquee(canvas: Canvas): Boolean {
+        val line = obtainMarqueeLine() ?: return false
+        val left = compoundPaddingLeft.toFloat()
+        val right = (width - compoundPaddingRight).toFloat()
+        val viewport = right - left
+        val content = line.width.toFloat()
+        if (!MarqueeMotion.overflows(content, viewport)) return false
+
+        val density = resources.displayMetrics.density
+        val loop = MarqueeMotion.loopPx(content, viewport)
+        val pxPerSecond = MarqueeMotion.VELOCITY_DP_PER_SECOND * density
+        val now = AnimationUtils.currentAnimationTimeMillis()
+        val running = !marqueePaused && isShown
+        if (!running) {
+            marqueeStartMs = -1L
+        } else if (marqueeStartMs < 0L) {
+            marqueeStartMs = now
         }
+        val elapsed = if (running) now - marqueeStartMs else 0L
+        val offset = MarqueeMotion.offsetAt(elapsed, loop, pxPerSecond)
+        val fadePx = MarqueeMotion.fadeWidthPx(MarqueeMotion.FADE_WIDTH_DP * density, viewport)
+        val strength = MarqueeMotion.fadeStrength(offset, loop, fadePx)
+
+        // Same vertical placement TextView gives its own single line.
+        val boxHeight = height - extendedPaddingTop - extendedPaddingBottom
+        val slack = (boxHeight - line.height).coerceAtLeast(0)
+        val lineTop = extendedPaddingTop + when (gravity and Gravity.VERTICAL_GRAVITY_MASK) {
+            Gravity.TOP -> 0
+            Gravity.BOTTOM -> slack
+            else -> slack / 2
+        }
+        // The resting copy sits on the start edge, the next one a loop behind it.
+        val rtl = line.getParagraphDirection(0) == Layout.DIR_RIGHT_TO_LEFT
+        val firstX = if (rtl) right - content + offset else left - offset
+        val secondX = if (rtl) firstX - loop else firstX + loop
+
+        // The View's own scroll is TextView's business (it centres its own line with it), and
+        // the canvas arrives translated by it; this line is placed in the View's own coordinates.
+        canvas.save()
+        canvas.translate(scrollX.toFloat(), scrollY.toFloat())
+        val layer = if (strength > 0f) {
+            canvas.saveLayer(left, 0f, right, height.toFloat(), null)
+        } else {
+            canvas.save()
+        }
+        canvas.clipRect(left, 0f, right, height.toFloat())
+        drawMarqueeCopy(canvas, line, firstX, lineTop.toFloat(), right, left)
+        if (offset > 0f) drawMarqueeCopy(canvas, line, secondX, lineTop.toFloat(), right, left)
+        if (strength > 0f) {
+            val edge = fadePx / viewport
+            val outer = Color.argb(((1f - strength) * 255f).toInt(), 0, 0, 0)
+            marqueeMaskPaint.shader = LinearGradient(
+                    left, 0f, right, 0f,
+                    intArrayOf(outer, Color.BLACK, Color.BLACK, outer),
+                    floatArrayOf(0f, edge, 1f - edge, 1f),
+                    Shader.TileMode.CLAMP)
+            canvas.drawRect(left, 0f, right, height.toFloat(), marqueeMaskPaint)
+            marqueeMaskPaint.shader = null
+        }
+        canvas.restoreToCount(layer)
+        canvas.restore()
+
+        if (running) {
+            val wait = MarqueeMotion.millisUntilMoving(elapsed, loop, pxPerSecond)
+            // Nothing changes while the line rests, so the next frame is not asked for until it
+            // moves again.
+            if (wait > 0L) postInvalidateDelayed(wait) else postInvalidateOnAnimation()
+        }
+        return true
+    }
+
+    /** One copy of the scrolling line at [x], with every pass [onDraw] gives the static text. */
+    private fun drawMarqueeCopy(
+            canvas: Canvas,
+            line: StaticLayout,
+            x: Float,
+            top: Float,
+            clipRight: Float,
+            clipLeft: Float
+    ) {
+        if (x >= clipRight || x + line.width <= clipLeft) return
+        canvas.save()
+        canvas.translate(x, top)
+        if (textBackdropColor != 0) {
+            backdropPaint.color = textBackdropColor
+            canvas.drawRect(line.getLineLeft(0), line.getLineTop(0).toFloat(),
+                    line.getLineRight(0), line.getLineBottom(0).toFloat(), backdropPaint)
+        }
+        paint.color = currentTextColor
+        paint.drawableState = drawableState
+        drawTextPasses { line.draw(canvas) }
+        canvas.restore()
     }
 
     private fun estimateWrappedLineCount(words: List<String>, paint: Paint, maxWidth: Float): Int {
@@ -413,11 +629,21 @@ class OutlineTextView : AppCompatTextView {
     }
 
     override fun onDraw(canvas: Canvas) {
+        if (marqueeActive && drawMarquee(canvas)) return
         drawTextBackdrop(canvas)
+        drawTextPasses { super.onDraw(canvas) }
+    }
+
+    /**
+     * Runs [draw] once per pass the text needs: a stroke alone for [displayTextOutline], a stroke
+     * under a fill when [strokeOutlineWidthFraction] is set, otherwise just the fill. Shared by the
+     * static text (TextView's own draw) and the scrolling line, so a marquee keeps its outline.
+     */
+    private inline fun drawTextPasses(draw: () -> Unit) {
         if (displayTextOutline) {
             paint.style = Paint.Style.STROKE
             paint.strokeWidth = outlineWidth
-            super.onDraw(canvas)
+            draw()
             return
         }
 
@@ -428,7 +654,7 @@ class OutlineTextView : AppCompatTextView {
             0f
         }
         if (strokeWidth <= 0f) {
-            super.onDraw(canvas)
+            draw()
             return
         }
 
@@ -442,10 +668,10 @@ class OutlineTextView : AppCompatTextView {
         paint.strokeJoin = Paint.Join.ROUND
         val previousFilter = paint.colorFilter
         paint.colorFilter = PorterDuffColorFilter(strokeOutlineColor, PorterDuff.Mode.SRC_IN)
-        super.onDraw(canvas)
+        draw()
 
         paint.colorFilter = previousFilter
         paint.style = Paint.Style.FILL
-        super.onDraw(canvas)
+        draw()
     }
 }

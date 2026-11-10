@@ -248,6 +248,17 @@ data class NowPlayingFaceState(
          *  plain-white status-message override - it mirrors the classic artist line exactly). */
         val artistColor: Int = WatchTheme.ACCENT_DEFAULT,
         /**
+         * Whether [artistColor] is a colour the user chose rather than the album-following default.
+         *
+         * Most faces draw the artist line in [artistColor] whatever it is. A few set the artist in
+         * a colour of their own design - Split's on its album-coloured panel, Frame's inside a
+         * filled chip, Verse's title card in its accent - because the following default would be
+         * illegible or off-key there. Those faces used to ignore the colour altogether, so a theme
+         * that picked an artist colour changed it everywhere but on them. With this they keep their
+         * own colour only while the user has not picked one.
+         */
+        val artistColorChosen: Boolean = false,
+        /**
          * Colour for the track title, or null to keep whatever colour the face designed.
          *
          * Null is the default and the normal case: every face draws its title in its own white,

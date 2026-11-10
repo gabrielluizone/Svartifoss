@@ -3,6 +3,7 @@ package com.svartifoss.snfell.view.watchface
 import androidx.annotation.StringRes
 import com.matejdro.wearutils.preferences.definition.PreferenceDefinition
 import com.svartifoss.snfell.R
+import com.svartifoss.snfell.common.FaceElements
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.TransportGlyphs
 import com.svartifoss.snfell.common.TextBlockPlacementSupport
@@ -546,6 +547,10 @@ internal object PlayerEditorModel {
         PlayerControl.PLAYER_CONTROLS -> face in PLAYER_CONTROLS_FACES
         PlayerControl.INTERNAL_PROGRESS -> face in INTERNAL_PROGRESS_FACES
         PlayerControl.METADATA_GROUPS -> face == "metadata"
+        // Two elements a handful of faces have no place for - see FaceElements. Offered there they
+        // moved nothing, which a theme author cannot tell from a broken setting.
+        PlayerControl.SOURCE_ICON -> FaceElements.drawsSourceIcon(face)
+        PlayerControl.TRACK_TIME_MODE -> FaceElements.drawsTrackTime(face)
         else -> true
     }
 

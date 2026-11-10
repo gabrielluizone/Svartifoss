@@ -228,6 +228,10 @@ class MusicViewModel @Inject constructor(
     val sourceIcon
         get() = phoneConnection.sourceIcon
 
+    /** Media-action icons by key - see [PhoneConnection.actionIcons]. */
+    val actionIcons
+        get() = phoneConnection.actionIcons
+
     /**
      * The picture the phone resolved for a non-local artwork source, when there is one.
      *

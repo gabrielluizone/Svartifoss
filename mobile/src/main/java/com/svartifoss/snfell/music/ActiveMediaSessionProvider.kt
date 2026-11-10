@@ -49,19 +49,32 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
     fun publishedPlaybackState(controller: MediaController): PlaybackState? =
             publishedStates[controller.sessionToken]
 
+    /**
+     * What made this provider last publish, for the phone's transmission log.
+     *
+     * Every publication makes MusicService rebuild the whole state and, unless it says nothing
+     * new, send it to the watch, so when transmissions come in a burst, which callback keeps
+     * publishing is the first thing the log has to answer. Read by the observer while that
+     * publication is being delivered: everything here runs on the main thread, where setting
+     * [value] delivers before it returns.
+     */
+    var lastReportReason: String = "nothing yet"
+        private set
+
     private fun rememberPublished(controller: MediaController?, state: PlaybackState?) {
         if (controller != null && state != null) {
             publishedStates[controller.sessionToken] = state
         }
     }
 
-    private fun findPlayingMediaController() {
+    private fun findPlayingMediaController(reason: String) {
         val activeSessions = getActiveSessions()
         publishedStates.keys.retainAll(activeSessions.mapTo(HashSet()) { it.sessionToken })
-        // Package names only. Each session's playback state and info are a binder call apiece, and
-        // the log line used to make two per session just to be formatted - before the logger had
-        // even decided whether to keep it.
-        Timber.d("Active Sessions %s", activeSessions.map { it.packageName })
+        // Package and token only. Each session's playback state and info are a binder call apiece,
+        // and the log line used to make two per session just to be formatted - before the logger
+        // had even decided whether to keep it. The token costs none and tells two sessions of one
+        // app apart.
+        Timber.d("Active Sessions %s", activeSessions.map { it.logLabel() })
 
         val newController = activeSessions.firstOrNull { it.isPlaying() }
 
@@ -100,15 +113,15 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
             currentController?.registerCallback(mediaCallback)
         }
 
-        Timber.d("Reported session %s", reportedController?.packageName)
-        setReportedController(reportedController)
+        Timber.d("Reported session %s", reportedController.logLabel())
+        setReportedController(reportedController, "resolved after $reason")
     }
 
     private fun getActiveSessions(): List<MediaController> {
         return try {
             mediaSessionManager.getActiveSessions(notificationListenerComponent)
         } catch (e: SecurityException) {
-            value = Resource.error(context.getString(R.string.error_notification_access), null)
+            reportMissingAccess()
             emptyList()
         }
     }
@@ -165,15 +178,20 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
         try {
             mediaSessionManager.addOnActiveSessionsChangedListener(this, notificationListenerComponent)
         } catch (e: SecurityException) {
-            value = Resource.error(context.getString(R.string.error_notification_access), null)
+            reportMissingAccess()
         }
 
-        updateControllerIfNeeded()
+        updateControllerIfNeeded("activated")
+    }
+
+    private fun reportMissingAccess() {
+        lastReportReason = "no notification access"
+        value = Resource.error(context.getString(R.string.error_notification_access), null)
     }
 
     override fun onActiveSessionsChanged(controllers: MutableList<MediaController>?) {
-        Timber.d("ActiveSessions changed %s", controllers?.map { it.packageName })
-        updateControllerIfNeeded()
+        Timber.d("ActiveSessions changed %s", controllers?.map { it.logLabel() })
+        updateControllerIfNeeded("session list changed")
     }
 
     override fun onActive() {
@@ -193,10 +211,11 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
     }
 
     /** Re-resolves the reported session when the playing one is gone or has stopped playing.
-     *  Returns whether it did, in which case the new resolution has already been reported. */
-    fun updateControllerIfNeeded(): Boolean {
+     *  Returns whether it did, in which case the new resolution has already been reported.
+     *  [reason] says what prompted the check, for [lastReportReason]. */
+    fun updateControllerIfNeeded(reason: String): Boolean {
         if (!isCurrentControllerActive() || currentController?.isPlaying() != true) {
-            findPlayingMediaController()
+            findPlayingMediaController(reason)
             return true
         }
         return false
@@ -239,12 +258,12 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
             // starts playback is the first the new callback would otherwise never see.
             rememberPublished(controller, state)
             if (state?.isPlaying() == true) {
-                updateControllerIfNeeded()
+                updateControllerIfNeeded("${controller.logLabel()} started playing")
             }
         }
 
         override fun onAudioInfoChanged(info: MediaController.PlaybackInfo) {
-            updateControllerIfNeeded()
+            updateControllerIfNeeded("audio info of idle ${controller.logLabel()}")
         }
 
         /**
@@ -262,7 +281,7 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
          * session cannot have changed - only its metadata has.
          */
         override fun onMetadataChanged(metadata: android.media.MediaMetadata?) {
-            reportResolvedSession()
+            reportResolvedSession("metadata of idle ${controller.logLabel()}")
         }
     }
 
@@ -274,11 +293,12 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
      * instead of showing the track that had just been loaded. [lastReportedController] is the
      * session the watch is actually being shown, which is what a metadata change is about.
      */
-    private fun reportResolvedSession() {
-        setReportedController(currentController ?: lastReportedController)
+    private fun reportResolvedSession(reason: String) {
+        setReportedController(currentController ?: lastReportedController, reason)
     }
 
-    private fun setReportedController(mediaController: MediaController?) {
+    private fun setReportedController(mediaController: MediaController?, reason: String) {
+        lastReportReason = reason
         value = if (mediaController == null) {
             null
         } else {
@@ -291,19 +311,21 @@ class ActiveMediaSessionProvider @Inject constructor(private val context: Contex
         this.mediaCallback = object : MediaController.Callback() {
             override fun onPlaybackStateChanged(state: PlaybackState?) {
                 rememberPublished(currentController, state)
-                if (updateControllerIfNeeded()) return
+                if (updateControllerIfNeeded("state of playing ${currentController.logLabel()}")) return
                 // Still the session playing. This used to end here, so nothing that changed
                 // *while* playing - a seek or a like on the phone, a speed change - reached the
                 // watch until something unrelated caused a retransmission. Reported now, but only
                 // when it says something new: see PlaybackReportPolicy for why not every update.
                 val snapshot = state?.let(::snapshotOf) ?: return
-                val worthReporting = PlaybackReportPolicy.worthReporting(lastPlayback, snapshot)
+                val change = PlaybackReportPolicy.changeWorthReporting(lastPlayback, snapshot)
                 lastPlayback = snapshot
-                if (worthReporting) reportResolvedSession()
+                if (change != null) {
+                    reportResolvedSession("playback state of ${currentController.logLabel()}: $change")
+                }
             }
 
             override fun onMetadataChanged(metadata: android.media.MediaMetadata?) {
-                reportResolvedSession()
+                reportResolvedSession("metadata of playing ${currentController.logLabel()}")
             }
         }
     }
@@ -321,6 +343,14 @@ fun PlaybackState.isPlaying() : Boolean {
 fun MediaController.isPlaying() : Boolean {
     return this.playbackState?.isPlaying() == true
 }
+
+/**
+ * The package and the session, for logs. Two sessions of one app are told apart by the token, which
+ * compares by the session's binder - the same identity the rest of this file uses - so the hex
+ * digest stays the same for as long as the session lives.
+ */
+fun MediaController?.logLabel(): String =
+        if (this == null) "none" else "$packageName#${Integer.toHexString(sessionToken.hashCode())}"
 
 /**
  * Which media session should be published to observers.

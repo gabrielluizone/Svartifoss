@@ -18,7 +18,6 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
@@ -48,7 +47,6 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -72,10 +70,6 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.graphics.CompositingStrategy
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -104,6 +98,7 @@ import com.svartifoss.snfell.common.CoverMotion
 import com.svartifoss.snfell.common.OverlayBackdropPatterns
 import com.svartifoss.snfell.common.WatchTypography
 import com.svartifoss.snfell.common.TitleTextMode
+import com.svartifoss.snfell.common.TitleBand
 import androidx.core.graphics.ColorUtils
 import androidx.wear.compose.material3.Icon
 import androidx.wear.compose.material3.LocalTextStyle
@@ -119,6 +114,7 @@ import com.svartifoss.snfell.common.SHADING_MAX_MULTIPLIER
 import com.svartifoss.snfell.watch.theme.GoogleSansFamily
 import com.svartifoss.snfell.watch.view.compose.SuperellipseShape
 import com.svartifoss.snfell.watch.view.compose.drawAccentFloorGlow
+import com.svartifoss.snfell.watch.view.compose.trackMarquee
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.wrapContentSize
@@ -1661,7 +1657,7 @@ internal fun AdaptiveTitleText(
          * measures identically, so a second report would be a duplicate rather than news.
          *
          * The one visible cost is a scrolling title, where both copies run their own
-         * `basicMarquee`. They enter composition in the same frame with identical parameters, so
+         * `trackMarquee`. They enter composition in the same frame with identical parameters, so
          * they travel in step; nothing enforces that beyond their inputs being the same.
          *
          * Defaults off [NowPlayingFaceState] for [shadow]'s reason.
@@ -1789,92 +1785,26 @@ internal fun AdaptiveTitleText(
                 letterSpacing, lineHeight, textAlign, modifier, maxLines, onLineCount
         )
         // "marquee", and the fallback for any value this build doesn't know yet.
-        else -> {
-            // Whether the line is actually longer than the room it has, which is the only state
-            // the fade below belongs in. Measured rather than assumed: `basicMarquee` hands its
-            // child unbounded width, so the text reports its natural size while the node reports
-            // the room - and a short line in this mode simply sits still, where fading its ends
-            // would eat the first and last letters of a title that is perfectly legible.
-            var roomWidth by remember { mutableIntStateOf(0) }
-            var lineWidth by remember(text) { mutableIntStateOf(0) }
-            Text(
-                    text = text,
-                    color = color,
-                    fontSize = fontSize,
-                    fontWeight = fontWeight,
-                    fontStyle = fontStyle,
-                    fontFamily = fontFamily,
-                    letterSpacing = letterSpacing,
-                    textAlign = textAlign,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    modifier = modifier
-                            .onSizeChanged { roomWidth = it.width }
-                            .marqueeFade(enabled = roomWidth in 1 until lineWidth)
-                            // Int.MAX_VALUE, not the default. `basicMarquee` ships with
-                            // `iterations = 3`: the title scrolled three times and then stopped
-                            // dead, and the only thing that appeared to bring it back was a
-                            // pause/resume - which restarts the animation by recomposing, not by
-                            // scrolling again. From the wrist that is indistinguishable from the
-                            // scroll breaking whenever the screen had been off for a while.
-                            .basicMarquee(iterations = Int.MAX_VALUE),
-                    onTextLayout = {
-                        lineWidth = it.size.width
-                        onLineCount?.invoke(1)
-                    }
-            )
-        }
+        else -> Text(
+                text = text,
+                color = color,
+                fontSize = fontSize,
+                fontWeight = fontWeight,
+                fontStyle = fontStyle,
+                fontFamily = fontFamily,
+                letterSpacing = letterSpacing,
+                textAlign = textAlign,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                // Scrolls only when the line is longer than its room, forever (a title that
+                // stopped after three passes - `basicMarquee`'s default - looked broken from the
+                // wrist), and dissolves its ends only while it moves: at rest every glyph is
+                // sharp. See trackMarquee.
+                modifier = modifier.trackMarquee(),
+                onTextLayout = { onLineCount?.invoke(1) }
+        )
     }
 }
-
-/**
- * How much of each end a scrolling line dissolves over.
- *
- * Wide enough that a glyph visibly thins out rather than being chopped, narrow enough that a short
- * word is never swallowed whole while it crosses. Shared by all three renderers, so the watch, the
- * queue and the phone's miniature dissolve over the same distance.
- */
-internal val MARQUEE_FADE_WIDTH = 18.dp
-
-/**
- * Dissolves a scrolling line at both ends instead of letting it appear and vanish at a hard edge.
- *
- * A marquee clipped to its box reads as text passing behind two invisible walls - every glyph is
- * fully opaque right up to the moment it is cut in half. Fading the ends makes the same movement
- * read as text coming into and out of view, which is what it actually is.
- *
- * Done as an **alpha mask** (`BlendMode.DstIn` over an offscreen layer) rather than by painting the
- * background colour over the ends, because on every face here the ground is album artwork: a solid
- * wash at the edges would be a pair of smudges over the cover. The offscreen layer is what makes
- * DstIn address the text's own pixels rather than everything drawn beneath it, and it is the one
- * real cost - a layer per scrolling line, on a line that is already animating every frame.
- *
- * [enabled] is a parameter rather than something inferred here because this modifier cannot see
- * whether the text overflows; the caller measures that, and passing false has to cost nothing.
- */
-internal fun Modifier.marqueeFade(
-        enabled: Boolean = true,
-        edge: Dp = MARQUEE_FADE_WIDTH
-): Modifier = if (!enabled) this else this
-        .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
-        .drawWithContent {
-            drawContent()
-            // Never more than a third of the width each: on a narrow line a fixed 18dp from both
-            // ends would leave the middle as the only fully-opaque part, which reads as the text
-            // being dimmed rather than as it entering and leaving.
-            val edgePx = edge.toPx().coerceAtMost(size.width / 3f)
-            if (edgePx <= 0f || size.width <= 0f) {
-                return@drawWithContent
-            }
-            val stop = edgePx / size.width
-            drawRect(
-                    brush = Brush.horizontalGradient(
-                            0f to Color.Transparent,
-                            stop to Color.Black,
-                            1f - stop to Color.Black,
-                            1f to Color.Transparent),
-                    blendMode = BlendMode.DstIn)
-        }
 
 /** Single line, font size stepped down until it fits - no wrap, no scroll. */
 @Composable
@@ -2076,17 +2006,23 @@ internal fun NowPlayingFaceState.blockArrangement(
  * inset below is measured where the text will really be rather than where it was drawn.
  *
  * `follow` returns the face's own band unchanged, which is what keeps an unmoved face pixel-identical.
+ *
+ * [bottomEdge] is where a block sent to the bottom stops when the face says so ([BlockRoom.floor]);
+ * without it the block is assumed to sit on the shared chrome at the bottom of the screen. A face
+ * that stops its block above its own controls has to pass it, or the chord is measured a fifth of
+ * the screen lower than the text and the top lines of a wrapped title end up on the bezel.
  */
 internal fun NowPlayingFaceState.blockBand(
         designedTop: Float,
-        designedHeight: Float
+        designedHeight: Float,
+        bottomEdge: Float? = null
 ): ClosedFloatingPointRange<Float> {
     val height = designedHeight.coerceIn(0f, 1f)
     val top = when (textBlockPosition) {
         TextBlockPosition.FOLLOW -> designedTop
         TextBlockPosition.TOP -> blockTopClearanceFraction()
         TextBlockPosition.MIDDLE -> (1f - height) / 2f
-        TextBlockPosition.BOTTOM -> 1f - blockBottomClearanceFraction() - height
+        TextBlockPosition.BOTTOM -> (bottomEdge ?: (1f - blockBottomClearanceFraction())) - height
     }.coerceIn(0f, 1f)
     return top..(top + height).coerceAtMost(1f)
 }
@@ -2147,7 +2083,8 @@ internal fun NowPlayingFaceState.blockSafeSideInset(
  * padding only the children would leave a `fillMaxWidth` column measuring the full screen and the
  * outermost line would still be placed on the bezel.
  * [fitToScreen] also fits the authored placement; pass measured heights and zero for hidden rows.
- * [isRound] lets rectangular screens retain only the designed margin.
+ * [isRound] lets rectangular screens retain only the designed margin. [bottomEdge] is the face's
+ * own stop for a block sent to the bottom - see [blockBand].
  */
 internal fun NowPlayingFaceState.blockLineInsets(
         screen: Dp,
@@ -2156,7 +2093,8 @@ internal fun NowPlayingFaceState.blockLineInsets(
         elementHeights: List<Dp>,
         floor: Dp = 0.dp,
         fitToScreen: Boolean = false,
-        isRound: Boolean = true
+        isRound: Boolean = true,
+        bottomEdge: Float? = null
 ): BlockLineInsets {
     val floorFraction = if (screen > 0.dp) floor / screen else 0f
     if (!isRound || (!blockPlacementOverridden && !fitToScreen) || elementHeights.isEmpty()) {
@@ -2169,7 +2107,7 @@ internal fun NowPlayingFaceState.blockLineInsets(
         BlockAnchor.CENTER -> (1f - height) / 2f
         BlockAnchor.BOTTOM -> 1f - designedEdgeFraction - height
     }
-    val band = blockBand(designedTop, height)
+    val band = blockBand(designedTop, height, bottomEdge)
     val insets = RoundScreenText.lineSideInsets(band.start, fractions)
             .map { maxOf(it, floorFraction) }
     val outer = insets.min()
@@ -2235,6 +2173,71 @@ internal fun NowPlayingFaceState.blockSafeVerticalInset(screen: Dp): Dp = when (
     TextBlockPosition.FOLLOW, TextBlockPosition.MIDDLE -> 0.dp
 }
 
+/**
+ * The vertical room for a block on a face whose own controls begin at [floor] (a screen fraction
+ * from the top), wherever the user has put the block.
+ *
+ * [blockSafeVerticalInset] only knows the shared chrome - the clock above, the mini-button row
+ * below - and so a block moved to the bottom of Poster or Studio landed on their play mark, their
+ * progress orb and their track time. Here the face says where its controls start: a block that
+ * follows the face, or sits in the middle, stays centred and may grow only as far as that floor; one
+ * moved to the top or the bottom lives between the clock's clearance and the floor, so "bottom"
+ * means as low as the face has room for, not over its controls.
+ *
+ * [BlockRoom.maxHeight] is the cap to put on the block itself; [TitleBand.lineCeiling] turns the
+ * same number into the title's line ceiling, which is the half the phone's miniature can mirror.
+ */
+internal fun NowPlayingFaceState.blockRoomAbove(screen: Dp, floor: Float): BlockRoom {
+    // The face's floor alone is not the whole story: the shared chrome in the bottom band - the
+    // mini-button row or the Up Next pill - can start higher, and with the player controls hidden
+    // Poster's own floor drops below it. The old shared inset knew about that chrome, so this
+    // keeps knowing about it rather than trading one collision for another.
+    val stop = TitleBand.effectiveFloor(floor, 1f - blockBottomClearanceFraction())
+    return when (textBlockPosition) {
+        TextBlockPosition.TOP, TextBlockPosition.BOTTOM -> {
+            val top = blockTopClearanceFraction()
+            BlockRoom(
+                    top = screen * top,
+                    bottom = screen * (1f - stop).coerceAtLeast(0f),
+                    maxHeight = screen * TitleBand.movedBand(top, stop),
+                    floor = stop)
+        }
+        TextBlockPosition.FOLLOW, TextBlockPosition.MIDDLE ->
+            BlockRoom(0.dp, 0.dp, screen * TitleBand.centredBand(stop), stop)
+    }
+}
+
+/**
+ * See [blockRoomAbove]: the padding that places the block, the cap on its height, and [floor], the
+ * screen fraction the block stops at - which [blockLineInsets] needs to measure the chord where a
+ * block sent to the bottom really is.
+ */
+internal data class BlockRoom(val top: Dp, val bottom: Dp, val maxHeight: Dp, val floor: Float)
+
+/**
+ * This state with the title, the artist and the playing app's mark all scaled by [fit] - the shrink
+ * [TitleBand.fitScale] asks for once the user's sizes no longer fit a face's band. Hand the result
+ * to the title and artist helpers of that band, which read their sizes from the state they are
+ * given; the same factor on all three keeps the block in proportion. [title] or [artist] false
+ * leaves that line (the artist taking the app mark with it) alone, for a face whose two lines have
+ * bands of their own (Ribbon). A [fit] of 1 is this state.
+ */
+internal fun NowPlayingFaceState.withTextFit(
+        fit: Float,
+        title: Boolean = true,
+        artist: Boolean = true
+): NowPlayingFaceState =
+        if (!(fit < 1f)) this else copy(
+                titleTypography = if (title) {
+                    titleTypography.copy(scale = titleTypography.scale * fit)
+                } else titleTypography,
+                artistTypography = if (artist) {
+                    artistTypography.copy(scale = artistTypography.scale * fit)
+                } else artistTypography,
+                sourceIconTypography = if (artist) {
+                    sourceIconTypography.copy(scale = sourceIconTypography.scale * fit)
+                } else sourceIconTypography)
+
 /** Keep a face's authored offset only while its placement still follows that face. */
 internal fun NowPlayingFaceState.blockDesignedTopPadding(designed: Dp): Dp =
         if (textBlockPosition == TextBlockPosition.FOLLOW) designed else 0.dp
@@ -2253,8 +2256,7 @@ internal fun NowPlayingFaceState.blockVerticalArrangement(
     TextBlockPosition.BOTTOM -> Arrangement.Bottom
 }
 
-private fun NowPlayingFaceState.blockTopClearanceFraction(): Float =
-        if (showClock) CLOCK_CLEARANCE_FRACTION else EDGE_MARGIN_FRACTION
+private fun NowPlayingFaceState.blockTopClearanceFraction(): Float = TitleBand.movedTop(showClock)
 
 /** The shared mini-button row or Up Next pill occupies the bottom band when its top is below 1. */
 private fun NowPlayingFaceState.blockBottomClearanceFraction(): Float = maxOf(
@@ -2273,11 +2275,11 @@ private const val ASSUMED_BLOCK_FRACTION = 0.20f
  */
 private const val DEFAULT_DESIGNED_BLOCK_TOP = 0.5f - ASSUMED_BLOCK_FRACTION / 2f
 
-/** How close to the glass a moved block is allowed to sit before the chord is measured. */
-private const val EDGE_MARGIN_FRACTION = 0.08f
-
-/** Clock top padding + its maximum configurable glyph height + a visible gap, in screen fractions. */
-private const val CLOCK_CLEARANCE_FRACTION = 0.22f
+/**
+ * How close to the glass a moved block is allowed to sit before the chord is measured. Held in
+ * [TitleBand] beside the clock's clearance, so the phone's miniature moves a block to the same depth.
+ */
+private const val EDGE_MARGIN_FRACTION = TitleBand.EDGE_MARGIN
 
 /**
  * Where the block sits in the face's own Box, on both axes at once.
@@ -2422,14 +2424,18 @@ internal fun ArtistLineText(
         /** Defaulted off the state inside the helper, never at the call site: fifteen faces call
          *  this, and a parameter they each had to opt into is how the title effects ended up
          *  resolved, published and read by nothing. */
-        mode: String = state.artistTextMode
+        mode: String = state.artistTextMode,
+        /** The artist's family unless a face sets the line in its own (Verse's title card uses the
+         *  lyric face, as its lyric lines do); everything else about the line still comes from the
+         *  artist's typography. */
+        fontFamily: FontFamily = state.artistFont
 ) {
     if (!LocalTrackTextSlideActive.current) {
         val slide = rememberTrackTextSlide(text, enabled = !state.ambient)
         CompositionLocalProvider(LocalTrackTextSlideActive provides true) {
             ArtistLineText(
                     slide.text, state, color, fontSize, modifier.then(slide.modifier), fontWeight,
-                    lineHeight, letterSpacing, textAlign, mode)
+                    lineHeight, letterSpacing, textAlign, mode, fontFamily)
         }
         return
     }
@@ -2448,7 +2454,7 @@ internal fun ArtistLineText(
                 modifier = modifier,
                 fontWeight = fontWeight,
                 fontStyle = state.artistFontStyle,
-                fontFamily = state.artistFont,
+                fontFamily = fontFamily,
                 letterSpacing = letterSpacing,
                 lineHeight = lineHeight,
                 textAlign = textAlign,
@@ -2467,16 +2473,17 @@ internal fun ArtistLineText(
         Box(modifier = modifier, propagateMinConstraints = true) {
             ArtistLineTextPass(
                     text, state, outline.color, fontSize, Modifier, fontWeight, lineHeight,
-                    letterSpacing, textAlign, Stroke(width = strokeWidth), state.artistShadow)
+                    letterSpacing, textAlign, Stroke(width = strokeWidth), state.artistShadow,
+                    fontFamily)
             ArtistLineTextPass(
                     text, state, color, fontSize, Modifier, fontWeight, lineHeight, letterSpacing,
-                    textAlign, drawStyle = null, shadow = null)
+                    textAlign, drawStyle = null, shadow = null, fontFamily = fontFamily)
         }
         return
     }
     ArtistLineTextPass(
             text, state, color, fontSize, modifier, fontWeight, lineHeight, letterSpacing,
-            textAlign, drawStyle = null, shadow = state.artistShadow)
+            textAlign, drawStyle = null, shadow = state.artistShadow, fontFamily = fontFamily)
 }
 
 /**
@@ -2497,7 +2504,8 @@ private fun ArtistLineTextPass(
         letterSpacing: TextUnit,
         textAlign: TextAlign,
         drawStyle: DrawStyle?,
-        shadow: Shadow?
+        shadow: Shadow?,
+        fontFamily: FontFamily
 ) {
     val spec = state.artistTypography
     Text(
@@ -2520,7 +2528,7 @@ private fun ArtistLineTextPass(
             fontSize = if (spec.scale == 1f) fontSize else spec.scaled(fontSize.value).sp,
             fontWeight = if (spec.weight == 400) fontWeight else FontWeight(spec.weight),
             fontStyle = state.artistFontStyle,
-            fontFamily = state.artistFont,
+            fontFamily = fontFamily,
             lineHeight = lineHeight,
             letterSpacing = if (spec.trackingEm == 0f) letterSpacing else spec.trackingEm.em,
             textAlign = state.blockTextAlign(textAlign),

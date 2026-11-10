@@ -168,10 +168,21 @@ object TextBlockPlacementSupport {
      *  - **split** - the seam is the face. Text above the seam is not Split, it is artwork with a
      *    caption on it, and the panel colour the text contrast was resolved against is no longer
      *    behind it.
+     *  - **expressive** - the transport row splits the screen, and the band above it is where the
+     *    text already sits. Below it are the track time and the mini-button row, so "bottom" put
+     *    the title over the time, and "top" only moved the block down from the band it was drawn
+     *    for and onto the transport row.
+     *  - **eclipse** - the disc holds the centre and the time sits under it: grounded, the text
+     *    ran over the time.
+     *  - **aurora** - the text lives inside its card. Moved, it left the card and landed on the
+     *    track time below.
+     *
+     * Poster and Studio stay: their controls are at the bottom of the screen, and "bottom" there
+     * means as low as the room above those controls goes (see `blockRoomAbove` on the watch and
+     * [TitleBand]), never on top of them.
      */
     val POSITION_FACES: Set<String> = setOf(
-            "classic", "expressive", "poster", "studio", "aurora", "eclipse", "immersive", "depth",
-            "artist", "chat", "note")
+            "classic", "poster", "studio", "immersive", "depth", "artist", "chat", "note")
 
     fun allowsAlign(face: String?): Boolean = face in ALIGN_FACES
 

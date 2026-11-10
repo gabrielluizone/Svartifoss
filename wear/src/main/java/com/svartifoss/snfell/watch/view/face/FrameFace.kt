@@ -187,9 +187,15 @@ private fun BoxScope.FrameHeaderRow(state: NowPlayingFaceState, screen: Dp, cont
 
 @Composable
 private fun FrameArtistChip(state: NowPlayingFaceState) {
-    // The chip is player chrome, not artist-text chrome: an artist custom-colour preference must
-    // not pin this face to a stale teal. Lift the live primary accent for a reliable on-chip pair.
-    val fillArgb = WatchTheme.accentForSurface(state.accentColor)
+    // The chip is player chrome, so by default it is filled from the live primary accent, lifted
+    // for a reliable on-chip pair. A colour the user picked for the artist fills it instead: the
+    // chip *is* the artist on this face, and ignoring the choice made the setting look broken here
+    // while it worked on every other face. The ink is decided against whichever fill it lands on.
+    val fillArgb = if (state.artistColorChosen) {
+        state.artistColor
+    } else {
+        WatchTheme.accentForSurface(state.accentColor)
+    }
     val fill = Color(fillArgb)
     val ink = if (AdaptiveTextContrast.prefersDarkText(fillArgb)) Color.Black else Color.White
     Row(

@@ -27,6 +27,10 @@ message WatchInfo {
   // replaced by the watch face". Absent on builds from before the field. Deliberately the API
   // level alone - model and fingerprint would identify the device.
   optional int32 platformApiLevel = 10;
+  // True when this watch draws media-action icons from MediaAction.iconKey and the music-state
+  // DataItem's assets, so the phone can leave the bytes out of the state. Absent on builds from
+  // before the field, which keep receiving them inline.
+  optional bool actionIconsByKey = 11;
 
   message WatchButton {
     required string label = 1;

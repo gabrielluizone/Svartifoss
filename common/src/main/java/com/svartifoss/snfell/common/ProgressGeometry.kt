@@ -148,3 +148,66 @@ object ProgressShape {
         else -> 1f
     }
 }
+
+/**
+ * The marks of a tick or dot scale laid along a ring or an arc: how many there are, where each one
+ * sits, which are the long ones and which are behind the playhead.
+ *
+ * The watch's `CircularProgressSeekBar` and the phone's miniature both lay a scale out from here, so
+ * the two cannot disagree about a single mark. They had: each kept its own copy, and the copies
+ * differed on exactly the case that matters, the open arcs.
+ *
+ * A scale is described by its *divisions* - sixty for a watch's minute track, twenty-four for the
+ * quarter-marked one - and a division is the gap between two marks. Around a closed ring the last
+ * division runs into the first mark, so there are as many marks as divisions. An open arc has two
+ * ends and wants a mark on each, so it has one more mark than it has divisions. Laying the ring's
+ * number of marks across an arc instead, which is what this used to do, leaves the far end one place
+ * short of the beat the near end starts on: with a long mark every fifth, "Open at top" began on a
+ * long mark at one side, ended on a short one at the other, and had its mark at six o'clock two
+ * degrees off the axis.
+ *
+ * Pure, like [ProgressShape], so the arithmetic is pinned by JVM tests while the drawing that
+ * consumes it stays a thin layer of canvas calls.
+ */
+object ProgressScale {
+
+    /**
+     * How many divisions the scale has.
+     *
+     * [count] on a closed ring. On an open arc with a beat ([emphasizeEvery] above one) it is
+     * [count] rounded up to a whole number of beats, which is what lets the scale finish on the long
+     * mark it began with: sixty divisions in fives run 0 to 60 rather than sixty marks 0 to 59. An
+     * arc with no beat has nothing to finish on, so it keeps its [count] marks, both ends included,
+     * which is [count] minus one divisions.
+     */
+    fun divisions(count: Int, emphasizeEvery: Int, closed: Boolean): Int = when {
+        count <= 0 -> 0
+        closed -> count
+        emphasizeEvery > 1 -> (count + emphasizeEvery - 1) / emphasizeEvery * emphasizeEvery
+        else -> max(1, count - 1)
+    }
+
+    /** How many marks are drawn: one per division around a ring, one more along an arc with a beat. */
+    fun markCount(count: Int, emphasizeEvery: Int, closed: Boolean): Int = when {
+        count <= 0 -> 0
+        closed || emphasizeEvery <= 1 -> count
+        else -> divisions(count, emphasizeEvery, closed) + 1
+    }
+
+    /** How far along the sweep mark [index] sits, 0..1, for a scale of [divisions]. */
+    fun fraction(index: Int, divisions: Int): Float =
+            if (divisions <= 0) 0f else index.toFloat() / divisions
+
+    /** True for the long marks: every [emphasizeEvery]th, starting with the first. */
+    fun isMajor(index: Int, emphasizeEvery: Int): Boolean =
+            emphasizeEvery > 0 && index % emphasizeEvery == 0
+
+    /**
+     * True when a mark [fraction] of the way along is behind [progress] (0..1).
+     *
+     * Nothing is played at zero, and at the very end everything is: the last mark of an arc sits at
+     * exactly 1, which no position can pass, so on a finished track it would otherwise stay dark.
+     */
+    fun isPlayed(fraction: Float, progress: Float): Boolean =
+            progress > 0f && (fraction < progress || progress >= 1f)
+}

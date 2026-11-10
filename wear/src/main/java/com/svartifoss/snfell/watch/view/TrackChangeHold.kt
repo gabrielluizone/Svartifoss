@@ -26,7 +26,7 @@ package com.svartifoss.snfell.watch.view
  * pace, with the track they asked for already on screen and waiting - so the press looks answered
  * and then undone, three times over.
  *
- * **Held, never discarded.** The phone dedupes its own transmissions (`equalsIgnoringTime`), so a
+ * **Held, never discarded.** The phone dedupes its own transmissions (`MusicStateDedupe`), so a
  * state thrown away here could be the only copy that is ever sent - a skip that silently failed
  * would then leave the watch showing playback that is not happening, for the rest of the session.
  * Every held state is kept and applied when the window closes, so the worst case is that the truth

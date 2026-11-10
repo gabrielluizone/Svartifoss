@@ -25,7 +25,7 @@ import kotlin.math.abs
  */
 object PlaybackReportPolicy {
 
-    /** Matches `MusicService.SEEK_DETECTION_THRESHOLD_MS`: a smaller jump is the player's own
+    /** Matches [MusicStateDedupe.SEEK_DETECTION_THRESHOLD_MS]: a smaller jump is the player's own
      *  jitter, not a seek, and the phone would not retransmit for it anyway. */
     const val SEEK_THRESHOLD_MS = 1_500L
 
@@ -42,15 +42,32 @@ object PlaybackReportPolicy {
             val customActions: List<String>
     )
 
-    fun worthReporting(previous: Snapshot?, current: Snapshot): Boolean {
+    fun worthReporting(previous: Snapshot?, current: Snapshot): Boolean =
+            changeWorthReporting(previous, current) != null
+
+    /** What [current] says that [previous] did not, worded for the phone's transmission log, or
+     *  null when it is not worth reporting. */
+    fun changeWorthReporting(previous: Snapshot?, current: Snapshot): String? {
         // Nothing to compare against means the session was only just resolved, and resolving
         // reports it - see ActiveMediaSessionProvider.
-        if (previous == null) return false
-        if (current.playing != previous.playing) return true
-        if (current.speed != previous.speed) return true
-        if (current.actions != previous.actions) return true
-        if (current.activeQueueItemId != previous.activeQueueItemId) return true
-        if (current.customActions != previous.customActions) return true
+        if (previous == null) return null
+        if (current.playing != previous.playing) {
+            return "playing ${previous.playing} -> ${current.playing}"
+        }
+        if (current.speed != previous.speed) return "speed ${previous.speed} -> ${current.speed}"
+        if (current.actions != previous.actions) {
+            return "actions ${previous.actions.toString(16)} -> ${current.actions.toString(16)}"
+        }
+        if (current.activeQueueItemId != previous.activeQueueItemId) {
+            return "queue item ${previous.activeQueueItemId} -> ${current.activeQueueItemId}"
+        }
+        if (current.customActions != previous.customActions) {
+            // The first entry that differs; the whole list runs to hundreds of characters.
+            val index = (0 until maxOf(previous.customActions.size, current.customActions.size))
+                    .first { previous.customActions.getOrNull(it) != current.customActions.getOrNull(it) }
+            return "custom action #$index ${previous.customActions.getOrNull(index)} -> " +
+                    "${current.customActions.getOrNull(index)}"
+        }
 
         val elapsed = current.positionUpdateTimeMs - previous.positionUpdateTimeMs
         val expected = if (previous.playing) {
@@ -58,6 +75,10 @@ object PlaybackReportPolicy {
         } else {
             previous.positionMs
         }
-        return abs(current.positionMs - expected) > SEEK_THRESHOLD_MS
+        return if (abs(current.positionMs - expected) > SEEK_THRESHOLD_MS) {
+            "position expected $expected ms, got ${current.positionMs} ms"
+        } else {
+            null
+        }
     }
 }

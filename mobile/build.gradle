@@ -36,7 +36,7 @@ android {
         // Wear OS has a separate API-35 requirement and remains configured in wear/build.gradle.
         targetSdkVersion 36
         compileSdk 36
-        versionCode 92
+        versionCode 93
         versionName "4.3.1"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
         wearAppUnbundled true
@@ -81,6 +81,16 @@ android {
     }
     packagingOptions {
         exclude 'META-INF/gradle/*'
+    }
+    // Fonts are stored uncompressed, so Android maps them straight out of the APK. A compressed
+    // font is inflated whole into the Java heap every time a Typeface is built from it, and the
+    // copy is never freed: Android keeps every family it derived a style from for the life of the
+    // process, and WatchFontCatalog keeps each base on purpose. Scrolling the font picker once added
+    // about 57 MB to the phone process - which then lives on as the music service - on a Pixel 3
+    // (2026-11-04); with fonts stored, about 12 MB. Costs about 22 MB of installed size. Pinned by
+    // FontPackagingContractTest; measurements in docs/memory-investigation.md.
+    androidResources {
+        noCompress 'ttf', 'otf'
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_21
@@ -282,6 +292,20 @@ tasks.withType(Test).configureEach {
             .withPathSensitivity(PathSensitivity.RELATIVE)
     inputs.file("${rootProject.projectDir}/wear/build.gradle")
             .withPropertyName("wearBuildScriptForR8Contract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // ProgressScaleUsageTest reads the watch's progress ring, which is in the wear module and so not
+    // on this module's test classpath; an edit that goes back to laying the marks out by hand there
+    // would otherwise leave the task UP-TO-DATE and green. (The miniature is compiled into it.)
+    inputs.file("${rootProject.projectDir}/wear/src/main/java/com/svartifoss/snfell/watch/view/CircularProgressSeekBar.kt")
+            .withPropertyName("wearProgressRingForScaleUsage")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // FontPackagingContractTest checks every bundled font of both apps against each build script's
+    // noCompress list. Both scripts and this module's res are declared above; the watch's fonts
+    // are the one thing it reads that nothing else here would notice changing.
+    inputs.dir("${rootProject.projectDir}/wear/src/main/res/font")
+            .withPropertyName("wearFontsForPackagingContract")
             .withPathSensitivity(PathSensitivity.RELATIVE)
 }
 

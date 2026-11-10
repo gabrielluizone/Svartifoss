@@ -400,17 +400,23 @@ private fun TitleCard(state: NowPlayingFaceState, accent: Color, pending: Boolea
             titleIsStatus = state.titleIsStatus,
             artistIsStatus = state.artistIsStatus)
 
+    // Through the shared line helpers, in the lyric face the card is designed around. As two bare
+    // Texts this was the one place on the face the title and artist were drawn whenever a track had
+    // no synced lyric - the common case - and every title and artist control (colour, weight,
+    // size, case, shadow, outline, backdrop) did nothing here, while the running head they replace
+    // honoured all of them.
     Column(horizontalAlignment = state.blockAlignment(Alignment.CenterHorizontally)) {
         if (visibility.title) {
-            Text(
+            TitleLineText(
                     text = state.title,
-                    color = Color.White.copy(alpha = if (pending) 0.55f else 0.90f),
-                    fontFamily = state.lyricFont,
+                    state = state,
+                    color = titleTextColor(
+                            state, Color.White.copy(alpha = if (pending) 0.55f else 0.90f)),
                     fontSize = 19.sp,
+                    fontFamily = state.lyricFont,
                     lineHeight = 24.sp,
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Center,
+                    maxLines = 3,
                     modifier = Modifier.fillMaxWidth())
         }
 
@@ -419,14 +425,15 @@ private fun TitleCard(state: NowPlayingFaceState, accent: Color, pending: Boolea
         }
 
         if (visibility.artist) {
-            Text(
+            ArtistLineText(
                     text = state.artist,
-                    color = accent.copy(alpha = if (pending) 0.45f else 0.80f),
-                    fontFamily = state.lyricFont,
+                    state = state,
+                    // The user's artist colour when they chose one; the card's accent otherwise.
+                    color = (if (state.artistColorChosen) Color(state.artistColor) else accent)
+                            .copy(alpha = if (pending) 0.45f else 0.80f),
                     fontSize = 12.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Center,
+                    fontFamily = state.lyricFont,
                     modifier = Modifier.fillMaxWidth())
         }
     }

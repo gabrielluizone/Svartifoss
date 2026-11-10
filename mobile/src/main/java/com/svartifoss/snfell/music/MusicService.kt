@@ -71,6 +71,7 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.LyricsStatus
 import com.svartifoss.snfell.common.LiveStreamTracker
+import com.svartifoss.snfell.common.MediaActionIcons
 import com.svartifoss.snfell.common.PlaybackPositionEstimate
 import com.svartifoss.snfell.common.PlayerBackgroundStyle
 import com.svartifoss.snfell.common.AppearanceContext
@@ -148,7 +149,6 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         private const val MESSAGE_STOP_SELF = 0
         private val ACK_TIMEOUT_MS = TimeUnit.MINUTES.toMillis(3)
-        private const val SEEK_DETECTION_THRESHOLD_MS = 1500L
 
         /** How long after a volume command the phone is read back - see checkVolumeLanded. Long
          *  enough for the audio service to have applied (or held) it. */
@@ -202,6 +202,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         /** MessageClient rejects payloads over 100 KB; stay well under it. */
         private const val MUSIC_STATE_MESSAGE_MAX_BYTES = 60 * 1024
+
+        /** At most one over-budget warning a minute: a storm is one finding, not a line per state. */
+        private const val PACING_WARNING_INTERVAL_MS = 60_000L
+
+        /** How many recent transmissions the over-budget warning names the causes of. */
+        private const val RECENT_TRIGGERS_KEPT = 30
 
         /**
          * How long a queue jump is given to take visible effect before the media-id route is tried
@@ -356,7 +362,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // re-transmit even when the quick panel is not bound to notification actions -
             // otherwise the icon that arrives just after a track change never reaches the watch.
             if (usesSessionQuickActions() || showSourceIconEnabled()) {
-                currentMediaController?.let(::buildMusicStateAndTransmit)
+                currentMediaController?.let { buildMusicStateAndTransmit(it, "notification actions changed") }
             }
         }
     }
@@ -440,7 +446,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // The notification listener is also used by auto-start, so this central helper
                 // decides whether changing either consumer should bind or unbind it.
                 NotificationService.updateQuickActionsBinding(this)
-                buildMusicStateAndTransmit(currentMediaController)
+                buildMusicStateAndTransmit(currentMediaController, "quick panel source setting")
             }
         } else if (key == MiscPreferences.ENABLE_NOTIFICATION_POPUP.key) {
             // Apply the toggle live instead of only on the next service start. observe/
@@ -458,7 +464,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 backdropArtKey = ""
                 backdropArtBytes = null
                 backdropArtPending = false
-                buildMusicStateAndTransmit(currentMediaController)
+                buildMusicStateAndTransmit(currentMediaController, "custom artwork setting")
             }
         } else if (key == MiscPreferences.ONLINE_ARTWORK_ENABLED.key ||
                 key == MiscPreferences.YOUTUBE_DATA_API_KEY.key) {
@@ -467,7 +473,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // build can try the new configuration immediately.
             queueRefreshHandler.post {
                 coverFallback.invalidate()
-                buildMusicStateAndTransmit(currentMediaController)
+                buildMusicStateAndTransmit(currentMediaController, "online artwork setting")
             }
         }
     }
@@ -567,12 +573,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      */
     private val compatModeCallback = object : MediaControllerCompat.Callback() {
         override fun onShuffleModeChanged(shuffleMode: Int) {
-            buildMusicStateAndTransmit(currentMediaController)
+            buildMusicStateAndTransmit(currentMediaController, "shuffle mode changed")
             scheduleQueueRefresh()
         }
 
         override fun onRepeatModeChanged(repeatMode: Int) {
-            buildMusicStateAndTransmit(currentMediaController)
+            buildMusicStateAndTransmit(currentMediaController, "repeat mode changed")
         }
     }
 
@@ -638,6 +644,26 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private var transmitSequence = 0L
     private var musicTransmitJob: Job? = null
     private var musicMessageJob: Job? = null
+
+    /** How often the state may go out - see [MusicTransmitPacer]. */
+    private val transmitPacer = MusicTransmitPacer()
+
+    /**
+     * The re-read a paced state is waiting for. One at a time: it reads the session afresh, so a
+     * later state that also had to wait is covered by it. [pacedTransmitAtMs] is 0 when none is
+     * scheduled, and is on the elapsedRealtime clock.
+     */
+    private val pacedTransmitHandler = Handler(Looper.getMainLooper())
+    private var pacedTransmitAtMs = 0L
+    private var pacedTransmitTrigger = ""
+    private val pacedTransmit = Runnable {
+        pacedTransmitAtMs = 0L
+        buildMusicStateAndTransmit(currentMediaController, "paced (last: $pacedTransmitTrigger)")
+    }
+
+    /** What asked for each recent transmission, oldest first, for the over-budget warning. */
+    private val recentTransmitTriggers = ArrayDeque<String>()
+    private var lastPacingWarningMs = 0L
 
     // Cache of the last album art decoded from a content URI, keyed by the URI string. Apps
     // that publish art as a URI would otherwise get a fresh Bitmap object on every state
@@ -1020,6 +1046,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         volumeCheckHandler.removeCallbacksAndMessages(null)
         transportCheckHandler.removeCallbacksAndMessages(null)
         recentTracksHandler.removeCallbacks(publishRecentTracks)
+        cancelPacedTransmit()
 
         active = false
 
@@ -1027,10 +1054,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     }
 
     private val mediaCallback = Observer<Resource<MediaController>?> {
+        val trigger = "session provider: ${mediaSessionProvider.lastReportReason}"
         when {
             it == null -> {
                 currentMediaController = null
-                buildMusicStateAndTransmit(null)
+                buildMusicStateAndTransmit(null, trigger)
             }
             it.status == Resource.Status.ERROR -> {
                 transmitError(it.message ?: "")
@@ -1041,7 +1069,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
             else -> {
                 currentMediaController = it.data
-                buildMusicStateAndTransmit(currentMediaController)
+                buildMusicStateAndTransmit(currentMediaController, trigger)
             }
         }
     }
@@ -1131,7 +1159,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             if (held != wasHeld) {
                 Timber.i("Volume %d of %d asked for, %d applied: %s", requested, info.maxVolume, applied,
                         if (held) "held by the hearing-safety limit" else "landed")
-                buildMusicStateAndTransmit(currentMediaController)
+                buildMusicStateAndTransmit(currentMediaController, "hearing-safety check")
             }
         }, VOLUME_LANDED_CHECK_MS)
     }
@@ -1206,7 +1234,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         override fun onReceive(context: Context, intent: Intent) {
             val controller = currentMediaController ?: return
             if (phoneAudioBlock(controller).code != previousMusicState?.audioBlock) {
-                buildMusicStateAndTransmit(controller)
+                buildMusicStateAndTransmit(controller, "Do Not Disturb changed")
             }
         }
     }
@@ -1278,7 +1306,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         controller.transportControls.seekTo(target)
 
         if (controller.sessionToken == currentMediaController?.sessionToken) {
-            buildMusicStateAndTransmit(currentMediaController)
+            buildMusicStateAndTransmit(currentMediaController, "seek issued")
         }
     }
 
@@ -1654,10 +1682,20 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
     }
 
-    private fun buildMusicStateAndTransmit(mediaController: MediaController?) {
+    /**
+     * Reads [mediaController] into a [MusicState] and transmits it, unless it says nothing new.
+     *
+     * [trigger] names what asked for the build, for the `TransmittingToWear` log line only. This
+     * runs from a couple of dozen places, and when the dedupe stops holding, which of them keeps
+     * calling is the first thing the log has to answer.
+     */
+    private fun buildMusicStateAndTransmit(mediaController: MediaController?, trigger: String) {
         applyPendingShortcutShuffle(mediaController)
         val musicStateBuilder = MusicState.newBuilder()
         var albumArt: Bitmap? = null
+        // The media-action icons that travel as assets rather than inline - see attachActionIcon.
+        val actionIcons = LinkedHashMap<String, ByteArray>()
+        val actionIconsByKey = watchInfoProvider.value?.watchInfo?.actionIconsByKey == true
 
         musicStateBuilder.time = System.currentTimeMillis().toInt()
 
@@ -1733,13 +1771,18 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // also carries, when the app published one and the user allows remote covers.
                 albumArt = higherResolutionArtOrSame(albumArt, artUriString)
 
-                // No bitmap and no address to fetch one from: the player has no cover at all and
-                // will not have one a moment later, so look for the album behind it (YouTube is the
-                // case that exists - see CoverFallback; it often finds nothing, and then the
-                // watch shows nothing, as it did). Not when an address is present: that cover is
-                // on its way.
+                // No bitmap and no address to fetch one from. Either the player has no cover at
+                // all, so look for the album behind it (YouTube is the case that exists - see
+                // CoverFallback; it often finds nothing, and then the watch shows nothing, as it
+                // did), or it published the track a moment before its cover, as YouTube Music
+                // does - which is why CoverFallback waits before deciding, and is told when the
+                // player's own cover turns up. Not when an address is present: that cover is on
+                // its way.
                 if (albumArt == null && artUriString == null) {
-                    albumArt = coverFallback.coverFor(newArtist, newTitle)
+                    albumArt = coverFallback.coverFor(newArtist, newTitle,
+                            android.os.SystemClock.elapsedRealtime())
+                } else {
+                    coverFallback.playerHasCover()
                 }
 
                 val duration = meta.getLong(MediaMetadata.METADATA_KEY_DURATION)
@@ -1818,14 +1861,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                             sessionToken = mediaController.sessionToken
                     )
                     if (notificationActions.isNotEmpty()) {
+                        reportQuickActionSource("notification", notificationActions.size,
+                                notificationActions.count { it.iconPng != null }, null)
                         notificationActions.take(MAX_SESSION_QUICK_ACTIONS).forEach { action ->
                             val builder = MediaAction.newBuilder()
                                     .setId(action.id)
                                     .setLabel(action.label)
                                     .setSemantic(action.semantic)
-                            action.iconPng?.takeIf { it.isNotEmpty() }?.let {
-                                builder.iconPng = ByteString.copyFrom(it)
-                            }
+                            attachActionIcon(builder, action.iconPng, actionIconsByKey, actionIcons)
                             musicStateBuilder.addMediaActions(builder.build())
                         }
                     } else {
@@ -1833,6 +1876,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                         // notification does not expose buttons (or while listener access
                         // reconnects). If neither source supplies anything, the watch presents
                         // an explicit unavailable state instead of silently using manual slots.
+                        val actionsBefore = musicStateBuilder.mediaActionsCount
                         playbackState.customActions.orEmpty()
                                 .asSequence()
                                 .filter { it.action.isNotBlank() }
@@ -1851,11 +1895,14 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                                             .setId(customActionCommandId(customAction))
                                             .setLabel(label)
                                             .setSemantic(semantic)
-                                    iconPng?.takeIf { it.isNotEmpty() }?.let {
-                                        builder.iconPng = ByteString.copyFrom(it)
-                                    }
+                                    attachActionIcon(builder, iconPng, actionIconsByKey, actionIcons)
                                     musicStateBuilder.addMediaActions(builder.build())
                                 }
+                        val added = musicStateBuilder.mediaActionsList.drop(actionsBefore)
+                        reportQuickActionSource("session custom actions", added.size,
+                                added.count { it.hasIconPng() || it.iconKey.isNotEmpty() },
+                                MediaNotificationActions.describeForLog(
+                                        mediaController.packageName, mediaController.sessionToken))
                     }
                 }
             }
@@ -1903,30 +1950,63 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             sleepTimer.observe(sleepTimerReadingOf(mediaController, musicState))
         }
 
-        // MediaMetadata is immutable, so as long as the source app hasn't published a new
-        // MediaMetadata object, repeated getBitmap() calls return the same Bitmap reference -
-        // making reference equality a cheap, reliable signal for "is this actually new art".
-        // This must be checked in addition to equalsIgnoringTime(): some apps publish metadata
+        // Compared by its pixels, never by reference. MediaController.getMetadata() is a binder
+        // call that hands back a freshly unparcelled MediaMetadata - Bitmap included - on every
+        // read, so the reference changed on every build and this check alone sent the whole state
+        // again for any callback at all: in one evening of YouTube Music, 72 of 184 transmissions
+        // carried nothing else (docs/watch-sync-battery-investigation.md). Bitmap.sameAs compares
+        // size, config and pixel bytes - a memcmp, well under a millisecond for a cover.
+        // It must still be checked in addition to MusicStateDedupe: some apps publish metadata
         // in two steps (text fields, then artwork moments later); without this, the artwork-only
         // update would look "equal" on every field that comparison checks and get silently
         // dropped, leaving the watch stuck on stale (or missing) album art until some other
-        // unrelated change (e.g. pause) forced a retransmit.
-        val albumArtChanged = albumArt !== previousAlbumArt
+        // unrelated change (e.g. pause) forced a retransmit. Artwork that arrives later differs
+        // in its pixels as well, so comparing them keeps that case.
+        val albumArtChanged = !albumArt.sameCoverAs(previousAlbumArt)
+        val stateDifference = MusicStateDedupe.firstDifference(previousMusicState, musicState)
 
         // Do not waste BT bandwitch and re-transmit equal music state
-        if (!albumArtChanged && !sourceIconChanged && !backdropArtChanged &&
-                musicState.equalsIgnoringTime(previousMusicState)) {
+        if (!albumArtChanged && !sourceIconChanged && !backdropArtChanged && stateDifference == null) {
             return
         }
 
-        Timber.d("TransmittingToWear %s", musicState.logSummary())
+        // Paced: see MusicTransmitPacer. A state that has to wait is not kept - the session is
+        // read again when the wait is over, and what goes out then is whatever it says by then.
+        val nowRealtimeMs = android.os.SystemClock.elapsedRealtime()
+        when (val decision = transmitPacer.decide(nowRealtimeMs)) {
+            is MusicTransmitPacer.Decision.Wait -> {
+                schedulePacedTransmit(decision, trigger, nowRealtimeMs)
+                return
+            }
+            MusicTransmitPacer.Decision.Send -> {
+                transmitPacer.sent(nowRealtimeMs)
+                cancelPacedTransmit()
+                rememberTransmitTrigger(trigger)
+            }
+        }
+
+        // Every condition that let this one through, not only the first: a cover that changed by
+        // its pixels alone and a cover that came with a new title are different findings.
+        val why = listOfNotNull(
+                if (albumArtChanged) {
+                    "cover ${bitmapLogLabel(previousAlbumArt)} -> ${bitmapLogLabel(albumArt)}"
+                } else null,
+                if (sourceIconChanged) {
+                    "source icon ${bytesLogLabel(previousSourceIconBytes)} -> ${bytesLogLabel(sourceIconBytes)}"
+                } else null,
+                if (backdropArtChanged) {
+                    "backdrop image ${bytesLogLabel(previousBackdropArtBytes)} -> ${bytesLogLabel(backdropArt)}"
+                } else null,
+                stateDifference
+        ).joinToString("; ")
         val trackChanged = previousMusicState?.title != musicState.title ||
                 previousMusicState?.artist != musicState.artist
         previousMusicState = musicState
         previousAlbumArt = albumArt
         previousSourceIconBytes = sourceIconBytes
         previousBackdropArtBytes = backdropArt
-        transmitToWear(musicState, albumArt, sourceIconBytes, backdropArt)
+        transmitToWear(musicState, albumArt, sourceIconBytes, backdropArt, actionIcons,
+                "why: $why | via: $trigger | session: ${mediaController.logLabel()}")
 
         // Keep the watch's queue data (QueueActivity + the quick panel's "Up Next" preview)
         // in step with playback. It used to be pushed only when explicitly requested, so the
@@ -2224,7 +2304,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             backdropArtPending = false
             Timber.d("Backdrop artwork %s for %s",
                     if (fetched == null) "unavailable" else "ready", key)
-            buildMusicStateAndTransmit(currentMediaController)
+            buildMusicStateAndTransmit(currentMediaController, "backdrop lookup finished")
         }
         return null
     }
@@ -2273,7 +2353,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             backdropArtPending = false
             Timber.d("Custom backdrop %s for %s",
                     if (resolved == null) "unavailable" else "ready", key)
-            buildMusicStateAndTransmit(currentMediaController)
+            buildMusicStateAndTransmit(currentMediaController, "custom backdrop resolved")
         }
         return null
     }
@@ -2402,14 +2482,20 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         null
     }
 
+    /** [reason] says why this state was sent - see [buildMusicStateAndTransmit]. It is logged here
+     *  rather than there so the line carries the revision the watch will see. [actionIcons] are
+     *  the icons [musicState] names by key only, attached to the final put - see attachActionIcon. */
     private fun transmitToWear(
             musicState: MusicState,
             originalAlbumArt: Bitmap?,
             sourceIconBytes: ByteArray?,
-            backdropArtBytes: ByteArray?
+            backdropArtBytes: ByteArray?,
+            actionIcons: Map<String, ByteArray>,
+            reason: String
     ) {
         val mySequence = ++transmitSequence
         val versionedState = musicState.toBuilder().setSeq(nextMusicSeq()).build()
+        Timber.d("TransmittingToWear %s | %s", versionedState.logSummary(), reason)
         musicTransmitJob?.cancel()
 
         musicTransmitJob = lifecycleScope.launchWithPlayServicesErrorHandling(this) {
@@ -2460,8 +2546,16 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // While this coroutine was suspended encoding art, a newer state may already have
             // been transmitted - putting ours now would overwrite fresh state with stale.
             if (transmitSequence != mySequence) {
+                Timber.d("TransmittingToWear seq=%d superseded before its final put", versionedState.seq)
                 return@launchWithPlayServicesErrorHandling
             }
+            // What the cover cost this time. "reused" covers both the same Bitmap and a new one
+            // with the same pixels; the digest shows whether an encode produced bytes already sent.
+            Timber.d("TransmittingToWear seq=%d cover %s, %d action icon(s) by key", versionedState.seq, when {
+                artBytes == null -> "none"
+                artChanged -> "encoded ${bytesLogLabel(artBytes)} from ${bitmapLogLabel(originalAlbumArt)}"
+                else -> "reused ${bytesLogLabel(artBytes)}"
+            }, actionIcons.size)
             lastSerializedArtSource = originalAlbumArt
             lastSerializedArt = artBytes
 
@@ -2481,6 +2575,13 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 putDataRequest.putAsset(
                         CommPaths.ASSET_BACKDROP_ART, Asset.createFromBytes(backdropArtBytes))
             }
+            // Only on this put, not the interim one above: that put carries no assets at all by
+            // design (the watch reads its absence of a source icon as "still coming"), and the
+            // message has already told the watch which icons to draw - from those it holds, or
+            // from its own glyph for the moment until these land.
+            actionIcons.forEach { (key, png) ->
+                putDataRequest.putAsset(MediaActionIcons.assetName(key), Asset.createFromBytes(png))
+            }
             // Reuse the snapshot's revision. Giving an old snapshot a fresh revision after an
             // await made it appear newer than the state that superseded it.
             putDataRequest.data = versionedState.toByteArray()
@@ -2493,9 +2594,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
     private fun transmitError(error: String): Job {
         // Invalidate any in-flight transmitToWear still encoding art, so it can't finish after
-        // this and overwrite the error with stale "playing" state.
+        // this and overwrite the error with stale "playing" state. A paced re-read scheduled
+        // before the error would do the same from the other end, so it goes as well.
         val mySequence = ++transmitSequence
         musicTransmitJob?.cancel()
+        cancelPacedTransmit()
 
         val musicStateBuilder = MusicState.newBuilder()
 
@@ -2508,6 +2611,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         musicStateBuilder.playing = false
 
         val musicState = musicStateBuilder.setSeq(nextMusicSeq()).build()
+        // Counted with the rest: this sends a message and a put like any other transmission.
+        Timber.d("TransmittingToWear %s | why: error", musicState.logSummary())
 
         // Record the error as the last-transmitted state (buildMusicStateAndTransmit bypasses this
         // path entirely, so it wouldn't otherwise know an error went out). Without this, if
@@ -2639,6 +2744,23 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     }
     private var remotePlayerArtInFlight: String? = null
 
+    /** Last line [reportQuickActionSource] emitted. */
+    private var lastQuickActionSourceReport: String? = null
+
+    /**
+     * Where the quick panel's actions came from and how many have an icon, once per change. The
+     * watch draws its own glyph for an action without one, so "the panel shows generic icons" has
+     * two silent causes - the notification did not match the session, or the session's custom
+     * action icons could not be drawn here - and this is what tells them apart.
+     */
+    private fun reportQuickActionSource(source: String, count: Int, withIcon: Int, registry: String?) {
+        val report = "$count from $source, $withIcon with an icon" +
+                (registry?.let { "; notifications: $it" } ?: "")
+        if (report == lastQuickActionSourceReport) return
+        lastQuickActionSourceReport = report
+        Timber.d("Quick panel actions: %s", report)
+    }
+
     /** Last line [reportArtUpgrade] emitted, so a decision that repeats every state tick is
      *  reported once instead of once per second. */
     private var lastArtUpgradeReport: String? = null
@@ -2743,7 +2865,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                     Timber.i("Player cover: got %dpx from %s", fetched.width, requested)
                     // Only worth a rebuild if it actually beats what we sent.
                     if (fetched.width > (current?.width ?: 0)) {
-                        scheduleStateRefresh(0L)
+                        scheduleStateRefresh(0L, "larger cover downloaded")
                     } else {
                         Timber.w(
                                 "Player cover: %dpx is no better than %s - not retransmitting",
@@ -2799,10 +2921,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      * [android.media.session.MediaSession.setPlaybackState] after updating their internal state,
      * so [onPlaybackStateChanged] never fires. Calling this after executing such an action ensures
      * the watch button reflects the new state within half a second.
+     *
+     * [trigger] is logged with the transmission, as for [buildMusicStateAndTransmit].
      */
-    fun scheduleStateRefresh(delayMs: Long = 500L) {
+    fun scheduleStateRefresh(delayMs: Long = 500L, trigger: String = "refresh after an action") {
         Handler(Looper.getMainLooper()).postDelayed({
-            buildMusicStateAndTransmit(currentMediaController)
+            buildMusicStateAndTransmit(currentMediaController, trigger)
         }, delayMs)
     }
 
@@ -3040,7 +3164,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // since, so this service's dedupe would never send the state that corrects it. Forgetting
         // the last one makes the next build go out whole.
         previousMusicState = null
-        buildMusicStateAndTransmit(controller)
+        buildMusicStateAndTransmit(controller, "$refusal refused")
         lifecycleScope.launch {
             try {
                 Wearable.getMessageClient(applicationContext).sendMessageToNearestClient(
@@ -3201,12 +3325,16 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      * needs [lifecycleScope], which does not exist yet while this service is being constructed.
      */
     private val coverFallback by lazy {
-        CoverFallback(this, lifecycleScope) { buildMusicStateAndTransmit(currentMediaController) }
+        CoverFallback(this, lifecycleScope) { trigger ->
+            buildMusicStateAndTransmit(currentMediaController, trigger)
+        }
     }
 
     private val liveStreamTracker = LiveStreamTracker()
     private val liveRecheckHandler = Handler(Looper.getMainLooper())
-    private val liveRecheck = Runnable { buildMusicStateAndTransmit(currentMediaController) }
+    private val liveRecheck = Runnable {
+        buildMusicStateAndTransmit(currentMediaController, "live stream recheck")
+    }
 
     /**
      * How many queue entries the watch last asked for.
@@ -4434,7 +4562,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // Waiting for the end of the track needs a first reading of it now, not at the
                 // player's next state - which, for one that publishes only on events, may not come
                 // before the track is over.
-                if (sleepTimer.atTrackEnd) currentMediaController?.let(::buildMusicStateAndTransmit)
+                if (sleepTimer.atTrackEnd) {
+                    currentMediaController?.let { buildMusicStateAndTransmit(it, "sleep timer set") }
+                }
             }
             CommPaths.MESSAGE_REQUEST_SLEEP_TIMER -> {
                 sendSleepTimerState()
@@ -4460,7 +4590,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             CommPaths.MESSAGE_WATCH_OPENED -> {
 
                 ackTimeoutHandler.removeMessages(MESSAGE_STOP_SELF)
-                buildMusicStateAndTransmit(currentMediaController)
+                buildMusicStateAndTransmit(currentMediaController, "watch app opened")
             }
             CommPaths.MESSAGE_WATCH_CLOSED_MANUALLY -> {
                 onWatchSwipeExited()
@@ -4537,6 +4667,85 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
     }
 
+    /**
+     * Has the session read again when [decision]'s wait is over, unless an earlier re-read is
+     * already due. Logs, at most once a minute, when the budget rather than the spacing holds a
+     * state back: nothing ordinary gets there, so whatever does is the thing to look at, and the
+     * warning names what asked for the transmissions that spent it.
+     */
+    private fun schedulePacedTransmit(
+            decision: MusicTransmitPacer.Decision.Wait,
+            trigger: String,
+            nowMs: Long
+    ) {
+        pacedTransmitTrigger = trigger
+        if (decision.overBudget &&
+                (lastPacingWarningMs == 0L || nowMs - lastPacingWarningMs >= PACING_WARNING_INTERVAL_MS)) {
+            lastPacingWarningMs = nowMs
+            Timber.w("Music state transmissions over budget: holding the next for %d ms (asked by %s). " +
+                    "Causes of the last %d: %s", decision.atMs - nowMs, trigger,
+                    recentTransmitTriggers.size, summarizeTriggers(recentTransmitTriggers))
+        }
+        if (pacedTransmitAtMs != 0L && pacedTransmitAtMs <= decision.atMs) return
+        pacedTransmitHandler.removeCallbacks(pacedTransmit)
+        pacedTransmitAtMs = decision.atMs
+        pacedTransmitHandler.postDelayed(pacedTransmit, (decision.atMs - nowMs).coerceAtLeast(0L))
+    }
+
+    private fun cancelPacedTransmit() {
+        if (pacedTransmitAtMs == 0L) return
+        pacedTransmitAtMs = 0L
+        pacedTransmitHandler.removeCallbacks(pacedTransmit)
+    }
+
+    private fun rememberTransmitTrigger(trigger: String) {
+        recentTransmitTriggers.addLast(trigger)
+        while (recentTransmitTriggers.size > RECENT_TRIGGERS_KEPT) recentTransmitTriggers.removeFirst()
+    }
+
+    /** "metadata of playing app#token x12, ..." - numbers blanked so positions do not split a cause. */
+    private fun summarizeTriggers(triggers: Collection<String>): String =
+            triggers.groupingBy { it.replace(Regex("\\b\\d+\\b"), "#") }
+                    .eachCount()
+                    .entries
+                    .sortedByDescending { it.value }
+                    .joinToString { "${it.key} x${it.value}" }
+
+    /**
+     * Puts [png] on [action]: always its key, and the bytes inline only for a watch that cannot
+     * resolve the key - everything before the build that sets `WatchInfo.actionIconsByKey`, and any
+     * watch whose info has not arrived yet. For one that can, the bytes go into [assets], which
+     * transmitToWear attaches to the DataItem. See `MediaAction.iconKey` in music.proto.
+     */
+    private fun attachActionIcon(
+            action: MediaAction.Builder,
+            png: ByteArray?,
+            byKey: Boolean,
+            assets: MutableMap<String, ByteArray>
+    ) {
+        if (png == null || png.isEmpty()) return
+        val key = MediaActionIcons.keyFor(png)
+        action.iconKey = key
+        if (byKey) {
+            assets[key] = png
+        } else {
+            action.iconPng = ByteString.copyFrom(png)
+        }
+    }
+
+    /** Whether two covers are the same picture: the same object, or the same size and pixels. A
+     *  cover that cannot be compared (recycled under us) counts as changed, which only costs one
+     *  transmission. */
+    private fun Bitmap?.sameCoverAs(other: Bitmap?): Boolean = when {
+        this === other -> true
+        this == null || other == null -> false
+        else -> try {
+            sameAs(other)
+        } catch (e: IllegalStateException) {
+            false
+        }
+    }
+
     /** ByteArray equality by content - the source-icon PNGs are fresh arrays each rasterization. */
     private fun ByteArray?.contentEqualsNullable(other: ByteArray?): Boolean = when {
         this === other -> true
@@ -4544,53 +4753,15 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         else -> contentEquals(other)
     }
 
-    private fun MusicState.equalsIgnoringTime(other: MusicState?): Boolean {
-        if (other == null ||
-                other.playing != playing ||
-                other.artist != artist ||
-                other.sourceAppName != sourceAppName ||
-                other.title != title ||
-                other.volume != volume ||
-                other.error != error ||
-                other.durationMs != durationMs ||
-                other.seekable != seekable ||
-                // Without these three the watch's quick-actions panel state rings stayed frozen:
-                // a state change that only flipped shuffle/repeat/like looked "equal" here and was
-                // never retransmitted (LikeAction.scheduleStateRefresh hit the same dedupe).
-                other.shuffleEnabled != shuffleEnabled ||
-                other.repeatMode != repeatMode ||
-                other.liked != liked ||
-                // The watch extrapolates the position at this rate between samples, so a speed
-                // changed on the phone has to reach it rather than wait for a seek-sized drift.
-                other.playbackSpeed != playbackSpeed ||
-                // The Artist face draws its backdrop from these, and the lookup behind them
-                // completes *after* the state that announced the track - so a resolution that
-                // changes nothing else must still reach the watch, exactly as a late shuffle or
-                // like flip must.
-                other.hasBackdropArt != hasBackdropArt ||
-                other.backdropArtPending != backdropArtPending ||
-                // Settled after a wait of its own, so it changes when nothing else does.
-                other.live != live ||
-                // Changes with a setting on the phone, not with playback, so nothing else moves.
-                other.audioBlock != audioBlock
-                || other.mediaActionsList != mediaActionsList
-        ) {
-            return false
-        }
+    /** A Bitmap's identity and size for the transmission log: the dedupe compares covers by
+     *  reference, so the same pixels in a new object and a different cover read the same there. */
+    private fun bitmapLogLabel(bitmap: Bitmap?): String =
+            if (bitmap == null) "none"
+            else "${Integer.toHexString(System.identityHashCode(bitmap))} ${bitmap.width}x${bitmap.height}"
 
-        // positionMs naturally drifts forward every time playback is polled, so comparing it
-        // directly would defeat the point of this check. Instead, extrapolate where playback
-        // "should" be based on the previous state and only treat a bigger-than-expected jump
-        // (a real seek, or a track restart) as a change worth re-transmitting for.
-        val elapsedSincePrevious = positionUpdateTime - other.positionUpdateTime
-        val expectedPosition = if (other.playing) {
-            other.positionMs + (elapsedSincePrevious * other.playbackSpeed).toLong()
-        } else {
-            other.positionMs
-        }
-
-        return Math.abs(positionMs - expectedPosition) <= SEEK_DETECTION_THRESHOLD_MS
-    }
+    /** Size and content digest of bytes about to travel, for the transmission log. */
+    private fun bytesLogLabel(bytes: ByteArray?): String =
+            if (bytes == null) "none" else "${bytes.size} B ${Integer.toHexString(bytes.contentHashCode())}"
 
     private val volumeContentObserver = object : ContentObserver(Handler(Looper.getMainLooper())) {
         override fun onChange(selfChange: Boolean) {
@@ -4600,7 +4771,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // told without the session's own volume moving.
             if (newVolume != currentVolume || (controller != null &&
                             phoneAudioBlock(controller).code != previousMusicState?.audioBlock)) {
-                buildMusicStateAndTransmit(controller)
+                buildMusicStateAndTransmit(controller, "volume changed")
             }
         }
     }

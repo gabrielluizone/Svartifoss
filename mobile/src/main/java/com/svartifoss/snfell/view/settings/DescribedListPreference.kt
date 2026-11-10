@@ -115,11 +115,10 @@ class DescribedListPreference @JvmOverloads constructor(
 
                     title.text = entries[position]
                     if (pref.previewTypeface) {
-                        // Each row shows its own font. Resolved per row rather than cached in a
-                        // list: the catalog is ~20 entries, all either bundled resources (which
-                        // ResourcesCompat caches itself) or Typeface.create calls off the platform
-                        // family cache, so there is nothing left to memoise here.
-                        title.typeface = WatchFontCatalog.previewTypefaceFor(
+                        // Each row shows its own font, resolved per row and deliberately not kept:
+                        // the catalog has over a hundred bundled fonts, and the rows' own loader
+                        // lets the ones scrolled past be freed - see listRowTypefaceFor.
+                        title.typeface = WatchFontCatalog.listRowTypefaceFor(
                                 parent.context, values.getOrNull(position)?.toString())
                     }
 

@@ -20,6 +20,7 @@ import com.google.android.gms.wearable.Wearable
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.common.BitmapBorderTrim
 import com.svartifoss.snfell.common.CommPaths
+import com.svartifoss.snfell.common.MediaActionIcons
 import com.svartifoss.snfell.common.SleepTimerPolicy
 import com.svartifoss.snfell.common.TransportRefusal
 import com.svartifoss.snfell.common.PlaybackSyncPolicy
@@ -79,12 +80,28 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     companion object {
         const val MESSAGE_CLOSE_CONNECTION = 0
         const val CONNECTION_CLOSE_DELAY_MS = 15_000L
+
+        /** A playing app shows three icons and swaps a few (like, unlike); this is several apps'. */
+        private const val MAX_ACTION_ICONS = 24
     }
 
     val musicState = ListenableLiveData<Resource<MusicState>>()
     val albumArt = ListenableLiveData<Bitmap?>()
     /** Icon of the app currently playing (or null when unavailable / the element is off). */
     val sourceIcon = ListenableLiveData<Bitmap?>()
+
+    /**
+     * The playing app's media-action icons by `MediaAction.iconKey`, from a phone that sends them
+     * by key instead of inside every state (see music.proto and [deliverActionIcons]). Kept across
+     * states, so an icon that comes back - a like toggled off and on again - is already here.
+     */
+    val actionIcons = MutableLiveData<Map<String, ByteArray>>(emptyMap())
+
+    /** Backs [actionIcons]; access-ordered so the icons in use are the last to be dropped. */
+    private val actionIconStore = object : LinkedHashMap<String, ByteArray>(16, 0.75f, true) {
+        override fun removeEldestEntry(eldest: MutableMap.MutableEntry<String, ByteArray>?) =
+                size > MAX_ACTION_ICONS
+    }
     /**
      * The picture the face asked for in place of the sleeve - the performing artist, or a cover
      * looked up online (see `AlbumArtSource`).
@@ -233,7 +250,12 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
 
     // Data Layer asset id (content-derived) of the currently decoded album art - lets an
     // unchanged cover riding along on every state put be skipped without decoding it again.
+    // Written only through postAlbumArt, together with lastAlbumArt, under publishMusicAsset's lock.
     private var lastAlbumArtAssetId: String? = null
+    // The bitmap that id decoded to - the same object albumArt was given, kept beside its id so the
+    // neighbouring covers can reuse it (after a skip, the cover that was playing is the neighbour
+    // behind). Never anything albumArt itself does not already hold.
+    private var lastAlbumArt: Bitmap? = null
     private var lastSourceIconAssetId: String? = null
     private var lastBackdropArtAssetId: String? = null
 
@@ -766,6 +788,8 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         musicAssetJob?.cancel()
         musicAssetJob = scope?.launch {
             try {
+                // First: a few kilobytes against the cover's tens, and the quick panel may be open.
+                deliverActionIcons(dataItem, state)
                 deliverAlbumArt(dataItem, state)
                 deliverSourceIcon(dataItem, state)
                 deliverBackdropArt(dataItem, state)
@@ -899,10 +923,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             // blanking between the two puts. A state with no asset and no pending flag genuinely
             // has no art: clear.
             if (!state.albumArtPending) {
-                publishMusicAsset(state) {
-                    lastAlbumArtAssetId = null
-                    albumArt.postValue(null)
-                }
+                publishMusicAsset(state) { postAlbumArt(null, null) }
             }
             return
         }
@@ -920,10 +941,7 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
         prefetchedNeighbourArtwork.firstOrNull {
             it.cover != null && it.assetId == asset.id
         }?.let { prefetched ->
-            publishMusicAsset(state) {
-                lastAlbumArtAssetId = asset.id
-                albumArt.postValue(prefetched.cover)
-            }
+            publishMusicAsset(state) { postAlbumArt(asset.id, prefetched.cover) }
             return
         }
 
@@ -932,19 +950,30 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             withContext(Dispatchers.Default) { decodeFromPhone(bytes) }
         }
         if (receivedAlbumArt != null) {
-            publishMusicAsset(state) {
-                lastAlbumArtAssetId = asset.id
-                albumArt.postValue(receivedAlbumArt)
-            }
+            publishMusicAsset(state) { postAlbumArt(asset.id, receivedAlbumArt) }
         } else if (!state.albumArtPending) {
             // Asset attached but unreadable and nothing newer on the way: clear rather than
             // keep showing the previous track's cover indefinitely.
-            publishMusicAsset(state) {
-                lastAlbumArtAssetId = null
-                albumArt.postValue(null)
-            }
+            publishMusicAsset(state) { postAlbumArt(null, null) }
         }
     }
+
+    /** Posts [cover] as the album art and records the asset it came from. Only ever called inside
+     *  [publishMusicAsset], so the pair changes under the lock [heldCover] reads it with. */
+    private fun postAlbumArt(assetId: String?, cover: Bitmap?) {
+        lastAlbumArtAssetId = assetId
+        lastAlbumArt = cover
+        albumArt.postValue(cover)
+    }
+
+    /**
+     * A decoded picture this watch already holds for asset [id]: one of [held] (the previous
+     * announcement's neighbours), or the cover now playing. Asset ids are content addresses, so a
+     * match is the same picture - see [PrefetchedCoverReuse].
+     */
+    private fun heldCover(held: List<PrefetchedCover>, id: String): Bitmap? =
+            held.firstOrNull { it.assetId == id }?.cover
+                    ?: synchronized(this) { lastAlbumArt?.takeIf { lastAlbumArtAssetId == id } }
 
     /**
      * The covers the phone sent ahead for the tracks around the playing one.
@@ -955,7 +984,10 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
      * track's cover - which is the picture that belongs there until the press happens.
      *
      * Each entry is a decoded full-screen bitmap, which is what makes the press instant and is
-     * also the reason the phone's radius stays small: these are held for as long as the track is.
+     * also the reason the phone's radius stays small: these are held for as long as the track is,
+     * while a screen can use them. Entries showing one picture share one bitmap, and an
+     * announcement that arrives with no screen to use it drops the list - see
+     * [PrefetchedCoverReuse] and [takeAdjacentArtwork].
      */
     @Volatile
     var prefetchedNeighbourArtwork: List<PrefetchedCover> = emptyList()
@@ -989,25 +1021,61 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             return
         }
 
-        val received = announcement.tracksList.mapNotNull { track ->
-            val title = track.title
-            if (title.isNullOrBlank()) {
-                return@mapNotNull null
-            }
-            val asset = track.assetKey?.takeIf { it.isNotEmpty() }?.let { dataItem.assets[it] }
-            val bytes = asset?.let { dataClient.getByteArrayAsset(it) }
-            val cover = bytes?.let {
-                withContext(Dispatchers.Default) { decodeFromPhone(it) }
-            }
-            PrefetchedCover(title, track.artist.orEmpty(), cover, asset?.id)
+        val tracks = announcement.tracksList.filter { !it.title.isNullOrBlank() }
+        val assets = tracks.map { track ->
+            track.assetKey?.takeIf { it.isNotEmpty() }?.let { dataItem.assets[it] }
+        }
+        val assetsById = assets.filterNotNull().associateBy { it.id }
+        val held = prefetchedNeighbourArtwork
+        var decodes = 0
+        val covers = PrefetchedCoverReuse.resolve(
+                assets.map { it?.id },
+                held = { id -> heldCover(held, id) },
+                decode = { id ->
+                    decodes++
+                    assetsById[id]?.let { dataClient.getByteArrayAsset(it) }?.let { bytes ->
+                        withContext(Dispatchers.Default) { decodeFromPhone(bytes) }
+                    }
+                })
+        val received = tracks.mapIndexed { index, track ->
+            PrefetchedCover(track.title, track.artist.orEmpty(), covers[index], assets[index]?.id)
         }
         prefetchedNeighbourArtwork = received
-        Timber.d("Holding %d of %d neighbouring cover(s) ready: %s",
-                received.count { it.cover != null }, received.size, received.map { it.title })
+        Timber.d("Holding %d of %d neighbouring cover(s) ready (%d decoded): %s",
+                received.count { it.cover != null }, received.size, decodes, received.map { it.title })
     }
 
     /** Decodes the optional source-app icon asset. It only changes when the playing app changes
      *  (the phone dedupes it), so track by asset id and keep the cached bitmap otherwise. */
+    /**
+     * Reads the icons [state] names by key that this watch does not hold yet.
+     *
+     * Not gated on the state still being current, unlike the cover: an icon is addressed by its
+     * content, so one that arrives late is still exactly that icon. A key without its asset is a
+     * state from the phone's interim put, which carries no assets, and is filled in by the final
+     * put moments later; MainActivity draws the action's own glyph until then.
+     */
+    private suspend fun deliverActionIcons(dataItem: DataItem, state: MusicState) {
+        val missing = state.mediaActionsList
+                .filter { !it.hasIconPng() && it.iconKey.isNotEmpty() }
+                .map { it.iconKey }
+                .distinct()
+                .filter { key -> synchronized(actionIconStore) { actionIconStore[key] == null } }
+        if (missing.isEmpty()) return
+        var added = 0
+        for (key in missing) {
+            val asset = dataItem.assets[MediaActionIcons.assetName(key)] ?: continue
+            val bytes = dataClient.getByteArrayAsset(asset) ?: continue
+            synchronized(actionIconStore) { actionIconStore[key] = bytes }
+            added++
+        }
+        // Says which half failed when the quick panel shows its own glyphs instead of the app's.
+        Timber.d("Action icons: %d of %d new key(s) loaded (seq %d)", added, missing.size, state.seq)
+        if (added > 0) {
+            actionIcons.postValue(synchronized(actionIconStore) { HashMap(actionIconStore) })
+        }
+    }
+
     private suspend fun deliverSourceIcon(dataItem: DataItem, state: MusicState) {
         if (!isCurrentMusicState(state)) return
         val asset = dataItem.assets[CommPaths.ASSET_SOURCE_ICON]
@@ -1107,6 +1175,11 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     private suspend fun takeAdjacentArtwork(dataItem: DataItem) {
         if (positionViewers.isEmpty()) {
             pendingAdjacentArtwork = dataItem
+            // What is held now belongs to the neighbours of a track that has stopped being the one
+            // playing, and nothing can use it before a screen comes back, which replaces it anyway.
+            // Kept, it was four full-screen bitmaps held for as long as the wrist stayed down - or
+            // for a whole paused hold with the app closed.
+            prefetchedNeighbourArtwork = emptyList()
             return
         }
         try {

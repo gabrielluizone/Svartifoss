@@ -31,6 +31,8 @@ import com.svartifoss.snfell.R
 import com.svartifoss.snfell.view.settings.WatchFontCatalog
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeProfile
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeValue
+import com.svartifoss.snfell.common.TitleBand
+import com.svartifoss.snfell.common.MarqueeMotion
 import com.svartifoss.snfell.common.ActionsMode
 import com.svartifoss.snfell.common.AlbumFillSlot
 import com.svartifoss.snfell.common.ActivityVisibility
@@ -47,6 +49,7 @@ import com.svartifoss.snfell.common.MiniButtonSurfaces
 import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.OverlayBackdrop
 import com.svartifoss.snfell.common.ProgressFx
+import com.svartifoss.snfell.common.ProgressScale
 import com.svartifoss.snfell.common.ProgressShape
 import com.svartifoss.snfell.common.OverlayBackdropPatterns
 import com.svartifoss.snfell.common.OverlayBackdropResolver
@@ -144,10 +147,6 @@ import com.svartifoss.snfell.view.NEUTRAL_WATCH_ACCENT
  * switches to the real round/square shape, aspect ratio and dp extent. Geometry mirrors the real
  * classic View face and Compose faces in `wear/`. Purely decorative - not interactive.
  */
-/** Matches `FaceChrome.MARQUEE_FADE_WIDTH` and `OutlineTextView`'s own copy: the same line
- *  dissolves over the same distance whichever of the three renderers drew it. */
-private const val MARQUEE_FADE_WIDTH_DP = 18f
-
 /** The miniature redraws a travelling wave about thirty times a second, like the watch does. */
 private const val WAVE_PREVIEW_FRAME_MS = 33L
 
@@ -172,7 +171,24 @@ class WatchPreviewView @JvmOverloads constructor(
         MINI_BUTTONS
     }
 
+    /** One sample-cover picture: sharp when [blurRadius] is null, else blurred at it, and
+     *  [frosted] for the frosted-rim composition of the sharp cover. */
+    private data class SampleArtKey(
+            val size: Int,
+            val alternate: Boolean,
+            val blurRadius: Int? = null,
+            val frosted: Boolean = false
+    )
+
     private companion object {
+        /** The sample covers and everything derived from them, shared by every preview in the
+         *  process (the gallery's cards are all one size) - see [SharedArtworkCache]. */
+        val sampleArtwork = SharedArtworkCache<SampleArtKey, Bitmap> { !it.isRecycled }
+
+        /** The demo mini-button glyphs, identical for every preview - see [buildDemoMiniButtonIcons]. */
+        @Volatile
+        var sharedDemoMiniButtonIcons: List<PreviewActionIcon> = emptyList()
+
         /** WatchTheme.ACCENT_DEFAULT on the wear side - the static "neutral" accent. */
         const val ACCENT_NEUTRAL = NEUTRAL_WATCH_ACCENT
 
@@ -669,6 +685,14 @@ class WatchPreviewView @JvmOverloads constructor(
     private var previewVolumeArcSweep = 100f
     /** Set while the current frame drew a scrolling title - schedules the next frame. */
     private var marqueeActive = false
+
+    /**
+     * When each scrolling line first appeared, so it starts from rest the way the watch's does
+     * rather than at whatever phase the clock happened to be in. Keyed by text and width; a line
+     * not drawn in a frame is forgotten, so it rests again when it comes back.
+     */
+    private val marqueeEpochs = HashMap<String, Long>()
+    private val marqueeSeen = HashSet<String>()
     private var transientAnimationActive = false
     /** Set by any wave drawn this frame; see [previewWavePhase]. */
     private var wavePreviewActive = false
@@ -981,6 +1005,40 @@ class WatchPreviewView @JvmOverloads constructor(
                 TextBlockPosition.MIDDLE -> geometry.cy + blockHeight / 2f
                 TextBlockPosition.BOTTOM -> geometry.bounds.bottom - inset
             }
+
+    /**
+     * Runs [block] with the title, the artist and the app mark scaled by [fit] - the shrink
+     * TitleBand.fitScale asks for once the user's sizes no longer fit a face's band, applied the
+     * way the watch's `withTextFit` applies it, so the miniature stops growing the text where the
+     * wrist does. [title] or [artist] false leaves that line alone (the artist taking the app mark
+     * with it) - Ribbon's two lines have bands of their own.
+     */
+    private inline fun withTextFit(
+            fit: Float,
+            title: Boolean = true,
+            artist: Boolean = true,
+            block: () -> Unit
+    ) {
+        if (!(fit < 1f)) {
+            block()
+            return
+        }
+        val titleSpec = titleTypographySpec
+        val artistSpec = artistTypographySpec
+        val iconSpec = sourceIconTypographySpec
+        if (title) titleTypographySpec = titleSpec.copy(scale = titleSpec.scale * fit)
+        if (artist) {
+            artistTypographySpec = artistSpec.copy(scale = artistSpec.scale * fit)
+            sourceIconTypographySpec = iconSpec.copy(scale = iconSpec.scale * fit)
+        }
+        try {
+            block()
+        } finally {
+            titleTypographySpec = titleSpec
+            artistTypographySpec = artistSpec
+            sourceIconTypographySpec = iconSpec
+        }
+    }
 
     private fun drawArtistLine(
             canvas: Canvas,
@@ -2139,16 +2197,19 @@ class WatchPreviewView @JvmOverloads constructor(
         super.onSizeChanged(w, h, oldw, oldh)
         val size = min(w, h)
         if (size <= 0) return
-        recycleOwned(sampleArt)
-        recycleOwned(sampleAlternateArt)
-        recycleOwned(sampleArtBlurred)
-        recycleOwned(sampleAlternateArtBlurred)
-        recycleOwned(sampleOverlayArtBlurred)
-        sampleArt = buildSampleArt(size, alternate = false)
-        sampleAlternateArt = buildSampleArt(size, alternate = true)
+        // Shared with every other preview of this size and never recycled here - the old ones
+        // are dropped, not freed, because another preview may still be drawing them.
+        sampleArt = sampleArtwork.obtain(SampleArtKey(size, alternate = false)) {
+            buildSampleArt(size, alternate = false)
+        }
+        sampleAlternateArt = sampleArtwork.obtain(SampleArtKey(size, alternate = true)) {
+            buildSampleArt(size, alternate = true)
+        }
         rebuildBlurCaches()
         if (demoMiniButtonIcons.isEmpty()) {
-            demoMiniButtonIcons = buildDemoMiniButtonIcons()
+            demoMiniButtonIcons = sharedDemoMiniButtonIcons.ifEmpty {
+                buildDemoMiniButtonIcons().also { sharedDemoMiniButtonIcons = it }
+            }
         }
         rebuildLiveArt()
     }
@@ -2194,21 +2255,25 @@ class WatchPreviewView @JvmOverloads constructor(
     }
 
     private fun rebuildBlurCaches() {
-        recycleOwned(sampleArtBlurred)
-        recycleOwned(sampleAlternateArtBlurred)
-        recycleOwned(sampleOverlayArtBlurred)
+        // The sample blurs are shared (see onSizeChanged) and only the live ones are this view's.
         recycleOwned(liveArtBlurred)
         recycleOwned(liveOverlayArtBlurred)
         // Match the watch: when the background is already blurred, the overlay reuses the album
         // blur radius so a given radius reads the same and the two never look like different blurs.
         val backgroundBlurred = PlayerBackgroundStyle.fromPreference(artStyle).blurredArtwork
         val overlayRadius = if (backgroundBlurred) albumBlurRadius else overlayBlurRadius
-        sampleArtBlurred = sampleArt?.let { blurArtwork(it, albumBlurRadius) }
-        sampleAlternateArtBlurred = sampleAlternateArt?.let { blurArtwork(it, albumBlurRadius) }
-        sampleOverlayArtBlurred = sampleArt?.let { blurArtwork(it, overlayRadius) }
+        sampleArtBlurred = sampleArt?.let { sampleBlur(it, alternate = false, albumBlurRadius) }
+        sampleAlternateArtBlurred = sampleAlternateArt?.let { sampleBlur(it, alternate = true, albumBlurRadius) }
+        sampleOverlayArtBlurred = sampleArt?.let { sampleBlur(it, alternate = false, overlayRadius) }
         liveArtBlurred = liveArt?.let { blurArtwork(it, albumBlurRadius) }
         liveOverlayArtBlurred = liveArt?.let { blurArtwork(it, overlayRadius) }
     }
+
+    /** [sample] blurred at [radius], shared like the sample itself. */
+    private fun sampleBlur(sample: Bitmap, alternate: Boolean, radius: Int): Bitmap =
+            sampleArtwork.obtain(SampleArtKey(sample.width, alternate, blurRadius = radius)) {
+                blurArtwork(sample, radius)
+            }
 
     /**
      * The frosted-rim composition for whichever artwork the preview is currently showing, built
@@ -2223,7 +2288,15 @@ class WatchPreviewView @JvmOverloads constructor(
         if (frostedPreviewSource === base && frostedPreviewRadius == albumBlurRadius) {
             frostedPreviewArt?.takeIf { !it.isRecycled }?.let { return it }
         }
-        val frosted = FrostedEdges.compose(base, albumBlurRadius.toFloat())
+        val frosted = if (base === sampleArt) {
+            // Every gallery card frosting the sample at one radius would otherwise make its own.
+            sampleArtwork.obtain(SampleArtKey(base.width, alternate = false,
+                    blurRadius = albumBlurRadius, frosted = true)) {
+                FrostedEdges.compose(base, albumBlurRadius.toFloat())
+            }
+        } else {
+            FrostedEdges.compose(base, albumBlurRadius.toFloat())
+        }
         // Not recycled, for the same reason the watch does not - see frostArtworkIfSelected. The
         // previous composition may still be the one a queued draw pass is about to paint.
         frostedPreviewSource = base
@@ -2232,8 +2305,15 @@ class WatchPreviewView @JvmOverloads constructor(
         return frosted
     }
 
+    /**
+     * Frees [bitmap] unless something else may still draw it: the caller's [nowPlayingSource], or
+     * a shared sample picture. The second check has to live here rather than at the call sites:
+     * [FrostedEdges.compose] and [BitmapBlur] hand their input straight back at radius 0, so a
+     * "derived" bitmap a caller believes it owns can be the shared sample itself.
+     */
     private fun recycleOwned(bitmap: Bitmap?) {
-        if (bitmap != null && !bitmap.isRecycled && bitmap !== nowPlayingSource) {
+        if (bitmap != null && !bitmap.isRecycled && bitmap !== nowPlayingSource &&
+                !sampleArtwork.holds(bitmap)) {
             bitmap.recycle()
         }
     }
@@ -2342,9 +2422,9 @@ class WatchPreviewView @JvmOverloads constructor(
 
     /**
      * Scrolling title, like the watch's marquee: the text loops leftward inside a clip window,
-     * drawn twice for a seamless wrap. Sets [marqueeActive] so onDraw schedules the next
-     * animation frame - this is the only continuously animating piece of the preview (the mini
-     * player's marquee titles already set that precedent).
+     * drawn twice for a seamless wrap, resting at its start between passes. Sets [marqueeActive]
+     * so onDraw schedules the next animation frame - this is the only continuously animating
+     * piece of the preview (the mini player's marquee titles already set that precedent).
      */
     private fun drawMarqueeText(canvas: Canvas, text: String, cx: Float, baseline: Float, availWidth: Float) =
             drawMarqueeRuns(
@@ -2396,22 +2476,34 @@ class WatchPreviewView @JvmOverloads constructor(
     ) {
         val widths = runs.map { measureRun(it) }
         val textWidth = widths.sum()
-        val gap = availWidth * 0.4f
-        val period = textWidth + gap
-        val speedPxPerSecond = availWidth / 4f
-        val phase = (previewAnimationTimeMillis() % 3_600_000L) / 1000f * speedPxPerSecond % period
+        val dpScale = frameGeometry?.dpScale ?: 1f
+        // The watch's own motion (MarqueeMotion), scaled to the miniature: the same rest, speed
+        // and gap, and a fade that is only there while the line is moving.
+        val loop = MarqueeMotion.loopPx(textWidth, availWidth)
+        val pxPerSecond = MarqueeMotion.VELOCITY_DP_PER_SECOND * dpScale
+        val now = previewAnimationTimeMillis()
+        val key = runs.joinToString("") { it.text } + "@" + availWidth.toInt()
+        marqueeSeen += key
+        val elapsed = now - marqueeEpochs.getOrPut(key) { now }
+        val offset = MarqueeMotion.offsetAt(elapsed, loop, pxPerSecond)
+        val fadeWidth = MarqueeMotion.fadeWidthPx(MarqueeMotion.FADE_WIDTH_DP * dpScale, availWidth)
+        val strength = MarqueeMotion.fadeStrength(offset, loop, fadeWidth)
 
         val left = cx - availWidth / 2f
         val top = baseline - textPaint.textSize * 1.2f
         val bottom = baseline + textPaint.textSize * 0.45f
-        // A layer rather than a plain clip, because the ends are dissolved below with DST_IN and
-        // that has to address the text's own pixels - applied straight to the canvas it would
-        // punch a hole through the artwork behind the line as well.
-        val layer = canvas.saveLayer(left, top, left + availWidth, bottom, null)
+        // A layer rather than a plain clip while the ends are dissolved, because that is done with
+        // DST_IN and has to address the text's own pixels - applied straight to the canvas it
+        // would punch a hole through the artwork behind the line as well.
+        val layer = if (strength > 0f) {
+            canvas.saveLayer(left, top, left + availWidth, bottom, null)
+        } else {
+            canvas.save().also { canvas.clipRect(left, top, left + availWidth, bottom) }
+        }
         textPaint.textAlign = Paint.Align.LEFT
-        // Drawn twice, a period apart, so the tail of one copy meets the head of the next.
-        for (copy in 0..1) {
-            var x = left - phase + copy * period
+        // Drawn twice, a loop apart, so the tail of one copy meets the head of the next.
+        for (copy in 0..(if (offset > 0f) 1 else 0)) {
+            var x = left - offset + copy * loop
             runs.forEachIndexed { index, run ->
                 measureRun(run)
                 canvas.drawText(run.text, x, baseline, textPaint)
@@ -2419,35 +2511,35 @@ class WatchPreviewView @JvmOverloads constructor(
             }
         }
         textPaint.textAlign = Paint.Align.CENTER
-        drawMarqueeFade(canvas, left, top, availWidth, bottom - top)
+        if (strength > 0f) drawMarqueeFade(canvas, left, top, availWidth, bottom - top, fadeWidth, strength)
         canvas.restoreToCount(layer)
 
         marqueeActive = true
     }
 
     /**
-     * Dissolves the ends of a scrolling line, mirroring the watch.
+     * Dissolves the ends of a scrolling line while it moves, mirroring the watch.
      *
-     * The wrist does this two different ways - `FaceChrome.marqueeFade` on the Compose faces,
-     * TextView's own fading edges on the View ones - and neither is reachable from here, so the
-     * miniature draws the same gradient itself. It is the same distance
-     * (`MARQUEE_FADE_WIDTH` / `MARQUEE_FADE_WIDTH_DP`, 18dp) scaled to the preview.
+     * The wrist does this in `FaceChrome.trackMarquee` and `OutlineTextView`, neither reachable from
+     * here, so the miniature draws the same mask itself, at the strength [MarqueeMotion] gives for
+     * the line's position: none at rest, full once it has moved a fade width.
      */
     private fun drawMarqueeFade(
             canvas: Canvas,
             left: Float,
             top: Float,
             width: Float,
-            height: Float
+            height: Float,
+            edge: Float,
+            strength: Float
     ) {
-        val edge = (MARQUEE_FADE_WIDTH_DP * (frameGeometry?.dpScale ?: 1f))
-                .coerceAtMost(width / 3f)
         if (edge <= 0f || width <= 0f) {
             return
         }
+        val outer = Color.argb(((1f - strength) * 255f).toInt(), 0, 0, 0)
         marqueeFadePaint.shader = LinearGradient(
                 left, 0f, left + width, 0f,
-                intArrayOf(Color.TRANSPARENT, Color.BLACK, Color.BLACK, Color.TRANSPARENT),
+                intArrayOf(outer, Color.BLACK, Color.BLACK, outer),
                 floatArrayOf(0f, edge / width, 1f - edge / width, 1f),
                 Shader.TileMode.CLAMP)
         canvas.drawRect(left, top, left + width, top + height, marqueeFadePaint)
@@ -2601,6 +2693,37 @@ class WatchPreviewView @JvmOverloads constructor(
         return linesThatFit(minSize, minimumWidth)?.let { lines ->
             ClassicArtistPlan(minSize, lines, marquee = false, labelWidth = minimumWidth)
         } ?: ClassicArtistPlan(minSize, listOf(text), marquee = true, labelWidth = minimumWidth)
+    }
+
+    /**
+     * The line ceiling the watch gives a title block that must stop at [floor] - the same
+     * [TitleBand] call `curatedTitleCeiling` makes there, in this device's own dp, so the miniature
+     * stops at the line the wrist does. Centred, the block may grow twice the distance from the
+     * middle to the floor; moved to the top or the bottom, it has what lies between the clock's
+     * clearance and the floor (the watch's `blockRoomAbove`).
+     */
+    private fun curatedTitleCeiling(
+            floor: Float,
+            titleLineDp: Float,
+            artistRowDp: Float,
+            artistShown: Boolean
+    ): Int {
+        val moved = textBlockPosition == TextBlockPosition.TOP ||
+                textBlockPosition == TextBlockPosition.BOTTOM
+        val anchored = titleCentered && artistShown && !moved
+        val room = if (moved) {
+            TitleBand.movedBand(TitleBand.movedTop(alwaysShowTime), floor)
+        } else {
+            TitleBand.centredBand(floor)
+        }
+        val band = min(deviceWidthDp, deviceHeightDp) * room -
+                (if (anchored) artistRowDp * artistTypographySpec.scale else 0f)
+        return TitleBand.lineCeiling(
+                bandDp = band,
+                titleLineDp = titleLineDp,
+                titleScale = titleTypographySpec.scale,
+                artistRowDp = if (artistShown) artistRowDp else 0f,
+                artistScale = artistTypographySpec.scale)
     }
 
     /**
@@ -2926,6 +3049,9 @@ class WatchPreviewView @JvmOverloads constructor(
         return ColorUtils.HSLToColor(hsl)
     }
 
+    /** Mirrors the watch's `artistColorChosen`: an artist colour the user picked, not "follow". */
+    private fun artistColorChosen(): Boolean = artistMode != "follow"
+
     /**
      * The artist line's colour, mirroring the watch's `resolvedArtistTextColor`: the resolved tint
      * through the shared lightness floor, then the adaptive correction when the user enabled it.
@@ -3101,6 +3227,8 @@ class WatchPreviewView @JvmOverloads constructor(
         }
 
         canvas.restore()
+        marqueeEpochs.keys.retainAll(marqueeSeen)
+        marqueeSeen.clear()
 
         if ((marqueeActive || transientAnimationActive) && isShown) {
             postInvalidateOnAnimation()
@@ -9795,8 +9923,8 @@ class WatchPreviewView @JvmOverloads constructor(
      * cap and the played arc rounded, both starting at 12 o'clock. Used by the classic face and,
      * when the expressive face's seek mode is "edge", by the expressive face too.
      */
-    private fun previewMarkIsPlayed(index: Int, count: Int): Boolean =
-            progressFraction() > 0f && index.toFloat() / count < progressFraction()
+    private fun previewMarkIsPlayed(fraction: Float): Boolean =
+            ProgressScale.isPlayed(fraction, progressFraction())
 
     private fun drawPreviewWatchDots(
             canvas: Canvas,
@@ -9815,12 +9943,15 @@ class WatchPreviewView @JvmOverloads constructor(
         val orbit = radius - baseStroke / 2f
         fillPaint.shader = null
         fillPaint.style = Paint.Style.FILL
-        repeat(count) { index ->
-            val denominator = if (sweepDegrees >= 359f) count else (count - 1).coerceAtLeast(1)
-            val angle = Math.toRadians(
-                    (startDegrees + index * sweepDegrees / denominator).toDouble())
-            val major = emphasizeEvery > 0 && index % emphasizeEvery == 0
-            fillPaint.color = if (previewMarkIsPlayed(index, count)) {
+        // The marks are laid out by ProgressScale, as the watch's ring lays them out, so an open arc
+        // starts and ends on the same long mark here too.
+        val closed = ProgressShape.isClosed(sweepDegrees)
+        val divisions = ProgressScale.divisions(count, emphasizeEvery, closed)
+        repeat(ProgressScale.markCount(count, emphasizeEvery, closed)) { index ->
+            val fraction = ProgressScale.fraction(index, divisions)
+            val angle = Math.toRadians((startDegrees + fraction * sweepDegrees).toDouble())
+            val major = ProgressScale.isMajor(index, emphasizeEvery)
+            fillPaint.color = if (previewMarkIsPlayed(fraction)) {
                 progressColor
             } else {
                 0x33FFFFFF
@@ -9854,14 +9985,15 @@ class WatchPreviewView @JvmOverloads constructor(
         strokePaint.pathEffect = null
         strokePaint.style = Paint.Style.STROKE
         strokePaint.strokeCap = Paint.Cap.ROUND
-        repeat(count) { index ->
-            val denominator = if (sweepDegrees >= 359f) count else (count - 1).coerceAtLeast(1)
-            val angle = Math.toRadians(
-                    (startDegrees + index * sweepDegrees / denominator).toDouble())
-            val emphasized = emphasizeEvery > 0 && index % emphasizeEvery == 0
+        val closed = ProgressShape.isClosed(sweepDegrees)
+        val divisions = ProgressScale.divisions(count, emphasizeEvery, closed)
+        repeat(ProgressScale.markCount(count, emphasizeEvery, closed)) { index ->
+            val fraction = ProgressScale.fraction(index, divisions)
+            val angle = Math.toRadians((startDegrees + fraction * sweepDegrees).toDouble())
+            val emphasized = ProgressScale.isMajor(index, emphasizeEvery)
             val length = if (emphasized) emphasizedLength else normalLength
             strokePaint.strokeWidth = if (emphasized) emphasizedWidth else normalWidth
-            strokePaint.color = if (previewMarkIsPlayed(index, count)) {
+            strokePaint.color = if (previewMarkIsPlayed(fraction)) {
                 progressColor
             } else {
                 0x33FFFFFF
@@ -11430,7 +11562,22 @@ class WatchPreviewView @JvmOverloads constructor(
         cy: Float,
         dp: (Float) -> Float
     ): Float {
-        if (!miniConfigured) return desiredY
+        val rowTop = miniRowTopY(miniConfigured, radius, cy, dp) ?: return desiredY
+        return minOf(desiredY, rowTop - dp(10f))
+    }
+
+    /**
+     * Where the configured mini-button row starts - the top of its highest pill - or null when
+     * there is no row in the bottom band (none configured, or a rail against the side bezel). The
+     * preview's half of the watch's `miniButtonsTopFraction`.
+     */
+    private fun miniRowTopY(
+        miniConfigured: Boolean,
+        radius: Float,
+        cy: Float,
+        dp: (Float) -> Float
+    ): Float? {
+        if (!miniConfigured) return null
         val icons = if (miniButtonIcons.isNotEmpty()) {
             miniButtonIcons
         } else if (surface == PreviewSurface.MINI_BUTTONS) {
@@ -11438,11 +11585,11 @@ class WatchPreviewView @JvmOverloads constructor(
         } else {
             emptyList()
         }
-        if (icons.isEmpty()) return desiredY
+        if (icons.isEmpty()) return null
         val placement = MiniButtonPlacement.fromPreference(buttonsCurveStyle)
         // A rail sits against the side bezel and blocks nothing at the bottom, so the text keeps
         // the height it asked for - the same thing the watch reports through RAIL_TOP_FRACTION.
-        if (placement.isRail) return desiredY
+        if (placement.isRail) return null
         val geometry = previewMiniGeometry(icons.size, cy, radius, dp)
         val riseScale = placement.riseScale
         val dx = geometry.totalWidth / 2f - geometry.pillWidth / 2f
@@ -11459,8 +11606,7 @@ class WatchPreviewView @JvmOverloads constructor(
             minOf(naturalRise, dp(maxCap))
         } + if (geometry.curved && icons.size == 3 &&
                 buttonsCurveStyle != "curved_extreme") dp(4f) else 0f
-        val miniButtonsTop = geometry.rowBottom - geometry.pillHeight - maxRise
-        return minOf(desiredY, miniButtonsTop - dp(10f))
+        return geometry.rowBottom - geometry.pillHeight - maxRise
     }
 
     /** Exact preview counterpart of Wear's centeredTransportTrackTimeOffset. Curved outer mini
@@ -11986,32 +12132,48 @@ class WatchPreviewView @JvmOverloads constructor(
         // Title/artist near the top. ExpressiveFace calls AdaptiveTitleText with an explicit
         // 12sp floor against its 16sp size, so the title honours the user's text mode here too -
         // this used to marquee unconditionally on the claim that the watch did, which it does not.
-        if (showTrackTitle) {
-            drawAdaptiveTitle(
-                    canvas,
-                    cx,
-                    cy - radius + dp(43f),
-                    radius * 1.45f,
-                    dp(16f),
-                    titleAlpha(Color.WHITE),
-                    minSize = dp(12f))
-        }
-        // Artist, or the "Playback Stopped" status in white while paused (the watch's expressive
-        // face mirrors the same textArtist line the classic face swaps).
-        if (isPlayingShown() && showTrackArtist) {
-            drawArtistLine(
-                    canvas, displayArtist(), cx, cy - radius + dp(57f), radius * 1.45f,
-                    artistColor, dp(12f), sourceGlyph = true, glyphSize = dp(13f))
-        } else if (!isPlayingShown()) {
-            // Status copy stays neutral white and keeps the mark beside it, as the face does.
-            drawArtistLine(
-                    canvas, context.getString(R.string.preview_playback_stopped),
-                    cx, cy - radius + dp(57f), radius * 1.45f,
-                    Color.WHITE, dp(12f), sourceGlyph = true, glyphSize = dp(13f))
-        }
-
         // Keep the same 225dp breakpoint as expressiveMetrics() on Wear.
         val largeScreen = min(deviceWidthDp, deviceHeightDp) >= 225f
+        val artistLineDrawn = !isPlayingShown() || showTrackArtist
+        // Past the sizes the band above the ring holds, the title and the artist shrink together -
+        // the same TitleBand.fitScale ExpressiveFace applies, so the miniature stops where it does.
+        val textFit = TitleBand.fitScale(
+                bandDp = TitleBand.expressiveBand(
+                        min(deviceWidthDp, deviceHeightDp), if (largeScreen) 78f else 62f),
+                titleLineDp = if (showTrackTitle) FaceGeometry.Expressive.TITLE_LINE_DP else 0f,
+                titleScale = titleTypographySpec.scale,
+                artistRowDp = if (artistLineDrawn) FaceGeometry.Expressive.ARTIST_ROW_DP else 0f,
+                artistScale = artistTypographySpec.scale)
+        withTextFit(textFit) {
+            if (showTrackTitle) {
+                // One line whenever an artist line sits under it: on the watch the band above the
+                // ring holds a title line and the artist row and no more, and the title is the part
+                // that gives way (ExpressiveFace weights it below the artist row).
+                drawAdaptiveTitle(
+                        canvas,
+                        cx,
+                        cy - radius + dp(43f),
+                        radius * 1.45f,
+                        dp(16f),
+                        titleAlpha(Color.WHITE),
+                        minSize = dp(12f),
+                        maxLines = if (artistLineDrawn) 1 else null)
+            }
+            // Artist, or the "Playback Stopped" status in white while paused (the watch's expressive
+            // face mirrors the same textArtist line the classic face swaps).
+            if (isPlayingShown() && showTrackArtist) {
+                drawArtistLine(
+                        canvas, displayArtist(), cx, cy - radius + dp(57f), radius * 1.45f,
+                        artistColor, dp(12f), sourceGlyph = true, glyphSize = dp(13f))
+            } else if (!isPlayingShown()) {
+                // Status copy stays neutral white and keeps the mark beside it, as the face does.
+                drawArtistLine(
+                        canvas, context.getString(R.string.preview_playback_stopped),
+                        cx, cy - radius + dp(57f), radius * 1.45f,
+                        Color.WHITE, dp(12f), sourceGlyph = true, glyphSize = dp(13f))
+            }
+        }
+
         val sideWidth = dp(if (largeScreen) 48f else 42f)
         val sideHeight = dp(if (largeScreen) 58f else 50f)
         val ringBox = dp(if (largeScreen) 78f else 62f)
@@ -12205,11 +12367,20 @@ class WatchPreviewView @JvmOverloads constructor(
             // get. This is the settle the face runs through AdaptiveTitleText's onLineCount,
             // whose growth is monotonic for the same reason: a narrower column can add a line,
             // which would narrow it again.
+            // The watch stops the title at the lines that fit under the rail at the user's size
+            // (CarouselFace's fittingLines), measured with the watch's own line height.
+            val fittingLines = RoundScreenText.linesThatFit(
+                    top = CAROUSEL_TITLE_TOP,
+                    lineHeight = FaceGeometry.Carousel.TITLE_LINE_HEIGHT_DP *
+                            titleTypographySpec.scale / min(deviceWidthDp, deviceHeightDp),
+                    maxLines = FaceGeometry.Carousel.MAX_TITLE_LINES)
             var plan = planTitle(
-                    widthForLines(1), titleSize, titleSize * .62f, title, bold = false)
+                    widthForLines(1), titleSize, titleSize * .62f, title, bold = false,
+                    maxLines = fittingLines)
             val settledWidth = if (plan.lines.size > 1) {
                 widthForLines(plan.lines.size).also {
-                    plan = planTitle(it, titleSize, titleSize * .62f, title, bold = false)
+                    plan = planTitle(it, titleSize, titleSize * .62f, title, bold = false,
+                            maxLines = fittingLines)
                 }
             } else {
                 widthForLines(1)
@@ -12313,7 +12484,15 @@ class WatchPreviewView @JvmOverloads constructor(
         // Both text bands take their width from the chord at their own depth, exactly as the face
         // does. They used to carry a third and fourth hand-picked inset (.76/.78 here, .13 on the
         // watch), all of them too wide for the title's depth on a round dial.
-        val titleLineFraction = dp(FaceGeometry.Ribbon.TITLE_LINE_HEIGHT_DP) / screen
+        // RibbonMetadata's title: it stops growing where its 100% line ends, and the inset is
+        // measured for the size it is then drawn at.
+        val titleFit = TitleBand.fitScale(
+                bandDp = min(deviceWidthDp, deviceHeightDp) *
+                        (TitleBand.RIBBON_TITLE_FLOOR - FaceGeometry.Ribbon.TITLE_TOP_FRACTION),
+                titleLineDp = FaceGeometry.Ribbon.TITLE_LINE_HEIGHT_DP,
+                titleScale = titleTypographySpec.scale)
+        val titleLineFraction = dp(FaceGeometry.Ribbon.TITLE_LINE_HEIGHT_DP) *
+                titleTypographySpec.scale * titleFit / screen
         val titleLines = RoundScreenText.linesThatFit(
                 top = FaceGeometry.Ribbon.TITLE_TOP_FRACTION,
                 lineHeight = titleLineFraction,
@@ -12332,31 +12511,45 @@ class WatchPreviewView @JvmOverloads constructor(
                     top = FaceGeometry.Ribbon.ARTIST_TOP_FRACTION,
                     bottom = FaceGeometry.Ribbon.ARTIST_TOP_FRACTION +
                             dp(FaceGeometry.Ribbon.ARTIST_LINE_HEIGHT_DP) / screen)
-            drawArtistLine(
-                    canvas,
-                    artist,
-                    cx,
-                    screenTop + screen * FaceGeometry.Ribbon.ARTIST_BASELINE_FRACTION,
-                    screen * (1f - artistInset * 2f),
-                    if (isPlayingShown()) artistTextColor() else Color.WHITE,
-                    dp(12f),
-                    bold = true,
-                    sourceGlyph = isPlayingShown(),
-                    glyphSize = dp(18f)
-            )
+            // The artist's own band, from its top down to the cover rail: past the size that
+            // holds it stops growing, as RibbonFace's TitleBand.fitScale does on the watch.
+            val artistFit = TitleBand.fitScale(
+                    bandDp = min(deviceWidthDp, deviceHeightDp) * (minOf(
+                            FaceGeometry.Ribbon.CENTER_COVER_TOP_FRACTION,
+                            FaceGeometry.Ribbon.COLUMN_TOP_FRACTION) -
+                            FaceGeometry.Ribbon.ARTIST_TOP_FRACTION),
+                    titleLineDp = 0f,
+                    artistRowDp = FaceGeometry.Ribbon.ARTIST_LINE_HEIGHT_DP,
+                    artistScale = artistTypographySpec.scale)
+            withTextFit(artistFit, title = false) {
+                drawArtistLine(
+                        canvas,
+                        artist,
+                        cx,
+                        screenTop + screen * FaceGeometry.Ribbon.ARTIST_BASELINE_FRACTION,
+                        screen * (1f - artistInset * 2f),
+                        if (isPlayingShown()) artistTextColor() else Color.WHITE,
+                        dp(12f),
+                        bold = true,
+                        sourceGlyph = isPlayingShown(),
+                        glyphSize = dp(18f)
+                )
+            }
         }
         if (showTrackTitle) {
-            drawAdaptiveTitle(
-                    canvas,
-                    cx,
-                    screenTop + screen * FaceGeometry.Ribbon.TITLE_BASELINE_FRACTION,
-                    screen * (1f - titleInset * 2f),
-                    dp(18f),
-                    titleAlpha(Color.WHITE),
-                    bold = true,
-                    minSize = dp(11f),
-                    maxLines = titleLines
-            )
+            withTextFit(titleFit, artist = false) {
+                drawAdaptiveTitle(
+                        canvas,
+                        cx,
+                        screenTop + screen * FaceGeometry.Ribbon.TITLE_BASELINE_FRACTION,
+                        screen * (1f - titleInset * 2f),
+                        dp(18f),
+                        titleAlpha(Color.WHITE),
+                        bold = true,
+                        minSize = dp(11f),
+                        maxLines = titleLines
+                )
+            }
         }
         if (alwaysShowTime || clockPreviewForced()) {
             drawSmallClock(
@@ -12396,7 +12589,8 @@ class WatchPreviewView @JvmOverloads constructor(
         // Match FrameFace: the card is a dark version of the player's resolved primary accent,
         // and its chip is a readable surface version of that same live colour. Neither is teal.
         val cardColor = tunedPreviewColor(albumAccent(), .16f, .42f)
-        val chipColor = accentForSurface(albumAccent())
+        // ...unless the user picked an artist colour, which fills the chip as it does on the watch.
+        val chipColor = if (artistColorChosen()) artistTextColor() else accentForSurface(albumAccent())
         val chipTextColor = if (AdaptiveTextContrast.prefersDarkText(chipColor)) {
             Color.BLACK
         } else {
@@ -13740,31 +13934,59 @@ class WatchPreviewView @JvmOverloads constructor(
         val available = screen * (1f - 2f * inset)
         textPaint.style = Paint.Style.FILL
         textPaint.textAlign = Paint.Align.LEFT
-        var baseline = seamY + screen * .04f + dp(11f)
-        if (showTrackArtist || !isPlayingShown()) {
-            textPaint.typeface = artistTypeface(bold = false)
-            textPaint.textSize = artistTypographySpec.scaled(dp(12f))
-            textPaint.color = secondary
-            val artistText = if (isPlayingShown()) {
-                displayArtist()
-            } else {
-                context.getString(R.string.preview_playback_stopped)
+        // Past the sizes the panel holds, the artist and the title shrink together - the same
+        // TitleBand.fitScale SplitFace applies.
+        val splitArtistDrawn = showTrackArtist || !isPlayingShown()
+        val textFit = TitleBand.fitScale(
+                bandDp = min(deviceWidthDp, deviceHeightDp) *
+                        (TitleBand.SPLIT_FLOOR - TitleBand.SPLIT_TOP),
+                titleLineDp = if (showTrackTitle) TitleBand.SPLIT_TITLE_LINE_DP else 0f,
+                titleScale = titleTypographySpec.scale,
+                artistRowDp = if (splitArtistDrawn) TitleBand.SPLIT_ARTIST_ROW_DP else 0f,
+                artistScale = artistTypographySpec.scale)
+        withTextFit(textFit) {
+            var baseline = seamY + screen * .04f + dp(11f)
+            if (showTrackArtist || !isPlayingShown()) {
+                textPaint.typeface = artistTypeface(bold = false)
+                textPaint.textSize = artistTypographySpec.scaled(dp(12f))
+                // The panel-contrast colour until the user picks an artist colour - as SplitFace does.
+                textPaint.color = if (artistColorChosen() && isPlayingShown()) {
+                    artistTextColor()
+                } else {
+                    secondary
+                }
+                val artistText = if (isPlayingShown()) {
+                    displayArtist()
+                } else {
+                    context.getString(R.string.preview_playback_stopped)
+                }
+                canvas.drawText(ellipsize(artistText, available), textLeft, baseline, textPaint)
+                baseline += dp(16f)
             }
-            canvas.drawText(ellipsize(artistText, available), textLeft, baseline, textPaint)
-            baseline += dp(16f)
-        }
-        if (showTrackTitle) {
-            // SplitFace uses AdaptiveTitleText here rather than a bare two-line wrap, precisely so
-            // the panel never breaks a word badly; the preview has to follow or the two disagree
-            // on the one face whose title has a whole panel to itself.
-            drawAdaptiveTitle(
-                    canvas,
-                    textLeft,
-                    baseline,
-                    available,
-                    dp(16f),
-                    titleAlpha(primary),
-                    align = Paint.Align.LEFT)
+            if (showTrackTitle) {
+                // SplitFace uses AdaptiveTitleText here rather than a bare two-line wrap, precisely so
+                // the panel never breaks a word badly; the preview has to follow or the two disagree
+                // on the one face whose title has a whole panel to itself.
+                drawAdaptiveTitle(
+                        canvas,
+                        textLeft,
+                        baseline,
+                        available,
+                        dp(16f),
+                        titleAlpha(primary),
+                        align = Paint.Align.LEFT,
+                        // The panel's band ends before the bezel - the same TitleBand ceiling
+                        // SplitFace passes.
+                        maxLines = TitleBand.lineCeiling(
+                                bandDp = min(deviceWidthDp, deviceHeightDp) *
+                                        (TitleBand.SPLIT_FLOOR - TitleBand.SPLIT_TOP),
+                                titleLineDp = TitleBand.SPLIT_TITLE_LINE_DP,
+                                titleScale = titleTypographySpec.scale,
+                                artistRowDp = if (showTrackArtist || !isPlayingShown()) {
+                                    TitleBand.SPLIT_ARTIST_ROW_DP
+                                } else 0f,
+                                artistScale = artistTypographySpec.scale))
+            }
         }
 
         // Source icon on the seam, right of centre. Drawn bare - no disc, no ring - matching
@@ -13834,6 +14056,170 @@ class WatchPreviewView @JvmOverloads constructor(
 
     /** Shared preview renderer for the curated watch-first layouts. They intentionally expose a
      * single play/pause focus and leave shortcuts to the configured mini-button row. */
+    /**
+     * Poster's and Studio's block of track text, mirroring the watch's `TitleAnchoredMetadata`.
+     *
+     * Centred until the user moves it. Sent to the top it starts under the clock (or the edge
+     * margin); sent to the bottom it ends where the face's own controls begin, [faceFloor], or
+     * where the shared chrome in the bottom band starts when that is higher, [chromeTop] (see
+     * [curatedChromeTop]). The title
+     * goes through [drawTitlePlan] like every other face's, and a moved block is settled against
+     * the chord its lines really reach, as the watch settles on the lines its title wrapped to.
+     *
+     * Both faces used to draw the title in plain white straight onto the canvas and always centre
+     * the block: in the miniature of the default face the title's colour, opacity, outline,
+     * backdrop and alignment did nothing, and choosing a position moved nothing.
+     */
+    private fun drawTitleAnchoredBlock(
+            canvas: Canvas,
+            geometry: PreviewGeometry,
+            dp: (Float) -> Float,
+            faceFloor: Float,
+            chromeTop: Float,
+            widthFraction: Float,
+            titleSize: Float,
+            titleLineDp: Float,
+            artistRowDp: Float,
+            artistSize: Float,
+            artistGap: Float,
+            artistStyle: CuratedArtistStyle,
+            artistColor: Int,
+            titleVisible: Boolean,
+            artistVisible: Boolean
+    ) {
+        val cx = geometry.cx
+        val cy = geometry.cy
+        val screenTop = cy - geometry.radius
+        val screenDiameter = geometry.radius * 2f
+        val stop = TitleBand.effectiveFloor(faceFloor, minOf(chromeTop, 1f - TitleBand.EDGE_MARGIN))
+        // Past the sizes the room holds, the title and the artist shrink together - the watch's
+        // curatedTextFit, the artist row counted twice while "Centre the title" hangs half of it
+        // below the block.
+        val moved = textBlockPosition == TextBlockPosition.TOP ||
+                textBlockPosition == TextBlockPosition.BOTTOM
+        val anchored = titleCentered && titleVisible && artistVisible && !moved
+        val textFit = TitleBand.fitScale(
+                bandDp = min(deviceWidthDp, deviceHeightDp) * if (moved) {
+                    TitleBand.movedBand(TitleBand.movedTop(alwaysShowTime), stop)
+                } else {
+                    TitleBand.centredBand(stop)
+                },
+                titleLineDp = if (titleVisible) titleLineDp else 0f,
+                titleScale = titleTypographySpec.scale,
+                artistRowDp = if (artistVisible) artistRowDp * (if (anchored) 2f else 1f) else 0f,
+                artistScale = artistTypographySpec.scale)
+        withTextFit(textFit) {
+            val ceiling = curatedTitleCeiling(stop, titleLineDp, artistRowDp, artistVisible)
+            val columnWidth = screenDiameter * widthFraction
+            // The watch passes the title an explicit line height, so its lines sit that far apart.
+            val titleLineH = dp(titleLineDp)
+
+            textPaint.typeface = artistTypeface(bold = false)
+            textPaint.textSize = artistTypographySpec.scaled(artistSize)
+            val artistFm = textPaint.fontMetrics
+            val artistLineH = artistFm.descent - artistFm.ascent
+
+            fun heightOf(plan: TitlePlan?): Float =
+                    (if (plan != null) titleLineH * plan.lines.size else 0f) +
+                            (if (plan != null && artistVisible) artistGap else 0f) +
+                            (if (artistVisible) artistLineH else 0f)
+
+            // TitleAnchoredMetadata: centred (the title's own centre on the middle when "Centre the
+            // title" is on), or against the clock's clearance / the floor once moved.
+            fun topOf(height: Float, titleHeight: Float): Float = when (textBlockPosition) {
+                TextBlockPosition.TOP -> screenTop + screenDiameter * TitleBand.movedTop(alwaysShowTime)
+                TextBlockPosition.BOTTOM -> screenTop + screenDiameter * stop - height
+                TextBlockPosition.FOLLOW, TextBlockPosition.MIDDLE ->
+                    cy - height / 2f + titleAnchorShift(height, 0f, titleHeight, titleVisible)
+            }
+
+            var titleWidth = columnWidth
+            var plan: TitlePlan? = if (titleVisible) {
+                planTitle(columnWidth, titleSize, titleSize * .62f, maxLines = ceiling)
+            } else {
+                null
+            }
+            var height = heightOf(plan)
+            var top = topOf(height, titleLineH * (plan?.lines?.size ?: 0))
+            // Moved or lined up on a side, the title has to fit the glass at the depth its lines
+            // reach, and fitting can add a line, which reaches deeper - a few monotonic passes settle
+            // it, the shape of the watch's onLineCount settle. Unmoved, blockLine is the identity.
+            if (textBlockAlign != TextBlockAlign.FOLLOW || textBlockPosition != TextBlockPosition.FOLLOW) {
+                repeat(3) {
+                    val current = plan ?: return@repeat
+                    val narrowed = blockLine(Paint.Align.CENTER, cx, columnWidth,
+                            top, top + titleLineH * current.lines.size).width
+                    if (narrowed < titleWidth - .5f) {
+                        titleWidth = narrowed
+                        val replanned = planTitle(titleWidth, titleSize, titleSize * .62f, maxLines = ceiling)
+                        plan = replanned
+                        height = heightOf(replanned)
+                        top = topOf(height, titleLineH * replanned.lines.size)
+                    }
+                }
+            }
+
+            var y = top
+            plan?.let { title ->
+                textPaint.typeface = titleTypeface(bold = true)
+                textPaint.textSize = title.size
+                val titleFm = textPaint.fontMetrics
+                // The glyphs sit in the middle of each line box, as Compose places them.
+                val firstBaseline = y + (titleLineH - (titleFm.descent - titleFm.ascent)) / 2f - titleFm.ascent
+                drawTitlePlan(canvas, title, cx, firstBaseline, titleWidth, titleAlpha(Color.WHITE),
+                        bold = true, lineHeight = titleLineH)
+                y += titleLineH * title.lines.size
+            }
+            if (artistVisible) {
+                if (plan != null) y += artistGap
+                val label = if (isPlayingShown()) displayArtist()
+                else context.getString(R.string.preview_playback_stopped)
+                drawArtistLine(
+                        canvas,
+                        if (artistStyle.uppercase) label.uppercase() else label,
+                        cx, y - artistFm.ascent, geometry.radius * 1.35f,
+                        ColorUtils.setAlphaComponent(artistColor, artistStyle.alpha),
+                        artistSize,
+                        designedTracking = artistStyle.trackingEm,
+                        sourceGlyph = true, glyphSize = dp(10f))
+            }
+        }
+    }
+
+    /**
+     * Where the shared chrome in a curated face's bottom band begins, as a screen fraction - the
+     * preview's half of the watch's `miniButtonsTopFraction`: the configured mini-button row, else
+     * the Up Next pill while it shows, else 1.
+     */
+    private fun curatedChromeTop(
+            geometry: PreviewGeometry,
+            miniConfigured: Boolean,
+            dp: (Float) -> Float
+    ): Float {
+        val screenTop = geometry.cy - geometry.radius
+        val diameter = geometry.radius * 2f
+        val chrome = miniRowTopY(miniConfigured, geometry.radius, geometry.cy, dp)
+                ?.let { (it - screenTop) / diameter }
+                ?: if (!miniConfigured && showUpNextPill && isPlayingShown()) {
+                    TitleBand.UP_NEXT_PILL_TOP
+                } else {
+                    1f
+                }
+        return chrome
+    }
+
+    /**
+     * The watch's `TrackFooter` placement for Poster and Studio: the face's own offset below the
+     * centre ([designed], a screen fraction), lifted clear of the chrome at [chromeTop] the way
+     * the watch lifts it - for the Up Next pill as well as a mini-button row.
+     */
+    private fun curatedFooterOffset(
+            designed: Float,
+            chromeTop: Float,
+            screenDiameter: Float,
+            dp: (Float) -> Float
+    ): Float = TitleBand.footerOffset(designed, chromeTop, dp(10f) / screenDiameter)
+
     private fun drawCuratedPlayer(
             canvas: Canvas,
             geometry: PreviewGeometry,
@@ -13893,7 +14279,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 (!hasMiniButtons || shortcutTop >= screenTop + screenDiameter * .50f)
 
         fillPaint.shader = null
-        fun header(topY: Float, compact: Boolean = false, showArtist: Boolean = true) {
+        fun headerText(topY: Float, compact: Boolean, showArtist: Boolean) {
             val titleSize = dp(when (kind) {
                 "vinyl" -> 12f
                 "halo" -> 13f
@@ -13917,7 +14303,20 @@ class WatchPreviewView @JvmOverloads constructor(
                 // shrink/wrap/scroll cascade applies here too - this used to be a fixed
                 // fits-or-scrolls pair that made the Title text behaviour setting inert on ten
                 // faces at once.
-                val plan = planTitle(titleWidth, titleSize, titleSize * .62f, title)
+                // Material's band ends at its disc; the watch caps the title there (TitleBand).
+                val ceiling = if (kind == "material") {
+                    TitleBand.lineCeiling(
+                            bandDp = min(deviceWidthDp, deviceHeightDp) *
+                                    (TitleBand.MATERIAL_FLOOR - TitleBand.MATERIAL_TOP),
+                            titleLineDp = FaceGeometry.CuratedText.MATERIAL_TITLE_LINE_DP,
+                            titleScale = titleTypographySpec.scale,
+                            artistRowDp = if (showArtist && artistVisible) {
+                                FaceGeometry.CuratedText.MATERIAL_ARTIST_ROW_DP
+                            } else 0f,
+                            artistScale = artistTypographySpec.scale)
+                } else null
+                val plan = planTitle(titleWidth, titleSize, titleSize * .62f, title,
+                        maxLines = ceiling)
                 val blockHeight = drawTitlePlan(
                         canvas,
                         plan,
@@ -13945,6 +14344,22 @@ class WatchPreviewView @JvmOverloads constructor(
                         sourceGlyph = true,
                         glyphSize = dp(if (kind == "material") 13f else 10f))
             }
+        }
+        fun header(topY: Float, compact: Boolean = false, showArtist: Boolean = true) {
+            // Material's band ends at its disc: past the sizes it holds the title and the artist
+            // shrink together, as MaterialComposition's TitleBand.fitScale does on the watch.
+            val fit = if (kind == "material") TitleBand.fitScale(
+                    bandDp = min(deviceWidthDp, deviceHeightDp) *
+                            (TitleBand.MATERIAL_FLOOR - TitleBand.MATERIAL_TOP),
+                    titleLineDp = if (titleVisible) {
+                        FaceGeometry.CuratedText.MATERIAL_TITLE_LINE_DP
+                    } else 0f,
+                    titleScale = titleTypographySpec.scale,
+                    artistRowDp = if (showArtist && artistVisible) {
+                        FaceGeometry.CuratedText.MATERIAL_ARTIST_ROW_DP
+                    } else 0f,
+                    artistScale = artistTypographySpec.scale) else 1f
+            withTextFit(fit) { headerText(topY, compact, showArtist) }
         }
 
         // Mirrors the watch's AlbumArtwork(): honors ALBUM_ART_STYLE instead of always drawing
@@ -14192,172 +14607,116 @@ class WatchPreviewView @JvmOverloads constructor(
                 }
             }
             "poster" -> {
-                // The watch's PosterMetadata is a Column with Modifier.align(Alignment.Center) -
-                // the whole title+artist block sits vertically centered on the screen, not
-                // anchored under the top bezel.
+                // PosterComposition: the block of track text, the play mark lifted off the bottom
+                // edge (higher while the progress line is drawn under it), the line and the time.
+                val posterProgressShown = !miniConfigured && internalProgressVisible
+                val posterChrome = curatedChromeTop(geometry, miniConfigured, dp)
+                val posterTime = curatedFooterOffset(
+                        if (posterProgressShown) FaceGeometry.Poster.TIME_OFFSET_WITH_LINE
+                        else FaceGeometry.Poster.TIME_OFFSET,
+                        posterChrome, screenDiameter, dp)
                 if (showCompactHeader) {
-                    val posterTitleSize = dp(if (hasMiniButtons) 14f else 18f)
-                    val posterArtistSize = artistTypographySpec.scaled(dp(10f))
-                    val posterGap = dp(6f)
-                    val posterArtistVisible = !hasMiniButtons && artistVisible
-
-                    // The watch's PosterMetadata title now follows the user's Title text
-                    // behaviour (AdaptiveTitleText), so the preview does too instead of always
-                    // wrapping to at most two lines - a short one-line title still takes just
-                    // one line, so the artist sits right beneath it rather than floating a whole
-                    // empty line below (the "big gap" the preview used to show).
-                    val posterTitleWidth = screenDiameter * FaceGeometry.CuratedText.POSTER_WIDTH_FRACTION
-                    val posterFloorSize = posterTitleSize * 0.62f
-                    val posterPlan = planTitle(
-                            posterTitleWidth, posterTitleSize, posterFloorSize)
-
-                    textPaint.typeface = titleTypeface(bold = true)
-                    textPaint.textSize = posterPlan.size
-                    val posterTitleFm = textPaint.fontMetrics
-                    val posterTitleLineH = posterTitleFm.descent - posterTitleFm.ascent
-
-                    textPaint.typeface = artistTypeface(bold = false)
-                    textPaint.textSize = posterArtistSize
-                    val posterArtistFm = textPaint.fontMetrics
-                    val posterArtistLineH = posterArtistFm.descent - posterArtistFm.ascent
-
-                    val posterTitleBlockH = posterTitleLineH * posterPlan.lines.size
-                    val posterTotalH = (if (titleVisible) posterTitleBlockH else 0f) +
-                            (if (titleVisible && posterArtistVisible) posterGap else 0f) +
-                            (if (posterArtistVisible) posterArtistLineH else 0f)
-                    var posterY = cy - posterTotalH / 2f + titleAnchorShift(
-                            posterTotalH, 0f, posterTitleBlockH, titleVisible)
-
-                    if (titleVisible) {
-                        textPaint.typeface = titleTypeface(bold = true)
-                        textPaint.textSize = posterPlan.size
-                        textPaint.color = Color.WHITE
-                        if (posterPlan.marquee) {
-                            drawMarqueeText(canvas, posterPlan.lines.first(), cx,
-                                    posterY - posterTitleFm.ascent, posterTitleWidth)
-                            posterY += posterTitleLineH
-                        } else {
-                            posterPlan.lines.forEach { line ->
-                                canvas.drawText(line, cx, posterY - posterTitleFm.ascent, textPaint)
-                                posterY += posterTitleLineH
-                            }
-                        }
-                    }
-                    if (posterArtistVisible) {
-                        if (titleVisible) posterY += posterGap
-                        val posterStyle = curatedArtistStyle("poster")
-                        val posterLabel = if (isPlayingShown()) displayArtist()
-                        else context.getString(R.string.preview_playback_stopped)
-                        drawArtistLine(
-                                canvas,
-                                if (posterStyle.uppercase) posterLabel.uppercase() else posterLabel,
-                                cx, posterY - posterArtistFm.ascent, radius * 1.35f,
-                                ColorUtils.setAlphaComponent(artistColor, posterStyle.alpha),
-                                dp(10f),
-                                designedTracking = posterStyle.trackingEm,
-                                sourceGlyph = true, glyphSize = dp(10f))
-                    }
+                    drawTitleAnchoredBlock(
+                            canvas, geometry, dp,
+                            // The face's controls, or its time line once lifted above the chrome.
+                            faceFloor = minOf(
+                                    TitleBand.posterFloor(
+                                            controls = controlsVisible,
+                                            progressLine = posterProgressShown,
+                                            trackTime = trackTimeVisible()),
+                                    if (trackTimeVisible()) .5f + posterTime - dp(4f) / screenDiameter
+                                    else 1f),
+                            chromeTop = posterChrome,
+                            widthFraction = FaceGeometry.CuratedText.POSTER_WIDTH_FRACTION,
+                            titleSize = dp(22f),
+                            titleLineDp = FaceGeometry.CuratedText.POSTER_TITLE_LINE_DP,
+                            artistRowDp = FaceGeometry.CuratedText.POSTER_ARTIST_ROW_DP,
+                            artistSize = dp(8f),
+                            artistGap = dp(6f),
+                            artistStyle = curatedArtistStyle("poster"),
+                            artistColor = artistColor,
+                            titleVisible = titleVisible,
+                            artistVisible = artistVisible)
                 }
-                // No play/pause glyph here: the watch's PosterComposition never draws one (tap
-                // still toggles playback) - the artwork stays unobscured, matching CHANGELOG.
-                if (!miniConfigured) progressLine(cy + dp(56f), dp(104f))
+                // PlayPauseGlyph(state, White, screen * .09f), bottom-centred and lifted .20 of
+                // the screen off the edge (.24 with no progress line under it). The miniature used
+                // to leave it out on the claim that the watch drew none; it does whenever the
+                // player controls are on, and it is what a block sent to the bottom stops above.
+                val posterMark = screenDiameter * FaceGeometry.Poster.MARK_FRACTION
+                val posterMarkBottom = screenTop + screenDiameter * (1f -
+                        if (posterProgressShown) FaceGeometry.Poster.MARK_LIFT_WITH_LINE
+                        else FaceGeometry.Poster.MARK_LIFT)
+                playGlyph(cx, posterMarkBottom - posterMark / 2f, posterMark)
+                if (posterProgressShown) {
+                    progressLine(cy + screenDiameter * FaceGeometry.Poster.LINE_OFFSET,
+                            screenDiameter * FaceGeometry.Poster.LINE_WIDTH)
+                }
                 if (trackTimeVisible()) {
-                    textPaint.color = 0xA8FFFFFF.toInt(); textPaint.textSize = dp(9f)
-                    // On the floor when there's no progress line above it (mirrors the watch).
-                    val posterTimeY = if (internalProgressVisible) dp(73f) else dp(81f)
+                    textPaint.color = 0xC2FFFFFF.toInt(); textPaint.textSize = dp(9f)
+                    // On the floor when there's no progress line above it, and lifted clear of
+                    // the mini-button row or the Up Next pill (mirrors the watch's TrackFooter).
                     drawTrackTimeText(
-                            canvas, timeText(), cx,
-                            clampTimeY(cy + posterTimeY, miniConfigured, radius, cy, dp),
-                            dp(9f), 0xA8FFFFFF.toInt(), textPaint.typeface)
+                            canvas, timeText(), cx, cy + screenDiameter * posterTime,
+                            dp(9f), 0xC2FFFFFF.toInt(), textPaint.typeface)
                 }
             }
             "studio" -> {
-                // The watch's StudioMetadata is also a Column with Alignment.Center - center the
-                // block on screen instead of anchoring it under the top bezel like header() does
-                // for the genuinely top-anchored faces (vinyl/halo/eclipse).
+                // StudioComposition: the block of track text over a progress orb resting .04 of
+                // the screen off the bottom edge, the play mark in the bottom of the orb and the
+                // time at its centre. The orb used to sit at the miniature's own guess (higher, and
+                // larger, than the watch's), so a block that stops above it stopped elsewhere.
+                val studioOrbR = screenDiameter * FaceGeometry.Studio.ORB_RADIUS
+                val studioOrbBottom = screenTop + screenDiameter * (1f - FaceGeometry.Studio.ORB_LIFT)
+                val studioOrbY = studioOrbBottom - studioOrbR
+                val studioChrome = curatedChromeTop(geometry, miniConfigured, dp)
+                val studioTime = curatedFooterOffset(
+                        if (internalProgressVisible) FaceGeometry.Studio.TIME_OFFSET_IN_ORB
+                        else FaceGeometry.Studio.TIME_OFFSET,
+                        studioChrome, screenDiameter, dp)
                 if (showCompactHeader) {
-                    val studioTitleSize = dp(if (hasMiniButtons) 14f else 18f)
-                    val studioArtistSize =
-                            artistTypographySpec.scaled(dp(if (hasMiniButtons) 9f else 11f))
-                    val studioGap = dp(if (hasMiniButtons) 5f else 6f)
-                    val studioArtistVisible = !hasMiniButtons && artistVisible
-
-                    // Studio's title now follows the user's Title text behaviour, same as Poster
-                    // above.
-                    val studioTitleWidth = screenDiameter * FaceGeometry.CuratedText.STUDIO_WIDTH_FRACTION
-                    val studioFloorSize = studioTitleSize * 0.62f
-                    val studioPlan = planTitle(
-                            studioTitleWidth, studioTitleSize, studioFloorSize)
-
-                    textPaint.typeface = titleTypeface(bold = true)
-                    textPaint.textSize = studioPlan.size
-                    val studioTitleFm = textPaint.fontMetrics
-                    val studioTitleLineH = studioTitleFm.descent - studioTitleFm.ascent
-
-                    textPaint.typeface = artistTypeface(bold = false)
-                    textPaint.textSize = studioArtistSize
-                    val studioArtistFm = textPaint.fontMetrics
-                    val studioArtistLineH = studioArtistFm.descent - studioArtistFm.ascent
-
-                    val studioTitleBlockH = studioTitleLineH * studioPlan.lines.size
-                    val studioTotalH = (if (titleVisible) studioTitleBlockH else 0f) +
-                            (if (titleVisible && studioArtistVisible) studioGap else 0f) +
-                            (if (studioArtistVisible) studioArtistLineH else 0f)
-                    var studioY = cy - studioTotalH / 2f + titleAnchorShift(
-                            studioTotalH, 0f, studioTitleBlockH, titleVisible)
-
-                    if (titleVisible) {
-                        textPaint.typeface = titleTypeface(bold = true)
-                        textPaint.textSize = studioPlan.size
-                        textPaint.color = Color.WHITE
-                        if (studioPlan.marquee) {
-                            drawMarqueeText(canvas, studioPlan.lines.first(), cx,
-                                    studioY - studioTitleFm.ascent, studioTitleWidth)
-                            studioY += studioTitleLineH
-                        } else {
-                            studioPlan.lines.forEach { line ->
-                                canvas.drawText(line, cx, studioY - studioTitleFm.ascent, textPaint)
-                                studioY += studioTitleLineH
-                            }
-                        }
-                    }
-                    if (studioArtistVisible) {
-                        if (titleVisible) studioY += studioGap
-                        val studioStyle = curatedArtistStyle("studio")
-                        val studioLabel = if (isPlayingShown()) displayArtist()
-                        else context.getString(R.string.preview_playback_stopped)
-                        drawArtistLine(
-                                canvas,
-                                if (studioStyle.uppercase) studioLabel.uppercase() else studioLabel,
-                                cx, studioY - studioArtistFm.ascent, radius * 1.35f,
-                                ColorUtils.setAlphaComponent(artistColor, studioStyle.alpha),
-                                dp(if (hasMiniButtons) 9f else 11f),
-                                designedTracking = studioStyle.trackingEm,
-                                sourceGlyph = true, glyphSize = dp(10f))
-                    }
+                    drawTitleAnchoredBlock(
+                            canvas, geometry, dp,
+                            faceFloor = minOf(
+                                    TitleBand.studioFloor(
+                                            progressOrb = internalProgressVisible,
+                                            controls = controlsVisible,
+                                            trackTime = trackTimeVisible()),
+                                    if (trackTimeVisible()) .5f + studioTime - dp(4f) / screenDiameter
+                                    else 1f),
+                            chromeTop = studioChrome,
+                            widthFraction = FaceGeometry.CuratedText.STUDIO_WIDTH_FRACTION,
+                            titleSize = dp(15f),
+                            titleLineDp = FaceGeometry.CuratedText.STUDIO_TITLE_LINE_DP,
+                            artistRowDp = FaceGeometry.CuratedText.STUDIO_ARTIST_ROW_DP,
+                            artistSize = dp(8f),
+                            artistGap = dp(5f),
+                            artistStyle = curatedArtistStyle("studio"),
+                            artistColor = artistColor,
+                            titleVisible = titleVisible,
+                            artistVisible = artistVisible)
                 }
-                val orbR = dp(if (hasMiniButtons) 26f else 31f)
-                // The watch's StudioComposition anchors this ring near the screen's bottom edge,
-                // not its center - no play/pause glyph is drawn on it either (tap still toggles
-                // playback; only the progress arc is visible).
-                val orbY = cy + radius * .42f
                 if (internalProgressVisible) {
-                    strokePaint.strokeWidth = dp(4f); strokePaint.strokeCap = Paint.Cap.ROUND
-                    strokePaint.color = 0x3CFFFFFF
-                    canvas.drawArc(RectF(cx - orbR, orbY - orbR, cx + orbR, orbY + orbR), -90f, 360f, false, strokePaint)
-                    strokePaint.color = Color.WHITE
-                    canvas.drawArc(RectF(cx - orbR, orbY - orbR, cx + orbR, orbY + orbR), -90f,
-                            progressFraction() * 360f, false, strokePaint)
+                    // Drawn inset by its own stroke inside the orb's box, as the watch draws it.
+                    val stroke = dp(4f)
+                    val arcR = studioOrbR - stroke
+                    val arc = RectF(cx - arcR, studioOrbY - arcR, cx + arcR, studioOrbY + arcR)
+                    strokePaint.strokeWidth = stroke; strokePaint.strokeCap = Paint.Cap.ROUND
+                    strokePaint.color = 0x3DFFFFFF
+                    canvas.drawArc(arc, -90f, 360f, false, strokePaint)
+                    strokePaint.color = progressColor
+                    canvas.drawArc(arc, -90f, progressFraction() * 360f, false, strokePaint)
                 }
+                // PlayPauseGlyph(state, White, orbR * .55f), bottom-centred .04 of the screen off
+                // the edge: inside the bottom of the orb when the orb is drawn.
+                val studioMark = studioOrbR * FaceGeometry.Studio.MARK_OF_ORB
+                playGlyph(cx, studioOrbBottom - studioMark / 2f, studioMark)
                 if (trackTimeVisible()) {
-                    textPaint.color = 0xA8FFFFFF.toInt(); textPaint.textSize = dp(9f)
-                    // Inside the orb when it's drawn, on the floor when it isn't (mirrors the
-                    // watch's TrackFooter anchoring for Studio).
-                    val studioTimeY = if (internalProgressVisible) orbY + dp(3f) else cy + dp(81f)
+                    textPaint.color = 0x9EFFFFFF.toInt(); textPaint.textSize = dp(9f)
+                    // Inside the orb when it's drawn, on the floor when it isn't, lifted clear of
+                    // the chrome in the bottom band (mirrors the watch's TrackFooter for Studio).
                     drawTrackTimeText(
-                            canvas, timeText(), cx,
-                            clampTimeY(studioTimeY, miniConfigured, radius, cy, dp),
-                            dp(9f), 0xA8FFFFFF.toInt(), textPaint.typeface)
+                            canvas, timeText(), cx, cy + screenDiameter * studioTime,
+                            dp(9f), 0x9EFFFFFF.toInt(), textPaint.typeface)
                 }
             }
             "halo" -> {

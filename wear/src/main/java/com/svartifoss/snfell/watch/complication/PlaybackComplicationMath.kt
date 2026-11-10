@@ -6,7 +6,7 @@ package com.svartifoss.snfell.watch.complication
  *
  * A complication is read by the watch face's process at moments this app does not choose, from the
  * music-state DataItem the phone last published, and the phone deliberately does not publish while
- * only the position moves (see `MusicService.equalsIgnoringTime`). So the reading here is always a
+ * only the position moves (see the phone's `MusicStateDedupe`). So the reading here is always a
  * *prediction*, and the only clock that can date the sample is the one the phone stamped it with:
  * `positionUpdateTime`, a wall-clock time. That is the cross-device subtraction the player itself
  * stopped trusting (see `PlaybackPositionEstimate`), and it is accepted here on purpose: the player

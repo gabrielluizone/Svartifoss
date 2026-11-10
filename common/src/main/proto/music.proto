@@ -94,17 +94,24 @@ message MusicState {
 message MediaAction {
   required string id = 1;
   optional string label = 2;
+  // The icon inline. Left out when the watch resolves icons by iconKey (WatchInfo.actionIconsByKey).
   optional bytes iconPng = 3;
   // Stable, locale-independent meaning used only for state/fallback presentation. The opaque id
   // remains the sole execution token, so a semantic guess can never redirect a button.
   optional string semantic = 4 [default = "unknown"];
+  // Content digest of the icon (MediaActionIcons.keyFor), set whenever the action has one. For a
+  // watch that resolves icons by key, iconPng is left out and the bytes ride the music-state
+  // DataItem as the asset MediaActionIcons.assetName(iconKey), which the Data Layer transfers once
+  // per digest. Inline, the icons were most of every state - three of them made a MusicState about
+  // 12 KB, paid twice per transmission (message and DataItem) while the icons never changed.
+  optional string iconKey = 5;
 }
 
 // Phone -> watch, in answer to CommPaths.MESSAGE_REQUEST_PLAYBACK_SYNC.
 //
 // The periodic correction for the watch's predicted playback position. MusicState carries a
 // position too, but only when something *else* changed - the phone suppresses position-only
-// retransmissions on purpose (see MusicService.equalsIgnoringTime), so during steady playback the
+// retransmissions on purpose (see the phone's MusicStateDedupe), so during steady playback the
 // watch can go a whole track without a single fresh sample and any error it started with lasts the
 // whole song. This is the sample it can ask for.
 //

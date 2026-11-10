@@ -5,7 +5,6 @@ import android.util.LruCache
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
@@ -26,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
@@ -55,7 +53,6 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -107,7 +104,7 @@ import com.svartifoss.snfell.watch.view.compose.CurvedScrollIndicator
 import com.svartifoss.snfell.watch.view.compose.EqualizerBars
 import com.svartifoss.snfell.watch.view.compose.LoadingBars
 import com.svartifoss.snfell.watch.view.compose.SuperellipseShape
-import com.svartifoss.snfell.watch.view.face.marqueeFade
+import com.svartifoss.snfell.watch.view.compose.trackMarquee
 import com.svartifoss.snfell.watch.view.panel.PanelBackdropLayer
 import com.svartifoss.snfell.watch.view.panel.ScreenBackdrop
 import kotlinx.coroutines.Dispatchers
@@ -883,8 +880,6 @@ private fun QueueHeader(
             horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (!title.isNullOrBlank()) {
-            var roomWidth by remember { mutableIntStateOf(0) }
-            var lineWidth by remember(title) { mutableIntStateOf(0) }
             Text(
                     text = title,
                     color = Color.White,
@@ -893,17 +888,10 @@ private fun QueueHeader(
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    // basicMarquee measures the text at its natural width. Compare that with
-                    // the viewport outside it so a stationary title keeps every glyph opaque.
-                    onTextLayout = { lineWidth = it.size.width },
-                    modifier = Modifier.fillMaxWidth().onSizeChanged { roomWidth = it.width }.then(
-                            if (marquee) {
-                                Modifier.marqueeFade(enabled = roomWidth in 1 until lineWidth)
-                                        .basicMarquee(iterations = Int.MAX_VALUE)
-                            } else {
-                                Modifier
-                            }
-                    )
+                    // Scrolls only when it overflows, and its ends dissolve only while it moves,
+                    // so a title at rest keeps every glyph sharp (see trackMarquee).
+                    modifier = Modifier.fillMaxWidth().then(
+                            if (marquee) Modifier.trackMarquee() else Modifier)
             )
         }
         if (!artist.isNullOrBlank()) {
@@ -1082,8 +1070,6 @@ private fun QueueRow(
             }
         }
         Column(Modifier.weight(1f)) {
-            var roomWidth by remember { mutableIntStateOf(0) }
-            var lineWidth by remember(item.title) { mutableIntStateOf(0) }
             Text(
                     text = item.title,
                     color = onRow,
@@ -1092,16 +1078,11 @@ private fun QueueRow(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     // Only the now-playing row scrolls its long title, and only while the list
-                    // itself is at rest ([marquee]). Marquee on EVERY row (or during a scroll)
-                    // re-lays the list out each frame and made scrolling visibly stutter.
-                    onTextLayout = { lineWidth = it.size.width },
-                    modifier = Modifier.onSizeChanged { roomWidth = it.width }.then(
-                            if (item.isPlaying && marquee) {
-                                Modifier.marqueeFade(enabled = roomWidth in 1 until lineWidth)
-                                        .basicMarquee(iterations = Int.MAX_VALUE)
-                            } else {
-                                Modifier
-                            })
+                    // itself is at rest ([marquee]). A marquee on every row (or during a scroll)
+                    // made scrolling visibly stutter when the old marquee re-laid the list out
+                    // each frame; trackMarquee only redraws, but there is still no reason to
+                    // animate rows nobody is reading.
+                    modifier = if (item.isPlaying && marquee) Modifier.trackMarquee() else Modifier
             )
             if (!item.subtitle.isNullOrBlank()) {
                 Text(

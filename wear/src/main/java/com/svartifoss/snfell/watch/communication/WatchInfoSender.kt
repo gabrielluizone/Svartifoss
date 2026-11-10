@@ -47,6 +47,9 @@ class WatchInfoSender(private val context: Context, private val urgent: Boolean)
         // separate platforms - and it is what decides whether the always-on player can be held past
         // the system's watch-face timeout at all. See WearPlatform.
         builder.platformApiLevel = Build.VERSION.SDK_INT
+        // PhoneConnection keeps media-action icons by key and MainActivity draws them from there,
+        // so the phone can stop sending the bytes inside every state. See MediaAction.iconKey.
+        builder.actionIconsByKey = true
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             // These labels are rendered by the *phone*, in the Controls screen, so they have to be
