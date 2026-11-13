@@ -307,6 +307,13 @@ tasks.withType(Test).configureEach {
     inputs.dir("${rootProject.projectDir}/wear/src/main/res/font")
             .withPropertyName("wearFontsForPackagingContract")
             .withPathSensitivity(PathSensitivity.RELATIVE)
+
+    // ShortcutPlaybackContractTest checks that the receiver letting adb stand in for a watch is
+    // declared in the debug source set only, behind the shell-only DUMP permission. A release
+    // variant's test task has no other reason to notice that manifest changing.
+    inputs.dir("src/debug")
+            .withPropertyName("debugSourcesForSimulatedWatchContract")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
 }
 
 // The key is read while this script is configured, so make the generated BuildConfig tasks

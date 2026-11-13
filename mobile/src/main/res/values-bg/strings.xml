@@ -344,7 +344,6 @@
     <string name="setting_always_show_time">Винаги показвай часа</string>
     <string name="setting_always_show_time_off_description">Текущият час ще се показва само в околен режим</string>
     <string name="setting_always_show_time_on_description">Текущият час ще се показва винаги. Горната икона за действие няма да се вижда (ще бъде заменена от часовника), но действието ще продължи да работи нормално.</string>
-    <string name="tap_to_force_stop">Докоснете, за да спрете контролите</string>
     <string name="notification_action_stop">Спиране</string>
     <string name="notification_action_force_stop">Принудително спиране</string>
     <string name="error_notification_access">Няма достъп до известия. Проверете телефона.</string>

@@ -40,6 +40,24 @@ object FaceElements {
      */
     private val WITHOUT_TRACK_TIME: Set<String> = setOf("carousel", "split", "ribbon", "depth")
 
+    /**
+     * Faces whose awake composition draws the Up Next pill (`wear_show_up_next_pill`) in the bottom
+     * band the mini-button row would otherwise take.
+     *
+     * The pill is drawn by each face rather than by the host, because where the bottom band is free
+     * is a property of the composition: Split's panel, Frame's card, Ribbon's rails and Carousel's
+     * text all live there. Before this was written down the switch sat on the Panels page for
+     * every face, the curated faces and Expressive drew it, and on the other eleven it did nothing -
+     * while the phone's miniature drew it on four of those eleven anyway, so the one screen built
+     * to show the setting claimed it worked where it did not. The Artist face draws it since its
+     * block learned to stop above the bottom band.
+     */
+    val UP_NEXT_PILL_FACES: Set<String> = setOf(
+            "expressive", "vinyl", "poster", "studio", "halo", "aurora", "eclipse", "spectrum",
+            "material", "immersive", "depth", "artist")
+
+    fun drawsUpNextPill(face: String?): Boolean = face in UP_NEXT_PILL_FACES
+
     /** Faces whose awake composition draws the playing app's mark. */
     val SOURCE_ICON_FACES: Set<String> = ThemeAppearance.ALLOWED_BASE_FACES - WITHOUT_SOURCE_ICON
 

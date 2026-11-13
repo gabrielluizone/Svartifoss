@@ -205,6 +205,9 @@ class LyricsViewModel @Inject constructor(
     fun setAmbient(value: Boolean) {
         if (ambient == value) return
         ambient = value
+        // The same reasoning for the connection: the position is checked against the phone to
+        // keep a line on the beat, which an ambient screen cannot show - see PositionViewers.
+        phoneConnection.setPositionViewerLive(this, !value)
         // Relaunches at the new cadence and ticks immediately, so the wrist coming up catches the
         // lyric up at once instead of waiting out the ambient delay already in flight.
         restartTicker()
@@ -215,8 +218,12 @@ class LyricsViewModel @Inject constructor(
     fun refreshPosition() = tick()
 
     /** Tells the connection whether this screen is on display - it pauses the position checks and
-     *  the neighbouring-cover decoding while no screen showing the position is. */
-    fun setShowingPosition(showing: Boolean) = phoneConnection.setPositionViewer(this, showing)
+     *  the neighbouring-cover decoding while no screen showing the position is. A screen that
+     *  comes back while still ambient registers as one whose readout is not moving. */
+    fun setShowingPosition(showing: Boolean) {
+        phoneConnection.setPositionViewer(this, showing)
+        if (showing && ambient) phoneConnection.setPositionViewerLive(this, false)
+    }
 
     /**
      * Where the song has got to, read from the shared clock.

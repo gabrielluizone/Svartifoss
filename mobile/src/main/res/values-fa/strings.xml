@@ -297,7 +297,6 @@
     <string name="setting_always_show_time">همیشه زمان را نمایش بده</string>
     <string name="setting_always_show_time_off_description">زمان فعلی فقط در حالت محیطی نمایش داده می‌شود</string>
     <string name="setting_always_show_time_on_description">زمان فعلی همیشه نمایش داده می‌شود. نماد اقدام بالا قابل‌مشاهده نخواهد بود (با ساعت جایگزین می‌شود)، اما اقدام همچنان به‌طور عادی کار می‌کند.</string>
-    <string name="tap_to_force_stop">برای توقف کنترل‌ها ضربه بزنید</string>
     <string name="notification_action_stop">توقف</string>
     <string name="notification_action_force_stop">توقف اجباری</string>
     <string name="error_notification_access">دسترسی به اعلان‌ها وجود ندارد. گوشی را بررسی کنید.</string>

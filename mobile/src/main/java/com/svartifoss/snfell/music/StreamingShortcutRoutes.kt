@@ -58,6 +58,37 @@ object StreamingShortcutRoutes {
     )
 
     /**
+     * The app whose session and library are asked to *play* [rawLink] when that is not the app
+     * the link opens in - null for every link that is played where it opens, which is nearly all.
+     *
+     * The exception is a YouTube link to one video or playlist
+     * ([StreamingShortcutLinks.playsUnderAnotherAddress]). [targetPackage] asks whether an app
+     * declares the link as it was saved, and YouTube Music declares neither `youtu.be` nor
+     * `youtube.com` (only the YouTube app does), so for those links it answered "no app" and the
+     * whole silent half of the ladder was skipped: a playlist shared from YouTube opened the
+     * YouTube app on an unlocked phone and did nothing on a locked one, where the same playlist
+     * saved as `music.youtube.com` started with the screen off. It had not always been so - until
+     * the target became a per-link question (4.2) every YouTube link was sent to YouTube Music.
+     *
+     * The same per-service choice applies as for [targetPackage], and the app is asked about the
+     * address it would be sent ([StreamingShortcutLinks.forPlayback]), not the saved one.
+     */
+    fun playbackPackage(
+            context: Context,
+            preferences: SharedPreferences,
+            service: StreamingService,
+            openMode: String,
+            rawLink: String
+    ): String? {
+        if (!StreamingShortcutLinks.playsUnderAnotherAddress(rawLink)) return null
+        return resolvePackage(service, openMode, selectedPackage(preferences, service)) { packageName ->
+            context.isPackageInstalled(packageName) &&
+                    canOpen(context.packageManager, packageName, StreamingShortcutLinks.forPlayback(
+                            rawLink, officialAppTarget = packageName == service.packageName))
+        }
+    }
+
+    /**
      * The official Spotify app accepts its compact app URI; alternatives should receive the
      * provider's normal web URL, which is the interoperable form they register for.
      */

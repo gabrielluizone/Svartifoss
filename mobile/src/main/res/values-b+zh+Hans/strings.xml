@@ -295,7 +295,6 @@
     <string name="setting_always_show_time">始终显示时间</string>
     <string name="setting_always_show_time_off_description">当前时间仅在环境模式下显示</string>
     <string name="setting_always_show_time_on_description">当前时间将始终显示。顶部操作图标将不可见（会被时钟取代），但操作仍会正常运行。</string>
-    <string name="tap_to_force_stop">点按以停止控制</string>
     <string name="notification_action_stop">停止</string>
     <string name="notification_action_force_stop">强制停止</string>
     <string name="error_notification_access">无通知访问权限。请检查手机。</string>

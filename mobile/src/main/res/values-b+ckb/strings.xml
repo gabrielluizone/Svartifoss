@@ -761,7 +761,6 @@
     <string name="setting_always_show_time">هەمیشە کات پیشان بدە</string>
     <string name="setting_always_show_time_off_description">کاتی ئێستا تەنها لە دۆخی ambient پیشان دەدرێت</string>
     <string name="setting_always_show_time_on_description">کاتی ئێستا هەمیشە پیشان دەدرێت. ئایکۆنی کردار لە سەرەوە دیار نابێت (کاتژمێر جێگای دەگرێتەوە)، بەڵام کردارەکە هەر ئاسایی کار دەکات.</string>
-    <string name="tap_to_force_stop">بۆ وەستاندنی کۆنترۆڵەکان بدە</string>
     <string name="notification_action_stop">بوەستێنە</string>
     <string name="notification_action_force_stop">بەزۆر بوەستێنە</string>
     <string name="error_notification_access">دەستگەیشتنی ئاگادارکردنەوە نییە. مۆبایل بپشکنە.</string>

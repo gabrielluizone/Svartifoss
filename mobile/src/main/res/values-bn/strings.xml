@@ -344,7 +344,6 @@
     <string name="setting_always_show_time">সবসময় সময় দেখান</string>
     <string name="setting_always_show_time_off_description">বর্তমান সময় শুধু অ্যাম্বিয়েন্ট মোডে দেখানো হবে</string>
     <string name="setting_always_show_time_on_description">বর্তমান সময় সবসময় দেখানো হবে। উপরের অ্যাকশন আইকন দৃশ্যমান থাকবে না (ঘড়ি দিয়ে বদলে যাবে), তবে অ্যাকশন স্বাভাবিকভাবেই কাজ করবে।</string>
-    <string name="tap_to_force_stop">নিয়ন্ত্রণ বন্ধ করতে ট্যাপ করুন</string>
     <string name="notification_action_stop">বন্ধ</string>
     <string name="notification_action_force_stop">জোর করে বন্ধ করুন</string>
     <string name="error_notification_access">নোটিফিকেশন অ্যাক্সেস নেই। ফোন পরীক্ষা করুন।</string>

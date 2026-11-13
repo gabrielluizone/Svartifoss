@@ -355,7 +355,6 @@ Bazı simge paketleri uygulamaların depolama iznine sahip olmasını gerektirir
     <string name="setting_always_show_time">Saati her zaman göster</string>
     <string name="setting_always_show_time_off_description">Geçerli saat yalnızca ortam modunda gösterilir</string>
     <string name="setting_always_show_time_on_description">Geçerli saat her zaman gösterilir. Üst eylem simgesi görünmez (yerine saat gelir), ancak eylem normal biçimde çalışmaya devam eder.</string>
-    <string name="tap_to_force_stop">Kontrolleri durdurmak için dokunun</string>
     <string name="notification_action_stop">Durdur</string>
     <string name="notification_action_force_stop">Zorla durdur</string>
     <string name="error_notification_access">Bildirim erişimi yok. Telefonu kontrol edin.</string>

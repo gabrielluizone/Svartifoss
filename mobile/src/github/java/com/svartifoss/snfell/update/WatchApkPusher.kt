@@ -18,6 +18,12 @@ import java.io.IOException
  * the same applicationId signed with the same key, so the channel is inherently same-app.
  *
  * Progress is reported via callback so [UpdateActivity] can show download/transfer percentages.
+ *
+ * **The downloaded APK outlives this call.** It used to be deleted in a `finally`, so a push that
+ * failed after a complete 25 MB download - no watch in range, the Bluetooth link dropping, the
+ * screen being closed - made the next attempt download it all again. It now stays in
+ * [ReleaseApkCache] until the watch has the release (or a newer one replaces it), and a download
+ * that was interrupted resumes - see [ApkDownloader]. Only the transfer to the watch is repeated.
  */
 class WatchApkPusher(private val context: Context) {
 
@@ -38,20 +44,34 @@ class WatchApkPusher(private val context: Context) {
         val apkUrl = release.wearApkUrl
                 ?: throw IOException("Release ${release.tag} has no wear APK asset")
 
-        val apkFile = File(context.cacheDir, "wear-update.apk")
-        try {
-            ApkDownloader.download(apkUrl, release.wearApkSize, apkFile) { percent ->
-                onProgress(Progress.Downloading(percent))
-            }
+        val apkFile = ReleaseApkCache.of(context).apkFor(ReleaseApkCache.Kind.WATCH, release.tag)
 
-            onProgress(Progress.Connecting)
-            val nodeId = findWatchNode() ?: throw NoWatchException()
-
-            transfer(nodeId, apkFile, onProgress)
-            onProgress(Progress.AwaitingWatchConfirmation)
-        } finally {
-            apkFile.delete()
+        // Downloaded before the watch is looked for, so a missing watch costs a retry of the
+        // connection and nothing else.
+        val outcome = ApkDownloader.download(
+                url = apkUrl,
+                expectedSize = release.wearApkSize,
+                target = apkFile,
+                sha256 = release.wearApkSha256,
+                isUsable = ::isApkOfThisApp
+        ) { percent ->
+            onProgress(Progress.Downloading(percent))
         }
+        Timber.d("Wear update APK %s (%s): %d bytes", release.tag, outcome, apkFile.length())
+
+        onProgress(Progress.Connecting)
+        val nodeId = findWatchNode() ?: throw NoWatchException()
+
+        transfer(nodeId, apkFile, onProgress)
+        onProgress(Progress.AwaitingWatchConfirmation)
+    }
+
+    /** The watch app has this app's package name, so the same check the phone applies to its own
+     *  update confirms the file is a well-formed APK of the right app before it crosses to the
+     *  watch - which would reject a bad one anyway, after the slow part. */
+    private fun isApkOfThisApp(apk: File): Boolean {
+        val info = context.packageManager.getPackageArchiveInfo(apk.absolutePath, 0)
+        return info != null && info.packageName == context.packageName
     }
 
     private suspend fun findWatchNode(): String? {

@@ -761,7 +761,6 @@
     <string name="setting_always_show_time">நேரத்தை எப்போதும் காட்டு</string>
     <string name="setting_always_show_time_off_description">தற்போதைய நேரம் ambient mode-இல் மட்டும் காட்டப்படும்</string>
     <string name="setting_always_show_time_on_description">தற்போதைய நேரம் எப்போதும் காட்டப்படும். மேல் செயல் ஐகான் தெரியாது (அதற்குப் பதில் கடிகாரம் வரும்), ஆனால் செயல் வழக்கம்போல வேலை செய்யும்.</string>
-    <string name="tap_to_force_stop">கட்டுப்பாடுகளை நிறுத்த தட்டவும்</string>
     <string name="notification_action_stop">நிறுத்து</string>
     <string name="notification_action_force_stop">கட்டாயமாக நிறுத்து</string>
     <string name="error_notification_access">அறிவிப்பு அணுகல் இல்லை. தொலைபேசியைப் பாருங்கள்.</string>

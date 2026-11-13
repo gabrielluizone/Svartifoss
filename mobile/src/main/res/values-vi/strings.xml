@@ -355,7 +355,6 @@ Một số gói biểu tượng yêu cầu ứng dụng có quyền truy cập b
     <string name="setting_always_show_time">Luôn hiển thị giờ</string>
     <string name="setting_always_show_time_off_description">Giờ hiện tại chỉ được hiển thị ở chế độ môi trường</string>
     <string name="setting_always_show_time_on_description">Giờ hiện tại sẽ luôn được hiển thị. Biểu tượng hành động phía trên sẽ không hiện (được thay bằng đồng hồ), nhưng hành động vẫn hoạt động bình thường.</string>
-    <string name="tap_to_force_stop">Nhấn để dừng điều khiển</string>
     <string name="notification_action_stop">Dừng</string>
     <string name="notification_action_force_stop">Buộc dừng</string>
     <string name="error_notification_access">Không có quyền truy cập thông báo. Kiểm tra điện thoại.</string>

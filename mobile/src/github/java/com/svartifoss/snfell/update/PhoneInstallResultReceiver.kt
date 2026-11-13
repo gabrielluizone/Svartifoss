@@ -12,7 +12,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.IntentCompat
 import com.svartifoss.snfell.R
 import timber.log.Timber
-import java.io.File
 
 /**
  * Handles the [PackageInstaller] status callbacks of the phone self-update flow started by
@@ -55,10 +54,13 @@ class PhoneInstallResultReceiver : BroadcastReceiver() {
             else -> {
                 val message = intent.getStringExtra(PackageInstaller.EXTRA_STATUS_MESSAGE)
                 Timber.e("Phone update install failed: status %d, %s", status, message)
-                cleanUp(context)
                 notificationManager(context).cancel(NOTIFICATION_ID)
-                // The user aborting the confirm dialog isn't an error worth nagging about.
+                // The user aborting the confirm dialog isn't an error worth nagging about, and it
+                // is no reason to throw away the download either: the file is fine, and pressing
+                // the button again should go straight to the prompt. A real failure may well be the
+                // file, so that one is removed and the next attempt starts clean.
                 if (status != PackageInstaller.STATUS_FAILURE_ABORTED) {
+                    cleanUp(context)
                     showFailureNotification(context)
                 }
             }
@@ -94,8 +96,10 @@ class PhoneInstallResultReceiver : BroadcastReceiver() {
         notificationManager(context).cancel(NOTIFICATION_ID)
     }
 
+    /** Removes every cached phone APK, completed or half-downloaded: the update either finished or
+     *  failed, and in both cases what is on disk is not what the next attempt should start from. */
     private fun cleanUp(context: Context) {
-        File(context.cacheDir, PhoneApkInstaller.APK_FILE_NAME).delete()
+        ReleaseApkCache.of(context).discard(ReleaseApkCache.Kind.PHONE)
     }
 
     private fun baseNotification(context: Context): NotificationCompat.Builder {

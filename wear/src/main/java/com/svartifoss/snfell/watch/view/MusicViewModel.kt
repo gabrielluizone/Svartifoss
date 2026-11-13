@@ -259,6 +259,13 @@ class MusicViewModel @Inject constructor(
      *  the neighbouring-cover decoding while no screen showing the position is. */
     fun setShowingPosition(showing: Boolean) = phoneConnection.setPositionViewer(this, showing)
 
+    /**
+     * Tells the connection whether the position this screen shows is moving ([live]) or is the
+     * always-on display's once-a-minute redraw, for which it stops checking the position against
+     * the phone - see `PositionViewers`.
+     */
+    fun setPositionLive(live: Boolean) = phoneConnection.setPositionViewerLive(this, live)
+
     fun updateTimers() {
         if (closeDeadline < System.currentTimeMillis()) {
             closeApp.call()

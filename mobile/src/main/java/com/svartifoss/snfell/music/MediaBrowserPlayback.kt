@@ -23,8 +23,9 @@ import timber.log.Timber
  * navigates. Artists therefore go straight to search.
  */
 object MediaBrowserPlayback {
-    /** How long to wait for one command to reach a playing state before trying the next strategy.
-     *  Kept alive so the freshly-woken process does not die before promoting itself to foreground. */
+    /** How long to wait for one command to reach a playing state before trying the next strategy
+     *  (a session still buffering then gets a few seconds more to finish or give up). Kept alive so
+     *  the freshly-woken process does not die before promoting itself to foreground. */
     private const val STRATEGY_TIMEOUT_MS = 5000L
     private const val PLAYBACK_POLL_MS = 200L
 
@@ -123,7 +124,8 @@ object MediaBrowserPlayback {
     }
 
     /**
-     * True when the target app accepted a command and reported an active playback state.
+     * True when the target app took a command and went on to play (see [awaitRequestedPlayback]
+     * for why buffering alone is not that).
      * False means the caller should fall back to the visible deep-link flow (no browser service,
      * connection rejected - e.g. an app that allowlists browser clients like Spotify often does -
      * or playback never started).
@@ -199,7 +201,8 @@ object MediaBrowserPlayback {
                                 metadata?.getString(MediaMetadataCompat.METADATA_KEY_MEDIA_ID),
                                 metadata?.getString(MediaMetadataCompat.METADATA_KEY_TITLE),
                                 metadata?.getString(MediaMetadataCompat.METADATA_KEY_ARTIST)),
-                        positionMs = state?.position ?: -1)
+                        positionMs = state?.position ?: -1,
+                        playing = state?.state == PlaybackStateCompat.STATE_PLAYING)
             },
             issue = { strategy.issue(controller) },
             timeoutMs = STRATEGY_TIMEOUT_MS,

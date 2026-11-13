@@ -357,7 +357,6 @@ Kinakailangan ng ilang icon pack na may storage permission ang mga app. Kailanga
     <string name="setting_always_show_time">Palaging ipakita ang oras</string>
     <string name="setting_always_show_time_off_description">Ipapakita lang ang kasalukuyang oras sa ambient mode</string>
     <string name="setting_always_show_time_on_description">Palaging ipapakita ang kasalukuyang oras. Hindi makikita ang top action icon (papalitan ito ng clock), pero gagana pa rin nang normal ang action.</string>
-    <string name="tap_to_force_stop">I-tap para ihinto ang mga control</string>
     <string name="notification_action_stop">Ihinto</string>
     <string name="notification_action_force_stop">Piliting ihinto</string>
     <string name="error_notification_access">Walang notification access. Tingnan ang phone.</string>

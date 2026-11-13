@@ -21,6 +21,7 @@ import com.svartifoss.snfell.common.QueuePaging
 import com.svartifoss.snfell.common.QueueShortcutLink
 import com.svartifoss.snfell.music.MusicService
 import com.svartifoss.snfell.music.QueueArtworkResolver
+import com.svartifoss.snfell.music.WatchImageCodec
 import com.svartifoss.snfell.proto.CustomList
 import com.matejdro.wearutils.miscutils.BitmapUtils
 import com.svartifoss.snfell.music.QueueThumbnailCache
@@ -33,10 +34,6 @@ import kotlinx.coroutines.withTimeoutOrNull
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 import javax.inject.Inject
-
-/** Matches the now-playing cover's quality in `MusicService.transmitToWear`; visually lossless at
- *  a 30dp thumbnail while keeping the 20-entry payload small. */
-private const val THUMBNAIL_JPEG_QUALITY = 85
 
 /** Page size and ceiling both ends agree on - see [QueuePaging]. */
 const val DEFAULT_QUEUE_PAGE_SIZE = QueuePaging.PAGE_SIZE
@@ -255,7 +252,7 @@ class OpenPlaylistAction : SelectableAction {
         }
 
         /**
-         * One row's thumbnail as the JPEG bytes the watch receives, or null when it has none.
+         * One row's thumbnail as the encoded bytes the watch receives, or null when it has none.
          *
          * Served from [THUMBNAILS] whenever the row has been encoded before - which on a track
          * change is every row but the one entering the window. A row that genuinely resolved to
@@ -342,28 +339,20 @@ class OpenPlaylistAction : SelectableAction {
         }
 
         /**
-         * JPEG bytes for one queue thumbnail, or null when the bitmap cannot be encoded.
+         * The bytes of one queue thumbnail as the watch receives it, or null when the bitmap
+         * cannot be encoded.
          *
          * Deliberately **not** `BitmapUtils.serialize`, which encodes lossless PNG: cover art is
-         * photographic and has no alpha, so PNG comes out several times larger than JPEG for no
-         * visible gain - the exact reasoning `MusicService.transmitToWear` already records for the
-         * now-playing cover, which is why that one arrives reliably. A queue sends up to 20 of
-         * these in a single DataItem, so the multiplier matters far more here: at the 320px size a
-         * Cover style asks for, twenty PNGs are megabytes of Bluetooth transfer, which is slow
-         * enough to look like the covers simply never arrive.
+         * photographic and has no alpha, so PNG comes out several times larger than a lossy
+         * encoding for no visible gain - the exact reasoning `MusicService.transmitToWear` already
+         * records for the now-playing cover, which is why that one arrives reliably. A queue sends
+         * up to 20 of these in a single DataItem, so the multiplier matters far more here: at the
+         * 320px size a Cover style asks for, twenty PNGs are megabytes of Bluetooth transfer, which
+         * is slow enough to look like the covers simply never arrive. Same format and quality as
+         * that cover, through the same [WatchImageCodec].
          */
-        private fun encodeThumbnail(bitmap: android.graphics.Bitmap?): ByteArray? {
-            if (bitmap == null) return null
-            return java.io.ByteArrayOutputStream().use { stream ->
-                if (!bitmap.compress(
-                                android.graphics.Bitmap.CompressFormat.JPEG,
-                                THUMBNAIL_JPEG_QUALITY,
-                                stream)) {
-                    return null
-                }
-                stream.toByteArray()
-            }
-        }
+        private fun encodeThumbnail(bitmap: android.graphics.Bitmap?): ByteArray? =
+                bitmap?.let(WatchImageCodec::encode)
 
         /** Whether anything on the watch draws these thumbnails larger than the 30dp list slot -
          *  the cover-filled queue pill styles, or a face whose composition is the queue itself.

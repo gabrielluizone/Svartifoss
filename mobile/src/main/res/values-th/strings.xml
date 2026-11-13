@@ -342,7 +342,6 @@
     <string name="setting_always_show_time">แสดงเวลาเสมอ</string>
     <string name="setting_always_show_time_off_description">เวลาปัจจุบันจะแสดงเฉพาะในโหมดแอมเบียนต์</string>
     <string name="setting_always_show_time_on_description">เวลาปัจจุบันจะแสดงเสมอ ไอคอนการทำงานด้านบนจะไม่ปรากฏ (ถูกแทนที่ด้วยนาฬิกา) แต่การทำงานยังทำงานตามปกติ</string>
-    <string name="tap_to_force_stop">แตะเพื่อหยุดการควบคุม</string>
     <string name="notification_action_stop">หยุด</string>
     <string name="notification_action_force_stop">บังคับหยุด</string>
     <string name="error_notification_access">ไม่มีสิทธิ์เข้าถึงการแจ้งเตือน ตรวจสอบโทรศัพท์</string>

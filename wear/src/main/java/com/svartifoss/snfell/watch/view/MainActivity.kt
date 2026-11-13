@@ -104,6 +104,7 @@ import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.TrackTimeFormat
 import com.svartifoss.snfell.common.TransportMark
 import com.svartifoss.snfell.common.TransportGlyphs
+import com.svartifoss.snfell.common.FaceElements
 import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.FrostedEdges
 import com.svartifoss.snfell.common.BitmapBlur
@@ -1506,8 +1507,10 @@ class MainActivity : WearCompanionWatchActivity(),
         hideNotificationIfOverdue()
 
         bindService(Intent(this, WatchMusicService::class.java), serviceConnection, BIND_AUTO_CREATE)
-        // Started covers the always-on display too, which draws the position once a minute.
+        // Started covers the always-on display too, which draws the position once a minute -
+        // and for that it is shown without being checked against the phone (setPositionLive).
         viewModel.setShowingPosition(true)
+        if (inAmbient) viewModel.setPositionLive(false)
     }
 
     override fun onResume() {
@@ -4305,8 +4308,10 @@ class MainActivity : WearCompanionWatchActivity(),
         // Curated/Expressive faces reserve their lower chrome only for a row that can actually
         // appear. Only the empty idle state restores their default lower composition.
         // The awake Up Next pill fills that same bottom band, so it shows only when the row does
-        // not (and never on the empty idle screen).
-        val pillVisible = showUpNextPillPref && !active && !faceState.value.idle
+        // not (and never on the empty idle screen) - and only on a face that draws it, or the
+        // faces would reserve the band for a pill nobody paints (see FaceElements.UP_NEXT_PILL_FACES).
+        val pillVisible = showUpNextPillPref && !active && !faceState.value.idle &&
+                FaceElements.drawsUpNextPill(screenFace)
         updateFaceState { state ->
             state.copy(
                     showDefaultBottomPills = !active,
@@ -7019,6 +7024,9 @@ class MainActivity : WearCompanionWatchActivity(),
                     // than restarting the 500ms loop we are trying to stop.
                     viewModel.setContinuousPositionTicking(false)
                     viewModel.refreshPositionOnce()
+                    // And nothing asks the phone where playback is while the panel redraws once a
+                    // minute: that check is a Bluetooth round trip, kept for a readout that moves.
+                    viewModel.setPositionLive(false)
                     stemButtonsManager.onEnterAmbient()
                     overlayActive = false
                     activeOverlayKind = null
@@ -7117,6 +7125,9 @@ class MainActivity : WearCompanionWatchActivity(),
                     inAmbient = false
                     updateDoublePinchInteractivity()
                     viewModel.setContinuousPositionTicking(true)
+                    // The readout moves again, and went unchecked for as long as the wrist was
+                    // down: this is what asks the phone, a moment from now.
+                    viewModel.setPositionLive(true)
                     stemButtonsManager.onExitAmbient()
 
                     updateFaceState {

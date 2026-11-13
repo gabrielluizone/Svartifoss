@@ -346,7 +346,6 @@
     <string name="setting_always_show_time">Увек приказуј време</string>
     <string name="setting_always_show_time_off_description">Тренутно време ће бити приказано само у амбијенталном режиму</string>
     <string name="setting_always_show_time_on_description">Тренутно време ће увек бити приказано. Горња икона радње неће бити видљива (замениће је сат), али ће радња и даље нормално функционисати.</string>
-    <string name="tap_to_force_stop">Додирните да зауставите контроле</string>
     <string name="notification_action_stop">Заустави</string>
     <string name="notification_action_force_stop">Принудно заустави</string>
     <string name="error_notification_access">Нема приступа обавештењима. Проверите телефон.</string>

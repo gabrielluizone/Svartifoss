@@ -42,8 +42,12 @@ object UpdateChecker {
             val isPrerelease: Boolean,
             val mobileApkUrl: String?,
             val mobileApkSize: Long,
+            /** GitHub's own digest of the asset (`sha256:<hex>`), or null for a release that was
+             *  published before the API reported one. A file is checked against it when present. */
+            val mobileApkSha256: String?,
             val wearApkUrl: String?,
             val wearApkSize: Long,
+            val wearApkSha256: String?,
             /** The release description (GitHub Markdown), shown as the "What's new" notes. */
             val body: String
     )
@@ -80,8 +84,10 @@ object UpdateChecker {
     private fun parseRelease(release: JSONObject): ReleaseInfo {
         var mobileApkUrl: String? = null
         var mobileApkSize = 0L
+        var mobileApkSha256: String? = null
         var wearApkUrl: String? = null
         var wearApkSize = 0L
+        var wearApkSha256: String? = null
 
         val assets = release.optJSONArray("assets") ?: JSONArray()
         for (i in 0 until assets.length()) {
@@ -90,10 +96,12 @@ object UpdateChecker {
                 ASSET_NAME_MOBILE -> {
                     mobileApkUrl = asset.optString("browser_download_url")
                     mobileApkSize = asset.optLong("size")
+                    mobileApkSha256 = asset.optString("digest").takeIf { it.isNotBlank() }
                 }
                 ASSET_NAME_WEAR -> {
                     wearApkUrl = asset.optString("browser_download_url")
                     wearApkSize = asset.optLong("size")
+                    wearApkSha256 = asset.optString("digest").takeIf { it.isNotBlank() }
                 }
             }
         }
@@ -106,8 +114,10 @@ object UpdateChecker {
                 isPrerelease = release.optBoolean("prerelease"),
                 mobileApkUrl = mobileApkUrl,
                 mobileApkSize = mobileApkSize,
+                mobileApkSha256 = mobileApkSha256,
                 wearApkUrl = wearApkUrl,
                 wearApkSize = wearApkSize,
+                wearApkSha256 = wearApkSha256,
                 body = release.optString("body").trim()
         )
     }

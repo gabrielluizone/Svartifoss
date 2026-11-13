@@ -47,6 +47,16 @@ class FaceElementsContractTest {
 
         val VIEW_FACES = setOf("classic", "matejdro")
 
+        /**
+         * Where a face's Up Next pill would be drawn, when that is not its awake composition: the
+         * curated faces share one outer composable that draws the backdrop, the clock and the pill
+         * around whichever composition is selected.
+         */
+        val PILL_ENTRY_POINTS = ENTRY_POINTS.mapValues { (_, entry) ->
+            if (entry.first == "CuratedPlayerFaces.kt") entry.first to "CuratedPlayerFace" else entry
+        }
+        val UP_NEXT_PILL = Regex("""(?<![A-Za-z])AwakeUpNextPill\(""")
+
         val SOURCE_ICON = Regex("""(?<![A-Za-z])SourceIconGlyph\(|state\.sourceIcon(?![A-Za-z])""")
         val TRACK_TIME = Regex("""(?<![A-Za-z])TrackTimeText\(|state\.showTrackTime(?![A-Za-z])""")
         val DECLARATION = Regex(
@@ -90,6 +100,25 @@ class FaceElementsContractTest {
         VIEW_FACES.forEach {
             assertTrue(FaceElements.drawsSourceIcon(it))
             assertTrue(FaceElements.drawsTrackTime(it))
+        }
+    }
+
+    /**
+     * The Up Next pill switch is offered, and its band reserved, only where a face paints it. The
+     * switch used to be offered on every face while eleven of them never drew the pill, so turning
+     * it on in a theme did nothing on the wrist - and still pushed nothing out of the way.
+     */
+    @Test
+    fun theRegistryMatchesTheFacesThatDrawTheUpNextPill() {
+        PILL_ENTRY_POINTS.forEach { (face, entry) ->
+            assertEquals(
+                    "Does $face draw the Up Next pill? FaceElements says " +
+                            FaceElements.drawsUpNextPill(face),
+                    FaceElements.drawsUpNextPill(face),
+                    UP_NEXT_PILL.containsMatchIn(awakeComposition(entry.first, entry.second)))
+        }
+        VIEW_FACES.forEach {
+            assertTrue("The View faces have no Up Next pill", !FaceElements.drawsUpNextPill(it))
         }
     }
 

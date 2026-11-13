@@ -344,7 +344,6 @@
     <string name="setting_always_show_time">Vis altid tid</string>
     <string name="setting_always_show_time_off_description">Aktuel tid vises kun i ambient-tilstand</string>
     <string name="setting_always_show_time_on_description">Aktuel tid vises altid. Det øverste handlingsikon er ikke synligt (det erstattes af uret), men handlingen fungerer stadig normalt.</string>
-    <string name="tap_to_force_stop">Tryk for at stoppe kontrollerne</string>
     <string name="notification_action_stop">Stop</string>
     <string name="notification_action_force_stop">Tving stop</string>
     <string name="error_notification_access">Ingen adgang til notifikationer. Tjek telefonen.</string>

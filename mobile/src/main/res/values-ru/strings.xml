@@ -301,7 +301,6 @@
     <string name="setting_always_show_time">Всегда показывать время</string>
     <string name="setting_always_show_time_off_description">Текущее время будет отображаться только в спящем режиме</string>
     <string name="setting_always_show_time_on_description">Текущее время будет отображаться всегда. Верхний значок действия не будет виден (его заменят часы), но действие продолжит работать как обычно.</string>
-    <string name="tap_to_force_stop">Нажмите, чтобы остановить управление</string>
     <string name="notification_action_stop">Стоп</string>
     <string name="notification_action_force_stop">Принудительная остановка</string>
     <string name="error_notification_access">Нет доступа к уведомлениям. Проверьте телефон.</string>

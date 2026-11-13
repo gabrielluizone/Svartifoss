@@ -357,7 +357,6 @@ Vissa ikonpaket kräver att appar har lagringsbehörighet. Du måste tillåta de
     <string name="setting_always_show_time">Visa alltid tiden</string>
     <string name="setting_always_show_time_off_description">Aktuell tid visas endast i ambientläge</string>
     <string name="setting_always_show_time_on_description">Aktuell tid visas alltid. Ikonen för den övre åtgärden syns inte (den ersätts av klockan), men åtgärden fungerar fortfarande normalt.</string>
-    <string name="tap_to_force_stop">Tryck för att stoppa kontrollerna</string>
     <string name="notification_action_stop">Stoppa</string>
     <string name="notification_action_force_stop">Tvinga stopp</string>
     <string name="error_notification_access">Ingen åtkomst till aviseringar. Kontrollera telefonen.</string>

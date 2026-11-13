@@ -295,7 +295,6 @@
     <string name="setting_always_show_time">Selalu tampilkan waktu</string>
     <string name="setting_always_show_time_off_description">Waktu saat ini hanya akan ditampilkan dalam mode ambient</string>
     <string name="setting_always_show_time_on_description">Waktu saat ini akan selalu ditampilkan. Ikon aksi atas tidak akan terlihat (akan digantikan oleh jam), tetapi aksi akan tetap berfungsi normal.</string>
-    <string name="tap_to_force_stop">Ketuk untuk menghentikan kontrol</string>
     <string name="notification_action_stop">Hentikan</string>
     <string name="notification_action_force_stop">Paksa berhenti</string>
     <string name="error_notification_access">Tidak ada akses notifikasi. Periksa ponsel.</string>

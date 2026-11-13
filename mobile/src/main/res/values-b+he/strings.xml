@@ -346,7 +346,6 @@
     <string name="setting_always_show_time">הצג תמיד את השעה</string>
     <string name="setting_always_show_time_off_description">השעה הנוכחית תוצג רק במצב סביבתי</string>
     <string name="setting_always_show_time_on_description">השעה הנוכחית תוצג תמיד. סמל הפעולה העליון לא ייראה (השעון יחליף אותו), אך הפעולה עצמה תמשיך לפעול כרגיל.</string>
-    <string name="tap_to_force_stop">הקש כדי לעצור את הפקדים</string>
     <string name="notification_action_stop">עצור</string>
     <string name="notification_action_force_stop">כפה עצירה</string>
     <string name="error_notification_access">אין גישה להתראות. בדוק את הטלפון.</string>

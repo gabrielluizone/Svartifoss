@@ -4,6 +4,8 @@ How Svartifoss talks to Spotify, SoundCloud, YouTube Music and the other streami
 
 **Status.** The hand-off described in section 4 is implemented, unit-tested, and was tested the same day on a Pixel 3 (Android 10) with Spotify 9.1.92 on a Free account, SoundCloud 2026.10.14 and Amazon Music 26.36.1. The results are in section 5.6 and changed the conclusions: SoundCloud's short share links now play silently, while this Spotify refuses every outside request to play something specific.
 
+**Update, 2026-11-11.** Three more causes of a shortcut that does not play were found and fixed, this time on an Android 14 emulator with a stand-in player (sections 3 and 5.7): the phone pressed play on the track an app came up holding, it took an app that only buffered for one that played, and the first command to reach a freshly started process had its work cancelled. None is about any one app, and none changes the conclusion about Spotify on a free account, which still plays nothing it is asked for from outside. The watch's own Spotify and YouTube Music apps were tried as a way round that (section 5.8); they are not one.
+
 This is engineering guidance, not legal advice. Where it cites a law or a contract it quotes the text; for a decision with real money or a takedown behind it, ask a lawyer.
 
 ---
@@ -98,11 +100,25 @@ Known from Svartifoss's own testing: SoundCloud's session plays a track URI and 
 
 `VIEW` on `amznmp3://` and on the `music.amazon.*` hosts, and a legacy `MediaBrowserService`. `StreamingShortcutLinks` recognises the scheme `amzn-music:`, which neither of these builds declares.
 
+### The Wear OS builds (manifests read 2026-11-11)
+
+From the APKs in `rea-apps/Wear-Apps/`, manifests only, and for Spotify also `dumpsys package` on a TicWatch Pro 5 (Wear OS 4), where 9.1.98.620 declares the same.
+
+| App | Links it opens | Media browser | Other surfaces |
+|---|---|---|---|
+| Spotify 9.1.94 | `VIEW` on `spotify:` (browsable). Its launcher filter also carries `com.google.android.wearable.action.MEDIA_CONTROLS` | `WearMediaBrowserService`, legacy, exported | a complication (`SHORT_TEXT`, `SMALL_IMAGE`, `ICON`), two Tiles, a Glance Wear widget that allows several instances, Health Services |
+| YouTube Music 9.42.42 | `VIEW` on `https://music.youtube.com/…` through an alias, and `com.google.android.youtube.music.action.navigate` with the `APP_MUSIC` category | `MusicBrowserService`, legacy | a Tile, a Glance Wear widget (disabled in the manifest) |
+| SoundCloud 2026.01.14 | `VIEW` on `soundcloud://soundcloud` | a Media3 `WearPlaybackService` (library and session) | none |
+| Amazon Music 26.3.0 | none | not exported | a Data Layer listener on `/wearos` and `/wearos/playbackState`: it has a tethered mode of its own |
+| Google Media Controls 1.8.86, the system's | `com.google.android.wearable.action.MEDIA_CONTROLS`, and the output switcher on `com.android.settings.panel.action.MEDIA_OUTPUT` | `AndroidSessionAdvertisingService`, a Media3 session service behind the permission `com.google.android.wearable.media.sessions.permission.BIND_THIRD_PARTY_MEDIA_CONTROLS`, which is declared with the *normal* protection level | a complication (`LARGE_IMAGE`, `SMALL_IMAGE`, `LONG_TEXT`), and a `ThirdPartyMediaControlService` that is disabled |
+
+Set against Svartifoss's own watch app: every complication type and Tile these declare has its counterpart already (album art as `SMALL_IMAGE`, `PHOTO_IMAGE` and `LONG_TEXT`; play and pause as `RANGED_VALUE`, `SHORT_TEXT` and `ICON`; three Tiles). What it lacks is a Glance Wear widget, which still needs SDK 37 and alpha libraries, and the two leads in sections 6.9 and 6.10.
+
 ### Confirmed on a phone (Pixel 3, Android 10, 2026-10-24, `dumpsys package`)
 
 - **Spotify 9.1.92.3058:** both `MEDIA_PLAY_FROM_SEARCH` filters (one with `BROWSABLE` and the `spotify` scheme), `SpotifyMediaBrowserService` and the Media3 `MediaLibraryService`, as in the APK above. Its live session advertised `PLAY_FROM_URI`, `PLAY_FROM_SEARCH` and `PREPARE_FROM_URI`, but not `SEEK_TO` or `SKIP_TO_PREVIOUS`, which is what a Spotify Free account looks like.
 - **SoundCloud 2026.10.14 (phone):** `SHORTCUT_PLAY_LIKES`, `MEDIA_PLAY_FROM_SEARCH` and a legacy `MediaBrowserService`, so the TV build was a fair stand-in.
-- **Amazon Music 26.36.1 (phone):** `MEDIA_PLAY_FROM_SEARCH`, a legacy browser and a Media3 session service, and the schemes `amzn` and `amznmp3`, **not** `amzn-music`. A saved `amzn-music:` link is classified as Amazon by Svartifoss but opens nothing on this phone; share links (`https://music.amazon.*`) are unaffected. Worth fixing in `StreamingShortcutLinks.detect`, recognising `amznmp3:` (and not the generic `amzn:`, which other Amazon apps may claim).
+- **Amazon Music 26.36.1 (phone):** `MEDIA_PLAY_FROM_SEARCH`, a legacy browser and a Media3 session service, and the schemes `amzn` and `amznmp3`, **not** `amzn-music`. A saved `amzn-music:` link is classified as Amazon by Svartifoss but opens nothing on this phone; share links (`https://music.amazon.*`) are unaffected. Since 2026-11-11 `StreamingShortcutLinks.detect` recognises `amznmp3:` as well (and not the generic `amzn:`, which other Amazon apps may claim); `amzn-music:` stays recognised for links that were saved with it.
 
 ---
 
@@ -117,6 +133,14 @@ Known from Svartifoss's own testing: SoundCloud's session plays a track URI and 
 So the user saw Spotify open on the right playlist with nothing playing, and SoundCloud the same. The missing piece was never a hidden API: it was that the only launch the watch can make (a `VIEW`) is the one launch that does not mean *play*, and the launch that does (`MEDIA_PLAY_FROM_SEARCH`, or an app's own "play" action) has to be started by something in the foreground on the phone.
 
 A second, separate bug was found on the way. When the watch searches for a song in an app whose library cannot be searched (Spotify again), the phone fired the voice-search intent from its background service. Since Android 10 a background activity start is dropped without an error, so the call "succeeded", the two silent routes after it never ran, and nothing played with the phone in a pocket. The intent is now used only while one of Svartifoss's screens is showing; otherwise the session's own `playFromSearch` (which Spotify honours) runs.
+
+### Three more, found on an emulator (2026-11-11)
+
+All three were in Svartifoss, none in any player, and each failed without an error anywhere. Section 5.7 has the runs.
+
+1. **Play was pressed on the wrong track.** After a plain open (step 3 without the hand-off) the phone re-sent the request every 200 ms for 3.2 s, then pressed play if "the app had no track before the link opened". An app that was not running has no track before, and comes up holding the one it played last, so the press started that: the right page on screen and the wrong music playing. The hand-off already knew this (it never pressed play after a cold start); the plain open, which is where a Spotify shortcut ends once both hand-off techniques are benched, did not. The loop also stopped for good after 3.2 s, so an app whose session came up later than that was never asked at all. Both visible routes are now followed by one policy, `VisibleOpenFollowUp`: the request goes out once the session has settled (up to three times, 1.5 s apart), and play is pressed only on content that *replaced* the first track the session showed.
+2. **Buffering was taken for playing.** Step 2 (the media browser) returned success the moment the session became active, and active included buffering and connecting. An app that accepts the connection, buffers while it tries the address and gives up was therefore "played", the watch was told there was nothing to open, and the shortcut ended with nothing playing and nothing on screen. Only `STATE_PLAYING` counts now; a session that is busy is waited on (and not sent the command again meanwhile), up to 3 s past the usual 5 s.
+3. **The first command into a cold process was cancelled.** When the phone's process starts on a watch command, the notification listener the system rebinds at that moment asks for a start of `MusicService` too, and usually gets in first. That start is not from the watch, so its branch called `stopSelf()`; both starts are delivered back to back, so the stop landed right after the watch's start had run and taken the command, and the shortcut's whole attempt was cancelled with the service. It is `stopSelf(startId)` now, which stops only if no newer start is waiting. A phone that kills background apps is in this state every time the app has been idle, which makes this the likeliest of the three to be behind "the first tap does nothing".
 
 ---
 
@@ -144,7 +168,8 @@ The pieces, all in `mobile/src/main/java/com/svartifoss/snfell/`:
 - `music/VisiblePlaybackMemory.kt` (pure + a private preferences file): per app and kind of content, keeps the technique that played and benches one that did not (one strike for an untested technique, two for a proven one, retried after a week because apps update). If all are benched, the shortcut just opens, as before.
 - `music/VisiblePlaybackRegistry.kt`: the token store. Single use, at most four pending, and **time-boxed**: within 60 s the launch may start playback, after that and up to 10 minutes it only opens the content (a phone unlocked long after the tap must not start music by surprise), after that it is gone.
 - `view/handoff/StreamingPlaybackActivity.kt`: exported, browsable, translucent, `noHistory`. Reads the token and nothing else from the link; `StreamingHandoffContractTest` fails the build if it ever reads an extra, a parameter or builds its own intent, because that would turn it into an intent-redirection hole any web page could use.
-- `MusicService`: `prepareVisiblePlayback`, `playThroughHandoff`, `awaitHandoffPlayback`. When Svartifoss is itself on screen it also starts the activity directly (a shortcut started from the phone's own UI has no watch to open it); the token makes the second open a no-op. Success means the app's session reached `STATE_PLAYING` (not `CONNECTING` or `BUFFERING`, which a cold app publishes whatever it was asked; see 5.6). A loaded-but-paused new item is pressed play after 4 s, but never after a cold start, where the app comes up holding whatever it played last.
+- `MusicService`: `prepareVisiblePlayback`, `playThroughHandoff`, `followVisibleOpen`. When Svartifoss is itself on screen it also starts the activity directly (a shortcut started from the phone's own UI has no watch to open it); the token makes the second open a no-op. Success means the app's session reached `STATE_PLAYING` (not `CONNECTING` or `BUFFERING`, which a cold app publishes whatever it was asked; see 5.6).
+- `music/VisibleOpenFollowUp.kt` (pure, since 2026-11-11): what is done while the app comes up, after the hand-off's launch and after a plain open alike. The session is asked for the content once it has been settled for a second, at most three times; a busy session is left alone; and play is pressed only on content that replaced the first track the session showed, 1.5 s after it appeared, because that first track is as likely the one the app restored as the one that was asked for.
 
 Also in this change:
 
@@ -154,6 +179,8 @@ Also in this change:
 - **The developer report** (Settings → Data & support → Developer → MediaSession explorer) now lists, per installed streaming app, its browser services, which play techniques it declares, and what each has done on this phone.
 
 The watch needed no change: its `PhoneUriOpener` opens whatever `package|uri` the verdict names, and an older watch build behaves the same.
+
+Since 2026-11-11 the watch also says so. A verdict that carries a link means the phone could not start the music silently, and what follows needs the phone in hand: it must be unlocked for the link to open at all, and an app that only shows the content has to be pressed play there. The watch used to open the link and say nothing, so a shortcut that ended on a locked phone's screen looked like one that did nothing. `OpenOnPhoneNotice` now shows the system's "Continue on your phone" confirmation (the one **Open on phone** already used, same words) when the link arrives, from whichever of the app's screens is in front; not for a pick made from the Tile, which leaves none in front. This half is unit-tested and compiled, and has not been seen on a watch yet.
 
 ---
 
@@ -242,6 +269,47 @@ What the numbers teach:
 - **SoundCloud's library accepts Svartifoss**, which no other big app tested here does. That is what made its short links work silently, and it makes 6.3 (finding Likes in the library and playing it by the app's own media id) concrete.
 - **A one-time link was claimed by the phone itself** in every hand-off: on Android 10 the service's own `startActivity` went through (the app had a task in Recents, an exemption Android 10 still had), and the watch's later open found the token used, exactly as designed.
 
+### 5.7 On an emulator, with a stand-in player (2026-11-11)
+
+The test phone is Android 10, and half of what goes wrong for other people only exists from Android 12. So this pass ran on an emulator: Android 14 (API 34, `google_apis`, x86_64), the phone app's debug build from the working tree, the app sent to the background, no real player installed.
+
+Two pieces make that possible, and neither ships.
+
+- **A stand-in player** (`rea-apps/mock-player/`, local and gitignored like the APKs beside it; our own code, nobody else's). A 17 KB app built under the package name of the player it stands in for (`build.sh deezer.android.app`), with a media session, a browser service and the link filters, whose behaviour is set by a broadcast: whether the browser accepts an unknown client, what `playFromUri`/`playFromSearch`/`playFromMediaId` do (honour, ignore, or buffer and give up), which actions the session advertises, whether it comes up holding a restored track, how late its session appears, and whether a link navigates, loads the content paused, or plays. It is installed on an emulator only, never beside the real app, and it stands in for an app's *declared* behaviour; what a real app does is still only learned from that app (section 5.6).
+- **A simulated watch** (`mobile/src/debug/.../SimulatedWatchCommandReceiver`, debug builds only, behind the shell-only `DUMP` permission). An emulator's phone image has no Wear API (`ApiException 17`), so nothing could ever pick a shortcut there. `adb shell am broadcast` hands the receiver a path and a payload and it enters at `WatchCommandDelivery.receive`, the call the manifest listener makes, so everything after it is the real code. The verdict cannot reach a watch; it is logged (`Shortcut verdict for request …`), and the test then opens that link with `am start`, as the watch's `RemoteActivityHelper` would.
+
+`rea-apps/mock-player/rig/run.sh <serial> <package> <link> <seconds between verdict and open> <seconds to watch> key value …` does one whole run and prints the ladder's log next to the stand-in's.
+
+| Stand-in behaves like | Before | After |
+|---|---|---|
+| Cold app; the link only navigates; the session takes the request without advertising it | The request sent 8 times in one second, then `Deep link navigated without playing; pressing play`: **the restored track started** | 3 requests 1.5 s apart, no press, left paused on its restored track, `played=false` |
+| The same, but the app honours the request and its session comes up 5 s after the pick | Not run. By the code: nothing sent after 3.2 s, then the blind press | Asked once the session had settled (6.8 s in): **the requested content played** |
+| A link that plays by itself | Not run | Nothing requested, `played=true` |
+| Cold app that shows its restored track, then loads the content paused | Not run | Play pressed 1.5 s after the new content replaced the restored track: played |
+| Warm app, paused on its old track; the link loads the content paused | Not run | Play pressed on the new content: played |
+| Warm app, paused; the link only navigates | Not run | Left paused |
+| Spotify stand-in that ignores every outside request (what Spotify Free did in 5.6), picked three times | Not run | Hand-off with `uri_search`, then with `view_autoplay`, then `every play technique failed lately … plain open`; three session requests each time, play never pressed, restored track left paused |
+| Spotify stand-in whose session honours the link although opening it only navigates | Not run | Played after one request |
+| Spotify stand-in that honours the play-from-search launch | Not run | Played, nothing requested |
+| Accepts the browser, buffers on the request, gives up | `played via MediaBrowserService (step 2)`, verdict "handled": **nothing played and nothing was opened** | Step 2 `did not play`, the link is opened, the follow-up runs |
+| First command into a cold process while the notification listener reconnects (right after a reinstall) | `Service stopped` a tenth of a second into the ladder, no verdict, nothing played, **3 of 3** (the stand-in would have played) | Played, 3 of 3; and once more after `kill -9` of the phone app with the command sent at once |
+
+Read with these limits. The stand-in proves what Svartifoss does with a given behaviour, not that any real app behaves that way. The last row's "before" needed the reinstall to line the two starts up; on a real phone the same line-up comes from the process being started by a watch message while the system still owes the listener a rebind, which was reproduced only through `kill -9`, and only on the fixed build. And one thing the emulator did settle about Android 14: with the notification listener bound, the phone app's start of `MusicService` from the background is logged `Background started FGS: Allowed [… uidState: BFGS …]`, so on stock Android a refused start needs the listener unbound (the default once auto-start and session-driven quick actions are off) or a vendor's restriction.
+
+The stand-in's tracks carry a cover on purpose: a track without one makes the phone look a cover up online, and the first few runs spent YouTube Data API quota that way before the stand-in was given one.
+
+### 5.8 The watch's own apps (2026-11-11)
+
+If Spotify on the phone plays nothing it is asked for, could the Spotify app *on the watch* be asked instead, since it can start a playlist on the phone itself? Tried on a TicWatch Pro 5 (Wear OS 4), watch muted, with Spotify 9.1.98.620 and YouTube Music 9.44.41 as installed there.
+
+| What was tried | Result |
+|---|---|
+| `VIEW` of `spotify:playlist:…`, `spotify:album:…`, `spotify:track:…`, `spotify:artist:…`, `spotify:collection:tracks` and `spotify:search:…` to the watch's Spotify, cold and running | The app opens, or stays, on its player ("Select something to play"). It does not go to the content, and nothing plays |
+| A connection to its `WearMediaBrowserService` from a throwaway probe app, under the probe's own name | **Accepted** (root `wear`), but loading the root's children fails, and the session it hands out (`PLAY`, `PLAY_PAUSE`, `PLAY_FROM_URI` advertised) did nothing with `playFromUri` for a playlist, `playFromSearch` or `playFromMediaId` in 10 to 16 s |
+| `VIEW` of `https://music.youtube.com/playlist?list=LM` to the watch's YouTube Music | Its account picker: the app is not signed in on that watch. Not taken further |
+
+So the watch's own apps are not a way to start something on the phone. The probe was removed afterwards and both apps were stopped.
+
 ---
 
 ## 6. What to build next
@@ -251,6 +319,8 @@ Ranked by value to someone using the watch, all green or yellow under section 1.
 ### 6.1 Associate the watch as a companion device
 
 The largest reliability gain available, and documented. An app with a `CompanionDeviceManager` association that declares `REQUEST_COMPANION_START_FOREGROUND_SERVICES_FROM_BACKGROUND` (a normal permission) may start foreground services from the background on Android 12+, per the Android 12 foreground-service page. That is exactly the refusal behind "the watch does nothing until I unlock my phone" (CLAUDE.md, *Watch command dispatch*): every command that still needs `MusicService` would just work. In AOSP `main`, the same association also exempts the app from background activity-start limits (`BackgroundActivityStartController`, the "Companion App" verdict), which would let the phone start the hand-off launch itself with no watch round trip; that one is not in the public guide, so treat it as a bonus to verify, not a contract. `REQUEST_COMPANION_RUN_IN_BACKGROUND` additionally puts the app on the power allowlist while the watch is present (AOSP `CompanionExemptionProcessor`), the cure for OEM battery killers.
+
+What 5.7 adds: on Android 14 the start is allowed whenever the notification listener is bound, so the association matters for installs where it is not (auto-start off, quick panel on manual), and for vendors that restrict background starts regardless. A shell can create an association for testing (`adb shell cmd companiondevice associate <user> <package> <MAC>`), which makes the exemption checkable on the same emulator before any pairing screen is built.
 
 Sketch: an optional "Pair the watch for reliable control" row; `AssociationRequest` with a `BluetoothDeviceFilter` matching the paired watch (name from the Wearable `Node`, or the bonded device's address), single device, **no device profile** (the watch profile grants a role with far more than this needs); keep the association id; degrade to today's behaviour without it. Self-managed associations are not an option (`REQUEST_COMPANION_SELF_MANAGED` is `signature|privileged`). Needs an Android 12+ phone to test; the Pixel 3 rig is Android 10.
 
@@ -282,6 +352,22 @@ Watch search for an app with no searchable library still ends in a voice-search 
 
 The watch draws bundled service marks (`wear/src/main/res/drawable/service_mark_*`, from `icons/icons_4/`, including Spotify's logo) on the shortcut screen's **Open on phone** pill when no glyph has been learned yet. It is arguably descriptive, but it is the one place the app ships another company's logo. The glyph the phone already learns from each app's own notification (`AppGlyphStore`) is drawn by that app on the user's own phone and is the safer source; a neutral glyph is the safest fallback. A product decision, not urgent.
 
+### 6.9 Wear OS 7's own "remote media" hook
+
+Documented, and the one thing the newer Wear apps point at that Svartifoss does not have. The Wear SDK's `com.google.wear.services.media.MediaManager` (added in API level 37) defines `ACTION_REMOTE_MEDIA_ACTIVITY` = `com.google.wear.services.media.action.REMOTE_MEDIA_ACTIVITY`: "An intent action declared by media applications that can handle Remote media sessions. The activity handling this intent would be associated with the media session fetched from the phone to the watch." With it come `getMediaAutoLaunchState()` ("whether their application will be auto-launched when a media session starts on the connected phone. When enabled by the user, the activity associated with the remote session will be launched") and `showMediaAutoLaunchSettings()`. Handling the phone's media on the watch is what Svartifoss is, and its own auto-start has to ask the watch to open an activity from the background, which Wear OS may refuse; the platform's version would not have that problem.
+
+What the page does not say is how a session is matched to an app: by package (Spotify on the phone to Spotify on the watch, which would leave Svartifoss out) or by the user's choice in those settings. Today's Spotify build declares the older, undocumented `com.google.android.wearable.action.MEDIA_CONTROLS` on its launcher activity instead, as Google's own Media Controls does. Declaring either filter on Svartifoss's player costs one manifest entry, and neither should ship unseen: it needs a Wear OS 7 watch or emulator image to see what the system then does.
+
+### 6.10 The system's bridge as a second channel
+
+Google's Media Controls for Wear declares `AndroidSessionAdvertisingService`, a Media3 `MediaSessionService`, exported behind `com.google.android.wearable.media.sessions.permission.BIND_THIRD_PARTY_MEDIA_CONTROLS`, a permission it defines with the normal protection level, a label and a description: the shape of something meant for other apps to hold. By its name and that app's job, the session is the phone's media as Wear OS itself bridges it. If it accepts a third-party controller, Svartifoss's watch app could keep play, pause, skip and the track's name through the system's channel whenever its own phone service cannot be reached or started, which is the whole class of "the watch does nothing until I unlock my phone".
+
+Yellow under section 1: a declared entry point with a standard protocol and undocumented behaviour. To check on a Wear OS 5+ watch: `adb shell dumpsys package com.google.android.wearable.media.sessions | grep -B3 -A6 AndroidSessionAdvertising`, then a controller built from `SessionToken(context, ComponentName(...))` by an app that declares the permission, under its own name, and see whether the connection is accepted and what the session publishes while the phone plays. Not checked: the test watch runs Wear OS 4 and its wireless debugging dropped during this pass.
+
+### 6.11 Deezer's autoplay parameter
+
+A 2016 Tasker forum thread reports that `?autoplay=true` on a `deezer://www.deezer.com/…` link starts playback. Deezer's developer guidelines document no deep links at all (read 2026-11-11), so this is yellow and unverified: it belongs on the visible open's link for Deezer only after one test on a phone with Deezer installed, where the follow-up in section 4 already tells whether it played.
+
 ---
 
 ## Sources
@@ -289,5 +375,6 @@ The watch draws bundled service marks (`wear/src/main/res/drawable/service_mark_
 - Android: [MediaStore.INTENT_ACTION_MEDIA_PLAY_FROM_SEARCH](https://developer.android.com/reference/android/provider/MediaStore#INTENT_ACTION_MEDIA_PLAY_FROM_SEARCH), [background activity starts](https://developer.android.com/guide/components/activities/background-starts), [Android 12 foreground-service restrictions](https://developer.android.com/about/versions/12/foreground-services), [RemoteActivityHelper](https://developer.android.com/reference/androidx/wear/remote/interactions/RemoteActivityHelper).
 - AOSP `main`: `services/core/java/com/android/server/wm/BackgroundActivityStartController.java`, `services/companion/java/com/android/server/companion/CompanionExemptionProcessor.java`, `core/res/AndroidManifest.xml` (permission protection levels).
 - Spotify: [content linking guide](https://developer.spotify.com/documentation/android/tutorials/content-linking), [User Guidelines](https://www.spotify.com/br-pt/legal/user-guidelines/), Spotify Community threads ["Tasker cannot start a Playlist anymore"](https://community.spotify.com/t5/Android/Tasker-cannot-start-a-Playlist-anymore-Send-intent-does-not-wrok/td-p/4633926) and ["Start shuffled Playlist with Android-Intent"](https://community.spotify.com/t5/Android/Start-shuffled-Playlist-with-Android-Intent/td-p/1210490).
+- Wear OS: [MediaManager](https://developer.android.com/reference/com/google/wear/services/media/MediaManager) (Wear SDK, API level 37). Android: [background start restrictions for foreground services](https://developer.android.com/develop/background-work/services/fgs/restrictions-bg-start), whose exemption list has the Companion Device Manager and no entry for the Wearable Data Layer.
 - Brazilian law: Lei 9.609/98 (software), Lei 9.610/98 (copyright), Lei 9.279/96 (industrial property).
 - Manifests: the APKs in `rea-apps/` (gitignored), decoded with `aapt2 dump xmltree`, no code opened.

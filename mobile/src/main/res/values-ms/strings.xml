@@ -342,7 +342,6 @@
     <string name="setting_always_show_time">Sentiasa tunjuk masa</string>
     <string name="setting_always_show_time_off_description">Masa semasa hanya akan dipaparkan dalam mod ambien</string>
     <string name="setting_always_show_time_on_description">Masa semasa akan sentiasa dipaparkan. Ikon tindakan atas tidak akan kelihatan (digantikan oleh jam), tetapi tindakan masih berfungsi seperti biasa.</string>
-    <string name="tap_to_force_stop">Ketik untuk hentikan kawalan</string>
     <string name="notification_action_stop">Henti</string>
     <string name="notification_action_force_stop">Paksa henti</string>
     <string name="error_notification_access">Tiada akses pemberitahuan. Semak telefon.</string>

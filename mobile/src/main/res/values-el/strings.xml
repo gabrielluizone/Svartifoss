@@ -297,7 +297,6 @@
     <string name="setting_always_show_time">Πάντα εμφάνιση ώρας</string>
     <string name="setting_always_show_time_off_description">Η τρέχουσα ώρα θα εμφανίζεται μόνο σε λειτουργία αδράνειας</string>
     <string name="setting_always_show_time_on_description">Η τρέχουσα ώρα θα εμφανίζεται πάντα. Το πάνω εικονίδιο ενέργειας δεν θα είναι ορατό (θα αντικατασταθεί από το ρολόι), αλλά η ενέργεια θα εξακολουθεί να λειτουργεί κανονικά.</string>
-    <string name="tap_to_force_stop">Πατήστε για διακοπή των χειριστηρίων</string>
     <string name="notification_action_stop">Διακοπή</string>
     <string name="notification_action_force_stop">Εξαναγκασμένη διακοπή</string>
     <string name="error_notification_access">Δεν υπάρχει πρόσβαση σε ειδοποιήσεις. Ελέγξτε το τηλέφωνο.</string>

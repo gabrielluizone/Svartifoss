@@ -9,7 +9,6 @@ import com.svartifoss.snfell.common.MiscPreferences
 import com.svartifoss.snfell.common.SampledBitmaps
 import org.json.JSONObject
 import timber.log.Timber
-import java.io.ByteArrayOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
@@ -58,15 +57,12 @@ object OnlineArtworkFetcher {
      */
     const val MAX_ARTWORK_PX = 512
 
-    /**
-     * JPEG, not PNG.
-     *
-     * The same reasoning `OpenPlaylistAction.encodeThumbnail` records for queue covers, and it
-     * applies harder here: this is a photograph with no alpha at the largest size anything in this
-     * app transmits, and lossless PNG would cost several times the bytes for no visible difference
-     * over Bluetooth. The watch decodes with `BitmapUtils.deserialize`, which is format-agnostic.
-     */
-    private const val JPEG_QUALITY = 88
+    // Encoded lossy, not as PNG, through WatchImageCodec. The same reasoning
+    // `OpenPlaylistAction.encodeThumbnail` records for queue covers, and it applies harder here:
+    // this is a photograph with no alpha at the largest size anything in this app transmits, and
+    // lossless PNG would cost several times the bytes for no visible difference over Bluetooth.
+    // The watch decodes with `BitmapUtils.deserialize`, which is format-agnostic - which is also
+    // why a cache entry written as JPEG by an earlier build is still read correctly.
 
     fun isEnabled(context: Context): Boolean =
             PreferenceManager.getDefaultSharedPreferences(context)
@@ -343,7 +339,7 @@ object OnlineArtworkFetcher {
     }
 
     /**
-     * Bounds the size and re-encodes as JPEG, **keeping the aspect ratio**.
+     * Bounds the size and re-encodes for the watch, **keeping the aspect ratio**.
      *
      * Deliberately unlike [ShortcutArtworkFetcher], which centre-crops to a square: that one fills
      * a round slot, while this fills the whole screen behind a face that already crops it to the
@@ -375,10 +371,7 @@ object OnlineArtworkFetcher {
             decoded
         }
         return try {
-            ByteArrayOutputStream().use { stream ->
-                scaled.compress(Bitmap.CompressFormat.JPEG, JPEG_QUALITY, stream)
-                stream.toByteArray()
-            }
+            WatchImageCodec.encode(scaled, WatchImageCodec.BACKDROP_QUALITY)
         } catch (e: Exception) {
             Timber.w(e, "Backdrop artwork could not be encoded")
             null

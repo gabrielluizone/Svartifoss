@@ -22,8 +22,22 @@ import java.util.concurrent.TimeUnit
  *
  * The install result (including the "confirm on watch" system prompt, which cannot be launched
  * directly from this background service) is handled by [InstallResultReceiver].
+ *
+ * **What this keeps on the watch, and for how long.** The received APK is written to one fixed
+ * file in the cache directory, so each send replaces the last instead of piling up. Once the
+ * install session has been committed that file is dropped: the session holds its own staged copy,
+ * and this one only sat there (about 25 MB) until the installer reported back - which, for an
+ * update left waiting at the confirmation prompt, could be never. The sessions themselves are the
+ * other half: every send opens a new [PackageInstaller] session with a full copy of the APK, and
+ * the system reaps an abandoned one only after days, so a send while an earlier one was still
+ * unconfirmed staged a second copy beside it. The earlier sessions are abandoned first now.
  */
 class ApkReceiverService : WearableListenerService() {
+
+    override fun onCreate() {
+        super.onCreate()
+        removeStaleReceivedApk()
+    }
 
     override fun onChannelOpened(channel: ChannelClient.Channel) {
         if (channel.path != CommPaths.CHANNEL_WEAR_APK) {
@@ -42,9 +56,10 @@ class ApkReceiverService : WearableListenerService() {
             receiveApk(channelClient, channel, apkFile)
             if (validateApk(apkFile)) {
                 startInstall(apkFile)
-            } else {
-                apkFile.delete()
             }
+            // After the install session has taken its own copy - or, when the file was no APK of
+            // ours, instead of it. Either way nothing needs it any more.
+            apkFile.delete()
         } catch (e: Exception) {
             Timber.e(e, "Receiving wear update APK failed")
             apkFile.delete()
@@ -99,6 +114,7 @@ class ApkReceiverService : WearableListenerService() {
         params.setAppPackageName(packageName)
         params.setSize(apkFile.length())
 
+        abandonEarlierSessions(installer)
         val sessionId = installer.createSession(params)
         installer.openSession(sessionId).use { session ->
             session.openWrite(UPDATE_APK_NAME, 0, apkFile.length()).use { output ->
@@ -120,6 +136,33 @@ class ApkReceiverService : WearableListenerService() {
             session.commit(resultPendingIntent.intentSender)
         }
         Timber.d("Update install session %d committed", sessionId)
+    }
+
+    /**
+     * Abandons this app's earlier install sessions, so the new one is the only copy staged.
+     * `getMySessions` is API 24+; the watch app's minSdk is 26.
+     */
+    private fun abandonEarlierSessions(installer: PackageInstaller) {
+        for (info in installer.mySessions) {
+            try {
+                installer.abandonSession(info.sessionId)
+            } catch (e: RuntimeException) {
+                // Already finished or already gone - the point was to have none left.
+            }
+        }
+    }
+
+    /**
+     * A received APK the process died holding (killed mid-install, battery out) would otherwise
+     * wait for the next send to be overwritten. Anything older than a transfer can last is not
+     * being written by a live one.
+     */
+    private fun removeStaleReceivedApk() {
+        val leftover = File(cacheDir, UPDATE_APK_NAME)
+        if (leftover.isFile &&
+                System.currentTimeMillis() - leftover.lastModified() > TRANSFER_TIMEOUT_MS) {
+            leftover.delete()
+        }
     }
 
     companion object {

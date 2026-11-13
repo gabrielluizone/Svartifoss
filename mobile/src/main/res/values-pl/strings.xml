@@ -348,7 +348,6 @@
     <string name="setting_always_show_time">Zawsze pokazuj czas</string>
     <string name="setting_always_show_time_off_description">Bieżący czas będzie wyświetlany tylko w trybie ambientowym</string>
     <string name="setting_always_show_time_on_description">Bieżący czas będzie zawsze wyświetlany. Górna ikona akcji nie będzie widoczna (zastąpi ją zegar), ale akcja nadal będzie działać normalnie.</string>
-    <string name="tap_to_force_stop">Dotknij, aby zatrzymać sterowanie</string>
     <string name="notification_action_stop">Zatrzymaj</string>
     <string name="notification_action_force_stop">Wymuś zatrzymanie</string>
     <string name="error_notification_access">Brak dostępu do powiadomień. Sprawdź telefon.</string>

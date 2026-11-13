@@ -297,7 +297,6 @@
     <string name="setting_always_show_time">Mostra sempre l\'ora</string>
     <string name="setting_always_show_time_off_description">L\'ora attuale verrà mostrata solo in modalità ambient</string>
     <string name="setting_always_show_time_on_description">L\'ora attuale verrà sempre mostrata. L\'icona dell\'azione superiore non sarà visibile (sarà sostituita dall\'orologio), ma l\'azione continuerà a funzionare normalmente.</string>
-    <string name="tap_to_force_stop">Tocca per fermare i controlli</string>
     <string name="notification_action_stop">Ferma</string>
     <string name="notification_action_force_stop">Forza arresto</string>
     <string name="error_notification_access">Nessun accesso alle notifiche. Controlla il telefono.</string>

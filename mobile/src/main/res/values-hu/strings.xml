@@ -357,7 +357,6 @@ Egyes ikoncsomagok tárhelyengedélyt igényelnek az alkalmazásoktól. A funkci
     <string name="setting_always_show_time">Idő mindig megjelenítése</string>
     <string name="setting_always_show_time_off_description">A pontos idő csak ambient módban jelenik meg</string>
     <string name="setting_always_show_time_on_description">A pontos idő mindig megjelenik. A felső művelet ikonja nem lesz látható (az óra váltja fel), de a művelet továbbra is normálisan működik.</string>
-    <string name="tap_to_force_stop">Koppintson a vezérlők leállításához</string>
     <string name="notification_action_stop">Leállítás</string>
     <string name="notification_action_force_stop">Kényszerített leállítás</string>
     <string name="error_notification_access">Nincs értesítés-hozzáférés. Ellenőrizze a telefont.</string>

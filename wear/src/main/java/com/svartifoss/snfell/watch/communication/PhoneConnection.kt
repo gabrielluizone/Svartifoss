@@ -856,6 +856,14 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
      */
     private fun scheduleNextPlaybackSync(initialDelayMs: Long? = null) {
         playbackSyncJob?.cancel()
+        playbackSyncJob = null
+        // No loop at all while nothing draws a moving position - see PositionViewers. It used to
+        // keep turning over every few seconds for the whole of a listening session, screen off
+        // included, only to find each time that it had nobody to send for.
+        if (!positionViewers.anyLive) {
+            playbackSyncSentAtMs = null
+            return
+        }
         val scope = scope ?: return
         // A plain launch, deliberately not launchWithErrorHandling: that helper posts
         // Resource.error to musicState, so a sync ping failing because the phone stepped out of
@@ -866,9 +874,10 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
             var wait = initialDelayMs ?: playbackClock.syncIntervalMs
             while (isActive) {
                 delay(wait)
-                // Only while a screen shows the position - see positionViewers. The loop keeps its
-                // cadence meanwhile; a viewer arriving forces a check straight away.
-                if (playbackClock.isPlaying() && positionViewers.isNotEmpty()) {
+                // Only while a screen draws a moving position - see PositionViewers. The last of
+                // them leaving cancels this loop, and one arriving starts it again with a check
+                // straight away, so the test below only ever fails for the moment in between.
+                if (playbackClock.isPlaying() && positionViewers.anyLive) {
                     if (playbackSyncSentAtMs != null) {
                         // The previous request was never answered - the phone is out of range, or
                         // its MusicService was not up to hear it. Treat that exactly as a quiet
@@ -1141,39 +1150,56 @@ class PhoneConnection @Inject constructor(@ApplicationContext private val contex
     }
 
     /**
-     * Screens on display that draw something moving with the playback position - the player (awake
-     * or always-on), the lyrics, the progress screen - keyed by whoever registered them.
+     * The screens on display that draw the playback position - the player (awake or always-on),
+     * the lyrics, the progress screen - keyed by whoever registered them. See [PositionViewers] for
+     * the two questions it answers and why they differ.
      *
      * Two pieces of upkeep exist for those screens alone: the position check against the phone
      * ([scheduleNextPlaybackSync]) and the decoding of the covers sent ahead for the neighbouring
      * tracks. This connection stays open for the whole of a listening session, screen off
      * included, so both used to run for hours with nothing on the wrist to show for them - five
      * or six Bluetooth round trips and four full-screen decodes per track. With no viewer the
-     * checks pause and the covers wait, undecoded, for someone to look.
+     * covers wait, undecoded, for someone to look, and with none whose readout is moving there is
+     * no check and no loop to make one.
      */
-    private val positionViewers = HashSet<Any>()
+    private val positionViewers = PositionViewers()
 
     /** The neighbouring covers that arrived while no screen could use them - see [positionViewers]. */
     private var pendingAdjacentArtwork: DataItem? = null
 
     /** Registers [viewer] as showing (or no longer showing) something that moves with the position. */
-    fun setPositionViewer(viewer: Any, showing: Boolean) {
-        val hadViewers = positionViewers.isNotEmpty()
-        if (showing) positionViewers.add(viewer) else positionViewers.remove(viewer)
-        if (hadViewers || positionViewers.isEmpty()) return
+    fun setPositionViewer(viewer: Any, showing: Boolean) =
+            onPositionViewersChanged(positionViewers.setShowing(viewer, showing))
 
-        // Someone is looking again. Whatever the estimate did meanwhile went unchecked, so verify
-        // it soon, and decode the covers that arrived in the dark.
-        requestPlaybackResync()
-        pendingAdjacentArtwork?.let { item ->
-            pendingAdjacentArtwork = null
-            scope?.launch { takeAdjacentArtwork(item) }
+    /**
+     * Tells the connection whether [viewer]'s position is being drawn moving ([live]) or only now
+     * and then - an ambient screen. See [PositionViewers.setLive].
+     */
+    fun setPositionViewerLive(viewer: Any, live: Boolean) =
+            onPositionViewersChanged(positionViewers.setLive(viewer, live))
+
+    private fun onPositionViewersChanged(change: PositionViewers.Transition) {
+        if (change.liveStarted) {
+            // Someone is watching it move again. Whatever the estimate did meanwhile went
+            // unchecked, so verify it soon.
+            requestPlaybackResync()
+        } else if (change.liveEnded) {
+            // Nobody is: stop the loop rather than leave it turning over with nothing to send.
+            scheduleNextPlaybackSync()
+        }
+
+        if (change.firstArrived) {
+            // Decode the covers that arrived in the dark.
+            pendingAdjacentArtwork?.let { item ->
+                pendingAdjacentArtwork = null
+                scope?.launch { takeAdjacentArtwork(item) }
+            }
         }
     }
 
     /** Takes delivery of the neighbouring covers now, or holds them until a screen can use them. */
     private suspend fun takeAdjacentArtwork(dataItem: DataItem) {
-        if (positionViewers.isEmpty()) {
+        if (!positionViewers.any) {
             pendingAdjacentArtwork = dataItem
             // What is held now belongs to the neighbours of a track that has stopped being the one
             // playing, and nothing can use it before a screen comes back, which replaces it anyway.

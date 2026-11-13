@@ -299,7 +299,6 @@
     <string name="setting_always_show_time">Afișează întotdeauna ora</string>
     <string name="setting_always_show_time_off_description">Ora curentă va fi afișată doar în modul ambiental</string>
     <string name="setting_always_show_time_on_description">Ora curentă va fi afișată întotdeauna. Pictograma de acțiune de sus nu va fi vizibilă (va fi înlocuită de ceas), dar acțiunea va continua să funcționeze normal.</string>
-    <string name="tap_to_force_stop">Atingeți pentru a opri comenzile</string>
     <string name="notification_action_stop">Oprește</string>
     <string name="notification_action_force_stop">Oprire forțată</string>
     <string name="error_notification_access">Fără acces la notificări. Verificați telefonul.</string>

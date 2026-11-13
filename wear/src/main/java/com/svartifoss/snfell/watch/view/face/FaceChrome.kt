@@ -1530,6 +1530,30 @@ internal fun FaceOverflowDots(color: Color = Color.White, scale: Float = 1f) {
 }
 
 /**
+ * A face's authored leading, restated relative to the size it was authored for, so the space
+ * between two lines keeps its proportion to the glyphs at whatever size they finally render.
+ *
+ * Faces pass an absolute `lineHeight` (Poster 24sp for a 22sp title, Artist 15sp for 13sp), which
+ * is right only at the size it was written beside. The size itself moves - the user's size control
+ * (up to 300%), [withTextFit], the shrink cascade - and an absolute leading does not: at 220% the
+ * Artist face drew a 28.6sp title on 15sp lines, so the moment it wrapped the second line was laid
+ * over the first, and a single artist line at 200% overflowed its own box into the title below it.
+ * The phone's miniature measured its lines from the font instead and never showed either, so the
+ * only place a theme author could see it was the wrist. In `em` the leading is multiplied by the
+ * font size Compose finally uses, which makes every one of those sizes right by construction while
+ * leaving the 100% design pixel-identical (`24/22 em` of 22sp is 24sp).
+ *
+ * Anything but two `sp` values - an unspecified leading, one already in `em` - is returned as it
+ * came, since it already follows the size or names none.
+ */
+internal fun TextUnit.proportionalTo(designedSize: TextUnit): TextUnit =
+        if (isSp && designedSize.isSp && designedSize.value > 0f) {
+            (value / designedSize.value).em
+        } else {
+            this
+        }
+
+/**
  * Renders a title/artist line honoring the user's [MiscPreferences.WEAR_TITLE_TEXT_MODE] choice -
  * every face reads this through here instead of hardcoding one fixed overflow strategy (the
  * situation before this existed: Vinyl/Halo/Eclipse/Expressive always scrolled, Poster/Studio/
@@ -1609,10 +1633,10 @@ internal fun AdaptiveTitleText(
         fontStyle: FontStyle? = null,
         fontFamily: FontFamily? = null,
         letterSpacing: TextUnit = TextUnit.Unspecified,
-        /** Passed through untouched, including to the shrunk-down text. An absolute value therefore
-         *  does *not* scale with the size this settles on, and a title that shrinks two or three
-         *  steps ends up with lines spaced further apart than they are tall. Leave it unspecified
-         *  unless the face genuinely needs a fixed leading. */
+        /** The leading the face authored *at [fontSize]*. It is restated relative to that size
+         *  ([proportionalTo]) before anything is drawn, so it follows the user's size control, a
+         *  text fit and every shrink step - an absolute value used to stay put while the glyphs
+         *  grew, and a wrapped title at 220% drew its second line over its first. */
         lineHeight: TextUnit = TextUnit.Unspecified,
         textAlign: TextAlign = TextAlign.Center,
         minFontSize: TextUnit = (fontSize.value * 0.62f).sp,
@@ -1748,6 +1772,8 @@ internal fun AdaptiveTitleText(
     // plain 400/upright/unspaced default" - otherwise simply shipping these controls would flatten
     // every face that deliberately sets its title Bold or its artist line wide-tracked. Only a
     // value the user actually moved away from the identity overrides the face.
+    // Before the size is scaled: the leading is relative to the size the face wrote it beside.
+    @Suppress("NAME_SHADOWING") val lineHeight = lineHeight.proportionalTo(fontSize)
     val fontSize = if (typography.scale == 1f) fontSize else typography.scaled(fontSize.value).sp
     val minFontSize =
             if (typography.scale == 1f) minFontSize else typography.scaled(minFontSize.value).sp
@@ -2529,7 +2555,7 @@ private fun ArtistLineTextPass(
             fontWeight = if (spec.weight == 400) fontWeight else FontWeight(spec.weight),
             fontStyle = state.artistFontStyle,
             fontFamily = fontFamily,
-            lineHeight = lineHeight,
+            lineHeight = lineHeight.proportionalTo(fontSize),
             letterSpacing = if (spec.trackingEm == 0f) letterSpacing else spec.trackingEm.em,
             textAlign = state.blockTextAlign(textAlign),
             maxLines = 1,
@@ -2632,7 +2658,7 @@ private fun TitleLineTextPass(
             fontWeight = if (spec.weight == 400) fontWeight else FontWeight(spec.weight),
             fontStyle = state.titleFontStyle,
             fontFamily = fontFamily,
-            lineHeight = lineHeight,
+            lineHeight = lineHeight.proportionalTo(fontSize),
             letterSpacing = if (spec.trackingEm == 0f) letterSpacing else spec.trackingEm.em,
             textAlign = state.blockTextAlignOrNull(textAlign),
             maxLines = maxLines,

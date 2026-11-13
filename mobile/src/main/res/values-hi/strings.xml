@@ -357,7 +357,6 @@ Svartifoss — काले बेसाल्ट के स्तंभ
     <string name="setting_always_show_time">हमेशा समय दिखाएँ</string>
     <string name="setting_always_show_time_off_description">मौजूदा समय केवल एम्बिएंट मोड में दिखेगा</string>
     <string name="setting_always_show_time_on_description">मौजूदा समय हमेशा दिखेगा। ऊपर का ऐक्शन आइकन दिखाई नहीं देगा (उसकी जगह घड़ी होगी), लेकिन ऐक्शन सामान्य रूप से काम करता रहेगा।</string>
-    <string name="tap_to_force_stop">कंट्रोल रोकने के लिए टैप करें</string>
     <string name="notification_action_stop">रोकें</string>
     <string name="notification_action_force_stop">फ़ोर्स स्टॉप</string>
     <string name="error_notification_access">नोटिफ़िकेशन एक्सेस नहीं है। फ़ोन जाँचें।</string>

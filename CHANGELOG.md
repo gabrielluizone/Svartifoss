@@ -2,17 +2,49 @@
 
 ## Unreleased
 
+### Added
+
+- **A Watch themes button on the Svartifoss notification.** It opens a small window over whatever you are doing, with your saved themes first and the built-in ones after; tap one to change the watch's theme without opening the app.
+
 ### Changed
+
+- **Tapping the Svartifoss notification opens the app**, where it used to stop the controls. Stop and Force stop are still buttons on it. Android shows three buttons at most, so opening the app is the notification itself.
 
 - **Settings a face cannot show are no longer offered for it.** The app icon is hidden on Chat, Note, Verse and Metadata, and the track time on Carousel, Split, Ribbon and Depth, which have no place for them; the Text page hides those tabs too.
 
 - **Text position is no longer offered on Expressive** (or on the archived Eclipse and Aurora faces), where the only room for the text is where it already sits; Bottom put it over the track time. On Poster and Studio, Bottom now means just above the play button or progress ring, or above the mini buttons, the Up Next pill or the track time when those sit higher, and "Center the title" no longer pushes the block lower there.
 
+- **The phone sends the watch fewer bytes of pictures.** Each cover sent ahead for the next songs was sent a second time when the song started; it now goes once. Covers, queue thumbnails and artist pictures also travel as WebP instead of JPEG, about a third smaller at the same quality.
+
+- **The watch no longer checks the song position with the phone while the screen is dimmed.** With the player left open on the always-on display it asked every few seconds after each track change and then about once a minute, for a screen that only redraws once a minute.
+
+- **The watch says "Continue on your phone" when a shortcut needs the phone's screen.** It appears when the phone could not start the music silently and had to open the app instead, so a shortcut that ends on a locked phone no longer looks like it did nothing.
+
 ### Fixed
+
+- **A shortcut no longer starts the wrong music.** When a link had to be opened in its app, Svartifoss then pressed play, and an app that was not running resumed whatever it had played last. Play is now pressed only once the app has loaded what was picked. Spotify on a free account still only opens the playlist: it plays nothing it is asked for from outside.
+
+- **The first tap after the phone app had been closed in the background works.** The command that woke the app could be cut off half-way, so a shortcut did nothing until it was tried again.
+
+- **A shortcut no longer ends with nothing happening** when the music app took the request but did not play it. The link is opened on the phone instead.
+
+- **A music app that starts slowly is still asked to play.** Svartifoss stopped asking about three seconds after the pick; it now waits for the app to come up.
+
+- **Amazon Music links in the app's own form (`amznmp3:`) are recognised** as Amazon Music.
+
+- **Updating from GitHub no longer downloads the same APK twice.** A download that stopped, because you left the screen or the connection dropped, now continues where it stopped, and a finished one is kept until the update is done, so a failed send to the watch or a dismissed install prompt no longer costs another 25 to 36 MB. The file is checked against GitHub's checksum. The watch also drops the received APK as soon as the install is queued, and an update you left unconfirmed no longer stays staged beside the next one.
+
+- **The quick panel shows the music app's own button icons on YouTube Music again on Android 10.** The app's notification was found but not matched to its session, so the panel fell back to generic icons and the phone redrew them on every update. A notification is now accepted when its app has only one session, and icons that were drawn are kept instead of redrawn.
 
 - **A scrolling title no longer looks faded while it stands still.** Both ends stayed faded between passes, eating the first letters; they now fade only while the text moves. On every face, in the queue and in the phone's preview.
 
 - **Long or large titles no longer run into a face's controls.** Wrap to 5 lines, a long title or a big title size pushed the text into the play button on Poster, the progress ring on Studio and the disc on Material, and on Expressive a two-line title hid the artist. The title now stops at an ellipsis where the controls begin, and the artist keeps its line. When the title and artist are set larger than a face has room for (Expressive, Material, Split, Poster and Studio), both stop growing at the largest size that fits, in the proportion chosen, instead of the title being cut. On Material, a long title also stays clear of the progress ring around the edge.
+
+- **Large titles that wrap no longer pile their lines on top of each other.** Above 100% size, the line spacing stayed at its 100% value, so a title that wrapped drew its second line over the first, and a large artist name ran into the title. This happened on every face, but only on the watch: the phone's preview spaced the lines correctly.
+
+- **The Artist face follows the title setting and keeps its text in place.** Its title always wrapped to two lines, even when set to scroll. Its text now stays inside the round screen at any size and stops above the mini buttons and the Up Next pill instead of running under them.
+
+- **The Up Next pill shows on the Artist face.** It is no longer offered on faces that never drew it (Classic, Carousel, Chat, Split, Note, Verse, Metadata, Ribbon and Frame), and the phone's preview no longer draws it on Classic, Carousel and Note. The preview also shows the mini buttons on the Artist face, as the watch does.
 
 - **Classic shows the track time under two-line titles again.** A short title like "Panic Station" was set so large that the time was cut off at the bottom.
 

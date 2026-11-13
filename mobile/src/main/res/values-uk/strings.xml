@@ -348,7 +348,6 @@
     <string name="setting_always_show_time">Завжди показувати час</string>
     <string name="setting_always_show_time_off_description">Поточний час відображатиметься лише у фоновому режимі</string>
     <string name="setting_always_show_time_on_description">Поточний час відображатиметься завжди. Верхній значок дії не буде видно (його замінить годинник), але сама дія працюватиме як завжди.</string>
-    <string name="tap_to_force_stop">Торкніться, щоб зупинити керування</string>
     <string name="notification_action_stop">Зупинити</string>
     <string name="notification_action_force_stop">Примусово зупинити</string>
     <string name="error_notification_access">Немає доступу до сповіщень. Перевірте телефон.</string>

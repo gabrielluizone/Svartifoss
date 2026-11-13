@@ -41,24 +41,29 @@ class PhoneApkInstaller(private val context: Context) {
             return
         }
 
-        val apkFile = File(context.cacheDir, APK_FILE_NAME)
-        ApkDownloader.download(apkUrl, release.mobileApkSize, apkFile) { percent ->
+        // Kept in the cache after this call, like the watch's: the install ends in a system
+        // confirmation the user can dismiss, and a dismissed prompt used to mean downloading the
+        // 36 MB again. The result receiver removes it once the update is done.
+        val apkFile = ReleaseApkCache.of(context).apkFor(ReleaseApkCache.Kind.PHONE, release.tag)
+
+        // ApkDownloader checks the byte count against the published size (a truncated transfer is
+        // a known HttpURLConnection redirect bug - see ApkDownloader), the published SHA-256 when
+        // there is one, and then [isValidUpdateApk]. Size alone can't catch same-length corruption
+        // (a re-encoding proxy, bit flips), which would otherwise reach the system installer as a
+        // raw, unlocalized "There was a problem parsing the package" failure; confirming the file
+        // is a well-formed APK for this exact package first mirrors the watch's
+        // ApkReceiverService.validateApk. A file that fails is deleted by the downloader.
+        ApkDownloader.download(
+                url = apkUrl,
+                expectedSize = release.mobileApkSize,
+                target = apkFile,
+                sha256 = release.mobileApkSha256,
+                isUsable = ::isValidUpdateApk
+        ) { percent ->
             onProgress(Progress.Downloading(percent))
         }
 
         onProgress(Progress.Installing)
-
-        // ApkDownloader already checked the downloaded byte count against the expected size,
-        // which catches a truncated transfer (a known HttpURLConnection redirect bug - see
-        // ApkDownloader). It can't catch same-length corruption (a re-encoding proxy, bit flips),
-        // which would otherwise reach the system installer as a raw, unlocalized "There was a
-        // problem parsing the package" failure. Confirm the file is actually a well-formed APK for
-        // this exact package first, mirroring the watch's ApkReceiverService.validateApk.
-        if (!isValidUpdateApk(apkFile)) {
-            apkFile.delete()
-            throw IOException("Downloaded file is not a valid Svartifoss update APK")
-        }
-
         commitInstallSession(apkFile)
     }
 
@@ -94,6 +99,7 @@ class PhoneApkInstaller(private val context: Context) {
         params.setAppPackageName(context.packageName)
         params.setSize(apkFile.length())
 
+        abandonEarlierSessions(installer)
         val sessionId = installer.createSession(params)
         installer.openSession(sessionId).use { session ->
             session.openWrite(APK_FILE_NAME, 0, apkFile.length()).use { output ->
@@ -114,7 +120,27 @@ class PhoneApkInstaller(private val context: Context) {
         }
     }
 
+    /**
+     * Drops this app's earlier install sessions before opening another.
+     *
+     * Each session holds its own full copy of the APK until it is committed *and* confirmed, or
+     * abandoned, and the system only reaps an abandoned one after days. An update the user walked
+     * away from at the confirmation prompt left one behind per attempt, so pressing the button
+     * three times staged three copies. `getMySessions` is API 24+.
+     */
+    private fun abandonEarlierSessions(installer: PackageInstaller) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) return
+        for (info in installer.mySessions) {
+            try {
+                installer.abandonSession(info.sessionId)
+            } catch (e: RuntimeException) {
+                // Already finished or already gone - the point was to have none left.
+            }
+        }
+    }
+
     companion object {
+        /** The name inside the install session; the file itself is in [ReleaseApkCache]. */
         const val APK_FILE_NAME = "phone-update.apk"
     }
 }

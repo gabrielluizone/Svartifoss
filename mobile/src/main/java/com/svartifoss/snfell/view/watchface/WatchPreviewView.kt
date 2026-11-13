@@ -39,6 +39,7 @@ import com.svartifoss.snfell.common.ActivityVisibility
 import com.svartifoss.snfell.common.AodArtTreatment
 import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.BitmapBlur
+import com.svartifoss.snfell.common.FaceElements
 import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.FaceScopedPreferences
 import com.svartifoss.snfell.common.FrostedEdges
@@ -2608,8 +2609,22 @@ class WatchPreviewView @JvmOverloads constructor(
     }
 
     /** A resolved title layout: the chosen font [size], the line(s) to draw, and whether it
-     *  scrolls. Leaves [textPaint]'s text size at [size]. */
-    private class TitlePlan(val size: Float, val lines: List<String>, val marquee: Boolean)
+     *  scrolls. Leaves [textPaint]'s text size at [size]. [designedSize] is the size the face
+     *  wrote its title at, before the user's scale, a text fit or any shrink step. */
+    private class TitlePlan(
+            val size: Float,
+            val lines: List<String>,
+            val marquee: Boolean,
+            val designedSize: Float = size
+    ) {
+        /**
+         * A face's authored leading at [size] - the watch's `proportionalTo`. A fixed leading
+         * stayed put while the title grew there, so a wrapped title at 220% drew its second line
+         * over its first; restated against the size it was written beside, it follows every size.
+         */
+        fun leading(designed: Float): Float =
+                if (designedSize > 0f) designed * size / designedSize else designed
+    }
 
     /**
      * The Classic artist is an [OutlineTextView] of its own: it always uses the View renderer's
@@ -2759,6 +2774,19 @@ class WatchPreviewView @JvmOverloads constructor(
              *  half by the wrong setting. Every other caller passes pure title text and wants the
              *  normal behaviour. */
             applyCase: Boolean = true
+    ): TitlePlan = planTitleAt(
+            availWidth, maxSize, floorSize, textOverride, bold, smartFallsBackToMarquee, maxLines,
+            applyCase).let { TitlePlan(it.size, it.lines, it.marquee, designedSize = maxSize) }
+
+    private fun planTitleAt(
+            availWidth: Float,
+            maxSize: Float,
+            floorSize: Float,
+            textOverride: String?,
+            bold: Boolean,
+            smartFallsBackToMarquee: Boolean,
+            maxLines: Int?,
+            applyCase: Boolean
     ): TitlePlan {
         val raw = textOverride ?: displayTitle()
         val text = if (applyCase) titleTypographySpec.case.apply(raw) else raw
@@ -2877,9 +2905,9 @@ class WatchPreviewView @JvmOverloads constructor(
      *  round screen the usable chord narrows with depth, so those plan first, re-measure, and then
      *  draw - the same settle CarouselFace performs through AdaptiveTitleText's `onLineCount`.
      *
-     *  [lineHeight] overrides the font's own leading for a face that composed a fixed one. It does
-     *  not scale as the title shrinks, matching AdaptiveTitleText's documented behaviour for an
-     *  explicitly passed `lineHeight`. */
+     *  [lineHeight] overrides the font's own leading for a face that composed a fixed one, given
+     *  at the size the face designed and scaled to the size the plan settled on
+     *  ([TitlePlan.leading]), as the watch's AdaptiveTitleText restates it in `em`. */
     private fun drawTitlePlan(
             canvas: Canvas,
             plan: TitlePlan,
@@ -2899,6 +2927,8 @@ class WatchPreviewView @JvmOverloads constructor(
         // the other direction.
         textPaint.typeface = titleTypeface(bold = bold)
         textPaint.textSize = plan.size
+        // The face's leading at the size the title settled on, not at the one it was written for.
+        @Suppress("NAME_SHADOWING") val lineHeight = lineHeight?.let(plan::leading)
         val planLineHeight = lineHeight
                 ?: (textPaint.fontMetrics.descent - textPaint.fontMetrics.ascent)
         val runBottom = baselineY + planLineHeight * (plan.lines.size - 1)
@@ -10915,7 +10945,7 @@ class WatchPreviewView @JvmOverloads constructor(
                     fontRegular)
         }
 
-        drawBottomChrome(canvas, cx, geometry.cy, geometry.radius, dp)
+        drawBottomChrome(canvas, cx, geometry.cy, geometry.radius, dp, "matejdro")
     }
 
     /**
@@ -11025,7 +11055,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 artistColor,
                 dp)
 
-        drawBottomChrome(canvas, cx, cy, radius, dp)
+        drawBottomChrome(canvas, cx, cy, radius, dp, "classic")
     }
 
     /**
@@ -11627,10 +11657,20 @@ class WatchPreviewView @JvmOverloads constructor(
 
     /** The player's bottom band: the mini-buttons row if it shows, otherwise the awake Up Next
      *  pill when enabled (the watch shows one or the other, never both - see
-     *  MainActivity.syncScreenButtonsVisibility). */
-    private fun drawBottomChrome(canvas: Canvas, cx: Float, cy: Float, radius: Float, dp: (Float) -> Float) {
+     *  MainActivity.syncScreenButtonsVisibility) and [drawingFace] is one that draws it
+     *  (FaceElements.UP_NEXT_PILL_FACES). It used to draw the pill on every face that called
+     *  this, Classic, Matejdro, Carousel and Note among them, none of which draw it on the wrist. */
+    private fun drawBottomChrome(
+            canvas: Canvas,
+            cx: Float,
+            cy: Float,
+            radius: Float,
+            dp: (Float) -> Float,
+            drawingFace: String
+    ) {
         val drewMiniButtons = drawMiniButtons(canvas, cx, cy, radius, dp)
-        if (!drewMiniButtons && showUpNextPill && isPlayingShown()) {
+        if (!drewMiniButtons && showUpNextPill && isPlayingShown() &&
+                FaceElements.drawsUpNextPill(drawingFace)) {
             drawAwakeUpNextPill(canvas, cx, cy, radius, dp)
         }
     }
@@ -12256,8 +12296,9 @@ class WatchPreviewView @JvmOverloads constructor(
             textPaint.color = 0xB3FFFFFF.toInt()
             textPaint.textSize = dp(10f)
             // Same preferred 45dp offset as Wear, clamped against the measured mini-button row.
-            val miniConfigured = isPlayingShown() &&
-                    (miniButtonIcons.isNotEmpty() || surface == PreviewSurface.MINI_BUTTONS)
+            val miniConfigured = activeMiniButtonIcons().isNotEmpty()
+            // Through the mini-button mode, as the watch's `active` is: a row set to "never"
+            // reserves no band, and the Up Next pill takes it instead.
             drawTrackTimeText(
                     canvas,
                     timeText(),
@@ -12270,7 +12311,7 @@ class WatchPreviewView @JvmOverloads constructor(
 
         // The watch's expressive face has no default queue/volume/overflow trio - that row is
         // left entirely to the user's configured mini buttons.
-        drawBottomChrome(canvas, cx, cy, radius, dp)
+        drawBottomChrome(canvas, cx, cy, radius, dp, "expressive")
     }
 
     /**
@@ -12395,7 +12436,7 @@ class WatchPreviewView @JvmOverloads constructor(
         if (alwaysShowTime || clockPreviewForced()) {
             drawFaceClock(canvas, cx, cy - radius, dp)
         }
-        drawBottomChrome(canvas, cx, cy, radius, dp)
+        drawBottomChrome(canvas, cx, cy, radius, dp, "carousel")
     }
 
     /**
@@ -13520,78 +13561,150 @@ class WatchPreviewView @JvmOverloads constructor(
         val cx = geometry.cx
         val radius = geometry.radius
         val screen = radius * 2f
-        val side = screen * ARTIST_SIDE_PADDING_FRACTION
-        val edge = screen * ARTIST_EDGE_PADDING_FRACTION
-        val available = screen - side * 2f
+        val screenTop = geometry.cy - radius
+        val screenDp = min(deviceWidthDp, deviceHeightDp)
 
         val nameVisible = showTrackArtist || !isPlayingShown()
         val trackVisible = showTrackTitle
         val timeVisible = trackTimeVisible()
-        if (!nameVisible && !trackVisible && !timeVisible) return
+        if (nameVisible || trackVisible || timeVisible) {
+            // ArtistTextBlock: the block lives between the clock's clearance and a floor that
+            // stops at the top of the mini-button row or the Up Next pill, and its height comes
+            // from the sizes and the line count actually drawn rather than from the 100% design.
+            val miniConfigured = activeMiniButtonIcons().isNotEmpty()
+            // Through the mini-button mode, as the watch's `active` is: a row set to "never"
+            // reserves no band, and the Up Next pill takes it instead.
+            val edgeFraction = ARTIST_EDGE_PADDING_FRACTION
+            val topFraction = maxOf(edgeFraction, TitleBand.movedTop(alwaysShowTime))
+            val floor = TitleBand.effectiveFloor(
+                    1f - edgeFraction, curatedChromeTop(geometry, miniConfigured, dp))
+            val band = when (textBlockPosition) {
+                TextBlockPosition.MIDDLE -> TitleBand.centredBand(floor)
+                else -> TitleBand.movedBand(topFraction, floor)
+            }
+            val trackPadDp = if (trackVisible) ARTIST_TRACK_TOP_PADDING_DP else 0f
+            val timeDp = if (timeVisible) {
+                ARTIST_TRACK_TIME_TOP_PADDING_DP +
+                        ARTIST_TRACK_TIME_LINE_HEIGHT_SP * trackTimeTypographySpec.scale
+            } else 0f
+            val nameLineDp = if (nameVisible) ARTIST_NAME_LINE_HEIGHT_SP else 0f
+            val textBandDp = (screenDp * band - trackPadDp - timeDp).coerceAtLeast(0f)
+            withTextFit(TitleBand.fitScale(
+                    bandDp = textBandDp,
+                    titleLineDp = if (trackVisible) ARTIST_TRACK_LINE_HEIGHT_SP else 0f,
+                    titleScale = titleTypographySpec.scale,
+                    artistRowDp = nameLineDp,
+                    artistScale = artistTypographySpec.scale)) {
+                val ceiling = TitleBand.lineCeiling(
+                        bandDp = textBandDp,
+                        titleLineDp = ARTIST_TRACK_LINE_HEIGHT_SP,
+                        titleScale = titleTypographySpec.scale,
+                        artistRowDp = nameLineDp,
+                        artistScale = artistTypographySpec.scale)
 
-        // What the block costs from its baseline upward, so a moved block can be anchored by its
-        // own height rather than by the screen's - the same reason the face measures its Column.
-        var blockHeight = 0f
-        if (timeVisible) blockHeight += dp(ARTIST_TRACK_TIME_TOP_PADDING_DP + ARTIST_TRACK_TIME_LINE_HEIGHT_SP)
-        if (trackVisible) blockHeight += dp(ARTIST_TRACK_TOP_PADDING_DP + ARTIST_TRACK_LINE_HEIGHT_SP)
-        if (nameVisible) blockHeight += dp(ARTIST_NAME_LINE_HEIGHT_SP)
+                fun blockHeight(plan: TitlePlan?): Float =
+                        dp(nameLineDp * artistTypographySpec.scale) +
+                                (if (plan != null) {
+                                    dp(trackPadDp) +
+                                            plan.leading(dp(ARTIST_TRACK_LINE_HEIGHT_SP)) *
+                                            plan.lines.size
+                                } else 0f) +
+                                dp(timeDp)
 
-        val bottom = blockAnchorY(geometry, blockHeight, edge) ?: (geometry.bounds.bottom - edge)
+                fun edgesOf(height: Float): Pair<Float, Float> {
+                    val fraction = height / screen
+                    return when (textBlockPosition) {
+                        TextBlockPosition.TOP -> topFraction to (topFraction + fraction)
+                        TextBlockPosition.MIDDLE -> (.5f - fraction / 2f) to (.5f + fraction / 2f)
+                        else -> (floor - fraction) to floor
+                    }
+                }
 
-        val align = blockAlign(Paint.Align.LEFT)
-        val anchorX = when (align) {
-            Paint.Align.LEFT -> cx - available / 2f
-            Paint.Align.RIGHT -> cx + available / 2f
-            else -> cx
-        }
+                fun available(plan: TitlePlan?): Float {
+                    val (top, bottom) = edgesOf(blockHeight(plan))
+                    val inset = maxOf(
+                            ARTIST_SIDE_PADDING_FRACTION,
+                            if (geometry.round) RoundScreenText.sideInsetFor(top, bottom) else 0f)
+                    return screen * (1f - 2f * inset)
+                }
 
-        var y = bottom
-        if (timeVisible) {
-            textPaint.textAlign = align
-            drawTrackTimeText(
-                    canvas,
-                    timeText(),
-                    anchorX,
-                    y,
-                    dp(ARTIST_TRACK_TIME_SP),
-                    0x9EFFFFFF.toInt(),
-                    // The face's authored family, mirroring the fontFamily ArtistFace hands
-                    // TrackTimeText - the fallback the playback-time font key resolves to while it
-                    // is `follow`. fontRegular here would show the system face on the phone and
-                    // the chosen one on the wrist.
-                    titleTypeface(bold = false))
-            y -= dp(ARTIST_TRACK_TIME_TOP_PADDING_DP + ARTIST_TRACK_TIME_LINE_HEIGHT_SP)
+                fun plan(width: Float): TitlePlan? = if (trackVisible) {
+                    planTitle(width, dp(ARTIST_TRACK_SP), dp(ARTIST_TRACK_SP) * .62f,
+                            bold = false, maxLines = ceiling)
+                } else null
+
+                // The watch settles on the lines its title wrapped to (a deeper block is narrower,
+                // which can add a line and never removes one); the same few monotonic passes here.
+                var width = available(null)
+                var title = plan(width)
+                repeat(3) {
+                    val narrowed = available(title)
+                    if (narrowed < width - .5f) {
+                        width = narrowed
+                        title = plan(width)
+                    }
+                }
+
+                val height = blockHeight(title)
+                val (_, bottomFraction) = edgesOf(height)
+                val bottom = screenTop + screen * bottomFraction
+                val align = blockAlign(Paint.Align.LEFT)
+                val anchorX = when (align) {
+                    Paint.Align.LEFT -> cx - width / 2f
+                    Paint.Align.RIGHT -> cx + width / 2f
+                    else -> cx
+                }
+
+                var y = bottom
+                if (timeVisible) {
+                    textPaint.textAlign = align
+                    drawTrackTimeText(
+                            canvas,
+                            timeText(),
+                            anchorX,
+                            y,
+                            dp(ARTIST_TRACK_TIME_SP),
+                            0x9EFFFFFF.toInt(),
+                            // The face's authored family, mirroring the fontFamily ArtistFace
+                            // hands TrackTimeText - the fallback the playback-time font key
+                            // resolves to while it is `follow`. fontRegular here would show the
+                            // system face on the phone and the chosen one on the wrist.
+                            titleTypeface(bold = false))
+                    y -= dp(timeDp)
+                }
+                title?.let { plan ->
+                    // The track is this face's *title*, drawn one step down from the name - the
+                    // inversion the face exists for - with the user's title behaviour, as the
+                    // watch's AdaptiveTitleText draws it. Grown upwards from the line above the
+                    // time, so a title that wrapped pushes the name up rather than into the time.
+                    val leading = plan.leading(dp(ARTIST_TRACK_LINE_HEIGHT_SP))
+                    drawTitlePlan(
+                            canvas, plan, anchorX, y, width,
+                            titleAlpha(ColorUtils.setAlphaComponent(Color.WHITE, 0xC7)),
+                            bold = false,
+                            lineHeight = dp(ARTIST_TRACK_LINE_HEIGHT_SP),
+                            align = align,
+                            bottomAnchored = true)
+                    y -= dp(trackPadDp) + leading * plan.lines.size
+                }
+                if (nameVisible) {
+                    drawArtistLine(
+                            canvas,
+                            if (isPlayingShown()) displayArtist()
+                            else context.getString(R.string.preview_playback_stopped),
+                            anchorX, y, width,
+                            artistTextColor(),
+                            dp(ARTIST_NAME_SP),
+                            bold = true,
+                            align = align,
+                            sourceGlyph = true,
+                            glyphSize = dp(ARTIST_SOURCE_ICON_SIZE_DP))
+                }
+            }
         }
-        if (trackVisible) {
-            // The track is this face's *title*, drawn one step down from the name - the inversion
-            // the face exists for. It is a fixed line rather than an adaptive one, mirroring the
-            // face's TitleLineText: the line that may overflow here is the artist's, and it is the
-            // one that gets the overflow behaviour.
-            textPaint.style = Paint.Style.FILL
-            textPaint.textAlign = align
-            textPaint.typeface = titleTypeface(bold = false)
-            textPaint.textSize = titleTypographySpec.scaled(dp(ARTIST_TRACK_SP))
-            textPaint.letterSpacing = titleTypographySpec.trackingEm
-            textPaint.color = titleAlpha(ColorUtils.setAlphaComponent(Color.WHITE, 0xC7))
-            canvas.drawText(
-                    ellipsize(titleTypographySpec.case.apply(displayTitle()), available),
-                    anchorX, y, textPaint)
-            textPaint.letterSpacing = 0f
-            y -= dp(ARTIST_TRACK_TOP_PADDING_DP + ARTIST_TRACK_LINE_HEIGHT_SP)
-        }
-        if (nameVisible) {
-            drawArtistLine(
-                    canvas,
-                    if (isPlayingShown()) displayArtist()
-                    else context.getString(R.string.preview_playback_stopped),
-                    anchorX, y, available,
-                    artistTextColor(),
-                    dp(ARTIST_NAME_SP),
-                    bold = true,
-                    align = align,
-                    sourceGlyph = true,
-                    glyphSize = dp(ARTIST_SOURCE_ICON_SIZE_DP))
-        }
+        // The shared mini-button row draws over this face on the watch, and the face carries the
+        // Up Next pill in the same band when no row is configured.
+        drawBottomChrome(canvas, cx, geometry.cy, radius, dp, "artist")
     }
 
     /**
@@ -13802,7 +13915,7 @@ class WatchPreviewView @JvmOverloads constructor(
             drawFaceClock(canvas, cx, cy - radius, dp)
         }
         // Mini buttons stay on for this face, so the shared bottom chrome is drawn as usual.
-        drawBottomChrome(canvas, cx, cy, radius, dp)
+        drawBottomChrome(canvas, cx, cy, radius, dp, "note")
     }
 
     /**
@@ -14111,8 +14224,10 @@ class WatchPreviewView @JvmOverloads constructor(
         withTextFit(textFit) {
             val ceiling = curatedTitleCeiling(stop, titleLineDp, artistRowDp, artistVisible)
             val columnWidth = screenDiameter * widthFraction
-            // The watch passes the title an explicit line height, so its lines sit that far apart.
+            // The watch passes the title an explicit line height, so its lines sit that far apart -
+            // at the size the title settled on (TitlePlan.leading), as the watch restates it in em.
             val titleLineH = dp(titleLineDp)
+            fun lineHOf(plan: TitlePlan?): Float = plan?.leading(titleLineH) ?: titleLineH
 
             textPaint.typeface = artistTypeface(bold = false)
             textPaint.textSize = artistTypographySpec.scaled(artistSize)
@@ -14120,7 +14235,7 @@ class WatchPreviewView @JvmOverloads constructor(
             val artistLineH = artistFm.descent - artistFm.ascent
 
             fun heightOf(plan: TitlePlan?): Float =
-                    (if (plan != null) titleLineH * plan.lines.size else 0f) +
+                    (if (plan != null) lineHOf(plan) * plan.lines.size else 0f) +
                             (if (plan != null && artistVisible) artistGap else 0f) +
                             (if (artistVisible) artistLineH else 0f)
 
@@ -14140,7 +14255,7 @@ class WatchPreviewView @JvmOverloads constructor(
                 null
             }
             var height = heightOf(plan)
-            var top = topOf(height, titleLineH * (plan?.lines?.size ?: 0))
+            var top = topOf(height, lineHOf(plan) * (plan?.lines?.size ?: 0))
             // Moved or lined up on a side, the title has to fit the glass at the depth its lines
             // reach, and fitting can add a line, which reaches deeper - a few monotonic passes settle
             // it, the shape of the watch's onLineCount settle. Unmoved, blockLine is the identity.
@@ -14148,13 +14263,13 @@ class WatchPreviewView @JvmOverloads constructor(
                 repeat(3) {
                     val current = plan ?: return@repeat
                     val narrowed = blockLine(Paint.Align.CENTER, cx, columnWidth,
-                            top, top + titleLineH * current.lines.size).width
+                            top, top + lineHOf(current) * current.lines.size).width
                     if (narrowed < titleWidth - .5f) {
                         titleWidth = narrowed
                         val replanned = planTitle(titleWidth, titleSize, titleSize * .62f, maxLines = ceiling)
                         plan = replanned
                         height = heightOf(replanned)
-                        top = topOf(height, titleLineH * replanned.lines.size)
+                        top = topOf(height, lineHOf(replanned) * replanned.lines.size)
                     }
                 }
             }
@@ -14165,10 +14280,10 @@ class WatchPreviewView @JvmOverloads constructor(
                 textPaint.textSize = title.size
                 val titleFm = textPaint.fontMetrics
                 // The glyphs sit in the middle of each line box, as Compose places them.
-                val firstBaseline = y + (titleLineH - (titleFm.descent - titleFm.ascent)) / 2f - titleFm.ascent
+                val firstBaseline = y + (lineHOf(title) - (titleFm.descent - titleFm.ascent)) / 2f - titleFm.ascent
                 drawTitlePlan(canvas, title, cx, firstBaseline, titleWidth, titleAlpha(Color.WHITE),
                         bold = true, lineHeight = titleLineH)
-                y += titleLineH * title.lines.size
+                y += lineHOf(title) * title.lines.size
             }
             if (artistVisible) {
                 if (plan != null) y += artistGap
@@ -14255,8 +14370,9 @@ class WatchPreviewView @JvmOverloads constructor(
         val controlsVisible = playerControlsVisible || essentialTransport
         val iconAlpha = ((if (essentialTransport) theme.iconAlpha.takeIf { it > 0f } ?: 1f
                 else theme.iconAlpha) * 255).toInt().coerceIn(0, 255)
-        val miniConfigured = isPlayingShown() &&
-                (miniButtonIcons.isNotEmpty() || surface == PreviewSurface.MINI_BUTTONS)
+        val miniConfigured = activeMiniButtonIcons().isNotEmpty()
+        // Through the mini-button mode, as the watch's `active` is: a row set to "never"
+        // reserves no band, and the Up Next pill takes it instead.
         val titleVisible = showTrackTitle
         // The stopped/status message remains operational UI even when the artist preference is
         // off, matching the Wear host's metadata visibility policy.
@@ -15077,7 +15193,7 @@ class WatchPreviewView @JvmOverloads constructor(
         }
 
         if (alwaysShowTime || clockPreviewForced()) drawFaceClock(canvas, cx, cy - radius, dp)
-        drawBottomChrome(canvas, cx, cy, radius, dp)
+        drawBottomChrome(canvas, cx, cy, radius, dp, kind)
     }
 
     private fun tunedPreviewColor(color: Int, lightness: Float, saturation: Float): Int =

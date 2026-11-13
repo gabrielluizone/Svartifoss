@@ -53,6 +53,21 @@
         <item name="android:windowLightStatusBar">@bool/is_light_mode</item>
     </style>
 
+    <!-- The window behind the quick theme dialog (ThemeQuickSwitchActivity): nothing at all. The
+         dialog is the only thing drawn, so it floats over whatever was on screen - the launcher,
+         another app - and closing it leaves the user exactly there. The status bar is transparent
+         for the same reason: the opaque Lyra colour AppTheme gives it would be painted over the
+         app underneath. -->
+    <style name="AppTheme.Transparent" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 

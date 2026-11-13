@@ -351,7 +351,6 @@
     <string name="setting_always_show_time">Mostrar sempre a hora</string>
     <string name="setting_always_show_time_off_description">A hora atual só será mostrada no modo ambiente</string>
     <string name="setting_always_show_time_on_description">A hora atual será sempre mostrada. O ícone da ação superior não ficará visível (será substituído pelo relógio), mas a ação continua a funcionar normalmente.</string>
-    <string name="tap_to_force_stop">Toca para parar os controlos</string>
     <string name="notification_action_stop">Parar</string>
     <string name="notification_action_force_stop">Forçar paragem</string>
     <string name="error_notification_access">Sem acesso a notificações. Verifica o telemóvel.</string>

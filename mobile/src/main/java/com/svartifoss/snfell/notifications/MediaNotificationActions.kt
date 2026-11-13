@@ -14,6 +14,7 @@ import android.graphics.drawable.DrawableContainer
 import android.graphics.drawable.Icon
 import android.media.session.MediaSession
 import android.os.Build
+import android.os.SystemClock
 import android.service.notification.StatusBarNotification
 import android.support.v4.media.session.MediaSessionCompat
 import androidx.appcompat.content.res.AppCompatResources
@@ -294,31 +295,23 @@ object MediaNotificationActions {
     }
 
     /**
-     * Returns actions belonging to the controller that is actually active. Package matching is
-     * still the compatibility fallback because some legacy/OEM notifications omit a readable
-     * media-session token, but an exact token match always wins when one is available.
+     * Returns actions belonging to the controller that is actually active. An exact token match
+     * always wins when one is available. Package matching is the fallback, for two reasons that
+     * [notificationMayBelongToSession] spells out: some legacy/OEM notifications omit a readable
+     * media-session token, and a token that fails to compare equal does not mean another session
+     * when [onlySessionOfPackage] says the app has only the one.
      */
     fun actionsForSession(
             packageName: String,
-            sessionToken: MediaSession.Token?
+            sessionToken: MediaSession.Token?,
+            onlySessionOfPackage: Boolean = false
     ): List<MediaNotificationAction> = synchronized(this) {
-        val packageNotifications = notifications.values
-                .asSequence()
-                .filter { it.packageName == packageName }
-                .toList()
-
-        val exactSession = sessionToken?.let { activeToken ->
-            packageNotifications.asSequence()
-                    .filter { it.sessionToken == activeToken }
-                    .maxByOrNull { it.postedAt }
-        }
-        val packageFallback = packageNotifications.asSequence()
-                // A missing notification token is the compatibility case. Do not borrow a
-                // notification that positively identifies a different session of the same app.
-                .filter { sessionToken == null || it.sessionToken == null }
-                .maxByOrNull { it.postedAt }
-
-        (exactSession ?: packageFallback)
+        pickNotificationForSession(
+                candidates = notifications.values.filter { it.packageName == packageName },
+                sessionToken = sessionToken,
+                onlySessionOfPackage = onlySessionOfPackage,
+                tokenOf = { it.sessionToken },
+                postedAtOf = { it.postedAt })
                 ?.actions
                 ?.map { it.publicAction }
                 .orEmpty()
@@ -329,27 +322,37 @@ object MediaNotificationActions {
      * [packageName] and whether any of it belongs to [sessionToken]. An empty answer there sends
      * the quick panel to the session's custom actions, whose icons often cannot be drawn outside
      * their app, and from the wrist the two look the same.
+     *
+     * The tokens' hash codes are in the line because "0 for this session" says a comparison failed
+     * and nothing about why; set beside the `#hash` every session label in the log already carries,
+     * they show whether two tokens that should be one are merely different objects.
      */
     fun describeForLog(packageName: String, sessionToken: MediaSession.Token?): String =
             synchronized(this) {
                 val stored = notifications.values.filter { it.packageName == packageName }
                 if (stored.isEmpty()) return "no media notification stored"
                 "${stored.size} stored, ${stored.count { it.sessionToken == sessionToken }} for this " +
-                        "session, ${stored.count { it.sessionToken == null }} without one"
+                        "session, ${stored.count { it.sessionToken == null }} without one; " +
+                        "session #${sessionToken?.hashCode()?.let(Integer::toHexString)}, " +
+                        "notification tokens " + stored.joinToString { notification ->
+                            "#" + (notification.sessionToken?.hashCode()?.let(Integer::toHexString)
+                                    ?: "none")
+                        }
             }
 
     /** Resolves an id only inside the currently active package/session. */
     fun execute(
             actionId: String,
             packageName: String,
-            sessionToken: MediaSession.Token?
+            sessionToken: MediaSession.Token?,
+            onlySessionOfPackage: Boolean = false
     ): Boolean {
         val action = synchronized(this) {
             notifications.values.asSequence()
                     .filter { notification ->
                         notification.packageName == packageName &&
-                                (sessionToken == null || notification.sessionToken == null ||
-                                        notification.sessionToken == sessionToken)
+                                notificationMayBelongToSession(
+                                        notification.sessionToken, sessionToken, onlySessionOfPackage)
                     }
                     .flatMap { it.actions.asSequence() }
                     .firstOrNull { it.publicAction.id == actionId }
@@ -368,13 +371,17 @@ object MediaNotificationActions {
     /** Fires the app's like/save notification action (e.g. Spotify's heart) for the active
      *  package/session, if one was found. Lets the watch's dedicated Like button work for apps
      *  that expose "like" only as a notification action, not a MediaSession custom action. */
-    fun executeLike(packageName: String, sessionToken: MediaSession.Token?): Boolean {
+    fun executeLike(
+            packageName: String,
+            sessionToken: MediaSession.Token?,
+            onlySessionOfPackage: Boolean = false
+    ): Boolean {
         val intent = synchronized(this) {
             notifications.values.asSequence()
                     .filter { notification ->
                         notification.packageName == packageName &&
-                                (sessionToken == null || notification.sessionToken == null ||
-                                        notification.sessionToken == sessionToken)
+                                notificationMayBelongToSession(
+                                        notification.sessionToken, sessionToken, onlySessionOfPackage)
                     }
                     .mapNotNull { it.likeAction?.intent }
                     .firstOrNull()
@@ -396,13 +403,17 @@ object MediaNotificationActions {
      *  **Null when there is no such action at all**, which is a different thing from a notification
      *  whose label says the track is not liked yet - the caller has one more source below this one
      *  (the session's own user rating) and a flat false here would have hidden it. */
-    fun likedStateForSession(packageName: String, sessionToken: MediaSession.Token?): Boolean? {
+    fun likedStateForSession(
+            packageName: String,
+            sessionToken: MediaSession.Token?,
+            onlySessionOfPackage: Boolean = false
+    ): Boolean? {
         val action = synchronized(this) {
             notifications.values.asSequence()
                     .filter { notification ->
                         notification.packageName == packageName &&
-                                (sessionToken == null || notification.sessionToken == null ||
-                                        notification.sessionToken == sessionToken)
+                                notificationMayBelongToSession(
+                                        notification.sessionToken, sessionToken, onlySessionOfPackage)
                     }
                     .mapNotNull { it.likeAction }
                     .firstOrNull()
@@ -426,16 +437,39 @@ object MediaNotificationActions {
         return null
     }
 
+    /**
+     * What [loadRemoteActionIcon] has already drawn. Asked once per custom action on **every**
+     * state build, so without this each state repeated several renders, a pixel scan and a PNG
+     * encode per icon - and for an app whose icons draw to nothing outside it, repeated them for
+     * an answer that was always "nothing". See [RenderedIconCache] for why failures expire.
+     */
+    private val customActionIcons = RenderedIconCache(
+            maxEntries = 48,
+            retryFailedAfterMs = 60_000L,
+            clock = SystemClock::elapsedRealtime)
+
     /** Rasterizes a framework MediaSession.CustomAction resource in the publishing app's own
-     * package context. Resource ids are package-local and therefore cannot cross to Wear as-is. */
+     * package context. Resource ids are package-local and therefore cannot cross to Wear as-is.
+     * The answer is remembered per package version and resource id. */
     fun loadRemoteActionIcon(
             context: Context,
             packageName: String,
             resourceId: Int
     ): ByteArray? {
         if (resourceId == 0) return null
-        return rasterizePng(
-                remoteResourceCandidates(publisherContexts(context, packageName), resourceId))
+        val key = "$packageName/$resourceId/${packageUpdateStamp(context, packageName)}"
+        return customActionIcons.getOrRender(key) {
+            rasterizePng(
+                    remoteResourceCandidates(publisherContexts(context, packageName), resourceId))
+        }
+    }
+
+    /** When [packageName] was last updated, so an app update that reuses a resource id for a
+     * different picture is not served the old render. 0 when the package cannot be read. */
+    private fun packageUpdateStamp(context: Context, packageName: String): Long = try {
+        context.packageManager.getPackageInfo(packageName, 0).lastUpdateTime
+    } catch (_: Exception) {
+        0L
     }
 
     /**

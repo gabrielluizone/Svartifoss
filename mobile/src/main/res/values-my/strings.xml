@@ -761,7 +761,6 @@
     <string name="setting_always_show_time">အချိန်ကို အမြဲပြရန်</string>
     <string name="setting_always_show_time_off_description">လက်ရှိအချိန်ကို ambient mode တွင်သာ ပြမည်</string>
     <string name="setting_always_show_time_on_description">လက်ရှိအချိန်ကို အမြဲပြမည်။ အပေါ် action icon ကို မမြင်ရဘဲ (နာရီဖြင့် အစားထိုးမည်) လုပ်ဆောင်ချက်က ပုံမှန်အတိုင်း အလုပ်လုပ်မည်။</string>
-    <string name="tap_to_force_stop">ထိန်းချုပ်မှုများ ရပ်ရန် နှိပ်ပါ</string>
     <string name="notification_action_stop">ရပ်ရန်</string>
     <string name="notification_action_force_stop">အတင်းရပ်ရန်</string>
     <string name="error_notification_access">Notification access မရှိပါ။ ဖုန်းကို စစ်ပါ။</string>

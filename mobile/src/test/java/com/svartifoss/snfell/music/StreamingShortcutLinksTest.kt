@@ -36,6 +36,22 @@ class StreamingShortcutLinksTest {
     }
 
     @Test
+    fun amazonMusicIsRecognisedByTheSchemeItsAppDeclares() {
+        // The phone app declares `amznmp3` (and the generic `amzn`), not `amzn-music`.
+        assertEquals(StreamingService.AMAZON_MUSIC,
+            StreamingShortcutLinks.detect("amznmp3://albums/B0EXAMPLE"))
+        assertEquals(StreamingContentType.ALBUM,
+            StreamingShortcutLinks.detectContentType("amznmp3://albums/B0EXAMPLE"))
+        assertEquals(StreamingService.AMAZON_MUSIC,
+            StreamingShortcutLinks.detect("amzn-music://playlists/B0EXAMPLE"))
+        // `amzn:` alone belongs to Amazon's other apps as much as to this one.
+        assertEquals(StreamingService.GENERIC,
+            StreamingShortcutLinks.detect("amzn://apps/android?p=com.example"))
+        assertEquals("amznmp3://albums/B0EXAMPLE",
+            StreamingShortcutLinks.extractSharedLink("Listen: amznmp3://albums/B0EXAMPLE"))
+    }
+
+    @Test
     fun providerLookalikeHostsStayGeneric() {
         listOf(
             "https://qobuz.com.example.org/track/1",
@@ -400,5 +416,109 @@ class StreamingShortcutLinksTest {
         assertEquals("Best of Spotify", StreamingShortcutLinks.searchableName("Best of Spotify"))
         assertEquals(null, StreamingShortcutLinks.searchableName(" - SoundCloud"))
         assertEquals(null, StreamingShortcutLinks.searchableName("   "))
+    }
+
+    /**
+     * What the YouTube app's share sheet hands out is played by YouTube Music under another
+     * address, and only those shapes: see [StreamingShortcutLinks.playsUnderAnotherAddress].
+     */
+    @Test
+    fun youtubeLinksToOneVideoOrPlaylistArePlayedUnderTheMusicAddress() {
+        listOf(
+                "https://youtu.be/dQw4w9WgXcQ?si=abc",
+                "https://youtu.be/dQw4w9WgXcQ?list=PL1234567890",
+                "https://www.youtube.com/watch?v=dQw4w9WgXcQ&list=PL1234567890&index=3",
+                "https://m.youtube.com/watch?v=dQw4w9WgXcQ&feature=shared",
+                "https://youtube.com/playlist?list=PL1234567890&si=abc",
+                "youtube.com/watch?v=dQw4w9WgXcQ"
+        ).forEach { link ->
+            assertTrue(link, StreamingShortcutLinks.playsUnderAnotherAddress(link))
+            val playback = StreamingShortcutLinks.forPlayback(link)
+            assertTrue("$link -> $playback", playback.startsWith("https://music.youtube.com/watch?"))
+        }
+    }
+
+    @Test
+    fun linksThatArePlayedWhereTheyOpenAreNotSentToAnotherApp() {
+        listOf(
+                // Already YouTube Music's own address: the app that opens it is the one that plays.
+                "https://music.youtube.com/watch?v=dQw4w9WgXcQ&si=AbC",
+                "https://music.youtube.com/playlist?list=PL1234567890",
+                "https://music.youtube.com/watch?list=LM",
+                // A channel plays by a name search, which could match somebody else there.
+                "https://www.youtube.com/@LofiGirl",
+                "https://www.youtube.com/channel/UCabcdef",
+                // Not known to play in YouTube Music; they stay with the YouTube app.
+                "https://www.youtube.com/live/jfKfPfyJRdk?si=abc",
+                "https://www.youtube.com/shorts/abcdefghijk",
+                "https://www.youtube.com/embed/dQw4w9WgXcQ",
+                // Other services have one app for both.
+                "https://open.spotify.com/playlist/37i9dQZF1DXcBWIGoYBM5M",
+                "spotify:playlist:37i9dQZF1DXcBWIGoYBM5M",
+                "https://soundcloud.com/forss/sets/soulhack",
+                "https://www.deezer.com/playlist/908622995",
+                "https://example.com/playlist/1",
+                ""
+        ).forEach { link ->
+            assertFalse(link, StreamingShortcutLinks.playsUnderAnotherAddress(link))
+        }
+    }
+
+    @Test
+    fun spotifyShortLinksOfBothGenerationsAreSpotify() {
+        assertEquals(StreamingService.SPOTIFY,
+                StreamingShortcutLinks.detect("https://spotify.link/AbCdEfGhIj"))
+        assertEquals(StreamingService.SPOTIFY,
+                StreamingShortcutLinks.detect("https://spotify.app.link/AbCdEfGhIj"))
+        // What they point at is not known until they are opened.
+        assertEquals(StreamingContentType.UNKNOWN,
+                StreamingShortcutLinks.detectContentType("https://spotify.app.link/AbCdEfGhIj"))
+        assertEquals(StreamingService.GENERIC,
+                StreamingShortcutLinks.detect("https://notspotify.app.link/AbCdEfGhIj"))
+    }
+
+    @Test
+    fun amazonMusicCollectionsOtherThanAlbumsAreRecognised() {
+        fun type(link: String) = StreamingShortcutLinks.detectContentType(link)
+        assertEquals(StreamingContentType.PLAYLIST,
+                type("https://music.amazon.com/user-playlists/abcdef0123456789?ref=dm_sh_x"))
+        assertEquals(StreamingContentType.PLAYLIST,
+                type("https://music.amazon.com/my/playlists/123e4567-e89b"))
+        assertEquals(StreamingContentType.PLAYLIST,
+                type("https://music.amazon.com.br/playlists/B07XYZ1234"))
+        assertEquals(StreamingContentType.MIX,
+                type("https://music.amazon.com/stations/A2UW0MECRAWILL"))
+        assertEquals(StreamingContentType.SHOW,
+                type("https://music.amazon.com/podcasts/123e4567/name"))
+        // An album link that names one of its tracks is still the album.
+        assertEquals(StreamingContentType.ALBUM, type(
+                "https://music.amazon.com/albums/B08FCB1JZP?marketplaceId=A&trackAsin=B08FC9T1ZP"))
+        assertEquals(StreamingContentType.UNKNOWN, type("https://music.amazon.com/"))
+    }
+
+    @Test
+    fun soundcloudProfileTabsAndSitePagesAreNotTracks() {
+        fun type(link: String) = StreamingShortcutLinks.detectContentType(link)
+        // A track and a set, as before.
+        assertEquals(StreamingContentType.TRACK, type("https://soundcloud.com/forss/flickermood"))
+        assertEquals(StreamingContentType.TRACK,
+                type("https://soundcloud.com/forss/flickermood/s-AbCdE"))
+        assertEquals(StreamingContentType.PLAYLIST, type("https://soundcloud.com/forss/sets/soulhack"))
+        assertEquals(StreamingContentType.PLAYLIST,
+                type("https://soundcloud.com/discover/sets/weekly::forss"))
+        assertEquals(StreamingContentType.PLAYLIST, type("https://soundcloud.com/you/likes"))
+        assertEquals(StreamingContentType.ARTIST, type("https://soundcloud.com/forss"))
+        // A profile's tabs are that artist, played by the saved name.
+        listOf("tracks", "popular-tracks", "albums", "sets", "reposts", "likes").forEach { tab ->
+            assertEquals(tab, StreamingContentType.ARTIST, type("https://soundcloud.com/forss/$tab"))
+        }
+        // SoundCloud's own pages are nobody's profile and nobody's track.
+        assertEquals(StreamingContentType.UNKNOWN, type("https://soundcloud.com/search?q=lofi"))
+        assertEquals(StreamingContentType.UNKNOWN, type("https://soundcloud.com/charts/top"))
+        assertEquals(StreamingContentType.UNKNOWN, type("https://soundcloud.com/discover"))
+        assertEquals(StreamingContentType.MIX,
+                type("https://soundcloud.com/stations/track/forss/flickermood"))
+        // A short link still names nothing until it is opened.
+        assertEquals(StreamingContentType.UNKNOWN, type("https://on.soundcloud.com/AbCdEf"))
     }
 }

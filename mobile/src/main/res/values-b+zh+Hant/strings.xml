@@ -342,7 +342,6 @@
     <string name="setting_always_show_time">一律顯示時間</string>
     <string name="setting_always_show_time_off_description">目前時間只會在環境模式中顯示</string>
     <string name="setting_always_show_time_on_description">目前時間會一律顯示。頂部動作圖示將不再可見（會由時鐘取代），但動作本身仍會正常運作。</string>
-    <string name="tap_to_force_stop">輕觸以停止控制</string>
     <string name="notification_action_stop">停止</string>
     <string name="notification_action_force_stop">強制停止</string>
     <string name="error_notification_access">沒有通知存取權限。請檢查手機。</string>

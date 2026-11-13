@@ -355,7 +355,6 @@ Svartifoss — Исландиядағы сарқыраманы
     <string name="setting_always_show_time">Уақытты әрдайым көрсету</string>
     <string name="setting_always_show_time_off_description">Ағымдағы уақыт тек қоршаған режимде көрсетіледі</string>
     <string name="setting_always_show_time_on_description">Ағымдағы уақыт әрдайым көрсетіледі. Жоғарғы әрекет белгішесі көрінбейді (оның орнына сағат тұрады), бірақ әрекет қалыпты жұмысын жалғастырады.</string>
-    <string name="tap_to_force_stop">Басқаруларды тоқтату үшін түртіңіз</string>
     <string name="notification_action_stop">Тоқтату</string>
     <string name="notification_action_force_stop">Мәжбүрлі тоқтату</string>
     <string name="error_notification_access">Хабарландыруларға рұқсат жоқ. Телефонды тексеріңіз.</string>

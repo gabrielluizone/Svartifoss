@@ -22,9 +22,11 @@ import com.svartifoss.snfell.common.CommPaths
 import com.svartifoss.snfell.proto.WatchInfo
 import com.svartifoss.snfell.util.SimpleMarkdown
 import com.svartifoss.snfell.view.LyraAccent
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import timber.log.Timber
 import java.util.concurrent.TimeUnit
@@ -146,6 +148,28 @@ class UpdateActivity : AppCompatActivity() {
             watchVersionText.text =
                     watchVersion ?: getString(R.string.update_watch_version_unknown)
             refreshButtons()
+            pruneDownloadedApks()
+        }
+    }
+
+    /**
+     * Removes downloaded APKs this screen no longer needs: those of a release that has been
+     * replaced, and those for a device that is already up to date.
+     *
+     * Everything else stays on purpose. A download that was interrupted resumes where it stopped,
+     * and a completed one is reused by the next push or install, so leaving this screen - or a
+     * failed transfer - no longer costs the download. Needs both the release and (for the watch)
+     * the watch's version, so it runs when either arrives and does nothing until it has what it
+     * needs; an unknown watch version is never read as "up to date".
+     */
+    private suspend fun pruneDownloadedApks() {
+        val release = latestRelease ?: return
+        val finished = buildSet {
+            if (!phoneNeedsUpdate(release)) add(ReleaseApkCache.Kind.PHONE)
+            if (watchVersion != null && !watchNeedsUpdate(release)) add(ReleaseApkCache.Kind.WATCH)
+        }
+        withContext(Dispatchers.IO) {
+            ReleaseApkCache.of(applicationContext).prune(keepTag = release.tag, finished = finished)
         }
     }
 
@@ -203,6 +227,7 @@ class UpdateActivity : AppCompatActivity() {
                 )
             }
             refreshButtons()
+            pruneDownloadedApks()
         }
     }
 

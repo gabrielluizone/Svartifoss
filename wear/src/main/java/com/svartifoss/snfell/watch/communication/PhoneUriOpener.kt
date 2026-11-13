@@ -27,10 +27,14 @@ object PhoneUriOpener {
     private val requests = ShortcutRequestTracker()
     private var backstop: Job? = null
 
+    /** Whether the request now outstanding is an "Open on phone" - see [OpenOnPhoneNotice]. */
+    private var pendingOpenOnly = false
+
     /** Called on main before sending the command. Every press, even of the same URI, gets an id. */
     fun requestOpenAfterPhoneTries(context: Context, rawUri: String, openOnly: Boolean = false): String {
         val appContext = context.applicationContext
         val request = requests.begin(UUID.randomUUID().toString(), rawUri, allowLegacy = !openOnly)
+        pendingOpenOnly = openOnly
         backstop?.cancel()
         backstop = scope.launch {
             // An older phone cannot resolve an open-only request. Keep the cached route as a
@@ -65,7 +69,12 @@ object PhoneUriOpener {
             backstop = null
             val uri = if (verdict != null) verdict.openUri
                 else payload?.toString(Charsets.UTF_8)
-            if (!uri.isNullOrBlank()) openNow(appContext, uri)
+            if (!uri.isNullOrBlank()) {
+                // A link to open means the phone could not start it silently, and what happens
+                // next happens on its screen. Said before the open, which has Bluetooth to cross.
+                OpenOnPhoneNotice.showIfWanted(appContext, pendingOpenOnly)
+                openNow(appContext, uri)
+            }
         }
     }
 

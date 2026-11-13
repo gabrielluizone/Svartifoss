@@ -388,16 +388,6 @@ object FaceGeometry {
         const val NAME_LINE_HEIGHT_SP = 20f
 
         /**
-         * The most lines the name may wrap to before the block is simply too tall for the band it
-         * sits in.
-         *
-         * A ceiling rather than the answer: `RoundScreenText.linesThatFit` narrows it further
-         * whenever the block has been placed somewhere the chord cannot hold that many lines, which
-         * on a round screen the top and bottom bands routinely cannot.
-         */
-        const val NAME_MAX_LINES = 3
-
-        /**
          * The centred square that takes play/pause taps, as a fraction of the screen.
          *
          * Deliberately a fraction and never the whole screen: this region *consumes* touches, so a

@@ -9,6 +9,7 @@ import com.svartifoss.snfell.watch.theme.UserFont
 import com.matejdro.wearutils.logging.FileLogger
 import com.svartifoss.snfell.common.logging.ReleaseLogcatTree
 import com.svartifoss.snfell.watch.util.ErrorsOnlyExceptionWearTree
+import com.svartifoss.snfell.watch.util.FrontActivity
 import dagger.hilt.android.HiltAndroidApp
 import pl.tajchert.exceptionwear.ExceptionWear
 import timber.log.Timber
@@ -34,6 +35,9 @@ class WearMusicCenter : android.app.Application() {
         val fileLogger = FileLogger.getInstance(this)
         fileLogger.activate()
         Timber.plant(fileLogger)
+
+        // Before any screen exists, so the first one to be resumed is already known.
+        FrontActivity.register(this)
 
         // Seeded before anything resolves a face: watchFontFamily takes no Context, so the
         // imported typeface is unreachable until this holder has one. A face composed before this

@@ -194,6 +194,20 @@
             android:label="@string/watch_themes_title"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <!-- The quick theme window the persistent notification opens (see
+             MusicService.promoteToForeground). A transparent activity that is only a host for one
+             dialog, in a task of its own and out of Recents, so choosing a theme from the shade
+             never brings the app's own screens forward. Not exported: only that notification's
+             PendingIntent starts it. -->
+        <activity
+            android:name=".view.watchface.theme.ThemeQuickSwitchActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:noHistory="true"
+            android:taskAffinity=""
+            android:label="@string/watch_themes_title"
+            android:theme="@style/AppTheme.Transparent" />
+
         <activity
             android:name=".view.watchface.theme.OnlineThemesActivity"
             android:exported="false"

@@ -503,7 +503,6 @@
     <string name="setting_always_show_time">Always show time</string>
     <string name="setting_always_show_time_off_description">Current time will only be displayed in ambient mode</string>
     <string name="setting_always_show_time_on_description">Current time will always be displayed. Top action icon will not be visible (it will be replaced by clock), but action will still function normally.</string>
-    <string name="tap_to_force_stop">Tap to stop the controls</string>
     <string name="notification_action_stop">Stop</string>
     <string name="notification_action_force_stop">Force stop</string>
     <string name="error_notification_access">No notification access. Check phone.</string>

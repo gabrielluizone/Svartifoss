@@ -357,7 +357,6 @@ Noen ikonpakker krever at apper har lagringstillatelse. Du må tillate dette for
     <string name="setting_always_show_time">Vis alltid tiden</string>
     <string name="setting_always_show_time_off_description">Gjeldende tid vises bare i omgivelsesmodus</string>
     <string name="setting_always_show_time_on_description">Gjeldende tid vises alltid. Ikonet for den øvre handlingen vil ikke være synlig (det erstattes av klokken), men handlingen fungerer fortsatt normalt.</string>
-    <string name="tap_to_force_stop">Trykk for å stoppe kontrollene</string>
     <string name="notification_action_stop">Stopp</string>
     <string name="notification_action_force_stop">Tving stopp</string>
     <string name="error_notification_access">Ingen tilgang til varsler. Sjekk telefonen.</string>

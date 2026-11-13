@@ -134,7 +134,8 @@ internal object WatchSearchTargetResolver {
         // Before the switch check below: on a face with no mark at all the switch is not offered
         // either, so pointing at it would point at nothing - see FaceElements.
         if (key in sourceIconRows && !FaceElements.drawsSourceIcon(face) ||
-                isTrackTimeRow(key) && !FaceElements.drawsTrackTime(face)) {
+                isTrackTimeRow(key) && !FaceElements.drawsTrackTime(face) ||
+                key == "wear_show_up_next_pill" && !FaceElements.drawsUpNextPill(face)) {
             return redirect(WatchFacePrefsFragment.SECTION_STYLE, "wear_screen_face")
         }
         if (key in setOf("wear_source_icon_scale", "wear_source_icon_opacity") &&

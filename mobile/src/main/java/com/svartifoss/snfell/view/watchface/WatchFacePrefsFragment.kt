@@ -2292,6 +2292,11 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 MiscPreferences.WEAR_QUEUE_STYLE.key, MiscPreferences.WEAR_QUEUE_STYLE.defaultValue))
         PanelControl.COVER_SHAPE -> QueueAppearance.coverShapeApplies(readStringPreference(
                 MiscPreferences.WEAR_QUEUE_STYLE.key, MiscPreferences.WEAR_QUEUE_STYLE.defaultValue))
+        // The player's Up Next pill is drawn by a minority of faces (see FaceElements), and on the
+        // others the switch moved nothing on the wrist. Its style row stays: the quick panel's own
+        // Up Next pill wears the same style on every face.
+        PanelControl.UP_NEXT ->
+            FaceElements.drawsUpNextPill(readStringPreference("wear_screen_face", "classic"))
         else -> true
     }
 

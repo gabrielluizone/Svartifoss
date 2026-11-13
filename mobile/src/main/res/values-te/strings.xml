@@ -761,7 +761,6 @@
     <string name="setting_always_show_time">సమయాన్ని ఎల్లప్పుడూ చూపు</string>
     <string name="setting_always_show_time_off_description">ప్రస్తుత సమయం ambient mode లో మాత్రమే చూపబడుతుంది</string>
     <string name="setting_always_show_time_on_description">ప్రస్తుత సమయం ఎల్లప్పుడూ చూపబడుతుంది. పై చర్య ఐకాన్ కనిపించదు (దాని స్థానంలో గడియారం ఉంటుంది), కానీ చర్య సాధారణంగానే పనిచేస్తుంది.</string>
-    <string name="tap_to_force_stop">నియంత్రణలను ఆపడానికి ట్యాప్ చేయండి</string>
     <string name="notification_action_stop">ఆపు</string>
     <string name="notification_action_force_stop">బలవంతంగా ఆపు</string>
     <string name="error_notification_access">నోటిఫికేషన్ యాక్సెస్ లేదు. ఫోన్‌ను తనిఖీ చేయండి.</string>

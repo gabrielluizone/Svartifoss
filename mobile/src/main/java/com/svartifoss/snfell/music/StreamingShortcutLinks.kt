@@ -86,7 +86,7 @@ object StreamingShortcutLinks {
 
     private val unsafeSchemes = setOf("content", "data", "file", "intent", "javascript")
     private val sharedLinkPattern = Regex(
-        "(?i)(?:https?://|spotify:|deezer:|tidal:|musics:|amzn-music:|soundcloud:)[^\\s<>\\\"]+"
+        "(?i)(?:https?://|spotify:|deezer:|tidal:|musics:|amzn-music:|amznmp3:|soundcloud:)[^\\s<>\\\"]+"
     )
 
     private val spotifyEntityTypes = setOf(
@@ -101,14 +101,21 @@ object StreamingShortcutLinks {
         val path = uri.path?.lowercase(Locale.US).orEmpty()
 
         return when {
+            // spotify.link and, before it, spotify.app.link are the short links Spotify's share
+            // sheet hands out; the Spotify app declares both (`dumpsys package`, 2026-11-12).
             scheme == "spotify" || hostMatches(host, "spotify.com") ||
-                    hostMatches(host, "spotify.link") -> StreamingService.SPOTIFY
+                    hostMatches(host, "spotify.link") || hostMatches(host, "spotify.app.link") ->
+                StreamingService.SPOTIFY
             scheme == "deezer" || hostMatches(host, "deezer.com") ||
                     hostMatches(host, "deezer.page.link") -> StreamingService.DEEZER
             scheme == "tidal" || hostMatches(host, "tidal.com") -> StreamingService.TIDAL
             scheme == "musics" || hostMatches(host, "music.apple.com") ->
                 StreamingService.APPLE_MUSIC
-            scheme == "amzn-music" || host.startsWith("music.amazon.") ||
+            // `amznmp3` is the scheme the Amazon Music app declares on a phone (read with
+            // `dumpsys package`, docs/streaming-app-interop.md section 2); `amzn-music` is the
+            // one this recognised before and stays, for links that were saved with it. Not the
+            // bare `amzn:`, which Amazon's other apps claim too.
+            scheme == "amzn-music" || scheme == "amznmp3" || host.startsWith("music.amazon.") ||
                     (hostMatches(host, "amazon.com") && path.startsWith("/music")) ->
                 StreamingService.AMAZON_MUSIC
             scheme == "soundcloud" || hostMatches(host, "soundcloud.com") ->
@@ -358,6 +365,32 @@ object StreamingShortcutLinks {
         }
     }
 
+    /**
+     * Whether [rawLink] is *played* under another address than the one it opens at.
+     *
+     * True for a YouTube link to one video or one playlist - what the YouTube app's share sheet
+     * hands out (`youtu.be/<id>`, `youtube.com/watch`, `youtube.com/playlist`). YouTube Music
+     * plays those as `music.youtube.com/watch` ([forPlayback]), but it does not declare the
+     * `youtube.com` and `youtu.be` hosts, so the link itself opens in the YouTube app. The two are
+     * therefore different apps: one is asked to play, the other is where the link is opened when
+     * that did not work. `StreamingShortcutRoutes.playbackPackage` is the Android half.
+     *
+     * Deliberately only the two precise shapes. A channel plays by a name search, which in
+     * YouTube Music could match somebody else; and a `/live/` or `/shorts/` address names
+     * something YouTube Music is not known to play - both stay with the app the link opens in.
+     */
+    fun playsUnderAnotherAddress(rawLink: String): Boolean {
+        val link = canonicalize(rawLink)
+        if (detect(link) != StreamingService.YOUTUBE_MUSIC) return false
+        val type = detectContentType(link)
+        if (type != StreamingContentType.TRACK && type != StreamingContentType.PLAYLIST) return false
+        val playback = forPlayback(link)
+        val playbackUri = parse(playback) ?: return false
+        return playback != forInstalledApp(link) &&
+                playbackUri.host.equals("music.youtube.com", ignoreCase = true) &&
+                playbackUri.path == "/watch"
+    }
+
     private fun youtubeMusicPlaybackUri(rawLink: String): String {
         val uri = parse(rawLink) ?: return rawLink
         val host = uri.host?.lowercase(Locale.US).orEmpty()
@@ -464,23 +497,41 @@ object StreamingShortcutLinks {
             StreamingService.AMAZON_MUSIC -> when {
                 entityParts.any { it == "albums" || it == "album" } ->
                     StreamingContentType.ALBUM
-                entityParts.any { it == "playlists" || it == "playlist" } ->
+                // `/user-playlists/<id>` is what sharing a playlist of one's own gives, and it is
+                // the playlist people most often save; it used to fall through as unknown, which
+                // skipped every silent route for it.
+                entityParts.any { it == "playlist" || it.endsWith("playlists") } ->
                     StreamingContentType.PLAYLIST
                 entityParts.any { it == "tracks" || it == "track" } ->
                     StreamingContentType.TRACK
                 entityParts.any { it == "artists" || it == "artist" } ->
                     StreamingContentType.ARTIST
+                entityParts.any { it == "stations" || it == "station" } ->
+                    StreamingContentType.MIX
+                entityParts.any { it == "podcasts" || it == "podcast" } ->
+                    StreamingContentType.SHOW
                 else -> StreamingContentType.UNKNOWN
             }
             StreamingService.SOUNDCLOUD -> when {
-                "sets" in pathParts -> StreamingContentType.PLAYLIST
                 uri.host?.equals("on.soundcloud.com", ignoreCase = true) == true ->
                     StreamingContentType.UNKNOWN
                 // The signed-in user's own collections (/you/likes, /you/library, ...). Without
                 // this they fall into the two-segment TRACK case below - a "track" whose URI names
                 // no track, which then gets offered to playFromUri as if it were one.
-                pathParts.firstOrNull()?.equals("you", ignoreCase = true) == true ->
+                pathParts.firstOrNull() == "you" -> StreamingContentType.PLAYLIST
+                // A set is `/<user>/sets/<name>`. `/<user>/sets` alone is that profile's list of
+                // sets, which is handled with the other profile tabs below.
+                pathParts.indexOf("sets").let { it >= 0 && it < pathParts.lastIndex } ->
                     StreamingContentType.PLAYLIST
+                pathParts.firstOrNull() == "stations" -> StreamingContentType.MIX
+                // SoundCloud's own pages share the address space with profiles: `/search` is not
+                // an artist called "search", and `/charts/top` is not a track.
+                pathParts.firstOrNull() in SOUNDCLOUD_SITE_PAGES -> StreamingContentType.UNKNOWN
+                // A profile's tabs (`/<user>/tracks`, `/<user>/albums`, ...) are that artist, not
+                // a track of theirs named "tracks": as an artist the saved name is searched, which
+                // plays; as a track the address was offered to playFromUri, which did nothing.
+                pathParts.size == 2 && pathParts[1] in SOUNDCLOUD_PROFILE_TABS ->
+                    StreamingContentType.ARTIST
                 pathParts.size >= 2 -> StreamingContentType.TRACK
                 pathParts.size == 1 -> StreamingContentType.ARTIST
                 else -> StreamingContentType.UNKNOWN
@@ -562,6 +613,19 @@ object StreamingShortcutLinks {
         "show", "shows", "podcast", "podcasts",
         "episode", "episodes", "mix", "mixes", "radio",
         "station", "stations", "flow"
+    )
+
+    /** The second path segment of a SoundCloud profile's own tabs. */
+    private val SOUNDCLOUD_PROFILE_TABS = setOf(
+        "tracks", "popular-tracks", "albums", "sets", "reposts", "likes", "comments",
+        "following", "followers"
+    )
+
+    /** First path segments that are SoundCloud's own pages rather than somebody's profile. */
+    private val SOUNDCLOUD_SITE_PAGES = setOf(
+        "search", "discover", "stream", "feed", "charts", "upload", "settings", "messages",
+        "notifications", "people", "pages", "tags", "popular", "signin", "logout", "connect",
+        "download", "mobile", "pro", "go", "jobs", "imprint", "terms-of-use"
     )
 
     private val ANDROID_PACKAGE_NAME =

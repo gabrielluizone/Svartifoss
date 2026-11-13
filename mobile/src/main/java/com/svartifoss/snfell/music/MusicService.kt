@@ -83,6 +83,8 @@ import com.svartifoss.snfell.common.util.FloatPacker
 import com.svartifoss.snfell.config.ActionConfig
 import com.svartifoss.snfell.config.WatchInfoProvider
 import com.svartifoss.snfell.config.WatchInfoWithIcons
+import com.svartifoss.snfell.view.mainactivity.MainActivity
+import com.svartifoss.snfell.view.watchface.theme.ThemeQuickSwitchActivity
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
 import com.svartifoss.snfell.di.GlobalConfig
 import com.svartifoss.snfell.di.MusicServiceSubComponent
@@ -228,14 +230,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         /** See [scheduleTrackHistorySave]. */
         private val TRACK_HISTORY_SAVE_INTERVAL_MS = TimeUnit.MINUTES.toMillis(20)
 
-        /** How long [pressPlayAfterNavigating] keeps watching for the app to finish loading the
-         *  content a deep link opened. Generous: this runs only after the URI retries have already
-         *  failed, and a cold streaming app can take seconds to publish its first metadata. */
-        private const val PRESS_PLAY_ATTEMPTS = 10
-
         /** Past the end of [LiveStreamTracker.CONFIRM_MS], so the recheck lands after it. */
         private const val LIVE_RECHECK_SLACK_MS = 50L
-        private const val PRESS_PLAY_INTERVAL_MS = 400L
 
         /** How long a direct `playFromUri` gets to actually start playing before the deep link
          *  falls through to the browser/visible routes. Long enough for a streaming app to buffer,
@@ -245,13 +241,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         /**
          * After a hand-off launch (see [playThroughHandoff]): how long the app gets to start
-         * playing, how often it is looked at, and how long it is left alone before a loaded but
-         * paused item is pressed play. Long, because this is a cold start of a streaming app that
-         * the user is usually unlocking the phone for at that very moment.
+         * playing. Long, because this is a cold start of a streaming app that the user is usually
+         * unlocking the phone for at that very moment. What is done meanwhile is
+         * [VisibleOpenFollowUp]'s, the same as after a plain open.
          */
         private const val HANDOFF_VERIFY_MS = 12_000L
-        private const val HANDOFF_POLL_MS = 250L
-        private const val HANDOFF_PRESS_PLAY_AFTER_MS = 4_000L
 
         /** Waiting for the watch to open the hand-off: its autoplay window plus delivery time. */
         private const val HANDOFF_GRACE_MS = 5_000L
@@ -277,6 +271,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
 
         private const val STOP_SELF_PENDING_INTENT_REQUEST_CODE = 333
         private const val FORCE_STOP_PENDING_INTENT_REQUEST_CODE = 334
+        private const val OPEN_APP_PENDING_INTENT_REQUEST_CODE = 335
+        private const val THEMES_PENDING_INTENT_REQUEST_CODE = 336
         private const val ACTION_STOP_SELF = "STOP_SELF"
         private const val ACTION_FORCE_STOP = "FORCE_STOP"
         // Not private: MiscSettingsFragment links out to this channel's system settings page.
@@ -605,6 +601,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     // every transmit.
     private var lastSerializedArtSource: Bitmap? = null
     private var lastSerializedArt: ByteArray? = null
+
+    /** The covers recently encoded for the watch, so the copy sent ahead for a track and the copy
+     *  sent when it starts playing are one set of bytes - see [WatchCoverLedger]. */
+    private val watchCovers = WatchCoverLedger()
     private var lastSourceIconPackage: String? = null
     private var lastSourceIconBytes: ByteArray? = null
     /** Whether [lastSourceIconBytes] came from the notification (tintable template) or the
@@ -821,14 +821,33 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 forceStopIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
+        // Tapping the notification opens the app, as a notification does everywhere else. It used
+        // to stop the service - one accidental tap on the body ended the controls - and the "Stop"
+        // button below already says that explicitly. Android shows at most three action buttons,
+        // so the body is "Open", which is what leaves room for the theme button beside Stop and
+        // Force stop.
+        val openAppPendingIntent = PendingIntent.getActivity(this,
+                OPEN_APP_PENDING_INTENT_REQUEST_CODE,
+                Intent(this, MainActivity::class.java),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
+        // A window of its own over whatever is on screen, not the app: the point of the button is
+        // to change the watch's theme without going through the app. A task of its own and a fresh
+        // instance every time, so a stale window never comes back.
+        val themesPendingIntent = PendingIntent.getActivity(this,
+                THEMES_PENDING_INTENT_REQUEST_CODE,
+                Intent(this, ThemeQuickSwitchActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK),
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+
         createNotificationChannel()
         val notificationBuilder = NotificationCompat.Builder(this, KEY_NOTIFICATION_CHANNEL)
                 .setContentTitle(getString(commonR.string.music_control_active))
-                .setContentText(getString(R.string.tap_to_force_stop))
-                .setContentIntent(stopSelfPendingIntent)
-                // Tapping the body keeps today's behavior (stop the service); the two actions
-                // make the choice explicit - "stop" is the same, "force stop" additionally
-                // unbinds the notification listener and kills the process outright.
+                .setContentIntent(openAppPendingIntent)
+                .addAction(R.drawable.ic_palette,
+                        getString(R.string.watch_themes_title), themesPendingIntent)
+                // "Stop" ends the service; "force stop" additionally unbinds the notification
+                // listener and kills the process outright.
                 .addAction(R.drawable.ic_nav_stopped,
                         getString(R.string.notification_action_stop), stopSelfPendingIntent)
                 .addAction(R.drawable.ic_music_off,
@@ -948,7 +967,16 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // ACTION_STOP_SELF used to share this branch; it returns above now, so what is left is
             // the real case here - a start that is not from the watch and has no business keeping
             // a service alive that only exists to serve one.
-            stopSelf()
+            //
+            // `stopSelf(startId)`, never the bare `stopSelf()`: it stops only if this was the
+            // latest start. When the process comes up cold on a watch command, the notification
+            // listener the system rebinds at that same moment asks for a start of its own, and it
+            // usually gets in first. Both starts are then delivered back to back, so a bare stop
+            // issued here tore the service down right after the watch's start had run - with the
+            // command it had just taken (a shortcut's whole playback attempt) cancelled along with
+            // it, and nothing to say so: the first press after the app had been killed did
+            // nothing. A phone that kills background apps is in that state all the time.
+            stopSelf(startId)
             return Service.START_NOT_STICKY
         } else if (action == ACTION_NOTIFICATION_SERVICE_ACTIVATED) {
             mediaSessionProvider.activate()
@@ -1530,6 +1558,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     private fun usesSessionQuickActions(): Boolean =
             Preferences.getString(preferences, MiscPreferences.WEAR_QUICK_PANEL_SOURCE) == "session"
 
+    /** Whether this controller's app has no other live session, which lets its media notification
+     *  be taken for this session even when the two tokens do not compare equal - see
+     *  [notificationMayBelongToSession][com.svartifoss.snfell.notifications.notificationMayBelongToSession]. */
+    private fun MediaController.isOnlySessionOfItsPackage(): Boolean =
+            mediaSessionProvider.isOnlySessionOfPackage(packageName)
+
     private fun customActionSemantic(action: PlaybackState.CustomAction): String =
             inferMediaActionSemantic(action.action, action.name?.toString())
 
@@ -1553,7 +1587,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 if (MediaNotificationActions.execute(
                                 actionId = id,
                                 packageName = controller.packageName,
-                                sessionToken = controller.sessionToken
+                                sessionToken = controller.sessionToken,
+                                onlySessionOfPackage = controller.isOnlySessionOfItsPackage()
                         )) {
                     scheduleStateRefresh()
                 }
@@ -1598,7 +1633,10 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 return true
             }
         }
-        if (MediaNotificationActions.executeLike(controller.packageName, controller.sessionToken)) {
+        if (MediaNotificationActions.executeLike(
+                        controller.packageName,
+                        controller.sessionToken,
+                        controller.isOnlySessionOfItsPackage())) {
             scheduleStateRefresh()
             return true
         }
@@ -1849,7 +1887,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                     LikeAction.isCurrentlyLiked(playbackState)
                 } else {
                     MediaNotificationActions.likedStateForSession(
-                            mediaController.packageName, mediaController.sessionToken)
+                            mediaController.packageName, mediaController.sessionToken,
+                            mediaController.isOnlySessionOfItsPackage())
                             ?: LikeAction.ratingLikedState(
                                     mediaController.ratingType,
                                     meta?.getRating(MediaMetadata.METADATA_KEY_USER_RATING))
@@ -1858,7 +1897,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 if (usesSessionQuickActions()) {
                     val notificationActions = MediaNotificationActions.actionsForSession(
                             packageName = mediaController.packageName,
-                            sessionToken = mediaController.sessionToken
+                            sessionToken = mediaController.sessionToken,
+                            onlySessionOfPackage = mediaController.isOnlySessionOfItsPackage()
                     )
                     if (notificationActions.isNotEmpty()) {
                         reportQuickActionSource("notification", notificationActions.size,
@@ -2141,11 +2181,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                     return@launch
                 }
 
-                val covers = coroutineScope {
+                val encoded = coroutineScope {
                     neighbours.map { (_, _, description) ->
                         async { encodeAdjacentCover(description) }
                     }.map { it.await() }
                 }
+                val covers = encoded.map { it?.bytes }
 
                 val request = PutDataRequest.create(CommPaths.DATA_ADJACENT_ALBUM_ART)
                 val payload = PrefetchedArtwork.newBuilder()
@@ -2178,8 +2219,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 // track it is predicting and ignores anything else.
                 withContext(NonCancellable) { dataClient.putDataItem(request).await() }
                 lastPublishedAdjacentKey = key
-                Timber.d("Sent %d neighbouring cover(s) ahead of time: %s",
+                // "already on the watch" counts the covers recognised as a picture it was sent
+                // before - the track that just played, as a rule - which then cost no transfer.
+                Timber.d("Sent %d neighbouring cover(s) ahead of time, %d already on the watch: %s",
                         covers.count { it != null },
+                        encoded.count { it?.alreadyHeld != null },
                         neighbours.joinToString { (offset, title, _) -> "$offset:$title" })
             } catch (e: CancellationException) {
                 throw e
@@ -2195,7 +2239,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      *  nothing could be resolved for it in time. */
     private suspend fun encodeAdjacentCover(
             description: android.media.MediaDescription
-    ): ByteArray? {
+    ): WatchCover? {
         val targetPx = watchInfoProvider.value?.watchInfo?.displayWidth
                 ?.takeIf { it > 0 }
                 ?: QueueArtworkResolver.DEFAULT_TARGET_PX
@@ -2206,7 +2250,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                     QueueArtworkResolver.remoteArtworkEnabled(this@MusicService),
                     targetPx = targetPx)
         } ?: return null
-        return withContext(Dispatchers.Default) { encodeArtworkForWatch(cover) }
+        return withContext(Dispatchers.Default) {
+            encodeArtworkForWatch(cover, description.title?.toString())
+        }
     }
 
     /** PNG bytes of the source-icon face element. Prefers the *media notification's* small icon -
@@ -2438,20 +2484,33 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         }
     }
 
+    /** One cover as the watch receives it. [alreadyHeld] is set when the bytes are an encoding
+     *  sent before for the same picture - how close the two pictures are - and null when the cover
+     *  was encoded just now. */
+    private class WatchCover(val bytes: ByteArray, val alreadyHeld: CoverSignature.Distance?)
+
     /**
      * One album cover, sized and encoded exactly as the watch expects to receive it.
      *
-     * Off the main thread (this used to PNG-encode on main for every transmit) and as JPEG: album
-     * art has no alpha, encodes much faster, and comes out several times smaller than PNG -
-     * directly cutting the Bluetooth transfer that delays the cover on the watch.
+     * Off the main thread (this used to PNG-encode on main for every transmit) and lossy: album
+     * art has no alpha, and a lossless encoding of a photograph is several times the size for
+     * nothing the eye can find - see [WatchImageCodec] for the format and the measurement behind it.
      *
      * Shared with [publishAdjacentTrackArtwork], and it has to be: that one sends the neighbouring
      * tracks' covers ahead of time so a skip can draw one instantly, and a cover framed even slightly
      * differently from the one that follows it would make the picture jump the moment the real
      * state landed - which is the artefact the prefetch exists to remove, reintroduced one frame
      * later.
+     *
+     * Sharing the function was never enough to make the two copies of one cover *the same bytes*,
+     * though: the copy sent ahead is resolved from the queue row and the playing copy from the
+     * player's own bitmap, two scalings of one picture. So each cover crossed Bluetooth twice, and
+     * the watch's check for "this is the cover I am already showing" never matched. [title] is what
+     * lets [watchCovers] recognise the second copy and hand back the first one's bytes instead -
+     * no encode here, no transfer, and on the watch the very bitmap already on screen. Null (or
+     * blank) for a picture that belongs to no track, which is then always encoded.
      */
-    private fun encodeArtworkForWatch(source: Bitmap): ByteArray? = try {
+    private fun encodeArtworkForWatch(source: Bitmap, title: String?): WatchCover? = try {
         var albumArt = source
         val watchInfo = watchInfoProvider.value?.watchInfo
         if (watchInfo != null) {
@@ -2473,12 +2532,43 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             }
         }
 
-        ByteArrayOutputStream().use { stream ->
-            albumArt.compress(Bitmap.CompressFormat.JPEG, 85, stream)
-            stream.toByteArray()
+        // Fingerprinted after sizing, so what is compared is the picture the watch would get.
+        val signature = title?.takeIf { it.isNotBlank() }?.let { coverSignatureOf(albumArt) }
+        val held = if (title != null && signature != null) watchCovers.find(title, signature) else null
+        if (held != null) {
+            WatchCover(held.bytes, held.distance)
+        } else {
+            WatchImageCodec.encode(albumArt)?.let { bytes ->
+                if (title != null && signature != null) watchCovers.remember(title, signature, bytes)
+                WatchCover(bytes, null)
+            }
         }
     } catch (e: RuntimeException) {
         Timber.w(e, "Could not encode album art for the watch")
+        null
+    }
+
+    /**
+     * [bitmap]'s fingerprint, or null when its pixels cannot be read - in which case the cover is
+     * simply encoded as it always was.
+     *
+     * Read a row at a time - see [CoverSignature.of]. A hardware bitmap refuses `getPixels`, so
+     * one is copied to a software bitmap first; that copy lives only for the length of this call.
+     */
+    private fun coverSignatureOf(bitmap: Bitmap): CoverSignature? = try {
+        val readable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+                bitmap.config == Bitmap.Config.HARDWARE) {
+            bitmap.copy(Bitmap.Config.ARGB_8888, false)
+        } else {
+            bitmap
+        }
+        readable?.let {
+            CoverSignature.of(it.width, it.height) { y, row ->
+                it.getPixels(row, 0, it.width, 0, y, it.width, 1)
+            }
+        }
+    } catch (e: RuntimeException) {
+        Timber.d(e, "Could not fingerprint a cover; it is encoded without the ledger")
         null
     }
 
@@ -2537,10 +2627,15 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 putCurrentMusicState(stateOnlyRequest, mySequence)
             }
 
+            // Set only when the cover went through the encoder's entry point this time - see
+            // WatchCover for what it says about whether anything was actually encoded.
+            var encodedNow: WatchCover? = null
             val artBytes = when {
                 originalAlbumArt == null -> null
                 !artChanged -> lastSerializedArt
-                else -> withContext(Dispatchers.Default) { encodeArtworkForWatch(originalAlbumArt) }
+                else -> withContext(Dispatchers.Default) {
+                    encodeArtworkForWatch(originalAlbumArt, versionedState.title)
+                }.also { encodedNow = it }?.bytes
             }
 
             // While this coroutine was suspended encoding art, a newer state may already have
@@ -2550,9 +2645,15 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 return@launchWithPlayServicesErrorHandling
             }
             // What the cover cost this time. "reused" covers both the same Bitmap and a new one
-            // with the same pixels; the digest shows whether an encode produced bytes already sent.
+            // with the same pixels; "already on the watch" is the copy sent ahead for this track
+            // (or left from when it last played), recognised as the same picture, so nothing was
+            // encoded and nothing travels. The digest shows whether an encode produced bytes
+            // already sent.
+            val alreadyHeld = encodedNow?.alreadyHeld
             Timber.d("TransmittingToWear seq=%d cover %s, %d action icon(s) by key", versionedState.seq, when {
                 artBytes == null -> "none"
+                alreadyHeld != null ->
+                    "already on the watch ${bytesLogLabel(artBytes)} ($alreadyHeld from ${bitmapLogLabel(originalAlbumArt)})"
                 artChanged -> "encoded ${bytesLogLabel(artBytes)} from ${bitmapLogLabel(originalAlbumArt)}"
                 else -> "reused ${bytesLogLabel(artBytes)}"
             }, actionIcons.size)
@@ -3593,6 +3694,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
      * outstanding ignores the verdict.
      */
     private suspend fun sendDeepLinkVerdict(openUri: String?, requestId: String?, sourceNode: String?) {
+        // What the watch is told, in the one place every route ends. Debug level, so it reaches
+        // logcat only in a debug build - the hand-off link carries a single-use token.
+        Timber.d("Shortcut verdict for request %s: %s", requestId, openUri ?: "handled, nothing to open")
         val path = if (requestId == null) CommPaths.MESSAGE_DEEP_LINK_VERDICT
             else CommPaths.MESSAGE_STREAMING_SHORTCUT_VERDICT
         val payload = if (requestId == null) (openUri ?: "").toByteArray(Charsets.UTF_8)
@@ -3904,6 +4008,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                 }
         val targetPackage = StreamingShortcutRoutes.targetPackage(
                 this, preferences, service, openMode, link)
+        // The app that is asked to play. Nearly always the one the link opens in; a YouTube link
+        // to a video or playlist is the exception, played by YouTube Music under its own address
+        // while the link itself opens in the YouTube app - see playbackPackage. The visible open
+        // below keeps using [targetPackage], so what reaches the screen is what it always was.
+        val playbackPackage = targetPackage ?: StreamingShortcutRoutes.playbackPackage(
+                this, preferences, service, openMode, link)
         val browserLink = StreamingShortcutLinks.forBrowser(link)
         if (openOnly) {
             val primaryLink = StreamingShortcutRoutes.linkForTarget(link, service, targetPackage)
@@ -3911,8 +4021,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             return
         }
         Timber.d("playDeepLink: service=%s contentType=%s openMode=%s targetPackage=%s " +
-                "preferSearch=%s playMode=%s", service.name, contentType, openMode, targetPackage,
-                preferSearch, playMode)
+                "playbackPackage=%s preferSearch=%s playMode=%s", service.name, contentType,
+                openMode, targetPackage, playbackPackage, preferSearch, playMode)
         // The app that will end up playing it: the targeted one, or - when the link is handed to
         // the default handler or a chooser - the service's own app, which is where it lands for
         // anyone who has it installed. A generic link names no app, so it gets no session request.
@@ -3928,9 +4038,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // Everything after the direct command, factored out so the verification below can fall
         // through to it instead of duplicating it.
         val continueWithBrowserThenVisibleOpen: suspend () -> Unit = {
-            if (targetPackage != null && (contentType.isPlayable || preferSearch)) {
-                startBrowserThenVisibleOpen(link, service, targetPackage, browserLink, query,
-                        preferSearch, plan.sessionShuffle, reply)
+            if (playbackPackage != null && (contentType.isPlayable || preferSearch)) {
+                startBrowserThenVisibleOpen(link, service, playbackPackage, targetPackage,
+                        browserLink, query, preferSearch, plan.sessionShuffle, reply)
             } else {
                 startStreamingLinkWithPlaybackNudge(link, service, targetPackage, browserLink,
                         query, preferSearch, plan.sessionShuffle, reply)
@@ -3940,11 +4050,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // ACTION_VIEW only navigates to Spotify content; it does not promise playback. If that
         // app already has a MediaSession, use the Android media contract first (playFromUri, or
         // playFromSearch for artists) so tracks, albums, playlists and artists actually start.
-        val controllerBefore = targetPackage?.let { mediaSessionProvider.controllerForPackage(it) }
+        val controllerBefore = playbackPackage?.let { mediaSessionProvider.controllerForPackage(it) }
         val before = playbackIdentity(controllerBefore)
         val wasPlayingBefore = controllerBefore?.isPlaying() == true
-        if (targetPackage != null &&
-                requestStreamingPlayback(link, service, targetPackage, query, preferSearch)) {
+        if (playbackPackage != null &&
+                requestStreamingPlayback(link, service, playbackPackage, query, preferSearch)) {
             // "Accepted" is not "playing". That return value comes from the advertised
             // ACTION_PLAY_FROM_URI bit, and an app can advertise the command, accept the call and
             // do nothing with it - SoundCloud takes a track URI happily and silently ignores a
@@ -3952,7 +4062,7 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             // this branch reported success, so neither the browser route nor the visible open ever
             // ran. Verify the same way a queue tap does rather than trusting the bitmask.
             delay(DEEP_LINK_VERIFY_MS)
-            val after = mediaSessionProvider.controllerForPackage(targetPackage)
+            val after = mediaSessionProvider.controllerForPackage(playbackPackage)
             // Playing a *different* item, or playing at all where nothing was: either way the
             // command landed. The one case that means it was swallowed is the app carrying on
             // with exactly what it was already playing - which is what a collection URI does to
@@ -3961,11 +4071,11 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             val movedOn = playbackIdentity(after) != before
             if (after?.isPlaying() == true && (movedOn || !wasPlayingBefore)) {
                 Timber.d("playDeepLink: %s started playing via playFromUri (step 1, verified)",
-                        targetPackage)
+                        playbackPackage)
                 reply(null)
                 return
             }
-            Timber.d("%s accepted the URI but did not start playing; continuing", targetPackage)
+            Timber.d("%s accepted the URI but did not start playing; continuing", playbackPackage)
             continueWithBrowserThenVisibleOpen()
             return
         }
@@ -3974,11 +4084,18 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         continueWithBrowserThenVisibleOpen()
     }
 
-    /** The browser route, falling back to the visible deep-link open - see [playDeepLink]. */
+    /**
+     * The browser route, falling back to the visible deep-link open - see [playDeepLink].
+     *
+     * [playbackPackage] is asked to play; [visiblePackage] is where the link is opened when that
+     * did not work. They are one app except for a YouTube link that YouTube Music plays and the
+     * YouTube app opens, where [visiblePackage] is null and the link goes to whatever handles it.
+     */
     private suspend fun startBrowserThenVisibleOpen(
             link: String,
             service: StreamingService,
-            targetPackage: String,
+            playbackPackage: String,
+            visiblePackage: String?,
             browserLink: String,
             query: String?,
             preferSearch: Boolean,
@@ -3993,19 +4110,19 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // connection, or never starts playing.
         val played = MediaBrowserPlayback.play(
                 this@MusicService,
-                targetPackage,
+                playbackPackage,
                 StreamingShortcutLinks.forPlayback(
-                        link, officialAppTarget = targetPackage == service.packageName),
+                        link, officialAppTarget = playbackPackage == service.packageName),
                 query,
                 preferSearch)
         if (played) {
-            Timber.d("playDeepLink: %s played via MediaBrowserService (step 2)", targetPackage)
+            Timber.d("playDeepLink: %s played via MediaBrowserService (step 2)", playbackPackage)
             reply(null)
             scheduleStateRefresh()
         } else {
             Timber.d("playDeepLink: step 2 (MediaBrowserService) did not play %s, moving to step 3",
-                    targetPackage)
-            startStreamingLinkWithPlaybackNudge(link, service, targetPackage, browserLink, query,
+                    playbackPackage)
+            startStreamingLinkWithPlaybackNudge(link, service, visiblePackage, browserLink, query,
                     preferSearch, sessionShuffle, reply)
         }
     }
@@ -4024,11 +4141,18 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     ) {
         val primaryLink = StreamingShortcutRoutes.linkForTarget(link, service, targetPackage)
 
-        // Sampled before anything opens, so the steps below can tell "the app loaded the thing we
+        // Sampled before anything opens, so the follow-up can tell "the app loaded the thing we
         // asked for" apart from "the app is sitting on whatever it had before".
         val controllerBeforeOpen = targetPackage?.let { mediaSessionProvider.controllerForPackage(it) }
-        val identityBeforeOpen = playbackIdentity(controllerBeforeOpen)
-        val hadTrackBeforeOpen = identityBeforeOpen.second != null || identityBeforeOpen.third != null
+        val identityBeforeOpen = controllerBeforeOpen.toPlaybackIdentity()
+        val wasPlayingBeforeOpen = controllerBeforeOpen?.isPlaying() == true
+        // The precise request the follow-up may send once the app is up: the link, or the saved
+        // name for a search. Null when the link names nothing a session could be asked to play.
+        val request: (() -> Unit)? = targetPackage
+                ?.takeIf { canRequestStreamingPlayback(link, service, searchQuery, preferSearch) }
+                ?.let { target ->
+                    { requestStreamingPlayback(link, service, target, searchQuery, preferSearch) }
+                }
 
         // Where the app declares a public way to be asked to *play* (Spotify, SoundCloud's Likes,
         // an artist by name), the visible open goes through the hand-off activity, which can start
@@ -4036,8 +4160,8 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         if (targetPackage != null) {
             val handoff = prepareVisiblePlayback(link, targetPackage, searchQuery, primaryLink)
             if (handoff != null) {
-                playThroughHandoff(handoff, targetPackage, controllerBeforeOpen?.isPlaying() == true,
-                        identityBeforeOpen, sessionShuffle, reply)
+                playThroughHandoff(handoff, targetPackage, wasPlayingBeforeOpen,
+                        identityBeforeOpen, sessionShuffle, request, reply)
                 return
             }
         }
@@ -4051,65 +4175,82 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         reply(
                 if (targetPackage != null) "$targetPackage|$primaryLink" else primaryLink)
 
-        if (startStreamingLink(primaryLink, targetPackage)) {
-            if (targetPackage != null) {
-                for (i in 0..15) {
-                    kotlinx.coroutines.delay(200)
-                    if (requestStreamingPlayback(
-                                    link, service, targetPackage, searchQuery, preferSearch)) {
-                        return
-                    }
-                }
-                pressPlayAfterNavigating(targetPackage, identityBeforeOpen, hadTrackBeforeOpen)
+        if (!startStreamingLink(primaryLink, targetPackage)) {
+            if (targetPackage == null || !startStreamingLink(browserLink, null)) {
+                Timber.e("No app handles %s streaming link", service.name)
             }
             return
         }
-        if (targetPackage != null && startStreamingLink(browserLink, null)) return
+        if (targetPackage == null) return
 
-        Timber.e("No app handles %s streaming link", service.name)
+        // Opening content does not start it, so the app is followed while it comes up: asked for
+        // the content once its session has settled, and pressed play only on content it loaded
+        // after the open - see VisibleOpenFollowUp for why not on the track it came up holding.
+        val played = followVisibleOpen(targetPackage, wasPlayingBeforeOpen, identityBeforeOpen,
+                request, VisibleOpenFollowUp.FOLLOW_MS)
+        Timber.d("playDeepLink: visible open of %s -> played=%s", targetPackage, played)
+        scheduleStateRefresh()
     }
 
     /**
-     * Last resort after a deep link has been opened: press play.
+     * Follows [targetPackage] after a visible open until it plays what was asked for or [followMs]
+     * runs out, doing what [VisibleOpenFollowUp] says at each reading of its session.
      *
-     * The retry loop above re-issues `playFromUri`, which is the right command for a *track* and
-     * the wrong one for a collection - SoundCloud honours it for a track and merely navigates for a
-     * playlist or a personal collection like Likes, so every retry re-opened the page and nothing
-     * ever started. The app had been taken to the content and then never asked to play it.
-     *
-     * Deliberately conditional, because a bare `play()` is a resume and could just as easily start
-     * something the user never asked for. It is only issued when the session is safe to resume into:
-     * either the app had no track at all before the link opened (nothing to hijack, and a resume is
-     * exactly what was wanted), or its metadata has since *changed*, which is the app telling us it
-     * loaded what we sent it. An app still sitting on the same track it had before is left alone -
-     * there the deep link only navigated, and pressing play would resume the wrong thing.
+     * @return true when it started playing, false when it did not, and null when that cannot be
+     *   told - it was already playing something and still plays the same thing, which is also what
+     *   a request for that very item looks like.
      */
-    private suspend fun pressPlayAfterNavigating(
+    private suspend fun followVisibleOpen(
             targetPackage: String,
-            identityBeforeOpen: Triple<Long?, String?, String?>,
-            hadTrackBeforeOpen: Boolean
-    ) {
-        for (attempt in 0 until PRESS_PLAY_ATTEMPTS) {
+            wasPlayingBefore: Boolean,
+            identityBefore: PlaybackIdentity,
+            request: (() -> Unit)?,
+            followMs: Long
+    ): Boolean? {
+        val followUp = VisibleOpenFollowUp(wasPlayingBefore, identityBefore, canRequest = request != null)
+        val start = android.os.SystemClock.elapsedRealtime()
+        while (android.os.SystemClock.elapsedRealtime() - start < followMs) {
+            delay(VisibleOpenFollowUp.POLL_MS)
             val controller = mediaSessionProvider.controllerForPackage(targetPackage)
-            if (controller == null) {
-                kotlinx.coroutines.delay(PRESS_PLAY_INTERVAL_MS)
-                continue
-            }
-            if (controller.isPlaying()) return
-
-            val loadedSomethingNew = playbackIdentity(controller) != identityBeforeOpen
-            if (!hadTrackBeforeOpen || loadedSomethingNew) {
-                Timber.d("Deep link navigated without playing; pressing play on %s", targetPackage)
-                try {
-                    controller.transportControls.play()
-                } catch (e: RuntimeException) {
-                    Timber.w(e, "Play command rejected by %s", targetPackage)
+            // A session that has published no state yet has not declined anything (the rule
+            // MediaSessionCapabilities records), so it reads as idle rather than as absent.
+            val state = controller?.let { it.playbackState?.state ?: PlaybackState.STATE_NONE }
+            val elapsed = android.os.SystemClock.elapsedRealtime() - start
+            when (followUp.next(state, controller.toPlaybackIdentity(), elapsed)) {
+                VisibleOpenFollowUp.Step.PLAYED -> return true
+                VisibleOpenFollowUp.Step.REQUEST -> {
+                    Timber.d("Visible open: asking %s for the content (request %d, %d ms in)",
+                            targetPackage, followUp.requests, elapsed)
+                    request?.invoke()
                 }
-                scheduleStateRefresh()
-                return
+                VisibleOpenFollowUp.Step.PRESS_PLAY -> {
+                    Timber.d("Visible open: %s loaded new content without playing; pressing play",
+                            targetPackage)
+                    try {
+                        controller?.transportControls?.play()
+                    } catch (e: RuntimeException) {
+                        Timber.w(e, "Play command rejected by %s", targetPackage)
+                    }
+                    scheduleStateRefresh()
+                }
+                VisibleOpenFollowUp.Step.WAIT -> Unit
             }
-            kotlinx.coroutines.delay(PRESS_PLAY_INTERVAL_MS)
         }
+        val after = mediaSessionProvider.controllerForPackage(targetPackage).toPlaybackIdentity()
+        return if (wasPlayingBefore && after.isSameTrackAs(identityBefore)) null else false
+    }
+
+    /** [playbackIdentity] as the follow-up reads it: blank strings are no information. */
+    private fun MediaController?.toPlaybackIdentity(): PlaybackIdentity {
+        if (this == null) return PlaybackIdentity.NONE
+        val metadata = metadata
+        return PlaybackIdentity(
+                queueItemId = playbackState?.activeQueueItemId
+                        ?.takeIf { it != MediaSession.QueueItem.UNKNOWN_ID.toLong() },
+                mediaId = metadata?.getString(MediaMetadata.METADATA_KEY_MEDIA_ID)
+                        ?.takeIf { it.isNotBlank() },
+                title = metadata?.getString(MediaMetadata.METADATA_KEY_TITLE)
+                        ?.takeIf { it.isNotBlank() })
     }
 
     /** A planned hand-off: what the watch opens, and what to learn from once it has. */
@@ -4158,8 +4299,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             handoff: VisibleHandoff,
             targetPackage: String,
             wasPlayingBefore: Boolean,
-            identityBeforeOpen: Triple<Long?, String?, String?>,
+            identityBeforeOpen: PlaybackIdentity,
             sessionShuffle: Boolean?,
+            request: (() -> Unit)?,
             reply: suspend (String?) -> Unit
     ) {
         Timber.d("playDeepLink: step 3 (visible) through the hand-off with %s for %s",
@@ -4200,7 +4342,12 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
         // The player may only be coming up now, so the watch's shuffle choice is asked again from
         // here rather than left to a window that opened when the request did.
         if (sessionShuffle != null) requestShortcutShuffle(targetPackage, sessionShuffle)
-        val played = awaitHandoffPlayback(targetPackage, wasPlayingBefore, identityBeforeOpen)
+        // The launch has been made; from here the app is followed exactly as after a plain open.
+        // That includes asking its session for the content once it has settled: an app can ignore
+        // the launch and still honour the same request made of its session, and the two ask for
+        // the same thing, so whichever lands, what plays is what was picked.
+        val played = followVisibleOpen(targetPackage, wasPlayingBefore, identityBeforeOpen,
+                request, HANDOFF_VERIFY_MS)
         Timber.d("playDeepLink: %s for %s -> played=%s", handoff.technique, handoff.memoryKey, played)
         if (played != null) {
             visiblePlaybackMemory.record(
@@ -4210,52 +4357,19 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
     }
 
     /**
-     * Whether [targetPackage] started playing what the hand-off asked for: true, false, or null
-     * when that cannot be told - it was already playing something and still plays the same thing,
-     * which is also what a request for that very item looks like.
+     * Whether a session of [service]'s app could be asked for [link] at all - the precondition of
+     * [requestStreamingPlayback], which sends nothing for a link that names nothing playable
+     * unless its saved name is the plan.
      */
-    private suspend fun awaitHandoffPlayback(
-            targetPackage: String,
-            wasPlayingBefore: Boolean,
-            identityBefore: Triple<Long?, String?, String?>
-    ): Boolean? {
-        val start = android.os.SystemClock.elapsedRealtime()
-        val hadTrackBefore = identityBefore.second != null || identityBefore.third != null
-        var pressedPlay = false
-        while (android.os.SystemClock.elapsedRealtime() - start < HANDOFF_VERIFY_MS) {
-            delay(HANDOFF_POLL_MS)
-            val controller = mediaSessionProvider.controllerForPackage(targetPackage) ?: continue
-            val moved = playbackIdentity(controller) != identityBefore
-            // Only STATE_PLAYING is evidence, unlike [isPlaying]. An app started cold publishes
-            // CONNECTING or BUFFERING within a second whatever it was asked - Spotify does it while
-            // restoring the track it played last and then settles on paused - so counting those
-            // reported "played" for a request that started nothing, and taught the memory a
-            // technique that does not work.
-            val state = controller.playbackState?.state
-            if (state == PlaybackState.STATE_PLAYING) {
-                if (moved || !wasPlayingBefore) return true
-                continue
-            }
-            if (state != PlaybackState.STATE_PAUSED && state != PlaybackState.STATE_STOPPED) continue
-            // Moved from a track it had before to a new one and left it paused - a play-from-search
-            // that queues without starting, say. That is the one state a bare play() is safe in,
-            // because what it would resume is what was just asked for (the rule
-            // pressPlayAfterNavigating documents), and not before the app has had time to start on
-            // its own. Deliberately *not* on a cold start: an app that was not running comes up
-            // holding whatever it played last, and pressing play would start that instead.
-            if (!pressedPlay && hadTrackBefore && moved &&
-                    android.os.SystemClock.elapsedRealtime() - start >= HANDOFF_PRESS_PLAY_AFTER_MS) {
-                pressedPlay = true
-                Timber.d("Hand-off loaded new content in %s without playing; pressing play", targetPackage)
-                try {
-                    controller.transportControls.play()
-                } catch (e: RuntimeException) {
-                    Timber.w(e, "Play command rejected by %s", targetPackage)
-                }
-            }
-        }
-        val after = mediaSessionProvider.controllerForPackage(targetPackage)
-        return if (wasPlayingBefore && playbackIdentity(after) == identityBefore) null else false
+    private fun canRequestStreamingPlayback(
+            link: String,
+            service: StreamingService,
+            searchQuery: String?,
+            preferSearch: Boolean
+    ): Boolean {
+        val info = StreamingShortcutLinks.inspect(link)
+        val playableByName = preferSearch && searchQuery != null
+        return info.service == service && (info.contentType.isPlayable || playableByName)
     }
 
     private fun requestStreamingPlayback(
@@ -4265,11 +4379,9 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
             searchQuery: String? = null,
             preferSearch: Boolean = false
     ): Boolean {
-        val info = StreamingShortcutLinks.inspect(link)
         // A link that names nothing playable can still be played by its saved name when that is
         // the plan (a SoundCloud short link): the search below is all that is ever sent then.
-        val playableByName = preferSearch && searchQuery != null
-        if (info.service != service || !(info.contentType.isPlayable || playableByName)) return false
+        if (!canRequestStreamingPlayback(link, service, searchQuery, preferSearch)) return false
         // Prefer the tracked session when it is already the target app, but fall back to any live
         // session that app has - it may be playing/paused without being the foreground one we
         // mirror, and we can still hand it a command (this is what lets Spotify respond while it

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A section heading in the quick theme window (ThemeQuickSwitchActivity). The colour is set in
+     code: it is the runtime accent, which a layout cannot name. Styled like a preference category
+     heading so the two lists read as one family. -->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="4dp"
+    android:textAllCaps="true"
+    android:textSize="12sp"
+    android:textStyle="bold"
+    android:letterSpacing="0.06"
+    android:maxLines="1"
+    android:ellipsize="end"
+    android:fontFamily="@font/google_sans"
+    android:textColor="@color/lyra_accent" />

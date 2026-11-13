@@ -298,7 +298,6 @@
     <string name="setting_always_show_time">Uhrzeit immer anzeigen</string>
     <string name="setting_always_show_time_off_description">Die aktuelle Uhrzeit wird nur im Ambient-Modus angezeigt</string>
     <string name="setting_always_show_time_on_description">Die aktuelle Uhrzeit wird immer angezeigt. Das obere Aktionssymbol ist nicht sichtbar (es wird durch die Uhr ersetzt), die Aktion funktioniert aber weiterhin normal.</string>
-    <string name="tap_to_force_stop">Tippen, um die Steuerung zu stoppen</string>
     <string name="notification_action_stop">Stopp</string>
     <string name="notification_action_force_stop">Erzwungen stoppen</string>
     <string name="error_notification_access">Kein Benachrichtigungszugriff. Prüfe das Telefon.</string>

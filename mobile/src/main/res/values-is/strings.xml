@@ -322,7 +322,6 @@
     <string name="setting_always_show_time">Sýna tíma alltaf</string>
     <string name="setting_always_show_time_off_description">Núverandi tími birtist aðeins í hvíldarham</string>
     <string name="setting_always_show_time_on_description">Núverandi tími birtist alltaf. Táknmynd efstu aðgerðar sést ekki (henni er skipt út fyrir klukku), en aðgerðin virkar samt eðlilega.</string>
-    <string name="tap_to_force_stop">Ýttu til að stöðva stýringarnar</string>
     <string name="notification_action_stop">Stöðva</string>
     <string name="notification_action_force_stop">Þvinga stöðvun</string>
     <string name="error_notification_access">Enginn aðgangur að tilkynningum. Athugaðu símann.</string>

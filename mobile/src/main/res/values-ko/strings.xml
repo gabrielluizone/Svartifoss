@@ -342,7 +342,6 @@
     <string name="setting_always_show_time">항상 시간 표시</string>
     <string name="setting_always_show_time_off_description">현재 시간은 앰비언트 모드에서만 표시됩니다</string>
     <string name="setting_always_show_time_on_description">현재 시간을 항상 표시합니다. 상단 동작 아이콘은 보이지 않고 시계로 대체되지만 동작은 정상적으로 작동합니다.</string>
-    <string name="tap_to_force_stop">탭하여 컨트롤 중지</string>
     <string name="notification_action_stop">중지</string>
     <string name="notification_action_force_stop">강제 중지</string>
     <string name="error_notification_access">알림 접근 권한이 없습니다. 휴대전화를 확인하세요.</string>

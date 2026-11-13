@@ -198,3 +198,74 @@ What is left:
 - **Pictures per track change.** The cover, the backdrop and the prefetched neighbour cover are about 150 KB per change, which is why the 30-minute target is out of reach while they travel at their current size. Whether to send them smaller, or to prefetch fewer neighbours, is a product decision.
 - **Finding 7**, the token match that keeps the quick panel on its own glyphs on this phone.
 
+
+## Second pass (2026-11-11): pictures, and the always-on display
+
+Same devices, phone `play` debug 93 and watch `play` debug 193 (the fixes above), YouTube Music.
+
+### What the link carries now
+
+`dumpsys` of `WearableService` on the phone at 12:36, 1 h 33 min after a reboot:
+
+| Svartifoss, since boot | Bytes | Messages |
+| --- | --- | --- |
+| `SetAsset` (pictures) | 3,694,346 | 766 |
+| `SetDataItem` | 361,199 | 291 |
+| `RpcRequest` (messages) | 80,508 | 131 |
+
+Pictures are 89% of what the app sends. The connection that ran from 11:02 to 12:03 carried 2.76 MB from Svartifoss, and the one from 12:03 had carried 1.37 MB after 31 minutes. The watch counted 6.27 MB of Svartifoss assets received in its own window (about 8 hours).
+
+The *Sent assets* list for 12:26 to 12:34 (three track changes) held eight covers at the watch's 466 px, 421,874 bytes between them, and about 44 KB of 96 px queue thumbnails.
+
+### Every cover sent ahead was sent twice
+
+`publishAdjacentTrackArtwork` sends the covers two tracks either way, resolved from each queue row's address at the watch's size. When one of those tracks starts, `transmitToWear` encodes the cover again from the player's own bitmap (YouTube Music: 544 px). Same sleeve, two scalers, two encodings: not one byte agrees, so the Data Layer, which addresses assets by a digest of their bytes, transferred it again, and the watch's check for a cover it already holds never matched either, so it read and decoded the second copy too. In the window above, Coma went out at 12:26:39 as a neighbour and again at 12:30:10 as 52,800 bytes; Психолог - Hardstyle at 12:26:39 and again at 12:33:12 as 35,873. In steady playback that is every cover twice.
+
+### Format
+
+Measured offline on real covers (84 at 466 px, from the phone's cache and the same CDN addresses fetched at two sizes):
+
+| Encoding at 466 px | Mean size | PSNR | SSIM |
+| --- | --- | --- | --- |
+| JPEG 85 (what was sent) | 48.2 KB | 34.60 dB | 0.936 |
+| WebP 80 | 31.9 KB | 34.68 dB | 0.934 |
+| WebP 85 | 39.3 KB | 35.74 dB | 0.947 |
+| JPEG 90 | 61.0 KB | 36.05 dB | 0.953 |
+
+A second sample of 70 cached covers: JPEG 85 51.1 KB at 35.25 dB, WebP 80 35.6 KB at 35.35 dB; JPEG 88 (the backdrop's quality) 57.8 KB at 36.64 dB, WebP 85 42.9 KB at 36.67 dB. Queue thumbnails: at 96 px JPEG 85 3.22 KB / 33.02 dB against WebP 80 1.94 KB / 33.35 dB, at 320 px 21.8 KB / 35.25 dB against 13.2 KB / 35.19 dB.
+
+YouTube Music *videos* are the one kind of picture where WebP 80 scores lower. Their queue rows carry a signed 400 x 225 thumbnail (`hqdefault.jpg?sqp=...`); on ten of them JPEG 85 came out at 28.2 KB and 37.91 dB, WebP 80 at 17.7 KB and 36.89 dB (SSIM 0.968 against 0.980), and WebP 84 would match the JPEG at 20.2 KB. Quality stays at 80: that thumbnail is only the stand-in a predicted skip draws until the playing cover arrives, and the playing cover of a video is a 466 px crop of the player's 853 x 479 picture, which behaves like a cover.
+
+### Telling one cover from another
+
+To recognise the second copy, `CoverSignature` reduces a picture to the mean colour of each cell of a 16 x 16 grid. Calibration, all at 466 px:
+
+| Pair | Mean difference (0 to 255) | Largest cell |
+| --- | --- | --- |
+| Same cover from the CDN at 466 and 544 px, the second scaled down (26 covers) | 0.04 to 1.60, one at 4.29 | 1 to 7, one at 22 |
+| The same, one pixel off | 0.51 to 2.71, one at 4.68 | 3 to 14, one at 25 |
+| Two different covers (73 covers, 2,628 pairs) | closest 19.37, 0.1st percentile 23.3, median 81.2 | closest pair 178 |
+
+The thresholds are a mean of 3.0 and a cell of 20. The one outlier pair is two renditions the image host served differently; refusing it only means sending it as before.
+
+### CPU is not where the battery goes
+
+Per-thread CPU of the app process, from `/proc/<pid>/task/*/stat`, over 4 min 7 s of playback with one track change: phone 1.04 s (0.4%), of which the main thread 0.42 s, JIT 0.31 s (debug builds only), coroutine workers 0.13 s and GC 0.09 s; watch 0.44 s (0.2%), main thread 0.20 s, JIT 0.14 s. Radio time, which every transfer and every message costs on both devices, is the larger lever.
+
+### Changes
+
+1. **A cover is sent once.** `WatchCoverLedger` keeps the last eight encodings by track title and `CoverSignature`; `encodeArtworkForWatch` reuses the bytes already sent when the same track's same-sized picture comes round again. Requiring the title as well as the picture keeps two dark sleeves with different small lettering apart, and requiring the size keeps a thumbnail sent ahead (because nothing larger was found) from standing in for a full-size cover. On the watch the reused bytes have the same asset id, so `deliverAlbumArt` publishes the bitmap it already decoded for the prediction. It does not apply to YouTube Music videos, by design: what is sent ahead for one is the 400 x 225 queue thumbnail and what plays is a 466 px crop of an 853 x 479 picture, and the sharper of two sizes always has to reach the watch.
+2. **WebP** (`WatchImageCodec`): quality 80 for covers and thumbnails, 85 for the backdrop. Every watch-side reader goes through `BitmapFactory`, so older watch builds read it too.
+3. **No position checks while the screen is ambient.** `PositionViewers` separates a screen that shows the position from one that shows it moving; an ambient player or lyrics screen is the first and not the second, and with no moving readout the check loop is not running at all. It used to run through the always-on display with the player left open: 8 s after every track change, then 16, 32 and 64 s, for a readout redrawn once a minute. The neighbouring covers are still decoded for an ambient screen, since a stem button skips from there.
+
+Cost: one 16 x 16 fingerprint per encoded cover, read a row at a time, and up to eight encodings (about 250 KB) held on the phone.
+
+### Verification on the devices
+
+Phone and watch builds with the changes installed at 16:18 (play debug 93/193), same playlists, same session.
+
+- **A cover goes out once.** At 16:23:01 the phone sent Бессонница's cover ahead as a neighbour, 26,376 bytes of WebP. When the song began at 16:25:02 the log read `cover already on the watch 26376 B ... (mean 0.66, largest cell 4 from decd639 544x544)`: the player's 544 px cover was recognised as the same picture and its bytes were not encoded or sent again. The link's *Sent assets* list for 16:25:02 holds only a 2,200-byte queue thumbnail and the 34,986-byte cover of the next new neighbour. With the old build every such start sent a second copy: 52,800 bytes for Coma and 35,873 for Психолог - Hardstyle in the morning window.
+- **WebP is read on the watch.** The watch logged its neighbouring covers decoded and the Artist face drew the cover; no decode error in its log.
+- **Videos** (YouTube Music's 853 x 479 covers): the playing cover is still sent next to the 400 x 225 thumbnail sent ahead, as intended. Before, three track changes of videos cost 112 KB of covers (37 KB each); after, covers of the same kind were 8 to 22 KB, but the tracks differ, so the offline measurement above is the controlled comparison.
+- **Ambient position checks**: not verified on these devices, because the watch's always-on display is off (`settings get global ambient_enabled` = 0) and the player is stopped, not ambient, when its screen turns off. `PositionViewersTest` covers it, including the calls in both screens' sources.
+- The first state after the phone's reinstall re-sent the queue's 24 thumbnails and the four neighbours once, as WebP: a picture whose encoding changed is a new asset to the Data Layer, once.

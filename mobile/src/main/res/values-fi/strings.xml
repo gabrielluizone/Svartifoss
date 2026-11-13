@@ -344,7 +344,6 @@
     <string name="setting_always_show_time">Näytä aika aina</string>
     <string name="setting_always_show_time_off_description">Nykyinen aika näytetään vain ambient-tilassa</string>
     <string name="setting_always_show_time_on_description">Nykyinen aika näytetään aina. Ylätoiminnon kuvake ei näy (kello korvaa sen), mutta toiminto toimii edelleen normaalisti.</string>
-    <string name="tap_to_force_stop">Pysäytä ohjaimet napauttamalla</string>
     <string name="notification_action_stop">Pysäytä</string>
     <string name="notification_action_force_stop">Pakota pysäytys</string>
     <string name="error_notification_access">Ei ilmoitusten käyttöoikeutta. Tarkista puhelin.</string>

@@ -361,7 +361,6 @@ Některé balíčky ikon vyžadují oprávnění aplikace k úložišti. Abyste 
     <string name="setting_always_show_time">Vždy zobrazovat čas</string>
     <string name="setting_always_show_time_off_description">Aktuální čas se zobrazí pouze v ambientním režimu</string>
     <string name="setting_always_show_time_on_description">Aktuální čas se zobrazí vždy. Ikona horní akce nebude viditelná (nahradí ji hodiny), ale akce bude dál fungovat normálně.</string>
-    <string name="tap_to_force_stop">Klepnutím zastavíte ovládání</string>
     <string name="notification_action_stop">Zastavit</string>
     <string name="notification_action_force_stop">Vynutit zastavení</string>
     <string name="error_notification_access">Chybí přístup k oznámením. Zkontrolujte telefon.</string>

@@ -302,7 +302,6 @@
     <string name="setting_always_show_time">Tijd altijd tonen</string>
     <string name="setting_always_show_time_off_description">De huidige tijd wordt alleen getoond in ambient-modus</string>
     <string name="setting_always_show_time_on_description">De huidige tijd wordt altijd getoond. Het bovenste actiepictogram is niet zichtbaar (het wordt vervangen door de klok), maar de actie blijft normaal werken.</string>
-    <string name="tap_to_force_stop">Tik om de bediening te stoppen</string>
     <string name="notification_action_stop">Stoppen</string>
     <string name="notification_action_force_stop">Geforceerd stoppen</string>
     <string name="error_notification_access">Geen toegang tot meldingen. Controleer de telefoon.</string>

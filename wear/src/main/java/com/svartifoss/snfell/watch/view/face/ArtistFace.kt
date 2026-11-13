@@ -9,8 +9,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +30,7 @@ import androidx.wear.compose.material3.Text
 import com.svartifoss.snfell.common.FaceGeometry
 import com.svartifoss.snfell.common.RoundScreenText
 import com.svartifoss.snfell.common.TextBlockPosition
+import com.svartifoss.snfell.common.TitleBand
 import com.svartifoss.snfell.R
 import com.svartifoss.snfell.watch.view.compose.FaceClock
 
@@ -110,63 +116,115 @@ fun ArtistFace(state: NowPlayingFaceState, listener: NowPlayingFaceListener) {
                 fontFamily = state.clockFont,
                 typography = state.clockTypography
         )
+
+        // The bottom band the mini-button row would otherwise take - the text block above stops
+        // short of it (see ArtistTextBlock), which is what lets this face carry the pill at all.
+        if (state.showUpNextPill) {
+            AwakeUpNextPill(
+                    state = state,
+                    screen = screen,
+                    onClick = listener::onQueueTap,
+                    modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = screen * .07f)
+            )
+        }
     }
 }
 
 /**
  * The name, the track and the elapsed time, as one movable block.
  *
- * ## Keeping it on the glass
+ * ## Keeping it on the glass, and off the bottom band
  *
  * The screen is a circle, so the usable width collapses towards the top and bottom - and this
  * block is grounded at the foot of the screen by default and can be moved to the very top. A fixed
  * side padding is therefore only ever correct for the one depth and the one line count its author
- * happened to look at: the moment the artist's name wrapped, the second line sat lower, where the
- * chord is narrower, and ran into the bezel. [RoundScreenText] measures the real chord instead,
- * and the block's depth is recomputed from the placement the user chose rather than assumed, since
- * the whole point of those controls is that this block does not stay where it was drawn.
+ * happened to look at. [RoundScreenText] measures the real chord instead, at the depth the block
+ * really reaches.
  *
- * The face's own [FaceGeometry.Artist.SIDE_PADDING_FRACTION] survives as a *floor*: near the centre
- * the circle constrains nothing, and the composition still wants its margin there.
+ * "Really" is the part that went wrong first. The block's height used to be read off the 100%
+ * design - one name line and one track line - whatever the user had done to the text, so a title
+ * at 220% that wrapped to two lines sat far deeper than the chord was measured at; and the foot of
+ * the block was the screen's edge margin, so the mini-button row and the Up Next pill (which share
+ * the bottom band) were painted straight over it. Both now come from what is drawn: the line
+ * heights at the user's sizes, the title's settled line count, and a floor that stops at the top of
+ * whatever occupies the bottom band ([NowPlayingFaceState.miniButtonsTopFraction]).
+ *
+ * The track is the face's *title* and gets the user's title behaviour (marquee, wrap, shrink,
+ * smart) like every other title, up to the lines its band holds. It used to be a fixed two-line
+ * [TitleLineText], so a theme set to scroll its title wrapped it here instead - and with the leading
+ * fixed at the 100% design, a large wrapped title drew its second line over its first.
+ *
+ * The face's own [FaceGeometry.Artist.SIDE_PADDING_FRACTION] survives as a *floor* on the inset:
+ * near the centre the circle constrains nothing, and the composition still wants its margin there.
  */
 @Composable
 private fun BoxScope.ArtistTextBlock(state: NowPlayingFaceState, screen: Dp) {
-    val edge = screen * FaceGeometry.Artist.EDGE_PADDING_FRACTION
-    // The face owns its real chord calculation, but a top override must clear the optional clock
-    // before that calculation chooses its top edge. Otherwise the name is safely inside the glass
-    // while still painting directly underneath the clock.
-    val topEdge = maxOf(edge, state.blockSafeVerticalInset(screen))
-    val nameColor = artistOrStatusColor(state, 1f)
+    val geo = FaceGeometry.Artist
+    val screenDp = screen.value
+    val edgeFraction = geo.EDGE_PADDING_FRACTION
+    // Above: the clock's clearance when it shows, the face's own margin when it does not.
+    val topFraction = maxOf(edgeFraction, TitleBand.movedTop(state.showClock))
+    // Below: the face's margin, or the top of the mini-button row / Up Next pill when either is
+    // in the bottom band. The host reports 1 when the band is empty.
+    val floor = TitleBand.effectiveFloor(1f - edgeFraction, state.miniButtonsTopFraction)
+    val position = state.textBlockPosition
+    val band = when (position) {
+        TextBlockPosition.MIDDLE -> TitleBand.centredBand(floor)
+        // TOP, BOTTOM and FOLLOW (grounded by design): between the clearance above and the floor.
+        else -> TitleBand.movedBand(topFraction, floor)
+    }
+
+    // Fixed parts of the block that are neither the title nor the artist line, in dp.
+    val trackPadDp = if (state.showTitle) geo.TRACK_TOP_PADDING_DP else 0f
+    val timeDp = if (state.showTrackTime) {
+        geo.TRACK_TIME_TOP_PADDING_DP + geo.TRACK_TIME_LINE_HEIGHT_SP * state.trackTimeTypography.scale
+    } else 0f
+    val nameLineDp = if (state.showArtist) geo.NAME_LINE_HEIGHT_SP else 0f
+    val titleLineDp = if (state.showTitle) geo.TRACK_LINE_HEIGHT_SP else 0f
+    val textBandDp = (screenDp * band - trackPadDp - timeDp).coerceAtLeast(0f)
+    // Past the sizes the band holds, the name and the track shrink together rather than either
+    // being cut - TitleBand's rule, anchored at the 100% design so default sizes never change.
+    val text = state.withTextFit(TitleBand.fitScale(
+            bandDp = textBandDp,
+            titleLineDp = titleLineDp,
+            titleScale = state.titleTypography.scale,
+            artistRowDp = nameLineDp,
+            artistScale = state.artistTypography.scale))
+    val titleScale = text.titleTypography.scale
+    val artistScale = text.artistTypography.scale
+    val titleCeiling = TitleBand.lineCeiling(
+            bandDp = textBandDp,
+            titleLineDp = geo.TRACK_LINE_HEIGHT_SP,
+            titleScale = titleScale,
+            artistRowDp = nameLineDp,
+            artistScale = artistScale)
+
+    // How many lines the title settled on, which decides how deep the block reaches. Only ever
+    // grows for one title at one size: a deeper block is narrower, which can add a line and never
+    // removes one, so the settle converges instead of oscillating.
+    var titleLines by remember(state.title, titleScale, state.titleTextMode, titleCeiling) {
+        mutableIntStateOf(1)
+    }
+    val nameColor = artistOrStatusColor(text, 1f)
 
     // sp is treated as dp here, as everywhere else in the faces: Wear OS has no user font scaling,
     // and the phone preview measures the same way against its 192dp reference watch.
-    val nameLineFraction = FaceGeometry.Artist.NAME_LINE_HEIGHT_SP.dp / screen
-    val trackFraction = if (state.showTitle) {
-        (FaceGeometry.Artist.TRACK_TOP_PADDING_DP + FaceGeometry.Artist.TRACK_LINE_HEIGHT_SP).dp / screen
-    } else 0f
-    val timeFraction = if (state.showTrackTime) {
-        (FaceGeometry.Artist.TRACK_TIME_TOP_PADDING_DP +
-                FaceGeometry.Artist.TRACK_TIME_LINE_HEIGHT_SP).dp / screen
-    } else 0f
-
-    val edgeFraction = FaceGeometry.Artist.EDGE_PADDING_FRACTION
-    val topEdgeFraction = topEdge / screen
-    // Where the block's own top and bottom edges land, in screen-height fractions measured from the
-    // top - which is what RoundScreenText's depth means. Resolved per placement because the block
-    // moves; taking the bottom-anchored case for all three would inset a top-anchored block by the
-    // chord of a band it is nowhere near.
-    // One line, always: the artist's Text behaviour offers only the single-line modes (static,
-    // marquee, shrink), because every face reserves one line for this credit. That is what removed
-    // the measure-then-re-inset settle this block used to need.
-    val blockFraction = nameLineFraction + trackFraction + timeFraction
-    val (blockTop, blockBottom) = when (state.textBlockPosition) {
-        TextBlockPosition.TOP -> topEdgeFraction to (topEdgeFraction + blockFraction)
+    val blockDp = nameLineDp * artistScale +
+            (if (state.showTitle) trackPadDp + titleLineDp * titleScale * titleLines else 0f) +
+            timeDp
+    val blockFraction = blockDp / screenDp
+    // Where the block's own top and bottom edges land, in screen-height fractions from the top -
+    // which is what RoundScreenText's depth means. Resolved per placement because the block moves.
+    val (blockTop, blockBottom) = when (position) {
+        TextBlockPosition.TOP -> topFraction to (topFraction + blockFraction)
         TextBlockPosition.MIDDLE -> (0.5f - blockFraction / 2f) to (0.5f + blockFraction / 2f)
         // BOTTOM and FOLLOW alike: the face is grounded by design.
-        else -> (1f - edgeFraction - blockFraction) to (1f - edgeFraction)
+        else -> (floor - blockFraction) to floor
     }
     val chordInset = RoundScreenText.sideInsetFor(top = blockTop, bottom = blockBottom)
-    val side = screen * maxOf(FaceGeometry.Artist.SIDE_PADDING_FRACTION, chordInset)
+    val side = screen * maxOf(geo.SIDE_PADDING_FRACTION, chordInset)
 
     Box(
             Modifier
@@ -175,10 +233,15 @@ private fun BoxScope.ArtistTextBlock(state: NowPlayingFaceState, screen: Dp) {
                     .padding(
                             start = side,
                             end = side,
-                            top = if (state.textBlockPosition == TextBlockPosition.TOP) topEdge else 0.dp,
-                            bottom = if (state.textBlockPosition == TextBlockPosition.BOTTOM ||
-                                    state.textBlockPosition == TextBlockPosition.FOLLOW) edge else 0.dp
+                            top = if (position == TextBlockPosition.TOP) screen * topFraction else 0.dp,
+                            bottom = if (position == TextBlockPosition.BOTTOM ||
+                                    position == TextBlockPosition.FOLLOW) {
+                                screen * (1f - floor)
+                            } else 0.dp
                     )
+                    // The safety net under the fit and the ceiling: a typeface taller than the
+                    // reference line metrics still cannot push the block into the bottom band.
+                    .heightIn(max = screen * band)
     ) {
         Column(
                 Modifier.fillMaxWidth(),
@@ -194,46 +257,43 @@ private fun BoxScope.ArtistTextBlock(state: NowPlayingFaceState, screen: Dp) {
                     // the one arrangement decision this face makes about it: the name is the
                     // subject here, so the glyph reads as the bullet of a list item instead of as a
                     // badge on a caption. SourceIconGlyph draws its own trailing gap.
-                    SourceIconGlyph(
-                            state,
-                            FaceGeometry.Artist.SOURCE_ICON_SIZE_DP.dp,
-                            nameColor
-                    )
-                    // The artist goes through AdaptiveTitleText rather than ArtistLineText because
-                    // on this face it is the line that can be too long for the screen, and it
-                    // therefore needs the user's title-overflow behaviour (marquee / wrap /
-                    // shrink); ArtistLineText has none, being a single line everywhere else. Its
-                    // typography, colour and effects still come from the *artist* controls - which
-                    // line is biggest is this face's composition, not a relabelling of the
-                    // settings, and an artist who set their artist colour must see it here.
+                    SourceIconGlyph(text, geo.SOURCE_ICON_SIZE_DP.dp, nameColor)
                     // The shared artist helper, like every other face - it owns the overflow
-                    // modes now, so this face needs no machinery of its own for the one line it
-                    // makes biggest. Reading the *title's* mode here is what made a long name
-                    // wrap onto a second line: that key defaults to `smart`, whose cascade ends
-                    // in a wrap, where the artist line has always been one line.
+                    // modes, so this face needs no machinery of its own for the one line it makes
+                    // biggest. Reading the *title's* mode here is what once made a long name wrap
+                    // onto a second line: that key defaults to `smart`, whose cascade ends in a
+                    // wrap, where the artist line has always been one line.
                     ArtistLineText(
-                            text = artistOrStatus(state),
-                            state = state,
+                            text = artistOrStatus(text),
+                            state = text,
                             color = nameColor,
-                            fontSize = FaceGeometry.Artist.NAME_SP.sp,
+                            fontSize = geo.NAME_SP.sp,
                             fontWeight = FontWeight.Bold,
-                            lineHeight = FaceGeometry.Artist.NAME_LINE_HEIGHT_SP.sp,
+                            lineHeight = geo.NAME_LINE_HEIGHT_SP.sp,
                             textAlign = TextAlign.Start
                     )
                 }
             }
             if (state.showTitle) {
-                TitleLineText(
-                        text = state.title,
-                        state = state,
-                        color = titleTextColor(state, Color.White.copy(alpha = .78f)),
-                        fontSize = FaceGeometry.Artist.TRACK_SP.sp,
+                AdaptiveTitleText(
+                        text = text.title,
+                        mode = text.titleTextMode,
+                        state = text,
+                        typography = text.titleTypography,
+                        color = titleTextColor(text, Color.White.copy(alpha = .78f)),
+                        fontSize = geo.TRACK_SP.sp,
+                        fontStyle = text.titleFontStyle,
+                        fontFamily = text.titleFont,
+                        lineHeight = geo.TRACK_LINE_HEIGHT_SP.sp,
+                        textAlign = TextAlign.Start,
+                        maxLines = titleCeiling,
+                        onLineCount = { lines -> if (lines > titleLines) titleLines = lines },
                         modifier = Modifier
+                                // Measured after the name and the time, so a block that is
+                                // still too tall gives up title lines, never the name.
+                                .weight(1f, fill = false)
                                 .fillMaxWidth()
-                                .padding(top = FaceGeometry.Artist.TRACK_TOP_PADDING_DP.dp),
-                        lineHeight = FaceGeometry.Artist.TRACK_LINE_HEIGHT_SP.sp,
-                        textAlign = state.blockTextAlign(TextAlign.Start),
-                        maxLines = 2
+                                .padding(top = geo.TRACK_TOP_PADDING_DP.dp)
                 )
             }
             if (state.showTrackTime) {
@@ -251,11 +311,11 @@ private fun BoxScope.ArtistTextBlock(state: NowPlayingFaceState, screen: Dp) {
                         // renders in the system font, ignoring the chosen typeface entirely - a
                         // dedicated playback-time font still overrides this, as it should.
                         fontFamily = state.titleFont,
-                        fontSize = FaceGeometry.Artist.TRACK_TIME_SP.sp,
+                        fontSize = geo.TRACK_TIME_SP.sp,
                         modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = FaceGeometry.Artist.TRACK_TIME_TOP_PADDING_DP.dp),
-                        lineHeight = FaceGeometry.Artist.TRACK_TIME_LINE_HEIGHT_SP.sp,
+                                .padding(top = geo.TRACK_TIME_TOP_PADDING_DP.dp),
+                        lineHeight = geo.TRACK_TIME_LINE_HEIGHT_SP.sp,
                         textAlign = state.blockTextAlign(TextAlign.Start)
                 )
             }

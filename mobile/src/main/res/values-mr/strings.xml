@@ -761,7 +761,6 @@
     <string name="setting_always_show_time">वेळ नेहमी दाखवा</string>
     <string name="setting_always_show_time_off_description">सध्याची वेळ फक्त अॅम्बियंट मोडमध्ये दिसेल</string>
     <string name="setting_always_show_time_on_description">सध्याची वेळ नेहमी दिसेल. वरचे क्रिया आयकॉन दिसणार नाही (त्याऐवजी घड्याळ दिसेल), पण क्रिया तरीही सामान्यपणे काम करेल.</string>
-    <string name="tap_to_force_stop">नियंत्रणे थांबवण्यासाठी टॅप करा</string>
     <string name="notification_action_stop">थांबवा</string>
     <string name="notification_action_force_stop">सक्तीने थांबवा</string>
     <string name="error_notification_access">सूचना प्रवेश नाही. फोन तपासा.</string>
