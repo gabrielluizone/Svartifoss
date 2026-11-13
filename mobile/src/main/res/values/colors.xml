@@ -47,4 +47,9 @@
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
     <color name="watch_background">#DEDEDE</color>
+
+    <!-- The system navigation bar under the app. Dark here, because before Android 8.1 its
+         buttons are always white and a light bar would hide them; values-v27 gives it the app's
+         background, where windowLightNavigationBar can make its marks dark to match. -->
+    <color name="system_navigation_bar">@color/black</color>
 </resources>

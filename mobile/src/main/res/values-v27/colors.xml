@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From Android 8.1 the navigation bar can draw dark marks, so it takes the app's background
+         and the screen ends in one colour instead of a black strip under the bottom bar. Follows
+         lyra_background into dark mode, where the marks turn light again (is_light_mode). -->
+    <color name="system_navigation_bar">@color/lyra_background</color>
+</resources>
