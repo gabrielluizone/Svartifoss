@@ -2366,4 +2366,6 @@
         <item>அடுத்து இயக்கு</item>
         <item>வரிசையில் சேர்</item>
     </string-array>
+    <string name="watch_home_quick_title">விரைவுச் சரிசெய்தல்கள்</string>
+    <string name="watch_home_scope_note">மாற்றங்கள் %1$s இல் சேமிக்கப்படும்</string>
 </resources>

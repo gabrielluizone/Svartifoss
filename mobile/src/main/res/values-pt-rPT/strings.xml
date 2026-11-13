@@ -2977,4 +2977,6 @@
         <item>Reproduzir a seguir</item>
         <item>Adicionar à fila</item>
     </string-array>
+    <string name="watch_home_quick_title">Ajustes rápidos</string>
+    <string name="watch_home_scope_note">As alterações são guardadas em %1$s</string>
 </resources>

@@ -2971,4 +2971,6 @@
         <item>Als Nächstes wiedergeben</item>
         <item>Zur Warteschlange hinzufügen</item>
     </string-array>
+    <string name="watch_home_quick_title">Schnelle Anpassungen</string>
+    <string name="watch_home_scope_note">Änderungen werden in %1$s gespeichert</string>
 </resources>

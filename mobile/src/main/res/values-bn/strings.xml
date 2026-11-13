@@ -2987,4 +2987,6 @@
         <item>পরে চালান</item>
         <item>কিউতে যোগ করুন</item>
     </string-array>
+    <string name="watch_home_quick_title">দ্রুত সমন্বয়</string>
+    <string name="watch_home_scope_note">পরিবর্তনগুলো %1$s-এ সংরক্ষিত হয়</string>
 </resources>

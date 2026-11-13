@@ -2997,4 +2997,6 @@
         <item>Відтворити наступним</item>
         <item>Додати до черги</item>
     </string-array>
+    <string name="watch_home_quick_title">Швидкі налаштування</string>
+    <string name="watch_home_scope_note">Зміни зберігаються в «%1$s»</string>
 </resources>

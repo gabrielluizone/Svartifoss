@@ -2970,4 +2970,6 @@
         <item>Riproduci dopo</item>
         <item>Aggiungi alla coda</item>
     </string-array>
+    <string name="watch_home_quick_title">Regolazioni rapide</string>
+    <string name="watch_home_scope_note">Le modifiche vengono salvate in %1$s</string>
 </resources>

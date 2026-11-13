@@ -3005,4 +3005,6 @@ Vibration Center сағатты дірілдеткен сайын, Svartifoss х
         <item>Келесі ретінде ойнату</item>
         <item>Кезекке қосу</item>
     </string-array>
+    <string name="watch_home_quick_title">Жылдам баптаулар</string>
+    <string name="watch_home_scope_note">Өзгерістер «%1$s» ішіне сақталады</string>
 </resources>

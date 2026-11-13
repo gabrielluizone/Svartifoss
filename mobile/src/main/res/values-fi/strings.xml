@@ -2987,4 +2987,6 @@
         <item>Toista seuraavaksi</item>
         <item>Lisää jonoon</item>
     </string-array>
+    <string name="watch_home_quick_title">Pikasäädöt</string>
+    <string name="watch_home_scope_note">Muutokset tallennetaan kohteeseen %1$s</string>
 </resources>

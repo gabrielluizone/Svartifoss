@@ -3010,4 +3010,6 @@ Svartifoss कभी भी आपके नोटिफ़िकेशन क�
         <item>अगला चलाएँ</item>
         <item>क्यू में जोड़ें</item>
     </string-array>
+    <string name="watch_home_quick_title">त्वरित समायोजन</string>
+    <string name="watch_home_scope_note">बदलाव %1$s में सहेजे जाते हैं</string>
 </resources>

@@ -17,6 +17,9 @@
         <com.svartifoss.snfell.view.watchface.home.HomeThemesPreference
             android:key="home_themes_surface" />
 
+        <com.svartifoss.snfell.view.watchface.home.HomeQuickPreference
+            android:key="home_quick_surface" />
+
         <com.svartifoss.snfell.view.watchface.home.HomeAreasPreference
             android:key="home_areas_surface" />
 

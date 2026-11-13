@@ -2975,4 +2975,6 @@
         <item>Redă următoarea</item>
         <item>Adaugă în coadă</item>
     </string-array>
+    <string name="watch_home_quick_title">Ajustări rapide</string>
+    <string name="watch_home_scope_note">Modificările se salvează în %1$s</string>
 </resources>

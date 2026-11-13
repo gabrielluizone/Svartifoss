@@ -2982,4 +2982,6 @@
         <item>下一首播放</item>
         <item>加入佇列</item>
     </string-array>
+    <string name="watch_home_quick_title">快速調整</string>
+    <string name="watch_home_scope_note">變更會儲存到 %1$s</string>
 </resources>

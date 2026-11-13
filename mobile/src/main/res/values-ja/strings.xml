@@ -2982,4 +2982,6 @@
         <item>次に再生</item>
         <item>キューに追加</item>
     </string-array>
+    <string name="watch_home_quick_title">クイック調整</string>
+    <string name="watch_home_scope_note">変更は %1$s に保存されます</string>
 </resources>

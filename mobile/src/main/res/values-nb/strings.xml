@@ -3010,4 +3010,6 @@ Når Vibration Center får klokken til å vibrere, viser Svartifoss en popup med
         <item>Spill av neste</item>
         <item>Legg til i køen</item>
     </string-array>
+    <string name="watch_home_quick_title">Raske justeringer</string>
+    <string name="watch_home_scope_note">Endringer lagres i %1$s</string>
 </resources>

@@ -3090,4 +3090,8 @@
         <item>custom_image</item>
         <item>custom_folder</item>
     </string-array>
+    <!-- The Watch tab's Home: the quick adjustments card, and the line under its heading naming
+         the theme every change is saved to (%1$s, a theme's name). -->
+    <string name="watch_home_quick_title">Quick adjustments</string>
+    <string name="watch_home_scope_note">Changes are saved to %1$s</string>
 </resources>

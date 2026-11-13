@@ -76,6 +76,7 @@ class AppearancePreferenceScopingTest {
                 // The Watch tab's Home: the theme strip and the list of areas, views over
                 // other rows that store nothing of their own.
                 "home_themes_surface",
+                "home_quick_surface",
                 "home_areas_surface",
                 // Imports a font file. What it stores is the file plus a display name in
                 // `user_font_name`; the row itself persists nothing.

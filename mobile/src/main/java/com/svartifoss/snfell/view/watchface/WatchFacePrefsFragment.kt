@@ -91,6 +91,8 @@ import com.svartifoss.snfell.view.settings.WatchFontCatalog
 import com.svartifoss.snfell.view.settings.lyraRuntimeAccent
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
 import com.svartifoss.snfell.view.watchface.home.HomeAreasPreference
+import com.svartifoss.snfell.view.watchface.home.HomeQuickPreference
+import com.svartifoss.snfell.view.watchface.home.WatchHomeModel
 import com.svartifoss.snfell.view.watchface.home.HomeThemesPreference
 import com.svartifoss.snfell.view.settings.PlaylistShortcutsActivity
 import com.svartifoss.snfell.view.settings.SettingsCatalog
@@ -125,6 +127,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         const val SECTION_HOME = "home"
         private const val HOME_THEMES_KEY = "home_themes_surface"
         private const val HOME_AREAS_KEY = "home_areas_surface"
+        private const val HOME_QUICK_KEY = "home_quick_surface"
         private const val ARG_SECTION = "watchAppearanceSection"
         private const val ARG_HIGHLIGHT_KEY = "watchAppearanceHighlightKey"
         private const val STATE_TYPOGRAPHY_TARGET = "watchTypographyTarget"
@@ -212,11 +215,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private var miniButtonEditor: MiniButtonEditorPreference? = null
     private var homeThemesEditor: HomeThemesPreference? = null
     private var homeAreasEditor: HomeAreasPreference? = null
+    private var homeQuickEditor: HomeQuickPreference? = null
 
     /** Re-reads scoped values after a face change and refreshes archived lists when their
      *  developer switch changes, even if this fragment remained alive beside Settings. */
     private val faceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         val baseKey = key?.substringBefore(FaceScopedPreferences.SCOPE_SEPARATOR)
+        // Home's quick card shows values that belong to the pages below, so it follows them too.
+        if (baseKey in WatchHomeModel.keys) homeQuickEditor?.refresh()
         when (baseKey) {
             MiscPreferences.WEAR_SCREEN_FACE.key,
             MiscPreferences.WEAR_ACTIVE_CUSTOM_THEME_ID.key,
@@ -235,6 +241,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 // and the mini-button arrangement rows depend on whether the face hosts the row.
                 refreshAodEditor()
                 refreshMiniButtonEditor()
+                // The scope line names the theme, and the chips follow what the layout draws.
+                homeQuickEditor?.refresh()
             }
             "dev_show_archived" -> {
                 applyArchivedOptionFilters()
@@ -518,12 +526,22 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             editor.bindEditor = { root -> bindHomeAreas(root) }
             editor.refresh()
         }
+        homeQuickEditor = findPreference<HomeQuickPreference>(HOME_QUICK_KEY)?.also { editor ->
+            editor.bindEditor = { root -> bindHomeQuick(root) }
+            editor.refresh()
+        }
+    }
+
+    /** Redraws only the quick card, after one of its chips changed - not the strip beside it. */
+    internal fun refreshHomeQuick() {
+        homeQuickEditor?.refresh()
     }
 
     /** Re-tints Home after the accent moved with the album art. The strip keeps its own state. */
     private fun refreshHomeEditor() {
         homeThemesEditor?.refresh()
         homeAreasEditor?.refresh()
+        homeQuickEditor?.refresh()
     }
 
     private fun initListSummaries() {
@@ -1168,7 +1186,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         return button
     }
 
-    private fun openPreferenceDialog(key: String) {
+    internal fun openPreferenceDialog(key: String) {
         val preference = findPreference<Preference>(key) ?: return
         notifyPreviewInteraction(key, null)
         onDisplayPreferenceDialog(preference)
@@ -1183,7 +1201,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      * easy to forget: reset persists "" rather than removing the key, because preference sync does
      * not transmit removals and the watch would keep rendering the old colour forever.
      */
-    private fun openColorPicker(key: String) {
+    internal fun openColorPicker(key: String) {
         val preference = findPreference<Preference>(key) ?: return
         notifyPreviewInteraction(key, null)
         preference.onPreferenceClickListener?.onPreferenceClick(preference)
@@ -3147,6 +3165,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         miniButtonEditor?.releaseBoundView()
         homeThemesEditor?.releaseBoundView()
         homeAreasEditor?.releaseBoundView()
+        homeQuickEditor?.releaseBoundView()
         super.onDestroyView()
     }
 
@@ -4297,7 +4316,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      * contrast-corrected against that blend - the treatment the Community gallery's filters
      * already use, so a selected chip means the same thing everywhere in the app.
      */
-    private fun tintEditorChipGroup(group: ChipGroup?, palette: EditorPalette) {
+    internal fun tintEditorChipGroup(group: ChipGroup?, palette: EditorPalette) {
         group ?: return
         val selectedContainer = ColorUtils.blendARGB(palette.surface, palette.accent, 0.16f)
         val selectedContent = LyraAccent.contrastSafe(
@@ -4316,7 +4335,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     }
 
     /** One checkable chip, carrying its preference key as the tag the search pulse looks for. */
-    private fun newEditorChip(
+    internal fun newEditorChip(
             key: String,
             label: CharSequence?,
             description: CharSequence?,

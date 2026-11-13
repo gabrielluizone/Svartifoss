@@ -3030,4 +3030,6 @@ Svartifoss — أعمدة بازلت سوداء
         <item>تشغيل التالي</item>
         <item>إضافة إلى قائمة الانتظار</item>
     </string-array>
+    <string name="watch_home_quick_title">تعديلات سريعة</string>
+    <string name="watch_home_scope_note">تُحفظ التغييرات في %1$s</string>
 </resources>

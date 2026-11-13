@@ -2366,4 +2366,6 @@
         <item>နောက်တစ်ပုဒ် ဖွင့်ရန်</item>
         <item>တန်းစီစာရင်းသို့ ထည့်ရန်</item>
     </string-array>
+    <string name="watch_home_quick_title">အမြန်ချိန်ညှိမှုများ</string>
+    <string name="watch_home_scope_note">ပြောင်းလဲမှုများကို %1$s တွင် သိမ်းဆည်းသည်</string>
 </resources>

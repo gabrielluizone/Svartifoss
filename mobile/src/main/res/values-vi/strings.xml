@@ -3005,4 +3005,6 @@ Mỗi khi Vibration Center làm đồng hồ rung, Svartifoss sẽ hiển thị 
         <item>Phát tiếp theo</item>
         <item>Thêm vào hàng đợi</item>
     </string-array>
+    <string name="watch_home_quick_title">Điều chỉnh nhanh</string>
+    <string name="watch_home_scope_note">Các thay đổi được lưu vào %1$s</string>
 </resources>

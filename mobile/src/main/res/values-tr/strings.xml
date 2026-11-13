@@ -3005,4 +3005,6 @@ Vibration Center saati titrettiğinde Svartifoss bildirim metnini bir açılır 
         <item>Sıradaki olarak çal</item>
         <item>Kuyruğa ekle</item>
     </string-array>
+    <string name="watch_home_quick_title">Hızlı ayarlar</string>
+    <string name="watch_home_scope_note">Değişiklikler şuraya kaydedilir: %1$s</string>
 </resources>

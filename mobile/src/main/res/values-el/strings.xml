@@ -2970,4 +2970,6 @@
         <item>Αναπαραγωγή επόμενου</item>
         <item>Προσθήκη στην ουρά</item>
     </string-array>
+    <string name="watch_home_quick_title">Γρήγορες ρυθμίσεις</string>
+    <string name="watch_home_scope_note">Οι αλλαγές αποθηκεύονται σε: %1$s</string>
 </resources>

@@ -2992,4 +2992,6 @@
         <item>Пусти следеће</item>
         <item>Додај у ред чекања</item>
     </string-array>
+    <string name="watch_home_quick_title">Брза подешавања</string>
+    <string name="watch_home_scope_note">Измене се чувају у %1$s</string>
 </resources>

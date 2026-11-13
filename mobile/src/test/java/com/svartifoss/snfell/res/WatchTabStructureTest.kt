@@ -19,7 +19,7 @@ class WatchTabStructureTest {
         /** The rule between the preview and the pages, which only the side-by-side layout draws. */
         val LANDSCAPE_ONLY_IDS = setOf("watch_preview_divider")
 
-        val HOME_LAYOUTS = listOf("pref_home_themes.xml", "pref_home_areas.xml", "item_watch_look.xml",
+        val HOME_LAYOUTS = listOf("pref_home_themes.xml", "pref_home_quick.xml", "pref_home_areas.xml", "item_watch_look.xml",
                 "item_watch_area.xml")
     }
 

@@ -2981,4 +2981,6 @@
         <item>Spila næst</item>
         <item>Bæta í biðröð</item>
     </string-array>
+    <string name="watch_home_quick_title">Fljótlegar stillingar</string>
+    <string name="watch_home_scope_note">Breytingar vistast í %1$s</string>
 </resources>

@@ -40,6 +40,7 @@ class SettingsSearchRoutingTest {
                 "mini_button_editor_surface",
                 // The Watch tab's Home rows: views over other rows, holding no setting.
                 "home_themes_surface",
+                "home_quick_surface",
                 "home_areas_surface")
     }
 

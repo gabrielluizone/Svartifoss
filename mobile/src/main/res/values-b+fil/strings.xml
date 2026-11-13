@@ -3010,4 +3010,6 @@ Tuwing pina-vibrate ng Vibration Center ang relo, magpapakita ang Svartifoss ng 
         <item>I-play susunod</item>
         <item>Idagdag sa queue</item>
     </string-array>
+    <string name="watch_home_quick_title">Mabilisang pagsasaayos</string>
+    <string name="watch_home_scope_note">Nase-save ang mga pagbabago sa %1$s</string>
 </resources>

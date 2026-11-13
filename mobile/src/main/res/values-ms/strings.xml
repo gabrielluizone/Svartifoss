@@ -2982,4 +2982,6 @@
         <item>Main seterusnya</item>
         <item>Tambah ke baris gilir</item>
     </string-array>
+    <string name="watch_home_quick_title">Pelarasan pantas</string>
+    <string name="watch_home_scope_note">Perubahan disimpan ke %1$s</string>
 </resources>

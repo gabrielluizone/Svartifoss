@@ -2965,4 +2965,6 @@
         <item>下一首播放</item>
         <item>添加到队列</item>
     </string-array>
+    <string name="watch_home_quick_title">快速调整</string>
+    <string name="watch_home_scope_note">更改会保存到 %1$s</string>
 </resources>

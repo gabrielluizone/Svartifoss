@@ -2965,4 +2965,6 @@
         <item>Putar berikutnya</item>
         <item>Tambahkan ke antrean</item>
     </string-array>
+    <string name="watch_home_quick_title">Penyesuaian cepat</string>
+    <string name="watch_home_scope_note">Perubahan disimpan ke %1$s</string>
 </resources>

@@ -3020,4 +3020,6 @@ Kdykoli Vibration Center zavibruje hodinkami, Svartifoss zobrazí vyskakovací o
         <item>Přehrát jako další</item>
         <item>Přidat do fronty</item>
     </string-array>
+    <string name="watch_home_quick_title">Rychlé úpravy</string>
+    <string name="watch_home_scope_note">Změny se ukládají do %1$s</string>
 </resources>

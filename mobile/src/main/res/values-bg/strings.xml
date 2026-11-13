@@ -2987,4 +2987,6 @@
         <item>Пускане следващо</item>
         <item>Добавяне към опашката</item>
     </string-array>
+    <string name="watch_home_quick_title">Бързи настройки</string>
+    <string name="watch_home_scope_note">Промените се запазват в %1$s</string>
 </resources>

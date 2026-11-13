@@ -2366,4 +2366,6 @@
         <item>دواتر لێبدە</item>
         <item>زیادکردن بۆ ڕیز</item>
     </string-array>
+    <string name="watch_home_quick_title">ڕێکخستنی خێرا</string>
+    <string name="watch_home_scope_note">گۆڕانکارییەکان لە %1$s پاشەکەوت دەکرێن</string>
 </resources>

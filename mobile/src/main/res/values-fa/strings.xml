@@ -2970,4 +2970,6 @@
         <item>بعدی را پخش کن</item>
         <item>افزودن به صف</item>
     </string-array>
+    <string name="watch_home_quick_title">تنظیمات سریع</string>
+    <string name="watch_home_scope_note">تغییرات در %1$s ذخیره می‌شوند</string>
 </resources>

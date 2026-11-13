@@ -2969,4 +2969,6 @@
         <item>Reproducir a continuación</item>
         <item>Añadir a la cola</item>
     </string-array>
+    <string name="watch_home_quick_title">Ajustes rápidos</string>
+    <string name="watch_home_scope_note">Los cambios se guardan en %1$s</string>
 </resources>

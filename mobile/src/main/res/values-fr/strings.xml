@@ -3010,4 +3010,6 @@ Chaque fois que Vibration Center fait vibrer la montre, Svartifoss affiche une f
         <item>Lire ensuite</item>
         <item>Ajouter à la file d’attente</item>
     </string-array>
+    <string name="watch_home_quick_title">Réglages rapides</string>
+    <string name="watch_home_scope_note">Les modifications sont enregistrées dans %1$s</string>
 </resources>

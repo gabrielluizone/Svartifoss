@@ -2987,4 +2987,6 @@
         <item>Afspil næste</item>
         <item>Føj til kø</item>
     </string-array>
+    <string name="watch_home_quick_title">Hurtige justeringer</string>
+    <string name="watch_home_scope_note">Ændringer gemmes i %1$s</string>
 </resources>

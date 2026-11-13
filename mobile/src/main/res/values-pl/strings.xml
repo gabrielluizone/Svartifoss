@@ -2997,4 +2997,6 @@
         <item>Odtwórz jako następny</item>
         <item>Dodaj do kolejki</item>
     </string-array>
+    <string name="watch_home_quick_title">Szybkie ustawienia</string>
+    <string name="watch_home_scope_note">Zmiany są zapisywane w %1$s</string>
 </resources>

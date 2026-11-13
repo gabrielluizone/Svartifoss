@@ -2366,4 +2366,6 @@
         <item>తర్వాత ప్లే చేయండి</item>
         <item>క్యూకు జోడించండి</item>
     </string-array>
+    <string name="watch_home_quick_title">త్వరిత సర్దుబాట్లు</string>
+    <string name="watch_home_scope_note">మార్పులు %1$sలో సేవ్ చేయబడతాయి</string>
 </resources>

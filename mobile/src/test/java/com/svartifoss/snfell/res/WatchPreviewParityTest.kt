@@ -135,6 +135,7 @@ class WatchPreviewParityTest {
                 "aod_editor_surface",
                 "mini_button_editor_surface",
                 "home_themes_surface",
+                "home_quick_surface",
                 "home_areas_surface",
                 "user_font_import"
         )

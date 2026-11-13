@@ -3010,4 +3010,6 @@ När Vibration Center får klockan att vibrera visar Svartifoss en popup med avi
         <item>Spela härnäst</item>
         <item>Lägg till i kön</item>
     </string-array>
+    <string name="watch_home_quick_title">Snabbjusteringar</string>
+    <string name="watch_home_scope_note">Ändringar sparas i %1$s</string>
 </resources>

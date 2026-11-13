@@ -2992,4 +2992,6 @@
         <item>השמעה הבא</item>
         <item>הוספה לתור</item>
     </string-array>
+    <string name="watch_home_quick_title">התאמות מהירות</string>
+    <string name="watch_home_scope_note">השינויים נשמרים ב-%1$s</string>
 </resources>

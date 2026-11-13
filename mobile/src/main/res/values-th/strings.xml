@@ -2982,4 +2982,6 @@
         <item>เล่นถัดไป</item>
         <item>เพิ่มในคิว</item>
     </string-array>
+    <string name="watch_home_quick_title">การปรับแต่งด่วน</string>
+    <string name="watch_home_scope_note">การเปลี่ยนแปลงจะบันทึกไว้ใน %1$s</string>
 </resources>

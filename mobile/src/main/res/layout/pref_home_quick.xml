@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The quick adjustments on the Watch tab's Home, between the theme strip and the areas: one card
+     with the line naming the theme the changes are saved to, the four pickers most people change,
+     and the on-screen chips. Built by WatchFacePrefsFragment at bind time, like the editors' cards. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp">
+
+    <LinearLayout
+        android:id="@+id/home_quick_groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+</LinearLayout>

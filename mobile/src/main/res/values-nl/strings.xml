@@ -2970,4 +2970,6 @@
         <item>Hierna afspelen</item>
         <item>Toevoegen aan wachtrij</item>
     </string-array>
+    <string name="watch_home_quick_title">Snelle aanpassingen</string>
+    <string name="watch_home_scope_note">Wijzigingen worden opgeslagen in %1$s</string>
 </resources>

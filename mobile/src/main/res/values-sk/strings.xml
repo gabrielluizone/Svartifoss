@@ -2997,4 +2997,6 @@
         <item>Prehrať ako ďalšiu</item>
         <item>Pridať do poradia</item>
     </string-array>
+    <string name="watch_home_quick_title">Rýchle úpravy</string>
+    <string name="watch_home_scope_note">Zmeny sa ukladajú do %1$s</string>
 </resources>

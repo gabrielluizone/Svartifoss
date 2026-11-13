@@ -29,6 +29,17 @@ class HomeThemesPreference @JvmOverloads constructor(
     }
 }
 
+/** The quick adjustments card: four pickers and the on-screen chips. Stores nothing. */
+class HomeQuickPreference @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null
+) : TaggedEditorPreference(context, attrs) {
+
+    init {
+        layoutResource = R.layout.pref_home_quick
+    }
+}
+
 /** The list of the seven areas and the reset of the current layout. Stores nothing. */
 class HomeAreasPreference @JvmOverloads constructor(
         context: Context,

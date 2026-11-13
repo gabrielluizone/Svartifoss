@@ -2366,4 +2366,6 @@
         <item>पुढे वाजवा</item>
         <item>रांगेत जोडा</item>
     </string-array>
+    <string name="watch_home_quick_title">झटपट समायोजन</string>
+    <string name="watch_home_scope_note">बदल %1$s मध्ये जतन होतात</string>
 </resources>

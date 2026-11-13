@@ -2992,4 +2992,6 @@
         <item>Reproduciraj sljedeće</item>
         <item>Dodaj u red čekanja</item>
     </string-array>
+    <string name="watch_home_quick_title">Brze prilagodbe</string>
+    <string name="watch_home_scope_note">Promjene se spremaju u %1$s</string>
 </resources>

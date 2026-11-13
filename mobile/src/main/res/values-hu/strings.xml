@@ -3010,4 +3010,6 @@ Amikor a Vibration Center megrezegteti az órát, a Svartifoss felugró ablakban
         <item>Lejátszás következőként</item>
         <item>Hozzáadás a sorhoz</item>
     </string-array>
+    <string name="watch_home_quick_title">Gyors beállítások</string>
+    <string name="watch_home_scope_note">A módosítások ide kerülnek: %1$s</string>
 </resources>
