@@ -34,6 +34,8 @@ import com.svartifoss.snfell.common.AppearanceContext
 import com.svartifoss.snfell.common.ThemeAppearance
 import com.svartifoss.snfell.view.LyraAccent
 import com.svartifoss.snfell.view.watchface.WatchPreviewView
+import com.svartifoss.snfell.view.watchface.home.WatchLookThumbnailer
+import kotlin.math.roundToInt
 
 /** Full-screen catalog for built-in presets and phone-local user themes. Tapping a row is an
  * explicit apply action; the repository performs one atomic preference materialization and the
@@ -67,6 +69,12 @@ class WatchThemesActivity : AppCompatActivity() {
      * carry a name at all, published or not.
      */
     private var communityAuthorName: String? = null
+
+    /**
+     * Draws each row's theme as the watch it is, in place of the generic palette glyph every row
+     * used to share - the same pictures the Watch tab's theme strip shows.
+     */
+    private var pictures: WatchLookThumbnailer? = null
     private val onlineThemesLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -120,6 +128,9 @@ class WatchThemesActivity : AppCompatActivity() {
                 onApplyCustom = ::applyCustom,
                 onMoreBuiltIn = ::showBuiltInMenu,
                 onMoreCustom = ::showCustomMenu)
+        pictures = WatchLookThumbnailer(this).also { renderer ->
+            renderer.listener = WatchLookThumbnailer.Listener { key, _ -> adapter.redraw(key) }
+        }
         findViewById<RecyclerView>(R.id.theme_list).apply {
             layoutManager = LinearLayoutManager(this@WatchThemesActivity)
             adapter = this@WatchThemesActivity.adapter
@@ -143,8 +154,17 @@ class WatchThemesActivity : AppCompatActivity() {
         super.onResume()
         if (::repository.isInitialized) {
             repository.captureActive(defaultPrefs)
+            // Anything can have been edited while another screen was in front; the old pictures
+            // stay up until each new one is drawn.
+            pictures?.invalidateAll()
             refreshScreen()
         }
+    }
+
+    override fun onDestroy() {
+        pictures?.release()
+        pictures = null
+        super.onDestroy()
     }
 
     private fun refreshScreen() {
@@ -177,12 +197,12 @@ class WatchThemesActivity : AppCompatActivity() {
                 profiles.forEach { add(ThemeRow.Custom(it)) }
             }
             add(ThemeRow.Header(getString(R.string.watch_theme_built_in_section)))
-            val showArchived = defaultPrefs.getBoolean("dev_show_archived", false)
-            ThemeAppearance.ALLOWED_BASE_FACES.filter { face ->
-                showArchived || face !in ArchivedFaces.KEYS || appearance.baseFace == face
-            }.forEach { face ->
-                add(ThemeRow.BuiltIn(face))
-            }
+            listedBuiltInFaces(
+                    allowedFaces = ThemeAppearance.ALLOWED_BASE_FACES,
+                    archivedFaces = ArchivedFaces.KEYS,
+                    showArchived = defaultPrefs.getBoolean(QuickThemeSwitch.SHOW_ARCHIVED_PREF, false),
+                    activeFace = appearance.baseFace)
+                    .forEach { face -> add(ThemeRow.BuiltIn(face)) }
         }
         adapter.submit(rows, appearance)
     }
@@ -505,6 +525,19 @@ class WatchThemesActivity : AppCompatActivity() {
             notifyDataSetChanged()
         }
 
+        /** [key]'s picture has been drawn; rebinds the row showing it. */
+        fun redraw(key: String) {
+            val index = rows.indexOfFirst { pictureKey(it) == key }
+            if (index >= 0) notifyItemChanged(index)
+        }
+
+        /** The name a row's picture is drawn under - the theme strip's names for the same themes. */
+        private fun pictureKey(row: ThemeRow): String? = when (row) {
+            is ThemeRow.Header -> null
+            is ThemeRow.BuiltIn -> row.face
+            is ThemeRow.Custom -> QuickThemeSwitch.CUSTOM_PREFIX + row.profile.id
+        }
+
         override fun getItemViewType(position: Int): Int =
                 if (rows[position] is ThemeRow.Header) VIEW_HEADER else VIEW_THEME
 
@@ -545,6 +578,9 @@ class WatchThemesActivity : AppCompatActivity() {
                 val description = getString(R.string.watch_theme_builtin_subtitle, display)
                 val applied = active is AppearanceContext.BuiltIn && active.baseFace == face
                 bindCommon(display, description, applied)
+                bindPicture(face, applied) {
+                    repository.previewProfile(defaultPrefs, AppearanceContext.BuiltIn(face))
+                }
                 more.visibility = View.VISIBLE
                 more.setOnClickListener { onMoreBuiltIn(it, face) }
                 card.setOnClickListener { onApplyBuiltIn(face) }
@@ -564,9 +600,46 @@ class WatchThemesActivity : AppCompatActivity() {
                 }
                 val applied = (active as? AppearanceContext.Custom)?.themeId == profile.id
                 bindCommon(profile.name, description, applied)
+                val current = active
+                bindPicture(QuickThemeSwitch.CUSTOM_PREFIX + profile.id, applied) {
+                    // The applied theme is drawn from the live values, edits not yet captured
+                    // included, so its picture matches the preview at the top of this screen.
+                    if (current is AppearanceContext.Custom && current.themeId == profile.id) {
+                        repository.previewProfile(defaultPrefs, current)
+                    } else {
+                        profile
+                    }
+                }
                 more.visibility = View.VISIBLE
                 more.setOnClickListener { onMoreCustom(it, profile) }
                 card.setOnClickListener { onApplyCustom(profile) }
+            }
+
+            /**
+             * The theme's picture, or the palette glyph every row used to show until the picture
+             * is drawn. The applied state stays with the check and the status line, as it was.
+             */
+            private fun bindPicture(
+                    key: String,
+                    applied: Boolean,
+                    profile: () -> WatchThemeProfile?
+            ) {
+                val renderer = pictures
+                val picture = renderer?.picture(key)
+                if (picture != null) {
+                    icon.setImageBitmap(picture)
+                    icon.imageTintList = null
+                    icon.background = null
+                    icon.setPadding(0, 0, 0, 0)
+                } else {
+                    val inset = (GLYPH_PADDING_DP * resources.displayMetrics.density).roundToInt()
+                    icon.setImageResource(R.drawable.ic_player_theme)
+                    icon.setBackgroundResource(R.drawable.circle_icon_bg)
+                    icon.setPadding(inset, inset, inset, inset)
+                    icon.imageTintList = ColorStateList.valueOf(
+                            if (applied) accentColor else getColor(R.color.lyra_on_surface))
+                }
+                if (renderer != null && !renderer.isFresh(key)) renderer.request(key, profile)
             }
 
             private fun bindCommon(display: String, description: String, applied: Boolean) {
@@ -576,8 +649,6 @@ class WatchThemesActivity : AppCompatActivity() {
                 selected.visibility = if (applied) View.VISIBLE else View.GONE
                 status.setTextColor(accentColor)
                 selected.imageTintList = ColorStateList.valueOf(accentColor)
-                icon.imageTintList = ColorStateList.valueOf(
-                        if (applied) accentColor else getColor(R.color.lyra_on_surface))
                 // Selection is already communicated by the checkmark/status and accent icon.
                 // Keep the card outline neutral so a custom theme row never gains the coloured
                 // frame the user explicitly asked to remove.
@@ -597,6 +668,8 @@ class WatchThemesActivity : AppCompatActivity() {
     private companion object {
         const val VIEW_HEADER = 0
         const val VIEW_THEME = 1
+        /** The palette glyph's inset inside its circle, matching item_watch_theme.xml. */
+        const val GLYPH_PADDING_DP = 15
         const val MENU_CUSTOMIZE = 1
         const val MENU_RENAME = 2
         const val MENU_DUPLICATE = 3

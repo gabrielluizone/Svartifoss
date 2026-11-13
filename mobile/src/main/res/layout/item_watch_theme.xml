@@ -27,13 +27,15 @@
         android:paddingEnd="4dp"
         android:paddingBottom="8dp">
 
+        <!-- The theme drawn as the watch it is (WatchThemesActivity.bindPicture); the palette glyph
+             in its circle stands in until the picture is ready. -->
         <ImageView
             android:id="@+id/theme_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:background="@drawable/circle_icon_bg"
             android:contentDescription="@null"
-            android:padding="11dp"
+            android:padding="15dp"
             android:src="@drawable/ic_player_theme"
             android:tint="@color/lyra_on_surface"
             tools:ignore="UseAppTint" />

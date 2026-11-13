@@ -657,6 +657,12 @@ class WatchFaceFragment : Fragment() {
         }
     }
 
+    /**
+     * The renderer a style picker draws its grid with: this tab's, because it already holds the
+     * cover that is playing and the shape of the connected watch.
+     */
+    internal fun choicePictures(): WatchLookThumbnailer? = thumbnailer
+
     private fun redrawActiveThumbnail() {
         if (_binding == null) return
         val key = activeQuickThemeKey(ThemeAppearance.resolve(defaultPrefs))

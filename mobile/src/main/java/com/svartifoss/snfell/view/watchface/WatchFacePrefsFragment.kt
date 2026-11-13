@@ -3036,6 +3036,12 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     }
 
     override fun onDisplayPreferenceDialog(preference: Preference) {
+        // A style picker opens as a grid of pictures wherever its list used to open - from an
+        // editor row, a Home row or anywhere else that asks for this preference's dialog.
+        if (preference is ListPreference && VisualChoiceCatalog.isVisual(preference.key) &&
+                showVisualChoiceDialog(preference)) {
+            return
+        }
         // The swatch data has no route from a bare Preference to the live album accent, so it
         // must be refreshed here, right before the dialog is built - see
         // ColorTreatmentPreference's class doc.
@@ -3052,6 +3058,40 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         // Preference dialogs inflate with the static theme colors; once the dialog is up,
         // re-tint it with the accent currently on screen.
         view?.post { tintOpenLyraPreferenceDialog() }
+    }
+
+    /**
+     * Opens [preference] as a grid of pictures - see [VisualChoiceDialog].
+     *
+     * Reads the entries as the list would show them, after [applyArchivedOptionFilters] has hidden
+     * the archived ones, and commits exactly as a list item does: the change listener first, then
+     * the value, so the preview interaction, validation and scoped storage behind this preference
+     * all run as before. Returns false, leaving the ordinary list to open, when there is no
+     * renderer to draw the pictures with.
+     */
+    private fun showVisualChoiceDialog(preference: ListPreference): Boolean {
+        val pictures = (parentFragment as? WatchFaceFragment)?.choicePictures() ?: return false
+        val labels = preference.entries ?: return false
+        val values = preference.entryValues ?: return false
+        if (labels.isEmpty() || labels.size != values.size) return false
+        val surface = ContextCompat.getColor(requireContext(), R.color.lyra_surface)
+        val rawAccent = lyraRuntimeAccent()
+        VisualChoiceDialog.show(
+                context = requireContext(),
+                title = preference.dialogTitle ?: preference.title,
+                key = preference.key,
+                labels = labels,
+                values = values,
+                selected = preference.value,
+                pictures = pictures,
+                textAccent = LyraAccent.contrastSafe(rawAccent, surface, minimumContrast = 4.5),
+                ringColor = LyraAccent.contrastSafe(rawAccent, surface, minimumContrast = 3.0),
+                onChosen = { value ->
+                    if (value != preference.value && preference.callChangeListener(value)) {
+                        preference.value = value
+                    }
+                })
+        return true
     }
 
     /** Feeds a [ColorTreatmentPreference] the current album accent and effective Normal color so

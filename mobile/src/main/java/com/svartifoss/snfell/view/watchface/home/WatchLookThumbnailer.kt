@@ -13,17 +13,28 @@ import timber.log.Timber
 import kotlin.math.roundToInt
 
 /**
- * Draws watch themes as pictures, with the same code that draws the Watch tab's preview.
+ * Draws watch themes, and single choices within the active theme, as pictures - with the same code
+ * that draws the Watch tab's preview.
  *
  * One [WatchPreviewView] that is never attached to a window, measured once and drawn into bitmaps:
  * the arrangement `SubmitCommunityThemeActivity.renderModerationPreview` already uses. A single
  * renderer rather than one live preview per tile, because each preview extracts the cover's
- * palette and blurs it for itself; here that is done once and every thumbnail shares it, and the
- * strip then scrolls as plain images.
+ * palette and blurs it for itself; here that is done once and every picture shares it, and a strip
+ * or a grid then scrolls as plain images.
  *
- * Rendering stays on the main thread - a View is not safe to draw anywhere else - one thumbnail
- * per posted message, so a long strip never holds a frame. Thumbnails are kept only in memory: they
- * are never written to disk or uploaded, and the moderation upload path is not involved.
+ * Two kinds of picture:
+ *
+ *  - a **look** ([request]): a whole theme from a profile, on the cover that is playing, with the
+ *    sample title. Kept in an in-memory cache, since the theme strip shows the same ones for as
+ *    long as the tab is open;
+ *  - a **choice** ([requestChoice]): the active theme with one value changed, on the screen that
+ *    value belongs to - the candidate mechanism the editors already use to paint a picked value on
+ *    the docked preview before it is stored, so a picture and the result of picking it come from
+ *    the same code. Handed to the caller only; a picker keeps its pictures while it is open.
+ *
+ * Rendering stays on the main thread - a View is not safe to draw anywhere else - one picture per
+ * posted message, so a long strip or grid never holds a frame. Nothing is written to disk or
+ * uploaded, and the moderation upload path is not involved.
  *
  * The renderer runs in the preview's moderation mode, which fixes the clock and the animation
  * phase. A cached picture showing the time it was drawn would disagree with the clock beside it a
@@ -36,7 +47,7 @@ internal class WatchLookThumbnailer(context: Context) {
         fun onThumbnail(key: String, thumbnail: Bitmap)
     }
 
-    private class Request(val key: String, val profile: () -> WatchThemeProfile?)
+    private class Job(val draw: () -> Bitmap?, val onDrawn: (Bitmap) -> Unit)
 
     /** One size for every consumer; an ImageView scales it down, so the renderer is laid out once. */
     val sizePx: Int = (THUMBNAIL_DP * context.resources.displayMetrics.density).roundToInt()
@@ -59,14 +70,14 @@ internal class WatchLookThumbnailer(context: Context) {
     private val stale = HashMap<String, Bitmap>()
 
     private val handler = Handler(Looper.getMainLooper())
-    private val pending = LinkedHashMap<String, Request>()
+    private val pending = LinkedHashMap<String, Job>()
     private var draining = false
     private var released = false
 
-    /** Whoever shows the thumbnails; told about each one as it is drawn. */
+    /** Whoever shows the looks; told about each one as it is drawn. */
     var listener: Listener? = null
 
-    /** What is playing now, whose cover every thumbnail is drawn on. */
+    /** What is playing now, whose cover every picture is drawn on. */
     private var artwork: Bitmap? = null
 
     private var deviceRound: Boolean? = null
@@ -81,14 +92,42 @@ internal class WatchLookThumbnailer(context: Context) {
     fun isFresh(key: String): Boolean = cache.get(key) != null
 
     /**
-     * Queues the picture for [key] unless a current one exists or one is already queued. [profile]
-     * is read only when its turn comes, so the theme is drawn as it is then, not as it was when it
-     * was asked for.
+     * Queues the picture of the look [key] unless a current one exists or one is already queued.
+     * [profile] is read only when its turn comes, so the theme is drawn as it is then, not as it
+     * was when it was asked for.
      */
     fun request(key: String, profile: () -> WatchThemeProfile?) {
         if (released || cache.get(key) != null || key in pending) return
-        pending[key] = Request(key, profile)
+        pending[key] = Job(
+                draw = { profile()?.let(::renderLook) },
+                onDrawn = { picture ->
+                    stale.remove(key)
+                    cache.put(key, picture)
+                    listener?.onThumbnail(key, picture)
+                })
         scheduleNext()
+    }
+
+    /**
+     * Queues a picture of the active theme with [key] set to [value], for a picker. [onDrawn] gets
+     * it; nothing is cached here, so a picker that closes takes its pictures with it.
+     */
+    fun requestChoice(key: String, value: String, onDrawn: (Bitmap) -> Unit) {
+        if (released) return
+        val jobKey = choiceKey(key, value)
+        if (jobKey in pending) return
+        pending[jobKey] = Job(draw = { renderChoice(key, value) }, onDrawn = onDrawn)
+        scheduleNext()
+    }
+
+    /** Forgets a queued choice that scrolled away before its turn came. */
+    fun cancelChoice(key: String, value: String) {
+        pending.remove(choiceKey(key, value))
+    }
+
+    /** Forgets every queued choice; the picker that asked for them has closed. */
+    fun cancelChoices() {
+        pending.keys.removeAll { it.startsWith(CHOICE_PREFIX) }
     }
 
     /** Marks [key]'s picture out of date; it stays on screen until the next [request] replaces it. */
@@ -103,7 +142,7 @@ internal class WatchLookThumbnailer(context: Context) {
 
     /**
      * The cover now playing, or null for the bundled sample. A different picture makes every
-     * thumbnail stale, because each one shows that theme on this cover.
+     * look stale, because each one shows that theme on this cover.
      */
     fun setArtwork(art: Bitmap?): Boolean {
         if (art === artwork) return false
@@ -149,38 +188,55 @@ internal class WatchLookThumbnailer(context: Context) {
         if (released) return
         val next = pending.entries.firstOrNull() ?: return
         pending.remove(next.key)
-        val profile = next.value.profile()
-        if (profile != null) {
-            render(profile)?.let { thumbnail ->
-                stale.remove(next.key)
-                cache.put(next.key, thumbnail)
-                listener?.onThumbnail(next.key, thumbnail)
-            }
-        }
+        next.value.draw()?.let(next.value.onDrawn)
         scheduleNext()
     }
 
-    private fun render(profile: WatchThemeProfile): Bitmap? = try {
+    private fun renderLook(profile: WatchThemeProfile): Bitmap? = drawSafely {
         renderer.setThemeProfile(profile, useLocalArtwork = true)
+    }
+
+    /**
+     * The active theme read from the live preferences, with [value] as the candidate for [key] -
+     * which also moves the picture to the screen that key belongs to. Built-in or saved, the active
+     * theme is what the picker is editing, and a layout choice keeps that theme's values on the new
+     * layout, exactly as picking it does. The candidate is cleared afterwards so none is left on
+     * the shared renderer for the next picture.
+     */
+    private fun renderChoice(key: String, value: String): Bitmap? = try {
+        drawSafely {
+            renderer.clearThemeProfile()
+            renderer.showPreference(key, value)
+        }
+    } finally {
+        renderer.refresh()
+    }
+
+    private fun drawSafely(prepare: () -> Unit): Bitmap? = try {
+        prepare()
         Bitmap.createBitmap(sizePx, sizePx, Bitmap.Config.ARGB_8888).also { bitmap ->
             renderer.draw(Canvas(bitmap))
         }
     } catch (error: RuntimeException) {
-        // A theme the preview cannot draw keeps an empty tile rather than taking the tab down.
-        Timber.w(error, "Could not draw the thumbnail of a watch theme")
+        // A look the preview cannot draw keeps an empty tile rather than taking the tab down.
+        Timber.w(error, "Could not draw a watch theme picture")
         null
     } catch (error: OutOfMemoryError) {
-        Timber.w(error, "No memory left for a watch theme thumbnail")
+        Timber.w(error, "No memory left for a watch theme picture")
         cache.evictAll()
         stale.clear()
         null
     }
 
+    private fun choiceKey(key: String, value: String) = "$CHOICE_PREFIX$key=$value"
+
     private companion object {
-        /** A thumbnail is shown at 78dp on Home; the picker grids of a later phase need a little more. */
+        /** A look is shown at 78dp on Home; a picker's grid cell needs a little more. */
         const val THUMBNAIL_DP = 112f
 
         /** Room for every built-in layout and a full library of saved themes at a phone's density. */
         const val CACHE_BYTES = 24 * 1024 * 1024
+
+        const val CHOICE_PREFIX = "choice:"
     }
 }
