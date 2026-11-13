@@ -2122,6 +2122,9 @@
     <!-- The Mini buttons editor's Appearance card heading. An alias for the same reason as the
          Player page's player_section_* headings: every locale already translates the word. -->
     <string name="mini_button_section_appearance" translatable="false">@string/category_appearance</string>
+    <!-- The Watch tab's Home: the heading of the card listing the seven areas. An alias for the
+         same reason: the themes library already says "Customize" in every locale. -->
+    <string name="watch_home_areas_title" translatable="false">@string/watch_theme_customize</string>
     <!-- Short names for the Mini buttons editor rows, for the same reason: four of their titles
          begin "Mini buttons" on a page already called Mini buttons. -->
     <string name="mini_button_control_arrangement">Arrangement</string>

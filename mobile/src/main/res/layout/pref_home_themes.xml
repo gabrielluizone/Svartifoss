@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The theme strip at the top of the Watch tab's Home: every theme drawn by the real preview, in
+     one row the finger runs along, with the way to the themes library beside its heading.
+
+     Choosing a look is the decision that decides everything else on the tab, so it comes first and
+     it is made by pointing at a picture rather than by reading a list of names. The list itself is
+     filled by WatchFaceFragment, which owns the thumbnails; this row only hosts it. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="48dp"
+        android:orientation="horizontal"
+        android:paddingStart="24dp"
+        android:paddingEnd="8dp">
+
+        <TextView
+            android:id="@+id/home_themes_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:accessibilityHeading="true"
+            android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:text="@string/watch_themes_title"
+            android:textAllCaps="true"
+            android:textColor="@color/lyra_accent"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/home_themes_manage"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:fontFamily="@font/google_sans"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:letterSpacing="0"
+            android:text="@string/watch_theme_manage"
+            android:textAllCaps="false"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_themes_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:scrollbars="none" />
+
+</LinearLayout>

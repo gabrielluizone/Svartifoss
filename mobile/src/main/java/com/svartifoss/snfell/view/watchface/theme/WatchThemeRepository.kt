@@ -333,6 +333,8 @@ class WatchThemeRepository(context: Context) {
         private const val MAX_NAME_LENGTH = MAX_THEME_NAME_LENGTH
         /** Leaves ample room below the Wear Data Layer's 100 KiB per-item ceiling. */
         private const val MAX_PUBLISHED_MATERIALIZED_BYTES = MAX_PUBLIC_MATERIALIZED_BYTES
+        /** The id of a profile made by [previewProfile]; never stored, so never a real theme's. */
+        private const val PREVIEW_PROFILE_ID = "preview"
 
         private val FACE_NAME_RESOURCES = mapOf(
                 "classic" to R.string.watch_theme_face_classic,
@@ -694,6 +696,27 @@ class WatchThemeRepository(context: Context) {
         val updated = state.profiles.toMutableList().apply { set(index, normalized) }
         saveState(state.copy(profiles = updated))
         return normalized
+    }
+
+    /**
+     * The complete look of [context] as a profile, for drawing it, never for storing it.
+     *
+     * Reads exactly what applying that context would put on the watch: a built-in layout with the
+     * values the user has already given it, or the active saved theme including edits not yet
+     * captured into the library. Nothing is written - no library entry, no default preference - so
+     * the Watch tab's theme strip can draw every layout through the same preview code the
+     * community gallery uses without that drawing ever becoming a theme.
+     */
+    fun previewProfile(defaultPrefs: SharedPreferences, context: AppearanceContext): WatchThemeProfile {
+        val baseFace = ThemeAppearance.normalizeBaseFace(context.baseFace)
+        return WatchThemeProfile(
+                id = PREVIEW_PROFILE_ID,
+                name = displayNameForFace(appContext, baseFace),
+                baseFace = baseFace,
+                createdAt = 0L,
+                updatedAt = 0L,
+                revision = 0,
+                settings = captureSettings(defaultPrefs, context))
     }
 
     /** Atomically projects every scoped definition plus validation metadata to default prefs. */

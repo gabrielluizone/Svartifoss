@@ -6,6 +6,22 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- The Watch tab's Home, the first thing the tab shows: the themes drawn by the real preview,
+         then the seven areas below. First in the file because it is first on screen. Its rows store
+         nothing and own no searchable setting; they are views over the Preferences declared in the
+         categories that follow (the reset row runs reset_appearance's own confirmation). -->
+    <PreferenceCategory
+        android:key="cat_wf_home_editor"
+        android:layout="@layout/pref_category_hidden_header">
+
+        <com.svartifoss.snfell.view.watchface.home.HomeThemesPreference
+            android:key="home_themes_surface" />
+
+        <com.svartifoss.snfell.view.watchface.home.HomeAreasPreference
+            android:key="home_areas_surface" />
+
+    </PreferenceCategory>
+
     <!-- The legacy player categories below remain inflated as the authoritative preferences
          (search metadata, scoped persistence, validation and dialogs), but the Player page presents
          this one contextual editor instead of rendering every row in sequence. -->

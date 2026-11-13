@@ -481,7 +481,19 @@ class WatchPreviewView @JvmOverloads constructor(
     private var quickPanelIcons: Map<Int, PreviewActionIcon> = emptyMap()
     private var demoMiniButtonIcons: List<PreviewActionIcon> = emptyList()
 
+    /**
+     * Told whenever the screen this miniature shows changes, so the Watch tab's caption can name
+     * it. Every route that switches the surface writes through [surface], so this one setter
+     * covers them all.
+     */
+    var onSurfaceChanged: ((PreviewSurface) -> Unit)? = null
+
     private var surface = PreviewSurface.PLAYER
+        set(value) {
+            if (field == value) return
+            field = value
+            onSurfaceChanged?.invoke(value)
+        }
     /** Lets a full-screen copy of this preview open on whatever surface is currently shown. */
     val currentSurface: PreviewSurface get() = surface
     private var focusedPreference: String? = null

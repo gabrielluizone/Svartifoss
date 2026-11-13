@@ -84,6 +84,9 @@ object SettingsCatalog {
 
     /** Section key -> visible categories. Keys match `WatchFacePrefsFragment.SECTION_*`. */
     val WATCH_SECTIONS: Map<String, Set<String>> = mapOf(
+            // The tab's first screen. Its category holds only Home's own rows, which store nothing
+            // and are not searchable, so no search result is ever routed here.
+            WatchFacePrefsFragment.SECTION_HOME to setOf("cat_wf_home_editor"),
             WatchFacePrefsFragment.SECTION_STYLE to setOf(
                     "cat_wf_player_editor",
                     "cat_wf_screen_behavior",
@@ -128,6 +131,7 @@ object SettingsCatalog {
 
     /** Every category in `watch_face_settings.xml`. See [SETTINGS_CATEGORIES]. */
     val WATCH_CATEGORIES: List<String> = listOf(
+            "cat_wf_home_editor",
             "cat_wf_player_editor",
             "cat_wf_screen_behavior",
             "cat_wf_player_layout",

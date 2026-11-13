@@ -164,6 +164,10 @@ object SettingsSearchIndex {
                     R.string.watch_section_panels
                 WatchFacePrefsFragment.SECTION_MINI_BUTTONS ->
                     R.string.watch_section_mini_buttons
+                // Home owns no searchable row, so nothing should ever be routed here; named all
+                // the same, because a new row in the wrong category must not crash the search.
+                WatchFacePrefsFragment.SECTION_HOME ->
+                    R.string.watch_face_header
                 else -> error("Unknown Watch appearance section: ${destination.section}")
             }
         }

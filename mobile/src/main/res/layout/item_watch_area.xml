@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One area in the Watch tab's Home list: its icon, its name and the sentence that says what is
+     inside, with a chevron because a tap opens the area rather than changing anything.
+
+     A flat row, not item_settings_section's card: these sit inside one editor card, and a card per
+     row inside a card drew a frame within a frame. The proportions are that layout's, made compact. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:minHeight="64dp"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/watch_area_icon"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:background="@drawable/circle_icon_bg"
+        android:contentDescription="@null"
+        android:importantForAccessibility="no"
+        android:padding="9dp"
+        tools:src="@drawable/ic_palette" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_weight="1"
+        android:importantForAccessibility="noHideDescendants"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/watch_area_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:textColor="@color/lyra_on_surface"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="Player" />
+
+        <TextView
+            android:id="@+id/watch_area_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:fontFamily="@font/google_sans"
+            android:includeFontPadding="false"
+            android:lineSpacingExtra="1dp"
+            android:textColor="@color/lyra_text_secondary"
+            android:textSize="12.5sp"
+            tools:text="Choose the player layout and how its title, time and progress behave." />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/watch_area_chevron"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:contentDescription="@null"
+        android:importantForAccessibility="no"
+        android:padding="8dp"
+        android:src="@drawable/ic_chevron_right" />
+
+</LinearLayout>

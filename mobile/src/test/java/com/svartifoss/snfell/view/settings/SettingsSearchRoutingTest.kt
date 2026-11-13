@@ -37,7 +37,10 @@ class SettingsSearchRoutingTest {
                 "player_editor_surface",
                 "background_editor_surface",
                 "aod_editor_surface",
-                "mini_button_editor_surface")
+                "mini_button_editor_surface",
+                // The Watch tab's Home rows: views over other rows, holding no setting.
+                "home_themes_surface",
+                "home_areas_surface")
     }
 
     @Test

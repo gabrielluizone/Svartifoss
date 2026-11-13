@@ -66,6 +66,23 @@ internal fun activeQuickThemeKey(appearance: AppearanceContext): String = when (
 }
 
 /**
+ * The built-in layouts a theme list offers, in registry order.
+ *
+ * Retired faces stay out, as on the Watch themes screen, unless the developer switch reveals them -
+ * except the one in use, which a list that hid it would leave looking like nothing is applied. One
+ * function for every list that offers themes (this window, the Watch tab's Home strip), so they
+ * cannot disagree about which layouts exist.
+ */
+internal fun listedBuiltInFaces(
+        allowedFaces: Collection<String>,
+        archivedFaces: Set<String>,
+        showArchived: Boolean,
+        activeFace: String
+): List<String> = allowedFaces.filter { face ->
+    showArchived || face !in archivedFaces || face == activeFace
+}
+
+/**
  * Lists and applies watch themes without the Watch themes screen, for the window the persistent
  * notification opens. Applies through the same [WatchThemeRepository] calls that screen makes, so
  * a theme chosen here is exactly the theme chosen there; the preference change is then pushed to
@@ -75,7 +92,7 @@ object QuickThemeSwitch {
     const val CUSTOM_PREFIX = "custom:"
 
     /** The developer switch that un-hides retired faces, the key the Watch themes screen reads. */
-    private const val SHOW_ARCHIVED_PREF = "dev_show_archived"
+    const val SHOW_ARCHIVED_PREF = "dev_show_archived"
 
     fun rows(context: Context, prefs: SharedPreferences): List<QuickThemeRow> {
         val appearance = ThemeAppearance.resolve(prefs)
@@ -89,12 +106,11 @@ object QuickThemeSwitch {
                             R.string.watch_theme_active_layout,
                             WatchThemeRepository.displayNameForFace(context, profile.baseFace)))
         }
-        val builtIn = ThemeAppearance.ALLOWED_BASE_FACES
-                // Retired faces stay out, as on the Watch themes screen - except the one in use,
-                // which a list that hid it would leave looking like nothing is applied.
-                .filter { face ->
-                    showArchived || face !in ArchivedFaces.KEYS || appearance.baseFace == face
-                }
+        val builtIn = listedBuiltInFaces(
+                allowedFaces = ThemeAppearance.ALLOWED_BASE_FACES,
+                archivedFaces = ArchivedFaces.KEYS,
+                showArchived = showArchived,
+                activeFace = appearance.baseFace)
                 .map { face ->
                     QuickThemeEntry(face, WatchThemeRepository.displayNameForFace(context, face))
                 }

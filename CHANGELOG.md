@@ -8,6 +8,8 @@
 
 ### Changed
 
+- **The Watch tab opens on a Home page.** Before the seven pages there is now a first screen with every watch theme drawn as a picture by the same preview, your saved themes first and the community gallery at the end of the row: tap one to apply it at once, with **Undo** on the message that follows. Below the themes, the seven pages are listed with what each one holds; open one and the row of pages is still there for moving sideways, while Back, or the arrow before the row, returns to Home. A search result still opens its page directly. Under the preview, a caption names the theme your changes are saved to and, when the preview switches to another screen such as the volume control, which screen it is showing. The theme card that sat above the pages is gone: the caption names the theme, and **Manage themes** sits beside the pictures.
+
 - **Tapping the Svartifoss notification opens the app**, where it used to stop the controls. Stop and Force stop are still buttons on it. Android shows three buttons at most, so opening the app is the notification itself.
 
 - **Settings a face cannot show are no longer offered for it.** The app icon is hidden on Chat, Note, Verse and Metadata, and the track time on Carousel, Split, Ribbon and Depth, which have no place for them; the Text page hides those tabs too.

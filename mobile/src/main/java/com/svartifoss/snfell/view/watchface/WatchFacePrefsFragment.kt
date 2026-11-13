@@ -90,6 +90,8 @@ import com.svartifoss.snfell.view.settings.HexColorDotPreference
 import com.svartifoss.snfell.view.settings.WatchFontCatalog
 import com.svartifoss.snfell.view.settings.lyraRuntimeAccent
 import com.svartifoss.snfell.view.watchface.theme.WatchThemeRepository
+import com.svartifoss.snfell.view.watchface.home.HomeAreasPreference
+import com.svartifoss.snfell.view.watchface.home.HomeThemesPreference
 import com.svartifoss.snfell.view.settings.PlaylistShortcutsActivity
 import com.svartifoss.snfell.view.settings.SettingsCatalog
 import com.svartifoss.snfell.view.settings.parseHexOrDefault
@@ -115,6 +117,14 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         const val SECTION_AOD = "aod"
         const val SECTION_PANELS = "panels"
         const val SECTION_MINI_BUTTONS = "miniButtons"
+        /**
+         * The Watch tab's first screen: the themes and the list of areas. It owns no searchable
+         * row - a search result always opens one of the seven areas above - so it never appears
+         * in the settings search, only as the page [WatchFaceFragment] shows first.
+         */
+        const val SECTION_HOME = "home"
+        private const val HOME_THEMES_KEY = "home_themes_surface"
+        private const val HOME_AREAS_KEY = "home_areas_surface"
         private const val ARG_SECTION = "watchAppearanceSection"
         private const val ARG_HIGHLIGHT_KEY = "watchAppearanceHighlightKey"
         private const val STATE_TYPOGRAPHY_TARGET = "watchTypographyTarget"
@@ -200,6 +210,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     private var backgroundEditor: BackgroundEditorPreference? = null
     private var aodEditor: AodEditorPreference? = null
     private var miniButtonEditor: MiniButtonEditorPreference? = null
+    private var homeThemesEditor: HomeThemesPreference? = null
+    private var homeAreasEditor: HomeAreasPreference? = null
 
     /** Re-reads scoped values after a face change and refreshes archived lists when their
      *  developer switch changes, even if this fragment remained alive beside Settings. */
@@ -278,6 +290,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
                 refreshBackgroundEditor()
                 refreshAodEditor()
                 refreshMiniButtonEditor()
+                refreshHomeEditor()
             }
         }
     }
@@ -490,8 +503,27 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         initBackgroundEditor()
         initAodEditor()
         initMiniButtonEditor()
+        initHomeEditor()
         applySectionVisibility()
         wirePreviewInteractions()
+    }
+
+    /** The two rows of the Watch tab's Home; drawn by WatchFacePrefsFragmentHome.kt. */
+    private fun initHomeEditor() {
+        homeThemesEditor = findPreference<HomeThemesPreference>(HOME_THEMES_KEY)?.also { editor ->
+            editor.bindEditor = { root -> bindHomeThemes(root) }
+            editor.refresh()
+        }
+        homeAreasEditor = findPreference<HomeAreasPreference>(HOME_AREAS_KEY)?.also { editor ->
+            editor.bindEditor = { root -> bindHomeAreas(root) }
+            editor.refresh()
+        }
+    }
+
+    /** Re-tints Home after the accent moved with the album art. The strip keeps its own state. */
+    private fun refreshHomeEditor() {
+        homeThemesEditor?.refresh()
+        homeAreasEditor?.refresh()
     }
 
     private fun initListSummaries() {
@@ -3057,6 +3089,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         refreshBackgroundEditor()
         refreshAodEditor()
         refreshMiniButtonEditor()
+        refreshHomeEditor()
     }
 
     override fun onPause() {
@@ -3072,6 +3105,8 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
         backgroundEditor?.releaseBoundView()
         aodEditor?.releaseBoundView()
         miniButtonEditor?.releaseBoundView()
+        homeThemesEditor?.releaseBoundView()
+        homeAreasEditor?.releaseBoundView()
         super.onDestroyView()
     }
 
@@ -4109,7 +4144,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      * Resolved once per render rather than per control: [lyraRuntimeAccent] follows the album art,
      * so a control tinted from its own lookup could land a frame behind its neighbours.
      */
-    private data class EditorPalette(
+    internal data class EditorPalette(
             val surface: Int,
             val accent: Int,
             val textAccent: Int,
@@ -4117,7 +4152,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
             val secondary: Int,
             val divider: Int)
 
-    private fun editorPalette(): EditorPalette {
+    internal fun editorPalette(): EditorPalette {
         val surface = ContextCompat.getColor(requireContext(), R.color.lyra_surface)
         val rawAccent = lyraRuntimeAccent()
         return EditorPalette(
@@ -4130,7 +4165,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
     }
 
     /** The colours a settings row tints itself from, taken from the palette of the same render. */
-    private fun editorRowColors(palette: EditorPalette) = EditorRowColors(
+    internal fun editorRowColors(palette: EditorPalette) = EditorRowColors(
             onSurface = palette.onSurface,
             secondary = palette.secondary,
             value = palette.textAccent,
@@ -4144,7 +4179,7 @@ class WatchFacePrefsFragment : PreferenceFragmentCompatEx() {
      * heading - so the heading and the gap that would sit above it are removed rather than left
      * as empty space on top of the row's own padding.
      */
-    private fun inflateEditorGroupCard(
+    internal fun inflateEditorGroupCard(
             container: LinearLayout,
             @StringRes headingRes: Int?,
             palette: EditorPalette

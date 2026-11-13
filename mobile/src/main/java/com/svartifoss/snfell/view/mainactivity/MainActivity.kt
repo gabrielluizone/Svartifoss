@@ -117,6 +117,14 @@ class MainActivity : WearCompanionPhoneActivity(),
         }
     }
 
+    /**
+     * Opens the community gallery so that, whatever it applies, the Watch tab is told on the way
+     * back. The toolbar's shortcut and the last tile of the Watch tab's theme strip both come here.
+     */
+    fun openCommunityGallery() {
+        communityGalleryLauncher.launch(Intent(this, OnlineThemesActivity::class.java))
+    }
+
     /** (tab, section, preference key) a settings-search result is waiting to land on. */
     private var pendingSearchTarget: Triple<String, String, String>? = null
     private var miniPlayerController: MediaController? = null
@@ -518,8 +526,7 @@ class MainActivity : WearCompanionPhoneActivity(),
                 return true
             }
             R.id.menu_community_themes -> {
-                communityGalleryLauncher.launch(
-                        Intent(this, OnlineThemesActivity::class.java))
+                openCommunityGallery()
                 return true
             }
             R.id.menu_help -> {

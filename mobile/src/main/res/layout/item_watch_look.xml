@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One tile of the theme strip on the Watch tab's Home: the theme drawn by the real preview, and
+     its name underneath. The applied theme gets a ring and a check over the picture; the strip's
+     last tile shows an icon instead of a picture and opens the community gallery.
+
+     The whole tile is the touch target and the accessibility node; the picture, ring and check are
+     decoration, since the description says the name, the kind of theme and whether it is applied. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/watch_look_tile"
+    android:layout_width="88dp"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp">
+
+    <!-- 88dp tiles leave part of the next one showing on a phone-width screen, which is what tells
+         a person the row goes on. -->
+    <FrameLayout
+        android:layout_width="78dp"
+        android:layout_height="78dp"
+        android:importantForAccessibility="noHideDescendants">
+
+        <ImageView
+            android:id="@+id/watch_look_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="3dp"
+            android:contentDescription="@null"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/watch_look_icon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_shopping_bag"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/watch_look_ring"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/watch_look_check"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_gravity="bottom|end"
+            android:contentDescription="@null"
+            android:padding="2dp"
+            android:src="@drawable/ic_check_circle"
+            android:visibility="gone" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/watch_look_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:paddingStart="2dp"
+        android:paddingEnd="2dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/google_sans"
+        android:gravity="center_horizontal"
+        android:includeFontPadding="false"
+        android:lineSpacingExtra="1dp"
+        android:maxLines="2"
+        android:textColor="@color/lyra_on_surface"
+        android:textSize="12sp"
+        tools:text="Expressive" />
+
+</LinearLayout>

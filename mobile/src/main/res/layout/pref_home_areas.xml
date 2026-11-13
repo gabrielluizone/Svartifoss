@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The second half of the Watch tab's Home: where everything else lives.
+
+     One card listing the seven areas - Player, Background, Colors, Text, Always-on, Panels and Mini
+     buttons - each with its icon and the one-line description every locale already translates, so
+     a person can see what is behind each one before opening it. Then, in a card of its own with no
+     heading because its row names itself, the reset of the current layout with its existing
+     confirmation. Both are built by WatchFacePrefsFragment at bind time. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="12dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="18dp">
+
+    <!-- Each card carries its own 10dp top margin, which is also the gap below the strip. -->
+    <LinearLayout
+        android:id="@+id/home_areas_groups"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+</LinearLayout>
