@@ -1,7 +1,46 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T09:29:16.584Z",
+  "generatedAt": "2026-11-11T11:57:35.418Z",
   "themes": [
+    {
+      "id": "4c36f4e1-9e62-4a1a-94b7-ac357550868a",
+      "name": "Free Me",
+      "author": "Gabriel L Svafoss",
+      "baseFace": "artist",
+      "revision": 1,
+      "schemaVersion": 1,
+      "minimumAppVersion": "4.3",
+      "publishedAt": "2026-10-29T10:57:53.121Z",
+      "likes": 0,
+      "settingsDigest": "sha256:8a9be04eb0290b14838aaa6628dc08a391b3b55e2e287892337c59adac882534",
+      "installs": 2
+    },
+    {
+      "id": "64a0cb48-5e19-49c6-ab57-00d0e4b37e66",
+      "name": "Card",
+      "author": "Gabriel L Svafoss",
+      "baseFace": "frame",
+      "revision": 1,
+      "schemaVersion": 1,
+      "minimumAppVersion": "4.3",
+      "publishedAt": "2026-10-29T10:57:53.121Z",
+      "likes": 0,
+      "settingsDigest": "sha256:113739edfab64a7fd993f97f1ff97c8a78e42582b032485f29d04fd125a410a8",
+      "installs": 1
+    },
+    {
+      "id": "e4208a70-bde6-4219-bdb4-e6d7c6ef0ef2",
+      "name": "OutThere",
+      "author": "Gabriel L Svafoss",
+      "baseFace": "artist",
+      "revision": 1,
+      "schemaVersion": 1,
+      "minimumAppVersion": "4.3",
+      "publishedAt": "2026-10-29T10:57:53.121Z",
+      "likes": 0,
+      "settingsDigest": "sha256:0fe541e6a58aa7d6a59b96349d105e3b78494f341f20301a9f9c02b021cffa98",
+      "installs": 1
+    },
     {
       "id": "502e5e8a-23ef-414a-8eac-4a8b853572c6",
       "name": "A New Type of Material",
@@ -13,7 +52,7 @@
       "publishedAt": "2026-09-21T03:00:29.510Z",
       "likes": 2,
       "settingsDigest": "sha256:ee672b58672655b04118def4a3be5213dfb0e5fd7619d1530e96ac098d38dae7",
-      "installs": 1
+      "installs": 2
     },
     {
       "id": "d91d74e0-9d3b-4423-97af-72faa1fcbfcb",
@@ -39,7 +78,7 @@
       "publishedAt": "2026-09-06T19:52:46.982Z",
       "likes": 0,
       "settingsDigest": "sha256:bd8235f1f2e91293a6f7b1a52bd7610272cfcf5331b01dc7c4cb1c232552dcf3",
-      "installs": 14
+      "installs": 15
     },
     {
       "id": "634ec24e-c4f6-4a00-a582-a268ddf56f9b",
@@ -50,7 +89,7 @@
       "schemaVersion": 1,
       "minimumAppVersion": "4.0",
       "publishedAt": "2026-09-06T06:46:37.724Z",
-      "likes": 1,
+      "likes": 2,
       "settingsDigest": "sha256:6141574c47376ffb3649c5dd62b3ecc5196681148bc17d4f3846d2adedd25c1a",
       "installs": 8
     },
@@ -104,7 +143,7 @@
       "publishedAt": "2026-08-24T00:00:00Z",
       "likes": 1,
       "settingsDigest": "sha256:04f6a5b8cfdcd3e062674f204ac06303f7200dddb580c9ed40a1a5332f8709e6",
-      "installs": 9
+      "installs": 10
     },
     {
       "id": "3f038d6e-c0e1-49e5-91e3-70a13ce3dbac",
