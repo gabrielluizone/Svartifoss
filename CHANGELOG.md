@@ -40,7 +40,9 @@
 
 - **Updating from GitHub no longer downloads the same APK twice.** A download that stopped, because you left the screen or the connection dropped, now continues where it stopped, and a finished one is kept until the update is done, so a failed send to the watch or a dismissed install prompt no longer costs another 25 to 36 MB. The file is checked against GitHub's checksum. The watch also drops the received APK as soon as the install is queued, and an update you left unconfirmed no longer stays staged beside the next one.
 
-- **The quick panel shows the music app's own button icons on YouTube Music again on Android 10.** The app's notification was found but not matched to its session, so the panel fell back to generic icons and the phone redrew them on every update. A notification is now accepted when its app has only one session, and icons that were drawn are kept instead of redrawn.
+- **The quick panel's buttons from the playing app leave out what the watch already shows.** When the app's notification offers only play, pause and skip, as YouTube Music's does, the panel takes the app's like, shuffle and repeat instead, and play and skip are only used when the app offers nothing else.
+
+- **The quick panel shows the playing app's own icons for its buttons.** When the app's like, shuffle and repeat came from its media controls rather than its notification, the phone could not draw their icons until one of Svartifoss's screens had been opened, so the watch showed its generic icons instead. They are now drawn every time and kept instead of redrawn on every update.
 
 - **A scrolling title no longer looks faded while it stands still.** Both ends stayed faded between passes, eating the first letters; they now fade only while the text moves. On every face, in the queue and in the phone's preview.
 

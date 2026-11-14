@@ -91,9 +91,12 @@ import com.svartifoss.snfell.di.MusicServiceSubComponent
 import com.svartifoss.snfell.notifications.AppGlyphStore
 import com.svartifoss.snfell.notifications.MediaNotificationActions
 import com.svartifoss.snfell.notifications.NotificationProvider
+import com.svartifoss.snfell.notifications.QuickActionSource
+import com.svartifoss.snfell.notifications.chooseQuickActionSource
 import com.svartifoss.snfell.notifications.customActionSnapshotId
 import com.svartifoss.snfell.notifications.inferMediaActionSemantic
 import com.svartifoss.snfell.notifications.isCustomActionSnapshotId
+import com.svartifoss.snfell.notifications.rankQuickActions
 import com.svartifoss.snfell.proto.LyricsRequest
 import com.svartifoss.snfell.proto.PrefetchedArtwork
 import com.svartifoss.snfell.proto.PrefetchedTrack
@@ -1900,10 +1903,22 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                             sessionToken = mediaController.sessionToken,
                             onlySessionOfPackage = mediaController.isOnlySessionOfItsPackage()
                     )
-                    if (notificationActions.isNotEmpty()) {
+                    val customActions = playbackState.customActions.orEmpty()
+                            .filter { it.action.isNotBlank() }
+                            .filter { customActionSemantic(it) != "dislike" }
+                            .distinctBy { it.action }
+                    // The notification wins only while it offers something besides transport:
+                    // YouTube Music's compact notification is Previous/Play/Next, and its like,
+                    // shuffle and repeat are custom actions (see chooseQuickActionSource).
+                    val quickActionSource = chooseQuickActionSource(
+                            notificationSemantics = notificationActions.map { it.semantic },
+                            customSemantics = customActions.map { customActionSemantic(it) })
+                    if (quickActionSource == QuickActionSource.NOTIFICATION) {
                         reportQuickActionSource("notification", notificationActions.size,
                                 notificationActions.count { it.iconPng != null }, null)
-                        notificationActions.take(MAX_SESSION_QUICK_ACTIONS).forEach { action ->
+                        rankQuickActions(notificationActions, MAX_SESSION_QUICK_ACTIONS) {
+                            it.semantic
+                        }.forEach { action ->
                             val builder = MediaAction.newBuilder()
                                     .setId(action.id)
                                     .setLabel(action.label)
@@ -1912,32 +1927,29 @@ class MusicService : LifecycleService(), MessageClient.OnMessageReceivedListener
                             musicStateBuilder.addMediaActions(builder.build())
                         }
                     } else {
-                        // MediaSession custom actions are the fallback for apps whose media
-                        // notification does not expose buttons (or while listener access
-                        // reconnects). If neither source supplies anything, the watch presents
-                        // an explicit unavailable state instead of silently using manual slots.
+                        // MediaSession custom actions: for apps whose media notification exposes
+                        // no buttons (or while listener access reconnects), and for those whose
+                        // notification holds only transport. If neither source supplies anything,
+                        // the watch presents an explicit unavailable state instead of silently
+                        // using manual slots.
                         val actionsBefore = musicStateBuilder.mediaActionsCount
-                        playbackState.customActions.orEmpty()
-                                .asSequence()
-                                .filter { it.action.isNotBlank() }
-                                .filter { customActionSemantic(it) != "dislike" }
-                                .distinctBy { it.action }
-                                .take(MAX_SESSION_QUICK_ACTIONS)
-                                .forEach { customAction ->
-                                    val label = customAction.name?.toString().orEmpty()
-                                    val semantic = customActionSemantic(customAction)
-                                    val iconPng = MediaNotificationActions.loadRemoteActionIcon(
-                                            context = this,
-                                            packageName = mediaController.packageName,
-                                            resourceId = customAction.icon
-                                    )
-                                    val builder = MediaAction.newBuilder()
-                                            .setId(customActionCommandId(customAction))
-                                            .setLabel(label)
-                                            .setSemantic(semantic)
-                                    attachActionIcon(builder, iconPng, actionIconsByKey, actionIcons)
-                                    musicStateBuilder.addMediaActions(builder.build())
-                                }
+                        rankQuickActions(customActions, MAX_SESSION_QUICK_ACTIONS) {
+                            customActionSemantic(it)
+                        }.forEach { customAction ->
+                            val label = customAction.name?.toString().orEmpty()
+                            val semantic = customActionSemantic(customAction)
+                            val iconPng = MediaNotificationActions.loadRemoteActionIcon(
+                                    context = this,
+                                    packageName = mediaController.packageName,
+                                    resourceId = customAction.icon
+                            )
+                            val builder = MediaAction.newBuilder()
+                                    .setId(customActionCommandId(customAction))
+                                    .setLabel(label)
+                                    .setSemantic(semantic)
+                            attachActionIcon(builder, iconPng, actionIconsByKey, actionIcons)
+                            musicStateBuilder.addMediaActions(builder.build())
+                        }
                         val added = musicStateBuilder.mediaActionsList.drop(actionsBefore)
                         reportQuickActionSource("session custom actions", added.size,
                                 added.count { it.hasIconPng() || it.iconKey.isNotEmpty() },

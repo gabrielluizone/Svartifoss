@@ -7,8 +7,8 @@ package com.svartifoss.snfell.notifications
  * this phone can always pass. On the Pixel 3 in the test rig (Android 10) the token inside YouTube
  * Music's notification and the one `getActiveSessions` returns for the very same session did not
  * compare equal. The registry then held the notification, `actionsForSession` found "0 for this
- * session", and the quick panel fell back to the session's custom actions, whose icons cannot be
- * drawn outside their app (docs/watch-sync-battery-investigation.md, finding 7).
+ * session", and the quick panel fell back to the session's custom actions
+ * (docs/watch-sync-battery-investigation.md, finding 7).
  *
  * What a mismatch cannot mean is a *different* session when the package only has one. Two tokens
  * that differ are evidence of two sessions only if the app owns two; with a single session the
@@ -54,13 +54,14 @@ internal fun <N, T : Any> pickNotificationForSession(
  *
  * Rasterizing an icon is the expensive part of a quick-panel action: several renders of the same
  * drawable through different Contexts, a pixel scan of each, a crop and a PNG encode. The session
- * custom-action path used to repeat all of it on **every** state build, and the builds that matter
- * most - an app whose icons render to nothing outside it - repeated it for nothing, because a
- * render that drew nothing was never remembered. A finished render is kept for as long as the
- * entry lives; a failed one is remembered for [retryFailedAfterMs] only, because "nothing drew"
- * can be a transient condition (the app's resources not yet loadable right after our process
- * started - one phone logged 0 icons at the first state and 3 a few minutes later, same app) and a
- * permanent no would stick the panel on generic glyphs for the process's life.
+ * custom-action path used to repeat all of it on **every** state build, and a render that drew
+ * nothing was never remembered, so a failing icon was paid for again on every state. A finished
+ * render is kept for as long as the entry lives; a failed one is remembered for
+ * [retryFailedAfterMs] only, because "nothing drew" has been transient before: one phone logged 0
+ * icons at the first state and 3 a few minutes later, same app. That one was AppCompat's vector
+ * check failing on the other app's Context until our own had passed it (see
+ * `remoteResourceCandidates`, which no longer uses AppCompat), but a permanent no would stick the
+ * panel on generic glyphs for the process's life whatever the next cause is.
  *
  * Keys carry the package's update time, so an app update that reuses a resource id for a different
  * picture is not served the old one.

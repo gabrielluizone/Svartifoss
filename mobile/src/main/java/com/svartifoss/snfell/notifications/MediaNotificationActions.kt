@@ -17,7 +17,6 @@ import android.os.Build
 import android.os.SystemClock
 import android.service.notification.StatusBarNotification
 import android.support.v4.media.session.MediaSessionCompat
-import androidx.appcompat.content.res.AppCompatResources
 import com.svartifoss.snfell.actions.playback.likeLabelIndicatesAlreadyLiked
 import timber.log.Timber
 import java.io.ByteArrayOutputStream
@@ -622,12 +621,16 @@ object MediaNotificationActions {
     ): List<Drawable> {
         if (resourceId == 0) return emptyList()
         val candidates = ArrayList<Drawable>(2)
-        candidates.addDrawable {
-            contexts.themed?.let { AppCompatResources.getDrawable(it, resourceId) }
-        }
-        candidates.addDrawable {
-            contexts.plain?.let { AppCompatResources.getDrawable(it, resourceId) }
-        }
+        // The platform's loader, never AppCompatResources. AppCompat first checks that vectors are
+        // set up by loading *its own* test drawable by id through the Context it is given - with
+        // another app's Context that id is some unrelated resource of theirs, so every call threw
+        // "This app has been built with an incorrect configuration", until something of ours had
+        // passed the check once with our own Context and it was cached. Hence "0 icons right after
+        // the process starts, 3 a few minutes later" and, in the service with no screen of ours
+        // open, never any: YouTube Music's like (a bitmap) and shuffle/repeat (layer lists) all
+        // load and draw through Context.getDrawable, which handles vectors itself from API 21.
+        candidates.addDrawable { contexts.themed?.getDrawable(resourceId) }
+        candidates.addDrawable { contexts.plain?.getDrawable(resourceId) }
         return candidates
     }
 
