@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-11-11T11:57:35.418Z",
+  "generatedAt": "2026-11-14T11:37:05.433Z",
   "themes": [
     {
       "id": "4c36f4e1-9e62-4a1a-94b7-ac357550868a",
@@ -26,7 +26,7 @@
       "publishedAt": "2026-10-29T10:57:53.121Z",
       "likes": 0,
       "settingsDigest": "sha256:113739edfab64a7fd993f97f1ff97c8a78e42582b032485f29d04fd125a410a8",
-      "installs": 1
+      "installs": 2
     },
     {
       "id": "e4208a70-bde6-4219-bdb4-e6d7c6ef0ef2",
@@ -39,7 +39,7 @@
       "publishedAt": "2026-10-29T10:57:53.121Z",
       "likes": 0,
       "settingsDigest": "sha256:0fe541e6a58aa7d6a59b96349d105e3b78494f341f20301a9f9c02b021cffa98",
-      "installs": 1
+      "installs": 2
     },
     {
       "id": "502e5e8a-23ef-414a-8eac-4a8b853572c6",
@@ -65,7 +65,7 @@
       "publishedAt": "2026-09-17T09:31:28.609Z",
       "likes": 2,
       "settingsDigest": "sha256:fc2ed8ca457f9bbd4b87fec2500e7a97f0ca323dc52fe209278187b0fef21dfb",
-      "installs": 3
+      "installs": 4
     },
     {
       "id": "567a2bdd-11e4-4a0f-8ddc-031c5db3905a",
